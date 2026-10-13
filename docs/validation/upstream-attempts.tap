@@ -12,7 +12,7 @@ not ok 1 - LIVE installed graft pinned structural extraction
     node:internal/modules/cjs/loader:1401
       const err = new Error(message);
                   ^
-    
+
     Error: Cannot find module '@nanonets/graft/package.json'
     Require stack:
     - /mnt/data/work-v030/Code-Intelligence/workers/graft_bridge.mjs
@@ -29,9 +29,9 @@ not ok 1 - LIVE installed graft pinned structural extraction
       code: 'MODULE_NOT_FOUND',
       requireStack: [ '/mnt/data/work-v030/Code-Intelligence/workers/graft_bridge.mjs' ]
     }
-    
+
     Node.js v22.16.0
-    
+
   code: 'PROVIDER_FAILED'
   name: 'CIError'
   stack: |-
@@ -64,9 +64,9 @@ not ok 2 - LIVE installed graphify pinned structural extraction
       File "/usr/lib/python3.13/importlib/metadata/__init__.py", line 407, in from_name
         return next(iter(cls.discover(name=name)))
     StopIteration
-    
+
     During handling of the above exception, another exception occurred:
-    
+
     Traceback (most recent call last):
       File "/mnt/data/work-v030/Code-Intelligence/workers/graphify_bridge.py", line 28, in <module>
         main()
@@ -82,7 +82,7 @@ not ok 2 - LIVE installed graphify pinned structural extraction
       File "/usr/lib/python3.13/importlib/metadata/__init__.py", line 409, in from_name
         raise PackageNotFoundError(name)
     importlib.metadata.PackageNotFoundError: No package metadata was found for graphifyy
-    
+
   code: 'PROVIDER_FAILED'
   name: 'CIError'
   stack: |-
