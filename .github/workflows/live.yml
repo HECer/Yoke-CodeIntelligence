@@ -1,0 +1,33 @@
+name: Optional live providers
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native-live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.2'
+          cache: false
+      - name: Install reviewed live-test prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clangd
+          python -m pip install jedi==0.20.0 networkx==3.6.1 PyMuPDF==1.26.7 Pillow==12.3.0
+      - run: npm ci
+      - run: npm run build
+      - run: node scripts/live-tests.mjs native
+      - run: node scripts/live-tests.mjs communities
+      - name: Package VS Code extension (host test still separate)
+        run: python scripts/package-vscode.py

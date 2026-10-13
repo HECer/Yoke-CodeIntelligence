@@ -5,11 +5,12 @@ import { Store } from '../store/store.js';
 import { assert, CIError, hash, stable, Deadline, atomicWrite, integer, object } from './util.js';
 import { safePath, normalizePath, blockedPath, glob, language, secretLike, STATE } from './paths.js';
 import { VERSION, type Config, type Snapshot, type ManifestFile } from './types.js';
+import { dependencyFiles, dependencyPath } from './dependencies.js';
 export const DEFAULT_CONFIG: Config = {
     schemaVersion: 1, exclude: ['dist/**', 'build/**', 'coverage/**', 'vendor/**', '*.min.js', '*.map'],
     maxFileBytes: 2000000, maxFiles: 20000, maxSnapshotBytes: 256000000,
     python: process.platform === 'win32' ? 'python' : 'python3', pythonEnabled: true,
-    captureAttempts: 3, maxResultBytes: 32768, timeoutMs: 15000, serviceScopes: {}, verify: {},
+    dependencyMode: 'types', maxDependencyFiles: 10000, captureAttempts: 3, maxResultBytes: 32768, timeoutMs: 15000, serviceScopes: {}, verify: {},
 };
 export class Workspace {
     readonly root: string;
@@ -35,6 +36,8 @@ export class Workspace {
         for (const [key, min, max] of [['maxFileBytes', 1, 32000000], ['maxFiles', 1, 100000], ['maxSnapshotBytes', 1, 1000000000], ['captureAttempts', 1, 10], ['maxResultBytes', 1024, 4000000], ['timeoutMs', 10, 600000]] as const)
             integer(this.config[key], key, min, max);
         assert(typeof this.config.python === 'string' && typeof this.config.pythonEnabled === 'boolean', 'INVALID_CONFIG', 'Invalid Python settings');
+        assert(['none', 'types'].includes(this.config.dependencyMode ?? 'none'), 'INVALID_CONFIG', 'dependencyMode must be none or types');
+        integer(this.config.maxDependencyFiles ?? 10000, 'maxDependencyFiles', 1, 100000);
         object(this.config.serviceScopes, 'serviceScopes');
         object(this.config.verify, 'verify');
         const state = join(this.root, STATE);
@@ -115,6 +118,12 @@ export class Workspace {
                 return true;
             }
         }).sort();
+        if (this.config.dependencyMode === 'types') {
+            const dependencies = dependencyFiles(this.root, this.config.maxDependencyFiles ?? 10000);
+            paths.push(...dependencies.paths);
+            omissions.push(...dependencies.omissions);
+            paths = [...new Set(paths)].sort();
+        }
         assert(paths.length <= this.config.maxFiles, 'CAPACITY_EXCEEDED', 'Workspace exceeds maxFiles');
         return { paths, omissions };
     }
@@ -123,7 +132,7 @@ export class Workspace {
         stamp: string;
         mode: number;
     } {
-        const abs = safePath(this.root, path);
+        const abs = path.split('/').includes('node_modules') ? dependencyPath(this.root, path) : safePath(this.root, path);
         const fd = openSync(abs, constants.O_RDONLY | (constants.O_NOFOLLOW ?? 0));
         try {
             const before = fstatSync(fd);
@@ -139,7 +148,11 @@ export class Workspace {
             closeSync(fd);
         }
     }
-    capture(deadline = new Deadline(60000)): Snapshot {
+    capture(deadline = new Deadline(60000), options: {
+        mode?: 'strict' | 'metadata';
+    } = {}): Snapshot {
+        const fast = options.mode === 'metadata';
+        let reusedFiles = 0, readBytes = 0;
         for (let attempt = 0; attempt < this.config.captureAttempts; attempt++) {
             deadline.check();
             const before = this.list();
@@ -150,8 +163,26 @@ export class Workspace {
                 for (const path of before.paths) {
                     deadline.check();
                     let read: ReturnType<Workspace['stableRead']>;
+                    const dependency = path.split('/').includes('node_modules');
+                    const cacheKey = `capture-file:${this.configHash}:${path}`;
                     try {
+                        const absolute = dependency ? dependencyPath(this.root, path) : safePath(this.root, path);
+                        const stat = lstatSync(absolute);
+                        const currentStamp = `${stat.ino}:${stat.size}:${stat.mtimeMs}:${stat.ctimeMs}:${stat.mode}`;
+                        const cached = fast ? this.store.cache<{
+                            stamp: string;
+                            file: ManifestFile;
+                        }>(cacheKey) : undefined;
+                        if (cached && cached.stamp === currentStamp && stat.isFile()) {
+                            files.push(cached.file);
+                            stamps.set(path, currentStamp);
+                            total += cached.file.size;
+                            reusedFiles++;
+                            assert(total <= this.config.maxSnapshotBytes, 'CAPACITY_EXCEEDED', 'Snapshot exceeds maxSnapshotBytes');
+                            continue;
+                        }
                         read = this.stableRead(path);
+                        readBytes += read.bytes.length;
                     }
                     catch (e) {
                         if (e instanceof CIError && ['PATH_DENIED', 'FILE_TOO_LARGE', 'UNSUPPORTED_FILE'].includes(e.code)) {
@@ -180,18 +211,21 @@ export class Workspace {
                     assert(total <= this.config.maxSnapshotBytes, 'CAPACITY_EXCEEDED', 'Snapshot exceeds maxSnapshotBytes');
                     stamps.set(path, read.stamp);
                     const digest = this.store.putBlob(read.bytes);
-                    files.push({ path: normalizePath(path), hash: digest, size: read.bytes.length, mode: read.mode, language: language(path) });
+                    const entry: ManifestFile = { path: normalizePath(path), hash: digest, size: read.bytes.length, mode: read.mode, language: language(path), ...(dependency ? { readOnly: true, dependency: 'installed-types' } : {}) };
+                    files.push(entry);
+                    this.store.setCache(cacheKey, { stamp: read.stamp, file: entry });
                 }
                 const after = this.list();
                 assert(stable(before.paths) === stable(after.paths), 'WORKSPACE_BUSY', 'File set changed during capture');
                 for (const [path, expected] of stamps) {
-                    const s = statSync(safePath(this.root, path));
+                    const s = statSync(path.split('/').includes('node_modules') ? dependencyPath(this.root, path) : safePath(this.root, path));
                     assert(`${s.ino}:${s.size}:${s.mtimeMs}:${s.ctimeMs}:${s.mode}` === expected, 'WORKSPACE_BUSY', `File changed during capture: ${path}`);
                 }
-                const identity = { workspaceId: this.store.workspaceId, projectId: this.store.projectId, configHash: this.configHash, files, omissions: before.omissions, kind: 'disk' as const };
-                const result: Snapshot = { ...identity, id: hash(stable(identity)), createdAt: new Date().toISOString(), captureConsistency: 'stable-double-scan' };
+                const identity = { workspaceId: this.store.workspaceId, projectId: this.store.projectId, configHash: this.configHash, files, omissions: before.omissions, kind: 'disk' as const, ...(fast ? { captureMode: 'metadata' } : {}) };
+                const result: Snapshot = { ...identity, id: hash(stable(identity)), createdAt: new Date().toISOString(), captureConsistency: fast ? 'metadata-reconciled' : 'stable-double-scan' };
                 this.store.putSnapshot(result);
                 this.store.setMeta('current', result.id);
+                this.store.event('capture', { snapshotId: result.id, mode: fast ? 'metadata' : 'strict', reusedFiles, readBytes });
                 this.dirty = false;
                 return result;
             }
@@ -218,6 +252,7 @@ export class Workspace {
         const files = new Map(base.files.map(f => [f.path, f]));
         for (const u of updates) {
             safePath(this.root, u.path);
+            assert(!files.get(normalizePath(u.path))?.readOnly, 'READ_ONLY_DEPENDENCY', 'Installed dependency snapshots cannot be edited');
             const path = normalizePath(u.path);
             if (u.content === null)
                 files.delete(path);
@@ -237,7 +272,7 @@ export class Workspace {
         assert(!existsSync(destination) || readdirSync(destination).length === 0, 'DESTINATION_NOT_EMPTY', 'Sandbox destination must be empty');
         mkdirSync(destination, { recursive: true, mode: 0o700 });
         for (const f of snapshot.files) {
-            const abs = safePath(destination, f.path);
+            const abs = f.readOnly && f.path.split('/').includes('node_modules') ? dependencyPath(destination, f.path) : safePath(destination, f.path);
             mkdirSync(dirname(abs), { recursive: true });
             atomicWrite(abs, this.store.blob(f.hash), f.mode);
             if (process.platform !== 'win32')
@@ -245,7 +280,7 @@ export class Workspace {
         }
     }
     assertCurrent(snapshot: Snapshot, deadline?: Deadline): void {
-        assert(snapshot.kind === 'disk', 'SNAPSHOT_STALE', 'A derived snapshot cannot be a workspace edit base');
+        assert(snapshot.kind === 'disk' && snapshot.captureConsistency === 'stable-double-scan', 'SNAPSHOT_STALE', 'A derived snapshot cannot be a workspace edit base');
         const current = this.capture(deadline);
         assert(current.id === snapshot.id, 'SNAPSHOT_STALE', 'Workspace differs from the prepared snapshot; prepare a new plan');
     }

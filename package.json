@@ -1,6 +1,6 @@
 {
   "name": "@hecer/code-intelligence",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Local, evidence-first code intelligence: immutable snapshots, semantic navigation, directed graphs and reviewable changes.",
   "type": "module",
   "license": "MIT",
@@ -41,7 +41,10 @@
     "prepack": "npm run build",
     "publish:github": "node scripts/publish-github.mjs",
     "format": "node scripts/format.mjs",
-    "smoke": "npm run build && node scripts/configured-smoke.mjs"
+    "smoke": "npm run build && node scripts/configured-smoke.mjs",
+    "test:live": "node scripts/live-tests.mjs",
+    "package:vscode": "python3 scripts/package-vscode.py",
+    "bench:paired": "node benchmarks/paired.mjs"
   },
   "dependencies": {
     "typescript": "5.8.3"

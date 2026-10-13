@@ -1,0 +1,7 @@
+{
+ "name":"code-intelligence-local","displayName":"Code Intelligence — Local Evidence","description":"Snapshot-bound context and unsaved-buffer overlays without automatic source writes.","version":"0.3.0","publisher":"hecer","license":"MIT","engines":{"vscode":"^1.90.0"},"categories":["Other"],"main":"./extension.cjs",
+ "activationEvents":["onCommand:codeIntelligence.start","onCommand:codeIntelligence.context"],
+ "capabilities":{"untrustedWorkspaces":{"supported":false},"virtualWorkspaces":{"supported":false}},
+ "contributes":{"commands":[{"command":"codeIntelligence.start","title":"Code Intelligence: Start Local Editor Bridge"},{"command":"codeIntelligence.context","title":"Code Intelligence: Find Context (Includes Unsaved Buffers)"},{"command":"codeIntelligence.snapshot","title":"Code Intelligence: Inspect Current Snapshot"},{"command":"codeIntelligence.stop","title":"Code Intelligence: Stop Editor Bridges"}],
+ "configuration":{"title":"Code Intelligence","properties":{"codeIntelligence.nodeExecutable":{"type":"string","default":"node","scope":"machine","description":"Trusted user-level Node.js 22.16+ executable. Workspace overrides are ignored."},"codeIntelligence.cliPath":{"type":"string","default":"","scope":"machine","description":"Trusted user-level path to dist/cli.js. Empty uses the runtime bundled in the VSIX."}}}}
+}

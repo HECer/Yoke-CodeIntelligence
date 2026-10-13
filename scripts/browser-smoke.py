@@ -123,4 +123,10 @@ def main():
                 process.kill(); process.communicate()
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as exc:
+        import re, sys
+        message = re.sub(r'(https?://[^\s/#]+/?)#[a-f0-9]{32,}', r'\1#[REDACTED]', str(exc))
+        print(json.dumps({'passed': False, 'mode': 'live_loopback_attempt', 'error': message}), file=sys.stderr)
+        sys.exit(1)

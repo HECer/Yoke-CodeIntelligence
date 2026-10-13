@@ -94,7 +94,7 @@ export class TypeScriptProjects {
     readonly projects = new Map<string, ConfiguredProject>();
     readonly limitations: string[] = [];
     constructor(readonly fs: TypeScriptFileSystem, deadline: Deadline) {
-        const names = [...fs.contents.keys()].filter(p => /(?:^|\/)(?:tsconfig|jsconfig)\.json$/.test(p))
+        const names = [...fs.contents.keys()].filter(p => !p.split('/').includes('node_modules')).filter(p => /(?:^|\/)(?:tsconfig|jsconfig)\.json$/.test(p))
             .filter(p => !p.endsWith('jsconfig.json') || !fs.contents.has(p.slice(0, -'jsconfig.json'.length) + 'tsconfig.json')).sort();
         const queue = [...names];
         for (let i = 0; i < queue.length; i++) {
@@ -154,7 +154,7 @@ export class TypeScriptProjects {
         for (const name of this.projects.keys())
             visit(name);
         if (!this.projects.size) {
-            this.projects.set('[inferred]', { name: '[inferred]', parsed: { fileNames: [...fs.contents.keys()].filter(isSource).map(fs.abs), options: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, moduleResolution: ts.ModuleResolutionKind.Bundler, jsx: ts.JsxEmit.Preserve, allowJs: true, checkJs: true, strict: true, skipLibCheck: true, types: [] }, errors: [] }, problems: [], limitations: ['No tsconfig/jsconfig was found; an explicitly inferred TypeScript configuration is used.'] });
+            this.projects.set('[inferred]', { name: '[inferred]', parsed: { fileNames: [...fs.contents.keys()].filter(p => isSource(p) && !p.split('/').includes('node_modules')).map(fs.abs), options: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, moduleResolution: ts.ModuleResolutionKind.Bundler, jsx: ts.JsxEmit.Preserve, allowJs: true, checkJs: true, strict: true, skipLibCheck: true }, errors: [] }, problems: [], limitations: ['No tsconfig/jsconfig was found; an explicitly inferred TypeScript configuration is used.'] });
         }
         if (names.length)
             this.limitations.push('Configured project roots honor files/include/exclude. Captured files outside all programs remain available for file/text search, not implied semantic analysis.');

@@ -5,6 +5,7 @@ import type { CodeIntelligence } from '../engine.js';
 import type { Envelope } from '../core/types.js';
 import { SCHEMA } from '../core/types.js';
 import { Deadline, TextIndex, assert, hash } from '../core/util.js';
+import { dependencyPath } from '../core/dependencies.js';
 import { safePath } from '../core/paths.js';
 import { fit, MIN_RESPONSE_BYTES } from '../core/budget.js';
 import { LspAdapter } from './lsp.js';
@@ -38,7 +39,7 @@ export async function runLsp(engine: CodeIntelligence, operation: 'definition' |
     const deadline = new Deadline(Math.min(options.timeoutMs ?? engine.workspace.config.timeoutMs, engine.workspace.config.timeoutMs));
     const snapshot = engine.workspace.snapshot(options.snapshotId, deadline);
     const file = engine.workspace.file(snapshot, path);
-    assert(['typescript', 'javascript', 'python', 'go'].includes(file.language), 'CAPABILITY_UNAVAILABLE', 'This entrypoint currently opens TS/JS, Python or Go documents only');
+    assert(['typescript', 'javascript', 'python', 'go', 'c', 'cpp', 'rust', 'java', 'csharp'].includes(file.language), 'CAPABILITY_UNAVAILABLE', 'No configured LSP language ID for this document');
     new TextIndex(engine.workspace.read(snapshot, file.path).toString('utf8')).utf16(options.byte);
     const directory = join(engine.workspace.store.directory, 'changes', `lsp-${requestId}`);
     const sandbox = join(directory, 'tree'), adapter = new LspAdapter(engine.workspace);
@@ -54,7 +55,7 @@ export async function runLsp(engine: CodeIntelligence, operation: 'definition' |
         // detects source mutation, not hidden internal analysis or network use.
         for (const source of snapshot.files) {
             deadline.check();
-            const name = safePath(sandbox, source.path);
+            const name = source.readOnly ? dependencyPath(sandbox, source.path) : safePath(sandbox, source.path);
             const stat = lstatSync(name);
             assert(stat.isFile() && stat.size === source.size && hash(readFileSync(name)) === source.hash, 'SNAPSHOT_STALE', 'External language server changed a captured source file');
         }

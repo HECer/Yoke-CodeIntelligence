@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import { fixture } from '../helpers.mjs';
+import { ingestMedia } from '../../dist/analysis/media.js';
+import { Deadline } from '../../dist/core/util.js';
+if (!process.env.CI_LIVE_MEDIA)
+    throw Error('Explicit CI_LIVE_MEDIA=1 required; dependencies must really be installed');
+test('LIVE PyMuPDF extracts exact page text and binds original PDF digest', async (t) => { const f = fixture(t, { 'a.ts': 'export const a=1;' }); execFileSync(f.ws.config.python, ['-I', '-c', 'import fitz,sys;d=fitz.open();p=d.new_page();p.insert_text((72,72),"Code Intelligence PDF fixture");d.save(sys.argv[1])', f.root + '/guide.pdf']); const result = await ingestMedia(f.engine, f.snapshot(), 'guide.pdf', {}, new Deadline(15000)); const s = f.ws.store.snapshot(result.snapshotId); assert(f.ws.read(s, result.representationPath).toString().includes('Code Intelligence PDF fixture')); assert.equal(result.sourceWritten, false); });
+test('LIVE Pillow image metadata is not mislabeled as scene understanding', async (t) => { const f = fixture(t, { 'a.ts': 'export const a=1;' }); execFileSync(f.ws.config.python, ['-I', '-c', 'from PIL import Image;import sys;Image.new("RGB",(32,20)).save(sys.argv[1])', f.root + '/image.png']); const r = await ingestMedia(f.engine, f.snapshot(), 'image.png', {}, new Deadline(15000)); const text = f.ws.read(f.ws.store.snapshot(r.snapshotId), r.representationPath).toString(); assert.match(text, /32/); assert.match(text, /20/); assert(!text.includes('model_inference')); });
+test('LIVE WAV metadata is extracted without inventing a speech transcript', async (t) => { const f = fixture(t, { 'a.ts': 'export const a=1;' }); execFileSync(f.ws.config.python, ['-I', '-c', 'import wave,sys;w=wave.open(sys.argv[1],"wb");w.setnchannels(1);w.setsampwidth(2);w.setframerate(8000);w.writeframes(bytes(16000));w.close()', f.root + '/audio.wav']); const r = await ingestMedia(f.engine, f.snapshot(), 'audio.wav', {}, new Deadline(15000)); const text = f.ws.read(f.ws.store.snapshot(r.snapshotId), r.representationPath).toString(); assert.match(text, /8000/); assert.equal(r.sourceWritten, false); });

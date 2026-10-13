@@ -3,8 +3,10 @@ import { Deadline, TextIndex, hash, stable, unique, assert } from '../core/util.
 import { TypeScriptProject } from './typescript.js';
 import { extractPython } from './python.js';
 import { extractGo } from './go.js';
+import { extractContracts } from './contracts.js';
 import { extractDocuments } from './documents.js';
 import type { Snapshot, Graph, Entity, Evidence, Observation, Extraction, LocalEntity } from '../core/types.js';
+const INDEX_REVISION = 'ci-index@0.3.0-contracts-2';
 export class Indexer {
     private project?: TypeScriptProject;
     private running = new Map<string, Promise<void>>();
@@ -17,7 +19,7 @@ export class Indexer {
         return this.project;
     }
     async ensure(snapshot: Snapshot, deadline: Deadline): Promise<void> {
-        if (this.workspace.store.graphInfo(snapshot.id))
+        if (this.workspace.store.graphInfo(snapshot.id) && this.workspace.store.meta(`index-revision:${snapshot.id}`) === INDEX_REVISION)
             return;
         // Shared builds use the first caller's bounded deadline; no caller can silently extend it.
         const pending = this.running.get(snapshot.id);
@@ -45,8 +47,11 @@ export class Indexer {
             return { key: `file:${f.path}`, path: f.path, name: f.path.split('/').at(-1)!, qualifiedName: f.path, kind: 'file', language: f.language, signature: source.split('\n').find(s => s.trim())?.slice(0, 300) ?? '', producer: 'ci-snapshot@0.1.0', ...ti.range(0, source.length) };
         });
         pieces.push({ entities: files, observations: [], diagnostics: [], limitations: [] });
-        if (snapshot.files.some(f => ['typescript', 'javascript'].includes(f.language)))
-            pieces.push(this.typescript(snapshot, deadline).extract(deadline));
+        if (snapshot.files.some(f => ['typescript', 'javascript'].includes(f.language))) {
+            const project = this.typescript(snapshot, deadline);
+            pieces.push(project.extract(deadline, { get: key => this.workspace.store.cache<Extraction>(key), put: (key, value) => this.workspace.store.setCache(key, value) }));
+            this.workspace.store.event('semantic-cache', { snapshotId: snapshot.id, ...project.cacheStats });
+        }
         try {
             pieces.push(await extractPython(this.workspace, snapshot, deadline));
         }
@@ -62,6 +67,7 @@ export class Indexer {
             pieces.push({ entities: [], observations: [], diagnostics: [], limitations: ['Go AST unavailable: ' + (e as Error).message] });
         }
         pieces.push(extractDocuments(snapshot, contents, this.workspace.config.serviceScopes));
+        pieces.push(extractContracts(snapshot, contents, this.workspace.config.serviceScopes, deadline));
         const imports = this.workspace.store.cache<Extraction[]>(`imports:${snapshot.id}`) ?? [];
         pieces.push(...imports);
         const graph = canonicalize(snapshot, pieces);
@@ -70,6 +76,7 @@ export class Indexer {
                 graph.coverage.limitations.push(`${f.language}: built-in semantic/AST provider unavailable; file and text search available, external graph import supported.`);
         deadline.check();
         this.workspace.store.putGraph(graph);
+        this.workspace.store.setMeta(`index-revision:${snapshot.id}`, INDEX_REVISION);
         this.workspace.store.event('index', { snapshotId: snapshot.id, files: snapshot.files.length, entities: graph.entities.length, observations: graph.observations.length, durationMs: deadline.elapsed, modelCalls: 0 });
     }
     close(): void { this.project?.close(); }
@@ -114,5 +121,5 @@ export function canonicalize(snapshot: Snapshot, extractions: Extraction[]): Gra
     }
     const diagnostics = extractions.flatMap(x => x.diagnostics);
     return { snapshotId: snapshot.id, entities: [...nodes.values()], evidence: [...evidence.values()], observations: [...observations.values()], diagnostics,
-        coverage: { analysisContexts: extractions.flatMap(x => x.analysisContexts ?? []), indexedFiles: snapshot.files.length, sourceFiles: snapshot.files.filter(f => !['document', 'config', 'text'].includes(f.language)).length, languages, unresolved: [...observations.values()].filter(e => e.target === null).length, omissions: snapshot.omissions.length, diagnostics: diagnostics.length, exhaustive: false, limitations: unique(['Only saved, captured files are known. Unsaved editor buffers are not included.', 'A stable double scan detects ordinary concurrent edits; it is not an atomic filesystem-wide snapshot against a hostile concurrent writer.', ...extractions.flatMap(x => x.limitations)]) } };
+        coverage: { analysisContexts: extractions.flatMap(x => x.analysisContexts ?? []), indexedFiles: snapshot.files.length, sourceFiles: snapshot.files.filter(f => !['document', 'config', 'text'].includes(f.language)).length, languages, unresolved: [...observations.values()].filter(e => e.target === null).length, omissions: snapshot.omissions.length, diagnostics: diagnostics.length, exhaustive: false, limitations: unique([snapshot.kind === 'overlay' ? 'Includes explicitly versioned editor buffers; other editor sessions are not implied.' : 'Only saved, captured files are known. Use an editor overlay snapshot for unsaved buffers.', 'A stable double scan detects ordinary concurrent edits; it is not an atomic filesystem-wide snapshot against a hostile concurrent writer.', ...extractions.flatMap(x => x.limitations)]) } };
 }

@@ -52,6 +52,53 @@
     "sqliteWal": "https://www.sqlite.org/wal.html",
     "githubPublisher": "https://cli.github.com/manual/gh_repo_create",
     "typescript": "https://www.typescriptlang.org/docs/",
-    "runtimeDependencyMetadata": "https://registry.npmjs.org/typescript/5.8.3"
-  }
+    "runtimeDependencyMetadata": "https://registry.npmjs.org/typescript/5.8.3",
+    "vscodePackaging": "https://code.visualstudio.com/api/working-with-extensions/publishing-extension",
+    "vscodeTrust": "https://code.visualstudio.com/api/extension-guides/workspace-trust",
+    "jedi": "https://jedi.readthedocs.io/en/latest/docs/api.html",
+    "goTypes": "https://pkg.go.dev/go/types",
+    "sentenceTransformer": "https://www.sbert.net/docs/package_reference/sentence_transformer/model.html",
+    "crossEncoder": "https://www.sbert.net/docs/package_reference/cross_encoder/model.html",
+    "leiden": "https://leidenalg.readthedocs.io/en/stable/reference.html"
+  },
+  "independentOptionalProviders": [
+    {
+      "name": "Jedi",
+      "testedVersion": "0.20.0",
+      "liveTested": true
+    },
+    {
+      "name": "go/types",
+      "testedVersion": "go1.23.2",
+      "liveTested": true
+    },
+    {
+      "name": "clangd",
+      "testedVersion": "17.0.0",
+      "liveTested": true
+    },
+    {
+      "name": "NetworkX Louvain",
+      "testedVersion": "3.6.1",
+      "liveTested": true
+    },
+    {
+      "name": "PyMuPDF",
+      "testedVersion": "1.26.7",
+      "liveTested": true
+    },
+    {
+      "name": "Pillow",
+      "testedVersion": "12.3.0",
+      "liveTested": true
+    },
+    {
+      "name": "leidenalg",
+      "liveTested": false
+    },
+    {
+      "name": "sentence-transformers",
+      "liveTested": false
+    }
+  ]
 }

@@ -1,5 +1,5 @@
 /** Canonical evidence contracts. Offsets are UTF-8 bytes, ranges are half-open. */
-export const VERSION = '0.2.0';
+export const VERSION = '0.3.0';
 export const SCHEMA = 1;
 export type Resolution = 'syntactic' | 'exact_binding' | 'possible_dispatch' | 'heuristic' | 'inferred_concept' | 'observed_execution' | 'authored_contract' | 'unresolved';
 export interface SourceRange {
@@ -14,6 +14,8 @@ export interface ManifestFile {
     size: number;
     mode: number;
     language: string;
+    readOnly?: boolean;
+    dependency?: string;
 }
 export interface Snapshot {
     id: string;
@@ -21,14 +23,26 @@ export interface Snapshot {
     projectId: string;
     configHash: string;
     parentId?: string;
-    kind: 'disk' | 'derived';
+    kind: 'disk' | 'derived' | 'overlay' | 'federated';
+    federation?: {
+        tenantId: string;
+        projectId: string;
+        keyId: string;
+        sourceSnapshotId: string;
+        manifestId: string;
+    };
+    overlay?: {
+        sessionId: string;
+        revision: number;
+        versions: Record<string, number>;
+    };
     files: ManifestFile[];
     createdAt: string;
     omissions: {
         path: string;
         reason: string;
     }[];
-    captureConsistency: 'stable-double-scan' | 'derived-from-immutable';
+    captureConsistency: 'stable-double-scan' | 'derived-from-immutable' | 'metadata-reconciled';
 }
 export interface Entity extends SourceRange {
     id: string;
@@ -183,6 +197,8 @@ export interface Config {
     maxSnapshotBytes: number;
     python: string;
     pythonEnabled: boolean;
+    dependencyMode?: 'none' | 'types';
+    maxDependencyFiles?: number;
     captureAttempts: number;
     maxResultBytes: number;
     timeoutMs: number;
@@ -191,6 +207,13 @@ export interface Config {
         command: string;
         args: string[];
         timeoutMs?: number;
+        sandbox?: {
+            kind: "docker";
+            image: string;
+            memoryMB?: number;
+            pids?: number;
+            cpus?: number;
+        };
     }>;
 }
 export type FileEdit = {

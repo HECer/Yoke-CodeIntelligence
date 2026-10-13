@@ -29,3 +29,15 @@ Graph provenance is metadata, not cryptographic attestation from an upstream too
 ## Dependencies and process protocol
 
 Core dependencies are pinned. External providers are installed separately and version checks fail closed. Update pins only with real protocol/graph fixture tests and license review. LSP workspace/applyEdit callbacks cannot directly write the project; resource operations outside supported text edits are refused. Stdio message sizes, subprocess output, read plans and request lifetimes are bounded. Some synchronous compiler operations can exceed a deadline before the next cooperative check; do not rely on this as a hard OS scheduler quota.
+
+## 0.3 host capabilities
+
+Editor and federation services use separate privileges. Editor is authenticated loopback-only, versioned and source-read-only; federation uses fixed host roots, tenant/project grants and signed source exchange. TLS is mandatory for remote federation. These are application controls, not isolation from a hostile process under the same OS account or a compromised host. Imported signatures authenticate bytes and scope, not program safety or completeness.
+
+New external semantic/model/Serena/media processes still need host review; generated summaries never become permissions. Generic provider configuration is explicit host input. Workspace settings cannot change the VS Code extension's executable. The additional `--allow-runtime` gateway permits actual arbitrary provider code and must not be inferred from tool annotations or repository prose.
+
+Optional Docker verification requires a pinned, preinstalled image; no pull/network/privilege fallback is performed. The daemon and image remain trusted dependencies. Cleanup not confirmed is failure, not successful containment. The Docker path has argument-level tests here, not a live daemon audit.
+
+Retention uses an exclusive-client check, transaction and quarantine. Current/pinned/editor/recovery/audit dependencies are roots. Backup before enabling automatic maintenance on valuable projects. Unsaved buffers and signed exports may contain source material; keep their local state/exports and cryptographic keys private. Obvious-secret detection is not an exhaustive DLP system.
+
+These controls and adversarial tests were reviewed internally during implementation. **No independent security audit or certification is claimed.**

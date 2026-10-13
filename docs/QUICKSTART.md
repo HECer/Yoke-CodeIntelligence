@@ -3,7 +3,7 @@
 ## Source checkout or supplied source archive
 
 Use Node 22.16+ and Git. Run `npm ci`, `npm run build`, then `node dist/cli.js --help`.
-The lockfile pins TypeScript 5.8.3, @types/node 25.1.0 and undici-types 7.16.0. The two development-only package integrities were unavailable in the offline build environment; versions and tarball URLs are pinned. The runtime TypeScript integrity was verified against npm metadata. Lockfile consistency was checked offline; a clean online install was not performed here.
+The lockfile pins TypeScript 5.8.3, @types/node 25.1.0 and undici-types 7.16.0. The two development-only package integrities were unavailable in the offline build environment; versions and tarball URLs are pinned. The runtime TypeScript integrity was verified against npm metadata. Lockfile consistency was checked offline. A clean online `npm ci` was attempted for v0.3.0 and failed on registry DNS resolution (`EAI_AGAIN`); local build and tests used the exact available dependencies restored offline.
 
 On systems where Python is not called `python3` (or `python` on Windows), supply an explicit host setting:
 
@@ -42,6 +42,14 @@ The default envelope cap is 32,768 bytes. `--max-bytes` may lower it. To raise t
 
 Optional UI checks require Python Playwright and Chromium. `python scripts/browser-smoke.py --chromium /path/to/chromium --save` uses the live loopback UI. `--offline-fixture` explicitly substitutes in-page test responses and a history API shim; it is not a live UI/API integration test.
 
-## Configured TypeScript example (0.2.0)
+## Configured TypeScript example
 
 `examples/monorepo` contains an inherited base config, a solution config and two referenced packages. Index it, search `subtotal`, then verify it as shown in its README. Use [configured-project guidance](CONFIGURED-PROJECTS.md) for context filtering and opt-in installed LSP servers. Upgrading changes the analysis version in newly captured snapshots; re-index after upgrading rather than assuming an old explicit snapshot was rebuilt.
+
+## Ready-to-run archive
+
+The runtime archive includes compiled JavaScript and the TypeScript runtime package. It does not include Node.js itself. Run `node dist/cli.js --help`, `node scripts/configured-smoke.mjs` or `node scripts/run-tests.mjs` directly; `npm test` is the source-build entry point and needs development dependencies. Additional native semantic/media providers require the documented local Python/Go tools.
+
+## Advanced v0.3.0 workflows
+
+See [advanced operations](ADVANCED.md) for unsaved editor overlays, optional semantic providers, in-memory solution builds, retention, contracts, per-selection coverage and local model adapters. See [federation](FEDERATION.md) for signed source snapshots and host-managed grants. The supplied VSIX bundles the runtime but still needs an externally installed Node 22.16+ executable; it is not a verified VS Code extension-host run.

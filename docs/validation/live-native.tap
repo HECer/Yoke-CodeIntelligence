@@ -1,0 +1,62 @@
+TAP version 13
+# (node:14713) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: LIVE PyMuPDF extracts exact page text and binds original PDF digest
+ok 1 - LIVE PyMuPDF extracts exact page text and binds original PDF digest
+  ---
+  duration_ms: 3241.257319
+  type: 'test'
+  ...
+# Subtest: LIVE Pillow image metadata is not mislabeled as scene understanding
+ok 2 - LIVE Pillow image metadata is not mislabeled as scene understanding
+  ---
+  duration_ms: 2161.553005
+  type: 'test'
+  ...
+# Subtest: LIVE WAV metadata is extracted without inventing a speech transcript
+ok 3 - LIVE WAV metadata is extracted without inventing a speech transcript
+  ---
+  duration_ms: 2683.851355
+  type: 'test'
+  ...
+# (node:14798) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: LIVE Jedi definition/references/rename cross files without executing Python
+ok 4 - LIVE Jedi definition/references/rename cross files without executing Python
+  ---
+  duration_ms: 7510.199029
+  type: 'test'
+  ...
+# Subtest: LIVE Jedi refuses invalid identifier and missing trust
+ok 5 - LIVE Jedi refuses invalid identifier and missing trust
+  ---
+  duration_ms: 2405.38228
+  type: 'test'
+  ...
+# Subtest: LIVE Go type semantics local modules and safe rename
+ok 6 - LIVE Go type semantics local modules and safe rename
+  ---
+  duration_ms: 18054.554774
+  type: 'test'
+  ...
+# Subtest: LIVE Go blocks a rename when dependencies cannot be resolved
+ok 7 - LIVE Go blocks a rename when dependencies cannot be resolved
+  ---
+  duration_ms: 11352.464427
+  type: 'test'
+  ...
+# Subtest: LIVE clangd actual definition, references and rename plan
+ok 8 - LIVE clangd actual definition, references and rename plan
+  ---
+  duration_ms: 236.827912
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 48975.701148

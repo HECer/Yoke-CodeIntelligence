@@ -1,12 +1,12 @@
 {
-  "version": "0.2.0",
-  "measuredAt": "2026-10-13T10:57:15.837Z",
+  "version": "0.3.0",
+  "measuredAt": "2026-10-13T15:47:47.278Z",
   "kind": "local_microbenchmark",
   "environment": {
     "node": "v22.16.0",
     "platform": "linux",
     "arch": "x64",
-    "cpu": "AMD EPYC 9V74 80-Core Processor"
+    "cpu": "INTEL(R) XEON(R) PLATINUM 8573C"
   },
   "fixture": {
     "files": 101,
@@ -14,14 +14,14 @@
     "queries": 60
   },
   "results": {
-    "coldIndexMs": 560.01,
-    "warmExplicitSnapshotP50Ms": 0.35,
-    "warmExplicitSnapshotP95Ms": 0.93,
-    "meanEnvelopeBytes": 7816,
+    "coldIndexMs": 783.83,
+    "warmExplicitSnapshotP50Ms": 0.49,
+    "warmExplicitSnapshotP95Ms": 2.7,
+    "meanEnvelopeBytes": 8057,
     "exactNameHits": 60,
     "entities": 502,
     "observations": 801,
-    "rssBytes": 182861824,
+    "rssBytes": 186732544,
     "modelCalls": 0
   },
   "limitations": [

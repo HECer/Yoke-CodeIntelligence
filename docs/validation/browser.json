@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "measuredAt": "2026-10-13T15:54:07.446506+00:00",
+  "browser": "Chromium",
+  "version": "144.0.7559.96",
+  "checks": [
+    "index control and status rendering",
+    "symbol search control/results",
+    "source rendering",
+    "trace control/evidence rendering",
+    "fragment cleanup requested",
+    "desktop no horizontal overflow",
+    "mobile search and no horizontal overflow",
+    "no page exceptions"
+  ],
+  "network": "none: mocked frontend API",
+  "mode": "offline_dom_fixture",
+  "limitations": [
+    "Live browser-to-loopback navigation was blocked by the managed Chromium policy; independent HTTP backend tests are separate.",
+    "Offline mode mocks fetch responses and the about:blank history API; it does not validate live browser networking, CSP execution or token handling."
+  ],
+  "fixture": "generated non-user invoice demo",
+  "errors": [],
+  "realNavigation": {
+    "status": "blocked",
+    "error": "ERR_BLOCKED_BY_ADMINISTRATOR",
+    "bypassed": false
+  }
+}

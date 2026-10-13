@@ -1,56 +1,45 @@
-# Release status — 0.2.0
+# Release status — 0.3.0
 
-This file separates implemented behavior from tested compatibility and the larger specification. No production-readiness, all-language completeness, formal-correctness or agent-token-savings claim is made.
+**A substantially extended working implementation, not certified completion of every originally discussed possibility.** This document distinguishes working code, real local evidence, optional-provider contracts and unexecuted external gates. No public publication was performed or attempted in this update.
 
-## Implemented and locally exercised
+## Implemented and exercised locally
 
-Saved-file snapshots/CAS; SQLite/FTS5; UTF-8 exact reads; configured TS/JS symbol and reference extraction; cross-project compiler rename with context-conflict rejection; native Python AST and Go parser; source-first retrieval; directed multigraph traversal; bounded read plans; immutable patch plans; isolated application; approved workspace writes; conflict preservation; actual killed-writer recovery; static diagnostics; actual authorized Node test command execution; source-bound memory/vector/LCOV/runtime/SARIF features; CLI; stdio MCP; read-only authenticated loopback HTTP.
-
-The test report records the exact count and platform. Native Python/Go tests were actually run. Tests use small fixtures, not arbitrary production-language completeness proofs.
-
-## Implemented adapters; real upstream execution not verified here
-
-| Adapter | Implemented boundary | Current verification |
-|---|---|---|
-| Graft | V1 graph import with source hash binding; public Graft.graph process bridge pinned to 0.21.1 | Schema/contract fixtures; no installed live Graft |
-| Graphify | Raw extraction/persisted schema import; direction markers and parallel relationships; explicit root; bridge pinned to graphifyy 0.9.87 | Schema/contract fixtures; no installed live Graphify |
-| LSP | Independent framed client plus host-authorized CLI; checked definition/reference/implementation locations, prepareRename, versioned edits and persisted rename plans | Adversarial protocol/process fixtures and CLI tests; no real external language server run |
-| Serena | External MCP initialize, symbol query and grouped-payload normalization | MCP fixture; no live Serena run |
-
-Graft's optional meaning model, Serena's complete tools/REPL/JetBrains backend and Graphify's multimodal/cloud capabilities are not silently reimplemented or bundled. Installing an upstream does not automatically enable all its features through this facade.
-
-## Deliberately limited in this release
-
-| Area | Actual boundary / next work |
+| Area | Delivered behavior and actual boundary |
 |---|---|
-| TypeScript build context | Captured `files`/`include`/`exclude`, inherited configs, aliases, independent programs and source-based project references are implemented. No automatic node_modules/@types loading, arbitrary plugins, generated declaration build validation or `tsc --build`. Files outside all configured programs remain searchable with explicit semantic omissions. |
-| Python and Go | Syntax/AST heuristics, not complete binding/type resolution or universal safe rename |
-| Frameworks/contracts | Selected syntax-based route/event/env/SQL/JSON schema hints; not complete ORM, migration or interservice proof |
-| Graph analytics | Degree, weak components, cycles and diff; no Leiden community implementation |
-| Retrieval | FTS/literal/graph context; optional precomputed vectors; no built-in embedding model or LLM reranker |
-| Incrementality | Parse caching and immutable graph reuse; new disk capture still hashes source bytes and new snapshots rerun global resolution |
-| Editor integration | Saved files only; no unsaved-buffer overlay or IDE plugin |
-| Multiple projects/devices | Separate workspaces; no authenticated federation, cross-machine state synchronization or team tenancy |
-| Verification | Bounded diagnostics plus explicitly trusted commands; no formal verification or general taint/dataflow analysis |
-| Test selection | Graph/filename suggestions and aggregate LCOV; not a complete per-test dependency/coverage map |
-| Execution security | No project execution by native index; copied trees are not OS/container sandboxes for trusted external programs |
-| Storage | No automatic garbage collection/retention policy or hosted database service |
-| Benchmarks | Local synthetic microbenchmark only; no full paired agent/Graft/Serena/Graphify cost-correctness sweep |
+| Existing core | Immutable CAS snapshots, FTS, directed multiedges, provenance, source-first context, configured TS/JS, eight MCP tools, CLI, controlled changes/recovery, verification, source-bound memory and imports remain regression-tested. |
+| TS dependency/build context | Installed declaration/metadata capture is read-only. In-memory solution builds produce and consume project-reference declarations without source-tree writes. No automatic installs, external symlinked package stores or custom compiler plugins. |
+| Python / Go semantics | Actual Jedi cross-file definition/reference/rename plans and actual Go `go/types` binding/typechecked rename plans. Missing dependency/context fails explicitly. Reflection/dynamic dispatch/other build configurations remain nonexhaustive. |
+| External LSP | Actual clangd definition/reference/rename-plan tests, in addition to adversarial protocol fixtures. Not an all-server compatibility claim. |
+| Editor | Versioned unsaved-buffer snapshots and authenticated loopback API; actual CLI-to-HTTP overlay search and original-source preservation tested. VS Code extension supplied and packaged, but no actual extension-host test. |
+| Federation / sync | Ed25519 source snapshot transfer, host-controlled tenant/project grants, immutable remote snapshots, local reindexing, federated search, replay handling and receiver excludes. Real HTTP round trips and denial tests. Not whole-agent-state synchronization, hosted user management or CRDT collaboration. |
+| Incrementality / retention | Metadata-assisted capture plus strict mode, semantic-unit dependency keys, filesystem watch with reconciliation, opt-in periodic retention, exclusive-client mark/sweep, quarantine and pinning. Not a fully incremental compiler; audit roots can deliberately retain history. |
+| Meaning / embeddings | Native statistical lexical vector generation/search and reviewed provider interfaces for neural encoding, reranking, source-bound inferred summaries and media descriptions. Model protocol/accounting tested with labeled fixtures. No model weights, embedding-model live run or LLM run included. |
+| Communities | Real NetworkX Louvain execution. Official Leiden adapter implemented, but required igraph/leidenalg packages unavailable; no mislabeled fallback. |
+| Contracts | Additional Prisma fields/mappings, SQL operations/migrations, literal HTTP/OpenAPI, GraphQL and Protobuf extraction plus selected OpenAPI change checks. Cross-links remain heuristic, not complete runtime contract verification. |
+| Tests / dataflow | Actual isolated Node test-file and name-pattern execution with V8 per-selection line coverage and widening on unknown impact; structured summaries reject zero-case success. Bounded TS/JS intraprocedural taint candidates with explicit source/sink assumptions; not full heap/interprocedural analysis or formal verification. |
+| Media | Actual PDF text/page, PNG metadata and WAV metadata tests. ffprobe and subtitle handling implemented. ASR, OCR and scene understanding need a reviewed provider or supplied transcript; metadata is never mislabeled as semantics. |
+| Process containment | Optional digest-pinned Docker verifier with no network/pulls, limits and fail-closed cleanup. Argument/security contract checked; no live Docker daemon here. Ordinary trusted copied-tree processes are not an OS sandbox. |
 
-## Validation boundaries
+Exact test totals, versions and package checks are in `validation/report.json`. The synthetic microbenchmark is not an agent-quality/cost benchmark. The paired-driver acceptance harness is implemented and its accounting/independent-verifier behavior is fixture-tested; no genuine multi-arm agent campaign was run.
 
-Linux Node 22.16, Python 3.13 and the available Go toolchain were used. macOS/Windows and Node 24 jobs are configured but were not run in this session. Windows symlink privilege-dependent tests may be skipped. Node's SQLite API is experimental in the tested Node version.
+## Remaining compatibility gates — not passed
 
-The current report records the re-run suite and package smoke checks. Browser fixture checks in `validation/v0.1.0` are historical, not re-run claims for this update. A clean online npm installation and GitHub-hosted CI did not run because the build container lacked network access. Local build used the available pinned TypeScript and Node type packages; lockfile structure was checked offline. The browser's managed policy blocked live localhost navigation. The actual frontend passed an offline DOM fixture test; independent Node HTTP tests exercised the real backend, authorization and origin restrictions. Do not conflate these with a live browser-to-backend end-to-end test.
+| Gate | Observed reason / status |
+|---|---|
+| Installed Graft 0.21.1 | Actual live attempt fails because the package is missing. Pinned structural bridge and source checks are implemented. |
+| Installed Graphify 0.9.87 | Actual live attempt fails because `graphifyy` is missing. Raw extraction/root/direction contracts are implemented. |
+| Installed Serena | No installed reviewed executable configured. Capability discovery, selected tools, safe-edit planning and explicitly authorized runtime gateway have protocol tests only. |
+| Paid / hosted features | Graphify Cloud and Serena JetBrains require the user's external products/licenses; neither source nor service is bundled. Compatibility must be established against the actual installation. |
+| Clean online install | `npm ci` attempted and failed on registry DNS resolution (`EAI_AGAIN`). The exact pinned local runtime/development dependencies were restored offline for build/test. |
+| Live browser end-to-end | Actual localhost navigation was refused by managed Chromium (`ERR_BLOCKED_BY_ADMINISTRATOR`). No bypass attempted. Frontend fixture checks and real HTTP tests are separate evidence. |
+| Platforms / extension host | Windows, macOS, Node 24, GitHub-hosted CI and VS Code extension-host execution were not available. Matrix/optional live jobs prepared, not claimed run. |
+| Neural model / Leiden / Docker | Required packages, weights or daemon absent. Explicit optional interfaces exist; missing dependencies do not pass a live gate. |
+| Independent audit / full agent benchmark | Neither performed. An internal review or protocol fixture cannot substitute for independent security certification or real agent cost/correctness evidence. |
 
-## Public publication
+## Important non-guarantees
 
-**No publication was performed in this update.** The prior attempt verified owner HECer, but the target returned 404 and the connector lacked repository creation. No current remote-state claim is made without a fresh lookup. The supplied local publisher performs the requested public creation and verifies the pushed commit using the user's own GitHub CLI authentication. No npm registry release or hosted release asset upload has been performed.
+The static graph is not the complete runtime. A successful reference query is not proof of absence elsewhere. Python/Go/TS resolution depends on captured configurations and dependencies; dynamic/generated code, unsupported languages and omitted files remain visible limits. Source signatures authenticate bytes/scope, not correctness. Filesystem metadata mode is weaker than a strict capture. Non-cooperating external writers, an untrusted tool executable and a hostile host need operating-system-level controls beyond a library.
 
-## Next acceptance gates
+The facade deliberately does **not** merge all upstream applications into one implicit privileged process. The native path does not need a model. Advanced provider/network/key/retention privileges remain host CLI/library operations, not automatically granted to an MCP caller. See `ADVANCED.md`, `FEDERATION.md`, `SECURITY.md` and `UPSTREAMS.md` for operation-specific boundaries.
 
-Live upstream version tests, larger real-world configured-project corpora, unsaved-buffer integration, independent patch-task benchmarks, and three-platform hosted CI must pass before stronger compatibility or maturity claims are made. Preserve the current source-bound failure semantics while extending capabilities; do not hide missing analysis behind empty result sets.
-
-## Configured-project implementation dependencies
-
-TypeScript is deliberately pinned to 5.8.3. Immutable wildcard matching and editor-style source redirects use compiler-exported/internal hooks (`matchFiles`, `useSourceOfProjectReferenceRedirect`) behind a narrow host adapter. Contract tests must pass before changing that compiler pin. Source reference navigation is not equivalent to building declarations. The final public graph is a union unless an analysis-context filter is supplied; that union is not one executable configuration.
+Version 0.3 is therefore usable for continued development and bounded local workflows; calling it universally production-ready, fully externally verified or complete feature-for-feature parity with every upstream product would be inaccurate.

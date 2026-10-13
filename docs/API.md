@@ -73,7 +73,7 @@ A changed base snapshot, expired/tampered plan or foreign edits must produce an 
 ```
 
 Then use `node dist/cli.js verify <plan-id> --root /project --profile unit --trust-project --timeout 120000`.
-Profiles run in a copied source tree. Dependencies are not installed or copied automatically. Use profiles appropriate for that tree, or explicitly authorize a dependency bootstrap after reviewing its risk. Any profile modifying captured source invalidates the report's source-integrity condition. Timeout/start failure is incomplete, not passed; test count is null if the actual runner output does not expose a supported count.
+Profiles run in a copied source tree. Package installation never runs automatically. Read-only captured TypeScript declarations/metadata are available; executable npm dependencies are not copied automatically. Use profiles appropriate for that tree, or explicitly authorize a dependency bootstrap after reviewing its risk. Any profile modifying captured source invalidates the report's source-integrity condition. Timeout/start failure is incomplete, not passed; test count is null if the actual runner output does not expose a supported count.
 
 ## Library
 
@@ -102,3 +102,12 @@ The MCP transport supports initialize, initialized notification, tools/list, too
 Coverage now carries optional `analysisContexts`; TypeScript observations/diagnostics retain their config identity. `ci_trace` accepts `analysisContexts: ["path/to/tsconfig.json"]` and reports `crossContextUnion`. Native rename refuses conflicting interpretations of a shared source edit with `RENAME_CONTEXT_CONFLICT`. See [configured projects](CONFIGURED-PROJECTS.md).
 
 The `runLsp` library export and `lsp` CLI entrypoint are explicit host integrations. They are not automatically exposed as additional MCP tools. The options contain host trust, command/argument vector, source path/UTF-8 offset and one shared deadline. Read operations return checked locations; rename returns a prepared, persisted plan. Verification keeps `failed` status if a later check is unavailable or times out; inspect individual stages for incomplete coverage.
+
+## Advanced host capabilities in 0.3.0
+
+The compact MCP API intentionally remains eight tools; `ci_verify` also accepts `build: true`.
+Advanced operations that can launch new external providers, manage signing keys, ingest binary media or
+change retention are explicit **host-side CLI/library** capabilities, not silently granted MCP tools.
+An agent with an approved shell can call them through the CLI. Pure MCP clients can read their saved
+artifacts/derived snapshots, but cannot obtain new process/network privileges from repository text.
+See [ADVANCED.md](ADVANCED.md) for invocation and the exported declarations in `dist/index.d.ts`.

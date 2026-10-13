@@ -1,0 +1,9 @@
+{
+  "command": "python3",
+  "args": ["-I", "/absolute/path/Code-Intelligence/workers/sentence_provider.py"],
+  "modelId": "my-reviewed-local-embedding-model",
+  "maxCost": 0,
+  "taskLimit": 0,
+  "taskId": "local-embedding-build",
+  "env": {"CI_MODEL_PATH": "/absolute/path/reviewed-safetensors-model"}
+}

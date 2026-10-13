@@ -1,1083 +1,1190 @@
 {
-  "command": "npm run typecheck && npm test",
-  "environment": "Linux x64, Node 22.16.0",
-  "counts": {
-    "tests": 178,
-    "pass": 178,
+  "version": "0.3.0",
+  "recordedAt": "2026-10-13T16:02:26.391287+00:00",
+  "command": "npm test",
+  "summary": {
+    "tests": 235,
+    "pass": 235,
     "fail": 0,
     "cancelled": 0,
     "skipped": 0,
     "todo": 0
   },
-  "durationMs": 19336.215464,
   "tests": [
     {
       "number": 1,
       "name": "Graft v1 graph import retains relationships but does not invent exact call sites",
-      "passed": true,
-      "durationMs": 29.922534
+      "status": "passed"
     },
     {
       "number": 2,
       "name": "Graphify historical markers take priority over undirected node-link endpoint order",
-      "passed": true,
-      "durationMs": 21.66394
+      "status": "passed"
     },
     {
       "number": 3,
       "name": "parallel and opposite raw Graphify edges survive canonical persistence",
-      "passed": true,
-      "durationMs": 590.768535
+      "status": "passed"
     },
     {
       "number": 4,
       "name": "stale source hashes and unknown schema versions are refused",
-      "passed": true,
-      "durationMs": 18.361562
+      "status": "passed"
     },
     {
       "number": 5,
       "name": "unanchored external nodes stay unresolved targets without phantom source entities",
-      "passed": true,
-      "durationMs": 20.94618
+      "status": "passed"
     },
     {
       "number": 6,
       "name": "Serena normalization handles file groups and inherited child locations",
-      "passed": true,
-      "durationMs": 0.97081
+      "status": "passed"
     },
     {
       "number": 7,
       "name": "Serena unrecognized prose or malformed groups cannot masquerade as zero matches",
-      "passed": true,
-      "durationMs": 0.827575
+      "status": "passed"
     },
     {
       "number": 8,
       "name": "ordered symbol search results do not create graph paths",
-      "passed": true,
-      "durationMs": 0.226411
+      "status": "passed"
     },
     {
       "number": 9,
       "name": "LSP framing handles split Content-Length headers and Unicode payloads",
-      "passed": true,
-      "durationMs": 61.814134
+      "status": "passed"
     },
     {
       "number": 10,
       "name": "stalled provider is cancelled and does not outlive the shared deadline",
-      "passed": true,
-      "durationMs": 165.6945
+      "status": "passed"
     },
     {
       "number": 11,
       "name": "LSP rename converts negotiated positions and binds edits to source hashes",
-      "passed": true,
-      "durationMs": 57.296698
+      "status": "passed"
     },
     {
       "number": 12,
       "name": "LSP cannot edit outside its isolated snapshot",
-      "passed": true,
-      "durationMs": 64.113118
+      "status": "passed"
     },
     {
       "number": 13,
       "name": "external Serena MCP adapter negotiates and decodes structured grouped symbols",
-      "passed": true,
-      "durationMs": 56.141976
+      "status": "passed"
     },
     {
       "number": 14,
       "name": "upstream processes never start without explicit provider trust",
-      "passed": true,
-      "durationMs": 24.284552
+      "status": "passed"
     },
     {
       "number": 15,
       "name": "native TypeScript graph keeps imports, calls and references distinct",
-      "passed": true,
-      "durationMs": 608.826585
+      "status": "passed"
     },
     {
       "number": 16,
       "name": "non-call property reads remain references",
-      "passed": true,
-      "durationMs": 266.528054
+      "status": "passed"
     },
     {
       "number": 17,
       "name": "same-named functions in different files never collapse by name",
-      "passed": true,
-      "durationMs": 233.130807
+      "status": "passed"
     },
     {
       "number": 18,
       "name": "interface dispatch is a possible dispatch, not a runtime observation",
-      "passed": true,
-      "durationMs": 229.141095
+      "status": "passed"
     },
     {
       "number": 19,
       "name": "unresolved external calls stay explicit with null targets",
-      "passed": true,
-      "durationMs": 304.12752
+      "status": "passed"
     },
     {
       "number": 20,
       "name": "compiler syntax errors appear in coverage and diagnostics",
-      "passed": true,
-      "durationMs": 302.035167
+      "status": "passed"
     },
     {
       "number": 21,
       "name": "renaming an export invalidates unchanged consumer resolution",
-      "passed": true,
-      "durationMs": 449.38415
+      "status": "passed"
     },
     {
       "number": 22,
       "name": "source reads are immutable and UTF-8 byte-accurate",
-      "passed": true,
-      "durationMs": 208.549794
+      "status": "passed"
     },
     {
       "number": 23,
       "name": "mixed line/byte/entity read arguments are rejected",
-      "passed": true,
-      "durationMs": 218.073086
+      "status": "passed"
     },
     {
       "number": 24,
       "name": "literal text search preserves offsets after Unicode case-expansion characters",
-      "passed": true,
-      "durationMs": 41.370585
+      "status": "passed"
     },
     {
       "number": 25,
       "name": "camelCase identifiers are discoverable by a constituent word",
-      "passed": true,
-      "durationMs": 191.903047
+      "status": "passed"
     },
     {
       "number": 26,
       "name": "scoped search excludes similarly named neighbouring services",
-      "passed": true,
-      "durationMs": 218.220913
+      "status": "passed"
     },
     {
       "number": 27,
       "name": "trace is directed, bounded and does not invent an ordered path",
-      "passed": true,
-      "durationMs": 194.318134
+      "status": "passed"
     },
     {
       "number": 28,
       "name": "read-only plans combine navigation without an extra model call",
-      "passed": true,
-      "durationMs": 210.007327
+      "status": "passed"
     },
     {
       "number": 29,
       "name": "Markdown concepts and rationale nodes keep original provenance",
-      "passed": true,
-      "durationMs": 207.140013
+      "status": "passed"
     },
     {
       "number": 30,
       "name": "Python AST works without imports or execution of project code",
-      "passed": true,
-      "durationMs": 1576.700241
+      "status": "passed"
     },
     {
       "number": 31,
       "name": "Python syntax errors are reported without empty-success semantics",
-      "passed": true,
-      "durationMs": 842.308288
+      "status": "passed"
     },
     {
       "number": 32,
       "name": "disabled Python parsing is explicitly reported as unavailable semantics",
-      "passed": true,
-      "durationMs": 33.265765
+      "status": "passed"
     },
     {
       "number": 33,
       "name": "Go stdlib parser emits real methods, imports and bounded call candidates",
-      "passed": true,
-      "durationMs": 5233.81772
+      "status": "passed"
     },
     {
       "number": 34,
-      "name": "prepare \u2192 compiler rename \u2192 verify \u2192 approve \u2192 workspace apply works across files",
-      "passed": true,
-      "durationMs": 994.946385
+      "name": "paired harness uses real independent verification and charges all protocol-fixture attempts",
+      "status": "passed"
     },
     {
       "number": 35,
-      "name": "reserved keywords cannot be compiler rename targets",
-      "passed": true,
-      "durationMs": 216.166026
+      "name": "paired harness refuses implicit driver execution",
+      "status": "passed"
     },
     {
       "number": 36,
-      "name": "exact native symbol replacement preserves surrounding code",
-      "passed": true,
-      "durationMs": 190.444658
+      "name": "prepare \u2192 compiler rename \u2192 verify \u2192 approve \u2192 workspace apply works across files",
+      "status": "passed"
     },
     {
       "number": 37,
-      "name": "isolated apply materializes a complete result without changing source",
-      "passed": true,
-      "durationMs": 25.325799
+      "name": "reserved keywords cannot be compiler rename targets",
+      "status": "passed"
     },
     {
       "number": 38,
-      "name": "workspace integration refuses missing host write permission",
-      "passed": true,
-      "durationMs": 21.129385
+      "name": "exact native symbol replacement preserves surrounding code",
+      "status": "passed"
     },
     {
       "number": 39,
-      "name": "workspace integration requires exact approval and verification",
-      "passed": true,
-      "durationMs": 20.011364
+      "name": "isolated apply materializes a complete result without changing source",
+      "status": "passed"
     },
     {
       "number": 40,
-      "name": "concurrent source edits block integration without overwriting user work",
-      "passed": true,
-      "durationMs": 26.045532
+      "name": "workspace integration refuses missing host write permission",
+      "status": "passed"
     },
     {
       "number": 41,
-      "name": "test modifications require separate explicit consent",
-      "passed": true,
-      "durationMs": 22.65456
+      "name": "workspace integration requires exact approval and verification",
+      "status": "passed"
     },
     {
       "number": 42,
-      "name": "hash preconditions and overlapping edits cannot be bypassed",
-      "passed": true,
-      "durationMs": 24.116219
+      "name": "concurrent source edits block integration without overwriting user work",
+      "status": "passed"
     },
     {
       "number": 43,
-      "name": "Unicode edits reject partial code points and lone surrogates",
-      "passed": true,
-      "durationMs": 19.907918
+      "name": "test modifications require separate explicit consent",
+      "status": "passed"
     },
     {
       "number": 44,
-      "name": "file creation and deletion are represented and applied correctly",
-      "passed": true,
-      "durationMs": 38.586477
+      "name": "hash preconditions and overlapping edits cannot be bypassed",
+      "status": "passed"
     },
     {
       "number": 45,
-      "name": "expired and tampered plans are never applied",
-      "passed": true,
-      "durationMs": 30.998313
+      "name": "Unicode edits reject partial code points and lone surrogates",
+      "status": "passed"
     },
     {
       "number": 46,
-      "name": "idempotency key cannot be reused for another plan or mode",
-      "passed": true,
-      "durationMs": 23.387803
+      "name": "file creation and deletion are represented and applied correctly",
+      "status": "passed"
     },
     {
       "number": 47,
-      "name": "ordinary write failure rolls back only files written by that transaction",
-      "passed": true,
-      "durationMs": 36.908713
+      "name": "expired and tampered plans are never applied",
+      "status": "passed"
     },
     {
       "number": 48,
-      "name": "rollback preserves concurrent foreign edits rather than resetting the workspace",
-      "passed": true,
-      "durationMs": 28.186251
+      "name": "idempotency key cannot be reused for another plan or mode",
+      "status": "passed"
     },
     {
       "number": 49,
-      "name": "a killed writer can be recovered from its durable journal",
-      "passed": true,
-      "durationMs": 385.275975
+      "name": "ordinary write failure rolls back only files written by that transaction",
+      "status": "passed"
     },
     {
       "number": 50,
-      "name": "whole-file unified diff is accepted by git apply including a missing final newline",
-      "passed": true,
-      "durationMs": 18.919541
+      "name": "rollback preserves concurrent foreign edits rather than resetting the workspace",
+      "status": "passed"
     },
     {
       "number": 51,
-      "name": "verification distinguishes newly introduced errors from preexisting errors",
-      "passed": true,
-      "durationMs": 384.10922
+      "name": "a killed writer can be recovered from its durable journal",
+      "status": "passed"
     },
     {
       "number": 52,
-      "name": "diagnostic delta is multiplicity-aware but ignores harmless line shifts",
-      "passed": true,
-      "durationMs": 0.15947
+      "name": "whole-file unified diff is accepted by git apply including a missing final newline",
+      "status": "passed"
     },
     {
       "number": 53,
-      "name": "no verifier means incomplete rather than a false successful proof",
-      "passed": true,
-      "durationMs": 16.008853
+      "name": "verification distinguishes newly introduced errors from preexisting errors",
+      "status": "passed"
     },
     {
       "number": 54,
-      "name": "project verification commands require trusted host permission",
-      "passed": true,
-      "durationMs": 233.57753
+      "name": "diagnostic delta is multiplicity-aware but ignores harmless line shifts",
+      "status": "passed"
     },
     {
       "number": 55,
-      "name": "trusted actual test execution records independent exit status and test count",
-      "passed": true,
-      "durationMs": 284.169522
+      "name": "no verifier means incomplete rather than a false successful proof",
+      "status": "passed"
     },
     {
       "number": 56,
-      "name": "verification that mutates its source inputs is invalidated",
-      "passed": true,
-      "durationMs": 52.979799
+      "name": "project verification commands require trusted host permission",
+      "status": "passed"
     },
     {
       "number": 57,
-      "name": "UTF-8 offsets survive emoji, umlauts and CRLF",
-      "passed": true,
-      "durationMs": 1.554198
+      "name": "trusted actual test execution records independent exit status and test count",
+      "status": "passed"
     },
     {
       "number": 58,
-      "name": "canonical hashes are independent of object insertion order",
-      "passed": true,
-      "durationMs": 0.595286
+      "name": "verification that mutates its source inputs is invalidated",
+      "status": "passed"
     },
     {
       "number": 59,
-      "name": "signed cursors reject tampering and a different workspace key",
-      "passed": true,
-      "durationMs": 0.718882
+      "name": "advanced CLI embeds source and retrieves the same snapshot through the local vectorizer",
+      "status": "passed"
     },
     {
       "number": 60,
-      "name": "deadline cancellation is distinct from expiration",
-      "passed": true,
-      "durationMs": 0.197116
+      "name": "advanced CLI solution build produces no source-tree output",
+      "status": "passed"
     },
     {
       "number": 61,
-      "name": "path policy refuses \"../x\"",
-      "passed": true,
-      "durationMs": 0.320872
+      "name": "advanced CLI model commands reject absent host permission",
+      "status": "passed"
     },
     {
       "number": 62,
-      "name": "path policy refuses \"a/../../x\"",
-      "passed": true,
-      "durationMs": 0.139881
+      "name": "advanced CLI rejects misspelled GC application mode instead of deleting",
+      "status": "passed"
     },
     {
       "number": 63,
-      "name": "path policy refuses \"/tmp/x\"",
-      "passed": true,
-      "durationMs": 0.112459
+      "name": "advanced CLI taint labels untrusted input flow as a nonexhaustive candidate",
+      "status": "passed"
     },
     {
       "number": 64,
-      "name": "path policy refuses \"C:\\\\\\\\secret\"",
-      "passed": true,
-      "durationMs": 0.135153
+      "name": "real editor CLI handshake, authentication, unsaved lookup and unchanged disk source",
+      "status": "passed"
     },
     {
       "number": 65,
-      "name": "path policy refuses \"\\\\\\\\\\\\\\\\server\\\\\\\\x\"",
-      "passed": true,
-      "durationMs": 0.277768
+      "name": "UTF-8 offsets survive emoji, umlauts and CRLF",
+      "status": "passed"
     },
     {
       "number": 66,
-      "name": "path policy refuses \"a\\\\u0000b\"",
-      "passed": true,
-      "durationMs": 0.235254
+      "name": "canonical hashes are independent of object insertion order",
+      "status": "passed"
     },
     {
       "number": 67,
-      "name": "path policy refuses \"a//b\"",
-      "passed": true,
-      "durationMs": 0.140742
+      "name": "signed cursors reject tampering and a different workspace key",
+      "status": "passed"
     },
     {
       "number": 68,
-      "name": "path policy refuses \"a/CON.txt\"",
-      "passed": true,
-      "durationMs": 0.18563
+      "name": "deadline cancellation is distinct from expiration",
+      "status": "passed"
     },
     {
       "number": 69,
-      "name": "path policy refuses \"a/nul\"",
-      "passed": true,
-      "durationMs": 0.068062
+      "name": "path policy refuses \"../x\"",
+      "status": "passed"
     },
     {
       "number": 70,
-      "name": "path policy refuses \"a/trailing.\"",
-      "passed": true,
-      "durationMs": 0.060461
+      "name": "path policy refuses \"a/../../x\"",
+      "status": "passed"
     },
     {
       "number": 71,
-      "name": "safe Windows-style relative paths normalize consistently",
-      "passed": true,
-      "durationMs": 0.104918
+      "name": "path policy refuses \"/tmp/x\"",
+      "status": "passed"
     },
     {
       "number": 72,
-      "name": "glob recursion differs from a single path-segment star",
-      "passed": true,
-      "durationMs": 0.254843
+      "name": "path policy refuses \"C:\\\\\\\\secret\"",
+      "status": "passed"
     },
     {
       "number": 73,
-      "name": "test-path detector recognizes root Python tests and Go/TS conventions",
-      "passed": true,
-      "durationMs": 0.269946
+      "name": "path policy refuses \"\\\\\\\\\\\\\\\\server\\\\\\\\x\"",
+      "status": "passed"
     },
     {
       "number": 74,
-      "name": "protected files, binary data and obvious credentials do not enter a snapshot",
-      "passed": true,
-      "durationMs": 21.12581
+      "name": "path policy refuses \"a\\\\u0000b\"",
+      "status": "passed"
     },
     {
       "number": 75,
-      "name": "Git ignored and generated state files never self-index",
-      "passed": true,
-      "durationMs": 18.976838
+      "name": "path policy refuses \"a//b\"",
+      "status": "passed"
     },
     {
       "number": 76,
-      "name": "non-Git fallback conservatively respects positive root and nested ignores",
-      "passed": true,
-      "durationMs": 9.719552
+      "name": "path policy refuses \"a/CON.txt\"",
+      "status": "passed"
     },
     {
       "number": 77,
-      "name": "snapshots retain old bytes after edits, creation and deletion",
-      "passed": true,
-      "durationMs": 20.278576
+      "name": "path policy refuses \"a/nul\"",
+      "status": "passed"
     },
     {
       "number": 78,
-      "name": "request budgets do not change semantic snapshot identities",
-      "passed": true,
-      "durationMs": 16.968757
+      "name": "path policy refuses \"a/trailing.\"",
+      "status": "passed"
     },
     {
       "number": 79,
-      "name": "snapshots are root/workspace isolated",
-      "passed": true,
-      "durationMs": 30.001563
+      "name": "safe Windows-style relative paths normalize consistently",
+      "status": "passed"
     },
     {
       "number": 80,
-      "name": "parent, leaf and dangling symbolic links are denied",
-      "passed": true,
-      "durationMs": 18.954319
+      "name": "glob recursion differs from a single path-segment star",
+      "status": "passed"
     },
     {
       "number": 81,
-      "name": "SQLite state and CAS path symbolic links are refused",
-      "passed": true,
-      "durationMs": 10.650562
+      "name": "test-path detector recognizes root Python tests and Go/TS conventions",
+      "status": "passed"
     },
     {
       "number": 82,
-      "name": "CAS integrity failure is visible, not silently reused",
-      "passed": true,
-      "durationMs": 14.323978
+      "name": "protected files, binary data and obvious credentials do not enter a snapshot",
+      "status": "passed"
     },
     {
       "number": 83,
-      "name": "schema validator rejects undeclared authority and invalid numbers",
-      "passed": true,
-      "durationMs": 0.40581
+      "name": "Git ignored and generated state files never self-index",
+      "status": "passed"
     },
     {
       "number": 84,
-      "name": "full serialized envelope respects byte bound including its metrics",
-      "passed": true,
-      "durationMs": 17.564993
+      "name": "non-Git fallback conservatively respects positive root and nested ignores",
+      "status": "passed"
     },
     {
       "number": 85,
-      "name": "artifact pagination recovers original JSON without splitting Unicode",
-      "passed": true,
-      "durationMs": 19.189469
+      "name": "snapshots retain old bytes after edits, creation and deletion",
+      "status": "passed"
     },
     {
       "number": 86,
-      "name": "tiny budgets and forged artifact cursors fail explicitly",
-      "passed": true,
-      "durationMs": 8.815812
+      "name": "request budgets do not change semantic snapshot identities",
+      "status": "passed"
     },
     {
       "number": 87,
-      "name": "derived source cannot exceed the configured total capacity",
-      "passed": true,
-      "durationMs": 13.495077
+      "name": "snapshots are root/workspace isolated",
+      "status": "passed"
     },
     {
       "number": 88,
-      "name": "repository configuration cannot select an executable interpreter",
-      "passed": true,
-      "durationMs": 7.05932
+      "name": "parent, leaf and dangling symbolic links are denied",
+      "status": "passed"
     },
     {
       "number": 89,
-      "name": "explicit host interpreter selection overrides untrusted repository setting",
-      "passed": true,
-      "durationMs": 7.437268
+      "name": "SQLite state and CAS path symbolic links are refused",
+      "status": "passed"
     },
     {
       "number": 90,
-      "name": "cost reservations include unknown billing and prevent overspend after failures",
-      "passed": true,
-      "durationMs": 17.402831
+      "name": "CAS integrity failure is visible, not silently reused",
+      "status": "passed"
     },
     {
       "number": 91,
-      "name": "streaming cumulative usage is deduplicated rather than added repeatedly",
-      "passed": true,
-      "durationMs": 11.57938
+      "name": "schema validator rejects undeclared authority and invalid numbers",
+      "status": "passed"
     },
     {
       "number": 92,
-      "name": "a sent attempt cannot be cancelled as though no request was sent",
-      "passed": true,
-      "durationMs": 31.076767
+      "name": "full serialized envelope respects byte bound including its metrics",
+      "status": "passed"
     },
     {
       "number": 93,
-      "name": "source-bound memories become stale and corrections supersede old hypotheses",
-      "passed": true,
-      "durationMs": 25.276095
+      "name": "artifact pagination recovers original JSON without splitting Unicode",
+      "status": "passed"
     },
     {
       "number": 94,
-      "name": "precomputed vector search validates model dimensions and source binding",
-      "passed": true,
-      "durationMs": 440.986095
+      "name": "tiny budgets and forged artifact cursors fail explicitly",
+      "status": "passed"
     },
     {
       "number": 95,
-      "name": "LCOV imports require matching source hashes and valid line numbers",
-      "passed": true,
-      "durationMs": 21.245431
+      "name": "derived source cannot exceed the configured total capacity",
+      "status": "passed"
     },
     {
       "number": 96,
-      "name": "runtime observations reject multi-node parent cycles",
-      "passed": true,
-      "durationMs": 22.389834
+      "name": "repository configuration cannot select an executable interpreter",
+      "status": "passed"
     },
     {
       "number": 97,
-      "name": "SARIF findings remain analysis findings rather than proofs",
-      "passed": true,
-      "durationMs": 16.976319
+      "name": "explicit host interpreter selection overrides untrusted repository setting",
+      "status": "passed"
     },
     {
       "number": 98,
-      "name": "import cycles are detected without altering directed observations",
-      "passed": true,
-      "durationMs": 450.034752
+      "name": "installed declarations are immutable, indexed and resolve package calls",
+      "status": "passed"
     },
     {
       "number": 99,
-      "name": "occurrence graph diffs do not fabricate rename lineage",
-      "passed": true,
-      "durationMs": 441.286798
+      "name": "ambient @types are discovered without reading live compiler filesystem",
+      "status": "passed"
     },
     {
       "number": 100,
-      "name": "one-shot LSP denies missing host authorization before starting any command",
-      "passed": true,
-      "durationMs": 16.402767
+      "name": "dependency capture can be disabled explicitly",
+      "status": "passed"
     },
     {
       "number": 101,
-      "name": "one-shot LSP returns bounded hash-checked locations with unknown external usage",
-      "passed": true,
-      "durationMs": 80.752701
+      "name": "metadata capture reuses unchanged files but cannot authorize source writes",
+      "status": "passed"
     },
     {
       "number": 102,
-      "name": "one-shot LSP prepares a persisted rename plan without applying it",
-      "passed": true,
-      "durationMs": 72.245516
+      "name": "editor overlay analyzes unsaved source without changing disk",
+      "status": "passed"
     },
     {
       "number": 103,
-      "name": "one-shot LSP refuses a provider which modifies the copied source",
-      "passed": true,
-      "durationMs": 75.871992
+      "name": "editor versions reject stale writes and allow exact retransmission",
+      "status": "passed"
     },
     {
       "number": 104,
-      "name": "one-shot LSP enforces UTF-8 cursor and rename argument preconditions",
-      "passed": true,
-      "durationMs": 25.791652
+      "name": "editor refuses independent disk mutation and preserves both versions",
+      "status": "passed"
     },
     {
       "number": 105,
-      "name": "one-shot LSP preserves a full artifact when the envelope is small",
-      "passed": true,
-      "durationMs": 105.844083
+      "name": "editor saved-buffer baseline advances for subsequent unsaved changes",
+      "status": "passed"
     },
     {
       "number": 106,
-      "name": "CLI exposes checked locations through explicit host-selected arguments",
-      "passed": true,
-      "durationMs": 657.882185
+      "name": "new and closed buffers are separate from saved disk source",
+      "status": "passed"
     },
     {
       "number": 107,
-      "name": "CLI refuses implicit provider permission and does not treat project text as approval",
-      "passed": true,
-      "durationMs": 710.374556
+      "name": "editor rejects protected path ../escape.ts",
+      "status": "passed"
     },
     {
       "number": 108,
-      "name": "RPC rejects malformed both response without resolving a pending call",
-      "passed": true,
-      "durationMs": 69.458725
+      "name": "editor rejects protected path .env",
+      "status": "passed"
     },
     {
       "number": 109,
-      "name": "RPC rejects malformed neither response without resolving a pending call",
-      "passed": true,
-      "durationMs": 50.261488
+      "name": "editor rejects protected path node_modules/p/a.d.ts",
+      "status": "passed"
     },
     {
       "number": 110,
-      "name": "RPC rejects malformed bad-error response without resolving a pending call",
-      "passed": true,
-      "durationMs": 54.787493
+      "name": "editor rejects protected path .code-intelligence/config",
+      "status": "passed"
     },
     {
       "number": 111,
-      "name": "RPC rejects malformed array response without resolving a pending call",
-      "passed": true,
-      "durationMs": 42.739313
+      "name": "editor rejects protected path /absolute.ts",
+      "status": "passed"
     },
     {
       "number": 112,
-      "name": "RPC rejects malformed utf8 response without resolving a pending call",
-      "passed": true,
-      "durationMs": 52.763323
+      "name": "editor rejects secrets, unpaired surrogates and versioned close conflicts",
+      "status": "passed"
     },
     {
       "number": 113,
-      "name": "RPC rejects malformed duplicate-header response without resolving a pending call",
-      "passed": true,
-      "durationMs": 52.897519
+      "name": "real authenticated editor server opens, updates and captures buffers",
+      "status": "passed"
     },
     {
       "number": 114,
-      "name": "RPC rejects malformed giant response without resolving a pending call",
-      "passed": true,
-      "durationMs": 57.553354
+      "name": "tsc solution builder generates referenced declarations entirely in memory",
+      "status": "passed"
     },
     {
       "number": 115,
-      "name": "RPC rejects malformed long-header response without resolving a pending call",
-      "passed": true,
-      "durationMs": 59.130606
+      "name": "tsc build reports type failure rather than marking generated output verified",
+      "status": "passed"
     },
     {
       "number": 116,
-      "name": "RPC bounds individual frames without rejecting many coalesced valid messages",
-      "passed": true,
-      "durationMs": 76.140717
+      "name": "tsc build rejects output escape and never writes outside virtual root",
+      "status": "passed"
     },
     {
       "number": 117,
-      "name": "unsupported server callbacks receive MethodNotFound, not a false success",
-      "passed": true,
-      "durationMs": 43.835446
+      "name": "built-in local vector generation and query need no model service",
+      "status": "passed"
     },
     {
       "number": 118,
-      "name": "server applyEdit callbacks are refused and cannot mutate workspace files",
-      "passed": true,
-      "durationMs": 85.943925
+      "name": "model contract fixtures exercise embed, rerank and source-bound meaning with accounted costs",
+      "status": "passed"
     },
     {
       "number": 119,
-      "name": "LSP locations normalize both regular Location and LocationLink against source hashes",
-      "passed": true,
-      "durationMs": 86.4586
+      "name": "unknown model billing survives malformed output and blocks overspend",
+      "status": "passed"
     },
     {
       "number": 120,
-      "name": "LSP external locations are explicitly reported but their files are never read",
-      "passed": true,
-      "durationMs": 64.54629
+      "name": "model-produced fabricated source IDs are refused after billing is preserved",
+      "status": "passed"
     },
     {
       "number": 121,
-      "name": "LSP null means no matches and malformed locations are a contract error",
-      "passed": true,
-      "durationMs": 74.446779
+      "name": "taint follows assignment, concatenation and branches to a sink with exact anchors",
+      "status": "passed"
     },
     {
       "number": 122,
-      "name": "LSP malformed location does not masquerade as a zero-match response",
-      "passed": true,
-      "durationMs": 116.00858
+      "name": "taint honors host sanitizer assumptions and clears overwritten local bindings",
+      "status": "passed"
     },
     {
       "number": 123,
-      "name": "LSP definition query requires advertised capability",
-      "passed": true,
-      "durationMs": 70.597187
+      "name": "taint distinguishes shadowed local variables using compiler symbols",
+      "status": "passed"
     },
     {
       "number": 124,
-      "name": "LSP duplicate references do not multiply equivalent source locations",
-      "passed": true,
-      "durationMs": 57.309687
+      "name": "actual Node test execution produces hash-bound per-test-file map and broadens unknown changes",
+      "status": "passed"
     },
     {
       "number": 125,
-      "name": "LSP readable location clamps oversized characters to content, not CRLF",
-      "passed": true,
-      "durationMs": 49.061309
+      "name": "per-test coverage rejects non-executed or mismatched-source observations",
+      "status": "passed"
     },
     {
       "number": 126,
-      "name": "LocationLink selection must stay inside its target range",
-      "passed": true,
-      "durationMs": 57.157274
+      "name": "Prisma models, SQL migrations, ORM calls and OpenAPI clients retain candidate provenance",
+      "status": "passed"
     },
     {
       "number": 127,
-      "name": "LSP rename rejects CRLF terminator and leaves source unchanged",
-      "passed": true,
-      "durationMs": 62.786467
+      "name": "OpenAPI delta reports removed operations and newly required fields",
+      "status": "passed"
     },
     {
       "number": 128,
-      "name": "LSP rename rejects reversed range and leaves source unchanged",
-      "passed": true,
-      "durationMs": 52.987555
+      "name": "actual Node name-pattern selections map individual cases and refuse zero executed passes",
+      "status": "passed"
     },
     {
       "number": 129,
-      "name": "LSP rename rejects stale version and leaves source unchanged",
-      "passed": true,
-      "durationMs": 48.08506
+      "name": "signed snapshot transfer preserves bytes, isolated history and replay identity",
+      "status": "passed"
     },
     {
       "number": 130,
-      "name": "LSP rename rejects annotation and leaves source unchanged",
-      "passed": true,
-      "durationMs": 46.965425
+      "name": "signed transfer rejects wrong signer, tenant and modified contents",
+      "status": "passed"
     },
     {
       "number": 131,
-      "name": "LSP rename rejects resource delete and leaves source unchanged",
-      "passed": true,
-      "durationMs": 44.334246
+      "name": "even an authorized signature cannot bypass path, secret and expiry policy",
+      "status": "passed"
     },
     {
       "number": 132,
-      "name": "LSP rename rejects overlap and leaves source unchanged",
-      "passed": true,
-      "durationMs": 48.336869
+      "name": "real HTTP federation applies tenant grants before lookup and rank merging",
+      "status": "passed"
     },
     {
       "number": 133,
-      "name": "LSP rename rejects both edit formats and leaves source unchanged",
-      "passed": true,
-      "durationMs": 46.944344
+      "name": "actual HTTP signed export and import through distinct endpoints",
+      "status": "passed"
     },
     {
       "number": 134,
-      "name": "LSP rename rejects unpaired surrogate and leaves source unchanged",
-      "passed": true,
-      "durationMs": 42.685326
+      "name": "remote plaintext, weak or duplicate tokens and browser origins refused",
+      "status": "passed"
     },
     {
       "number": 135,
-      "name": "LSP rename rejects external target and leaves source unchanged",
-      "passed": true,
-      "durationMs": 40.767231
+      "name": "signed source does not override the receiving host exclusion policy",
+      "status": "passed"
     },
     {
       "number": 136,
-      "name": "LSP rename rejects prepareRename refusal and leaves source unchanged",
-      "passed": true,
-      "durationMs": 55.812805
+      "name": "federation refuses reuse of a physical workspace for different security scopes",
+      "status": "passed"
     },
     {
       "number": 137,
-      "name": "LSP rename validates prepareRename and deduplicates matching replacements",
-      "passed": true,
-      "durationMs": 49.864162
+      "name": "unchanged independently configured TypeScript unit reuses semantic extraction",
+      "status": "passed"
     },
     {
       "number": 138,
-      "name": "LSP refuses a position inside a UTF-16 surrogate pair",
-      "passed": true,
-      "durationMs": 68.801536
+      "name": "new resolution candidate invalidates negative and existing semantic caches",
+      "status": "passed"
     },
     {
       "number": 139,
-      "name": "CR-only, CRLF and LF positions use the same exact UTF-8 source model",
-      "passed": true,
-      "durationMs": 81.803566
+      "name": "GC defaults to dry-run and preserves explicitly pinned snapshots",
+      "status": "passed"
     },
     {
       "number": 140,
-      "name": "LSP diagnostic notifications are source-scoped and reject stale versions",
-      "passed": true,
-      "durationMs": 82.894919
+      "name": "GC refuses a second live connection and succeeds after close",
+      "status": "passed"
     },
     {
       "number": 141,
-      "name": "LSP startup rejects unsupported negotiated encodings and closes the peer",
-      "passed": true,
-      "durationMs": 62.413907
+      "name": "quarantined source is recoverable after interrupted maintenance",
+      "status": "passed"
     },
     {
       "number": 142,
-      "name": "LSP advertises JSX documents using their correct language identifiers",
-      "passed": true,
-      "durationMs": 57.910907
+      "name": "GC retains source blobs referenced by memories and prepared changes",
+      "status": "passed"
     },
     {
       "number": 143,
-      "name": "MCP initializes, exposes exactly eight tools and returns one complete content payload",
-      "passed": true,
-      "durationMs": 553.285053
+      "name": "cost reservations include unknown billing and prevent overspend after failures",
+      "status": "passed"
     },
     {
       "number": 144,
-      "name": "MCP rejects tools before initialization and reports unknown tools",
-      "passed": true,
-      "durationMs": 10.584684
+      "name": "streaming cumulative usage is deduplicated rather than added repeatedly",
+      "status": "passed"
     },
     {
       "number": 145,
-      "name": "MCP invalid JSON does not poison the next valid request",
-      "passed": true,
-      "durationMs": 10.852903
+      "name": "a sent attempt cannot be cancelled as though no request was sent",
+      "status": "passed"
     },
     {
       "number": 146,
-      "name": "MCP cancellation reaches the active request AbortSignal",
-      "passed": true,
-      "durationMs": 1.029789
+      "name": "source-bound memories become stale and corrections supersede old hypotheses",
+      "status": "passed"
     },
     {
       "number": 147,
-      "name": "actual CLI emits parseable JSON with runtime warnings kept on stderr",
-      "passed": true,
-      "durationMs": 970.853987
+      "name": "precomputed vector search validates model dimensions and source binding",
+      "status": "passed"
     },
     {
       "number": 148,
-      "name": "CLI help and invalid tool exit status work without external packages",
-      "passed": true,
-      "durationMs": 880.826255
+      "name": "LCOV imports require matching source hashes and valid line numbers",
+      "status": "passed"
     },
     {
       "number": 149,
-      "name": "CLI canonical graph export is a real, readable graph file",
-      "passed": true,
-      "durationMs": 862.612628
+      "name": "runtime observations reject multi-node parent cycles",
+      "status": "passed"
     },
     {
       "number": 150,
-      "name": "deleting a tracked Git file produces a new snapshot rather than perpetual WORKSPACE_BUSY",
-      "passed": true,
-      "durationMs": 29.355385
+      "name": "SARIF findings remain analysis findings rather than proofs",
+      "status": "passed"
     },
     {
       "number": 151,
-      "name": "loopback explorer requires a bearer token and refuses write tools",
-      "passed": true,
-      "durationMs": 266.268441
+      "name": "import cycles are detected without altering directed observations",
+      "status": "passed"
     },
     {
       "number": 152,
-      "name": "loopback explorer rejects a cross-site Origin even with a valid token",
-      "passed": true,
-      "durationMs": 14.561998
+      "name": "occurrence graph diffs do not fabricate rename lineage",
+      "status": "passed"
     },
     {
       "number": 153,
-      "name": "bounded subprocess capture never treats truncated logs as complete",
-      "passed": true,
-      "durationMs": 34.5832
+      "name": "one-shot LSP denies missing host authorization before starting any command",
+      "status": "passed"
     },
     {
       "number": 154,
-      "name": "subprocess deadlines kill a stalled process instead of waiting indefinitely",
-      "passed": true,
-      "durationMs": 109.58304
+      "name": "one-shot LSP returns bounded hash-checked locations with unknown external usage",
+      "status": "passed"
     },
     {
       "number": 155,
-      "name": "publisher dry run names the public owner and makes no remote changes",
-      "passed": true,
-      "durationMs": 36.226151
+      "name": "one-shot LSP prepares a persisted rename plan without applying it",
+      "status": "passed"
     },
     {
       "number": 156,
-      "name": "tsconfig include/exclude controls roots while excluded source remains text-searchable",
-      "passed": true,
-      "durationMs": 529.459645
+      "name": "one-shot LSP refuses a provider which modifies the copied source",
+      "status": "passed"
     },
     {
       "number": 157,
-      "name": "files list is authoritative rather than every TypeScript file in the snapshot",
-      "passed": true,
-      "durationMs": 288.33869
+      "name": "one-shot LSP enforces UTF-8 cursor and rename argument preconditions",
+      "status": "passed"
     },
     {
       "number": 158,
-      "name": "exclude does not remove a file actually imported by a configured root",
-      "passed": true,
-      "durationMs": 277.155425
+      "name": "one-shot LSP preserves a full artifact when the envelope is small",
+      "status": "passed"
     },
     {
       "number": 159,
-      "name": "extends retains the base configuration origin for relative baseUrl and paths",
-      "passed": true,
-      "durationMs": 228.070397
+      "name": "CLI exposes checked locations through explicit host-selected arguments",
+      "status": "passed"
     },
     {
       "number": 160,
-      "name": "separate default configs keep unrelated global scripts from contaminating each other",
-      "passed": true,
-      "durationMs": 315.539241
+      "name": "CLI refuses implicit provider permission and does not treat project text as approval",
+      "status": "passed"
     },
     {
       "number": 161,
-      "name": "each package resolves the same alias against its own tsconfig",
-      "passed": true,
-      "durationMs": 385.239882
+      "name": "RPC rejects malformed both response without resolving a pending call",
+      "status": "passed"
     },
     {
       "number": 162,
-      "name": "project references discover source and resolve calls without generated outputs",
-      "passed": true,
-      "durationMs": 498.44813
+      "name": "RPC rejects malformed neither response without resolving a pending call",
+      "status": "passed"
     },
     {
       "number": 163,
-      "name": "cross-project compiler rename deduplicates edits and updates the importing project",
-      "passed": true,
-      "durationMs": 470.239457
+      "name": "RPC rejects malformed bad-error response without resolving a pending call",
+      "status": "passed"
     },
     {
       "number": 164,
-      "name": "a shared source file retains conflicting bindings as separate analysis contexts",
-      "passed": true,
-      "durationMs": 357.576877
+      "name": "RPC rejects malformed array response without resolving a pending call",
+      "status": "passed"
     },
     {
       "number": 165,
-      "name": "changing only a config invalidates unchanged consumer bindings",
-      "passed": true,
-      "durationMs": 696.820017
+      "name": "RPC rejects malformed utf8 response without resolving a pending call",
+      "status": "passed"
     },
     {
       "number": 166,
-      "name": "missing/outside project references are diagnostics, not silently complete analysis",
-      "passed": true,
-      "durationMs": 166.932677
+      "name": "RPC rejects malformed duplicate-header response without resolving a pending call",
+      "status": "passed"
     },
     {
       "number": 167,
-      "name": "reference cycles terminate and produce an explicit cycle diagnostic",
-      "passed": true,
-      "durationMs": 307.547134
+      "name": "RPC rejects malformed giant response without resolving a pending call",
+      "status": "passed"
     },
     {
       "number": 168,
-      "name": "malformed and circular extended config errors preserve their own paths",
-      "passed": true,
-      "durationMs": 158.877063
+      "name": "RPC rejects malformed long-header response without resolving a pending call",
+      "status": "passed"
     },
     {
       "number": 169,
-      "name": "jsconfig is discovered and JavaScript is not forced into TypeScript strict mode",
-      "passed": true,
-      "durationMs": 166.510352
+      "name": "RPC bounds individual frames without rejecting many coalesced valid messages",
+      "status": "passed"
     },
     {
       "number": 170,
-      "name": "nonexistent files from explicit config lists are reported by the compiler",
-      "passed": true,
-      "durationMs": 166.016719
+      "name": "unsupported server callbacks receive MethodNotFound, not a false success",
+      "status": "passed"
     },
     {
       "number": 171,
-      "name": "diagnostic baseline comparison includes configuration identity",
-      "passed": true,
-      "durationMs": 0.228003
+      "name": "server applyEdit callbacks are refused and cannot mutate workspace files",
+      "status": "passed"
     },
     {
       "number": 172,
-      "name": "too many configs fail explicitly before constructing unbounded compiler programs",
-      "passed": true,
-      "durationMs": 80.900694
+      "name": "LSP locations normalize both regular Location and LocationLink against source hashes",
+      "status": "passed"
     },
     {
       "number": 173,
-      "name": "compiler reads remain immutable after captured config/source changes on disk",
-      "passed": true,
-      "durationMs": 371.646089
+      "name": "LSP external locations are explicitly reported but their files are never read",
+      "status": "passed"
     },
     {
       "number": 174,
-      "name": "rename refuses to modify a shared consumer that binds differently in another variant",
-      "passed": true,
-      "durationMs": 380.415307
+      "name": "LSP null means no matches and malformed locations are a contract error",
+      "status": "passed"
     },
     {
       "number": 175,
-      "name": "zero configured source files do not claim semantic coverage",
-      "passed": true,
-      "durationMs": 20.082283
+      "name": "LSP malformed location does not masquerade as a zero-match response",
+      "status": "passed"
     },
     {
       "number": 176,
-      "name": "configured strict false is not silently overridden by inferred defaults",
-      "passed": true,
-      "durationMs": 161.438986
+      "name": "LSP definition query requires advertised capability",
+      "status": "passed"
     },
     {
       "number": 177,
-      "name": "a real static failure is not hidden by disabled Python analysis",
-      "passed": true,
-      "durationMs": 595.094668
+      "name": "LSP duplicate references do not multiply equivalent source locations",
+      "status": "passed"
     },
     {
       "number": 178,
+      "name": "LSP readable location clamps oversized characters to content, not CRLF",
+      "status": "passed"
+    },
+    {
+      "number": 179,
+      "name": "LocationLink selection must stay inside its target range",
+      "status": "passed"
+    },
+    {
+      "number": 180,
+      "name": "LSP rename rejects CRLF terminator and leaves source unchanged",
+      "status": "passed"
+    },
+    {
+      "number": 181,
+      "name": "LSP rename rejects reversed range and leaves source unchanged",
+      "status": "passed"
+    },
+    {
+      "number": 182,
+      "name": "LSP rename rejects stale version and leaves source unchanged",
+      "status": "passed"
+    },
+    {
+      "number": 183,
+      "name": "LSP rename rejects annotation and leaves source unchanged",
+      "status": "passed"
+    },
+    {
+      "number": 184,
+      "name": "LSP rename rejects resource delete and leaves source unchanged",
+      "status": "passed"
+    },
+    {
+      "number": 185,
+      "name": "LSP rename rejects overlap and leaves source unchanged",
+      "status": "passed"
+    },
+    {
+      "number": 186,
+      "name": "LSP rename rejects both edit formats and leaves source unchanged",
+      "status": "passed"
+    },
+    {
+      "number": 187,
+      "name": "LSP rename rejects unpaired surrogate and leaves source unchanged",
+      "status": "passed"
+    },
+    {
+      "number": 188,
+      "name": "LSP rename rejects external target and leaves source unchanged",
+      "status": "passed"
+    },
+    {
+      "number": 189,
+      "name": "LSP rename rejects prepareRename refusal and leaves source unchanged",
+      "status": "passed"
+    },
+    {
+      "number": 190,
+      "name": "LSP rename validates prepareRename and deduplicates matching replacements",
+      "status": "passed"
+    },
+    {
+      "number": 191,
+      "name": "LSP refuses a position inside a UTF-16 surrogate pair",
+      "status": "passed"
+    },
+    {
+      "number": 192,
+      "name": "CR-only, CRLF and LF positions use the same exact UTF-8 source model",
+      "status": "passed"
+    },
+    {
+      "number": 193,
+      "name": "LSP diagnostic notifications are source-scoped and reject stale versions",
+      "status": "passed"
+    },
+    {
+      "number": 194,
+      "name": "LSP startup rejects unsupported negotiated encodings and closes the peer",
+      "status": "passed"
+    },
+    {
+      "number": 195,
+      "name": "LSP advertises JSX documents using their correct language identifiers",
+      "status": "passed"
+    },
+    {
+      "number": 196,
+      "name": "Docker invocation pins image, denies network and privileges and never expands a shell",
+      "status": "passed"
+    },
+    {
+      "number": 197,
+      "name": "media native transcript creates a provenance-bound derived snapshot, no source edits",
+      "status": "passed"
+    },
+    {
+      "number": 198,
+      "name": "media refuses source escape and stale media digest",
+      "status": "passed"
+    },
+    {
+      "number": 199,
+      "name": "Serena discovery and explicitly selected read operation preserve source isolation",
+      "status": "passed"
+    },
+    {
+      "number": 200,
+      "name": "MCP initializes, exposes exactly eight tools and returns one complete content payload",
+      "status": "passed"
+    },
+    {
+      "number": 201,
+      "name": "MCP rejects tools before initialization and reports unknown tools",
+      "status": "passed"
+    },
+    {
+      "number": 202,
+      "name": "MCP invalid JSON does not poison the next valid request",
+      "status": "passed"
+    },
+    {
+      "number": 203,
+      "name": "MCP cancellation reaches the active request AbortSignal",
+      "status": "passed"
+    },
+    {
+      "number": 204,
+      "name": "actual CLI emits parseable JSON with runtime warnings kept on stderr",
+      "status": "passed"
+    },
+    {
+      "number": 205,
+      "name": "CLI help and invalid tool exit status work without external packages",
+      "status": "passed"
+    },
+    {
+      "number": 206,
+      "name": "CLI canonical graph export is a real, readable graph file",
+      "status": "passed"
+    },
+    {
+      "number": 207,
+      "name": "deleting a tracked Git file produces a new snapshot rather than perpetual WORKSPACE_BUSY",
+      "status": "passed"
+    },
+    {
+      "number": 208,
+      "name": "loopback explorer requires a bearer token and refuses write tools",
+      "status": "passed"
+    },
+    {
+      "number": 209,
+      "name": "loopback explorer rejects a cross-site Origin even with a valid token",
+      "status": "passed"
+    },
+    {
+      "number": 210,
+      "name": "bounded subprocess capture never treats truncated logs as complete",
+      "status": "passed"
+    },
+    {
+      "number": 211,
+      "name": "subprocess deadlines kill a stalled process instead of waiting indefinitely",
+      "status": "passed"
+    },
+    {
+      "number": 212,
+      "name": "publisher dry run names the public owner and makes no remote changes",
+      "status": "passed"
+    },
+    {
+      "number": 213,
+      "name": "tsconfig include/exclude controls roots while excluded source remains text-searchable",
+      "status": "passed"
+    },
+    {
+      "number": 214,
+      "name": "files list is authoritative rather than every TypeScript file in the snapshot",
+      "status": "passed"
+    },
+    {
+      "number": 215,
+      "name": "exclude does not remove a file actually imported by a configured root",
+      "status": "passed"
+    },
+    {
+      "number": 216,
+      "name": "extends retains the base configuration origin for relative baseUrl and paths",
+      "status": "passed"
+    },
+    {
+      "number": 217,
+      "name": "separate default configs keep unrelated global scripts from contaminating each other",
+      "status": "passed"
+    },
+    {
+      "number": 218,
+      "name": "each package resolves the same alias against its own tsconfig",
+      "status": "passed"
+    },
+    {
+      "number": 219,
+      "name": "project references discover source and resolve calls without generated outputs",
+      "status": "passed"
+    },
+    {
+      "number": 220,
+      "name": "cross-project compiler rename deduplicates edits and updates the importing project",
+      "status": "passed"
+    },
+    {
+      "number": 221,
+      "name": "a shared source file retains conflicting bindings as separate analysis contexts",
+      "status": "passed"
+    },
+    {
+      "number": 222,
+      "name": "changing only a config invalidates unchanged consumer bindings",
+      "status": "passed"
+    },
+    {
+      "number": 223,
+      "name": "missing/outside project references are diagnostics, not silently complete analysis",
+      "status": "passed"
+    },
+    {
+      "number": 224,
+      "name": "reference cycles terminate and produce an explicit cycle diagnostic",
+      "status": "passed"
+    },
+    {
+      "number": 225,
+      "name": "malformed and circular extended config errors preserve their own paths",
+      "status": "passed"
+    },
+    {
+      "number": 226,
+      "name": "jsconfig is discovered and JavaScript is not forced into TypeScript strict mode",
+      "status": "passed"
+    },
+    {
+      "number": 227,
+      "name": "nonexistent files from explicit config lists are reported by the compiler",
+      "status": "passed"
+    },
+    {
+      "number": 228,
+      "name": "diagnostic baseline comparison includes configuration identity",
+      "status": "passed"
+    },
+    {
+      "number": 229,
+      "name": "too many configs fail explicitly before constructing unbounded compiler programs",
+      "status": "passed"
+    },
+    {
+      "number": 230,
+      "name": "compiler reads remain immutable after captured config/source changes on disk",
+      "status": "passed"
+    },
+    {
+      "number": 231,
+      "name": "rename refuses to modify a shared consumer that binds differently in another variant",
+      "status": "passed"
+    },
+    {
+      "number": 232,
+      "name": "zero configured source files do not claim semantic coverage",
+      "status": "passed"
+    },
+    {
+      "number": 233,
+      "name": "configured strict false is not silently overridden by inferred defaults",
+      "status": "passed"
+    },
+    {
+      "number": 234,
+      "name": "a real static failure is not hidden by disabled Python analysis",
+      "status": "passed"
+    },
+    {
+      "number": 235,
       "name": "a failing executed check stays failed when a later check times out",
-      "passed": true,
-      "durationMs": 157.242909
+      "status": "passed"
     }
   ]
 }

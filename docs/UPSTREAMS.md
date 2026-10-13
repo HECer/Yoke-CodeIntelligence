@@ -37,3 +37,11 @@ External subprocesses are not network-isolated by this project. They receive a r
 ### 0.2.0 LSP command
 
 An already installed server can now be called through `lsp definition|references|implementation|rename`, with explicit `--command`, `--byte`, and `--trust-providers`. `rename` only prepares a plan. See [the configured-project/LSP guide](CONFIGURED-PROJECTS.md) for examples, returned evidence, incomplete dependency coverage and the non-sandbox boundary. Adversarial subprocess and CLI tests do not establish live third-party server compatibility.
+
+## 0.3 compatibility update
+
+The native optional **Jedi 0.20.0**, **Go/go-types 1.23.2**, **clangd 17**, **NetworkX 3.6.1**, **PyMuPDF 1.26.7**, and **Pillow 12.3.0** paths now have actual installed-provider tests on Linux. The earlier blanket “no real external server run” statement above describes the historical 0.2 LSP milestone; see the current report for the 0.3 results.
+
+Graft/Graphify structural bridges now verify all captured source files and dispose their temporary trees. Actual installed Graft and Graphify attempts still fail on missing packages in this environment, so their real compatibility status has not been upgraded. Serena has a broader schema-discovered selected-tool gateway, including guarded edit preparation and explicitly authorized runtime commands; it still has no real installed Serena test here.
+
+The own source-bound `summarize`/media pipeline provides optional meaning-layer integration independently of the structural bridge; it is not a claim that every native Graft/Graphify enrichment option is re-exported. `ADVANCED.md` explains model protocol, scope and host trust. Hosted Graphify Cloud, paid IDE backends, model weights and provider packages are separate products/dependencies.

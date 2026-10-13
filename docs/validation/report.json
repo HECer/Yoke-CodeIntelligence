@@ -1,108 +1,138 @@
 {
   "schemaVersion": 1,
   "project": "Code Intelligence",
-  "version": "0.2.0",
-  "measuredAt": "2026-10-13T10:59:47.688852+00:00",
-  "status": "tested_local_implementation_not_full_specification_or_production_certification",
+  "version": "0.3.0",
+  "recordedAt": "2026-10-13T16:02:26.391287+00:00",
+  "status": "working_extended_implementation_external_completion_gates_open",
+  "baseCommit": "ba22d091d773b1fe621dc92fef31c1e3e8551ca3",
   "sourceCorpus": {
-    "sha256": "db3d8179d97639db3577a43f81fa8669564ec15aea040b8119f0a2d1783aad7a",
-    "files": 73,
-    "includes": [
-      "src",
-      "workers",
-      "test",
-      "scripts",
-      "benchmarks",
-      "examples",
-      "package.json",
-      "package-lock.json",
-      "tsconfig.json"
-    ],
-    "method": "sha256 of sorted relative path + NUL + sha256(file bytes) for each file"
+    "sha256": "a0836854445da0c7b13710a01d0be15188fa723e30d66091c0fb3e3b2ce6f360",
+    "files": 111,
+    "manifest": "source-manifest.json",
+    "method": "sha256(sorted relative path + NUL + file sha256 + LF); excludes state/cache/dependencies/generated dist"
   },
   "environment": {
-    "os": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
     "node": "v22.16.0",
     "npm": "10.9.2",
-    "python": "Python 3.13.5",
+    "python": "3.13.5",
     "go": "go version go1.23.2 linux/amd64",
-    "git": "git version 2.47.3",
-    "typescript": "5.8.3"
+    "clangd": "clangd version 17.0.0 (https://github.com/swiftlang/llvm-project.git 10999b6d034fe318f3d56c83bddb6572593a8bb0)",
+    "typescript": "5.8.3",
+    "pythonPackages": {
+      "jedi": "0.20.0",
+      "networkx": "3.6.1",
+      "PyMuPDF": "1.26.7",
+      "Pillow": "12.3.0"
+    }
   },
-  "checks": {
-    "typescriptBuild": true,
-    "typecheck": true,
-    "nodeTests": {
-      "tests": 178,
-      "pass": 178,
+  "standardSuite": {
+    "command": "npm test",
+    "exitCode": 0,
+    "tests": 235,
+    "pass": 235,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "elapsedSeconds": 67.14395356178284,
+    "baselineV020Tests": 178,
+    "additionalStandardTests": 57,
+    "evidence": [
+      "tests.tap",
+      "tests.json"
+    ]
+  },
+  "actualAdditionalLiveChecks": {
+    "native": {
+      "command": "node scripts/live-tests.mjs native",
+      "tests": 8,
+      "pass": 8,
       "fail": 0,
-      "cancelled": 0,
       "skipped": 0,
-      "todo": 0
+      "evidence": "live-native.tap",
+      "providers": [
+        "Jedi",
+        "Go go/types",
+        "clangd",
+        "PyMuPDF",
+        "Pillow",
+        "WAV standard library"
+      ]
     },
-    "baselineTests": 112,
-    "addedRegressionTests": 66,
-    "configuredProjects": true,
-    "projectReferenceSourceNavigation": true,
-    "renameAcrossConfiguredProjects": true,
-    "conflictingBindingRenameRejected": true,
-    "adversarialLspAndRpcFixtures": true,
-    "hostAuthorizedLspCli": true,
-    "copiedSourceMutationRefused": true,
-    "actualConfiguredProjectCliSmoke": true,
-    "verificationFailurePrecedence": true,
+    "communities": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0,
+      "algorithm": "NetworkX Louvain",
+      "evidence": "live-community-final.tap",
+      "note": "The earlier live-communities.tap also reran 12 default tests; do not count those twice."
+    }
+  },
+  "localChecks": {
+    "typescriptBuild": true,
+    "typescriptNoEmitTypecheck": true,
+    "gitDiffCheck": true,
     "pythonWorkerSyntax": true,
-    "nativeGoAstActualExecution": true,
-    "nativePythonAstActualExecution": true,
-    "actualKilledWriterRecovery": true,
-    "actualMcpProtocol": true,
-    "actualLoopbackHttpAndAuthorization": true,
-    "publisherDryRun": true,
-    "publisherLive": false,
-    "lockfileOfflineConsistency": true,
-    "npmPackDryRun": true,
-    "cleanOnlineDependencyInstall": false,
-    "macOSRun": false,
-    "windowsRun": false,
-    "githubHostedCI": false,
-    "liveBrowserToBackend": false
+    "extensionJavaScriptSyntax": true,
+    "actualConfiguredCliFlow": true,
+    "actualNodePerSelectionCoverage": true,
+    "actualEditorLoopbackHttp": true,
+    "actualFederationLoopbackHttp": true,
+    "browserFixture": true,
+    "liveBrowserToBackend": false,
+    "vsixZipStructure": "see external release validation",
+    "actualVsCodeExtensionHost": false
   },
-  "coverageRun": {
-    "completed": false,
-    "reason": "No instrumented coverage run performed for 0.2.0. The normal 178-test suite passed; no coverage percentage is claimed."
+  "upstreamLiveAttempts": {
+    "command": "node scripts/live-tests.mjs upstreams",
+    "exitCode": 1,
+    "tests": 3,
+    "pass": 0,
+    "fail": 3,
+    "classification": "missing_prerequisites_not_compatibility_success",
+    "graft": "Pinned package not installed",
+    "graphify": "graphifyy distribution not installed",
+    "serena": "No reviewed installed executable configured",
+    "evidence": "upstream-attempts.tap"
   },
-  "upstreamValidation": {
-    "graft": "Graph-contract fixtures; live package not installed",
-    "graphify": "Graph-contract fixtures; live package not installed",
-    "lsp": "Scripted adversarial subprocess and actual CLI fixtures, not a real third-party language server",
-    "serena": "MCP protocol fixture; live Serena not installed"
+  "externalGates": {
+    "cleanOnlineInstall": {
+      "status": "attempted_failed",
+      "error": "EAI_AGAIN registry.npmjs.org",
+      "evidence": "online-install-attempt.txt",
+      "offlineBuildDependenciesRestored": true,
+      "developmentLockIntegritiesComplete": false
+    },
+    "windows": "not_run",
+    "macOS": "not_run",
+    "node24": "not_run",
+    "githubHostedCI": "not_run",
+    "vscodeExtensionHost": "not_run",
+    "realBrowser": "blocked_by_administrator",
+    "dockerIsolationLive": "no_daemon_available_not_run",
+    "leiden": "igraph/leidenalg_not_installed",
+    "neuralEmbeddingsAndReranking": "packages_and_model_weights_unavailable_not_run",
+    "llmMeaningAndMultimodalInference": "provider_contracts_only_no_model_execution",
+    "independentSecurityAudit": "not_performed",
+    "pairedRealAgentBenchmark": "harness_fixture_tested_no_real_campaign"
   },
+  "scopeBoundaries": [
+    "Graphify Cloud and Serena JetBrains are external products and are not bundled.",
+    "General dynamic/whole-program/runtime correctness, complete multi-language/framework parity and formal proofs are not claimed.",
+    "Federation synchronizes authenticated source snapshots, not all agent state or collaborative CRDT edits.",
+    "Metadata capture is not the same guarantee as a strict content capture.",
+    "No ordinary copied worktree is an OS sandbox for trusted commands.",
+    "Model provider fixtures, protocol fixtures, metadata extraction and graph candidates are labeled; they are not live LLM/upstream/correctness evidence.",
+    "Microbenchmark is synthetic native retrieval, not an agent accuracy, billing or speedup claim."
+  ],
+  "coveragePercentage": null,
+  "coveragePercentageNote": "Per-selection V8 coverage functionality was actually tested; no global coverage percentage was measured.",
   "publication": {
-    "requestedRepository": "HECer/Code-Intelligence",
-    "requestedVisibility": "public",
-    "publishedByThisUpdate": false,
-    "remoteStateRechecked": false,
-    "reason": "This update is local implementation and archive delivery. Prior publication was blocked; no remote operation was performed in this update.",
-    "localPublisher": "scripts/publish-github.mjs",
-    "releaseTag": "v0.2.0",
-    "npmPublished": false
+    "requestedForThisUpdate": false,
+    "attempted": false,
+    "performed": false
   },
-  "reports": {
-    "tests": "tests.json",
-    "tap": "tests.tap",
-    "benchmark": "benchmark.json",
-    "configuredSmoke": "configured-smoke.json",
-    "historicalBrowser": "v0.1.0/browser.json",
-    "historicalRelease": "v0.1.0/report.json"
-  },
-  "limitations": [
-    "No live third-party Graft/Graphify/Serena/language-server verification, no all-language equivalence claim.",
-    "Configured project references use source redirects, not tsc --build or generated declaration verification.",
-    "No automatic external node_modules/@types loading; no project-selected compiler plugins; no unsaved editor buffer integration.",
-    "TypeScript is pinned; exported/internal wildcard and source-redirect hooks require regression tests when upgraded.",
-    "Copied workspaces do not sandbox hostile external programs or enforce network isolation. External usage is unknown, not zero.",
-    "Native code makes no LLM calls. This does not measure or predict the outer agent token costs.",
-    "No independent security audit, production task benchmark, formal proof, live browser E2E or multi-platform run.",
-    "Pinned dev packages were supplied offline from the available environment; a clean online npm ci and development tarball integrity verification were not performed."
-  ]
+  "packageChecks": "External Code-Intelligence-v0.3.0-Validation.json contains final archive hashes, commit and extracted-runtime checks."
 }

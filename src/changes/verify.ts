@@ -5,9 +5,11 @@ import { TypeScriptProject } from '../analysis/typescript.js';
 import { extractPython } from '../analysis/python.js';
 import { extractGo } from '../analysis/go.js';
 import { Deadline, assert, hash, stable, redact } from '../core/util.js';
+import { runSandboxed } from '../core/sandbox.js';
 import { runProcess } from '../core/process.js';
 import { ChangeManager } from './manager.js';
 import type { Snapshot, Diagnostic } from '../core/types.js';
+import { buildTypeScript } from '../analysis/build.js';
 export interface VerificationReport {
     id: string;
     status: 'passed' | 'failed' | 'incomplete';
@@ -71,6 +73,7 @@ export class Verifier {
     async verify(snapshot: Snapshot, options: {
         planId?: string;
         profiles?: string[];
+        build?: boolean;
     }, deadline: Deadline): Promise<VerificationReport> {
         let base: Snapshot | undefined, target = snapshot;
         if (options.planId) {
@@ -87,6 +90,14 @@ export class Verifier {
             static: { beforeErrors: before.length, afterErrors: after.length, newErrors: delta.added, resolvedErrors: delta.removed, limitations: [...new Set([...previous.limitations, ...current.limitations])] }, jobs: [], inputFilesUnchanged: true };
         if (report.status === 'passed' && current.limitations.some(l => l.includes('unavailable') || l.includes('disabled')))
             report.status = 'incomplete';
+        if (options.build) {
+            const build = buildTypeScript(this.workspace, target, deadline);
+            report.jobs.push({ profile: 'typescript-solution-build', executed: true, ...build });
+            if (build.status === 'failed')
+                report.status = 'failed';
+            else if (build.status === 'incomplete' && report.status !== 'failed')
+                report.status = 'incomplete';
+        }
         if (options.profiles?.length) {
             assert(this.trustedProject, 'PROJECT_UNTRUSTED', 'Executing project commands requires trusted host --trust-project; source instructions cannot grant that permission');
             assert(options.profiles.length <= 10, 'INVALID_ARGUMENT', 'At most ten verification profiles');
@@ -100,10 +111,10 @@ export class Verifier {
                 assert(typeof config.command === 'string' && Array.isArray(config.args) && config.args.every(a => typeof a === 'string'), 'INVALID_CONFIG', 'Verification commands need executable + argument list');
                 const jobDeadline = new Deadline(Math.min(deadline.remaining, config.timeoutMs ?? deadline.remaining), deadline.signal);
                 try {
-                    const output = await runProcess(config.command, config.args, { cwd: sandbox, deadline: jobDeadline, maxBytes: 1000000, env: { HOME: join(sandbox, '.ci-home'), USERPROFILE: join(sandbox, '.ci-home') } });
+                    const output = config.sandbox ? await runSandboxed(config.command, config.args, sandbox, config.sandbox, jobDeadline) : await runProcess(config.command, config.args, { cwd: sandbox, deadline: jobDeadline, maxBytes: 1000000, env: { HOME: join(sandbox, '.ci-home'), USERPROFILE: join(sandbox, '.ci-home') } });
                     const logId = this.workspace.store.artifact(target.id, { profile, ...output });
                     const counts = /^# tests (\d+)$/m.exec(output.stdout);
-                    report.jobs.push({ profile, executed: true, exitCode: output.exitCode, status: output.exitCode === 0 ? 'passed' : 'failed', testCount: counts ? Number(counts[1]) : null, durationMs: output.durationMs, logArtifactId: logId, outputTruncated: output.truncated, stdout: redact(output.stdout.slice(-4000)), stderr: redact(output.stderr.slice(-2000)), networkIsolation: 'not_enforced_trusted_process_only' });
+                    report.jobs.push({ profile, executed: true, exitCode: output.exitCode, status: output.exitCode === 0 ? 'passed' : 'failed', testCount: counts ? Number(counts[1]) : null, durationMs: output.durationMs, logArtifactId: logId, outputTruncated: output.truncated, stdout: redact(output.stdout.slice(-4000)), stderr: redact(output.stderr.slice(-2000)), networkIsolation: config.sandbox ? 'docker_network_none' : 'not_enforced_trusted_process_only' });
                     if (output.exitCode !== 0)
                         report.status = 'failed';
                 }

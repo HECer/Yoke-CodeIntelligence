@@ -1,1112 +1,1456 @@
-
-> @hecer/code-intelligence@0.2.0 typecheck
-> tsc -p tsconfig.json --noEmit
-
-
-> @hecer/code-intelligence@0.2.0 test
-> npm run build && node scripts/run-tests.mjs
-
-
-> @hecer/code-intelligence@0.2.0 build
-> tsc -p tsconfig.json
-
 TAP version 13
-# (node:9268) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:17890) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: Graft v1 graph import retains relationships but does not invent exact call sites
 ok 1 - Graft v1 graph import retains relationships but does not invent exact call sites
   ---
-  duration_ms: 29.922534
+  duration_ms: 85.384998
   type: 'test'
   ...
 # Subtest: Graphify historical markers take priority over undirected node-link endpoint order
 ok 2 - Graphify historical markers take priority over undirected node-link endpoint order
   ---
-  duration_ms: 21.66394
+  duration_ms: 127.012709
   type: 'test'
   ...
 # Subtest: parallel and opposite raw Graphify edges survive canonical persistence
 ok 3 - parallel and opposite raw Graphify edges survive canonical persistence
   ---
-  duration_ms: 590.768535
+  duration_ms: 916.668592
   type: 'test'
   ...
 # Subtest: stale source hashes and unknown schema versions are refused
 ok 4 - stale source hashes and unknown schema versions are refused
   ---
-  duration_ms: 18.361562
+  duration_ms: 45.496665
   type: 'test'
   ...
 # Subtest: unanchored external nodes stay unresolved targets without phantom source entities
 ok 5 - unanchored external nodes stay unresolved targets without phantom source entities
   ---
-  duration_ms: 20.94618
+  duration_ms: 38.923101
   type: 'test'
   ...
 # Subtest: Serena normalization handles file groups and inherited child locations
 ok 6 - Serena normalization handles file groups and inherited child locations
   ---
-  duration_ms: 0.97081
+  duration_ms: 1.297135
   type: 'test'
   ...
 # Subtest: Serena unrecognized prose or malformed groups cannot masquerade as zero matches
 ok 7 - Serena unrecognized prose or malformed groups cannot masquerade as zero matches
   ---
-  duration_ms: 0.827575
+  duration_ms: 1.918684
   type: 'test'
   ...
 # Subtest: ordered symbol search results do not create graph paths
 ok 8 - ordered symbol search results do not create graph paths
   ---
-  duration_ms: 0.226411
+  duration_ms: 0.541268
   type: 'test'
   ...
 # Subtest: LSP framing handles split Content-Length headers and Unicode payloads
 ok 9 - LSP framing handles split Content-Length headers and Unicode payloads
   ---
-  duration_ms: 61.814134
+  duration_ms: 67.121742
   type: 'test'
   ...
 # Subtest: stalled provider is cancelled and does not outlive the shared deadline
 ok 10 - stalled provider is cancelled and does not outlive the shared deadline
   ---
-  duration_ms: 165.6945
+  duration_ms: 197.957089
   type: 'test'
   ...
 # Subtest: LSP rename converts negotiated positions and binds edits to source hashes
 ok 11 - LSP rename converts negotiated positions and binds edits to source hashes
   ---
-  duration_ms: 57.296698
+  duration_ms: 105.808869
   type: 'test'
   ...
 # Subtest: LSP cannot edit outside its isolated snapshot
 ok 12 - LSP cannot edit outside its isolated snapshot
   ---
-  duration_ms: 64.113118
+  duration_ms: 144.917392
   type: 'test'
   ...
 # Subtest: external Serena MCP adapter negotiates and decodes structured grouped symbols
 ok 13 - external Serena MCP adapter negotiates and decodes structured grouped symbols
   ---
-  duration_ms: 56.141976
+  duration_ms: 352.491557
   type: 'test'
   ...
 # Subtest: upstream processes never start without explicit provider trust
 ok 14 - upstream processes never start without explicit provider trust
   ---
-  duration_ms: 24.284552
+  duration_ms: 101.04816
   type: 'test'
   ...
-# (node:9269) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:17891) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: native TypeScript graph keeps imports, calls and references distinct
 ok 15 - native TypeScript graph keeps imports, calls and references distinct
   ---
-  duration_ms: 608.826585
+  duration_ms: 1863.325468
   type: 'test'
   ...
 # Subtest: non-call property reads remain references
 ok 16 - non-call property reads remain references
   ---
-  duration_ms: 266.528054
+  duration_ms: 709.137144
   type: 'test'
   ...
 # Subtest: same-named functions in different files never collapse by name
 ok 17 - same-named functions in different files never collapse by name
   ---
-  duration_ms: 233.130807
+  duration_ms: 783.121304
   type: 'test'
   ...
 # Subtest: interface dispatch is a possible dispatch, not a runtime observation
 ok 18 - interface dispatch is a possible dispatch, not a runtime observation
   ---
-  duration_ms: 229.141095
+  duration_ms: 1163.637439
   type: 'test'
   ...
 # Subtest: unresolved external calls stay explicit with null targets
 ok 19 - unresolved external calls stay explicit with null targets
   ---
-  duration_ms: 304.12752
+  duration_ms: 411.820286
   type: 'test'
   ...
 # Subtest: compiler syntax errors appear in coverage and diagnostics
 ok 20 - compiler syntax errors appear in coverage and diagnostics
   ---
-  duration_ms: 302.035167
+  duration_ms: 402.759573
   type: 'test'
   ...
 # Subtest: renaming an export invalidates unchanged consumer resolution
 ok 21 - renaming an export invalidates unchanged consumer resolution
   ---
-  duration_ms: 449.38415
+  duration_ms: 587.485484
   type: 'test'
   ...
 # Subtest: source reads are immutable and UTF-8 byte-accurate
 ok 22 - source reads are immutable and UTF-8 byte-accurate
   ---
-  duration_ms: 208.549794
+  duration_ms: 300.896548
   type: 'test'
   ...
 # Subtest: mixed line/byte/entity read arguments are rejected
 ok 23 - mixed line/byte/entity read arguments are rejected
   ---
-  duration_ms: 218.073086
+  duration_ms: 395.479039
   type: 'test'
   ...
 # Subtest: literal text search preserves offsets after Unicode case-expansion characters
 ok 24 - literal text search preserves offsets after Unicode case-expansion characters
   ---
-  duration_ms: 41.370585
+  duration_ms: 29.816886
   type: 'test'
   ...
 # Subtest: camelCase identifiers are discoverable by a constituent word
 ok 25 - camelCase identifiers are discoverable by a constituent word
   ---
-  duration_ms: 191.903047
+  duration_ms: 388.486088
   type: 'test'
   ...
 # Subtest: scoped search excludes similarly named neighbouring services
 ok 26 - scoped search excludes similarly named neighbouring services
   ---
-  duration_ms: 218.220913
+  duration_ms: 358.463198
   type: 'test'
   ...
 # Subtest: trace is directed, bounded and does not invent an ordered path
 ok 27 - trace is directed, bounded and does not invent an ordered path
   ---
-  duration_ms: 194.318134
+  duration_ms: 746.161854
   type: 'test'
   ...
 # Subtest: read-only plans combine navigation without an extra model call
 ok 28 - read-only plans combine navigation without an extra model call
   ---
-  duration_ms: 210.007327
+  duration_ms: 612.845897
   type: 'test'
   ...
 # Subtest: Markdown concepts and rationale nodes keep original provenance
 ok 29 - Markdown concepts and rationale nodes keep original provenance
   ---
-  duration_ms: 207.140013
+  duration_ms: 478.72237
   type: 'test'
   ...
 # Subtest: Python AST works without imports or execution of project code
 ok 30 - Python AST works without imports or execution of project code
   ---
-  duration_ms: 1576.700241
+  duration_ms: 6073.339407
   type: 'test'
   ...
 # Subtest: Python syntax errors are reported without empty-success semantics
 ok 31 - Python syntax errors are reported without empty-success semantics
   ---
-  duration_ms: 842.308288
+  duration_ms: 6704.885825
   type: 'test'
   ...
 # Subtest: disabled Python parsing is explicitly reported as unavailable semantics
 ok 32 - disabled Python parsing is explicitly reported as unavailable semantics
   ---
-  duration_ms: 33.265765
+  duration_ms: 171.700459
   type: 'test'
   ...
 # Subtest: Go stdlib parser emits real methods, imports and bounded call candidates
 ok 33 - Go stdlib parser emits real methods, imports and bounded call candidates
   ---
-  duration_ms: 5233.81772
+  duration_ms: 11841.451017
   type: 'test'
   ...
-# (node:9387) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:18002) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: paired harness uses real independent verification and charges all protocol-fixture attempts
+ok 34 - paired harness uses real independent verification and charges all protocol-fixture attempts
+  ---
+  duration_ms: 2722.270491
+  type: 'test'
+  ...
+# Subtest: paired harness refuses implicit driver execution
+ok 35 - paired harness refuses implicit driver execution
+  ---
+  duration_ms: 640.426057
+  type: 'test'
+  ...
+# (node:18115) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: prepare → compiler rename → verify → approve → workspace apply works across files
-ok 34 - prepare → compiler rename → verify → approve → workspace apply works across files
+ok 36 - prepare → compiler rename → verify → approve → workspace apply works across files
   ---
-  duration_ms: 994.946385
+  duration_ms: 1910.658219
   type: 'test'
   ...
 # Subtest: reserved keywords cannot be compiler rename targets
-ok 35 - reserved keywords cannot be compiler rename targets
+ok 37 - reserved keywords cannot be compiler rename targets
   ---
-  duration_ms: 216.166026
+  duration_ms: 798.056782
   type: 'test'
   ...
 # Subtest: exact native symbol replacement preserves surrounding code
-ok 36 - exact native symbol replacement preserves surrounding code
+ok 38 - exact native symbol replacement preserves surrounding code
   ---
-  duration_ms: 190.444658
+  duration_ms: 418.058408
   type: 'test'
   ...
 # Subtest: isolated apply materializes a complete result without changing source
-ok 37 - isolated apply materializes a complete result without changing source
+ok 39 - isolated apply materializes a complete result without changing source
   ---
-  duration_ms: 25.325799
+  duration_ms: 106.535107
   type: 'test'
   ...
 # Subtest: workspace integration refuses missing host write permission
-ok 38 - workspace integration refuses missing host write permission
+ok 40 - workspace integration refuses missing host write permission
   ---
-  duration_ms: 21.129385
+  duration_ms: 72.453979
   type: 'test'
   ...
 # Subtest: workspace integration requires exact approval and verification
-ok 39 - workspace integration requires exact approval and verification
+ok 41 - workspace integration requires exact approval and verification
   ---
-  duration_ms: 20.011364
+  duration_ms: 103.67657
   type: 'test'
   ...
 # Subtest: concurrent source edits block integration without overwriting user work
-ok 40 - concurrent source edits block integration without overwriting user work
+ok 42 - concurrent source edits block integration without overwriting user work
   ---
-  duration_ms: 26.045532
+  duration_ms: 227.921172
   type: 'test'
   ...
 # Subtest: test modifications require separate explicit consent
-ok 41 - test modifications require separate explicit consent
+ok 43 - test modifications require separate explicit consent
   ---
-  duration_ms: 22.65456
+  duration_ms: 100.176805
   type: 'test'
   ...
 # Subtest: hash preconditions and overlapping edits cannot be bypassed
-ok 42 - hash preconditions and overlapping edits cannot be bypassed
+ok 44 - hash preconditions and overlapping edits cannot be bypassed
   ---
-  duration_ms: 24.116219
+  duration_ms: 38.804322
   type: 'test'
   ...
 # Subtest: Unicode edits reject partial code points and lone surrogates
-ok 43 - Unicode edits reject partial code points and lone surrogates
+ok 45 - Unicode edits reject partial code points and lone surrogates
   ---
-  duration_ms: 19.907918
+  duration_ms: 40.00241
   type: 'test'
   ...
 # Subtest: file creation and deletion are represented and applied correctly
-ok 44 - file creation and deletion are represented and applied correctly
+ok 46 - file creation and deletion are represented and applied correctly
   ---
-  duration_ms: 38.586477
+  duration_ms: 87.383007
   type: 'test'
   ...
 # Subtest: expired and tampered plans are never applied
-ok 45 - expired and tampered plans are never applied
+ok 47 - expired and tampered plans are never applied
   ---
-  duration_ms: 30.998313
+  duration_ms: 60.915684
   type: 'test'
   ...
 # Subtest: idempotency key cannot be reused for another plan or mode
-ok 46 - idempotency key cannot be reused for another plan or mode
+ok 48 - idempotency key cannot be reused for another plan or mode
   ---
-  duration_ms: 23.387803
+  duration_ms: 44.776946
   type: 'test'
   ...
 # Subtest: ordinary write failure rolls back only files written by that transaction
-ok 47 - ordinary write failure rolls back only files written by that transaction
+ok 49 - ordinary write failure rolls back only files written by that transaction
   ---
-  duration_ms: 36.908713
+  duration_ms: 158.470586
   type: 'test'
   ...
 # Subtest: rollback preserves concurrent foreign edits rather than resetting the workspace
-ok 48 - rollback preserves concurrent foreign edits rather than resetting the workspace
+ok 50 - rollback preserves concurrent foreign edits rather than resetting the workspace
   ---
-  duration_ms: 28.186251
+  duration_ms: 701.980969
   type: 'test'
   ...
 # Subtest: a killed writer can be recovered from its durable journal
-ok 49 - a killed writer can be recovered from its durable journal
+ok 51 - a killed writer can be recovered from its durable journal
   ---
-  duration_ms: 385.275975
+  duration_ms: 2174.75447
   type: 'test'
   ...
 # Subtest: whole-file unified diff is accepted by git apply including a missing final newline
-ok 50 - whole-file unified diff is accepted by git apply including a missing final newline
+ok 52 - whole-file unified diff is accepted by git apply including a missing final newline
   ---
-  duration_ms: 18.919541
+  duration_ms: 150.674121
   type: 'test'
   ...
 # Subtest: verification distinguishes newly introduced errors from preexisting errors
-ok 51 - verification distinguishes newly introduced errors from preexisting errors
+ok 53 - verification distinguishes newly introduced errors from preexisting errors
   ---
-  duration_ms: 384.10922
+  duration_ms: 2188.173163
   type: 'test'
   ...
 # Subtest: diagnostic delta is multiplicity-aware but ignores harmless line shifts
-ok 52 - diagnostic delta is multiplicity-aware but ignores harmless line shifts
+ok 54 - diagnostic delta is multiplicity-aware but ignores harmless line shifts
   ---
-  duration_ms: 0.15947
+  duration_ms: 0.380837
   type: 'test'
   ...
 # Subtest: no verifier means incomplete rather than a false successful proof
-ok 53 - no verifier means incomplete rather than a false successful proof
+ok 55 - no verifier means incomplete rather than a false successful proof
   ---
-  duration_ms: 16.008853
+  duration_ms: 199.853519
   type: 'test'
   ...
 # Subtest: project verification commands require trusted host permission
-ok 54 - project verification commands require trusted host permission
+ok 56 - project verification commands require trusted host permission
   ---
-  duration_ms: 233.57753
+  duration_ms: 1184.005223
   type: 'test'
   ...
 # Subtest: trusted actual test execution records independent exit status and test count
-ok 55 - trusted actual test execution records independent exit status and test count
+ok 57 - trusted actual test execution records independent exit status and test count
   ---
-  duration_ms: 284.169522
+  duration_ms: 2076.1963
   type: 'test'
   ...
 # Subtest: verification that mutates its source inputs is invalidated
-ok 56 - verification that mutates its source inputs is invalidated
+ok 58 - verification that mutates its source inputs is invalidated
   ---
-  duration_ms: 52.979799
+  duration_ms: 114.112429
   type: 'test'
   ...
-# (node:9577) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:18317) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: advanced CLI embeds source and retrieves the same snapshot through the local vectorizer
+ok 59 - advanced CLI embeds source and retrieves the same snapshot through the local vectorizer
+  ---
+  duration_ms: 3379.436294
+  type: 'test'
+  ...
+# Subtest: advanced CLI solution build produces no source-tree output
+ok 60 - advanced CLI solution build produces no source-tree output
+  ---
+  duration_ms: 4520.124221
+  type: 'test'
+  ...
+# Subtest: advanced CLI model commands reject absent host permission
+ok 61 - advanced CLI model commands reject absent host permission
+  ---
+  duration_ms: 2896.509468
+  type: 'test'
+  ...
+# Subtest: advanced CLI rejects misspelled GC application mode instead of deleting
+ok 62 - advanced CLI rejects misspelled GC application mode instead of deleting
+  ---
+  duration_ms: 1046.647481
+  type: 'test'
+  ...
+# Subtest: advanced CLI taint labels untrusted input flow as a nonexhaustive candidate
+ok 63 - advanced CLI taint labels untrusted input flow as a nonexhaustive candidate
+  ---
+  duration_ms: 2141.150752
+  type: 'test'
+  ...
+# Subtest: real editor CLI handshake, authentication, unsaved lookup and unchanged disk source
+ok 64 - real editor CLI handshake, authentication, unsaved lookup and unchanged disk source
+  ---
+  duration_ms: 1596.130788
+  type: 'test'
+  ...
+# (node:19120) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: UTF-8 offsets survive emoji, umlauts and CRLF
-ok 57 - UTF-8 offsets survive emoji, umlauts and CRLF
+ok 65 - UTF-8 offsets survive emoji, umlauts and CRLF
   ---
-  duration_ms: 1.554198
+  duration_ms: 2.035548
   type: 'test'
   ...
 # Subtest: canonical hashes are independent of object insertion order
-ok 58 - canonical hashes are independent of object insertion order
+ok 66 - canonical hashes are independent of object insertion order
   ---
-  duration_ms: 0.595286
+  duration_ms: 0.965273
   type: 'test'
   ...
 # Subtest: signed cursors reject tampering and a different workspace key
-ok 59 - signed cursors reject tampering and a different workspace key
+ok 67 - signed cursors reject tampering and a different workspace key
   ---
-  duration_ms: 0.718882
+  duration_ms: 0.984441
   type: 'test'
   ...
 # Subtest: deadline cancellation is distinct from expiration
-ok 60 - deadline cancellation is distinct from expiration
+ok 68 - deadline cancellation is distinct from expiration
   ---
-  duration_ms: 0.197116
+  duration_ms: 0.278759
   type: 'test'
   ...
 # Subtest: path policy refuses "../x"
-ok 61 - path policy refuses "../x"
+ok 69 - path policy refuses "../x"
   ---
-  duration_ms: 0.320872
+  duration_ms: 0.233517
   type: 'test'
   ...
 # Subtest: path policy refuses "a/../../x"
-ok 62 - path policy refuses "a/../../x"
+ok 70 - path policy refuses "a/../../x"
   ---
-  duration_ms: 0.139881
+  duration_ms: 0.152412
   type: 'test'
   ...
 # Subtest: path policy refuses "/tmp/x"
-ok 63 - path policy refuses "/tmp/x"
+ok 71 - path policy refuses "/tmp/x"
   ---
-  duration_ms: 0.112459
+  duration_ms: 0.494101
   type: 'test'
   ...
 # Subtest: path policy refuses "C:\\\\secret"
-ok 64 - path policy refuses "C:\\\\secret"
+ok 72 - path policy refuses "C:\\\\secret"
   ---
-  duration_ms: 0.135153
+  duration_ms: 0.176214
   type: 'test'
   ...
 # Subtest: path policy refuses "\\\\\\\\server\\\\x"
-ok 65 - path policy refuses "\\\\\\\\server\\\\x"
+ok 73 - path policy refuses "\\\\\\\\server\\\\x"
   ---
-  duration_ms: 0.277768
+  duration_ms: 0.502704
   type: 'test'
   ...
 # Subtest: path policy refuses "a\\u0000b"
-ok 66 - path policy refuses "a\\u0000b"
+ok 74 - path policy refuses "a\\u0000b"
   ---
-  duration_ms: 0.235254
+  duration_ms: 0.297243
   type: 'test'
   ...
 # Subtest: path policy refuses "a//b"
-ok 67 - path policy refuses "a//b"
+ok 75 - path policy refuses "a//b"
   ---
-  duration_ms: 0.140742
+  duration_ms: 0.401829
   type: 'test'
   ...
 # Subtest: path policy refuses "a/CON.txt"
-ok 68 - path policy refuses "a/CON.txt"
+ok 76 - path policy refuses "a/CON.txt"
   ---
-  duration_ms: 0.18563
+  duration_ms: 0.369965
   type: 'test'
   ...
 # Subtest: path policy refuses "a/nul"
-ok 69 - path policy refuses "a/nul"
+ok 77 - path policy refuses "a/nul"
   ---
-  duration_ms: 0.068062
+  duration_ms: 0.089893
   type: 'test'
   ...
 # Subtest: path policy refuses "a/trailing."
-ok 70 - path policy refuses "a/trailing."
+ok 78 - path policy refuses "a/trailing."
   ---
-  duration_ms: 0.060461
+  duration_ms: 0.064101
   type: 'test'
   ...
 # Subtest: safe Windows-style relative paths normalize consistently
-ok 71 - safe Windows-style relative paths normalize consistently
+ok 79 - safe Windows-style relative paths normalize consistently
   ---
-  duration_ms: 0.104918
+  duration_ms: 0.08074
   type: 'test'
   ...
 # Subtest: glob recursion differs from a single path-segment star
-ok 72 - glob recursion differs from a single path-segment star
+ok 80 - glob recursion differs from a single path-segment star
   ---
-  duration_ms: 0.254843
+  duration_ms: 0.551583
   type: 'test'
   ...
 # Subtest: test-path detector recognizes root Python tests and Go/TS conventions
-ok 73 - test-path detector recognizes root Python tests and Go/TS conventions
+ok 81 - test-path detector recognizes root Python tests and Go/TS conventions
   ---
-  duration_ms: 0.269946
+  duration_ms: 0.358987
   type: 'test'
   ...
 # Subtest: protected files, binary data and obvious credentials do not enter a snapshot
-ok 74 - protected files, binary data and obvious credentials do not enter a snapshot
+ok 82 - protected files, binary data and obvious credentials do not enter a snapshot
   ---
-  duration_ms: 21.12581
+  duration_ms: 68.549553
   type: 'test'
   ...
 # Subtest: Git ignored and generated state files never self-index
-ok 75 - Git ignored and generated state files never self-index
+ok 83 - Git ignored and generated state files never self-index
   ---
-  duration_ms: 18.976838
+  duration_ms: 54.488351
   type: 'test'
   ...
 # Subtest: non-Git fallback conservatively respects positive root and nested ignores
-ok 76 - non-Git fallback conservatively respects positive root and nested ignores
+ok 84 - non-Git fallback conservatively respects positive root and nested ignores
   ---
-  duration_ms: 9.719552
+  duration_ms: 22.728334
   type: 'test'
   ...
 # Subtest: snapshots retain old bytes after edits, creation and deletion
-ok 77 - snapshots retain old bytes after edits, creation and deletion
+ok 85 - snapshots retain old bytes after edits, creation and deletion
   ---
-  duration_ms: 20.278576
+  duration_ms: 55.063346
   type: 'test'
   ...
 # Subtest: request budgets do not change semantic snapshot identities
-ok 78 - request budgets do not change semantic snapshot identities
+ok 86 - request budgets do not change semantic snapshot identities
   ---
-  duration_ms: 16.968757
+  duration_ms: 39.744999
   type: 'test'
   ...
 # Subtest: snapshots are root/workspace isolated
-ok 79 - snapshots are root/workspace isolated
+ok 87 - snapshots are root/workspace isolated
   ---
-  duration_ms: 30.001563
+  duration_ms: 80.599505
   type: 'test'
   ...
 # Subtest: parent, leaf and dangling symbolic links are denied
-ok 80 - parent, leaf and dangling symbolic links are denied
+ok 88 - parent, leaf and dangling symbolic links are denied
   ---
-  duration_ms: 18.954319
+  duration_ms: 35.036999
   type: 'test'
   ...
 # Subtest: SQLite state and CAS path symbolic links are refused
-ok 81 - SQLite state and CAS path symbolic links are refused
+ok 89 - SQLite state and CAS path symbolic links are refused
   ---
-  duration_ms: 10.650562
+  duration_ms: 18.760547
   type: 'test'
   ...
 # Subtest: CAS integrity failure is visible, not silently reused
-ok 82 - CAS integrity failure is visible, not silently reused
+ok 90 - CAS integrity failure is visible, not silently reused
   ---
-  duration_ms: 14.323978
+  duration_ms: 25.628284
   type: 'test'
   ...
 # Subtest: schema validator rejects undeclared authority and invalid numbers
-ok 83 - schema validator rejects undeclared authority and invalid numbers
+ok 91 - schema validator rejects undeclared authority and invalid numbers
   ---
-  duration_ms: 0.40581
+  duration_ms: 0.68899
   type: 'test'
   ...
 # Subtest: full serialized envelope respects byte bound including its metrics
-ok 84 - full serialized envelope respects byte bound including its metrics
+ok 92 - full serialized envelope respects byte bound including its metrics
   ---
-  duration_ms: 17.564993
+  duration_ms: 31.883348
   type: 'test'
   ...
 # Subtest: artifact pagination recovers original JSON without splitting Unicode
-ok 85 - artifact pagination recovers original JSON without splitting Unicode
+ok 93 - artifact pagination recovers original JSON without splitting Unicode
   ---
-  duration_ms: 19.189469
+  duration_ms: 32.199411
   type: 'test'
   ...
 # Subtest: tiny budgets and forged artifact cursors fail explicitly
-ok 86 - tiny budgets and forged artifact cursors fail explicitly
+ok 94 - tiny budgets and forged artifact cursors fail explicitly
   ---
-  duration_ms: 8.815812
+  duration_ms: 18.72053
   type: 'test'
   ...
 # Subtest: derived source cannot exceed the configured total capacity
-ok 87 - derived source cannot exceed the configured total capacity
+ok 95 - derived source cannot exceed the configured total capacity
   ---
-  duration_ms: 13.495077
+  duration_ms: 29.20544
   type: 'test'
   ...
 # Subtest: repository configuration cannot select an executable interpreter
-ok 88 - repository configuration cannot select an executable interpreter
+ok 96 - repository configuration cannot select an executable interpreter
   ---
-  duration_ms: 7.05932
+  duration_ms: 22.745589
   type: 'test'
   ...
 # Subtest: explicit host interpreter selection overrides untrusted repository setting
-ok 89 - explicit host interpreter selection overrides untrusted repository setting
+ok 97 - explicit host interpreter selection overrides untrusted repository setting
   ---
-  duration_ms: 7.437268
+  duration_ms: 39.948859
   type: 'test'
   ...
-# (node:9640) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:19190) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: installed declarations are immutable, indexed and resolve package calls
+ok 98 - installed declarations are immutable, indexed and resolve package calls
+  ---
+  duration_ms: 1598.069557
+  type: 'test'
+  ...
+# Subtest: ambient @types are discovered without reading live compiler filesystem
+ok 99 - ambient @types are discovered without reading live compiler filesystem
+  ---
+  duration_ms: 480.637025
+  type: 'test'
+  ...
+# Subtest: dependency capture can be disabled explicitly
+ok 100 - dependency capture can be disabled explicitly
+  ---
+  duration_ms: 33.129811
+  type: 'test'
+  ...
+# Subtest: metadata capture reuses unchanged files but cannot authorize source writes
+ok 101 - metadata capture reuses unchanged files but cannot authorize source writes
+  ---
+  duration_ms: 55.252941
+  type: 'test'
+  ...
+# Subtest: editor overlay analyzes unsaved source without changing disk
+ok 102 - editor overlay analyzes unsaved source without changing disk
+  ---
+  duration_ms: 460.054635
+  type: 'test'
+  ...
+# Subtest: editor versions reject stale writes and allow exact retransmission
+ok 103 - editor versions reject stale writes and allow exact retransmission
+  ---
+  duration_ms: 47.461161
+  type: 'test'
+  ...
+# Subtest: editor refuses independent disk mutation and preserves both versions
+ok 104 - editor refuses independent disk mutation and preserves both versions
+  ---
+  duration_ms: 42.639302
+  type: 'test'
+  ...
+# Subtest: editor saved-buffer baseline advances for subsequent unsaved changes
+ok 105 - editor saved-buffer baseline advances for subsequent unsaved changes
+  ---
+  duration_ms: 58.960021
+  type: 'test'
+  ...
+# Subtest: new and closed buffers are separate from saved disk source
+ok 106 - new and closed buffers are separate from saved disk source
+  ---
+  duration_ms: 110.221742
+  type: 'test'
+  ...
+# Subtest: editor rejects protected path ../escape.ts
+ok 107 - editor rejects protected path ../escape.ts
+  ---
+  duration_ms: 52.045086
+  type: 'test'
+  ...
+# Subtest: editor rejects protected path .env
+ok 108 - editor rejects protected path .env
+  ---
+  duration_ms: 42.437053
+  type: 'test'
+  ...
+# Subtest: editor rejects protected path node_modules/p/a.d.ts
+ok 109 - editor rejects protected path node_modules/p/a.d.ts
+  ---
+  duration_ms: 83.059311
+  type: 'test'
+  ...
+# Subtest: editor rejects protected path .code-intelligence/config
+ok 110 - editor rejects protected path .code-intelligence/config
+  ---
+  duration_ms: 34.104909
+  type: 'test'
+  ...
+# Subtest: editor rejects protected path /absolute.ts
+ok 111 - editor rejects protected path /absolute.ts
+  ---
+  duration_ms: 29.056283
+  type: 'test'
+  ...
+# Subtest: editor rejects secrets, unpaired surrogates and versioned close conflicts
+ok 112 - editor rejects secrets, unpaired surrogates and versioned close conflicts
+  ---
+  duration_ms: 34.784332
+  type: 'test'
+  ...
+# Subtest: real authenticated editor server opens, updates and captures buffers
+ok 113 - real authenticated editor server opens, updates and captures buffers
+  ---
+  duration_ms: 503.691179
+  type: 'test'
+  ...
+# Subtest: tsc solution builder generates referenced declarations entirely in memory
+ok 114 - tsc solution builder generates referenced declarations entirely in memory
+  ---
+  duration_ms: 2187.799009
+  type: 'test'
+  ...
+# Subtest: tsc build reports type failure rather than marking generated output verified
+ok 115 - tsc build reports type failure rather than marking generated output verified
+  ---
+  duration_ms: 1079.510607
+  type: 'test'
+  ...
+# Subtest: tsc build rejects output escape and never writes outside virtual root
+ok 116 - tsc build rejects output escape and never writes outside virtual root
+  ---
+  duration_ms: 1042.374841
+  type: 'test'
+  ...
+# (node:19201) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: built-in local vector generation and query need no model service
+ok 117 - built-in local vector generation and query need no model service
+  ---
+  duration_ms: 924.883966
+  type: 'test'
+  ...
+# Subtest: model contract fixtures exercise embed, rerank and source-bound meaning with accounted costs
+ok 118 - model contract fixtures exercise embed, rerank and source-bound meaning with accounted costs
+  ---
+  duration_ms: 600.408059
+  type: 'test'
+  ...
+# Subtest: unknown model billing survives malformed output and blocks overspend
+ok 119 - unknown model billing survives malformed output and blocks overspend
+  ---
+  duration_ms: 55.917216
+  type: 'test'
+  ...
+# Subtest: model-produced fabricated source IDs are refused after billing is preserved
+ok 120 - model-produced fabricated source IDs are refused after billing is preserved
+  ---
+  duration_ms: 462.717426
+  type: 'test'
+  ...
+# Subtest: taint follows assignment, concatenation and branches to a sink with exact anchors
+ok 121 - taint follows assignment, concatenation and branches to a sink with exact anchors
+  ---
+  duration_ms: 349.537955
+  type: 'test'
+  ...
+# Subtest: taint honors host sanitizer assumptions and clears overwritten local bindings
+ok 122 - taint honors host sanitizer assumptions and clears overwritten local bindings
+  ---
+  duration_ms: 379.030373
+  type: 'test'
+  ...
+# Subtest: taint distinguishes shadowed local variables using compiler symbols
+ok 123 - taint distinguishes shadowed local variables using compiler symbols
+  ---
+  duration_ms: 283.008568
+  type: 'test'
+  ...
+# Subtest: actual Node test execution produces hash-bound per-test-file map and broadens unknown changes
+ok 124 - actual Node test execution produces hash-bound per-test-file map and broadens unknown changes
+  ---
+  duration_ms: 306.504162
+  type: 'test'
+  ...
+# Subtest: per-test coverage rejects non-executed or mismatched-source observations
+ok 125 - per-test coverage rejects non-executed or mismatched-source observations
+  ---
+  duration_ms: 34.246672
+  type: 'test'
+  ...
+# Subtest: Prisma models, SQL migrations, ORM calls and OpenAPI clients retain candidate provenance
+ok 126 - Prisma models, SQL migrations, ORM calls and OpenAPI clients retain candidate provenance
+  ---
+  duration_ms: 326.967422
+  type: 'test'
+  ...
+# Subtest: OpenAPI delta reports removed operations and newly required fields
+ok 127 - OpenAPI delta reports removed operations and newly required fields
+  ---
+  duration_ms: 0.538143
+  type: 'test'
+  ...
+# Subtest: actual Node name-pattern selections map individual cases and refuse zero executed passes
+ok 128 - actual Node name-pattern selections map individual cases and refuse zero executed passes
+  ---
+  duration_ms: 507.797428
+  type: 'test'
+  ...
+# (node:19411) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: signed snapshot transfer preserves bytes, isolated history and replay identity
+ok 129 - signed snapshot transfer preserves bytes, isolated history and replay identity
+  ---
+  duration_ms: 942.997477
+  type: 'test'
+  ...
+# Subtest: signed transfer rejects wrong signer, tenant and modified contents
+ok 130 - signed transfer rejects wrong signer, tenant and modified contents
+  ---
+  duration_ms: 49.892631
+  type: 'test'
+  ...
+# Subtest: even an authorized signature cannot bypass path, secret and expiry policy
+ok 131 - even an authorized signature cannot bypass path, secret and expiry policy
+  ---
+  duration_ms: 129.065993
+  type: 'test'
+  ...
+# Subtest: real HTTP federation applies tenant grants before lookup and rank merging
+ok 132 - real HTTP federation applies tenant grants before lookup and rank merging
+  ---
+  duration_ms: 959.998374
+  type: 'test'
+  ...
+# Subtest: actual HTTP signed export and import through distinct endpoints
+ok 133 - actual HTTP signed export and import through distinct endpoints
+  ---
+  duration_ms: 119.316879
+  type: 'test'
+  ...
+# Subtest: remote plaintext, weak or duplicate tokens and browser origins refused
+ok 134 - remote plaintext, weak or duplicate tokens and browser origins refused
+  ---
+  duration_ms: 29.54021
+  type: 'test'
+  ...
+# Subtest: signed source does not override the receiving host exclusion policy
+ok 135 - signed source does not override the receiving host exclusion policy
+  ---
+  duration_ms: 47.813313
+  type: 'test'
+  ...
+# Subtest: federation refuses reuse of a physical workspace for different security scopes
+ok 136 - federation refuses reuse of a physical workspace for different security scopes
+  ---
+  duration_ms: 16.184707
+  type: 'test'
+  ...
+# (node:19484) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: unchanged independently configured TypeScript unit reuses semantic extraction
+ok 137 - unchanged independently configured TypeScript unit reuses semantic extraction
+  ---
+  duration_ms: 2072.501278
+  type: 'test'
+  ...
+# Subtest: new resolution candidate invalidates negative and existing semantic caches
+ok 138 - new resolution candidate invalidates negative and existing semantic caches
+  ---
+  duration_ms: 645.578594
+  type: 'test'
+  ...
+# Subtest: GC defaults to dry-run and preserves explicitly pinned snapshots
+ok 139 - GC defaults to dry-run and preserves explicitly pinned snapshots
+  ---
+  duration_ms: 219.87749
+  type: 'test'
+  ...
+# Subtest: GC refuses a second live connection and succeeds after close
+ok 140 - GC refuses a second live connection and succeeds after close
+  ---
+  duration_ms: 86.586264
+  type: 'test'
+  ...
+# Subtest: quarantined source is recoverable after interrupted maintenance
+ok 141 - quarantined source is recoverable after interrupted maintenance
+  ---
+  duration_ms: 37.077549
+  type: 'test'
+  ...
+# Subtest: GC retains source blobs referenced by memories and prepared changes
+ok 142 - GC retains source blobs referenced by memories and prepared changes
+  ---
+  duration_ms: 101.923006
+  type: 'test'
+  ...
+# (node:19495) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: cost reservations include unknown billing and prevent overspend after failures
-ok 90 - cost reservations include unknown billing and prevent overspend after failures
+ok 143 - cost reservations include unknown billing and prevent overspend after failures
   ---
-  duration_ms: 17.402831
+  duration_ms: 204.201396
   type: 'test'
   ...
 # Subtest: streaming cumulative usage is deduplicated rather than added repeatedly
-ok 91 - streaming cumulative usage is deduplicated rather than added repeatedly
+ok 144 - streaming cumulative usage is deduplicated rather than added repeatedly
   ---
-  duration_ms: 11.57938
+  duration_ms: 19.497616
   type: 'test'
   ...
 # Subtest: a sent attempt cannot be cancelled as though no request was sent
-ok 92 - a sent attempt cannot be cancelled as though no request was sent
+ok 145 - a sent attempt cannot be cancelled as though no request was sent
   ---
-  duration_ms: 31.076767
+  duration_ms: 16.729775
   type: 'test'
   ...
 # Subtest: source-bound memories become stale and corrections supersede old hypotheses
-ok 93 - source-bound memories become stale and corrections supersede old hypotheses
+ok 146 - source-bound memories become stale and corrections supersede old hypotheses
   ---
-  duration_ms: 25.276095
+  duration_ms: 91.991559
   type: 'test'
   ...
 # Subtest: precomputed vector search validates model dimensions and source binding
-ok 94 - precomputed vector search validates model dimensions and source binding
+ok 147 - precomputed vector search validates model dimensions and source binding
   ---
-  duration_ms: 440.986095
+  duration_ms: 1072.492098
   type: 'test'
   ...
 # Subtest: LCOV imports require matching source hashes and valid line numbers
-ok 95 - LCOV imports require matching source hashes and valid line numbers
+ok 148 - LCOV imports require matching source hashes and valid line numbers
   ---
-  duration_ms: 21.245431
+  duration_ms: 64.399047
   type: 'test'
   ...
 # Subtest: runtime observations reject multi-node parent cycles
-ok 96 - runtime observations reject multi-node parent cycles
+ok 149 - runtime observations reject multi-node parent cycles
   ---
-  duration_ms: 22.389834
+  duration_ms: 120.579233
   type: 'test'
   ...
 # Subtest: SARIF findings remain analysis findings rather than proofs
-ok 97 - SARIF findings remain analysis findings rather than proofs
+ok 150 - SARIF findings remain analysis findings rather than proofs
   ---
-  duration_ms: 16.976319
+  duration_ms: 54.319731
   type: 'test'
   ...
 # Subtest: import cycles are detected without altering directed observations
-ok 98 - import cycles are detected without altering directed observations
+ok 151 - import cycles are detected without altering directed observations
   ---
-  duration_ms: 450.034752
+  duration_ms: 462.226973
   type: 'test'
   ...
 # Subtest: occurrence graph diffs do not fabricate rename lineage
-ok 99 - occurrence graph diffs do not fabricate rename lineage
+ok 152 - occurrence graph diffs do not fabricate rename lineage
   ---
-  duration_ms: 441.286798
+  duration_ms: 667.771347
   type: 'test'
   ...
-# (node:10044) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:19549) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: one-shot LSP denies missing host authorization before starting any command
-ok 100 - one-shot LSP denies missing host authorization before starting any command
+ok 153 - one-shot LSP denies missing host authorization before starting any command
   ---
-  duration_ms: 16.402767
+  duration_ms: 149.561081
   type: 'test'
   ...
 # Subtest: one-shot LSP returns bounded hash-checked locations with unknown external usage
-ok 101 - one-shot LSP returns bounded hash-checked locations with unknown external usage
+ok 154 - one-shot LSP returns bounded hash-checked locations with unknown external usage
   ---
-  duration_ms: 80.752701
+  duration_ms: 265.674096
   type: 'test'
   ...
 # Subtest: one-shot LSP prepares a persisted rename plan without applying it
-ok 102 - one-shot LSP prepares a persisted rename plan without applying it
+ok 155 - one-shot LSP prepares a persisted rename plan without applying it
   ---
-  duration_ms: 72.245516
+  duration_ms: 111.560057
   type: 'test'
   ...
 # Subtest: one-shot LSP refuses a provider which modifies the copied source
-ok 103 - one-shot LSP refuses a provider which modifies the copied source
+ok 156 - one-shot LSP refuses a provider which modifies the copied source
   ---
-  duration_ms: 75.871992
+  duration_ms: 274.739766
   type: 'test'
   ...
 # Subtest: one-shot LSP enforces UTF-8 cursor and rename argument preconditions
-ok 104 - one-shot LSP enforces UTF-8 cursor and rename argument preconditions
+ok 157 - one-shot LSP enforces UTF-8 cursor and rename argument preconditions
   ---
-  duration_ms: 25.791652
+  duration_ms: 29.657202
   type: 'test'
   ...
-# (node:10116) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:19688) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: one-shot LSP preserves a full artifact when the envelope is small
-ok 105 - one-shot LSP preserves a full artifact when the envelope is small
+ok 158 - one-shot LSP preserves a full artifact when the envelope is small
   ---
-  duration_ms: 105.844083
+  duration_ms: 171.808686
   type: 'test'
   ...
 # Subtest: CLI exposes checked locations through explicit host-selected arguments
-ok 106 - CLI exposes checked locations through explicit host-selected arguments
+ok 159 - CLI exposes checked locations through explicit host-selected arguments
   ---
-  duration_ms: 657.882185
+  duration_ms: 952.440059
   type: 'test'
   ...
 # Subtest: CLI refuses implicit provider permission and does not treat project text as approval
-ok 107 - CLI refuses implicit provider permission and does not treat project text as approval
+ok 160 - CLI refuses implicit provider permission and does not treat project text as approval
   ---
-  duration_ms: 710.374556
+  duration_ms: 1374.429596
   type: 'test'
   ...
-# (node:10327) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:19573) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: RPC rejects malformed both response without resolving a pending call
-ok 108 - RPC rejects malformed both response without resolving a pending call
+ok 161 - RPC rejects malformed both response without resolving a pending call
   ---
-  duration_ms: 69.458725
+  duration_ms: 248.999001
   type: 'test'
   ...
 # Subtest: RPC rejects malformed neither response without resolving a pending call
-ok 109 - RPC rejects malformed neither response without resolving a pending call
+ok 162 - RPC rejects malformed neither response without resolving a pending call
   ---
-  duration_ms: 50.261488
+  duration_ms: 91.862338
   type: 'test'
   ...
 # Subtest: RPC rejects malformed bad-error response without resolving a pending call
-ok 110 - RPC rejects malformed bad-error response without resolving a pending call
+ok 163 - RPC rejects malformed bad-error response without resolving a pending call
   ---
-  duration_ms: 54.787493
+  duration_ms: 145.136364
   type: 'test'
   ...
 # Subtest: RPC rejects malformed array response without resolving a pending call
-ok 111 - RPC rejects malformed array response without resolving a pending call
+ok 164 - RPC rejects malformed array response without resolving a pending call
   ---
-  duration_ms: 42.739313
+  duration_ms: 100.785502
   type: 'test'
   ...
 # Subtest: RPC rejects malformed utf8 response without resolving a pending call
-ok 112 - RPC rejects malformed utf8 response without resolving a pending call
+ok 165 - RPC rejects malformed utf8 response without resolving a pending call
   ---
-  duration_ms: 52.763323
+  duration_ms: 93.577537
   type: 'test'
   ...
 # Subtest: RPC rejects malformed duplicate-header response without resolving a pending call
-ok 113 - RPC rejects malformed duplicate-header response without resolving a pending call
+ok 166 - RPC rejects malformed duplicate-header response without resolving a pending call
   ---
-  duration_ms: 52.897519
+  duration_ms: 94.44919
   type: 'test'
   ...
 # Subtest: RPC rejects malformed giant response without resolving a pending call
-ok 114 - RPC rejects malformed giant response without resolving a pending call
+ok 167 - RPC rejects malformed giant response without resolving a pending call
   ---
-  duration_ms: 57.553354
+  duration_ms: 105.777276
   type: 'test'
   ...
 # Subtest: RPC rejects malformed long-header response without resolving a pending call
-ok 115 - RPC rejects malformed long-header response without resolving a pending call
+ok 168 - RPC rejects malformed long-header response without resolving a pending call
   ---
-  duration_ms: 59.130606
+  duration_ms: 129.294558
   type: 'test'
   ...
 # Subtest: RPC bounds individual frames without rejecting many coalesced valid messages
-ok 116 - RPC bounds individual frames without rejecting many coalesced valid messages
+ok 169 - RPC bounds individual frames without rejecting many coalesced valid messages
   ---
-  duration_ms: 76.140717
+  duration_ms: 77.414122
   type: 'test'
   ...
 # Subtest: unsupported server callbacks receive MethodNotFound, not a false success
-ok 117 - unsupported server callbacks receive MethodNotFound, not a false success
+ok 170 - unsupported server callbacks receive MethodNotFound, not a false success
   ---
-  duration_ms: 43.835446
+  duration_ms: 72.272593
   type: 'test'
   ...
 # Subtest: server applyEdit callbacks are refused and cannot mutate workspace files
-ok 118 - server applyEdit callbacks are refused and cannot mutate workspace files
+ok 171 - server applyEdit callbacks are refused and cannot mutate workspace files
   ---
-  duration_ms: 85.943925
+  duration_ms: 98.109236
   type: 'test'
   ...
 # Subtest: LSP locations normalize both regular Location and LocationLink against source hashes
-ok 119 - LSP locations normalize both regular Location and LocationLink against source hashes
+ok 172 - LSP locations normalize both regular Location and LocationLink against source hashes
   ---
-  duration_ms: 86.4586
+  duration_ms: 121.454008
   type: 'test'
   ...
 # Subtest: LSP external locations are explicitly reported but their files are never read
-ok 120 - LSP external locations are explicitly reported but their files are never read
+ok 173 - LSP external locations are explicitly reported but their files are never read
   ---
-  duration_ms: 64.54629
+  duration_ms: 86.872097
   type: 'test'
   ...
 # Subtest: LSP null means no matches and malformed locations are a contract error
-ok 121 - LSP null means no matches and malformed locations are a contract error
+ok 174 - LSP null means no matches and malformed locations are a contract error
   ---
-  duration_ms: 74.446779
+  duration_ms: 112.801201
   type: 'test'
   ...
 # Subtest: LSP malformed location does not masquerade as a zero-match response
-ok 122 - LSP malformed location does not masquerade as a zero-match response
+ok 175 - LSP malformed location does not masquerade as a zero-match response
   ---
-  duration_ms: 116.00858
+  duration_ms: 118.704374
   type: 'test'
   ...
 # Subtest: LSP definition query requires advertised capability
-ok 123 - LSP definition query requires advertised capability
+ok 176 - LSP definition query requires advertised capability
   ---
-  duration_ms: 70.597187
+  duration_ms: 167.596317
   type: 'test'
   ...
 # Subtest: LSP duplicate references do not multiply equivalent source locations
-ok 124 - LSP duplicate references do not multiply equivalent source locations
+ok 177 - LSP duplicate references do not multiply equivalent source locations
   ---
-  duration_ms: 57.309687
+  duration_ms: 88.828827
   type: 'test'
   ...
 # Subtest: LSP readable location clamps oversized characters to content, not CRLF
-ok 125 - LSP readable location clamps oversized characters to content, not CRLF
+ok 178 - LSP readable location clamps oversized characters to content, not CRLF
   ---
-  duration_ms: 49.061309
+  duration_ms: 110.396779
   type: 'test'
   ...
 # Subtest: LocationLink selection must stay inside its target range
-ok 126 - LocationLink selection must stay inside its target range
+ok 179 - LocationLink selection must stay inside its target range
   ---
-  duration_ms: 57.157274
+  duration_ms: 180.845993
   type: 'test'
   ...
 # Subtest: LSP rename rejects CRLF terminator and leaves source unchanged
-ok 127 - LSP rename rejects CRLF terminator and leaves source unchanged
+ok 180 - LSP rename rejects CRLF terminator and leaves source unchanged
   ---
-  duration_ms: 62.786467
+  duration_ms: 121.147482
   type: 'test'
   ...
 # Subtest: LSP rename rejects reversed range and leaves source unchanged
-ok 128 - LSP rename rejects reversed range and leaves source unchanged
+ok 181 - LSP rename rejects reversed range and leaves source unchanged
   ---
-  duration_ms: 52.987555
+  duration_ms: 138.442843
   type: 'test'
   ...
 # Subtest: LSP rename rejects stale version and leaves source unchanged
-ok 129 - LSP rename rejects stale version and leaves source unchanged
+ok 182 - LSP rename rejects stale version and leaves source unchanged
   ---
-  duration_ms: 48.08506
+  duration_ms: 300.70927
   type: 'test'
   ...
 # Subtest: LSP rename rejects annotation and leaves source unchanged
-ok 130 - LSP rename rejects annotation and leaves source unchanged
+ok 183 - LSP rename rejects annotation and leaves source unchanged
   ---
-  duration_ms: 46.965425
+  duration_ms: 102.585657
   type: 'test'
   ...
 # Subtest: LSP rename rejects resource delete and leaves source unchanged
-ok 131 - LSP rename rejects resource delete and leaves source unchanged
+ok 184 - LSP rename rejects resource delete and leaves source unchanged
   ---
-  duration_ms: 44.334246
+  duration_ms: 121.470432
   type: 'test'
   ...
 # Subtest: LSP rename rejects overlap and leaves source unchanged
-ok 132 - LSP rename rejects overlap and leaves source unchanged
+ok 185 - LSP rename rejects overlap and leaves source unchanged
   ---
-  duration_ms: 48.336869
+  duration_ms: 81.793614
   type: 'test'
   ...
 # Subtest: LSP rename rejects both edit formats and leaves source unchanged
-ok 133 - LSP rename rejects both edit formats and leaves source unchanged
+ok 186 - LSP rename rejects both edit formats and leaves source unchanged
   ---
-  duration_ms: 46.944344
+  duration_ms: 88.595377
   type: 'test'
   ...
 # Subtest: LSP rename rejects unpaired surrogate and leaves source unchanged
-ok 134 - LSP rename rejects unpaired surrogate and leaves source unchanged
+ok 187 - LSP rename rejects unpaired surrogate and leaves source unchanged
   ---
-  duration_ms: 42.685326
+  duration_ms: 106.018183
   type: 'test'
   ...
 # Subtest: LSP rename rejects external target and leaves source unchanged
-ok 135 - LSP rename rejects external target and leaves source unchanged
+ok 188 - LSP rename rejects external target and leaves source unchanged
   ---
-  duration_ms: 40.767231
+  duration_ms: 94.037663
   type: 'test'
   ...
 # Subtest: LSP rename rejects prepareRename refusal and leaves source unchanged
-ok 136 - LSP rename rejects prepareRename refusal and leaves source unchanged
+ok 189 - LSP rename rejects prepareRename refusal and leaves source unchanged
   ---
-  duration_ms: 55.812805
+  duration_ms: 107.073117
   type: 'test'
   ...
 # Subtest: LSP rename validates prepareRename and deduplicates matching replacements
-ok 137 - LSP rename validates prepareRename and deduplicates matching replacements
+ok 190 - LSP rename validates prepareRename and deduplicates matching replacements
   ---
-  duration_ms: 49.864162
+  duration_ms: 94.474364
   type: 'test'
   ...
 # Subtest: LSP refuses a position inside a UTF-16 surrogate pair
-ok 138 - LSP refuses a position inside a UTF-16 surrogate pair
+ok 191 - LSP refuses a position inside a UTF-16 surrogate pair
   ---
-  duration_ms: 68.801536
+  duration_ms: 94.783277
   type: 'test'
   ...
 # Subtest: CR-only, CRLF and LF positions use the same exact UTF-8 source model
-ok 139 - CR-only, CRLF and LF positions use the same exact UTF-8 source model
+ok 192 - CR-only, CRLF and LF positions use the same exact UTF-8 source model
   ---
-  duration_ms: 81.803566
+  duration_ms: 97.754527
   type: 'test'
   ...
 # Subtest: LSP diagnostic notifications are source-scoped and reject stale versions
-ok 140 - LSP diagnostic notifications are source-scoped and reject stale versions
+ok 193 - LSP diagnostic notifications are source-scoped and reject stale versions
   ---
-  duration_ms: 82.894919
+  duration_ms: 79.613924
   type: 'test'
   ...
 # Subtest: LSP startup rejects unsupported negotiated encodings and closes the peer
-ok 141 - LSP startup rejects unsupported negotiated encodings and closes the peer
+ok 194 - LSP startup rejects unsupported negotiated encodings and closes the peer
   ---
-  duration_ms: 62.413907
+  duration_ms: 113.194061
   type: 'test'
   ...
 # Subtest: LSP advertises JSX documents using their correct language identifiers
-ok 142 - LSP advertises JSX documents using their correct language identifiers
+ok 195 - LSP advertises JSX documents using their correct language identifiers
   ---
-  duration_ms: 57.910907
+  duration_ms: 83.267803
   type: 'test'
   ...
-# (node:10765) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:19970) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Docker invocation pins image, denies network and privileges and never expands a shell
+ok 196 - Docker invocation pins image, denies network and privileges and never expands a shell
+  ---
+  duration_ms: 1.644967
+  type: 'test'
+  ...
+# Subtest: media native transcript creates a provenance-bound derived snapshot, no source edits
+ok 197 - media native transcript creates a provenance-bound derived snapshot, no source edits
+  ---
+  duration_ms: 1362.53325
+  type: 'test'
+  ...
+# Subtest: media refuses source escape and stale media digest
+ok 198 - media refuses source escape and stale media digest
+  ---
+  duration_ms: 39.572583
+  type: 'test'
+  ...
+# Subtest: Serena discovery and explicitly selected read operation preserve source isolation
+ok 199 - Serena discovery and explicitly selected read operation preserve source isolation
+  ---
+  duration_ms: 310.169811
+  type: 'test'
+  ...
+# (node:20168) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: MCP initializes, exposes exactly eight tools and returns one complete content payload
-ok 143 - MCP initializes, exposes exactly eight tools and returns one complete content payload
+ok 200 - MCP initializes, exposes exactly eight tools and returns one complete content payload
   ---
-  duration_ms: 553.285053
+  duration_ms: 683.189718
   type: 'test'
   ...
 # Subtest: MCP rejects tools before initialization and reports unknown tools
-ok 144 - MCP rejects tools before initialization and reports unknown tools
+ok 201 - MCP rejects tools before initialization and reports unknown tools
   ---
-  duration_ms: 10.584684
+  duration_ms: 28.380893
   type: 'test'
   ...
 # Subtest: MCP invalid JSON does not poison the next valid request
-ok 145 - MCP invalid JSON does not poison the next valid request
+ok 202 - MCP invalid JSON does not poison the next valid request
   ---
-  duration_ms: 10.852903
+  duration_ms: 23.158847
   type: 'test'
   ...
 # Subtest: MCP cancellation reaches the active request AbortSignal
-ok 146 - MCP cancellation reaches the active request AbortSignal
+ok 203 - MCP cancellation reaches the active request AbortSignal
   ---
-  duration_ms: 1.029789
+  duration_ms: 1.504246
   type: 'test'
   ...
 # Subtest: actual CLI emits parseable JSON with runtime warnings kept on stderr
-ok 147 - actual CLI emits parseable JSON with runtime warnings kept on stderr
+ok 204 - actual CLI emits parseable JSON with runtime warnings kept on stderr
   ---
-  duration_ms: 970.853987
+  duration_ms: 1773.662733
   type: 'test'
   ...
 # Subtest: CLI help and invalid tool exit status work without external packages
-ok 148 - CLI help and invalid tool exit status work without external packages
+ok 205 - CLI help and invalid tool exit status work without external packages
   ---
-  duration_ms: 880.826255
+  duration_ms: 1485.146489
   type: 'test'
   ...
 # Subtest: CLI canonical graph export is a real, readable graph file
-ok 149 - CLI canonical graph export is a real, readable graph file
+ok 206 - CLI canonical graph export is a real, readable graph file
   ---
-  duration_ms: 862.612628
+  duration_ms: 1393.249758
   type: 'test'
   ...
 # Subtest: deleting a tracked Git file produces a new snapshot rather than perpetual WORKSPACE_BUSY
-ok 150 - deleting a tracked Git file produces a new snapshot rather than perpetual WORKSPACE_BUSY
+ok 207 - deleting a tracked Git file produces a new snapshot rather than perpetual WORKSPACE_BUSY
   ---
-  duration_ms: 29.355385
+  duration_ms: 66.795122
   type: 'test'
   ...
 # Subtest: loopback explorer requires a bearer token and refuses write tools
-ok 151 - loopback explorer requires a bearer token and refuses write tools
+ok 208 - loopback explorer requires a bearer token and refuses write tools
   ---
-  duration_ms: 266.268441
+  duration_ms: 433.958687
   type: 'test'
   ...
 # Subtest: loopback explorer rejects a cross-site Origin even with a valid token
-ok 152 - loopback explorer rejects a cross-site Origin even with a valid token
+ok 209 - loopback explorer rejects a cross-site Origin even with a valid token
   ---
-  duration_ms: 14.561998
+  duration_ms: 30.863959
   type: 'test'
   ...
 # Subtest: bounded subprocess capture never treats truncated logs as complete
-ok 153 - bounded subprocess capture never treats truncated logs as complete
+ok 210 - bounded subprocess capture never treats truncated logs as complete
   ---
-  duration_ms: 34.5832
+  duration_ms: 64.10378
   type: 'test'
   ...
 # Subtest: subprocess deadlines kill a stalled process instead of waiting indefinitely
-ok 154 - subprocess deadlines kill a stalled process instead of waiting indefinitely
+ok 211 - subprocess deadlines kill a stalled process instead of waiting indefinitely
   ---
-  duration_ms: 109.58304
+  duration_ms: 151.48339
   type: 'test'
   ...
 # Subtest: publisher dry run names the public owner and makes no remote changes
-ok 155 - publisher dry run names the public owner and makes no remote changes
+ok 212 - publisher dry run names the public owner and makes no remote changes
   ---
-  duration_ms: 36.226151
+  duration_ms: 70.086206
   type: 'test'
   ...
-# (node:10984) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:20230) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: tsconfig include/exclude controls roots while excluded source remains text-searchable
-ok 156 - tsconfig include/exclude controls roots while excluded source remains text-searchable
+ok 213 - tsconfig include/exclude controls roots while excluded source remains text-searchable
   ---
-  duration_ms: 529.459645
+  duration_ms: 791.605651
   type: 'test'
   ...
 # Subtest: files list is authoritative rather than every TypeScript file in the snapshot
-ok 157 - files list is authoritative rather than every TypeScript file in the snapshot
+ok 214 - files list is authoritative rather than every TypeScript file in the snapshot
   ---
-  duration_ms: 288.33869
+  duration_ms: 427.710585
   type: 'test'
   ...
 # Subtest: exclude does not remove a file actually imported by a configured root
-ok 158 - exclude does not remove a file actually imported by a configured root
+ok 215 - exclude does not remove a file actually imported by a configured root
   ---
-  duration_ms: 277.155425
+  duration_ms: 411.624896
   type: 'test'
   ...
 # Subtest: extends retains the base configuration origin for relative baseUrl and paths
-ok 159 - extends retains the base configuration origin for relative baseUrl and paths
+ok 216 - extends retains the base configuration origin for relative baseUrl and paths
   ---
-  duration_ms: 228.070397
+  duration_ms: 320.236221
   type: 'test'
   ...
 # Subtest: separate default configs keep unrelated global scripts from contaminating each other
-ok 160 - separate default configs keep unrelated global scripts from contaminating each other
+ok 217 - separate default configs keep unrelated global scripts from contaminating each other
   ---
-  duration_ms: 315.539241
+  duration_ms: 493.373342
   type: 'test'
   ...
 # Subtest: each package resolves the same alias against its own tsconfig
-ok 161 - each package resolves the same alias against its own tsconfig
+ok 218 - each package resolves the same alias against its own tsconfig
   ---
-  duration_ms: 385.239882
+  duration_ms: 552.506553
   type: 'test'
   ...
 # Subtest: project references discover source and resolve calls without generated outputs
-ok 162 - project references discover source and resolve calls without generated outputs
+ok 219 - project references discover source and resolve calls without generated outputs
   ---
-  duration_ms: 498.44813
+  duration_ms: 532.804395
   type: 'test'
   ...
 # Subtest: cross-project compiler rename deduplicates edits and updates the importing project
-ok 163 - cross-project compiler rename deduplicates edits and updates the importing project
+ok 220 - cross-project compiler rename deduplicates edits and updates the importing project
   ---
-  duration_ms: 470.239457
+  duration_ms: 613.451641
   type: 'test'
   ...
 # Subtest: a shared source file retains conflicting bindings as separate analysis contexts
-ok 164 - a shared source file retains conflicting bindings as separate analysis contexts
+ok 221 - a shared source file retains conflicting bindings as separate analysis contexts
   ---
-  duration_ms: 357.576877
+  duration_ms: 590.598119
   type: 'test'
   ...
 # Subtest: changing only a config invalidates unchanged consumer bindings
-ok 165 - changing only a config invalidates unchanged consumer bindings
+ok 222 - changing only a config invalidates unchanged consumer bindings
   ---
-  duration_ms: 696.820017
+  duration_ms: 614.341226
   type: 'test'
   ...
 # Subtest: missing/outside project references are diagnostics, not silently complete analysis
-ok 166 - missing/outside project references are diagnostics, not silently complete analysis
+ok 223 - missing/outside project references are diagnostics, not silently complete analysis
   ---
-  duration_ms: 166.932677
+  duration_ms: 419.784163
   type: 'test'
   ...
 # Subtest: reference cycles terminate and produce an explicit cycle diagnostic
-ok 167 - reference cycles terminate and produce an explicit cycle diagnostic
+ok 224 - reference cycles terminate and produce an explicit cycle diagnostic
   ---
-  duration_ms: 307.547134
+  duration_ms: 637.240959
   type: 'test'
   ...
 # Subtest: malformed and circular extended config errors preserve their own paths
-ok 168 - malformed and circular extended config errors preserve their own paths
+ok 225 - malformed and circular extended config errors preserve their own paths
   ---
-  duration_ms: 158.877063
+  duration_ms: 391.634167
   type: 'test'
   ...
 # Subtest: jsconfig is discovered and JavaScript is not forced into TypeScript strict mode
-ok 169 - jsconfig is discovered and JavaScript is not forced into TypeScript strict mode
+ok 226 - jsconfig is discovered and JavaScript is not forced into TypeScript strict mode
   ---
-  duration_ms: 166.510352
+  duration_ms: 313.41855
   type: 'test'
   ...
 # Subtest: nonexistent files from explicit config lists are reported by the compiler
-ok 170 - nonexistent files from explicit config lists are reported by the compiler
+ok 227 - nonexistent files from explicit config lists are reported by the compiler
   ---
-  duration_ms: 166.016719
+  duration_ms: 232.51399
   type: 'test'
   ...
 # Subtest: diagnostic baseline comparison includes configuration identity
-ok 171 - diagnostic baseline comparison includes configuration identity
+ok 228 - diagnostic baseline comparison includes configuration identity
   ---
-  duration_ms: 0.228003
+  duration_ms: 0.881253
   type: 'test'
   ...
 # Subtest: too many configs fail explicitly before constructing unbounded compiler programs
-ok 172 - too many configs fail explicitly before constructing unbounded compiler programs
+ok 229 - too many configs fail explicitly before constructing unbounded compiler programs
   ---
-  duration_ms: 80.900694
+  duration_ms: 153.56933
   type: 'test'
   ...
 # Subtest: compiler reads remain immutable after captured config/source changes on disk
-ok 173 - compiler reads remain immutable after captured config/source changes on disk
+ok 230 - compiler reads remain immutable after captured config/source changes on disk
   ---
-  duration_ms: 371.646089
+  duration_ms: 547.699152
   type: 'test'
   ...
 # Subtest: rename refuses to modify a shared consumer that binds differently in another variant
-ok 174 - rename refuses to modify a shared consumer that binds differently in another variant
+ok 231 - rename refuses to modify a shared consumer that binds differently in another variant
   ---
-  duration_ms: 380.415307
+  duration_ms: 588.1987
   type: 'test'
   ...
 # Subtest: zero configured source files do not claim semantic coverage
-ok 175 - zero configured source files do not claim semantic coverage
+ok 232 - zero configured source files do not claim semantic coverage
   ---
-  duration_ms: 20.082283
+  duration_ms: 54.972742
   type: 'test'
   ...
 # Subtest: configured strict false is not silently overridden by inferred defaults
-ok 176 - configured strict false is not silently overridden by inferred defaults
+ok 233 - configured strict false is not silently overridden by inferred defaults
   ---
-  duration_ms: 161.438986
+  duration_ms: 295.512567
   type: 'test'
   ...
-# (node:11109) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:20363) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: a real static failure is not hidden by disabled Python analysis
-ok 177 - a real static failure is not hidden by disabled Python analysis
+ok 234 - a real static failure is not hidden by disabled Python analysis
   ---
-  duration_ms: 595.094668
+  duration_ms: 809.778044
   type: 'test'
   ...
 # Subtest: a failing executed check stays failed when a later check times out
-ok 178 - a failing executed check stays failed when a later check times out
+ok 235 - a failing executed check stays failed when a later check times out
   ---
-  duration_ms: 157.242909
+  duration_ms: 200.408446
   type: 'test'
   ...
-1..178
-# tests 178
+1..235
+# tests 235
 # suites 0
-# pass 178
+# pass 235
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 19336.215464
+# duration_ms 66951.590151

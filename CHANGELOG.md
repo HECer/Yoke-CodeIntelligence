@@ -21,3 +21,18 @@ Adds hash-bound patch preparation, copied-tree application, trusted verification
 Development regression fixes include Unicode source offsets, grouped semantic payloads, directed imported edges, deleted Git-tracked files, rationale extraction, immutable result truncation, shared request versus semantic snapshot configuration, durable write recovery, and rejection of repository-selected interpreters.
 
 This release is not the entire long-term specification, is not published to npm, and does not claim live upstream compatibility or production readiness. See docs/STATUS.md and the actual validation report.
+
+## 0.3.0 — 2026-10-13
+
+- Capture installed type declarations/metadata read-only and build TypeScript solution references entirely in memory.
+- Add monotonic unsaved editor overlays, authenticated loopback editor API and locally packaged VS Code extension.
+- Add real optional Jedi and Go/type semantic providers; validate actual clangd definition/reference/rename behavior.
+- Add signed Ed25519 immutable source exchange, receiving-policy checks, fixed-root tenant/project authorization and federated retrieval.
+- Add metadata-assisted capture, dependency-scoped semantic caches, watcher reconciliation and opt-in retention/quarantine/pinning.
+- Add local statistical vectors, reviewed neural/model provider protocol, reranking and source-bound inferred summaries with failure-preserving billing.
+- Add explicit NetworkX Louvain/official Leiden community adapters, richer contract hints and bounded intraprocedural dataflow candidates.
+- Add per-test-file/name-pattern Node coverage collection. Fix zero-matching-case false success by using structured file-level summaries.
+- Add native media ingestion and explicit optional interpretation providers; retain binary hashes and never fabricate ASR/scene meaning.
+- Add optional fail-closed Docker verifier, expanded Serena gateway and full captured-source validation around upstream bridges.
+- Extend public library/CLI, live gates and independent paired-driver benchmark harness. Keep current external/platform/audit limitations explicit.
+- No GitHub or registry publication performed.

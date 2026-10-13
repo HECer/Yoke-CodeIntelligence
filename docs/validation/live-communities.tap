@@ -1,0 +1,90 @@
+TAP version 13
+# (node:16825) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: built-in local vector generation and query need no model service
+ok 1 - built-in local vector generation and query need no model service
+  ---
+  duration_ms: 757.328926
+  type: 'test'
+  ...
+# Subtest: model contract fixtures exercise embed, rerank and source-bound meaning with accounted costs
+ok 2 - model contract fixtures exercise embed, rerank and source-bound meaning with accounted costs
+  ---
+  duration_ms: 508.923542
+  type: 'test'
+  ...
+# Subtest: unknown model billing survives malformed output and blocks overspend
+ok 3 - unknown model billing survives malformed output and blocks overspend
+  ---
+  duration_ms: 73.46667
+  type: 'test'
+  ...
+# Subtest: model-produced fabricated source IDs are refused after billing is preserved
+ok 4 - model-produced fabricated source IDs are refused after billing is preserved
+  ---
+  duration_ms: 356.131345
+  type: 'test'
+  ...
+# Subtest: taint follows assignment, concatenation and branches to a sink with exact anchors
+ok 5 - taint follows assignment, concatenation and branches to a sink with exact anchors
+  ---
+  duration_ms: 337.579812
+  type: 'test'
+  ...
+# Subtest: taint honors host sanitizer assumptions and clears overwritten local bindings
+ok 6 - taint honors host sanitizer assumptions and clears overwritten local bindings
+  ---
+  duration_ms: 522.202474
+  type: 'test'
+  ...
+# Subtest: taint distinguishes shadowed local variables using compiler symbols
+ok 7 - taint distinguishes shadowed local variables using compiler symbols
+  ---
+  duration_ms: 352.792524
+  type: 'test'
+  ...
+# Subtest: actual Node test execution produces hash-bound per-test-file map and broadens unknown changes
+ok 8 - actual Node test execution produces hash-bound per-test-file map and broadens unknown changes
+  ---
+  duration_ms: 226.857808
+  type: 'test'
+  ...
+# Subtest: per-test coverage rejects non-executed or mismatched-source observations
+ok 9 - per-test coverage rejects non-executed or mismatched-source observations
+  ---
+  duration_ms: 45.333246
+  type: 'test'
+  ...
+# Subtest: Prisma models, SQL migrations, ORM calls and OpenAPI clients retain candidate provenance
+ok 10 - Prisma models, SQL migrations, ORM calls and OpenAPI clients retain candidate provenance
+  ---
+  duration_ms: 306.597213
+  type: 'test'
+  ...
+# Subtest: OpenAPI delta reports removed operations and newly required fields
+ok 11 - OpenAPI delta reports removed operations and newly required fields
+  ---
+  duration_ms: 0.50504
+  type: 'test'
+  ...
+# Subtest: LIVE NetworkX Louvain returns a partition without mutating directed observations
+ok 12 - LIVE NetworkX Louvain returns a partition without mutating directed observations
+  ---
+  duration_ms: 1529.820273
+  type: 'test'
+  ...
+# Subtest: actual Node name-pattern selections map individual cases and refuse zero executed passes
+ok 13 - actual Node name-pattern selections map individual cases and refuse zero executed passes
+  ---
+  duration_ms: 345.669473
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6014.672058

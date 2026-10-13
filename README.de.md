@@ -1,58 +1,48 @@
-# Code Intelligence
+# Code Intelligence 0.3.0
 
 **Lokale Codeanalyse mit Quellbelegen, unveränderlichen Projektständen und überprüfbaren Änderungen.**
 
-[English](README.md) · [Schnellstart](docs/QUICKSTART.md) · [Funktionsstand](docs/STATUS.md) · [Prüfergebnisse](docs/validation/report.json)
+[English](README.md) · [Schnellstart](docs/QUICKSTART.md) · [Neue Funktionen](docs/ADVANCED.md) · [Funktionsstand](docs/STATUS.md) · [Prüfergebnisse](docs/validation/report.json)
 
-Die Implementierung verbindet Codesuche, einen gerichteten Wissensgraphen, semantische TypeScript-Navigation und einen abgesicherten Änderungsablauf. Für die eingebauten Analysepfade ist weder ein Sprachmodell noch ein API-Schlüssel erforderlich.
+Der eigenständige Kern verbindet Codesuche, gerichtete Beziehungen, konfigurationsgebundene TypeScript-Analyse und kontrollierte Änderungen. Native Indexierung benötigt kein Sprachmodell und keinen API-Schlüssel. Optionale externe Anbieter behalten eigene Installation, Berechtigungen und Lizenzen. Das ist **keine behauptete vollständige Funktionsgleichheit mit sämtlichen Upstream- oder Cloud-Produkten**.
 
 ## Start
 
-Voraussetzungen: Node.js ab 22.16 und Git; für Python-Dateien Python ab 3.10, für Go-Dateien eine Go-Toolchain.
+Node.js **22.16 oder neuer**, Git; Python und Go für die entsprechenden optionalen Analysepfade. Das Runtime-Archiv enthält die gebaute Anwendung samt TypeScript und benötigt keine npm-Installation. Node/Python/Go, zusätzliche Python-Pakete und Modelle sind nicht gebündelt.
 
 ```sh
-npm ci
-npm run build
+node dist/cli.js --help
 node dist/cli.js index --root "C:/Projekte/MeinProjekt" --timeout 120000
 node dist/cli.js find meineFunktion --root "C:/Projekte/MeinProjekt"
 node dist/cli.js view --root "C:/Projekte/MeinProjekt" --timeout 120000
 ```
 
-Das separate Runtime-Archiv enthält bereits die gebaute Anwendung und TypeScript. Damit kann `node dist/cli.js --help` direkt ohne Paketinstallation gestartet werden. Node, Python, Go und optionale Upstream-Tools sind nicht darin enthalten.
+Im Quellarchiv zuerst `npm ci` und `npm run build`. In dieser Bauumgebung scheiterte die Online-Installation an DNS; Build und Tests nutzten die vorhandenen gepinnten Abhängigkeiten. Die acht MCP-Werkzeuge stehen über `serve` bereit. Änderungen am Originalprojekt bleiben standardmäßig gesperrt.
 
-Für eine Agentenanbindung wird `serve` statt `view` gestartet. Die acht MCP-Werkzeuge und konkrete JSON-Beispiele stehen in [docs/API.md](docs/API.md). Die üblichen Schritte sind: finden, Originalcode lesen, Änderung vorbereiten, prüfen und zunächst isoliert anwenden. Änderungen am Originalprojekt sind standardmäßig gesperrt.
+## Neu gegenüber 0.2.0
 
-## Neu in 0.2.0
+| Bereich | Implementierung |
+|---|---|
+| TypeScript | Unveränderliche, schreibgeschützte installierte Typdefinitionen; Solution-Build einschließlich Project-Reference-Ausgaben ausschließlich im Speicher. |
+| Python/Go/LSP | Echte Jedi- und Go-Typanalyse für Navigation und vorbereitete Umbenennungen. Live-Prüfungen mit Jedi, Go und clangd. |
+| Editor | Ungespeicherte Buffer mit Versions-/Konfliktschutz, lokale authentifizierte HTTP-Brücke und VS-Code-Erweiterung als VSIX. |
+| Mehrere Projekte/Rechner | Signierter Snapshot-Austausch, projekt-/mandantenbezogene Berechtigungen und föderierte Suche ohne automatisches Überschreiben des Quellprojekts. |
+| Laufende Pflege | Metadatenmodus, kontextbezogene Semantik-Caches, Watch-Reconciliation, explizite Speicherbereinigung und optionale periodische Retention. |
+| Wissensanreicherung | Lokale statistische Vektoren, optionale neuronale Embeddings, Reranking und quellengebundene Modell-Zusammenfassungen. |
+| Analyse | Zusätzliche Prisma-/SQL-/API-Bezüge, OpenAPI-Änderungsanalyse, begrenzter Datenfluss und Community-Backends. |
+| Tests/Medien | Tatsächlich ausgeführte Node-Testselektionen mit Coverage, native PDF-/Metadaten-/Untertitelimporte; keine erfundenen Transkripte. |
+| Prüfwerkzeuge | Docker-Profil mit explizitem Image-Digest und gesperrtem Netzwerk; getrennte Live-Gates und ein gepaarter Agenten-Benchmark-Harness. |
 
-Konfigurierte TypeScript-Projekte mit `files`, `include`, `exclude`, `extends`, Pfad-Aliassen und quellbasierter Navigation über Project References. Separate Konfigurationen behalten eigene Bindungen und globale Namensräume. Umbenennungen sammeln projektübergreifende Verwendungen und lehnen widersprüchliche Bindungen ab.
+## Nachweise und offene Grenzen
 
-Der neue, ausdrücklich freizugebende `lsp`-Befehl kann einen lokal installierten Sprachserver für Definitionen, Referenzen, Implementierungen und vorbereitete Umbenennungspläne nutzen. URI-Grenzen, Quell-Hashes, Zeichenpositionen, Dokumentversionen und Konflikte werden geprüft. Das ist keine bestätigte Kompatibilität mit allen echten Sprachservern und keine Betriebssystem-Sandbox.
+Die vollständige Standardsuite wurde erneut ausgeführt. Zusätzliche echte Live-Tests und die Paketprüfungen sind im [Report](docs/validation/report.json) separat aufgeführt. Modell-/Serena-Protokollfixtures werden nicht als echte Anbieterläufe gezählt. Die Mikrobenchmarks sind keine nachgewiesene Tokenersparnis ganzer Agentenaufgaben.
 
-Das Beispiel `examples/monorepo` und [die Anleitung](docs/CONFIGURED-PROJECTS.md) zeigen die Verwendung. Nach dem Update einmal neu indexieren; vorhandene alte Snapshots bleiben historische Projektstände.
+Die konkreten Upstream-Pakete Graft/Graphify/Serena konnten hier nicht live installiert werden. Leiden, neuronale Modellgewichte, Docker und ein echter VS-Code-Host waren ebenfalls nicht verfügbar. Windows/macOS- und Hosted-CI-Läufe sind vorbereitet, nicht durchgeführt. Der Browserzugriff auf localhost wurde durch eine Administratorrichtlinie blockiert; Frontend- und echte HTTP-Tests sind deshalb getrennt ausgewiesen. Eine unabhängige Sicherheitsprüfung oder ein realer Agentenvergleich wurde nicht ersetzt oder erfunden.
 
-## Was tatsächlich enthalten ist
+## Weitere Verwendung
 
-Unveränderliche Snapshots und Quell-Hashes, UTF-8-Positionen, SQLite-Volltextsuche, gerichtete Beziehungen mit Herkunft und Unsicherheiten, TypeScript-/JavaScript-Symbolsuche und Umbenennungen, Python-AST- und Go-Parseranalyse, begrenzte Kontextpläne, Konfliktschutz und Wiederherstellung unterbrochener Änderungen. Hinzu kommen ein lokaler Explorer, Gedächtniseinträge mit Quellenbindung und Importe von Vektoren, Laufzeitbeobachtungen, LCOV und SARIF.
+Die Anleitung [ADVANCED.md](docs/ADVANCED.md) enthält alle neuen Befehle. Die VSIX lässt sich lokal installieren; sie benötigt einen vertrauenswürdig konfigurierten Node-Prozess. Föderation und Schlüsselaustausch stehen in [FEDERATION.md](docs/FEDERATION.md). Vollständige Funktionsgrenzen: [STATUS.md](docs/STATUS.md).
 
-Graft und Graphify besitzen versionierte Import-/Prozessadapter. Externe LSP- und Serena-MCP-Anbindungen sind ebenfalls implementiert. **Diese Adapter wurden mit Vertrags- und Protokollfixtures geprüft, nicht mit tatsächlich installierten aktuellen Upstream-Paketen.** Version 0.2.0 ist deshalb kein Versprechen vollständiger Funktionsgleichheit oder Produktionsreife. Die verbleibenden Unterschiede sind in [STATUS.md](docs/STATUS.md) ausdrücklich aufgelistet.
+**In diesem Update keine GitHub-Veröffentlichung.** Das vorhandene Veröffentlichungsskript bleibt optional im Projekt; es wurde nicht ausgeführt. Quellarchiv und Git-Historie sind die ausgelieferte Grundlage.
 
-Die aktuelle lokale Testsuite und die Mikrobenchmark-Ergebnisse sind beigefügt. Der historische Browserbericht ist ausdrücklich als 0.1.0-Ergebnis archiviert. Der Screenshot zeigt die echte Oberfläche mit einer Testantwort: Direkte Browseraufrufe auf localhost wurden durch eine Richtlinie dieser Umgebung blockiert. Der HTTP-Dienst wurde unabhängig davon getestet.
-
-## Öffentlich auf GitHub veröffentlichen
-
-Ziel: **`HECer/Code-Intelligence`**. Der vorherige Veröffentlichungsversuch scheiterte an der fehlenden Repository-Anlage im Connector (404 am Ziel). In diesem Update wurde keine Veröffentlichung vorgenommen. Die Quell- und Runtime-Archive enthalten Version 0.2.0; der lokale Publisher verwendet den aktuellen Versions-Tag.
-
-Im entpackten Quellprojekt mit enthaltener `.git`-Historie:
-
-```sh
-gh auth login
-npm run publish:github
-```
-
-Dafür ist GitHub CLI nötig. Alternativ zu npm: `node scripts/publish-github.mjs`. Der Publisher prüft den Account `HECer`, legt das Repository öffentlich an, pusht ohne Force und verifiziert Sichtbarkeit und Commit. Er überschreibt kein abweichendes Repository und fordert keine im Chat geteilten Zugangsdaten.
-
-## Wichtige Grenzen
-
-Gespeicherte Dateien, keine ungespeicherten Editorbuffer. Python-/Go-Aufrufziele sind häufig heuristisch, nicht compilerverifiziert. Ein statischer Graph ist kein Laufzeit- oder Sicherheitsbeweis. Kopierte Arbeitsverzeichnisse schützen nicht gegen bösartige ausgeführte Programme; externe Verifikationsbefehle benötigen ausdrückliches Vertrauen. Ein kleiner Warm-Query-Benchmark beweist keine Tokenersparnis eines kompletten Agentenlaufs.
-
-Der eigene Code steht unter MIT. Die separat installierten Upstream-Komponenten behalten ihre jeweiligen Lizenzen; Serena-Anwendungscode wurde nicht übernommen.
+Eigener Code: MIT. Separat installierte Programme und Modelle haben eigene Lizenzbedingungen. Serena-Anwendungscode wurde nicht übernommen. Ein kopiertes Arbeitsverzeichnis ist keine Betriebssystem-Sandbox; externe Programme dürfen nur mit ausdrücklichem Vertrauen oder geeigneter Host-Isolation laufen.

@@ -1,7 +1,8 @@
 import { DatabaseSync } from 'node:sqlite';
-import { mkdirSync, readFileSync, existsSync, lstatSync } from 'node:fs';
+import { mkdirSync, readFileSync, existsSync, lstatSync, renameSync } from 'node:fs';
 import { join } from 'node:path';
 import { randomBytes, randomUUID } from 'node:crypto';
+import { hostname } from 'node:os';
 import { assert, atomicWrite, hash, stable, CursorCodec, tokens } from '../core/util.js';
 import { SCHEMA, type Snapshot, type Graph, type Entity, type Observation, type Evidence } from '../core/types.js';
 /** One local writer; immutable source blobs and snapshot-bound observations. */
@@ -11,11 +12,12 @@ export class Store {
     readonly workspaceId: string;
     readonly projectId: string;
     private closed = false;
+    readonly clientId = randomUUID();
     constructor(readonly directory: string) {
         if (existsSync(directory))
             assert(!lstatSync(directory).isSymbolicLink(), 'PATH_DENIED', 'State directory cannot be a symbolic link');
         mkdirSync(directory, { recursive: true, mode: 0o700 });
-        for (const name of ['blobs', 'changes', 'logs', 'workers', 'index.sqlite', 'index.sqlite-wal', 'index.sqlite-shm']) {
+        for (const name of ['blobs', 'trash', 'changes', 'logs', 'workers', 'index.sqlite', 'index.sqlite-wal', 'index.sqlite-shm']) {
             try {
                 assert(!lstatSync(join(directory, name)).isSymbolicLink(), 'PATH_DENIED', 'State files and directories cannot be symbolic links');
             }
@@ -24,7 +26,7 @@ export class Store {
                     throw e;
             }
         }
-        for (const sub of ['blobs', 'changes', 'logs'])
+        for (const sub of ['blobs', 'trash', 'changes', 'logs'])
             mkdirSync(join(directory, sub), { recursive: true, mode: 0o700 });
         this.db = new DatabaseSync(join(directory, 'index.sqlite'));
         this.db.exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000; PRAGMA synchronous=FULL;');
@@ -32,6 +34,8 @@ export class Store {
         const schema = this.meta('schema');
         assert(!schema || Number(schema) === SCHEMA, 'SCHEMA_MISMATCH', `Unsupported database schema ${schema}; back up and rebuild the index.`);
         this.db.exec(`
+      CREATE TABLE IF NOT EXISTS clients(id TEXT PRIMARY KEY, pid INTEGER NOT NULL, host TEXT NOT NULL, created TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS pins(id TEXT PRIMARY KEY, snapshot TEXT NOT NULL, reason TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS snapshots(id TEXT PRIMARY KEY, workspace TEXT NOT NULL, json TEXT NOT NULL, created TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS graphs(snapshot TEXT PRIMARY KEY REFERENCES snapshots(id), coverage TEXT NOT NULL, diagnostics TEXT NOT NULL, created TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS entities(id TEXT PRIMARY KEY, snapshot TEXT NOT NULL REFERENCES snapshots(id), path TEXT NOT NULL, name TEXT NOT NULL, kind TEXT NOT NULL, json TEXT NOT NULL);
@@ -64,6 +68,7 @@ export class Store {
             this.setMeta('cursor_secret', secret);
             return { workspace, project, secret };
         });
+        this.db.prepare('INSERT INTO clients VALUES(?,?,?,?)').run(this.clientId, process.pid, hostname(), new Date().toISOString());
         this.workspaceId = identity.workspace;
         this.projectId = identity.project;
         this.cursor = new CursorCodec(Buffer.from(identity.secret, 'hex'));
@@ -108,7 +113,19 @@ export class Store {
         }
         return join(this.directory, 'blobs', digest.slice(0, 2), digest.slice(2));
     }
-    blob(digest: string): Buffer { const path = this.blobPath(digest); assert(existsSync(path), 'MISSING_BLOB', 'Source blob is missing'); const b = readFileSync(path); assert(hash(b) === digest, 'CORRUPT_BLOB', 'Source blob failed SHA-256 integrity check'); return b; }
+    blob(digest: string): Buffer {
+        const path = this.blobPath(digest), trash = join(this.directory, 'trash', digest);
+        assert(!lstatSync(join(this.directory, 'trash')).isSymbolicLink(), 'PATH_DENIED', 'Trash root cannot be a symlink');
+        if (!existsSync(path) && existsSync(trash)) {
+            assert(!lstatSync(trash).isSymbolicLink() && hash(readFileSync(trash)) === digest, 'CORRUPT_BLOB', 'Quarantined blob failed integrity check');
+            mkdirSync(join(this.directory, 'blobs', digest.slice(0, 2)), { recursive: true, mode: 0o700 });
+            renameSync(trash, path);
+        }
+        assert(existsSync(path), 'MISSING_BLOB', 'Source blob is missing');
+        const b = readFileSync(path);
+        assert(hash(b) === digest, 'CORRUPT_BLOB', 'Source blob failed SHA-256 integrity check');
+        return b;
+    }
     putSnapshot(value: Snapshot): void { this.db.prepare('INSERT OR IGNORE INTO snapshots VALUES(?,?,?,?)').run(value.id, value.workspaceId, stable(value), value.createdAt); }
     snapshot(id: string): Snapshot {
         const row = this.db.prepare('SELECT json FROM snapshots WHERE id=? AND workspace=?').get(id, this.workspaceId) as {
@@ -231,6 +248,7 @@ export class Store {
     }
     close(): void {
         if (!this.closed) {
+            this.db.prepare('DELETE FROM clients WHERE id=?').run(this.clientId);
             this.db.close();
             this.closed = true;
         }

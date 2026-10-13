@@ -15,7 +15,7 @@ class TypeScriptUnit {
         this.contents = fs.contents;
         this.abs = fs.abs;
         this.rel = fs.rel;
-        const options: ts.CompilerOptions = { ...config.parsed.options, noEmit: true, types: config.parsed.options.types ?? [], plugins: [] };
+        const options: ts.CompilerOptions = { ...config.parsed.options, noEmit: true, plugins: [] };
         const host: ts.LanguageServiceHost & {
             useSourceOfProjectReferenceRedirect(): boolean;
         } = {
@@ -155,7 +155,7 @@ class TypeScriptUnit {
         }
         for (const edge of observations)
             edge.analysisContext = this.config.name;
-        return { entities, observations, diagnostics: this.diagnostics(deadline), limitations: ['TypeScript semantic bindings are not runtime dispatch proofs.', 'External dependency source and @types packages are excluded unless explicitly indexed; missing dependencies reduce semantic coverage.', 'Bindings are scoped to the reported TypeScript configuration; alternative configurations are retained separately.'] };
+        return { entities, observations, diagnostics: this.diagnostics(deadline), limitations: ['TypeScript semantic bindings are not runtime dispatch proofs.', 'Only captured installed declaration/configuration files are available. Missing packages and symlinked dependency stores remain explicit omissions.', 'Bindings are scoped to the reported TypeScript configuration; alternative configurations are retained separately.'] };
     }
     diagnostics(deadline = new Deadline(60000)): Diagnostic[] {
         const diagnostics: ts.Diagnostic[] = [...this.program.getOptionsDiagnostics(), ...this.program.getGlobalDiagnostics()];
@@ -215,6 +215,10 @@ export class TypeScriptProject {
     get service(): ts.LanguageService { assert(this.units[0], 'CAPABILITY_UNAVAILABLE', 'No configured TypeScript source program'); return this.units[0].service; }
     abs(path: string): string { return this.fs.abs(path); }
     rel(path: string): string | undefined { return this.fs.rel(path); }
+    analysisUnits(): {
+        id: string;
+        program: ts.Program;
+    }[] { return this.units.map(u => ({ id: u.config.name, program: u.program })); }
     contexts(): AnalysisContext[] {
         return [...this.configs.projects.values()].map(config => {
             const unit = this.units.find(u => u.config === config);
@@ -226,15 +230,30 @@ export class TypeScriptProject {
         const missing = this.snapshot.files.filter(f => ['typescript', 'javascript'].includes(f.language) && !known.has(f.path));
         return [...this.configs.limitations, ...contexts.flatMap(c => c.limitations),
             ...(missing.length ? [`TypeScript semantic analysis unavailable for ${missing.length} captured files outside configured programs; file/text search still works.`] : []),
-            'Only immutable source and trusted TypeScript standard libraries are loaded; external dependency types are not automatically loaded.'];
+            'Only immutable source/dependency captures and trusted TypeScript standard libraries are loaded. Package code and compiler plugins are not executed.'];
     }
-    extract(deadline: Deadline): Extraction {
+    cacheStats = { hits: 0, misses: 0 };
+    extract(deadline: Deadline, cache?: {
+        get(key: string): Extraction | undefined;
+        put(key: string, value: Extraction): void;
+    }): Extraction {
+        this.cacheStats = { hits: 0, misses: 0 };
         const entities = new Map<string, LocalEntity>(), memberships = new Map<string, Set<string>>();
         const observations: LocalObservation[] = [], diagnostics: Diagnostic[] = [...this.configs.projects.values()].flatMap(c => c.problems);
         const limitations = new Set(this.limitations());
         for (const unit of this.units) {
             deadline.check();
-            const result = unit.extract(deadline);
+            const sourceFiles = unit.program.getSourceFiles().map(f => this.rel(f.fileName)).filter((p): p is string => p !== undefined);
+            const metadata = this.snapshot.files.filter(f => /(?:tsconfig|jsconfig|package|lock).*\.json$/.test(f.path)).map(f => [f.path, f.hash]);
+            const key = 'ts-unit:' + hash(stable({ compiler: ts.version, producer: 'ci-ts-unit-v1', context: unit.config.name, options: { ...unit.config.parsed.options, configFile: undefined }, roots: unit.config.parsed.fileNames, references: unit.config.parsed.projectReferences, metadata, availablePaths: this.snapshot.files.map(f => f.path), sources: sourceFiles.map(path => [path, hash(this.contents.get(path)!)]) }));
+            let result = cache?.get(key);
+            if (result)
+                this.cacheStats.hits++;
+            else {
+                result = unit.extract(deadline);
+                this.cacheStats.misses++;
+                cache?.put(key, result);
+            }
             for (const entity of result.entities) {
                 const prior = entities.get(entity.key);
                 assert(!prior || stable(prior) === stable(entity), 'IDENTITY_COLLISION', 'TypeScript source entity differs across configuration contexts');
@@ -292,6 +311,8 @@ export class TypeScriptProject {
             }
         return [...edits.values()].sort((a, b) => a.path.localeCompare(b.path) || (a.kind === 'replace' && b.kind === 'replace' ? a.startByte - b.startByte : 0));
     }
-    close(): void { for (const unit of this.units)
-        unit.close(); }
+    close(): void {
+        for (const unit of this.units)
+            unit.close();
+    }
 }

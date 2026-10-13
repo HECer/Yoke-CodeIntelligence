@@ -9,6 +9,8 @@ import { runLsp } from './adapters/lsp-command.js';
 import { serveViewer } from './protocol/viewer.js';
 import { Deadline, assert, object } from './core/util.js';
 import { VERSION } from './core/types.js';
+import { collectGarbage } from './store/maintenance.js';
+import { ADVANCED_COMMANDS, advancedCommand } from './cli-advanced.js';
 const HELP = `Code Intelligence ${VERSION} — local, evidence-first code intelligence
 
 Usage: code-intelligence <command> [arguments] --root <project> [options]
@@ -38,6 +40,23 @@ Usage: code-intelligence <command> [arguments] --root <project> [options]
   runtime --input <JSON>         Import source-hash-bound execution observations
   sarif --input <JSON>           Import SARIF with --hashes <source-hashes.json>
   export                        Write the canonical graph to --output <file>
+  editor                        Loopback authenticated unsaved-buffer bridge
+  build                         TypeScript solution build with memory-only output
+  semantic <python|go> <op> <path>  Real optional semantic provider; --byte offset
+  serena <capabilities|read|prepare> --command ... --input operation.json
+  gc                            Retention preview; --mode apply quarantines data
+  pin / unpin                   Keep/release a snapshot with --key
+  federation --host-config file Signed source service; tokens via environment
+  sync <export|import|request>   Host-configured signed exchange, no checkout
+  embed                         Local lexical vectors; --host-config for models
+  semantic-search <query>       --model local-id or --host-config provider.json
+  rerank / summarize            Source-bound model operations; --input JSON
+  communities                   Explicit --algorithm leiden|louvain
+  taint                         Bounded intraprocedural candidates; --input policy
+  coverage-run                  Run test selections from --input; --trust-project
+  coverage-tests / test-select  Per-test import or selection against --base
+  media <path>                  Native media ingest; optional supplied transcript
+  contract-diff --input JSON    Compare before/after OpenAPI contracts
   doctor                        Show environment and installed-provider diagnostics
 
 Options:
@@ -58,7 +77,15 @@ Options:
   --byte <offset>               Exact UTF-8 source offset for an LSP operation
   --new-name <name>             LSP rename prepares a plan; does not apply it
   --analysis-context <config>   Restrict trace to a config path; repeatable
-  --port <port>                 Explorer port, default 0 (ephemeral)
+  --port <port>                 Explorer/editor/federation port, default 0
+  --gc-every <seconds>           Watch only: opt-in retention, at least 60 seconds
+  --build                       Include TypeScript solution build in verify
+  --host-config <file>          Explicit host configuration, not repo instructions
+  --allow-runtime               Explicit arbitrary Serena REPL/debug capability
+  --base <snapshot>             Baseline for per-test impact selection
+  --algorithm <name>            Leiden requires optional libraries; no fallback
+  --model <id> / --dimensions N Local vectorizer identity/dimension
+  --expected-hash <sha256>      Require exact imported media bytes
 
 No model/API key is required. Repository text is data, never permission.
 `;
@@ -72,7 +99,7 @@ const numeric = (v: unknown, fallback: number): number => {
 const print = (value: unknown) => process.stdout.write(JSON.stringify(value, null, 2) + '\n');
 export async function main(argv = process.argv.slice(2)): Promise<void> {
     const { values: o, positionals: p } = parseArgs({ args: argv, allowPositionals: true, options: {
-            command: { type: 'string' }, arg: { type: 'string', multiple: true }, byte: { type: 'string' }, 'new-name': { type: 'string' }, 'analysis-context': { type: 'string', multiple: true },
+            'gc-every': { type: 'string' }, build: { type: 'boolean' }, 'host-config': { type: 'string' }, 'allow-runtime': { type: 'boolean' }, base: { type: 'string' }, algorithm: { type: 'string' }, model: { type: 'string' }, dimensions: { type: 'string' }, 'expected-hash': { type: 'string' }, command: { type: 'string' }, arg: { type: 'string', multiple: true }, byte: { type: 'string' }, 'new-name': { type: 'string' }, 'analysis-context': { type: 'string', multiple: true },
             python: { type: 'string' }, root: { type: 'string' }, snapshot: { type: 'string' }, json: { type: 'string' }, input: { type: 'string' },
             output: { type: 'string' }, hashes: { type: 'string' }, kind: { type: 'string' }, path: { type: 'string' },
             mode: { type: 'string' }, direction: { type: 'string' }, depth: { type: 'string' }, limit: { type: 'string' },
@@ -115,9 +142,21 @@ export async function main(argv = process.argv.slice(2)): Promise<void> {
     const snapshot = () => engine.workspace.snapshot(o.snapshot, new Deadline(numeric(o.timeout, 120000)));
     const requireInput = () => { assert(o.input, 'INVALID_ARGUMENT', '--input is required'); return readFileSync(resolve(o.input), 'utf8'); };
     try {
+        if (ADVANCED_COMMANDS.has(cmd)) {
+            persistent = (await advancedCommand(cmd, p, o, engine, input, print)).persistent;
+            return;
+        }
         switch (cmd) {
             case 'index':
-                await invoke('ci_status', { mode: 'index' });
+                if (o.mode === 'metadata') {
+                    const s = engine.workspace.capture(new Deadline(numeric(o.timeout, 120000)), { mode: 'metadata' });
+                    await engine.indexer.ensure(s, new Deadline(numeric(o.timeout, 120000)));
+                    print({ snapshotId: s.id, captureConsistency: s.captureConsistency });
+                }
+                else {
+                    assert(o.mode === undefined || o.mode === 'strict', 'INVALID_ARGUMENT', 'index --mode strict or metadata');
+                    await invoke('ci_status', { mode: 'index' });
+                }
                 break;
             case 'status':
                 await invoke('ci_status');
@@ -153,7 +192,7 @@ export async function main(argv = process.argv.slice(2)): Promise<void> {
                 await invoke('ci_change_apply', { planId: p[1], idempotencyKey: o.key ?? `cli-${p[1].slice(0, 24)}`, mode: o.mode ?? 'isolated' });
                 break;
             case 'verify':
-                await invoke('ci_verify', { ...(p[1] ? { planId: p[1] } : {}), ...(o.profile ? { profiles: o.profile } : {}) });
+                await invoke('ci_verify', { ...(p[1] ? { planId: p[1] } : {}), ...(o.profile ? { profiles: o.profile } : {}), ...(o.build ? { build: true } : {}) });
                 break;
             case 'recover':
                 print(engine.changes.recover());
@@ -235,6 +274,9 @@ export async function main(argv = process.argv.slice(2)): Promise<void> {
             case 'watch': {
                 persistent = true;
                 let timer: ReturnType<typeof setTimeout> | undefined, busy = false, again = false;
+                const gcSeconds = o['gc-every'] ? numeric(o['gc-every'], 3600) : 0;
+                assert(!gcSeconds || gcSeconds >= 60 && gcSeconds <= 604800, 'INVALID_ARGUMENT', 'GC interval must be 60–604800 seconds');
+                let nextGc = Date.now() + gcSeconds * 1000;
                 const update = async () => {
                     if (busy) {
                         again = true;
@@ -242,7 +284,25 @@ export async function main(argv = process.argv.slice(2)): Promise<void> {
                     }
                     busy = true;
                     try {
-                        await invoke('ci_status', { mode: 'index' });
+                        if (o.mode === 'metadata') {
+                            const s = engine.workspace.capture(new Deadline(numeric(o.timeout, 120000)), { mode: 'metadata' });
+                            await engine.indexer.ensure(s, new Deadline(numeric(o.timeout, 120000)));
+                            print({ snapshotId: s.id, captureConsistency: s.captureConsistency });
+                        }
+                        else
+                            await invoke('ci_status', { mode: 'index' });
+                        if (gcSeconds && Date.now() >= nextGc) {
+                            try {
+                                print({ maintenance: collectGarbage(engine.workspace.store, { apply: true }) });
+                            }
+                            catch (e) {
+                                print({ maintenance: 'deferred', reason: (e as Error).message });
+                            }
+                            nextGc = Date.now() + gcSeconds * 1000;
+                        }
+                    }
+                    catch (error) {
+                        print({ index: 'failed', message: (error as Error).message });
                     }
                     finally {
                         busy = false;
@@ -254,13 +314,16 @@ export async function main(argv = process.argv.slice(2)): Promise<void> {
                 };
                 await update();
                 const watcher = watchFs(engine.workspace.root, { recursive: true }, (_event, filename) => {
-                    if (!filename || /(^|[\\/])(?:\.code-intelligence|node_modules|\.git|dist|__pycache__)([\\/]|$)/.test(filename.toString()))
+                    if (!filename || /(^|[\\/])(?:\.code-intelligence|\.git|dist|__pycache__)([\\/]|$)/.test(filename.toString()))
                         return;
                     if (timer)
                         clearTimeout(timer);
                     timer = setTimeout(() => void update(), 300);
                 });
+                // Watch notifications are hints. Reconcile periodically even after dropped events.
+                const reconciliation = setInterval(() => void update(), 30000);
                 const cleanup = () => {
+                    clearInterval(reconciliation);
                     if (timer)
                         clearTimeout(timer);
                     watcher.close();

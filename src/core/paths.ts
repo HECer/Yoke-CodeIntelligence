@@ -67,6 +67,16 @@ export function language(path: string): string {
         return 'javascript';
     if (/\.pyi?$/.test(path))
         return 'python';
+    if (/\.(c|h)$/.test(path))
+        return 'c';
+    if (/\.(cpp|cxx|cc|hpp|hxx)$/.test(path))
+        return 'cpp';
+    if (/\.rs$/.test(path))
+        return 'rust';
+    if (/\.java$/.test(path))
+        return 'java';
+    if (/\.cs$/.test(path))
+        return 'csharp';
     if (/\.go$/.test(path))
         return 'go';
     if (/\.(md|mdx|rst|txt)$/i.test(path))

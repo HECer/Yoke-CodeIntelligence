@@ -1,0 +1,15 @@
+import { fileURLToPath } from 'node:url';
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { fixture } from './helpers.mjs';
+import { Deadline, hash } from '../dist/core/util.js';
+import { ingestMedia } from '../dist/analysis/media.js';
+import { dockerArguments } from '../dist/core/sandbox.js';
+import { writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { runSerena } from '../dist/adapters/serena-command.js';
+const image = 'node@sha256:' + 'a'.repeat(64);
+test('Docker invocation pins image, denies network and privileges and never expands a shell', () => { const args = dockerArguments('/project/work', 'ci-test', { kind: 'docker', image }, 'node', ['--test', 'a.js']); assert(args.includes('--pull=never')); assert(args.includes('--network=none')); assert(args.includes('--cap-drop=ALL')); assert(args.includes('--security-opt=no-new-privileges')); assert.equal(args.at(-3), image); assert.equal(args.at(-2), '--test'); assert.equal(args.at(-1), 'a.js'); assert.throws(() => dockerArguments('/tmp/x', 'test', { kind: 'docker', image: 'node:latest' }, 'node', []), /digest/); });
+test('media native transcript creates a provenance-bound derived snapshot, no source edits', async (t) => { const f = fixture(t, { 'notes.vtt': 'WEBVTT\n\n00:00:00.000 --> 00:00:01.000\nInvoice confirmation.\n' }), s = f.snapshot(), r = await ingestMedia(f.engine, s, 'notes.vtt', {}, new Deadline(10000)); assert.equal(r.sourceHash, hash(f.read('notes.vtt'))); assert.equal(r.sourceWritten, false); const derived = f.ws.store.snapshot(r.snapshotId); assert(f.ws.read(derived, r.representationPath).toString().includes('Invoice confirmation')); assert.equal(f.read('notes.vtt'), 'WEBVTT\n\n00:00:00.000 --> 00:00:01.000\nInvoice confirmation.\n'); });
+test('media refuses source escape and stale media digest', async (t) => { const f = fixture(t, { 'notes.txt': 'text' }), s = f.snapshot(); await assert.rejects(ingestMedia(f.engine, s, '../secret.txt', {}, new Deadline(1000))); await assert.rejects(ingestMedia(f.engine, s, 'notes.txt', { expectedHash: '0'.repeat(64) }, new Deadline(1000)), /hash/); });
+test('Serena discovery and explicitly selected read operation preserve source isolation', async (t) => { const f = fixture(t, { 'a.ts': 'export function one(){return 1}' }), script = fileURLToPath(new URL('./fixtures/fake-provider.mjs', import.meta.url)); const result = await runSerena(f.engine, 'capabilities', undefined, {}, { trusted: true, command: process.execPath, args: [script, 'mcp'] }); assert(result.capabilities.some(x => x.name === 'find_symbol')); const read = await runSerena(f.engine, 'read', 'find_symbol', { name_path_pattern: 'one', relative_path: 'a.ts' }, { trusted: true, command: process.execPath, args: [script, 'mcp'] }); assert.equal(read.sourceFilesUnchanged, true); await assert.rejects(runSerena(f.engine, 'read', 'execute_shell_command', {}, { trusted: true, command: process.execPath, args: [script, 'mcp'] }), /advertised|permission/); });

@@ -92,3 +92,13 @@ No compiler host fallback reads arbitrary live disk files: only immutable captur
 LSP parsing validates per-message limits, UTF-8 JSON, JSON-RPC result/error shape, negotiated UTF-16 positions, URI scope, LocationLinks, edit versions and overlaps. Unsupported callbacks receive MethodNotFound and workspace/applyEdit is refused. Read results are locally source-bound, not upstream correctness/coverage attestations.
 
 The host-authorized `runLsp`/CLI operation materializes a snapshot, shares one deadline, invokes the provider, requests shutdown, verifies copied source hashes and returns bounded locations or a persisted change plan. Original source is never implicitly edited. Unknown external billing/network activity is reported; a copied tree is not an OS security boundary. No arbitrary repository-declared server command is auto-started.
+
+## 0.3 extensions
+
+`EditorBuffers` derives versioned overlays from strict disk snapshots; `serveEditor` and the VS Code client pass only explicit local read privileges. Federation signs immutable source envelopes and stores remote snapshots separately; it never transfers a live WAL database or grants remote source writes.
+
+Readonly dependency declarations extend the compiler filesystem, while the TypeScript solution builder emits to a memory overlay only. Semantic extraction cache keys include program/config/reference/source dependencies. Metadata-assisted capture is a separately labeled weaker read mode, never source-write authority.
+
+Advanced operations remain modules around the existing snapshot/provenance/change core: semantic providers, source-bound model enrichment, community projection, contract hints, bounded dataflow, test maps and media imports. Their command dispatch is in `cli-advanced.ts`. Source-changing provider operations prepare a ChangeManager plan rather than bypassing its preconditions.
+
+Retention scans explicit roots under an exclusive-client transaction, quarantines unreferenced blobs and only purges earlier unreferenced trash. Failures/unknown usage survive model errors. Optional Docker is containment policy, not a silent fallback around arbitrary process execution. See the operation-specific guides for residual limits.
