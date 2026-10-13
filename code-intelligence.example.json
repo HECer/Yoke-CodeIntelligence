@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "exclude": [
+    "dist/**",
+    "build/**",
+    "coverage/**",
+    "vendor/**",
+    "docs/validation/**",
+    "*.min.js",
+    "*.map"
+  ],
+  "maxFileBytes": 2000000,
+  "maxFiles": 20000,
+  "maxSnapshotBytes": 256000000,
+  "pythonEnabled": true,
+  "captureAttempts": 3,
+  "maxResultBytes": 32768,
+  "timeoutMs": 120000,
+  "serviceScopes": {},
+  "verify": {}
+}

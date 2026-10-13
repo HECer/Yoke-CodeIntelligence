@@ -1,0 +1,23 @@
+{
+  "sourceRead": "src/invoice.ts",
+  "originalWorkspaceChanged": false,
+  "diff": "diff --git a/src/invoice.ts b/src/invoice.ts\n--- a/src/invoice.ts\n+++ b/src/invoice.ts\n@@ -1,10 +1,10 @@\n-export interface LineItem {\n-  quantity: number;\n-  unitPrice: number;\n-}\n-\n-/** Calculate a gross total from invoice lines and a tax rate. */\n-export function invoiceTotal(lines: LineItem[], taxRate: number = 0.19): number {\n-  const subtotal = lines.reduce((sum, line) => sum + line.quantity * line.unitPrice, 0);\n-  return Math.round(subtotal * (1 + taxRate) * 100) / 100;\n-}\n+export interface LineItem {\n+  quantity: number;\n+  unitPrice: number;\n+}\n+\n+/** Calculate a gross total from invoice lines and a tax rate. */\n+export function calculateInvoiceTotal(lines: LineItem[], taxRate: number = 0.19): number {\n+  const subtotal = lines.reduce((sum, line) => sum + line.quantity * line.unitPrice, 0);\n+  return Math.round(subtotal * (1 + taxRate) * 100) / 100;\n+}\n\ndiff --git a/src/checkout.ts b/src/checkout.ts\n--- a/src/checkout.ts\n+++ b/src/checkout.ts\n@@ -1,5 +1,5 @@\n-import { invoiceTotal, type LineItem } from './invoice.js';\n-\n-export function checkout(lines: LineItem[]): { total: number; currency: string } {\n-  return { total: invoiceTotal(lines), currency: 'EUR' };\n-}\n+import { calculateInvoiceTotal, type LineItem } from './invoice.js';\n+\n+export function checkout(lines: LineItem[]): { total: number; currency: string } {\n+  return { total: calculateInvoiceTotal(lines), currency: 'EUR' };\n+}\n",
+  "verification": "passed",
+  "isolatedResult": {
+    "id": "3ffaeba5-65f3-4e54-a6cc-bd7219586e97",
+    "planId": "d8a8c29bdc602a6f05e7e4af9b2c5f72496c5260162e19b03f5c3863e2462743",
+    "idempotencyKey": "demo-d8a8c29bdc602a6f05e7",
+    "mode": "isolated",
+    "status": "applied",
+    "snapshotId": "be9b96c923de3a7f7311560ff55612b0dcb0743367d612114623022a150b6029",
+    "changedPaths": [
+      "src/invoice.ts",
+      "src/checkout.ts"
+    ],
+    "appliedPaths": [
+      "src/invoice.ts",
+      "src/checkout.ts"
+    ],
+    "sandboxPath": "[temporary local snapshot copy, omitted]"
+  }
+}

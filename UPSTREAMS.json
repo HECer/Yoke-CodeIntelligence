@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "ownImplementation": "independently written; optional upstream applications not vendored",
+  "pins": [
+    {
+      "name": "Graft",
+      "package": "@nanonets/graft",
+      "version": "0.21.1",
+      "commit": "fe30ead39d5e6f0c921018d364da2bdbc9d4b3ad",
+      "license": "MIT",
+      "source": "https://github.com/trailhq/graft",
+      "examinedFiles": [
+        "src/graph/types.ts",
+        "src/engine.ts",
+        "src/graph/build.ts",
+        "package.json"
+      ],
+      "liveTested": false
+    },
+    {
+      "name": "Graphify",
+      "package": "graphifyy",
+      "version": "0.9.87",
+      "commit": "7536dc0665dba4adacca1a323c84fedb217ddc5d",
+      "branch": "v8",
+      "license": "Apache-2.0 with applicable legacy MIT notices",
+      "source": "https://github.com/Graphify-Labs/graphify",
+      "examinedFiles": [
+        "ARCHITECTURE.md",
+        "graphify/build.py",
+        "README.md"
+      ],
+      "liveTested": false
+    },
+    {
+      "name": "Serena",
+      "commit": "713ac6db040b59d79049ef418e3f3f9bf35f3b3c",
+      "applicationLicense": "GPL-3.0-or-later",
+      "solidLspLicense": "MIT",
+      "bundled": false,
+      "source": "https://github.com/oraios/serena",
+      "examinedFiles": [
+        "LICENSE",
+        "src/serena/tools/symbol_tools.py",
+        "README.md"
+      ],
+      "liveTested": false
+    }
+  ],
+  "references": {
+    "mcp": "https://modelcontextprotocol.io/specification/2025-06-18/basic/transports",
+    "sqliteWal": "https://www.sqlite.org/wal.html",
+    "githubPublisher": "https://cli.github.com/manual/gh_repo_create",
+    "typescript": "https://www.typescriptlang.org/docs/",
+    "runtimeDependencyMetadata": "https://registry.npmjs.org/typescript/5.8.3"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "name": "@hecer/code-intelligence",
+  "version": "0.1.0",
+  "description": "Local, evidence-first code intelligence: immutable snapshots, semantic navigation, directed graphs and reviewable changes.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Hermann",
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "bin": {
+    "code-intelligence": "dist/cli.js",
+    "ci-code": "dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "workers",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "docs",
+    "UPSTREAMS.json",
+    "README.de.md",
+    "SECURITY.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node scripts/run-tests.mjs",
+    "test:coverage": "npm run build && node scripts/run-tests.mjs --coverage",
+    "bench": "npm run build && node benchmarks/run.mjs",
+    "check": "npm run typecheck && npm test",
+    "prepack": "npm run build",
+    "publish:github": "node scripts/publish-github.mjs",
+    "format": "node scripts/format.mjs"
+  },
+  "dependencies": {
+    "typescript": "5.8.3"
+  },
+  "devDependencies": {
+    "@types/node": "25.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HECer/Code-Intelligence.git"
+  },
+  "overrides": {
+    "undici-types": "7.16.0"
+  }
+}

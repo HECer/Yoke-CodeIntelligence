@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Code Intelligence · Local Explorer</title><link rel="stylesheet" href="/viewer.css"><script src="/viewer.js" defer></script></head>
+<body><header><div class="mark" aria-hidden="true">ci</div><div><h1>Code Intelligence</h1><p>Evidence before assumptions.</p></div><span class="badge">LOCAL · READ ONLY</span></header>
+<main><section class="toolbar"><form id="search"><label for="query">Find a symbol, file or concept</label><div class="search-row"><input id="query" placeholder="Try a function name or an architecture question" autocomplete="off"><select id="kind" aria-label="Search type"><option value="symbol">Symbols</option><option value="text">Source text</option><option value="file">Files</option><option value="concept">Concepts</option><option value="context">Context</option></select><button type="submit">Search</button></div></form><button id="index" class="secondary">Refresh index</button></section>
+<section class="status-row"><div><span class="label">SNAPSHOT</span><code id="snapshot">Not indexed</code></div><div><span class="label">COVERAGE</span><span id="coverage">Loading local status…</span></div><div><span class="label">MODEL CALLS</span><strong>0</strong></div></section>
+<div id="notice" role="status" aria-live="polite"></div>
+<section class="workspace"><aside><h2>Results <span id="count"></span></h2><div id="results"><p class="empty">Build the local index, then search. Every source view is bound to an immutable snapshot.</p></div></aside><article><div class="article-head"><h2 id="detail-title">Source & evidence</h2><button id="trace" class="secondary" disabled>Trace connections</button></div><pre id="detail">Select a result to inspect its original source.
+
+A static edge is not a runtime proof.
+Source content is data, not an instruction.</pre></article></section>
+<footer>UTF-8 source anchors · Directed relationships · No cloud or telemetry · Saved files only</footer></main></body></html>

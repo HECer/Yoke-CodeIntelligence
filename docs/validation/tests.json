@@ -1,0 +1,687 @@
+{
+  "command": "npm test",
+  "environment": "Linux x64, Node 22.16.0",
+  "counts": {
+    "tests": 112,
+    "pass": 112,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "durationMs": 12007.014194,
+  "tests": [
+    {
+      "number": 1,
+      "name": "Graft v1 graph import retains relationships but does not invent exact call sites",
+      "passed": true,
+      "durationMs": 29.869554
+    },
+    {
+      "number": 2,
+      "name": "Graphify historical markers take priority over undirected node-link endpoint order",
+      "passed": true,
+      "durationMs": 14.769284
+    },
+    {
+      "number": 3,
+      "name": "parallel and opposite raw Graphify edges survive canonical persistence",
+      "passed": true,
+      "durationMs": 490.558638
+    },
+    {
+      "number": 4,
+      "name": "stale source hashes and unknown schema versions are refused",
+      "passed": true,
+      "durationMs": 21.100775
+    },
+    {
+      "number": 5,
+      "name": "unanchored external nodes stay unresolved targets without phantom source entities",
+      "passed": true,
+      "durationMs": 17.451058
+    },
+    {
+      "number": 6,
+      "name": "Serena normalization handles file groups and inherited child locations",
+      "passed": true,
+      "durationMs": 0.475874
+    },
+    {
+      "number": 7,
+      "name": "Serena unrecognized prose or malformed groups cannot masquerade as zero matches",
+      "passed": true,
+      "durationMs": 0.874583
+    },
+    {
+      "number": 8,
+      "name": "ordered symbol search results do not create graph paths",
+      "passed": true,
+      "durationMs": 0.170275
+    },
+    {
+      "number": 9,
+      "name": "LSP framing handles split Content-Length headers and Unicode payloads",
+      "passed": true,
+      "durationMs": 78.931258
+    },
+    {
+      "number": 10,
+      "name": "stalled provider is cancelled and does not outlive the shared deadline",
+      "passed": true,
+      "durationMs": 164.598736
+    },
+    {
+      "number": 11,
+      "name": "LSP rename converts negotiated positions and binds edits to source hashes",
+      "passed": true,
+      "durationMs": 50.640099
+    },
+    {
+      "number": 12,
+      "name": "LSP cannot edit outside its isolated snapshot",
+      "passed": true,
+      "durationMs": 52.744711
+    },
+    {
+      "number": 13,
+      "name": "external Serena MCP adapter negotiates and decodes structured grouped symbols",
+      "passed": true,
+      "durationMs": 46.87259
+    },
+    {
+      "number": 14,
+      "name": "upstream processes never start without explicit provider trust",
+      "passed": true,
+      "durationMs": 21.23034
+    },
+    {
+      "number": 15,
+      "name": "native TypeScript graph keeps imports, calls and references distinct",
+      "passed": true,
+      "durationMs": 485.060331
+    },
+    {
+      "number": 16,
+      "name": "non-call property reads remain references",
+      "passed": true,
+      "durationMs": 244.01365
+    },
+    {
+      "number": 17,
+      "name": "same-named functions in different files never collapse by name",
+      "passed": true,
+      "durationMs": 204.999744
+    },
+    {
+      "number": 18,
+      "name": "interface dispatch is a possible dispatch, not a runtime observation",
+      "passed": true,
+      "durationMs": 281.1411
+    },
+    {
+      "number": 19,
+      "name": "unresolved external calls stay explicit with null targets",
+      "passed": true,
+      "durationMs": 280.069309
+    },
+    {
+      "number": 20,
+      "name": "compiler syntax errors appear in coverage and diagnostics",
+      "passed": true,
+      "durationMs": 269.882355
+    },
+    {
+      "number": 21,
+      "name": "renaming an export invalidates unchanged consumer resolution",
+      "passed": true,
+      "durationMs": 456.666633
+    },
+    {
+      "number": 22,
+      "name": "source reads are immutable and UTF-8 byte-accurate",
+      "passed": true,
+      "durationMs": 259.365139
+    },
+    {
+      "number": 23,
+      "name": "mixed line/byte/entity read arguments are rejected",
+      "passed": true,
+      "durationMs": 230.680955
+    },
+    {
+      "number": 24,
+      "name": "literal text search preserves offsets after Unicode case-expansion characters",
+      "passed": true,
+      "durationMs": 21.736476
+    },
+    {
+      "number": 25,
+      "name": "camelCase identifiers are discoverable by a constituent word",
+      "passed": true,
+      "durationMs": 215.522182
+    },
+    {
+      "number": 26,
+      "name": "scoped search excludes similarly named neighbouring services",
+      "passed": true,
+      "durationMs": 201.07655
+    },
+    {
+      "number": 27,
+      "name": "trace is directed, bounded and does not invent an ordered path",
+      "passed": true,
+      "durationMs": 215.058587
+    },
+    {
+      "number": 28,
+      "name": "read-only plans combine navigation without an extra model call",
+      "passed": true,
+      "durationMs": 209.930369
+    },
+    {
+      "number": 29,
+      "name": "Markdown concepts and rationale nodes keep original provenance",
+      "passed": true,
+      "durationMs": 221.941567
+    },
+    {
+      "number": 30,
+      "name": "Python AST works without imports or execution of project code",
+      "passed": true,
+      "durationMs": 1360.293751
+    },
+    {
+      "number": 31,
+      "name": "Python syntax errors are reported without empty-success semantics",
+      "passed": true,
+      "durationMs": 622.29456
+    },
+    {
+      "number": 32,
+      "name": "disabled Python parsing is explicitly reported as unavailable semantics",
+      "passed": true,
+      "durationMs": 29.269197
+    },
+    {
+      "number": 33,
+      "name": "Go stdlib parser emits real methods, imports and bounded call candidates",
+      "passed": true,
+      "durationMs": 4915.49804
+    },
+    {
+      "number": 34,
+      "name": "prepare \u2192 compiler rename \u2192 verify \u2192 approve \u2192 workspace apply works across files",
+      "passed": true,
+      "durationMs": 1132.143179
+    },
+    {
+      "number": 35,
+      "name": "reserved keywords cannot be compiler rename targets",
+      "passed": true,
+      "durationMs": 220.598307
+    },
+    {
+      "number": 36,
+      "name": "exact native symbol replacement preserves surrounding code",
+      "passed": true,
+      "durationMs": 202.125404
+    },
+    {
+      "number": 37,
+      "name": "isolated apply materializes a complete result without changing source",
+      "passed": true,
+      "durationMs": 23.1785
+    },
+    {
+      "number": 38,
+      "name": "workspace integration refuses missing host write permission",
+      "passed": true,
+      "durationMs": 21.856997
+    },
+    {
+      "number": 39,
+      "name": "workspace integration requires exact approval and verification",
+      "passed": true,
+      "durationMs": 17.604865
+    },
+    {
+      "number": 40,
+      "name": "concurrent source edits block integration without overwriting user work",
+      "passed": true,
+      "durationMs": 28.117813
+    },
+    {
+      "number": 41,
+      "name": "test modifications require separate explicit consent",
+      "passed": true,
+      "durationMs": 17.593813
+    },
+    {
+      "number": 42,
+      "name": "hash preconditions and overlapping edits cannot be bypassed",
+      "passed": true,
+      "durationMs": 22.840052
+    },
+    {
+      "number": 43,
+      "name": "Unicode edits reject partial code points and lone surrogates",
+      "passed": true,
+      "durationMs": 16.634658
+    },
+    {
+      "number": 44,
+      "name": "file creation and deletion are represented and applied correctly",
+      "passed": true,
+      "durationMs": 28.839458
+    },
+    {
+      "number": 45,
+      "name": "expired and tampered plans are never applied",
+      "passed": true,
+      "durationMs": 19.67393
+    },
+    {
+      "number": 46,
+      "name": "idempotency key cannot be reused for another plan or mode",
+      "passed": true,
+      "durationMs": 27.831504
+    },
+    {
+      "number": 47,
+      "name": "ordinary write failure rolls back only files written by that transaction",
+      "passed": true,
+      "durationMs": 30.828493
+    },
+    {
+      "number": 48,
+      "name": "rollback preserves concurrent foreign edits rather than resetting the workspace",
+      "passed": true,
+      "durationMs": 36.219054
+    },
+    {
+      "number": 49,
+      "name": "a killed writer can be recovered from its durable journal",
+      "passed": true,
+      "durationMs": 365.427431
+    },
+    {
+      "number": 50,
+      "name": "whole-file unified diff is accepted by git apply including a missing final newline",
+      "passed": true,
+      "durationMs": 22.517057
+    },
+    {
+      "number": 51,
+      "name": "verification distinguishes newly introduced errors from preexisting errors",
+      "passed": true,
+      "durationMs": 399.721139
+    },
+    {
+      "number": 52,
+      "name": "diagnostic delta is multiplicity-aware but ignores harmless line shifts",
+      "passed": true,
+      "durationMs": 0.276526
+    },
+    {
+      "number": 53,
+      "name": "no verifier means incomplete rather than a false successful proof",
+      "passed": true,
+      "durationMs": 19.303614
+    },
+    {
+      "number": 54,
+      "name": "project verification commands require trusted host permission",
+      "passed": true,
+      "durationMs": 203.339762
+    },
+    {
+      "number": 55,
+      "name": "trusted actual test execution records independent exit status and test count",
+      "passed": true,
+      "durationMs": 285.08885
+    },
+    {
+      "number": 56,
+      "name": "verification that mutates its source inputs is invalidated",
+      "passed": true,
+      "durationMs": 62.115654
+    },
+    {
+      "number": 57,
+      "name": "UTF-8 offsets survive emoji, umlauts and CRLF",
+      "passed": true,
+      "durationMs": 1.291759
+    },
+    {
+      "number": 58,
+      "name": "canonical hashes are independent of object insertion order",
+      "passed": true,
+      "durationMs": 0.550887
+    },
+    {
+      "number": 59,
+      "name": "signed cursors reject tampering and a different workspace key",
+      "passed": true,
+      "durationMs": 0.809775
+    },
+    {
+      "number": 60,
+      "name": "deadline cancellation is distinct from expiration",
+      "passed": true,
+      "durationMs": 0.19959
+    },
+    {
+      "number": 61,
+      "name": "path policy refuses \"../x\"",
+      "passed": true,
+      "durationMs": 0.188022
+    },
+    {
+      "number": 62,
+      "name": "path policy refuses \"a/../../x\"",
+      "passed": true,
+      "durationMs": 0.164166
+    },
+    {
+      "number": 63,
+      "name": "path policy refuses \"/tmp/x\"",
+      "passed": true,
+      "durationMs": 0.116946
+    },
+    {
+      "number": 64,
+      "name": "path policy refuses \"C:\\\\\\\\secret\"",
+      "passed": true,
+      "durationMs": 0.131688
+    },
+    {
+      "number": 65,
+      "name": "path policy refuses \"\\\\\\\\\\\\\\\\server\\\\\\\\x\"",
+      "passed": true,
+      "durationMs": 0.242975
+    },
+    {
+      "number": 66,
+      "name": "path policy refuses \"a\\\\u0000b\"",
+      "passed": true,
+      "durationMs": 0.234302
+    },
+    {
+      "number": 67,
+      "name": "path policy refuses \"a//b\"",
+      "passed": true,
+      "durationMs": 0.21379
+    },
+    {
+      "number": 68,
+      "name": "path policy refuses \"a/CON.txt\"",
+      "passed": true,
+      "durationMs": 0.183936
+    },
+    {
+      "number": 69,
+      "name": "path policy refuses \"a/nul\"",
+      "passed": true,
+      "durationMs": 0.070256
+    },
+    {
+      "number": 70,
+      "name": "path policy refuses \"a/trailing.\"",
+      "passed": true,
+      "durationMs": 0.055303
+    },
+    {
+      "number": 71,
+      "name": "safe Windows-style relative paths normalize consistently",
+      "passed": true,
+      "durationMs": 0.067601
+    },
+    {
+      "number": 72,
+      "name": "glob recursion differs from a single path-segment star",
+      "passed": true,
+      "durationMs": 0.247641
+    },
+    {
+      "number": 73,
+      "name": "test-path detector recognizes root Python tests and Go/TS conventions",
+      "passed": true,
+      "durationMs": 0.298598
+    },
+    {
+      "number": 74,
+      "name": "protected files, binary data and obvious credentials do not enter a snapshot",
+      "passed": true,
+      "durationMs": 24.860224
+    },
+    {
+      "number": 75,
+      "name": "Git ignored and generated state files never self-index",
+      "passed": true,
+      "durationMs": 24.088817
+    },
+    {
+      "number": 76,
+      "name": "non-Git fallback conservatively respects positive root and nested ignores",
+      "passed": true,
+      "durationMs": 12.257778
+    },
+    {
+      "number": 77,
+      "name": "snapshots retain old bytes after edits, creation and deletion",
+      "passed": true,
+      "durationMs": 32.290062
+    },
+    {
+      "number": 78,
+      "name": "request budgets do not change semantic snapshot identities",
+      "passed": true,
+      "durationMs": 24.132382
+    },
+    {
+      "number": 79,
+      "name": "snapshots are root/workspace isolated",
+      "passed": true,
+      "durationMs": 35.29004
+    },
+    {
+      "number": 80,
+      "name": "parent, leaf and dangling symbolic links are denied",
+      "passed": true,
+      "durationMs": 18.930734
+    },
+    {
+      "number": 81,
+      "name": "SQLite state and CAS path symbolic links are refused",
+      "passed": true,
+      "durationMs": 12.290001
+    },
+    {
+      "number": 82,
+      "name": "CAS integrity failure is visible, not silently reused",
+      "passed": true,
+      "durationMs": 17.767308
+    },
+    {
+      "number": 83,
+      "name": "schema validator rejects undeclared authority and invalid numbers",
+      "passed": true,
+      "durationMs": 0.401172
+    },
+    {
+      "number": 84,
+      "name": "full serialized envelope respects byte bound including its metrics",
+      "passed": true,
+      "durationMs": 19.084004
+    },
+    {
+      "number": 85,
+      "name": "artifact pagination recovers original JSON without splitting Unicode",
+      "passed": true,
+      "durationMs": 16.432575
+    },
+    {
+      "number": 86,
+      "name": "tiny budgets and forged artifact cursors fail explicitly",
+      "passed": true,
+      "durationMs": 9.790966
+    },
+    {
+      "number": 87,
+      "name": "derived source cannot exceed the configured total capacity",
+      "passed": true,
+      "durationMs": 17.172296
+    },
+    {
+      "number": 88,
+      "name": "repository configuration cannot select an executable interpreter",
+      "passed": true,
+      "durationMs": 9.63403
+    },
+    {
+      "number": 89,
+      "name": "explicit host interpreter selection overrides untrusted repository setting",
+      "passed": true,
+      "durationMs": 10.37993
+    },
+    {
+      "number": 90,
+      "name": "cost reservations include unknown billing and prevent overspend after failures",
+      "passed": true,
+      "durationMs": 16.629179
+    },
+    {
+      "number": 91,
+      "name": "streaming cumulative usage is deduplicated rather than added repeatedly",
+      "passed": true,
+      "durationMs": 12.321054
+    },
+    {
+      "number": 92,
+      "name": "a sent attempt cannot be cancelled as though no request was sent",
+      "passed": true,
+      "durationMs": 10.430055
+    },
+    {
+      "number": 93,
+      "name": "source-bound memories become stale and corrections supersede old hypotheses",
+      "passed": true,
+      "durationMs": 26.621798
+    },
+    {
+      "number": 94,
+      "name": "precomputed vector search validates model dimensions and source binding",
+      "passed": true,
+      "durationMs": 607.547617
+    },
+    {
+      "number": 95,
+      "name": "LCOV imports require matching source hashes and valid line numbers",
+      "passed": true,
+      "durationMs": 28.088441
+    },
+    {
+      "number": 96,
+      "name": "runtime observations reject multi-node parent cycles",
+      "passed": true,
+      "durationMs": 22.811182
+    },
+    {
+      "number": 97,
+      "name": "SARIF findings remain analysis findings rather than proofs",
+      "passed": true,
+      "durationMs": 17.691529
+    },
+    {
+      "number": 98,
+      "name": "import cycles are detected without altering directed observations",
+      "passed": true,
+      "durationMs": 231.706051
+    },
+    {
+      "number": 99,
+      "name": "occurrence graph diffs do not fabricate rename lineage",
+      "passed": true,
+      "durationMs": 475.701995
+    },
+    {
+      "number": 100,
+      "name": "MCP initializes, exposes exactly eight tools and returns one complete content payload",
+      "passed": true,
+      "durationMs": 624.010334
+    },
+    {
+      "number": 101,
+      "name": "MCP rejects tools before initialization and reports unknown tools",
+      "passed": true,
+      "durationMs": 35.222346
+    },
+    {
+      "number": 102,
+      "name": "MCP invalid JSON does not poison the next valid request",
+      "passed": true,
+      "durationMs": 12.688421
+    },
+    {
+      "number": 103,
+      "name": "MCP cancellation reaches the active request AbortSignal",
+      "passed": true,
+      "durationMs": 1.045719
+    },
+    {
+      "number": 104,
+      "name": "actual CLI emits parseable JSON with runtime warnings kept on stderr",
+      "passed": true,
+      "durationMs": 1109.075275
+    },
+    {
+      "number": 105,
+      "name": "CLI help and invalid tool exit status work without external packages",
+      "passed": true,
+      "durationMs": 986.187541
+    },
+    {
+      "number": 106,
+      "name": "CLI canonical graph export is a real, readable graph file",
+      "passed": true,
+      "durationMs": 827.804636
+    },
+    {
+      "number": 107,
+      "name": "deleting a tracked Git file produces a new snapshot rather than perpetual WORKSPACE_BUSY",
+      "passed": true,
+      "durationMs": 32.709431
+    },
+    {
+      "number": 108,
+      "name": "loopback explorer requires a bearer token and refuses write tools",
+      "passed": true,
+      "durationMs": 256.489175
+    },
+    {
+      "number": 109,
+      "name": "loopback explorer rejects a cross-site Origin even with a valid token",
+      "passed": true,
+      "durationMs": 19.608154
+    },
+    {
+      "number": 110,
+      "name": "bounded subprocess capture never treats truncated logs as complete",
+      "passed": true,
+      "durationMs": 36.735255
+    },
+    {
+      "number": 111,
+      "name": "subprocess deadlines kill a stalled process instead of waiting indefinitely",
+      "passed": true,
+      "durationMs": 112.779456
+    },
+    {
+      "number": 112,
+      "name": "publisher dry run names the public owner and makes no remote changes",
+      "passed": true,
+      "durationMs": 28.885632
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+export { CodeIntelligence, type EngineOptions } from './engine.js';
+export { Workspace, DEFAULT_CONFIG } from './core/workspace.js';
+export { Store } from './store/store.js';
+export { Deadline, CIError, TextIndex, hash, stable } from './core/util.js';
+export { Indexer, canonicalize } from './analysis/indexer.js';
+export { QueryEngine } from './analysis/query.js';
+export { TypeScriptProject } from './analysis/typescript.js';
+export { ChangeManager, unifiedDiff } from './changes/manager.js';
+export { Verifier, diagnosticDelta } from './changes/verify.js';
+export { Knowledge } from './analysis/knowledge.js';
+export { Ledger } from './core/ledger.js';
+export { importGraph, normalizeSerenaSymbols, persistImport } from './adapters/graph-import.js';
+export { LspAdapter } from './adapters/lsp.js';
+export { SerenaAdapter } from './adapters/serena.js';
+export { RpcPeer } from './adapters/rpc.js';
+export { serveMcp } from './protocol/mcp.js';
+export { TOOLS } from './protocol/tools.js';
+export * from './core/types.js';
