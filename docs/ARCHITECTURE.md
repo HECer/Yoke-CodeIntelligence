@@ -80,3 +80,15 @@ The spend ledger reserves costs before calls, distinguishes sent from unsent att
 Memories distinguish confirmed findings, hypotheses, dead ends and superseded records. Current-file hashes determine staleness. Imported vectors carry model/dimension/hash identity; there is no built-in embedding model. LCOV is aggregate coverage, not a precise per-test map. Runtime imports prove only the supplied run's observations. SARIF findings are external analyzer data, not automatically security proofs.
 
 Graph analytics include degree, weak components, import cycles and snapshot differences. Weak components are not Leiden communities. Framework hints are syntax-derived candidates and can be incomplete. There is no general taint analysis or formal correctness verifier.
+
+## ADR 008 — Compilation context is part of a fact
+
+`typescript-host.ts` owns an immutable filesystem and a bounded graph of configured projects. `TypeScriptProject` orchestrates one language service/program per configuration and merges source entities without flattening context-specific observations or diagnostics. Config roots and inherited relative paths are delegated to the pinned compiler. Source-reference navigation uses a tested compiler-host redirect, not generated build output. Same-source conflicting rename bindings fail closed.
+
+No compiler host fallback reads arbitrary live disk files: only immutable captured source and trusted pinned standard-library files are readable. Files not covered by any configured program remain searchable but explicitly lack semantic coverage. The default trace can be a union of configurations; request `analysisContexts` to restrict it.
+
+## ADR 009 — External protocol results are not automatic source authority
+
+LSP parsing validates per-message limits, UTF-8 JSON, JSON-RPC result/error shape, negotiated UTF-16 positions, URI scope, LocationLinks, edit versions and overlaps. Unsupported callbacks receive MethodNotFound and workspace/applyEdit is refused. Read results are locally source-bound, not upstream correctness/coverage attestations.
+
+The host-authorized `runLsp`/CLI operation materializes a snapshot, shares one deadline, invokes the provider, requests shutdown, verifies copied source hashes and returns bounded locations or a persisted change plan. Original source is never implicitly edited. Unknown external billing/network activity is reported; a copied tree is not an OS security boundary. No arbitrary repository-declared server command is auto-started.

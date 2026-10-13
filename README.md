@@ -6,18 +6,26 @@
 
 Code Intelligence gives coding agents one small interface for finding code, reading exact source, following directed relationships, preparing patches and verifying changes. Native indexing and retrieval require **no model, API key or cloud account**.
 
-**Version 0.1.0 is an initial tested implementation, not full feature parity with every upstream or the entire long-term specification.** Native TypeScript, Python and Go paths were exercised locally. External Graft, Graphify, LSP and Serena adapters have contract/protocol tests; live upstream compatibility still needs validation. See [the exact capability matrix](docs/STATUS.md).
+**Version 0.2.0 adds configured TypeScript projects, source-based project references, cross-project rename safeguards and hardened opt-in LSP operations. It is not full feature parity with every upstream or the entire long-term specification.** Native TypeScript, Python and Go paths were exercised locally. External Graft, Graphify, LSP and Serena adapters have contract/protocol tests; live upstream compatibility still needs validation. See [the exact capability matrix](docs/STATUS.md).
 
 ![Read-only local explorer, rendered against the included invoice UI fixture](docs/screenshots/explorer.png)
 
 *The screenshot uses the real frontend with an offline invoice fixture. Live browser-to-loopback navigation was blocked by the build environment's managed-browser policy; the HTTP service is tested independently.*
+
+## New in 0.2.0
+
+`tsconfig`/`jsconfig` roots, `extends`, path aliases and solution references are resolved against immutable captured files. Each configuration has its own compiler program; identical source can retain different context-specific bindings. Renames gather references across projects and refuse edits that bind to a different symbol in another configuration.
+
+An explicit `lsp` CLI command can use an already installed, host-trusted language server to return hash-bound locations or **prepare** a rename plan. It validates protocol framing, URI scope, UTF-16 positions, document versions and edit conflicts. External server/network/model behavior is not trusted or silently reported as local-only. Live third-party server compatibility remains unverified here.
+
+Read [configured projects and LSP usage](docs/CONFIGURED-PROJECTS.md). The included `examples/monorepo` exercises a two-package solution. After upgrading, run `index` to capture a new analysis-version-bound snapshot; old snapshots remain historical.
 
 ## What works
 
 | Area | Included implementation |
 |---|---|
 | Source integrity | Immutable content-addressed snapshots, explicit omissions, UTF-8 byte anchors and hash-bound reads |
-| Native language analysis | TypeScript/JavaScript compiler navigation and rename; Python AST; Go parser |
+| Native language analysis | Configured TypeScript/JavaScript compiler programs, contextual navigation and cross-project rename; Python AST; Go parser |
 | Knowledge graph | Directed multirelations, separate provenance and resolution, unresolved targets kept explicit |
 | Retrieval | SQLite FTS5, literal source search, scope filters, compact context, bounded read-only operation plans |
 | Changes | Preview, full patch, isolated materialization, optional approved workspace application, durable recovery and conflict preservation |
@@ -70,6 +78,7 @@ The eight tools are `ci_status`, `ci_find`, `ci_read`, `ci_trace`, `ci_context`,
 ```sh
 npm run typecheck
 npm test
+npm run smoke
 npm run test:coverage
 npm run bench
 ```
@@ -80,7 +89,7 @@ The microbenchmark is a small generated fixture with explicit-snapshot warm quer
 
 ## Publish under HECer
 
-The intended public repository is `HECer/Code-Intelligence`. At delivery, repository creation from this session was blocked: the available GitHub connector could write files in existing repositories but could not create a repository, and the target returned 404.
+The intended public repository is `HECer/Code-Intelligence`. The previous publication attempt was blocked: the connector had no repository-create action and the target returned 404. This 0.2.0 update is delivered as local source/runtime archives; no GitHub or npm publication was performed during this update.
 
 After extracting the source archive **including its `.git` directory**, install GitHub CLI and authenticate locally:
 

@@ -79,5 +79,7 @@ test('publisher dry run names the public owner and makes no remote changes', () 
     const data = JSON.parse(result.stdout);
     assert.equal(data.repository, 'HECer/Code-Intelligence');
     assert.equal(data.visibility, 'public');
+    assert.match(data.tag, /^v\d+\.\d+\.\d+/);
+    assert.equal(data.tag, `v${data.version}`);
     assert.equal(data.changesMade, false);
 });

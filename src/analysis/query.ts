@@ -113,6 +113,7 @@ export class QueryEngine {
         direction?: 'in' | 'out' | 'both';
         relations?: string[];
         resolutions?: string[];
+        analysisContexts?: string[];
         depth?: number;
         maxVisited?: number;
     }, deadline: Deadline): Record<string, unknown> {
@@ -136,6 +137,8 @@ export class QueryEngine {
             for (const edge of this.workspace.store.observations(snapshot.id, item.id, options.direction ?? 'out')) {
                 if (options.relations?.length && !options.relations.includes(edge.relation))
                     continue;
+                if (options.analysisContexts?.length && (!edge.analysisContext || !options.analysisContexts.includes(edge.analysisContext)))
+                    continue;
                 if (options.resolutions?.length && !options.resolutions.includes(edge.resolution))
                     continue;
                 if (observations.size >= max * 10) {
@@ -152,7 +155,8 @@ export class QueryEngine {
         if (edges.length !== observations.size)
             truncated = true;
         const evidenceIds = [...new Set(edges.flatMap(e => e.evidenceIds))];
-        return { items: [...seen].map(id => this.workspace.store.entity(id, snapshot.id)), edges, evidence: this.workspace.store.evidence(evidenceIds, snapshot.id), traversalComplete: !truncated, depthLimit: depth, visited: seen.size, unresolved: edges.filter(e => e.target === null).length };
+        const analysisContexts = [...new Set(edges.map(e => e.analysisContext).filter(Boolean))].sort();
+        return { items: [...seen].map(id => this.workspace.store.entity(id, snapshot.id)), edges, evidence: this.workspace.store.evidence(evidenceIds, snapshot.id), traversalComplete: !truncated, analysisContexts, crossContextUnion: analysisContexts.length > 1, depthLimit: depth, visited: seen.size, unresolved: edges.filter(e => e.target === null).length };
     }
     context(snapshot: Snapshot, query: string, deadline: Deadline, limit = 8): Record<string, unknown> {
         const found = this.find(snapshot, query, { kind: 'all', limit }, deadline);

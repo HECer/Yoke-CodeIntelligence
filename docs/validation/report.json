@@ -1,19 +1,24 @@
 {
   "schemaVersion": 1,
   "project": "Code Intelligence",
-  "version": "0.1.0",
-  "measuredAt": "2026-10-13T10:11:28.441055+00:00",
-  "status": "tested_initial_implementation_not_full_specification_or_production_certification",
+  "version": "0.2.0",
+  "measuredAt": "2026-10-13T10:59:47.688852+00:00",
+  "status": "tested_local_implementation_not_full_specification_or_production_certification",
   "sourceCorpus": {
-    "sha256": "5800477600228826d8229ed00ab9e8c5500e34fd950760548b447215f0744962",
-    "files": 51,
+    "sha256": "db3d8179d97639db3577a43f81fa8669564ec15aea040b8119f0a2d1783aad7a",
+    "files": 73,
     "includes": [
       "src",
       "workers",
       "test",
       "scripts",
-      "benchmarks"
-    ]
+      "benchmarks",
+      "examples",
+      "package.json",
+      "package-lock.json",
+      "tsconfig.json"
+    ],
+    "method": "sha256 of sorted relative path + NUL + sha256(file bytes) for each file"
   },
   "environment": {
     "os": "Linux-6.18.44-x86_64-with-glibc2.41",
@@ -28,23 +33,30 @@
     "typescriptBuild": true,
     "typecheck": true,
     "nodeTests": {
-      "tests": 112,
-      "pass": 112,
+      "tests": 178,
+      "pass": 178,
       "fail": 0,
       "cancelled": 0,
       "skipped": 0,
       "todo": 0
     },
-    "pythonWorkersCompile": true,
-    "goAstActualExecution": true,
-    "pythonAstActualExecution": true,
-    "compilerRenameAcrossFiles": true,
+    "baselineTests": 112,
+    "addedRegressionTests": 66,
+    "configuredProjects": true,
+    "projectReferenceSourceNavigation": true,
+    "renameAcrossConfiguredProjects": true,
+    "conflictingBindingRenameRejected": true,
+    "adversarialLspAndRpcFixtures": true,
+    "hostAuthorizedLspCli": true,
+    "copiedSourceMutationRefused": true,
+    "actualConfiguredProjectCliSmoke": true,
+    "verificationFailurePrecedence": true,
+    "pythonWorkerSyntax": true,
+    "nativeGoAstActualExecution": true,
+    "nativePythonAstActualExecution": true,
     "actualKilledWriterRecovery": true,
-    "actualCli": true,
-    "mcpProtocol": true,
+    "actualMcpProtocol": true,
     "actualLoopbackHttpAndAuthorization": true,
-    "readOnlyFrontendOfflineDomFixture": true,
-    "liveBrowserToBackend": false,
     "publisherDryRun": true,
     "publisherLive": false,
     "lockfileOfflineConsistency": true,
@@ -53,37 +65,44 @@
     "macOSRun": false,
     "windowsRun": false,
     "githubHostedCI": false,
-    "portableRuntimeWithoutGlobalModules": true
+    "liveBrowserToBackend": false
   },
   "coverageRun": {
     "completed": false,
-    "reason": "The optional instrumented run did not complete within the execution window; no coverage percentage is asserted. The uninstrumented 112-test suite completed with zero failures."
+    "reason": "No instrumented coverage run performed for 0.2.0. The normal 178-test suite passed; no coverage percentage is claimed."
   },
   "upstreamValidation": {
-    "graft": "contract fixtures only; live package not installed",
-    "graphify": "contract fixtures only; live package not installed",
-    "lsp": "fake protocol peer, not a real installed language server",
-    "serena": "fake MCP peer, not a real installed Serena"
+    "graft": "Graph-contract fixtures; live package not installed",
+    "graphify": "Graph-contract fixtures; live package not installed",
+    "lsp": "Scripted adversarial subprocess and actual CLI fixtures, not a real third-party language server",
+    "serena": "MCP protocol fixture; live Serena not installed"
   },
   "publication": {
     "requestedRepository": "HECer/Code-Intelligence",
     "requestedVisibility": "public",
-    "published": false,
-    "authenticatedOwnerConfirmed": "HECer",
-    "reason": "Connected GitHub tools have no repository-create action. The target and an actual file creation attempt returned HTTP 404; final target check also returned 404.",
+    "publishedByThisUpdate": false,
+    "remoteStateRechecked": false,
+    "reason": "This update is local implementation and archive delivery. Prior publication was blocked; no remote operation was performed in this update.",
     "localPublisher": "scripts/publish-github.mjs",
+    "releaseTag": "v0.2.0",
     "npmPublished": false
   },
   "reports": {
     "tests": "tests.json",
+    "tap": "tests.tap",
     "benchmark": "benchmark.json",
-    "browser": "browser.json"
+    "configuredSmoke": "configured-smoke.json",
+    "historicalBrowser": "v0.1.0/browser.json",
+    "historicalRelease": "v0.1.0/report.json"
   },
   "limitations": [
-    "Read docs/STATUS.md for the unimplemented long-term specification areas.",
-    "No independent security audit, formal proof or full agent/upstream cost benchmark.",
-    "The default native core performs no model calls; outer-agent usage is not measured.",
-    "Managed Chromium blocked localhost navigation; actual frontend was tested offline with mocked fetch/history and HTTP tested independently.",
-    "Dev dependency tarball integrities for @types/node/undici-types were not retrievable; exact versions/URLs are pinned."
+    "No live third-party Graft/Graphify/Serena/language-server verification, no all-language equivalence claim.",
+    "Configured project references use source redirects, not tsc --build or generated declaration verification.",
+    "No automatic external node_modules/@types loading; no project-selected compiler plugins; no unsaved editor buffer integration.",
+    "TypeScript is pinned; exported/internal wildcard and source-redirect hooks require regression tests when upgraded.",
+    "Copied workspaces do not sandbox hostile external programs or enforce network isolation. External usage is unknown, not zero.",
+    "Native code makes no LLM calls. This does not measure or predict the outer agent token costs.",
+    "No independent security audit, production task benchmark, formal proof, live browser E2E or multi-platform run.",
+    "Pinned dev packages were supplied offline from the available environment; a clean online npm ci and development tarball integrity verification were not performed."
   ]
 }

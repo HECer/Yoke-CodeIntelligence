@@ -5,6 +5,7 @@ import { resolve } from 'node:path';
 import { CodeIntelligence } from './engine.js';
 import { serveMcp } from './protocol/mcp.js';
 import { runBridge } from './adapters/bridges.js';
+import { runLsp } from './adapters/lsp-command.js';
 import { serveViewer } from './protocol/viewer.js';
 import { Deadline, assert, object } from './core/util.js';
 import { VERSION } from './core/types.js';
@@ -29,6 +30,8 @@ Usage: code-intelligence <command> [arguments] --root <project> [options]
   recover                       Recover an interrupted workspace transaction
   import <graft|graphify>        Import --input <JSON> bound to --snapshot
   bridge <graft|graphify>        Run separately installed, pinned upstream provider
+  lsp <operation> <path>        External definition|references|implementation|rename
+                               Requires --command, --byte and --trust-providers
   remember --input <JSON>        Store a source-bound memory (untrusted data)
   vectors --input <JSON>         Import precomputed vectors; no model bundled
   coverage --input <LCOV>        Import LCOV with --hashes <source-hashes.json>
@@ -50,6 +53,11 @@ Options:
   --allow-test-changes          Explicit approval for a plan changing test files
   --allow-unverified            Explicit approval overriding static verification
   --key <key>                   Idempotency key for apply
+  --command <executable>        Host-selected language server; no shell expansion
+  --arg=<argument>              Repeatable server argument, e.g. --arg=--stdio
+  --byte <offset>               Exact UTF-8 source offset for an LSP operation
+  --new-name <name>             LSP rename prepares a plan; does not apply it
+  --analysis-context <config>   Restrict trace to a config path; repeatable
   --port <port>                 Explorer port, default 0 (ephemeral)
 
 No model/API key is required. Repository text is data, never permission.
@@ -64,6 +72,7 @@ const numeric = (v: unknown, fallback: number): number => {
 const print = (value: unknown) => process.stdout.write(JSON.stringify(value, null, 2) + '\n');
 export async function main(argv = process.argv.slice(2)): Promise<void> {
     const { values: o, positionals: p } = parseArgs({ args: argv, allowPositionals: true, options: {
+            command: { type: 'string' }, arg: { type: 'string', multiple: true }, byte: { type: 'string' }, 'new-name': { type: 'string' }, 'analysis-context': { type: 'string', multiple: true },
             python: { type: 'string' }, root: { type: 'string' }, snapshot: { type: 'string' }, json: { type: 'string' }, input: { type: 'string' },
             output: { type: 'string' }, hashes: { type: 'string' }, kind: { type: 'string' }, path: { type: 'string' },
             mode: { type: 'string' }, direction: { type: 'string' }, depth: { type: 'string' }, limit: { type: 'string' },
@@ -125,7 +134,7 @@ export async function main(argv = process.argv.slice(2)): Promise<void> {
                 break;
             case 'trace':
                 assert(p[1], 'INVALID_ARGUMENT', 'Entity ID required');
-                await invoke('ci_trace', { entityIds: [p[1]], direction: o.direction ?? 'out', depth: numeric(o.depth, 2) });
+                await invoke('ci_trace', { entityIds: [p[1]], direction: o.direction ?? 'out', depth: numeric(o.depth, 2), ...(o['analysis-context'] ? { analysisContexts: o['analysis-context'] } : {}) });
                 break;
             case 'context':
                 await invoke('ci_context', { query: p.slice(1).join(' '), limit: numeric(o.limit, 8) });
@@ -160,6 +169,12 @@ export async function main(argv = process.argv.slice(2)): Promise<void> {
                 assert(p[1] === 'graft' || p[1] === 'graphify', 'INVALID_ARGUMENT', 'Expected graft or graphify');
                 const s = snapshot();
                 print(await runBridge(engine, p[1], s.id, { trusted: !!o['trust-providers'], timeoutMs: numeric(o.timeout, 120000) }));
+                break;
+            }
+            case 'lsp': {
+                assert(p[1] === 'definition' || p[1] === 'references' || p[1] === 'implementation' || p[1] === 'rename', 'INVALID_ARGUMENT', 'Expected definition, references, implementation or rename');
+                assert(p[2] && p.length === 3 && o.command && o.byte !== undefined, 'INVALID_ARGUMENT', 'LSP requires a path, --command and --byte');
+                print(await runLsp(engine, p[1], p[2], { ...common, trusted: !!o['trust-providers'], command: o.command, args: o.arg, byte: numeric(o.byte, 0), newName: o['new-name'] }));
                 break;
             }
             case 'remember': {

@@ -41,3 +41,7 @@ The default envelope cap is 32,768 bytes. `--max-bytes` may lower it. To raise t
 `npm test` builds TypeScript and runs Node's real tests. Python and Go tests require their local toolchains; symlink tests are conditionally skipped on Windows. `npm run test:coverage` uses Node's experimental coverage reporting. `npm run bench` measures only the supplied synthetic fixture.
 
 Optional UI checks require Python Playwright and Chromium. `python scripts/browser-smoke.py --chromium /path/to/chromium --save` uses the live loopback UI. `--offline-fixture` explicitly substitutes in-page test responses and a history API shim; it is not a live UI/API integration test.
+
+## Configured TypeScript example (0.2.0)
+
+`examples/monorepo` contains an inherited base config, a solution config and two referenced packages. Index it, search `subtotal`, then verify it as shown in its README. Use [configured-project guidance](CONFIGURED-PROJECTS.md) for context filtering and opt-in installed LSP servers. Upgrading changes the analysis version in newly captured snapshots; re-index after upgrading rather than assuming an old explicit snapshot was rebuilt.

@@ -1,87 +1,51 @@
 import ts from 'typescript';
-import { resolve, dirname, relative, isAbsolute, basename } from 'node:path';
-import { readFileSync } from 'node:fs';
-import { TextIndex, assert, Deadline, hash } from '../core/util.js';
-import type { Extraction, LocalEntity, LocalObservation, Diagnostic, Snapshot, FileEdit } from '../core/types.js';
+import { TextIndex, assert, Deadline, hash, stable } from '../core/util.js';
+import type { Extraction, LocalEntity, LocalObservation, Diagnostic, Snapshot, FileEdit, AnalysisContext } from '../core/types.js';
+import { TypeScriptFileSystem, TypeScriptProjects, type ConfiguredProject } from './typescript-host.js';
 const PRODUCER = `typescript-compiler@${ts.version}`;
-const slash = (p: string) => p.replaceAll('\\', '/');
-/** Compiler IO is limited to immutable source files and the installed standard library. */
-export class TypeScriptProject {
-    readonly program: ts.Program;
+class TypeScriptUnit {
     readonly service: ts.LanguageService;
-    readonly indexes = new Map<string, TextIndex>();
-    private readonly virtual: string;
-    private readonly absolute = new Map<string, string>();
-    private readonly options: ts.CompilerOptions;
-    private readonly configDiagnostics: ts.Diagnostic[] = [];
-    constructor(readonly snapshot: Snapshot, readonly contents: Map<string, string>, root: string) {
-        this.virtual = slash(resolve(root, '.code-intelligence', 'virtual'));
-        for (const [path, source] of contents) {
-            this.absolute.set(this.abs(path), source);
-            this.indexes.set(path, new TextIndex(source));
-        }
-        const lib = slash(dirname(ts.getDefaultLibFilePath({ target: ts.ScriptTarget.ES2022 })));
-        const read = (file: string): string | undefined => {
-            const key = slash(resolve(file));
-            const local = this.absolute.get(key);
-            if (local !== undefined)
-                return local;
-            if (dirname(key) === lib && /^lib(?:\.[a-z0-9.-]+)?\.d\.ts$/i.test(basename(key))) {
-                try {
-                    return readFileSync(key, 'utf8');
-                }
-                catch {
-                    return undefined;
-                }
-            }
-            return undefined;
+    readonly program: ts.Program;
+    readonly indexes: Map<string, TextIndex>;
+    readonly contents: Map<string, string>;
+    readonly abs: (path: string) => string;
+    readonly rel: (path: string) => string | undefined;
+    constructor(readonly snapshot: Snapshot, readonly fs: TypeScriptFileSystem, readonly configs: TypeScriptProjects, readonly config: ConfiguredProject) {
+        this.indexes = fs.indexes;
+        this.contents = fs.contents;
+        this.abs = fs.abs;
+        this.rel = fs.rel;
+        const options: ts.CompilerOptions = { ...config.parsed.options, noEmit: true, types: config.parsed.options.types ?? [], plugins: [] };
+        const host: ts.LanguageServiceHost & {
+            useSourceOfProjectReferenceRedirect(): boolean;
+        } = {
+            getCompilationSettings: () => options,
+            getScriptFileNames: () => config.parsed.fileNames,
+            getScriptVersion: name => hash(fs.read(name) ?? ''),
+            getScriptSnapshot: name => { const value = fs.read(name); return value === undefined ? undefined : ts.ScriptSnapshot.fromString(value); },
+            getCurrentDirectory: () => fs.root,
+            getDefaultLibFileName: options => ts.getDefaultLibFilePath(options),
+            getProjectReferences: () => config.parsed.projectReferences,
+            // Pinned compiler host hook: analyze captured referenced source, never emit build files.
+            useSourceOfProjectReferenceRedirect: () => true,
+            getParsedCommandLine: configs.parsed,
+            readFile: fs.read, fileExists: fs.fileExists, readDirectory: fs.readDirectory,
+            directoryExists: fs.directoryExists, getDirectories: fs.getDirectories,
+            useCaseSensitiveFileNames: () => true,
+            realpath: path => path.replaceAll('\\', '/'),
+            writeFile: () => { throw new Error('Compiler is read-only'); },
         };
-        const fileExists = (file: string) => read(file) !== undefined;
-        const directories = new Set<string>();
-        for (const file of this.absolute.keys()) {
-            let d = slash(dirname(file));
-            while (d.startsWith(this.virtual)) {
-                directories.add(d);
-                const next = slash(dirname(d));
-                if (next === d)
-                    break;
-                d = next;
-            }
+        this.service = ts.createLanguageService(host);
+        try {
+            const program = this.service.getProgram();
+            assert(program, 'COMPILER_UNAVAILABLE', 'TypeScript did not create a source program');
+            this.program = program;
         }
-        const base: ts.CompilerOptions = { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, moduleResolution: ts.ModuleResolutionKind.Bundler, jsx: ts.JsxEmit.Preserve, allowJs: true, checkJs: true, noEmit: true, skipLibCheck: true, strict: true, types: [] };
-        const configName = contents.has('tsconfig.json') ? 'tsconfig.json' : contents.has('jsconfig.json') ? 'jsconfig.json' : undefined;
-        if (configName) {
-            const parsed = ts.parseConfigFileTextToJson(this.abs(configName), contents.get(configName)!);
-            if (parsed.error)
-                this.configDiagnostics.push(parsed.error);
-            const result = ts.parseJsonConfigFileContent(parsed.config ?? {}, { useCaseSensitiveFileNames: true, readFile: read, fileExists, readDirectory: (_path, extensions) => [...this.absolute.keys()].filter(p => !extensions || extensions.some(e => p.endsWith(e))) }, this.virtual);
-            this.configDiagnostics.push(...result.errors.filter(e => e.code !== 18003));
-            this.options = { ...base, ...result.options, noEmit: true, skipLibCheck: true, types: [] };
+        catch (e) {
+            this.service.dispose();
+            throw e;
         }
-        else
-            this.options = base;
-        const roots = [...contents.keys()].filter(p => /\.[cm]?[jt]sx?$/.test(p)).map(p => this.abs(p));
-        const host = ts.createCompilerHost(this.options, true);
-        host.readFile = read;
-        host.fileExists = fileExists;
-        host.directoryExists = path => directories.has(slash(resolve(path))) || slash(resolve(path)) === lib;
-        host.getDirectories = () => [];
-        host.getCurrentDirectory = () => this.virtual;
-        host.realpath = slash;
-        host.writeFile = () => { throw new Error('Compiler is read-only'); };
-        host.getSourceFile = (fileName, languageVersion) => { const value = read(fileName); return value === undefined ? undefined : ts.createSourceFile(fileName, value, languageVersion, true); };
-        this.program = ts.createProgram(roots, this.options, host);
-        const serviceHost: ts.LanguageServiceHost = {
-            getCompilationSettings: () => this.options, getScriptFileNames: () => roots,
-            getScriptVersion: name => hash(read(name) ?? ''), getScriptSnapshot: name => { const value = read(name); return value === undefined ? undefined : ts.ScriptSnapshot.fromString(value); },
-            getCurrentDirectory: host.getCurrentDirectory, getDefaultLibFileName: options => ts.getDefaultLibFilePath(options),
-            readFile: read, fileExists, directoryExists: host.directoryExists, getDirectories: host.getDirectories,
-            useCaseSensitiveFileNames: () => true, realpath: slash,
-        };
-        this.service = ts.createLanguageService(serviceHost);
     }
-    abs(path: string): string { return slash(resolve(this.virtual, path)); }
-    rel(file: string): string | undefined { const path = slash(relative(this.virtual, file)); return path.startsWith('../') || isAbsolute(path) || !this.contents.has(path) ? undefined : path; }
     extract(deadline: Deadline): Extraction {
         const checker = this.program.getTypeChecker();
         const entities: LocalEntity[] = [];
@@ -189,19 +153,18 @@ export class TypeScriptProject {
             };
             visit(sf);
         }
-        return { entities, observations, diagnostics: this.diagnostics(deadline), limitations: ['TypeScript semantic bindings are not runtime dispatch proofs.', 'External dependency source and @types packages are excluded unless explicitly indexed; missing dependencies reduce semantic coverage.', 'Project references and multiple conflicting tsconfig build variants are not merged into one authoritative configuration.'] };
+        for (const edge of observations)
+            edge.analysisContext = this.config.name;
+        return { entities, observations, diagnostics: this.diagnostics(deadline), limitations: ['TypeScript semantic bindings are not runtime dispatch proofs.', 'External dependency source and @types packages are excluded unless explicitly indexed; missing dependencies reduce semantic coverage.', 'Bindings are scoped to the reported TypeScript configuration; alternative configurations are retained separately.'] };
     }
     diagnostics(deadline = new Deadline(60000)): Diagnostic[] {
-        const diagnostics: ts.Diagnostic[] = [...this.configDiagnostics];
+        const diagnostics: ts.Diagnostic[] = [...this.program.getOptionsDiagnostics(), ...this.program.getGlobalDiagnostics()];
         for (const source of this.program.getSourceFiles())
             if (this.rel(source.fileName) !== undefined) {
                 deadline.check();
                 diagnostics.push(...this.program.getSyntacticDiagnostics(source), ...this.program.getSemanticDiagnostics(source));
             }
-        return diagnostics.slice(0, 3000).map(d => {
-            const path = d.file ? this.rel(d.file.fileName) ?? 'tsconfig.json' : 'tsconfig.json';
-            return { path, code: `TS${d.code}`, message: ts.flattenDiagnosticMessageText(d.messageText, '\n'), severity: d.category === ts.DiagnosticCategory.Error ? 'error' : 'warning', startByte: d.start !== undefined ? this.indexes.get(path)?.byte(d.start) : undefined };
-        });
+        return diagnostics.slice(0, 3000).map(d => this.configs.diagnostic(d, this.config.name));
     }
     rename(path: string, byte: number, name: string): FileEdit[] {
         assert(/^[$_\p{L}][$_\p{L}\p{N}]*$/u.test(name), 'INVALID_RENAME', 'New name must be a JavaScript identifier');
@@ -223,4 +186,112 @@ export class TypeScriptProject {
         });
     }
     close(): void { this.service.dispose(); }
+}
+/** Snapshot-wide facade over independently configured TypeScript programs.
+ * Entities keep source identity; observations and diagnostics retain context.
+ */
+export class TypeScriptProject {
+    readonly fs: TypeScriptFileSystem;
+    readonly configs: TypeScriptProjects;
+    private readonly units: TypeScriptUnit[] = [];
+    constructor(readonly snapshot: Snapshot, readonly contents: Map<string, string>, root: string, deadline = new Deadline(120000)) {
+        this.fs = new TypeScriptFileSystem(contents, root);
+        this.configs = new TypeScriptProjects(this.fs, deadline);
+        try {
+            for (const config of this.configs.projects.values()) {
+                deadline.check();
+                if (config.parsed.fileNames.length)
+                    this.units.push(new TypeScriptUnit(snapshot, this.fs, this.configs, config));
+            }
+        }
+        catch (e) {
+            this.close();
+            throw e;
+        }
+    }
+    get indexes(): Map<string, TextIndex> { return this.fs.indexes; }
+    /** Legacy single-program access. Use contexts() for multi-project analysis. */
+    get program(): ts.Program { assert(this.units[0], 'CAPABILITY_UNAVAILABLE', 'No configured TypeScript source program'); return this.units[0].program; }
+    get service(): ts.LanguageService { assert(this.units[0], 'CAPABILITY_UNAVAILABLE', 'No configured TypeScript source program'); return this.units[0].service; }
+    abs(path: string): string { return this.fs.abs(path); }
+    rel(path: string): string | undefined { return this.fs.rel(path); }
+    contexts(): AnalysisContext[] {
+        return [...this.configs.projects.values()].map(config => {
+            const unit = this.units.find(u => u.config === config);
+            return this.configs.context(config, unit?.program.getSourceFiles().map(f => this.rel(f.fileName)).filter((p): p is string => p !== undefined) ?? []);
+        });
+    }
+    limitations(): string[] {
+        const contexts = this.contexts(), known = new Set(contexts.flatMap(c => c.analyzedFiles));
+        const missing = this.snapshot.files.filter(f => ['typescript', 'javascript'].includes(f.language) && !known.has(f.path));
+        return [...this.configs.limitations, ...contexts.flatMap(c => c.limitations),
+            ...(missing.length ? [`TypeScript semantic analysis unavailable for ${missing.length} captured files outside configured programs; file/text search still works.`] : []),
+            'Only immutable source and trusted TypeScript standard libraries are loaded; external dependency types are not automatically loaded.'];
+    }
+    extract(deadline: Deadline): Extraction {
+        const entities = new Map<string, LocalEntity>(), memberships = new Map<string, Set<string>>();
+        const observations: LocalObservation[] = [], diagnostics: Diagnostic[] = [...this.configs.projects.values()].flatMap(c => c.problems);
+        const limitations = new Set(this.limitations());
+        for (const unit of this.units) {
+            deadline.check();
+            const result = unit.extract(deadline);
+            for (const entity of result.entities) {
+                const prior = entities.get(entity.key);
+                assert(!prior || stable(prior) === stable(entity), 'IDENTITY_COLLISION', 'TypeScript source entity differs across configuration contexts');
+                entities.set(entity.key, entity);
+                const contexts = memberships.get(entity.key) ?? new Set<string>();
+                contexts.add(unit.config.name);
+                memberships.set(entity.key, contexts);
+            }
+            observations.push(...result.observations);
+            diagnostics.push(...result.diagnostics);
+            for (const limit of result.limitations)
+                limitations.add(limit);
+        }
+        for (const [key, entity] of entities)
+            entity.metadata = { ...entity.metadata, analysisContexts: [...memberships.get(key)!].sort() };
+        return { entities: [...entities.values()], observations, diagnostics, limitations: [...limitations], analysisContexts: this.contexts() };
+    }
+    diagnostics(deadline = new Deadline(60000)): Diagnostic[] {
+        const diagnostics = [...this.configs.projects.values()].flatMap(c => c.problems);
+        for (const unit of this.units) {
+            deadline.check();
+            diagnostics.push(...unit.diagnostics(deadline));
+        }
+        return diagnostics;
+    }
+    rename(path: string, byte: number, name: string, deadline = new Deadline(60000)): FileEdit[] {
+        const edits = new Map<string, FileEdit>(), replacements = new Map<string, string>();
+        const perContext = new Map<TypeScriptUnit, Set<string>>();
+        for (const unit of this.units) {
+            deadline.check();
+            if (!unit.program.getSourceFile(this.abs(path)))
+                continue;
+            const contextEdits = new Set<string>();
+            perContext.set(unit, contextEdits);
+            // A failure in any participating context must not silently produce a partial rename.
+            for (const edit of unit.rename(path, byte, name)) {
+                assert(edit.kind === 'replace', 'COMPILER_CONTRACT', 'Compiler rename returned a resource operation');
+                const key = stable([edit.path, edit.startByte, edit.endByte]);
+                const old = replacements.get(key);
+                assert(old === undefined || old === edit.text, 'RENAME_CONTEXT_CONFLICT', 'Configurations disagree on a rename replacement; use separate reviewed plans');
+                replacements.set(key, edit.text);
+                edits.set(stable(edit), edit);
+                contextEdits.add(stable(edit));
+            }
+        }
+        deadline.check();
+        assert(edits.size, 'RENAME_UNAVAILABLE', 'No configured program contains the rename target');
+        for (const [key, edit] of edits)
+            for (const unit of this.units) {
+                deadline.check();
+                // A shared consumer may bind the same spelling to a DIFFERENT target
+                // under another build variant. A rename must agree in every context
+                // that analyzes an edited file, not merely contexts holding its definition.
+                assert(!unit.program.getSourceFile(this.abs(edit.path)) || perContext.get(unit)?.has(key), 'RENAME_CONTEXT_CONFLICT', `Rename would change ${edit.path} inconsistently in ${unit.config.name}; prepare a context-specific explicit patch instead`);
+            }
+        return [...edits.values()].sort((a, b) => a.path.localeCompare(b.path) || (a.kind === 'replace' && b.kind === 'replace' ? a.startByte - b.startByte : 0));
+    }
+    close(): void { for (const unit of this.units)
+        unit.close(); }
 }

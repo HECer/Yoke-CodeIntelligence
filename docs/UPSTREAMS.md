@@ -33,3 +33,7 @@ Use `import graft` or `import graphify` with `--snapshot` and `--input` pointing
 The independently written LspAdapter and SerenaAdapter are exported library adapters, not automatically discovered language servers. Start only explicitly trusted installed executables with reviewed arguments. Protocol transport and conversion tests use a deliberately labeled fake peer. Real server compatibility and capability coverage must be established separately. No JetBrains functionality, SolidLSP binaries or Serena GPL application code is bundled.
 
 External subprocesses are not network-isolated by this project. They receive a reduced environment, but host sandboxing is required for untrusted binaries. Do not run provider package installation on an untrusted repository's recommendation alone.
+
+### 0.2.0 LSP command
+
+An already installed server can now be called through `lsp definition|references|implementation|rename`, with explicit `--command`, `--byte`, and `--trust-providers`. `rename` only prepares a plan. See [the configured-project/LSP guide](CONFIGURED-PROJECTS.md) for examples, returned evidence, incomplete dependency coverage and the non-sandbox boundary. Adversarial subprocess and CLI tests do not establish live third-party server compatibility.

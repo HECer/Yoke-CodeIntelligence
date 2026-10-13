@@ -1,3 +1,4 @@
+import { VERSION } from '../core/types.js';
 import { RpcPeer } from './rpc.js';
 import { Deadline, object, assert } from '../core/util.js';
 import { normalizeSerenaSymbols } from './graph-import.js';
@@ -7,7 +8,7 @@ export class SerenaAdapter {
     private tools = new Set<string>();
     async start(command: string, args: string[], sandbox: string, deadline: Deadline): Promise<void> {
         this.peer.start(command, args.map(a => a.replaceAll('{workspace}', sandbox)), sandbox);
-        await this.peer.request('initialize', { protocolVersion: '2025-06-18', capabilities: {}, clientInfo: { name: 'code-intelligence', version: '0.1.0' } }, deadline);
+        await this.peer.request('initialize', { protocolVersion: '2025-06-18', capabilities: {}, clientInfo: { name: 'code-intelligence', version: VERSION } }, deadline);
         this.peer.notify('notifications/initialized', {});
         const result = object(await this.peer.request('tools/list', {}, deadline));
         assert(Array.isArray(result.tools), 'ADAPTER_CONTRACT', 'MCP tools/list returned no tools');

@@ -2,10 +2,15 @@
 /** Publish this repository using the owner's locally authenticated GitHub CLI.
  * No token is read, printed, embedded in a URL or stored by this script.
  */
+import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
+const VERSION = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8')).version;
+if (typeof VERSION !== 'string' || !/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(VERSION))
+    throw new Error('Invalid package version.');
+const TAG = `v${VERSION}`;
 const OWNER = 'HECer';
 const REPO = `${OWNER}/Code-Intelligence`;
 const HTTPS = `https://github.com/${REPO}.git`;
@@ -25,12 +30,12 @@ function run(command, args, { allowFailure = false } = {}) {
 }
 try {
     if (dryRun) {
-        console.log(JSON.stringify({ dryRun: true, repository: REPO, visibility: 'public', changesMade: false,
+        console.log(JSON.stringify({ dryRun: true, repository: REPO, visibility: 'public', version: VERSION, tag: TAG, changesMade: false,
             steps: ['Require a clean, committed local main branch', 'Verify gh account is HECer',
                 'Create the public repository if absent; refuse an existing private repository',
                 'Refuse an unexpected origin or unrelated/divergent remote history',
                 'Configure GitHub CLI credential helper; push main without force',
-                'Push the local v0.1.0 tag if present; verify GitHub visibility and HEAD'] }, null, 2));
+                `Push the local ${TAG} tag if present; verify GitHub visibility and HEAD`] }, null, 2));
         process.exit(0);
     }
     const head = run('git', ['rev-parse', 'HEAD']).stdout;
@@ -38,6 +43,9 @@ try {
         throw new Error('Switch to the intended main branch before publishing.');
     if (run('git', ['status', '--porcelain']).stdout)
         throw new Error('Working tree is not clean. Review and commit changes before publishing.');
+    const tagCommit = run('git', ['rev-parse', '--verify', `refs/tags/${TAG}^{commit}`], { allowFailure: true });
+    if (tagCommit.ok && tagCommit.stdout !== head)
+        throw new Error(`${TAG} does not identify HEAD; review the intended release before publishing.`);
     const who = run('gh', ['api', 'user', '--jq', '.login']).stdout;
     if (who.toLowerCase() !== OWNER.toLowerCase())
         throw new Error(`Authenticated account is ${who}, not ${OWNER}. Switch accounts locally with gh auth switch.`);
@@ -66,13 +74,13 @@ try {
             throw new Error('Remote main is unrelated or ahead/diverged. Review it; this script never force-pushes.');
     }
     run('git', ['push', '-u', 'origin', 'HEAD:main']);
-    if (run('git', ['rev-parse', '--verify', 'refs/tags/v0.1.0'], { allowFailure: true }).ok)
-        run('git', ['push', 'origin', 'refs/tags/v0.1.0']);
+    if (tagCommit.ok)
+        run('git', ['push', 'origin', `refs/tags/${TAG}`]);
     const remoteHead = run('gh', ['api', `repos/${REPO}/commits/main`, '--jq', '.sha']).stdout;
     const finalRepo = JSON.parse(run('gh', ['api', `repos/${REPO}`]).stdout);
     if (remoteHead !== head || finalRepo.private)
         throw new Error('Post-publication verification failed; inspect GitHub before retrying.');
-    console.log(JSON.stringify({ published: true, repository: REPO, public: true, commit: head, url: finalRepo.html_url }, null, 2));
+    console.log(JSON.stringify({ published: true, repository: REPO, public: true, version: VERSION, tag: tagCommit.ok ? TAG : null, commit: head, url: finalRepo.html_url }, null, 2));
 }
 catch (error) {
     console.error(`Publication stopped: ${error.message}`);

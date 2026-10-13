@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "measuredAt": "2026-10-13T10:57:14.888Z",
+  "passed": true,
+  "mode": "actual_cli_native_compiler",
+  "steps": [
+    "index",
+    "find",
+    "cross_project_rename_prepare",
+    "static_verify",
+    "isolated_apply",
+    "original_source_unchanged"
+  ],
+  "analysisContexts": [
+    "packages/app/tsconfig.json",
+    "packages/core/tsconfig.json",
+    "tsconfig.json"
+  ],
+  "filesChanged": [
+    "packages/app/src/invoice.ts",
+    "packages/core/src/money.ts"
+  ],
+  "verification": {
+    "status": "passed",
+    "beforeErrors": 0,
+    "afterErrors": 0
+  },
+  "originalSourceUnchanged": true,
+  "noProjectCodeExecuted": true,
+  "upstreamServerUsed": false,
+  "limitation": "Small configured-project fixture. Not tsc --build, functional tests or a live upstream comparison."
+}

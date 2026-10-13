@@ -1,6 +1,6 @@
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import { EventEmitter } from 'node:events';
-import { Deadline, CIError, assert } from '../core/util.js';
+import { Deadline, CIError, assert, object } from '../core/util.js';
 import { killTree } from '../core/process.js';
 /** Minimal bounded JSON-RPC transport, shared by optional MCP and LSP peers. */
 export class RpcPeer extends EventEmitter {
@@ -32,13 +32,15 @@ export class RpcPeer extends EventEmitter {
     }
     private ingest(data: Buffer): void {
         this.buffer = Buffer.concat([this.buffer, data]);
-        assert(this.buffer.length <= this.maxMessageBytes + 16384, 'PROTOCOL_LIMIT', 'Provider output buffer exceeded limit');
         while (this.buffer.length) {
             let body: Buffer;
             if (this.framing === 'ndjson') {
                 const newline = this.buffer.indexOf(10);
-                if (newline < 0)
+                if (newline < 0) {
+                    assert(this.buffer.length <= this.maxMessageBytes, 'PROTOCOL_LIMIT', 'Provider message exceeds the byte limit');
                     return;
+                }
+                assert(newline <= this.maxMessageBytes, 'PROTOCOL_LIMIT', 'Provider message exceeds the byte limit');
                 body = this.buffer.subarray(0, newline);
                 this.buffer = this.buffer.subarray(newline + 1);
                 if (!body.length)
@@ -50,23 +52,43 @@ export class RpcPeer extends EventEmitter {
                     assert(this.buffer.length < 8192, 'PROTOCOL_LIMIT', 'LSP header too large');
                     return;
                 }
+                assert(end < 8192, 'PROTOCOL_LIMIT', 'LSP header too large');
                 const header = this.buffer.subarray(0, end).toString('ascii');
                 const lengths = [...header.matchAll(/^Content-Length:\s*(\d+)\s*$/gim)];
                 assert(lengths.length === 1, 'PROTOCOL_ERROR', 'LSP requires exactly one Content-Length');
                 const length = Number(lengths[0]![1]);
-                assert(length <= this.maxMessageBytes, 'PROTOCOL_LIMIT', 'LSP body too large');
+                assert(Number.isSafeInteger(length) && length <= this.maxMessageBytes, 'PROTOCOL_LIMIT', 'LSP body too large');
                 if (this.buffer.length < end + 4 + length)
                     return;
                 body = this.buffer.subarray(end + 4, end + 4 + length);
                 this.buffer = this.buffer.subarray(end + 4 + length);
             }
-            const message = JSON.parse(body.toString('utf8')) as Record<string, unknown>;
+            let message: Record<string, unknown>;
+            try {
+                message = object(JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(body)));
+            }
+            catch {
+                throw new CIError('PROTOCOL_ERROR', 'Provider sent invalid UTF-8, JSON or a non-object message');
+            }
             assert(message.jsonrpc === '2.0', 'PROTOCOL_ERROR', 'Expected JSON-RPC 2.0');
             if (typeof message.method === 'string') {
                 if (message.id !== undefined) {
                     // No peer is allowed to edit the workspace or acquire credentials via callbacks.
-                    const result = message.method === 'workspace/configuration' ? (Array.isArray((message.params as any)?.items) ? (message.params as any).items.map(() => null) : []) : message.method === 'workspace/applyEdit' ? { applied: false, failureReason: 'Writes must be prepared through Code Intelligence' } : null;
-                    this.send({ jsonrpc: '2.0', id: message.id, result });
+                    assert(typeof message.id === 'string' || typeof message.id === 'number', 'PROTOCOL_ERROR', 'Invalid request id');
+                    if (message.method === 'workspace/configuration') {
+                        const items = (message.params as any)?.items;
+                        assert(Array.isArray(items) && items.length <= 1000, 'PROTOCOL_LIMIT', 'Configuration request is malformed or too large');
+                        this.send({ jsonrpc: '2.0', id: message.id, result: items.map(() => null) });
+                    }
+                    else if (message.method === 'workspace/applyEdit') {
+                        this.send({ jsonrpc: '2.0', id: message.id, result: { applied: false, failureReason: 'Writes must be prepared through Code Intelligence' } });
+                    }
+                    else if (message.method === 'window/workDoneProgress/create' || message.method === 'window/showMessageRequest') {
+                        this.send({ jsonrpc: '2.0', id: message.id, result: null });
+                    }
+                    else {
+                        this.send({ jsonrpc: '2.0', id: message.id, error: { code: -32601, message: 'Unsupported client callback; no side effect performed' } });
+                    }
                 }
                 else
                     this.emit('notification', message.method, message.params);
@@ -75,6 +97,9 @@ export class RpcPeer extends EventEmitter {
                 const pending = this.pending.get(message.id);
                 if (!pending)
                     continue;
+                assert(Object.hasOwn(message, 'result') !== Object.hasOwn(message, 'error'), 'PROTOCOL_ERROR', 'Response must contain exactly one of result or error');
+                if (Object.hasOwn(message, 'error'))
+                    assert(message.error && typeof message.error === 'object' && Number.isInteger((message.error as any).code) && typeof (message.error as any).message === 'string', 'PROTOCOL_ERROR', 'Malformed JSON-RPC error');
                 this.pending.delete(message.id);
                 pending.cleanup();
                 if (message.error)

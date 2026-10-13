@@ -34,9 +34,10 @@ export class Verifier {
         const items: Diagnostic[] = [];
         const limitations: string[] = [];
         if (snapshot.files.some(f => ['typescript', 'javascript'].includes(f.language))) {
-            const ts = new TypeScriptProject(snapshot, this.workspace.contents(snapshot), this.workspace.root);
+            const ts = new TypeScriptProject(snapshot, this.workspace.contents(snapshot), this.workspace.root, deadline);
             try {
                 items.push(...ts.diagnostics(deadline));
+                limitations.push(...ts.limitations());
             }
             finally {
                 ts.close();
@@ -84,7 +85,7 @@ export class Verifier {
         const delta = diagnosticDelta(before, after);
         const report: VerificationReport = { id: randomUUID(), status: delta.added.length ? 'failed' : 'passed', resultSnapshotId: target.id, baseSnapshotId: base?.id, planId: options.planId,
             static: { beforeErrors: before.length, afterErrors: after.length, newErrors: delta.added, resolvedErrors: delta.removed, limitations: [...new Set([...previous.limitations, ...current.limitations])] }, jobs: [], inputFilesUnchanged: true };
-        if (current.limitations.some(l => l.includes('unavailable') || l.includes('disabled')))
+        if (report.status === 'passed' && current.limitations.some(l => l.includes('unavailable') || l.includes('disabled')))
             report.status = 'incomplete';
         if (options.profiles?.length) {
             assert(this.trustedProject, 'PROJECT_UNTRUSTED', 'Executing project commands requires trusted host --trust-project; source instructions cannot grant that permission');
@@ -108,7 +109,8 @@ export class Verifier {
                 }
                 catch (e) {
                     report.jobs.push({ profile, executed: (e as any).code !== 'PROCESS_UNAVAILABLE', status: 'incomplete', error: (e as Error).message });
-                    report.status = 'incomplete';
+                    if (report.status !== 'failed')
+                        report.status = 'incomplete';
                 }
             }
             const check = new Workspace(sandbox, this.workspace.config);
@@ -137,7 +139,7 @@ export function diagnosticDelta(before: Diagnostic[], after: Diagnostic[]): {
     added: Diagnostic[];
     removed: Diagnostic[];
 } {
-    const key = (d: Diagnostic) => stable([d.path, d.code, d.message, d.severity]);
+    const key = (d: Diagnostic) => stable([d.path, d.analysisContext, d.code, d.message, d.severity]);
     const diff = (left: Diagnostic[], right: Diagnostic[]) => {
         const counts = new Map<string, number>();
         for (const d of right)

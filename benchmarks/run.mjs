@@ -5,7 +5,7 @@ import { tmpdir, platform, arch, cpus } from 'node:os';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { performance } from 'node:perf_hooks';
-import { CodeIntelligence } from '../dist/index.js';
+import { CodeIntelligence, VERSION } from '../dist/index.js';
 const root = mkdtempSync(join(tmpdir(), 'ci-bench-'));
 execFileSync('git', ['init', '-q', root]);
 mkdirSync(join(root, 'src'));
@@ -32,7 +32,7 @@ try {
     }
     times.sort((a, b) => a - b);
     const graph = engine.workspace.store.graph(indexed.snapshotId);
-    const output = { version: '0.1.0', measuredAt: new Date().toISOString(), kind: 'local_microbenchmark',
+    const output = { version: VERSION, measuredAt: new Date().toISOString(), kind: 'local_microbenchmark',
         environment: { node: process.version, platform: platform(), arch: arch(), cpu: cpus()[0]?.model },
         fixture: { files: 101, typeScriptModules: 100, queries: 60 },
         results: { coldIndexMs: +coldIndexMs.toFixed(2), warmExplicitSnapshotP50Ms: +times[Math.floor(times.length * .50)].toFixed(2),

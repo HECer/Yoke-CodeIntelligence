@@ -85,7 +85,7 @@ export class TextIndex {
             if (width === 2)
                 this.byteOffsets[i + 1] = b; // Mid-surrogate positions are not edit boundaries.
             b += Buffer.byteLength(String.fromCodePoint(cp));
-            if (value[i] === '\n')
+            if (value[i] === '\n' || value[i] === '\r' && value[i + 1] !== '\n')
                 this.lineStarts.push(i + 1);
             i += width;
             this.byteOffsets[i] = b;

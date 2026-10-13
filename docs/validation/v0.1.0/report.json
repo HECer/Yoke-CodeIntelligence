@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "project": "Code Intelligence",
+  "version": "0.1.0",
+  "measuredAt": "2026-10-13T10:11:28.441055+00:00",
+  "status": "tested_initial_implementation_not_full_specification_or_production_certification",
+  "sourceCorpus": {
+    "sha256": "5800477600228826d8229ed00ab9e8c5500e34fd950760548b447215f0744962",
+    "files": 51,
+    "includes": [
+      "src",
+      "workers",
+      "test",
+      "scripts",
+      "benchmarks"
+    ]
+  },
+  "environment": {
+    "os": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "node": "v22.16.0",
+    "npm": "10.9.2",
+    "python": "Python 3.13.5",
+    "go": "go version go1.23.2 linux/amd64",
+    "git": "git version 2.47.3",
+    "typescript": "5.8.3"
+  },
+  "checks": {
+    "typescriptBuild": true,
+    "typecheck": true,
+    "nodeTests": {
+      "tests": 112,
+      "pass": 112,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "pythonWorkersCompile": true,
+    "goAstActualExecution": true,
+    "pythonAstActualExecution": true,
+    "compilerRenameAcrossFiles": true,
+    "actualKilledWriterRecovery": true,
+    "actualCli": true,
+    "mcpProtocol": true,
+    "actualLoopbackHttpAndAuthorization": true,
+    "readOnlyFrontendOfflineDomFixture": true,
+    "liveBrowserToBackend": false,
+    "publisherDryRun": true,
+    "publisherLive": false,
+    "lockfileOfflineConsistency": true,
+    "npmPackDryRun": true,
+    "cleanOnlineDependencyInstall": false,
+    "macOSRun": false,
+    "windowsRun": false,
+    "githubHostedCI": false,
+    "portableRuntimeWithoutGlobalModules": true
+  },
+  "coverageRun": {
+    "completed": false,
+    "reason": "The optional instrumented run did not complete within the execution window; no coverage percentage is asserted. The uninstrumented 112-test suite completed with zero failures."
+  },
+  "upstreamValidation": {
+    "graft": "contract fixtures only; live package not installed",
+    "graphify": "contract fixtures only; live package not installed",
+    "lsp": "fake protocol peer, not a real installed language server",
+    "serena": "fake MCP peer, not a real installed Serena"
+  },
+  "publication": {
+    "requestedRepository": "HECer/Code-Intelligence",
+    "requestedVisibility": "public",
+    "published": false,
+    "authenticatedOwnerConfirmed": "HECer",
+    "reason": "Connected GitHub tools have no repository-create action. The target and an actual file creation attempt returned HTTP 404; final target check also returned 404.",
+    "localPublisher": "scripts/publish-github.mjs",
+    "npmPublished": false
+  },
+  "reports": {
+    "tests": "tests.json",
+    "benchmark": "benchmark.json",
+    "browser": "browser.json"
+  },
+  "limitations": [
+    "Read docs/STATUS.md for the unimplemented long-term specification areas.",
+    "No independent security audit, formal proof or full agent/upstream cost benchmark.",
+    "The default native core performs no model calls; outer-agent usage is not measured.",
+    "Managed Chromium blocked localhost navigation; actual frontend was tested offline with mocked fetch/history and HTTP tested independently.",
+    "Dev dependency tarball integrities for @types/node/undici-types were not retrievable; exact versions/URLs are pinned."
+  ]
+}

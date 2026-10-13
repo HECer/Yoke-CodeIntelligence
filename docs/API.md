@@ -96,3 +96,9 @@ try {
 ```
 
 The MCP transport supports initialize, initialized notification, tools/list, tools/call, cancellation, ping, and read-only local artifact resources. JSON is newline-delimited on stdout; diagnostics go to stderr. Supported negotiated protocol versions are 2024-11-05, 2025-03-26 and 2025-06-18. Tool results contain one complete text JSON payload rather than a duplicated structuredContent/text pair. No hosted HTTP MCP service or multi-user authentication is supplied.
+
+## Configuration-aware results (0.2.0)
+
+Coverage now carries optional `analysisContexts`; TypeScript observations/diagnostics retain their config identity. `ci_trace` accepts `analysisContexts: ["path/to/tsconfig.json"]` and reports `crossContextUnion`. Native rename refuses conflicting interpretations of a shared source edit with `RENAME_CONTEXT_CONFLICT`. See [configured projects](CONFIGURED-PROJECTS.md).
+
+The `runLsp` library export and `lsp` CLI entrypoint are explicit host integrations. They are not automatically exposed as additional MCP tools. The options contain host trust, command/argument vector, source path/UTF-8 offset and one shared deadline. Read operations return checked locations; rename returns a prepared, persisted plan. Verification keeps `failed` status if a later check is unavailable or times out; inspect individual stages for incomplete coverage.

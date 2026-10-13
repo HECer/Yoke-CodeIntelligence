@@ -1,0 +1,32 @@
+{
+  "version": "0.1.0",
+  "measuredAt": "2026-10-13T09:59:44.569Z",
+  "kind": "local_microbenchmark",
+  "environment": {
+    "node": "v22.16.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor"
+  },
+  "fixture": {
+    "files": 101,
+    "typeScriptModules": 100,
+    "queries": 60
+  },
+  "results": {
+    "coldIndexMs": 570.61,
+    "warmExplicitSnapshotP50Ms": 0.27,
+    "warmExplicitSnapshotP95Ms": 0.68,
+    "meanEnvelopeBytes": 3461,
+    "exactNameHits": 60,
+    "entities": 502,
+    "observations": 801,
+    "rssBytes": 183394304,
+    "modelCalls": 0
+  },
+  "limitations": [
+    "Warm queries reuse an explicit immutable snapshot; a fresh disk capture still reads source bytes.",
+    "No agent reasoning, API token billing, independent patch tasks or upstream systems were benchmarked.",
+    "A small synthetic fixture on this host is not a production latency guarantee."
+  ]
+}

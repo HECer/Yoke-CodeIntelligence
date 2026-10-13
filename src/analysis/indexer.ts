@@ -9,10 +9,10 @@ export class Indexer {
     private project?: TypeScriptProject;
     private running = new Map<string, Promise<void>>();
     constructor(readonly workspace: Workspace) { }
-    typescript(snapshot: Snapshot): TypeScriptProject {
+    typescript(snapshot: Snapshot, deadline = new Deadline(120000)): TypeScriptProject {
         if (this.project?.snapshot.id !== snapshot.id) {
             this.project?.close();
-            this.project = new TypeScriptProject(snapshot, this.workspace.contents(snapshot), this.workspace.root);
+            this.project = new TypeScriptProject(snapshot, this.workspace.contents(snapshot), this.workspace.root, deadline);
         }
         return this.project;
     }
@@ -46,7 +46,7 @@ export class Indexer {
         });
         pieces.push({ entities: files, observations: [], diagnostics: [], limitations: [] });
         if (snapshot.files.some(f => ['typescript', 'javascript'].includes(f.language)))
-            pieces.push(this.typescript(snapshot).extract(deadline));
+            pieces.push(this.typescript(snapshot, deadline).extract(deadline));
         try {
             pieces.push(await extractPython(this.workspace, snapshot, deadline));
         }
@@ -98,16 +98,21 @@ export function canonicalize(snapshot: Snapshot, extractions: Extraction[]): Gra
             e.id = hash(stable({ ...e, id: undefined }));
             evidence.set(e.id, e);
             const target = edge.targetKey ? keys.get(edge.targetKey) ?? null : null;
-            const o: Observation = { id: '', snapshotId: snapshot.id, source, target, targetLabel: target ? undefined : edge.targetLabel ?? edge.targetKey, relation: edge.relation, resolution: target ? edge.resolution : 'unresolved', evidenceIds: [e.id], producer: edge.producer, scope: edge.path.split('/').slice(0, -1).join('/') };
+            const o: Observation = { id: '', snapshotId: snapshot.id, source, target, targetLabel: target ? undefined : edge.targetLabel ?? edge.targetKey, relation: edge.relation, resolution: target ? edge.resolution : 'unresolved', evidenceIds: [e.id], producer: edge.producer, scope: edge.path.split('/').slice(0, -1).join('/'), ...(edge.analysisContext ? { analysisContext: edge.analysisContext } : {}) };
             o.id = hash(stable({ ...o, id: undefined }));
             observations.set(o.id, o);
         }
     const languages: Graph['coverage']['languages'] = {};
+    const semanticPaths = new Set(extractions.flatMap(x => x.analysisContexts ?? []).flatMap(c => c.analyzedFiles));
     for (const file of snapshot.files) {
         languages[file.language] ??= { files: 0, provider: ['typescript', 'javascript'].includes(file.language) ? 'typescript-compiler@5.8.3' : file.language === 'python' && extractions.some(x => x.entities.some(e => e.language === 'python' && e.kind !== 'file')) ? 'python-ast' : file.language === 'go' && extractions.some(x => x.entities.some(e => e.language === 'go' && e.kind !== 'file')) ? 'go-parser' : 'text/contracts', semantic: ['typescript', 'javascript'].includes(file.language) };
         languages[file.language]!.files++;
+        if (['typescript', 'javascript'].includes(file.language)) {
+            languages[file.language]!.semanticFiles = (languages[file.language]!.semanticFiles ?? 0) + (semanticPaths.has(file.path) ? 1 : 0);
+            languages[file.language]!.semantic = languages[file.language]!.semanticFiles! > 0;
+        }
     }
     const diagnostics = extractions.flatMap(x => x.diagnostics);
     return { snapshotId: snapshot.id, entities: [...nodes.values()], evidence: [...evidence.values()], observations: [...observations.values()], diagnostics,
-        coverage: { indexedFiles: snapshot.files.length, sourceFiles: snapshot.files.filter(f => !['document', 'config', 'text'].includes(f.language)).length, languages, unresolved: [...observations.values()].filter(e => e.target === null).length, omissions: snapshot.omissions.length, diagnostics: diagnostics.length, exhaustive: false, limitations: unique(['Only saved, captured files are known. Unsaved editor buffers are not included.', 'A stable double scan detects ordinary concurrent edits; it is not an atomic filesystem-wide snapshot against a hostile concurrent writer.', ...extractions.flatMap(x => x.limitations)]) } };
+        coverage: { analysisContexts: extractions.flatMap(x => x.analysisContexts ?? []), indexedFiles: snapshot.files.length, sourceFiles: snapshot.files.filter(f => !['document', 'config', 'text'].includes(f.language)).length, languages, unresolved: [...observations.values()].filter(e => e.target === null).length, omissions: snapshot.omissions.length, diagnostics: diagnostics.length, exhaustive: false, limitations: unique(['Only saved, captured files are known. Unsaved editor buffers are not included.', 'A stable double scan detects ordinary concurrent edits; it is not an atomic filesystem-wide snapshot against a hostile concurrent writer.', ...extractions.flatMap(x => x.limitations)]) } };
 }

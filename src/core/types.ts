@@ -1,5 +1,5 @@
 /** Canonical evidence contracts. Offsets are UTF-8 bytes, ranges are half-open. */
-export const VERSION = '0.1.0';
+export const VERSION = '0.2.0';
 export const SCHEMA = 1;
 export type Resolution = 'syntactic' | 'exact_binding' | 'possible_dispatch' | 'heuristic' | 'inferred_concept' | 'observed_execution' | 'authored_contract' | 'unresolved';
 export interface SourceRange {
@@ -58,6 +58,7 @@ export interface Evidence extends SourceRange {
     artifactId?: string;
 }
 export interface Observation {
+    analysisContext?: string;
     id: string;
     snapshotId: string;
     source: string;
@@ -69,13 +70,24 @@ export interface Observation {
     producer: string;
     scope: string;
 }
+export interface AnalysisContext {
+    id: string;
+    provider: string;
+    configPath: string | null;
+    rootFiles: string[];
+    analyzedFiles: string[];
+    references: string[];
+    limitations: string[];
+}
 export interface Coverage {
+    analysisContexts?: AnalysisContext[];
     indexedFiles: number;
     sourceFiles: number;
     languages: Record<string, {
         files: number;
         provider: string;
         semantic: boolean;
+        semanticFiles?: number;
     }>;
     unresolved: number;
     omissions: number;
@@ -92,6 +104,7 @@ export interface Graph {
     diagnostics: Diagnostic[];
 }
 export interface Diagnostic {
+    analysisContext?: string;
     path: string;
     message: string;
     severity: 'error' | 'warning';
@@ -114,6 +127,7 @@ export interface LocalEntity extends SourceRange {
     metadata?: Record<string, unknown>;
 }
 export interface LocalObservation extends SourceRange {
+    analysisContext?: string;
     sourceKey: string;
     targetKey?: string;
     targetLabel?: string;
@@ -124,6 +138,7 @@ export interface LocalObservation extends SourceRange {
     anchor?: Evidence['anchor'];
 }
 export interface Extraction {
+    analysisContexts?: AnalysisContext[];
     entities: LocalEntity[];
     observations: LocalObservation[];
     diagnostics: Diagnostic[];

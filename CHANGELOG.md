@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.0 — 2026-10-13
+
+- Add immutable TypeScript compiler filesystem and configured `tsconfig`/`jsconfig` discovery. Honor roots, inherited settings, path aliases and source-based project references; separate globals and analysis contexts. Reference cycles and unavailable targets are explicit diagnostics, not successful empty analyses.
+- Preserve configuration identity on graph observations and diagnostics. Add `analysisContexts` trace filtering and expose cross-context union. Rebuild resolution when a captured config changes.
+- Combine cross-project compiler rename locations and refuse edits when the same physical source binds differently in another configuration.
+- Harden LSP/JSON-RPC framing, malformed response handling, callbacks, document versions, UTF-16/UTF-8 positions, LocationLinks and overlapping/resource edits. Cache text indexes during location conversion.
+- Add explicit host-authorized `lsp` CLI/library operations over copied snapshots. Reads expose bound source locations; rename produces a persisted plan, never an implicit apply. Report unknown external usage and source-mutation failures.
+- Preserve failed verification status when a subsequent stage is unavailable or times out; retain incomplete stages separately. Support standalone CR line endings in the shared source-position model.
+- Add a two-package configured project example and new regression tests. The publisher derives the release tag from package metadata and refuses an existing release tag pointing at another local commit.
+
+Live Graft/Graphify/Serena/third-party LSP runs, unsaved editor buffers, dependency installation and hosted multi-platform CI remain outside the verified scope. This is a local archive release, not a completed GitHub or npm publication.
+
 ## 0.1.0 — 2026-10-13
 
 Initial independently written local implementation: immutable snapshot/CAS storage, SQLite FTS5, TypeScript compiler navigation/refactoring, Python AST and Go parser workers, directed evidence graph, compact retrieval, eight MCP tools, CLI and read-only loopback explorer.
