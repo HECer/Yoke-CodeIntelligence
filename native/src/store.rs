@@ -434,10 +434,23 @@ impl Store {
             Ok(())
         };
         let tx = self.db.transaction()?;
-        tx.execute(
+        let snapshot_inserted = tx.execute(
             "INSERT OR IGNORE INTO snapshots VALUES(?1,?2)",
             params![snapshot.id, serde_json::to_string(snapshot)?],
         )?;
+        if snapshot_inserted > 0 {
+            let published_at = std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)?
+                .as_millis();
+            let receipt = serde_json::json!({
+                "snapshotId": snapshot.id, "workspaceId": snapshot.workspace_id,
+                "publishedAtMs": u64::try_from(published_at)?
+            });
+            tx.execute(
+                "INSERT INTO records(kind,id,value) VALUES('snapshot-published',?1,?2)",
+                params![snapshot.id, serde_json::to_string(&receipt)?],
+            )?;
+        }
         let inserted = tx.execute(
             "INSERT OR IGNORE INTO graphs VALUES(?1,?2)",
             params![snapshot.id, serde_json::to_string(graph)?],

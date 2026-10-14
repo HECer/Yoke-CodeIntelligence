@@ -45,8 +45,11 @@ pub fn tools() -> Value {
     let definitions = [
         (
             "ci_status",
-            "Inspect native capabilities; mode=index captures source, mode=analyze computes labeled graph analytics.",
-            schema(json!({"mode":{"enum":["status","index","analyze"]}}), &[]),
+            "Inspect native capabilities; index captures source, analyze computes graph analytics, dataflow reports conservative local taint candidates without executing source.",
+            schema(
+                json!({"mode":{"enum":["status","index","analyze","dataflow"]}}),
+                &[],
+            ),
             true,
         ),
         (
@@ -142,7 +145,7 @@ pub fn serve(engine: &mut Engine, input: impl BufRead, mut output: impl Write) -
         let parsed = if too_large {
             None
         } else {
-            serde_json::from_slice::<Value>(&line).ok()
+            crate::json::parse(&line, 4_000_000).ok()
         };
         let mut send = |value: Value| -> Result<()> {
             serde_json::to_writer(&mut output, &value)?;

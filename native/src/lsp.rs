@@ -2,15 +2,16 @@ use crate::{
     Engine,
     capture::Deadline,
     changes,
-    model::{Graph, Snapshot},
+    model::{Graph, Snapshot, identity},
     paths::{scoped, utf8_range},
     query,
 };
 use anyhow::{Context, Result, bail, ensure};
 use serde_json::{Value, json};
+#[cfg(test)]
+use std::fs;
 use std::{
     collections::HashMap,
-    fs,
     io::{BufRead, BufReader, Read, Write},
     path::Path,
     process::{Command, Stdio},
@@ -107,7 +108,7 @@ pub fn read_frame(input: &mut impl BufRead) -> Result<Value> {
     );
     let mut bytes = vec![0; length];
     input.read_exact(&mut bytes)?;
-    let value: Value = serde_json::from_slice(&bytes)?;
+    let value = crate::json::parse(&bytes, 4_000_000)?;
     ensure!(
         value.is_object() && value["jsonrpc"] == "2.0",
         "Invalid LSP JSON-RPC message"
@@ -337,9 +338,24 @@ impl Session {
     }
 }
 fn uri(path: &Path) -> Result<String> {
-    Ok(Url::from_file_path(path)
+    let value = Url::from_file_path(path)
         .map_err(|_| anyhow::anyhow!("Cannot encode local file URI"))?
-        .to_string())
+        .to_string();
+    #[cfg(windows)]
+    let value = {
+        let mut value = value;
+        // Python/Jedi canonicalizes Windows drive letters. Open and request
+        // documents under that same URI so versions remain attached to them.
+        if value.starts_with("file:///")
+            && value.as_bytes().get(8).is_some_and(u8::is_ascii_alphabetic)
+            && value.as_bytes().get(9) == Some(&b':')
+        {
+            let drive = value[8..9].to_ascii_lowercase();
+            value.replace_range(8..9, &drive);
+        }
+        value
+    };
+    Ok(value)
 }
 fn relative_uri(root: &Path, value: &str, snapshot: &Snapshot) -> Result<String> {
     let url = Url::parse(value)?;
@@ -420,7 +436,7 @@ fn check_copy(snapshot: &Snapshot, root: &Path, deadline: &Deadline) -> Result<(
     for file in &snapshot.files {
         deadline.check()?;
         ensure!(
-            crate::model::hash(fs::read(scoped(root, &file.path)?)?) == file.hash,
+            crate::verify::file_integrity(file, &scoped(root, &file.path)?, deadline)?,
             "Language server modified captured source"
         );
     }
@@ -464,6 +480,19 @@ pub fn run_at(
     request: SemanticRequest<'_>,
     deadline: &Deadline,
 ) -> Result<Value> {
+    engine.store.set_deadline(deadline)?;
+    deadline.check()?;
+    ensure!(
+        snapshot.workspace_id == engine.store.workspace_id
+            && identity(&engine.store.snapshot(&snapshot.id)?) == identity(snapshot),
+        "Semantic source manifest mismatch"
+    );
+    ensure!(
+        graph.snapshot_id == snapshot.id
+            && identity(&engine.store.graph(&snapshot.id)?) == identity(graph),
+        "Semantic graph manifest mismatch"
+    );
+    deadline.check()?;
     let SemanticRequest {
         path,
         offset,
@@ -557,7 +586,12 @@ pub fn run_at(
             if let Some(version) = version {
                 ensure!(
                     version.is_null() || version == 1,
-                    "Stale or unsupported document version"
+                    "Stale or unsupported document version {} for URI {}; requested {}",
+                    version
+                        .as_i64()
+                        .map_or("invalid".to_owned(), |n| n.to_string()),
+                    uri,
+                    document_uri
                 );
             }
             let relative = relative_uri(tree.path(), uri, snapshot)?;
@@ -684,6 +718,40 @@ pub fn run_at(
 #[cfg(test)]
 mod uri_tests {
     use super::*;
+    #[test]
+    fn grown_provider_copy_is_rejected_without_reading_unbounded_source() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("main.rs");
+        let text = "fn main() {}\n";
+        fs::write(&path, text).unwrap();
+        let file = crate::model::SourceFile {
+            path: "main.rs".into(),
+            hash: crate::model::hash(text),
+            size: text.len(),
+            language: "rust".into(),
+            mode: 0o644,
+        };
+        fs::OpenOptions::new()
+            .write(true)
+            .open(&path)
+            .unwrap()
+            .set_len(128_000_000)
+            .unwrap();
+        let snapshot = Snapshot {
+            id: "a".repeat(64),
+            workspace_id: "b".repeat(64),
+            kind: "disk".into(),
+            files: vec![file],
+            omissions: vec![],
+            capture_consistency: "test".into(),
+        };
+        let started = std::time::Instant::now();
+        assert!(check_copy(&snapshot, dir.path(), &Deadline::new(300)).is_err());
+        assert!(
+            started.elapsed() < std::time::Duration::from_secs(1),
+            "An altered provider file must be size-checked before hashing"
+        );
+    }
     static PROTOCOL_FIXTURE: std::sync::Mutex<()> = std::sync::Mutex::new(());
     fn fixture(adversary: &str, root: &Path, setup: &Deadline) -> Session {
         let server = Server {

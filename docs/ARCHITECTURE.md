@@ -6,7 +6,9 @@
 
 `editor` derives versioned immutable overlays; `editor_http` exposes authenticated loopback read operations. The VS Code client selects executables from user settings and queues document versions through startup/shutdown. `knowledge` validates authored assertions, sparse/external vectors and imported observations. `media` binds assets and supplied text; PDF parsing uses a resource-limited child rather than uninterruptible parsing in the main process. `federation` and `maintenance` have separately scoped integration and acceptance tests.
 
-TypeScript directories and ADRs below describe the retained advanced runtime. They are not an assertion that every operation has migrated to Rust. Snapshot identity and serialized state are runtime-specific; no implicit conversion occurs. [The native guide](../native/README.md) and [replacement criteria](RUST_REPLACEMENT.md) describe current boundaries.
+Rust 0.5 adds `projects` and its own compiler worker, `dataflow`, `test_map`, `providers`/`ledger`/`ollama`, `runtime` and its own Python worker, `container`, `retention`, `federation_http` and native OS credential modules. External toolchains are explicit host inputs. Model calls and execution remain outside default retrieval. Compiler/library hashes enter context identity; model attempts reserve before sending; retirement and purge recheck every durable authority root.
+
+TypeScript directories and ADRs below describe the retained runtime. Snapshot identity and serialized state are runtime-specific; no implicit conversion occurs. [The native guide](../native/README.md) and [replacement criteria](RUST_REPLACEMENT.md) describe current boundaries.
 
 ## Boundaries
 

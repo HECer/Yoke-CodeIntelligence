@@ -14,7 +14,7 @@ function handle(message) {
       const extension=path.extname(fileURLToPath(current));
       const targetLanguage=extension==='.tsx'?'typescriptreact':'javascriptreact';
       const siblingLanguage=extension==='.tsx'?'typescript':'javascript';
-      const sibling=pathToFileURL(path.join(process.cwd(),`support${extension==='.tsx'?'.ts':'.js'}`)).href;
+      const sibling=pathToFileURL(path.join(process.cwd(),`support${extension==='.tsx'?'.ts':'.js'}`)).href.replace(/^file:\/\/\/([A-Z]):/, (_, drive)=>`file:///${drive.toLowerCase()}:`);
       if(opened.get(current)!==targetLanguage || opened.get(sibling)!==siblingLanguage || opened.size!==2) {send({jsonrpc:'2.0',id:message.id,error:{code:-32000,message:'Fixture document languages or provider siblings differ'}});return;}
     }
     const range={start:{line:1,character:3},end:{line:1,character:9}}; const result=adversary==='outside-selection'?{targetUri:current,targetRange:{start:{line:0,character:0},end:{line:0,character:2}},targetSelectionRange:range}:{uri:current,range};send({jsonrpc:'2.0',id:message.id,result});return;

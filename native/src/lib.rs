@@ -1,22 +1,35 @@
 pub mod analysis;
 pub mod capture;
 pub mod changes;
+pub mod container;
 pub mod contracts;
 pub mod credentials;
+pub mod dataflow;
 pub mod editor;
 pub mod editor_http;
 pub mod export;
 pub mod federation;
+pub mod federation_http;
+pub mod host_credentials;
+pub mod json;
 pub mod knowledge;
+pub mod ledger;
 pub mod lsp;
 pub mod maintenance;
 pub mod media;
 pub mod model;
+pub mod ollama;
 pub mod paths;
+pub mod platform_credentials;
 pub mod process;
+pub mod projects;
 pub mod protocol;
+pub mod providers;
 pub mod query;
+pub mod retention;
+pub mod runtime;
 pub mod store;
+pub mod test_map;
 mod validation;
 pub mod verify;
 
@@ -178,7 +191,7 @@ impl Engine {
             if tool == "ci_status" && args["mode"].as_str().unwrap_or("status") == "status" {
                 sid = self.store.latest()?;
                 return Ok(
-                    json!({"version":env!("CARGO_PKG_VERSION"),"runtime":"rust","workspaceId":self.store.workspace_id,"latestSnapshotId":sid,"capabilities":{"structuralLanguages":analysis::LANGUAGES,"sourceSearch":true,"regexSearch":true,"directedGraph":true,"immutableSnapshots":true,"semanticRename":"host-selected-lsp-required","registeredSemanticLanguages":self.servers.keys().collect::<Vec<_>>(),"modelCalls":false,"upstreamApplicationsRequired":false,"workspaceWrites":self.allow_writes},"limitations":["Rust migration does not yet replace all advanced TypeScript 0.3 operations or proprietary upstream features."]}),
+                    json!({"version":env!("CARGO_PKG_VERSION"),"runtime":"rust","workspaceId":self.store.workspace_id,"latestSnapshotId":sid,"capabilities":{"structuralLanguages":analysis::LANGUAGES,"sourceSearch":true,"regexSearch":true,"directedGraph":true,"immutableSnapshots":true,"semanticRename":"host-selected-lsp-required","registeredSemanticLanguages":self.servers.keys().collect::<Vec<_>>(),"structuralDataflow":true,"hostWorkflows":["configured_compiler","test_map_collection","model_providers_and_ledger","python_debugger_repl","docker_verification","signed_tls_source_exchange","reviewed_history_retention"],"modelCalls":false,"upstreamApplicationsRequired":false,"workspaceWrites":self.allow_writes},"limitations":["Structural candidates and model inferences are not exhaustive compiler or runtime proofs.","Optional execution, models, credentials, network service and deletion require separate explicit host authority.","All-language-server certification and proprietary hosted features are outside the measured local workflow replacement."]}),
                 );
             }
             if tool == "ci_change_apply" {
@@ -209,6 +222,13 @@ impl Engine {
             let (snapshot, graph) = self.select(&args, &deadline)?;
             sid = Some(snapshot.id.clone());
             match tool {
+                "ci_status" if args["mode"] == "dataflow" => dataflow::analyze(
+                    &self.store,
+                    &snapshot,
+                    &graph,
+                    dataflow::Policy::default(),
+                    &deadline,
+                ),
                 "ci_status" => Ok(
                     json!({"analytics":query::analytics(&graph,&deadline)?,"coverage":graph.coverage}),
                 ),

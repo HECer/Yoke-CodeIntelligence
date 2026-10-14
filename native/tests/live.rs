@@ -7,6 +7,102 @@ use yoke::{
     capture::Deadline,
     lsp::{self, Server},
 };
+#[test]
+#[ignore = "requires YOKE_PYTHON_LSP pointing to an actual installed jedi-language-server executable"]
+fn actual_python_server_cross_file_unicode_historical_navigation_and_rename() {
+    let command = std::env::var("YOKE_PYTHON_LSP")
+        .expect("Set YOKE_PYTHON_LSP to the real server executable");
+    assert!(Path::new(&command).is_absolute() && Path::new(&command).is_file());
+    let dir = TempDir::new().unwrap();
+    let library = "def café(number: int) -> int:\n    return number + 1\n";
+    let text = "# 🌍 historical Python\nfrom lib import café\nresult = café(4)\n";
+    fs::write(dir.path().join("lib.py"), library).unwrap();
+    fs::write(dir.path().join("main.py"), text).unwrap();
+    let mut engine = Engine::open(dir.path()).unwrap();
+    let (snapshot, graph, _, _) = engine.index(&Deadline::new(10_000)).unwrap();
+    let current = "def disk_changed(): return 'live'\n";
+    fs::write(dir.path().join("lib.py"), current).unwrap();
+    let server = Server {
+        command,
+        args: vec![],
+        language: "python".into(),
+        trust: true,
+    };
+    for operation in ["definition", "references", "hover"] {
+        let report = lsp::run_at(
+            &mut engine,
+            &server,
+            &snapshot,
+            &graph,
+            lsp::SemanticRequest {
+                path: "main.py",
+                offset: text.rfind("café").unwrap(),
+                operation,
+                new_name: None,
+            },
+            &Deadline::new(60_000),
+        )
+        .unwrap();
+        assert_eq!(report["snapshotId"], snapshot.id, "{report}");
+        if operation == "definition" {
+            assert!(
+                report["locations"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .any(|p| p["path"] == "lib.py" && p["text"] == "café"),
+                "{report}"
+            );
+        }
+        if operation == "references" {
+            assert!(
+                report["locations"].as_array().unwrap().len() >= 3,
+                "{report}"
+            );
+        }
+        if operation == "hover" {
+            assert!(
+                report["response"]["contents"]["value"]
+                    .as_str()
+                    .is_some_and(|t| t.contains("café(number: int) -> int")),
+                "{report}"
+            );
+        }
+    }
+    let rename = lsp::run_at(
+        &mut engine,
+        &server,
+        &snapshot,
+        &graph,
+        lsp::SemanticRequest {
+            path: "lib.py",
+            offset: 4,
+            operation: "rename",
+            new_name: Some("renamed"),
+        },
+        &Deadline::new(60_000),
+    )
+    .unwrap();
+    assert_eq!(
+        rename["plan"]["files"].as_array().unwrap().len(),
+        2,
+        "{rename}"
+    );
+    assert!(
+        rename["plan"]["diff"]
+            .as_str()
+            .unwrap()
+            .contains("from lib import renamed")
+    );
+    assert_eq!(
+        fs::read_to_string(dir.path().join("lib.py")).unwrap(),
+        current
+    );
+    assert_eq!(
+        fs::read_to_string(dir.path().join("main.py")).unwrap(),
+        text
+    );
+}
 
 #[test]
 #[ignore = "requires an actual installed rust-analyzer"]

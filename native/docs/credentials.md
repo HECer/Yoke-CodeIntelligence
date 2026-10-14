@@ -1,57 +1,31 @@
-# Federation signing credentials
+# Native host credentials
 
-`credentials::generate(name: &str) -> anyhow::Result<serde_json::Value>` creates a
-new Ed25519 signing key in the current Windows user's Credential Manager. Its
-only returned fields are `keyName` and `publicKey`; the public key is 64 lowercase
-hexadecimal characters. The private seed consists of 32 bytes from the OS-backed
-`getrandom` provider and is never returned by generation.
+The host CLI and library may create federation signing keys, service tokens and TLS private identities in the current user's native credential store. Repository content and MCP tools cannot select credentials or call these host operations. Windows keeps its existing native Credential Manager implementation and target names.
 
-`credentials::read(name: &str) -> anyhow::Result<[u8; 32]>` loads that seed into
-memory for a host-authorized signing operation. The caller must immediately wrap
-the result in `zeroize::Zeroizing`, use it only in memory, and never format or log
-the array. Generation temporaries and Credential Manager read buffers are wiped
-before they are released. These memory wipes do not promise control over OS swap,
-crash dumps, or copies made by callers.
+The portable facade exposes `write_new(target: &str, bytes: &[u8]) -> Result<()>` and `read(target: &str) -> Result<Zeroizing<Vec<u8>>>`. It accepts only these exact namespaces:
 
-Names contain 1–80 ASCII letters, digits, `_`, `-`, or `.`, and start with a letter
-or digit. The only credential targets accessible through this module are
-`yoke-code-intelligence/federation/<name>`. Invalid names fail before any OS call.
-The module does not enumerate credentials or access unrelated account entries.
+- `yoke-code-intelligence/federation/{name}`
+- `yoke-code-intelligence/service/tls/{name}`
+- `yoke-code-intelligence/service/token/{name}`
 
-Windows storage uses generic credentials with `CRED_PERSIST_LOCAL_MACHINE`: the
-credential persists across logons on this computer for the current user and does
-not request roaming persistence. Generation refuses an existing generic target,
-even if its blob has an invalid format. Reads accept only an exact 32-byte seed.
-A named Windows mutex serializes the check and write across helper processes and
-logon sessions, including case aliases, with a five-second lock wait. Windows
-does not provide a create-only `CredWriteW` operation; another program running as
-the same user can still replace an entry without following this helper's lock.
-OS failures return fixed context and numeric error codes, without credential
-contents. Non-Windows builds explicitly report that the OS store is unavailable;
-there is no file, SQLite, configuration, or environment-variable fallback.
+Names contain 1–80 ASCII letters, digits, underscores, hyphens or periods and begin with a letter or digit. Secrets contain 1–2560 binary bytes. Invalid names and capacities fail before native store access. No password decoding, secret JSON, secret logs, default mock store, plaintext file fallback or analyzed-source credential configuration is used. Returned bytes are zeroized when their wrapper is dropped; callers must avoid formatting or copying them into logs.
 
-This module is an explicit host facility. The host CLI may generate a credential
-or read one for a separately authorized federation export. It must not be exposed
-as an MCP operation or inferred from source files, editor buffers, imported
-artifacts, or requests supplied by an untrusted source. Possessing a signing key
-does not grant source access or execution authority.
+macOS uses the native user Keychain with an explicitly constructed keyring `MacCredential`. Creation uses the native add operation, which refuses an existing entry atomically. A process mutex guards temporary suppression of Keychain interaction and restores its prior state afterward. This avoids opening unlock/permission dialogs for these operations. A locked, unavailable or denied Keychain fails explicitly. Yoke does not create or unlock keychains. The interaction setting is process-wide during the guarded call; embedding hosts must account for other Keychain users in their process.
 
-## Validation
+Linux uses keyring's native SecretService credential mapping and the SecretService 4 encrypted blocking backend with OS randomness. A single explicit Unix session-bus address, an already owned `org.freedesktop.secrets` bus name, an existing default collection and its unlocked state are required. Yoke refuses missing, locked and ambiguous items and creates only an item with replacement disabled. It does not invoke a daemon, create a collection, request an unlock or configure a headless session. Missing desktop services fail explicitly. The native broker remains trusted: the upstream backend uses a well-known service name and may reactivate a daemon or handle a broker-issued prompt if the service or policy changes after preflight. Preflight is not an atomic no-activation or no-prompt guarantee.
 
-The normal `credentials` test target validates namespace boundaries without
-accessing Credential Manager. Two ignored Windows integration tests exercise the
-actual OS store: generation/public-key/read consistency, overwrite refusal,
-case aliases, and concurrent creation. Each uses a random `integration-test-`
-name, arms its cleanup guard only after a successful creation, and deletes
-precisely that target. Normal cleanup checks deletion; unwind cleanup is best
-effort. An externally terminated process can leave its random test credential.
+Creation and reads use a secret-free per-target cross-process lock. Its directory is `.yoke-credential-locks` under the home obtained from the OS account database, independent of `HOME`, XDG variables or source-selected paths. Yoke verifies ownership, private permissions and every existing path component; Unix lock files use `openat`, `O_NOFOLLOW`, inode/device checks and a single hard link. Lock files remain empty and are never unlinked by normal operations, preserving exclusion across processes. Acquisition waits at most five seconds. Native-store calls retain the platform library's own timing and are not governed by the code-analysis deadline.
 
-Run the explicit Windows gate from the workspace root:
+Cooperating Yoke processes refuse overwrite under that shared lock, including invalid or empty existing entries. macOS also has native create-only enforcement. SecretService's creation call disables replacement, but a separate writer outside Yoke's lock protocol can create an ambiguous duplicate; such entries are refused on reads. The OS account, native broker and same-user filesystem administration remain trusted boundaries.
 
-```powershell
-cargo test -p yoke-code-intelligence -j 2 --test credentials -- --ignored
+The dependency features are target-specific: keyring 3.6.3 `apple-native` on macOS; `async-secret-service`, `async-io`, `crypto-rust` on Linux; SecretService 4.0.0 `rt-async-io-crypto-rust` and zbus 4 `async-io` for Linux; libc for Unix account/path checks. No synchronous libdbus backend is selected even though Cargo.lock includes its optional package resolution. The keyring global default builder cannot replace the explicitly selected native mapping with a mock.
+
+Standard tests check namespace/capacity refusal and secret-free lock exclusion, timeout and tampering. Unix tests also reject symbolic links, hard links and public directories. Cross-compilation validates macOS Rust APIs; it does not prove macOS runtime access. Linux compilation and filesystem tests can run through the available Ubuntu WSL toolchain using a separate target directory. The ignored real-store gate writes a random new target with synthetic binary data, checks unchanged data after refused overwrite and removes only that test entry:
+
+```sh
+YOKE_NATIVE_CREDENTIAL_TEST=1 cargo test --locked -j2 --test platform_credentials actual_native_store_binary_roundtrip_refuses_overwrite -- --ignored
 ```
 
-The tests do not print private seeds or credential blobs. They compare public
-keys derived from the memory-only seed and verify that a second creator cannot
-change the stored public key.
+This gate requires an existing unlocked native store and performs no service provisioning. A missing store is a failure, not a mock-backed pass. Real-store tests and native model inference are separate capabilities.
+
+Primary API references: [keyring 3.6.3 native features](https://docs.rs/keyring/3.6.3/keyring/), [macOS native Keychain mapping](https://docs.rs/crate/keyring/3.6.3/source/src/macos.rs), [Security framework create-only add](https://docs.rs/crate/security-framework/3.5.1/source/src/os/macos/passwords.rs), [SecretService 4 blocking API](https://docs.rs/crate/secret-service/4.0.0/source/src/blocking/mod.rs), and [SecretService OS-random encrypted sessions](https://docs.rs/crate/secret-service/4.0.0/source/src/session.rs).

@@ -2,11 +2,11 @@ use crate::{
     Engine,
     capture::Deadline,
     changes::{self, Plan},
-    model::hash,
     paths::scoped,
 };
 use anyhow::{Context, Result, ensure};
 use serde_json::{Value, json};
+use sha2::{Digest, Sha256};
 use std::{
     fs,
     io::Read,
@@ -19,6 +19,103 @@ use std::{
     thread,
     time::Duration,
 };
+
+/// Check the complete copied source tree, including unexpected files and links.
+/// Existing host execution keeps its previous semantics; containers use this
+/// stronger inventory check before an executed verification can be approved.
+pub(crate) fn snapshot_integrity(
+    snapshot: &crate::model::Snapshot,
+    root: &std::path::Path,
+    deadline: &Deadline,
+) -> Result<bool> {
+    let mut expected = std::collections::BTreeMap::new();
+    for file in &snapshot.files {
+        ensure!(
+            expected.insert(file.path.clone(), file).is_none(),
+            "Duplicate snapshot path"
+        );
+    }
+    let mut queue = vec![root.to_path_buf()];
+    let mut seen = std::collections::BTreeSet::new();
+    let mut entries = 0usize;
+    while let Some(dir) = queue.pop() {
+        deadline.check()?;
+        let metadata = fs::symlink_metadata(&dir)?;
+        if crate::paths::is_link(&metadata) || !metadata.is_dir() {
+            return Ok(false);
+        }
+        for entry in fs::read_dir(&dir)? {
+            deadline.check()?;
+            entries += 1;
+            ensure!(
+                entries <= 200_000,
+                "Source integrity inventory capacity exceeded"
+            );
+            let entry = entry?;
+            let path = entry.path();
+            let meta = fs::symlink_metadata(&path)?;
+            if crate::paths::is_link(&meta) {
+                return Ok(false);
+            }
+            if meta.is_dir() {
+                queue.push(path);
+                continue;
+            }
+            if !meta.is_file() {
+                return Ok(false);
+            }
+            let relative = path
+                .strip_prefix(root)?
+                .to_str()
+                .context("Source path is not UTF-8")?
+                .replace('\\', "/");
+            let Some(expected_file) = expected.get(&relative) else {
+                return Ok(false);
+            };
+            if !file_integrity(expected_file, &path, deadline)? {
+                return Ok(false);
+            }
+            seen.insert(relative);
+        }
+    }
+    Ok(seen.len() == expected.len())
+}
+
+pub(crate) fn file_integrity(
+    file: &crate::model::SourceFile,
+    path: &std::path::Path,
+    deadline: &Deadline,
+) -> Result<bool> {
+    deadline.check()?;
+    let expected_size = u64::try_from(file.size)?;
+    let meta = fs::symlink_metadata(path)?;
+    if !meta.is_file() || crate::paths::is_link(&meta) || meta.len() != expected_size {
+        return Ok(false);
+    }
+    let mut input = fs::File::open(path)?;
+    if input.metadata()?.len() != expected_size {
+        return Ok(false);
+    }
+    let mut digest = Sha256::new();
+    let mut bytes = 0u64;
+    let mut buffer = [0u8; 65_536];
+    loop {
+        deadline.check()?;
+        let count = input.read(&mut buffer)?;
+        if count == 0 {
+            break;
+        }
+        bytes = bytes
+            .checked_add(count as u64)
+            .context("Source integrity byte count overflow")?;
+        if bytes > expected_size {
+            return Ok(false);
+        }
+        digest.update(&buffer[..count]);
+    }
+    deadline.check()?;
+    Ok(bytes == expected_size && hex::encode(digest.finalize()) == file.hash)
+}
 
 pub fn execute(
     engine: &Engine,
@@ -151,7 +248,7 @@ pub fn execute(
     let stderr = output[1].take().unwrap_or_default();
     let integrity = snapshot.files.iter().all(|file| {
         scoped(tree.path(), &file.path)
-            .and_then(|path| Ok(hash(fs::read(path)?) == file.hash))
+            .and_then(|path| file_integrity(file, &path, deadline))
             .unwrap_or(false)
     });
     timed_out |= deadline.check().is_err();
@@ -163,4 +260,36 @@ pub fn execute(
     let value = json!({"status":if passed{"passed"}else{"failed"},"level":"executed","planId":plan_id,"snapshotId":snapshot.id,"command":command,"args":args,"exitCode":status.and_then(|s| s.code()),"timedOut":timed_out,"outputComplete":output_complete,"outputExceeded":overflow.load(Ordering::SeqCst),"sourceIntegrity":integrity,"stdout":String::from_utf8_lossy(&stdout).chars().take(128000).collect::<String>(),"stderr":String::from_utf8_lossy(&stderr).chars().take(128000).collect::<String>(),"limitations":["Host-selected command ran in a copied tree under the host account; this is not an OS sandbox or proof of exhaustive test coverage."]});
     engine.store.record("verification", plan_id, &value)?;
     Ok(value)
+}
+
+#[cfg(test)]
+mod integrity_tests {
+    use super::*;
+    #[test]
+    fn oversized_copied_source_is_rejected_within_the_hash_budget() {
+        let original = tempfile::TempDir::new().unwrap();
+        fs::write(original.path().join("a.rs"), "fn original() {}\n").unwrap();
+        let mut engine = Engine::open(original.path()).unwrap();
+        let snapshot = engine.index(&Deadline::new(10_000)).unwrap().0;
+        let copy = tempfile::TempDir::new().unwrap();
+        changes::materialize(
+            &engine.store,
+            &snapshot,
+            copy.path(),
+            &Deadline::new(10_000),
+        )
+        .unwrap();
+        fs::OpenOptions::new()
+            .write(true)
+            .open(copy.path().join("a.rs"))
+            .unwrap()
+            .set_len(128_000_000)
+            .unwrap();
+        let deadline = Deadline::new(300);
+        assert!(!snapshot_integrity(&snapshot, copy.path(), &deadline).unwrap());
+        assert!(
+            deadline.check().is_ok(),
+            "Source hashing consumed an oversized file beyond its deadline"
+        );
+    }
 }

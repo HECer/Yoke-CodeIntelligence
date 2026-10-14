@@ -33,6 +33,46 @@ fn server(adversary: &str) -> Server {
     }
 }
 #[test]
+fn semantic_calls_refuse_rebound_source_under_a_published_snapshot_id() {
+    let _fixture = protocol_fixture();
+    let dir = TempDir::new().unwrap();
+    let original = "// captured\nfn helper() {}\n";
+    fs::write(dir.path().join("main.rs"), original).unwrap();
+    let mut engine = Engine::open(dir.path()).unwrap();
+    let deadline = Deadline::new(20000);
+    let (mut snapshot, graph, _, _) = engine.index(&deadline).unwrap();
+    let replaced = "// replaced\nfn altered() {}\n";
+    snapshot.files[0].hash = engine.store.blob(replaced.as_bytes()).unwrap();
+    snapshot.files[0].size = replaced.len();
+    let result = lsp::run_at(
+        &mut engine,
+        &server(""),
+        &snapshot,
+        &graph,
+        lsp::SemanticRequest {
+            path: "main.rs",
+            offset: 0,
+            operation: "definition",
+            new_name: None,
+        },
+        &deadline,
+    );
+    assert!(
+        result.is_err(),
+        "A semantic result was attributed to a rebound source manifest"
+    );
+    assert!(
+        result
+            .unwrap_err()
+            .to_string()
+            .contains("manifest mismatch")
+    );
+    assert_eq!(
+        fs::read_to_string(dir.path().join("main.rs")).unwrap(),
+        original
+    );
+}
+#[test]
 fn protocol_fixture_locations_bind_to_exact_immutable_source() {
     let _fixture = protocol_fixture();
     let dir = TempDir::new().unwrap();

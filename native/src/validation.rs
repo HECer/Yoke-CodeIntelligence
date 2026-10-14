@@ -112,7 +112,7 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
     }
     if let Some(mode) = args.get("mode") {
         let allowed = if tool == "ci_status" {
-            &["status", "index", "analyze"][..]
+            &["status", "index", "analyze", "dataflow"][..]
         } else {
             &["isolated", "workspace"][..]
         };

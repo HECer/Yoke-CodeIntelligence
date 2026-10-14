@@ -2,7 +2,7 @@
 
 The transfer unit is an immutable UTF-8 source envelope. No live SQLite database, private signing key, approval receipt, editor session, model cache or user account is transferred. Import writes only the receiver's private native store and rebuilds structural analysis locally. It never checks out source files or executes sender code.
 
-This module supplies bounded offline exchange and explicit remote queries. HTTP/TLS transport, hosted identity management, automatic revocation services and multi-user operating-system isolation are outside this module.
+This module supplies bounded offline exchange and explicit remote queries. [The separate native HTTP/TLS module](federation-http.md) transports these same signed envelopes with host-controlled roles/grants and revocation. Hosted identity management and multi-user operating-system isolation remain separate concerns.
 
 ## Host APIs and trust
 

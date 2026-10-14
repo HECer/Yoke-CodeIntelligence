@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "nativeVersion": "0.5.0",
+  "recordedAt": "2026-10-14T14:37:20.765996+00:00",
+  "sourceCorpusSha256": "3a612b041eceaac38d518905cc893cb5cc0ae52502631341814c0f1dcf9f6be3",
+  "embeddedValidationSha256": "76b9c819214577da4a3af0d05cf69daac82d75ee2be013a91243e2f21d13fcd5",
+  "embeddedSourceManifestSha256": "57e46ed77fc536e77f0b8b8065b6d9216ca93f3d719e17b5824e7122a1e8030f",
+  "embeddedReportsMatchWorkspace": true,
+  "commands": [
+    "python scripts/package-native.py --skip-build --fetch-missing-licenses --output dist-native/yoke-0.5.0-windows-x64.zip",
+    "python scripts/package-vscode.py --native-archive dist-native/yoke-0.5.0-windows-x64.zip --output dist-native/yoke-0.5.0-win32-x64.vsix"
+  ],
+  "portable": {
+    "file": "dist-native/yoke-0.5.0-windows-x64.zip",
+    "bytes": 10969243,
+    "sha256": "b1dcb84204b6649ac654c8b70cd3dde0b884fe9c68fcc9ea26991b1468387b8b",
+    "binarySha256": "3be3bb82cc4ae7524d1e820bc54592fbe537789bb5991b2de588e2f4fb65f803",
+    "members": 502,
+    "dependencyRecords": 227,
+    "licenseTextsVerified": 418,
+    "crcPassed": true,
+    "pathsAndNoStatePassed": true,
+    "embeddedReportsMatchWorkspace": true
+  },
+  "vsix": {
+    "file": "dist-native/yoke-0.5.0-win32-x64.vsix",
+    "bytes": 11003282,
+    "sha256": "6d8839b09a1943ccfcec2addbbbf0d2ff4de74e562f7450829b3f53828e00420",
+    "binarySha256": "3be3bb82cc4ae7524d1e820bc54592fbe537789bb5991b2de588e2f4fb65f803",
+    "members": 507,
+    "dependencyRecords": 227,
+    "licenseTextsVerified": 418,
+    "crcPassed": true,
+    "pathsAndNoStatePassed": true,
+    "embeddedReportsMatchWorkspace": true
+  },
+  "portableSmoke": {
+    "indexAndFindPassed": true,
+    "mcpInitializeAndEightToolsPassed": true,
+    "sourcePreserved": true,
+    "explicitModelProviderConfigured": false,
+    "extractedVersion": "yoke 0.5.0"
+  },
+  "actualPackagedVscode": {
+    "kind": "actual-vscode-extension-host",
+    "passed": true,
+    "runtime": "rust",
+    "bundledRuntime": true,
+    "vscodeVersion": "1.140.0",
+    "unsavedSourceBound": true,
+    "workspaceExecutableIgnored": true,
+    "protectedOpenBufferExcluded": true,
+    "savedSourceUnchanged": true,
+    "command": "powershell -NoProfile -File scripts/test-vscode.ps1 -ExtensionDirectory <isolated extracted VSIX extension> -UseBundledRuntime",
+    "evidence": "native-distribution-0.5-vscode.json"
+  },
+  "licenseScope": "Resolved Windows native Cargo graph, including build-time crates; each exact full license text hash checked against the embedded manifest.",
+  "exclusions": [
+    "Captured workspace/source blobs and SQLite state",
+    "Private credentials/signing keys",
+    "Model weights and upstream application packages",
+    "Node/Python and retained TypeScript runtime",
+    "External language servers",
+    "Development extension-host fixture"
+  ],
+  "scope": "Actual local Windows portable and native VSIX checks; full Linux/macOS runtime, broker and extension-host execution remain unverified.",
+  "evidenceOrder": "Validation/source manifests frozen before archives. External companion records final digests and packaged-host execution, avoiding circular archive checksums.",
+  "publication": {
+    "gitHub": false,
+    "registry": false
+  }
+}

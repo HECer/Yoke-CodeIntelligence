@@ -1,6 +1,4 @@
-// Compile the independently owned helper while the host integrates its public module.
-#[path = "../src/credentials.rs"]
-mod credentials;
+use yoke::credentials;
 
 #[test]
 fn credential_names_cannot_escape_the_federation_namespace() {
@@ -53,7 +51,7 @@ fn ordinary_names_resolve_only_to_the_federation_namespace() {
     assert!(credentials::target_name(&"a".repeat(80)).is_ok());
 }
 
-#[cfg(not(windows))]
+#[cfg(not(any(windows, target_os = "macos", target_os = "linux")))]
 #[test]
 fn unsupported_hosts_do_not_use_a_plaintext_fallback() {
     for error in [

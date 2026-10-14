@@ -2,7 +2,8 @@
 use anyhow::{Result, ensure};
 use serde_json::Value;
 
-pub(crate) fn target_name(name: &str) -> Result<String> {
+#[doc(hidden)]
+pub fn target_name(name: &str) -> Result<String> {
     ensure!(
         !name.is_empty()
             && name.len() <= 80
@@ -25,8 +26,16 @@ pub fn generate(name: &str) -> Result<Value> {
     }
     #[cfg(not(windows))]
     {
-        let _ = target;
-        anyhow::bail!("Federation OS credential storage is unavailable on this platform")
+        let mut seed = zeroize::Zeroizing::new([0_u8; 32]);
+        getrandom::fill(&mut *seed)
+            .map_err(|_| anyhow::anyhow!("Federation key randomness is unavailable"))?;
+        crate::platform_credentials::write_new(&target, &*seed)?;
+        let public_key = hex::encode(
+            ed25519_dalek::SigningKey::from_bytes(&seed)
+                .verifying_key()
+                .to_bytes(),
+        );
+        Ok(serde_json::json!({"keyName":name,"publicKey":public_key}))
     }
 }
 
@@ -40,8 +49,14 @@ pub fn read(name: &str) -> Result<[u8; 32]> {
     }
     #[cfg(not(windows))]
     {
-        let _ = target;
-        anyhow::bail!("Federation OS credential storage is unavailable on this platform")
+        let bytes = crate::platform_credentials::read(&target)?;
+        ensure!(
+            bytes.len() == 32,
+            "Federation credential has an invalid seed format"
+        );
+        let mut seed = [0_u8; 32];
+        seed.copy_from_slice(&bytes);
+        Ok(seed)
     }
 }
 

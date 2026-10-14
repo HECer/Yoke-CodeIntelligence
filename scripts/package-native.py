@@ -120,10 +120,12 @@ def main():
     binary = repo / "target" / "release" / ("yoke.exe" if sys.platform == "win32" else "yoke")
     if not binary.is_file() or binary.is_symlink():
         raise RuntimeError("Release executable unavailable or linked")
+    if command(str(binary), "--version", timeout=10).strip() != f"yoke {package['version']}":
+        raise RuntimeError("Release executable version differs from Cargo package version")
     output = args.output or repo / "dist-native" / f"yoke-{package['version']}-{host}.zip"
     if output.exists():
         raise RuntimeError("Archive exists; choose a new output path")
-    portable_readme = """# Yoke native Rust 0.4.0
+    portable_readme = f"""# Yoke native Rust {package['version']}
 
 Run `yoke.exe --root C:/project index` on Windows, or `./yoke --root /project index` on Unix.
 The default executable requires no Node, Python, upstream application, model or API key.
@@ -134,7 +136,7 @@ it contains no captured workspace, account credential, private key or language s
 `manifest.json` records the exact executable checksum and locked build dependencies.
 The independent advanced TypeScript runtime is distributed separately.
 """
-    members = {binary.name: binary.read_bytes(), "LICENSE": (repo / "LICENSE").read_bytes(), "README.md": portable_readme.encode("utf-8"), "native/README.md": (repo / "native" / "README.md").read_bytes(), "THIRD_PARTY_NOTICES.md": (repo / "THIRD_PARTY_NOTICES.md").read_bytes(), "Cargo.lock": (repo / "Cargo.lock").read_bytes(), "UPSTREAMS.json": (repo / "UPSTREAMS.json").read_bytes()}
+    members = {binary.name: binary.read_bytes(), "LICENSE": (repo / "LICENSE").read_bytes(), "README.md": portable_readme.encode("utf-8"), "native/README.md": (repo / "native" / "README.md").read_bytes(), "SECURITY.md": (repo / "SECURITY.md").read_bytes(), "CHANGELOG.md": (repo / "CHANGELOG.md").read_bytes(), "THIRD_PARTY_NOTICES.md": (repo / "THIRD_PARTY_NOTICES.md").read_bytes(), "Cargo.lock": (repo / "Cargo.lock").read_bytes(), "UPSTREAMS.json": (repo / "UPSTREAMS.json").read_bytes()}
     for directory in [repo / "native/docs", repo / "docs"]:
         for path in sorted(directory.rglob("*.md")):
             if path.is_symlink():
@@ -145,7 +147,7 @@ The independent advanced TypeScript runtime is distributed separately.
     for validation in sorted((repo / "docs/validation").glob("native-*")):
         # Archive digests and the packaged-host run are generated afterward in
         # a separate companion; including them would create circular evidence.
-        if validation.name == "native-distribution.json" or validation.suffix not in (".json", ".txt"):
+        if validation.name.startswith("native-distribution") or validation.suffix not in (".json", ".txt"):
             continue
         if validation.is_symlink() or not validation.is_file() or validation.stat().st_size > 1_000_000:
             raise RuntimeError("Unsupported validation evidence input")

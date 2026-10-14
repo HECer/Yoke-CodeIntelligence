@@ -2,9 +2,9 @@
 
 **Local, evidence-first code intelligence for coding agents.**
 
-[Deutsch](README.de.md) · [Rust core](native/README.md) · [Quick start](docs/QUICKSTART.md) · [Advanced 0.3 features](docs/ADVANCED.md) · [Status](docs/STATUS.md)
+[Deutsch](README.de.md) · [Rust core](native/README.md) · [Rust workflows](native/docs/workflows.md) · [Quick start](docs/QUICKSTART.md) · [Status](docs/STATUS.md)
 
-Independent Rust 0.4 core and retained TypeScript 0.3 advanced implementation combining immutable source snapshots, compiler navigation, directed multiedges, source-bound retrieval, controlled changes and verification. The native default works without Graft, Serena, Graphify, Node, Python, a model or an API key. The [replacement matrix](docs/RUST_REPLACEMENT.md) states which workflows have native evidence and which migrations remain open.
+Independent Rust 0.5 implementation combining immutable source snapshots, configured compiler navigation, directed graphs, source-bound retrieval, controlled changes, test selection and execution. Rust also owns model-provider accounting, a persistent Python debugger, signed TLS source exchange, history retirement and Docker verification. The default works without Graft, Serena, Graphify, Node, Python, a model or an API key. Optional compiler, runtime and model operations use explicitly selected host tools. The [replacement matrix](docs/RUST_REPLACEMENT.md) records behavioral evidence and limits.
 
 ## Native Rust start
 
@@ -16,7 +16,7 @@ cargo build --workspace --release --locked -j 2
 ./target/release/yoke --root /absolute/project serve
 ```
 
-Use `target/release/yoke.exe` on Windows. Rust 1.94+ is required to build. The executable links 24 programming-language grammars, SQLite FTS5, graph algorithms including real Leiden, an independent LSP client and guarded changes with durable recovery. The HTML graph inspector works offline. Standard MCP tool names are shared, but advanced optional arguments and snapshot stores are distinct. [Native instructions](native/README.md) cover trusted semantic servers, context plans, verification, portable packaging and remaining limits. Actual Windows checks are recorded in [native validation](docs/validation/native-rust.json).
+Use `target/release/yoke.exe` on Windows. Rust 1.94+ is required to build. The executable links 24 programming-language grammars, SQLite FTS5, graph algorithms including real Leiden, an independent LSP client and guarded changes with durable recovery. The HTML graph inspector works offline. Standard MCP tool names are shared, but advanced optional arguments and snapshot stores are distinct. [Native instructions](native/README.md) cover trusted semantic servers, context plans, verification, portable packaging and remaining limits. Actual Windows checks are recorded in [native validation](docs/validation/native-workflows.json).
 
 ## TypeScript advanced runtime
 
@@ -50,7 +50,7 @@ The historical screenshot uses labeled frontend fixture responses. The native Ru
 
 ## Agent interface
 
-`node dist/cli.js serve --root /project` exposes **ci_status, ci_find, ci_read, ci_trace, ci_context, ci_change_prepare, ci_change_apply, ci_verify**. Read exact source before edits. Responses bind a snapshot and distinguish omissions, uncertain relationships and failures. Native tools do not get implicit provider/network/key permissions. Advanced privileges remain explicit host-side CLI/library operations; see [API](docs/API.md).
+`yoke --root /project serve` exposes **ci_status, ci_find, ci_read, ci_trace, ci_context, ci_change_prepare, ci_change_apply, ci_verify**. Read exact source before edits. Responses bind a snapshot and distinguish omissions, uncertain relationships and failures. Native tools do not get implicit provider/network/key permissions. Advanced privileges remain explicit host-side CLI/library operations; see [native workflows](native/docs/workflows.md). The retained `node dist/cli.js serve --root /project` runtime has its own [API](docs/API.md) and state.
 
 ## Checks
 
@@ -68,7 +68,7 @@ Optional live gates **fail** when prerequisites are absent; they do not fall bac
 
 ## Evidence boundaries
 
-Full migration to Rust and feature-for-feature parity with all upstream/commercial products remain open. The Rust path has actual Windows tests, live rust-analyzer/TypeScript-server checks, native Leiden, real PDF worker extraction, a live offline-export browser check and an actual VS Code 1.140 extension-host test. The older TypeScript validation report remains historical; its Node 24/Windows regression suite was rerun successfully in this update. Other language servers, proprietary services, neural models, Docker, hosted macOS/Linux CI and whole-agent savings remain unverified. [STATUS.md](docs/STATUS.md) records the exact boundaries.
+The advanced local workflows now have independently owned Rust CLI/library paths. [Native workflows](native/docs/workflows.md) documents their explicit permissions and configuration. Feature-for-feature parity with every upstream or commercial product, all-language-server certification, hosted Linux/macOS execution and whole-agent savings require separate evidence. Actual Windows compiler, debugger, Docker, credential-store and TLS tests are distinguished from labeled protocol fixtures in [STATUS.md](docs/STATUS.md). The retained TypeScript 0.3 implementation and its earlier reports remain available.
 
 ## License
 

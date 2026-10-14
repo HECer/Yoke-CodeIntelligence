@@ -20,7 +20,9 @@ $taskExtensions = Join-Path $taskFixture 'extensions'
 New-Item -ItemType Directory -Path $taskWorkspace, (Join-Path $taskProfile 'User'), $taskExtensions | Out-Null
 [IO.File]::WriteAllText((Join-Path $taskWorkspace 'main.rs'), ('fn main() { println!("fixture"); }' + "`n"))
 New-Item -ItemType Directory -Path (Join-Path $taskWorkspace '.vscode') | Out-Null
-@{ 'codeIntelligence.nativeExecutable' = (Join-Path $taskWorkspace 'must-not-run.exe'); 'codeIntelligence.runtime' = 'typescript' } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $taskWorkspace '.vscode\settings.json') -Encoding utf8
+$taskUtf8 = [Text.UTF8Encoding]::new($false)
+$taskWorkspaceSettings = @{ 'codeIntelligence.nativeExecutable' = (Join-Path $taskWorkspace 'must-not-run.exe'); 'codeIntelligence.runtime' = 'typescript' } | ConvertTo-Json
+[IO.File]::WriteAllText((Join-Path $taskWorkspace '.vscode\settings.json'), $taskWorkspaceSettings, $taskUtf8)
 $taskSettings = @{
     'security.workspace.trust.enabled' = $false
     'telemetry.telemetryLevel' = 'off'
@@ -30,7 +32,7 @@ $taskSettings = @{
     'workbench.startupEditor' = 'none'
     'window.restoreWindows' = 'none'
 }
-$taskSettings | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $taskProfile 'User\settings.json') -Encoding utf8
+[IO.File]::WriteAllText((Join-Path $taskProfile 'User\settings.json'), ($taskSettings | ConvertTo-Json), $taskUtf8)
 $taskResult = Join-Path $taskFixture 'result.json'
 $taskOut = Join-Path $taskFixture 'stdout.log'
 $taskErr = Join-Path $taskFixture 'stderr.log'
@@ -72,7 +74,25 @@ try {
     $env:YOKE_VSCODE_BUNDLED = $taskPreviousBundled
     $env:ELECTRON_RUN_AS_NODE = $taskPreviousElectron
     $env:VSCODE_IPC_HOOK_CLI = $taskPreviousIpc
-    if ($taskProcess -and !$taskProcess.HasExited) {
-        & taskkill.exe /PID $taskProcess.Id /T /F 2>$null | Out-Null
+    if ($taskProcess) {
+        try {
+            if (!$taskProcess.WaitForExit(5000)) {
+                $taskCleanupOut = Join-Path $taskFixture 'cleanup.stdout.log'
+                $taskCleanupErr = Join-Path $taskFixture 'cleanup.stderr.log'
+                $taskCleanup = Start-Process -FilePath 'taskkill.exe' -ArgumentList @('/PID', $taskProcess.Id, '/T', '/F') -WindowStyle Hidden -PassThru -RedirectStandardOutput $taskCleanupOut -RedirectStandardError $taskCleanupErr
+                try {
+                    if (!$taskCleanup.WaitForExit(5000)) {
+                        try { $taskCleanup.Kill() } catch { if (!$taskCleanup.HasExited) { throw } }
+                        if (!$taskCleanup.WaitForExit(5000)) { throw 'Owned cleanup helper could not be stopped' }
+                        throw 'Owned VS Code cleanup helper timed out'
+                    }
+                    if (!$taskProcess.WaitForExit(5000)) { throw 'Owned VS Code process cleanup failed' }
+                } finally {
+                    $taskCleanup.Dispose()
+                }
+            }
+        } finally {
+            $taskProcess.Dispose()
+        }
     }
 }

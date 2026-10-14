@@ -1,0 +1,31 @@
+Actual native concise-summary validation, 2026-10-14 UTC
+
+The final, explicitly authorized local retry used Ollama 0.40.3 and official smollm2:135m, Apache-2.0, manifest digest 9077fe9d2ae1a4a41a868836b56b8163731a8fe16621397028c2c76f838c6907. The 270,898,672 bytes of model/metadata were reused from the owned test directory outside the repository; no additional weights were downloaded. Model metadata reported an 8,192-token context. An owned hidden CPU-only server used PID 95076 and http://127.0.0.1:54667 with unrelated credential environment variables cleared.
+
+The native executable was copied into an owned temporary directory after the focused adapter tests passed. Both the host CLI and ProviderSpec used this copy, avoiding shared Cargo output locks. Tested executable SHA-256: 0948fab956b5a1c7c2f8a88782945887b45e722e6ad47ff9036b5529fc36bf8c.
+
+Exact command sequence (temporary host paths are redacted):
+yoke --root <owned-source-fixture> --timeout 60000 index
+yoke --root <owned-source-fixture> --timeout 60000 find invoice
+yoke --root <owned-source-fixture> --timeout 60000 models --config <owned-public-host-profile> --trust-provider summarize --entity f919375de7c161270648c01d6eac9ab87b2b2a68a52542bd970e2d878dc4693b
+yoke --root <owned-source-fixture> --timeout 60000 ledger actual-concise-summary-final
+
+ProviderSpec selected the same copied executable with args: --timeout 60000 model-worker --endpoint http://127.0.0.1:54667 --model smollm2:135m --digest 9077fe9d2ae1a4a41a868836b56b8163731a8fe16621397028c2c76f838c6907. The public host profile contained no credentials; its immutable EUR task limit was 100 micro-units and attempt reservation was 10 micro-units.
+
+Exactly one final actual model attempt passed through native indexing, host ProviderSpec, model-worker, provider validation and Store/Ledger. It returned one 83-byte UTF-8 statement citing the exact captured invoice entity. The generated result remains truth=model_inference_not_verified_fact and resolution=inferred_concept, with concise subset coverage. No exhaustive coverage or semantic-quality claim is made. The statement content was not copied into this evidence; its SHA-256 is recorded in the companion JSON.
+
+Source snapshot: da2be91d8164ae40616e45a4195032c1942cff2066df3356d8dd6507f808a342.
+Source entity: f919375de7c161270648c01d6eac9ab87b2b2a68a52542bd970e2d878dc4693b.
+Source: billing.rs, full-file SHA-256 86bc9cacd1252cb8d4e7d5e6f04ebe8b9a7b32631a94355842da0cef7fb07d64, 84 bytes, exact selected UTF-8 range 0..83. The source bytes remained unchanged.
+Durable meaning-layer artifact: 873bbc221e6f9d0902f1a4ec1c1d91d30107f9ab2bf0c80cf43f890e7cbfafab.
+Durable attempt: 6cdf3d7175fe65a9370fbbf57ac569233b846fd56bfddaaabb395471239e36b9.
+
+A separate read-only SQLite/CAS check verified the stored attempt, artifact registration size, artifact SHA-256, exact citation/source bindings and inference labels after the native processes exited. Provider billing is unknown: the durable ledger records one attempt, one unknown, 10 reserved/encumbered micro-units and 0 known actual micro-units. Zero known actual cost is not a verified free-model bill.
+
+The adapter-specific request now asks for at most min(sourceCount,4) statements, each at most 512 UTF-8 bytes, and at most min(uniqueSourceCount,4) unique citations per statement. JSON Schema maxLength512 is a character bound; strict Rust byte postvalidation also handles non-ASCII text. All selected source IDs remain bound. The generic provider contract, 1,024 output-token cap and shared deadline remain unchanged. Malformed/truncated/oversized model output still fails explicitly.
+
+Meaningful regressions exercised transmitted HTTP schema/budget for one and six sources, overbudget returned statement/text/citation counts, and a 514-byte/257-character Unicode statement. RED failures preceded the fixes. Final targeted command: cargo test --locked -j2 --test ollama; 11 passed, 0 failed, 1 ignored, 0.86 seconds. HTTP fixtures are protocol fixtures, not actual neural models. Independent focused code review reported no Critical or Important findings.
+
+The earlier full summary failure and single worker socket-timeout diagnostic remain documented in native-workflows-ollama-structured-live.json; this final concise retry supplies separate successful evidence rather than replacing those failures. Actual embedding and reranking evidence remains separate. Actual vision and neural quality were not evaluated.
+
+Cleanup was confirmed: the owned Windows job closed, its server and descendants exited, and its endpoint was closed. Existing user identity length/mtime stayed unchanged; identity bytes, private keys and raw configuration logs were not read, copied or recorded. No user junction/configuration/default-server control action occurred. No native model or Cargo process from this test remains running. Model weights are outside the repository and excluded from release artifacts. The core adapter still starts no server and pulls no model by default.
