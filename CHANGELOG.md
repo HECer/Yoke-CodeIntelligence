@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.0 native Rust — 2026-10-14
+
+- Add an independent Rust CLI/MCP runtime with 24-language Tree-sitter structure, immutable SQLite/CAS evidence, parallel parse reuse, FTS/BM25, bounded context plans, directed graph analytics and actual Leiden.
+- Add exact source-bound LSP navigation/rename planning, guarded symbolic changes, executed verification and durable recovery with process-group/job lifecycle control.
+- Expose six read-only semantic operations through the eight-tool MCP interface; validate actual rust-analyzer historical references and reject corrupted snapshot/workspace/graph attribution.
+- Add service-scoped contracts, authored knowledge, sparse/external vectors, LCOV/runtime/SARIF imports, versioned editor overlays and a native authenticated HTTP bridge.
+- Default VS Code to Rust; validate actual extension-host unsaved capture and harden startup/stop/version/exclusion races with separate regression tests.
+- Add native image/audio/video technical inspection, supplied transcript binding and resource-limited real PDF text extraction with independent Unicode code-space/page-tree validation and visible unsupported scope.
+- Add portable native/VSIX packaging with pinned full license inventories, offline graph export and cross-platform CI definitions. Retain independent TypeScript 0.3 advanced workflows and their state during migration.
+- Fix Windows TypeScript process cleanup, test reporter paths and Node 24 structured test counts. Full suite: 240 passed, 3 skipped, 0 failed.
+
+No registry/GitHub publication is implied. Native migration and external compatibility boundaries are recorded in `docs/STATUS.md` and the replacement acceptance matrix.
+
 ## 0.2.0 — 2026-10-13
 
 - Add immutable TypeScript compiler filesystem and configured `tsconfig`/`jsconfig` discovery. Honor roots, inherited settings, path aliases and source-based project references; separate globals and analysis contexts. Reference cycles and unavailable targets are explicit diagnostics, not successful empty analyses.

@@ -1,5 +1,13 @@
 # Architecture and design decisions
 
+## Native Rust ownership
+
+`native/src` is an independent runtime with its own `.yoke` SQLite/CAS state. `capture`, `paths` and `store` own strict saved-source acquisition, immutable bytes, FTS and client/writer locking. `analysis` and `contracts` produce structural and authored observations; `query` owns retrieval, plans and directed analytics. `lsp` owns the host-selected semantic protocol, with exact source anchors and bounded excerpts. `changes`, `verify` and `process` own reviewed plans, copied execution, conditional original writes and recovery.
+
+`editor` derives versioned immutable overlays; `editor_http` exposes authenticated loopback read operations. The VS Code client selects executables from user settings and queues document versions through startup/shutdown. `knowledge` validates authored assertions, sparse/external vectors and imported observations. `media` binds assets and supplied text; PDF parsing uses a resource-limited child rather than uninterruptible parsing in the main process. `federation` and `maintenance` have separately scoped integration and acceptance tests.
+
+TypeScript directories and ADRs below describe the retained advanced runtime. They are not an assertion that every operation has migrated to Rust. Snapshot identity and serialized state are runtime-specific; no implicit conversion occurs. [The native guide](../native/README.md) and [replacement criteria](RUST_REPLACEMENT.md) describe current boundaries.
+
 ## Boundaries
 
 ```text

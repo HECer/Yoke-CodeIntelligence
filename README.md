@@ -2,11 +2,23 @@
 
 **Local, evidence-first code intelligence for coding agents.**
 
-[Deutsch](README.de.md) · [Quick start](docs/QUICKSTART.md) · [Advanced 0.3 features](docs/ADVANCED.md) · [Status](docs/STATUS.md) · [Validation](docs/validation/report.json)
+[Deutsch](README.de.md) · [Rust core](native/README.md) · [Quick start](docs/QUICKSTART.md) · [Advanced 0.3 features](docs/ADVANCED.md) · [Status](docs/STATUS.md)
 
-Independent TypeScript core combining immutable source snapshots, compiler navigation, directed multiedges, source-bound retrieval, controlled change plans and verification. Optional adapters connect Graft, Graphify, Serena and external language servers without treating every upstream claim or inferred edge as established program truth.
+Independent Rust 0.4 core and retained TypeScript 0.3 advanced implementation combining immutable source snapshots, compiler navigation, directed multiedges, source-bound retrieval, controlled changes and verification. The native default works without Graft, Serena, Graphify, Node, Python, a model or an API key. The [replacement matrix](docs/RUST_REPLACEMENT.md) states which workflows have native evidence and which migrations remain open.
 
-## Run
+## Native Rust start
+
+```sh
+cargo build --workspace --release --locked -j 2
+./target/release/yoke --root /absolute/project index
+./target/release/yoke --root /absolute/project context invoice
+./target/release/yoke --root /absolute/project export --format html
+./target/release/yoke --root /absolute/project serve
+```
+
+Use `target/release/yoke.exe` on Windows. Rust 1.94+ is required to build. The executable links 24 programming-language grammars, SQLite FTS5, graph algorithms including real Leiden, an independent LSP client and guarded changes with durable recovery. The HTML graph inspector works offline. Standard MCP tool names are shared, but advanced optional arguments and snapshot stores are distinct. [Native instructions](native/README.md) cover trusted semantic servers, context plans, verification, portable packaging and remaining limits. Actual Windows checks are recorded in [native validation](docs/validation/native-rust.json).
+
+## TypeScript advanced runtime
 
 Requires **Node.js 22.16+**. Python/Go and additional optional providers are installed separately. Node SQLite is experimental on the tested Node version. No model or API key is required by native indexing.
 
@@ -34,7 +46,7 @@ The separately supplied runtime ZIP includes compiled code and the pinned TypeSc
 
 ![Explorer — actual UI with labeled fixture responses](docs/screenshots/explorer.png)
 
-The screenshot is a frontend fixture test, not evidence of a successful real browser-to-backend test. Managed Chromium blocked localhost navigation; real HTTP authorization and query paths are tested independently.
+The historical screenshot uses labeled frontend fixture responses. The native Rust offline export has separately been opened in the actual collaborative browser and exercised with real captured source, Unicode anchors, a mobile viewport and hostile embedded text.
 
 ## Agent interface
 
@@ -56,7 +68,7 @@ Optional live gates **fail** when prerequisites are absent; they do not fall bac
 
 ## Evidence boundaries
 
-No feature-for-feature parity with every upstream/commercial product, exhaustive multi-language semantics, formal safety proof, independent audit or measured whole-agent token savings is claimed. Graft/Graphify/Serena live installation, neural model/Leiden/Docker execution, real VS Code host, Windows/macOS/hosted CI and the full paired-agent comparison remain externally unverified here. Clean online npm install failed on DNS; the tested pinned compiler/runtime was restored offline. [STATUS.md](docs/STATUS.md) states each limitation instead of reporting missing capabilities as successful empty results.
+Full migration to Rust and feature-for-feature parity with all upstream/commercial products remain open. The Rust path has actual Windows tests, live rust-analyzer/TypeScript-server checks, native Leiden, real PDF worker extraction, a live offline-export browser check and an actual VS Code 1.140 extension-host test. The older TypeScript validation report remains historical; its Node 24/Windows regression suite was rerun successfully in this update. Other language servers, proprietary services, neural models, Docker, hosted macOS/Linux CI and whole-agent savings remain unverified. [STATUS.md](docs/STATUS.md) records the exact boundaries.
 
 ## License
 

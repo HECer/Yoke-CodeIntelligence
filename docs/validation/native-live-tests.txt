@@ -1,0 +1,10 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.42s
+     Running tests\live.rs (target\debug\deps\live-f7f8c1ab7ff9a336.exe)
+
+running 3 tests
+test actual_rust_analyzer_definition_references_and_rename ... ok
+test actual_rust_analyzer_mcp_references_bind_immutable_snapshot ... ok
+test actual_typescript_server_cross_file_definition_and_rename ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 25.70s
+

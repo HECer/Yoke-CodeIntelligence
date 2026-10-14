@@ -1,4 +1,22 @@
-# Release status — 0.3.0
+# Release status — native 0.4.0 and retained TypeScript 0.3.0
+
+## Current native Rust implementation
+
+The default Rust executable independently owns immutable source capture/storage, 24-language structural analysis, exact UTF-8 evidence, incremental parse reuse, FTS/BM25 retrieval, bounded context plans, directed graphs/Leiden, offline exports, eight MCP tools, guarded changes/recovery and a host-selected LSP client. Graft, Serena and Graphify are unnecessary for these operations; Node/Python/model calls are unnecessary for the default native runtime.
+
+Rust also implements service-scoped contract extraction, source-bound knowledge and statistical/external vectors, LCOV/runtime/SARIF imports, versioned unsaved overlays and authenticated loopback editor requests. Technical image/audio/video inspection, supplied transcript binding and actual PDF text extraction use native code. PDF decompression runs in a separate process with bounded memory/CPU/output and a shared deadline; it is not a general OS sandbox.
+
+Current evidence includes Windows MSVC builds/tests, actual rust-analyzer and TypeScript language-server definition/rename runs, historical-snapshot references through actual rust-analyzer MCP, real Leiden partitions, native PDF subprocess tests and an actual VS Code 1.140 extension-host run. The VS Code run preserves saved source, finds unsaved Rust symbols, ignores repository-selected executables and excludes an open protected buffer. Lifecycle/cancellation races have separate labeled protocol regression tests. The standalone HTML export was exercised against captured source in the actual browser, including hostile text and a narrow viewport.
+
+The native standard suite passes with **159 passed, 5 explicitly ignored live/integration gates, 0 failed**. All three actual language-server gates pass separately; the two actual Windows credential-store gates also passed in this session. The TypeScript suite passes on this Windows host with Node 24: **240 passed, 3 skipped, 0 failed**. Logs, release measurements and package checks are recorded in [native validation](validation/native-rust.json) and its distribution companion. Cross-platform CI definitions are present; hosted Linux/macOS runs have not been executed here.
+
+Offline Ed25519 source exchange and conservative quarantine maintenance now have independent Rust CLI/library paths and real behavioral tests. Windows Credential Manager round-trip/overwrite/concurrent-creation gates also passed. No private keys are exported or persisted in project configuration; receiving grants remain explicit host inputs. Generic artifact reads cannot bypass foreign-source grants through an unpublished raw CAS hash.
+
+Remaining Rust migration includes configured compiler/solution-build ownership, neural/model/media providers, selected dataflow/per-test execution, full signed service transport, destructive history retention and Docker verification. Persistent debugger/REPL workflows, all-language-server certification, proprietary hosted products and whole-agent cost/correctness comparisons remain unverified. The [replacement matrix](RUST_REPLACEMENT.md) defines the evidence needed before claiming completion.
+
+## Historical TypeScript 0.3.0 report
+
+The following report preserves the earlier environment's results. Its claims that Windows/Node 24, a real browser, native Leiden or a VS Code host were unavailable are historical and are superseded by the current evidence above. It does not establish the implementation or validation of a Rust port.
 
 **A substantially extended working implementation, not certified completion of every originally discussed possibility.** This document distinguishes working code, real local evidence, optional-provider contracts and unexecuted external gates. No public publication was performed or attempted in this update.
 
