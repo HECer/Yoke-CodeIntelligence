@@ -925,6 +925,7 @@ fn process_exited(pid: u32) -> bool {
         exited
     }
 }
+#[cfg(windows)]
 fn runtime_session(address: SocketAddr, token: u8) -> (String, String, u32) {
     let initialized = exchange(
         address,

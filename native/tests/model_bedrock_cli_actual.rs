@@ -1,4 +1,6 @@
 //! Actual Windows OS credential chunks and owned TCP; no AWS service calls.
+#![cfg(windows)]
+
 use serde_json::json;
 use std::{fs, process::Command};
 fn profile() -> serde_json::Value {
