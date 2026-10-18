@@ -338,11 +338,15 @@ fn executable(store: &Store, name: &str) -> Result<std::path::PathBuf> {
         if directory.starts_with(&workspace) {
             continue;
         }
-        let mut names = vec![name.to_string()];
+        let names = vec![name.to_string()];
         #[cfg(windows)]
-        if path.extension().is_none() {
-            names.insert(0, format!("{name}.exe"));
-        }
+        let names = {
+            let mut names = names;
+            if path.extension().is_none() {
+                names.insert(0, format!("{name}.exe"));
+            }
+            names
+        };
         for candidate in names {
             let candidate = directory.join(candidate);
             if let Ok(resolved) = candidate.canonicalize()

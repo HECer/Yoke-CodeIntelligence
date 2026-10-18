@@ -8,9 +8,27 @@ from `main` at the start of this integration. Their historical evidence is
 preserved; it is not evidence for the combined source. The integration repairs
 inherited Windows process-cleanup regressions and adds Git-compatible bounded
 committer-date history selection. See [digest development](native-digest-development.md)
-for actual scoped checks and remaining digest functionality. Combined whole-native,
-browser and packaging acceptance is still in progress. No new release, live App
-installation, public comment or deployment is claimed.
+for remaining digest functionality. The frozen combined baseline executed all
+255 native test targets: **2,272 passed, 11 failed, 37 ignored**, with unchanged
+source hashes. Ten failures occurred while creating real Windows symlink fixtures
+(OS 1314 on EVY); one cancellation fixture incorrectly required EOF instead of
+also accepting a closed connection reported as reset/aborted. This is not a
+whole-native pass, and the security fixtures remain unchanged.
+
+The subsequent repair passes **389 library tests / 7 ignored, 28 worker tests and
+four actual installed-server navigation tests**. Format and all-target Clippy
+with warnings denied pass. Five actual Windows credential/TLS gates, three
+expanded language-server gates, two source-execution permission gates and the
+actual native HTTP browser fixture also pass separately; these counts overlap
+the default ignored/scoped tests and are not added to whole-run totals. The
+retained TypeScript suite passes 254 / 3 skipped and its typecheck passes.
+[Integration evidence](validation/integration-2026-10-19/README.md) preserves the
+baseline, repairs, source hashes, browser inspection and explicit boundaries.
+
+CI now selects Rust 1.94.1 and removes inherited conditional-code warnings while
+preserving existing non-Windows refusals. Updated hosted checks and packaging
+remain pending. No new release, live App installation, public comment or
+deployment is claimed; full functionality and universal parity remain open.
 
 ## Current native Rust implementation
 

@@ -620,6 +620,8 @@ pub fn recover(
 
 // This capability is minted only after strict durable v2 lineage readback.
 // It cannot be deserialized from an analyzed repository or host request JSON.
+// Registration fields are consumed only by the guarded Windows IO backend.
+#[cfg_attr(not(windows), allow(dead_code))]
 pub(super) struct DurableOutputRegistration {
     plan_id: String,
     journal_id: String,
@@ -631,12 +633,15 @@ pub(super) struct DurableOutputRegistration {
     security_hash: String,
 }
 impl DurableOutputRegistration {
+    #[cfg(windows)]
     pub(super) fn after_hash(&self) -> &str {
         &self.after_hash
     }
+    #[cfg(windows)]
     pub(super) fn security_hash(&self) -> &str {
         &self.security_hash
     }
+    #[cfg(windows)]
     pub(super) fn matches(&self, path: &Path, id: &str) -> bool {
         self.path == path
             && self.identity == id

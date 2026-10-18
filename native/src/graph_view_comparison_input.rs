@@ -210,7 +210,7 @@ pub(crate) fn prepare_archive_pair<'input>(
     .map_err(|error| sanitized(error, deadline))
 }
 
-#[cfg(test)]
+#[cfg(all(test, windows))]
 pub(crate) fn prepare_published_pair_guarded(
     store: &Store,
     before: &SelectionPin,

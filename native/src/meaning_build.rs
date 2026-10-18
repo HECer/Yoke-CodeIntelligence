@@ -1362,11 +1362,15 @@ fn resolve_executable(store: &Store, command: &Path) -> Result<PathBuf> {
         if directory.starts_with(&workspace) {
             continue;
         }
-        let mut names = vec![command.to_path_buf()];
+        let names = vec![command.to_path_buf()];
         #[cfg(windows)]
-        if command.extension().is_none() {
-            names.insert(0, command.with_extension("exe"));
-        }
+        let names = {
+            let mut names = names;
+            if command.extension().is_none() {
+                names.insert(0, command.with_extension("exe"));
+            }
+            names
+        };
         for name in names {
             if let Ok(path) = directory.join(name).canonicalize()
                 && path.is_file()

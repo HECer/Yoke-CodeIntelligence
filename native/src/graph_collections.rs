@@ -216,6 +216,17 @@ impl Registry {
     ) -> Result<Value> {
         self.read_source_inner(name, path, range, None, deadline)
     }
+    #[cfg(not(windows))]
+    pub fn open_existing(host_directory: &Path) -> Result<Self> {
+        Self::check_paths(host_directory)?;
+        let meta = fs::symlink_metadata(host_directory.join("yoke-collection.sqlite"))?;
+        ensure!(
+            meta.is_file() && !is_link(&meta),
+            "Registry database link refused"
+        );
+        anyhow::bail!("Read-only registry file-sharing guard is currently Windows-only")
+    }
+    #[cfg(windows)]
     pub fn open_existing(host_directory: &Path) -> Result<Self> {
         Self::check_paths(host_directory)?;
         let path = host_directory.join("yoke-collection.sqlite");
@@ -236,9 +247,6 @@ impl Registry {
                 .open(&path)
                 .context("Read-only registry requires no active database writer")?
         };
-        #[cfg(not(windows))]
-        let guard: fs::File =
-            anyhow::bail!("Read-only registry file-sharing guard is currently Windows-only");
         for suffix in ["-wal", "-journal"] {
             let file = host_directory.join(format!("yoke-collection.sqlite{suffix}"));
             match fs::metadata(file) {

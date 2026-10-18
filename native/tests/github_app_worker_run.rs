@@ -420,11 +420,18 @@ impl Provider {
                                 .unwrap();
                             hook.take().expect("owned mid-body cancellation hook")();
                             let mut byte = [0u8; 1];
-                            assert_eq!(
-                                stream.read(&mut byte).unwrap(),
-                                0,
-                                "cancelled owned response must close its connection"
-                            );
+                            match stream.read(&mut byte) {
+                                Ok(0) => {}
+                                Err(error)
+                                    if matches!(
+                                        error.kind(),
+                                        std::io::ErrorKind::ConnectionReset
+                                            | std::io::ErrorKind::ConnectionAborted
+                                    ) => {}
+                                result => panic!(
+                                    "cancelled owned response must close its connection: {result:?}"
+                                ),
+                            }
                             continue;
                         }
                         let _ = stream.write_all(response.as_bytes());

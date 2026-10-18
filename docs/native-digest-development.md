@@ -4,11 +4,11 @@ The `github_app::digest::preview` library function projects a host-selected
 captured native disk or locally proven immutable Git source snapshot into bounded
 declaration metadata. This is an
 isolated development component. The explicit history reader adds bounded,
-captured-head commit messages. Exact most-recent history selection, historical
-file/symbol mapping, provider discussions, service handoff and universal export
+captured-head commit messages. Historical file/symbol mapping, provider
+discussions, service handoff and universal export
 parity remain open.
 
-## Integration development checkpoint ? 2026-10-18
+## Integration development checkpoint (2026-10-18 UTC)
 
 The Windows integration branch combines parity checkpoint `c5178b2` with
 GitHub App checkpoint `7b8eabb`, preserving Wave 14 and historical validation.
@@ -22,12 +22,20 @@ independently terminates an unassigned root even when job termination refuses.
 Capture reaps the owned job when the root exits, before waiting for inherited
 pipe handles to close, and checks both root exit and job accounting.
 
-A fresh scoped Windows run passes 389 library tests with seven explicit ignored
-gates, 37 digest CLI tests and 35 digest library tests. Separate actual-Git
+A frozen combined Windows run passes 389 library tests with seven explicit
+ignored gates, 38 digest CLI tests and 35 digest library tests. Separate actual-Git
 oracles cover committer-date priority, clock skew, equal-date insertion order and
 negative stored timestamps. The original failed and intermediate runs remain
-in local integration evidence. Whole-target acceptance, Clippy and browser
-verification are subsequent gates; scoped counts are not added to a full run.
+in local integration evidence. The whole 255-target baseline records 2,272
+passes, 11 failures and 37 ignored gates: ten Windows symlink fixture setup
+failures (OS 1314) and one cancellation socket-observation fixture failure.
+It is not accepted. The latter fixture now accepts an actual TCP reset/abort as
+well as EOF; data, timeouts and other errors still fail. Subsequent checks pass
+389 library tests, 28 worker tests, four actual navigation gates, format and
+all-target Clippy. Actual native HTTP desktop/mobile inspection also passes with
+unchanged source, CAS and logical Store records. See the
+[integration evidence](validation/integration-2026-10-19/README.md); scoped and
+actual-host counts are not added to whole-native totals.
 
 The history reader now uses bounded committer-date-priority discovery rather
 than breadth-first selection. It verifies all competing frontier dates before

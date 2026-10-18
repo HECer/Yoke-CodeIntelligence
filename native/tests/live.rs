@@ -5,8 +5,69 @@ use tempfile::TempDir;
 use yoke::{
     Engine,
     capture::Deadline,
-    lsp::{self, Server},
+    lsp::{self, ConfiguredServer, HostConfiguration, PassiveProfile, SemanticRequest, Server},
 };
+
+// These gates explicitly select the actual installed provider's passive policy.
+// Backend launch trust alone does not grant source execution authority.
+fn configured(server: &Server) -> ConfiguredServer {
+    let passive_profile = match server.language.as_str() {
+        "rust" => PassiveProfile::RustAnalyzer,
+        "typescript" => PassiveProfile::TypescriptLanguageServer,
+        "python" => PassiveProfile::JediLanguageServer,
+        _ => panic!("No actual passive provider gate declared for this language"),
+    };
+    ConfiguredServer {
+        server: server.clone(),
+        configuration: HostConfiguration {
+            passive_profile: Some(passive_profile),
+            ..Default::default()
+        },
+    }
+}
+fn run_at(
+    engine: &mut Engine,
+    server: &Server,
+    snapshot: &yoke::model::Snapshot,
+    graph: &yoke::model::Graph,
+    request: SemanticRequest<'_>,
+    deadline: &Deadline,
+) -> anyhow::Result<Value> {
+    lsp::run_at_configured(
+        engine,
+        &configured(server),
+        snapshot,
+        graph,
+        request,
+        &json!({}),
+        deadline,
+    )
+}
+fn run(
+    engine: &mut Engine,
+    server: &Server,
+    path: &str,
+    offset: usize,
+    operation: &str,
+    new_name: Option<&str>,
+    deadline: &Deadline,
+) -> anyhow::Result<Value> {
+    let (snapshot, graph, _, _) = engine.index(deadline)?;
+    run_at(
+        engine,
+        server,
+        &snapshot,
+        &graph,
+        SemanticRequest {
+            path,
+            offset,
+            operation,
+            new_name,
+        },
+        deadline,
+    )
+}
+
 #[test]
 #[ignore = "requires YOKE_PYTHON_LSP pointing to an actual installed jedi-language-server executable"]
 fn actual_python_server_cross_file_unicode_historical_navigation_and_rename() {
@@ -29,7 +90,7 @@ fn actual_python_server_cross_file_unicode_historical_navigation_and_rename() {
         trust: true,
     };
     for operation in ["definition", "references", "hover"] {
-        let report = lsp::run_at(
+        let report = run_at(
             &mut engine,
             &server,
             &snapshot,
@@ -69,7 +130,7 @@ fn actual_python_server_cross_file_unicode_historical_navigation_and_rename() {
             );
         }
     }
-    let rename = lsp::run_at(
+    let rename = run_at(
         &mut engine,
         &server,
         &snapshot,
@@ -124,7 +185,7 @@ fn actual_rust_analyzer_definition_references_and_rename() {
         language: "rust".into(),
         trust: true,
     };
-    let definition = lsp::run(
+    let definition = run(
         &mut engine,
         &server,
         "src/main.rs",
@@ -135,7 +196,7 @@ fn actual_rust_analyzer_definition_references_and_rename() {
     )
     .unwrap();
     assert_eq!(definition["locations"][0]["text"], "helper", "{definition}");
-    let references = lsp::run(
+    let references = run(
         &mut engine,
         &server,
         "src/main.rs",
@@ -149,7 +210,7 @@ fn actual_rust_analyzer_definition_references_and_rename() {
         references["locations"].as_array().unwrap().len() >= 2,
         "{references}"
     );
-    let rename = lsp::run(
+    let rename = run(
         &mut engine,
         &server,
         "src/main.rs",
@@ -196,12 +257,12 @@ fn actual_rust_analyzer_mcp_references_bind_immutable_snapshot() {
     let current = "fn main() { let disk_changed = 42; println!(\"{disk_changed}\"); }\n";
     fs::write(dir.path().join("src/main.rs"), current).unwrap();
     engine
-        .register_server(Server {
+        .register_configured_server(configured(&Server {
             command: "rust-analyzer".into(),
             args: vec![],
             language: "rust".into(),
             trust: true,
-        })
+        }))
         .unwrap();
     let input = format!(
         "{}\n{}\n",
@@ -263,7 +324,7 @@ fn actual_typescript_server_cross_file_definition_and_rename() {
         language: "typescript".into(),
         trust: true,
     };
-    let definition = lsp::run(
+    let definition = run(
         &mut engine,
         &server,
         "main.ts",
@@ -275,7 +336,7 @@ fn actual_typescript_server_cross_file_definition_and_rename() {
     .unwrap();
     assert_eq!(definition["locations"][0]["path"], "lib.ts", "{definition}");
     assert_eq!(definition["locations"][0]["text"], "helper");
-    let rename = lsp::run(
+    let rename = run(
         &mut engine,
         &server,
         "lib.ts",

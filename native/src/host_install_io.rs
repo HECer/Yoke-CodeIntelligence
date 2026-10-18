@@ -6,6 +6,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
+#[cfg(windows)]
 #[path = "host_install_namespace.rs"]
 mod namespace;
 
@@ -29,10 +30,10 @@ pub(super) struct HeldFile {
 }
 
 pub(super) struct OutputBinding {
-    #[cfg(test)]
+    #[cfg(all(test, windows))]
     pub(super) path: PathBuf,
     pub(super) identity: String,
-    #[cfg(test)]
+    #[cfg(all(test, windows))]
     pub(super) byte_length: usize,
     pub(super) security_hash: String,
 }
@@ -45,8 +46,11 @@ pub(super) struct ArmedOutput {
 
 /// A durably registered output; bytes are admitted only through canonical appends.
 pub(super) struct RegisteredOutput {
+    #[cfg(windows)]
     file: HeldFile,
+    #[cfg(windows)]
     after_hash: String,
+    #[cfg(windows)]
     security_hash: String,
 }
 
@@ -102,21 +106,24 @@ pub(super) fn open_registered_output(
 impl ArmedOutput {
     pub(super) fn binding(&self) -> OutputBinding {
         OutputBinding {
-            #[cfg(test)]
+            #[cfg(all(test, windows))]
             path: self.file.path.clone(),
             identity: self.file.identity.clone(),
-            #[cfg(test)]
+            #[cfg(all(test, windows))]
             byte_length: self.file.byte_length,
             security_hash: self.security_hash.clone(),
         }
     }
 
+    #[cfg(windows)]
     pub(super) fn identity(&self) -> &str {
         &self.file.identity
     }
+    #[cfg(windows)]
     pub(super) fn len(&self) -> usize {
         self.file.byte_length
     }
+    #[cfg(windows)]
     pub(super) fn is_empty(&self) -> bool {
         self.len() == 0
     }
@@ -138,7 +145,7 @@ impl ArmedOutput {
 }
 
 impl RegisteredOutput {
-    #[cfg(test)]
+    #[cfg(all(test, windows))]
     pub(super) fn binding(&self) -> OutputBinding {
         OutputBinding {
             path: self.file.path.clone(),
@@ -148,13 +155,15 @@ impl RegisteredOutput {
         }
     }
 
-    #[cfg(test)]
+    #[cfg(all(test, windows))]
     pub(super) fn identity(&self) -> &str {
         &self.file.identity
     }
+    #[cfg(windows)]
     pub(super) fn len(&self) -> usize {
         self.file.byte_length
     }
+    #[cfg(windows)]
     pub(super) fn is_empty(&self) -> bool {
         self.len() == 0
     }
@@ -287,7 +296,7 @@ pub(super) fn create_directory(path: &Path, d: &Deadline) -> Result<GuardedDirec
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, windows))]
 pub(super) fn directory_entries(
     path: &Path,
     max_entries: usize,
