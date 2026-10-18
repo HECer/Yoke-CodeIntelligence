@@ -23,6 +23,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
+      - name: Use a canonical macOS temporary root
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const os = require('node:os');
+          const path = require('node:path');
+          const root = fs.realpathSync(os.tmpdir());
+          if (!path.isAbsolute(root) || /[\x00-\x1f\x7f]/.test(root) || !fs.statSync(root).isDirectory()) {
+            throw new Error('Canonical temporary root must be an ordinary absolute directory');
+          }
+          fs.appendFileSync(process.env.GITHUB_ENV, `TMPDIR=${root}\n`, 'utf8');
+          console.log(`Canonical temporary root: ${root}`);
+          NODE
       - uses: Swatinem/rust-cache@v2
       - run: npm ci
       - run: python -m unittest discover -s scripts/tests -v
