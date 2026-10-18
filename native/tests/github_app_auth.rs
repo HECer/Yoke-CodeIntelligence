@@ -11,6 +11,7 @@ fn profile_value() -> Value {
 fn profile() -> AuthProfile {
     AuthProfile::parse(&serde_json::to_vec(&profile_value()).unwrap()).unwrap()
 }
+#[cfg(windows)]
 fn options() -> Options {
     Options {
         allow_network: true,

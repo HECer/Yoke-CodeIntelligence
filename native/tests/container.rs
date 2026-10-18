@@ -1,5 +1,7 @@
 use serde_json::{Value, json};
-use std::{fs, path::Path};
+use std::fs;
+#[cfg(windows)]
+use std::path::Path;
 use tempfile::TempDir;
 use yoke::{
     Engine,

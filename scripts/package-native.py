@@ -30,6 +30,13 @@ def upstream_path(value, allow_empty=False):
     return PurePosixPath(value)
 
 
+def license_name(name):
+    # Some pinned crates use MIT-LICENSE / Apache-LICENSE rather than LICENSE-MIT.
+    # Keep the additional forms closed; executable/backup lookalikes are not notices.
+    return bool(re.match(r"^(LICENSE|LICENCE|COPYING|UNLICENSE|NOTICE|COPYRIGHT)", name, re.I | re.ASCII)
+                or re.fullmatch(r"(?:MIT|APACHE(?:-2\.0)?)[-_]LICEN[CS]E(?:\.(?:txt|md))?", name, re.I | re.ASCII))
+
+
 def github_licenses(package, root):
     repository = package.get("repository") or ""
     match = re.fullmatch(r"https://github\.com/([^/]+/[^/]+?)(?:\.git)?/?", repository)
@@ -53,7 +60,7 @@ def github_licenses(package, root):
         if entry["type"] != "blob":
             continue
         path = upstream_path(entry["path"])
-        if not re.match(r"^(LICENSE|LICENCE|COPYING|UNLICENSE|NOTICE|COPYRIGHT)", path.name, re.I):
+        if not license_name(path.name):
             continue
         # Crate-local notices and ancestor-level repository licenses apply to
         # this published source scope. Unrelated sibling crate texts do not.
@@ -162,7 +169,7 @@ The independent advanced TypeScript runtime is distributed separately.
         if dependency["id"] not in included or dependency["id"] == root_id:
             continue
         crate_root = Path(dependency["manifest_path"]).parent
-        licenses = [(path.name, path.read_bytes(), "locked-crate-package") for path in crate_root.iterdir() if path.is_file() and re.match(r"^(LICENSE|LICENCE|COPYING|UNLICENSE|NOTICE|COPYRIGHT)", path.name, re.I)]
+        licenses = [(path.name, path.read_bytes(), "locked-crate-package") for path in crate_root.iterdir() if path.is_file() and license_name(path.name)]
         if not licenses:
             if not args.fetch_missing_licenses:
                 raise RuntimeError(f"License text missing for {dependency['name']}; review --fetch-missing-licenses")

@@ -64,6 +64,38 @@ class LicenseDiscovery(unittest.TestCase):
         result, _ = self.invoke([("grammar/LICENSE", b"Synthetic nested license")])
         self.assertEqual(result[0][0], "grammar/LICENSE")
 
+    def test_named_notices_keep_revision_unicode_path_and_sibling_boundaries(self):
+        result, _ = self.invoke([
+            ("Apache-LICENSE", b"Synthetic ancestor notice"),
+            ("crates/target/caf\u00e9/MIT-LICENSE", b"Synthetic crate notice"),
+            ("crates/other/MIT-LICENSE", b"Unrelated sibling notice"),
+        ], path="crates/target")
+        self.assertEqual([item[0] for item in result],
+                         ["Apache-LICENSE", "crates/target/caf\u00e9/MIT-LICENSE"])
+        self.assertIn(f"/blob/{REVISION}/", result[1][2])
+        self.assertIn("/caf%C3%A9/", result[1][2])
+
+    def test_named_notice_tampering_still_fails_git_object_identity(self):
+        with self.assertRaisesRegex(RuntimeError, "identity|hash"):
+            self.invoke([("MIT-LICENSE", b"Synthetic notice")], forged=True)
+
+    def test_named_notice_lookalikes_cannot_substitute_for_missing_notice(self):
+        with self.assertRaisesRegex(RuntimeError, REVISION):
+            self.invoke([
+                ("MIT-LICENSE.exe", b"Not a notice"),
+                ("Apache-LICENSE/README.md", b"Not a notice"),
+                ("ReadmeMIT-LICENSE", b"Not a notice"),
+                ("MIT-LICEN\u017fE", b"Unicode lookalike"),
+            ])
+
+    def test_named_notice_keeps_raw_byte_limit(self):
+        with self.assertRaisesRegex(RuntimeError, "byte budget"):
+            self.invoke([("Apache-LICENSE", b"x" * 1_000_001)])
+
+    def test_named_notice_cannot_escape_repository_path(self):
+        with self.assertRaisesRegex(RuntimeError, "repository path"):
+            self.invoke([("crates/target/../MIT-LICENSE", b"Synthetic notice")])
+
     def test_truncated_recursive_tree_fails_even_with_root_license(self):
         with self.assertRaisesRegex(RuntimeError, "truncated"):
             self.invoke([("LICENSE", b"Synthetic notice")], truncated=True)
@@ -138,6 +170,39 @@ class PackagingInputs(unittest.TestCase):
                 MODULE.main()
             with zipfile.ZipFile(output) as archive:
                 self.assertEqual(archive.read(stale.name), b"Labeled executable fixture")
+
+    def test_named_notice_in_locked_crate_needs_no_online_fallback(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            script, invoke = self.fixture(root, "0.5.0")
+            crate = root / "registry/synthetic-notice"
+            crate.mkdir(parents=True)
+            notice = b"Synthetic original notice\r\n"
+            (crate / "MIT-LICENSE").write_bytes(notice)
+
+            def with_dependency(*args, **kwargs):
+                value = invoke(*args, **kwargs)
+                if args[:2] != ("cargo", "metadata"):
+                    return value
+                metadata = json.loads(value)
+                metadata["packages"].append({
+                    "id": "dependency", "name": "synthetic-notice", "version": "1.2.3",
+                    "manifest_path": str(crate / "Cargo.toml"), "license": "MIT",
+                    "repository": "https://github.com/example/fixture",
+                })
+                metadata["resolve"]["nodes"][0]["deps"] = [{"pkg": "dependency"}]
+                metadata["resolve"]["nodes"].append({"id": "dependency", "deps": []})
+                return json.dumps(metadata)
+
+            output = root / "native.zip"
+            with patch.object(MODULE, "__file__", str(script)), patch.object(MODULE, "command", side_effect=with_dependency), patch.object(sys, "argv", [str(script), "--skip-build", "--output", str(output)]), contextlib.redirect_stdout(io.StringIO()):
+                MODULE.main()
+            with zipfile.ZipFile(output) as archive:
+                member = "licenses/synthetic-notice-1.2.3/MIT-LICENSE"
+                self.assertEqual(archive.read(member), notice)
+                dependency = json.loads(archive.read("manifest.json"))["dependencies"][0]
+                self.assertEqual(dependency["licenseTexts"][0]["source"], "locked-crate-package")
+                self.assertEqual(dependency["licenseTexts"][0]["sha256"], hashlib.sha256(notice).hexdigest())
 
 
 if __name__ == "__main__":

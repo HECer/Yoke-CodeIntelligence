@@ -7,7 +7,7 @@ use yoke::{
 
 const NOW: u64 = 1_000_000;
 struct Fixture {
-    dir: TempDir,
+    _dir: TempDir,
     roots: Vec<PathBuf>,
     state: PathBuf,
     exe: PathBuf,
@@ -30,7 +30,7 @@ impl Fixture {
         let policy = dir.path().join("host-policy.json");
         fs::write(&policy, b"{\"projects\":[]}\n").unwrap();
         Self {
-            dir,
+            _dir: dir,
             roots,
             state,
             exe,
@@ -85,7 +85,7 @@ fn internal_volume_guid_binding_launches_the_real_binary_and_is_not_a_user_path_
     );
     let output = std::process::Command::new(&plan.bindings.executable.path)
         .arg("--version")
-        .current_dir(f.dir.path())
+        .current_dir(f._dir.path())
         .output()
         .expect("CreateProcess could not launch the actual native binary through its GUID path");
     assert!(
@@ -115,7 +115,7 @@ fn internal_volume_guid_binding_launches_the_real_binary_and_is_not_a_user_path_
         denied.is_err(),
         "Internal GUID representation became a user-supplied authority grant"
     );
-    assert!(!f.dir.path().join(".yoke").exists());
+    assert!(!f._dir.path().join(".yoke").exists());
     assert_eq!(fs::read_dir(&f.state).unwrap().count(), 0);
 }
 
@@ -381,6 +381,6 @@ fn windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_c
     );
     assert_eq!(fs::read(&first).unwrap(), b"first\n");
     drop(held);
-    fs::hard_link(&first, f.dir.path().join("foreign-alias.md")).unwrap();
+    fs::hard_link(&first, f._dir.path().join("foreign-alias.md")).unwrap();
     assert!(host_install::plan_install(&selection, NOW, &Deadline::new(10_000)).is_err());
 }
