@@ -20,6 +20,9 @@ pub struct Registry {
     read_only: bool,
     _read_guard: Option<fs::File>,
 }
+#[cfg(test)]
+#[path = "graph_collection_read_tests.rs"]
+mod reader_tests;
 #[derive(Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 struct Registration {
@@ -216,6 +219,113 @@ impl Registry {
     ) -> Result<Value> {
         self.read_source_inner(name, path, range, None, deadline)
     }
+    /// Select a registry reader using invocation-only host permission. The
+    /// default preserves the Windows file-sharing guard and its zero-sidecar
+    /// contract. Coordination permission is independent of registration rights.
+    pub fn open_existing_for_host(
+        host_directory: &Path,
+        allow_registry_coordination: bool,
+        deadline: &Deadline,
+    ) -> Result<Self> {
+        deadline.check()?;
+        if allow_registry_coordination {
+            Self::open_existing_coordinated(host_directory, deadline)
+        } else {
+            Self::open_existing(host_directory)
+        }
+    }
+    /// Explicitly permit SQLite WAL/SHM coordination in a trusted local host
+    /// directory. No database creation or logical writes are allowed. Unlike
+    /// immutable mode, this reads committed WAL data and pins one read
+    /// transaction until this Registry is dropped on Unix. Other SQLite writers
+    /// may continue; direct filesystem writers are not excluded by this mode.
+    /// Windows retains its stronger file-sharing guard even with permission.
+    pub fn open_existing_coordinated(host_directory: &Path, deadline: &Deadline) -> Result<Self> {
+        deadline.check()?;
+        #[cfg(windows)]
+        {
+            Self::open_existing(host_directory)
+        }
+        #[cfg(not(windows))]
+        {
+            Self::open_coordinated_snapshot(host_directory, deadline)
+        }
+    }
+    #[cfg(any(not(windows), test))]
+    fn open_coordinated_snapshot(host_directory: &Path, deadline: &Deadline) -> Result<Self> {
+        deadline.check()?;
+        Self::check_paths(host_directory)?;
+        let path = host_directory.join("yoke-collection.sqlite");
+        let meta = fs::symlink_metadata(&path)?;
+        ensure!(
+            meta.is_file() && !is_link(&meta),
+            "Registry database link refused"
+        );
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::MetadataExt;
+            ensure!(
+                meta.nlink() == 1,
+                "Registry database hardlink alias refused"
+            );
+            for suffix in ["-wal", "-shm", "-journal"] {
+                let sidecar = host_directory.join(format!("yoke-collection.sqlite{suffix}"));
+                match fs::symlink_metadata(sidecar) {
+                    Ok(meta) => {
+                        ensure!(meta.nlink() == 1, "Registry sidecar hardlink alias refused")
+                    }
+                    Err(error) if error.kind() == std::io::ErrorKind::NotFound => (),
+                    Err(error) => return Err(error.into()),
+                }
+            }
+        }
+        deadline.check()?;
+        let db = rusqlite::Connection::open_with_flags(
+            &path,
+            rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY
+                | rusqlite::OpenFlags::SQLITE_OPEN_NO_MUTEX
+                | rusqlite::OpenFlags::SQLITE_OPEN_NOFOLLOW,
+        )?;
+        // Bound untrusted schema/row materialization before the first schema
+        // read. Sources remain lazy and retain their narrower admission limits.
+        use rusqlite::limits::Limit;
+        for (limit, bound) in [
+            (Limit::SQLITE_LIMIT_LENGTH, 64_004_096),
+            (Limit::SQLITE_LIMIT_SQL_LENGTH, 65_536),
+            (Limit::SQLITE_LIMIT_COLUMN, 64),
+            (Limit::SQLITE_LIMIT_EXPR_DEPTH, 64),
+        ] {
+            db.set_limit(limit, db.limit(limit)?.min(bound))?;
+        }
+        let registry = Self {
+            db,
+            read_only: true,
+            _read_guard: None,
+        };
+        registry.budget(deadline)?;
+        registry.db.execute_batch(
+            "PRAGMA query_only=ON; PRAGMA trusted_schema=OFF; PRAGMA temp_store=MEMORY; BEGIN",
+        )?;
+        // BEGIN alone is deferred. Reading the schema here pins the snapshot
+        // before any subsequent multi-step registration/proof/source reads.
+        registry.check_schema()?;
+        deadline.check()?;
+        Ok(registry)
+    }
+    fn check_schema(&self) -> Result<()> {
+        for table in ["registrations", "source_blobs"] {
+            let sql: String = self.db.query_row(
+                "SELECT sql FROM sqlite_master WHERE type='table' AND name=?1",
+                [table],
+                |r| r.get(0),
+            )?;
+            ensure!(
+                sql.starts_with(&format!("CREATE TABLE {table}(")),
+                "Unknown registry table schema"
+            );
+        }
+        Ok(())
+    }
     #[cfg(not(windows))]
     pub fn open_existing(host_directory: &Path) -> Result<Self> {
         Self::check_paths(host_directory)?;
@@ -292,22 +402,13 @@ impl Registry {
         db.execute_batch(
             "PRAGMA query_only=ON; PRAGMA trusted_schema=OFF; PRAGMA temp_store=MEMORY",
         )?;
-        for table in ["registrations", "source_blobs"] {
-            let sql: String = db.query_row(
-                "SELECT sql FROM sqlite_master WHERE type='table' AND name=?1",
-                [table],
-                |r| r.get(0),
-            )?;
-            ensure!(
-                sql.starts_with(&format!("CREATE TABLE {table}(")),
-                "Unknown registry table schema"
-            );
-        }
-        Ok(Self {
+        let registry = Self {
             db,
             read_only: true,
             _read_guard: Some(guard),
-        })
+        };
+        registry.check_schema()?;
+        Ok(registry)
     }
     pub fn register_cas(
         &self,

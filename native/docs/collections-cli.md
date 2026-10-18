@@ -1,10 +1,15 @@
-# Windows collection CLI
+# Collection CLI
 
 The `collections` command uses an explicit absolute registry directory. Native
 and checked-view archives can be inspected after the original project is deleted.
 Read operations do not open the default `--root`, capture source, activate a
-project, or write registry files. The current enforced read-only registry guard
-is Windows-only; Linux and macOS runtime certification is deferred.
+project, or change logical registry contents. The default enforced guard is
+Windows-only and creates no registry files. Unix hosts can explicitly select
+`collections --registry ABSOLUTE_DIRECTORY --allow-registry-coordination list`
+to permit SQLite WAL/SHM coordination with a pinned read transaction. This
+permission is independent of `--allow-registration`; query JSON cannot grant
+it. See the [registry access contract](collection-registry-access.md). Broader
+Linux and macOS runtime certification remains pending.
 
 ```powershell
 yoke --root C:/work/billing collections --registry C:/collections/team --allow-registration register billing --expect-absent

@@ -1,4 +1,6 @@
 use serde_json::json;
+#[path = "support/registry_coordination.rs"]
+mod coordination;
 use std::{collections::BTreeMap, fs};
 use yoke::{
     Engine,
@@ -13,6 +15,7 @@ fn host(root: &std::path::Path, write: bool) -> HostProfile {
             registry_root: root.into(),
             allowed_members: vec!["archived".into(), "next".into()],
             allow_registration: write,
+            allow_registry_coordination: cfg!(unix),
             receiver_project: None,
         }],
         ..Default::default()
@@ -91,10 +94,11 @@ fn native_archived_queries_never_open_original_or_active_source() {
         .query_row("SELECT COUNT(*) FROM snapshots", [], |r| r.get(0))
         .unwrap();
     assert_eq!(snapshots, 0);
-    assert_eq!(bytes(central.path()), before);
+    coordination::assert_read_footprint(central.path(), before);
     for args in [
         json!({"collection":"missing"}),
         json!({"collection":"library","registryRoot":active.path()}),
+        json!({"collection":"library","allowRegistryCoordination":true}),
         json!({"collection":"library","member":"unregistered"}),
     ] {
         assert!(session.invoke("collections.describe", &args, &d).is_err());
@@ -404,6 +408,43 @@ fn collection_policy_changes_invalidate_resume_but_empty_policy_keeps_original_f
             Engine::open(active.path()).unwrap(),
             changed,
             Some("policy"),
+            &d
+        )
+        .is_err()
+    );
+}
+
+#[test]
+fn registry_coordination_is_host_policy_and_defaults_preserve_existing_profile_bytes() {
+    let active = tempfile::tempdir().unwrap();
+    let central = tempfile::tempdir().unwrap();
+    let d = Deadline::new(30000);
+    let mut profile = host(central.path(), false);
+    profile.collections[0].allow_registry_coordination = false;
+    let legacy = serde_json::to_value(&profile).unwrap();
+    assert!(
+        legacy["collections"][0]
+            .get("allowRegistryCoordination")
+            .is_none()
+    );
+    let decoded: HostProfile = serde_json::from_value(legacy.clone()).unwrap();
+    assert!(!decoded.collections[0].allow_registry_coordination);
+    assert_eq!(serde_json::to_value(decoded).unwrap(), legacy);
+    drop(
+        Session::open(
+            Engine::open(active.path()).unwrap(),
+            profile.clone(),
+            Some("coordination"),
+            &d,
+        )
+        .unwrap(),
+    );
+    profile.collections[0].allow_registry_coordination = true;
+    assert!(
+        Session::open(
+            Engine::open(active.path()).unwrap(),
+            profile,
+            Some("coordination"),
             &d
         )
         .is_err()

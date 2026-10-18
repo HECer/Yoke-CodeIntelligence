@@ -5,6 +5,13 @@ original and rebound proof closure, and exact frozen source bytes. Claims remain
 inferred and provider attestation remains unverified. None of these commands
 starts a model, language server, source capture or project code.
 
+On Unix, loading from a registry requires the explicit host option
+`meaning-archive load NAME --registry ABSOLUTE_DIRECTORY --allow-registry-coordination`.
+It permits SQLite WAL/SHM coordination while the database connection remains
+read-only and one transaction pins the complete archive replay. Windows keeps
+the strict existing sharing guard. This option grants no registration or source
+acquisition permission. See the [registry access contract](collection-registry-access.md).
+
 Export an exact already-published Meaning View from an existing source store:
 
 ```text

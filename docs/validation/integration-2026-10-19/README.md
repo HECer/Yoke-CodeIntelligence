@@ -30,3 +30,17 @@ remain locally in ignored `validation/integration-20261018`. The committed bundl
 contains the complete 255-target receipts and selected raw logs, not a claim that
 missing platform, provider, proprietary, benchmark or deployment gates passed.
 Historical parity ledgers and their false full-contract certifications are kept.
+
+The [registry coordination follow-up](registry-coordination/index.json) adds an
+explicit host permission for a pinned read-only SQLite/WAL transaction on Unix;
+Windows retains its stronger sharing guard. The default policy serialization
+and strict no-sidecar path are preserved. Five local SQLite tests pass; all nine
+affected CLI/session targets run with 55 passes and one actual Windows symlink
+setup failure (OS 1314). This follow-up is not an accepted whole-native run.
+Actual Unix execution of the new path remains a hosted validation gate. The
+separate debugger/REPL fixture repair replaces Windows-only tool discovery and
+shell selection with explicit platform profiles while retaining all assertions.
+Those fixtures pass 28 tests with one unconfigured live debugpy gate ignored;
+fresh typecheck and TypeScript tests pass 254/3 skipped. Source hashes remain
+unchanged within both follow-up validation runs. Only the two fixture files
+differ between the registry and portable-fixture source manifests.

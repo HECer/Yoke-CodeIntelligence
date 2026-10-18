@@ -203,7 +203,7 @@ fn typed_registration_cas_and_load_keep_exact_bytes_after_all_original_state_is_
     let db_before = fs::read(registry_dir.path().join("yoke-collection.sqlite")).unwrap();
     let loaded = success(
         command(cwd.path())
-            .args(["load", "typed", "--registry"])
+            .args(load_prefix())
             .arg(registry_dir.path())
             .arg("--output")
             .arg(&destination)
@@ -214,7 +214,7 @@ fn typed_registration_cas_and_load_keep_exact_bytes_after_all_original_state_is_
     assert_eq!(fs::read(&destination).unwrap(), expected_bytes);
     let metadata_only = success(
         command(cwd.path())
-            .args(["load", "typed", "--registry"])
+            .args(load_prefix())
             .arg(registry_dir.path())
             .output()
             .unwrap(),
@@ -403,7 +403,12 @@ fn stdout_loss_reports_already_durable_registration_and_output_archive_identitie
     drop(child.stdout.take());
     let result = child.wait_with_output().unwrap();
     assert!(!result.status.success());
-    let registry = Registry::open_existing(registry_dir.path()).unwrap();
+    let registry = Registry::open_existing_for_host(
+        registry_dir.path(),
+        cfg!(unix),
+        &yoke::capture::Deadline::new(30_000),
+    )
+    .unwrap();
     let archive = registry
         .load_meaning_archive("durable", Limits::default(), &d())
         .unwrap();
@@ -535,4 +540,17 @@ fn export_refuses_incomplete_store_without_initializing_any_state() {
         "Failed export initialized incomplete state: {}",
         mutations.join("\n")
     );
+}
+
+fn load_prefix() -> &'static [&'static str] {
+    if cfg!(unix) {
+        &[
+            "load",
+            "typed",
+            "--allow-registry-coordination",
+            "--registry",
+        ]
+    } else {
+        &["load", "typed", "--registry"]
+    }
 }

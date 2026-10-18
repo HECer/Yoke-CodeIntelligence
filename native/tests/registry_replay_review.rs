@@ -174,7 +174,12 @@ fn fixture(view: bool, relabel: Option<bool>) -> (TempDir, Deadline) {
 }
 fn reject(view: bool, relabel: bool) {
     let (central, deadline) = fixture(view, Some(relabel));
-    let registry = Registry::open_existing(central.path()).unwrap();
+    let registry = Registry::open_existing_for_host(
+        central.path(),
+        cfg!(unix),
+        &yoke::capture::Deadline::new(30_000),
+    )
+    .unwrap();
     assert!(
         registry.join(&["member".into()], &deadline).is_err(),
         "accepted fully resealed view={view} relabel={relabel}"
@@ -215,7 +220,12 @@ fn view8_retarget_is_rejected_after_origin_deleted() {
 fn unchanged_native8_and_view8_remain_standalone() {
     for view in [false, true] {
         let (central, deadline) = fixture(view, None);
-        let registry = Registry::open_existing(central.path()).unwrap();
+        let registry = Registry::open_existing_for_host(
+            central.path(),
+            cfg!(unix),
+            &yoke::capture::Deadline::new(30_000),
+        )
+        .unwrap();
         let joined = registry.join(&["member".into()], &deadline).unwrap();
         assert_eq!(
             joined["observations"]
@@ -280,7 +290,12 @@ fn native9_archive_selects_proven_epoch_without_global_activation() {
     )
     .unwrap();
     drop(db);
-    let registry = Registry::open_existing(central.path()).unwrap();
+    let registry = Registry::open_existing_for_host(
+        central.path(),
+        cfg!(unix),
+        &yoke::capture::Deadline::new(30_000),
+    )
+    .unwrap();
     let joined = registry.join(&["member".into()], &deadline).unwrap();
     assert!(
         joined["nodes"]
@@ -337,7 +352,12 @@ fn historical4_keeps_its_identity_and_reports_unreplayed_claims() {
     )
     .unwrap();
     drop(db);
-    let registry = Registry::open_existing(central.path()).unwrap();
+    let registry = Registry::open_existing_for_host(
+        central.path(),
+        cfg!(unix),
+        &yoke::capture::Deadline::new(30_000),
+    )
+    .unwrap();
     let metadata = registry.describe("member", &deadline).unwrap();
     assert_eq!(metadata["registrationId"], id);
     assert_eq!(
@@ -378,7 +398,12 @@ fn producer_labels_cannot_change_a_proven_capture_epoch() {
         )
         .unwrap();
         drop(db);
-        let registry = Registry::open_existing(central.path()).unwrap();
+        let registry = Registry::open_existing_for_host(
+            central.path(),
+            cfg!(unix),
+            &yoke::capture::Deadline::new(30_000),
+        )
+        .unwrap();
         assert!(
             registry.join(&["member".into()], &deadline).is_err(),
             "graph label {producer} selected a replay policy"

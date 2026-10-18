@@ -1,5 +1,7 @@
 use std::{collections::BTreeMap, fs};
 use yoke::{Engine, capture::Deadline, graph_collections::Registry};
+#[path = "support/registry_coordination.rs"]
+mod coordination;
 fn files(root: &std::path::Path) -> BTreeMap<String, Vec<u8>> {
     fs::read_dir(root)
         .unwrap()
@@ -79,7 +81,12 @@ fn read_only_native_archive_survives_original_source_deletion_without_writes() {
     drop(engine);
     source.close().unwrap();
     let before = files(central.path());
-    let registry = Registry::open_existing(central.path()).unwrap();
+    let registry = Registry::open_existing_for_host(
+        central.path(),
+        cfg!(unix),
+        &yoke::capture::Deadline::new(30_000),
+    )
+    .unwrap();
     assert_eq!(registry.list(&d).unwrap()["items"][0]["registrationId"], id);
     let metadata = registry.describe("native", &d).unwrap();
     assert_eq!(metadata["kind"], "native");
@@ -101,7 +108,7 @@ fn read_only_native_archive_survives_original_source_deletion_without_writes() {
     assert!(read["text"].as_str().unwrap().contains("fn archive"));
     assert!(registry.remove("native", &id, &d).is_err());
     drop(registry);
-    assert_eq!(files(central.path()), before);
+    coordination::assert_read_footprint(central.path(), before);
 }
 #[test]
 fn stale_and_absent_cas_never_replace_existing_binding() {

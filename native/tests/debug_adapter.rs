@@ -9,19 +9,13 @@ fn profile(log: &std::path::Path, mode: &str) -> HostDebugProfile {
     HostDebugProfile {
         key: "owned".into(),
         adapter_id: "independent-fixture".into(),
-        command: PathBuf::from(
-            std::process::Command::new("where.exe")
-                .arg("node")
-                .output()
-                .unwrap()
-                .stdout
-                .into_iter()
-                .map(char::from)
-                .collect::<String>()
-                .lines()
-                .next()
-                .unwrap(),
-        ),
+        command: std::env::split_paths(&std::env::var_os("PATH").unwrap())
+            .filter(|directory| directory.is_absolute())
+            .map(|directory| directory.join(if cfg!(windows) { "node.exe" } else { "node" }))
+            .find(|path| path.is_file())
+            .expect("The owned DAP fixture requires host-installed Node")
+            .canonicalize()
+            .unwrap(),
         arguments: vec![
             PathBuf::from(env!("CARGO_MANIFEST_DIR"))
                 .join("tests/fixtures/debug-adapter.mjs")

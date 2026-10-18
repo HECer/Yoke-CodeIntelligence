@@ -25,10 +25,34 @@ retained TypeScript suite passes 254 / 3 skipped and its typecheck passes.
 [Integration evidence](validation/integration-2026-10-19/README.md) preserves the
 baseline, repairs, source hashes, browser inspection and explicit boundaries.
 
-CI now selects Rust 1.94.1 and removes inherited conditional-code warnings while
-preserving existing non-Windows refusals. Updated hosted checks and packaging
-remain pending. No new release, live App installation, public comment or
-deployment is claimed; full functionality and universal parity remain open.
+CI selects Rust 1.94.1 and runs all targets despite individual failures. At
+`670951b`, the actual hosted Linux run records **1,903 passed, 70 failed,
+23 ignored** across 256 groups. Windows-only guarded host installation and
+registry access account for most refusals; inherited Windows-specific debugger
+and shell fixtures also fail. The macOS workflow now canonicalizes its temporary
+root without weakening link checks. Hosted acceptance remains pending.
+
+The integration adds an explicitly host-permitted Unix registry reader using a
+pinned, read-only SQLite transaction with committed WAL visibility. The strict
+Windows sharing guard and default profile bytes remain unchanged. Five local
+SQLite-reader tests pass; nine CLI/session targets record **55 passed, one
+failed** with unchanged sources. The failure remains an actual Windows symlink
+fixture setup error (OS 1314), not a suppressed security check. Actual Unix
+validation is pending. The separate permission allows SQLite coordination
+sidecars and grants no registration, source acquisition or provider execution.
+Portable debugger/REPL fixtures pass 28 tests with one unconfigured actual
+debugpy gate ignored. The fresh TypeScript typecheck and 254 tests pass, with
+three existing skips. These scoped results are not whole-native acceptance.
+See the [registry contract](../native/docs/collection-registry-access.md) and
+[scoped evidence](validation/integration-2026-10-19/registry-coordination/index.json).
+
+Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
+licenses and 551 complete notice files were checked. The extracted CLI passes
+index/find/context/exact Unicode-source reads with only Windows system folders
+on PATH. The VSIX contains the identical binary; no new extension-host run is
+claimed. These packages predate the registry follow-up and are not a release.
+No live App installation, public comment, deployment or main merge is claimed;
+full functionality and universal parity remain open.
 
 ## Current native Rust implementation
 

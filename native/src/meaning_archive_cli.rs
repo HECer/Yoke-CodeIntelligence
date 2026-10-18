@@ -58,6 +58,9 @@ enum Operation {
         name: String,
         #[arg(long)]
         registry: PathBuf,
+        /// Permit SQLite coordination sidecars, without registration permission.
+        #[arg(long)]
+        allow_registry_coordination: bool,
         #[arg(long)]
         output: Option<PathBuf>,
     },
@@ -647,9 +650,14 @@ pub fn run(
             name,
             registry,
             output,
+            allow_registry_coordination,
         } => {
             let _registry_guards = directory_guards(registry, &deadline)?;
-            let registry = Registry::open_existing(registry)?;
+            let registry = Registry::open_existing_for_host(
+                registry,
+                *allow_registry_coordination,
+                &deadline,
+            )?;
             let checked = registry.load_meaning_archive(name, limits, &deadline)?;
             let value = metadata(
                 args,

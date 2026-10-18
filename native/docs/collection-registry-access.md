@@ -15,6 +15,34 @@ with `mode=ro&immutable=1`, query-only mode and in-memory temporary storage.
 Immutable mode cannot bypass pending WAL data. Other operating systems require
 an equivalent enforced file-sharing guard before this API becomes available.
 
+## Explicit SQLite coordination on Unix
+
+`Registry::open_existing_for_host(directory, allow_registry_coordination, deadline)`
+keeps the strict default above. With explicit host permission, Unix uses a
+read-only SQLite connection, bounded schema reads, query-only mode, in-memory
+temporary storage, and one read transaction pinned during admission. Committed
+WAL data is included. The same transaction covers registration, proof and source
+reads until the handle is dropped; later SQLite commits become visible only to
+a new handle. Windows retains its stronger sharing guard with either setting.
+
+This mode permits SQLite to create/use `-wal` and `-shm` coordination files in
+the existing trusted local registry directory. It never initializes a database
+or changes logical registry contents. It does not exclude direct filesystem
+writers or make a database on a network filesystem safe. Do not select it for
+an untrusted or concurrently replaced host directory. Symlinked ancestors,
+database files and sidecars are rejected; Unix hardlinked database/sidecar
+aliases are rejected because an alias can hide the real WAL pathname. This is
+SQLite transaction consistency, not the strict no-sidecar contract. See
+[SQLite WAL concurrency](https://sqlite.org/wal.html#concurrency) and
+[read-only WAL databases](https://sqlite.org/wal.html#read_only_databases).
+
+The CLI exposes `--allow-registry-coordination` on `collections` and
+`meaning-archive load`. Sessions use the host-only `allowRegistryCoordination`
+collection policy (default false, omitted from serialized profiles when false).
+The policy participates in session fingerprints. Query/MCP arguments and stored
+session records cannot grant this permission. Registration, source acquisition,
+provider execution and federation grants retain their independent checks.
+
 ## Registration compare and swap
 
 The new `register_cas`, `register_view_cas`, `register_federated_cas`, and

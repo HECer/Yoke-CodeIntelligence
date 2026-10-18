@@ -26,7 +26,7 @@ fn archived_collection_cli_queries_without_opening_a_source_project() {
     let list = Command::new(env!("CARGO_BIN_EXE_yoke"))
         .arg("--root")
         .arg(empty.path().join("never-open-this"))
-        .args(["collections", "--registry"])
+        .args(collection_prefix())
         .arg(registry_root.path())
         .arg("list")
         .output()
@@ -42,7 +42,7 @@ fn archived_collection_cli_queries_without_opening_a_source_project() {
     let found = Command::new(env!("CARGO_BIN_EXE_yoke"))
         .arg("--root")
         .arg(empty.path().join("never-open-this"))
-        .args(["collections", "--registry"])
+        .args(collection_prefix())
         .arg(registry_root.path())
         .args([
             "query",
@@ -70,7 +70,7 @@ fn collection_registration_requires_separate_authority_before_creating_any_state
     let output = Command::new(env!("CARGO_BIN_EXE_yoke"))
         .arg("--root")
         .arg(source.path())
-        .args(["collections", "--registry"])
+        .args(collection_prefix())
         .arg(registry_root.path())
         .args(["register", "billing", "--expect-absent"])
         .output()
@@ -94,7 +94,7 @@ fn collection_cli_registration_is_create_only_or_exact_compare_and_swap() {
         Command::new(env!("CARGO_BIN_EXE_yoke"))
             .arg("--root")
             .arg(source.path())
-            .args(["collections", "--registry"])
+            .args(collection_prefix())
             .arg(registry_root.path())
             .args(["--allow-registration", "register", "project"])
             .args(extra)
@@ -113,7 +113,12 @@ fn collection_cli_registration_is_create_only_or_exact_compare_and_swap() {
     assert!(!register(&["--expect-absent"]).status.success());
     assert!(!register(&["--expected", &"0".repeat(64)]).status.success());
     {
-        let registry = Registry::open_existing(registry_root.path()).unwrap();
+        let registry = Registry::open_existing_for_host(
+            registry_root.path(),
+            cfg!(unix),
+            &yoke::capture::Deadline::new(30_000),
+        )
+        .unwrap();
         assert_eq!(
             registry.describe("project", &Deadline::new(5000)).unwrap()["registrationId"],
             id
@@ -130,7 +135,7 @@ fn collection_cli_registration_is_create_only_or_exact_compare_and_swap() {
     let removed = Command::new(env!("CARGO_BIN_EXE_yoke"))
         .arg("--root")
         .arg(source.path().join("unused"))
-        .args(["collections", "--registry"])
+        .args(collection_prefix())
         .arg(registry_root.path())
         .args([
             "--allow-registration",
@@ -147,7 +152,12 @@ fn collection_cli_registration_is_create_only_or_exact_compare_and_swap() {
         String::from_utf8_lossy(&removed.stderr)
     );
     assert!(!source.path().join("unused").exists());
-    let registry = Registry::open_existing(registry_root.path()).unwrap();
+    let registry = Registry::open_existing_for_host(
+        registry_root.path(),
+        cfg!(unix),
+        &yoke::capture::Deadline::new(30_000),
+    )
+    .unwrap();
     assert_eq!(registry.list(&Deadline::new(5000)).unwrap()["count"], 0);
 }
 
@@ -158,7 +168,7 @@ fn unknown_collection_cli_registry_does_not_create_files() {
     let output = Command::new(env!("CARGO_BIN_EXE_yoke"))
         .arg("--root")
         .arg(root.path())
-        .args(["collections", "--registry"])
+        .args(collection_prefix())
         .arg(&registry)
         .arg("list")
         .output()
@@ -216,9 +226,7 @@ fn foreign_collection_cli_reloads_current_host_grants_and_keeps_source_only_dist
     fs::write(&profile_path, profile.to_string()).unwrap();
     let run = |args: &[&str], authorized: bool| {
         let mut command = Command::new(env!("CARGO_BIN_EXE_yoke"));
-        command
-            .args(["collections", "--registry"])
-            .arg(central.path());
+        command.args(collection_prefix()).arg(central.path());
         if authorized {
             command
                 .arg("--federation-profile")
@@ -313,4 +321,12 @@ fn foreign_collection_cli_reloads_current_host_grants_and_keeps_source_only_dist
         .status
         .success()
     );
+}
+
+fn collection_prefix() -> &'static [&'static str] {
+    if cfg!(unix) {
+        &["collections", "--allow-registry-coordination", "--registry"]
+    } else {
+        &["collections", "--registry"]
+    }
 }

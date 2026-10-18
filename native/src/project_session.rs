@@ -50,6 +50,8 @@ pub struct HostCollection {
     pub allowed_members: Vec<String>,
     #[serde(default)]
     pub allow_registration: bool,
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub allow_registry_coordination: bool,
     #[serde(default)]
     pub receiver_project: Option<String>,
 }
@@ -266,10 +268,13 @@ impl Session {
                     .all(|name| collection.allowed_members.contains(name)),
                 "Unknown collection member"
             );
-            // The read-sharing guard holds this registry immutable throughout
-            // inspection. A native-only selection needs no receiving workspace.
-            let registry =
-                crate::graph_collections::Registry::open_existing(&collection.registry_root)?;
+            // A guarded immutable file or an explicitly permitted SQLite read
+            // transaction pins inspection. Native selections need no receiver.
+            let registry = crate::graph_collections::Registry::open_existing_for_host(
+                &collection.registry_root,
+                collection.allow_registry_coordination,
+                deadline,
+            )?;
             if !registry.needs_federation(&names, deadline)? {
                 return self.invoke(operation, args, deadline);
             }
@@ -492,7 +497,11 @@ impl Session {
                 .join("yoke-collection.sqlite")
                 .try_exists()?
             {
-                let registry = Registry::open_existing(&configured.registry_root)?;
+                let registry = Registry::open_existing_for_host(
+                    &configured.registry_root,
+                    configured.allow_registry_coordination,
+                    deadline,
+                )?;
                 match describe(&registry, member) {
                     Ok(value) => Some(value),
                     Err(error)
@@ -627,7 +636,11 @@ impl Session {
                 json!({"registrationId":id,"member":member,"kind":kind,"executionAuthority":"none"}),
             );
         }
-        let registry = Registry::open_existing(&configured.registry_root)?;
+        let registry = Registry::open_existing_for_host(
+            &configured.registry_root,
+            configured.allow_registry_coordination,
+            deadline,
+        )?;
         match operation {
             "collections.list" => {
                 let mut items = Vec::new();

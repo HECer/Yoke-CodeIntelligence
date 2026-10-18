@@ -137,6 +137,7 @@ fn current_principal_grants_are_injected_per_http_call_and_removed_on_upsert() {
             registry_root: registry_root.path().into(),
             allowed_members: vec!["foreign".into()],
             allow_registration: false,
+            allow_registry_coordination: cfg!(unix),
             receiver_project: Some("default".into()),
         }],
         ..Default::default()
@@ -213,6 +214,7 @@ fn native_archive_does_not_open_a_configured_but_unused_federation_receiver() {
             registry_root: central.path().into(),
             allowed_members: vec!["native".into()],
             allow_registration: false,
+            allow_registry_coordination: cfg!(unix),
             receiver_project: Some("receiver".into()),
         }],
         ..Default::default()

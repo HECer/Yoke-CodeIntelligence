@@ -182,6 +182,7 @@ fn collection_grants_are_borrowed_per_dispatch_and_sources_remain_noncanonical()
             registry_root: registry_root.path().into(),
             allowed_members: vec!["foreign".into()],
             allow_registration: false,
+            allow_registry_coordination: cfg!(unix),
             receiver_project: Some("default".into()),
         }],
         ..Default::default()
@@ -278,6 +279,7 @@ fn non_session_profile_rejects_host_collection_grants_before_opening_source_stat
             registry_root: registry.path().into(),
             allowed_members: vec!["foreign".into()],
             allow_registration: false,
+            allow_registry_coordination: cfg!(unix),
             receiver_project: Some("default".into()),
         }],
         ..Default::default()

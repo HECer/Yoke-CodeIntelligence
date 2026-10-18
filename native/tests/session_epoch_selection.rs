@@ -280,6 +280,7 @@ fn session_v9_reads_old_native_archives_without_recapture_or_registration_author
             registry_root: archive.path().into(),
             allowed_members: vec!["old8".into()],
             allow_registration: false,
+            allow_registry_coordination: cfg!(unix),
             receiver_project: None,
         }],
         ..Default::default()
@@ -368,6 +369,7 @@ fn session_v9_keeps_federation_receiver_receipts_and_current_grants_separate() {
             registry_root: archive.path().into(),
             allowed_members: vec!["foreign8".into()],
             allow_registration: true,
+            allow_registry_coordination: cfg!(unix),
             receiver_project: Some("default".into()),
         }],
         ..Default::default()

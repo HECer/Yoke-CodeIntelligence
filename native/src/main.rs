@@ -1044,6 +1044,9 @@ struct CollectionArguments {
     registry: PathBuf,
     #[arg(long)]
     allow_registration: bool,
+    /// Permit SQLite coordination sidecars while retaining a read-only database snapshot.
+    #[arg(long)]
+    allow_registry_coordination: bool,
     #[arg(long)]
     federation_profile: Option<PathBuf>,
     #[arg(long)]
@@ -1338,7 +1341,11 @@ fn standalone_collections(
             json!({"removed":name,"expectedRegistrationId":expected,"sourceBlobsDeleted":false})
         }
         other => {
-            let registry = Registry::open_existing(&args.registry)?;
+            let registry = Registry::open_existing_for_host(
+                &args.registry,
+                args.allow_registry_coordination,
+                deadline,
+            )?;
             match other {
                 CollectionOperation::List => {
                     if let Some(access) = &access {

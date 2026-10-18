@@ -78,7 +78,12 @@ fn typed_registration_reopens_and_replays_after_the_original_store_tree_and_work
     let _retained_fixture = remove_source_workspace(f);
     drop(registry);
     let before = fs::read(directory.path().join("yoke-collection.sqlite")).unwrap();
-    let readonly = Registry::open_existing(directory.path()).unwrap();
+    let readonly = Registry::open_existing_for_host(
+        directory.path(),
+        cfg!(unix),
+        &yoke::capture::Deadline::new(30_000),
+    )
+    .unwrap();
     let replay = readonly
         .load_meaning_archive("typed", Limits::default(), &d())
         .unwrap();
@@ -257,7 +262,12 @@ fn typed_collection_load_rejects_deleted_historical_source_without_repairing_the
     );
     drop(db);
     let before = registry_state(directory.path());
-    let registry = Registry::open_existing(directory.path()).unwrap();
+    let registry = Registry::open_existing_for_host(
+        directory.path(),
+        cfg!(unix),
+        &yoke::capture::Deadline::new(30_000),
+    )
+    .unwrap();
     assert!(
         registry
             .load_meaning_archive("typed", Limits::default(), &d())

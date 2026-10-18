@@ -11,6 +11,13 @@ unique `allowedMembers`, `allowRegistration` (default false), and optional
 project name. Registry ancestors must be directories without links. Session
 initialization validates paths without opening or creating a registry database.
 
+`allowRegistryCoordination` is an independent host permission, default false and
+omitted when false. On Unix, explicit permission selects a read-only SQLite
+transaction which includes committed WAL data and may use/create SQLite
+coordination sidecars. Windows keeps its existing enforced file-sharing guard.
+The policy is fingerprinted and cannot be supplied in invocation arguments. See
+the [registry access contract](collection-registry-access.md).
+
 ## Native invocation contract
 
 `Session::invoke` accepts these additional operations:
@@ -30,9 +37,9 @@ duplicate member selections are refused. A source `path` selects only an exact
 member of the archived manifest; it never authorizes a filesystem probe.
 `arguments` uses the existing immutable registry query contract.
 
-Read operations use `Registry::open_existing`. Native and checked-view archives
+Read operations use the host-selected registry reader. Native and checked-view archives
 remain readable after the original project/store is deleted, without capturing
-or activating a Session project and without creating registry state. Listing
+or activating a Session project and without initializing a database. Listing
 shows only currently registered members in the host allowlist; unused allowed
 names are omitted. Metadata remains bounded and does not expose signatures or
 source excerpts. The existing Windows read-sharing/checkpoint requirements

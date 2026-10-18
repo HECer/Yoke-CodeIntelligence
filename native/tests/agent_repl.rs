@@ -224,17 +224,29 @@ fn explicitly_selected_shell_runs_and_cell_errors_preserve_namespace() {
     let d = Deadline::new(20000);
     let mut s = session(root.path(), HostProfile::default(), &d);
     let mut config = spec();
-    config.shell = Some(yoke::agent_repl::HostShell {
-        command: PathBuf::from(std::env::var_os("SystemRoot").unwrap())
-            .join("System32/WindowsPowerShell/v1.0/powershell.exe"),
-        arguments: vec![
-            "-NoProfile".into(),
-            "-NonInteractive".into(),
-            "-Command".into(),
-        ],
+    config.shell = Some(if cfg!(windows) {
+        yoke::agent_repl::HostShell {
+            command: PathBuf::from(std::env::var_os("SystemRoot").unwrap())
+                .join("System32/WindowsPowerShell/v1.0/powershell.exe"),
+            arguments: vec![
+                "-NoProfile".into(),
+                "-NonInteractive".into(),
+                "-Command".into(),
+            ],
+        }
+    } else {
+        yoke::agent_repl::HostShell {
+            command: PathBuf::from("/bin/sh").canonicalize().unwrap(),
+            arguments: vec!["-c".into()],
+        }
     });
     let mut repl = AgentRepl::spawn(config, &d).unwrap();
-    let value=repl.execute(&mut s,"remembered=17\ns.shell.execute_shell_command('Write-Output owned-shell-test')['stdout'].strip()",&d).unwrap();
+    let cell = if cfg!(windows) {
+        "remembered=17\ns.shell.execute_shell_command('Write-Output owned-shell-test')['stdout'].strip()"
+    } else {
+        "remembered=17\ns.shell.execute_shell_command('printf owned-shell-test')['stdout'].strip()"
+    };
+    let value = repl.execute(&mut s, cell, &d).unwrap();
     assert_eq!(value["result"], "owned-shell-test", "{value}");
     assert!(
         repl.execute(&mut s, "raise ValueError('owned error')", &d)

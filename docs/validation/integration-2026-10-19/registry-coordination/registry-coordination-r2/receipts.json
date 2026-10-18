@@ -1,0 +1,80 @@
+[
+  {
+    "gate": "format",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 4.844,
+    "recordedAt": "2026-10-18T23:39:33.621970+00:00"
+  },
+  {
+    "gate": "clippy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--keep-going",
+      "-j2",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 94.331,
+    "recordedAt": "2026-10-18T23:41:07.956638+00:00"
+  },
+  {
+    "gate": "registry-reader-unit",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "--lib",
+      "graph_collections::reader_tests",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 63.277,
+    "recordedAt": "2026-10-18T23:42:11.235534+00:00"
+  },
+  {
+    "gate": "registry-session-cli",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--no-fail-fast",
+      "--test",
+      "collection_registry_access",
+      "--test",
+      "collections_cli",
+      "--test",
+      "meaning_archive_cli",
+      "--test",
+      "meaning_collection_archives",
+      "--test",
+      "registry_replay_review",
+      "--test",
+      "session_collections",
+      "--test",
+      "session_epoch_selection",
+      "--test",
+      "mcp_collection_grants",
+      "--test",
+      "mcp_collection_grants_review",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 101,
+    "elapsedSeconds": 114.582,
+    "recordedAt": "2026-10-18T23:44:05.821722+00:00"
+  }
+]
