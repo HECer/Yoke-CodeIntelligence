@@ -1,0 +1,713 @@
+//! Checked captured-source run, resource ledger and immutable scope partition.
+//! Native global retrieval does not construct this capability.
+
+use crate::model::{identity, valid_id};
+use crate::{
+    capture::{CapturedSourceScope, Deadline},
+    model::{Entity, Graph, Snapshot},
+    store::Store,
+};
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    fmt,
+    sync::Arc,
+};
+
+#[path = "retrieval_marker_decode.rs"]
+mod marker_decode;
+#[path = "retrieval_partition.rs"]
+mod partition;
+
+pub(crate) fn check_deadline(deadline: &Deadline) -> RetrievalResult<()> {
+    match deadline.failure() {
+        Some(crate::capture::DeadlineFailure::Cancelled) => {
+            Err(RetrievalHardError::Cancelled("host_cancelled"))
+        }
+        Some(crate::capture::DeadlineFailure::Expired) => {
+            Err(RetrievalHardError::Deadline("expired"))
+        }
+        None => Ok(()),
+    }
+}
+
+fn authority_error(deadline: &Deadline) -> RetrievalHardError {
+    check_deadline(deadline)
+        .err()
+        .unwrap_or(RetrievalHardError::Authority("source_binding"))
+}
+
+pub(crate) const POLICY: &str = "yoke-retrieval-scopes-1";
+
+pub(crate) type RetrievalResult<T> = Result<T, RetrievalHardError>;
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum RetrievalHardError {
+    InvalidRequest(&'static str),
+    Authority(&'static str),
+    SourceIntegrity(&'static str),
+    DeniedSource(&'static str),
+    Cancelled(&'static str),
+    Deadline(&'static str),
+    Capacity(&'static str),
+    OutputCapacity(&'static str),
+    Internal(&'static str),
+}
+impl fmt::Display for RetrievalHardError {
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let (kind, code) = match self {
+            Self::InvalidRequest(code) => ("invalid_request", code),
+            Self::Authority(code) => ("authority", code),
+            Self::SourceIntegrity(code) => ("source_integrity", code),
+            Self::DeniedSource(code) => ("denied_source", code),
+            Self::Cancelled(code) => ("cancelled", code),
+            Self::Deadline(code) => ("deadline", code),
+            Self::Capacity(code) => ("capacity", code),
+            Self::OutputCapacity(code) => ("output_capacity", code),
+            Self::Internal(code) => ("internal", code),
+        };
+        write!(out, "Manifest-balanced retrieval {kind}: {code}")
+    }
+}
+impl std::error::Error for RetrievalHardError {}
+
+// No public constructors, Deserialize, mutable getters, reset or refund API.
+// CapturedSourceScope borrows the same immutable snapshot and a shorter borrow
+// of the exact Store; begin therefore requires 'store: 'input.
+pub(crate) struct CheckedRetrievalRun<'store, 'input, 'deadline> {
+    store: &'store Store,
+    snapshot: &'input Snapshot,
+    graph: &'input Graph,
+    source_scope: CapturedSourceScope<'input>,
+    deadline: &'deadline Deadline,
+    output_limit: usize,
+    snapshot_hash: String,
+    graph_hash: String,
+    verified: BTreeMap<String, VerifiedSource>,
+    admitted_documents: BTreeSet<String>,
+    usage: RunUsage,
+    // Pin this exact Store read snapshot through probe, ranking and fallback.
+    _transaction: rusqlite::Transaction<'store>,
+    entities: BTreeMap<&'input str, &'input Entity>,
+    probed: bool,
+}
+
+pub(crate) struct CheckedScopePartition<'store> {
+    store: &'store Store,
+    snapshot_id: String,
+    snapshot_hash: String,
+    graph_hash: String,
+    source_scope_binding: String,
+    id: String,
+    physical_package_count: usize,
+    declarations: Vec<ManifestBinding>,
+    scopes: Vec<CheckedScope>,
+    ownership: BTreeMap<String, usize>,
+    diagnostics: Vec<ScopeDiagnostic>,
+    omitted_diagnostic_count: usize,
+}
+
+pub(crate) struct ScopeHandle<'partition, 'store> {
+    owner: &'partition CheckedScopePartition<'store>,
+    ordinal: usize,
+}
+
+pub(crate) enum ProbeOutcome<'store> {
+    Ready(CheckedScopePartition<'store>),
+    NotApplicable(PolicyFallback),
+    UnsupportedPolicy(PolicyFallback),
+}
+
+pub(crate) struct PolicyFallback {
+    code: &'static str,
+    physical_package_count: Option<usize>,
+    diagnostics: Vec<ScopeDiagnostic>,
+    omitted_diagnostic_count: usize,
+}
+impl PolicyFallback {
+    pub(crate) fn code(&self) -> &'static str {
+        self.code
+    }
+    pub(crate) fn physical_package_count(&self) -> Option<usize> {
+        self.physical_package_count
+    }
+    pub(crate) fn diagnostics(&self) -> impl Iterator<Item = &ScopeDiagnostic> {
+        self.diagnostics.iter()
+    }
+    pub(crate) fn omitted_diagnostic_count(&self) -> usize {
+        self.omitted_diagnostic_count
+    }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum ScopeKind {
+    Package,
+    WorkspaceUnassigned,
+    RootUnassigned,
+}
+impl ScopeKind {
+    pub(crate) fn as_str(self) -> &'static str {
+        match self {
+            Self::Package => "package",
+            Self::WorkspaceUnassigned => "workspace_unassigned",
+            Self::RootUnassigned => "root_unassigned",
+        }
+    }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub(crate) enum Ecosystem {
+    Cargo,
+    Npm,
+    Pnpm,
+}
+impl Ecosystem {
+    pub(crate) fn as_str(self) -> &'static str {
+        match self {
+            Self::Cargo => "cargo",
+            Self::Npm => "npm",
+            Self::Pnpm => "pnpm",
+        }
+    }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum MembershipReason {
+    Member,
+    Excluded,
+    Unmatched,
+    Standalone,
+}
+impl MembershipReason {
+    pub(crate) fn as_str(self) -> &'static str {
+        match self {
+            Self::Member => "member",
+            Self::Excluded => "excluded",
+            Self::Unmatched => "unmatched",
+            Self::Standalone => "standalone",
+        }
+    }
+}
+
+pub(crate) struct PackageLabel {
+    ecosystem: Ecosystem,
+    name: String,
+    declaration_path: String,
+    primary: bool,
+}
+impl PackageLabel {
+    pub(crate) fn ecosystem(&self) -> Ecosystem {
+        self.ecosystem
+    }
+    pub(crate) fn name(&self) -> &str {
+        &self.name
+    }
+    pub(crate) fn declaration_path(&self) -> &str {
+        &self.declaration_path
+    }
+    pub(crate) fn is_primary(&self) -> bool {
+        self.primary
+    }
+}
+
+pub(crate) struct ManifestBinding {
+    path: String,
+    content_hash: String,
+}
+impl ManifestBinding {
+    pub(crate) fn path(&self) -> &str {
+        &self.path
+    }
+    pub(crate) fn content_hash(&self) -> &str {
+        &self.content_hash
+    }
+}
+
+pub(crate) struct WorkspaceMembership {
+    ecosystem: Ecosystem,
+    workspace_root: Option<String>,
+    declaration_path: Option<String>,
+    reason: MembershipReason,
+}
+impl WorkspaceMembership {
+    pub(crate) fn ecosystem(&self) -> Ecosystem {
+        self.ecosystem
+    }
+    pub(crate) fn workspace_root(&self) -> Option<&str> {
+        self.workspace_root.as_deref()
+    }
+    pub(crate) fn declaration_path(&self) -> Option<&str> {
+        self.declaration_path.as_deref()
+    }
+    pub(crate) fn reason(&self) -> MembershipReason {
+        self.reason
+    }
+}
+
+pub(crate) struct ScopeDiagnostic {
+    code: &'static str,
+    path: String,
+    content_hash: Option<String>,
+    selector: Option<String>,
+    line: Option<usize>,
+    column: Option<usize>,
+}
+impl ScopeDiagnostic {
+    pub(crate) fn code(&self) -> &'static str {
+        self.code
+    }
+    pub(crate) fn path(&self) -> &str {
+        &self.path
+    }
+    pub(crate) fn content_hash(&self) -> Option<&str> {
+        self.content_hash.as_deref()
+    }
+    pub(crate) fn selector(&self) -> Option<&str> {
+        self.selector.as_deref()
+    }
+    pub(crate) fn line(&self) -> Option<usize> {
+        self.line
+    }
+    pub(crate) fn column(&self) -> Option<usize> {
+        self.column
+    }
+}
+
+pub(crate) struct CheckedScope {
+    id: String,
+    root: String,
+    kind: ScopeKind,
+    labels: Vec<PackageLabel>,
+    declarations: Vec<ManifestBinding>,
+    memberships: Vec<WorkspaceMembership>,
+}
+impl CheckedScope {
+    pub(crate) fn id(&self) -> &str {
+        &self.id
+    }
+    pub(crate) fn root(&self) -> &str {
+        &self.root
+    }
+    pub(crate) fn kind(&self) -> ScopeKind {
+        self.kind
+    }
+    pub(crate) fn labels(&self) -> impl Iterator<Item = &PackageLabel> {
+        self.labels.iter()
+    }
+    #[allow(dead_code)] // Retained descriptor API from the accepted scope contract.
+    pub(crate) fn declarations(&self) -> impl Iterator<Item = &ManifestBinding> {
+        self.declarations.iter()
+    }
+    pub(crate) fn memberships(&self) -> impl Iterator<Item = &WorkspaceMembership> {
+        self.memberships.iter()
+    }
+}
+
+#[derive(Clone, Copy)]
+pub(crate) struct SourceCost {
+    source_bytes: usize,
+    incremental_bytes: usize,
+    #[cfg_attr(not(test), allow(dead_code))]
+    cached: bool,
+}
+impl SourceCost {
+    pub(crate) fn source_bytes(self) -> usize {
+        self.source_bytes
+    }
+    pub(crate) fn incremental_bytes(self) -> usize {
+        self.incremental_bytes
+    }
+    #[cfg_attr(not(test), allow(dead_code))]
+    pub(crate) fn is_cached(self) -> bool {
+        self.cached
+    }
+}
+
+// Cloning immutable verified data is not a source-scope or debit capability.
+#[derive(Clone)]
+pub(crate) struct VerifiedSource {
+    path: String,
+    content_hash: String,
+    text: Arc<str>,
+}
+impl VerifiedSource {
+    #[allow(dead_code)] // Retained immutable verified-source descriptor API.
+    pub(crate) fn path(&self) -> &str {
+        &self.path
+    }
+    pub(crate) fn content_hash(&self) -> &str {
+        &self.content_hash
+    }
+    pub(crate) fn text(&self) -> &str {
+        &self.text
+    }
+}
+pub(crate) struct VerifiedDocument<'input> {
+    #[cfg_attr(not(test), allow(dead_code))]
+    entity: &'input Entity,
+    source: VerifiedSource,
+    #[cfg_attr(not(test), allow(dead_code))]
+    start: usize,
+    #[cfg_attr(not(test), allow(dead_code))]
+    end: usize,
+}
+impl VerifiedDocument<'_> {
+    #[cfg_attr(not(test), allow(dead_code))]
+    pub(crate) fn entity(&self) -> &Entity {
+        self.entity
+    }
+    pub(crate) fn source(&self) -> &VerifiedSource {
+        &self.source
+    }
+    #[cfg_attr(not(test), allow(dead_code))]
+    pub(crate) fn text(&self) -> &str {
+        &self.source.text()[self.start..self.end]
+    }
+}
+
+#[derive(Clone, Copy, Default, Debug, PartialEq, Eq)]
+pub(crate) struct RunUsage {
+    marker_files_checked: usize,
+    marker_bytes_charged: usize,
+    body_input_bytes_charged: usize,
+    input_bytes_charged: usize,
+    document_bytes_charged: usize,
+    selector_work: usize,
+    ownership_bytes: usize,
+    verified_path_count: usize,
+}
+impl RunUsage {
+    pub(crate) fn marker_files_checked(self) -> usize {
+        self.marker_files_checked
+    }
+    pub(crate) fn marker_bytes_charged(self) -> usize {
+        self.marker_bytes_charged
+    }
+    pub(crate) fn body_input_bytes_charged(self) -> usize {
+        self.body_input_bytes_charged
+    }
+    pub(crate) fn input_bytes_charged(self) -> usize {
+        self.input_bytes_charged
+    }
+    pub(crate) fn document_bytes_charged(self) -> usize {
+        self.document_bytes_charged
+    }
+    pub(crate) fn selector_work(self) -> usize {
+        self.selector_work
+    }
+    #[cfg_attr(not(test), allow(dead_code))]
+    pub(crate) fn ownership_bytes(self) -> usize {
+        self.ownership_bytes
+    }
+    #[cfg_attr(not(test), allow(dead_code))]
+    pub(crate) fn verified_path_count(self) -> usize {
+        self.verified_path_count
+    }
+}
+
+pub(crate) fn begin<'store: 'input, 'input, 'deadline>(
+    store: &'store Store,
+    snapshot: &'input Snapshot,
+    graph: &'input Graph,
+    deadline: &'deadline Deadline,
+    output_limit: usize,
+) -> RetrievalResult<CheckedRetrievalRun<'store, 'input, 'deadline>> {
+    check_deadline(deadline)?;
+    if output_limit > 4_000_000 || output_limit == 0 {
+        return Err(RetrievalHardError::InvalidRequest("output_limit"));
+    }
+    if snapshot.files.len() > 100_000 {
+        return Err(RetrievalHardError::Capacity("snapshot_paths"));
+    }
+    if graph.entities.len() > 100_000 {
+        return Err(RetrievalHardError::Capacity("graph_entities"));
+    }
+    if graph.observations.len() > 1_000_000 {
+        return Err(RetrievalHardError::Capacity("graph_observations"));
+    }
+    if snapshot.workspace_id != store.workspace_id
+        || graph.snapshot_id != snapshot.id
+        || !valid_id(&snapshot.id)
+    {
+        return Err(RetrievalHardError::Authority("snapshot_binding"));
+    }
+    let mut paths = BTreeSet::new();
+    for file in &snapshot.files {
+        check_deadline(deadline)?;
+        if file.path.len() > 4096 {
+            return Err(RetrievalHardError::Capacity("path_bytes"));
+        }
+        if crate::paths::normalized_syntax(&file.path).ok().as_deref() != Some(file.path.as_str())
+            || !valid_id(&file.hash)
+            || file.size > 4_000_000
+            || !paths.insert(file.path.as_str())
+        {
+            return Err(RetrievalHardError::Authority("source_manifest"));
+        }
+    }
+    let graph_hash = crate::retrieval_capacity::bounded_graph_fingerprint(graph, deadline)?;
+    store
+        .set_deadline(deadline)
+        .map_err(|_| authority_error(deadline))?;
+    let transaction = store
+        .db
+        .unchecked_transaction()
+        .map_err(|_| RetrievalHardError::Internal("read_transaction"))?;
+    let snapshot_hash = identity(snapshot);
+    let saved = store
+        .snapshot(&snapshot.id)
+        .map_err(|_| authority_error(deadline))?;
+    if identity(&saved) != snapshot_hash {
+        return Err(RetrievalHardError::Authority("snapshot_binding"));
+    }
+    crate::retrieval_saved_graph::verify_saved_graph_in(
+        store,
+        &transaction,
+        &snapshot.id,
+        &graph_hash,
+        deadline,
+    )?;
+    let source_scope = crate::capture::source_scope_policy(store, snapshot)
+        .map_err(|_| authority_error(deadline))?;
+    let mut entities = BTreeMap::new();
+    for entity in &graph.entities {
+        check_deadline(deadline)?;
+        if entity.snapshot_id != snapshot.id
+            || !paths.contains(entity.path.as_str())
+            || !valid_id(&entity.id)
+            || entities.insert(entity.id.as_str(), entity).is_some()
+        {
+            return Err(RetrievalHardError::SourceIntegrity("graph_entity"));
+        }
+    }
+    Ok(CheckedRetrievalRun {
+        store,
+        snapshot,
+        graph,
+        source_scope,
+        deadline,
+        output_limit,
+        snapshot_hash,
+        graph_hash,
+        verified: BTreeMap::new(),
+        admitted_documents: BTreeSet::new(),
+        usage: RunUsage::default(),
+        _transaction: transaction,
+        entities,
+        probed: false,
+    })
+}
+
+pub(crate) fn probe<'store>(
+    run: &mut CheckedRetrievalRun<'store, '_, '_>,
+) -> RetrievalResult<ProbeOutcome<'store>> {
+    check_deadline(run.deadline)?;
+    if run.probed {
+        return Err(RetrievalHardError::Internal("probe_repeated"));
+    }
+    run.probed = true;
+    partition::build_partition(run)
+}
+
+impl<'store, 'input, 'deadline> CheckedRetrievalRun<'store, 'input, 'deadline> {
+    pub(crate) fn snapshot(&self) -> &'input Snapshot {
+        self.snapshot
+    }
+    pub(crate) fn graph(&self) -> &'input Graph {
+        self.graph
+    }
+    pub(crate) fn deadline(&self) -> &'deadline Deadline {
+        self.deadline
+    }
+    pub(crate) fn output_limit(&self) -> usize {
+        self.output_limit
+    }
+    pub(crate) fn usage(&self) -> RunUsage {
+        self.usage
+    }
+    pub(crate) fn source_cost(&self, path: &str) -> RetrievalResult<SourceCost> {
+        check_deadline(self.deadline)?;
+        let file = self.source_scope.file(path).map_err(|_| {
+            check_deadline(self.deadline)
+                .err()
+                .unwrap_or(RetrievalHardError::DeniedSource("captured_path"))
+        })?;
+        Ok(SourceCost {
+            source_bytes: file.size,
+            incremental_bytes: if self.verified.contains_key(path) {
+                0
+            } else {
+                file.size
+            },
+            cached: self.verified.contains_key(path),
+        })
+    }
+    fn read_verified(&mut self, path: &str, marker: bool) -> RetrievalResult<VerifiedSource> {
+        check_deadline(self.deadline)?;
+        let cost = self.source_cost(path)?;
+        if let Some(source) = self.verified.get(path) {
+            return Ok(source.clone());
+        }
+        let next = self
+            .usage
+            .input_bytes_charged
+            .checked_add(cost.source_bytes)
+            .filter(|n| *n <= 32_000_000)
+            .ok_or(RetrievalHardError::Capacity("source_input_bytes"))?;
+        let file = self.source_scope.file(path).map_err(|_| {
+            check_deadline(self.deadline)
+                .err()
+                .unwrap_or(RetrievalHardError::DeniedSource("captured_path"))
+        })?;
+        let bytes = self.source_scope.read_source(path).map_err(|_| {
+            check_deadline(self.deadline)
+                .err()
+                .unwrap_or(RetrievalHardError::SourceIntegrity("captured_blob"))
+        })?;
+        check_deadline(self.deadline)?;
+        let text = String::from_utf8(bytes)
+            .map_err(|_| RetrievalHardError::SourceIntegrity("source_utf8"))?;
+        let source = VerifiedSource {
+            path: path.to_string(),
+            content_hash: file.hash.clone(),
+            text: Arc::from(text),
+        };
+        self.usage.input_bytes_charged = next;
+        if marker {
+            self.usage.marker_bytes_charged += cost.source_bytes;
+        } else {
+            self.usage.body_input_bytes_charged += cost.source_bytes;
+        }
+        self.usage.verified_path_count += 1;
+        self.verified.insert(path.to_string(), source.clone());
+        Ok(source)
+    }
+    pub(crate) fn read_source(&mut self, path: &str) -> RetrievalResult<VerifiedSource> {
+        self.read_verified(path, false)
+    }
+    fn original_entity(&self, entity: &Entity) -> RetrievalResult<&'input Entity> {
+        check_deadline(self.deadline)?;
+        let original = self
+            .entities
+            .get(entity.id.as_str())
+            .copied()
+            .ok_or(RetrievalHardError::SourceIntegrity("document_entity"))?;
+        if identity(original) != identity(entity) {
+            return Err(RetrievalHardError::SourceIntegrity("document_entity"));
+        }
+        let file = self
+            .source_scope
+            .file(&original.path)
+            .map_err(|_| RetrievalHardError::SourceIntegrity("document_path"))?;
+        if original.start_byte > original.end_byte || original.end_byte > file.size {
+            return Err(RetrievalHardError::SourceIntegrity("document_range"));
+        }
+        Ok(original)
+    }
+    pub(crate) fn document_cost(&self, entity: &Entity) -> RetrievalResult<usize> {
+        let original = self.original_entity(entity)?;
+        // Documents are scheduled only after whole-source admission. Checking
+        // cached text here also protects documents later omitted by that budget.
+        if let Some(source) = self.verified.get(&original.path)
+            && source
+                .text()
+                .get(original.start_byte..original.end_byte)
+                .is_none()
+        {
+            return Err(RetrievalHardError::SourceIntegrity("document_range"));
+        }
+        Ok(if self.admitted_documents.contains(&original.id) {
+            0
+        } else {
+            original.end_byte - original.start_byte
+        })
+    }
+    pub(crate) fn admit_document(
+        &mut self,
+        entity: &Entity,
+    ) -> RetrievalResult<VerifiedDocument<'input>> {
+        let original = self.original_entity(entity)?;
+        let cost = self.document_cost(original)?;
+        let next = self
+            .usage
+            .document_bytes_charged
+            .checked_add(cost)
+            .filter(|n| *n <= 32_000_000)
+            .ok_or(RetrievalHardError::Capacity("document_bytes"))?;
+        let source = self.read_source(&original.path)?;
+        if !source.text().is_char_boundary(original.start_byte)
+            || !source.text().is_char_boundary(original.end_byte)
+        {
+            return Err(RetrievalHardError::SourceIntegrity("document_range"));
+        }
+        self.usage.document_bytes_charged = next;
+        self.admitted_documents.insert(original.id.clone());
+        Ok(VerifiedDocument {
+            entity: original,
+            source,
+            start: original.start_byte,
+            end: original.end_byte,
+        })
+    }
+}
+impl<'store> CheckedScopePartition<'store> {
+    pub(crate) fn validate_for(
+        &self,
+        run: &CheckedRetrievalRun<'_, '_, '_>,
+    ) -> RetrievalResult<()> {
+        check_deadline(run.deadline)?;
+        if !std::ptr::eq(self.store, run.store)
+            || self.snapshot_id != run.snapshot.id
+            || self.snapshot_hash != run.snapshot_hash
+            || self.graph_hash != run.graph_hash
+            || self.source_scope_binding != partition::scope_binding(run)
+        {
+            return Err(RetrievalHardError::Authority("partition_binding"));
+        }
+        Ok(())
+    }
+    pub(crate) fn id(&self) -> &str {
+        &self.id
+    }
+    pub(crate) fn physical_package_count(&self) -> usize {
+        self.physical_package_count
+    }
+    pub(crate) fn scopes(&self) -> impl Iterator<Item = &CheckedScope> {
+        self.scopes.iter()
+    }
+    pub(crate) fn declarations(&self) -> impl Iterator<Item = &ManifestBinding> {
+        self.declarations.iter()
+    }
+    pub(crate) fn diagnostics(&self) -> impl Iterator<Item = &ScopeDiagnostic> {
+        self.diagnostics.iter()
+    }
+    pub(crate) fn omitted_diagnostic_count(&self) -> usize {
+        self.omitted_diagnostic_count
+    }
+    pub(crate) fn owner(&self, path: &str) -> RetrievalResult<ScopeHandle<'_, 'store>> {
+        let ordinal = self
+            .ownership
+            .get(path)
+            .copied()
+            .ok_or(RetrievalHardError::DeniedSource("captured_path"))?;
+        Ok(ScopeHandle {
+            owner: self,
+            ordinal,
+        })
+    }
+    pub(crate) fn scope(&self, handle: &ScopeHandle<'_, '_>) -> RetrievalResult<&CheckedScope> {
+        if !std::ptr::eq(self, handle.owner) {
+            return Err(RetrievalHardError::Authority("scope_handle"));
+        }
+        self.scopes
+            .get(handle.ordinal)
+            .ok_or(RetrievalHardError::Authority("scope_handle"))
+    }
+}
+
+#[cfg(test)]
+#[path = "retrieval_scopes_tests.rs"]
+mod tests;
+
+#[cfg(test)]
+#[path = "retrieval_scopes_capacity_tests.rs"]
+mod capacity_tests;

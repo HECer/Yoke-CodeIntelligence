@@ -86,6 +86,101 @@ fn signed_sources_are_separate_immutable_and_locally_reindexed_without_source_wr
 }
 
 #[test]
+fn granted_foreign_search_reuses_verified_sources_without_native_publication() {
+    let (_sender_root, sender, source) = fixture("remote_invoice");
+    let (receiver_root, receiver, local) = fixture("local_main");
+    let secret = key();
+    let policy = grant(&source, &secret);
+    let deadline = Deadline::new(20_000);
+    let envelope =
+        federation::export_snapshot(&sender.store, &source, &scope(), &secret, &deadline).unwrap();
+    let imported = federation::import_snapshot(&receiver, envelope, &policy, &deadline).unwrap();
+    let id = imported["remoteId"].as_str().unwrap();
+    for kind in ["symbol", "all", "text"] {
+        let mut args = json!({
+            "kind":kind,"query":"remote_invoice","skipIgnored":true,
+            "pathGlob":"**/*.rs","limit":10
+        });
+        if kind == "symbol" {
+            args["includeBody"] = json!(true);
+        }
+        let found = federation::find(&receiver, id, &policy, &args, &deadline).unwrap();
+        assert!(
+            !found["items"].as_array().unwrap().is_empty(),
+            "{kind}: {found}"
+        );
+        assert_eq!(found["items"][0]["path"], "main.rs");
+        assert_eq!(
+            found["items"][0]["contentHash"],
+            source
+                .files
+                .iter()
+                .find(|file| file.path == "main.rs")
+                .unwrap()
+                .hash
+        );
+        if kind == "symbol" {
+            assert!(
+                found["items"][0]["body"]
+                    .as_str()
+                    .unwrap()
+                    .contains("remote_invoice")
+            );
+        }
+    }
+    let foreign = federation::snapshot(&receiver, id, &policy, &deadline).unwrap();
+    let graph = federation::graph(&receiver, id, &policy, &deadline).unwrap();
+    assert!(
+        yoke::query_features::symbols_find(
+            &receiver.store,
+            &foreign,
+            &graph,
+            &json!({"query":"remote_invoice"}),
+            &deadline
+        )
+        .is_err()
+    );
+    let mut rotated = policy.clone();
+    rotated.public_key = hex::encode(SigningKey::from_bytes(&key()).verifying_key().to_bytes());
+    assert!(
+        federation::find(
+            &receiver,
+            id,
+            &rotated,
+            &json!({"query":"remote_invoice"}),
+            &deadline
+        )
+        .is_err()
+    );
+    let mut excluded = policy.clone();
+    excluded.exclude.push("main.rs".into());
+    assert!(
+        federation::find(
+            &receiver,
+            id,
+            &excluded,
+            &json!({"query":"remote_invoice"}),
+            &deadline
+        )
+        .is_err()
+    );
+    fs::write(receiver_root.path().join(".gitignore"), "main.rs\n").unwrap();
+    assert!(
+        federation::find(
+            &receiver,
+            id,
+            &policy,
+            &json!({"kind":"text","query":"remote_invoice"}),
+            &deadline
+        )
+        .is_err()
+    );
+    assert_eq!(receiver.store.latest().unwrap(), Some(local.id));
+    assert!(receiver.store.snapshot(id).is_err());
+    assert!(receiver.store.graph(id).is_err());
+}
+
+#[test]
 fn canonical_editor_overlays_round_trip_without_saved_source_or_reexport_authority() {
     let (sender_root, mut sender, _) = fixture("saved_invoice");
     let (receiver_root, receiver, local) = fixture("local_main");

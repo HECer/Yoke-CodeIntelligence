@@ -1,0 +1,30 @@
+{
+  "checkedAtUtc": "2026-10-16T06:46:37.158496+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "2",
+    "--no-fail-fast",
+    "--test",
+    "trail_bodies",
+    "--test",
+    "monorepo_profiles",
+    "--test",
+    "monorepo_pre_feature_envelope",
+    "--",
+    "--test-threads=4"
+  ],
+  "exitCode": 0,
+  "seconds": 32.484,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-envelope-contract-migration-20261016",
+  "logSha256": "d39642f8dd06db8ee8d792df7746f40b4badc1830d9610696fbe37224fdbb348",
+  "groups": 3,
+  "passed": 17,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

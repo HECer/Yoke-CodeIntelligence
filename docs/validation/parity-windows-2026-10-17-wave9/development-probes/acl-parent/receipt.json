@@ -1,0 +1,114 @@
+{
+  "fixtureRoot": "C:\\Users\\HEC_e\\AppData\\Local\\Temp\\yoke-view-comparison-cli-20261017-acl-parent-probe",
+  "sourceManifestSha256": "024fe10476e773b373c7d3e53c6e9ade2da0c0368d4e9a01e8dc7b3567fa87ca",
+  "sourceUnchanged": true,
+  "results": [
+    {
+      "name": "host_install::io::tests::explicit_low_integrity_label_is_preserved_or_refused_before_human_bytes",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "1",
+        "--no-fail-fast",
+        "--lib",
+        "host_install::io::tests::explicit_low_integrity_label_is_preserved_or_refused_before_human_bytes",
+        "--",
+        "--format",
+        "pretty",
+        "--test-threads=1",
+        "--exact"
+      ],
+      "exitCode": 0,
+      "seconds": 1.875,
+      "groups": [
+        {
+          "executable": "E:/Yoke-Build-Cache/meaning-aliases-20261016\\debug\\deps\\yoke-35b101204e4eb110.exe",
+          "rows": {
+            "host_install::io::tests::explicit_low_integrity_label_is_preserved_or_refused_before_human_bytes": "ok"
+          },
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 370
+        }
+      ],
+      "logSha256": "90a65f77e972c1d3520753e20da34ac97324a887b38ca671edd658b306e96b1b"
+    },
+    {
+      "name": "host_install::io::tests::prepared_output_preserves_owner_and_nondefault_group_before_human_bytes",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "1",
+        "--no-fail-fast",
+        "--lib",
+        "host_install::io::tests::prepared_output_preserves_owner_and_nondefault_group_before_human_bytes",
+        "--",
+        "--format",
+        "pretty",
+        "--test-threads=1",
+        "--exact"
+      ],
+      "exitCode": 0,
+      "seconds": 1.343,
+      "groups": [
+        {
+          "executable": "E:/Yoke-Build-Cache/meaning-aliases-20261016\\debug\\deps\\yoke-35b101204e4eb110.exe",
+          "rows": {
+            "host_install::io::tests::prepared_output_preserves_owner_and_nondefault_group_before_human_bytes": "ok"
+          },
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 370
+        }
+      ],
+      "logSha256": "40e40c3c45b165612202d6c1755f3384596e537c2e0ed704a0d90f0d983e5a85"
+    },
+    {
+      "name": "host_install::io::tests::staged_registered_reopen_checks_original_security_before_any_mutation",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "1",
+        "--no-fail-fast",
+        "--lib",
+        "host_install::io::tests::staged_registered_reopen_checks_original_security_before_any_mutation",
+        "--",
+        "--format",
+        "pretty",
+        "--test-threads=1",
+        "--exact"
+      ],
+      "exitCode": 0,
+      "seconds": 1.532,
+      "groups": [
+        {
+          "executable": "E:/Yoke-Build-Cache/meaning-aliases-20261016\\debug\\deps\\yoke-35b101204e4eb110.exe",
+          "rows": {
+            "host_install::io::tests::staged_registered_reopen_checks_original_security_before_any_mutation": "ok"
+          },
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 370
+        }
+      ],
+      "logSha256": "5e1ad2ae02ce838af24c3517cfda27c3ad5acc9614c4de795effc9a4c4fb4006"
+    }
+  ],
+  "allThreePassed": true,
+  "interpretation": "Same-source fixture-parent diagnosis only. These three tests do not repair or add to failed whole-run counts."
+}

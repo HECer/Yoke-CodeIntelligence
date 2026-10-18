@@ -1,0 +1,123 @@
+{
+  "H18": {
+    "actualCredit": false,
+    "buildJobs": 2,
+    "cleanup": "Only unchanged acceptance_wave4.checked_cleanup plain matching EXE/PDB leaves, after synchronous batch returns; never arbitrary trees/fingerprints",
+    "commands": 3,
+    "expectedNames": 51,
+    "originalSelectionAndParametersRetained": true,
+    "targets": 6,
+    "targetsPerCommand": 2,
+    "testThreads": 4
+  },
+  "actionId": "act_mvau7xzx_5ad2a4658e23",
+  "actualAcceptanceCounts": null,
+  "artifacts": {
+    "CONTEXT-TEMPLATE.json": {
+      "bytes": 2671,
+      "sha256": "2d6735fb1c02be5a7066ae462b5b376967efba6f8a8534024eb1ad5d940416e2"
+    },
+    "H18-EXPECTED-TESTS.json": {
+      "bytes": 4613,
+      "sha256": "0c21b1e45653b00393243efeb8ffcef5c1741b863f2283ad739fc2aa2e59b7d2"
+    },
+    "README.md": {
+      "bytes": 6685,
+      "sha256": "8ad3d3e84471a737ae1d1b42669603c8fefad27b3685517d01bd65d5ad463192"
+    },
+    "STATIC-CHECKS.json": {
+      "bytes": 1980,
+      "sha256": "1d913352bc8869b7a65812882d5de1345b2c2ca4b8a924a882725c8828a014da"
+    },
+    "STATIC-REVIEW.json": {
+      "bytes": 1522,
+      "sha256": "ec07f200ca2ebe8379298c09a57abee1aa912b3ccb2c45c9e3b7aa6c095eef06"
+    },
+    "combined_common.py": {
+      "bytes": 16265,
+      "sha256": "035eb4e6f0a513b5c6bc271803640678feca1c73b8015167ad7602de9b013751"
+    },
+    "run_combined_windows_acceptance.py": {
+      "bytes": 8203,
+      "sha256": "70a8fff46d663f1481bbe4d5875e76d0a6193e747cd532a97a661d496aa23ebc"
+    },
+    "run_h18_combined.py": {
+      "bytes": 6196,
+      "sha256": "bfb42228fd8a8711366d945acb8ccfd0a0660c457547962dafda8cdca10f3ab3"
+    }
+  },
+  "cacheOrigin": {
+    "V3ReceiptSupportedIfPreservedFieldContractMatches": true,
+    "debugRequiredReleaseOptional": true,
+    "normalWholeOwnPackageReceiptRequired": true,
+    "quarantineInvokedByWrappers": false,
+    "recordedDepMetadataIsBinaryProvenanceProof": false,
+    "rootOwnsTimingAndExclusiveCargoContext": true
+  },
+  "finalCombinedFileCount": null,
+  "finalCombinedSourceMapSha256": null,
+  "fullWindows": {
+    "ACLFixtures": 3,
+    "extraCargoArguments": [],
+    "frozenRunnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+    "inheritedOrEstimatedPassCredit": false,
+    "normalContextSwitchBetweenPhasesAllowed": false,
+    "phases": [
+      "format",
+      "clippy",
+      "python",
+      "typescript",
+      "native",
+      "finalize"
+    ]
+  },
+  "historicalImageEvidence": {
+    "countsAreNeverAddedToNormalAcceptance": true,
+    "failedReceiptsAreSupportOnly": true,
+    "mustIncludeRoles": [
+      "R3",
+      "R5-library",
+      "R5-CLI"
+    ],
+    "oneCompletePositiveReceiptMayQualifyMultipleExplicitRoles": true
+  },
+  "imageWrites": false,
+  "independentStaticReview": "STATIC-REVIEW.json",
+  "interpretation": "Preparation and static review only. Root must finish/review final promotion and actual normal cache invalidation, supply all concrete pinned inputs, then execute H18/full acceptance. No current normal map or runtime acceptance is claimed.",
+  "minimalBehavioralDiff": [
+    "Replace fixed R3-only afdc/2406 admission with exact caller-pinned final-map, completed-promotion-receipt and root-reviewed closed context",
+    "Bind final main/lib/Cargo/H18 pins, recorded image maps/raw/helper/command/origin evidence and separately executed normal whole-own-package cache invalidation",
+    "Use original H18 three two-target commands and frozen-runner exact EXE/PDB cleanup to bound retained disk use",
+    "Keep original frozen five phases, finalize, all target inventories, ACL3 fixtures and all acceptance parameters unchanged"
+  ],
+  "normalWrites": false,
+  "oldFrozenPreparationPreserved": true,
+  "preparedModuleImports": false,
+  "pureStaticChecks": "STATIC-CHECKS.json",
+  "requiredArguments": [
+    "--expected-map",
+    "--expected-map-sha256",
+    "--promotion-receipt",
+    "--promotion-receipt-sha256",
+    "--reviewed-context",
+    "--reviewed-context-sha256",
+    "--tag-prefix"
+  ],
+  "rootConcreteFinalContextTemplate": "CONTEXT-TEMPLATE.json",
+  "schemaVersion": 1,
+  "scope": "Only new ignored revisions/combined-normal-runner-v1",
+  "sourcePins": {
+    "target/parity-validation-20261015/acceptance_wave4.py": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+    "target/parity-validation-20261015/next-historical-view-comparison/ROOT-COMBINED-ACCEPTANCE-DECISION-V1.json": "63f0b106fa4b0696d0b9612b244c57f0dc749804328b043a2447fbd85d2c97cf",
+    "target/parity-validation-20261015/next-historical-view-comparison/h18-regression-plan.json": "0a5db448f6275617a4625df9a327f628b8034c45bfe26264624ec4f1a8e58fdc",
+    "target/parity-validation-20261015/next-historical-view-comparison/revisions/normal-root-runner-v1/H18-EXPECTED-TESTS.json": "0c21b1e45653b00393243efeb8ffcef5c1741b863f2283ad739fc2aa2e59b7d2",
+    "target/parity-validation-20261015/next-historical-view-comparison/revisions/normal-root-runner-v1/PREPARATION-MANIFEST.json": "1af60d5b080aff516c328ab694181876c72b13fb33030ec8f0a09d0a58aed494",
+    "target/parity-validation-20261015/next-historical-view-comparison/revisions/normal-root-runner-v1/README.md": "364b6b10bf91eb583478ffbe07bf86f2cff22c53f66eda8b85b925218ca4ce82",
+    "target/parity-validation-20261015/next-historical-view-comparison/revisions/normal-root-runner-v1/STATIC-REVIEW.json": "40589aae5bfbf71eb3d8ce03c70bb67e7735a3fdbb604f7fcf44de85883908ea",
+    "target/parity-validation-20261015/next-historical-view-comparison/revisions/normal-root-runner-v1/normal_runner_common.py": "ef78be98e82967e3d3d96fcfc8e6f6ec1a4a21428a9f80f3c0b7f0ceb72a15eb",
+    "target/parity-validation-20261015/next-historical-view-comparison/revisions/normal-root-runner-v1/run_h18_normal.py": "427a1a400480ea690ff8ad46715042101380583f154f2f09c5ddf2d091c59749",
+    "target/parity-validation-20261015/next-historical-view-comparison/revisions/normal-root-runner-v1/run_r3_windows_acceptance.py": "444a015ea324d94f70cff6db6eccec95ac1c8b4ff459fb5c31e38dba66b47dc7"
+  },
+  "status": "PREPARED_UNEXECUTED_ROOT_ONLY_FINAL_CONTEXT_PENDING",
+  "wrappersOrCargoNodeRustcQuarantineInvoked": false
+}

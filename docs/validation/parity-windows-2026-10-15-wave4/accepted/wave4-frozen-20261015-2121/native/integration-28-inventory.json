@@ -1,0 +1,30 @@
+{
+  "facade_file_move": {
+    "executable": "target\\debug\\deps\\facade_file_move-6144897cf260e5ee.exe",
+    "ignored": [],
+    "registered": [
+      "directory_symbol_parent_and_malformed_file_selectors_are_explicit_refusals",
+      "file_move_omitted_null_and_empty_selectors_preserve_basename_in_the_target_parent_for_v8_v9",
+      "move_permissions_and_external_project_refusal_precede_provider_start",
+      "move_target_parent_must_be_explicit_and_must_not_be_an_existing_file",
+      "occupied_final_child_and_same_parent_moves_refuse_without_change_objects",
+      "omitted_binary_host_destination_is_still_occupied_before_provider_and_plan",
+      "unsafe_target_parents_and_captured_readonly_or_excluded_scopes_never_prepare_plans"
+    ]
+  },
+  "facade_file_rename": {
+    "executable": "target\\debug\\deps\\facade_file_rename-26aacd7ab6c8a3a1.exe",
+    "ignored": [],
+    "registered": [
+      "directory_missing_excluded_and_readonly_sources_have_no_file_rename_authority",
+      "empty_selectors_and_true_or_malformed_file_occurrence_options_refuse_before_provider",
+      "file_rename_new_name_is_a_portable_single_basename_and_never_a_destination_path",
+      "file_rename_permissions_and_external_context_refusal_precede_provider_start",
+      "guarded_file_rename_plan_refuses_stale_source_before_any_workspace_write",
+      "nullable_file_rename_omitted_and_null_selectors_preserve_parent_for_v8_v9",
+      "occupied_file_directory_uncaptured_binary_and_source_alias_refuse_before_provider",
+      "public_file_rename_accepts_generated_false_defaults_and_explicit_false_options",
+      "root_file_rename_uses_the_supplied_unicode_basename_without_creating_a_parent"
+    ]
+  }
+}

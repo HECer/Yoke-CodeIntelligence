@@ -1,0 +1,21 @@
+{
+  "mcp_http_cli": {
+    "executable": "target\\debug\\deps\\mcp_http_cli-3fc9d13404c28561.exe",
+    "ignored": [
+      "actual_public_http_cli_resolves_credential_reference_and_authenticates"
+    ],
+    "registered": [
+      "actual_public_http_cli_resolves_credential_reference_and_authenticates",
+      "optional_http_python_requires_independent_host_authority_before_credentials_or_state",
+      "public_http_cli_requires_host_trust_before_opening_source_state",
+      "public_http_host_configuration_rejects_inline_tokens_before_credential_access"
+    ]
+  },
+  "mcp_http_review": {
+    "executable": "target\\debug\\deps\\mcp_http_review-4f4cb8a0aa875058.exe",
+    "ignored": [],
+    "registered": [
+      "single_worker_session_expiry_cancels_an_already_running_provider"
+    ]
+  }
+}

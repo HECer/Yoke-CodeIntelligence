@@ -1,0 +1,27 @@
+{
+  "checkedAtUtc": "2026-10-15T22:45:50.005053+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--lib",
+    "retrieval_scopes::tests::captured_npm_packages_have_distinct_path_ids_and_deepest_owners",
+    "--",
+    "--exact",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 109.703,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-scope-constructor-stub-red",
+  "logSha256": "f30235dace6f46a732066bd1a93f3d8b3d2cf9b3a37142496097c6ec9a110b20",
+  "groups": 1,
+  "passed": 0,
+  "failed": 1,
+  "ignored": 0,
+  "sourceChanges": []
+}

@@ -1,0 +1,28 @@
+{
+  "scope": "focused_node_gate_not_frozen_suite",
+  "checkedAtUtc": "2026-10-15T20:26:46.574666+00:00",
+  "command": [
+    "node",
+    "--test",
+    "test/process-deadline-transition.test.mjs",
+    "test/process-cleanup.test.mjs",
+    "test/protocol.test.mjs"
+  ],
+  "exitCode": 0,
+  "seconds": 14.0,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-process-deadline-stdio-green",
+  "logSha256": "2c7e94d9a4c3de66b331e3959ef35c65d8b7d0944f90d95ff4efd73543924a71",
+  "frameworkCounts": {
+    "tests": 21,
+    "pass": 21,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "groups": 1,
+  "passed": 21,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

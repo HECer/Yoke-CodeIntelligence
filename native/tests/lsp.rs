@@ -5,11 +5,7 @@ use std::{
     sync::{Mutex, MutexGuard},
 };
 use tempfile::TempDir;
-use yoke::{
-    Engine,
-    capture::Deadline,
-    lsp::{self, Server},
-};
+use yoke::{Engine, capture::Deadline, lsp::Server};
 // Concurrent Windows Node/JobObject startup measured 1.5-1.85 seconds per
 // fixture, versus 146-235 ms sequentially. Acquire before any measured phase.
 static PROTOCOL_FIXTURE: Mutex<()> = Mutex::new(());
@@ -164,7 +160,9 @@ fn host_registered_semantic_rename_uses_the_requested_mcp_snapshot() {
     let text = "// 🌍\nfn helper() {}\nfn main() { helper(); }\n";
     fs::write(dir.path().join("main.rs"), text).unwrap();
     let mut engine = Engine::open(dir.path()).unwrap();
-    engine.register_server(server("")).unwrap();
+    engine
+        .register_configured_server(lsp::configured(&server("")))
+        .unwrap();
     let found = engine.invoke("ci_find", json!({"query":"helper"})).unwrap();
     let symbol = found["data"]["items"][0]["id"].clone();
     fs::write(dir.path().join("main.rs"), "fn completely_different() {}\n").unwrap();
@@ -320,3 +318,6 @@ fn repeated_large_lsp_locations_remain_exact_anchors_with_bounded_body_bytes() {
     assert_eq!(read["data"]["contentHash"], locations[0]["contentHash"]);
     assert_eq!(read["data"]["text"], &text[..100004]);
 }
+
+#[path = "support/lsp_fixture.rs"]
+mod lsp;

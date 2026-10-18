@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "scope": "root_reviewed_combined_r3_r5_normal_acceptance",
+  "approved": false,
+  "expectedMap": {"path": "target/parity-validation-20261015/REQUIRED-FINAL-MAP.json", "sha256": null},
+  "sourceFiles": null,
+  "promotionReceipt": {"path": "target/parity-validation-20261015/REQUIRED-COMPLETED-PROMOTION.json", "sha256": null},
+  "promotionManifest": {"path": "target/parity-validation-20261015/REQUIRED-REVIEWED-PROMOTION-MANIFEST.json", "sha256": null},
+  "sourcePins": {
+    "native/src/main.rs": null,
+    "native/src/lib.rs": null,
+    "Cargo.toml": null,
+    "Cargo.lock": null,
+    "native/Cargo.toml": null,
+    "native/tests/selected_view_analysis.rs": "3df4e57b1fbf915ff0c1a98618cd00540f77ad04735eb5782990bb5b01608b76",
+    "native/tests/protocol_connection.rs": "48edba9ca135fced3149c69ba4f155c6aa57cad34b34a89139fd2cbd820a6a6a",
+    "native/tests/meaning_view_archives.rs": "7ab7a8c6714c7f22eb7be3e34e23947052dcc2e8e1e774bf7f6336e77bf854c9",
+    "native/tests/registry_replay_review.rs": "38423b7b2d7e30aff97fce496ee32c8de12779c6c913460ee5461bf356cc12f9",
+    "native/tests/collection_registry_access.rs": "c4ab023c894605b2f190d5d07de9ae8a041c7ec6035c9dc0af0c81a8218e5b25",
+    "native/tests/graph_view.rs": "1df56137b4ed5870aabb4c95366fb6419168b810de9e2cd86328cce668e5e41b"
+  },
+  "imageGates": [
+    {
+      "name": "REQUIRED-ROOT-REVIEWED-GATE",
+      "role": "R3",
+      "imageRoot": "target/REQUIRED-RECORDED-IMAGE",
+      "sourceMap": {"path": "target/parity-validation-20261015/REQUIRED-IMAGE-MAP.json", "sha256": null},
+      "sourceBefore": {"path": "target/parity-validation-20261015/REQUIRED-GATE/source-before.json", "sha256": null},
+      "sourceAfter": {"path": "target/parity-validation-20261015/REQUIRED-GATE/source-after.json", "sha256": null},
+      "receipt": {"path": "target/parity-validation-20261015/REQUIRED-GATE/receipt.json", "sha256": null},
+      "raw": {"path": "target/parity-validation-20261015/REQUIRED-GATE/run.log", "sha256": null},
+      "helper": {"path": "target/parity-validation-20261015/REQUIRED-FROZEN-HELPER.py", "sha256": null},
+      "mainSha256": null,
+      "libSha256": null,
+      "originEvidence": [{"path": "target/parity-validation-20261015/REQUIRED-ORIGIN-EVIDENCE.json", "sha256": null}],
+      "originLimitations": ["REQUIRED: state exactly what the retained origin evidence establishes and what remains unverified"]
+    }
+  ],
+  "normalCachePlan": {"path": "target/parity-validation-20261015/REQUIRED-FROZEN-NORMAL-CACHE-PLAN.json", "sha256": null},
+  "normalCacheReceipt": {"path": "target/parity-validation-20261015/REQUIRED-FROZEN-NORMAL-CACHE-RECEIPT.json", "sha256": null}
+}

@@ -1,0 +1,28 @@
+{
+  "checkedAtUtc": "2026-10-16T00:10:15.826812+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--test",
+    "monorepo_profiles",
+    "--test",
+    "monorepo_pre_feature_envelope",
+    "--",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 0,
+  "seconds": 178.578,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-functional-public-profiles",
+  "logSha256": "85a4758c69c6c5051f6e7f4eff17ad3954e53b6e1e2114a2f83cdcf23c3a3cae",
+  "groups": 2,
+  "passed": 13,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

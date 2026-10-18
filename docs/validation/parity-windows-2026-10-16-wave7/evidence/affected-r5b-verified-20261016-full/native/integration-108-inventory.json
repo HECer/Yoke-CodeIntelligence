@@ -1,0 +1,22 @@
+{
+  "skills_cli": {
+    "executable": "target\\debug\\deps\\skills_cli-091e7a1a8e0b53d0.exe",
+    "ignored": [],
+    "registered": [
+      "cli_rejects_untrusted_roots_and_source_options_before_initializing_state",
+      "folding_the_library_preflights_every_revision_before_changing_the_first_skill",
+      "host_cli_observes_missing_revision_guards_and_preserves_explicit_stale_guards",
+      "public_cli_preserves_authored_history_through_confirm_fold_and_publish",
+      "small_output_budget_retains_the_complete_mutation_receipt_in_the_personal_store"
+    ]
+  },
+  "store_cancellation": {
+    "executable": "target\\debug\\deps\\store_cancellation-a0db40c66b27d046.exe",
+    "ignored": [],
+    "registered": [
+      "active_sql_is_interrupted_by_inherited_host_cancellation",
+      "cancelled_store_refuses_new_publication_until_deadline_is_replaced",
+      "sqlite_lock_contention_retains_a_finite_timeout_and_atomic_recovery"
+    ]
+  }
+}

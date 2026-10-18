@@ -1,0 +1,80 @@
+{
+  "accepted": true,
+  "aclTempRoot": null,
+  "artifactSha256": {
+    "source-after.json": "ee3aa27d31684acd0c16e14af519929e603a187bf5a23d17ef977af2956d5934",
+    "source-before.json": "ee3aa27d31684acd0c16e14af519929e603a187bf5a23d17ef977af2956d5934",
+    "typecheck.log": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5",
+    "typescript.log": "e2d6deed61b5c78d922ad2aefe63141e5d8d7bffd6c6ddc6bfbbc3461d2656f9"
+  },
+  "checkedAtUtc": "2026-10-16T23:55:21.669875+00:00",
+  "failed": 0,
+  "groups": 1,
+  "ignored": 3,
+  "interpretation": "Fresh execution only. Shared freeze required across all five phases; ignored test results are never relabeled as passing.",
+  "matrixCoverage": {},
+  "passed": 254,
+  "phase": "typescript",
+  "phases": [
+    "format",
+    "clippy",
+    "native",
+    "python",
+    "typescript"
+  ],
+  "results": [
+    {
+      "command": [
+        "npm.cmd",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "inventoryOnly": false,
+      "label": "typecheck",
+      "logSha256": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5",
+      "origin": "fresh_execution",
+      "passed": 0,
+      "runnerSha256": "412b796dff54e94a5ba1076204c28646f85dc1a769a4e7afa0428416b07f6a6b",
+      "seconds": 6.062,
+      "sourceManifestSha256": "ee3aa27d31684acd0c16e14af519929e603a187bf5a23d17ef977af2956d5934",
+      "tempRoot": "E:\\Yoke-Test-Scratch\\meaning-aliases-windows-20261017-serial-query-typescript"
+    },
+    {
+      "command": [
+        "npm.cmd",
+        "test"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "frameworkCounts": {
+        "cancelled": 0,
+        "fail": 0,
+        "pass": 254,
+        "skipped": 3,
+        "tests": 257,
+        "todo": 0
+      },
+      "groups": 1,
+      "ignored": 3,
+      "inventoryOnly": false,
+      "label": "typescript",
+      "logSha256": "e2d6deed61b5c78d922ad2aefe63141e5d8d7bffd6c6ddc6bfbbc3461d2656f9",
+      "origin": "fresh_execution",
+      "passed": 254,
+      "runnerSha256": "412b796dff54e94a5ba1076204c28646f85dc1a769a4e7afa0428416b07f6a6b",
+      "seconds": 191.609,
+      "sourceManifestSha256": "ee3aa27d31684acd0c16e14af519929e603a187bf5a23d17ef977af2956d5934",
+      "tempRoot": "E:\\Yoke-Test-Scratch\\meaning-aliases-windows-20261017-serial-query-typescript"
+    }
+  ],
+  "runnerSha256": "412b796dff54e94a5ba1076204c28646f85dc1a769a4e7afa0428416b07f6a6b",
+  "sourceChanges": [],
+  "sourceFiles": 3254,
+  "sourceManifestSha256": "ee3aa27d31684acd0c16e14af519929e603a187bf5a23d17ef977af2956d5934",
+  "tempRoot": "E:\\Yoke-Test-Scratch\\meaning-aliases-windows-20261017-serial-query-typescript",
+  "validationErrors": []
+}

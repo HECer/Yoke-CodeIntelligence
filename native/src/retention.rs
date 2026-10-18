@@ -269,7 +269,8 @@ fn json_value(raw: &str) -> Result<Value> {
         raw.len() <= MAX_MANIFEST as usize,
         "Retention metadata capacity exceeded"
     );
-    serde_json::from_str(raw).context("Corrupt persisted metadata; retention refused")
+    crate::json::parse(raw.as_bytes(), MAX_MANIFEST as usize)
+        .context("Corrupt persisted metadata; retention refused")
 }
 fn known_kind(kind: &str) -> bool {
     [
@@ -308,6 +309,630 @@ fn known_kind(kind: &str) -> bool {
         "snapshot-published",
     ]
     .contains(&kind)
+}
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct ReportRecord {
+    snapshot_id: String,
+    workspace_id: String,
+    graph_hash: String,
+    previous_snapshot_id: Option<String>,
+    artifact_id: String,
+    markdown_artifact_id: String,
+    options: crate::graph_extensions::AnalysisOptions,
+}
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct ExportRecord {
+    snapshot_id: String,
+    workspace_id: String,
+    graph_hash: String,
+    artifact_id: String,
+    format: crate::graph_exports::ExportFormat,
+    options: crate::graph_exports::ExportOptions,
+}
+fn fields_only(value: &Value, allowed: &[&str]) -> Result<()> {
+    ensure!(
+        value
+            .as_object()
+            .is_some_and(|object| object.keys().all(|key| allowed.contains(&key.as_str()))),
+        "Unknown retained artifact field"
+    );
+    Ok(())
+}
+fn report_anchor(snapshot: &Snapshot, graph: &Graph, value: &Value) -> Result<()> {
+    let entity = value["entityId"]
+        .as_str()
+        .and_then(|id| graph.entities.iter().find(|entity| entity.id == id))
+        .context("Retained report anchor entity absent")?;
+    let hash = snapshot
+        .files
+        .iter()
+        .find(|file| file.path == entity.path)
+        .map(|file| file.hash.as_str());
+    let source = json!({"path":entity.path,"contentHash":hash,"startByte":entity.start_byte,"endByte":entity.end_byte,"startLine":entity.start_line,"endLine":entity.end_line,"entityId":entity.id,"anchor":"exact"});
+    let community = json!({"entityId":entity.id,"path":entity.path,"startByte":entity.start_byte,"endByte":entity.end_byte,"startLine":entity.start_line,"endLine":entity.end_line,"snapshotId":graph.snapshot_id,"anchor":"exact"});
+    ensure!(
+        value == &source || value == &community,
+        "Retained report anchor mismatch"
+    );
+    Ok(())
+}
+fn report_shape(
+    store: &Store,
+    snapshot: &Snapshot,
+    graph: &Graph,
+    report: &Value,
+    record: &ReportRecord,
+    deadline: &Deadline,
+) -> Result<()> {
+    fields_only(
+        report,
+        &[
+            "producer",
+            "workspaceId",
+            "snapshotId",
+            "graphHash",
+            "previousSnapshotId",
+            "previousGraphHash",
+            "options",
+            "sourceBindings",
+            "evidenceAnchors",
+            "audit",
+            "godNodes",
+            "communities",
+            "clustering",
+            "surprises",
+            "questions",
+            "diff",
+            "modelCalls",
+            "complete",
+            "limitations",
+        ],
+    )?;
+    ensure!(
+        report["producer"] == "yoke-graph-report-v1"
+            && report["workspaceId"] == snapshot.workspace_id
+            && report["snapshotId"] == snapshot.id
+            && report["graphHash"] == identity(graph)
+            && report["options"] == serde_json::to_value(&record.options)?
+            && report["previousSnapshotId"] == json!(record.previous_snapshot_id)
+            && report["modelCalls"] == 0
+            && report["complete"] == false
+            && report["limitations"].is_string(),
+        "Retained report scope mismatch"
+    );
+    let bindings = report["sourceBindings"]
+        .as_array()
+        .context("Report source bindings absent")?;
+    ensure!(
+        bindings.len() == graph.entities.len(),
+        "Report source binding count mismatch"
+    );
+    for (entity, binding) in graph.entities.iter().zip(bindings) {
+        deadline.check()?;
+        ensure!(
+            binding["entityId"] == entity.id,
+            "Report binding order mismatch"
+        );
+        report_anchor(snapshot, graph, binding)?;
+    }
+    ensure!(
+        report["evidenceAnchors"] == serde_json::to_value(&graph.evidence)?,
+        "Report evidence differs from source graph"
+    );
+    let mut resolutions = BTreeMap::<&str, usize>::new();
+    let mut relations = BTreeMap::<&str, usize>::new();
+    for observation in &graph.observations {
+        deadline.check()?;
+        *resolutions.entry(&observation.resolution).or_default() += 1;
+        *relations.entry(&observation.relation).or_default() += 1;
+    }
+    ensure!(
+        report["audit"]
+            == json!({"totalEntities":graph.entities.len(),"totalObservations":graph.observations.len(),"byResolution":resolutions,"byRelation":relations,"unresolvedObservations":graph.observations.iter().filter(|item|item.target.is_none()).count(),"omissions":snapshot.omissions,"coverage":graph.coverage,"confidenceMeaning":"source_and_analysis_categories_not_probabilities"}),
+        "Report audit source mismatch"
+    );
+    fields_only(
+        &report["clustering"],
+        &[
+            "algorithm",
+            "producer",
+            "resolution",
+            "seed",
+            "maxIterations",
+            "maxCommunitySize",
+            "uncertainWeight",
+            "excludeHubsPercentile",
+            "excludedHubs",
+            "quality",
+            "projection",
+            "cancellation",
+            "hubReattachment",
+        ],
+    )?;
+    let cluster = &report["clustering"];
+    ensure!(
+        cluster["quality"].is_null() || cluster["quality"].as_f64().is_some_and(f64::is_finite),
+        "Invalid report quality type"
+    );
+    ensure!(
+        cluster["projection"]
+            == "undirected_weighted_resolved_observations_parallel_weight_retained"
+            && cluster["cancellation"] == "before_and_after_bounded_library_call_not_inside_leiden"
+            && cluster["hubReattachment"]
+                == "weighted_majority_then_standalone_may_exceed_max_community_size",
+        "Unknown report clustering contract"
+    );
+    ensure!(
+        cluster["algorithm"] == "leiden"
+            && cluster["producer"] == "leiden-rs-0.8.1"
+            && cluster["resolution"] == json!(record.options.resolution)
+            && cluster["seed"] == record.options.seed
+            && cluster["maxIterations"] == record.options.max_iterations
+            && cluster["maxCommunitySize"] == record.options.max_community_size
+            && cluster["uncertainWeight"] == json!(record.options.uncertain_weight)
+            && cluster["excludeHubsPercentile"] == json!(record.options.exclude_hubs_percentile),
+        "Report clustering options mismatch"
+    );
+    ensure!(
+        cluster["excludedHubs"]
+            .as_array()
+            .is_some_and(|items| items.iter().all(|id| id
+                .as_str()
+                .is_some_and(|id| graph.entities.iter().any(|entity| entity.id == id)))),
+        "Invalid retained excluded hubs"
+    );
+    for (section, allowed, maximum) in [
+        (
+            "godNodes",
+            vec!["entityId", "label", "degree", "degreeDefinition", "anchor"],
+            record.options.hub_limit,
+        ),
+        (
+            "surprises",
+            vec![
+                "observationId",
+                "source",
+                "target",
+                "relation",
+                "resolution",
+                "reason",
+                "rankingScore",
+                "evidenceIds",
+                "anchor",
+            ],
+            record.options.surprise_limit,
+        ),
+        (
+            "questions",
+            vec!["kind", "question", "observationId", "anchor"],
+            record.options.question_limit,
+        ),
+        (
+            "communities",
+            vec![
+                "id",
+                "members",
+                "stableMemberKeys",
+                "identityMethod",
+                "label",
+                "labelProducer",
+                "cohesion",
+                "cohesionProjection",
+                "anchor",
+                "previousCommunityId",
+                "previousMemberOverlap",
+                "previousMatchAmbiguous",
+            ],
+            graph.entities.len(),
+        ),
+    ] {
+        let items = report[section]
+            .as_array()
+            .context("Retained report result section absent")?;
+        ensure!(items.len() <= maximum, "Report result capacity exceeded");
+        for item in items {
+            deadline.check()?;
+            fields_only(item, &allowed)?;
+            report_anchor(snapshot, graph, &item["anchor"])?;
+            if section == "godNodes" {
+                ensure!(
+                    item["label"].is_string()
+                        && item["degree"].is_u64()
+                        && item["degreeDefinition"]
+                            == "resolved_parallel_in_plus_out_self_loop_twice"
+                        && item["entityId"] == item["anchor"]["entityId"],
+                    "Invalid report hub schema"
+                );
+            } else if section == "questions" {
+                ensure!(
+                    item["question"].is_string()
+                        && matches!(
+                            item["kind"].as_str(),
+                            Some("candidate" | "unresolved" | "bridge" | "isolation")
+                        ),
+                    "Invalid report question schema"
+                );
+            } else if section == "surprises" {
+                ensure!(
+                    item["rankingScore"]
+                        .as_u64()
+                        .is_some_and(|score| (1..=3).contains(&score))
+                        && matches!(
+                            item["reason"].as_str(),
+                            Some("cross_file_candidate" | "cross_community_candidate")
+                        ),
+                    "Invalid report surprise schema"
+                );
+            }
+            ensure!(
+                item.get("observationId")
+                    .is_none_or(|id| id.as_str().is_some_and(valid_id)),
+                "Invalid retained report observation ID"
+            );
+            if let Some(id) = item["observationId"].as_str() {
+                let observation = graph
+                    .observations
+                    .iter()
+                    .find(|value| value.id == id)
+                    .context("Report observation absent")?;
+                if section == "surprises" {
+                    ensure!(
+                        item["source"] == observation.source
+                            && item["target"] == json!(observation.target)
+                            && item["relation"] == observation.relation
+                            && item["resolution"] == observation.resolution
+                            && item["evidenceIds"] == json!(observation.evidence_ids),
+                        "Report observation source mismatch"
+                    );
+                }
+            }
+            if section == "communities" {
+                ensure!(
+                    item["label"].is_string()
+                        && item["labelProducer"] == "deterministic_source_hubs"
+                        && matches!(
+                            item["identityMethod"].as_str(),
+                            Some("ambiguous_members_snapshot_scoped" | "unique_structural_members")
+                        )
+                        && item["cohesion"]
+                            .as_f64()
+                            .is_some_and(|value| value.is_finite() && (0.0..=1.0).contains(&value))
+                        && item["cohesionProjection"] == "unique_undirected_positive_weight_pairs"
+                        && item
+                            .get("previousCommunityId")
+                            .is_none_or(|id| id.as_str().is_some_and(valid_id))
+                        && item.get("previousMemberOverlap").is_none_or(|value| value
+                            .as_f64()
+                            .is_some_and(|value| (0.0..=1.0).contains(&value)))
+                        && item
+                            .get("previousMatchAmbiguous")
+                            .is_none_or(Value::is_boolean),
+                    "Invalid retained community schema"
+                );
+                ensure!(
+                    item["id"].as_str().is_some_and(valid_id)
+                        && item["members"]
+                            .as_array()
+                            .is_some_and(|members| members.iter().all(|id| id
+                                .as_str()
+                                .is_some_and(|id| graph
+                                    .entities
+                                    .iter()
+                                    .any(|entity| entity.id == id))))
+                        && item["stableMemberKeys"]
+                            .as_array()
+                            .is_some_and(|keys| keys.iter().all(Value::is_string)),
+                    "Invalid retained community members"
+                );
+            }
+        }
+    }
+    if let Some(previous) = &record.previous_snapshot_id {
+        let old = store.snapshot(previous)?;
+        let old_graph = store.graph(previous)?;
+        ensure!(
+            report["previousGraphHash"] == identity(&old_graph)
+                && report["diff"]
+                    == crate::graph_extensions::compare(
+                        store, &old, &old_graph, snapshot, graph, deadline
+                    )?,
+            "Report previous source graph mismatch"
+        );
+    } else {
+        ensure!(
+            report["diff"].is_null() && report["previousGraphHash"].is_null(),
+            "Unexpected report previous graph"
+        );
+    }
+    Ok(())
+}
+fn parity_artifact(store: &Store, id: &str, deadline: &Deadline) -> Result<Vec<u8>> {
+    deadline.check()?;
+    ensure!(valid_id(id), "Invalid parity artifact ID");
+    let path = store.dir.join("blobs").join(id);
+    ensure!(
+        leaf(&path)?.len() <= 64_000_000,
+        "Parity artifact capacity exceeded"
+    );
+    checked_hash(&path, id, deadline)?;
+    store.read_artifact(id)
+}
+fn validate_report_export(
+    store: &Store,
+    kind: &str,
+    id: &str,
+    value: &Value,
+    deadline: &Deadline,
+) -> Result<Vec<String>> {
+    if kind == crate::graph_extensions::REPORT_KIND {
+        let record: ReportRecord = serde_json::from_value(value.clone())?;
+        ensure!(
+            serde_json::to_value(&record)? == *value
+                && record.artifact_id == id
+                && record.workspace_id == store.workspace_id
+                && record.options.previous_snapshot_id == record.previous_snapshot_id,
+            "Invalid report retention record"
+        );
+        crate::graph_extensions::validate_options(&record.options)?;
+        let snapshot = store.snapshot(&record.snapshot_id)?;
+        let graph = store.graph(&record.snapshot_id)?;
+        crate::graph_extensions::validate_scope(store, &snapshot, &graph, deadline)?;
+        ensure!(
+            record.graph_hash == identity(&graph),
+            "Report base graph mismatch"
+        );
+        let bytes = parity_artifact(store, id, deadline)?;
+        let report = crate::json::parse(&bytes, 64_000_000)?;
+        ensure!(
+            serde_json::to_vec(&report)? == bytes,
+            "Noncanonical retained report"
+        );
+        report_shape(store, &snapshot, &graph, &report, &record, deadline)?;
+        ensure!(
+            parity_artifact(store, &record.markdown_artifact_id, deadline)?
+                == crate::graph_extensions::markdown(&report).as_bytes(),
+            "Report Markdown content mismatch"
+        );
+        Ok(vec![id.into(), record.markdown_artifact_id])
+    } else {
+        let record: ExportRecord = serde_json::from_value(value.clone())?;
+        ensure!(
+            serde_json::to_value(&record)? == *value
+                && record.artifact_id == id
+                && record.workspace_id == store.workspace_id
+                && record.options.format == record.format
+                && (1..=5000).contains(&record.options.max_nodes)
+                && (1..=50000).contains(&record.options.max_edges),
+            "Invalid export retention record"
+        );
+        let snapshot = store.snapshot(&record.snapshot_id)?;
+        let graph = store.graph(&record.snapshot_id)?;
+        crate::graph_extensions::validate_scope(store, &snapshot, &graph, deadline)?;
+        ensure!(
+            record.graph_hash == identity(&graph),
+            "Export base graph mismatch"
+        );
+        let bytes = parity_artifact(store, id, deadline)?;
+        let value = crate::json::parse(&bytes, 64_000_000)?;
+        let mut bundle: crate::graph_exports::ExportBundle = serde_json::from_value(value.clone())?;
+        ensure!(
+            serde_json::to_value(&bundle)? == value
+                && serde_json::to_vec(&bundle)? == bytes
+                && bundle.artifact_id.is_empty()
+                && bundle.snapshot_id == record.snapshot_id
+                && bundle.workspace_id == record.workspace_id
+                && bundle.graph_hash == record.graph_hash
+                && bundle.format == record.format,
+            "Export artifact scope mismatch"
+        );
+        bundle.artifact_id = id.into();
+        crate::graph_exports::validate_bundle(&bundle, deadline)?;
+        Ok(vec![id.into()])
+    }
+}
+type ParityDependencies = (
+    BTreeSet<(String, String)>,
+    BTreeSet<String>,
+    BTreeSet<String>,
+    BTreeSet<String>,
+);
+fn add_meaning_dependencies(
+    store: &Store,
+    roots: crate::meaning_build::MeaningDependencies,
+    artifacts: &mut BTreeSet<String>,
+    typed_references: &mut BTreeSet<String>,
+    deadline: &Deadline,
+) -> Result<()> {
+    artifacts.extend(roots.artifacts);
+    typed_references.extend(roots.snapshots);
+    for (record_kind, record_id) in roots.records {
+        deadline.check()?;
+        ensure!(
+            store.db.query_row(
+                "SELECT EXISTS(SELECT 1 FROM records WHERE kind=?1 AND id=?2)",
+                params![record_kind, record_id],
+                |row| row.get::<_, bool>(0),
+            )?,
+            "Retained meaning dependency record is absent"
+        );
+        typed_references.insert(record_id);
+    }
+    Ok(())
+}
+fn validate_parity_records(store: &Store, deadline: &Deadline) -> Result<ParityDependencies> {
+    let mut recognized = BTreeSet::new();
+    let mut artifacts = BTreeSet::new();
+    let mut federation_namespaces = BTreeSet::new();
+    let mut typed_references = BTreeSet::new();
+    let mut statement = store
+        .db
+        .prepare("SELECT kind,id,value FROM records ORDER BY kind,id")?;
+    for (count, row) in statement
+        .query_map([], |row| {
+            Ok((
+                row.get::<_, String>(0)?,
+                row.get::<_, String>(1)?,
+                row.get::<_, String>(2)?,
+            ))
+        })?
+        .enumerate()
+    {
+        deadline.check()?;
+        ensure!(count < MAX_ROWS, "Retention row capacity exceeded");
+        let (kind, id, raw) = row?;
+        match kind.as_str() {
+            crate::github_app::RECORD_KIND
+            | crate::github_app::worker::RECORD_KIND
+            | crate::github_app::publication::RECORD_KIND
+            | crate::github_app::pages::RECORD_KIND
+            | crate::github_app::pages::REVISION_KIND => {
+                // scan validates the complete closed inline history before this pass.
+            }
+            crate::knowledge::feedback::EVENT_KIND
+            | crate::knowledge::feedback::TRANSCRIPT_KIND => {
+                // scan validates the complete feedback set once before this pass.
+            }
+            crate::decision_records::REVISION_KIND
+            | crate::decision_records::HEAD_KIND
+            | crate::decision_records::HOST_KIND
+            | crate::decision_records::PIN_KIND => {
+                // The complete authored revision/head graph is validated once
+                // by scan before any of these rows can be recognized.
+            }
+            "native_model_batch_v1" => {
+                artifacts.extend(crate::provider_batches::validate_retained_batch(
+                    store,
+                    &id,
+                    &json_value(&raw)?,
+                    deadline,
+                )?)
+            }
+            "native_federation_receipt_v1" | crate::federation::RECEIPT_V2 => {
+                artifacts.extend(crate::federation::validate_retention_receipt(
+                    store,
+                    &kind,
+                    &id,
+                    &json_value(&raw)?,
+                    deadline,
+                )?);
+                federation_namespaces.insert(id.clone());
+            }
+            crate::skill_takeaways::REVISION_KIND
+            | crate::skill_takeaways::HEAD_KIND
+            | crate::skill_takeaways::OPERATION_KIND
+            | crate::skill_takeaways::RECEIPT_KIND => artifacts.extend(
+                crate::skill_takeaways::validate_retention_record(
+                    store,
+                    &kind,
+                    &id,
+                    &json_value(&raw)?,
+                    deadline,
+                )?
+                .context("Skill retention record was not validated")?,
+            ),
+            crate::document_graph::RECORD_KIND => artifacts.extend(
+                crate::document_graph::validate_retention_record(
+                    store,
+                    &kind,
+                    &id,
+                    &json_value(&raw)?,
+                    deadline,
+                )?
+                .context("Document retention record was not validated")?,
+            ),
+            crate::capture::OPTIONS_RECORD_KIND
+            | crate::capture::DERIVED_OPTIONS_RECORD_KIND
+            | crate::capture::IGNORED_RECORD_KIND => {
+                crate::capture::validate_retention_record(store, &kind, &id, &json_value(&raw)?)?
+            }
+            crate::notes::HEAD_KIND | crate::notes::REVISION_KIND => {
+                crate::notes::validate_retention_record(store, &kind, &id, &json_value(&raw)?)?
+            }
+            crate::project_session::RECORD_KIND => {
+                crate::project_session::validate_retention_record(store, &id, &json_value(&raw)?)?
+            }
+            crate::graph_extensions::REPORT_KIND | crate::graph_exports::EXPORT_KIND => artifacts
+                .extend(validate_report_export(
+                    store,
+                    &kind,
+                    &id,
+                    &json_value(&raw)?,
+                    deadline,
+                )?),
+            crate::graph_extensions::VIEW_REPORT_KIND => {
+                let roots = crate::graph_extensions::validate_view_report_record(
+                    store,
+                    &id,
+                    &json_value(&raw)?,
+                    deadline,
+                )?;
+                // Snapshot and View IDs remain typed record references below;
+                // only CAS objects belong in the artifact roots set.
+                artifacts.extend(roots.artifact_ids);
+            }
+            crate::meaning_build::JOB_KIND
+            | crate::meaning_build::CACHE_KIND
+            | crate::meaning_build::GRAPH_KIND => {
+                let roots = crate::meaning_build::validate_retained_record(
+                    store,
+                    &kind,
+                    &id,
+                    &json_value(&raw)?,
+                    deadline,
+                )?;
+                add_meaning_dependencies(
+                    store,
+                    roots,
+                    &mut artifacts,
+                    &mut typed_references,
+                    deadline,
+                )?;
+            }
+            _ => {
+                let value = json_value(&raw)?;
+                match crate::graph_view::validate_retention_record(
+                    store, &kind, &id, &value, deadline,
+                )? {
+                    Some(ids) => {
+                        artifacts.extend(ids);
+                        if kind == crate::graph_view::RECORD_KIND
+                            && value["meaningGraphIds"]
+                                .as_array()
+                                .is_some_and(|ids| !ids.is_empty())
+                        {
+                            let view = crate::graph_view::load(store, &id, deadline)?;
+                            if let Some(roots) =
+                                crate::graph_view::meaning_dependencies(store, &view, deadline)?
+                            {
+                                add_meaning_dependencies(
+                                    store,
+                                    roots,
+                                    &mut artifacts,
+                                    &mut typed_references,
+                                    deadline,
+                                )?;
+                            }
+                        }
+                    }
+                    None => match crate::git_workflows::validate_retention_record(
+                        store, &kind, &id, &value, deadline,
+                    )? {
+                        Some(ids) => artifacts.extend(ids),
+                        None => continue,
+                    },
+                }
+            }
+        }
+        recognized.insert((kind, id));
+    }
+    Ok((
+        recognized,
+        artifacts,
+        federation_namespaces,
+        typed_references,
+    ))
 }
 fn known_artifact(value: &Value) -> Result<bool> {
     if let Ok(graph) = serde_json::from_value::<Graph>(value.clone())
@@ -420,6 +1045,40 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
         );
     }
     let mut out = Scan::default();
+    let github_inline_ids = crate::github_app::validated_inline_records(store, deadline)?;
+    let github_worker_roots = crate::github_app::worker::retained_roots(store, deadline)?;
+    let github_publication_ids = crate::github_app::publication::validated_inline_records(
+        store,
+        &github_worker_roots,
+        deadline,
+    )?;
+    let github_page_ids =
+        crate::github_app::pages::validated_inline_records(store, &github_worker_roots, deadline)?;
+    out.references
+        .extend(github_worker_roots.snapshot_ids.iter().cloned());
+    out.all_references.extend(github_worker_roots.snapshot_ids);
+    let decision_roots = crate::decision_records::validated_roots(store, deadline)?;
+    let decision_ids: BTreeSet<_> = decision_roots
+        .snapshot_ids
+        .into_iter()
+        .chain(decision_roots.blob_ids)
+        .collect();
+    out.references.extend(decision_ids.iter().cloned());
+    out.all_references.extend(decision_ids);
+    let feedback_roots = crate::knowledge::feedback::retained_roots(store, deadline)?;
+    let feedback_ids: BTreeSet<_> = feedback_roots
+        .snapshot_ids
+        .into_iter()
+        .chain(feedback_roots.blob_ids)
+        .collect();
+    out.references.extend(feedback_ids.iter().cloned());
+    out.all_references.extend(feedback_ids);
+    let (parity_records, parity_artifacts, federation_namespaces, typed_references) =
+        validate_parity_records(store, deadline)?;
+    out.references.extend(typed_references.iter().cloned());
+    out.all_references.extend(typed_references);
+    out.references.extend(parity_artifacts.iter().cloned());
+    out.all_references.extend(parity_artifacts.iter().cloned());
     let mut owners: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
     let mut dependencies: BTreeMap<String, Value> = BTreeMap::new();
     for table in ["snapshots", "graphs", "cache", "meta"] {
@@ -502,7 +1161,38 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
                 _ => {
                     let parsed = serde_json::from_str::<Extraction>(&raw)
                         .context("Corrupt cache; retention refused")?;
-                    if value != serde_json::to_value(parsed)? {
+                    let old_epoch = parsed.entities.iter().all(|entity| {
+                        matches!(
+                            entity.producer.as_str(),
+                            "yoke-tree-sitter-4" | "yoke-tree-sitter-6"
+                        )
+                    });
+                    let old_six = parsed
+                        .entities
+                        .iter()
+                        .all(|entity| entity.producer == "yoke-tree-sitter-6");
+                    let mut schema = serde_json::to_value(&parsed)?;
+                    if value.get("resolution").is_none() && old_epoch {
+                        // Released 0.5 Extraction had exactly these same nested
+                        // schemas and omitted the later resolution enrichment.
+                        schema
+                            .as_object_mut()
+                            .context("Cache schema invalid")?
+                            .remove("resolution");
+                    } else if old_six
+                        && parsed.resolution.language.is_empty()
+                        && value["resolution"]
+                            .as_object()
+                            .is_some_and(|fields| !fields.contains_key("language"))
+                    {
+                        // Early development-six caches predate composite
+                        // language enrichment; all other fields remain exact.
+                        schema["resolution"]
+                            .as_object_mut()
+                            .context("Resolution cache schema invalid")?
+                            .remove("language");
+                    }
+                    if value != schema {
                         out.unknown.insert("cache:unknown-shape".into());
                     }
                     references(&value, &mut out.references, deadline)?;
@@ -547,8 +1237,46 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
         }
         out.inventory
             .push((format!("records:{kind}"), id.clone(), raw.clone()));
-        if !known_kind(&kind) {
+        if !known_kind(&kind) && !parity_records.contains(&(kind.clone(), id.clone())) {
             out.unknown.insert(kind.clone());
+        }
+        if kind == crate::github_app::RECORD_KIND {
+            ensure!(
+                github_inline_ids.contains(&id),
+                "Invalid GitHub inline history"
+            );
+            // Strict typed proof above establishes no CAS authority. Payload text
+            // and Git IDs must never become source-retention references.
+            continue;
+        }
+        if kind == crate::github_app::worker::RECORD_KIND {
+            ensure!(
+                github_worker_roots.record_ids.contains(&id),
+                "Invalid GitHub worker history"
+            );
+            // Only validated typed head/base roots above carry source authority.
+            // Inert report JSON, Git IDs, MACs and request text are never walked.
+            continue;
+        }
+        if kind == crate::github_app::publication::RECORD_KIND {
+            ensure!(
+                github_publication_ids.contains(&id),
+                "Invalid GitHub publication history"
+            );
+            // Only the validated completed worker roots carry CAS authority. Body,
+            // request, URL and other inline strings are never generic root inputs.
+            continue;
+        }
+        if kind == crate::github_app::pages::RECORD_KIND
+            || kind == crate::github_app::pages::REVISION_KIND
+        {
+            ensure!(
+                github_page_ids.contains(&(kind.clone(), id.clone())),
+                "Invalid GitHub page history"
+            );
+            // Typed completed worker roots alone retain sources. Never walk HTML,
+            // labels, capability URLs or caller-provided identifiers as CAS roots.
+            continue;
         }
         if kind == "retention-committed" {
             let r: HistoryReceipt = serde_json::from_str(&raw)?;
@@ -610,14 +1338,17 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
                     checked_hash(&path, artifact_id, deadline)?;
                     match serde_json::from_slice::<Value>(&fs::read(path)?) {
                         Ok(content) => {
-                            if !known_artifact(&content)? {
+                            if !parity_artifacts.contains(artifact_id) && !known_artifact(&content)?
+                            {
                                 out.unknown.insert("artifact:unknown-shape".into());
                             }
                             references(&content, &mut out.references, deadline)?;
                             references(&content, &mut out.all_references, deadline)?;
                         }
                         Err(_) => {
-                            out.unknown.insert("artifact:opaque".into());
+                            if !parity_artifacts.contains(artifact_id) {
+                                out.unknown.insert("artifact:opaque".into());
+                            }
                         }
                     }
                 }
@@ -674,7 +1405,7 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
             );
             let row = row?;
             ensure!(
-                out.snapshots.contains_key(&row[0]),
+                out.snapshots.contains_key(&row[0]) || federation_namespaces.contains(&row[0]),
                 "Unbound search row; retention refused"
             );
             out.inventory

@@ -1,0 +1,26 @@
+{
+  "checkedAtUtc": "2026-10-15T23:05:22.712717+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--lib",
+    "capture::deadline_cause_tests",
+    "--",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 109.75,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-typed-deadline-stub-red",
+  "logSha256": "e30df0d6ff414683063b75c7fb78d7c2e14badd213de95e92912235f62547477",
+  "groups": 1,
+  "passed": 1,
+  "failed": 2,
+  "ignored": 0,
+  "sourceChanges": []
+}

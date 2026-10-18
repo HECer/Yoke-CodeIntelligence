@@ -1,0 +1,25 @@
+// Append inside retrieval_scopes::tests only after root source promotion.
+#[test]
+fn wildcard_exclusion_of_actual_workspace_root_is_a_policy_conflict() {
+    let control = fixture(&[
+        (
+            "Cargo.toml",
+            "[package]\nname='root'\n[workspace]\nmembers=['a']\n",
+        ),
+        ("a/Cargo.toml", "[package]\nname='a'\n"),
+    ]);
+    let d = Deadline::new(20_000);
+    let (_, partition) = checked(&control, &d);
+    assert_eq!(
+        membership(scope(&partition, "."), Ecosystem::Cargo).reason(),
+        MembershipReason::Member
+    );
+    let excluded = fixture(&[
+        (
+            "Cargo.toml",
+            "[package]\nname='root'\n[workspace]\nmembers=['a']\nexclude=['**']\n",
+        ),
+        ("a/Cargo.toml", "[package]\nname='a'\n"),
+    ]);
+    unsupported(&excluded, "workspace_root_excluded");
+}

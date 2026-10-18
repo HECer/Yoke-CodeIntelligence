@@ -1,0 +1,27 @@
+{
+  "checkedAtUtc": "2026-10-15T15:45:04.599368+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-p",
+    "yoke-code-intelligence",
+    "--locked",
+    "-j",
+    "2",
+    "--test",
+    "host_output_disposition",
+    "--",
+    "--test-threads=4",
+    "--nocapture"
+  ],
+  "exitCode": 0,
+  "seconds": 1.875,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave3-disposition-cleanup-oracle-retry",
+  "logSha256": "170f2512580041f47d66ab21c9f8fa5891ff553b86b17710e08cc7b23f6d2299",
+  "groups": 1,
+  "passed": 10,
+  "failed": 0,
+  "ignored": 1,
+  "sourceChanges": []
+}

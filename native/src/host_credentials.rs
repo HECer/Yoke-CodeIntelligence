@@ -1,7 +1,10 @@
 //! Host-only service credentials. Secret values are never returned as JSON.
+#[path = "aws_session_credentials.rs"]
+mod aws_session;
 #[cfg(windows)]
 use anyhow::Context;
 use anyhow::{Result, ensure};
+pub use aws_session::{import_aws_session, import_aws_session_json, read_aws_session};
 use base64::Engine as _;
 use serde_json::{Value, json};
 use zeroize::Zeroizing;
@@ -85,6 +88,78 @@ pub fn read_token(name: &str) -> Result<Zeroizing<Vec<u8>>> {
     let bytes = read(&target("token", name)?)?;
     ensure!(bytes.len() == 32, "Invalid service token format");
     Ok(bytes)
+}
+fn github_token_bytes(bytes: &[u8]) -> Result<&str> {
+    ensure!(
+        !bytes.is_empty()
+            && bytes.len() <= 2560
+            && bytes.iter().all(|b| b.is_ascii_alphanumeric()
+                || matches!(b, b'_' | b'-' | b'.' | b'+' | b'/' | b'=')),
+        "Invalid GitHub credential format or capacity"
+    );
+    Ok(std::str::from_utf8(bytes)?)
+}
+/// Host-only import. Secret bytes never enter a serialized result or source file.
+pub fn import_github_token(name: &str, bytes: &[u8]) -> Result<Value> {
+    let target = target("github", name)?;
+    github_token_bytes(bytes)?;
+    write_new(&target, bytes)?;
+    Ok(
+        json!({"credentialName":name,"credentialType":"github","privateMaterial":"os_credential_store_only"}),
+    )
+}
+pub fn read_github_token(name: &str) -> Result<Zeroizing<String>> {
+    let bytes = read(&target("github", name)?)?;
+    Ok(Zeroizing::new(github_token_bytes(&bytes)?.to_owned()))
+}
+/// Exact private stdin bytes in a separate namespace; never a bearer credential.
+pub fn import_github_webhook_secret(name: &str, bytes: &[u8]) -> Result<Value> {
+    let target = target("github-webhook", name)?;
+    crate::github_app::validate_secret(bytes)?;
+    write_new(&target, bytes)?;
+    Ok(
+        json!({"credentialName":name,"credentialType":"github-webhook",
+        "privateMaterial":"os_credential_store_only"}),
+    )
+}
+pub fn read_github_webhook_secret(name: &str) -> Result<Zeroizing<Vec<u8>>> {
+    let bytes = read(&target("github-webhook", name)?)?;
+    crate::github_app::validate_secret(&bytes)?;
+    Ok(bytes)
+}
+/// Decode and validate PKCS1/PKCS8 before a create-only, distinct OS-store write.
+pub fn import_github_app_key(name: &str, bytes: &[u8]) -> Result<Value> {
+    let target = target("github-app-key", name)?;
+    let der = crate::github_app_auth::key::decoded_key(bytes)?;
+    write_new(&target, &der)?;
+    Ok(
+        json!({"credentialName":name,"credentialType":"github-app-key",
+        "privateMaterial":"os_credential_store_only"}),
+    )
+}
+pub fn read_github_app_key(name: &str) -> Result<crate::github_app_auth::AppKey> {
+    let bytes = read(&target("github-app-key", name)?)?;
+    crate::github_app_auth::AppKey::from_host_bytes(&bytes)
+}
+fn model_token_bytes(bytes: &[u8]) -> Result<&str> {
+    ensure!(
+        !bytes.is_empty() && bytes.len() <= 2560 && bytes.iter().all(u8::is_ascii_graphic),
+        "Invalid model credential format or capacity"
+    );
+    Ok(std::str::from_utf8(bytes)?)
+}
+/// Import a header-safe opaque key into the explicitly named OS credential slot.
+pub fn import_model_token(name: &str, bytes: &[u8]) -> Result<Value> {
+    let target = target("model", name)?;
+    model_token_bytes(bytes)?;
+    write_new(&target, bytes)?;
+    Ok(
+        json!({"credentialName":name,"credentialType":"model","privateMaterial":"os_credential_store_only"}),
+    )
+}
+pub fn read_model_token(name: &str) -> Result<Zeroizing<String>> {
+    let bytes = read(&target("model", name)?)?;
+    Ok(Zeroizing::new(model_token_bytes(&bytes)?.to_owned()))
 }
 fn digest(bytes: &[u8]) -> String {
     use sha2::{Digest, Sha256};
@@ -186,7 +261,7 @@ mod windows {
             }
         }
     }
-    fn lock(target: &str) -> Result<Lock> {
+    fn lock_for(target: &str, milliseconds: u32) -> Result<Lock> {
         let name = wide(&format!(
             "Global\\YokeServiceCreate-{}",
             digest(target.to_ascii_lowercase().as_bytes())
@@ -196,7 +271,7 @@ mod windows {
             !handle.is_null(),
             "Host credential creation lock unavailable"
         );
-        match unsafe { WaitForSingleObject(handle, 5000) } {
+        match unsafe { WaitForSingleObject(handle, milliseconds) } {
             0 | 0x80 => Ok(Lock(handle)),
             _ => {
                 unsafe {
@@ -207,11 +282,24 @@ mod windows {
         }
     }
     pub(super) fn write_new(target: &str, bytes: &[u8]) -> Result<()> {
+        write_new_bounded(target, bytes, &crate::capture::Deadline::new(5000))
+    }
+    pub(super) fn exists(target: &str) -> Result<bool> {
+        Ok(lookup(target)?.is_some())
+    }
+    pub(super) fn write_new_bounded(
+        target: &str,
+        bytes: &[u8],
+        deadline: &crate::capture::Deadline,
+    ) -> Result<()> {
+        deadline.check()?;
         ensure!(
             !bytes.is_empty() && bytes.len() <= 2560,
             "Host credential capacity exceeded"
         );
-        let _lock = lock(target)?;
+        let wait = deadline.remaining().as_millis().min(5000) as u32;
+        let _lock = lock_for(target, wait)?;
+        deadline.check()?;
         ensure!(
             lookup(target)?.is_none(),
             "Host credential already exists; refusing overwrite"

@@ -1,0 +1,18 @@
+{
+  "ledger_batches_review": {
+    "executable": "target\\debug\\deps\\ledger_batches_review-e3f6d3e72c9aa0b7.exe",
+    "ignored": [],
+    "registered": [
+      "late_batch_insert_failure_preserves_an_existing_task_and_all_old_reservations",
+      "original_response_usage_stays_distinct_from_later_maxima_and_reconciled_cost",
+      "sealed_reservation_rejects_changed_durable_bindings_without_ledger_side_effects"
+    ]
+  },
+  "legacy_retrieval_oracle": {
+    "executable": "target\\debug\\deps\\legacy_retrieval_oracle-c68f8fd262f61b26.exe",
+    "ignored": [],
+    "registered": [
+      "native_global_complete_json_matches_pre_feature_frozen_oracle"
+    ]
+  }
+}

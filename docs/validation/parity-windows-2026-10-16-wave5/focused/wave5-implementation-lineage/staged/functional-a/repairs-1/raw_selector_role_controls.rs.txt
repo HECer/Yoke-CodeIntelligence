@@ -1,0 +1,177 @@
+// Append to retrieval_scopes_tests.rs to reuse genuine capture helpers.
+// Test-only draft: no compilation or execution is claimed here.
+
+type RawSelectorRoleCase = (&'static str, Vec<String>, usize, Option<RetrievalHardError>);
+
+fn raw_selector_role_limit_cases() -> Vec<RawSelectorRoleCase> {
+    let long = format!("{}ab", "a/".repeat(255));
+    assert_eq!(long.len(), 512);
+    vec![
+        ("raw2048", vec!["p/*".into(); 2_048], 6_144, None),
+        (
+            "raw2049",
+            vec!["p/*".into(); 2_049],
+            6_147,
+            Some(RetrievalHardError::Capacity("selectors")),
+        ),
+        ("selector512", vec![long.clone()], 512, None),
+        (
+            "selector513",
+            vec![format!("{long}x")],
+            513,
+            Some(RetrievalHardError::Capacity("selector_bytes")),
+        ),
+        ("aggregate256000", vec![long.clone(); 500], 256_000, None),
+        (
+            "aggregate256001",
+            vec![long; 500]
+                .into_iter()
+                .chain([".".to_string()])
+                .collect(),
+            256_001,
+            Some(RetrievalHardError::Capacity("selector_bytes")),
+        ),
+    ]
+}
+
+#[test]
+fn raw_selector_role_controls_json() {
+    for (label, selectors, bytes, expected) in raw_selector_role_limit_cases() {
+        assert_eq!(
+            selectors.iter().map(|s| s.len()).sum::<usize>(),
+            bytes,
+            "{label}"
+        );
+        let marker = json!({"workspaces": selectors}).to_string();
+        assert!(marker.len() < 1_000_000, "{label}");
+        let f = fixture(&[
+            ("package.json", &marker),
+            ("p/a/package.json", r#"{"name":"a"}"#),
+            ("p/b/package.json", r#"{"name":"b"}"#),
+        ]);
+        captured(&f, "package.json", &marker);
+        let deadline = Deadline::new(20_000);
+        if let Some(expected) = expected {
+            let mut run =
+                begin(&f.engine.store, &f.snapshot, &f.graph, &deadline, 4_000_000).unwrap();
+            assert_eq!(hard(probe(&mut run)), expected, "{label}");
+        } else {
+            let (_, partition) = checked(&f, &deadline);
+            assert_eq!(partition.physical_package_count(), 2, "{label}");
+        }
+    }
+
+    let ignored = vec!["p/*"; 2_049];
+    let marker = json!({
+        "workspaces": ["p/*"],
+        "padding": {
+            "workspaces": ignored.clone(),
+            "workspace": {"members": ignored.clone(), "packages": ignored},
+        },
+    })
+    .to_string();
+    assert!(marker.len() < 1_000_000);
+    let f = fixture(&[
+        ("package.json", &marker),
+        ("p/a/package.json", r#"{"name":"a"}"#),
+        ("p/b/package.json", r#"{"name":"b"}"#),
+    ]);
+    captured(&f, "package.json", &marker);
+    let deadline = Deadline::new(20_000);
+    let (_, partition) = checked(&f, &deadline);
+    assert_eq!(partition.physical_package_count(), 2);
+}
+
+#[test]
+fn raw_selector_role_controls_toml() {
+    for (label, selectors, bytes, expected) in raw_selector_role_limit_cases() {
+        assert_eq!(
+            selectors.iter().map(|s| s.len()).sum::<usize>(),
+            bytes,
+            "{label}"
+        );
+        let entries = selectors
+            .iter()
+            .map(|s| format!("'{s}'"))
+            .collect::<Vec<_>>()
+            .join(",");
+        let marker = format!("[workspace]\nmembers=[{entries}]\n");
+        assert!(marker.len() < 1_000_000, "{label}");
+        let f = fixture(&[
+            ("Cargo.toml", &marker),
+            ("p/a/Cargo.toml", "[package]\nname='a'\n"),
+            ("p/b/Cargo.toml", "[package]\nname='b'\n"),
+        ]);
+        captured(&f, "Cargo.toml", &marker);
+        let deadline = Deadline::new(20_000);
+        if let Some(expected) = expected {
+            let mut run =
+                begin(&f.engine.store, &f.snapshot, &f.graph, &deadline, 4_000_000).unwrap();
+            assert_eq!(hard(probe(&mut run)), expected, "{label}");
+        } else {
+            let (_, partition) = checked(&f, &deadline);
+            assert_eq!(partition.physical_package_count(), 2, "{label}");
+        }
+    }
+
+    let ignored = vec!["'p/*'"; 2_049].join(",");
+    let marker = format!(
+        "[workspace]\nmembers=['p/*']\n[workspace.metadata]\nworkspaces=[{ignored}]\nmembers=[{ignored}]\npackages=[{ignored}]\n"
+    );
+    assert!(marker.len() < 1_000_000);
+    let f = fixture(&[
+        ("Cargo.toml", &marker),
+        ("p/a/Cargo.toml", "[package]\nname='a'\n"),
+        ("p/b/Cargo.toml", "[package]\nname='b'\n"),
+    ]);
+    captured(&f, "Cargo.toml", &marker);
+    let deadline = Deadline::new(20_000);
+    let (_, partition) = checked(&f, &deadline);
+    assert_eq!(partition.physical_package_count(), 2);
+}
+
+#[test]
+fn raw_selector_role_controls_yaml() {
+    for (label, selectors, bytes, expected) in raw_selector_role_limit_cases() {
+        assert_eq!(
+            selectors.iter().map(|s| s.len()).sum::<usize>(),
+            bytes,
+            "{label}"
+        );
+        let entries = selectors
+            .iter()
+            .map(|s| format!(" - '{s}'\n"))
+            .collect::<String>();
+        let marker = format!("packages:\n{entries}");
+        assert!(marker.len() < 1_000_000, "{label}");
+        let f = fixture(&[
+            ("pnpm-workspace.yaml", &marker),
+            ("p/a/package.json", r#"{"name":"a"}"#),
+            ("p/b/package.json", r#"{"name":"b"}"#),
+        ]);
+        captured(&f, "pnpm-workspace.yaml", &marker);
+        let deadline = Deadline::new(20_000);
+        if let Some(expected) = expected {
+            let mut run =
+                begin(&f.engine.store, &f.snapshot, &f.graph, &deadline, 4_000_000).unwrap();
+            assert_eq!(hard(probe(&mut run)), expected, "{label}");
+        } else {
+            let (_, partition) = checked(&f, &deadline);
+            assert_eq!(partition.physical_package_count(), 2, "{label}");
+        }
+    }
+
+    let ignored = vec!["'p/*'"; 2_049].join(",");
+    let marker = format!(
+        "packages: ['p/*']\npadding:\n workspaces: [{ignored}]\n workspace:\n  members: [{ignored}]\n  packages: [{ignored}]\n"
+    );
+    assert!(marker.len() < 1_000_000);
+    let f = fixture(&[
+        ("pnpm-workspace.yaml", &marker),
+        ("p/a/package.json", r#"{"name":"a"}"#),
+        ("p/b/package.json", r#"{"name":"b"}"#),
+    ]);
+    captured(&f, "pnpm-workspace.yaml", &marker);
+    // pnpm's unrelated root field is unsupported schema, never a selector cap.
+    unsupported(&f, "source_schema");
+}

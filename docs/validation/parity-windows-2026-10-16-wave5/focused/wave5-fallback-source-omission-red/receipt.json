@@ -1,0 +1,28 @@
+{
+  "checkedAtUtc": "2026-10-15T23:54:13.017287+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--test",
+    "monorepo_profiles",
+    "malformed_manifest_fallback_keeps_the_four_megabytes_already_spent",
+    "--",
+    "--exact",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 149.719,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-fallback-source-omission-red",
+  "logSha256": "88957e8accb7be0679b1dee65dd903906a92f6117efb503696f85c3ad8a83be0",
+  "groups": 1,
+  "passed": 0,
+  "failed": 1,
+  "ignored": 0,
+  "sourceChanges": []
+}

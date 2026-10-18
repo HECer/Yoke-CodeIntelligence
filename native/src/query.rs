@@ -1,7 +1,7 @@
 use crate::{
     capture::Deadline,
     model::{Entity, Graph, Snapshot},
-    paths::{normalized, utf8_range},
+    paths::utf8_range,
     store::Store,
 };
 use anyhow::{Result, bail, ensure};
@@ -11,14 +11,17 @@ use std::collections::{HashMap, HashSet, VecDeque};
 use unicode_normalization::{UnicodeNormalization, char::is_combining_mark};
 
 pub fn source(store: &Store, snapshot: &Snapshot, path: &str) -> Result<(String, String)> {
-    normalized(path)?;
-    let file = snapshot
-        .files
-        .iter()
-        .find(|f| f.path == path)
-        .ok_or_else(|| anyhow::anyhow!("Path not in snapshot"))?;
+    let scope = crate::capture::source_scope_policy(store, snapshot)?;
+    source_in_scope(store, &scope, path)
+}
+pub(crate) fn source_in_scope(
+    _store: &Store,
+    scope: &crate::capture::CapturedSourceScope<'_>,
+    path: &str,
+) -> Result<(String, String)> {
+    let file = scope.file(path)?;
     Ok((
-        String::from_utf8(store.read_blob(&file.hash)?)?,
+        String::from_utf8(scope.read_source(path)?)?,
         file.hash.clone(),
     ))
 }
@@ -207,6 +210,22 @@ fn document_candidate(
     Ok(None)
 }
 pub fn find(
+    store: &Store,
+    snapshot: &Snapshot,
+    graph: &Graph,
+    args: &Value,
+    deadline: &Deadline,
+) -> Result<Value> {
+    let kind = args["kind"].as_str().unwrap_or("symbol");
+    if kind == "text" {
+        return crate::query_features::text_find(store, snapshot, graph, args, deadline);
+    }
+    if matches!(kind, "symbol" | "all" | "file") {
+        return crate::query_features::symbols_find(store, snapshot, graph, args, deadline);
+    }
+    find_base(store, snapshot, graph, args, deadline)
+}
+pub(crate) fn find_base(
     store: &Store,
     snapshot: &Snapshot,
     graph: &Graph,

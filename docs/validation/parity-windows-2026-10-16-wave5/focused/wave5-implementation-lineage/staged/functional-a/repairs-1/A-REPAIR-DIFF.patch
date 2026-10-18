@@ -1,0 +1,195 @@
+--- before/retrieval_scopes.rs
++++ after/retrieval_scopes.rs
+@@ -69,10 +69,6 @@
+     }
+ }
+ impl std::error::Error for RetrievalHardError {}
+-
+-fn unavailable<T>() -> RetrievalResult<T> {
+-    Err(RetrievalHardError::Internal("implementation_unavailable"))
+-}
+ 
+ // No public constructors, Deserialize, mutable getters, reset or refund API.
+ // CapturedSourceScope borrows the same immutable snapshot and a shorter borrow
+@@ -89,7 +85,8 @@
+     verified: BTreeMap<String, VerifiedSource>,
+     admitted_documents: BTreeSet<String>,
+     usage: RunUsage,
+-    transaction: rusqlite::Transaction<'store>,
++    // Pin this exact Store read snapshot through probe, ranking and fallback.
++    _transaction: rusqlite::Transaction<'store>,
+     entities: BTreeMap<&'input str, &'input Entity>,
+     probed: bool,
+ }
+@@ -296,6 +293,7 @@
+     pub(crate) fn labels(&self) -> impl Iterator<Item = &PackageLabel> {
+         self.labels.iter()
+     }
++    #[allow(dead_code)] // Retained descriptor API from the accepted scope contract.
+     pub(crate) fn declarations(&self) -> impl Iterator<Item = &ManifestBinding> {
+         self.declarations.iter()
+     }
+@@ -308,6 +306,7 @@
+ pub(crate) struct SourceCost {
+     source_bytes: usize,
+     incremental_bytes: usize,
++    #[cfg_attr(not(test), allow(dead_code))]
+     cached: bool,
+ }
+ impl SourceCost {
+@@ -317,6 +316,7 @@
+     pub(crate) fn incremental_bytes(self) -> usize {
+         self.incremental_bytes
+     }
++    #[cfg_attr(not(test), allow(dead_code))]
+     pub(crate) fn is_cached(self) -> bool {
+         self.cached
+     }
+@@ -330,6 +330,7 @@
+     text: Arc<str>,
+ }
+ impl VerifiedSource {
++    #[allow(dead_code)] // Retained immutable verified-source descriptor API.
+     pub(crate) fn path(&self) -> &str {
+         &self.path
+     }
+@@ -341,18 +342,23 @@
+     }
+ }
+ pub(crate) struct VerifiedDocument<'input> {
++    #[cfg_attr(not(test), allow(dead_code))]
+     entity: &'input Entity,
+     source: VerifiedSource,
++    #[cfg_attr(not(test), allow(dead_code))]
+     start: usize,
++    #[cfg_attr(not(test), allow(dead_code))]
+     end: usize,
+ }
+ impl VerifiedDocument<'_> {
++    #[cfg_attr(not(test), allow(dead_code))]
+     pub(crate) fn entity(&self) -> &Entity {
+         self.entity
+     }
+     pub(crate) fn source(&self) -> &VerifiedSource {
+         &self.source
+     }
++    #[cfg_attr(not(test), allow(dead_code))]
+     pub(crate) fn text(&self) -> &str {
+         &self.source.text()[self.start..self.end]
+     }
+@@ -388,9 +394,11 @@
+     pub(crate) fn selector_work(self) -> usize {
+         self.selector_work
+     }
++    #[cfg_attr(not(test), allow(dead_code))]
+     pub(crate) fn ownership_bytes(self) -> usize {
+         self.ownership_bytes
+     }
++    #[cfg_attr(not(test), allow(dead_code))]
+     pub(crate) fn verified_path_count(self) -> usize {
+         self.verified_path_count
+     }
+@@ -483,7 +491,7 @@
+         verified: BTreeMap::new(),
+         admitted_documents: BTreeSet::new(),
+         usage: RunUsage::default(),
+-        transaction,
++        _transaction: transaction,
+         entities,
+         probed: false,
+     })
+@@ -597,6 +605,17 @@
+     }
+     pub(crate) fn document_cost(&self, entity: &Entity) -> RetrievalResult<usize> {
+         let original = self.original_entity(entity)?;
++        // Documents are scheduled only after whole-source admission. Checking
++        // cached text here also protects documents later omitted by that budget.
++        if let Some(source) = self.verified.get(&original.path) {
++            if source
++                .text()
++                .get(original.start_byte..original.end_byte)
++                .is_none()
++            {
++                return Err(RetrievalHardError::SourceIntegrity("document_range"));
++            }
++        }
+         Ok(if self.admitted_documents.contains(&original.id) {
+             0
+         } else {
+--- before/retrieval_partition.rs
++++ after/retrieval_partition.rs
+@@ -232,9 +232,7 @@
+         };
+         if matches!(marker.kind, MarkerKind::Npm)
+             && name.is_none()
+-            && workspaces
+-                .iter()
+-                .any(|w| w.root == marker.root && w.ecosystem != Ecosystem::Cargo)
++            && workspaces.iter().any(|w| w.root == marker.root)
+         {
+             continue;
+         }
+@@ -274,7 +272,17 @@
+     }
+     // A package is always a member of its own workspace, so subtracting it is a policy conflict.
+     for workspace in &workspaces {
+-        if roots.contains_key(&workspace.root) && workspace.negative.contains(".") {
++        let mut excludes_root = false;
++        if roots.contains_key(&workspace.root) {
++            for selector in &workspace.negative {
++                charge_match(run, selector, ".")?;
++                if matches_selector(selector, ".") {
++                    excludes_root = true;
++                    break;
++                }
++            }
++        }
++        if excludes_root {
+             let source = sources
+                 .iter()
+                 .find(|s| s.path == workspace.path)
+--- before/retrieval_scopes_tests.rs
++++ after/retrieval_scopes_tests.rs
+@@ -642,11 +642,42 @@
+         hard(begin(&f.engine.store, &f.snapshot, &graph, &d, 4_000_000)),
+         RetrievalHardError::Authority(_)
+     ));
++    // Default captures use their implicit identity proof. A persisted-options
++    // negative must start from a real configured capture that produced a row.
++    let f = owned(
++        vec![
++            ("packages/a/package.json".into(), r#"{"name":"a"}"#.into()),
++            ("packages/b/package.json".into(), r#"{"name":"b"}"#.into()),
++            ("packages/a/main.rs".into(), "fn alpha(){}\n".into()),
++        ],
++        CaptureOptions {
++            only_dirs: vec!["packages".into()],
++            ..Default::default()
++        },
++    );
++    assert_eq!(
++        f.snapshot
++            .files
++            .iter()
++            .map(|file| file.path.as_str())
++            .collect::<BTreeSet<_>>(),
++        BTreeSet::from([
++            "packages/a/main.rs",
++            "packages/a/package.json",
++            "packages/b/package.json"
++        ]),
++    );
++    let valid = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
++    drop(valid);
+     let mut proof: Value = f
+         .engine
+         .store
+         .get_record(crate::capture::OPTIONS_RECORD_KIND, &f.snapshot.id)
+         .unwrap();
++    assert_eq!(
++        proof["workspaceId"].as_str(),
++        Some(f.snapshot.workspace_id.as_str())
++    );
+     proof["workspaceId"] = json!("f".repeat(64));
+     f.engine
+         .store

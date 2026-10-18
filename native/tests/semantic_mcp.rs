@@ -4,7 +4,11 @@ use std::{
     sync::{Mutex, MutexGuard},
 };
 use tempfile::TempDir;
-use yoke::{Engine, capture::Deadline, lsp::Server};
+use yoke::{
+    Engine,
+    capture::Deadline,
+    lsp::{ConfiguredServer, HostConfiguration, PassiveProfile, Server},
+};
 
 // This real stdio process is a labeled protocol fixture, not a semantic compiler.
 const STDIO_FIXTURE: &str = r#"
@@ -83,16 +87,22 @@ fn fixture() -> (TempDir, TempDir, Engine, String) {
     let (snapshot, _, _, _) = engine.index(&Deadline::new(20_000)).unwrap();
     (root, provider, engine, snapshot.id)
 }
-fn server(provider: &TempDir, language: &str) -> Server {
-    Server {
-        command: "node".into(),
-        args: vec![
-            "-e".into(),
-            STDIO_FIXTURE.into(),
-            provider.path().join("started").display().to_string(),
-        ],
-        language: language.into(),
-        trust: true,
+fn server(provider: &TempDir, language: &str) -> ConfiguredServer {
+    ConfiguredServer {
+        server: Server {
+            command: "node".into(),
+            args: vec![
+                "-e".into(),
+                STDIO_FIXTURE.into(),
+                provider.path().join("started").display().to_string(),
+            ],
+            language: language.into(),
+            trust: true,
+        },
+        configuration: HostConfiguration {
+            passive_profile: Some(PassiveProfile::ContractFixture),
+            ..Default::default()
+        },
     }
 }
 fn call(engine: &mut Engine, args: Value) -> Value {
@@ -142,7 +152,9 @@ fn unconfigured_semantic_navigation_fails_explicitly_without_execution() {
 fn registered_stdio_navigation_binds_old_requested_snapshot_after_disk_changes() {
     let _serial = serial_fixture();
     let (root, provider, mut engine, snapshot) = fixture();
-    engine.register_server(server(&provider, "rust")).unwrap();
+    engine
+        .register_configured_server(server(&provider, "rust"))
+        .unwrap();
     let hash = engine.store.snapshot(&snapshot).unwrap().files[0]
         .hash
         .clone();
@@ -195,7 +207,9 @@ fn registered_stdio_navigation_binds_old_requested_snapshot_after_disk_changes()
 #[test]
 fn mutating_authority_mixed_and_malformed_requests_never_start_a_provider() {
     let (root, provider, mut engine, snapshot) = fixture();
-    engine.register_server(server(&provider, "rust")).unwrap();
+    engine
+        .register_configured_server(server(&provider, "rust"))
+        .unwrap();
     let valid = request(&snapshot, "definition");
     let mut invalid = Vec::new();
     for field in [
@@ -216,7 +230,7 @@ fn mutating_authority_mixed_and_malformed_requests_never_start_a_provider() {
     }
     for operation in [
         "rename",
-        "prepareRename",
+        "workspace/executeCommand",
         "executeCommand",
         "workspace/applyEdit",
     ] {
@@ -273,7 +287,9 @@ fn mutating_authority_mixed_and_malformed_requests_never_start_a_provider() {
 #[test]
 fn captured_path_language_and_utf8_offset_are_checked_before_execution() {
     let (root, provider, mut engine, snapshot) = fixture();
-    engine.register_server(server(&provider, "rust")).unwrap();
+    engine
+        .register_configured_server(server(&provider, "rust"))
+        .unwrap();
     for path in ["missing.rs", "../main.rs", ".git/config", "main\\rs"] {
         let mut args = request(&snapshot, "definition");
         args["languageServer"]["path"] = json!(path);
@@ -347,7 +363,7 @@ fn tsx_navigation_can_use_an_explicitly_registered_typescript_provider() {
     fs::write(root.path().join("main.tsx"), source).unwrap();
     let (snapshot, _, _, _) = engine.index(&Deadline::new(20_000)).unwrap();
     engine
-        .register_server(server(&provider, "typescript"))
+        .register_configured_server(server(&provider, "typescript"))
         .unwrap();
     let response = call(
         &mut engine,

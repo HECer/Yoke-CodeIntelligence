@@ -1,0 +1,186 @@
+{
+  "builtBinary": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\target\\debug\\yoke.exe",
+  "snapshotId": "99824a918ea3d231ae28858aa5b7cdca30ed7607b3a309145536e836820a48a2",
+  "viewId": "a4be7bc1af8fabd66e34dab09cf20871a83ee3141feb434029a3a277aec10544",
+  "canonicalByRelation": {
+    "contains": 2,
+    "calls": 3
+  },
+  "structuralViewByRelation": {
+    "contains": 2,
+    "calls": 3,
+    "cites_symbol": 2,
+    "depends_on": 1,
+    "contains_key": 1
+  },
+  "structuralViewObservations": [
+    {
+      "evidenceIds": [
+        "55a71afa34db245460148c0d073fc4f18263915fddbb5eb8c562c2b1c1a71269"
+      ],
+      "id": "d499daad613cca79fbeb7c381b6770b6b1ce3d5358d5993251d1aba2bc4f98f2",
+      "origin": "canonical",
+      "producer": "yoke-tree-sitter-8",
+      "relation": "contains",
+      "resolution": "syntactic",
+      "snapshotId": "99824a918ea3d231ae28858aa5b7cdca30ed7607b3a309145536e836820a48a2",
+      "source": "f996a6cdf015aa7e14bf93400604d2a0b19ee7456a80199adc0ab61ef73143bb",
+      "target": "cb2c11d2a5a45c0e1508212828666ce595c8c051d7d76662da78009bfec4dacf",
+      "targetLabel": "main.rs:function:0",
+      "sourceName": "main.rs",
+      "targetName": "helper"
+    },
+    {
+      "evidenceIds": [
+        "352725b6543cbebcd7c19f2ba90880751a2865f86c7967c310e04f520a613536"
+      ],
+      "id": "d01f5d361e5c9f7ce411354785de0c996fe580dfb06dbe2e542abc51d8f07c01",
+      "origin": "canonical",
+      "producer": "yoke-tree-sitter-8",
+      "relation": "calls",
+      "resolution": "heuristic",
+      "snapshotId": "99824a918ea3d231ae28858aa5b7cdca30ed7607b3a309145536e836820a48a2",
+      "source": "cb2c11d2a5a45c0e1508212828666ce595c8c051d7d76662da78009bfec4dacf",
+      "target": "cb2c11d2a5a45c0e1508212828666ce595c8c051d7d76662da78009bfec4dacf",
+      "targetLabel": "helper",
+      "sourceName": "helper",
+      "targetName": "helper"
+    },
+    {
+      "evidenceIds": [
+        "c9e40edf83df7da731d2cb416f4833864208c3ca6df3a1ab8fe4fab43e67e642"
+      ],
+      "id": "6da8597f4dd08a580c7a487e97dc7e3c7ff5b52c1e6a2b9e92a512277fc9261d",
+      "origin": "canonical",
+      "producer": "yoke-tree-sitter-8",
+      "relation": "contains",
+      "resolution": "syntactic",
+      "snapshotId": "99824a918ea3d231ae28858aa5b7cdca30ed7607b3a309145536e836820a48a2",
+      "source": "f996a6cdf015aa7e14bf93400604d2a0b19ee7456a80199adc0ab61ef73143bb",
+      "target": "21aaebaae3db24b3553b501b03dcf995a25d7913e3171774f2488a83eff8e92c",
+      "targetLabel": "main.rs:function:24",
+      "sourceName": "main.rs",
+      "targetName": "caller"
+    },
+    {
+      "evidenceIds": [
+        "9255380a9374df615bdebb792465671489d77e0922a0068a2ecff14ad46bfa3f"
+      ],
+      "id": "da5ea84f8829f31867c4a3e54f3d052e8af5f16d57841ed00f6c333ab6b59fb9",
+      "origin": "canonical",
+      "producer": "yoke-tree-sitter-8",
+      "relation": "calls",
+      "resolution": "heuristic",
+      "snapshotId": "99824a918ea3d231ae28858aa5b7cdca30ed7607b3a309145536e836820a48a2",
+      "source": "21aaebaae3db24b3553b501b03dcf995a25d7913e3171774f2488a83eff8e92c",
+      "target": "cb2c11d2a5a45c0e1508212828666ce595c8c051d7d76662da78009bfec4dacf",
+      "targetLabel": "helper",
+      "sourceName": "caller",
+      "targetName": "helper"
+    },
+    {
+      "evidenceIds": [
+        "68fcfa3ba93209b37046418d6fab5ad14937001ba293b598a8dfaf25e124942a"
+      ],
+      "id": "8f6885b13d9a67368b559bf2fc57945052ca5581e1b1d1269b8cb9bf1fe2b5d2",
+      "origin": "canonical",
+      "producer": "yoke-tree-sitter-8",
+      "relation": "calls",
+      "resolution": "heuristic",
+      "snapshotId": "99824a918ea3d231ae28858aa5b7cdca30ed7607b3a309145536e836820a48a2",
+      "source": "21aaebaae3db24b3553b501b03dcf995a25d7913e3171774f2488a83eff8e92c",
+      "target": "cb2c11d2a5a45c0e1508212828666ce595c8c051d7d76662da78009bfec4dacf",
+      "targetLabel": "helper",
+      "sourceName": "caller",
+      "targetName": "helper"
+    },
+    {
+      "baseObservationId": "a0cc8ba11ebe111ec16f864fadf314c12d38637d9ec7adbe6f4833a55cd9ef24",
+      "candidateEntityIds": [
+        "cb2c11d2a5a45c0e1508212828666ce595c8c051d7d76662da78009bfec4dacf"
+      ],
+      "evidenceIds": [
+        "f94cf0e30b300ede2848ac63e47e14db58e88c6bed320b2b7db846af36b71e5f"
+      ],
+      "id": "bcee68a705d6d233fea438cddf0e0a1c52a5c6bfb39ed7c3b3970b3d9aae8fe2",
+      "origin": "structural_overlay",
+      "overlayArtifactId": "9a9f876f224f275568c0bbaa250a6203d5f63533230de3e6a4eac1007d84535b",
+      "producer": "yoke-markdown-graph-2",
+      "relation": "cites_symbol",
+      "resolution": "unique_name_candidate",
+      "snapshotId": "99824a918ea3d231ae28858aa5b7cdca30ed7607b3a309145536e836820a48a2",
+      "source": "406241817f1f6273ad647f8ee70b2df5cb0047c4264fd82a6a5d3bd028e790c2",
+      "target": "cb2c11d2a5a45c0e1508212828666ce595c8c051d7d76662da78009bfec4dacf",
+      "targetLabel": "main.rs::helper",
+      "targetNamespace": "canonical_graph",
+      "trust": "source_bound_structural_claim",
+      "sourceName": "guide.md",
+      "targetName": "helper"
+    },
+    {
+      "baseObservationId": "09b8e58b8bd181788d5961ffb3b309609a985ef0c10b9b3a86c980d1f682977f",
+      "candidateEntityIds": [
+        "cb2c11d2a5a45c0e1508212828666ce595c8c051d7d76662da78009bfec4dacf"
+      ],
+      "evidenceIds": [
+        "940931ead46b9049423dc8f6f2433f4d46069b2abf45cab11f95d0c4ba53cc80"
+      ],
+      "id": "58054073c77eca9db1b26823d950880237af61d90d032eff52bcd6a211820da9",
+      "origin": "structural_overlay",
+      "overlayArtifactId": "9a9f876f224f275568c0bbaa250a6203d5f63533230de3e6a4eac1007d84535b",
+      "producer": "yoke-markdown-graph-2",
+      "relation": "cites_symbol",
+      "resolution": "unique_name_candidate",
+      "snapshotId": "99824a918ea3d231ae28858aa5b7cdca30ed7607b3a309145536e836820a48a2",
+      "source": "406241817f1f6273ad647f8ee70b2df5cb0047c4264fd82a6a5d3bd028e790c2",
+      "target": "cb2c11d2a5a45c0e1508212828666ce595c8c051d7d76662da78009bfec4dacf",
+      "targetLabel": "main.rs::helper",
+      "targetNamespace": "canonical_graph",
+      "trust": "source_bound_structural_claim",
+      "sourceName": "guide.md",
+      "targetName": "helper"
+    },
+    {
+      "baseObservationId": "510e89bd970e1695174382cac3f54a3388d96974d50d729e1fe95db22e2590c4",
+      "dependencyAlias": "external",
+      "ecosystem": "npm",
+      "evidenceIds": [
+        "9082359d195128e90e3f641c8e9bee153c41f05d2b1023474c951485862d3989"
+      ],
+      "id": "7ea5069bde84c8b3548ea26f355a0f984d95c0ad55bff77fe56657eecab49500",
+      "inherited": false,
+      "origin": "structural_overlay",
+      "overlayArtifactId": "ab74a9a60dd7189ad473f9a1c8ee6203e9a80d38ea753f2fb14fc0ea768cee3e",
+      "producer": "yoke-manifest-graph-1",
+      "relation": "depends_on",
+      "resolution": "declared_dependency",
+      "scope": "runtime",
+      "snapshotId": "99824a918ea3d231ae28858aa5b7cdca30ed7607b3a309145536e836820a48a2",
+      "source": "671f16c21fab1e7e0fb0f7a683d8b1196908e5cfbe3a65a083f915413eaf0925",
+      "target": null,
+      "targetLabel": "external",
+      "trust": "source_bound_structural_claim",
+      "sourceName": "app",
+      "targetName": null
+    },
+    {
+      "baseObservationId": "eb4f34b1c0b0c83b327ea99058e7d237dfc6013881c5a46adc8b9a68d44ccf01",
+      "evidenceIds": [
+        "2685143f83735056968d96b718422996d816a57625a23a82dc1e64e65676571a"
+      ],
+      "id": "4ec263a518c575069842e96feecc74f0e12d318040ccd9f74480ae46baff09ad",
+      "origin": "structural_overlay",
+      "overlayArtifactId": "fc835f3812f2ded347f55460510dafe5c8e8a08a7e1ad7e1493901add577b3e8",
+      "producer": "yoke-config-graph-1",
+      "relation": "contains_key",
+      "resolution": "declared_key",
+      "snapshotId": "99824a918ea3d231ae28858aa5b7cdca30ed7607b3a309145536e836820a48a2",
+      "source": "13e7a32807e1b777ea058ef1e12f8c11fa843944cea3e2f4c443c27fd44ecc25",
+      "target": "b18b3748a2b36af4e3ca2e424db6ee8d923b85d914d0c16236e642a31beb21ae",
+      "targetLabel": "external",
+      "trust": "source_bound_structural_claim",
+      "sourceName": "dependencies",
+      "targetName": "dependencies.external"
+    }
+  ]
+}

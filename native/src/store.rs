@@ -5,23 +5,31 @@ use crate::{
 use anyhow::{Context, Result, ensure};
 use rusqlite::{Connection, OptionalExtension, params};
 use serde::{Serialize, de::DeserializeOwned};
+use sha2::{Digest, Sha256};
 use std::{
-    cell::Cell,
+    cell::{Cell, RefCell},
     fs,
-    io::Write,
+    io::{Read, Write},
     path::{Path, PathBuf},
     time::{Duration, Instant},
 };
+
+#[path = "store_read_only.rs"]
+mod read_only;
 
 pub struct Store {
     pub dir: PathBuf,
     pub db: Connection,
     pub workspace_id: String,
-    deadline: Cell<Option<Instant>>,
+    deadline: RefCell<Option<crate::capture::Deadline>>,
     client_lock: fs::File,
     admission_gate: fs::File,
     client_valid: Cell<bool>,
     maintenance_active: Cell<bool>,
+}
+pub struct ArtifactPage {
+    pub bytes: Vec<u8>,
+    pub total_bytes: usize,
 }
 fn state_lock(dir: &Path, name: &str) -> Result<fs::File> {
     let path = dir.join(name);
@@ -38,8 +46,22 @@ fn state_lock(dir: &Path, name: &str) -> Result<fs::File> {
         .truncate(false)
         .open(path)?)
 }
-fn lock_until(file: &fs::File, exclusive: bool, end: Instant) -> Result<()> {
+fn lock_is_contended(error: &std::io::Error) -> bool {
+    error.kind() == std::io::ErrorKind::WouldBlock
+        || error
+            .raw_os_error()
+            .is_some_and(|code| Some(code) == fs2::lock_contended_error().raw_os_error())
+}
+fn lock_until(
+    file: &fs::File,
+    exclusive: bool,
+    end: Instant,
+    deadline: Option<&crate::capture::Deadline>,
+) -> Result<()> {
     loop {
+        if let Some(deadline) = deadline {
+            deadline.check()?;
+        }
         ensure!(Instant::now() < end, "State client lock deadline exceeded");
         let result = if exclusive {
             fs2::FileExt::try_lock_exclusive(file)
@@ -48,7 +70,7 @@ fn lock_until(file: &fs::File, exclusive: bool, end: Instant) -> Result<()> {
         };
         match result {
             Ok(()) => return Ok(()),
-            Err(error) if error.kind() == std::io::ErrorKind::WouldBlock => {
+            Err(error) if lock_is_contended(&error) => {
                 std::thread::sleep(
                     end.saturating_duration_since(Instant::now())
                         .min(Duration::from_millis(5)),
@@ -107,6 +129,7 @@ impl Store {
             &self.admission_gate,
             true,
             Instant::now() + deadline.remaining(),
+            Some(deadline),
         )?;
         self.maintenance_active.set(true);
         let mut upgrade = ClientUpgrade {
@@ -115,6 +138,7 @@ impl Store {
             restore_client: false,
             exclusive: false,
         };
+        deadline.check()?;
         fs2::FileExt::unlock(&self.client_lock)?;
         self.client_valid.set(false);
         upgrade.restore_client = true;
@@ -122,6 +146,7 @@ impl Store {
             .context("Maintenance requires all other state clients to close")?;
         upgrade.exclusive = true;
         self.client_valid.set(true);
+        deadline.check()?;
         let result = operation();
         upgrade.restore()?;
         result
@@ -146,8 +171,8 @@ impl Store {
         let admission_gate = state_lock(&dir, "maintenance.lock")?;
         let client_lock = state_lock(&dir, "clients.lock")?;
         let end = started + timeout;
-        lock_until(&admission_gate, false, end)?;
-        lock_until(&client_lock, false, end)?;
+        lock_until(&admission_gate, false, end, None)?;
+        lock_until(&client_lock, false, end, None)?;
         fs2::FileExt::unlock(&admission_gate)?;
         let db_path = dir.join("index.sqlite");
         for name in [
@@ -204,7 +229,7 @@ impl Store {
             dir,
             db,
             workspace_id,
-            deadline: Cell::new(None),
+            deadline: RefCell::new(None),
             client_lock,
             admission_gate,
             client_valid: Cell::new(true),
@@ -216,7 +241,7 @@ impl Store {
         let path = self.dir.join("blobs").join(&id);
         if path.exists() {
             ensure!(
-                self.read_blob(&id)? == bytes,
+                self.read_blob_exact(&id, bytes.len(), 512_000_000)? == bytes,
                 "Existing content blob is corrupt"
             );
             return Ok(id);
@@ -228,16 +253,58 @@ impl Store {
             if !path.exists() {
                 return Err(error.error.into());
             }
-            ensure!(self.read_blob(&id)? == bytes, "Concurrent blob corruption");
+            ensure!(
+                self.read_blob_exact(&id, bytes.len(), 512_000_000)? == bytes,
+                "Concurrent blob corruption"
+            );
         }
         Ok(id)
     }
     pub fn read_blob(&self, id: &str) -> Result<Vec<u8>> {
         ensure!(valid_id(id), "Invalid content ID");
         let path = self.dir.join("blobs").join(id);
-        ensure!(!is_link(&fs::symlink_metadata(&path)?), "Blob link refused");
-        let bytes = fs::read(path)?;
+        let metadata = fs::symlink_metadata(&path)?;
+        let size = usize::try_from(metadata.len()).context("Blob size overflow")?;
+        self.read_blob_exact(id, size, 512_000_000)
+    }
+    /// Admit a verified expected size before allocating bytes. This is not a source-scope grant.
+    pub fn read_blob_exact(&self, id: &str, expected: usize, maximum: usize) -> Result<Vec<u8>> {
+        self.check_deadline()?;
+        ensure!(
+            valid_id(id) && expected <= maximum,
+            "Invalid or oversized content read"
+        );
+        let path = self.dir.join("blobs").join(id);
+        let metadata = fs::symlink_metadata(&path)?;
+        ensure!(
+            metadata.is_file() && !is_link(&metadata) && metadata.len() == expected as u64,
+            "Content file type or expected size mismatch"
+        );
+        let mut file = fs::File::open(path)?;
+        let opened = file.metadata()?;
+        ensure!(
+            opened.is_file() && !is_link(&opened) && opened.len() == expected as u64,
+            "Opened content size mismatch"
+        );
+        let mut bytes = Vec::with_capacity(expected);
+        let mut buffer = [0u8; 64000];
+        loop {
+            self.check_deadline()?;
+            let remaining = expected.saturating_sub(bytes.len()).saturating_add(1);
+            let maximum = remaining.min(buffer.len());
+            let count = file.read(&mut buffer[..maximum])?;
+            if count == 0 {
+                break;
+            }
+            ensure!(
+                count <= expected.saturating_sub(bytes.len()),
+                "Content grew beyond admitted size"
+            );
+            bytes.extend_from_slice(&buffer[..count]);
+        }
+        ensure!(bytes.len() == expected, "Content size changed during read");
         ensure!(hash(&bytes) == id, "Content hash mismatch");
+        self.check_deadline()?;
         Ok(bytes)
     }
     pub fn artifact(&self, bytes: &[u8]) -> Result<String> {
@@ -249,16 +316,26 @@ impl Store {
         )?;
         Ok(id)
     }
-    pub fn read_artifact(&self, id: &str) -> Result<Vec<u8>> {
+    pub fn artifact_size(&self, id: &str) -> Result<usize> {
+        self.check_deadline()?;
         ensure!(valid_id(id), "Invalid artifact ID");
-        let registered: Option<String> = self
+        let prior = self.db.set_limit(
+            rusqlite::limits::Limit::SQLITE_LIMIT_LENGTH,
+            self.db
+                .limit(rusqlite::limits::Limit::SQLITE_LIMIT_LENGTH)?
+                .min(64000),
+        )?;
+        let registration: rusqlite::Result<Option<String>> = self
             .db
             .query_row(
                 "SELECT value FROM records WHERE kind='artifact' AND id=?1",
                 [id],
                 |row| row.get(0),
             )
-            .optional()?;
+            .optional();
+        self.db
+            .set_limit(rusqlite::limits::Limit::SQLITE_LIMIT_LENGTH, prior)?;
+        let registered = registration?;
         let expected = if let Some(raw) = registered {
             #[derive(serde::Deserialize)]
             #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -266,29 +343,163 @@ impl Store {
                 artifact_id: String,
                 total_bytes: usize,
             }
-            let record: Artifact = serde_json::from_str(&raw)?;
+            let record: Artifact = crate::json::decode(crate::json::parse(raw.as_bytes(), 64000)?)?;
             ensure!(
                 record.artifact_id == id,
                 "Artifact registration identity mismatch"
             );
-            Some(record.total_bytes)
+            record.total_bytes
         } else {
-            let local: bool=self.db.query_row(
-                "SELECT EXISTS(SELECT 1 FROM snapshots AS s JOIN json_each(s.value,'$.files') AS f WHERE json_extract(s.value,'$.kind')!='federated' AND json_extract(f.value,'$.hash')=?1)",
-                [id],|row|row.get(0)
+            let prior = self.db.set_limit(
+                rusqlite::limits::Limit::SQLITE_LIMIT_LENGTH,
+                self.db
+                    .limit(rusqlite::limits::Limit::SQLITE_LIMIT_LENGTH)?
+                    .min(32_000_000),
             )?;
-            ensure!(
-                local,
-                "Artifact is not published or belongs to explicit foreign-source scope"
-            );
-            None
+            let membership = (|| -> Result<Option<usize>> {
+                let mut statement=self.db.prepare("SELECT s.id,json_extract(f.value,'$.path'),json_extract(f.value,'$.size') FROM snapshots AS s JOIN json_each(s.value,'$.files') AS f WHERE json_extract(s.value,'$.kind')!='federated' AND json_extract(f.value,'$.hash')=?1 AND json_type(f.value,'$.size')='integer' ORDER BY s.id LIMIT 1000")?;
+                let mut rows = statement.query([id])?;
+                while let Some(row) = rows.next()? {
+                    self.check_deadline()?;
+                    let snapshot_id: String = row.get(0)?;
+                    let path: String = row.get(1)?;
+                    let size: i64 = row.get(2)?;
+                    if !(0..=4_000_000).contains(&size) {
+                        continue;
+                    }
+                    let proof = (|| -> Result<()> {
+                        let snapshot = self.snapshot(&snapshot_id)?;
+                        crate::capture::source_path_policy(self, &snapshot, &path)?;
+                        ensure!(
+                            snapshot.files.iter().any(|file| file.path == path
+                                && file.hash == id
+                                && file.size == size as usize),
+                            "Source content membership mismatch"
+                        );
+                        Ok(())
+                    })();
+                    if proof.is_ok() {
+                        return Ok(Some(size as usize));
+                    }
+                }
+                Ok(None)
+            })();
+            self.db
+                .set_limit(rusqlite::limits::Limit::SQLITE_LIMIT_LENGTH, prior)?;
+            membership?.context(
+                "Artifact lacks published registration or a verified local captured-source owner",
+            )?
         };
-        let bytes = self.read_blob(id)?;
         ensure!(
-            expected.is_none_or(|size| size == bytes.len()),
-            "Artifact registration size mismatch"
+            expected <= 512_000_000,
+            "Artifact size exceeds content admission limit"
         );
-        Ok(bytes)
+        Ok(expected)
+    }
+    pub fn read_artifact(&self, id: &str) -> Result<Vec<u8>> {
+        self.read_artifact_limited(id, 512_000_000)
+    }
+    pub fn read_artifact_limited(&self, id: &str, maximum: usize) -> Result<Vec<u8>> {
+        let expected = self.artifact_size(id)?;
+        self.read_blob_exact(id, expected, maximum)
+    }
+    /// Verify the whole immutable object while retaining only a bounded page.
+    pub fn read_artifact_page(
+        &self,
+        id: &str,
+        start: usize,
+        maximum: usize,
+        utf8: bool,
+    ) -> Result<ArtifactPage> {
+        let expected = self.artifact_size(id)?;
+        ensure!(
+            start <= expected && (1..=4_000_000).contains(&maximum),
+            "Invalid artifact page bounds"
+        );
+        let path = self.dir.join("blobs").join(id);
+        let metadata = fs::symlink_metadata(&path)?;
+        ensure!(
+            metadata.is_file() && !is_link(&metadata) && metadata.len() == expected as u64,
+            "Artifact file type or size mismatch"
+        );
+        let mut file = fs::File::open(path)?;
+        let opened = file.metadata()?;
+        ensure!(
+            opened.is_file() && !is_link(&opened) && opened.len() == expected as u64,
+            "Opened artifact size mismatch"
+        );
+        let end = start.saturating_add(maximum).min(expected);
+        let mut bytes = Vec::with_capacity(end - start);
+        let mut validation = Vec::with_capacity(if utf8 { 64004 } else { 0 });
+        let mut hasher = Sha256::new();
+        let mut offset = 0usize;
+        let mut buffer = [0u8; 64000];
+        loop {
+            self.check_deadline()?;
+            let maximum = expected
+                .saturating_sub(offset)
+                .saturating_add(1)
+                .min(buffer.len());
+            let count = file.read(&mut buffer[..maximum])?;
+            if count == 0 {
+                break;
+            }
+            ensure!(
+                count <= expected.saturating_sub(offset),
+                "Artifact grew beyond admitted size"
+            );
+            hasher.update(&buffer[..count]);
+            if utf8 {
+                if start >= offset && start < offset + count {
+                    ensure!(
+                        buffer[start - offset] & 0xc0 != 0x80,
+                        "Artifact cursor splits a UTF-8 code point"
+                    );
+                }
+                validation.extend_from_slice(&buffer[..count]);
+                match std::str::from_utf8(&validation) {
+                    Ok(_) => validation.clear(),
+                    Err(error) => {
+                        ensure!(
+                            error.error_len().is_none(),
+                            "Artifact contains non-UTF8 data; request base64"
+                        );
+                        let valid = error.valid_up_to();
+                        let tail = validation.len() - valid;
+                        ensure!(tail <= 3, "Invalid UTF-8 stream boundary");
+                        validation.copy_within(valid.., 0);
+                        validation.truncate(tail);
+                    }
+                }
+            }
+            let first = start.max(offset);
+            let last = end.min(offset + count);
+            if first < last {
+                bytes.extend_from_slice(&buffer[first - offset..last - offset]);
+            }
+            offset += count;
+        }
+        ensure!(
+            offset == expected && (!utf8 || validation.is_empty()),
+            "Artifact ended before admitted bytes or UTF-8 sequence completed"
+        );
+        ensure!(
+            hex::encode(hasher.finalize()) == id,
+            "Artifact content hash mismatch"
+        );
+        if utf8 && let Err(error) = std::str::from_utf8(&bytes) {
+            ensure!(error.error_len().is_none(), "Invalid artifact page UTF-8");
+            bytes.truncate(error.valid_up_to());
+        }
+        ensure!(
+            !utf8 || !bytes.is_empty() || start == expected,
+            "Artifact page budget cannot fit the next UTF-8 character"
+        );
+        self.check_deadline()?;
+        Ok(ArtifactPage {
+            bytes,
+            total_bytes: expected,
+        })
     }
     pub fn snapshot(&self, id: &str) -> Result<Snapshot> {
         let snapshot: Snapshot = self.load("snapshots", id)?;
@@ -412,6 +623,17 @@ impl Store {
         rows.map(|v| Ok(serde_json::from_str(&v?)?)).collect()
     }
     pub fn publish(&mut self, snapshot: &Snapshot, graph: &Graph) -> Result<()> {
+        self.publish_with_latest(snapshot, graph, true)
+    }
+    pub fn publish_historical(&mut self, snapshot: &Snapshot, graph: &Graph) -> Result<()> {
+        self.publish_with_latest(snapshot, graph, false)
+    }
+    fn publish_with_latest(
+        &mut self,
+        snapshot: &Snapshot,
+        graph: &Graph,
+        update_latest: bool,
+    ) -> Result<()> {
         self.check_deadline()?;
         let documents: Vec<_> = snapshot
             .files
@@ -420,17 +642,16 @@ impl Store {
                 self.check_deadline()?;
                 Ok((
                     file.path.clone(),
-                    String::from_utf8(self.read_blob(&file.hash)?)?,
+                    String::from_utf8(self.read_blob_exact(&file.hash, file.size, 4_000_000)?)?,
                 ))
             })
             .collect::<Result<_>>()?;
         self.check_deadline()?;
-        let end = self.deadline.get();
+        let publication_deadline = self.deadline.borrow().clone();
         let check = || -> Result<()> {
-            ensure!(
-                end.is_none_or(|end| Instant::now() < end),
-                "Request deadline exceeded during publication"
-            );
+            if let Some(deadline) = &publication_deadline {
+                deadline.check()?;
+            }
             Ok(())
         };
         let tx = self.db.transaction()?;
@@ -478,7 +699,9 @@ impl Store {
             }
         }
         check()?;
-        tx.execute("INSERT INTO meta VALUES('latest',?1) ON CONFLICT(key) DO UPDATE SET value=excluded.value",[&snapshot.id])?;
+        if update_latest {
+            tx.execute("INSERT INTO meta VALUES('latest',?1) ON CONFLICT(key) DO UPDATE SET value=excluded.value",[&snapshot.id])?;
+        }
         check()?;
         tx.commit()?;
         Ok(())
@@ -498,24 +721,38 @@ impl Store {
         Ok(())
     }
     pub fn set_deadline(&self, deadline: &crate::capture::Deadline) -> Result<()> {
-        let end = Instant::now() + deadline.remaining();
-        self.deadline.set(Some(end));
-        self.db
-            .progress_handler(1000, Some(move || Instant::now() >= end));
+        self.replace_deadline(Some(deadline.clone()));
         self.check_deadline()
     }
     pub fn clear_deadline(&self) {
-        self.deadline.set(None);
-        self.db.progress_handler(0, None::<fn() -> bool>);
+        self.replace_deadline(None);
     }
-    fn check_deadline(&self) -> Result<()> {
+    /// Swap only the Store-owned progress policy; scoped callers restore their saved policy.
+    pub(crate) fn replace_deadline(
+        &self,
+        deadline: Option<crate::capture::Deadline>,
+    ) -> Option<crate::capture::Deadline> {
+        let prior = self.deadline.replace(deadline.clone());
+        if let Some(bounded) = deadline {
+            self.db
+                .progress_handler(1000, Some(move || bounded.check().is_err()));
+        } else {
+            self.db.progress_handler(0, None::<fn() -> bool>);
+        }
+        prior
+    }
+    pub(crate) fn check_deadline(&self) -> Result<()> {
         ensure!(
             self.client_valid.get(),
             "State client lease could not be restored; reopen state"
         );
-        let duration = self.deadline.get().map_or(Duration::from_secs(10), |end| {
-            end.saturating_duration_since(Instant::now())
-        });
+        let deadline = self.deadline.borrow();
+        if let Some(bounded) = deadline.as_ref() {
+            bounded.check()?;
+        }
+        let duration = deadline
+            .as_ref()
+            .map_or(Duration::from_secs(10), crate::capture::Deadline::remaining);
         ensure!(
             !duration.is_zero(),
             "Request deadline exceeded before database write"

@@ -1,0 +1,139 @@
+{
+  "cacheOrProcessChanges": false,
+  "candidateSha256": "4f4e598146bcb8b96f8cc256f63b4f73c6d8e34202f66f90f2de1c020b7263d6",
+  "checkedAtUtc": "2026-10-16T14:24:06.876010+00:00",
+  "checks": [
+    "actual_tiny_read_requests_exact_size_plus_one",
+    "sentinel_grow_refused",
+    "sentinel_shrink_refused",
+    "oversize_preopen_refused",
+    "completed_fstat_identity_mismatch_refused",
+    "empty_file_requests_one_sentinel_byte"
+  ],
+  "fixtureRetained": "read-smoke-r60intoc",
+  "frozenCoreSha256": "35e097ea51dee414c88c68d645ad43ca6bc2d71c6335152f05107e99a22f99f3",
+  "fullPlanOrApply": false,
+  "gatesInvoked": false,
+  "guardOnlyBeforeSha256": "cf60be4406464649e9bc5175f8c9522d0d7eb57b0420d4dcb05ff6f7e6fd2f15",
+  "interpretation": "Measured tiny-file read improvement only; full preservation wall time and total-memory behavior remain unmeasured.",
+  "normalWrites": false,
+  "oldCoreToFinalSpeedup": 23.702103154541756,
+  "rounds": 4,
+  "rows": [
+    {
+      "bytes": 27430,
+      "oldCoreMilliseconds": 45.4596,
+      "path": "acceptance_wave4.py",
+      "repeat": 0,
+      "sha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "v2BoundedRequestMilliseconds": 2.1611,
+      "v2LargeRequestMilliseconds": 54.0782
+    },
+    {
+      "bytes": 7810,
+      "oldCoreMilliseconds": 51.0796,
+      "path": "r5-final-public-20261016-1212/run.log",
+      "repeat": 0,
+      "sha256": "9725073da5fccfc18777973baafb42251dbb137223e934969ec4c516ece91f80",
+      "v2BoundedRequestMilliseconds": 2.8521,
+      "v2LargeRequestMilliseconds": 52.5455
+    },
+    {
+      "bytes": 15336,
+      "oldCoreMilliseconds": 54.9333,
+      "path": "next-git-impact-details/revisions/normal-final-promotion-v3/apply_normal.py",
+      "repeat": 0,
+      "sha256": "64be3d9a6e91808807abaaf28e0e3abdb391e28ece0ee27a5beff94a8a2a71b9",
+      "v2BoundedRequestMilliseconds": 2.1632,
+      "v2LargeRequestMilliseconds": 46.1634
+    },
+    {
+      "bytes": 27430,
+      "oldCoreMilliseconds": 44.3745,
+      "path": "acceptance_wave4.py",
+      "repeat": 1,
+      "sha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "v2BoundedRequestMilliseconds": 1.7035,
+      "v2LargeRequestMilliseconds": 42.2449
+    },
+    {
+      "bytes": 7810,
+      "oldCoreMilliseconds": 50.7411,
+      "path": "r5-final-public-20261016-1212/run.log",
+      "repeat": 1,
+      "sha256": "9725073da5fccfc18777973baafb42251dbb137223e934969ec4c516ece91f80",
+      "v2BoundedRequestMilliseconds": 3.2569,
+      "v2LargeRequestMilliseconds": 39.4949
+    },
+    {
+      "bytes": 15336,
+      "oldCoreMilliseconds": 48.2811,
+      "path": "next-git-impact-details/revisions/normal-final-promotion-v3/apply_normal.py",
+      "repeat": 1,
+      "sha256": "64be3d9a6e91808807abaaf28e0e3abdb391e28ece0ee27a5beff94a8a2a71b9",
+      "v2BoundedRequestMilliseconds": 2.1209,
+      "v2LargeRequestMilliseconds": 44.8396
+    },
+    {
+      "bytes": 27430,
+      "oldCoreMilliseconds": 40.4064,
+      "path": "acceptance_wave4.py",
+      "repeat": 2,
+      "sha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "v2BoundedRequestMilliseconds": 1.4437,
+      "v2LargeRequestMilliseconds": 55.4697
+    },
+    {
+      "bytes": 7810,
+      "oldCoreMilliseconds": 54.7459,
+      "path": "r5-final-public-20261016-1212/run.log",
+      "repeat": 2,
+      "sha256": "9725073da5fccfc18777973baafb42251dbb137223e934969ec4c516ece91f80",
+      "v2BoundedRequestMilliseconds": 3.0584,
+      "v2LargeRequestMilliseconds": 61.3641
+    },
+    {
+      "bytes": 15336,
+      "oldCoreMilliseconds": 56.748,
+      "path": "next-git-impact-details/revisions/normal-final-promotion-v3/apply_normal.py",
+      "repeat": 2,
+      "sha256": "64be3d9a6e91808807abaaf28e0e3abdb391e28ece0ee27a5beff94a8a2a71b9",
+      "v2BoundedRequestMilliseconds": 2.194,
+      "v2LargeRequestMilliseconds": 66.055
+    },
+    {
+      "bytes": 27430,
+      "oldCoreMilliseconds": 50.6005,
+      "path": "acceptance_wave4.py",
+      "repeat": 3,
+      "sha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "v2BoundedRequestMilliseconds": 1.3222,
+      "v2LargeRequestMilliseconds": 51.5812
+    },
+    {
+      "bytes": 7810,
+      "oldCoreMilliseconds": 59.805,
+      "path": "r5-final-public-20261016-1212/run.log",
+      "repeat": 3,
+      "sha256": "9725073da5fccfc18777973baafb42251dbb137223e934969ec4c516ece91f80",
+      "v2BoundedRequestMilliseconds": 1.9633,
+      "v2LargeRequestMilliseconds": 52.3951
+    },
+    {
+      "bytes": 15336,
+      "oldCoreMilliseconds": 66.3823,
+      "path": "next-git-impact-details/revisions/normal-final-promotion-v3/apply_normal.py",
+      "repeat": 3,
+      "sha256": "64be3d9a6e91808807abaaf28e0e3abdb391e28ece0ee27a5beff94a8a2a71b9",
+      "v2BoundedRequestMilliseconds": 2.0688,
+      "v2LargeRequestMilliseconds": 61.8299
+    }
+  ],
+  "sameGuardAllocationSpeedup": 23.8733127819949,
+  "scope": "three_tiny_actual_paths_four_alternating_rounds_not_full_plan",
+  "totalsMilliseconds": {
+    "oldCore": 623.5572999999999,
+    "v2BoundedRequest": 26.3081,
+    "v2LargeRequest": 628.0615
+  }
+}

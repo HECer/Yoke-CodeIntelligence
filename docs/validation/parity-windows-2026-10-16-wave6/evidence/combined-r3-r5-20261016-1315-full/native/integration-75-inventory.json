@@ -1,0 +1,24 @@
+{
+  "model_bedrock_batch_cli_review": {
+    "executable": "target\\debug\\deps\\model_bedrock_batch_cli_review-83f2c165a7f1f553.exe",
+    "ignored": [],
+    "registered": [
+      "batch_status_does_not_initialize_an_empty_database_placeholder",
+      "batch_status_unknown_root_or_invalid_identity_does_not_create_state",
+      "host_batch_authority_fields_and_aggregate_overbudget_reject_without_workers",
+      "invalid_batch_output_budget_rejects_before_creating_source_state",
+      "small_cli_status_is_a_recoverable_typed_reference_without_new_artifacts_or_execution",
+      "valid_batch_retention_is_typed_and_future_fields_or_response_rebinding_fail_closed"
+    ]
+  },
+  "model_bedrock_cli": {
+    "executable": "target\\debug\\deps\\model_bedrock_cli-2a5523af827e1e38.exe",
+    "ignored": [],
+    "registered": [
+      "bedrock_parent_requires_network_trust_before_profile_or_source_state",
+      "changed_bedrock_worker_profile_fails_before_stdin_credentials_or_source_state",
+      "embedding_batch_host_limits_are_validated_before_source_or_credential_access",
+      "incompatible_bedrock_operation_is_denied_before_opening_source_or_reserving_cost"
+    ]
+  }
+}

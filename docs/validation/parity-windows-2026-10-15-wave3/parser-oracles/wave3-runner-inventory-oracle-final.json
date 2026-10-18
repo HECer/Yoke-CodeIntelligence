@@ -1,0 +1,335 @@
+{
+  "runnerSha256": "0d7ed0fa533d55c6518da3dfdc322d6e9e227361f1e88070edbaf2b7067ba45e",
+  "preserverSha256": "665b5ba25a405c0e48ffaad46b9d244fd1491816ad5959b51d9185c8d24f6842",
+  "oracleSha256": "840a5d753106e399a4b107463d3fdc252dc90181122d73e38ff0cb47477be680",
+  "astParsed": true,
+  "runnerMainExecuted": false,
+  "preserverMainExecuted": false,
+  "subprocessesExecuted": 0,
+  "suitesExecuted": 0,
+  "copiesExecuted": 0,
+  "immutableInputsUnchanged": true,
+  "cases": [
+    {
+      "name": "actual-terse-all-rejects-missing-summary",
+      "accepted": true,
+      "expectedRejection": true,
+      "error": "RuntimeError: Unterminated Cargo harness output"
+    },
+    {
+      "name": "actual-terse-ignored-rejects-missing-summary",
+      "accepted": true,
+      "expectedRejection": true,
+      "error": "RuntimeError: Unterminated Cargo harness output"
+    },
+    {
+      "name": "old-inventory-call-actual-terse-fails",
+      "accepted": true,
+      "expectedRejection": true,
+      "error": "RuntimeError: Unterminated Cargo harness output"
+    },
+    {
+      "name": "new-exact-default-calls-149-ignored1",
+      "accepted": true,
+      "expectedRejection": false,
+      "detail": {
+        "registered": 149,
+        "ignored": 1,
+        "ignoredNames": [
+          "host_install::output_recovery_tests::output_recovery_worker"
+        ]
+      }
+    },
+    {
+      "name": "actual-terse-and-default-rows-identical",
+      "accepted": true,
+      "expectedRejection": false,
+      "detail": {
+        "allRows": 149,
+        "ignoredRows": 1
+      }
+    },
+    {
+      "name": "default-missing-summary-still-rejected",
+      "accepted": true,
+      "expectedRejection": true,
+      "error": "RuntimeError: Unterminated Cargo harness output"
+    },
+    {
+      "name": "default-count-drift-rejected",
+      "accepted": true,
+      "expectedRejection": true,
+      "error": "RuntimeError: Inventory name/count mismatch"
+    },
+    {
+      "name": "default-duplicate-row-rejected",
+      "accepted": true,
+      "expectedRejection": true,
+      "error": "RuntimeError: Duplicate registered test name"
+    },
+    {
+      "name": "default-unregistered-ignore-rejected",
+      "accepted": true,
+      "expectedRejection": true,
+      "error": "RuntimeError: Ignored inventory contains unregistered names"
+    },
+    {
+      "name": "original1734-parser-failure-remains-zero-executed",
+      "accepted": true,
+      "expectedRejection": false,
+      "detail": {
+        "executedTests": 0,
+        "productFailure": false,
+        "validationErrors": [
+          "RuntimeError: Unterminated Cargo harness output"
+        ]
+      }
+    },
+    {
+      "name": "runner-inverse-only-two-command-flags",
+      "accepted": true,
+      "expectedRejection": false,
+      "detail": {
+        "inverseSha256": "fec205667564b2aa82bcc40f17b2c8378b9ffe8ce4ea90a077045b6837e2ec9f",
+        "exactHistoricalBytes": true
+      }
+    },
+    {
+      "name": "preserver-keeps-old-runner-and-zero-test-failure-history",
+      "accepted": true,
+      "expectedRejection": false,
+      "detail": {
+        "historicalRunner": "fec205667564b2aa82bcc40f17b2c8378b9ffe8ce4ea90a077045b6837e2ec9f",
+        "acceptedRunner": "0d7ed0fa533d55c6518da3dfdc322d6e9e227361f1e88070edbaf2b7067ba45e",
+        "availablePhases": [
+          "format",
+          "clippy",
+          "native",
+          "python",
+          "typescript"
+        ],
+        "missingPhases": [],
+        "missingFinalize": true
+      }
+    }
+  ],
+  "commandTraces": {
+    "old-terse": [
+      {
+        "label": "library-inventory-all",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--no-fail-fast",
+          "--lib",
+          "--",
+          "--list",
+          "--format",
+          "terse"
+        ]
+      },
+      {
+        "label": "library-inventory-ignored",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--no-fail-fast",
+          "--lib",
+          "--",
+          "--ignored",
+          "--list",
+          "--format",
+          "terse"
+        ]
+      }
+    ],
+    "new-default": [
+      {
+        "label": "library-inventory-all",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--no-fail-fast",
+          "--lib",
+          "--",
+          "--list"
+        ]
+      },
+      {
+        "label": "library-inventory-ignored",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--no-fail-fast",
+          "--lib",
+          "--",
+          "--ignored",
+          "--list"
+        ]
+      }
+    ],
+    "missing-summary": [
+      {
+        "label": "library-inventory-all",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--no-fail-fast",
+          "--lib",
+          "--",
+          "--list"
+        ]
+      },
+      {
+        "label": "library-inventory-ignored",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--no-fail-fast",
+          "--lib",
+          "--",
+          "--ignored",
+          "--list"
+        ]
+      }
+    ],
+    "count-drift": [
+      {
+        "label": "library-inventory-all",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--no-fail-fast",
+          "--lib",
+          "--",
+          "--list"
+        ]
+      },
+      {
+        "label": "library-inventory-ignored",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--no-fail-fast",
+          "--lib",
+          "--",
+          "--ignored",
+          "--list"
+        ]
+      }
+    ],
+    "duplicate-row": [
+      {
+        "label": "library-inventory-all",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--no-fail-fast",
+          "--lib",
+          "--",
+          "--list"
+        ]
+      },
+      {
+        "label": "library-inventory-ignored",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--no-fail-fast",
+          "--lib",
+          "--",
+          "--ignored",
+          "--list"
+        ]
+      }
+    ],
+    "foreign-ignore": [
+      {
+        "label": "library-inventory-all",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--no-fail-fast",
+          "--lib",
+          "--",
+          "--list"
+        ]
+      },
+      {
+        "label": "library-inventory-ignored",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--no-fail-fast",
+          "--lib",
+          "--",
+          "--ignored",
+          "--list"
+        ]
+      }
+    ]
+  },
+  "passed": 12,
+  "failed": 0,
+  "inputSha256": {
+    "acceptance_wave3.py": "0d7ed0fa533d55c6518da3dfdc322d6e9e227361f1e88070edbaf2b7067ba45e",
+    "preserve_wave3.py": "665b5ba25a405c0e48ffaad46b9d244fd1491816ad5959b51d9185c8d24f6842",
+    "wave3-frozen-20261015-1734\\runner.py": "fec205667564b2aa82bcc40f17b2c8378b9ffe8ce4ea90a077045b6837e2ec9f",
+    "wave3-frozen-20261015-1734\\native\\library-inventory-all.log": "363f7bcb78db512e513e7c7cc42f342d278679eaeeb5e116f3389620ea3525d9",
+    "wave3-frozen-20261015-1734\\native\\library-inventory-ignored.log": "fb00c0b2ee2a06dbdce9bd6b57a4b1841ab2ad1b7facb0c5b85f4c47b847f638",
+    "wave3-frozen-20261015-1734\\native\\receipt.json": "ade6d8a0632478b314b7858abd731bc7933e187ee19c2f15daba1242bdbed8e6",
+    "wave3-inventory-default-all\\run.log": "a309b79ec2d731726e1291bd96e1c7d8e745a3c6a0f62ef61ba6248c53ac0747",
+    "wave3-inventory-default-all\\receipt.json": "01b95669219c8acb164d1b71442c373a6a2c2b497732bce730444c0a906f9462",
+    "wave3-inventory-default-ignored\\run.log": "85f440b5fdc1576862084e5e4df4386158db65f6f42b06d2f1bf8de04f383057",
+    "wave3-inventory-default-ignored\\receipt.json": "daf90fd63062867c7474cbab3cbab098c1ef9f660c17368681478886fc16692f",
+    "acceptance.py": "4c2bb96aa73ae8036507028daeb91016004845fe92f38bc3f6fca4b6238832fa"
+  }
+}

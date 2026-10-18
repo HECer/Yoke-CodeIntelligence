@@ -1,0 +1,27 @@
+{
+  "checkedAtUtc": "2026-10-15T19:24:47.118395+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "2",
+    "--test",
+    "meaning_archive_cli",
+    "export_refuses_incomplete_store_without_initializing_any_state",
+    "--",
+    "--exact",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 4.704,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-archive-cli-store-init-red",
+  "logSha256": "97eab90df3118a3e20d8112ded8719024f0d3562b39ab0d01e7fedbdbbf50851",
+  "groups": 1,
+  "passed": 0,
+  "failed": 1,
+  "ignored": 0,
+  "sourceChanges": []
+}

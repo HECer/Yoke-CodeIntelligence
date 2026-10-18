@@ -1,0 +1,26 @@
+{
+  "checkedAtUtc": "2026-10-15T22:46:30.273297+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--lib",
+    "retrieval::balanced::tests",
+    "--",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 3.016,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-balanced-kernels-stub-red",
+  "logSha256": "20deae788f66ae720c5e14ade2ae3f33c90701e1dede7c025d45967f785ee324",
+  "groups": 1,
+  "passed": 0,
+  "failed": 15,
+  "ignored": 0,
+  "sourceChanges": []
+}

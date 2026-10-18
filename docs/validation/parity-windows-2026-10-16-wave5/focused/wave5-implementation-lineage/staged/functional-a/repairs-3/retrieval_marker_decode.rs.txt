@@ -1,0 +1,975 @@
+//! Pure bounded manifest decoding. The caller owns every source binding.
+//! Staged implementation only: not compiled, executed, or accepted yet.
+
+use super::{RetrievalHardError, RetrievalResult, check_deadline};
+use crate::capture::Deadline;
+use serde::Deserialize;
+use std::collections::BTreeMap;
+use yaml_rust2::{
+    Yaml,
+    parser::{Event, Parser},
+    scanner::{Scanner, TScalarStyle, TokenType},
+};
+
+const MARKER_BYTES: usize = 1_000_000;
+const NODES: usize = 20_000;
+const DEPTH: usize = 64;
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(super) enum MarkerKind {
+    Npm,
+    Cargo,
+    Pnpm,
+}
+
+#[derive(Debug, PartialEq, Eq)]
+pub(super) struct DecodedPackage {
+    pub(super) name: Option<String>,
+}
+
+#[derive(Debug, Default, PartialEq, Eq)]
+pub(super) struct WorkspaceSelectors {
+    pub(super) positive: Vec<String>,
+    pub(super) negative: Vec<String>,
+}
+
+#[derive(Debug, PartialEq, Eq)]
+pub(super) struct DecodedMarker {
+    pub(super) package: Option<DecodedPackage>,
+    pub(super) workspace: Option<WorkspaceSelectors>,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(super) struct MarkerPolicyError {
+    pub(super) code: &'static str,
+}
+
+#[derive(Default, Debug)]
+pub(super) struct MarkerDecodeLedger {
+    pub(super) raw_selectors: usize,
+    pub(super) raw_selector_bytes: usize,
+}
+
+impl MarkerDecodeLedger {
+    fn charge(&mut self, value: Option<&str>) -> Parsed<()> {
+        let bytes = value.map_or(0, str::len);
+        if bytes > 512 {
+            return Err(hard("selector_bytes"));
+        }
+        let count = self
+            .raw_selectors
+            .checked_add(1)
+            .ok_or_else(|| hard("selectors"))?;
+        let total = self
+            .raw_selector_bytes
+            .checked_add(bytes)
+            .ok_or_else(|| hard("selector_bytes"))?;
+        if count > 2_048 {
+            return Err(hard("selectors"));
+        }
+        if total > 256_000 {
+            return Err(hard("selector_bytes"));
+        }
+        self.raw_selectors = count;
+        self.raw_selector_bytes = total;
+        Ok(())
+    }
+}
+
+enum Failure {
+    Policy(&'static str),
+    Hard(RetrievalHardError),
+}
+type Parsed<T> = Result<T, Failure>;
+fn policy(code: &'static str) -> Failure {
+    Failure::Policy(code)
+}
+fn syntax() -> Failure {
+    policy("source_syntax")
+}
+fn schema() -> Failure {
+    policy("source_schema")
+}
+fn hard(code: &'static str) -> Failure {
+    Failure::Hard(RetrievalHardError::Capacity(code))
+}
+
+#[derive(Debug)]
+enum Node {
+    String(String),
+    Array(Vec<Node>),
+    Map(BTreeMap<String, Node>),
+    Scalar,
+}
+
+#[derive(Clone, Copy)]
+enum Role {
+    Root,
+    NpmWorkspace,
+    CargoWorkspace,
+    Selectors,
+    Other,
+}
+impl Role {
+    fn field(self, kind: MarkerKind, key: &str) -> Self {
+        match (self, kind, key) {
+            (Self::Root, MarkerKind::Npm, "workspaces") => Self::NpmWorkspace,
+            (Self::Root, MarkerKind::Cargo, "workspace") => Self::CargoWorkspace,
+            (Self::Root, MarkerKind::Pnpm, "packages")
+            | (Self::NpmWorkspace, MarkerKind::Npm, "packages")
+            | (Self::CargoWorkspace, MarkerKind::Cargo, "members" | "exclude") => Self::Selectors,
+            _ => Self::Other,
+        }
+    }
+    fn selects(self, kind: MarkerKind) -> bool {
+        matches!(self, Self::Selectors)
+            || matches!((self, kind), (Self::NpmWorkspace, MarkerKind::Npm))
+    }
+}
+
+struct Guard<'d> {
+    deadline: &'d Deadline,
+    ledger: &'d mut MarkerDecodeLedger,
+    kind: MarkerKind,
+    nodes: usize,
+    duplicate: bool,
+    yaml_feature: bool,
+}
+impl Guard<'_> {
+    fn check(&self) -> Parsed<()> {
+        check_deadline(self.deadline).map_err(Failure::Hard)
+    }
+    fn node(&mut self) -> Parsed<()> {
+        self.check()?;
+        if self.nodes == NODES {
+            return Err(hard("marker_nodes"));
+        }
+        self.nodes += 1;
+        Ok(())
+    }
+    fn container(&mut self, depth: usize) -> Parsed<()> {
+        if depth > DEPTH {
+            return Err(hard("marker_depth"));
+        }
+        self.node()
+    }
+    fn array_value(&mut self, role: Role, value: &Node) -> Parsed<()> {
+        if role.selects(self.kind) {
+            self.check()?;
+            self.ledger.charge(match value {
+                Node::String(value) => Some(value.as_str()),
+                _ => None,
+            })?;
+        }
+        Ok(())
+    }
+}
+
+/// The caller preflights aggregate marker bytes/count and verifies all sources.
+/// No filesystem, Store, source-scope, partition, or identity authority exists here.
+pub(super) fn decode_marker(
+    kind: MarkerKind,
+    text: &str,
+    ledger: &mut MarkerDecodeLedger,
+    deadline: &Deadline,
+) -> RetrievalResult<Result<DecodedMarker, MarkerPolicyError>> {
+    check_deadline(deadline)?;
+    if text.len() > MARKER_BYTES {
+        return Err(RetrievalHardError::Capacity("marker_bytes"));
+    }
+    let mut guard = Guard {
+        deadline,
+        ledger,
+        kind,
+        nodes: 0,
+        duplicate: false,
+        yaml_feature: false,
+    };
+    let parsed = (|| {
+        let node = match kind {
+            MarkerKind::Npm => Cursor::new(text, &mut guard).json_document()?,
+            MarkerKind::Cargo => {
+                // TOML's serde Deserializer first builds its own unbounded tree.
+                // Build a bounded structural shadow before invoking that decoder.
+                let node = Cursor::new(text, &mut guard).toml_document()?;
+                guard.check()?;
+                let _: toml::Value = toml::from_str(text).map_err(|_| syntax())?;
+                guard.check()?;
+                node
+            }
+            MarkerKind::Pnpm => match yaml_document(text, &mut guard) {
+                Err(Failure::Policy(_)) if guard.yaml_feature => {
+                    return Err(policy("unsupported_yaml_feature"));
+                }
+                other => other?,
+            },
+        };
+        if guard.yaml_feature {
+            return Err(policy("unsupported_yaml_feature"));
+        }
+        if guard.duplicate {
+            return Err(schema());
+        }
+        let Node::Map(mut fields) = node else {
+            return Err(schema());
+        };
+        match kind {
+            MarkerKind::Npm => {
+                let name = name(fields.remove("name"))?;
+                let workspace = match fields.remove("workspaces") {
+                    None => None,
+                    Some(Node::Map(mut object)) => {
+                        if object.len() != 1 || !object.contains_key("packages") {
+                            return Err(schema());
+                        }
+                        Some(selectors(object.remove("packages").unwrap(), false, false)?)
+                    }
+                    Some(value) => Some(selectors(value, false, false)?),
+                };
+                let package = if name.is_some() || workspace.is_none() {
+                    Some(DecodedPackage { name })
+                } else {
+                    None
+                };
+                Ok(DecodedMarker { package, workspace })
+            }
+            MarkerKind::Pnpm => {
+                if fields.len() != 1 || !fields.contains_key("packages") {
+                    return Err(schema());
+                }
+                let workspace = selectors(fields.remove("packages").unwrap(), true, false)?;
+                Ok(DecodedMarker {
+                    package: None,
+                    workspace: Some(workspace),
+                })
+            }
+            MarkerKind::Cargo => {
+                let package = match fields.remove("package") {
+                    None => None,
+                    Some(Node::Map(mut package)) => {
+                        if package.contains_key("workspace") {
+                            return Err(policy("explicit_package_workspace"));
+                        }
+                        Some(DecodedPackage {
+                            name: name(package.remove("name"))?,
+                        })
+                    }
+                    Some(_) => return Err(schema()),
+                };
+                let workspace = match fields.remove("workspace") {
+                    None => None,
+                    Some(Node::Map(mut workspace)) => {
+                        let mut result = WorkspaceSelectors::default();
+                        if let Some(value) = workspace.remove("members") {
+                            result.positive = selectors(value, false, false)?.positive;
+                        }
+                        if let Some(value) = workspace.remove("exclude") {
+                            result.negative = selectors(value, false, true)?.negative;
+                        }
+                        Some(result)
+                    }
+                    Some(_) => return Err(schema()),
+                };
+                if package.is_none() && workspace.is_none() {
+                    return Err(policy("unsupported_marker_role"));
+                }
+                Ok(DecodedMarker { package, workspace })
+            }
+        }
+    })();
+    check_deadline(deadline)?;
+    match parsed {
+        Ok(value) => Ok(Ok(value)),
+        Err(Failure::Policy(code)) => Ok(Err(MarkerPolicyError { code })),
+        Err(Failure::Hard(error)) => Err(error),
+    }
+}
+
+fn name(value: Option<Node>) -> Parsed<Option<String>> {
+    match value {
+        None => Ok(None),
+        Some(Node::String(value)) => {
+            if value.len() > 256 {
+                return Err(hard("package_name_bytes"));
+            }
+            if value.is_empty() || value.chars().any(char::is_control) {
+                return Err(schema());
+            }
+            Ok(Some(value))
+        }
+        Some(_) => Err(schema()),
+    }
+}
+
+fn selectors(value: Node, pnpm: bool, exclude: bool) -> Parsed<WorkspaceSelectors> {
+    let Node::Array(values) = value else {
+        return Err(schema());
+    };
+    let mut result = WorkspaceSelectors::default();
+    let mut invalid = false;
+    let mut wrong_shape = false;
+    for value in values {
+        let text = match value {
+            Node::String(s) => Some(s),
+            _ => None,
+        };
+        let Some(raw) = text else {
+            wrong_shape = true;
+            continue;
+        };
+        let (negative, selector) = if pnpm && raw.starts_with('!') {
+            (true, &raw[1..])
+        } else {
+            (exclude, raw.as_str())
+        };
+        if !valid_selector(selector) || (!pnpm && raw.starts_with('!')) {
+            invalid = true;
+            continue;
+        }
+        if negative {
+            result.negative.push(selector.to_string());
+        } else {
+            result.positive.push(selector.to_string());
+        }
+    }
+    if wrong_shape {
+        return Err(schema());
+    }
+    if invalid {
+        return Err(policy("unsupported_selector"));
+    }
+    result.positive.sort();
+    result.positive.dedup();
+    result.negative.sort();
+    result.negative.dedup();
+    Ok(result)
+}
+
+fn valid_selector(value: &str) -> bool {
+    if value == "." {
+        return true;
+    }
+    if value.is_empty() || value.starts_with(['~', '!']) {
+        return false;
+    }
+    let mut parts = value.split('/').peekable();
+    while let Some(part) = parts.next() {
+        if part == "*" {
+            continue;
+        }
+        if part == "**" {
+            if parts.peek().is_some() {
+                return false;
+            } else {
+                continue;
+            }
+        }
+        if part.is_empty()
+            || part == "."
+            || part == ".."
+            || part.starts_with(' ')
+            || part.ends_with([' ', '.'])
+        {
+            return false;
+        }
+        if part
+            .chars()
+            .any(|c| c.is_control() || "\\:*?\"<>|[]{}()~".contains(c))
+        {
+            return false;
+        }
+    }
+    true
+}
+
+struct Cursor<'s, 'g, 'd> {
+    text: &'s str,
+    at: usize,
+    guard: &'g mut Guard<'d>,
+}
+impl<'s, 'g, 'd> Cursor<'s, 'g, 'd> {
+    fn new(text: &'s str, guard: &'g mut Guard<'d>) -> Self {
+        Self { text, at: 0, guard }
+    }
+    fn byte(&self) -> Option<u8> {
+        self.text.as_bytes().get(self.at).copied()
+    }
+    fn advance(&mut self) -> Parsed<()> {
+        self.at += 1;
+        if self.at % 1_024 == 0 {
+            self.guard.check()?;
+        }
+        Ok(())
+    }
+    fn space(&mut self, comments: bool) -> Parsed<()> {
+        loop {
+            match self.byte() {
+                Some(b' ' | b'\t' | b'\r' | b'\n') => self.advance()?,
+                Some(b'#') if comments => {
+                    while !matches!(self.byte(), None | Some(b'\n')) {
+                        self.advance()?;
+                    }
+                }
+                _ => return Ok(()),
+            }
+        }
+    }
+    fn take(&mut self, expected: u8) -> Parsed<()> {
+        if self.byte() != Some(expected) {
+            return Err(syntax());
+        }
+        self.advance()
+    }
+    fn json_document(&mut self) -> Parsed<Node> {
+        self.space(false)?;
+        let value = self.json_value(0, Role::Root)?;
+        self.space(false)?;
+        if self.byte().is_some() {
+            return Err(syntax());
+        }
+        Ok(value)
+    }
+    fn json_string(&mut self) -> Parsed<String> {
+        let start = self.at;
+        self.take(b'"')?;
+        loop {
+            match self.byte() {
+                Some(b'"') => {
+                    self.advance()?;
+                    break;
+                }
+                Some(b'\\') => {
+                    self.advance()?;
+                    if self.byte().is_none() {
+                        return Err(syntax());
+                    }
+                    self.advance()?;
+                }
+                Some(0..=31) | None => return Err(syntax()),
+                Some(_) => self.advance()?,
+            }
+        }
+        serde_json::from_str(&self.text[start..self.at]).map_err(|_| syntax())
+    }
+    fn json_value(&mut self, parent: usize, role: Role) -> Parsed<Node> {
+        self.space(false)?;
+        match self.byte() {
+            Some(b'{') => {
+                self.guard.container(parent + 1)?;
+                self.advance()?;
+                let mut map = BTreeMap::new();
+                self.space(false)?;
+                if self.byte() == Some(b'}') {
+                    self.advance()?;
+                    return Ok(Node::Map(map));
+                }
+                loop {
+                    self.space(false)?;
+                    let key = self.json_string()?;
+                    self.space(false)?;
+                    self.take(b':')?;
+                    let value = self.json_value(parent + 1, role.field(self.guard.kind, &key))?;
+                    if map.insert(key, value).is_some() {
+                        self.guard.duplicate = true;
+                    }
+                    self.space(false)?;
+                    match self.byte() {
+                        Some(b'}') => {
+                            self.advance()?;
+                            break;
+                        }
+                        Some(b',') => self.advance()?,
+                        _ => return Err(syntax()),
+                    }
+                }
+                Ok(Node::Map(map))
+            }
+            Some(b'[') => {
+                self.guard.container(parent + 1)?;
+                self.advance()?;
+                let mut values = Vec::new();
+                self.space(false)?;
+                if self.byte() == Some(b']') {
+                    self.advance()?;
+                    return Ok(Node::Array(values));
+                }
+                loop {
+                    let value = self.json_value(parent + 1, Role::Other)?;
+                    self.guard.array_value(role, &value)?;
+                    values.push(value);
+                    self.space(false)?;
+                    match self.byte() {
+                        Some(b']') => {
+                            self.advance()?;
+                            break;
+                        }
+                        Some(b',') => self.advance()?,
+                        _ => return Err(syntax()),
+                    }
+                }
+                Ok(Node::Array(values))
+            }
+            Some(b'"') => {
+                self.guard.node()?;
+                Ok(Node::String(self.json_string()?))
+            }
+            Some(b't' | b'f' | b'n') => {
+                self.guard.node()?;
+                let literal = match self.byte() {
+                    Some(b't') => "true",
+                    Some(b'f') => "false",
+                    _ => "null",
+                };
+                if !self.text[self.at..].starts_with(literal) {
+                    return Err(syntax());
+                }
+                for _ in literal.bytes() {
+                    self.advance()?;
+                }
+                Ok(Node::Scalar)
+            }
+            Some(b'-' | b'0'..=b'9') => {
+                self.guard.node()?;
+                // Validate JSON number syntax without converting untrusted magnitude.
+                if self.byte() == Some(b'-') {
+                    self.advance()?;
+                }
+                match self.byte() {
+                    Some(b'0') => self.advance()?,
+                    Some(b'1'..=b'9') => {
+                        while matches!(self.byte(), Some(b'0'..=b'9')) {
+                            self.advance()?;
+                        }
+                    }
+                    _ => return Err(syntax()),
+                }
+                if self.byte() == Some(b'.') {
+                    self.advance()?;
+                    if !matches!(self.byte(), Some(b'0'..=b'9')) {
+                        return Err(syntax());
+                    }
+                    while matches!(self.byte(), Some(b'0'..=b'9')) {
+                        self.advance()?;
+                    }
+                }
+                if matches!(self.byte(), Some(b'e' | b'E')) {
+                    self.advance()?;
+                    if matches!(self.byte(), Some(b'+' | b'-')) {
+                        self.advance()?;
+                    }
+                    if !matches!(self.byte(), Some(b'0'..=b'9')) {
+                        return Err(syntax());
+                    }
+                    while matches!(self.byte(), Some(b'0'..=b'9')) {
+                        self.advance()?;
+                    }
+                }
+                Ok(Node::Scalar)
+            }
+            _ => Err(syntax()),
+        }
+    }
+
+    fn toml_string(&mut self, multiline: bool) -> Parsed<String> {
+        let start = self.at;
+        let quote = self.byte().ok_or_else(syntax)?;
+        if !matches!(quote, b'\'' | b'"') {
+            return Err(syntax());
+        }
+        self.advance()?;
+        let triple = multiline
+            && self.byte() == Some(quote)
+            && self.text.as_bytes().get(self.at + 1) == Some(&quote);
+        if triple {
+            self.advance()?;
+            self.advance()?;
+        }
+        loop {
+            match self.byte() {
+                None => return Err(syntax()),
+                Some(b'\\') if quote == b'"' => {
+                    self.advance()?;
+                    if self.byte().is_none() {
+                        return Err(syntax());
+                    }
+                    self.advance()?;
+                }
+                Some(c) if c == quote => {
+                    self.advance()?;
+                    if !triple {
+                        break;
+                    }
+                    if self.byte() == Some(quote)
+                        && self.text.as_bytes().get(self.at + 1) == Some(&quote)
+                    {
+                        self.advance()?;
+                        self.advance()?;
+                        // TOML permits one or two quotes immediately before closure.
+                        for _ in 0..2 {
+                            if self.byte() == Some(quote) {
+                                self.advance()?;
+                            }
+                        }
+                        break;
+                    }
+                }
+                Some(b'\r' | b'\n') if !triple => return Err(syntax()),
+                Some(_) => self.advance()?,
+            }
+        }
+        // Only a lexically isolated scalar reaches this general parser.
+        let decoder =
+            toml::de::ValueDeserializer::parse(&self.text[start..self.at]).map_err(|_| syntax())?;
+        String::deserialize(decoder).map_err(|_| syntax())
+    }
+    fn inline_space(&mut self) -> Parsed<()> {
+        while matches!(self.byte(), Some(b' ' | b'\t')) {
+            self.advance()?;
+        }
+        Ok(())
+    }
+    fn toml_keys(&mut self) -> Parsed<Vec<String>> {
+        let mut keys = Vec::new();
+        loop {
+            self.inline_space()?;
+            if keys.len() == DEPTH {
+                return Err(hard("marker_depth"));
+            }
+            let key = if matches!(self.byte(), Some(b'\'' | b'"')) {
+                self.toml_string(false)?
+            } else {
+                let start = self.at;
+                while matches!(
+                    self.byte(),
+                    Some(b'a'..=b'z' | b'A'..=b'Z' | b'0'..=b'9' | b'_' | b'-')
+                ) {
+                    self.advance()?;
+                }
+                if start == self.at {
+                    return Err(syntax());
+                }
+                self.text[start..self.at].to_string()
+            };
+            keys.push(key);
+            self.inline_space()?;
+            if self.byte() != Some(b'.') {
+                break;
+            }
+            self.advance()?;
+        }
+        Ok(keys)
+    }
+    fn toml_value(&mut self, parent: usize, role: Role) -> Parsed<Node> {
+        self.space(true)?;
+        match self.byte() {
+            Some(b'\'' | b'"') => {
+                self.guard.node()?;
+                Ok(Node::String(self.toml_string(true)?))
+            }
+            Some(b'[') => {
+                self.guard.container(parent + 1)?;
+                self.advance()?;
+                let mut values = Vec::new();
+                self.space(true)?;
+                while self.byte() != Some(b']') {
+                    let value = self.toml_value(parent + 1, Role::Other)?;
+                    self.guard.array_value(role, &value)?;
+                    values.push(value);
+                    self.space(true)?;
+                    if self.byte() == Some(b']') {
+                        break;
+                    }
+                    self.take(b',')?;
+                    self.space(true)?;
+                }
+                self.take(b']')?;
+                Ok(Node::Array(values))
+            }
+            Some(b'{') => {
+                self.guard.container(parent + 1)?;
+                self.advance()?;
+                let mut map = BTreeMap::new();
+                self.space(true)?;
+                while self.byte() != Some(b'}') {
+                    let keys = self.toml_keys()?;
+                    self.take(b'=')?;
+                    let (target, depth, target_role) = table_at(
+                        &mut map,
+                        &keys[..keys.len() - 1],
+                        parent + 1,
+                        role,
+                        self.guard,
+                    )?;
+                    let value = self.toml_value(
+                        depth,
+                        target_role.field(self.guard.kind, keys.last().unwrap()),
+                    )?;
+                    if target.insert(keys.last().unwrap().clone(), value).is_some() {
+                        self.guard.duplicate = true;
+                    }
+                    self.space(true)?;
+                    if self.byte() == Some(b'}') {
+                        break;
+                    }
+                    self.take(b',')?;
+                    self.space(true)?;
+                }
+                self.take(b'}')?;
+                Ok(Node::Map(map))
+            }
+            Some(_) => {
+                self.guard.node()?;
+                let start = self.at;
+                while !matches!(
+                    self.byte(),
+                    None | Some(b',' | b']' | b'}' | b'#' | b'\r' | b'\n')
+                ) {
+                    self.advance()?;
+                }
+                if self.text[start..self.at].trim().is_empty() {
+                    return Err(syntax());
+                }
+                Ok(Node::Scalar)
+            }
+            None => Err(syntax()),
+        }
+    }
+    fn toml_document(&mut self) -> Parsed<Node> {
+        self.guard.container(1)?;
+        let mut root = BTreeMap::new();
+        let mut active: Vec<String> = Vec::new();
+        self.space(true)?;
+        while self.byte().is_some() {
+            if self.byte() == Some(b'[') {
+                self.advance()?;
+                let array = self.byte() == Some(b'[');
+                if array {
+                    self.advance()?;
+                }
+                active = self.toml_keys()?;
+                self.take(b']')?;
+                if array {
+                    self.take(b']')?;
+                }
+                if array {
+                    let (map, depth, parent_role) = table_at(
+                        &mut root,
+                        &active[..active.len() - 1],
+                        1,
+                        Role::Root,
+                        self.guard,
+                    )?;
+                    let key = active.last().unwrap();
+                    let array_role = parent_role.field(self.guard.kind, key);
+                    if !map.contains_key(key) {
+                        self.guard.container(depth + 1)?;
+                        map.insert(key.clone(), Node::Array(Vec::new()));
+                    }
+                    let Some(Node::Array(values)) = map.get_mut(key) else {
+                        return Err(syntax());
+                    };
+                    self.guard.container(depth + 2)?;
+                    let value = Node::Map(BTreeMap::new());
+                    self.guard.array_value(array_role, &value)?;
+                    values.push(value);
+                } else {
+                    table_at(&mut root, &active, 1, Role::Root, self.guard)?;
+                }
+            } else {
+                let keys = self.toml_keys()?;
+                self.take(b'=')?;
+                let mut full = active.clone();
+                full.extend_from_slice(&keys[..keys.len() - 1]);
+                let (map, depth, target_role) =
+                    table_at(&mut root, &full, 1, Role::Root, self.guard)?;
+                let value = self.toml_value(
+                    depth,
+                    target_role.field(self.guard.kind, keys.last().unwrap()),
+                )?;
+                if map.insert(keys.last().unwrap().clone(), value).is_some() {
+                    self.guard.duplicate = true;
+                }
+            }
+            self.inline_space()?;
+            if self.byte() == Some(b'#') {
+                while !matches!(self.byte(), None | Some(b'\r' | b'\n')) {
+                    self.advance()?;
+                }
+            }
+            if !matches!(self.byte(), None | Some(b'\r' | b'\n')) {
+                return Err(syntax());
+            }
+            self.space(true)?;
+        }
+        Ok(Node::Map(root))
+    }
+}
+
+/// Follow the latest array-of-tables element, retaining real semantic depth.
+fn table_at<'m>(
+    map: &'m mut BTreeMap<String, Node>,
+    keys: &[String],
+    depth: usize,
+    role: Role,
+    guard: &mut Guard<'_>,
+) -> Parsed<(&'m mut BTreeMap<String, Node>, usize, Role)> {
+    let Some((key, rest)) = keys.split_first() else {
+        return Ok((map, depth, role));
+    };
+    if !map.contains_key(key) {
+        guard.container(depth + 1)?;
+        map.insert(key.clone(), Node::Map(BTreeMap::new()));
+    }
+    match map.get_mut(key).unwrap() {
+        Node::Map(child) => table_at(child, rest, depth + 1, role.field(guard.kind, key), guard),
+        Node::Array(values) => match values.last_mut() {
+            Some(Node::Map(child)) => table_at(child, rest, depth + 2, Role::Other, guard),
+            _ => Err(syntax()),
+        },
+        _ => Err(syntax()),
+    }
+}
+
+fn yaml_document(text: &str, guard: &mut Guard<'_>) -> Parsed<Node> {
+    // Scanner catches unknown aliases before the parser's undefined-anchor error.
+    // It also checks flow/block nesting before any application tree is allocated.
+    let mut scanner = Scanner::new(text.chars());
+    let mut depth = 0usize;
+    while let Some(token) = scanner.next() {
+        guard.check()?;
+        match token.1 {
+            TokenType::Alias(_)
+            | TokenType::Anchor(_)
+            | TokenType::Tag(_, _)
+            | TokenType::TagDirective(_, _) => guard.yaml_feature = true,
+            TokenType::BlockMappingStart
+            | TokenType::BlockSequenceStart
+            | TokenType::FlowMappingStart
+            | TokenType::FlowSequenceStart => {
+                depth += 1;
+                if depth > DEPTH {
+                    return Err(hard("marker_depth"));
+                }
+            }
+            TokenType::BlockEnd | TokenType::FlowMappingEnd | TokenType::FlowSequenceEnd => {
+                depth = depth.saturating_sub(1)
+            }
+            _ => {}
+        }
+    }
+    // A later scanner syntax error cannot erase a selector ceiling already
+    // observable in the valid event prefix. Keep it pending until that prefix
+    // has passed the same inherited parser/debit guards.
+    let scanner_failed = scanner.get_error().is_some();
+    let mut parser = Parser::new_from_str(text);
+    let mut value = None;
+    let mut documents = 0;
+    let mut multiple = false;
+    loop {
+        guard.check()?;
+        let event = parser
+            .next_token()
+            .map_err(|_| {
+                if guard.yaml_feature {
+                    policy("unsupported_yaml_feature")
+                } else {
+                    syntax()
+                }
+            })?
+            .0;
+        match event {
+            Event::StreamStart | Event::DocumentEnd | Event::Nothing => {}
+            Event::DocumentStart => documents += 1,
+            Event::StreamEnd => break,
+            event => {
+                let node = yaml_node(event, &mut parser, guard, 0, Role::Root)?;
+                if value.replace(node).is_some() {
+                    multiple = true;
+                }
+            }
+        }
+    }
+    if scanner_failed {
+        return Err(syntax());
+    }
+    if documents != 1 || multiple {
+        return Err(schema());
+    }
+    value.ok_or_else(schema)
+}
+
+fn yaml_node(
+    event: Event,
+    parser: &mut Parser<std::str::Chars<'_>>,
+    guard: &mut Guard<'_>,
+    parent: usize,
+    role: Role,
+) -> Parsed<Node> {
+    match event {
+        Event::Scalar(value, style, anchor, tag) => {
+            guard.node()?;
+            if anchor != 0 || tag.is_some() {
+                guard.yaml_feature = true;
+            }
+            if style == TScalarStyle::Plain && !matches!(Yaml::from_str(&value), Yaml::String(_)) {
+                Ok(Node::Scalar)
+            } else {
+                Ok(Node::String(value))
+            }
+        }
+        Event::Alias(_) => {
+            guard.yaml_feature = true;
+            guard.node()?;
+            Ok(Node::Scalar)
+        }
+        Event::SequenceStart(anchor, tag) => {
+            guard.container(parent + 1)?;
+            if anchor != 0 || tag.is_some() {
+                guard.yaml_feature = true;
+            }
+            let mut values = Vec::new();
+            loop {
+                guard.check()?;
+                let event = parser.next_token().map_err(|_| syntax())?.0;
+                if event == Event::SequenceEnd {
+                    break;
+                }
+                let value = yaml_node(event, parser, guard, parent + 1, Role::Other)?;
+                guard.array_value(role, &value)?;
+                values.push(value);
+            }
+            Ok(Node::Array(values))
+        }
+        Event::MappingStart(anchor, tag) => {
+            guard.container(parent + 1)?;
+            if anchor != 0 || tag.is_some() {
+                guard.yaml_feature = true;
+            }
+            let mut map = BTreeMap::new();
+            loop {
+                guard.check()?;
+                let event = parser.next_token().map_err(|_| syntax())?.0;
+                if event == Event::MappingEnd {
+                    break;
+                }
+                let key = match event {
+                    Event::Scalar(key, _, anchor, tag) => {
+                        if anchor != 0 || tag.is_some() || key == "<<" {
+                            guard.yaml_feature = true;
+                        }
+                        key
+                    }
+                    _ => return Err(schema()),
+                };
+                let event = parser.next_token().map_err(|_| syntax())?.0;
+                let value_role = role.field(guard.kind, &key);
+                let value = yaml_node(event, parser, guard, parent + 1, value_role)?;
+                if map.insert(key, value).is_some() {
+                    guard.duplicate = true;
+                }
+            }
+            Ok(Node::Map(map))
+        }
+        _ => Err(syntax()),
+    }
+}

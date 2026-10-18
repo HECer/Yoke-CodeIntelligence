@@ -2,7 +2,7 @@
 
 ## Native Rust executable
 
-Build with Rust 1.94+: `cargo build --workspace --release --locked -j 2`. Use `target/release/yoke.exe` on Windows or `target/release/yoke` on Unix. A portable archive can be built with `python scripts/package-native.py --skip-build --fetch-missing-licenses`; its default runtime requires no Node, Python or upstream application.
+Build with Rust 1.94.1 or newer: `cargo build --workspace --release --locked -j 2`. Use `target/release/yoke.exe` on Windows or `target/release/yoke` on Unix. A portable archive can be built with `python scripts/package-native.py --skip-build --fetch-missing-licenses`; its default runtime requires no Node, Python or upstream application.
 
 ```sh
 ./target/release/yoke --root examples/demo index

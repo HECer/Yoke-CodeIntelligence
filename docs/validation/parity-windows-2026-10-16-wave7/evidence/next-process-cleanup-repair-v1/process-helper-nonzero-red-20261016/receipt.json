@@ -1,0 +1,29 @@
+{
+  "after": {
+    "dist/core/process.js": "ea0494cac9656cc27a3d999f237e39ebef1c90086c399045a5b8e55311611018",
+    "src/core/process.ts": "00c923dafca5beeb1bb4638250c973f3fad5a6b648baa507d260771673dab0e4",
+    "test/process-killer-failure.test.mjs": "e82d4701f0d92a41a7a167c1a8861f05804e7dff2703707a7c81a0b67e4498b7"
+  },
+  "before": {
+    "dist/core/process.js": "ea0494cac9656cc27a3d999f237e39ebef1c90086c399045a5b8e55311611018",
+    "src/core/process.ts": "00c923dafca5beeb1bb4638250c973f3fad5a6b648baa507d260771673dab0e4",
+    "test/process-killer-failure.test.mjs": "e82d4701f0d92a41a7a167c1a8861f05804e7dff2703707a7c81a0b67e4498b7"
+  },
+  "command": [
+    "node",
+    "--test",
+    "test/process-killer-failure.test.mjs"
+  ],
+  "counts": {
+    "cancelled": "0",
+    "fail": "1",
+    "pass": "0",
+    "skipped": "0",
+    "tests": "1",
+    "todo": "0"
+  },
+  "exitCode": 1,
+  "logSha256": "f29f6117e78baf9891e37a12bf46d3a77a8c55fd5170eee749da75bdc9a2bd79",
+  "seconds": 10.609,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\process-helper-nonzero-red-20261016"
+}

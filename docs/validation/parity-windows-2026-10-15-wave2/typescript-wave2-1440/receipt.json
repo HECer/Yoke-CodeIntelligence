@@ -1,0 +1,42 @@
+{
+  "checkedAtUtc": "2026-10-15T14:42:30.481854+00:00",
+  "phase": "typescript",
+  "sourceFiles": 694,
+  "sourceChanges": [],
+  "results": [
+    {
+      "label": "typecheck",
+      "command": [
+        "npm.cmd",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 2.828,
+      "logSha256": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5",
+      "groups": 0,
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "label": "typescript",
+      "command": [
+        "npm.cmd",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 130.812,
+      "logSha256": "7eb086441134aa1c376453a5a11cd4567cc2f9c80eda3a744dafc70e92aa6b77",
+      "groups": 0,
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    }
+  ],
+  "passed": 0,
+  "failed": 0,
+  "ignored": 0,
+  "accepted": true,
+  "tempRoot": "C:\\Users\\Public\\Yoke-Test-Scratch\\typescript-wave2-1440"
+}

@@ -1,0 +1,504 @@
+//! Captured marker interpretation and bounded physical ownership construction.
+use super::marker_decode::{MarkerDecodeLedger, MarkerKind, decode_marker};
+use super::*;
+use serde_json::json;
+
+struct Workspace {
+    root: String,
+    path: String,
+    ecosystem: Ecosystem,
+    positive: BTreeSet<String>,
+    negative: BTreeSet<String>,
+}
+struct Marker {
+    source: VerifiedSource,
+    root: String,
+    kind: MarkerKind,
+    package: Option<Option<String>>,
+}
+fn root(path: &str) -> &str {
+    path.rsplit_once('/').map_or(".", |(parent, _)| parent)
+}
+fn basename(path: &str) -> &str {
+    path.rsplit('/').next().unwrap_or(path)
+}
+fn is_hint(path: &str) -> bool {
+    matches!(
+        basename(path),
+        "pnpm-workspace.yml" | "lerna.json" | "pyproject.toml" | "go.mod" | "pom.xml"
+    ) || path.ends_with(".csproj")
+}
+fn marker_kind(path: &str) -> Option<MarkerKind> {
+    match basename(path) {
+        "package.json" => Some(MarkerKind::Npm),
+        "Cargo.toml" => Some(MarkerKind::Cargo),
+        "pnpm-workspace.yaml" => Some(MarkerKind::Pnpm),
+        _ => None,
+    }
+}
+fn below<'a>(path: &'a str, ancestor: &str) -> Option<&'a str> {
+    if path == ancestor {
+        Some(".")
+    } else if ancestor == "." {
+        Some(path)
+    } else {
+        path.strip_prefix(ancestor)
+            .and_then(|p| p.strip_prefix('/'))
+    }
+}
+fn diagnostic(
+    source: &VerifiedSource,
+    code: &'static str,
+    selector: Option<String>,
+) -> ScopeDiagnostic {
+    ScopeDiagnostic {
+        code,
+        path: source.path.clone(),
+        content_hash: Some(source.content_hash.clone()),
+        selector,
+        line: None,
+        column: None,
+    }
+}
+fn diagnostic_order(a: &ScopeDiagnostic, b: &ScopeDiagnostic) -> std::cmp::Ordering {
+    (&a.path, a.code, &a.selector).cmp(&(&b.path, b.code, &b.selector))
+}
+fn clip_diagnostics(mut rows: Vec<ScopeDiagnostic>) -> (Vec<ScopeDiagnostic>, usize) {
+    rows.sort_by(diagnostic_order);
+    rows.dedup_by(|a, b| a.path == b.path && a.code == b.code && a.selector == b.selector);
+    let total = rows.len();
+    let mut bytes = 2usize;
+    let keep = rows
+        .iter()
+        .take(64)
+        .take_while(|row| {
+            let n = serde_json::to_vec(&diagnostic_value(row)).map_or(256_001, |v| v.len() + 1);
+            if bytes.checked_add(n).is_some_and(|n| n <= 256_000) {
+                bytes += n;
+                true
+            } else {
+                false
+            }
+        })
+        .count();
+    rows.truncate(keep);
+    (rows, total - keep)
+}
+fn diagnostic_value(d: &ScopeDiagnostic) -> serde_json::Value {
+    json!({"code":d.code,"path":d.path,"contentHash":d.content_hash,"selector":d.selector,"line":d.line,"column":d.column})
+}
+fn fallback(
+    code: &'static str,
+    count: Option<usize>,
+    rows: Vec<ScopeDiagnostic>,
+) -> PolicyFallback {
+    let (diagnostics, omitted_diagnostic_count) = clip_diagnostics(rows);
+    PolicyFallback {
+        code,
+        physical_package_count: count,
+        diagnostics,
+        omitted_diagnostic_count,
+    }
+}
+fn charge_match(
+    run: &mut CheckedRetrievalRun<'_, '_, '_>,
+    selector: &str,
+    relative: &str,
+) -> RetrievalResult<()> {
+    check_deadline(run.deadline)?;
+    let n = 1usize
+        .checked_add(selector.len())
+        .and_then(|n| n.checked_add(relative.len()))
+        .and_then(|n| n.checked_add(run.usage.selector_work))
+        .filter(|n| *n <= 16_000_000)
+        .ok_or(RetrievalHardError::Capacity("selector_work"))?;
+    run.usage.selector_work = n;
+    Ok(())
+}
+fn matches_selector(selector: &str, relative: &str) -> bool {
+    if selector == "." {
+        return relative == ".";
+    }
+    if relative == "." {
+        return selector == "**";
+    }
+    let mut parts = relative.split('/');
+    for component in selector.split('/') {
+        if component == "**" {
+            return true;
+        }
+        match parts.next() {
+            Some(p) if component == "*" || component == p => {}
+            _ => return false,
+        }
+    }
+    parts.next().is_none()
+}
+pub(super) fn scope_binding(run: &CheckedRetrievalRun<'_, '_, '_>) -> String {
+    identity(&(
+        "yoke-retrieval-source-scope-1",
+        &run.store.workspace_id,
+        &run.snapshot_hash,
+    ))
+}
+
+pub(super) fn build_partition<'store>(
+    run: &mut CheckedRetrievalRun<'store, '_, '_>,
+) -> RetrievalResult<ProbeOutcome<'store>> {
+    let mut paths = Vec::new();
+    for file in &run.snapshot.files {
+        check_deadline(run.deadline)?;
+        if marker_kind(&file.path).is_some() || is_hint(&file.path) {
+            if paths.len() == 1024 {
+                return Err(RetrievalHardError::Capacity("marker_files"));
+            }
+            paths.push(file.path.clone());
+        }
+    }
+    paths.sort();
+    let mut bytes = 0usize;
+    for path in &paths {
+        check_deadline(run.deadline)?;
+        let size = run.source_cost(path)?.source_bytes();
+        if size > 1_000_000 {
+            return Err(RetrievalHardError::Capacity("marker_bytes"));
+        }
+        bytes = bytes
+            .checked_add(size)
+            .filter(|n| *n <= 4_000_000)
+            .ok_or(RetrievalHardError::Capacity("marker_bytes"))?;
+    }
+    // Verify every recognized captured marker before interpreting any fallback.
+    let mut sources = Vec::with_capacity(paths.len());
+    for path in paths {
+        let source = run.read_verified(&path, true)?;
+        run.usage.marker_files_checked += 1;
+        sources.push(source);
+    }
+    let mut parse_ledger = MarkerDecodeLedger::default();
+    let mut markers = Vec::new();
+    let mut workspaces = Vec::new();
+    let mut diagnostics = Vec::new();
+    for source in &sources {
+        check_deadline(run.deadline)?;
+        let Some(kind) = marker_kind(&source.path) else {
+            continue;
+        };
+        match decode_marker(kind, source.text(), &mut parse_ledger, run.deadline)? {
+            Err(policy) => diagnostics.push(diagnostic(source, policy.code, None)),
+            Ok(decoded) => {
+                let directory = root(&source.path).to_string();
+                if let Some(workspace) = decoded.workspace {
+                    workspaces.push(Workspace {
+                        root: directory.clone(),
+                        path: source.path.clone(),
+                        ecosystem: match kind {
+                            MarkerKind::Npm => Ecosystem::Npm,
+                            MarkerKind::Cargo => Ecosystem::Cargo,
+                            MarkerKind::Pnpm => Ecosystem::Pnpm,
+                        },
+                        positive: workspace.positive.into_iter().collect(),
+                        negative: workspace.negative.into_iter().collect(),
+                    });
+                }
+                markers.push(Marker {
+                    source: source.clone(),
+                    root: directory,
+                    kind,
+                    package: decoded.package.map(|p| p.name),
+                });
+            }
+        }
+    }
+    // Conflicting same-directory npm/pnpm semantics are never guessed.
+    for npm in workspaces.iter().filter(|w| w.ecosystem == Ecosystem::Npm) {
+        if let Some(pnpm) = workspaces
+            .iter()
+            .find(|w| w.root == npm.root && w.ecosystem == Ecosystem::Pnpm)
+        {
+            if npm.positive != pnpm.positive || !pnpm.negative.is_empty() {
+                let source = sources
+                    .iter()
+                    .find(|s| s.path == npm.path)
+                    .ok_or(RetrievalHardError::Internal("marker_binding"))?;
+                diagnostics.push(diagnostic(source, "conflicting_npm_pnpm_membership", None));
+            }
+        }
+    }
+    let mut roots: BTreeMap<String, CheckedScope> = BTreeMap::new();
+    for marker in &markers {
+        let Some(name) = &marker.package else {
+            continue;
+        };
+        if matches!(marker.kind, MarkerKind::Npm)
+            && name.is_none()
+            && workspaces.iter().any(|w| w.root == marker.root)
+        {
+            continue;
+        }
+        if !roots.contains_key(&marker.root) && roots.len() >= 256 {
+            return Err(RetrievalHardError::Capacity("scopes"));
+        }
+        let scope = roots
+            .entry(marker.root.clone())
+            .or_insert_with(|| CheckedScope {
+                id: String::new(),
+                root: marker.root.clone(),
+                kind: ScopeKind::Package,
+                labels: Vec::new(),
+                declarations: Vec::new(),
+                memberships: Vec::new(),
+            });
+        scope.labels.push(PackageLabel {
+            ecosystem: if matches!(marker.kind, MarkerKind::Cargo) {
+                Ecosystem::Cargo
+            } else {
+                Ecosystem::Npm
+            },
+            name: name.clone().unwrap_or_else(|| marker.root.clone()),
+            declaration_path: marker.source.path.clone(),
+            primary: true,
+        });
+        scope.declarations.push(ManifestBinding {
+            path: marker.source.path.clone(),
+            content_hash: marker.source.content_hash.clone(),
+        });
+    }
+    let physical_package_count = roots.len();
+    for source in sources.iter().filter(|s| is_hint(&s.path)) {
+        if physical_package_count == 0 || basename(&source.path) == "pnpm-workspace.yml" {
+            diagnostics.push(diagnostic(source, "unsupported_repository_format", None));
+        }
+    }
+    // A package is always a member of its own workspace, so subtracting it is a policy conflict.
+    for workspace in &workspaces {
+        let mut excludes_root = false;
+        if roots.contains_key(&workspace.root) {
+            for selector in &workspace.negative {
+                charge_match(run, selector, ".")?;
+                if matches_selector(selector, ".") {
+                    excludes_root = true;
+                    break;
+                }
+            }
+        }
+        if excludes_root {
+            let source = sources
+                .iter()
+                .find(|s| s.path == workspace.path)
+                .ok_or(RetrievalHardError::Internal("marker_binding"))?;
+            diagnostics.push(diagnostic(source, "workspace_root_excluded", None));
+        }
+    }
+    if !diagnostics.is_empty() {
+        diagnostics.sort_by(diagnostic_order);
+        return Ok(ProbeOutcome::UnsupportedPolicy(fallback(
+            diagnostics[0].code,
+            None,
+            diagnostics,
+        )));
+    }
+    // Compute membership only against the nearest boundary of each ecosystem.
+    let mut matched: BTreeSet<(String, String)> = BTreeSet::new();
+    let package_roots: Vec<_> = roots.keys().cloned().collect();
+    for package_root in &package_roots {
+        let scope = roots
+            .get_mut(package_root)
+            .ok_or(RetrievalHardError::Internal("package_root"))?;
+        let cargo = scope.labels.iter().any(|l| l.ecosystem == Ecosystem::Cargo);
+        let npm = scope.labels.iter().any(|l| l.ecosystem == Ecosystem::Npm);
+        for ecosystem in [Ecosystem::Cargo, Ecosystem::Npm, Ecosystem::Pnpm] {
+            if ecosystem == Ecosystem::Cargo && !cargo || ecosystem != Ecosystem::Cargo && !npm {
+                continue;
+            }
+            if ecosystem == Ecosystem::Pnpm && !workspaces.iter().any(|w| w.ecosystem == ecosystem)
+            {
+                continue;
+            }
+            if ecosystem == Ecosystem::Npm
+                && !workspaces.iter().any(|w| w.ecosystem == ecosystem)
+                && workspaces.iter().any(|w| w.ecosystem == Ecosystem::Pnpm)
+            {
+                continue;
+            }
+            let nearest = workspaces
+                .iter()
+                .filter(|w| w.ecosystem == ecosystem && below(package_root, &w.root).is_some())
+                .max_by_key(|w| w.root.len());
+            let (workspace_root, declaration_path, reason) = if let Some(workspace) = nearest {
+                let relative = below(package_root, &workspace.root)
+                    .ok_or(RetrievalHardError::Internal("workspace_ancestor"))?;
+                let mut positive = relative == ".";
+                let mut negative = false;
+                for selector in &workspace.positive {
+                    charge_match(run, selector, relative)?;
+                    if matches_selector(selector, relative) {
+                        positive = true;
+                        matched.insert((workspace.path.clone(), selector.clone()));
+                    }
+                }
+                for selector in &workspace.negative {
+                    charge_match(run, selector, relative)?;
+                    if matches_selector(selector, relative) {
+                        negative = true;
+                    }
+                }
+                (
+                    Some(workspace.root.clone()),
+                    Some(workspace.path.clone()),
+                    if negative {
+                        MembershipReason::Excluded
+                    } else if positive {
+                        MembershipReason::Member
+                    } else {
+                        MembershipReason::Unmatched
+                    },
+                )
+            } else {
+                (None, None, MembershipReason::Standalone)
+            };
+            scope.memberships.push(WorkspaceMembership {
+                ecosystem,
+                workspace_root,
+                declaration_path,
+                reason,
+            });
+        }
+    }
+    for workspace in &workspaces {
+        for selector in &workspace.positive {
+            if !matched.contains(&(workspace.path.clone(), selector.clone())) {
+                let source = sources
+                    .iter()
+                    .find(|s| s.path == workspace.path)
+                    .ok_or(RetrievalHardError::Internal("marker_binding"))?;
+                diagnostics.push(diagnostic(source, "missing_member", Some(selector.clone())));
+            }
+        }
+    }
+    for workspace in &workspaces {
+        if !roots.contains_key(&workspace.root) && roots.len() >= 256 {
+            return Err(RetrievalHardError::Capacity("scopes"));
+        }
+        let scope = roots
+            .entry(workspace.root.clone())
+            .or_insert_with(|| CheckedScope {
+                id: String::new(),
+                root: workspace.root.clone(),
+                kind: ScopeKind::WorkspaceUnassigned,
+                labels: Vec::new(),
+                declarations: Vec::new(),
+                memberships: Vec::new(),
+            });
+        let source = sources
+            .iter()
+            .find(|s| s.path == workspace.path)
+            .ok_or(RetrievalHardError::Internal("marker_binding"))?;
+        if !scope.declarations.iter().any(|d| d.path == source.path) {
+            scope.declarations.push(ManifestBinding {
+                path: source.path.clone(),
+                content_hash: source.content_hash.clone(),
+            });
+        }
+    }
+    if !roots.contains_key(".") {
+        if roots.len() >= 256 {
+            return Err(RetrievalHardError::Capacity("scopes"));
+        }
+        roots.insert(
+            ".".into(),
+            CheckedScope {
+                id: String::new(),
+                root: ".".into(),
+                kind: ScopeKind::RootUnassigned,
+                labels: Vec::new(),
+                declarations: Vec::new(),
+                memberships: Vec::new(),
+            },
+        );
+    }
+    if physical_package_count < 2 {
+        return Ok(ProbeOutcome::NotApplicable(fallback(
+            if physical_package_count == 0 {
+                "no_supported_package_roots"
+            } else {
+                "single_actual_package_root"
+            },
+            Some(physical_package_count),
+            diagnostics,
+        )));
+    }
+    let mut scopes: Vec<_> = roots.into_values().collect();
+    for scope in &mut scopes {
+        scope.id = identity(&(
+            "yoke-retrieval-scope-1",
+            &run.store.workspace_id,
+            &run.snapshot_hash,
+            &scope.root,
+        ));
+        scope.labels.sort_by(|a, b| {
+            (a.ecosystem, &a.declaration_path).cmp(&(b.ecosystem, &b.declaration_path))
+        });
+        scope.declarations.sort_by(|a, b| a.path.cmp(&b.path));
+        scope.memberships.sort_by(|a, b| {
+            (a.ecosystem, &a.declaration_path).cmp(&(b.ecosystem, &b.declaration_path))
+        });
+    }
+    let root_index: BTreeMap<_, _> = scopes
+        .iter()
+        .enumerate()
+        .map(|(i, s)| (s.root.as_str(), i))
+        .collect();
+    let mut ownership = BTreeMap::new();
+    for file in &run.snapshot.files {
+        check_deadline(run.deadline)?;
+        let mut ancestor = root(&file.path);
+        let ordinal = loop {
+            if let Some(i) = root_index.get(ancestor) {
+                break *i;
+            }
+            ancestor = root(ancestor);
+        };
+        let charge = file
+            .path
+            .len()
+            .checked_add(scopes[ordinal].root.len())
+            .and_then(|n| n.checked_add(32))
+            .and_then(|n| n.checked_add(run.usage.ownership_bytes))
+            .filter(|n| *n <= 16_000_000)
+            .ok_or(RetrievalHardError::Capacity("ownership_bytes"))?;
+        run.usage.ownership_bytes = charge;
+        ownership.insert(file.path.clone(), ordinal);
+    }
+    let declarations: Vec<_> = sources
+        .iter()
+        .filter(|s| marker_kind(&s.path).is_some())
+        .map(|s| ManifestBinding {
+            path: s.path.clone(),
+            content_hash: s.content_hash.clone(),
+        })
+        .collect();
+    let (diagnostics, omitted_diagnostic_count) = clip_diagnostics(diagnostics);
+    let descriptors:Vec<_>=scopes.iter().map(|s|json!({"id":s.id,"root":s.root,"kind":s.kind.as_str(),"labels":s.labels.iter().map(|l|json!({"ecosystem":l.ecosystem.as_str(),"name":l.name,"declarationPath":l.declaration_path,"primary":l.primary})).collect::<Vec<_>>(),"declarations":s.declarations.iter().map(|d|json!({"path":d.path,"contentHash":d.content_hash})).collect::<Vec<_>>(),"memberships":s.memberships.iter().map(|m|json!({"ecosystem":m.ecosystem.as_str(),"workspaceRoot":m.workspace_root,"declarationPath":m.declaration_path,"reason":m.reason.as_str()})).collect::<Vec<_>>()})).collect();
+    let ownership_image: Vec<_> = ownership
+        .iter()
+        .map(|(path, i)| (path, &scopes[*i].id))
+        .collect();
+    let id = identity(
+        &json!({"schemaVersion":1,"producer":POLICY,"workspaceId":run.store.workspace_id,"snapshotId":run.snapshot.id,"snapshotManifestHash":run.snapshot_hash,"graphHash":run.graph_hash,"markerBindings":declarations.iter().map(|d|json!({"path":d.path,"contentHash":d.content_hash})).collect::<Vec<_>>(),"scopeDescriptors":descriptors,"ownership":ownership_image,"diagnostics":diagnostics.iter().map(diagnostic_value).collect::<Vec<_>>(),"diagnosticCounts":{"total":diagnostics.len()+omitted_diagnostic_count,"omitted":omitted_diagnostic_count}}),
+    );
+    Ok(ProbeOutcome::Ready(CheckedScopePartition {
+        store: run.store,
+        snapshot_id: run.snapshot.id.clone(),
+        snapshot_hash: run.snapshot_hash.clone(),
+        graph_hash: run.graph_hash.clone(),
+        source_scope_binding: scope_binding(run),
+        id,
+        physical_package_count,
+        declarations,
+        scopes,
+        ownership,
+        diagnostics,
+        omitted_diagnostic_count,
+    }))
+}

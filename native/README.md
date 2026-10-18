@@ -4,7 +4,7 @@ An independently implemented MIT core for local code orientation, semantic navig
 
 ## Build and use
 
-Rust 1.94.1 and the Windows MSVC toolchain are exercised locally. Cargo requires Rust 1.94 or newer. Older compilers and hosted macOS/Linux CI are not claimed tested here.
+Rust 1.94.1 and the Windows MSVC toolchain are exercised locally. Cargo requires Rust 1.94.1 or newer, including the native AWS signing dependencies. Older compilers and hosted macOS/Linux CI are not claimed tested here.
 
 ```sh
 cargo build --release --locked -j 2
@@ -19,6 +19,29 @@ cargo build --release --locked -j 2
 ```
 
 On Windows, use `target/release/yoke.exe`. JSON is written to stdout; operational failures go to stderr with a nonzero exit status. `--snapshot ID` reads immutable history; otherwise saved source is strictly recaptured. Global `--timeout` is milliseconds and `--max-bytes` bounds tool envelopes. Large complete responses are immutable artifacts, paged with `ci_read`. `tokenBudget` is conservatively estimated as UTF-8 bytes / 3; impossible envelope budgets fail explicitly.
+
+Analyzer 8 remains the default. Explicit host `--analyzer-epoch 9` selects the
+additional structural rules for new captures and supported Git/session queries;
+historical snapshots keep their proven policy. See [analyzer epochs](docs/analyzer-epochs.md)
+and [session policy](docs/session-analyzer-epochs.md). This opt-in does not certify
+complete language or language-server behavior.
+
+Ordinary `ci_find`, `ci_read`, `ci_trace` and `ci_context` can explicitly select an
+already published `graphViewId` to query code, document and semantic overlays
+through the same eight tools. [Selected graph queries](docs/selected-graph-queries.md)
+describe the strict scope, evidence and output budgets. Authored decisions and
+personal preferences have separate immutable revision, Markdown exchange and
+literal-check workflows; see [decision records](docs/decision-records.md) and
+[their host CLI](docs/decision-cli.md). Personal content stays in the selected
+personal store, while minimal dependency pins retain its source history.
+
+The Rust library also provides [historical selected-View comparison](docs/historical-view-comparison.md).
+It compares two explicitly pinned Views or checked Meaning archives with exact
+source bindings, bounded output and visible structural ambiguity.
+
+An existing Git report also supports [captured-hierarchy affected details](docs/git-affected-details.md)
+through the Rust library and `git affected`, with separate historical source
+bindings and structural candidate explanations.
 
 ## Native capabilities
 
@@ -102,6 +125,8 @@ yoke --root /project editor
 ```
 
 Knowledge records are project assertions with source hashes and explicit staleness. They are distinct from agents' central AgentMemory service. `ci_context` includes them only with `includeMemory: true`; semantic search requires an explicit model identity. LCOV/runtime/SARIF inputs are strict JSON wrappers documented in [knowledge](docs/knowledge.md), rather than unscoped raw reports.
+
+Explicit [outcome feedback](docs/outcome-feedback.md) binds authored results to original native Views and exact source or imported transcript quotes. Ranking exposes sequence selection, integer age decay and stale-source exclusions; literal transcript mining returns candidates for explicit host selection. Assertions and ranking scores never establish observed execution or independent corroboration.
 
 The editor command prints one loopback endpoint and a random per-process bearer token. Keep this token private. The API exposes saved/unsaved capture and read tools; it cannot grant source writes or select provider executables. Buffer text and immutable history are retained in local state. A Rust VSIX can be built from a matching native archive with `python scripts/package-vscode.py --native-archive ARCHIVE --output PACKAGE.vsix`.
 

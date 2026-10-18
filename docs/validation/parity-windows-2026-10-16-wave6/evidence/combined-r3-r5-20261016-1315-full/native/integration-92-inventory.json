@@ -1,0 +1,37 @@
+{
+  "query_parity": {
+    "executable": "target\\debug\\deps\\query_parity-fd60f1161151b971.exe",
+    "ignored": [],
+    "registered": [
+      "advertised_native_protocol_reaches_advanced_semantic_operations",
+      "body_retrieval_in_file_mode_never_returns_symbol_rows",
+      "bulk_edit_selection_is_atomic_and_conflicting_modes_are_rejected",
+      "clipped_single_line_context_keeps_the_match_and_exact_unicode_bytes",
+      "exact_name_path_symbol_query_has_source_bound_body_and_depth",
+      "multiline_case_insensitive_search_exposes_exact_occurrences_and_symbol_owners",
+      "public_engine_semantics_preserve_host_configuration_callbacks",
+      "relative_directory_scope_is_segment_aware_and_globs_are_explicit",
+      "selected_occurrences_and_count_guards_prepare_an_atomic_reviewable_bulk_plan",
+      "task_words_inside_multiline_bodies_are_searchable_without_becoming_fact",
+      "text_search_pages_past_the_first_ten_thousand_occurrences",
+      "text_search_streams_the_captured_corpus_beyond_the_symbol_body_cache_budget"
+    ]
+  },
+  "read_only_dependencies": {
+    "executable": "target\\debug\\deps\\read_only_dependencies-652ca9b7d8ea27bc.exe",
+    "ignored": [],
+    "registered": [
+      "an_unknown_capture_epoch_cannot_grant_dependency_source_authority",
+      "authentic_legacy_overlay_receipt_proves_readonly_source_without_a_live_session",
+      "dependency_sources_retain_file_size_binary_and_secret_content_omissions",
+      "derived_dependency_members_require_exact_origin_proof_and_remain_virtual",
+      "editor_overlay_inherits_native_capture_scope_without_dependency_write_access",
+      "empty_dependency_option_preserves_version_one_identity_and_rejects_other_protected_scopes",
+      "explicit_readonly_dependency_capture_keeps_secret_state_and_size_protections",
+      "materialized_language_server_tree_reads_proven_dependency_members_only",
+      "passive_provider_materialization_can_omit_exact_source_selectors_without_changing_capture",
+      "prospective_read_admission_is_scoped_metadata_and_cannot_read_uncaptured_bytes",
+      "real_git_ignored_dependencies_stay_ignored_under_the_readonly_host_scope"
+    ]
+  }
+}

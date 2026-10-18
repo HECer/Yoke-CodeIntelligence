@@ -5,6 +5,12 @@ use std::{
 };
 
 pub fn normalized(path: &str) -> Result<String> {
+    let normalized = normalized_syntax(path)?;
+    ensure!(!protected(path), "Protected path refused");
+    Ok(normalized)
+}
+/// Syntax alone grants no source access; callers must validate a captured scope.
+pub fn normalized_syntax(path: &str) -> Result<String> {
     ensure!(
         !path.is_empty() && path.len() <= 4096,
         "Invalid path length"
@@ -43,7 +49,6 @@ pub fn normalized(path: &str) -> Result<String> {
             "Nonportable or reserved path refused"
         );
     }
-    ensure!(!protected(path), "Protected path refused");
     Ok(normalized)
 }
 

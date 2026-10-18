@@ -134,6 +134,18 @@ pub fn prepare(
     args: &Value,
     deadline: &Deadline,
 ) -> Result<Plan> {
+    let epoch =
+        crate::capture::analyzer_epoch_for_snapshot_with_deadline(store, snapshot, deadline)?;
+    prepare_at(epoch, store, snapshot, graph, args, deadline)
+}
+pub fn prepare_at(
+    epoch: analysis::AnalyzerEpoch,
+    store: &mut Store,
+    snapshot: &Snapshot,
+    graph: &Graph,
+    args: &Value,
+    deadline: &Deadline,
+) -> Result<Plan> {
     let mut edits: Vec<Edit> = if let Some(value) = args.get("edits") {
         serde_json::from_value(value.clone())?
     } else {
@@ -193,11 +205,15 @@ pub fn prepare(
         !edits.is_empty() && edits.len() <= 2000,
         "Expected 1..2000 edits"
     );
+    store.set_deadline(deadline)?;
+    let source_scope = crate::capture::source_scope_policy(store, snapshot)?;
     let mut grouped: BTreeMap<String, Vec<Edit>> = BTreeMap::new();
     for edit in edits {
         crate::paths::normalized(edit.path())?;
+        source_scope.check_host_write_scope(edit.path())?;
         grouped.entry(edit.path().into()).or_default().push(edit);
     }
+    drop(source_scope);
     let mut files = snapshot.files.clone();
     let mut changed = Vec::new();
     let mut diff = String::new();
@@ -321,7 +337,7 @@ pub fn prepare(
                 path: path.clone(),
                 hash,
                 size: text.len(),
-                language: crate::capture::language(&path).into(),
+                language: crate::capture::language_for_snapshot(store, snapshot, &path)?,
                 mode,
             });
         }
@@ -329,7 +345,7 @@ pub fn prepare(
     ensure!(!changed.is_empty(), "Patch contains no changes");
     files.sort_by(|a, b| a.path.cmp(&b.path));
     let result = Snapshot {
-        id: identity(&(&snapshot.id, "derived", &files)),
+        id: epoch.derived_snapshot_id(snapshot, &files),
         workspace_id: snapshot.workspace_id.clone(),
         kind: "derived".into(),
         files,
@@ -339,10 +355,11 @@ pub fn prepare(
     let mut extractions = Vec::new();
     for file in &result.files {
         let text = String::from_utf8(store.read_blob(&file.hash)?)?;
-        extractions.push(analysis::extract(file, &text, deadline)?);
+        extractions.push(analysis::extract_at(epoch, file, &text, deadline)?);
     }
-    let result_graph = analysis::assemble(&result, extractions, deadline)?;
+    let result_graph = analysis::assemble_at(epoch, &result, extractions, deadline)?;
     store.publish(&result, &result_graph)?;
+    crate::capture::inherit_options(store, snapshot, &result)?;
     let created = now();
     let id = identity(&(&snapshot.id, &result.id, &changed, created));
     let plan = Plan {
@@ -365,6 +382,27 @@ pub fn materialize(
     target: &Path,
     deadline: &Deadline,
 ) -> Result<()> {
+    materialize_selected_sources(
+        store,
+        snapshot,
+        target,
+        &std::collections::BTreeSet::new(),
+        deadline,
+    )
+}
+/// Host-selected omissions affect only this private copy, never captured source.
+pub fn materialize_selected_sources(
+    store: &Store,
+    snapshot: &Snapshot,
+    target: &Path,
+    excluded: &std::collections::BTreeSet<String>,
+    deadline: &Deadline,
+) -> Result<()> {
+    let scope = crate::capture::source_scope_policy(store, snapshot)?;
+    for path in excluded {
+        deadline.check()?;
+        scope.file(path)?;
+    }
     fs::create_dir_all(target)?;
     ensure!(
         !is_link(&fs::symlink_metadata(target)?),
@@ -372,13 +410,26 @@ pub fn materialize(
     );
     for file in &snapshot.files {
         deadline.check()?;
-        let path = scoped(target, &file.path)?;
+        if excluded.contains(&file.path) {
+            continue;
+        }
+        let file = scope.file(&file.path)?;
+        let mut path = target.to_path_buf();
+        for component in file.path.split('/') {
+            path.push(component);
+            match fs::symlink_metadata(&path) {
+                Ok(metadata) => ensure!(!is_link(&metadata), "Materialized source path is a link"),
+                Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+                Err(error) => return Err(error.into()),
+            }
+        }
+        let bytes = scope.read_source(&file.path)?;
         fs::create_dir_all(path.parent().unwrap())?;
         let mut output = fs::OpenOptions::new()
             .write(true)
             .create_new(true)
             .open(&path)?;
-        output.write_all(&store.read_blob(&file.hash)?)?;
+        output.write_all(&bytes)?;
         output.sync_all()?;
         #[cfg(unix)]
         {
@@ -556,7 +607,8 @@ pub fn apply(
         "Executed verification did not pass for this plan"
     );
     let _lock = lock(store)?;
-    let current = crate::capture::capture(root, store, deadline)?;
+    let base = store.snapshot(&plan.base_snapshot_id)?;
+    let current = crate::capture::capture_for_snapshot(root, store, &base, deadline)?;
     ensure!(
         current.id == plan.base_snapshot_id,
         "Workspace snapshot is stale"

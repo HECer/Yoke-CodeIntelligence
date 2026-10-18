@@ -1,0 +1,60 @@
+{
+  "scope": "three_exact_acl_fixture_qualification_not_full_acceptance",
+  "tempRoot": "C:\\Users\\HEC_e\\AppData\\Local\\Temp\\yoke-r5b-acl-qualification-20261016",
+  "sourceManifestSha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+  "sourceChanges": [],
+  "results": [
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j2",
+        "--lib",
+        "host_install::io::tests::explicit_low_integrity_label_is_preserved_or_refused_before_human_bytes",
+        "--",
+        "--exact",
+        "--test-threads=4"
+      ],
+      "exitCode": 0,
+      "logSha256": "0417dac73d2a2e996bdcb4c1897be8a59b6174f1a296d58cf7dcf0327f2d3d34",
+      "exactPass": true
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j2",
+        "--lib",
+        "host_install::io::tests::prepared_output_preserves_owner_and_nondefault_group_before_human_bytes",
+        "--",
+        "--exact",
+        "--test-threads=4"
+      ],
+      "exitCode": 0,
+      "logSha256": "707e05e5c157f16d1b18e449b6d08aba617ee9fd8b49ea68e13320c5e75d9c9c",
+      "exactPass": true
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j2",
+        "--lib",
+        "host_install::io::tests::staged_registered_reopen_checks_original_security_before_any_mutation",
+        "--",
+        "--exact",
+        "--test-threads=4"
+      ],
+      "exitCode": 0,
+      "logSha256": "0494ab5f606e635bdfdb6580a1910bf96a588ffeabcbb85a5bed5210891e1582",
+      "exactPass": true
+    }
+  ],
+  "accepted": true
+}

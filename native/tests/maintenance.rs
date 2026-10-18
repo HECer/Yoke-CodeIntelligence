@@ -269,6 +269,8 @@ fn raw_sqlite_writer_contention_does_not_extend_failed_maintenance_cleanup() {
         elapsed < Duration::from_millis(450),
         "Cleanup repeated the busy wait: {elapsed:?}"
     );
+    // Recovery inspection is a new read after the measured request has expired.
+    engine.store.clear_deadline();
     assert_eq!(
         engine.store.read_blob(&orphan).unwrap(),
         b"contended orphan"
@@ -286,7 +288,6 @@ fn raw_sqlite_writer_contention_does_not_extend_failed_maintenance_cleanup() {
         "Failure must identify the prepared recovery run"
     );
     foreign.execute_batch("ROLLBACK").unwrap();
-    engine.store.clear_deadline();
     let committed: i64 = engine
         .store
         .db

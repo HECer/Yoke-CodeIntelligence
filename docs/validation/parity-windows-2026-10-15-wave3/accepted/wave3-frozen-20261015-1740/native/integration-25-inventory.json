@@ -1,0 +1,70 @@
+{
+  "parity_view_review": {
+    "executable": "target\\debug\\deps\\parity_view_review-5885658842c4425e.exe",
+    "ignored": [],
+    "registered": [
+      "resealed_view_cannot_invent_canonical_labels_or_parent_claims",
+      "resealed_view_cannot_relabel_a_selected_overlay_or_upgrade_its_precision",
+      "resealed_view_cannot_remove_canonical_observations"
+    ]
+  },
+  "parser_epoch9": {
+    "executable": "target\\debug\\deps\\parser_epoch9-683ec3da72b69dcb.exe",
+    "ignored": [],
+    "registered": [
+      "commonlisp9_extracts_local_functions_without_treating_binding_lists_as_calls",
+      "commonlisp9_function_namespace_and_flet_labels_visibility_are_distinct",
+      "commonlisp9_local_function_designators_use_the_function_namespace",
+      "commonlisp9_preserves_escaped_symbol_case",
+      "commonlisp9_rejects_known_impossible_arity_but_keeps_optional_and_rest_candidates",
+      "powershell9_function_drive_reference_is_distinct_from_value_and_literal_text",
+      "powershell9_matches_command_case_without_binding_dynamic_command_variables",
+      "verilog9_retains_task_declaration_and_task_function_scope"
+    ]
+  },
+  "platform_credentials": {
+    "executable": "target\\debug\\deps\\platform_credentials-40235d1fc0b3fd5d.exe",
+    "ignored": [],
+    "registered": [
+      "rejects_empty_and_oversized_binary_secrets_before_backend_access",
+      "rejects_foreign_ambiguous_and_traversing_targets_before_backend_access",
+      "valid_native_targets_do_not_use_mock_or_windows_fallback"
+    ]
+  },
+  "process": {
+    "executable": "target\\debug\\deps\\process-c08c3527bf584b4b.exe",
+    "ignored": [],
+    "registered": [
+      "capture_transfers_exact_unicode_bytes_and_independent_streams",
+      "descendant_held_stdio_cannot_extend_the_shared_deadline",
+      "output_overflow_is_a_failure_with_bounded_retained_bytes",
+      "source_selected_defaults_and_oversized_stdin_are_rejected_before_spawn",
+      "windows_host_fixture_does_not_allocate_a_console_window"
+    ]
+  },
+  "project_session": {
+    "executable": "target\\debug\\deps\\project_session-a0bbbade20e03be1.exe",
+    "ignored": [],
+    "registered": [
+      "external_project_queries_cannot_mutate_or_activate_query_only_roots",
+      "external_queries_cannot_publish_semantic_plans_through_find",
+      "global_note_host_identity_is_bound_to_canonical_directory",
+      "modes_onboarding_and_named_notes_are_persistent_without_granting_execution",
+      "registered_projects_inherit_explicit_host_capture_and_provider_defaults",
+      "session_activation_and_resume_use_only_host_registered_projects"
+    ]
+  },
+  "projects": {
+    "executable": "target\\debug\\deps\\projects-8f94e632183a0e8f.exe",
+    "ignored": [],
+    "registered": [
+      "changed_trusted_standard_library_changes_context_identity_for_unchanged_source",
+      "compiler_output_outside_snapshot_and_overwriting_inputs_are_denied",
+      "compiler_requires_host_trust_and_captured_config_cannot_enable_plugins",
+      "configured_compiler_uses_historical_sources_extends_and_exact_unicode_bindings",
+      "missing_references_cycles_and_empty_solution_never_become_successful_builds",
+      "overlapping_projects_keep_distinct_compiler_contexts_and_report_binding_conflicts",
+      "solution_build_consumes_referenced_declarations_without_source_tree_writes"
+    ]
+  }
+}

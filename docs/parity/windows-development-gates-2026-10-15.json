@@ -1,0 +1,3368 @@
+{
+  "analyzer": "yoke-tree-sitter-8",
+  "currentReconciliation": "docs/parity/native-reconciliation-2026-10-15.json",
+  "deferredPlatforms": [
+    "Linux runtime certification",
+    "macOS runtime certification"
+  ],
+  "eighthWaveAcceptance": {
+    "acceptedTag": "meaning-aliases-windows-20261017-serial-query",
+    "boundedCapabilities": [
+      "Read-only meaning aliases CLI and library replay stored graphs, then propose deterministic label/alias matches with exact packet-qualified source proofs.",
+      "Bounded contextual Unicode normalization, integer Jaro-Winkler/trigram scores and independent true-zero concept/pair/work/candidate/output capacities; no clipped output, model execution, persistence or merging.",
+      "Host output owner/group/DACL reads preserve stored legacy explicit ACE flags through bounded pinned-handle GetKernelObjectSecurity rather than converted GetSecurityInfo results.",
+      "Successful legacy one-shot LSP shutdown awaits actual provider process/stdio closure under the same deadline before source verification and cleanup."
+    ],
+    "cargoTargets": 234,
+    "claims": {
+      "automaticMerging": false,
+      "crossGraphDeduplication": false,
+      "fullGraphifyEquivalence": false,
+      "newParityRowsCertified": false,
+      "releaseCertified": false,
+      "semanticIdentityEstablished": false,
+      "universalParity": false
+    },
+    "failed": 0,
+    "groups": 238,
+    "ignored": 33,
+    "index": "docs/validation/parity-windows-2026-10-16-wave8/index.json",
+    "indexSha256": "a00cfb8e8f240dd4555a5d8e9035bab3638354393c2408ee6e10c8fba530de03",
+    "inventoryBoundary": {
+      "backendRuntimeUnknowns": 77,
+      "identitiesStatusesAndCertificationsChanged": false,
+      "originalIdentities": 353,
+      "unreconciledReviewRequired": 73
+    },
+    "limitations": [
+      "Lexical candidates do not establish semantic identity; reviewed groups, cross-graph deduplication and model-assisted tie-breaking remain open.",
+      "The Windows acceptance profile runs query_parity serially with its original deadlines and executes real short-name fixtures on C; it is not a concurrent-load latency or universal filesystem certification.",
+      "Comparison bounds do not redesign inherited meaning graph replay/allocation limits.",
+      "Historical pending host journals whose converted security hash differs from stored raw flags can refuse exact baseline checks; no fingerprint migration is performed.",
+      "Unreleased Windows checkpoint; universal parity, full upstream contracts and release certification remain open."
+    ],
+    "nativeMatrix": {
+      "integrationTargets": 231,
+      "libraryIgnored": 7,
+      "libraryRegistered": 356
+    },
+    "nonadditiveEvidence": {
+      "index": "docs/validation/parity-windows-2026-10-16-wave8/index.json",
+      "rawCountsAreNonadditive": true,
+      "tests": [
+        "meaning_alias_cli_replays_exact_graph_without_provider_source_capture_or_writes",
+        "meaning_alias_limits_fail_before_creating_state",
+        "meaning_aliases::tests::canonical_pair_order_is_independent_of_materialized_concept_order",
+        "meaning_aliases::tests::capacities_refuse_the_complete_operation_instead_of_returning_a_top_k",
+        "meaning_aliases::tests::compatibility_normalization_preserves_accent_and_script_distinctions",
+        "meaning_aliases::tests::equal_native_ids_in_separate_packets_retain_qualified_proof",
+        "meaning_aliases::tests::explicit_alias_overlap_retains_which_provider_terms_matched",
+        "meaning_aliases::tests::invalid_host_limits_and_deadlines_are_refused",
+        "meaning_aliases::tests::normalization_expansion_refuses_instead_of_truncating_a_label",
+        "meaning_aliases::tests::normalized_aliases_propose_a_pair_without_merging_or_rewriting_source",
+        "meaning_aliases::tests::normalized_term_dedup_preserves_label_priority_and_exact_work_admission",
+        "meaning_aliases::tests::short_unrelated_names_and_empty_normalizations_do_not_get_fuzzy_matches",
+        "meaning_aliases::tests::transposed_letters_are_scored_without_becoming_identity_proof",
+        "meaning_aliases::tests::trigram_similarity_is_separate_from_normalized_equality"
+      ]
+    },
+    "passed": 1814,
+    "phaseProof": {
+      "clippy": {
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave8/evidence/meaning-aliases-windows-20261017-serial-query/clippy/receipt.json",
+        "receiptSha256": "056d1545ab494385347f92053a3047cdaf45ff1352e1716c0ba049c20f59a7c2"
+      },
+      "format": {
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave8/evidence/meaning-aliases-windows-20261017-serial-query/format/receipt.json",
+        "receiptSha256": "49adcc610965bf2c1227f9693ad1b01a0bbcacb7156d0497707b0d3c5ead25eb"
+      },
+      "native": {
+        "failed": 0,
+        "groups": 238,
+        "ignored": 33,
+        "passed": 1814,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave8/evidence/meaning-aliases-windows-20261017-serial-query/native/receipt.json",
+        "receiptSha256": "ec81cb6e5f317cdf3912e142ba8059b8814c5b4461db3e51021ee6696517ba26"
+      },
+      "python": {
+        "failed": 0,
+        "groups": 1,
+        "ignored": 0,
+        "passed": 11,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave8/evidence/meaning-aliases-windows-20261017-serial-query/python/receipt.json",
+        "receiptSha256": "3a9ffaa1b97f5f677dcc7108176772a5e8dc84af6db504b9a7491e5c0ae36600"
+      },
+      "typescript": {
+        "failed": 0,
+        "groups": 1,
+        "ignored": 3,
+        "passed": 254,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave8/evidence/meaning-aliases-windows-20261017-serial-query/typescript/receipt.json",
+        "receiptSha256": "5a435e7e7b140c79f698f1b7cebb28d2c0f4295b38bb7998c8f3c34c27457e2b"
+      }
+    },
+    "platform": "Windows",
+    "postFreezeMetadataFiles": [
+      "docs/STATUS.md",
+      "docs/parity/native-reconciliation-2026-10-15.json",
+      "docs/parity/windows-development-gates-2026-10-15.json",
+      "native/docs/windows-parity-2026-10-15.md"
+    ],
+    "receipt": "docs/validation/parity-windows-2026-10-16-wave8/evidence/meaning-aliases-windows-20261017-serial-query/native/receipt.json",
+    "runnerSha256": "412b796dff54e94a5ba1076204c28646f85dc1a769a4e7afa0428416b07f6a6b",
+    "rustFiles": 395,
+    "sourceChangesDuringEachGate": [],
+    "sourceFiles": 3254,
+    "sourceManifest": "docs/validation/parity-windows-2026-10-16-wave8/evidence/meaning-aliases-windows-20261017-serial-query/source-freeze.json",
+    "sourceManifestSha256": "ee3aa27d31684acd0c16e14af519929e603a187bf5a23d17ef977af2956d5934",
+    "status": "accepted_windows_development_checkpoint"
+  },
+  "fifthWaveAcceptance": {
+    "acceptedTag": "wave5-frozen-20261016-0654",
+    "cargoTargets": 218,
+    "claims": {
+      "releaseCertified": false,
+      "universalParity": false
+    },
+    "failed": 0,
+    "groups": 222,
+    "ignored": 33,
+    "index": "docs/validation/parity-windows-2026-10-16-wave5/index.json",
+    "indexSha256": "377ae26fc17d845f8279d092687833023e4969b7215a4216c97cbebdb4155fd4",
+    "metadataBoundary": "Four separately reconciled post-freeze metadata files; Serena map and runtime freeze remain unchanged.",
+    "nativeMatrix": {
+      "cargoTargets": 218,
+      "integrationTargets": 215,
+      "libraryIgnored": 7,
+      "libraryRegistered": 286
+    },
+    "passed": 1635,
+    "phaseProof": {
+      "clippy": {
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave5/accepted/wave5-frozen-20261016-0654/clippy/receipt.json",
+        "receiptSha256": "e3724a02419e25407a4f296664aa22c8b5c4e835b8c8887981709e95131d7997"
+      },
+      "format": {
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave5/accepted/wave5-frozen-20261016-0654/format/receipt.json",
+        "receiptSha256": "93351c1ce4e95686bdbe7cf42fd49d43666b705bc1937b2f5b1280bb64e08614"
+      },
+      "native": {
+        "failed": 0,
+        "groups": 222,
+        "ignored": 33,
+        "passed": 1635,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave5/accepted/wave5-frozen-20261016-0654/native/receipt.json",
+        "receiptSha256": "9bb40f88d8974d8e9bdaf01722b926dfe4ff17ceb19cf31d103cf41c3e73c75e"
+      },
+      "python": {
+        "failed": 0,
+        "groups": 1,
+        "ignored": 0,
+        "passed": 11,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave5/accepted/wave5-frozen-20261016-0654/python/receipt.json",
+        "receiptSha256": "5664b02e28fcc0160974b5ba21a8ee4fb653cafe0bd7e0df4268ead4dde318cc"
+      },
+      "typescript": {
+        "failed": 0,
+        "groups": 1,
+        "ignored": 3,
+        "passed": 249,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave5/accepted/wave5-frozen-20261016-0654/typescript/receipt.json",
+        "receiptSha256": "266f4aeb94bc6dbfca12022e87aa8f78de11279393e9dffe64808751b7ce9786"
+      }
+    },
+    "postFreezeMetadataFiles": [
+      "docs/parity/native-reconciliation-2026-10-15.json",
+      "docs/parity/windows-development-gates-2026-10-15.json",
+      "docs/STATUS.md",
+      "native/docs/windows-parity-2026-10-15.md"
+    ],
+    "preservationProof": {
+      "preservedFiles": 1679,
+      "preservedPins": 1677,
+      "priorPinsVerified": 1650,
+      "replay": "All five raw phases, native registered/ignored/runtime names, prior pins, full new tree and current normal freeze replayed; classifications remain nonadditive.",
+      "reviewedPlanSha256": "8f3bd62d787894465de3f05e4317efd45d507f85372c066876e81f3bdf489589",
+      "summary": "docs/validation/parity-windows-2026-10-16-wave5/accepted/wave5-frozen-20261016-0654/summary.json",
+      "summarySha256": "43e9254688366d23d171195361ff65b4344d9884d4b00ea59f8afbcec47f98c9"
+    },
+    "priorEvidence": [
+      {
+        "index": "docs/validation/parity-windows-2026-10-15/index.json",
+        "indexSha256": "156852befe63b51cd99d66f9b9a857157659715f31ffb0a653720373677d91a0",
+        "sidecarVerified": false,
+        "verifiedPins": 160
+      },
+      {
+        "index": "docs/validation/parity-windows-2026-10-15-wave2/index.json",
+        "indexSha256": "0e2e504fb30ec388ae46efe53dd4639de55926753ffc8b9b5da74fc55c71633e",
+        "sidecarVerified": false,
+        "verifiedPins": 210
+      },
+      {
+        "index": "docs/validation/parity-windows-2026-10-15-wave3/index.json",
+        "indexSha256": "98646f7e98060d475129f4db26e353f37f57059658f639382888a20240208e97",
+        "sidecarVerified": true,
+        "verifiedPins": 416
+      },
+      {
+        "index": "docs/validation/parity-windows-2026-10-15-wave4/index.json",
+        "indexSha256": "1b829007c444e02be250626ca0e418830932d478a49ad1c88dc828eb3a72acbf",
+        "sidecarVerified": true,
+        "verifiedPins": 864
+      }
+    ],
+    "rawEvidence": [
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-artifact-transport-control",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 1,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-artifact-transport-control"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-balanced-kernels-stub-red",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 15,
+            "ignored": 0,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-balanced-kernels-stub-red"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-balanced-public-stub-red",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 1,
+            "ignored": 0,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-balanced-public-stub-red"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-capacity-helpers-stub-red",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 5,
+            "ignored": 0,
+            "passed": 2,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-capacity-helpers-stub-red"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_standalone_oracle_or_review",
+        "countsInterpretation": "Opaque bytes, never added to accepted totals",
+        "preservedFiles": 1,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/oracles-or-review/wave5-clippy-repair-review.json",
+        "tag": "wave5-clippy-repair-review.json"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_standalone_oracle_or_review",
+        "countsInterpretation": "Opaque bytes, never added to accepted totals",
+        "preservedFiles": 1,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/oracles-or-review/wave5-ended-profile-target-cleanup.json",
+        "tag": "wave5-ended-profile-target-cleanup.json"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-envelope-contract-final",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 18,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-envelope-contract-final"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-envelope-contract-migration",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 17,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-envelope-contract-migration"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-envelope-counter-green",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 4,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-envelope-counter-green"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 9,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-envelope-migration-lineage",
+        "recordedOutcomes": {},
+        "tag": "wave5-envelope-migration-lineage"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-fallback-source-omission-red",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 1,
+            "ignored": 0,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-fallback-source-omission-red"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-first-repairs-green-pending-parser",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 6,
+            "passed": 76,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-first-repairs-green-pending-parser"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-format-check",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 1,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-format-check"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-format-green",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-format-green"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_frozen_attempt_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 11,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/failed-attempts/wave5-frozen-20261016-0050",
+        "recordedOutcomes": {
+          "clippy": {
+            "accepted": false,
+            "exitCode": null,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 0,
+            "scope": null,
+            "sourceChanges": [],
+            "validationErrors": []
+          },
+          "format": {
+            "accepted": true,
+            "exitCode": null,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 0,
+            "scope": null,
+            "sourceChanges": [],
+            "validationErrors": []
+          }
+        },
+        "tag": "wave5-frozen-20261016-0050"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_frozen_attempt_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 181,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/failed-attempts/wave5-frozen-20261016-0110",
+        "recordedOutcomes": {
+          "clippy": {
+            "accepted": true,
+            "exitCode": null,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 0,
+            "scope": null,
+            "sourceChanges": [],
+            "validationErrors": []
+          },
+          "format": {
+            "accepted": true,
+            "exitCode": null,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 0,
+            "scope": null,
+            "sourceChanges": [],
+            "validationErrors": []
+          },
+          "python": {
+            "accepted": true,
+            "exitCode": null,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 11,
+            "scope": null,
+            "sourceChanges": [],
+            "validationErrors": []
+          },
+          "typescript": {
+            "accepted": true,
+            "exitCode": null,
+            "failed": 0,
+            "ignored": 3,
+            "passed": 249,
+            "scope": null,
+            "sourceChanges": [],
+            "validationErrors": []
+          }
+        },
+        "tag": "wave5-frozen-20261016-0110"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_frozen_attempt_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 582,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/failed-attempts/wave5-frozen-20261016-0605",
+        "recordedOutcomes": {
+          "clippy": {
+            "accepted": true,
+            "exitCode": null,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 0,
+            "scope": null,
+            "sourceChanges": [],
+            "validationErrors": []
+          },
+          "format": {
+            "accepted": true,
+            "exitCode": null,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 0,
+            "scope": null,
+            "sourceChanges": [],
+            "validationErrors": []
+          },
+          "native": {
+            "accepted": false,
+            "exitCode": null,
+            "failed": 1,
+            "ignored": 33,
+            "passed": 1633,
+            "scope": null,
+            "sourceChanges": [],
+            "validationErrors": []
+          },
+          "python": {
+            "accepted": true,
+            "exitCode": null,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 11,
+            "scope": null,
+            "sourceChanges": [],
+            "validationErrors": []
+          },
+          "typescript": {
+            "accepted": true,
+            "exitCode": null,
+            "failed": 0,
+            "ignored": 3,
+            "passed": 249,
+            "scope": null,
+            "sourceChanges": [],
+            "validationErrors": []
+          }
+        },
+        "tag": "wave5-frozen-20261016-0605"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-functional-first-compile",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-functional-first-compile"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-functional-public-profiles",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 13,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-functional-public-profiles"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-functional-public-retrieval",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 10,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-functional-public-retrieval"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-functional-retrieval-first",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 6,
+            "ignored": 6,
+            "passed": 71,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-functional-retrieval-first"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-functional-retrieval-green",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 6,
+            "passed": 88,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-functional-retrieval-green"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 154,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-implementation-lineage",
+        "recordedOutcomes": {},
+        "tag": "wave5-implementation-lineage"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-input-routing-stub-red",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 3,
+            "ignored": 0,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-input-routing-stub-red"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_standalone_oracle_or_review",
+        "countsInterpretation": "Opaque bytes, never added to accepted totals",
+        "preservedFiles": 1,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/oracles-or-review/wave5-interrupted-0110.json",
+        "tag": "wave5-interrupted-0110.json"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-linker-recovery",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 9,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-linker-recovery"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-missing-graph-category-red",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 1,
+            "ignored": 0,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-missing-graph-category-red"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-native-mode-stub-red",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 1,
+            "ignored": 0,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-native-mode-stub-red"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-old-envelope-red",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 1,
+            "ignored": 0,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-old-envelope-red"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-old-global-capture",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 1,
+            "ignored": 0,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-old-global-capture"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-old-global-green",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 1,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-old-global-green"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_standalone_oracle_or_review",
+        "countsInterpretation": "Opaque bytes, never added to accepted totals",
+        "preservedFiles": 1,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/oracles-or-review/wave5-pipeline-0050.json",
+        "tag": "wave5-pipeline-0050.json"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_standalone_oracle_or_review",
+        "countsInterpretation": "Opaque bytes, never added to accepted totals",
+        "preservedFiles": 1,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/oracles-or-review/wave5-pipeline-0110.json",
+        "tag": "wave5-pipeline-0110.json"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_standalone_oracle_or_review",
+        "countsInterpretation": "Opaque bytes, never added to accepted totals",
+        "preservedFiles": 1,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/oracles-or-review/wave5-pipeline-0605.json",
+        "tag": "wave5-pipeline-0605.json"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_standalone_oracle_or_review",
+        "countsInterpretation": "Opaque bytes, never added to accepted totals",
+        "preservedFiles": 1,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/oracles-or-review/wave5-pipeline-0654.json",
+        "tag": "wave5-pipeline-0654.json"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_standalone_oracle_or_review",
+        "countsInterpretation": "Opaque bytes, never added to accepted totals",
+        "preservedFiles": 1,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/oracles-or-review/wave5-pipeline-0654.log",
+        "tag": "wave5-pipeline-0654.log"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_qualified_manual_gate_not_full_acceptance",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-qualified-100k-files",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 1,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-qualified-100k-files"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_qualified_manual_gate_not_full_acceptance",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-qualified-real-64mb-graph",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 1,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-qualified-real-64mb-graph"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_qualified_manual_gate_not_full_acceptance",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-qualified-real-ownership",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 1,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-qualified-real-ownership"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_qualified_manual_gate_not_full_acceptance",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-qualified-saved-graph-limit",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 1,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-qualified-saved-graph-limit"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_qualified_manual_gate_not_full_acceptance",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-qualified-windows-path",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 1,
+            "ignored": 0,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-qualified-windows-path"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_qualified_manual_gate_not_full_acceptance",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-qualified-windows-path-green",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 1,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-qualified-windows-path-green"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-saved-graph-stub-red",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 7,
+            "ignored": 1,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-saved-graph-stub-red"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-saved-schema-stub-red",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 6,
+            "ignored": 0,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-saved-schema-stub-red"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-scope-constructor-stub-red",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 1,
+            "ignored": 0,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-scope-constructor-stub-red"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-selector-later-syntax-red",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 3,
+            "ignored": 0,
+            "passed": 0,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-selector-later-syntax-red"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-selector-roles-and-duplicates-red",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 7,
+            "ignored": 0,
+            "passed": 5,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-selector-roles-and-duplicates-red"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-typed-deadline-green",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 0,
+            "failed": 0,
+            "ignored": 0,
+            "passed": 3,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-typed-deadline-green"
+      },
+      {
+        "acceptedFullRun": false,
+        "classification": "raw_focused_gate_not_certified",
+        "countsInterpretation": "Overlapping historical counts are never added to accepted totals; runner code is never imported",
+        "parseDiagnostics": [],
+        "preservedFiles": 4,
+        "preservedRoot": "docs/validation/parity-windows-2026-10-16-wave5/focused/wave5-typed-deadline-stub-red",
+        "recordedOutcomes": {
+          "focused": {
+            "accepted": null,
+            "exitCode": 101,
+            "failed": 2,
+            "ignored": 0,
+            "passed": 1,
+            "scope": "focused_gate_not_frozen_suite",
+            "sourceChanges": [],
+            "validationErrors": null
+          }
+        },
+        "tag": "wave5-typed-deadline-stub-red"
+      }
+    ],
+    "receipt": "docs/validation/parity-windows-2026-10-16-wave5/accepted/wave5-frozen-20261016-0654/native/receipt.json",
+    "runnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+    "rustFiles": 336,
+    "sourceChangesDuringEachGate": [],
+    "sourceFiles": 1528,
+    "sourceManifest": "docs/validation/parity-windows-2026-10-16-wave5/accepted/wave5-frozen-20261016-0654/source-freeze.json",
+    "sourceManifestSha256": "0373cf52584645b8a81d0fe3d9624b8073c9d15748f1db26a4ff53ca167a4863",
+    "status": "accepted_windows_development_checkpoint"
+  },
+  "focusedAcceptance": [
+    {
+      "additionalNativeRegressionPassed": 20,
+      "behavior": "Actual CLI regression repaired using a non-deserializable, current-grant-checked read-only query capability. Native snapshots are never published for imported source.",
+      "capability": "Separate signed source namespace queries",
+      "passed": 28,
+      "suites": 6
+    },
+    {
+      "behavior": "Shared immutable directory projection supports exact registered names and roots, original ignore metadata, recursive directory prefixes, bounded depth amplification, read-only contexts and removal without activating the target project. Unknown captured directory membership is explicit and never probes live files.",
+      "capability": "Registered external directory queries",
+      "passed": 26,
+      "suites": 4
+    },
+    {
+      "behavior": "Explicit personal store and project identity; learn, confirm, fold, publish and read back preserved history. Missing CLI guards are observed within the command and explicit stale guards are preserved. Library-wide folding admits every expected revision and predictable capacity limit before changing the first skill. Small output budgets retain the complete receipt as a personal-store artifact.",
+      "capability": "Authored skill CLI lifecycle",
+      "focusedPassed": 26,
+      "passed": 5,
+      "remaining": "Expanded YAML admission and this lifecycle are included in the accepted899 frozen checkpoint.",
+      "suites": 1
+    },
+    {
+      "behavior": "Exact released JSON identity bytes are preserved while SHA-256 uses a 16 KiB buffer. The multi-megabyte fixture previously requested an 8 MiB allocation and now passes a 64 KiB largest-additional-allocation ceiling. This is not a latency benchmark.",
+      "capability": "Streamed immutable identity hashing",
+      "passed": 28,
+      "suites": 4
+    },
+    {
+      "behavior": "Explicit read-only dependencies retain exact model source bindings. Corrupt oversized CAS data and JSON escape amplification are admitted before source allocation, provider launch and cost reservation. Existing process and Ollama contracts remain unchanged; native HTTP adapters have a separate subsequent focused checkpoint.",
+      "capability": "Bounded source-bound model requests",
+      "ignored": 1,
+      "passed": 26
+    },
+    {
+      "behavior": "Shared 8 MiB expanded decoded-scalar byte admission rejects alias amplification before materialization, retaining independent node and depth bounds. No claim of an 8 MiB total process memory cap.",
+      "capability": "Expanded YAML scalar and alias byte admission",
+      "passed": 17
+    },
+    {
+      "additionalActualWindowsCredentialAndCliGate": 1,
+      "behavior": "Owned TCP/TLS fixtures cover OpenAI-compatible, Anthropic Messages and Azure v1/dated deployment dialects, embeddings, vision, source bindings, refusals and reported usage. Independent malformed tool-call and decoded credential-echo regressions are repaired. Strict host profiles, explicit network trust, dedicated OS credential references and exact parent-to-worker profile SHA pinning. No live external model certification.",
+      "capability": "Native HTTP model adapters and host CLI",
+      "ignored": 2,
+      "passed": 48,
+      "suites": 6
+    },
+    {
+      "behavior": "Windows enforced read-sharing guard excludes writers; read-only inspection creates no registry files and refuses nonempty WAL/journal. Native, view and foreign archive kinds remain distinct; exact CAS registration and current-grant revalidation are enforced.",
+      "capability": "Checked Windows collection registry access",
+      "passed": 23,
+      "remaining": "Native/view canonical replay8/9 and Session integration are included in accepted1080; foreign reads still require current grants.",
+      "subsequentCliPassed": 5,
+      "subsequentIndependentNativeSourceReadPassed": 1
+    },
+    {
+      "behavior": "Empty HostProfile serialization and previous session fingerprints remain unchanged. Registered names/member allowlists, separate registration permission, exact CAS, readonly archive access and invocation-scoped current foreign grants preserve source-only/canonical distinctions. Collection requests use count-only input admission; a reproduced8.2MB rejection allocation was repaired. Subsequent HTTP principal integration is included in accepted1080.",
+      "capability": "Host-configured Session collections",
+      "passed": 37,
+      "suites": 6
+    },
+    {
+      "additionalIndependentEpochReviewPassed": 13,
+      "behavior": "Missing graphs require proven exact capture8/9 policy, epoch-bound cache/extraction/assembly, and unknown producer IDs fail closed. Existing graph fastpath checks the exact stored immutable manifest. Active analyzer remains8. Legacy4 cache-schema fixtures do not claim an available extractor4.",
+      "capability": "Exact Engine extraction replay and immutable fastpaths",
+      "passed": 3
+    },
+    {
+      "behavior": "Generic bounded serializer preserves exact JSON bytes, admits size before allocation, uses a constrained exact-capacity second pass and checks the deadline. Actual oversized fixture previously allocated8MiB before rejecting a1024-byte budget. Collection CLI writes admitted bytes once, including newline in its budget.",
+      "capability": "Count-before-allocation JSON output",
+      "passed": 1
+    },
+    {
+      "behavior": "Four actual fully-resealed native8/view8 graph relabel/retarget regressions now fail exact source replay. Capture proof selects8/9; historical4/6/7 remain explicitly unreplayed. Original registration/view IDs and active8 remain unchanged.",
+      "capability": "Native/view archived canonical replay",
+      "passed": 104
+    },
+    {
+      "behavior": "Eight parser gates plus existing language, exact authentic8 migration, Engine/cache and scoped-resolution coverage. PowerShell command/value/function-drive distinction, Verilog tasks, Common Lisp local function namespace/flet/labels/positional arity/escaped case. Active8 stays unchanged; universal language completeness remains open.",
+      "capability": "Epoch9 language semantic extensions",
+      "passed": 61
+    },
+    {
+      "additionalActualWindowsCredentialAndCliGate": 1,
+      "behavior": "Converse, Titan1/2 and Cohere3/4 owned TCP/TLS with independent SigV4 oracle and hostile responses. Versioned OS credential chunks support4200-byte synthetic sessions; final manifest binds generation/order/length/hash/expiry. Actual managed CLI source-bound summary and unknown-billing reservation pass. No external AWS validation or hidden worker fan-out; parent corpus batching is now independently implemented and included in accepted1080; see embedding-batches.md.",
+      "capability": "Native Bedrock and Windows session credentials",
+      "passed": 19,
+      "storagePassed": 5
+    },
+    {
+      "behavior": "Current principal grants are borrowed under the policy read lease for one Session dispatch; no grants in connection/Session/queued state. Native-only archived reads avoid unused receivers. Upsert cancels obsolete sessions before waiting for the policy write lease. Existing HTTP17/protocol+Session15 compatibility gates passed before the final cancellation adjustment.",
+      "capability": "HTTP principal collection grant integration",
+      "independentReviewPassed": 3,
+      "independentUpsertCancellationGate": "passed; all3 independent gates included in accepted947 whole checkpoint",
+      "passed": 2,
+      "subsequentBedrockCliPreflightPassed": 3
+    },
+    {
+      "behavior": "Explicit graphViewId for find/read/trace/context; checked immutable lineage, original precision and evidence, seed admission and source excerpt omissions; no capture/provider calls. Included in accepted1080.",
+      "capability": "Ordinary selected-View MCP queries",
+      "passed": 14,
+      "suites": 2
+    },
+    {
+      "behavior": "Immutable authored revisions, CAS updates, literal checks, deterministic inert Markdown/JSON bundles, rollback-safe imports and private-store CLI artifacts. Minimal source pins retain personal evidence without copying private text. Included in accepted1080; pins retain conservatively and measured touch counters are not implemented.",
+      "capability": "Authored repository decisions and personal preferences",
+      "passed": 29,
+      "suites": 4
+    },
+    {
+      "behavior": "New disk/Git/editor capture and Session projects propagate explicit host policy while original8 fixtures/IDs remain unchanged. Strict extraction replay stays separate from validated capture-acquisition ancestry;9 new scope policy regressions included in accepted1080. HTTP independently configured targets still do not expose the selector.",
+      "capability": "Host-selected epoch8/9 and pinned Sessions"
+    },
+    {
+      "behavior": "500ms early-expiry response/PID race plus definitely-started4000ms TTL fixture; process exit observed before shutdown against original admission time. Production timeouts unchanged. Included in accepted1080.",
+      "capability": "HTTP initialization expiry evidence",
+      "passed": 18,
+      "suites": 1
+    },
+    {
+      "behavior": "Complete source/sink/cost preflight, one reservation per remote attempt, accounted bounded chunks, uncertain-billing preservation and one atomic complete vector publication. Included in accepted1080; optional actual Windows fake-credential CLI gate remains separately recorded.",
+      "capability": "Parent-managed Bedrock embedding batches"
+    }
+  ],
+  "fourthWaveAcceptance": {
+    "cargoTargets": 213,
+    "failed": 0,
+    "groups": 217,
+    "hostNativeCoverageAccepted": true,
+    "ignored": 27,
+    "index": "docs/validation/parity-windows-2026-10-15-wave4/index.json",
+    "indexSha256": "1b829007c444e02be250626ca0e418830932d478a49ad1c88dc828eb3a72acbf",
+    "metadataBoundary": "Exactly the five listed post-freeze metadata/documents and a separately preserved evidence bundle follow acceptance. All 313 Rust files, native/src compatibility contracts and TypeScript source remain at accepted hashes. Universal parity, release and deferred-platform certification remain open.",
+    "nativeMatrix": {
+      "cargoTargets": 213,
+      "disjointLibraryCoverage": true,
+      "exactAclNames": [
+        "host_install::io::tests::explicit_low_integrity_label_is_preserved_or_refused_before_human_bytes",
+        "host_install::io::tests::prepared_output_preserves_owner_and_nondefault_group_before_human_bytes",
+        "host_install::io::tests::staged_registered_reopen_checks_original_security_before_any_mutation"
+      ],
+      "integrationTargets": 210,
+      "libraryIgnored": 1,
+      "libraryRegistered": 185,
+      "targetNamesByKind": {
+        "bench": [],
+        "bin": [
+          "yoke"
+        ],
+        "example": [
+          "benchmark"
+        ],
+        "lib": [
+          "yoke"
+        ],
+        "test": [
+          "adversarial",
+          "agent_dependency_options",
+          "agent_diagnostic_boundaries",
+          "agent_documentation",
+          "agent_facade_options",
+          "agent_facade_semantics",
+          "agent_file_options",
+          "agent_memory_namespaces",
+          "agent_repl",
+          "agent_repl_lifecycle",
+          "agent_symbol_contracts",
+          "analyzer_cli",
+          "analyzer_epochs",
+          "artifact_page_review",
+          "artifacts",
+          "blob_bounds",
+          "capture_analyzer8_fixture",
+          "capture_changes",
+          "capture_epoch_selection",
+          "capture_options",
+          "capture_policy",
+          "client_lock",
+          "collection_registry_access",
+          "collections_cli",
+          "collections_cli_review",
+          "compatibility",
+          "compatibility_review",
+          "config_graph",
+          "container",
+          "contracts",
+          "core",
+          "credentials",
+          "dataflow",
+          "deadline_scope",
+          "deadlines",
+          "debug_adapter",
+          "decision_cli",
+          "decision_records",
+          "decision_records_review",
+          "decision_retention",
+          "dependency_queries",
+          "derived_graph_mixed_budget",
+          "derived_graph_preparation",
+          "document_cli",
+          "document_explorer",
+          "document_graph",
+          "document_graph_review",
+          "editor",
+          "editor_http",
+          "engine_epoch_review",
+          "epoch_cache_review",
+          "epoch_producers",
+          "explorer_export",
+          "explorer_runtime",
+          "export",
+          "facade_file_delete",
+          "facade_file_move",
+          "facade_file_rename",
+          "federated_collections",
+          "federation",
+          "federation_archive",
+          "federation_archive_receipts",
+          "federation_epoch_review",
+          "federation_epochs",
+          "federation_http",
+          "federation_receipt_bounds",
+          "file_api",
+          "freshness",
+          "freshness_epoch",
+          "git_cli",
+          "git_epoch_selection",
+          "git_epochs",
+          "git_review",
+          "git_workflows",
+          "github",
+          "github_live",
+          "graph",
+          "graph_archive_review",
+          "graph_collections",
+          "graph_exports",
+          "graph_extensions",
+          "graph_review_adversarial",
+          "graph_root_review",
+          "graph_view",
+          "graphify_adapter",
+          "graphify_cli",
+          "graphify_selected_queries",
+          "historical_publication",
+          "host_cli",
+          "host_config",
+          "host_credentials",
+          "host_install",
+          "host_install_cli",
+          "host_output_disposition",
+          "hybrid_retrieval",
+          "ignored_capture",
+          "ignored_capture_cli",
+          "ignored_facades",
+          "json_output_review",
+          "knowledge",
+          "knowledge_cli",
+          "language_constructs",
+          "ledger",
+          "ledger_admission_review",
+          "ledger_batches",
+          "ledger_batches_review",
+          "live",
+          "live_enrichment",
+          "lsp",
+          "lsp_action_resolve",
+          "lsp_dependency_scope",
+          "lsp_enrichment",
+          "lsp_lifecycle",
+          "lsp_source_execution",
+          "maintenance",
+          "manifest_graph",
+          "markdown_graph",
+          "mcp_collection_grants",
+          "mcp_collection_grants_review",
+          "mcp_http",
+          "mcp_http_cli",
+          "mcp_http_review",
+          "meaning_archive_cli",
+          "meaning_archive_primitives",
+          "meaning_build",
+          "meaning_cli",
+          "meaning_collection_archives",
+          "meaning_commit_review",
+          "meaning_graph",
+          "meaning_graph_views",
+          "meaning_protocol",
+          "meaning_retention_review",
+          "meaning_view",
+          "meaning_view_archives",
+          "media",
+          "model_bedrock",
+          "model_bedrock_batch_cli_review",
+          "model_bedrock_cli",
+          "model_bedrock_cli_actual",
+          "model_bedrock_review",
+          "model_http",
+          "model_http_cli",
+          "model_http_review",
+          "model_identity",
+          "notes",
+          "office",
+          "office_bounds",
+          "ollama",
+          "operations",
+          "parity_cli",
+          "parity_construct_review",
+          "parity_retention",
+          "parity_source_review",
+          "parity_view_review",
+          "parser_epoch9",
+          "platform_credentials",
+          "process",
+          "project_session",
+          "projects",
+          "protocol_connection",
+          "provider_batch_bounds",
+          "provider_batches",
+          "provider_batches_review",
+          "provider_scope_review",
+          "providers",
+          "publication",
+          "query_parity",
+          "read_only_dependencies",
+          "refactor_intents",
+          "registry_replay_review",
+          "replacement",
+          "resource_paging",
+          "retention",
+          "retrieval",
+          "runtime",
+          "scoped_parent_performance",
+          "scoped_resolution",
+          "selected_graph_views",
+          "selected_view_analysis",
+          "selected_view_analysis_review",
+          "selected_view_review",
+          "semantic_enrichment",
+          "semantic_mcp",
+          "semantic_provider_context",
+          "semantic_refactor",
+          "server_catalog",
+          "session_collections",
+          "session_collections_admission",
+          "session_epoch_selection",
+          "session_mcp",
+          "session_review",
+          "skill_takeaways",
+          "skill_takeaways_batch_review",
+          "skill_takeaways_contract_review",
+          "skill_takeaways_review",
+          "skills_cli",
+          "store_cancellation",
+          "store_identity",
+          "store_review",
+          "symbol_move_effect_admission",
+          "symbol_move_own_v1",
+          "test_map",
+          "trail_adapter",
+          "trail_bodies",
+          "trail_review",
+          "universal_languages",
+          "vector_admission_review",
+          "workflow_cli",
+          "workspace",
+          "yaml_admission_review"
+        ]
+      }
+    },
+    "passed": 1515,
+    "phaseProof": {
+      "clippy": {
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receipt": "docs/validation/parity-windows-2026-10-15-wave4/accepted/wave4-frozen-20261015-2121/clippy/receipt.json",
+        "receiptSha256": "c3cd17b1db2a9c9e0acab92eec7fb3c914e1ecaaa6ebbaa262897de36d9d1aab"
+      },
+      "format": {
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receipt": "docs/validation/parity-windows-2026-10-15-wave4/accepted/wave4-frozen-20261015-2121/format/receipt.json",
+        "receiptSha256": "cae1261e7322171ce2cdf933ba167b6fa75a098d97ad0ed00249a4aa6ba3231e"
+      },
+      "native": {
+        "failed": 0,
+        "groups": 217,
+        "ignored": 27,
+        "passed": 1515,
+        "receipt": "docs/validation/parity-windows-2026-10-15-wave4/accepted/wave4-frozen-20261015-2121/native/receipt.json",
+        "receiptSha256": "01b0fb063b6532596a82b28292a20a10faa134a9c594b72694c6fb0748a60b61"
+      },
+      "python": {
+        "failed": 0,
+        "groups": 1,
+        "ignored": 0,
+        "passed": 11,
+        "receipt": "docs/validation/parity-windows-2026-10-15-wave4/accepted/wave4-frozen-20261015-2121/python/receipt.json",
+        "receiptSha256": "fea4e73cd9611d94320f4cb527acb1a6a89a469edad02f78f672ff1776c966cd"
+      },
+      "typescript": {
+        "failed": 0,
+        "groups": 1,
+        "ignored": 3,
+        "passed": 249,
+        "receipt": "docs/validation/parity-windows-2026-10-15-wave4/accepted/wave4-frozen-20261015-2121/typescript/receipt.json",
+        "receiptSha256": "023171bbdfc48e358baecb7d62031f5a89255bb53ea22bfe26b9d487b7d7e64a"
+      }
+    },
+    "postFreezeMetadataFiles": [
+      "docs/parity/native-reconciliation-2026-10-15.json",
+      "docs/parity/windows-development-gates-2026-10-15.json",
+      "docs/parity/serena-facade-mapping-2026-10-14.json",
+      "docs/STATUS.md",
+      "native/docs/windows-parity-2026-10-15.md"
+    ],
+    "receipt": "docs/validation/parity-windows-2026-10-15-wave4/accepted/wave4-frozen-20261015-2121/native/receipt.json",
+    "runnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+    "rustFiles": 313,
+    "sourceChangesDuringEachGate": [],
+    "sourceFiles": 1070,
+    "sourceManifest": "docs/validation/parity-windows-2026-10-15-wave4/accepted/wave4-frozen-20261015-2121/source-freeze.json",
+    "sourceManifestSha256": "df91fac4f3bc5c3e81be4a082cd795fc5bfcd7b8844421ff6b2075dd18625063",
+    "status": "accepted_frozen_source_matrix"
+  },
+  "fourthWaveAttempts": {
+    "interpretation": "Original failed format/Clippy, partial or interrupted native/TypeScript, quiet recovery failures, process/host diagnostic failures and PDB/link-inventory failures retain their original classifications in the preserved index; later success does not rewrite them.",
+    "preservedIndex": "docs/validation/parity-windows-2026-10-15-wave4/index.json"
+  },
+  "fourthWaveScopedEvidence": [
+    {
+      "historicalFocusedEvidence": [
+        {
+          "addToWholeMatrixTotals": false,
+          "failed": 0,
+          "groups": 5,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave4/focused/wave4-final-functional-green/run.log",
+          "logSha256": "b8eb07ab52351fd7946fcbf4fb550e686dc8118ccfa09df96f8086af512c67f2",
+          "passed": 80,
+          "receipt": "docs/validation/parity-windows-2026-10-15-wave4/focused/wave4-final-functional-green/receipt.json",
+          "receiptSha256": "cb7b7cb49c1f4f654cffd1acf15b564a02148b3d7805cb1dc86fb3537e382058",
+          "scope": "focused_gate_not_frozen_suite"
+        },
+        {
+          "addToWholeMatrixTotals": false,
+          "failed": 0,
+          "groups": 1,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave4/focused/wave4-archive-index-and-order-green/run.log",
+          "logSha256": "693314672b6edc43075b9b1c2f63bdb54d4294f11a1914240cc9c80c074eed27",
+          "passed": 13,
+          "receipt": "docs/validation/parity-windows-2026-10-15-wave4/focused/wave4-archive-index-and-order-green/receipt.json",
+          "receiptSha256": "ef871511b8f9ba44e9b70897dbb1bb11f41d91469592f1da6fecb5987338d7c9",
+          "scope": "focused_gate_not_frozen_suite"
+        }
+      ],
+      "id": "wave4_owned_rust_function_move_and_portable_archives",
+      "interpretation": "Scoped original observations remain historical; counts overlap the accepted matrix and are never added to global totals.",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave4/accepted/wave4-frozen-20261015-2121/native/receipt.json",
+      "wholeTypescriptReceipt": "docs/validation/parity-windows-2026-10-15-wave4/accepted/wave4-frozen-20261015-2121/typescript/receipt.json"
+    },
+    {
+      "distinctScopedPasses": 23,
+      "historicalFocusedEvidence": {
+        "addScopedCountsToWholeTotals": false,
+        "behavior": "Post-spawn deadline/cancellation/setup errors use installed child/stdio cleanup before rejection; successful output and real missing-executable/missing-cwd failures remain checked.",
+        "distinctScopedPasses": 23,
+        "failedScopedAttempts": [
+          {
+            "failed": 2,
+            "logSha256": "775f8f49a8fe75435acd2ac8d82e23f05652cf399135b63eaad8ee60b01acce6",
+            "passed": 5,
+            "receipt": "docs/validation/parity-windows-2026-10-15-wave4/focused/wave4-process-deadline-red/receipt.json"
+          },
+          {
+            "failed": 2,
+            "logSha256": "c889cbfc8e8bfa019cef069beffc3fb64acbaa241255c4764983c6d044bea8f9",
+            "passed": 19,
+            "receipt": "docs/validation/parity-windows-2026-10-15-wave4/focused/wave4-process-deadline-green/receipt.json"
+          }
+        ],
+        "independentReview": "clear_per_root; retain exact final review reference when supplied",
+        "newLedgerRowsOrCertificationUpgrades": false,
+        "overlappingControlNotAddedAgain": {
+          "logSha256": "294335f57202580497bdb3e94336c18783aa00dc10c4a09d8606cdef31b516c4",
+          "passed": 2,
+          "receipt": "docs/validation/parity-windows-2026-10-15-wave4/focused/wave4-process-spawn-failure-controls/receipt.json"
+        },
+        "remainingLimits": "No universal descendant-tree termination, all-platform cancellation, latency/SLA or whole-TypeScript acceptance is inferred.",
+        "sourceHashes": {
+          "src/core/process.ts": "00c923dafca5beeb1bb4638250c973f3fad5a6b648baa507d260771673dab0e4",
+          "test/process-deadline-transition.test.mjs": "ee60282d44e65e0b918d09e891422447afdceb75ea1b6346abaae917580c1d19",
+          "test/process-spawn-failure.test.mjs": "589ecc46244e9b2ef2d3657a799d455a37163063528b18b36cbda26c1d4f3a16"
+        },
+        "status": "scoped_repair_verified_whole_typescript_pending",
+        "successfulScopedReceipts": [
+          {
+            "failed": 0,
+            "ignored": 0,
+            "logSha256": "2c7e94d9a4c3de66b331e3959ef35c65d8b7d0944f90d95ff4efd73543924a71",
+            "passed": 21,
+            "receipt": "docs/validation/parity-windows-2026-10-15-wave4/focused/wave4-process-deadline-stdio-green/receipt.json"
+          },
+          {
+            "failed": 0,
+            "ignored": 0,
+            "logSha256": "88e90aacfc131b60632707bfb7daecb44b14defb8853400107ec9e91b42995a4",
+            "passed": 2,
+            "receipt": "docs/validation/parity-windows-2026-10-15-wave4/focused/wave4-process-spawn-failure-normal-green/receipt.json"
+          }
+        ],
+        "wholeTypescriptAccepted": null
+      },
+      "id": "wave4_process_lifecycle_repair",
+      "interpretation": "Scoped original observations remain historical; counts overlap the accepted matrix and are never added to global totals.",
+      "sourceHashes": {
+        "src/core/process.ts": "00c923dafca5beeb1bb4638250c973f3fad5a6b648baa507d260771673dab0e4",
+        "test/process-deadline-transition.test.mjs": "ee60282d44e65e0b918d09e891422447afdceb75ea1b6346abaae917580c1d19",
+        "test/process-spawn-failure.test.mjs": "589ecc46244e9b2ef2d3657a799d455a37163063528b18b36cbda26c1d4f3a16"
+      },
+      "status": "included_in_accepted_frozen_source_matrix",
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave4/accepted/wave4-frozen-20261015-2121/native/receipt.json",
+      "wholeTypescriptReceipt": "docs/validation/parity-windows-2026-10-15-wave4/accepted/wave4-frozen-20261015-2121/typescript/receipt.json"
+    },
+    {
+      "current": "A per-operation held-parent metadata reader and bounded journal-lineage work retain source identity/security, exact filename membership and fresh listed-leaf checks. Original mutation and refusal guards remain. Fresh contexts are not reused as long-lived authority. Scoped success is separate from full native/Windows acceptance.",
+      "historicalFocusedEvidence": [
+        {
+          "failed": 0,
+          "ignored": 0,
+          "logSha256": "82e16862c35345afd26d66865087121577e4111d315477a407e650c61fca2b56",
+          "passed": 18,
+          "receipt": "docs/validation/parity-windows-2026-10-15-wave4/focused/wave4-host-metadata-repaired-green/receipt.json"
+        },
+        {
+          "failed": 0,
+          "ignored": 0,
+          "logSha256": "7aafe9bbd1bddbdadcf27d138c564951fce613bb72dcc626a5e529ca962e85d6",
+          "passed": 3,
+          "receipt": "docs/validation/parity-windows-2026-10-15-wave4/focused/wave4-host-journal-final-guards/receipt.json"
+        },
+        {
+          "failed": 0,
+          "ignored": 0,
+          "logSha256": "1e418e1d8704a0a6380f496e1d3b2b6dbca60d0925be8678378f1b4bed891294",
+          "passed": 1,
+          "receipt": "docs/validation/parity-windows-2026-10-15-wave4/focused/wave4-host-final-quiet16/receipt.json"
+        }
+      ],
+      "id": "wave4_scoped_host_parent_reader",
+      "interpretation": "Scoped original observations remain historical; counts overlap the accepted matrix and are never added to global totals.",
+      "quietObservation": {
+        "appends": 51,
+        "exactTest": "host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work",
+        "fixtureRoots": 16,
+        "interpretation": "One scoped successful fixture under unchanged original deadline; phase timings are not an SLA or a release benchmark.",
+        "loads": 52,
+        "originalDeadlineMs": 30000,
+        "passedCases": 1,
+        "prefixMs": 733,
+        "preparationMs": 2890,
+        "reads": 5903,
+        "recoveryMs": 13949
+      },
+      "remaining": "Branded clients/hooks, non-Windows certification, hard cancellation/power loss, terminal rolled_back ACL replay, universal recovery/performance and full upstream contracts remain unestablished. No deadline increase or certification upgrade follows.",
+      "sourceHashes": {
+        "native/src/host_install.rs": "7867bb0291079702fe0cacb48628afe953a0445fa9d947b0413da5cbf46e621b",
+        "native/src/host_install_io.rs": "a273ef221a6d030810eca8b74f4325543969fb7e7812720ba0f288023095bdaf",
+        "native/src/host_install_journal_v2.rs": "5e1e19b425e071dc2d769c97423ecc0aedf5ff02025e45913afd98d26ced92f4",
+        "native/src/host_journal_scope_tests.rs": "438944c933fdb9d46e7a14f87aee01519703e82d032a392f8a1771b452e8ee3a",
+        "native/src/host_metadata_directory_tests.rs": "ed07f67c776d821b0073d5635fd88de8e45a32452c0866a41043c9e070fe9d9c",
+        "native/src/host_output_recovery_tests.rs": "e7872a61750d846e522e2ffa7a2dc1ca5001a7563d3de332c4a883a61047699c"
+      },
+      "status": "included_in_accepted_frozen_source_matrix",
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave4/accepted/wave4-frozen-20261015-2121/native/receipt.json",
+      "wholeTypescriptReceipt": "docs/validation/parity-windows-2026-10-15-wave4/accepted/wave4-frozen-20261015-2121/typescript/receipt.json"
+    }
+  ],
+  "historicalInitialWholeNativeRun": {
+    "failed": 1,
+    "failure": "host_cli: signed_source_cli_requires_a_host_grant_and_queries_a_separate_namespace",
+    "groups": 133,
+    "ignored": 20,
+    "interpretation": "Coherent failing baseline. Subsequent focused repairs and features require a fresh frozen whole run.",
+    "passed": 784,
+    "receipt": "full-tests-20261015-0445.log",
+    "sourceFiles": 487,
+    "sourceFilesChangedDuringRun": 0,
+    "sourceManifest": "source-freeze-20261015-0445.json",
+    "sourceManifestSha256": "18cb2303ce15cd56622e66fe42ec576d6d20959785e445c5a823253a51e77575"
+  },
+  "hostLifecycleScopedAcceptance": {
+    "combinedGate": {
+      "failed": 0,
+      "ignored": 0,
+      "passed": 117,
+      "suites": {
+        "host_install": {
+          "passed": 9
+        },
+        "host_install_cli": {
+          "passed": 11
+        },
+        "lib": {
+          "passed": 97
+        }
+      }
+    },
+    "evidence": {
+      "bytes": 12711,
+      "path": "docs/validation/parity-windows-2026-10-15-wave2/wave2-namespace-second-green.log",
+      "sha256": "99d6dc566fb7d0974e13a4c8cd11928e394218c41d1ecc4dfc17136fdf848a3c"
+    },
+    "exactGuidRealBinaryLaunch": "passed",
+    "finalWholeAcceptance": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/receipt.json",
+    "hostSpecific": {
+      "failed": 0,
+      "groups": {
+        "cli": 11,
+        "core": 21,
+        "integration": 9,
+        "io": 24,
+        "namespace": 12
+      },
+      "passed": 77
+    },
+    "independentReview": "Coordinator reports FFI/core/Windows backend reviews clear. This does not change any of the77 language-server runtime-review rows.",
+    "otherLibCasesInCombinedGate": 40,
+    "profile": "generic-agents-v1 only; no branded assistant configuration, prompt/edit/session/statusline or Git-hook integration",
+    "recoveryBoundary": "A prepared output created before its exact identity is journaled is preserved/refused as unrecognized. The pre-journal crash frontier remains open; no universal recovery is claimed.",
+    "reparseRegressions": {
+      "passed": 2,
+      "scope": "held-handle namespace/raw reparse admission regressions"
+    },
+    "status": "included_in_accepted_matrix_generic_agents_only",
+    "wholeNativeAcceptance": "Included in the accepted 1,269-test matrix; see finalWholeAcceptance for the exact receipt."
+  },
+  "latestWholeNativeRun": {
+    "status": "accepted_windows_development_checkpoint",
+    "platform": "Windows",
+    "acceptedTag": "declaration-moves-windows-20261017-r2",
+    "index": "docs/validation/parity-windows-2026-10-17-wave10/index.json",
+    "indexSha256": "4de65fbe19220356f19fcdddb079542f9475490dcb790265d38a565a2b985ee3",
+    "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/native/receipt.json",
+    "sourceManifest": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/source-freeze.json",
+    "sourceManifestSha256": "6440b361f0ab6dbbc43834da0490a4e34aa2dd4de27efe371f434cb82bb021eb",
+    "runnerSha256": "412b796dff54e94a5ba1076204c28646f85dc1a769a4e7afa0428416b07f6a6b",
+    "sourceFiles": 3683,
+    "rustFiles": 401,
+    "phaseProof": {
+      "clippy": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/clippy/receipt.json",
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receiptSha256": "8f22137fac707eb73dc05af08dd0637fbfa17770367551ce2e95278311ddecc3"
+      },
+      "format": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/format/receipt.json",
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receiptSha256": "7e21a0aced296cc786fe79d3e01711455732aecf771a6531bb889ae82d8c0dfc"
+      },
+      "native": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/native/receipt.json",
+        "failed": 0,
+        "groups": 241,
+        "ignored": 33,
+        "passed": 1867,
+        "receiptSha256": "1fcdda6be575e30abc9e8271ef9bc87847e2c2a959aa88bbbc0965b9d4ddef23"
+      },
+      "python": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/python/receipt.json",
+        "failed": 0,
+        "groups": 1,
+        "ignored": 0,
+        "passed": 11,
+        "receiptSha256": "11a9ba9354a10ecc00222fe93782a17dc8ada9f4de378aeb348f44aa61db5863"
+      },
+      "typescript": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/typescript/receipt.json",
+        "failed": 0,
+        "groups": 1,
+        "ignored": 3,
+        "passed": 254,
+        "receiptSha256": "7040ca2ad011bf502d279ebca0569e5ecf44d2e7cfcdc8ec6b06d846625f00a7"
+      }
+    },
+    "cargoTargets": 237,
+    "groups": 241,
+    "passed": 1867,
+    "failed": 0,
+    "ignored": 33,
+    "nativeMatrix": {
+      "integrationTargets": 234,
+      "libraryRegistered": 371,
+      "libraryIgnored": 7
+    },
+    "claims": {
+      "universalParity": false,
+      "releaseCertified": false,
+      "newParityRowsCertified": false,
+      "fullUpstreamEquivalence": false,
+      "exhaustiveCompilerReferenceBinding": false,
+      "liveProprietaryIdeParity": false
+    },
+    "sourceChangesDuringEachGate": [],
+    "postFreezeMetadataFiles": [
+      "docs/STATUS.md",
+      "docs/parity/native-reconciliation-2026-10-15.json",
+      "docs/parity/windows-development-gates-2026-10-15.json",
+      "native/docs/windows-parity-2026-10-15.md"
+    ],
+    "boundedCapabilities": [
+      "Checked own_v1 moves of free Rust functions, structs, enums, traits, type aliases and constants at file/inline-module scope.",
+      "Explicit sourceAttachments exact_text_v1 capability admits an independently derived unchanged outer-documentation/attribute text bundle, retaining distinct original graph/name anchors and checking every transferred attachment owner.",
+      "Original-coordinate cut, exact AST/direct-parent placement, extra-copy provenance, other preamble/attachment preservation, old capability compatibility and CRLF padding; original guarded change/apply authority remains."
+    ],
+    "limitations": [
+      "Module/directory moves, associated/local declarations, other languages, compilation/attribute expansion and exhaustive reference repair remain outside this slice.",
+      "Existing publication atomicity and proprietary IDE limitations remain; universal parity and release certification stay open."
+    ],
+    "inventoryBoundary": {
+      "originalIdentities": 353,
+      "unreconciledReviewRequired": 73,
+      "backendRuntimeUnknowns": 77,
+      "identitiesStatusesAndCertificationsChanged": false
+    },
+    "nonadditiveDeclarationTests": [
+      "attachments_require_an_explicit_recognized_provider_capability",
+      "block_docs_crlf_and_bom_keep_exact_transfer_bytes_and_ordinary_leading_comments",
+      "const_moves_preserve_initializer",
+      "declaration_moves_still_require_an_exact_cut_and_unchanged_insert_at_the_selected_parent",
+      "enum_moves_preserve_variants",
+      "exact_moved_declaration_retains_nested_module_preambles_and_attributes",
+      "negotiated_attachments_move_as_one_bundle_with_distinct_entity_and_text_ranges",
+      "nonfree_and_module_declarations_refuse_before_provider_work",
+      "nonfunction_moves_cannot_leave_or_add_a_comment_wrapped_ast_copy",
+      "provider_cannot_leave_source_attachments_or_strip_them_from_the_target",
+      "same_file_and_inline_source_moves_use_original_coordinates",
+      "same_file_inline_bundle_preserves_inner_docs_and_other_items_attachments",
+      "struct_moves_preserve_generic_fields",
+      "trait_moves_preserve_associated_signatures",
+      "transferred_bundles_accept_crlf_insertion_padding_without_changing_their_bytes",
+      "type_alias_moves_preserve_generic_target",
+      "unattached_declarations_retain_the_three_field_provider_capability_contract",
+      "unrelated_identical_declarations_keep_their_original_provenance"
+    ]
+  },
+  "limits": [
+    "Focused passes do not constitute a new whole-source acceptance or release.",
+    "Declared language-server adapters are not live certification of all adapters.",
+    "Current working-tree ignore observations do not authorize historical ignored Git capture.",
+    "Document explorer browser interactions were checked; screenshot certification remains unavailable.",
+    "No upstream performance or universal correctness claim is inherited."
+  ],
+  "meaningGroupProjectionScopedChecks": {
+    "behavior": "Explicit disjoint host-selected groups over one replayed meaning graph preserve all original concepts, directed parallel relations, ordered hyperedge slots, source evidence and provider receipt metadata. No parent mutation, provider, capture or persistence.",
+    "claims": {
+      "authenticatedHumanReview": false,
+      "crossGraphDeduplication": false,
+      "newWholeNativeAcceptance": false,
+      "releaseCertified": false,
+      "semanticIdentityEstablished": false,
+      "universalParity": false
+    },
+    "failed": 0,
+    "ignored": 0,
+    "index": "docs/validation/meaning-groups-windows-2026-10-17/index.json",
+    "indexSha256": "2d133505d5c786de5c44be5b2c0a7b40caa2201318ebb1503065b203425520f4",
+    "limitations": "Host assertions do not establish semantic identity or authenticated human review. Cross-graph grouping, automatic semantic decisions and generic projection consumers remain open.",
+    "newWholeNativeAcceptance": false,
+    "passed": 47,
+    "runnerSha256": "8fff3af62df640622dcba22c727aa413e19422330540f28ff52125ee8606c661",
+    "sourceManifestSha256": "ae5c68faebe887cbd063266ebe479b62dd43dd671f6ec6fe035f67126585f78f",
+    "status": "accepted_windows_scoped_development_checks",
+    "uniqueNonadditiveGroupTests": 25
+  },
+  "nextWork": [
+    "Other symbol/directory moves, default-safe file usage proof, propagation and broader inline/rename/provider contracts remain open beyond explicit own_v1 free Rust functions.",
+    "Generic typed Meaning joins/analytics/source-only consumers, broader mixed code/Office/PDF spaces and semantic alias identity remain open beyond complete native archive/Registry/CLI transport.",
+    "Branded clients/hooks, non-Windows certification, hard cancellation/power loss, terminal rolled_back ACL replay, universal recovery/performance and full upstream contracts remain unestablished. No deadline increase or certification upgrade follows.",
+    "All remaining original 353-entry boundaries, 77 backend runtime reviews and Linux/macOS runtime certification remain open.",
+    "manifest_balanced_v1 is an owned finite retrieval policy, distinct from the unrelated LSP own_v1 profile. Other repository/selector formats and richer discovery remain unsupported. Full pinned upstream ranking/ordering/quality, performance, compiler reference completeness, all-allocation bounds, whole-agent savings and non-Windows certification remain open. Earlier capture/indexing and inherited Snapshot loading retain separate boundaries. Qualified large/host fixtures remain separately labeled and nonadditive; an ignored default-suite case never becomes a default-suite pass."
+  ],
+  "olderAcceptedWholeNativeRuns": [
+    {
+      "additionalManualWindowsCliPassed": 3,
+      "allTargetsClippy": "passed with -D warnings",
+      "checkedAtUtc": "2026-10-15T08:21:44.494275+00:00",
+      "failed": 0,
+      "format": "passed",
+      "groups": 164,
+      "ignored": 24,
+      "interpretation": "Accepted frozen Windows development checkpoint. Metadata update and subsequent implementation occur after this source snapshot; universal parity and release remain open.",
+      "log": "full-tests-20261015-0806.log",
+      "logSha256": "c3dadc52c16ae51212e368172d2606b0fd18e22d40bad1aeab4b0bc91d3c625b",
+      "passed": 947,
+      "receipt": "acceptance-20261015-0806.json",
+      "sourceFiles": 541,
+      "sourceFilesChangedDuringRun": 0,
+      "sourceInventoryChangedDuringRun": 0,
+      "sourceManifest": "source-freeze-20261015-0806.json",
+      "sourceManifestSha256": "0d12ff12d128ffa5495d8755f176a7737686fff8e113c5657d42b636df906a48"
+    }
+  ],
+  "packagingPython": {
+    "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/python/receipt.json",
+    "failed": 0,
+    "groups": 1,
+    "ignored": 0,
+    "passed": 11,
+    "receiptSha256": "11a9ba9354a10ecc00222fe93782a17dc8ada9f4de378aeb348f44aa61db5863"
+  },
+  "priorAcceptedWholeNativeRun": {
+    "allTargetsClippy": "passed with -D warnings on identical source manifest",
+    "cargoTargets": 186,
+    "checkedAtUtc": "2026-10-15T11:32:25.513693+00:00",
+    "doctests": "passed; no executable documentation tests present",
+    "evidenceIndex": "docs/validation/parity-windows-2026-10-15/index.json",
+    "failed": 0,
+    "format": "passed on identical source manifest",
+    "groups": 187,
+    "ignored": 25,
+    "interpretation": "Accepted frozen Windows development checkpoint. Evidence copies and status/reconciliation documentation were added afterward; universal parity, Linux/macOS certification and release remain open.",
+    "passed": 1080,
+    "pythonPackaging": "11 passed on identical source manifest",
+    "receipt": "docs/validation/parity-windows-2026-10-15/native-1116/receipt.json",
+    "sourceFiles": 574,
+    "sourceFilesChangedDuringRun": 0,
+    "sourceInventoryChangedDuringRun": 0,
+    "sourceManifest": "docs/validation/parity-windows-2026-10-15/native-1116/source-before.json",
+    "sourceManifestSha256": "45a6422ebeb5d0c3bc36eb5c3284af84c1fb741d424840c1801bbc60503c30d1"
+  },
+  "releaseStatus": "unreleased",
+  "repairedWholeNativeBaseline": {
+    "failed": 4,
+    "ignored": 25,
+    "interpretation": "Failed frozen baseline retained. Capture policy regression repaired; actual Windows short-name prerequisites supplied by C: scratch; HTTP initialization fixture now distinguishes early expiry and proves worker exit before shutdown.",
+    "passed": 1066,
+    "receipt": "docs/validation/parity-windows-2026-10-15/native-1035/receipt.json",
+    "sourceFiles": 572,
+    "sourceFilesChangedDuringRun": 0
+  },
+  "rootFinalization": {
+    "acceptedIndex": "docs/validation/parity-windows-2026-10-15-wave4/index.json",
+    "author": "codex-t3-windows-root",
+    "checkedAtUtc": "2026-10-15T22:32:00.231238+00:00",
+    "metadataAfterFreeze": true,
+    "rendererAuthor": "codex-meaning-view-windows"
+  },
+  "schemaVersion": 1,
+  "scope": "Windows development acceptance; full universal parity remains open",
+  "secondWaveAcceptance": {
+    "acceptedWholeSourceBoundary": "accepted1269; 694 frozen files; 0 failures; 25 ignored",
+    "failed": 0,
+    "ignored": 25,
+    "interpretation": "All selected matrix executions use the same frozen source manifest. Retained successful groups keep their original hashes; the two skipped ACL fixtures were each executed once separately and passed, not ignored.",
+    "passed": 1269,
+    "prerequisites": {
+      "clippy": "docs/validation/parity-windows-2026-10-15-wave2/clippy-wave2-1440/receipt.json",
+      "format": "docs/validation/parity-windows-2026-10-15-wave2/format-wave2-1440/receipt.json",
+      "python": "docs/validation/parity-windows-2026-10-15-wave2/python-wave2-1440/receipt.json",
+      "typescript": "docs/validation/parity-windows-2026-10-15-wave2/typescript-wave2-1440/receipt.json"
+    },
+    "receipt": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/receipt.json",
+    "sourceFiles": 694,
+    "sourceManifest": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/source-before.json",
+    "sourceManifestSha256": "88948a429f7694e0db82b3f198b38abac929c9790be80206b1040a4f4d980659",
+    "status": "accepted_frozen_source_matrix"
+  },
+  "secondWaveFocusedAcceptance": [
+    {
+      "canonicalGoldenHashes": {
+        "markdown": "ddc366379924b1ee7715fb66b2612265f5fa5eb65c773a7babd4c047ac9fa2b4",
+        "registration": "a49f27cbc779a406c1f03fa53966d7e629ef4b3f66459af3a269f821341508be",
+        "report": "d8f121c54b0a3ecbd898d035da3293dfbe08d79047600d7f8a21cb2a121852d0"
+      },
+      "failed": 0,
+      "id": "selected_view_analytics",
+      "log": "docs/validation/parity-windows-2026-10-15-wave2/wave2-integration-fourth.log",
+      "logScope": "Earlier focused log retained as history; final suite logs and whole matrix receipt above establish current acceptance.",
+      "passed": 29,
+      "receiptStatus": "Listed suite counts verified against the accepted matrix logs; overlapping focused counts must not be summed into whole-source totals.",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "suites": {
+        "graph_extensions": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-12.log",
+          "passed": 9
+        },
+        "graphify_adapter": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-13.log",
+          "passed": 7
+        },
+        "selected_view_analysis": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-27.log",
+          "passed": 11
+        },
+        "selected_view_analysis_review": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-27.log",
+          "passed": 2
+        }
+      },
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/receipt.json"
+    },
+    {
+      "failed": 0,
+      "id": "host_configuration_byte_planner",
+      "log": "docs/validation/parity-windows-2026-10-15-wave2/wave2-integration-fifth.log",
+      "logScope": "Earlier focused log retained as history; final suite logs and whole matrix receipt above establish current acceptance.",
+      "passed": 22,
+      "receiptStatus": "Listed suite counts verified against the accepted matrix logs; overlapping focused counts must not be summed into whole-source totals.",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "suites": {
+        "host_config": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-14.log",
+          "passed": 22
+        }
+      },
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/receipt.json"
+    },
+    {
+      "failed": 0,
+      "id": "bounded_refactor_intents",
+      "ignored": 3,
+      "log": null,
+      "passed": 32,
+      "receiptStatus": "Listed suite counts verified against the accepted matrix logs; overlapping focused counts must not be summed into whole-source totals.",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "suites": {
+        "lsp_action_resolve": {
+          "failed": 0,
+          "ignored": 1,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-17.log",
+          "passed": 5
+        },
+        "lsp_source_execution": {
+          "failed": 0,
+          "ignored": 2,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-17.log",
+          "passed": 5
+        },
+        "refactor_intents": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-26.log",
+          "passed": 15
+        },
+        "semantic_refactor": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-28.log",
+          "passed": 7
+        }
+      },
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/receipt.json"
+    },
+    {
+      "behavior": "Additive source-bound typed claims/build/cache/accounting/CLI/retention; no existing graph View bridge, semantic alias merge or model-quality certification.",
+      "failed": 0,
+      "id": "meaning_graph_build_protocol_cli_retention",
+      "legacyProviderRegression": {
+        "ignored": 1,
+        "interpretation": "Separate legacy provider regressions, not additional new behavior or a whole-source acceptance.",
+        "passed": 39
+      },
+      "log": null,
+      "passed": 55,
+      "receiptStatus": "Listed suite counts verified against the accepted matrix logs; overlapping focused counts must not be summed into whole-source totals.",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "suites": {
+        "meaning_build": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-19.log",
+          "passed": 26
+        },
+        "meaning_cli": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-19.log",
+          "passed": 8
+        },
+        "meaning_commit_review": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-19.log",
+          "passed": 1
+        },
+        "meaning_graph": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-19.log",
+          "passed": 7
+        },
+        "meaning_protocol": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-20.log",
+          "passed": 4
+        },
+        "meaning_retention_review": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-20.log",
+          "passed": 3
+        },
+        "model_protocol::meaning_extract_tests": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/package.log",
+          "passed": 6,
+          "scope": "Six named tests pass inside a mixed failing lib gate; no whole-lib green claim."
+        }
+      },
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/receipt.json"
+    },
+    {
+      "behavior": "jb.move treats target_relative_path as an explicit existing parent and preserves the captured file basename. Omitted/null/exact-empty name_path selects a captured file. Directory and symbol-parent moves remain refused. An existing uncaptured binary destination is occupied and fails before provider requests or plan/derived publication.",
+      "evidence": {
+        "bytes": 3474,
+        "path": "docs/validation/parity-windows-2026-10-15-wave2/wave2-facade-file-move-final-green.log",
+        "sha256": "ee790e94dd79db5dfb8bc3ba6d6b7e24e30267f40a45b500c67d8666795e2e8b"
+      },
+      "failed": 0,
+      "id": "jb_move_file_parent_facade",
+      "nativeApiBoundary": "Direct native semantic move retains its existing final-destination-filename contract; only the facade argument mapping is corrected.",
+      "overlap": "The15 intent and7 native cases overlap earlier refactor32 evidence. Do not add this29 to32 as distinct new tests.",
+      "passed": 29,
+      "receiptStatus": "Listed suite counts verified against the accepted matrix logs; overlapping focused counts must not be summed into whole-source totals.",
+      "redEvidence": [
+        {
+          "bytes": 2195,
+          "path": "docs/validation/parity-windows-2026-10-15-wave2/wave2-facade-file-move-red.log",
+          "sha256": "8d8687807299ed5758af7b403ef5ccba2bd6804b2264031b3708d03568fbb19e"
+        },
+        {
+          "bytes": 2359,
+          "path": "docs/validation/parity-windows-2026-10-15-wave2/wave2-facade-uncaptured-destination-red.log",
+          "sha256": "015577ceecf47f3974b6c86a74f17d614e97ad340c91ddf3dd4a157c1c6fb067"
+        }
+      ],
+      "status": "included_in_accepted_frozen_source_matrix",
+      "suites": {
+        "facade_file_move": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-08.log",
+          "passed": 7
+        },
+        "refactor_intents": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-26.log",
+          "passed": 15
+        },
+        "semantic_refactor": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-28.log",
+          "passed": 7
+        }
+      },
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/receipt.json"
+    },
+    {
+      "combinedPassed": 117,
+      "evidence": {
+        "bytes": 12711,
+        "path": "docs/validation/parity-windows-2026-10-15-wave2/wave2-namespace-second-green.log",
+        "sha256": "99d6dc566fb7d0974e13a4c8cd11928e394218c41d1ecc4dfc17136fdf848a3c"
+      },
+      "failed": 0,
+      "finalMatrixComponents": {
+        "aclLogs": [
+          "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/package-acl-0.log",
+          "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/package-acl-1.log"
+        ],
+        "cli": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-14.log",
+          "passed": 11
+        },
+        "integration": {
+          "failed": 0,
+          "ignored": 0,
+          "log": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/integration-14.log",
+          "passed": 9
+        },
+        "libraryHostTests": 57
+      },
+      "id": "generic_agents_host_lifecycle",
+      "passed": 77,
+      "receiptStatus": "Listed suite counts verified against the accepted matrix logs; overlapping focused counts must not be summed into whole-source totals.",
+      "scope": "generic-agents-v1 Windows lifecycle; does not certify branded profiles/hooks, full native/matrix acceptance or pre-journal automatic recovery",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/receipt.json"
+    }
+  ],
+  "secondWaveNativeAcceptanceAttempts": {
+    "finalMatrix": {
+      "acceptedWholeSourceBoundary": "accepted1269; 694 frozen files; 0 failures; 25 ignored",
+      "failed": 0,
+      "ignored": 25,
+      "interpretation": "All selected matrix executions use the same frozen source manifest. Retained successful groups keep their original hashes; the two skipped ACL fixtures were each executed once separately and passed, not ignored.",
+      "passed": 1269,
+      "prerequisites": {
+        "clippy": "docs/validation/parity-windows-2026-10-15-wave2/clippy-wave2-1440/receipt.json",
+        "format": "docs/validation/parity-windows-2026-10-15-wave2/format-wave2-1440/receipt.json",
+        "python": "docs/validation/parity-windows-2026-10-15-wave2/python-wave2-1440/receipt.json",
+        "typescript": "docs/validation/parity-windows-2026-10-15-wave2/typescript-wave2-1440/receipt.json"
+      },
+      "receipt": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/receipt.json",
+      "sourceFiles": 694,
+      "sourceManifest": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-matrix/source-before.json",
+      "sourceManifestSha256": "88948a429f7694e0db82b3f198b38abac929c9790be80206b1040a4f4d980659",
+      "status": "accepted_frozen_source_matrix"
+    },
+    "fixtureBaselineD": {
+      "accepted": false,
+      "failed": 2,
+      "ignored": 25,
+      "passed": 1267,
+      "reason": "Two ACL setup prerequisites failed before product invocation.",
+      "receipt": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-1455/receipt.json"
+    },
+    "interruptedC": {
+      "accepted": false,
+      "observedFailed": 2,
+      "observedIgnored": 6,
+      "observedPassed": 417,
+      "reason": "OS112 at two 128MB fixture allocations; owned C fixtures were small and unrelated disk data was preserved.",
+      "receipt": "docs/validation/parity-windows-2026-10-15-wave2/native-wave2-1440/abort-receipt.json"
+    }
+  },
+  "secondWavePrerequisites": {
+    "mechanicalClippyReview": "Coordinator reports mechanical fixes in8 files independently reviewed before the freeze.",
+    "receipts": {
+      "allTargetsClippy": {
+        "logs": [
+          {
+            "bytes": 179,
+            "path": "docs/validation/parity-windows-2026-10-15-wave2/clippy-wave2-1440/clippy.log",
+            "sha256": "38098eb017abaea5fde7f0e2c30c32152facefda3c602c5805fe01643e4f87ee"
+          }
+        ],
+        "receipt": {
+          "bytes": 766,
+          "path": "docs/validation/parity-windows-2026-10-15-wave2/clippy-wave2-1440/receipt.json",
+          "sha256": "9ab4a09b479262d870f6cf84561f77d9aad05c2415444b2c49e51d4de527a42d"
+        },
+        "sourceManifest": {
+          "bytes": 76438,
+          "path": "docs/validation/parity-windows-2026-10-15-wave2/clippy-wave2-1440/source-before.json",
+          "sha256": "88948a429f7694e0db82b3f198b38abac929c9790be80206b1040a4f4d980659"
+        },
+        "status": "passed"
+      },
+      "format": {
+        "logs": [
+          {
+            "bytes": 0,
+            "path": "docs/validation/parity-windows-2026-10-15-wave2/format-wave2-1440/format.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "receipt": {
+          "bytes": 664,
+          "path": "docs/validation/parity-windows-2026-10-15-wave2/format-wave2-1440/receipt.json",
+          "sha256": "84f0b930a18d646c19a3f138ef5960dabfda87b18fd4de6ff6901bae5ae9adca"
+        },
+        "sourceManifest": {
+          "bytes": 76438,
+          "path": "docs/validation/parity-windows-2026-10-15-wave2/format-wave2-1440/source-before.json",
+          "sha256": "88948a429f7694e0db82b3f198b38abac929c9790be80206b1040a4f4d980659"
+        },
+        "status": "passed"
+      },
+      "pythonPackaging": {
+        "logs": [
+          {
+            "bytes": 1882,
+            "path": "docs/validation/parity-windows-2026-10-15-wave2/python-wave2-1440/python.log",
+            "sha256": "2e17abf818b3690ba418159af5c3653d34b1793af9338dd4fcc2e83aaea41ffc"
+          }
+        ],
+        "passedTests": 11,
+        "receipt": {
+          "bytes": 709,
+          "path": "docs/validation/parity-windows-2026-10-15-wave2/python-wave2-1440/receipt.json",
+          "sha256": "dbaaa03d043d52f9953536e972be01844303659d8e8c9ecc08f36127695c4c43"
+        },
+        "sourceManifest": {
+          "bytes": 76438,
+          "path": "docs/validation/parity-windows-2026-10-15-wave2/python-wave2-1440/source-before.json",
+          "sha256": "88948a429f7694e0db82b3f198b38abac929c9790be80206b1040a4f4d980659"
+        },
+        "status": "passed"
+      },
+      "typescript": {
+        "logs": [
+          {
+            "bytes": 77,
+            "path": "docs/validation/parity-windows-2026-10-15-wave2/typescript-wave2-1440/typecheck.log",
+            "sha256": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5"
+          },
+          {
+            "bytes": 23678,
+            "path": "docs/validation/parity-windows-2026-10-15-wave2/typescript-wave2-1440/typescript.log",
+            "sha256": "7eb086441134aa1c376453a5a11cd4567cc2f9c80eda3a744dafc70e92aa6b77"
+          }
+        ],
+        "passedTests": 240,
+        "receipt": {
+          "bytes": 974,
+          "path": "docs/validation/parity-windows-2026-10-15-wave2/typescript-wave2-1440/receipt.json",
+          "sha256": "8e8cb414c468629260553449725234fd2c9e8393e09e4c709f64176e1c191f47"
+        },
+        "skippedTests": 3,
+        "sourceManifest": {
+          "bytes": 76438,
+          "path": "docs/validation/parity-windows-2026-10-15-wave2/typescript-wave2-1440/source-before.json",
+          "sha256": "88948a429f7694e0db82b3f198b38abac929c9790be80206b1040a4f4d980659"
+        },
+        "status": "passed",
+        "typecheck": "passed"
+      }
+    },
+    "sourceFiles": 694,
+    "sourceManifestSha256": "88948a429f7694e0db82b3f198b38abac929c9790be80206b1040a4f4d980659",
+    "status": "four_prerequisites_green_on_identical_frozen694_manifest"
+  },
+  "seventhWaveAcceptance": {
+    "acceptedTag": "affected-r5b-verified-20261016-full",
+    "affectedDetailsClaims": {
+      "compilerBindingEstablished": false,
+      "complete": false,
+      "runtimeDispatchEstablished": false
+    },
+    "boundedCapabilities": [
+      "Captured TypeScript parent/type hierarchy and exact same-name member relationships produce structural candidate seeds and per-root/per-walk-seed incoming call/reference proofs with deterministic shortest witnesses.",
+      "The canonical JSON library result and git affected CLI retain captured source/analyzer bindings, explicit true-zero graph/walk/row/source/wire budgets and static recognized-command/domain refusal markers."
+    ],
+    "cargoTargets": 234,
+    "claims": {
+      "newParityRowsCertified": false,
+      "releaseCertified": false,
+      "universalParity": false
+    },
+    "failed": 0,
+    "groups": 238,
+    "ignored": 33,
+    "index": "docs/validation/parity-windows-2026-10-16-wave7/index.json",
+    "indexSha256": "dfb69d94964b038547b237b5dd4c9ff631184104971c6d595f3efa0da8a48d62",
+    "inventoryBoundary": {
+      "backendRuntimeUnknowns": 77,
+      "identitiesStatusesAndCertificationsChanged": false,
+      "originalIdentities": 353,
+      "unreconciledReviewRequired": 73
+    },
+    "limitations": [
+      "Structural candidates do not prove override identity, compiler binding, runtime dispatch, semantic/reference completeness or full Graphify behavior/schema equivalence; complete, compilerBindingEstablished and runtimeDispatchEstablished remain false.",
+      "The new source-byte budget excludes inherited report-loader and epoch-proof reads; it is not a total I/O, memory or all-allocation bound.",
+      "Windows-only unreleased checkpoint; Linux/macOS runtime, full upstream contracts, universal parity and release certification remain open."
+    ],
+    "metadataBoundary": "Four separately reviewed metadata files follow evidence preservation; the accepted runtime source freeze and Serena mapping retain their separate identities.",
+    "nativeMatrix": {
+      "cargoTargets": 234,
+      "integrationTargets": 231,
+      "libraryIgnored": 7,
+      "libraryRegistered": 343
+    },
+    "nonadditiveEvidence": {
+      "index": "docs/validation/parity-windows-2026-10-16-wave7/index.json",
+      "interpretation": "Only the five accepted whole-phase receipts supply totals. Focused tests, qualification, causal failures and repeated gate roles never add to them.",
+      "rawCountsAreNonadditive": true
+    },
+    "passed": 1799,
+    "phaseProof": {
+      "clippy": {
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave7/evidence/affected-r5b-verified-20261016-full/clippy/receipt.json",
+        "receiptSha256": "f8ac0577acddea599826e1570a6a706023a4c5a6770bfe1987620939db709638"
+      },
+      "format": {
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave7/evidence/affected-r5b-verified-20261016-full/format/receipt.json",
+        "receiptSha256": "18b557af2c1df119308abced50ef8bc3249b9f334c25e9751b74fa2c4856c8ef"
+      },
+      "native": {
+        "failed": 0,
+        "groups": 238,
+        "ignored": 33,
+        "passed": 1799,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave7/evidence/affected-r5b-verified-20261016-full/native/receipt.json",
+        "receiptSha256": "6437c5e6ccd0c2d3d03af133bb78a95dac2b9bb49849856766d61cca12d42272"
+      },
+      "python": {
+        "failed": 0,
+        "groups": 1,
+        "ignored": 0,
+        "passed": 11,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave7/evidence/affected-r5b-verified-20261016-full/python/receipt.json",
+        "receiptSha256": "ab9a112dab31089ed4b70c38e657aa4c445fb6a4c720e593c4ccaccc3cdbcd40"
+      },
+      "typescript": {
+        "failed": 0,
+        "groups": 1,
+        "ignored": 3,
+        "passed": 250,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave7/evidence/affected-r5b-verified-20261016-full/typescript/receipt.json",
+        "receiptSha256": "c64536ac9f26d5dfcba71baffe6268d39b920b9d5db6aa462f3a8b66bde5237b"
+      }
+    },
+    "platform": "Windows",
+    "postFreezeMetadataFiles": [
+      "docs/STATUS.md",
+      "docs/parity/native-reconciliation-2026-10-15.json",
+      "docs/parity/windows-development-gates-2026-10-15.json",
+      "native/docs/windows-parity-2026-10-15.md"
+    ],
+    "receipt": "docs/validation/parity-windows-2026-10-16-wave7/evidence/affected-r5b-verified-20261016-full/native/receipt.json",
+    "runnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+    "rustFiles": 385,
+    "sourceChangesDuringEachGate": [],
+    "sourceFiles": 2873,
+    "sourceManifest": "docs/validation/parity-windows-2026-10-16-wave7/evidence/affected-r5b-verified-20261016-full/source-freeze.json",
+    "sourceManifestSha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+    "status": "accepted_windows_development_checkpoint"
+  },
+  "sixthWaveAcceptance": {
+    "acceptedTag": "combined-r3-r5-20261016-1315-full",
+    "boundedCapabilities": [
+      "Historical selected-View comparison preserves structural candidates, directed observations, selected Meaning evidence and explicit ambiguity.",
+      "Source-bound Git impact details preserve rename candidates, exact UTF-8 quotes and JSON/HTML CLI output; complete-store admission supports healthy closed/live WAL stores and refuses incomplete or uninitialized stores without sidecar mutation."
+    ],
+    "cargoTargets": 231,
+    "claims": {
+      "newParityRowsCertified": false,
+      "releaseCertified": false,
+      "universalParity": false
+    },
+    "failed": 0,
+    "groups": 235,
+    "ignored": 33,
+    "index": "docs/validation/parity-windows-2026-10-16-wave6/index.json",
+    "indexSha256": "913c1d3ad33fb8928b4b0e6ee3aca8752ab746457c2d6b89b4a3626cdeff3ede",
+    "inventoryBoundary": {
+      "backendRuntimeUnknowns": 77,
+      "identitiesStatusesAndCertificationsChanged": false,
+      "originalIdentities": 353,
+      "unreconciledReviewRequired": 73
+    },
+    "limitations": [
+      "Structural correspondences and rename candidates do not prove entity identity or complete semantic/reference coverage.",
+      "Supertype/override expansion and runtime dynamic dispatch remain outside this slice.",
+      "Windows-only unreleased checkpoint; Linux/macOS runtime, full upstream contracts, universal parity and release certification remain open."
+    ],
+    "metadataBoundary": "Four separately reviewed metadata files follow evidence preservation; the accepted runtime source freeze and Serena mapping retain their separate identities.",
+    "nativeMatrix": {
+      "cargoTargets": 231,
+      "integrationTargets": 228,
+      "libraryIgnored": 7,
+      "libraryRegistered": 311
+    },
+    "nonadditiveEvidence": {
+      "h18": {
+        "countsAreNonadditive": true,
+        "failed": 0,
+        "groups": 6,
+        "ignored": 0,
+        "passed": 51,
+        "tag": "combined-r3-r5-20261016-1315-h18"
+      },
+      "index": "docs/validation/parity-windows-2026-10-16-wave6/index.json",
+      "interpretation": "H18, inventories, historical failed attempts and repeated focused gate roles never add to the five accepted phase totals.",
+      "pipeline": {
+        "accepted": true,
+        "countsAreNonadditive": true,
+        "orchestrationOnly": true,
+        "stages": [
+          "format",
+          "clippy",
+          "python",
+          "typescript",
+          "native",
+          "finalize"
+        ],
+        "tag": "combined-r3-r5-20261016-1315-pipeline"
+      }
+    },
+    "passed": 1744,
+    "phaseProof": {
+      "clippy": {
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave6/evidence/combined-r3-r5-20261016-1315-full/clippy/receipt.json",
+        "receiptSha256": "c5b975d286a4bb2200bdb484c71610f6ae943548b4a57285fb2965c2e9f8715f"
+      },
+      "format": {
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave6/evidence/combined-r3-r5-20261016-1315-full/format/receipt.json",
+        "receiptSha256": "fb372b83551bd81962434bb40a424f947616c1c245dad45eedd0754c78fec2bf"
+      },
+      "native": {
+        "failed": 0,
+        "groups": 235,
+        "ignored": 33,
+        "passed": 1744,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave6/evidence/combined-r3-r5-20261016-1315-full/native/receipt.json",
+        "receiptSha256": "debf60af7d145d46543bc794898f58d12e5c4032625c5370d057ea9408143538"
+      },
+      "python": {
+        "failed": 0,
+        "groups": 1,
+        "ignored": 0,
+        "passed": 11,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave6/evidence/combined-r3-r5-20261016-1315-full/python/receipt.json",
+        "receiptSha256": "9a8fd7c88437d9134af5a6240648187c12e6207bf9074710020e192245ce73f4"
+      },
+      "typescript": {
+        "failed": 0,
+        "groups": 1,
+        "ignored": 3,
+        "passed": 249,
+        "receipt": "docs/validation/parity-windows-2026-10-16-wave6/evidence/combined-r3-r5-20261016-1315-full/typescript/receipt.json",
+        "receiptSha256": "1a9097800491dee9836b6df3198f3f5771124b4ee07bec2dc4fa670d136d551b"
+      }
+    },
+    "platform": "Windows",
+    "postFreezeMetadataFiles": [
+      "docs/STATUS.md",
+      "docs/parity/native-reconciliation-2026-10-15.json",
+      "docs/parity/windows-development-gates-2026-10-15.json",
+      "native/docs/windows-parity-2026-10-15.md"
+    ],
+    "receipt": "docs/validation/parity-windows-2026-10-16-wave6/evidence/combined-r3-r5-20261016-1315-full/native/receipt.json",
+    "runnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+    "rustFiles": 373,
+    "sourceChangesDuringEachGate": [],
+    "sourceFiles": 2419,
+    "sourceManifest": "docs/validation/parity-windows-2026-10-16-wave6/evidence/combined-r3-r5-20261016-1315-full/source-freeze.json",
+    "sourceManifestSha256": "11f688628aa77bf3f50c440cd954aa49e0588800aeabb838bc17d09efe9ef30f",
+    "status": "accepted_windows_development_checkpoint"
+  },
+  "thirdWaveAcceptance": {
+    "cargoTargets": 208,
+    "failed": 0,
+    "groups": 212,
+    "hostNativeCoverageAccepted": true,
+    "ignored": 27,
+    "index": "docs/validation/parity-windows-2026-10-15-wave3/index.json",
+    "indexSha256": "98646f7e98060d475129f4db26e353f37f57059658f639382888a20240208e97",
+    "metadataBoundary": "The accepted source freeze precedes changes to exactly the five postFreezeMetadataFiles metadata/documents plus the separately pinned evidence bundle. All 297 Rust files, native/src compatibility contracts and TypeScript source remain at their accepted hashes. Universal parity/release/deferred-platform certification remain open.",
+    "nativeMatrix": {
+      "cargoTargets": 208,
+      "countedOnlyFreshExecution": true,
+      "disjointLibraryCoverage": true,
+      "exactAclNames": [
+        "host_install::io::tests::explicit_low_integrity_label_is_preserved_or_refused_before_human_bytes",
+        "host_install::io::tests::prepared_output_preserves_owner_and_nondefault_group_before_human_bytes",
+        "host_install::io::tests::staged_registered_reopen_checks_original_security_before_any_mutation"
+      ],
+      "integrationTargets": 205,
+      "libraryIgnored": 1,
+      "libraryIgnoredNames": [
+        "host_install::output_recovery_tests::output_recovery_worker"
+      ],
+      "libraryRegistered": 149
+    },
+    "passed": 1399,
+    "phaseProof": {
+      "clippy": {
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/clippy/receipt.json",
+        "receiptSha256": "5ebe9110e85cd0ca664dc3ea20edf96c3b4693ae5c8276c212a55d01bf8adc2b"
+      },
+      "format": {
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/format/receipt.json",
+        "receiptSha256": "276a10c5f03b001dfb099e1dbdb68e7f09d3bb46ecdb523c1f9a4bbc85350958"
+      },
+      "native": {
+        "failed": 0,
+        "groups": 212,
+        "ignored": 27,
+        "passed": 1399,
+        "receipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/native/receipt.json",
+        "receiptSha256": "140f508e2c3101dfbaa15c63c22163261efaccfac01b58041445bf8da36ac808"
+      },
+      "python": {
+        "failed": 0,
+        "groups": 1,
+        "ignored": 0,
+        "passed": 11,
+        "receipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/python/receipt.json",
+        "receiptSha256": "90218a86b8cd62e046dfef23fedb7aa63e83c7edd872334f23632ada5fdff28b"
+      },
+      "typescript": {
+        "failed": 0,
+        "groups": 1,
+        "ignored": 3,
+        "passed": 240,
+        "receipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/typescript/receipt.json",
+        "receiptSha256": "bfa75535e8110cfad4dc34dcbb47d91f9aacf44e2d5363b19152cd3906487029"
+      }
+    },
+    "postFreezeMetadataFiles": [
+      "docs/parity/native-reconciliation-2026-10-15.json",
+      "docs/parity/windows-development-gates-2026-10-15.json",
+      "docs/parity/serena-facade-mapping-2026-10-14.json",
+      "native/docs/windows-parity-2026-10-15.md",
+      "docs/STATUS.md"
+    ],
+    "receipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/native/receipt.json",
+    "runnerSha256": "0d7ed0fa533d55c6518da3dfdc322d6e9e227361f1e88070edbaf2b7067ba45e",
+    "rustFiles": 297,
+    "sourceChangesDuringEachGate": [],
+    "sourceFiles": 803,
+    "sourceManifest": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/source-freeze.json",
+    "sourceManifestSha256": "6248aced85ca0400a82f758a765b99897c1479220f1cd07ce6c2616c7b3a4abf",
+    "status": "accepted_frozen_source_matrix"
+  },
+  "thirdWaveScopedEvidence": [
+    {
+      "historicalFocusedObservation": {
+        "behavior": "Omitted/null name_path selects a captured writable FILE; exact-empty is refused. new_name is one canonical portable basename, retaining the parent and exactly the supplied extension. Absent/false occurrence flags accepted; true/null/nonboolean refused before provider dispatch. Existing willRenameFiles yields one guarded plan with source/snapshot/epoch checks. Directories, occupied/uncaptured destinations, aliases and unauthorized scopes refuse. Provider reference discovery/exclusions and proprietary IDE parity remain uncertified.",
+        "evidenceLog": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-meaning-repair-and-schema-red/run.log",
+        "failed": 0,
+        "id": "wave3_nullable_file_rename",
+        "passed": 9,
+        "status": "scoped_accepted",
+        "suite": "facade_file_rename"
+      },
+      "id": "wave3_nullable_file_rename",
+      "interpretation": "Original focused counts and past pending/failing labels remain historical; never add them to the accepted native total.",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/native/receipt.json"
+    },
+    {
+      "historicalFocusedObservation": {
+        "behavior": "Omitted/null name_path selects a captured writable FILE only with explicit delete_even_if_used=true and absent/false propagate; exact-empty refuses. One source-bound deletion plan preserves callers/imports and original workspace. No provider executes. usageCheck.performed=false, referencesRewritten=false, remainingUsagesMayBreak=true. Default-safe deletion, propagation and directories remain unsupported. Host permission, approval, verification and stale-source guards still govern apply.",
+        "evidenceLog": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-derived-preparation-and-budget-red/run.log",
+        "failed": 0,
+        "id": "wave3_explicit_forced_file_delete",
+        "passed": 10,
+        "status": "scoped_accepted",
+        "suite": "facade_file_delete",
+        "verifiedRelevantFacadeRegressions": {
+          "agentReplSha256": "bb2afe8a94d215c4323111b614156bd15d6df342bfda1a56c53a842aa370fdaf",
+          "groups": [
+            {
+              "log": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-meaning-repair-and-schema-red/run.log",
+              "passed": 31,
+              "suites": {
+                "facade_file_rename": 9,
+                "refactor_intents": 15,
+                "semantic_refactor": 7
+              }
+            },
+            {
+              "log": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-derived-preparation-and-budget-red/run.log",
+              "passed": 17,
+              "suites": {
+                "facade_file_delete": 10,
+                "facade_file_move": 7
+              }
+            }
+          ],
+          "interpretation": "48 relevant named-target passes across two snapshots with the exact same current agent_repl SHA. These include rename/delete facts and earlier regression coverage; never sum into new whole-source totals or claim all source files identical. Both mixed commands retain unrelated failures.",
+          "manifests": [
+            {
+              "agentReplSha256": "bb2afe8a94d215c4323111b614156bd15d6df342bfda1a56c53a842aa370fdaf",
+              "path": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-meaning-repair-and-schema-red/source-before.json",
+              "sha256": "06716b93ddae72fed3b054a2c1489468598b2ff4bd4a68a0f354b63fb2a25ea9"
+            },
+            {
+              "agentReplSha256": "bb2afe8a94d215c4323111b614156bd15d6df342bfda1a56c53a842aa370fdaf",
+              "path": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-meaning-repair-and-schema-red/source-after.json",
+              "sha256": "543a7fadc8e1bdc827a6081f790f4d544d0c03b14c40e8a7e47b58bcfe6c6d8f"
+            },
+            {
+              "agentReplSha256": "bb2afe8a94d215c4323111b614156bd15d6df342bfda1a56c53a842aa370fdaf",
+              "path": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-derived-preparation-and-budget-red/source-before.json",
+              "sha256": "b1ae47b74e12045ff56888e09dacddf1773b483376a51cf9493e2c0d0d5a679c"
+            },
+            {
+              "agentReplSha256": "bb2afe8a94d215c4323111b614156bd15d6df342bfda1a56c53a842aa370fdaf",
+              "path": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-derived-preparation-and-budget-red/source-after.json",
+              "sha256": "b378c48cfd19ebcf1737f0a6140b5db9a00ce0965601ad1a3137f3c0c1ac0ed3"
+            }
+          ],
+          "older38Matrix": "Do not claim: no standalone locator and it predates forced-file-delete implementation. Root superseded that earlier brief with this verified48 observation.",
+          "passedExecutions": 48,
+          "wholeSourceAcceptance": false
+        }
+      },
+      "id": "wave3_explicit_forced_file_delete",
+      "interpretation": "Original focused counts and past pending/failing labels remain historical; never add them to the accepted native total.",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/native/receipt.json"
+    },
+    {
+      "historicalFocusedObservation": {
+        "behavior": "Explicit graphViewId selects a previously published checked STRUCTURAL/standard-LSP View without capture/provider fallback; omitted selector retains default selection. Direction/parallel evidence, historic bytes and budgets remain explicit. Typed Meaning selections refuse in all source-only Graphify tools/resources. Hosted PR tools gain no local View selector.",
+        "evidenceLog": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-meaning-repair-and-schema-red/run.log",
+        "failed": 0,
+        "id": "wave3_selected_structural_graphify_queries",
+        "localTools": [
+          "query_graph",
+          "get_node",
+          "get_neighbors",
+          "get_community",
+          "god_nodes",
+          "graph_stats",
+          "shortest_path"
+        ],
+        "passed": 8,
+        "status": "scoped_accepted",
+        "suite": "graphify_selected_queries"
+      },
+      "id": "wave3_selected_structural_graphify_queries",
+      "interpretation": "Original focused counts and past pending/failing labels remain historical; never add them to the accepted native total.",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/native/receipt.json"
+    },
+    {
+      "historicalFocusedObservation": {
+        "behavior": "Explicit published meaningGraphIds compose a separate typed layer bound to exact workspace/snapshot/canonical graph/epoch/capture policy. Namespaced concepts, directed parallel relations and ordered role-bearing hyperedges retain exact multifile UTF8 citations and original request/receipt/accounting lineage. Alias labels are searchable candidates, never semantic merges. Native find/read/trace/context use typed inferred/unverified provenance without provider execution or invented code anchors. Opaque proof plus frozen original/rebound source callbacks replays without live Store. No source-only Graph projection, portable collection integration, model-quality claim or full publication-atomicity claim follows.",
+        "capacity": "Distinct32MB immutable closure; stable64k per distinct mutable ledger task/attempt; actual row validation unchanged. Sourcearchive cap64MB, with sourcebytes still counted in32MB closure.",
+        "evidenceLog": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-derived-preparation-and-budget-red/run.log",
+        "failed": 0,
+        "id": "wave3_published_meaning_view_core",
+        "passed": 11,
+        "status": "scoped_accepted",
+        "suite": "meaning_view"
+      },
+      "id": "wave3_published_meaning_view_core",
+      "interpretation": "Original focused counts and past pending/failing labels remain historical; never add them to the accepted native total.",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/native/receipt.json"
+    },
+    {
+      "historicalFocusedObservation": {
+        "evidenceLog": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-atomic-admission-green/run.log",
+        "failed": 0,
+        "id": "wave3_typed_meaning_queries",
+        "ignored": 0,
+        "interpretation": "All13 named target cases now pass, including the prior CAS-conflict negative. Preserve the old12/1 failure and avoid converting focused49 into whole-wave acceptance.",
+        "passed": 13,
+        "retainedEarlierFailure": {
+          "case": "conflicting_view_registration_is_refused_before_any_prepared_or_view_cas_write",
+          "failed": 1,
+          "log": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-atomic-admission-conflict-red/run.log",
+          "passed": 12
+        },
+        "status": "scoped_accepted_full_checkpoint_pending",
+        "suite": "meaning_graph_views"
+      },
+      "id": "wave3_typed_meaning_queries",
+      "interpretation": "Original focused counts and past pending/failing labels remain historical; never add them to the accepted native total.",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/native/receipt.json"
+    },
+    {
+      "historicalFocusedObservation": {
+        "behavior": "Pure archived ledger attempt/task pairing and capture-option lineage validation; not installed backend attestation.",
+        "evidenceLog": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-meaning-query-first-gate/run.log",
+        "failed": 0,
+        "id": "wave3_meaning_archive_primitives",
+        "passed": 10,
+        "status": "scoped_accepted",
+        "suite": "meaning_archive_primitives"
+      },
+      "id": "wave3_meaning_archive_primitives",
+      "interpretation": "Original focused counts and past pending/failing labels remain historical; never add them to the accepted native total.",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/native/receipt.json"
+    },
+    {
+      "historicalFocusedObservation": {
+        "behavior": "Pure structural/semantic preparation and combined source/semantic/Meaning admission precede publication; predictable registration conflicts refuse before prepared/View CAS writes. Named7prep/1mixed/13Meaning/11legacygraph/11analysis/6review cases pass. Scope remains bounded to checked preparation/short publication transaction and exact tests; not universal crash atomicity.",
+        "evidenceLog": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-atomic-admission-green/run.log",
+        "focusedFailed": 0,
+        "focusedIgnored": 0,
+        "focusedPassed": 49,
+        "id": "wave3_atomic_view_admission",
+        "independentReviewMemory": "mem_mv9smh1l_817e1c5fdc09",
+        "interpretation": "49 focused executions overlap Meaningquery13 and legacy/regression cases. Receipt records concurrent unrelated host source edits; relevant graph/manifest bindings match before/after. This is not a frozen whole-source checkpoint.",
+        "relevantSourceBindings": {
+          "native/src/graph_view.rs": "e7b0cfb29c032b147efecd7bc41e41c4990b719fbd1752e75a949d3ccddacfd4",
+          "native/src/manifest_graph.rs": "c0dd194f780472fe2d35f6f1c345250d2046114eb477b5d91ce95263e54f1a85"
+        },
+        "status": "scoped_accepted_full_checkpoint_pending",
+        "suites": {
+          "derived_graph_mixed_budget": 1,
+          "derived_graph_preparation": 7,
+          "graph_view": 11,
+          "meaning_graph_views": 13,
+          "selected_view_analysis": 11,
+          "selected_view_review": 6
+        }
+      },
+      "id": "wave3_atomic_view_admission",
+      "interpretation": "Original focused counts and past pending/failing labels remain historical; never add them to the accepted native total.",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/native/receipt.json"
+    },
+    {
+      "historicalFocusedObservation": {
+        "behavior": "Strict v2 allocation/output lineage and sourceSecurityHash bind the persisted original security fingerprint. Scoped process-exit/kill/raw-prefix/same-identity/replacement/ACL/source-security fixtures pass; unchanged v1 histories keep their original semantics. This is not full host-matrix or branded/platform acceptance.",
+        "evidenceLog": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-host-source-security-profile/run.log",
+        "focusedFailed": 0,
+        "focusedIgnored": 1,
+        "focusedPassed": 33,
+        "id": "wave3_prejournal_output_ownership_v2",
+        "ignoredWorker": "host_install::output_recovery_tests::output_recovery_worker (only launched by an explicit parent-owned fixture)",
+        "status": "source_security_implemented_scoped_host_matrix_pending"
+      },
+      "id": "wave3_prejournal_output_ownership_v2",
+      "interpretation": "Original focused counts and past pending/failing labels remain historical; never add them to the accepted native total.",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/native/receipt.json"
+    },
+    {
+      "historicalFocusedObservation": {
+        "case": "host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work",
+        "evidenceLog": "docs/validation/parity-windows-2026-10-15-wave3/focused/wave3-host-capacity-profile-visible/run.log",
+        "failed": 0,
+        "id": "wave3_host_capacity_observation",
+        "ignored": 0,
+        "interpretation": "One exact repeat of a case already included in33, not an extra distinct case. Owned16-root unoptimized fixture recovery completed under its unchanged30s bound; test/setup wall time differs. Inclusive spans overlap and must not be summed. No SLA, release benchmark or generalized performance claim.",
+        "passed": 1,
+        "recoveryElapsedMicros": 24020377,
+        "recoveryElapsedSeconds": 24.020377,
+        "status": "exact_filtered_case_scoped_accepted",
+        "unchangedAdmittedRecoveryDeadlineSeconds": 30
+      },
+      "id": "wave3_host_capacity_observation",
+      "interpretation": "Original focused counts and past pending/failing labels remain historical; never add them to the accepted native total.",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/native/receipt.json"
+    },
+    {
+      "historicalFocusedObservation": {
+        "behavior": "Root updated two native protocol descriptions to advertise exact Meaning quotes and unverified inference. No schema, defaults or eight-tool surface change; not a new executable feature or additional upstream inventory row.",
+        "id": "wave3_native_description_clarification",
+        "implementation": "native/src/protocol.rs",
+        "status": "coordinator_reported_description_only",
+        "wholeSourceAcceptance": false
+      },
+      "id": "wave3_native_description_clarification",
+      "interpretation": "Original focused counts and past pending/failing labels remain historical; never add them to the accepted native total.",
+      "status": "included_in_accepted_frozen_source_matrix",
+      "wholeNativeReceipt": "docs/validation/parity-windows-2026-10-15-wave3/accepted/wave3-frozen-20261015-1740/native/receipt.json"
+    }
+  ],
+  "typescript": {
+    "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/typescript/receipt.json",
+    "failed": 0,
+    "groups": 1,
+    "ignored": 3,
+    "passed": 254,
+    "receiptSha256": "7040ca2ad011bf502d279ebca0569e5ecf44d2e7cfcdc8ec6b06d846625f00a7",
+    "skipped": 3,
+    "typecheck": "passed",
+    "interpretation": "Complete fresh frozen phase only; scoped and historical checks are nonadditive."
+  },
+  "wholeNativeRun": {
+    "status": "accepted_windows_development_checkpoint",
+    "platform": "Windows",
+    "acceptedTag": "declaration-moves-windows-20261017-r2",
+    "index": "docs/validation/parity-windows-2026-10-17-wave10/index.json",
+    "indexSha256": "4de65fbe19220356f19fcdddb079542f9475490dcb790265d38a565a2b985ee3",
+    "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/native/receipt.json",
+    "sourceManifest": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/source-freeze.json",
+    "sourceManifestSha256": "6440b361f0ab6dbbc43834da0490a4e34aa2dd4de27efe371f434cb82bb021eb",
+    "runnerSha256": "412b796dff54e94a5ba1076204c28646f85dc1a769a4e7afa0428416b07f6a6b",
+    "sourceFiles": 3683,
+    "rustFiles": 401,
+    "phaseProof": {
+      "clippy": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/clippy/receipt.json",
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receiptSha256": "8f22137fac707eb73dc05af08dd0637fbfa17770367551ce2e95278311ddecc3"
+      },
+      "format": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/format/receipt.json",
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receiptSha256": "7e21a0aced296cc786fe79d3e01711455732aecf771a6531bb889ae82d8c0dfc"
+      },
+      "native": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/native/receipt.json",
+        "failed": 0,
+        "groups": 241,
+        "ignored": 33,
+        "passed": 1867,
+        "receiptSha256": "1fcdda6be575e30abc9e8271ef9bc87847e2c2a959aa88bbbc0965b9d4ddef23"
+      },
+      "python": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/python/receipt.json",
+        "failed": 0,
+        "groups": 1,
+        "ignored": 0,
+        "passed": 11,
+        "receiptSha256": "11a9ba9354a10ecc00222fe93782a17dc8ada9f4de378aeb348f44aa61db5863"
+      },
+      "typescript": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/typescript/receipt.json",
+        "failed": 0,
+        "groups": 1,
+        "ignored": 3,
+        "passed": 254,
+        "receiptSha256": "7040ca2ad011bf502d279ebca0569e5ecf44d2e7cfcdc8ec6b06d846625f00a7"
+      }
+    },
+    "cargoTargets": 237,
+    "groups": 241,
+    "passed": 1867,
+    "failed": 0,
+    "ignored": 33,
+    "nativeMatrix": {
+      "integrationTargets": 234,
+      "libraryRegistered": 371,
+      "libraryIgnored": 7
+    },
+    "claims": {
+      "universalParity": false,
+      "releaseCertified": false,
+      "newParityRowsCertified": false,
+      "fullUpstreamEquivalence": false,
+      "exhaustiveCompilerReferenceBinding": false,
+      "liveProprietaryIdeParity": false
+    },
+    "sourceChangesDuringEachGate": [],
+    "postFreezeMetadataFiles": [
+      "docs/STATUS.md",
+      "docs/parity/native-reconciliation-2026-10-15.json",
+      "docs/parity/windows-development-gates-2026-10-15.json",
+      "native/docs/windows-parity-2026-10-15.md"
+    ],
+    "boundedCapabilities": [
+      "Checked own_v1 moves of free Rust functions, structs, enums, traits, type aliases and constants at file/inline-module scope.",
+      "Explicit sourceAttachments exact_text_v1 capability admits an independently derived unchanged outer-documentation/attribute text bundle, retaining distinct original graph/name anchors and checking every transferred attachment owner.",
+      "Original-coordinate cut, exact AST/direct-parent placement, extra-copy provenance, other preamble/attachment preservation, old capability compatibility and CRLF padding; original guarded change/apply authority remains."
+    ],
+    "limitations": [
+      "Module/directory moves, associated/local declarations, other languages, compilation/attribute expansion and exhaustive reference repair remain outside this slice.",
+      "Existing publication atomicity and proprietary IDE limitations remain; universal parity and release certification stay open."
+    ],
+    "inventoryBoundary": {
+      "originalIdentities": 353,
+      "unreconciledReviewRequired": 73,
+      "backendRuntimeUnknowns": 77,
+      "identitiesStatusesAndCertificationsChanged": false
+    },
+    "nonadditiveDeclarationTests": [
+      "attachments_require_an_explicit_recognized_provider_capability",
+      "block_docs_crlf_and_bom_keep_exact_transfer_bytes_and_ordinary_leading_comments",
+      "const_moves_preserve_initializer",
+      "declaration_moves_still_require_an_exact_cut_and_unchanged_insert_at_the_selected_parent",
+      "enum_moves_preserve_variants",
+      "exact_moved_declaration_retains_nested_module_preambles_and_attributes",
+      "negotiated_attachments_move_as_one_bundle_with_distinct_entity_and_text_ranges",
+      "nonfree_and_module_declarations_refuse_before_provider_work",
+      "nonfunction_moves_cannot_leave_or_add_a_comment_wrapped_ast_copy",
+      "provider_cannot_leave_source_attachments_or_strip_them_from_the_target",
+      "same_file_and_inline_source_moves_use_original_coordinates",
+      "same_file_inline_bundle_preserves_inner_docs_and_other_items_attachments",
+      "struct_moves_preserve_generic_fields",
+      "trait_moves_preserve_associated_signatures",
+      "transferred_bundles_accept_crlf_insertion_padding_without_changing_their_bytes",
+      "type_alias_moves_preserve_generic_target",
+      "unattached_declarations_retain_the_three_field_provider_capability_contract",
+      "unrelated_identical_declarations_keep_their_original_provenance"
+    ]
+  },
+  "ninthWaveAcceptance": {
+    "status": "accepted_windows_development_checkpoint",
+    "platform": "Windows",
+    "acceptedTag": "view-comparison-cli-windows-20261017-r2",
+    "index": "docs/validation/parity-windows-2026-10-17-wave9/index.json",
+    "indexSha256": "989954324d55430451d9bca94f5d9bb21cbce466a85920fec8e497ccabd27ebd",
+    "receipt": "docs/validation/parity-windows-2026-10-17-wave9/evidence/view-comparison-cli-windows-20261017-r2/native/receipt.json",
+    "sourceManifest": "docs/validation/parity-windows-2026-10-17-wave9/evidence/view-comparison-cli-windows-20261017-r2/source-freeze.json",
+    "sourceManifestSha256": "024fe10476e773b373c7d3e53c6e9ade2da0c0368d4e9a01e8dc7b3567fa87ca",
+    "runnerSha256": "412b796dff54e94a5ba1076204c28646f85dc1a769a4e7afa0428416b07f6a6b",
+    "sourceFiles": 3629,
+    "rustFiles": 400,
+    "phaseProof": {
+      "clippy": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave9/evidence/view-comparison-cli-windows-20261017-r2/clippy/receipt.json",
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receiptSha256": "96f34a1aab278bd1c9b07bd3301be96d65f8934d31ece292a43581cf67211a57"
+      },
+      "format": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave9/evidence/view-comparison-cli-windows-20261017-r2/format/receipt.json",
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receiptSha256": "4050f2a3bcd87a00d29fd9ddd28faf5e21e04b9fd0d23b554f7f461d5c298148"
+      },
+      "native": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave9/evidence/view-comparison-cli-windows-20261017-r2/native/receipt.json",
+        "failed": 0,
+        "groups": 240,
+        "ignored": 33,
+        "passed": 1849,
+        "receiptSha256": "913b990b6bf51c59ac854821f2c45462a9b8a9b437d970413ec35e5d7036e323"
+      },
+      "python": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave9/evidence/view-comparison-cli-windows-20261017-r2/python/receipt.json",
+        "failed": 0,
+        "groups": 1,
+        "ignored": 0,
+        "passed": 11,
+        "receiptSha256": "b9b28d1b065d2074959634d137b3e38592b2a3e48257a32b1e5617dbd94c7f45"
+      },
+      "typescript": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave9/evidence/view-comparison-cli-windows-20261017-r2/typescript/receipt.json",
+        "failed": 0,
+        "groups": 1,
+        "ignored": 3,
+        "passed": 254,
+        "receiptSha256": "424f1e99474e0600cb884b243ad97b49fc4b52025665638589b1da413b0e04c7"
+      }
+    },
+    "cargoTargets": 236,
+    "groups": 240,
+    "passed": 1849,
+    "failed": 0,
+    "ignored": 33,
+    "nativeMatrix": {
+      "integrationTargets": 233,
+      "libraryRegistered": 371,
+      "libraryIgnored": 7
+    },
+    "claims": {
+      "universalParity": false,
+      "releaseCertified": false,
+      "newParityRowsCertified": false,
+      "fullGraphifyEquivalence": false,
+      "semanticIdentityEstablished": false,
+      "renameProofAvailable": false
+    },
+    "sourceChangesDuringEachGate": [],
+    "postFreezeMetadataFiles": [
+      "docs/STATUS.md",
+      "docs/parity/native-reconciliation-2026-10-15.json",
+      "docs/parity/windows-development-gates-2026-10-15.json",
+      "native/docs/windows-parity-2026-10-15.md"
+    ],
+    "boundedCapabilities": [
+      "Explicit graph compare-views pins both complete immutable selections and uses the existing fully replayed comparison core.",
+      "Strict guarded host JSON, complete existing Store admission, original directed parallel evidence and declared primary-file continuity; no capture, provider, logical publication or artifact fallback.",
+      "Canonical JSON delivery reserves its newline, all four true-zero budgets refuse as a whole, and domain failures expose only static markers."
+    ],
+    "limitations": [
+      "Structural correspondence and explicit file-continuity declarations do not prove semantic identity or a rename.",
+      "Normal Store client/WAL bookkeeping remains; this is not a physical-write-free Store mode.",
+      "Graphify/MCP schemas, canonical graph compare and selected analysis previousSnapshotId retain their existing contracts.",
+      "Windows development only; full upstream contracts, universal parity and release certification remain open."
+    ],
+    "inventoryBoundary": {
+      "originalIdentities": 353,
+      "unreconciledReviewRequired": 73,
+      "backendRuntimeUnknowns": 77,
+      "identitiesStatusesAndCertificationsChanged": false
+    },
+    "nonadditiveCliTests": [
+      "compare_views_cli_exact_output_limit_includes_its_single_newline",
+      "compare_views_cli_keeps_all_five_input_pins_binding",
+      "compare_views_cli_reads_a_checkpointed_store_after_its_last_writer_closed",
+      "compare_views_cli_refuses_missing_or_incomplete_stores_without_initializing_them",
+      "compare_views_cli_rejects_bad_host_json_before_creating_source_state",
+      "compare_views_cli_rejects_execution_and_capture_options_before_host_file_access",
+      "compare_views_cli_replays_history_and_preserves_directed_parallel_changes_without_publication",
+      "compare_views_cli_uses_only_explicit_one_to_one_primary_file_continuity",
+      "compare_views_cli_whole_result_budgets_refuse_without_artifact_fallback",
+      "compare_views_cli_zero_capacities_refuse_without_output_or_store_creation"
+    ]
+  },
+  "tenthWaveAcceptance": {
+    "status": "accepted_windows_development_checkpoint",
+    "platform": "Windows",
+    "acceptedTag": "declaration-moves-windows-20261017-r2",
+    "index": "docs/validation/parity-windows-2026-10-17-wave10/index.json",
+    "indexSha256": "4de65fbe19220356f19fcdddb079542f9475490dcb790265d38a565a2b985ee3",
+    "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/native/receipt.json",
+    "sourceManifest": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/source-freeze.json",
+    "sourceManifestSha256": "6440b361f0ab6dbbc43834da0490a4e34aa2dd4de27efe371f434cb82bb021eb",
+    "runnerSha256": "412b796dff54e94a5ba1076204c28646f85dc1a769a4e7afa0428416b07f6a6b",
+    "sourceFiles": 3683,
+    "rustFiles": 401,
+    "phaseProof": {
+      "clippy": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/clippy/receipt.json",
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receiptSha256": "8f22137fac707eb73dc05af08dd0637fbfa17770367551ce2e95278311ddecc3"
+      },
+      "format": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/format/receipt.json",
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0,
+        "receiptSha256": "7e21a0aced296cc786fe79d3e01711455732aecf771a6531bb889ae82d8c0dfc"
+      },
+      "native": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/native/receipt.json",
+        "failed": 0,
+        "groups": 241,
+        "ignored": 33,
+        "passed": 1867,
+        "receiptSha256": "1fcdda6be575e30abc9e8271ef9bc87847e2c2a959aa88bbbc0965b9d4ddef23"
+      },
+      "python": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/python/receipt.json",
+        "failed": 0,
+        "groups": 1,
+        "ignored": 0,
+        "passed": 11,
+        "receiptSha256": "11a9ba9354a10ecc00222fe93782a17dc8ada9f4de378aeb348f44aa61db5863"
+      },
+      "typescript": {
+        "receipt": "docs/validation/parity-windows-2026-10-17-wave10/evidence/declaration-moves-windows-20261017-r2/typescript/receipt.json",
+        "failed": 0,
+        "groups": 1,
+        "ignored": 3,
+        "passed": 254,
+        "receiptSha256": "7040ca2ad011bf502d279ebca0569e5ecf44d2e7cfcdc8ec6b06d846625f00a7"
+      }
+    },
+    "cargoTargets": 237,
+    "groups": 241,
+    "passed": 1867,
+    "failed": 0,
+    "ignored": 33,
+    "nativeMatrix": {
+      "integrationTargets": 234,
+      "libraryRegistered": 371,
+      "libraryIgnored": 7
+    },
+    "claims": {
+      "universalParity": false,
+      "releaseCertified": false,
+      "newParityRowsCertified": false,
+      "fullUpstreamEquivalence": false,
+      "exhaustiveCompilerReferenceBinding": false,
+      "liveProprietaryIdeParity": false
+    },
+    "sourceChangesDuringEachGate": [],
+    "postFreezeMetadataFiles": [
+      "docs/STATUS.md",
+      "docs/parity/native-reconciliation-2026-10-15.json",
+      "docs/parity/windows-development-gates-2026-10-15.json",
+      "native/docs/windows-parity-2026-10-15.md"
+    ],
+    "boundedCapabilities": [
+      "Checked own_v1 moves of free Rust functions, structs, enums, traits, type aliases and constants at file/inline-module scope.",
+      "Explicit sourceAttachments exact_text_v1 capability admits an independently derived unchanged outer-documentation/attribute text bundle, retaining distinct original graph/name anchors and checking every transferred attachment owner.",
+      "Original-coordinate cut, exact AST/direct-parent placement, extra-copy provenance, other preamble/attachment preservation, old capability compatibility and CRLF padding; original guarded change/apply authority remains."
+    ],
+    "limitations": [
+      "Module/directory moves, associated/local declarations, other languages, compilation/attribute expansion and exhaustive reference repair remain outside this slice.",
+      "Existing publication atomicity and proprietary IDE limitations remain; universal parity and release certification stay open."
+    ],
+    "inventoryBoundary": {
+      "originalIdentities": 353,
+      "unreconciledReviewRequired": 73,
+      "backendRuntimeUnknowns": 77,
+      "identitiesStatusesAndCertificationsChanged": false
+    },
+    "nonadditiveDeclarationTests": [
+      "attachments_require_an_explicit_recognized_provider_capability",
+      "block_docs_crlf_and_bom_keep_exact_transfer_bytes_and_ordinary_leading_comments",
+      "const_moves_preserve_initializer",
+      "declaration_moves_still_require_an_exact_cut_and_unchanged_insert_at_the_selected_parent",
+      "enum_moves_preserve_variants",
+      "exact_moved_declaration_retains_nested_module_preambles_and_attributes",
+      "negotiated_attachments_move_as_one_bundle_with_distinct_entity_and_text_ranges",
+      "nonfree_and_module_declarations_refuse_before_provider_work",
+      "nonfunction_moves_cannot_leave_or_add_a_comment_wrapped_ast_copy",
+      "provider_cannot_leave_source_attachments_or_strip_them_from_the_target",
+      "same_file_and_inline_source_moves_use_original_coordinates",
+      "same_file_inline_bundle_preserves_inner_docs_and_other_items_attachments",
+      "struct_moves_preserve_generic_fields",
+      "trait_moves_preserve_associated_signatures",
+      "transferred_bundles_accept_crlf_insertion_padding_without_changing_their_bytes",
+      "type_alias_moves_preserve_generic_target",
+      "unattached_declarations_retain_the_three_field_provider_capability_contract",
+      "unrelated_identical_declarations_keep_their_original_provenance"
+    ]
+  }
+}

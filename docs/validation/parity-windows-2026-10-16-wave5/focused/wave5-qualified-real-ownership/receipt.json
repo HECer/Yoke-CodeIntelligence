@@ -1,0 +1,28 @@
+{
+  "checkedAtUtc": "2026-10-16T00:54:45.406233+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--lib",
+    "retrieval_scopes::capacity_tests::real_ownership_exact_16mb_passes_and_next_byte_refuses_before_body_scoring",
+    "--",
+    "--ignored",
+    "--exact",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 0,
+  "seconds": 195.75,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-qualified-real-ownership",
+  "logSha256": "9b8b53897e1779c12a1a5e07b11ee22f1a00f1692456eb419504e7ae3c371e7b",
+  "groups": 1,
+  "passed": 1,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

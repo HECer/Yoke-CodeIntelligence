@@ -1,0 +1,17 @@
+{
+  "freshness_epoch": {
+    "executable": "target\\debug\\deps\\freshness_epoch-82901587d2a56894.exe",
+    "ignored": [],
+    "registered": [
+      "freshness_refuses_a_new_host_epoch_until_it_is_explicitly_indexed",
+      "freshness_reuses_the_proven_disk_epoch_and_does_not_publish_new_source"
+    ]
+  },
+  "git_cli": {
+    "executable": "target\\debug\\deps\\git_cli-e30b12c3158d0146.exe",
+    "ignored": [],
+    "registered": [
+      "public_git_cli_analyzes_and_reloads_immutable_reports_with_explicit_host_execution"
+    ]
+  }
+}

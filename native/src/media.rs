@@ -20,15 +20,62 @@ use std::{
 const MAX_ASSET: usize = 50_000_000;
 const MAX_TEXT: usize = 2_000_000;
 const PRODUCER: &str = "yoke-native-media-1";
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
-struct Asset {
-    id: String,
-    workspace_id: String,
-    path: String,
-    source_hash: String,
-    blob_id: String,
-    size: usize,
+pub(crate) struct Asset {
+    pub(crate) id: String,
+    pub(crate) workspace_id: String,
+    pub(crate) path: String,
+    pub(crate) source_hash: String,
+    pub(crate) blob_id: String,
+    pub(crate) size: usize,
+}
+
+pub(crate) fn validate_asset(asset: &Asset) -> Result<()> {
+    normalized(&asset.path)?;
+    ensure!(
+        valid_id(&asset.workspace_id)
+            && valid_id(&asset.source_hash)
+            && asset.blob_id == asset.source_hash
+            && asset.size <= MAX_ASSET
+            && asset.id
+                == identity(&(
+                    asset.workspace_id.as_str(),
+                    asset.path.as_str(),
+                    &asset.source_hash
+                )),
+        "Explicit asset identity/size mismatch"
+    );
+    Ok(())
+}
+/// Read a registered immutable asset without reopening its original filesystem path.
+pub(crate) fn checked_asset(
+    store: &crate::store::Store,
+    id: &str,
+    deadline: &Deadline,
+) -> Result<(Asset, Vec<u8>)> {
+    ensure!(valid_id(id), "Invalid explicit asset ID");
+    store.set_deadline(deadline)?;
+    let limit = rusqlite::limits::Limit::SQLITE_LIMIT_LENGTH;
+    let prior = store
+        .db
+        .set_limit(limit, store.db.limit(limit)?.min(64000))?;
+    let raw: rusqlite::Result<String> = store.db.query_row(
+        "SELECT value FROM records WHERE kind='native_media_asset_v1' AND id=?1",
+        [id],
+        |row| row.get(0),
+    );
+    store.db.set_limit(limit, prior)?;
+    let raw = raw?;
+    let asset: Asset = crate::json::decode(crate::json::parse(raw.as_bytes(), 64000)?)?;
+    validate_asset(&asset)?;
+    ensure!(
+        asset.id == id && asset.workspace_id == store.workspace_id,
+        "Foreign explicit asset registration"
+    );
+    let bytes = store.read_blob_exact(&asset.blob_id, asset.size, MAX_ASSET)?;
+    deadline.check()?;
+    Ok((asset, bytes))
 }
 
 fn policy_file(path: &Path) -> Result<()> {
@@ -610,8 +657,37 @@ fn technical(path: &str, bytes: &[u8], deadline: &Deadline) -> Result<Value> {
         _ => anyhow::bail!("Unsupported native media format"),
     }
 }
+pub(crate) fn office_inspection_data(
+    asset: &Asset,
+    bytes: &[u8],
+    deadline: &Deadline,
+) -> Result<Value> {
+    let extension = Path::new(&asset.path)
+        .extension()
+        .and_then(|value| value.to_str())
+        .unwrap_or("")
+        .to_ascii_lowercase();
+    let extracted = crate::office::extract(bytes, &extension, deadline)?;
+    Ok(
+        json!({"kind":"media_inspection","workspaceId":asset.workspace_id,"assetId":asset.id,"path":asset.path,"sourceHash":asset.source_hash,"blobId":asset.blob_id,"metadata":extracted["metadata"],"segments":extracted["segments"],"producer":PRODUCER,"captureConsistency":"stable_double_read","contentInterpretation":"native_openxml_text_and_cached_values","limitations":extracted["limitations"]}),
+    )
+}
 pub fn inspect(engine: &Engine, path: &str, deadline: &Deadline) -> Result<Value> {
     let (asset, bytes) = capture(engine, path, deadline)?;
+    let extension = Path::new(path)
+        .extension()
+        .and_then(|value| value.to_str())
+        .unwrap_or("")
+        .to_ascii_lowercase();
+    if matches!(extension.as_str(), "docx" | "xlsx") {
+        let data = office_inspection_data(&asset, &bytes, deadline)?;
+        let mut result = persist(engine, &asset, &bytes, &data, deadline)?;
+        result["metadata"] = data["metadata"].clone();
+        result["segments"] = data["segments"].clone();
+        result["sourceHash"] = json!(asset.source_hash);
+        result["contentInterpretation"] = data["contentInterpretation"].clone();
+        return Ok(result);
+    }
     let metadata = technical(path, &bytes, deadline)?;
     let data = json!({"kind":"media_inspection","workspaceId":asset.workspace_id,"assetId":asset.id,"path":asset.path,"sourceHash":asset.source_hash,"blobId":asset.blob_id,"metadata":metadata,"producer":PRODUCER,"captureConsistency":"stable_double_read","contentInterpretation":"not_performed","limitations":["Technical metadata is not OCR, speech recognition, visual interpretation or proof of a decodable media stream.","Native PDF text extraction requires the explicitly selected bounded native worker."]});
     let mut result = persist(engine, &asset, &bytes, &data, deadline)?;
@@ -680,7 +756,7 @@ const PDF_INPUT: usize = 10_000_000;
 const PDF_OUTPUT: usize = 8_000_000;
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
-struct ResourceLimits {
+pub(crate) struct ResourceLimits {
     memory_bytes: u64,
     cpu_seconds: u32,
     memory_enforcement: String,
@@ -1436,7 +1512,7 @@ fn pdf_pages(document: &lopdf::Document) -> Result<BTreeMap<u32, lopdf::ObjectId
 
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
-struct PdfMetadata {
+pub(crate) struct PdfMetadata {
     kind: String,
     format: String,
     pages: usize,
@@ -1449,20 +1525,20 @@ struct PdfMetadata {
 }
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
-struct PdfSegment {
-    page: usize,
-    text: String,
-    origin: String,
+pub(crate) struct PdfSegment {
+    pub(crate) page: usize,
+    pub(crate) text: String,
+    pub(crate) origin: String,
 }
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
-struct PdfResult {
+pub(crate) struct PdfResult {
     schema: u8,
     source_hash: String,
-    metadata: PdfMetadata,
-    segments: Vec<PdfSegment>,
-    warnings: Vec<String>,
-    resource_limits: ResourceLimits,
+    pub(crate) metadata: PdfMetadata,
+    pub(crate) segments: Vec<PdfSegment>,
+    pub(crate) warnings: Vec<String>,
+    pub(crate) resource_limits: ResourceLimits,
 }
 
 /// Must be dispatched in a dedicated native worker before Engine opens any store.
@@ -1591,19 +1667,16 @@ fn read_worker_pipe(
         let _ = sender.send((stdout, result));
     });
 }
-pub fn inspect_with_worker(
-    engine: &Engine,
-    path: &str,
+pub(crate) type PdfSpawnObserver = dyn Fn(u32, &Deadline) -> Result<()> + Send + Sync;
+/// Replays only these immutable bytes in an explicitly selected native worker.
+/// It opens no Store and never reopens an original asset path.
+pub(crate) fn frozen_pdf_with_worker(
+    bytes: &[u8],
     worker_exe: &Path,
+    observer: Option<&PdfSpawnObserver>,
     deadline: &Deadline,
-) -> Result<Value> {
-    if !Path::new(path)
-        .extension()
-        .is_some_and(|extension| extension.eq_ignore_ascii_case("pdf"))
-    {
-        return inspect(engine, path, deadline);
-    }
-    let (asset, bytes) = capture(engine, path, deadline)?;
+) -> Result<PdfResult> {
+    deadline.check()?;
     ensure!(
         bytes.len() <= PDF_INPUT,
         "Native PDF worker input exceeds 10 MB"
@@ -1616,7 +1689,8 @@ pub fn inspect_with_worker(
         .prefix("yoke-media-pdf-")
         .tempdir()?;
     let copy = temporary.path().join("input.pdf");
-    fs::write(&copy, &bytes)?;
+    let source_hash = hash(bytes);
+    fs::write(&copy, bytes)?;
     let mut permissions = fs::metadata(&copy)?.permissions();
     permissions.set_readonly(true);
     fs::set_permissions(&copy, permissions)?;
@@ -1637,6 +1711,12 @@ pub fn inspect_with_worker(
         }
     }
     let mut child = crate::process::ManagedChild::spawn(command)?;
+    // Cleanup ownership exists before host denial or shared cancellation can
+    // reject an already spawned helper. The observer cannot grant authority.
+    if let Some(observer) = observer {
+        observer(child.inner().id(), deadline)?;
+    }
+    deadline.check()?;
     let stdout = child
         .stdout()
         .take()
@@ -1675,14 +1755,14 @@ pub fn inspect_with_worker(
         "Native PDF worker failed; malformed, encrypted or resource-limited PDF"
     );
     ensure!(
-        hash(fs::read(&copy)?) == asset.source_hash,
+        hash(fs::read(&copy)?) == source_hash,
         "Native PDF worker modified its immutable input copy"
     );
     let parsed: PdfResult =
         serde_json::from_slice(&output.context("Native PDF worker response missing")?)?;
     ensure!(
         parsed.schema == 1
-            && parsed.source_hash == asset.source_hash
+            && parsed.source_hash == source_hash
             && parsed.metadata.kind == "document"
             && parsed.metadata.format == "pdf"
             && parsed.metadata.native_text_available
@@ -1730,6 +1810,23 @@ pub fn inspect_with_worker(
                 .all(|warning| warning.len() <= 512 && !obvious_secret(warning)),
         "Native PDF worker warning capacity exceeded"
     );
+    deadline.check()?;
+    Ok(parsed)
+}
+pub fn inspect_with_worker(
+    engine: &Engine,
+    path: &str,
+    worker_exe: &Path,
+    deadline: &Deadline,
+) -> Result<Value> {
+    if !Path::new(path)
+        .extension()
+        .is_some_and(|extension| extension.eq_ignore_ascii_case("pdf"))
+    {
+        return inspect(engine, path, deadline);
+    }
+    let (asset, bytes) = capture(engine, path, deadline)?;
+    let parsed = frozen_pdf_with_worker(&bytes, worker_exe, None, deadline)?;
     let data = json!({"kind":"media_inspection","workspaceId":asset.workspace_id,"assetId":asset.id,"path":asset.path,"sourceHash":asset.source_hash,"blobId":asset.blob_id,"metadata":parsed.metadata,"segments":parsed.segments,"warnings":parsed.warnings,"resourceLimits":parsed.resource_limits,"producer":PRODUCER,"captureConsistency":"stable_double_read","contentInterpretation":"native_pdf_text_only","limitations":["PDF text extraction reads native text operators and font mappings; it does not perform OCR or visual interpretation.","The native worker is resource-limited and copied-file-only, not a general OS sandbox."]});
     let mut result = persist(engine, &asset, &bytes, &data, deadline)?;
     result["metadata"] = data["metadata"].clone();
