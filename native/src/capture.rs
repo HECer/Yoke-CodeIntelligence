@@ -114,6 +114,15 @@ impl Deadline {
         bounded.check()?;
         let _restore = Restore(HOST_DEADLINE.with(|scope| scope.replace(Some(bounded.clone()))));
         let result = run();
+        if result
+            .as_ref()
+            .err()
+            .is_some_and(crate::process::cleanup_unproven)
+        {
+            // Cancellation is not proof that an owned process has stopped.
+            // Preserve the stronger typed failure after the cleanup attempt.
+            return result;
+        }
         bounded.check()?;
         result
     }

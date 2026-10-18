@@ -1,5 +1,17 @@
 # Release status — native 0.5.0 and retained TypeScript 0.3.0
 
+## Current integration work
+
+Local branch `integrate/native-parity-github-app-20261018` combines the separate
+`c5178b2` parity/Wave 14 and `7b8eabb` GitHub App checkpoints. Both remain absent
+from `main` at the start of this integration. Their historical evidence is
+preserved; it is not evidence for the combined source. The integration repairs
+inherited Windows process-cleanup regressions and adds Git-compatible bounded
+committer-date history selection. See [digest development](native-digest-development.md)
+for actual scoped checks and remaining digest functionality. Combined whole-native,
+browser and packaging acceptance is still in progress. No new release, live App
+installation, public comment or deployment is claimed.
+
 ## Current native Rust implementation
 
 The default Rust executable independently owns immutable source capture/storage, 24-language structural analysis, exact UTF-8 evidence, incremental parse reuse, FTS/BM25 retrieval, bounded context plans, directed graphs/Leiden, offline exports, eight MCP tools, guarded changes/recovery and a host-selected LSP client. Graft, Serena and Graphify are unnecessary for these operations; Node/Python/model calls are unnecessary for the default native runtime.

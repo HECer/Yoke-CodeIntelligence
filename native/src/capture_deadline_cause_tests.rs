@@ -52,3 +52,49 @@ fn inherited_cancellation_is_observed_on_the_same_borrow_and_wins_over_expiry() 
     assert!(after_scope.check().is_ok());
     assert!(!after_scope.remaining().is_zero());
 }
+
+#[test]
+fn history_cleanup_failure_survives_host_cancellation() {
+    let parent = Deadline::new(60_000);
+    let cancellation = Arc::new(AtomicBool::new(false));
+    let flag = Arc::clone(&cancellation);
+    let result: anyhow::Result<()> = Deadline::run_bounded(&parent, cancellation, || {
+        flag.store(true, Ordering::SeqCst);
+        Err(anyhow::Error::new(crate::process::CleanupUnproven::new(
+            "owned group still active",
+        ))
+        .context("Nested history acquisition failed"))
+    });
+    assert!(
+        crate::process::cleanup_unproven(&result.unwrap_err()),
+        "Cancellation must not hide an unproven owned-process cleanup"
+    );
+    assert!(parent.check().is_ok());
+}
+
+#[test]
+fn history_cleanup_failure_survives_host_deadline() {
+    let parent = Deadline::new(20);
+    let result: anyhow::Result<()> =
+        Deadline::run_bounded(&parent, Arc::new(AtomicBool::new(false)), || {
+            std::thread::sleep(std::time::Duration::from_millis(30));
+            Err(anyhow::Error::new(crate::process::CleanupUnproven::new(
+                "owned group still active",
+            ))
+            .context("Nested history acquisition failed"))
+        });
+    assert!(
+        crate::process::cleanup_unproven(&result.unwrap_err()),
+        "Expiry must not hide an unproven owned-process cleanup"
+    );
+    assert_eq!(parent.failure(), Some(DeadlineFailure::Expired));
+}
+
+#[test]
+fn history_cleanup_failure_remains_typed_inside_a_spawn_io_error() {
+    let error = anyhow::Error::new(std::io::Error::other(crate::process::CleanupUnproven::new(
+        "owned root exit unproven",
+    )))
+    .context("Host executable unavailable");
+    assert!(crate::process::cleanup_unproven(&error));
+}

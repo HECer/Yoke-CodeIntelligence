@@ -783,6 +783,13 @@ fn validate_parity_records(store: &Store, deadline: &Deadline) -> Result<ParityD
         ensure!(count < MAX_ROWS, "Retention row capacity exceeded");
         let (kind, id, raw) = row?;
         match kind.as_str() {
+            crate::github_app::RECORD_KIND
+            | crate::github_app::worker::RECORD_KIND
+            | crate::github_app::publication::RECORD_KIND
+            | crate::github_app::pages::RECORD_KIND
+            | crate::github_app::pages::REVISION_KIND => {
+                // scan validates the complete closed inline history before this pass.
+            }
             crate::knowledge::feedback::EVENT_KIND
             | crate::knowledge::feedback::TRANSCRIPT_KIND => {
                 // scan validates the complete feedback set once before this pass.
@@ -1038,6 +1045,18 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
         );
     }
     let mut out = Scan::default();
+    let github_inline_ids = crate::github_app::validated_inline_records(store, deadline)?;
+    let github_worker_roots = crate::github_app::worker::retained_roots(store, deadline)?;
+    let github_publication_ids = crate::github_app::publication::validated_inline_records(
+        store,
+        &github_worker_roots,
+        deadline,
+    )?;
+    let github_page_ids =
+        crate::github_app::pages::validated_inline_records(store, &github_worker_roots, deadline)?;
+    out.references
+        .extend(github_worker_roots.snapshot_ids.iter().cloned());
+    out.all_references.extend(github_worker_roots.snapshot_ids);
     let decision_roots = crate::decision_records::validated_roots(store, deadline)?;
     let decision_ids: BTreeSet<_> = decision_roots
         .snapshot_ids
@@ -1220,6 +1239,44 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
             .push((format!("records:{kind}"), id.clone(), raw.clone()));
         if !known_kind(&kind) && !parity_records.contains(&(kind.clone(), id.clone())) {
             out.unknown.insert(kind.clone());
+        }
+        if kind == crate::github_app::RECORD_KIND {
+            ensure!(
+                github_inline_ids.contains(&id),
+                "Invalid GitHub inline history"
+            );
+            // Strict typed proof above establishes no CAS authority. Payload text
+            // and Git IDs must never become source-retention references.
+            continue;
+        }
+        if kind == crate::github_app::worker::RECORD_KIND {
+            ensure!(
+                github_worker_roots.record_ids.contains(&id),
+                "Invalid GitHub worker history"
+            );
+            // Only validated typed head/base roots above carry source authority.
+            // Inert report JSON, Git IDs, MACs and request text are never walked.
+            continue;
+        }
+        if kind == crate::github_app::publication::RECORD_KIND {
+            ensure!(
+                github_publication_ids.contains(&id),
+                "Invalid GitHub publication history"
+            );
+            // Only the validated completed worker roots carry CAS authority. Body,
+            // request, URL and other inline strings are never generic root inputs.
+            continue;
+        }
+        if kind == crate::github_app::pages::RECORD_KIND
+            || kind == crate::github_app::pages::REVISION_KIND
+        {
+            ensure!(
+                github_page_ids.contains(&(kind.clone(), id.clone())),
+                "Invalid GitHub page history"
+            );
+            // Typed completed worker roots alone retain sources. Never walk HTML,
+            // labels, capability URLs or caller-provided identifiers as CAS roots.
+            continue;
         }
         if kind == "retention-committed" {
             let r: HistoryReceipt = serde_json::from_str(&raw)?;

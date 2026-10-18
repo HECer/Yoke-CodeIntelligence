@@ -64,7 +64,7 @@ pub struct Prepared {
     input: Input,
     options: Options,
 }
-fn host_bytes(path: &Path, maximum: usize, d: &Deadline) -> Result<Vec<u8>> {
+pub(crate) fn host_bytes(path: &Path, maximum: usize, d: &Deadline) -> Result<Vec<u8>> {
     d.check()?;
     ensure!(
         !path.components().any(|c| matches!(c, Component::ParentDir)),

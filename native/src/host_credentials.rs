@@ -112,6 +112,35 @@ pub fn read_github_token(name: &str) -> Result<Zeroizing<String>> {
     let bytes = read(&target("github", name)?)?;
     Ok(Zeroizing::new(github_token_bytes(&bytes)?.to_owned()))
 }
+/// Exact private stdin bytes in a separate namespace; never a bearer credential.
+pub fn import_github_webhook_secret(name: &str, bytes: &[u8]) -> Result<Value> {
+    let target = target("github-webhook", name)?;
+    crate::github_app::validate_secret(bytes)?;
+    write_new(&target, bytes)?;
+    Ok(
+        json!({"credentialName":name,"credentialType":"github-webhook",
+        "privateMaterial":"os_credential_store_only"}),
+    )
+}
+pub fn read_github_webhook_secret(name: &str) -> Result<Zeroizing<Vec<u8>>> {
+    let bytes = read(&target("github-webhook", name)?)?;
+    crate::github_app::validate_secret(&bytes)?;
+    Ok(bytes)
+}
+/// Decode and validate PKCS1/PKCS8 before a create-only, distinct OS-store write.
+pub fn import_github_app_key(name: &str, bytes: &[u8]) -> Result<Value> {
+    let target = target("github-app-key", name)?;
+    let der = crate::github_app_auth::key::decoded_key(bytes)?;
+    write_new(&target, &der)?;
+    Ok(
+        json!({"credentialName":name,"credentialType":"github-app-key",
+        "privateMaterial":"os_credential_store_only"}),
+    )
+}
+pub fn read_github_app_key(name: &str) -> Result<crate::github_app_auth::AppKey> {
+    let bytes = read(&target("github-app-key", name)?)?;
+    crate::github_app_auth::AppKey::from_host_bytes(&bytes)
+}
 fn model_token_bytes(bytes: &[u8]) -> Result<&str> {
     ensure!(
         !bytes.is_empty() && bytes.len() <= 2560 && bytes.iter().all(u8::is_ascii_graphic),

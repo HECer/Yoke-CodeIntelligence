@@ -1039,8 +1039,65 @@ fn source_impact(
         let (s, g, _, _) = engine.index(deadline)?;
         (s, g)
     };
-    crate::graph_extensions::validate_scope(&engine.store, &snapshot, &graph, deadline)?;
-    let scope = crate::capture::source_scope_policy(&engine.store, &snapshot)?;
+    Ok(source_impact_for(
+        &engine.store,
+        &snapshot,
+        &graph,
+        files,
+        head,
+        deadline,
+        true,
+    )?
+    .value)
+}
+
+/// Minted only after captured bytes and the reported remote Git blob actually match.
+/// Stored/remote JSON cannot deserialize this private preparation capability.
+pub(crate) struct CheckedFileBlob {
+    snapshot_id: String,
+    path: String,
+    content_hash: String,
+    git_blob_sha: String,
+    start_byte: usize,
+    end_byte: usize,
+}
+impl CheckedFileBlob {
+    pub(crate) fn evidence(&self) -> Value {
+        json!({"snapshotId":self.snapshot_id,"path":self.path,"contentHash":self.content_hash,
+            "gitBlobSha":self.git_blob_sha,"startByte":self.start_byte,"endByte":self.end_byte})
+    }
+}
+pub(crate) struct WorkerImpact {
+    value: Value,
+    matched: Vec<CheckedFileBlob>,
+}
+impl WorkerImpact {
+    pub(crate) fn into_parts(self) -> (Value, Vec<CheckedFileBlob>) {
+        (self.value, self.matched)
+    }
+}
+pub(crate) fn worker_source_impact(
+    store: &crate::store::Store,
+    snapshot: &crate::model::Snapshot,
+    graph: &crate::model::Graph,
+    files: &[Value],
+    commit: &str,
+    deadline: &Deadline,
+) -> Result<WorkerImpact> {
+    source_impact_for(store, snapshot, graph, files, commit, deadline, false)
+}
+fn source_impact_for(
+    store: &crate::store::Store,
+    snapshot: &crate::model::Snapshot,
+    graph: &crate::model::Graph,
+    files: &[Value],
+    head: &str,
+    deadline: &Deadline,
+    publish_communities: bool,
+) -> Result<WorkerImpact> {
+    let mut matched = Vec::new();
+    crate::graph_extensions::validate_scope(store, snapshot, graph, deadline)?;
+    let scope = crate::capture::source_scope_policy(store, snapshot)?;
     let mut selected = BTreeSet::new();
     let mut path_ids = BTreeSet::new();
     let mut rows = vec![];
@@ -1091,6 +1148,14 @@ fn source_impact(
                 rows.push(row);
                 continue;
             }
+            matched.push(CheckedFileBlob {
+                snapshot_id: snapshot.id.clone(),
+                path: path.clone(),
+                content_hash: file.hash.clone(),
+                git_blob_sha: local_sha,
+                start_byte: 0,
+                end_byte: file.size,
+            });
             let removed = status == "removed";
             row["sourceMatch"] = json!(if removed {
                 "local_blob_matches_reported_removed_file"
@@ -1241,15 +1306,29 @@ fn source_impact(
         .iter()
         .filter(|e| evidence_ids.contains(e.id.as_str()))
         .collect();
-    let report = crate::graph_extensions::analyze(
-        &engine.store,
-        &snapshot,
-        &graph,
-        &Default::default(),
-        deadline,
-    )?;
-    let communities:Vec<_>=report["communities"].as_array().context("PR impact communities missing")?.iter().filter(|community|community["members"].as_array().into_iter().flatten().filter_map(Value::as_str).any(|id|selected.contains(id)||path_ids.contains(id))).map(|c|json!({"id":c["id"],"label":c["label"],"memberCount":c["members"].as_array().map_or(0,Vec::len)})).collect();
-    Ok(
-        json!({"snapshotId":snapshot.id,"graphHash":crate::model::identity(&graph),"reportedHeadSha":head,"sourceSelection":"existing_immutable_index_or_initial_capture","files":rows,"omissions":omissions,"changedSymbols":entities(&selected),"pathCandidates":entities(&path_ids),"incomingCandidates":entities(&incoming),"observations":observations,"evidence":evidence,"communities":communities,"communityReportArtifactId":report["artifactId"],"certainty":"source_bound_structural_candidate_not_compiler_or_merge_proof","localTreeCommitEquality":"not_attested_file_blob_comparisons_only","complete":false}),
-    )
+    let mut value = json!({"snapshotId":snapshot.id,"graphHash":crate::model::identity(graph),
+        "reportedHeadSha":head,"sourceSelection":if publish_communities {"existing_immutable_index_or_initial_capture"}
+            else {"host_selected_existing_immutable_snapshot"},
+        "files":rows,"omissions":omissions,"changedSymbols":entities(&selected),"pathCandidates":entities(&path_ids),
+        "incomingCandidates":entities(&incoming),"observations":observations,"evidence":evidence,
+        "certainty":"source_bound_structural_candidate_not_compiler_or_merge_proof",
+        "localTreeCommitEquality":"not_attested_file_blob_comparisons_only","complete":false});
+    if publish_communities {
+        let report = crate::graph_extensions::analyze(
+            store,
+            snapshot,
+            graph,
+            &Default::default(),
+            deadline,
+        )?;
+        let communities:Vec<_>=report["communities"].as_array().context("PR impact communities missing")?.iter()
+            .filter(|community|community["members"].as_array().into_iter().flatten().filter_map(Value::as_str)
+                .any(|id|selected.contains(id)||path_ids.contains(id)))
+            .map(|c|json!({"id":c["id"],"label":c["label"],"memberCount":c["members"].as_array().map_or(0,Vec::len)})).collect();
+        value["communities"] = json!(communities);
+        value["communityReportArtifactId"] = report["artifactId"].clone();
+    } else {
+        value["communityAnalysis"] = json!("not_run_by_pure_worker");
+    }
+    Ok(WorkerImpact { value, matched })
 }

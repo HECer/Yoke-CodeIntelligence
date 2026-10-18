@@ -21,6 +21,8 @@ pub mod file_api;
 pub mod freshness;
 pub mod git_workflows;
 pub mod github;
+pub mod github_app;
+pub mod github_app_auth;
 pub mod graph_collections;
 pub mod graph_exports;
 pub mod graph_extensions;

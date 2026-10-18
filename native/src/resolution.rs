@@ -538,18 +538,10 @@ pub fn enrich_at(
             });
         }
         // The signature is an exact source header. Long headers stay visibly bounded.
-        let body = node.child_by_field_name("body").or_else(|| {
-            node.child_by_field_name("value")
-                .and_then(|n| n.child_by_field_name("body"))
-        });
-        let end = body.map_or(node.end_byte(), |body| body.start_byte());
-        let header = source[entity.start_byte..end].trim_end();
-        let mut cap = header.len().min(4096);
-        while !header.is_char_boundary(cap) {
-            cap -= 1;
-        }
-        entity.signature = header[..cap].into();
-        if header.len() > cap {
+        let (signature, truncated) =
+            crate::analysis::declarations::signature(node, source, entity.start_byte);
+        entity.signature = signature;
+        if truncated {
             output.diagnostics.push(crate::model::Diagnostic {
                 path: file.path.clone(),
                 start_byte: entity.start_byte,

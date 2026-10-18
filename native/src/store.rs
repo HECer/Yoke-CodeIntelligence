@@ -14,6 +14,9 @@ use std::{
     time::{Duration, Instant},
 };
 
+#[path = "store_read_only.rs"]
+mod read_only;
+
 pub struct Store {
     pub dir: PathBuf,
     pub db: Connection,
@@ -43,8 +46,22 @@ fn state_lock(dir: &Path, name: &str) -> Result<fs::File> {
         .truncate(false)
         .open(path)?)
 }
-fn lock_until(file: &fs::File, exclusive: bool, end: Instant) -> Result<()> {
+fn lock_is_contended(error: &std::io::Error) -> bool {
+    error.kind() == std::io::ErrorKind::WouldBlock
+        || error
+            .raw_os_error()
+            .is_some_and(|code| Some(code) == fs2::lock_contended_error().raw_os_error())
+}
+fn lock_until(
+    file: &fs::File,
+    exclusive: bool,
+    end: Instant,
+    deadline: Option<&crate::capture::Deadline>,
+) -> Result<()> {
     loop {
+        if let Some(deadline) = deadline {
+            deadline.check()?;
+        }
         ensure!(Instant::now() < end, "State client lock deadline exceeded");
         let result = if exclusive {
             fs2::FileExt::try_lock_exclusive(file)
@@ -53,7 +70,7 @@ fn lock_until(file: &fs::File, exclusive: bool, end: Instant) -> Result<()> {
         };
         match result {
             Ok(()) => return Ok(()),
-            Err(error) if error.kind() == std::io::ErrorKind::WouldBlock => {
+            Err(error) if lock_is_contended(&error) => {
                 std::thread::sleep(
                     end.saturating_duration_since(Instant::now())
                         .min(Duration::from_millis(5)),
@@ -112,6 +129,7 @@ impl Store {
             &self.admission_gate,
             true,
             Instant::now() + deadline.remaining(),
+            Some(deadline),
         )?;
         self.maintenance_active.set(true);
         let mut upgrade = ClientUpgrade {
@@ -120,6 +138,7 @@ impl Store {
             restore_client: false,
             exclusive: false,
         };
+        deadline.check()?;
         fs2::FileExt::unlock(&self.client_lock)?;
         self.client_valid.set(false);
         upgrade.restore_client = true;
@@ -127,6 +146,7 @@ impl Store {
             .context("Maintenance requires all other state clients to close")?;
         upgrade.exclusive = true;
         self.client_valid.set(true);
+        deadline.check()?;
         let result = operation();
         upgrade.restore()?;
         result
@@ -151,8 +171,8 @@ impl Store {
         let admission_gate = state_lock(&dir, "maintenance.lock")?;
         let client_lock = state_lock(&dir, "clients.lock")?;
         let end = started + timeout;
-        lock_until(&admission_gate, false, end)?;
-        lock_until(&client_lock, false, end)?;
+        lock_until(&admission_gate, false, end, None)?;
+        lock_until(&client_lock, false, end, None)?;
         fs2::FileExt::unlock(&admission_gate)?;
         let db_path = dir.join("index.sqlite");
         for name in [
@@ -701,15 +721,25 @@ impl Store {
         Ok(())
     }
     pub fn set_deadline(&self, deadline: &crate::capture::Deadline) -> Result<()> {
-        self.deadline.replace(Some(deadline.clone()));
-        let bounded = deadline.clone();
-        self.db
-            .progress_handler(1000, Some(move || bounded.check().is_err()));
+        self.replace_deadline(Some(deadline.clone()));
         self.check_deadline()
     }
     pub fn clear_deadline(&self) {
-        self.deadline.replace(None);
-        self.db.progress_handler(0, None::<fn() -> bool>);
+        self.replace_deadline(None);
+    }
+    /// Swap only the Store-owned progress policy; scoped callers restore their saved policy.
+    pub(crate) fn replace_deadline(
+        &self,
+        deadline: Option<crate::capture::Deadline>,
+    ) -> Option<crate::capture::Deadline> {
+        let prior = self.deadline.replace(deadline.clone());
+        if let Some(bounded) = deadline {
+            self.db
+                .progress_handler(1000, Some(move || bounded.check().is_err()));
+        } else {
+            self.db.progress_handler(0, None::<fn() -> bool>);
+        }
+        prior
     }
     pub(crate) fn check_deadline(&self) -> Result<()> {
         ensure!(

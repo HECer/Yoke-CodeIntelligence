@@ -21,8 +21,13 @@ pub const SOURCE_KIND: &str = "native_git_source_v1";
 pub const REPORT_KIND: &str = "native_git_workflow_v1";
 #[path = "git_affected.rs"]
 pub mod affected_details;
+#[path = "git_history_read.rs"]
+pub(crate) mod history_read;
+pub use history_read::Options as HistoryOptions;
 #[path = "git_impact_details.rs"]
 pub mod impact_details;
+#[path = "git_source_read.rs"]
+pub(crate) mod source_read;
 pub(crate) fn validate_retention_record(
     store: &crate::store::Store,
     kind: &str,
@@ -1508,49 +1513,39 @@ pub fn validate_source(
     deadline.check()?;
     store.set_deadline(deadline)?;
     ensure!(model::valid_id(id), "Invalid Git source snapshot ID");
-    let receipt: SourceReceipt =
-        crate::json::decode(record_value(store, SOURCE_KIND, id, 16_000_000, deadline)?)?;
     let snapshot = store.snapshot(id)?;
-    ensure!(
-        snapshot.kind == "derived"
-            && snapshot.capture_consistency == "immutable_git_objects_verified"
-            && [
-                "yoke-tree-sitter-9",
-                "yoke-tree-sitter-8",
-                "yoke-tree-sitter-6",
-                "yoke-tree-sitter-4"
-            ]
-            .contains(&receipt.analyzer.as_str())
-            && receipt.snapshot_id == id
-            && receipt.workspace_id == store.workspace_id
-            && snapshot.workspace_id == store.workspace_id
-            && receipt.snapshot_hash == identity(&snapshot)
-            && receipt.producer == "yoke-native-git-1"
-            && receipt.blobs.len() == snapshot.files.len(),
-        "Git source receipt scope mismatch"
-    );
-    let inherited: crate::capture::DerivedCaptureOptionsRecord =
-        store.get_record(crate::capture::DERIVED_OPTIONS_RECORD_KIND, id)?;
-    ensure!(
-        inherited.origin_snapshot_id == receipt.origin_snapshot_id,
-        "Git source capture origin mismatch"
-    );
-    crate::capture::options_for_snapshot_at(store, &snapshot, crate::analysis::AnalyzerEpoch::V9)?;
-    let commit = artifact_bytes(store, &receipt.commit_artifact_id, 1_000_000, deadline)?;
+    let header = source_read::header(store, &snapshot, deadline)?;
     validate_source_objects(
         &snapshot,
-        &receipt,
-        &commit,
+        &header.receipt,
+        &header.commit,
         &mut |file| cas_bytes(store, &file.hash, file.size, 4_000_000, deadline),
         deadline,
     )?;
-    Ok(serde_json::to_value(receipt)?)
+    Ok(serde_json::to_value(header.receipt)?)
 }
 fn validate_source_objects(
     snapshot: &Snapshot,
     receipt: &SourceReceipt,
     commit: &[u8],
     read: &mut dyn FnMut(&SourceFile) -> Result<Vec<u8>>,
+    deadline: &Deadline,
+) -> Result<()> {
+    validate_source_objects_retained(
+        snapshot,
+        receipt,
+        commit,
+        read,
+        &mut |_, _| Ok(()),
+        deadline,
+    )
+}
+fn validate_source_objects_retained(
+    snapshot: &Snapshot,
+    receipt: &SourceReceipt,
+    commit: &[u8],
+    read: &mut dyn FnMut(&SourceFile) -> Result<Vec<u8>>,
+    retain: &mut dyn FnMut(&SourceFile, String) -> Result<()>,
     deadline: &Deadline,
 ) -> Result<()> {
     ensure!(
@@ -1592,6 +1587,14 @@ fn validate_source_objects(
         .map(|entry| (entry.path.as_str(), entry))
         .collect();
     let mut paths = BTreeSet::new();
+    let mut files = BTreeMap::new();
+    for file in &snapshot.files {
+        deadline.check()?;
+        ensure!(
+            files.insert(file.path.as_str(), file).is_none(),
+            "Duplicate Git source manifest path"
+        );
+    }
     let mut total = 0usize;
     for proof in &receipt.blobs {
         deadline.check()?;
@@ -1599,10 +1602,9 @@ fn validate_source_objects(
             paths.insert(proof.path.as_str()),
             "Duplicate Git file proof"
         );
-        let file = snapshot
-            .files
-            .iter()
-            .find(|file| file.path == proof.path)
+        let file = files
+            .get(proof.path.as_str())
+            .copied()
             .context("Git proof file outside source manifest")?;
         let entry = tree
             .get(proof.path.as_str())
@@ -1631,6 +1633,7 @@ fn validate_source_objects(
                     == proof.git_object_id,
             "Git source blob proof hash/size mismatch"
         );
+        retain(file, text)?;
     }
     ensure!(
         snapshot.id
@@ -1698,38 +1701,11 @@ pub(crate) fn archive_source(
     snapshot: &Snapshot,
     deadline: &Deadline,
 ) -> Result<ArchivedGitSource> {
-    let receipt: SourceReceipt =
-        crate::json::decode(validate_source(store, &snapshot.id, deadline)?)?;
-    let commit_text = String::from_utf8(artifact_bytes(
-        store,
-        &receipt.commit_artifact_id,
-        1_000_000,
-        deadline,
-    )?)?;
-    let mut sources = BTreeMap::new();
-    let mut total = 0usize;
-    for file in &snapshot.files {
-        deadline.check()?;
-        total = total
-            .checked_add(file.size)
-            .context("Git archive source byte overflow")?;
-        ensure!(total <= 64_000_000, "Git archive source capacity exceeded");
-        ensure!(
-            sources
-                .insert(
-                    file.path.clone(),
-                    String::from_utf8(cas_bytes(
-                        store, &file.hash, file.size, 4_000_000, deadline
-                    )?)?
-                )
-                .is_none(),
-            "Duplicate Git archive source path"
-        );
-    }
+    let (header, sources) = source_read::retained(store, snapshot, 64_000_000, deadline)?;
     Ok(ArchivedGitSource {
-        receipt,
-        inheritance: store.get_record(crate::capture::DERIVED_OPTIONS_RECORD_KIND, &snapshot.id)?,
-        commit_text,
+        receipt: header.receipt,
+        inheritance: header.inheritance,
+        commit_text: String::from_utf8(header.commit)?,
         sources,
     })
 }

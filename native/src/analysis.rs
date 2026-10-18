@@ -12,6 +12,9 @@ use tree_sitter::{Language, Node, ParseOptions, Parser};
 
 pub use crate::languages::LANGUAGES;
 
+#[path = "analysis_declarations.rs"]
+pub(crate) mod declarations;
+
 /// An explicit extraction policy; capture/classification proofs remain separate.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum AnalyzerEpoch {

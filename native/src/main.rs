@@ -11,6 +11,12 @@ mod bedrock_cli;
 mod feedback_cli;
 mod git_affected_cli;
 mod git_impact_cli;
+mod github_app_cli;
+mod github_app_digest_cli;
+mod github_app_ingress_cli;
+mod github_app_pages_cli;
+mod github_app_publication_cli;
+mod github_app_worker_cli;
 mod host_install_cli;
 mod meaning_archive_cli;
 mod meaning_cli;
@@ -75,6 +81,7 @@ enum ExtensionOperation {
     Meaning(Box<meaning_cli::Arguments>),
     MixedView(Box<mixed_view_cli::Arguments>),
     Feedback(Box<feedback_cli::Arguments>),
+    GithubApp(Box<github_app_cli::Arguments>),
     ModelsHttp(Box<HttpModelArguments>),
     ModelHttpWorker(Box<HttpModelWorkerArguments>),
     ModelsBedrock(Box<bedrock_cli::Arguments>),
@@ -887,6 +894,12 @@ enum CredentialOperation {
         name: String,
     },
     GithubImport {
+        name: String,
+    },
+    GithubWebhookImport {
+        name: String,
+    },
+    GithubAppKeyImport {
         name: String,
     },
     Tls {
@@ -1916,6 +1929,7 @@ fn run_parity(
         ExtensionOperation::Meaning(_) => bail!("Meaning graph host dispatch error"),
         ExtensionOperation::MixedView(_) => bail!("Mixed views host dispatch error"),
         ExtensionOperation::Feedback(_) => bail!("Feedback host dispatch error"),
+        ExtensionOperation::GithubApp(_) => bail!("GitHub App host dispatch error"),
         ExtensionOperation::Decisions(args) => run_decisions(engine, *args, arguments, deadline),
         ExtensionOperation::Document(args) => run_document(engine, *args, arguments, deadline),
         ExtensionOperation::Retrieve { query, options } => {
@@ -3223,6 +3237,74 @@ fn run(cli: Cli) -> Result<bool> {
         return host_install_cli::run(args, cli.timeout, cli.max_bytes);
     }
     if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::GithubApp(args) = extension.as_ref()
+    {
+        args.check_permission(cli.allow_writes)?;
+        ensure!(
+            (10..=if args.is_serve() { 86_400_000 } else { 600_000 }).contains(&cli.timeout)
+                && cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.analyzer_epoch.is_none()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers,
+            "github_app_input_invalid"
+        );
+        let deadline = Deadline::new(cli.timeout);
+        if args.is_digest() {
+            let prepared = args.prepare_digest(cli.max_bytes, cli.allow_writes, &deadline)?;
+            return prepared.run(&cli.root, &deadline);
+        }
+        if args.is_pages() {
+            let prepared =
+                args.prepare_pages(cli.max_bytes, cli.allow_writes, cli.timeout, &deadline)?;
+            validate_existing_batch_store(&cli.root, &deadline)
+                .map_err(|_| anyhow::anyhow!("github_app_store_unavailable"))?;
+            let engine = Engine::open_with_timeout(&cli.root, deadline.remaining())
+                .map_err(|_| anyhow::anyhow!("github_app_store_unavailable"))?;
+            return prepared.run(engine, &deadline);
+        }
+        if args.is_publication() {
+            let prepared = args.prepare_publication(cli.max_bytes, cli.allow_writes, &deadline)?;
+            validate_existing_batch_store(&cli.root, &deadline)
+                .map_err(|_| anyhow::anyhow!("github_app_store_unavailable"))?;
+            let engine = Engine::open_with_timeout(&cli.root, deadline.remaining())
+                .map_err(|_| anyhow::anyhow!("github_app_store_unavailable"))?;
+            return prepared.run(&engine, &deadline);
+        }
+        if args.is_worker() {
+            let prepared = args.prepare_worker(cli.max_bytes, cli.allow_writes, &deadline)?;
+            validate_existing_batch_store(&cli.root, &deadline)
+                .map_err(|_| anyhow::anyhow!("github_app_store_unavailable"))?;
+            let engine = Engine::open_with_timeout(&cli.root, deadline.remaining())
+                .map_err(|_| anyhow::anyhow!("github_app_store_unavailable"))?;
+            return prepared.run(&engine, &deadline);
+        }
+        if args.is_authorize() {
+            ensure!(
+                cli.root == std::path::Path::new("."),
+                "github_app_auth_input_invalid"
+            );
+            return args.run_authorize(cli.max_bytes, &deadline);
+        }
+        if args.is_serve() {
+            let prepared =
+                args.prepare_service(cli.max_bytes, cli.allow_writes, cli.timeout, &deadline)?;
+            validate_existing_batch_store(&cli.root, &deadline)
+                .map_err(|_| anyhow::anyhow!("github_app_store_unavailable"))?;
+            let engine = Engine::open_with_timeout(&cli.root, deadline.remaining())
+                .map_err(|_| anyhow::anyhow!("github_app_store_unavailable"))?;
+            return prepared.run(engine, &deadline);
+        }
+        let prepared = args.prepare(cli.max_bytes, cli.allow_writes, &deadline)?;
+        validate_existing_batch_store(&cli.root, &deadline)
+            .map_err(|_| anyhow::anyhow!("github_app_store_unavailable"))?;
+        let engine = Engine::open_with_timeout(&cli.root, deadline.remaining())
+            .map_err(|_| anyhow::anyhow!("github_app_store_unavailable"))?;
+        engine.store.set_deadline(&deadline)?;
+        return prepared.run(&engine, &deadline);
+    }
+    if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::Feedback(args) = extension.as_ref()
     {
         args.check_permission(cli.allow_writes)?;
@@ -3533,6 +3615,26 @@ fn run(cli: Cli) -> Result<bool> {
                     }
                 }
                 yoke::host_credentials::import_model_token(name, &bytes)?
+            }
+            CredentialOperation::GithubAppKeyImport { name } => {
+                ensure!(
+                    !io::stdin().is_terminal(),
+                    "GitHub App keys require a private stdin pipe"
+                );
+                let mut bytes = zeroize::Zeroizing::new(Vec::new());
+                io::stdin().lock().take(8193).read_to_end(&mut bytes)?;
+                ensure!(bytes.len() <= 8192, "github_app_key_invalid");
+                yoke::host_credentials::import_github_app_key(name, &bytes)?
+            }
+            CredentialOperation::GithubWebhookImport { name } => {
+                ensure!(
+                    !io::stdin().is_terminal(),
+                    "GitHub webhook secrets require a private stdin pipe"
+                );
+                let mut bytes = zeroize::Zeroizing::new(Vec::new());
+                io::stdin().lock().take(2561).read_to_end(&mut bytes)?;
+                ensure!(bytes.len() <= 2560, "github_app_credential_invalid");
+                yoke::host_credentials::import_github_webhook_secret(name, &bytes)?
             }
             CredentialOperation::GithubImport { name } => {
                 ensure!(
