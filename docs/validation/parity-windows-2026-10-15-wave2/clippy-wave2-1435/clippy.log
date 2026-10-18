@@ -1,0 +1,44 @@
+    Checking yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+error: large size difference between variants
+  --> native\src\meaning_cli.rs:70:1
+   |
+70 | /   enum PreparedOperation {
+71 | | /     Build {
+72 | | |         provider: ProviderSpec,
+73 | | |         policy: MeaningPolicy,
+74 | | |     },
+   | | |_____- the largest variant contains at least 328 bytes
+75 | |       Load(String),
+76 | | /     Query {
+77 | | |         graph_id: String,
+78 | | |         term: String,
+79 | | |     },
+   | | |_____- the second-largest variant contains at least 48 bytes
+...  |
+83 | |       },
+84 | |   }
+   | |___^ the entire enum is at least 328 bytes
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#large_enum_variant
+   = note: `-D clippy::large-enum-variant` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::large_enum_variant)]`
+help: consider boxing the large fields or introducing indirection in some other way to reduce the total size of the enum
+   |
+72 -         provider: ProviderSpec,
+72 +         provider: Box<ProviderSpec>,
+   |
+
+error: this creates an owned instance just for comparison
+    --> native\src\main.rs:3083:25
+     |
+3083 |             cli.root == PathBuf::from(".")
+     |             ------------^^^^^^^^^^^^^^^^^^
+     |             |
+     |             help: try: `cli.root == "."`
+     |
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#cmp_owned
+     = note: `-D clippy::cmp-owned` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::cmp_owned)]`
+
+error: could not compile `yoke-code-intelligence` (bin "yoke" test) due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...

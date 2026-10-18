@@ -47,7 +47,7 @@ Accepted state lives in separate SQLite record namespaces:
 | `native_federation_graph_v1` | Structural graph rebuilt by native local analyzers. |
 | `native_federation_replay_v1` | Nonce-to-manifest/remote-ID binding. |
 
-Ordinary `Store.snapshot(remoteId)` does not return remote snapshots. Their IDs bind receiver workspace, sender scope/workspace, source snapshot and manifest identity. Import does not move the ordinary local `latest` pointer. Remote FTS rows use the explicit remote ID; `snapshot` and `graph` can feed the ordinary source-bound query functions after grant validation.
+Ordinary `Store.snapshot(remoteId)` does not return remote snapshots. Their IDs bind receiver workspace, sender scope/workspace, source snapshot and manifest identity. Import does not move the ordinary local `latest` pointer. Remote FTS rows use the explicit remote ID. `federation::find` rechecks the current grant and receiving policy, then supplies a temporary read-only source capability to the shared search algorithms. Native query entrypoints still require native manifest proofs; passing a foreign snapshot to them does not grant access. Symbol bodies and text matches use the same bounded, hash-checked source reads. `skipIgnored` never overrides the receiver's current ignore policy.
 
 Reimporting an identical still-valid envelope is idempotent. Reusing a nonce for a different signed manifest fails. Distinct fresh envelopes may describe older source: signatures and timestamps do not establish latest remote state or automatic roll-forward policy.
 

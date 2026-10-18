@@ -1,0 +1,1037 @@
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:2:
+ //! No product implementation is included; the frozen library37 tests are untouched.
+ use rusqlite::types::ValueRef;
+ use serde_json::{Value, json};
+-use std::{collections::BTreeMap, fs, path::{Path, PathBuf}, process::{Command, Output}};
++use std::{
++    collections::BTreeMap,
++    fs,
++    path::{Path, PathBuf},
++    process::{Command, Output},
++};
+ use tempfile::TempDir;
+-use yoke::{Engine, capture::Deadline, git_workflows::{self, HostGit, WorkflowOptions,
+-    impact_details::{self, DetailOptions}}, model::hash};
++use yoke::{
++    Engine,
++    capture::Deadline,
++    git_workflows::{
++        self, HostGit, WorkflowOptions,
++        impact_details::{self, DetailOptions},
++    },
++    model::hash,
++};
+ 
+ const BASE: &str = "// caf\u{e9}\r\npub fn changed() {\r\n let label = \"<tag>&\";\r\n let first=1;\r\n let second=2;\r\n}\r\npub fn caller(){ changed(); changed(); }\r\n";
+ const HEAD: &str = "// caf\u{e9}\r\npub fn changed() {\r\n let label = \"<tag>& edited\";\r\n let first=3;\r\n let second=2;\r\n}\r\npub fn caller(){ changed(); changed(); }\r\n";
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:15:
+ const CAPACITY: &str = "git_impact_details_capacity_exceeded";
+ const DEADLINE: &str = "git_impact_details_deadline_exceeded";
+ 
+-fn deadline() -> Deadline { Deadline::new(30_000) }
++fn deadline() -> Deadline {
++    Deadline::new(30_000)
++}
+ fn git_executable() -> PathBuf {
+     std::env::split_paths(&std::env::var_os("PATH").expect("host PATH"))
+         .map(|p| p.join(if cfg!(windows) { "git.exe" } else { "git" }))
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:22:
+-        .find(|p| p.is_absolute() && p.is_file()).expect("real Git fixture prerequisite")
+-        .canonicalize().unwrap()
++        .find(|p| p.is_absolute() && p.is_file())
++        .expect("real Git fixture prerequisite")
++        .canonicalize()
++        .unwrap()
+ }
+ fn git(root: &Path, args: &[&str]) -> String {
+-    let out = Command::new(git_executable()).current_dir(root)
++    let out = Command::new(git_executable())
++        .current_dir(root)
+         .env("GIT_CONFIG_NOSYSTEM", "1")
+-        .env("GIT_CONFIG_GLOBAL", if cfg!(windows) { "NUL" } else { "/dev/null" })
+-        .args(["-c", "init.templateDir=", "-c", "core.autocrlf=false", "-c",
+-            "core.hooksPath=", "-c", "commit.gpgsign=false", "-c",
+-            "user.name=Owned CLI fixture", "-c", "user.email=owned-cli@example.invalid"])
+-        .args(args).output().unwrap();
+-    assert!(out.status.success(), "genuine Git fixture: {}", String::from_utf8_lossy(&out.stderr));
++        .env(
++            "GIT_CONFIG_GLOBAL",
++            if cfg!(windows) { "NUL" } else { "/dev/null" },
++        )
++        .args([
++            "-c",
++            "init.templateDir=",
++            "-c",
++            "core.autocrlf=false",
++            "-c",
++            "core.hooksPath=",
++            "-c",
++            "commit.gpgsign=false",
++            "-c",
++            "user.name=Owned CLI fixture",
++            "-c",
++            "user.email=owned-cli@example.invalid",
++        ])
++        .args(args)
++        .output()
++        .unwrap();
++    assert!(
++        out.status.success(),
++        "genuine Git fixture: {}",
++        String::from_utf8_lossy(&out.stderr)
++    );
+     String::from_utf8(out.stdout).unwrap().trim().into()
+ }
+-struct Fixture { dir: TempDir, engine: Engine, report: Value, index: Vec<u8> }
++struct Fixture {
++    dir: TempDir,
++    engine: Engine,
++    report: Value,
++    index: Vec<u8>,
++}
+ impl Fixture {
+     fn new() -> Self {
+         let dir = TempDir::new().unwrap();
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:48:
+         fs::write(dir.path().join(NEW), HEAD).unwrap();
+         let index = fs::read(dir.path().join(".git/index")).unwrap();
+         let mut engine = Engine::open(dir.path()).unwrap();
+-        let report = git_workflows::analyze(&mut engine, &HostGit { executable: git_executable() },
+-            &WorkflowOptions { base_ref: base, history_limit: 1, branch_limit: 0,
+-                ..Default::default() }, &deadline()).expect("genuine existing report qualifier");
+-        assert!(report["changes"].as_array().unwrap().iter().any(|c| c["basePath"] == OLD));
+-        assert!(report["changes"].as_array().unwrap().iter().any(|c| c["headPath"] == NEW));
++        let report = git_workflows::analyze(
++            &mut engine,
++            &HostGit {
++                executable: git_executable(),
++            },
++            &WorkflowOptions {
++                base_ref: base,
++                history_limit: 1,
++                branch_limit: 0,
++                ..Default::default()
++            },
++            &deadline(),
++        )
++        .expect("genuine existing report qualifier");
++        assert!(
++            report["changes"]
++                .as_array()
++                .unwrap()
++                .iter()
++                .any(|c| c["basePath"] == OLD)
++        );
++        assert!(
++            report["changes"]
++                .as_array()
++                .unwrap()
++                .iter()
++                .any(|c| c["headPath"] == NEW)
++        );
+         assert_eq!(fs::read(dir.path().join(".git/index")).unwrap(), index);
+-        Self { dir, engine, report, index }
++        Self {
++            dir,
++            engine,
++            report,
++            index,
++        }
+     }
+-    fn id(&self) -> &str { self.report["artifactId"].as_str().unwrap() }
++    fn id(&self) -> &str {
++        self.report["artifactId"].as_str().unwrap()
++    }
+     fn options(&self, value: &Value) -> PathBuf {
+         let p = self.dir.path().join("R5_CLI_INPUT_NOT_PUBLIC.json");
+-        fs::write(&p, serde_json::to_vec(value).unwrap()).unwrap(); p
++        fs::write(&p, serde_json::to_vec(value).unwrap()).unwrap();
++        p
+     }
+     fn command(&self) -> Command {
+         let mut c = Command::new(env!("CARGO_BIN_EXE_yoke"));
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:66:
+-        c.arg("--root").arg(self.dir.path()).args(["--max-bytes", "4000000"]);
++        c.arg("--root")
++            .arg(self.dir.path())
++            .args(["--max-bytes", "4000000"]);
+         c
+     }
+     fn details(&self) -> Command {
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:70:
+-        let mut c = self.command(); c.args(["git", "digest", self.id(), "impact-details"]); c
++        let mut c = self.command();
++        c.args(["git", "digest", self.id(), "impact-details"]);
++        c
+     }
+ }
+ // Fresh readonly SQL connection and complete physical CAS inventory: catches
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:74:
+ // other-process logical writes and unregistered blobs; no WAL-byte claim.
+ fn state(f: &Fixture) -> Value {
+-    let db_path: String = f.engine.store.db.query_row(
+-        "SELECT file FROM pragma_database_list WHERE name='main'", [], |r| r.get(0)).unwrap();
+-    let db = rusqlite::Connection::open_with_flags(db_path,
+-        rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY).unwrap();
++    let db_path: String = f
++        .engine
++        .store
++        .db
++        .query_row(
++            "SELECT file FROM pragma_database_list WHERE name='main'",
++            [],
++            |r| r.get(0),
++        )
++        .unwrap();
++    let db =
++        rusqlite::Connection::open_with_flags(db_path, rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY)
++            .unwrap();
+     let tx = db.unchecked_transaction().unwrap();
+-    let schema: Vec<(String, String, String, Option<String>)> = tx.prepare(
+-        "SELECT type,name,tbl_name,sql FROM sqlite_master ORDER BY type,name,tbl_name").unwrap()
+-        .query_map([], |r| Ok((r.get(0)?,r.get(1)?,r.get(2)?,r.get(3)?))).unwrap()
+-        .collect::<rusqlite::Result<_>>().unwrap();
++    let schema: Vec<(String, String, String, Option<String>)> = tx
++        .prepare("SELECT type,name,tbl_name,sql FROM sqlite_master ORDER BY type,name,tbl_name")
++        .unwrap()
++        .query_map([], |r| Ok((r.get(0)?, r.get(1)?, r.get(2)?, r.get(3)?)))
++        .unwrap()
++        .collect::<rusqlite::Result<_>>()
++        .unwrap();
+     let mut tables = BTreeMap::new();
+     for (kind, name, _, _) in &schema {
+-        if kind != "table" { continue; }
+-        let mut q = tx.prepare(&format!("SELECT * FROM \"{}\"", name.replace('"', "\"\""))).unwrap();
++        if kind != "table" {
++            continue;
++        }
++        let mut q = tx
++            .prepare(&format!("SELECT * FROM \"{}\"", name.replace('"', "\"\"")))
++            .unwrap();
+         let count = q.column_count();
+-        let mut rows: Vec<Vec<Value>> = q.query_map([], |r| (0..count).map(|i| {
+-            Ok(match r.get_ref(i)? { ValueRef::Null => json!(["null"]),
+-                ValueRef::Integer(n) => json!(["integer",n]),
+-                ValueRef::Real(n) => json!(["realBits",n.to_bits().to_string()]),
+-                ValueRef::Text(b) => json!(["text",hex::encode(b)]),
+-                ValueRef::Blob(b) => json!(["blob",hex::encode(b)]) })
+-        }).collect::<rusqlite::Result<Vec<_>>>()).unwrap().collect::<rusqlite::Result<_>>().unwrap();
+-        rows.sort_by_key(|r| serde_json::to_vec(r).unwrap()); tables.insert(name, rows);
++        let mut rows: Vec<Vec<Value>> = q
++            .query_map([], |r| {
++                (0..count)
++                    .map(|i| {
++                        Ok(match r.get_ref(i)? {
++                            ValueRef::Null => json!(["null"]),
++                            ValueRef::Integer(n) => json!(["integer", n]),
++                            ValueRef::Real(n) => json!(["realBits", n.to_bits().to_string()]),
++                            ValueRef::Text(b) => json!(["text", hex::encode(b)]),
++                            ValueRef::Blob(b) => json!(["blob", hex::encode(b)]),
++                        })
++                    })
++                    .collect::<rusqlite::Result<Vec<_>>>()
++            })
++            .unwrap()
++            .collect::<rusqlite::Result<_>>()
++            .unwrap();
++        rows.sort_by_key(|r| serde_json::to_vec(r).unwrap());
++        tables.insert(name, rows);
+     }
+-    let blobs: BTreeMap<_,_> = fs::read_dir(f.engine.store.dir.join("blobs")).unwrap()
+-        .map(|e| { let e=e.unwrap(); (e.file_name().to_str().unwrap().to_owned(),hash(fs::read(e.path()).unwrap())) }).collect();
++    let blobs: BTreeMap<_, _> = fs::read_dir(f.engine.store.dir.join("blobs"))
++        .unwrap()
++        .map(|e| {
++            let e = e.unwrap();
++            (
++                e.file_name().to_str().unwrap().to_owned(),
++                hash(fs::read(e.path()).unwrap()),
++            )
++        })
++        .collect();
+     json!({"schema":schema,"tables":tables,"blobs":blobs})
+ }
+ fn success(out: Output) -> Vec<u8> {
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:104:
+-    assert!(out.status.success(), "{}", String::from_utf8_lossy(&out.stderr));
+-    assert!(out.stderr.is_empty()); out.stdout
++    assert!(
++        out.status.success(),
++        "{}",
++        String::from_utf8_lossy(&out.stderr)
++    );
++    assert!(out.stderr.is_empty());
++    out.stdout
+ }
+ fn refused(out: Output, marker: &str) {
+-    assert!(!out.status.success()); assert!(out.stdout.is_empty(), "no partial result");
+-    assert_eq!(out.stderr,format!("yoke: {marker}\n").as_bytes());
++    assert!(!out.status.success());
++    assert!(out.stdout.is_empty(), "no partial result");
++    assert_eq!(out.stderr, format!("yoke: {marker}\n").as_bytes());
+ }
+-fn with_lf(bytes: &[u8]) -> Vec<u8> { let mut b=bytes.to_vec(); b.push(b'\n'); b }
++fn with_lf(bytes: &[u8]) -> Vec<u8> {
++    let mut b = bytes.to_vec();
++    b.push(b'\n');
++    b
++}
+ fn assert_literal_quotes(value: &Value, report: &Value) {
+     let mut quotes = Vec::new();
+     for c in value["changes"].as_array().unwrap() {
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:115:
+         for h in c["hunks"].as_array().unwrap() {
+-            for s in ["base","head"] { if !h[s].is_null() { quotes.push(&h[s]); } }
++            for s in ["base", "head"] {
++                if !h[s].is_null() {
++                    quotes.push(&h[s]);
++                }
++            }
+         }
+     }
+-    for field in ["changedSymbols","impact"] {
+-        for r in value[field].as_array().unwrap() { quotes.push(&r["source"]); }
++    for field in ["changedSymbols", "impact"] {
++        for r in value[field].as_array().unwrap() {
++            quotes.push(&r["source"]);
++        }
+     }
+     for r in value["impactObservations"].as_array().unwrap() {
+-        for e in r["evidence"].as_array().unwrap() { quotes.push(&e["source"]); }
++        for e in r["evidence"].as_array().unwrap() {
++            quotes.push(&e["source"]);
++        }
+     }
+     assert!(!quotes.is_empty());
+     for q in quotes {
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:127:
+-        let text = if q["snapshotId"]==report["baseSnapshotId"] { assert_eq!(q["path"],OLD); BASE }
+-            else { assert_eq!(q["snapshotId"],report["headSnapshotId"]); assert_eq!(q["path"],NEW); HEAD };
+-        assert_eq!(q["status"],"complete"); assert!(q["reason"].is_null());
+-        let start=q["range"]["startByte"].as_u64().unwrap() as usize;
+-        let end=q["range"]["endByte"].as_u64().unwrap() as usize;
+-        assert_eq!(q["text"], &text[start..end]); assert_eq!(q["contentHash"],hash(text));
++        let text = if q["snapshotId"] == report["baseSnapshotId"] {
++            assert_eq!(q["path"], OLD);
++            BASE
++        } else {
++            assert_eq!(q["snapshotId"], report["headSnapshotId"]);
++            assert_eq!(q["path"], NEW);
++            HEAD
++        };
++        assert_eq!(q["status"], "complete");
++        assert!(q["reason"].is_null());
++        let start = q["range"]["startByte"].as_u64().unwrap() as usize;
++        let end = q["range"]["endByte"].as_u64().unwrap() as usize;
++        assert_eq!(q["text"], &text[start..end]);
++        assert_eq!(q["contentHash"], hash(text));
+     }
+ }
+ 
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:137:
+ fn public_impact_details_cli_returns_complete_canonical_library_result_and_literal_sources() {
+     // Break caught: missing kind admission, legacy digest wrapper, clipped output,
+     // lost parallel evidence, wrong source side or altered options/result identity.
+-    let f=Fixture::new(); let before=state(&f);
+-    let expected=impact_details::derive(&f.engine.store,f.id(),&DetailOptions::default(),&deadline()).unwrap();
+-    let bytes=success(f.details().output().unwrap());
+-    assert_eq!(bytes,with_lf(expected.canonical_bytes()));
+-    let value: Value=serde_json::from_slice(&bytes).unwrap(); assert_eq!(&value,expected.value());
+-    assert_eq!(value["kind"],"git_impact_details_v1"); assert_eq!(value["complete"],false);
+-    let candidates=value["renameCandidates"].as_array().unwrap(); assert_eq!(candidates.len(),1);
+-    assert_eq!(candidates[0]["basePath"],OLD); assert_eq!(candidates[0]["headPath"],NEW);
+-    assert_eq!(candidates[0]["score"],7142); assert_eq!(candidates[0]["identityEstablished"],false);
+-    assert_eq!(value["impactObservations"].as_array().unwrap().len(),f.report["impactObservations"].as_array().unwrap().len());
+-    assert_literal_quotes(&value,&f.report); assert_eq!(state(&f),before);
+-    assert_eq!(fs::read(f.dir.path().join(".git/index")).unwrap(),f.index);
++    let f = Fixture::new();
++    let before = state(&f);
++    let expected = impact_details::derive(
++        &f.engine.store,
++        f.id(),
++        &DetailOptions::default(),
++        &deadline(),
++    )
++    .unwrap();
++    let bytes = success(f.details().output().unwrap());
++    assert_eq!(bytes, with_lf(expected.canonical_bytes()));
++    let value: Value = serde_json::from_slice(&bytes).unwrap();
++    assert_eq!(&value, expected.value());
++    assert_eq!(value["kind"], "git_impact_details_v1");
++    assert_eq!(value["complete"], false);
++    let candidates = value["renameCandidates"].as_array().unwrap();
++    assert_eq!(candidates.len(), 1);
++    assert_eq!(candidates[0]["basePath"], OLD);
++    assert_eq!(candidates[0]["headPath"], NEW);
++    assert_eq!(candidates[0]["score"], 7142);
++    assert_eq!(candidates[0]["identityEstablished"], false);
++    assert_eq!(
++        value["impactObservations"].as_array().unwrap().len(),
++        f.report["impactObservations"].as_array().unwrap().len()
++    );
++    assert_literal_quotes(&value, &f.report);
++    assert_eq!(state(&f), before);
++    assert_eq!(fs::read(f.dir.path().join(".git/index")).unwrap(), f.index);
+ }
+ 
+ #[test]
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:155:
+ fn public_impact_details_html_is_exact_sealed_render_and_escapes_source_markup() {
+     // Break caught: independent report rendering, unescaped source or partial HTML.
+-    let f=Fixture::new(); let before=state(&f);
+-    let result=impact_details::derive(&f.engine.store,f.id(),&DetailOptions::default(),&deadline()).unwrap();
+-    let expected=impact_details::render_html(&result,&deadline()).unwrap();
++    let f = Fixture::new();
++    let before = state(&f);
++    let result = impact_details::derive(
++        &f.engine.store,
++        f.id(),
++        &DetailOptions::default(),
++        &deadline(),
++    )
++    .unwrap();
++    let expected = impact_details::render_html(&result, &deadline()).unwrap();
+     assert!(expected.contains("&lt;tag&gt;&amp;"));
+     assert!(!expected.contains("<tag>"));
+-    assert_eq!(success(f.details().args(["--format","html"]).output().unwrap()),with_lf(expected.as_bytes()));
+-    assert_eq!(state(&f),before);
++    assert_eq!(
++        success(f.details().args(["--format", "html"]).output().unwrap()),
++        with_lf(expected.as_bytes())
++    );
++    assert_eq!(state(&f), before);
+ }
+ 
+ #[test]
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:167:
+ fn historical_details_need_no_git_live_sources_latest_capture_or_provider() {
+     // Break caught: live recapture/refs/provider/tool dependency during derive.
+-    let f=Fixture::new();
+-    let expected=impact_details::derive(&f.engine.store,f.id(),&DetailOptions::default(),&deadline()).unwrap();
+-    fs::write(f.dir.path().join(NEW),"fn unrelated_latest(){}\n").unwrap();
+-    let mut later=Engine::open(f.dir.path()).unwrap(); later.index(&deadline()).unwrap(); drop(later);
++    let f = Fixture::new();
++    let expected = impact_details::derive(
++        &f.engine.store,
++        f.id(),
++        &DetailOptions::default(),
++        &deadline(),
++    )
++    .unwrap();
++    fs::write(f.dir.path().join(NEW), "fn unrelated_latest(){}\n").unwrap();
++    let mut later = Engine::open(f.dir.path()).unwrap();
++    later.index(&deadline()).unwrap();
++    drop(later);
+     fs::remove_dir_all(f.dir.path().join("src")).unwrap();
+-    fs::rename(f.dir.path().join(".git"),f.dir.path().join("git-withheld-for-cli")).unwrap();
+-    let before=state(&f); let empty=TempDir::new().unwrap();
+-    let out=f.details().env("PATH",empty.path()).output().unwrap();
+-    assert_eq!(success(out),with_lf(expected.canonical_bytes())); assert_eq!(state(&f),before);
+-    assert!(!f.dir.path().join("src").exists()); assert!(!f.dir.path().join(".git").exists());
++    fs::rename(
++        f.dir.path().join(".git"),
++        f.dir.path().join("git-withheld-for-cli"),
++    )
++    .unwrap();
++    let before = state(&f);
++    let empty = TempDir::new().unwrap();
++    let out = f.details().env("PATH", empty.path()).output().unwrap();
++    assert_eq!(success(out), with_lf(expected.canonical_bytes()));
++    assert_eq!(state(&f), before);
++    assert!(!f.dir.path().join("src").exists());
++    assert!(!f.dir.path().join(".git").exists());
+ }
+ 
+ #[test]
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:182:
+ fn strict_options_reject_unknown_duplicate_bad_utf8_and_oversize_without_diagnostics_leaks() {
+     // Break caught: permissive option decode, unbounded file read or echoed causes.
+-    let f=Fixture::new(); let before=state(&f);
+-    let mut unknown=serde_json::to_value(DetailOptions::default()).unwrap(); unknown["R5_SOURCE_DO_NOT_ECHO"]=json!(true);
+-    let valid=serde_json::to_string(&DetailOptions::default()).unwrap();
+-    let duplicate=valid.replacen("\"maxRows\":200000","\"maxRows\":200000,\"maxRows\":1",1);
+-    assert_ne!(duplicate,valid,"genuine duplicate fixture");
+-    let mut wrong_type=serde_json::to_value(DetailOptions::default()).unwrap(); wrong_type["maxRows"]=json!("R5_SOURCE_DO_NOT_ECHO");
+-    let mut missing=serde_json::to_value(DetailOptions::default()).unwrap(); missing.as_object_mut().unwrap().remove("maxRows");
+-    let cases=[serde_json::to_vec(&unknown).unwrap(),duplicate.into_bytes(),vec![0xff],vec![b' ';128001],b"{}".to_vec(),serde_json::to_vec(&wrong_type).unwrap(),serde_json::to_vec(&missing).unwrap()];
+-    for bytes in cases { let path=f.dir.path().join("R5_SOURCE_DO_NOT_ECHO-options.json"); fs::write(&path,bytes).unwrap();
+-        refused(f.details().arg("--options").arg(&path).output().unwrap(),INPUT); assert_eq!(state(&f),before); }
+-    refused(f.details().arg("--options").arg(f.dir.path().join("R5_SOURCE_DO_NOT_ECHO-missing")).output().unwrap(),INPUT);
+-    assert_eq!(state(&f),before);
+-    refused(f.details().args(["--path","R5_SOURCE_DO_NOT_ECHO"]).output().unwrap(),INPUT);
+-    assert_eq!(state(&f),before);
+-    refused(f.command().args(["git","digest",&"0".repeat(64),"impact-details"]).output().unwrap(),INPUT);
+-    assert_eq!(state(&f),before);
++    let f = Fixture::new();
++    let before = state(&f);
++    let mut unknown = serde_json::to_value(DetailOptions::default()).unwrap();
++    unknown["R5_SOURCE_DO_NOT_ECHO"] = json!(true);
++    let valid = serde_json::to_string(&DetailOptions::default()).unwrap();
++    let duplicate = valid.replacen("\"maxRows\":200000", "\"maxRows\":200000,\"maxRows\":1", 1);
++    assert_ne!(duplicate, valid, "genuine duplicate fixture");
++    let mut wrong_type = serde_json::to_value(DetailOptions::default()).unwrap();
++    wrong_type["maxRows"] = json!("R5_SOURCE_DO_NOT_ECHO");
++    let mut missing = serde_json::to_value(DetailOptions::default()).unwrap();
++    missing.as_object_mut().unwrap().remove("maxRows");
++    let cases = [
++        serde_json::to_vec(&unknown).unwrap(),
++        duplicate.into_bytes(),
++        vec![0xff],
++        vec![b' '; 128001],
++        b"{}".to_vec(),
++        serde_json::to_vec(&wrong_type).unwrap(),
++        serde_json::to_vec(&missing).unwrap(),
++    ];
++    for bytes in cases {
++        let path = f.dir.path().join("R5_SOURCE_DO_NOT_ECHO-options.json");
++        fs::write(&path, bytes).unwrap();
++        refused(
++            f.details().arg("--options").arg(&path).output().unwrap(),
++            INPUT,
++        );
++        assert_eq!(state(&f), before);
++    }
++    refused(
++        f.details()
++            .arg("--options")
++            .arg(f.dir.path().join("R5_SOURCE_DO_NOT_ECHO-missing"))
++            .output()
++            .unwrap(),
++        INPUT,
++    );
++    assert_eq!(state(&f), before);
++    refused(
++        f.details()
++            .args(["--path", "R5_SOURCE_DO_NOT_ECHO"])
++            .output()
++            .unwrap(),
++        INPUT,
++    );
++    assert_eq!(state(&f), before);
++    refused(
++        f.command()
++            .args(["git", "digest", &"0".repeat(64), "impact-details"])
++            .output()
++            .unwrap(),
++        INPUT,
++    );
++    assert_eq!(state(&f), before);
+ }
+ 
+ #[test]
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:203:
+ fn explicit_zero_hard_budgets_are_capacity_refusals_instead_of_defaults() {
+     // Break caught: zero-as-default, swallowed capacity or partial result bytes.
+-    let f=Fixture::new(); let before=state(&f);
+-    for key in ["maxCandidatePairs","maxSourceBytes","maxSimilarityLines","maxSimilarityWork","maxRows","maxOutputBytes"] {
+-        let mut options=serde_json::to_value(DetailOptions::default()).unwrap(); options[key]=json!(0);
+-        let path=f.options(&options); refused(f.details().arg("--options").arg(path).output().unwrap(),CAPACITY);
+-        assert_eq!(state(&f),before);
++    let f = Fixture::new();
++    let before = state(&f);
++    for key in [
++        "maxCandidatePairs",
++        "maxSourceBytes",
++        "maxSimilarityLines",
++        "maxSimilarityWork",
++        "maxRows",
++        "maxOutputBytes",
++    ] {
++        let mut options = serde_json::to_value(DetailOptions::default()).unwrap();
++        options[key] = json!(0);
++        let path = f.options(&options);
++        refused(
++            f.details().arg("--options").arg(path).output().unwrap(),
++            CAPACITY,
++        );
++        assert_eq!(state(&f), before);
+     }
+ }
+ 
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:213:
+ #[test]
+ fn zero_quote_caps_preserve_explicit_options_and_report_omissions() {
+     // Break caught: clamping/normalizing caller options or rejecting valid quote0.
+-    let f=Fixture::new(); let before=state(&f);
+-    let options=DetailOptions { max_quote_bytes:0,max_total_quote_bytes:0,..Default::default() };
+-    let path=f.options(&serde_json::to_value(&options).unwrap());
+-    let expected=impact_details::derive(&f.engine.store,f.id(),&options,&deadline()).unwrap();
+-    let bytes=success(f.details().arg("--options").arg(path).output().unwrap());
+-    assert_eq!(bytes,with_lf(expected.canonical_bytes()));
+-    assert_eq!(expected.value()["options"]["maxQuoteBytes"],0);
+-    assert_eq!(expected.value()["coverage"]["emittedQuoteBytes"],0);
+-    assert_eq!(expected.value()["coverage"]["quotesComplete"],false); assert_eq!(state(&f),before);
++    let f = Fixture::new();
++    let before = state(&f);
++    let options = DetailOptions {
++        max_quote_bytes: 0,
++        max_total_quote_bytes: 0,
++        ..Default::default()
++    };
++    let path = f.options(&serde_json::to_value(&options).unwrap());
++    let expected = impact_details::derive(&f.engine.store, f.id(), &options, &deadline()).unwrap();
++    let bytes = success(f.details().arg("--options").arg(path).output().unwrap());
++    assert_eq!(bytes, with_lf(expected.canonical_bytes()));
++    assert_eq!(expected.value()["options"]["maxQuoteBytes"], 0);
++    assert_eq!(expected.value()["coverage"]["emittedQuoteBytes"], 0);
++    assert_eq!(expected.value()["coverage"]["quotesComplete"], false);
++    assert_eq!(state(&f), before);
+ }
+ 
+ #[test]
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:228:
+ fn global_stdout_cap_includes_lf_for_json_and_html_without_clamping_options() {
+     // Break caught: truncated/partial writes, ignored global cap or changed resultId.
+-    let f=Fixture::new(); let before=state(&f);
+-    let details=impact_details::derive(&f.engine.store,f.id(),&DetailOptions::default(),&deadline()).unwrap();
+-    for (format,bytes) in [("json",details.canonical_bytes().to_vec()),("html",impact_details::render_html(&details,&deadline()).unwrap().into_bytes())] {
+-        assert!(bytes.len()+1<=4_000_000);
+-        let mut command=Command::new(env!("CARGO_BIN_EXE_yoke"));
+-        command.arg("--root").arg(f.dir.path()).args(["--max-bytes",&(bytes.len()+1).to_string(),"git","digest",f.id(),"impact-details","--format",format]);
+-        assert_eq!(success(command.output().unwrap()),with_lf(&bytes));
+-        let mut command=Command::new(env!("CARGO_BIN_EXE_yoke"));
+-        command.arg("--root").arg(f.dir.path()).args(["--max-bytes",&bytes.len().to_string(),"git","digest",f.id(),"impact-details","--format",format]);
+-        refused(command.output().unwrap(),CAPACITY); assert_eq!(state(&f),before);
++    let f = Fixture::new();
++    let before = state(&f);
++    let details = impact_details::derive(
++        &f.engine.store,
++        f.id(),
++        &DetailOptions::default(),
++        &deadline(),
++    )
++    .unwrap();
++    for (format, bytes) in [
++        ("json", details.canonical_bytes().to_vec()),
++        (
++            "html",
++            impact_details::render_html(&details, &deadline())
++                .unwrap()
++                .into_bytes(),
++        ),
++    ] {
++        assert!(bytes.len() + 1 <= 4_000_000);
++        let mut command = Command::new(env!("CARGO_BIN_EXE_yoke"));
++        command.arg("--root").arg(f.dir.path()).args([
++            "--max-bytes",
++            &(bytes.len() + 1).to_string(),
++            "git",
++            "digest",
++            f.id(),
++            "impact-details",
++            "--format",
++            format,
++        ]);
++        assert_eq!(success(command.output().unwrap()), with_lf(&bytes));
++        let mut command = Command::new(env!("CARGO_BIN_EXE_yoke"));
++        command.arg("--root").arg(f.dir.path()).args([
++            "--max-bytes",
++            &bytes.len().to_string(),
++            "git",
++            "digest",
++            f.id(),
++            "impact-details",
++            "--format",
++            format,
++        ]);
++        refused(command.output().unwrap(), CAPACITY);
++        assert_eq!(state(&f), before);
+     }
+ }
+ 
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:243:
+ #[test]
+ fn invalid_report_and_domain_flags_are_static_without_creating_missing_store() {
+     // Break caught: generic Engine bootstrap or source/provider flag processing first.
+-    let dir=TempDir::new().unwrap();
+-    for flags in [vec!["--max-bytes","0"],vec!["--timeout","0"],vec!["--snapshot","R5_SOURCE_DO_NOT_ECHO"],vec!["--capture-config","R5_SOURCE_DO_NOT_ECHO"],vec!["--language-server-config","R5_SOURCE_DO_NOT_ECHO"],vec!["--analyzer-epoch","9"],vec!["--allow-writes"],vec!["--trust-servers"],vec!["--include-ignored-dir","R5_SOURCE_DO_NOT_ECHO"]] {
+-        let marker=if flags[0]=="--max-bytes" { CAPACITY } else if flags[0]=="--timeout" { DEADLINE } else { INPUT };
+-        let mut command=Command::new(env!("CARGO_BIN_EXE_yoke"));
+-        command.arg("--root").arg(dir.path()).args(&flags)
+-            .args(["git","digest",&"a".repeat(64),"impact-details"]);
+-        if flags[0]=="--max-bytes" || flags[0]=="--timeout" {
++    let dir = TempDir::new().unwrap();
++    for flags in [
++        vec!["--max-bytes", "0"],
++        vec!["--timeout", "0"],
++        vec!["--snapshot", "R5_SOURCE_DO_NOT_ECHO"],
++        vec!["--capture-config", "R5_SOURCE_DO_NOT_ECHO"],
++        vec!["--language-server-config", "R5_SOURCE_DO_NOT_ECHO"],
++        vec!["--analyzer-epoch", "9"],
++        vec!["--allow-writes"],
++        vec!["--trust-servers"],
++        vec!["--include-ignored-dir", "R5_SOURCE_DO_NOT_ECHO"],
++    ] {
++        let marker = if flags[0] == "--max-bytes" {
++            CAPACITY
++        } else if flags[0] == "--timeout" {
++            DEADLINE
++        } else {
++            INPUT
++        };
++        let mut command = Command::new(env!("CARGO_BIN_EXE_yoke"));
++        command.arg("--root").arg(dir.path()).args(&flags).args([
++            "git",
++            "digest",
++            &"a".repeat(64),
++            "impact-details",
++        ]);
++        if flags[0] == "--max-bytes" || flags[0] == "--timeout" {
+             // Error precedence is observed; static ownership review must still
+             // establish no attempted read, not a swallowed failed file access.
+-            command.arg("--options").arg(dir.path().join("R5_SOURCE_DO_NOT_ECHO-missing-options"));
++            command
++                .arg("--options")
++                .arg(dir.path().join("R5_SOURCE_DO_NOT_ECHO-missing-options"));
+         }
+-        let out=command.output().unwrap();
+-        refused(out,marker); assert!(!dir.path().join(".yoke").exists());
++        let out = command.output().unwrap();
++        refused(out, marker);
++        assert!(!dir.path().join(".yoke").exists());
+     }
+-    let out=Command::new(env!("CARGO_BIN_EXE_yoke")).arg("--root").arg(dir.path())
+-        .args(["git","digest","R5_SOURCE_DO_NOT_ECHO","impact-details"]).output().unwrap();
+-    refused(out,INPUT); assert!(!dir.path().join(".yoke").exists());
+-    let out=Command::new(env!("CARGO_BIN_EXE_yoke")).arg("--root").arg(dir.path())
+-        .args(["git","digest",&"a".repeat(64),"impact-details"]).output().unwrap();
+-    refused(out,INPUT); assert!(!dir.path().join(".yoke").exists());
++    let out = Command::new(env!("CARGO_BIN_EXE_yoke"))
++        .arg("--root")
++        .arg(dir.path())
++        .args(["git", "digest", "R5_SOURCE_DO_NOT_ECHO", "impact-details"])
++        .output()
++        .unwrap();
++    refused(out, INPUT);
++    assert!(!dir.path().join(".yoke").exists());
++    let out = Command::new(env!("CARGO_BIN_EXE_yoke"))
++        .arg("--root")
++        .arg(dir.path())
++        .args(["git", "digest", &"a".repeat(64), "impact-details"])
++        .output()
++        .unwrap();
++    refused(out, INPUT);
++    assert!(!dir.path().join(".yoke").exists());
+ }
+ 
+ #[test]
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:269:
+ fn impact_options_and_html_flags_refuse_legacy_kinds_instead_of_silent_ignoring() {
+     // Break caught: accepting new detail authority/options on an old digest branch.
+-    let dir=TempDir::new().unwrap();
+-    for (kind,flags) in [("report",vec!["--options","R5_SOURCE_DO_NOT_ECHO"]),("history",vec!["--format","html"]),("history",vec!["--format","json"]),("file",vec!["--options","R5_SOURCE_DO_NOT_ECHO"])] {
+-        let out=Command::new(env!("CARGO_BIN_EXE_yoke")).arg("--root").arg(dir.path())
+-            .args(["git","digest",&"a".repeat(64),kind]).args(flags).output().unwrap();
+-        refused(out,INPUT); assert!(!dir.path().join(".yoke").exists());
++    let dir = TempDir::new().unwrap();
++    for (kind, flags) in [
++        ("report", vec!["--options", "R5_SOURCE_DO_NOT_ECHO"]),
++        ("history", vec!["--format", "html"]),
++        ("history", vec!["--format", "json"]),
++        ("file", vec!["--options", "R5_SOURCE_DO_NOT_ECHO"]),
++    ] {
++        let out = Command::new(env!("CARGO_BIN_EXE_yoke"))
++            .arg("--root")
++            .arg(dir.path())
++            .args(["git", "digest", &"a".repeat(64), kind])
++            .args(flags)
++            .output()
++            .unwrap();
++        refused(out, INPUT);
++        assert!(!dir.path().join(".yoke").exists());
+     }
+ }
+ 
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:279:
+ #[test]
+ fn legacy_load_render_and_three_digest_values_keep_existing_contracts() {
+     // Break caught: routing all Git reports through the new derived result wrapper.
+-    let f=Fixture::new(); let before=state(&f);
+-    assert_eq!(serde_json::from_slice::<Value>(&success(f.command().args(["git","load",f.id()]).output().unwrap())).unwrap(),f.report);
+-    for kind in ["report","history","file"] {
+-        let path=if kind=="file" {Some(OLD)} else {None};
+-        let expected=git_workflows::digest(&f.engine.store,&f.report,kind,path,&deadline()).unwrap();
+-        let mut c=f.command(); c.args(["git","digest",f.id(),kind]); if let Some(p)=path {c.args(["--path",p]);}
+-        assert_eq!(serde_json::from_slice::<Value>(&success(c.output().unwrap())).unwrap(),expected);
++    let f = Fixture::new();
++    let before = state(&f);
++    assert_eq!(
++        serde_json::from_slice::<Value>(&success(
++            f.command().args(["git", "load", f.id()]).output().unwrap()
++        ))
++        .unwrap(),
++        f.report
++    );
++    for kind in ["report", "history", "file"] {
++        let path = if kind == "file" { Some(OLD) } else { None };
++        let expected =
++            git_workflows::digest(&f.engine.store, &f.report, kind, path, &deadline()).unwrap();
++        let mut c = f.command();
++        c.args(["git", "digest", f.id(), kind]);
++        if let Some(p) = path {
++            c.args(["--path", p]);
++        }
++        assert_eq!(
++            serde_json::from_slice::<Value>(&success(c.output().unwrap())).unwrap(),
++            expected
++        );
+     }
+-    let expected=git_workflows::render(&f.engine.store,&f.report,"json",&deadline()).unwrap();
+-    assert_eq!(success(f.command().args(["git","render",f.id(),"--format","json"]).output().unwrap()),with_lf(expected.as_bytes()));
+-    assert_eq!(state(&f),before);
++    let expected = git_workflows::render(&f.engine.store, &f.report, "json", &deadline()).unwrap();
++    assert_eq!(
++        success(
++            f.command()
++                .args(["git", "render", f.id(), "--format", "json"])
++                .output()
++                .unwrap()
++        ),
++        with_lf(expected.as_bytes())
++    );
++    assert_eq!(state(&f), before);
+ }
+ 
+ #[test]
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:296:
+ fn valid_closed_options_at_exact_raw_cap_succeed_and_one_more_byte_refuses() {
+     // Break caught: no raw cap hidden by an independently malformed oversize case.
+-    let f=Fixture::new(); let before=state(&f);
+-    let expected=impact_details::derive(&f.engine.store,f.id(),&DetailOptions::default(),&deadline()).unwrap();
+-    let path=f.dir.path().join("R5_SOURCE_DO_NOT_ECHO-raw-boundary.json");
+-    let mut bytes=serde_json::to_vec(&DetailOptions::default()).unwrap();
+-    assert!(bytes.len()<128000); bytes.resize(128000,b' ');
+-    assert_eq!(serde_json::from_slice::<Value>(&bytes).unwrap(),serde_json::to_value(DetailOptions::default()).unwrap());
+-    fs::write(&path,&bytes).unwrap();
+-    assert_eq!(success(f.details().arg("--options").arg(&path).output().unwrap()),with_lf(expected.canonical_bytes()));
+-    assert_eq!(state(&f),before);
+-    bytes.push(b' '); assert_eq!(bytes.len(),128001);
+-    assert!(serde_json::from_slice::<Value>(&bytes).is_ok(),"oversize remains valid closed JSON");
+-    fs::write(&path,&bytes).unwrap();
+-    refused(f.details().arg("--options").arg(&path).output().unwrap(),INPUT);
+-    assert_eq!(state(&f),before);
++    let f = Fixture::new();
++    let before = state(&f);
++    let expected = impact_details::derive(
++        &f.engine.store,
++        f.id(),
++        &DetailOptions::default(),
++        &deadline(),
++    )
++    .unwrap();
++    let path = f.dir.path().join("R5_SOURCE_DO_NOT_ECHO-raw-boundary.json");
++    let mut bytes = serde_json::to_vec(&DetailOptions::default()).unwrap();
++    assert!(bytes.len() < 128000);
++    bytes.resize(128000, b' ');
++    assert_eq!(
++        serde_json::from_slice::<Value>(&bytes).unwrap(),
++        serde_json::to_value(DetailOptions::default()).unwrap()
++    );
++    fs::write(&path, &bytes).unwrap();
++    assert_eq!(
++        success(f.details().arg("--options").arg(&path).output().unwrap()),
++        with_lf(expected.canonical_bytes())
++    );
++    assert_eq!(state(&f), before);
++    bytes.push(b' ');
++    assert_eq!(bytes.len(), 128001);
++    assert!(
++        serde_json::from_slice::<Value>(&bytes).is_ok(),
++        "oversize remains valid closed JSON"
++    );
++    fs::write(&path, &bytes).unwrap();
++    refused(
++        f.details().arg("--options").arg(&path).output().unwrap(),
++        INPUT,
++    );
++    assert_eq!(state(&f), before);
+ }
+ 
+ #[cfg(windows)]
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:316:
+ fn windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive() {
+     // Break caught: options admission follows leaf or ancestor symbolic links.
+     // Creation failure is a fixture failure, never an ignored/refusal success.
+-    let f=Fixture::new(); let before=state(&f);
+-    let expected=impact_details::derive(&f.engine.store,f.id(),&DetailOptions::default(),&deadline()).unwrap();
+-    let target=f.dir.path().join("host-options-target"); fs::create_dir(&target).unwrap();
+-    let source=target.join("options.json"); let bytes=serde_json::to_vec(&DetailOptions::default()).unwrap();
+-    fs::write(&source,&bytes).unwrap();
+-    assert_eq!(success(f.details().arg("--options").arg(&source).output().unwrap()),with_lf(expected.canonical_bytes()));
+-    assert_eq!(state(&f),before);
+-    let leaf=f.dir.path().join("linked-options.json");
+-    std::os::windows::fs::symlink_file(&source,&leaf).expect("real Windows file reparse prerequisite");
++    let f = Fixture::new();
++    let before = state(&f);
++    let expected = impact_details::derive(
++        &f.engine.store,
++        f.id(),
++        &DetailOptions::default(),
++        &deadline(),
++    )
++    .unwrap();
++    let target = f.dir.path().join("host-options-target");
++    fs::create_dir(&target).unwrap();
++    let source = target.join("options.json");
++    let bytes = serde_json::to_vec(&DetailOptions::default()).unwrap();
++    fs::write(&source, &bytes).unwrap();
++    assert_eq!(
++        success(f.details().arg("--options").arg(&source).output().unwrap()),
++        with_lf(expected.canonical_bytes())
++    );
++    assert_eq!(state(&f), before);
++    let leaf = f.dir.path().join("linked-options.json");
++    std::os::windows::fs::symlink_file(&source, &leaf)
++        .expect("real Windows file reparse prerequisite");
+     assert!(yoke::paths::is_link(&fs::symlink_metadata(&leaf).unwrap()));
+-    let ancestor=f.dir.path().join("linked-host-directory");
+-    std::os::windows::fs::symlink_dir(&target,&ancestor).expect("real Windows directory reparse prerequisite");
+-    assert!(yoke::paths::is_link(&fs::symlink_metadata(&ancestor).unwrap()));
+-    for path in [&leaf,&ancestor.join("options.json")] {
+-        assert_eq!(fs::read(path).unwrap(),bytes,"both aliases resolve valid options without the guard");
+-        refused(f.details().arg("--options").arg(path).output().unwrap(),INPUT);
+-        assert_eq!(fs::read(&source).unwrap(),bytes); assert_eq!(state(&f),before);
++    let ancestor = f.dir.path().join("linked-host-directory");
++    std::os::windows::fs::symlink_dir(&target, &ancestor)
++        .expect("real Windows directory reparse prerequisite");
++    assert!(yoke::paths::is_link(
++        &fs::symlink_metadata(&ancestor).unwrap()
++    ));
++    for path in [&leaf, &ancestor.join("options.json")] {
++        assert_eq!(
++            fs::read(path).unwrap(),
++            bytes,
++            "both aliases resolve valid options without the guard"
++        );
++        refused(
++            f.details().arg("--options").arg(path).output().unwrap(),
++            INPUT,
++        );
++        assert_eq!(fs::read(&source).unwrap(), bytes);
++        assert_eq!(state(&f), before);
+     }
+ }
+ 
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:340:
+ fn incomplete_existing_stores_refuse_without_schema_directory_lock_or_journal_initialization() {
+     // Break caught: a valid basic DB is mistaken for authority to initialize
+     // missing constructor artifacts, or a meta-only schema is silently upgraded.
+-    let qualifier=Fixture::new(); let logical=state(&qualifier);
+-    let expected=impact_details::derive(&qualifier.engine.store,qualifier.id(),&DetailOptions::default(),&deadline()).unwrap();
+-    assert_eq!(success(qualifier.details().output().unwrap()),with_lf(expected.canonical_bytes()));
+-    assert_eq!(state(&qualifier),logical); drop(qualifier);
++    let qualifier = Fixture::new();
++    let logical = state(&qualifier);
++    let expected = impact_details::derive(
++        &qualifier.engine.store,
++        qualifier.id(),
++        &DetailOptions::default(),
++        &deadline(),
++    )
++    .unwrap();
++    assert_eq!(
++        success(qualifier.details().output().unwrap()),
++        with_lf(expected.canonical_bytes())
++    );
++    assert_eq!(state(&qualifier), logical);
++    drop(qualifier);
+     fn inventory(root: &Path) -> BTreeMap<String, Option<String>> {
+-        fn visit(root: &Path, dir: &Path, out: &mut BTreeMap<String,Option<String>>) {
+-            for entry in fs::read_dir(dir).unwrap() { let p=entry.unwrap().path();
+-                let name=p.strip_prefix(root).unwrap().to_str().unwrap().to_owned();
+-                let m=fs::symlink_metadata(&p).unwrap(); assert!(!yoke::paths::is_link(&m));
+-                if m.is_dir() {out.insert(name,None); visit(root,&p,out);}
+-                else {out.insert(name,Some(hash(fs::read(p).unwrap())));}
++        fn visit(root: &Path, dir: &Path, out: &mut BTreeMap<String, Option<String>>) {
++            for entry in fs::read_dir(dir).unwrap() {
++                let p = entry.unwrap().path();
++                let name = p.strip_prefix(root).unwrap().to_str().unwrap().to_owned();
++                let m = fs::symlink_metadata(&p).unwrap();
++                assert!(!yoke::paths::is_link(&m));
++                if m.is_dir() {
++                    out.insert(name, None);
++                    visit(root, &p, out);
++                } else {
++                    out.insert(name, Some(hash(fs::read(p).unwrap())));
++                }
+             }
+         }
+-        let mut out=BTreeMap::new(); visit(root,root,&mut out); out
++        let mut out = BTreeMap::new();
++        visit(root, root, &mut out);
++        out
+     }
+-    for missing in ["all","blobs","trees","maintenance.lock","clients.lock","journal_mode","schema"] {
+-        let dir=TempDir::new().unwrap(); let root=dir.path().join("existing-incomplete"); let store=root.join(".yoke");
++    for missing in [
++        "all",
++        "blobs",
++        "trees",
++        "maintenance.lock",
++        "clients.lock",
++        "journal_mode",
++        "schema",
++    ] {
++        let dir = TempDir::new().unwrap();
++        let root = dir.path().join("existing-incomplete");
++        let store = root.join(".yoke");
+         fs::create_dir_all(&store).unwrap();
+-        let db=rusqlite::Connection::open(store.join("index.sqlite")).unwrap();
+-        db.execute_batch("CREATE TABLE meta(key TEXT PRIMARY KEY,value TEXT NOT NULL);").unwrap();
+-        db.execute("INSERT INTO meta VALUES('workspace',?1)",["a".repeat(64)]).unwrap();
+-        if missing!="schema" { db.execute_batch("CREATE TABLE snapshots(id TEXT PRIMARY KEY,value TEXT NOT NULL);
++        let db = rusqlite::Connection::open(store.join("index.sqlite")).unwrap();
++        db.execute_batch("CREATE TABLE meta(key TEXT PRIMARY KEY,value TEXT NOT NULL);")
++            .unwrap();
++        db.execute("INSERT INTO meta VALUES('workspace',?1)", ["a".repeat(64)])
++            .unwrap();
++        if missing != "schema" {
++            db.execute_batch("CREATE TABLE snapshots(id TEXT PRIMARY KEY,value TEXT NOT NULL);
+             CREATE TABLE graphs(id TEXT PRIMARY KEY,value TEXT NOT NULL);
+             CREATE TABLE cache(key TEXT PRIMARY KEY,value TEXT NOT NULL);
+             CREATE TABLE records(kind TEXT NOT NULL,id TEXT NOT NULL,value TEXT NOT NULL,PRIMARY KEY(kind,id));
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native\tests\git_impact_details_cli.rs:368:
+             CREATE VIRTUAL TABLE symbols USING fts5(snapshot UNINDEXED,id UNINDEXED,name,path UNINDEXED,signature);
+-            CREATE VIRTUAL TABLE documents USING fts5(snapshot UNINDEXED,path UNINDEXED,text);").unwrap(); }
+-        if missing!="all" && missing!="journal_mode" {db.execute_batch("PRAGMA journal_mode=WAL").unwrap();}
++            CREATE VIRTUAL TABLE documents USING fts5(snapshot UNINDEXED,path UNINDEXED,text);").unwrap();
++        }
++        if missing != "all" && missing != "journal_mode" {
++            db.execute_batch("PRAGMA journal_mode=WAL").unwrap();
++        }
+         drop(db);
+-        if missing!="all" {
+-            for name in ["blobs","trees"] {if missing!=name {fs::create_dir(store.join(name)).unwrap();}}
+-            for name in ["maintenance.lock","clients.lock"] {if missing!=name {fs::write(store.join(name),[]).unwrap();}}
++        if missing != "all" {
++            for name in ["blobs", "trees"] {
++                if missing != name {
++                    fs::create_dir(store.join(name)).unwrap();
++                }
++            }
++            for name in ["maintenance.lock", "clients.lock"] {
++                if missing != name {
++                    fs::write(store.join(name), []).unwrap();
++                }
++            }
+         }
+-        let before=inventory(&root);
+-        let out=Command::new(env!("CARGO_BIN_EXE_yoke")).arg("--root").arg(&root)
+-            .args(["git","digest",&"b".repeat(64),"impact-details"]).output().unwrap();
+-        refused(out,INPUT); assert_eq!(inventory(&root),before,"constructor mutation for {missing}");
++        let before = inventory(&root);
++        let out = Command::new(env!("CARGO_BIN_EXE_yoke"))
++            .arg("--root")
++            .arg(&root)
++            .args(["git", "digest", &"b".repeat(64), "impact-details"])
++            .output()
++            .unwrap();
++        refused(out, INPUT);
++        assert_eq!(
++            inventory(&root),
++            before,
++            "constructor mutation for {missing}"
++        );
+     }
+ }
+ 

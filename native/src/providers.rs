@@ -5,7 +5,7 @@ use crate::{
     knowledge,
     ledger::{Ledger, Usage, validate_cost},
     model::{Graph, Snapshot, hash, identity, valid_id},
-    paths::{normalized, obvious_secret, utf8_range},
+    paths::{obvious_secret, utf8_range},
     process::{CaptureLimits, run_capture},
     store::Store,
 };
@@ -16,6 +16,7 @@ use serde::{Deserialize, Serialize, de::DeserializeOwned};
 use serde_json::{Value, json};
 use std::{
     collections::{BTreeMap, BTreeSet},
+    io::Write,
     path::PathBuf,
     process::Command,
 };
@@ -67,7 +68,7 @@ impl ProviderSpec {
         );
         Ok(key)
     }
-    fn validate(&self) -> Result<()> {
+    pub(crate) fn validate(&self) -> Result<()> {
         ensure!(
             self.trusted,
             "Explicit trusted host model-provider permission is required"
@@ -116,19 +117,19 @@ impl ProviderSpec {
 }
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
-struct Binding {
-    source_id: String,
-    path: String,
-    content_hash: String,
-    start_byte: usize,
-    end_byte: usize,
+pub(crate) struct Binding {
+    pub(crate) source_id: String,
+    pub(crate) path: String,
+    pub(crate) content_hash: String,
+    pub(crate) start_byte: usize,
+    pub(crate) end_byte: usize,
 }
 #[derive(Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
-struct Source {
-    anchor: Binding,
-    text: String,
-    omitted_bytes: usize,
+pub(crate) struct Source {
+    pub(crate) anchor: Binding,
+    pub(crate) text: String,
+    pub(crate) omitted_bytes: usize,
 }
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -186,6 +187,24 @@ fn sources(
     bytes: usize,
     deadline: &Deadline,
 ) -> Result<Vec<Source>> {
+    sources_with_total_limit(
+        store,
+        snapshot,
+        graph,
+        ids,
+        (maximum, bytes, usize::MAX),
+        deadline,
+    )
+}
+pub(crate) fn sources_with_total_limit(
+    store: &Store,
+    snapshot: &Snapshot,
+    graph: &Graph,
+    ids: &[String],
+    limits: (usize, usize, usize),
+    deadline: &Deadline,
+) -> Result<Vec<Source>> {
+    let (maximum, bytes, total_limit) = limits;
     scope(store, snapshot, graph, deadline)?;
     ensure!(
         !ids.is_empty() && ids.len() <= maximum,
@@ -200,15 +219,12 @@ fn sources(
         entities.len() == graph.entities.len(),
         "Duplicate model source entity identity"
     );
-    let files: BTreeMap<_, _> = snapshot
-        .files
-        .iter()
-        .map(|file| (file.path.as_str(), file))
-        .collect();
+    let captured = crate::capture::source_scope_policy(store, snapshot)?;
     let mut seen = BTreeSet::new();
     let mut cached = BTreeMap::new();
     let mut cached_bytes = 0usize;
     let mut result = Vec::with_capacity(ids.len());
+    let mut selected_bytes = 0usize;
     for id in ids {
         deadline.check()?;
         ensure!(
@@ -222,16 +238,13 @@ fn sources(
             entity.snapshot_id == snapshot.id,
             "Model entity snapshot mismatch"
         );
-        normalized(&entity.path)?;
-        let file = files
-            .get(entity.path.as_str())
-            .context("Model source file is absent from this snapshot")?;
+        let file = captured.file(&entity.path)?;
         if !cached.contains_key(&file.hash) {
             ensure!(
                 file.size <= MAX_SOURCE,
                 "Model source file exceeds capacity"
             );
-            let source = String::from_utf8(store.read_blob(&file.hash)?)?;
+            let source = String::from_utf8(captured.read_source(&entity.path)?)?;
             ensure!(
                 source.len() <= MAX_SOURCE && source.len() == file.size,
                 "Model source size mismatch"
@@ -251,6 +264,13 @@ fn sources(
         }
         let excerpt = utf8_range(original, entity.start_byte, end)?;
         text(excerpt, bytes, false)?;
+        selected_bytes = selected_bytes
+            .checked_add(excerpt.len())
+            .context("Model source byte overflow")?;
+        ensure!(
+            selected_bytes <= total_limit,
+            "Model batch source byte budget exceeded"
+        );
         result.push(Source {
             anchor: Binding {
                 source_id: id.clone(),
@@ -274,6 +294,45 @@ fn omissions(sources: &[Source]) -> Value {
         json!({"sourceId":source.anchor.source_id,"omittedBytes":source.omitted_bytes})).collect::<Vec<_>>())
 }
 
+fn serialized_size(value: &impl Serialize, maximum: usize, deadline: &Deadline) -> Result<usize> {
+    struct Count<'a> {
+        size: usize,
+        maximum: usize,
+        deadline: &'a Deadline,
+    }
+    impl Write for Count<'_> {
+        fn write(&mut self, bytes: &[u8]) -> std::io::Result<usize> {
+            self.deadline.check().map_err(std::io::Error::other)?;
+            if bytes.len() > self.maximum.saturating_sub(self.size) {
+                return Err(std::io::Error::other(
+                    "Model provider input exceeds capacity",
+                ));
+            }
+            self.size += bytes.len();
+            Ok(bytes.len())
+        }
+        fn flush(&mut self) -> std::io::Result<()> {
+            Ok(())
+        }
+    }
+    let mut count = Count {
+        size: 0,
+        maximum,
+        deadline,
+    };
+    serde_json::to_writer(&mut count, value)?;
+    deadline.check()?;
+    Ok(count.size)
+}
+
+fn serialized_input(value: &impl Serialize, deadline: &Deadline) -> Result<Vec<u8>> {
+    let size = serialized_size(value, MAX_INPUT, deadline)?;
+    let mut bytes = Vec::with_capacity(size);
+    serde_json::to_writer(&mut bytes, value)?;
+    deadline.check()?;
+    Ok(bytes)
+}
+
 fn request<T: DeserializeOwned>(
     store: &Store,
     provider: &ProviderSpec,
@@ -285,12 +344,8 @@ fn request<T: DeserializeOwned>(
 ) -> Result<(T, Receipt)> {
     provider.validate()?;
     deadline.check()?;
-    let payload_bytes = serde_json::to_vec(&payload)?;
-    ensure!(
-        payload_bytes.len() <= MAX_INPUT - 2_048,
-        "Model provider input exceeds capacity"
-    );
-    let input_hash = hash(&payload_bytes);
+    serialized_size(&payload, MAX_INPUT - 2_048, deadline)?;
+    let input_hash = identity(&payload);
     let directory = tempfile::Builder::new().prefix("yoke-model-").tempdir()?;
     let ledger = Ledger::new(store, deadline);
     let id = ledger.reserve(
@@ -307,17 +362,14 @@ fn request<T: DeserializeOwned>(
         &provider.model_version,
         &input_hash,
     ));
-    let input = serde_json::to_vec(
-        &json!({"schema":1,"operation":operation,"model":provider.model_id,"modelVersion":provider.model_version,
-        "requestId":request_id,"inputHash":input_hash,"currency":provider.currency,"taskId":provider.task_id,
-        "costLimitMicros":provider.max_cost_micros,"payload":payload}),
-    )?;
     let mut sent = false;
     let result = (|| -> Result<(T, Option<u64>, Option<Usage>)> {
-        ensure!(
-            input.len() <= MAX_INPUT,
-            "Model provider input exceeds capacity"
-        );
+        let input = serialized_input(
+            &json!({"schema":1,"operation":operation,"model":provider.model_id,"modelVersion":provider.model_version,
+            "requestId":request_id,"inputHash":input_hash,"currency":provider.currency,"taskId":provider.task_id,
+            "costLimitMicros":provider.max_cost_micros,"payload":payload}),
+            deadline,
+        )?;
         let mut command = Command::new(&provider.command);
         command.args(&provider.args).current_dir(directory.path());
         ledger.mark_sent(&id)?;

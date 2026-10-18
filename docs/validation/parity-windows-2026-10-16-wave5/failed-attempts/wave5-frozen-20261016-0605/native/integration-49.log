@@ -1,0 +1,27 @@
+    Finished `test` profile [unoptimized] target(s) in 1.00s
+     Running tests\json_output_review.rs (target\debug\deps\json_output_review-cd827bb7bbdc2ff1.exe)
+
+running 1 test
+test escaped_json_is_admitted_before_allocation_and_preserves_exact_bytes ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\knowledge.rs (target\debug\deps\knowledge-cbfc45c540800951.exe)
+
+running 13 tests
+test knowledge_refuses_unanchored_paths_secrets_and_scope_escalation ... ok
+test forged_snapshot_and_corrupt_persisted_vectors_fail_closed ... ok
+test corrupt_local_corpus_counts_and_nonunit_coordinates_are_rejected ... ok
+test overflowing_persisted_idf_cannot_be_misreported_as_no_lexical_matches ... ok
+test lcov_import_binds_line_hits_and_rejects_incomplete_or_forged_records ... ok
+test rejected_supersession_preserves_original_and_expired_deadlines_do_not_write ... ok
+test expanded_memory_size_is_rejected_without_poisoning_recall_or_supersession ... ok
+test runtime_import_preserves_one_execution_and_refuses_parent_cycles ... ok
+test sarif_import_maps_utf16_unicode_regions_to_source_bytes_and_refuses_escape ... ok
+test remembered_source_hashes_report_changed_deleted_and_superseded_knowledge ... ok
+test source_bound_external_vectors_normalize_and_reject_forged_or_invalid_vectors ... ok
+test sparse_tfidf_retrieval_matches_unicode_and_camelcase_without_model_execution ... ok
+test vector_import_rejects_mixed_dimensions_duplicates_and_partial_persistence ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.65s
+

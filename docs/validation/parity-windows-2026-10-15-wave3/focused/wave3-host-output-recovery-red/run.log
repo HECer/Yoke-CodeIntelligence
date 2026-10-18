@@ -1,0 +1,26 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 34.79s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 7 tests
+Error: Host recovery encountered a foreign or unidentified file
+test host_install::output_recovery_tests::actual_apply_pre_identity_kill_resumes_after_os_removes_unregistered_empty_output ... FAILED
+Error: Installer wrote human bytes before its output identity was durably journaled
+test host_install::output_recovery_tests::actual_apply_exposes_no_human_bytes_before_durable_output_identity ... FAILED
+Error: Host recovery encountered a foreign or unidentified file
+test host_install::output_recovery_tests::actual_apply_pre_identity_process_exit_rolls_back_without_unidentified_output ... FAILED
+test host_install::output_recovery_tests::output_recovery_worker ... ignored, spawned only with an explicitly selected parent-owned temp fixture
+test host_install::output_recovery_tests::actual_pre_identity_crash_preserves_foreign_canonical_bytes_occupant ... ok
+test host_install::output_recovery_tests::actual_pre_identity_crash_preserves_foreign_empty_occupant ... ok
+test host_install::output_recovery_tests::actual_apply_post_prepared_kill_still_resumes_as_a_positive_harness_control ... ok
+
+failures:
+
+failures:
+    host_install::output_recovery_tests::actual_apply_exposes_no_human_bytes_before_durable_output_identity
+    host_install::output_recovery_tests::actual_apply_pre_identity_kill_resumes_after_os_removes_unregistered_empty_output
+    host_install::output_recovery_tests::actual_apply_pre_identity_process_exit_rolls_back_without_unidentified_output
+
+test result: FAILED. 3 passed; 3 failed; 1 ignored; 0 measured; 97 filtered out; finished in 0.61s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --lib`

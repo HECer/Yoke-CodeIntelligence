@@ -1,0 +1,35 @@
+{
+  "retention": {
+    "executable": "target\\debug\\deps\\retention-c9716eb52673495e.exe",
+    "ignored": [],
+    "registered": [
+      "committed_retirement_can_feed_conservative_cas_quarantine_and_purge_without_losing_receipts",
+      "future_opaque_json_artifact_schema_is_not_inferred_to_be_dependency_free",
+      "labeled_uncommitted_history_journal_restores_missing_rows_without_changing_current_source",
+      "labeled_uncommitted_history_journal_restores_only_hash_bound_rows",
+      "missing_history_age_and_corrupt_metadata_never_become_retirement_permission",
+      "multiply_linked_quarantine_content_is_unknown_physical_reclamation_and_is_preserved",
+      "newly_rooted_quarantine_and_tampered_plan_refuse_purge_without_deleting_bytes",
+      "opaque_published_artifacts_defer_history",
+      "partial_purge_reports_actual_removed_bytes_and_can_resume_only_its_exact_intent",
+      "pin_and_every_source_bound_workflow_record_protect_history",
+      "purge_reclaims_only_exact_committed_unreachable_quarantine_bytes_after_confirmation",
+      "reviewed_history_retirement_removes_only_unrooted_rows_and_preserves_original_source",
+      "source_bindings_inside_published_json_artifacts_protect_history",
+      "stale_plan_and_concurrent_client_leave_history_intact",
+      "unknown_nested_snapshot_fields_defer_history",
+      "unknown_record_blocks_retirement_even_without_explicit_hash_fields"
+    ]
+  },
+  "retrieval": {
+    "executable": "target\\debug\\deps\\retrieval-1eb097bf0ffff17d.exe",
+    "ignored": [],
+    "registered": [
+      "common_document_terms_cannot_amplify_unbounded_highlight_work",
+      "context_plan_find_references_read_select_preserves_exact_old_source",
+      "context_plan_rejects_execution_unknown_fields_and_over_budget_steps",
+      "document_fts_normalization_keeps_exact_diacritic_and_punctuation_evidence",
+      "identifier_components_and_document_body_are_retrievable_from_the_snapshot"
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 2,
+  "status": "ignored_strict_saved_schema_tests_uncompiled_unexecuted",
+  "action": "act_mva0w19b_ed935c0ac58d",
+  "policy": "root_explicit_strict_new_run_only",
+  "preserved": [
+    "cccfe018c3a1dc1cdcc2539f536451ca213c11f0347088e224cce52589483960",
+    "369292a4411180dfd9f4fdbaed8c112902cdb28b4b259baff15a070a3be9234a",
+    "18e8d83be0a8985bb0d711e6321e26d6a6e410961f08d3df698a80b3caf0c2d4"
+  ],
+  "normalEditsAuthorized": false,
+  "functionalImplementationAuthorized": false,
+  "apiChanged": false,
+  "file": {
+    "draft": "retrieval_saved_graph_schema_tests.rs",
+    "destination": "native/src/retrieval_saved_graph_schema_tests.rs",
+    "ordinaryDraftTests": 6,
+    "rootRegistrationInsideRetrievalSavedGraph": "#[cfg(test)] #[path = \"retrieval_saved_graph_schema_tests.rs\"] mod schema_tests;"
+  },
+  "rootCommand": "cargo test --manifest-path native/Cargo.toml --lib retrieval_saved_graph::schema_tests",
+  "requiredOutcome": "Duplicate/unknown saved Graph schema is typed SourceIntegrity, never manifest UnsupportedPolicy/fallback/reset; preserve native8/9 controls and all lower connection limits.",
+  "unchanged": "Generic Store::graph/global/absent retrieval semantics and all predecessor source/test bytes."
+}

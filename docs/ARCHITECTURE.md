@@ -8,6 +8,26 @@
 
 Rust 0.5 adds `projects` and its own compiler worker, `dataflow`, `test_map`, `providers`/`ledger`/`ollama`, `runtime` and its own Python worker, `container`, `retention`, `federation_http` and native OS credential modules. External toolchains are explicit host inputs. Model calls and execution remain outside default retrieval. Compiler/library hashes enter context identity; model attempts reserve before sending; retirement and purge recheck every durable authority root.
 
+`graph_view` composes explicitly selected structural and semantic overlays while preserving their source bindings and precision. Ordinary retrieval can select a saved View, and `graph_extensions` prepares and admits selected-View reports before publishing their artifacts. Canonical graphs and existing canonical report identities remain separate from these projections.
+
+`meaning_graph` validates typed concepts, directed relations and role-bearing hyperedges against exact submitted UTF-8 source ranges. `meaning_build` reserves all admitted attempts before sending, accounts for reported costs before rejecting invalid domain output, and publishes the completed graph, cache pointers and immutable receipt references together. Cache identity includes the source unit, extraction contract, proven analyzer epoch, provider inputs, generation and currency. `meaning_cli` separates explicit trusted builds from provider-free load/query/status operations. `retention` validates the typed job, cache, graph and report dependencies before retiring history or purging CAS content.
+
+`meaning_aliases` replays a published meaning graph before proposing bounded
+lexical matches between its concept labels and declared aliases. Comparison
+keeps packet-qualified concept references and exact original evidence, performs
+no model calls or persistence, and never grants semantic identity to a label or
+similarity score. The read-only `meaning aliases` command applies independent
+pair, character-work, candidate and output limits before publishing stdout.
+
+`meaning_groups` projects explicitly host-selected, disjoint concept groups over
+one replayed meaning graph. Every original concept, directed parallel relation,
+hyperedge slot and evidence record is preserved. Group-induced selfloops and
+repeated projected participants remain visible in a separate projection schema.
+The read-only `meaning group --review HOST_JSON` command admits strict bounded
+host assertions before opening state; no provider, capture or persistence is
+introduced. Host assertions do not establish semantic identity or authenticated
+human review. See the [group projection contract](../native/docs/meaning-groups.md).
+
 TypeScript directories and ADRs below describe the retained runtime. Snapshot identity and serialized state are runtime-specific; no implicit conversion occurs. [The native guide](../native/README.md) and [replacement criteria](RUST_REPLACEMENT.md) describe current boundaries.
 
 ## Boundaries

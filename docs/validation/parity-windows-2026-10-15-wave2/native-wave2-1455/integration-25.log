@@ -1,0 +1,87 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 8.49s
+     Running tests\provider_batches_review.rs (target\debug\deps\provider_batches_review-fb8e8e5278794de4.exe)
+
+running 10 tests
+test every_source_is_verified_before_first_chunk_reservation_or_launch ... ok
+test complete_bound_reply_with_nonzero_exit_still_preserves_cost_and_usage ... ok
+test failed_new_batch_leaves_existing_other_model_corpus_byte_identical ... ok
+test each_chunk_keeps_native_protocol_one_and_legacy_attempt_bound_request_identity ... ok
+test legal_reversed_cohere_items_are_reassembled_by_id_before_publication ... ok
+test full_vector_store_capacity_is_rejected_before_any_reservation_or_child ... ok
+test unbound_reported_cost_remains_unknown_and_only_never_sent_attempt_is_released ... ok
+test model_child_can_acquire_sqlite_write_transaction_while_parent_holds_only_client_lease ... ok
+test worst_finite_float_serialization_rejects_entire_batch_before_billing ... ok
+test retained_batch_rejects_unknown_nested_fields_and_rebound_request_identity ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.85s
+
+     Running tests\provider_scope_review.rs (target\debug\deps\provider_scope_review-efdd81e89803991c.exe)
+
+running 4 tests
+test corrupt_cas_size_is_refused_before_source_allocation_or_provider_launch ... ok
+test escaped_request_is_admitted_before_serialization_allocation_and_billing ... ok
+test explicitly_captured_readonly_dependencies_keep_exact_model_source_binding ... ok
+test persisted_unknown_native_identity_does_not_grant_model_source_authority ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.69s
+
+     Running tests\providers.rs (target\debug\deps\providers-4a75185b5a986379.exe)
+
+running 11 tests
+test corpus_excerpts_stop_at_exact_utf8_boundaries_and_report_omissions ... ok
+test invalid_requests_and_missing_capabilities_fail_before_model_attempts ... ok
+test embeddings_and_query_search_use_versioned_source_bound_collections ... ok
+test media_descriptions_bind_captured_bytes_without_source_writes ... ok
+test complete_bound_failed_replies_still_account_for_reported_costs ... ok
+test query_vector_dimension_must_match_indexed_corpus_before_settlement ... ok
+test successful_unknown_billing_and_known_overrun_keep_budget_conservative ... ok
+test summaries_use_immutable_utf8_source_and_remain_inferences ... ok
+test reranking_and_vectors_reject_invalid_exact_candidates ... ok
+test unavailable_timeout_and_output_cap_keep_unknown_reservations ... ok
+test host_trust_and_exact_reply_binding_fail_closed ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.46s
+
+     Running tests\publication.rs (target\debug\deps\publication-48dca67002c9b393.exe)
+
+running 1 test
+test first_publication_time_is_durable_and_never_refreshed_by_republication ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests\query_parity.rs (target\debug\deps\query_parity-fd60f1161151b971.exe)
+
+running 12 tests
+test body_retrieval_in_file_mode_never_returns_symbol_rows ... ok
+test clipped_single_line_context_keeps_the_match_and_exact_unicode_bytes ... ok
+test bulk_edit_selection_is_atomic_and_conflicting_modes_are_rejected ... ok
+test advertised_native_protocol_reaches_advanced_semantic_operations ... ok
+test exact_name_path_symbol_query_has_source_bound_body_and_depth ... ok
+test multiline_case_insensitive_search_exposes_exact_occurrences_and_symbol_owners ... ok
+test relative_directory_scope_is_segment_aware_and_globs_are_explicit ... ok
+test selected_occurrences_and_count_guards_prepare_an_atomic_reviewable_bulk_plan ... ok
+test task_words_inside_multiline_bodies_are_searchable_without_becoming_fact ... ok
+test public_engine_semantics_preserve_host_configuration_callbacks ... ok
+test text_search_pages_past_the_first_ten_thousand_occurrences ... ok
+test text_search_streams_the_captured_corpus_beyond_the_symbol_body_cache_budget ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.18s
+
+     Running tests\read_only_dependencies.rs (target\debug\deps\read_only_dependencies-652ca9b7d8ea27bc.exe)
+
+running 11 tests
+test dependency_sources_retain_file_size_binary_and_secret_content_omissions ... ok
+test an_unknown_capture_epoch_cannot_grant_dependency_source_authority ... ok
+test empty_dependency_option_preserves_version_one_identity_and_rejects_other_protected_scopes ... ok
+test authentic_legacy_overlay_receipt_proves_readonly_source_without_a_live_session ... ok
+test derived_dependency_members_require_exact_origin_proof_and_remain_virtual ... ok
+test explicit_readonly_dependency_capture_keeps_secret_state_and_size_protections ... ok
+test materialized_language_server_tree_reads_proven_dependency_members_only ... ok
+test editor_overlay_inherits_native_capture_scope_without_dependency_write_access ... ok
+test passive_provider_materialization_can_omit_exact_source_selectors_without_changing_capture ... ok
+test prospective_read_admission_is_scoped_metadata_and_cannot_read_uncaptured_bytes ... ok
+test real_git_ignored_dependencies_stay_ignored_under_the_readonly_host_scope ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.29s
+

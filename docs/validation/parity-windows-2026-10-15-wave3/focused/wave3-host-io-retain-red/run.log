@@ -1,0 +1,52 @@
+warning: methods `path` and `identity` are never used
+   --> native\src\host_install.rs:634:19
+    |
+633 | impl DurableOutputRegistration {
+    | ------------------------------ methods in this implementation
+634 |     pub(super) fn path(&self) -> &Path {
+    |                   ^^^^
+...
+637 |     pub(super) fn identity(&self) -> &str {
+    |                   ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `run_output_retain_hook` is never used
+   --> native\src\host_install_io.rs:390:8
+    |
+390 |     fn run_output_retain_hook() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib test) generated 2 warnings
+    Finished `test` profile [unoptimized] target(s) in 0.58s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 10 tests
+Error: Durable host-output retention is unavailable
+test host_install::io::tests::staged_registered_output_appends_raw_canonical_chunks_and_finishes_same_identity ... FAILED
+Error: Durable host-output retention is unavailable
+test host_install::io::tests::staged_registered_output_rechecks_security_and_full_hash_before_writes_or_cleanup ... FAILED
+test host_install::io::tests::staged_armed_output_rejects_wrong_registration_or_expired_retain_before_persistence ... ok
+test host_install::io::tests::staged_armed_output_is_empty_secured_guarded_and_deleted_on_drop ... ok
+test host_install::io::tests::staged_existing_occupant_and_replaced_registered_identity_are_preserved ... ok
+test host_install::io::tests::staged_registered_reopen_refuses_hardlinks_readonly_and_incomplete_finalization ... ok
+Error: Durable host-output retention is unavailable
+test host_install::io::tests::staged_retains_owned_output_when_cancellation_arrives_after_disarm ... FAILED
+Error: Canonical durable host output path mismatch
+test host_install::io::tests::staged_registered_prefix_reopens_without_truncation_and_discards_by_held_identity ... FAILED
+Error: Fixture group setup failed
+test host_install::io::tests::staged_registered_reopen_checks_original_security_before_any_mutation ... FAILED
+test host_install::io::tests::staged_registered_reopen_refuses_wrong_id_stage_hash_and_noncanonical_bytes ... ok
+
+failures:
+
+failures:
+    host_install::io::tests::staged_registered_output_appends_raw_canonical_chunks_and_finishes_same_identity
+    host_install::io::tests::staged_registered_output_rechecks_security_and_full_hash_before_writes_or_cleanup
+    host_install::io::tests::staged_registered_prefix_reopens_without_truncation_and_discards_by_held_identity
+    host_install::io::tests::staged_registered_reopen_checks_original_security_before_any_mutation
+    host_install::io::tests::staged_retains_owned_output_when_cancellation_arrives_after_disarm
+
+test result: FAILED. 5 passed; 5 failed; 0 ignored; 0 measured; 135 filtered out; finished in 0.13s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --lib`

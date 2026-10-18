@@ -1,0 +1,28 @@
+{
+  "graph_archive_review": {
+    "executable": "target\\debug\\deps\\graph_archive_review-34a08598b98b6c0e.exe",
+    "ignored": [],
+    "registered": [
+      "collection_reregistration_caps_existing_source_sql_cells_before_length_reads",
+      "resealed_archives_cannot_reclassify_a_captured_file_as_protected_source"
+    ]
+  },
+  "graph_collections": {
+    "executable": "target\\debug\\deps\\graph_collections-07ab8869252f0b4a.exe",
+    "ignored": [],
+    "registered": [
+      "archived_capture_scope_keeps_configured_readonly_dependencies_and_rejects_missing_proof",
+      "canonical_collection_also_rejects_resealed_protected_source_after_registration",
+      "collection_historical_source_survives_original_history_retirement_and_blob_purge",
+      "collection_queries_use_namespaced_entities_and_exact_original_call_anchors",
+      "collection_sqlite_sidecars_cannot_write_through_links",
+      "legacy_default_native_archive_without_scope_sidecar_retains_original_identity",
+      "registered_collection_namespaces_equal_symbols_and_preserves_parallel_edges",
+      "registration_is_immutable_and_rejects_forged_graph_or_unregistered_scope",
+      "registry_payload_capacity_is_checked_before_decoding_corrupt_registration",
+      "registry_payload_sqlite_cell_is_capped_before_length_admission",
+      "selected_view_collection_preserves_origins_namespaces_and_source_after_retirement",
+      "view_archive_rejects_resealed_invented_rows_corrupt_inputs_and_foreign_view"
+    ]
+  }
+}

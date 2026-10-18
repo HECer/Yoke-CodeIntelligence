@@ -1,0 +1,36 @@
+    Finished `test` profile [unoptimized] target(s) in 0.55s
+     Running tests\decision_cli.rs (target\debug\deps\decision_cli-9dc34196300fa9c9.exe)
+
+running 10 tests
+test decision_cli_inline_arguments_are_strict_and_cannot_select_a_second_input ... ok
+test decision_cli_creates_reads_and_conditionally_updates_immutable_revisions ... ok
+test decision_cli_checks_current_captured_source_and_preserves_historical_snapshot ... ok
+test decision_cli_rejects_ambiguous_and_oversized_json_before_opening_state ... ok
+test decision_cli_output_budget_retains_the_complete_result_as_an_immutable_artifact ... ok
+test decision_cli_rejects_provider_configuration_before_opening_source_state ... ok
+test decision_cli_rejects_incomplete_or_unsafe_personal_scope_without_creating_state ... ok
+test decision_cli_exports_fresh_bundles_and_imports_without_replacing_documents ... ok
+test decision_cli_write_and_import_require_host_permission_before_opening_state ... ok
+test decision_cli_personal_scope_is_explicit_isolated_and_pinned_to_host ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.86s
+
+     Running tests\decision_records.rs (target\debug\deps\decision_records-2d40982098120ac5.exe)
+
+running 13 tests
+test explicit_import_cannot_roll_back_or_replace_an_existing_revision_lineage ... ok
+test authored_markdown_cannot_create_active_links ... ok
+test bundles_refuse_foreign_sources_unknown_entries_duplicate_json_and_invalid_utf8 ... ok
+test bundle_roundtrip_is_deterministic_strict_and_never_overwrites_markdown ... ok
+test hostile_schema_paths_dates_bounds_and_foreign_snapshots_are_rejected_without_state ... ok
+test missing_candidate_files_are_inconclusive_and_absence_is_file_scoped ... ok
+test import_cas_is_atomic_across_multiple_keys_and_includes_revision_history ... ok
+test large_hostile_markdown_can_be_imported_without_losing_original_bytes ... ok
+test retention_keeps_all_source_revisions_and_rejects_head_alias_tampering ... ok
+test personal_storage_is_explicit_and_durably_host_pinned ... ok
+test revisions_require_exact_cas_and_preserve_authored_attribution_and_originals ... ok
+test source_bound_literal_checks_show_utf8_byte_evidence_and_truthful_limits ... ok
+test windows_junction_parents_cannot_redirect_import_or_export ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.55s
+

@@ -1,0 +1,20 @@
+{
+  "agent_diagnostic_boundaries": {
+    "executable": "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\agent_diagnostic_boundaries-aecde4390af3b716.exe",
+    "ignored": [],
+    "registered": [
+      "independent_inspection_line_ranges_exclude_the_next_line_but_keep_full_file_eof",
+      "partial_line_diagnostics_do_not_admit_the_next_line_point",
+      "selecting_lines_before_the_trailing_empty_line_excludes_its_eof_point",
+      "whole_file_diagnostics_keep_valid_zero_width_eof_points_including_empty_source"
+    ]
+  },
+  "agent_documentation": {
+    "executable": "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\agent_documentation-513703bd6ac7eba0.exe",
+    "ignored": [],
+    "registered": [
+      "adjacent_literal_strings_form_one_exact_python_module_docstring_span",
+      "executable_fstrings_and_byte_literals_are_not_python_module_docstrings"
+    ]
+  }
+}

@@ -1,0 +1,247 @@
+warning: unused import: `serde_json::json`
+ --> native\src\meaning_comparison_fixture_internal.rs:2:5
+  |
+2 | use serde_json::json;
+  |     ^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `snapshot` is never used
+   --> native\src\graph_view_comparison_input.rs:782:19
+    |
+781 | impl BoundComparisonScope<'_> {
+    | ----------------------------- method in this implementation
+782 |     pub(crate) fn snapshot(&self) -> &Snapshot {
+    |                   ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: fields `dir` and `graph` are never read
+  --> native\src\meaning_comparison_fixture_internal.rs:24:9
+   |
+23 | pub struct Fixture {
+   |            ------- fields in this struct
+24 |     pub dir: TempDir,
+   |         ^^^
+...
+29 |     pub graph: Graph,
+   |         ^^^^^
+
+warning: function `remove_source_workspace` is never used
+   --> native\src\meaning_comparison_fixture_internal.rs:149:8
+    |
+149 | pub fn remove_source_workspace(f: Fixture) -> TempDir {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `calibrate_foreign_connection_mutation_oracle` is never used
+  --> native\src\historical_fixture_state_internal.rs:52:8
+   |
+52 | pub fn calibrate_foreign_connection_mutation_oracle(engine: &Engine) {
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: fields `dir`, `snapshot`, and `graph` are never read
+  --> native\src\meaning_comparison_fixture_internal.rs:24:9
+   |
+23 | pub struct Fixture {
+   |            ------- fields in this struct
+24 |     pub dir: TempDir,
+   |         ^^^
+...
+28 |     pub snapshot: Snapshot,
+   |         ^^^^^^^^
+29 |     pub graph: Graph,
+   |         ^^^^^
+
+warning: fields `snapshot` and `graph` are never read
+  --> native\src\meaning_comparison_fixture_internal.rs:28:9
+   |
+23 | pub struct Fixture {
+   |            ------- fields in this struct
+...
+28 |     pub snapshot: Snapshot,
+   |         ^^^^^^^^
+29 |     pub graph: Graph,
+   |         ^^^^^
+
+warning: method `snapshot` is never used
+   --> native\src\meaning_build.rs:185:19
+    |
+184 | impl BoundFrozenScope<'_> {
+    | ------------------------- method in this implementation
+185 |     pub(crate) fn snapshot(&self) -> &Snapshot {
+    |                   ^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib test) generated 8 warnings (run `cargo fix --lib -p yoke-code-intelligence --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized] target(s) in 0.79s
+     Running unittests src\lib.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 21 tests
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67232) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+test graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67892) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+test graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test graph_view::comparison_boundary_tests::h15_original_rebound_full_union_has_an_exact_distinct_source_boundary_after_store_removal ... ok
+test graph_view::comparison_input_tests::h07_pair_allows_the_first_authorized_side_then_denies_after_side_history_before_its_cas ... ok
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (67364) panicked at native\src\..\tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+test graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test graph_view::comparison_boundary_tests::h15_both_public_entrypoints_honor_real_inherited_cancellation_and_zero_deadline ... ok
+test graph_view::comparison_boundary_tests::h15_same_checked_archive_counts_proof_twice_but_full_union_source_hashes_once ... ok
+test graph_view::comparison_pin_tests::h03_existing_source_views_state_oracle_and_windows_cas_tripwire_qualify_without_comparison ... ok
+test graph_view::comparison_pin_tests::h03_missing_registration_on_either_side_refuses_before_cas_without_lookup_fallback ... ok
+test graph_view::comparison_pin_tests::h03_matching_foreign_pins_wrong_store_and_mixed_workspaces_use_early_workspace_pin_refusal ... ok
+test graph_view::comparison_input_tests::h07_valid_current_scope_cannot_hide_a_late_original_scope_policy_denial_before_cas ... ok
+test graph_view::comparison_pin_tests::h03_all_five_requested_pin_fields_are_admitted_on_both_sides_before_any_cas ... ok
+test view_comparison::budget_tests::bounded_serializer_exact_bytes_and_next_byte_refuse_before_poison ... ok
+test view_comparison::budget_tests::bounded_typed_digest_preserves_released_serialization_order ... ok
+test view_comparison::budget_tests::canonical_value_conversion_is_preflighted_before_poison_serialize ... ok
+test view_comparison::budget_tests::recursive_rows_check_same_deadline_after_final_child_progress ... ok
+test view_comparison::budget_tests::recursive_rows_count_all_copies_and_cancel_only_after_completed_child_progress ... ok
+test view_comparison::budget_tests::serializer_cancellation_after_actual_progress_uses_same_inherited_deadline ... ok
+test graph_view::comparison_raw_typed_tests::raw_sql_metadata_above_exact_typed_pair_budget_remains_a_read_only_positive ... ok
+test graph_view::comparison_pin_tests::h03_registration_internal_view_id_binding_is_checked_separately_from_the_lookup_key ... ok
+test graph_view::comparison_pin_tests::h03_one_supplied_store_read_view_survives_a_foreign_second_registration_commit ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 286 filtered out; finished in 8.10s
+

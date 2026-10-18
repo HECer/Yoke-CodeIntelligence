@@ -1,0 +1,33 @@
+test_native_and_pdf_frozen_text_share_literal_search_with_typed_page_reads (__main__.PdfMixedContract.test_native_and_pdf_frozen_text_share_literal_search_with_typed_page_reads) ... FAIL
+test_schema2_requires_explicit_pdf_worker_permission_before_store_access (__main__.PdfMixedContract.test_schema2_requires_explicit_pdf_worker_permission_before_store_access) ... FAIL
+
+======================================================================
+FAIL: test_native_and_pdf_frozen_text_share_literal_search_with_typed_page_reads (__main__.PdfMixedContract.test_native_and_pdf_frozen_text_share_literal_search_with_typed_page_reads)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Yoke-Build-Cache\pdf-mixed-view-20261017\contract_red.py", line 60, in test_native_and_pdf_frozen_text_share_literal_search_with_typed_page_reads
+    asset = success('media', 'inspect', '--path', 'notes.pdf')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Yoke-Build-Cache\pdf-mixed-view-20261017\contract_red.py", line 54, in success
+    self.assertEqual(result.returncode, 0, result.stderr.decode('utf-8', errors='replace'))
+AssertionError: 2 != 0 : error: unexpected argument '--path' found
+
+  tip: to pass '--path' as a value, use '-- --path'
+
+Usage: yoke.exe media inspect [OPTIONS] <PATH>
+
+For more information, try '--help'.
+
+
+======================================================================
+FAIL: test_schema2_requires_explicit_pdf_worker_permission_before_store_access (__main__.PdfMixedContract.test_schema2_requires_explicit_pdf_worker_permission_before_store_access)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Yoke-Build-Cache\pdf-mixed-view-20261017\contract_red.py", line 98, in test_schema2_requires_explicit_pdf_worker_permission_before_store_access
+    self.assertIn(b'mixed_view_pdf_permission_required',result.stderr)
+AssertionError: b'mixed_view_pdf_permission_required' not found in b'yoke: mixed_view_input_invalid\n'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.130s
+
+FAILED (failures=2)

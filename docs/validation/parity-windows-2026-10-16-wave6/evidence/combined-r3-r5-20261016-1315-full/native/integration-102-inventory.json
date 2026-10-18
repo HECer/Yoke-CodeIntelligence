@@ -1,0 +1,22 @@
+{
+  "session_collections": {
+    "executable": "target\\debug\\deps\\session_collections-729062ee8f2bd3cf.exe",
+    "ignored": [],
+    "registered": [
+      "collection_policy_changes_invalidate_resume_but_empty_policy_keeps_original_fingerprint",
+      "configured_query_only_project_can_register_current_checked_view_without_activation",
+      "empty_collections_preserve_legacy_host_serialization",
+      "native_archived_queries_never_open_original_or_active_source",
+      "native_registry_read_wrapper_uses_exact_archived_membership",
+      "registration_requires_host_write_authority_and_explicit_binding_expectation",
+      "transient_current_foreign_grants_authorize_only_the_registered_receiver_and_call"
+    ]
+  },
+  "session_collections_admission": {
+    "executable": "target\\debug\\deps\\session_collections_admission-845ce530900379fe.exe",
+    "ignored": [],
+    "registered": [
+      "oversized_collection_invocation_is_rejected_before_serialization_allocation"
+    ]
+  }
+}

@@ -1,0 +1,108 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 11s
+     Running tests\facade_file_move.rs (target\debug\deps\facade_file_move-6144897cf260e5ee.exe)
+
+running 7 tests
+test move_permissions_and_external_project_refusal_precede_provider_start ... ok
+test move_target_parent_must_be_explicit_and_must_not_be_an_existing_file ... ok
+test occupied_final_child_and_same_parent_moves_refuse_without_change_objects ... ok
+test omitted_binary_host_destination_is_still_occupied_before_provider_and_plan ... ok
+test directory_symbol_parent_and_malformed_file_selectors_are_explicit_refusals ... ok
+test unsafe_target_parents_and_captured_readonly_or_excluded_scopes_never_prepare_plans ... ok
+test file_move_omitted_null_and_empty_selectors_preserve_basename_in_the_target_parent_for_v8_v9 ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.39s
+
+     Running tests\facade_file_rename.rs (target\debug\deps\facade_file_rename-26aacd7ab6c8a3a1.exe)
+
+running 9 tests
+test file_rename_permissions_and_external_context_refusal_precede_provider_start ... ok
+test directory_missing_excluded_and_readonly_sources_have_no_file_rename_authority ... ok
+test empty_selectors_and_true_or_malformed_file_occurrence_options_refuse_before_provider ... ok
+test guarded_file_rename_plan_refuses_stale_source_before_any_workspace_write ... ok
+test file_rename_new_name_is_a_portable_single_basename_and_never_a_destination_path ... ok
+test occupied_file_directory_uncaptured_binary_and_source_alias_refuse_before_provider ... ok
+test root_file_rename_uses_the_supplied_unicode_basename_without_creating_a_parent ... ok
+test nullable_file_rename_omitted_and_null_selectors_preserve_parent_for_v8_v9 ... ok
+test public_file_rename_accepts_generated_false_defaults_and_explicit_false_options ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.26s
+
+     Running tests\meaning_graph_views.rs (target\debug\deps\meaning_graph_views-6f736190f27f413b.exe)
+
+running 5 tests
+test meaning_trace_preserves_direction_and_ordered_hyperedge_incidence_without_a_clique ... FAILED
+test explicit_meaning_view_finds_alias_candidates_and_source_without_merging_claims ... FAILED
+test meaning_read_and_context_return_historic_quote_citations_without_declaration_anchors ... FAILED
+test source_only_projection_consumers_refuse_meaning_before_report_or_archive_publication ... FAILED
+test unselected_views_keep_the_released_schema_identity_and_artifact_bytes ... ok
+
+failures:
+
+---- meaning_trace_preserves_direction_and_ordered_hyperedge_incidence_without_a_clique stdout ----
+
+thread 'meaning_trace_preserves_direction_and_ordered_hyperedge_incidence_without_a_clique' (98464) panicked at native\tests\meaning_graph_views.rs:91:5:
+An explicit already-published meaning selection is rejected: Err(Error("unknown field `meaningGraphIds`, expected one of `structuralKinds`, `structuralOverlayIds`, `semanticOverlayIds`", line: 0, column: 0))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- explicit_meaning_view_finds_alias_candidates_and_source_without_merging_claims stdout ----
+
+thread 'explicit_meaning_view_finds_alias_candidates_and_source_without_merging_claims' (41104) panicked at native\tests\meaning_graph_views.rs:91:5:
+An explicit already-published meaning selection is rejected: Err(Error("unknown field `meaningGraphIds`, expected one of `structuralKinds`, `structuralOverlayIds`, `semanticOverlayIds`", line: 0, column: 0))
+
+---- meaning_read_and_context_return_historic_quote_citations_without_declaration_anchors stdout ----
+
+thread 'meaning_read_and_context_return_historic_quote_citations_without_declaration_anchors' (57508) panicked at native\tests\meaning_graph_views.rs:91:5:
+An explicit already-published meaning selection is rejected: Err(Error("unknown field `meaningGraphIds`, expected one of `structuralKinds`, `structuralOverlayIds`, `semanticOverlayIds`", line: 0, column: 0))
+
+---- source_only_projection_consumers_refuse_meaning_before_report_or_archive_publication stdout ----
+
+thread 'source_only_projection_consumers_refuse_meaning_before_report_or_archive_publication' (94072) panicked at native\tests\meaning_graph_views.rs:91:5:
+An explicit already-published meaning selection is rejected: Err(Error("unknown field `meaningGraphIds`, expected one of `structuralKinds`, `structuralOverlayIds`, `semanticOverlayIds`", line: 0, column: 0))
+
+
+failures:
+    explicit_meaning_view_finds_alias_candidates_and_source_without_merging_claims
+    meaning_read_and_context_return_historic_quote_citations_without_declaration_anchors
+    meaning_trace_preserves_direction_and_ordered_hyperedge_incidence_without_a_clique
+    source_only_projection_consumers_refuse_meaning_before_report_or_archive_publication
+
+test result: FAILED. 1 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.08s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --test meaning_graph_views`
+     Running tests\refactor_intents.rs (target\debug\deps\refactor_intents-e45b8130e18e3e90.exe)
+
+running 15 tests
+test flagged_refactoring_obeys_session_plan_permissions_before_querying_a_provider ... ok
+test inline_keep_definition_preserves_exact_declaration_bytes_while_replacing_a_call ... ok
+test flagged_rename_rejects_unrelated_and_wholefile_provider_changes_before_publication ... ok
+test invalid_later_inline_candidate_cannot_leave_an_earlier_hidden_plan_or_derivative ... ok
+test deterministic_later_noop_nul_or_secret_candidate_is_rejected_before_any_publication ... ok
+test keeping_an_inline_definition_requires_a_real_source_bound_call_replacement ... ok
+test amplified_candidate_contents_are_bounded_before_any_publication ... ok
+test native_text_occurrences_refuse_potentially_interpolated_strings_before_publication ... ok
+test keep_definition_rejects_broad_ambiguous_and_command_candidates_without_plans ... ok
+test native_occurrences_distinguish_string_comment_markers_and_unicode_word_boundaries ... ok
+test native_unicode_rename_refuses_byte_string_occurrences_before_publication ... ok
+test native_text_rename_never_rewrites_rust_raw_string_delimiters ... ok
+test requested_false_occurrence_flags_also_constrain_provider_supplied_edits ... ok
+test projected_refactors_keep_v8_v9_source_proofs_and_never_edit_readonly_or_ignored_sources ... ok
+test requested_comment_and_text_rename_options_change_only_their_own_occurrence_classes ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.55s
+
+     Running tests\semantic_refactor.rs (target\debug\deps\semantic_refactor-f66dd7e99dc076bb.exe)
+
+running 7 tests
+test file_move_negotiates_will_rename_and_combines_pre_rename_edits_into_one_guarded_plan ... ok
+test indexed_symbol_refactoring_selects_the_same_source_order_overload_as_the_facade ... ok
+test explicit_force_delete_keeps_verified_usage_context_and_still_refuses_foreign_or_stale_sources ... ok
+test inspection_equivalent_uses_actual_registered_diagnostics_and_declared_kind_registry ... ok
+test inline_refactoring_accepts_only_the_requested_kind_and_explicit_workspace_edits ... ok
+test unused_semantic_delete_requires_registered_source_proof_and_only_prepares_a_guarded_plan ... ok
+test semantic_delete_refuses_actual_candidate_unresolved_foreign_and_stale_uses_without_publishing_plans ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.23s
+
+error: 1 target failed:
+    `-p yoke-code-intelligence --test meaning_graph_views`

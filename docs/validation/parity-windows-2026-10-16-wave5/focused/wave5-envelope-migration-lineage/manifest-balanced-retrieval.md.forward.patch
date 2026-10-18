@@ -1,0 +1,14 @@
+--- native/docs/manifest-balanced-retrieval.md
++++ native/docs/manifest-balanced-retrieval.md
+@@ -274,6 +274,11 @@
+ these bounded retrieval results, and no promise to rerank to fit after
+ definition conversion.
+ 
++This limit also applies when automatic Trail/Graft retrieval selects global
++fallback because no usable package partition exists. It replaces the previous
++large-`find_code` artifact behavior. Other artifact-capable queries, including
++`find_all`, retain their immutable paged-artifact transport.
++
+ Items preserve original UTF-8 path, content hash, entity ID and byte ranges;
+ normalization for scoring does not rewrite source anchors or bodies. Results
+ remain `complete: false`: admitted-corpus counts and deterministic ranking are

@@ -1,0 +1,29 @@
+    Finished `test` profile [unoptimized] target(s) in 0.74s
+     Running tests\knowledge_cli.rs (target\debug\deps\knowledge_cli-cd250fcd9ca5d2aa.exe)
+
+running 2 tests
+test native_context_includes_labeled_source_knowledge_only_when_requested ... ok
+test cli_builds_vectors_and_mcp_queries_them_without_a_model_or_source_writes ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+
+     Running tests\language_constructs.rs (target\debug\deps\language_constructs-4f3985b025df7217.exe)
+
+running 14 tests
+test explicit_erlang_fun_references_point_to_the_named_function_without_becoming_calls ... ok
+test commonlisp_function_invocations_keep_the_exact_original_call_span ... ok
+test explicit_lisp_function_designators_are_references_and_quoted_data_stays_literal ... ok
+test fortran_parameter_bindings_do_not_escape_to_another_procedure ... ok
+test lisp_class_superclasses_and_slot_headers_are_not_calls_but_initforms_are ... ok
+test literal_lisp_vectors_do_not_emit_executable_calls_or_function_references ... ok
+test objc_message_calls_are_distinct_from_plain_identifier_references ... ok
+test new_language_procedure_nodes_have_actual_function_scopes ... ok
+test lisp_lexical_declaration_headers_are_not_calls_but_bodies_and_initializers_are ... ok
+test powershell_nested_functions_do_not_leak_into_a_sibling_function_scope ... ok
+test quoted_lisp_lists_and_lambda_lists_do_not_become_function_calls ... ok
+test objc_untyped_foreign_receiver_does_not_resolve_to_callers_own_method ... ok
+test vb_invocations_and_address_of_references_keep_distinct_relations ... ok
+test vb_local_declarations_block_an_unrelated_same_named_module_method ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

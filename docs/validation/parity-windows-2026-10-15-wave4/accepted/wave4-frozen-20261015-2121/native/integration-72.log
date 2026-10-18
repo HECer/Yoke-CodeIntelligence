@@ -1,0 +1,43 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+    Finished `test` profile [unoptimized] target(s) in 0.60s
+     Running tests\notes.rs (target\debug\deps\notes-662e2c807df93ad8.exe)
+
+running 15 tests
+test authored_revision_timestamp_uses_unix_milliseconds ... ok
+test global_address_namespace_is_reserved_and_reference_boundaries_are_exact ... ok
+test edited_note_keeps_historical_anchor_and_reports_changed_source ... ok
+test global_note_policy_matches_its_canonical_global_namespace ... ok
+test host_note_policy_defaults_read_only_and_rejects_unknown_authority_fields ... ok
+test hidden_and_read_only_references_do_not_leak_or_block_renames ... ok
+test global_storage_is_host_selected_and_missing_or_ignored_notes_do_not_leak ... ok
+test maximally_encoded_accepted_note_remains_readable_after_commit ... ok
+test memory_reference_left_boundaries_exclude_larger_uri_schemes_and_identifiers ... ok
+test named_note_crud_retains_authored_scope_revisions_and_exact_source ... ok
+test regex_edits_count_guard_and_read_only_policy_do_not_partially_mutate_notes ... ok
+test full_retired_head_quota_rejects_publication_atomically_and_allows_reuse ... ok
+test regex_gap_growth_fails_before_remaining_budget_underflow_and_keeps_the_revision ... ok
+test rename_rewrites_exact_mem_references_atomically_except_read_only_notes ... ok
+test retired_heads_remain_bounded_without_consuming_active_note_content_quota ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.55s
+
+     Running tests\office.rs (target\debug\deps\office-dd16d7ee5a8a673a.exe)
+
+running 8 tests
+test office_refuses_wrong_main_root_instead_of_extracting_fake_document_text ... ok
+test native_xlsx_keeps_shared_inline_values_and_formula_cache_distinct ... ok
+test native_docx_inspection_decodes_source_bound_unicode_paragraphs_and_tables ... ok
+test public_cli_reads_office_without_starting_office_or_a_worker ... ok
+test public_office_cli_retains_large_results_as_artifacts_within_its_output_budget ... ok
+test forbidden_xml_scalars_cannot_enter_persisted_office_text ... ok
+test unicode_zip_extra_fields_cannot_replace_admitted_part_identity ... ok
+test package_paths_bounds_entities_secrets_and_crc_fail_before_persistence ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.79s
+

@@ -1,0 +1,19 @@
+✖ a failed Windows tree helper falls back only after its actual nonzero exit (10142.8025ms)
+ℹ {"fixture":"controlled Windows helper nonzero exit","actualTargetPid":45920,"actualHelperPid":106756,"helperState":{"exited":true,"closed":true,"exitCode":7},"attempts":[],"beforeSafetyCleanup":{"stdin":true,"stdout":false,"stderr":false}}
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10352.482
+
+✖ failing tests:
+
+test at test\process-killer-failure.test.mjs:19:1
+✖ a failed Windows tree helper falls back only after its actual nonzero exit (10142.8025ms)
+  Error: Failed helper left its actual owned target or stdio open
+      at Timeout.<anonymous> (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/test/process-killer-failure.test.mjs:12:74)
+      at listOnTimeout (node:internal/timers:605:17)
+      at process.processTimers (node:internal/timers:541:7)

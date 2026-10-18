@@ -1,0 +1,30 @@
+{
+  "checkedAtUtc": "2026-10-15T15:27:07.247839+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-p",
+    "yoke-code-intelligence",
+    "--locked",
+    "-j",
+    "2",
+    "--no-fail-fast",
+    "--test",
+    "facade_file_rename",
+    "--test",
+    "host_output_disposition",
+    "--",
+    "--test-threads=4",
+    "--nocapture"
+  ],
+  "exitCode": 101,
+  "seconds": 7.547,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave3-rename-disposition-red",
+  "logSha256": "eaef1ff688250b526f11b947a19d1201cd0a2b64dced4b6e54731aa98afdbad8",
+  "groups": 2,
+  "passed": 13,
+  "failed": 4,
+  "ignored": 1,
+  "sourceChanges": []
+}

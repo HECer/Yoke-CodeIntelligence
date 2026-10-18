@@ -2,12 +2,31 @@ use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::BTreeMap;
 
-pub const ANALYZER: &str = "yoke-tree-sitter-4";
+pub const ANALYZER: &str = "yoke-tree-sitter-8";
 pub fn hash(bytes: impl AsRef<[u8]>) -> String {
     hex::encode(Sha256::digest(bytes.as_ref()))
 }
 pub fn identity(value: &impl Serialize) -> String {
-    hash(serde_json::to_vec(value).expect("serializable identity"))
+    use std::io::{BufWriter, Write};
+    struct HashWriter(Sha256);
+    impl Write for HashWriter {
+        fn write(&mut self, bytes: &[u8]) -> std::io::Result<usize> {
+            self.0.update(bytes);
+            Ok(bytes.len())
+        }
+        fn flush(&mut self) -> std::io::Result<()> {
+            Ok(())
+        }
+    }
+    let mut digest = HashWriter(Sha256::new());
+    {
+        // Preserve the released serialization byte for byte while bounding the
+        // second buffer independently of graph or corpus size.
+        let mut writer = BufWriter::with_capacity(16 * 1024, &mut digest);
+        serde_json::to_writer(&mut writer, value).expect("serializable identity");
+        writer.flush().expect("identity digest writer");
+    }
+    hex::encode(digest.0.finalize())
 }
 pub fn valid_id(id: &str) -> bool {
     id.len() == 64
@@ -136,4 +155,6 @@ pub struct Extraction {
     pub entities: Vec<Entity>,
     pub edges: Vec<RawEdge>,
     pub diagnostics: Vec<Diagnostic>,
+    #[serde(default)]
+    pub resolution: crate::resolution::ResolutionData,
 }

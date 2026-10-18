@@ -1,0 +1,44 @@
+{
+  "sourceManifestSha256": "f23616f840be3d746859b469f1473b221747e1085aa2f85342fcfcfb05a8ddab",
+  "sourceFiles": 3751,
+  "rustFiles": 420,
+  "changedPaths": {
+    "native/docs/mixed-pdf-views.md": {
+      "before": null,
+      "after": "94f0115b78d6e5eb3f5f83f77a50c051e2f01d862c016be9ce191b9f5a6c24e5"
+    },
+    "native/src/media.rs": {
+      "before": "4405e3e678fef2a3d294ea3bb92b3e24eeb774d6da455e6e70595128144b0e3f",
+      "after": "4e402828d678678d320f602beac3b4ce71303a384786affa46f84b801f8e00b2"
+    },
+    "native/src/mixed_pdf_input.rs": {
+      "before": null,
+      "after": "58b356548c9502e142a531b778629c38988ae2a220b5ba885fabbccdb3726f0c"
+    },
+    "native/src/mixed_view.rs": {
+      "before": "01584c6fa78b5c78dc076a13eb363e08dee24af8f1863cced690b9d46cf6bca8",
+      "after": "425c0f8c3f823c76eaf6d793e8e036ca527e76c96349acc59d281d9f8475e057"
+    },
+    "native/src/mixed_view_cli.rs": {
+      "before": "63830d60e359679d929186b599c0e347d4cc754df37c068f237b6661742de293",
+      "after": "68d74aa059ba18a9459e139e97c933616d56ec80aacf813c10d480adee931c3c"
+    },
+    "native/src/mixed_view_query.rs": {
+      "before": "a9a24435677c329848af0786e15d3506b4ec43eb9506df528f466e85c9fa306d",
+      "after": "78ca3491940fdc7ae47607b74b59626ba0b96d88c054075c95be9917408d1267"
+    },
+    "native/tests/mixed_pdf_view.rs": {
+      "before": null,
+      "after": "cacc832cfe6e6b9af505011f7b0b4aff9a0b6e5ab0f94a57289c4b0201e1e79e"
+    },
+    "native/tests/support/mixed_pdf_fixture.rs": {
+      "before": null,
+      "after": "d8b456dd5afba804b9e6fd0052a0e4135f028ceb4bfaf66fac06c913188c506e"
+    }
+  },
+  "actualBehavioralRed": "cli-red-r3-receipt.json",
+  "rustTestsWritten": 9,
+  "rustCompiledOrRun": false,
+  "sourceFormatting": "rustfmt parsed and formatted only; not a typecheck or build",
+  "interpretation": "Uncompiled isolated candidate for static review only. No primary integration or PDF acceptance."
+}

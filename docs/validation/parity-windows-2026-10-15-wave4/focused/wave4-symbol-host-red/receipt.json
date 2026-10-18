@@ -1,0 +1,27 @@
+{
+  "checkedAtUtc": "2026-10-15T18:22:22.320672+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "2",
+    "--test",
+    "symbol_move_own_v1",
+    "own_v1_host_opt_in_is_optional_and_default_profile_bytes_remain_identical",
+    "--",
+    "--exact",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 3.907,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-symbol-host-red",
+  "logSha256": "402bd3062ba238c14224c8d4ef2525153ab5d3f9c11dc4a5e541690d717d8228",
+  "groups": 1,
+  "passed": 0,
+  "failed": 1,
+  "ignored": 0,
+  "sourceChanges": []
+}

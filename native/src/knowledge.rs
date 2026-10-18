@@ -3,7 +3,7 @@
 //! These project records are distinct from the coding agents' central AgentMemory.
 use crate::{
     capture::Deadline,
-    model::{Entity, Graph, Snapshot, SourceFile, identity, valid_id},
+    model::{Entity, Graph, Snapshot, identity, valid_id},
     paths::{normalized, obvious_secret, utf8_range},
     store::Store,
 };
@@ -18,6 +18,8 @@ use std::{
 use unicode_normalization::UnicodeNormalization;
 
 const MEMORY_KIND: &str = "native_knowledge_v1";
+#[path = "knowledge_feedback.rs"]
+pub mod feedback;
 const VECTOR_KIND: &str = "native_vectors_v1";
 const LOCAL_KIND: &str = "native_local_tfidf_v1";
 const TRUST: &str = "authored_data_not_execution_authority";
@@ -117,21 +119,43 @@ fn database_deadline(store: &Store, deadline: &Deadline) -> Result<()> {
     Ok(())
 }
 fn record_raw(store: &Store, kind: &str, id: &str) -> Result<Option<String>> {
-    let raw: Option<String> = store
+    let limit = rusqlite::limits::Limit::SQLITE_LIMIT_LENGTH;
+    let prior = store
         .db
-        .query_row(
-            "SELECT value FROM records WHERE kind=?1 AND id=?2",
-            params![kind, id],
-            |row| row.get(0),
-        )
-        .optional()?;
-    if let Some(raw) = &raw {
+        .set_limit(limit, (MAX_RECORD_BYTES + 65536) as i32)?;
+    let result = (|| {
+        let size: Option<usize> = store
+            .db
+            .query_row(
+                "SELECT length(CAST(value AS BLOB)) FROM records WHERE kind=?1 AND id=?2",
+                params![kind, id],
+                |row| row.get(0),
+            )
+            .optional()?;
+        if let Some(size) = size {
+            ensure!(
+                size <= MAX_RECORD_BYTES,
+                "Persisted record exceeds capacity"
+            );
+        }
+        let raw: Option<String> = store.db.query_row(
+            "SELECT value FROM records WHERE kind=?1 AND id=?2 AND length(CAST(value AS BLOB))<=?3",
+            params![kind,id,MAX_RECORD_BYTES], |row| row.get(0),
+        ).optional()?;
         ensure!(
-            raw.len() <= MAX_RECORD_BYTES,
-            "Persisted record exceeds capacity"
+            size.is_none() == raw.is_none(),
+            "Persisted record changed during admission"
         );
-    }
-    Ok(raw)
+        if let Some(raw) = &raw {
+            ensure!(
+                raw.len() <= MAX_RECORD_BYTES,
+                "Persisted record exceeds capacity"
+            );
+        }
+        Ok(raw)
+    })();
+    store.db.set_limit(limit, prior)?;
+    result
 }
 
 /// The actor is an authored attribution label, not an authenticated principal.
@@ -358,6 +382,277 @@ struct DenseCollection {
     items: Vec<DenseItem>,
 }
 
+/// A source-checked destination plan, never constructible from model JSON.
+/// The batch orchestrator holds Store::with_exclusive_client across admission,
+/// billed attempts and final publication; no SQLite transaction spans the calls.
+pub struct PreparedVectorAdmission<'a> {
+    store: &'a Store,
+    snapshot: &'a Snapshot,
+    graph: &'a Graph,
+    model: String,
+    ordered: Vec<(String, String)>,
+    dimension: usize,
+    maximum: usize,
+    worst_bytes: usize,
+}
+
+/// Exact normalized legacy collection bytes, sealed after source-plan validation.
+pub struct PreparedVectorCollection<'a> {
+    store: &'a Store,
+    id: String,
+    serialized: String,
+    serialized_hash: String,
+    model: String,
+    snapshot_id: String,
+    dimension: usize,
+    count: usize,
+}
+
+fn vector_namespace_absent(store: &Store, id: &str) -> Result<()> {
+    let exists: bool = store.db.query_row(
+        "SELECT EXISTS(SELECT 1 FROM records WHERE kind=?1 AND id=?2)",
+        params![VECTOR_KIND, id],
+        |row| row.get(0),
+    )?;
+    ensure!(
+        !exists,
+        "Vector model namespace already exists; choose a versioned model identifier"
+    );
+    Ok(())
+}
+
+fn vector_capacity(store: &Store, additional: usize, deadline: &Deadline) -> Result<()> {
+    database_deadline(store, deadline)?;
+    let limit = rusqlite::limits::Limit::SQLITE_LIMIT_LENGTH;
+    let prior = store
+        .db
+        .set_limit(limit, (MAX_RECORD_BYTES + 65536) as i32)?;
+    let result = (|| {
+        let (count, bytes): (usize,usize) = store.db.query_row(
+            "SELECT count(*),coalesce(sum(length(CAST(value AS BLOB))),0) FROM records WHERE kind IN (?1,?2)",
+            params![VECTOR_KIND, LOCAL_KIND], |row| Ok((row.get(0)?,row.get(1)?)),
+        )?;
+        ensure!(
+            count < 512
+                && bytes
+                    .checked_add(additional)
+                    .is_some_and(|n| n <= MAX_VECTOR_TOTAL),
+            "Vector store capacity reached"
+        );
+        Ok(())
+    })();
+    store.db.set_limit(limit, prior)?;
+    result
+}
+
+impl<'a> PreparedVectorAdmission<'a> {
+    #[allow(clippy::too_many_arguments)] // Independent host bounds and immutable source selections.
+    pub fn new(
+        store: &'a Store,
+        snapshot: &'a Snapshot,
+        graph: &'a Graph,
+        model: &str,
+        ordered_ids: &[String],
+        dimensions: usize,
+        max_serialized_bytes: usize,
+        deadline: &Deadline,
+    ) -> Result<Self> {
+        graph_scope(store, snapshot, graph, deadline)?;
+        model_label(model)?;
+        ensure!(
+            !model.starts_with("yoke-local-tfidf-v1:"),
+            "Local vector model namespace is reserved"
+        );
+        ensure!(
+            !ordered_ids.is_empty()
+                && ordered_ids.len() <= 10000
+                && (1..=4096).contains(&dimensions),
+            "Invalid prepared vector count or dimensions"
+        );
+        ensure!(
+            ordered_ids
+                .len()
+                .checked_mul(dimensions)
+                .is_some_and(|n| n <= 2_000_000),
+            "Dense vector coordinate capacity exceeded"
+        );
+        ensure!(
+            (1..=MAX_RECORD_BYTES).contains(&max_serialized_bytes),
+            "Invalid prepared vector serialized capacity"
+        );
+        let id = identity(&(snapshot.id.as_str(), model));
+        vector_namespace_absent(store, &id)?;
+        let mut anchors = AnchorReader::new(store, snapshot, graph)?;
+        let files: BTreeMap<_, _> = snapshot
+            .files
+            .iter()
+            .map(|file| (file.path.as_str(), file.hash.as_str()))
+            .collect();
+        let entities: BTreeMap<_, _> = graph
+            .entities
+            .iter()
+            .map(|entity| (entity.id.as_str(), entity))
+            .collect();
+        let mut seen = BTreeSet::new();
+        let mut ordered = Vec::with_capacity(ordered_ids.len());
+        let mut skeleton = Vec::with_capacity(ordered_ids.len());
+        for entity_id in ordered_ids {
+            deadline.check()?;
+            ensure!(
+                valid_id(entity_id) && seen.insert(entity_id),
+                "Invalid or duplicate prepared vector entity"
+            );
+            let entity = entities
+                .get(entity_id.as_str())
+                .context("Prepared vector entity is not in this snapshot")?;
+            let hash = *files
+                .get(entity.path.as_str())
+                .context("Prepared vector source absent")?;
+            anchors.entity(entity_id, hash)?;
+            ordered.push((entity_id.clone(), hash.into()));
+            skeleton.push(DenseItem {
+                entity_id: entity_id.clone(),
+                content_hash: hash.into(),
+                vector: vec![],
+            });
+        }
+        let skeleton = DenseCollection {
+            schema: 1,
+            snapshot_id: snapshot.id.clone(),
+            workspace_id: store.workspace_id.clone(),
+            model: model.into(),
+            dimension: dimensions,
+            items: skeleton,
+        };
+        let base = bounded_serialized_size(&skeleton, max_serialized_bytes, deadline)?;
+        // A finite f64 JSON number needs at most a sign, 17 significant decimal
+        // digits, decimal separator, exponent marker/sign and three exponent
+        // digits. Reserve 32 bytes plus its separator, conservatively beyond
+        // that representation; output values are never assumed to be short.
+        let coordinate_bytes = ordered_ids
+            .len()
+            .checked_mul(dimensions)
+            .and_then(|n| n.checked_mul(33))
+            .context("Prepared vector byte overflow")?;
+        let worst_bytes = base
+            .checked_add(coordinate_bytes)
+            .context("Prepared vector byte overflow")?;
+        ensure!(
+            worst_bytes <= max_serialized_bytes,
+            "Worst-case finite vector serialization exceeds capacity before model calls"
+        );
+        vector_capacity(store, worst_bytes, deadline)?;
+        Ok(Self {
+            store,
+            snapshot,
+            graph,
+            model: model.into(),
+            ordered,
+            dimension: dimensions,
+            maximum: max_serialized_bytes,
+            worst_bytes,
+        })
+    }
+
+    pub fn prepare(
+        self,
+        input: Value,
+        deadline: &Deadline,
+    ) -> Result<PreparedVectorCollection<'a>> {
+        graph_scope(self.store, self.snapshot, self.graph, deadline)?;
+        bounded_serialized_size(&input, self.maximum, deadline)?;
+        let mut input: DenseInput = crate::json::decode(input)?;
+        ensure!(
+            input.snapshot_id == self.snapshot.id
+                && input.model == self.model
+                && input.items.len() == self.ordered.len(),
+            "Prepared vector response scope/count mismatch"
+        );
+        let mut anchors = AnchorReader::new(self.store, self.snapshot, self.graph)?;
+        for (item, (entity_id, hash)) in input.items.iter_mut().zip(&self.ordered) {
+            deadline.check()?;
+            ensure!(
+                item.entity_id == *entity_id
+                    && item.content_hash == *hash
+                    && item.vector.len() == self.dimension,
+                "Prepared vector response order/source/dimension mismatch"
+            );
+            anchors.entity(entity_id, hash)?;
+            item.vector = normalized_vector(&item.vector)?;
+        }
+        input.items.sort_by(|a, b| a.entity_id.cmp(&b.entity_id));
+        let count = input.items.len();
+        let collection = DenseCollection {
+            schema: 1,
+            snapshot_id: self.snapshot.id.clone(),
+            workspace_id: self.store.workspace_id.clone(),
+            model: self.model.clone(),
+            dimension: self.dimension,
+            items: input.items,
+        };
+        let serialized = String::from_utf8(crate::json::encode_bounded(
+            &collection,
+            self.worst_bytes,
+            deadline,
+        )?)?;
+        let serialized_hash = crate::model::hash(serialized.as_bytes());
+        Ok(PreparedVectorCollection {
+            store: self.store,
+            id: identity(&(self.snapshot.id.as_str(), self.model.as_str())),
+            serialized,
+            serialized_hash,
+            model: self.model,
+            snapshot_id: self.snapshot.id.clone(),
+            dimension: self.dimension,
+            count,
+        })
+    }
+}
+
+impl PreparedVectorCollection<'_> {
+    pub fn collection_id(&self) -> &str {
+        &self.id
+    }
+    pub fn serialized_hash(&self) -> &str {
+        &self.serialized_hash
+    }
+    pub fn dimension(&self) -> usize {
+        self.dimension
+    }
+    pub fn count(&self) -> usize {
+        self.count
+    }
+
+    pub(crate) fn publish(
+        self,
+        completion: &crate::provider_batches::CheckedBatchCompletion,
+        deadline: &Deadline,
+    ) -> Result<Value> {
+        database_deadline(self.store, deadline)?;
+        let tx =
+            rusqlite::Transaction::new_unchecked(&self.store.db, TransactionBehavior::Immediate)?;
+        vector_namespace_absent(self.store, &self.id)?;
+        vector_capacity(self.store, self.serialized.len(), deadline)?;
+        tx.execute(
+            "INSERT INTO records(kind,id,value) VALUES(?1,?2,?3)",
+            params![VECTOR_KIND, self.id, self.serialized],
+        )?;
+        completion.persist_in_tx(
+            &tx,
+            &self.id,
+            &self.serialized_hash,
+            self.dimension,
+            self.count,
+            deadline,
+        )?;
+        deadline.check()?;
+        tx.commit()?;
+        Ok(
+            json!({"snapshotId":self.snapshot_id,"model":self.model,"dimension":self.dimension,"count":self.count,"normalized":true,"trust":"source_hash_binding_not_provider_attestation","collectionId":self.id,"collectionHash":self.serialized_hash}),
+        )
+    }
+}
+
 fn model_label(model: &str) -> Result<()> {
     bounded_text(model, 200, false)?;
     ensure!(
@@ -365,6 +660,37 @@ fn model_label(model: &str) -> Result<()> {
         "Model identifier must be a single label"
     );
     Ok(())
+}
+fn bounded_serialized_size(
+    value: &impl Serialize,
+    maximum: usize,
+    deadline: &Deadline,
+) -> Result<usize> {
+    struct Count<'a> {
+        bytes: usize,
+        maximum: usize,
+        deadline: &'a Deadline,
+    }
+    impl std::io::Write for Count<'_> {
+        fn write(&mut self, bytes: &[u8]) -> std::io::Result<usize> {
+            self.deadline.check().map_err(std::io::Error::other)?;
+            if bytes.len() > self.maximum.saturating_sub(self.bytes) {
+                return Err(std::io::Error::other("Vector JSON exceeds byte capacity"));
+            }
+            self.bytes += bytes.len();
+            Ok(bytes.len())
+        }
+        fn flush(&mut self) -> std::io::Result<()> {
+            Ok(())
+        }
+    }
+    let mut count = Count {
+        bytes: 0,
+        maximum,
+        deadline,
+    };
+    serde_json::to_writer(&mut count, value)?;
+    Ok(count.bytes)
 }
 fn normalized_vector(vector: &[f64]) -> Result<Vec<f64>> {
     ensure!(
@@ -379,41 +705,26 @@ fn normalized_vector(vector: &[f64]) -> Result<Vec<f64>> {
     Ok(vector.iter().map(|v| v / norm).collect())
 }
 struct SourceReader<'a> {
-    store: &'a Store,
-    files: BTreeMap<&'a str, &'a SourceFile>,
+    scope: crate::capture::CapturedSourceScope<'a>,
     texts: BTreeMap<String, String>,
     cached_bytes: usize,
 }
 impl<'a> SourceReader<'a> {
     fn new(store: &'a Store, snapshot: &'a Snapshot) -> Result<Self> {
-        let files: BTreeMap<_, _> = snapshot
-            .files
-            .iter()
-            .map(|file| (file.path.as_str(), file))
-            .collect();
-        ensure!(
-            files.len() == snapshot.files.len(),
-            "Duplicate source path in snapshot"
-        );
         Ok(Self {
-            store,
-            files,
+            scope: crate::capture::source_scope_policy(store, snapshot)?,
             texts: BTreeMap::new(),
             cached_bytes: 0,
         })
     }
     fn read(&mut self, path: &str, hash: &str) -> Result<&str> {
-        normalized(path)?;
-        let file = self
-            .files
-            .get(path)
-            .context("Imported source path is absent from this snapshot")?;
+        let file = self.scope.file(path)?;
         ensure!(
             valid_id(hash) && file.hash == hash,
             "Imported source hash mismatch"
         );
         if !self.texts.contains_key(hash) {
-            let text = String::from_utf8(self.store.read_blob(hash)?)?;
+            let text = String::from_utf8(self.scope.read_source(path)?)?;
             ensure!(
                 text.len() <= 4 * 1024 * 1024,
                 "Source blob exceeds per-file capacity"
@@ -425,6 +736,10 @@ impl<'a> SourceReader<'a> {
             self.cached_bytes += text.len();
             self.texts.insert(hash.to_string(), text);
         }
+        ensure!(
+            self.texts[hash].len() == file.size,
+            "Captured source size differs from manifest"
+        );
         Ok(&self.texts[hash])
     }
 }
@@ -472,31 +787,21 @@ fn persist_collection(
     value: &impl Serialize,
     deadline: &Deadline,
 ) -> Result<()> {
-    let serialized = serde_json::to_string(value)?;
-    ensure!(
-        serialized.len() <= MAX_RECORD_BYTES,
-        "Vector collection exceeds byte capacity"
-    );
+    let serialized = String::from_utf8(crate::json::encode_bounded(
+        value,
+        MAX_RECORD_BYTES,
+        deadline,
+    )?)?;
     database_deadline(store, deadline)?;
     let tx = rusqlite::Transaction::new_unchecked(&store.db, TransactionBehavior::Immediate)?;
-    let existing: Option<String> = tx
-        .query_row(
-            "SELECT value FROM records WHERE kind=?1 AND id=?2",
-            params![kind, id],
-            |row| row.get(0),
-        )
-        .optional()?;
+    let existing = record_raw(store, kind, id)?;
     if let Some(existing) = existing {
         ensure!(
             existing == serialized,
             "This model already has a different immutable collection; choose a versioned model identifier"
         );
     } else {
-        let (count,bytes): (usize,usize) = tx.query_row("SELECT count(*),coalesce(sum(length(CAST(value AS BLOB))),0) FROM records WHERE kind IN (?1,?2)", params![VECTOR_KIND,LOCAL_KIND], |row| Ok((row.get(0)?,row.get(1)?)))?;
-        ensure!(
-            count < 512 && bytes.saturating_add(serialized.len()) <= MAX_VECTOR_TOTAL,
-            "Vector store capacity reached"
-        );
+        vector_capacity(store, serialized.len(), deadline)?;
         deadline.check()?;
         tx.execute(
             "INSERT INTO records VALUES(?1,?2,?3)",
@@ -516,10 +821,7 @@ pub fn import_vectors(
     deadline: &Deadline,
 ) -> Result<Value> {
     graph_scope(store, snapshot, graph, deadline)?;
-    ensure!(
-        serde_json::to_vec(&input)?.len() <= MAX_RECORD_BYTES,
-        "Vector import exceeds byte capacity"
-    );
+    bounded_serialized_size(&input, MAX_RECORD_BYTES, deadline)?;
     let mut input: DenseInput = serde_json::from_value(input)?;
     ensure!(
         input.snapshot_id == snapshot.id,
@@ -749,7 +1051,6 @@ pub fn build_local_vectors(
             entity.snapshot_id == snapshot.id,
             "Entity snapshot mismatch"
         );
-        normalized(&entity.path)?;
         let source = sources.read(&entity.path, &file.hash)?;
         utf8_range(source, entity.start_byte, entity.end_byte)?;
         let mut begin = entity.start_byte.saturating_sub(1024);

@@ -1,0 +1,32 @@
+{
+  "model_bedrock": {
+    "executable": "target\\debug\\deps\\model_bedrock-f9c29e631b53577c.exe",
+    "ignored": [],
+    "registered": [
+      "actual_wire_signature_binds_arn_body_host_port_date_region_and_session_token",
+      "converse_refuses_overlarge_image_before_credential_read",
+      "converse_signs_one_source_bound_request_and_preserves_unknown_cost",
+      "independent_signature_oracle_matches_official_aws_post_vanilla_vector",
+      "malformed_vectors_usage_and_tool_blocks_never_become_success",
+      "network_authority_input_integrity_deadline_and_cohere_batch_precede_credentials",
+      "non_200_status_is_one_attempt_with_unknown_billing_and_no_service_body",
+      "oversized_titan_batch_and_invalid_authority_never_read_credentials",
+      "refusals_preserve_valid_usage_and_decoded_secret_echo_is_never_returned",
+      "session_admission_refuses_expiry_header_injection_and_partial_temporary_identity",
+      "titan_and_cohere_each_use_exactly_one_wire_batch_and_ordered_float_vectors",
+      "tls_uses_owned_roots_and_never_accepts_untrusted_fixture_certificate"
+    ]
+  },
+  "model_bedrock_batch_cli_review": {
+    "executable": "target\\debug\\deps\\model_bedrock_batch_cli_review-83f2c165a7f1f553.exe",
+    "ignored": [],
+    "registered": [
+      "batch_status_does_not_initialize_an_empty_database_placeholder",
+      "batch_status_unknown_root_or_invalid_identity_does_not_create_state",
+      "host_batch_authority_fields_and_aggregate_overbudget_reject_without_workers",
+      "invalid_batch_output_budget_rejects_before_creating_source_state",
+      "small_cli_status_is_a_recoverable_typed_reference_without_new_artifacts_or_execution",
+      "valid_batch_retention_is_typed_and_future_fields_or_response_rebinding_fail_closed"
+    ]
+  }
+}

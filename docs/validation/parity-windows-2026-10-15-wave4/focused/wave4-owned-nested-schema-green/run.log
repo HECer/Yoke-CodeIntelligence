@@ -1,0 +1,13 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 43.64s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 5 tests
+test lsp::refactor_intents::tests::owned_nested_schema_recognizes_existing_edit_and_resource_field_shapes ... ok
+test lsp::refactor_intents::tests::owned_response_applies_nested_schema_guard_before_returning_an_edit ... ok
+test lsp::refactor_intents::tests::request_id_has_a_canonical_golden_and_ignores_actual_private_document_uris ... ok
+test lsp::refactor_intents::tests::owned_nested_schema_refuses_unknown_fields_at_each_supported_shape ... ok
+test lsp::refactor_intents::tests::request_id_changes_with_every_manifest_profile_analyzer_and_intent_binding ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 150 filtered out; finished in 0.00s
+

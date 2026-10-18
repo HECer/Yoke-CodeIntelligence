@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.69s
+     Running tests\facade_file_move.rs (target\debug\deps\facade_file_move-6144897cf260e5ee.exe)
+
+running 1 test
+test omitted_binary_host_destination_is_still_occupied_before_provider_and_plan ... FAILED
+
+failures:
+
+---- omitted_binary_host_destination_is_still_occupied_before_provider_and_plan stdout ----
+
+thread 'omitted_binary_host_destination_is_still_occupied_before_provider_and_plan' (94480) panicked at native\tests\facade_file_move.rs:102:5:
+Invalid facade move accepted: Ok(Object {"commandsExecuted": Bool(false), "complete": Bool(false), "equivalent": String("independent_will_rename_files"), "plan": Object {"baseSnapshotId": String("b28273a569235ba45093fa1ffb48f24d5e9beaabcd13fe8d96a29b790a3fe8cd"), "createdAt": Number(1792074374), "diff": String("--- src/mód.rs\n+++ /dev/null\n@@ -1 +0,0 @@\n-fn helper() {}\n--- /dev/null\n+++ target.rs/mód.rs\n@@ -0,0 +1,2 @@\n+// provider prepared move\n+fn helper() {}\n"), "expiresAt": Number(1792160774), "files": Array [Object {"afterHash": Null, "beforeHash": String("a9056e4d5143dee5a485795c9873cfe0b792536a818f0a5abb4504f1e08ad4ad"), "mode": Number(420), "path": String("src/mód.rs")}, Object {"afterHash": String("5798b321f3a1f037f11fc1649794274665c8b06c0f170e9739fc194bd2fb657a"), "beforeHash": Null, "mode": Number(420), "path": String("target.rs/mód.rs")}], "id": String("0179d8dd5a2730ebdf098a8650e02af8a728dbbf9f1ba2728c9e27a62837209a"), "resultSnapshotId": String("9744cfa745ea2feea4c756bd18ba1696c2eb46890629ee27856106cbbd95211a"), "warnings": Array [], "workspaceId": String("dfd5a7d43239d5f5d697f44c7c9d6f25868c8fd940c1fb9666d494427d2bdeb4")}, "provider": String("host_selected_lsp"), "serverProfileHash": String("d8978910a7b53f31f7ffcaa349a53ca1f8e66fff86417333578b4273f645387d"), "snapshotId": String("b28273a569235ba45093fa1ffb48f24d5e9beaabcd13fe8d96a29b790a3fe8cd")})
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    omitted_binary_host_destination_is_still_occupied_before_provider_and_plan
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.68s
+
+error: test failed, to rerun pass `--test facade_file_move`

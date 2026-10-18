@@ -1,0 +1,56 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: function `unavailable` is never used
+  --> native\src\retrieval_scopes.rs:73:4
+   |
+73 | fn unavailable<T>() -> RetrievalResult<T> {
+   |    ^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `transaction` is never read
+  --> native\src\retrieval_scopes.rs:92:5
+   |
+80 | pub(crate) struct CheckedRetrievalRun<'store, 'input, 'deadline> {
+   |                   ------------------- field in this struct
+...
+92 |     transaction: rusqlite::Transaction<'store>,
+   |     ^^^^^^^^^^^
+
+warning: method `declarations` is never used
+   --> native\src\retrieval_scopes.rs:299:19
+    |
+286 | impl CheckedScope {
+    | ----------------- method in this implementation
+...
+299 |     pub(crate) fn declarations(&self) -> impl Iterator<Item = &ManifestBinding> {
+    |                   ^^^^^^^^^^^^
+
+warning: method `path` is never used
+   --> native\src\retrieval_scopes.rs:333:19
+    |
+332 | impl VerifiedSource {
+    | ------------------- method in this implementation
+333 |     pub(crate) fn path(&self) -> &str {
+    |                   ^^^^
+
+warning: `yoke-code-intelligence` (lib test) generated 4 warnings
+    Finished `test` profile [unoptimized] target(s) in 1m 43s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 1 test
+
+thread 'retrieval_saved_graph::tests::missing_saved_row_is_none_for_readers_and_source_integrity_for_verifier' (42216) panicked at native\src\retrieval_saved_graph_tests.rs:145:5:
+assertion `left == right` failed
+  left: Err(Authority("saved_graph_missing"))
+ right: Err(SourceIntegrity("saved_graph_missing"))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test retrieval_saved_graph::tests::missing_saved_row_is_none_for_readers_and_source_integrity_for_verifier ... FAILED
+
+failures:
+
+failures:
+    retrieval_saved_graph::tests::missing_saved_row_is_none_for_readers_and_source_integrity_for_verifier
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 274 filtered out; finished in 0.29s
+
+error: test failed, to rerun pass `--lib`

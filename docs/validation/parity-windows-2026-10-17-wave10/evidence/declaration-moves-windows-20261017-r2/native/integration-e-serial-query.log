@@ -1,0 +1,19 @@
+    Finished `test` profile [unoptimized] target(s) in 1.16s
+     Running tests\query_parity.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\query_parity-fd60f1161151b971.exe)
+
+running 12 tests
+test advertised_native_protocol_reaches_advanced_semantic_operations ... ok
+test body_retrieval_in_file_mode_never_returns_symbol_rows ... ok
+test bulk_edit_selection_is_atomic_and_conflicting_modes_are_rejected ... ok
+test clipped_single_line_context_keeps_the_match_and_exact_unicode_bytes ... ok
+test exact_name_path_symbol_query_has_source_bound_body_and_depth ... ok
+test multiline_case_insensitive_search_exposes_exact_occurrences_and_symbol_owners ... ok
+test public_engine_semantics_preserve_host_configuration_callbacks ... ok
+test relative_directory_scope_is_segment_aware_and_globs_are_explicit ... ok
+test selected_occurrences_and_count_guards_prepare_an_atomic_reviewable_bulk_plan ... ok
+test task_words_inside_multiline_bodies_are_searchable_without_becoming_fact ... ok
+test text_search_pages_past_the_first_ten_thousand_occurrences ... ok
+test text_search_streams_the_captured_corpus_beyond_the_symbol_body_cache_budget ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.11s
+

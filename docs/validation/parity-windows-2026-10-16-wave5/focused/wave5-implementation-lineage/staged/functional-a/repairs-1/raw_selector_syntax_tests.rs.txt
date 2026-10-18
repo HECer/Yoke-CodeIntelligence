@@ -1,0 +1,103 @@
+// Append these tests to retrieval_scopes_tests.rs, whose real-capture helpers
+// supply fixture, captured, checked, unsupported, begin, probe, and hard.
+// Draft only: no compilation or execution is claimed here.
+
+#[test]
+fn raw_selectors_before_later_source_syntax_json() {
+    let positive = two();
+    let deadline = Deadline::new(20_000);
+    let (_, partition) = checked(&positive, &deadline);
+    assert_eq!(partition.physical_package_count(), 2);
+
+    for count in [1usize, 2_049] {
+        let entries = vec![r#""p/*""#; count].join(",");
+        let marker = format!("{{\"workspaces\":[{entries}],\"broken\":");
+        assert!(marker.len() < 1_000_000);
+        let f = fixture(&[
+            ("package.json", &marker),
+            ("p/a/package.json", r#"{"name":"a"}"#),
+            ("p/b/package.json", r#"{"name":"b"}"#),
+        ]);
+        captured(&f, "package.json", &marker);
+        if count == 1 {
+            unsupported(&f, "source_syntax");
+        } else {
+            let deadline = Deadline::new(20_000);
+            let mut run =
+                begin(&f.engine.store, &f.snapshot, &f.graph, &deadline, 4_000_000).unwrap();
+            assert_eq!(
+                hard(probe(&mut run)),
+                RetrievalHardError::Capacity("selectors")
+            );
+        }
+    }
+}
+
+#[test]
+fn raw_selectors_before_later_source_syntax_toml() {
+    let positive = fixture(&[
+        ("Cargo.toml", "[workspace]\nmembers=['p/*']\n"),
+        ("p/a/Cargo.toml", "[package]\nname='a'\n"),
+        ("p/b/Cargo.toml", "[package]\nname='b'\n"),
+    ]);
+    let deadline = Deadline::new(20_000);
+    let (_, partition) = checked(&positive, &deadline);
+    assert_eq!(partition.physical_package_count(), 2);
+
+    for count in [1usize, 2_049] {
+        let entries = vec!["'p/*'"; count].join(",");
+        let marker = format!("[workspace]\nmembers=[{entries}]\nbroken=[\n");
+        assert!(marker.len() < 1_000_000);
+        let f = fixture(&[
+            ("Cargo.toml", &marker),
+            ("p/a/Cargo.toml", "[package]\nname='a'\n"),
+            ("p/b/Cargo.toml", "[package]\nname='b'\n"),
+        ]);
+        captured(&f, "Cargo.toml", &marker);
+        if count == 1 {
+            unsupported(&f, "source_syntax");
+        } else {
+            let deadline = Deadline::new(20_000);
+            let mut run =
+                begin(&f.engine.store, &f.snapshot, &f.graph, &deadline, 4_000_000).unwrap();
+            assert_eq!(
+                hard(probe(&mut run)),
+                RetrievalHardError::Capacity("selectors")
+            );
+        }
+    }
+}
+
+#[test]
+fn raw_selectors_before_later_source_syntax_yaml() {
+    let positive = fixture(&[
+        ("pnpm-workspace.yaml", "packages:\n - 'p/*'\n"),
+        ("p/a/package.json", r#"{"name":"a"}"#),
+        ("p/b/package.json", r#"{"name":"b"}"#),
+    ]);
+    let deadline = Deadline::new(20_000);
+    let (_, partition) = checked(&positive, &deadline);
+    assert_eq!(partition.physical_package_count(), 2);
+
+    for count in [1usize, 2_049] {
+        let marker = format!("packages:\n{}broken: [\n", " - 'p/*'\n".repeat(count));
+        assert!(marker.len() < 1_000_000);
+        let f = fixture(&[
+            ("pnpm-workspace.yaml", &marker),
+            ("p/a/package.json", r#"{"name":"a"}"#),
+            ("p/b/package.json", r#"{"name":"b"}"#),
+        ]);
+        captured(&f, "pnpm-workspace.yaml", &marker);
+        if count == 1 {
+            unsupported(&f, "source_syntax");
+        } else {
+            let deadline = Deadline::new(20_000);
+            let mut run =
+                begin(&f.engine.store, &f.snapshot, &f.graph, &deadline, 4_000_000).unwrap();
+            assert_eq!(
+                hard(probe(&mut run)),
+                RetrievalHardError::Capacity("selectors")
+            );
+        }
+    }
+}

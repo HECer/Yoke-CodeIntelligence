@@ -1,0 +1,15 @@
+{
+  "phase": "ignored tests/stubs only; not executed",
+  "baselineRetrievalSha256": "c209e6da3dc36e09613066ea1031d3174067675d8ac97e235f887de4e6cc633b",
+  "legacyBodyDraftEquality": "exact text after sole function-name replacement; no global arithmetic/body edits",
+  "futurePromotion": {
+    "retrieval.rs": "native/src/retrieval.rs",
+    "retrieval_balanced.rs": "native/src/retrieval_balanced.rs",
+    "retrieval_balanced_tests.rs": "native/src/retrieval_balanced_tests.rs",
+    "monorepo_retrieval.rs": "native/tests/monorepo_retrieval.rs",
+    "retrieval_driver_tests.rs": "native/src/retrieval_driver_tests.rs",
+    "legacy_retrieval_oracle.rs": "native/tests/legacy_retrieval_oracle.rs",
+    "support/monorepo_retrieval_fixture.rs": "native/tests/support/monorepo_retrieval_fixture.rs"
+  },
+  "preFeatureOracle": "Root must first run legacy_retrieval_oracle against old production, freeze literal emitted hash, then promote new mode stubs. No invented golden."
+}

@@ -1,0 +1,37 @@
+{
+  "status": "functional draft; root-normal-hold; no execution by C",
+  "action": "act_mva5b363_71c9c0d17073",
+  "artifacts": {
+    "native/src/protocol.rs": {
+      "sha256": "e395fcd26c64be8041abb1b41fff99d04fb55bef2744e0cff471920539388f8f",
+      "bytes": 49411
+    },
+    "native/src/trail_adapter.rs": {
+      "sha256": "61e230f3ac3e7df52c775d4a5c7846c511558ca582ed94f23a8663fa9b097be3",
+      "bytes": 19967
+    },
+    "native/src/trail_envelope_tests.rs": {
+      "sha256": "9ef3546863ef0ac4f91a97a0459f10133a9a6842da3541dd4ff214742e99c8cd",
+      "bytes": 2410
+    },
+    "native/tests/monorepo_profiles.rs": {
+      "sha256": "95781d115cf1a8bb529a184d6f70b69ce4902863524cddae99f3b86ce30ed390",
+      "bytes": 21888
+    }
+  },
+  "normalInputsUnmodifiedByC": {
+    "native/src/protocol.rs": "2836e4a5f2283c9187deba7f1c53b3f942210ca25ae28574353c4a48073efb76",
+    "native/src/trail_adapter.rs": "a13abcd831cb6dc11079dc0eef8530f71a788f68787c2567e0c162ae06165295",
+    "native/tests/monorepo_profiles.rs": "e8e9502236377be9b7ac465299e62c0ee1768ff5e2b3c8f6e0a0567fe8314c20",
+    "native/tests/monorepo_pre_feature_envelope.rs": "c1563216c4d2c78f26fadadc62ffd68a4ff5f391df3396e32485f17aa5014103"
+  },
+  "dependencies": [
+    "Engine.index_retrieval_at",
+    "Engine.select_retrieval_inputs_at",
+    "retrieval_scopes.check_deadline"
+  ],
+  "causalRootEvidence": [
+    "invalid-native-modes c48e984de59cf043ad6e4c9a6a9047bbb57ddcc4aafcf9fbfa0d56a09ca0a2bc",
+    "old-envelope 62c5b523c73a422bbebc77193c57268f195f8db108054a6f6854ec799cae1b2a"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "afterSourceManifestSha256": "bd3278301478b0326a68cdd7cc709b22bded1fef0d1a794344abeaaea65650e5",
+  "beforeSourceManifestSha256": "690c0c486d7e84506954dbae859ea3bc89283eb684db697e04a0bbc49581cfe2",
+  "candidateSourceManifestSha256": "d6510d06d4cc8d3f53a0f375f4801e2529e24b16c7a5a960e47bafcfb4c4f5ec",
+  "parentIndexSha256": "2e6cd679412377eedadd7457b7d4d7e544417b20983b9617b6181354a674b1b9",
+  "parentSourceManifestSha256": "67505463621444b62fdb792fb56cec5ea54f8c3a1bfac51ed84329abe320c81a",
+  "paths": {
+    "native/README.md": {
+      "after": "9c73159d49b38ef15e68b7aa8eece2bd776d761a197333160ed8545bec6ce9d9",
+      "before": "e12dba6a94be6a64df3b74d9d8cabdd9494280f1a336991798791d2e0cbcaa1a"
+    },
+    "native/docs/outcome-feedback.md": {
+      "after": "51cadc83cda096a9bfc0dc19799b6b5039f9b1672bf3c6222088ebb72916ef0c",
+      "before": null
+    },
+    "native/src/feedback_cli.rs": {
+      "after": "5f0a50d399b962c6b1228a7d70b27c91cc49c9db3db2de78c807abc2ec549005",
+      "before": null
+    },
+    "native/src/graph_view_comparison_input.rs": {
+      "after": "467e51ba0ed61d8c708e891a3a7c0869fed274104921785724817f202e921b89",
+      "before": "f9940544515eac383172841ac3ee1f06a224c7149c9ec9ccecd736ef888ddd35"
+    },
+    "native/src/knowledge.rs": {
+      "after": "6996ae2c4cd3bd27700dc9db788b60089f51b83eb8cf7b2e4c583b1478b1ad8d",
+      "before": "425e6b117d1ce90887b4b0f95e16d49ac93a268b4e024550ecc0a911385fdfc6"
+    },
+    "native/src/knowledge_feedback.rs": {
+      "after": "df0bff3552651ba67ae1952c857ac1f3875b88559ee03a8f369e9d97ed99836f",
+      "before": null
+    },
+    "native/src/knowledge_feedback_provenance.rs": {
+      "after": "2a168f7630fd225044e286ce96be4b094402ff9d0d30c05df3f76adadcf653b1",
+      "before": null
+    },
+    "native/src/knowledge_feedback_rank.rs": {
+      "after": "597ecb8936f78b950077b1cc7b5516275fb2f1fec51beef54da710a5fd378b94",
+      "before": null
+    },
+    "native/src/knowledge_feedback_store.rs": {
+      "after": "99bb3128a2770703ed64f079cbf4742568b04f58c148257b888d23e24c2102ed",
+      "before": null
+    },
+    "native/src/knowledge_feedback_transcript.rs": {
+      "after": "2b884998f3f232b75985c1973d28751d5f89923cdf993c1a73d3ebcfa038261c",
+      "before": null
+    },
+    "native/src/main.rs": {
+      "after": "6fc88ee84e40cf3c07b9068424924577062e8029f4cf88021a885bca129c5ab9",
+      "before": "16f59ab7229372a598120f9cabdd8c4cc80bab48ada6f8298f5e0563c5cf803e"
+    },
+    "native/src/meaning_build.rs": {
+      "after": "76510d3ec772be29103189195e86ce0923f11a722f45e6333138abd000370993",
+      "before": "e8208e38cfe495de704f3e27165a2ecb850b27a451e7c6a72436c5a386d938ec"
+    },
+    "native/src/retention.rs": {
+      "after": "ccd053093143e10e365b51675ec75228a6b3b4b59e1b328d3dee99c5db6d0d96",
+      "before": "35ad7daa52d1d019f7587f8cc0fa73da81b2063015bbf8ea4523690f57d1e379"
+    },
+    "native/tests/feedback_cli.rs": {
+      "after": "7c6005fe8014f42b3e2c7d27a513011dc09a2732ab5f4af02eb370bb6a5f1e97",
+      "before": null
+    }
+  },
+  "reviewedBaselineSourceManifestSha256": "1ef41d7564050c370f7db36fd539e0db1fa081248fe282db4997c46572d09e26"
+}

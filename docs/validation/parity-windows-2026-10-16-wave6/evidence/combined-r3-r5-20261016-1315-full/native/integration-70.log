@@ -1,0 +1,21 @@
+    Finished `test` profile [unoptimized] target(s) in 1.04s
+     Running tests\meaning_collection_archives.rs (target\debug\deps\meaning_collection_archives-4634c8a7bf8a6b57.exe)
+
+running 7 tests
+test adding_a_typed_archive_preserves_released_source_registration_payload_ids_and_queries ... ok
+test source_only_collection_entry_points_never_return_a_partial_typed_registration ... ok
+test complete_archive_bytes_are_explicit_input_but_protected_foreign_cas_is_never_a_fallback ... ok
+test collection_metadata_reports_the_complete_typed_layer_without_quotes_or_false_accounting ... ok
+test typed_collection_cas_and_invalid_name_refusals_leave_no_registration_or_source_blobs ... ok
+test typed_collection_load_rejects_deleted_historical_source_without_repairing_the_database ... ok
+test typed_registration_reopens_and_replays_after_the_original_store_tree_and_worker_are_gone ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.81s
+
+     Running tests\meaning_commit_review.rs (target\debug\deps\meaning_commit_review-13cd89b423bf2ad5.exe)
+
+running 1 test
+test a_failed_status_after_commit_reports_both_durable_identities_without_claiming_incomplete_work ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.57s
+

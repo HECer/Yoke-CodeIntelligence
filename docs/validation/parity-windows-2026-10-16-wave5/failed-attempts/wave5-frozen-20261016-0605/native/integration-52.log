@@ -1,0 +1,22 @@
+    Finished `test` profile [unoptimized] target(s) in 1.12s
+     Running tests\ledger_batches.rs (target\debug\deps\ledger_batches-f3f296587db86e74.exe)
+
+running 6 tests
+test a_late_sqlite_insert_failure_rolls_back_every_batch_reservation_and_task ... ok
+test competing_whole_batches_cannot_spend_partial_or_overlapping_budgets ... ok
+test batch_status_can_be_validated_inside_the_existing_retention_transaction ... ok
+test batch_admission_is_atomic_and_preserves_individual_unknown_billing ... ok
+test first_overrun_blocks_a_previously_reserved_later_send_without_releasing_sent_cost ... ok
+test reservation_tokens_are_workspace_bound_and_cannot_send_an_already_sent_attempt ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.62s
+
+     Running tests\ledger_batches_review.rs (target\debug\deps\ledger_batches_review-e3f6d3e72c9aa0b7.exe)
+
+running 3 tests
+test late_batch_insert_failure_preserves_an_existing_task_and_all_old_reservations ... ok
+test original_response_usage_stays_distinct_from_later_maxima_and_reconciled_cost ... ok
+test sealed_reservation_rejects_changed_durable_bindings_without_ledger_side_effects ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.57s
+

@@ -1,0 +1,38 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 6.91s
+     Running tests\selected_view_analysis.rs (target\debug\deps\selected_view_analysis-4bdd1f0c8eb0e5b6.exe)
+
+running 3 tests
+test existing_graphify_hubs_preserve_file_level_manifest_source_precision ... FAILED
+test existing_graphify_hubs_include_parallel_citations_and_count_self_loops_twice ... FAILED
+test existing_graphify_community_tools_assign_default_view_overlay_nodes ... FAILED
+
+failures:
+
+---- existing_graphify_hubs_preserve_file_level_manifest_source_precision stdout ----
+
+thread 'existing_graphify_hubs_preserve_file_level_manifest_source_precision' (14548) panicked at native\tests\selected_view_analysis.rs:142:10:
+Selected package must appear in the hub candidate set
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- existing_graphify_hubs_include_parallel_citations_and_count_self_loops_twice stdout ----
+
+thread 'existing_graphify_hubs_include_parallel_citations_and_count_self_loops_twice' (47604) panicked at native\tests\selected_view_analysis.rs:108:5:
+assertion `left == right` failed: Selected parallel/citation degree must include all captured resolved observations: {"baseGraphHash":"78aa28d9da5a56e43d812ce6cd53275f700e7b0a3f789c729b721c114a9334a3","clustering":{"algorithm":"leiden","cancellation":"before_and_after_bounded_library_call_not_inside_leiden","excludeHubsPercentile":null,"excludedHubs":[],"hubReattachment":"weighted_majority_then_standalone_may_exceed_max_community_size","maxCommunitySize":0,"maxIterations":10,"producer":"leiden-rs-0.8.1","projection":"undirected_weighted_resolved_observations_parallel_weight_retained","quality":0.0,"resolution":1.0,"seed":42,"uncertainWeight":0.5},"complete":false,"items":[{"anchor":{"anchor":"exact","contentHash":"8ca79b9f762d38da272a1a59e5e2acc1283b87f9affc6164e66a1c055b6e311a","endByte":22,"endLine":1,"entityId":"9f55d6597339a1eff03d05a0ebd53b10bdacbb3d7254ad491238b08653cec614","path":"main.rs","startByte":0,"startLine":1},"degree":5,"degreeDefinition":"resolved_parallel_in_plus_out_self_loop_twice","entityId":"9f55d6597339a1eff03d05a0ebd53b10bdacbb3d7254ad491238b08653cec614","label":"main.rs/helper"},{"anchor":{"anchor":"exact","contentHash":"8ca79b9f762d38da272a1a59e5e2acc1283b87f9affc6164e66a1c055b6e311a","endByte":54,"endLine":2,"entityId":"7973edf17f00684e2fa52859e7a80ceb12c0a1d29bbd87ec8eb30c7f64da427f","path":"main.rs","startByte":23,"startLine":2},"degree":3,"degreeDefinition":"resolved_parallel_in_plus_out_self_loop_twice","entityId":"7973edf17f00684e2fa52859e7a80ceb12c0a1d29bbd87ec8eb30c7f64da427f","label":"main.rs/caller"},{"anchor":{"anchor":"exact","contentHash":"73d4c7fef660e7128b81aae1dcc8e22314a93d27c5cd34e25657f3655403ae6e","endByte":8,"endLine":1,"entityId":"101a17f0c3c8e775f1efbf6295ba1c7f3eb86e4e14c048efe594fccd68913c40","path":"guide.md","startByte":0,"startLine":1},"degree":0,"degreeDefinition":"resolved_parallel_in_plus_out_self_loop_twice","entityId":"101a17f0c3c8e775f1efbf6295ba1c7f3eb86e4e14c048efe594fccd68913c40","label":"guide.md/Guide"}],"rankingScope":"canonical_graph_only","reportArtifactId":"37a375a417744672431342a9540df242d012d5649cf0faf6b9eddb3ca5ff514f","snapshotId":"dd6397ce7f832247746835b80483b2ea619a9aaf4f045cb6d8b3fc30bfbba8fa","truncated":false,"viewId":"3d7cb4c6e499d2d014a8cf94aed8c8b97b71e2651b11a213496dc2665d8b8e31"}
+  left: Number(5)
+ right: 7
+
+---- existing_graphify_community_tools_assign_default_view_overlay_nodes stdout ----
+
+thread 'existing_graphify_community_tools_assign_default_view_overlay_nodes' (86408) panicked at native\tests\selected_view_analysis.rs:81:5:
+Published package node was omitted from every community
+
+
+failures:
+    existing_graphify_community_tools_assign_default_view_overlay_nodes
+    existing_graphify_hubs_include_parallel_citations_and_count_self_loops_twice
+    existing_graphify_hubs_preserve_file_level_manifest_source_precision
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.44s
+
+error: test failed, to rerun pass `--test selected_view_analysis`

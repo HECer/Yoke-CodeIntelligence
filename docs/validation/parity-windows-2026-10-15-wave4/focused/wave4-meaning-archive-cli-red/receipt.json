@@ -1,0 +1,27 @@
+{
+  "checkedAtUtc": "2026-10-15T18:59:46.176802+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "2",
+    "--test",
+    "meaning_archive_cli",
+    "published_view_export_preserves_full_typed_archive_without_source_publication",
+    "--",
+    "--exact",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 60.297,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-meaning-archive-cli-red",
+  "logSha256": "39153c3904f7db4545311298cfe0a96f4b7eb89dcd80962912512e87bdb35dbb",
+  "groups": 1,
+  "passed": 0,
+  "failed": 1,
+  "ignored": 0,
+  "sourceChanges": []
+}

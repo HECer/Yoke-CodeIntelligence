@@ -1,0 +1,19 @@
+    Finished `test` profile [unoptimized] target(s) in 1.17s
+     Running tests\historical_receipt_fixture_qualification.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\historical_receipt_fixture_qualification-72ab9d25051d43a1.exe)
+
+running 2 tests
+test h11_owned_worker_publishes_literal_reports_and_reuses_only_original_receipts ... ok
+test h11_owned_archives_replay_original_reports_after_later_host_accounting_and_store_removal ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.12s
+
+     Running tests\historical_view_adversarial.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\historical_view_adversarial-02d723fb92bdcde2.exe)
+
+running 4 tests
+test error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test h08_portable_full_source_and_proof_closure_cannot_be_repaired_from_live_paths ... ok
+test h09_public_view_resealing_does_not_authorize_forged_precision_ranges_edges_or_completeness ... ok
+test h08_published_comparison_requires_uncited_history_and_uncorrupted_view_overlay_cas ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.83s
+

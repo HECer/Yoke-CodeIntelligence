@@ -1,0 +1,27 @@
+{
+  "checkedAtUtc": "2026-10-15T15:44:38.321405+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-p",
+    "yoke-code-intelligence",
+    "--locked",
+    "-j",
+    "2",
+    "--lib",
+    "output_recovery_tests",
+    "--",
+    "--test-threads=4",
+    "--nocapture"
+  ],
+  "exitCode": 101,
+  "seconds": 36.094,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave3-host-output-recovery-red",
+  "logSha256": "6f95cf30a0c8ab2dcdbe868ec07231781794d2368ca2282a32fee84bd9ceb7e6",
+  "groups": 1,
+  "passed": 3,
+  "failed": 3,
+  "ignored": 1,
+  "sourceChanges": []
+}

@@ -1,0 +1,527 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: fields `bindings` and `installation` are never read
+  --> native\src\host_install.rs:43:5
+   |
+42 | pub struct WriteAuthority {
+   |            -------------- fields in this struct
+43 |     bindings: Bindings,
+   |     ^^^^^^^^
+44 |     installation: String,
+   |     ^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: fields `start`, `end`, and `text` are never read
+    --> native\src\lsp.rs:1196:9
+     |
+1195 | pub(crate) struct CheckedTextEdit {
+     |                   --------------- fields in this struct
+1196 |     pub start: usize,
+     |         ^^^^^
+1197 |     pub end: usize,
+     |         ^^^
+1198 |     pub text: String,
+     |         ^^^^
+     |
+     = note: `CheckedTextEdit` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `path`, `source_hash`, `original_source`, `version`, and `edits` are never read
+    --> native\src\lsp.rs:1203:9
+     |
+1202 |     TextDocument {
+     |     ------------ fields in this variant
+1203 |         path: String,
+     |         ^^^^
+1204 |         source_hash: String,
+     |         ^^^^^^^^^^^
+1205 |         original_source: bool,
+     |         ^^^^^^^^^^^^^^^
+1206 |         version: Option<i64>,
+     |         ^^^^^^^
+1207 |         edits: Vec<CheckedTextEdit>,
+     |         ^^^^^
+     |
+     = note: `CheckedEditOperation` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `path` and `applied` are never read
+    --> native\src\lsp.rs:1210:9
+     |
+1209 |     Create {
+     |     ------ fields in this variant
+1210 |         path: String,
+     |         ^^^^
+1211 |         applied: bool,
+     |         ^^^^^^^
+     |
+     = note: `CheckedEditOperation` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `old`, `new`, and `applied` are never read
+    --> native\src\lsp.rs:1214:9
+     |
+1213 |     Rename {
+     |     ------ fields in this variant
+1214 |         old: String,
+     |         ^^^
+1215 |         new: String,
+     |         ^^^
+1216 |         applied: bool,
+     |         ^^^^^^^
+     |
+     = note: `CheckedEditOperation` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `path` and `applied` are never read
+    --> native\src\lsp.rs:1219:9
+     |
+1218 |     Delete {
+     |     ------ fields in this variant
+1219 |         path: String,
+     |         ^^^^
+1220 |         applied: bool,
+     |         ^^^^^^^
+     |
+     = note: `CheckedEditOperation` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: field `operations` is never read
+    --> native\src\lsp.rs:1229:9
+     |
+1225 | pub(crate) struct CheckedWorkspaceEdit {
+     |                   -------------------- field in this struct
+...
+1229 |     pub operations: Vec<CheckedEditOperation>,
+     |         ^^^^^^^^^^
+
+warning: struct `StagedSemantic` is never constructed
+    --> native\src\lsp.rs:1286:19
+     |
+1286 | pub(crate) struct StagedSemantic {
+     |                   ^^^^^^^^^^^^^^
+
+warning: function `stage_at` is never used
+    --> native\src\lsp.rs:1671:15
+     |
+1671 | pub(crate) fn stage_at(
+     |               ^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib test) generated 9 warnings (9 duplicates)
+warning: `yoke-code-intelligence` (lib) generated 9 warnings
+warning: unused import: `json`
+ --> native\tests\meaning_build.rs:2:24
+  |
+2 | use serde_json::{Value,json};
+  |                        ^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (test "meaning_build") generated 1 warning (run `cargo fix --test "meaning_build" -p yoke-code-intelligence` to apply 1 suggestion)
+    Finished `test` profile [unoptimized] target(s) in 2m 05s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 40 tests
+test capture::analyzer_migration_tests::authentic_analyzer_seven_scope_survives_eight_without_relabeling ... ok
+test capture::analyzer_migration_tests::authentic_analyzer_six_languages_survive_seven_with_exact_scope_proof ... ok
+test capture::analyzer_migration_tests::released_analyzer_four_archives_preserve_unknown_vue_and_powershell_languages ... ok
+test capture::archive_scope_tests::exact_native_archive_identity_denies_resealed_protected_members_and_future_fields ... ok
+test capture::archive_scope_tests::offline_dependency_and_derived_scope_proofs_require_exact_options_and_origin_chain ... ok
+test capture::archive_scope_tests::released_capture_and_overlay_receipts_remain_exact_offline_after_workspace_closes ... ok
+test capture::epoch_migration_tests::authentic_archived8_scope_proofs_remain_valid_for_a9_reader ... ok
+test changes::recovery_tests::expired_emergency_write_preserves_the_durable_recovery_identifier ... ok
+test capture::epoch_migration_tests::authentic_native8_scope_proofs_remain_valid_for_a9_reader ... ok
+test decision_records::tests::authored_decision_creates_a_source_bound_immutable_revision ... ok
+test editor_http::tests::an_expired_response_never_claims_the_operation_succeeded ... ok
+test agent_repl::source_binding_tests::provider_queries_keep_the_symbol_snapshot_after_original_source_changes ... ok
+test host_credentials::aws_session::tests::aws_chunks_roundtrip_larger_than_single_blob_and_are_create_only ... ok
+test host_credentials::aws_session::tests::aws_manifest_failure_leaves_only_unpublished_chunks_and_expired_deadline_writes_nothing ... ok
+test host_credentials::aws_session::tests::aws_manifest_rejects_missing_mixed_corrupt_and_expired_generation ... ok
+test host_credentials::aws_session::tests::aws_private_json_parser_accepts_exact_dto_and_refuses_ambiguity ... ok
+test host_credentials::aws_session::tests::interrupted_publication_and_changed_chunks_never_yield_session ... ok
+test lsp::uri_tests::an_outside_uri_is_rejected_lexically_before_a_filesystem_lookup ... ok
+test agent_repl::cleanup_proof_tests::lost_process_cleanup_proof_stays_typed_across_repeated_close ... ok
+test lsp::uri_tests::grown_provider_copy_is_rejected_without_reading_unbounded_source ... ok
+test lsp::uri_tests::nonlocal_file_authorities_are_refused_without_target_lookup ... ok
+test editor_http::tests::backpressured_socket_writes_cannot_extend_the_response_deadline ... ok
+test lsp::uri_tests::blocked_pipe_write_uses_300ms_deadline_after_confirmed_server_pause ... ok
+test maintenance::tests::expired_rollback_budget_preserves_quarantine_for_later_recovery ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_accepts_no_claims_but_requires_exact_honest_unit_coverage ... FAILED
+test model_protocol::meaning_extract_tests::meaning_extract_admits_schema_one_operation_without_changing_envelope ... FAILED
+test model_protocol::meaning_extract_tests::meaning_extract_prepares_exact_sources_and_bounded_strict_output_schema ... FAILED
+test model_protocol::meaning_extract_tests::meaning_extract_rejects_forged_units_omissions_and_arbitrary_instructions ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_rejects_unknown_anchor_fields_and_duplicate_result_fields ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_validates_local_claims_and_own_support_on_every_edge ... FAILED
+test ollama::endpoint_tests::explicit_default_http_port_remains_host_selected ... ok
+test platform_credentials::creation_lock::tests::contaminated_and_nonfile_locks_are_refused_without_repair ... ok
+test platform_credentials::creation_lock::tests::creation_locks_serialize_and_time_out_without_secret_contents ... ok
+test skill_takeaways::tests::a_large_applied_receipt_prefix_cannot_hide_pending_journals ... ok
+test skill_takeaways::tests::expanded_yaml_frontmatter_is_rejected_before_alias_materialization ... ok
+test skill_takeaways::tests::manual_edit_after_observation_is_never_adopted_as_a_write_precondition ... ok
+test verify::integrity_tests::oversized_copied_source_is_rejected_within_the_hash_budget ... ok
+test debug_adapter::cleanup_tests::unjoined_worker_cleanup_failure_remains_sticky_after_worker_eventually_exits ... ok
+test lsp::uri_tests::react_documents_and_siblings_keep_their_ids_with_base_language_providers ... ok
+test lsp::uri_tests::slow_shutdown_uses_800ms_deadline_after_completed_protocol_response ... ok
+
+failures:
+
+---- model_protocol::meaning_extract_tests::meaning_extract_accepts_no_claims_but_requires_exact_honest_unit_coverage stdout ----
+
+thread 'model_protocol::meaning_extract_tests::meaning_extract_accepts_no_claims_but_requires_exact_honest_unit_coverage' (65604) panicked at native\src\model_protocol.rs:657:14:
+an explicitly covered source unit may contain no model claims: Unsupported structured model result
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- model_protocol::meaning_extract_tests::meaning_extract_admits_schema_one_operation_without_changing_envelope stdout ----
+
+thread 'model_protocol::meaning_extract_tests::meaning_extract_admits_schema_one_operation_without_changing_envelope' (87192) panicked at native\src\model_protocol.rs:556:14:
+the additive meaning operation must use the existing envelope: Unsupported native model operation
+
+---- model_protocol::meaning_extract_tests::meaning_extract_prepares_exact_sources_and_bounded_strict_output_schema stdout ----
+
+thread 'model_protocol::meaning_extract_tests::meaning_extract_prepares_exact_sources_and_bounded_strict_output_schema' (79408) panicked at native\src\model_protocol.rs:566:14:
+meaning extraction must prepare without vision or a model call: Unsupported Ollama chat operation
+
+---- model_protocol::meaning_extract_tests::meaning_extract_validates_local_claims_and_own_support_on_every_edge stdout ----
+
+thread 'model_protocol::meaning_extract_tests::meaning_extract_validates_local_claims_and_own_support_on_every_edge' (85540) panicked at native\src\model_protocol.rs:639:14:
+valid supported concepts, relation and role-bearing hyperedge must be accepted: Unsupported structured model result
+
+
+failures:
+    model_protocol::meaning_extract_tests::meaning_extract_accepts_no_claims_but_requires_exact_honest_unit_coverage
+    model_protocol::meaning_extract_tests::meaning_extract_admits_schema_one_operation_without_changing_envelope
+    model_protocol::meaning_extract_tests::meaning_extract_prepares_exact_sources_and_bounded_strict_output_schema
+    model_protocol::meaning_extract_tests::meaning_extract_validates_local_claims_and_own_support_on_every_edge
+
+test result: FAILED. 36 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.69s
+
+error: test failed, to rerun pass `--lib`
+     Running tests\host_config.rs (target\debug\deps\host_config-7659402ec860ad5b.exe)
+
+running 16 tests
+test agents_marker_presence_never_grants_ownership ... ok
+test agents_install_update_remove_preserve_bom_unicode_and_crlf_bytes ... ok
+test agents_and_patch_work_are_bounded_before_output ... ok
+test agents_empty_existing_file_round_trips_without_phantom_bytes ... ok
+test agents_removal_preserves_later_human_prefix_and_append ... ok
+test agents_reject_changed_receipts_owned_bytes_duplicate_and_nested_markers ... ok
+test jsonc_decoded_duplicate_keys_unowned_entries_and_ambiguous_parents_fail ... ok
+test jsonc_empty_and_trailing_comma_parents_restore_original_punctuation ... FAILED
+test jsonc_human_append_is_preserved_or_rejected_when_unrecorded_punctuation_would_be_removed ... FAILED
+test jsonc_named_entry_preserves_comments_bom_crlf_and_literal_unowned_bytes ... FAILED
+test patch_application_checks_entire_input_fragments_ranges_and_output_hash ... ok
+test toml_managed_table_preserves_human_comments_and_round_trips_crlf ... FAILED
+test structured_formats_reject_stale_selectors_body_capacity_and_deadlines ... FAILED
+test toml_quoted_aliases_dotted_conflicts_and_body_headers_fail_without_claiming_ownership ... ok
+test toml_table_removal_never_reparents_later_human_keys ... FAILED
+test receipts_are_strict_serialized_data_and_do_not_include_human_prefix ... ok
+
+failures:
+
+---- jsonc_empty_and_trailing_comma_parents_restore_original_punctuation stdout ----
+
+thread 'jsonc_empty_and_trailing_comma_parents_restore_original_punctuation' (88960) panicked at native\tests\host_config.rs:226:90:
+called `Result::unwrap()` on an `Err` value: Lossless JSONC named-entry editing is unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- jsonc_human_append_is_preserved_or_rejected_when_unrecorded_punctuation_would_be_removed stdout ----
+
+thread 'jsonc_human_append_is_preserved_or_rejected_when_unrecorded_punctuation_would_be_removed' (32896) panicked at native\tests\host_config.rs:275:86:
+called `Result::unwrap()` on an `Err` value: Lossless JSONC named-entry editing is unavailable
+
+---- jsonc_named_entry_preserves_comments_bom_crlf_and_literal_unowned_bytes stdout ----
+
+thread 'jsonc_named_entry_preserves_comments_bom_crlf_and_literal_unowned_bytes' (59076) panicked at native\tests\host_config.rs:189:6:
+called `Result::unwrap()` on an `Err` value: Lossless JSONC named-entry editing is unavailable
+
+---- toml_managed_table_preserves_human_comments_and_round_trips_crlf stdout ----
+
+thread 'toml_managed_table_preserves_human_comments_and_round_trips_crlf' (80200) panicked at native\tests\host_config.rs:323:6:
+called `Result::unwrap()` on an `Err` value: Lossless TOML managed-table editing is unavailable
+
+---- structured_formats_reject_stale_selectors_body_capacity_and_deadlines stdout ----
+
+thread 'structured_formats_reject_stale_selectors_body_capacity_and_deadlines' (59052) panicked at native\tests\host_config.rs:390:92:
+called `Result::unwrap()` on an `Err` value: Lossless JSONC named-entry editing is unavailable
+
+---- toml_table_removal_never_reparents_later_human_keys stdout ----
+
+thread 'toml_table_removal_never_reparents_later_human_keys' (47404) panicked at native\tests\host_config.rs:342:6:
+called `Result::unwrap()` on an `Err` value: Lossless TOML managed-table editing is unavailable
+
+
+failures:
+    jsonc_empty_and_trailing_comma_parents_restore_original_punctuation
+    jsonc_human_append_is_preserved_or_rejected_when_unrecorded_punctuation_would_be_removed
+    jsonc_named_entry_preserves_comments_bom_crlf_and_literal_unowned_bytes
+    structured_formats_reject_stale_selectors_body_capacity_and_deadlines
+    toml_managed_table_preserves_human_comments_and_round_trips_crlf
+    toml_table_removal_never_reparents_later_human_keys
+
+test result: FAILED. 10 passed; 6 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `--test host_config`
+     Running tests\host_install.rs (target\debug\deps\host_install-ecb3efabd0fd83d7.exe)
+
+running 8 tests
+test dry_run_is_deterministic_and_creates_no_source_engine_or_host_state ... FAILED
+test private_state_never_contains_unrelated_human_config_or_policy_contents ... FAILED
+test every_target_and_host_binding_is_checked_before_first_write ... FAILED
+test install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence ... FAILED
+test state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed ... FAILED
+test uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block ... FAILED
+test receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths ... FAILED
+test windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_change ... FAILED
+
+failures:
+
+---- dry_run_is_deterministic_and_creates_no_source_engine_or_host_state stdout ----
+
+thread 'dry_run_is_deterministic_and_creates_no_source_engine_or_host_state' (89884) panicked at native\tests\host_install.rs:72:85:
+called `Result::unwrap()` on an `Err` value: Host installer not yet implemented
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- private_state_never_contains_unrelated_human_config_or_policy_contents stdout ----
+
+thread 'private_state_never_contains_unrelated_human_config_or_policy_contents' (73652) panicked at native\tests\host_install.rs:54:84:
+called `Result::unwrap()` on an `Err` value: Host installer not yet implemented
+
+---- every_target_and_host_binding_is_checked_before_first_write stdout ----
+
+thread 'every_target_and_host_binding_is_checked_before_first_write' (82660) panicked at native\tests\host_install.rs:171:88:
+called `Result::unwrap()` on an `Err` value: Host installer not yet implemented
+
+---- install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence stdout ----
+
+thread 'install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence' (77048) panicked at native\tests\host_install.rs:54:84:
+called `Result::unwrap()` on an `Err` value: Host installer not yet implemented
+
+---- state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed stdout ----
+
+thread 'state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed' (50688) panicked at native\tests\host_install.rs:250:5:
+assertion failed: Selection::new("work", &f.roots, &f.exe, &f.policy, &f.roots[0],
+        &Deadline::new(10_000)).is_err()
+
+---- uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block stdout ----
+
+thread 'uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block' (34216) panicked at native\tests\host_install.rs:54:84:
+called `Result::unwrap()` on an `Err` value: Host installer not yet implemented
+
+---- receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths stdout ----
+
+thread 'receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths' (64100) panicked at native\tests\host_install.rs:208:88:
+called `Result::unwrap()` on an `Err` value: Host installer not yet implemented
+
+---- windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_change stdout ----
+
+thread 'windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_change' (72736) panicked at native\tests\host_install.rs:310:84:
+called `Result::unwrap()` on an `Err` value: Host installer not yet implemented
+
+
+failures:
+    dry_run_is_deterministic_and_creates_no_source_engine_or_host_state
+    every_target_and_host_binding_is_checked_before_first_write
+    install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence
+    private_state_never_contains_unrelated_human_config_or_policy_contents
+    receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths
+    state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed
+    uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block
+    windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_change
+
+test result: FAILED. 0 passed; 8 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `--test host_install`
+     Running tests\host_install_cli.rs (target\debug\deps\host_install_cli-580c103695fa8de9.exe)
+
+running 4 tests
+test host_install_cli_planning_and_status_are_pure_and_keep_human_text_private ... FAILED
+test host_install_cli_write_permission_precedes_selection_or_plan_reads ... FAILED
+test host_install_cli_installs_and_uninstalls_only_its_owned_fragment ... FAILED
+test host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation ... FAILED
+
+failures:
+
+---- host_install_cli_planning_and_status_are_pure_and_keep_human_text_private stdout ----
+
+thread 'host_install_cli_planning_and_status_are_pure_and_keep_human_text_private' (24888) panicked at native\tests\host_install_cli.rs:70:5:
+error: unrecognized subcommand 'host-install'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- host_install_cli_write_permission_precedes_selection_or_plan_reads stdout ----
+
+thread 'host_install_cli_write_permission_precedes_selection_or_plan_reads' (85600) panicked at native\tests\host_install_cli.rs:149:9:
+error: unrecognized subcommand 'host-install'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- host_install_cli_installs_and_uninstalls_only_its_owned_fragment stdout ----
+
+thread 'host_install_cli_installs_and_uninstalls_only_its_owned_fragment' (37984) panicked at native\tests\host_install_cli.rs:70:5:
+error: unrecognized subcommand 'host-install'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation stdout ----
+
+thread 'host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation' (68464) panicked at native\tests\host_install_cli.rs:174:5:
+assertion failed: String::from_utf8_lossy(&duplicate.stderr).contains("Duplicate JSON key")
+
+
+failures:
+    host_install_cli_installs_and_uninstalls_only_its_owned_fragment
+    host_install_cli_planning_and_status_are_pure_and_keep_human_text_private
+    host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation
+    host_install_cli_write_permission_precedes_selection_or_plan_reads
+
+test result: FAILED. 0 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.28s
+
+error: test failed, to rerun pass `--test host_install_cli`
+     Running tests\meaning_build.rs (target\debug\deps\meaning_build-5530091b88518422.exe)
+
+running 18 tests
+test altered_contract_and_provider_version_do_not_reuse_old_claims ... FAILED
+test body_selection_uses_full_body_and_invalidates_unchanged_signature_changes ... FAILED
+test accounted_overrun_blocks_later_reserved_send_and_never_publishes ... FAILED
+test fixed_cross_file_packet_preserves_relations_and_hyperedge_roles ... FAILED
+test forged_cache_origin_is_rejected_without_starting_worker ... FAILED
+test exact_snapshot_analyzer_epochs_have_separate_cache_namespaces ... FAILED
+test malformed_or_unbound_replies_keep_sent_hold_and_cancel_only_unsent ... FAILED
+test in_place_provider_script_change_invalidates_cache_even_when_command_is_unchanged ... FAILED
+test later_invalid_claim_accounts_bill_but_publishes_no_partial_graph_or_cache ... FAILED
+test no_claims_is_explicit_successful_coverage ... FAILED
+test publishes_source_bound_claims_then_reuses_receipts_with_zero_calls_or_reservations ... FAILED
+test publication_failure_rolls_back_every_new_cache_pointer ... FAILED
+test oversized_source_is_rejected_as_complete_selection_before_worker ... ok
+test retained_graph_validates_original_receipt_and_rebound_snapshot_dependencies ... FAILED
+test unknown_billing_remains_reserved_after_valid_graph_publication ... FAILED
+test unchanged_body_cache_rebinds_new_snapshot_and_changed_body_invalidates_it ... FAILED
+test valid_bound_bill_is_preserved_when_worker_exits_unsuccessfully ... FAILED
+test every_selected_source_budget_and_graph_sink_is_admitted_before_first_child ... ok
+
+failures:
+
+---- altered_contract_and_provider_version_do_not_reuse_old_claims stdout ----
+
+thread 'altered_contract_and_provider_version_do_not_reuse_old_claims' (64576) panicked at native\tests\meaning_build.rs:82:61:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- body_selection_uses_full_body_and_invalidates_unchanged_signature_changes stdout ----
+
+thread 'body_selection_uses_full_body_and_invalidates_unchanged_signature_changes' (70604) panicked at native\tests\meaning_build.rs:94:208:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- accounted_overrun_blocks_later_reserved_send_and_never_publishes stdout ----
+
+thread 'accounted_overrun_blocks_later_reserved_send_and_never_publishes' (55692) panicked at native\tests\meaning_build.rs:60:68:
+assertion `left == right` failed
+  left: 0
+ right: 1
+
+---- fixed_cross_file_packet_preserves_relations_and_hyperedge_roles stdout ----
+
+thread 'fixed_cross_file_packet_preserves_relations_and_hyperedge_roles' (5500) panicked at native\tests\meaning_build.rs:72:120:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- forged_cache_origin_is_rejected_without_starting_worker stdout ----
+
+thread 'forged_cache_origin_is_rejected_without_starting_worker' (75100) panicked at native\tests\meaning_build.rs:86:53:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- exact_snapshot_analyzer_epochs_have_separate_cache_namespaces stdout ----
+
+thread 'exact_snapshot_analyzer_epochs_have_separate_cache_namespaces' (76604) panicked at native\tests\meaning_build.rs:112:57:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- malformed_or_unbound_replies_keep_sent_hold_and_cancel_only_unsent stdout ----
+
+thread 'malformed_or_unbound_replies_keep_sent_hold_and_cancel_only_unsent' (81412) panicked at native\tests\meaning_build.rs:56:115:
+assertion `left == right` failed
+  left: 0
+ right: 1
+
+---- in_place_provider_script_change_invalidates_cache_even_when_command_is_unchanged stdout ----
+
+thread 'in_place_provider_script_change_invalidates_cache_even_when_command_is_unchanged' (50304) panicked at native\tests\meaning_build.rs:108:53:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- later_invalid_claim_accounts_bill_but_publishes_no_partial_graph_or_cache stdout ----
+
+thread 'later_invalid_claim_accounts_bill_but_publishes_no_partial_graph_or_cache' (65288) panicked at native\tests\meaning_build.rs:51:75:
+assertion `left == right` failed
+  left: 0
+ right: 2
+
+---- no_claims_is_explicit_successful_coverage stdout ----
+
+thread 'no_claims_is_explicit_successful_coverage' (85948) panicked at native\tests\meaning_build.rs:68:58:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- publishes_source_bound_claims_then_reuses_receipts_with_zero_calls_or_reservations stdout ----
+
+thread 'publishes_source_bound_claims_then_reuses_receipts_with_zero_calls_or_reservations' (42164) panicked at native\tests\meaning_build.rs:38:63:
+meaning extraction: Meaning build unavailable
+
+---- publication_failure_rolls_back_every_new_cache_pointer stdout ----
+
+thread 'publication_failure_rolls_back_every_new_cache_pointer' (46868) panicked at native\tests\meaning_build.rs:90:266:
+assertion `left == right` failed
+  left: 0
+ right: 2
+
+---- retained_graph_validates_original_receipt_and_rebound_snapshot_dependencies stdout ----
+
+thread 'retained_graph_validates_original_receipt_and_rebound_snapshot_dependencies' (89564) panicked at native\tests\meaning_build.rs:103:51:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- unknown_billing_remains_reserved_after_valid_graph_publication stdout ----
+
+thread 'unknown_billing_remains_reserved_after_valid_graph_publication' (83248) panicked at native\tests\meaning_build.rs:64:56:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- unchanged_body_cache_rebinds_new_snapshot_and_changed_body_invalidates_it stdout ----
+
+thread 'unchanged_body_cache_rebinds_new_snapshot_and_changed_body_invalidates_it' (14192) panicked at native\tests\meaning_build.rs:76:67:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- valid_bound_bill_is_preserved_when_worker_exits_unsuccessfully stdout ----
+
+thread 'valid_bound_bill_is_preserved_when_worker_exits_unsuccessfully' (88836) panicked at native\tests\meaning_build.rs:116:71:
+assertion `left == right` failed
+  left: 0
+ right: 1
+
+
+failures:
+    accounted_overrun_blocks_later_reserved_send_and_never_publishes
+    altered_contract_and_provider_version_do_not_reuse_old_claims
+    body_selection_uses_full_body_and_invalidates_unchanged_signature_changes
+    exact_snapshot_analyzer_epochs_have_separate_cache_namespaces
+    fixed_cross_file_packet_preserves_relations_and_hyperedge_roles
+    forged_cache_origin_is_rejected_without_starting_worker
+    in_place_provider_script_change_invalidates_cache_even_when_command_is_unchanged
+    later_invalid_claim_accounts_bill_but_publishes_no_partial_graph_or_cache
+    malformed_or_unbound_replies_keep_sent_hold_and_cancel_only_unsent
+    no_claims_is_explicit_successful_coverage
+    publication_failure_rolls_back_every_new_cache_pointer
+    publishes_source_bound_claims_then_reuses_receipts_with_zero_calls_or_reservations
+    retained_graph_validates_original_receipt_and_rebound_snapshot_dependencies
+    unchanged_body_cache_rebinds_new_snapshot_and_changed_body_invalidates_it
+    unknown_billing_remains_reserved_after_valid_graph_publication
+    valid_bound_bill_is_preserved_when_worker_exits_unsuccessfully
+
+test result: FAILED. 2 passed; 16 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.21s
+
+error: test failed, to rerun pass `--test meaning_build`
+error: 5 targets failed:
+    `--lib`
+    `--test host_config`
+    `--test host_install`
+    `--test host_install_cli`
+    `--test meaning_build`

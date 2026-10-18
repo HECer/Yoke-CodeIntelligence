@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "status": "INDEPENDENT_STATIC_REVIEW_CLEAR_UNEXECUTED",
+  "reviewer": "/root/r3_receipts_finish/meaning_projection_review",
+  "blockingFindingsRemaining": [],
+  "contextOverconstraintsFound": [],
+  "resolvedFindings": ["Path guards now use lstat, refusing dangling symlinks/reparse points as well as existing ones."],
+  "reviewedArtifacts": {
+    "combined_common.py": "035eb4e6f0a513b5c6bc271803640678feca1c73b8015167ad7602de9b013751",
+    "run_h18_combined.py": "bfb42228fd8a8711366d945acb8ccfd0a0660c457547962dafda8cdca10f3ab3",
+    "run_combined_windows_acceptance.py": "70a8fff46d663f1481bbe4d5875e76d0a6193e747cd532a97a661d496aa23ebc",
+    "H18-EXPECTED-TESTS.json": "0c21b1e45653b00393243efeb8ffcef5c1741b863f2283ad739fc2aa2e59b7d2"
+  },
+  "reviewMode": "Read-only source/hash review and Python AST parsing; no prepared-module imports, wrapper execution, gates, quarantine, network or reviewer writes",
+  "staticConclusions": {
+    "pythonFilesParse": 3,
+    "embeddedHelperPinsMatch": true,
+    "originalH18Targets": 6,
+    "originalH18Names": 51,
+    "oldFrozenPreparationUnchanged": true,
+    "explicitFinalMapPromotionContextAdmission": true,
+    "historicalGateOriginAndNormalCacheContextRetained": true
+  },
+  "remaining": ["Root supplies and approves concrete final combined context after actual promotion and separately recorded normal cache invalidation", "Root executes and verifies H18 and the original full Windows phases plus finalize"],
+  "runtimeAcceptanceClaimed": false
+}

@@ -1,0 +1,16 @@
+    Finished `test` profile [unoptimized] target(s) in 1.37s
+     Running tests\git_cli.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\git_cli-e30b12c3158d0146.exe)
+
+running 1 test
+test public_git_cli_analyzes_and_reloads_immutable_reports_with_explicit_host_execution ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.93s
+
+     Running tests\git_epoch_selection.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\git_epoch_selection-f81aa6a9b3a3098a.exe)
+
+running 2 tests
+test worktree_cache_seed_uses_selected_epoch_without_copying_other_epoch_entries ... ok
+test selected_epoch_is_shared_by_working_and_committed_git_report_sides ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.07s
+

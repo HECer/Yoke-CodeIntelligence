@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "upstreamRevision": "4f2520efb128dd02e66a2302095bdbbb26ddd5a0",
+  "methods": {
+    "cfg.get_current_config": [],
+    "cfg.open_dashboard": [],
+    "edit.replace_content": [
+      "relative_path",
+      "needle",
+      "repl",
+      "mode",
+      "allow_multiple_occurrences"
+    ],
+    "edit.replace_in_files": [
+      "needle",
+      "repl",
+      "mode",
+      "relative_path",
+      "paths_include_glob",
+      "paths_exclude_glob",
+      "dry_run",
+      "occurrence_ids",
+      "expected_count",
+      "max_answer_chars"
+    ],
+    "edit.delete_lines": [
+      "relative_path",
+      "start_line",
+      "end_line"
+    ],
+    "edit.replace_lines": [
+      "relative_path",
+      "start_line",
+      "end_line",
+      "content"
+    ],
+    "edit.insert_at_line": [
+      "relative_path",
+      "line",
+      "content"
+    ],
+    "edit.replace_symbol_body": [
+      "name_path",
+      "relative_path",
+      "body"
+    ],
+    "edit.insert_after_symbol": [
+      "name_path",
+      "relative_path",
+      "body"
+    ],
+    "edit.insert_before_symbol": [
+      "name_path",
+      "relative_path",
+      "body"
+    ],
+    "ext.list_projects": [
+      "symbol_access"
+    ],
+    "ext.read_project_context": [
+      "project_name"
+    ],
+    "ext.project_context": [
+      "project_name"
+    ],
+    "fs.read_file": [
+      "relative_path",
+      "start_line",
+      "end_line",
+      "max_answer_chars"
+    ],
+    "fs.create_text_file": [
+      "relative_path",
+      "content"
+    ],
+    "fs.list_dir": [
+      "relative_path",
+      "recursive",
+      "skip_ignored_files",
+      "max_answer_chars"
+    ],
+    "fs.find_file": [
+      "file_mask",
+      "relative_path",
+      "skip_ignored_files"
+    ],
+    "fs.search_for_pattern": [
+      "substring_pattern",
+      "context_lines_before",
+      "context_lines_after",
+      "paths_include_glob",
+      "paths_exclude_glob",
+      "relative_path",
+      "restrict_search_to_code_files",
+      "skip_ignored_files",
+      "multiline",
+      "max_answer_chars"
+    ],
+    "jb.find_symbol": [
+      "name_path_pattern",
+      "depth",
+      "relative_path",
+      "include_body",
+      "include_info",
+      "search_deps",
+      "max_matches",
+      "max_answer_chars"
+    ],
+    "jb.find_referencing_symbols": [
+      "name_path",
+      "relative_path",
+      "max_answer_chars"
+    ],
+    "jb.get_symbols_overview": [
+      "relative_path",
+      "depth",
+      "max_answer_chars",
+      "include_file_documentation"
+    ],
+    "jb.get_type_hierarchy": [
+      "name_path",
+      "relative_path",
+      "hierarchy_type",
+      "depth",
+      "max_answer_chars"
+    ],
+    "jb.find_declaration": [
+      "relative_path",
+      "regex",
+      "include_body"
+    ],
+    "jb.find_implementations": [
+      "relative_path",
+      "name_path"
+    ],
+    "jb.rename": [
+      "relative_path",
+      "new_name",
+      "name_path",
+      "rename_in_comments",
+      "rename_in_text_occurrences"
+    ],
+    "jb.move": [
+      "relative_path",
+      "name_path",
+      "target_relative_path",
+      "target_parent_name_path"
+    ],
+    "jb.safe_delete": [
+      "relative_path",
+      "name_path",
+      "delete_even_if_used",
+      "propagate"
+    ],
+    "jb.inline_symbol": [
+      "name_path",
+      "relative_path",
+      "keep_definition"
+    ],
+    "jb.run_inspections": [
+      "relative_path",
+      "min_severity",
+      "inspection_names",
+      "start_line",
+      "end_line",
+      "max_answer_chars"
+    ],
+    "jb.list_inspections": [
+      "language",
+      "group_path_contains",
+      "max_answer_chars"
+    ],
+    "jb.debug_eval_info": [],
+    "jb.debug_eval": [
+      "expression",
+      "repl_key"
+    ],
+    "lsp.restart_language_server": [],
+    "lsp.get_symbols_overview": [
+      "relative_path",
+      "depth",
+      "max_answer_chars"
+    ],
+    "lsp.find_symbol": [
+      "name_path_pattern",
+      "depth",
+      "relative_path",
+      "include_body",
+      "include_info",
+      "include_kinds",
+      "exclude_kinds",
+      "substring_matching",
+      "max_matches",
+      "max_answer_chars"
+    ],
+    "lsp.find_referencing_symbols": [
+      "name_path",
+      "relative_path",
+      "include_kinds",
+      "exclude_kinds",
+      "max_answer_chars"
+    ],
+    "lsp.find_implementations": [
+      "name_path",
+      "relative_path",
+      "include_info",
+      "include_kinds",
+      "exclude_kinds",
+      "max_answer_chars"
+    ],
+    "lsp.find_declaration": [
+      "relative_path",
+      "regex",
+      "containing_symbol_name_path",
+      "include_body",
+      "include_info"
+    ],
+    "lsp.get_diagnostics_for_file": [
+      "relative_path",
+      "start_line",
+      "end_line",
+      "min_severity",
+      "max_answer_chars"
+    ],
+    "lsp.get_diagnostics_for_symbol": [
+      "name_path",
+      "reference_file",
+      "check_symbol_references",
+      "min_severity",
+      "max_answer_chars"
+    ],
+    "lsp.rename_symbol": [
+      "name_path",
+      "relative_path",
+      "new_name"
+    ],
+    "lsp.safe_delete_symbol": [
+      "name_path_pattern",
+      "relative_path"
+    ],
+    "mem.list_memories": [
+      "topic"
+    ],
+    "mem.read_memory": [
+      "memory_name"
+    ],
+    "mem.write_memory": [
+      "memory_name",
+      "content",
+      "max_chars"
+    ],
+    "mem.edit_memory": [
+      "memory_name",
+      "needle",
+      "repl",
+      "mode",
+      "allow_multiple_occurrences"
+    ],
+    "mem.rename_memory": [
+      "old_name",
+      "new_name"
+    ],
+    "mem.delete_memory": [
+      "memory_name"
+    ],
+    "mem.onboarding": [],
+    "shell.execute_shell_command": [
+      "command",
+      "cwd",
+      "capture_stderr",
+      "max_answer_chars"
+    ]
+  }
+}

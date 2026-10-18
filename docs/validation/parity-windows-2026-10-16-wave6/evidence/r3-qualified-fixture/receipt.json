@@ -1,0 +1,29 @@
+{
+  "checkedAtUtc": "2026-10-16T06:51:46.064703+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "-j",
+    "2",
+    "--manifest-path",
+    "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\target\\parity-validation-20261015\\next-historical-view-comparison\\revisions\\execution-prep\\qualification-harness\\Cargo.toml",
+    "--target-dir",
+    "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\target",
+    "--test",
+    "historical_view_fixture_qualification",
+    "--",
+    "--test-threads=4",
+    "--nocapture"
+  ],
+  "exitCode": 0,
+  "seconds": 54.578,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\r3-qualified-fixture-20261016",
+  "logSha256": "5d0117d075c1d3f2fec3370c01e7770806e10a710807f989003c391d7a1c941a",
+  "groups": 1,
+  "passed": 2,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

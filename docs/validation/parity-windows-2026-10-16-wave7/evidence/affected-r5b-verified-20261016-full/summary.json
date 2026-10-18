@@ -1,0 +1,57 @@
+{
+  "accepted": true,
+  "checkedAtUtc": "2026-10-16T17:10:22.453177+00:00",
+  "freezeArtifactSha256": {
+    "freeze.json": "fca059ddd843396509ce04ed4fc26800204c7c6173b4e59a34c4ec405c9808c1",
+    "runner.py": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+    "source-freeze.json": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31"
+  },
+  "interpretation": "All five phases freshly executed on the identical frozen source and runner; ignored tests remain ignored, with three disjoint ACL fixtures executed exactly on C.",
+  "phaseReceipts": {
+    "clippy": {
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "passed": 0,
+      "receiptSha256": "f8ac0577acddea599826e1570a6a706023a4c5a6770bfe1987620939db709638"
+    },
+    "format": {
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "passed": 0,
+      "receiptSha256": "18b557af2c1df119308abced50ef8bc3249b9f334c25e9751b74fa2c4856c8ef"
+    },
+    "native": {
+      "failed": 0,
+      "groups": 238,
+      "ignored": 33,
+      "passed": 1799,
+      "receiptSha256": "6437c5e6ccd0c2d3d03af133bb78a95dac2b9bb49849856766d61cca12d42272"
+    },
+    "python": {
+      "failed": 0,
+      "groups": 1,
+      "ignored": 0,
+      "passed": 11,
+      "receiptSha256": "ab9a112dab31089ed4b70c38e657aa4c445fb6a4c720e593c4ccaccc3cdbcd40"
+    },
+    "typescript": {
+      "failed": 0,
+      "groups": 1,
+      "ignored": 3,
+      "passed": 250,
+      "receiptSha256": "c64536ac9f26d5dfcba71baffe6268d39b920b9d5db6aa462f3a8b66bde5237b"
+    }
+  },
+  "phases": [
+    "format",
+    "clippy",
+    "native",
+    "python",
+    "typescript"
+  ],
+  "runnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+  "sourceFiles": 2873,
+  "sourceManifestSha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31"
+}

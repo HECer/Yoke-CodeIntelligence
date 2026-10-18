@@ -1,0 +1,295 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: method `content_hash` is never used
+  --> native\src\refactor_contract.rs:22:19
+   |
+18 | impl CheckedFileBinding {
+   | ----------------------- method in this implementation
+...
+22 |     pub(crate) fn content_hash(&self) -> &str {
+   |                   ^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `range` and `name_range` are never used
+  --> native\src\refactor_contract.rs:44:19
+   |
+40 | impl CheckedSymbolBinding {
+   | ------------------------- methods in this implementation
+...
+44 |     pub(crate) fn range(&self) -> Range<usize> {
+   |                   ^^^^^
+...
+47 |     pub(crate) fn name_range(&self) -> Range<usize> {
+   |                   ^^^^^^^^^^
+
+warning: field `insertion_byte` is never read
+  --> native\src\refactor_contract.rs:62:9
+   |
+60 |     FileTopLevel {
+   |     ------------ field in this variant
+61 |         file: CheckedFileBinding,
+62 |         insertion_byte: usize,
+   |         ^^^^^^^^^^^^^^
+   |
+   = note: `CheckedMoveDestination` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: method `insertion_byte` is never used
+  --> native\src\refactor_contract.rs:77:19
+   |
+70 | impl CheckedMoveDestination {
+   | --------------------------- method in this implementation
+...
+77 |     pub(crate) fn insertion_byte(&self) -> usize {
+   |                   ^^^^^^^^^^^^^^
+
+warning: methods `source` and `destination` are never used
+   --> native\src\refactor_contract.rs:274:19
+    |
+106 | impl CheckedMoveIntent {
+    | ---------------------- methods in this implementation
+...
+274 |     pub(crate) fn source(&self) -> &CheckedSymbolBinding {
+    |                   ^^^^^^
+...
+277 |     pub(crate) fn destination(&self) -> &CheckedMoveDestination {
+    |                   ^^^^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib) generated 5 warnings
+warning: fields `original` and `provider` are never read
+  --> native\tests\support\meaning_archive_fixture.rs:26:9
+   |
+23 | pub struct Fixture {
+   |            ------- fields in this struct
+...
+26 |     pub original: Snapshot,
+   |         ^^^^^^^^
+...
+31 |     pub provider: ProviderSpec,
+   |         ^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (test "meaning_collection_archives") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 57.56s
+     Running tests\meaning_collection_archives.rs (target\debug\deps\meaning_collection_archives-4634c8a7bf8a6b57.exe)
+
+running 7 tests
+test collection_metadata_reports_the_complete_typed_layer_without_quotes_or_false_accounting ... ok
+test adding_a_typed_archive_preserves_released_source_registration_payload_ids_and_queries ... ok
+test source_only_collection_entry_points_never_return_a_partial_typed_registration ... ok
+test complete_archive_bytes_are_explicit_input_but_protected_foreign_cas_is_never_a_fallback ... ok
+test typed_collection_cas_and_invalid_name_refusals_leave_no_registration_or_source_blobs ... ok
+test typed_collection_load_rejects_deleted_historical_source_without_repairing_the_database ... ok
+test typed_registration_reopens_and_replays_after_the_original_store_tree_and_worker_are_gone ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.81s
+
+     Running tests\meaning_view_archives.rs (target\debug\deps\meaning_view_archives-51ea5f08bcf57128.exe)
+
+running 8 tests
+test missing_historical_uncited_file_and_wrong_same_path_bytes_are_not_repaired_from_live_state ... ok
+test archive_replay_rejects_publicly_resealed_source_view_and_meaning_changes ... ok
+test complete_wire_and_distinct_source_limits_are_admitted_without_store_side_effects ... ok
+test portable_transport_keeps_task_totals_current_attempt_usage_and_original_unknown_response_distinct ... ok
+test portable_wire_rejects_unknown_nested_properties_duplicate_keys_and_unknown_profiles ... ok
+test portable_archive_replays_both_epochs_without_a_store_live_tree_or_worker ... ok
+test portable_bridge_requires_complete_raw_closure_and_rejects_foreign_or_unpaired_sidecars ... ok
+test replay_preserves_typed_claim_ids_ordered_roles_exact_quotes_and_unknown_receipts ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.43s
+
+     Running tests\symbol_move_effect_admission.rs (target\debug\deps\symbol_move_effect_admission-2df8dec33a99276f.exe)
+
+running 16 tests
+test broad_source_rewrite_is_not_one_isolated_cut ... FAILED
+test block_docs_multiline_attributes_and_intervening_trivia_refuse_before_provider ... ok
+test broad_destination_rewrite_is_not_one_pure_insertion ... FAILED
+test applied_resource_operation_is_refused ... FAILED
+test changed_body_is_not_a_preserved_declaration ... FAILED
+test copy_only_is_not_a_move ... FAILED
+test deletion_alone_has_no_preserved_insertion ... FAILED
+test duplicate_identical_insertions_are_refused ... FAILED
+test exact_original_cut_and_inline_insertion_prepare_one_real_plan_for_each_epoch ... FAILED
+test nested_child_is_not_the_requested_direct_parent ... FAILED
+test repeated_null_version_document_is_not_one_original_input ... FAILED
+test outside_parent_insertion_is_not_requested_placement ... FAILED
+test same_named_parent_with_changed_header_is_refused ... FAILED
+test split_deletion_is_not_one_original_cut ... FAILED
+test unapplied_resource_noop_is_also_refused ... FAILED
+test unrelated_comment_is_not_a_source_cut ... FAILED
+
+failures:
+
+---- broad_source_rewrite_is_not_one_isolated_cut stdout ----
+
+thread 'broad_source_rewrite_is_not_one_isolated_cut' (39284) panicked at native\tests\symbol_move_effect_admission.rs:117:5:
+Scenario whole_source stopped before its causal effect rule: Symbol move effect admission is unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- broad_destination_rewrite_is_not_one_pure_insertion stdout ----
+
+thread 'broad_destination_rewrite_is_not_one_pure_insertion' (98576) panicked at native\tests\symbol_move_effect_admission.rs:117:5:
+Scenario whole_target stopped before its causal effect rule: Symbol move effect admission is unavailable
+
+---- applied_resource_operation_is_refused stdout ----
+
+thread 'applied_resource_operation_is_refused' (56280) panicked at native\tests\symbol_move_effect_admission.rs:117:5:
+Scenario resource stopped before its causal effect rule: Symbol move effect admission is unavailable
+
+---- changed_body_is_not_a_preserved_declaration stdout ----
+
+thread 'changed_body_is_not_a_preserved_declaration' (95348) panicked at native\tests\symbol_move_effect_admission.rs:117:5:
+Scenario body_change stopped before its causal effect rule: Symbol move effect admission is unavailable
+
+---- copy_only_is_not_a_move stdout ----
+
+thread 'copy_only_is_not_a_move' (98860) panicked at native\tests\symbol_move_effect_admission.rs:117:5:
+Scenario copy_only stopped before its causal effect rule: Symbol move effect admission is unavailable
+
+---- deletion_alone_has_no_preserved_insertion stdout ----
+
+thread 'deletion_alone_has_no_preserved_insertion' (30212) panicked at native\tests\symbol_move_effect_admission.rs:117:5:
+Scenario delete_only stopped before its causal effect rule: Symbol move effect admission is unavailable
+
+---- duplicate_identical_insertions_are_refused stdout ----
+
+thread 'duplicate_identical_insertions_are_refused' (78032) panicked at native\tests\symbol_move_effect_admission.rs:117:5:
+Scenario duplicate_copy stopped before its causal effect rule: Symbol move effect admission is unavailable
+
+---- exact_original_cut_and_inline_insertion_prepare_one_real_plan_for_each_epoch stdout ----
+
+thread 'exact_original_cut_and_inline_insertion_prepare_one_real_plan_for_each_epoch' (85500) panicked at native\tests\symbol_move_effect_admission.rs:165:37:
+called `Result::unwrap()` on an `Err` value: Symbol move effect admission is unavailable
+
+---- nested_child_is_not_the_requested_direct_parent stdout ----
+
+thread 'nested_child_is_not_the_requested_direct_parent' (92032) panicked at native\tests\symbol_move_effect_admission.rs:117:5:
+Scenario nested_inner stopped before its causal effect rule: Symbol move effect admission is unavailable
+
+---- repeated_null_version_document_is_not_one_original_input stdout ----
+
+thread 'repeated_null_version_document_is_not_one_original_input' (74924) panicked at native\tests\symbol_move_effect_admission.rs:117:5:
+Scenario repeated_original stopped before its causal effect rule: Symbol move effect admission is unavailable
+
+---- outside_parent_insertion_is_not_requested_placement stdout ----
+
+thread 'outside_parent_insertion_is_not_requested_placement' (36960) panicked at native\tests\symbol_move_effect_admission.rs:117:5:
+Scenario wrong_parent stopped before its causal effect rule: Symbol move effect admission is unavailable
+
+---- same_named_parent_with_changed_header_is_refused stdout ----
+
+thread 'same_named_parent_with_changed_header_is_refused' (76152) panicked at native\tests\symbol_move_effect_admission.rs:117:5:
+Scenario replace_parent stopped before its causal effect rule: Symbol move effect admission is unavailable
+
+---- split_deletion_is_not_one_original_cut stdout ----
+
+thread 'split_deletion_is_not_one_original_cut' (79388) panicked at native\tests\symbol_move_effect_admission.rs:117:5:
+Scenario split_cut stopped before its causal effect rule: Symbol move effect admission is unavailable
+
+---- unapplied_resource_noop_is_also_refused stdout ----
+
+thread 'unapplied_resource_noop_is_also_refused' (93228) panicked at native\tests\symbol_move_effect_admission.rs:117:5:
+Scenario resource_noop stopped before its causal effect rule: Symbol move effect admission is unavailable
+
+---- unrelated_comment_is_not_a_source_cut stdout ----
+
+thread 'unrelated_comment_is_not_a_source_cut' (85616) panicked at native\tests\symbol_move_effect_admission.rs:117:5:
+Scenario noop stopped before its causal effect rule: Symbol move effect admission is unavailable
+
+
+failures:
+    applied_resource_operation_is_refused
+    broad_destination_rewrite_is_not_one_pure_insertion
+    broad_source_rewrite_is_not_one_isolated_cut
+    changed_body_is_not_a_preserved_declaration
+    copy_only_is_not_a_move
+    deletion_alone_has_no_preserved_insertion
+    duplicate_identical_insertions_are_refused
+    exact_original_cut_and_inline_insertion_prepare_one_real_plan_for_each_epoch
+    nested_child_is_not_the_requested_direct_parent
+    outside_parent_insertion_is_not_requested_placement
+    repeated_null_version_document_is_not_one_original_input
+    same_named_parent_with_changed_header_is_refused
+    split_deletion_is_not_one_original_cut
+    unapplied_resource_noop_is_also_refused
+    unrelated_comment_is_not_a_source_cut
+
+test result: FAILED. 1 passed; 15 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.20s
+
+error: test failed, to rerun pass `--test symbol_move_effect_admission`
+     Running tests\symbol_move_own_v1.rs (target\debug\deps\symbol_move_own_v1-83b3e666597bb2c3.exe)
+
+running 18 tests
+test an_inline_destination_inside_the_moved_declaration_refuses_before_provider ... ok
+test actual_inline_module_body_preserves_inner_preamble_and_existing_item_attachments ... FAILED
+test changing_only_the_owned_profile_refuses_session_resume_without_mutation_or_provider_start ... ok
+test captured_source_scope_cannot_be_widened_by_an_owned_provider_profile ... ok
+test final_bytes_or_unrelated_changes_cannot_replace_isolated_original_operation_evidence ... FAILED
+test attached_documentation_or_attributes_are_not_silently_left_on_the_next_item ... ok
+test functions_impls_and_traits_are_not_guessed_inline_module_destinations ... ok
+test own_v1_host_opt_in_is_optional_and_default_profile_bytes_remain_identical ... ok
+test moving_one_overload_cannot_remove_a_different_same_name_declaration ... FAILED
+test owned_symbol_move_preserves_exact_declaration_and_actual_destination_parent_for_v8_v9 ... FAILED
+test host_and_capability_must_both_enable_the_owned_move_protocol ... ok
+test dangling_outer_attachments_and_malformed_destination_preambles_refuse_before_provider ... ok
+test same_file_symbol_move_uses_one_original_document_and_the_real_inline_parent ... FAILED
+test same_line_unicode_and_crlf_keep_original_byte_and_utf16_coordinates_distinct ... FAILED
+test symbol_move_mode_and_external_context_denials_precede_provider_work ... ok
+test top_level_scope_preserves_valid_destination_preambles_and_existing_outer_attachments ... FAILED
+test unsupported_missing_directory_and_empty_destination_contracts_refuse_before_provider ... ok
+test unsupported_ack_command_wrong_echo_and_unknown_response_fields_publish_nothing ... ok
+
+failures:
+
+---- actual_inline_module_body_preserves_inner_preamble_and_existing_item_attachments stdout ----
+
+thread 'actual_inline_module_body_preserves_inner_preamble_and_existing_item_attachments' (95016) panicked at native\tests\symbol_move_own_v1.rs:526:40:
+Destination must be the real inline module body: Symbol move effect admission is unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- final_bytes_or_unrelated_changes_cannot_replace_isolated_original_operation_evidence stdout ----
+
+thread 'final_bytes_or_unrelated_changes_cannot_replace_isolated_original_operation_evidence' (90520) panicked at native\tests\symbol_move_own_v1.rs:600:9:
+Scenario noop did not reach its causal effect rule: Symbol move effect admission is unavailable
+
+---- moving_one_overload_cannot_remove_a_different_same_name_declaration stdout ----
+
+thread 'moving_one_overload_cannot_remove_a_different_same_name_declaration' (99180) panicked at native\tests\symbol_move_own_v1.rs:656:32:
+called `Result::unwrap()` on an `Err` value: Symbol move effect admission is unavailable
+
+---- owned_symbol_move_preserves_exact_declaration_and_actual_destination_parent_for_v8_v9 stdout ----
+
+thread 'owned_symbol_move_preserves_exact_declaration_and_actual_destination_parent_for_v8_v9' (89100) panicked at native\tests\symbol_move_own_v1.rs:360:18:
+Exact supported source/destination move must prepare: Symbol move effect admission is unavailable
+
+---- same_file_symbol_move_uses_one_original_document_and_the_real_inline_parent stdout ----
+
+thread 'same_file_symbol_move_uses_one_original_document_and_the_real_inline_parent' (52944) panicked at native\tests\symbol_move_own_v1.rs:703:38:
+called `Result::unwrap()` on an `Err` value: Symbol move effect admission is unavailable
+
+---- same_line_unicode_and_crlf_keep_original_byte_and_utf16_coordinates_distinct stdout ----
+
+thread 'same_line_unicode_and_crlf_keep_original_byte_and_utf16_coordinates_distinct' (80280) panicked at native\tests\symbol_move_own_v1.rs:476:38:
+called `Result::unwrap()` on an `Err` value: Symbol move effect admission is unavailable
+
+---- top_level_scope_preserves_valid_destination_preambles_and_existing_outer_attachments stdout ----
+
+thread 'top_level_scope_preserves_valid_destination_preambles_and_existing_outer_attachments' (93044) panicked at native\tests\symbol_move_own_v1.rs:503:14:
+Valid preambles remain at the front of the top-level scope: Symbol move effect admission is unavailable
+
+
+failures:
+    actual_inline_module_body_preserves_inner_preamble_and_existing_item_attachments
+    final_bytes_or_unrelated_changes_cannot_replace_isolated_original_operation_evidence
+    moving_one_overload_cannot_remove_a_different_same_name_declaration
+    owned_symbol_move_preserves_exact_declaration_and_actual_destination_parent_for_v8_v9
+    same_file_symbol_move_uses_one_original_document_and_the_real_inline_parent
+    same_line_unicode_and_crlf_keep_original_byte_and_utf16_coordinates_distinct
+    top_level_scope_preserves_valid_destination_preambles_and_existing_outer_attachments
+
+test result: FAILED. 11 passed; 7 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.36s
+
+error: test failed, to rerun pass `--test symbol_move_own_v1`
+error: 2 targets failed:
+    `--test symbol_move_effect_admission`
+    `--test symbol_move_own_v1`

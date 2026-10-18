@@ -1,0 +1,20 @@
+--- a/native/src/protocol.rs
++++ b/native/src/protocol.rs
+@@ -390,7 +390,7 @@
+                 )
+             });
+             items.push(json!({"name":"ci_session","description":"Steer a persistent host-registered project session, read captured sources and authored notes, or prepare guarded edits. Host authority is configured outside tool arguments.","inputSchema":{"type":"object","properties":{"operation":{"type":"string"},"args":{"type":"object"},"timeoutMs":{"type":"integer","minimum":10,"maximum":600000}},"required":["operation","args"],"additionalProperties":false},"annotations":{"readOnlyHint":false,"destructiveHint":false,"openWorldHint":false}}));
+-            items.push(json!({"name":"ci_retrieve","description":"Rank captured source bodies with BM25 and personalized graph relevance, with per-file diversification. Ranking is a heuristic, not compiler or runtime proof.","inputSchema":{"type":"object","properties":{"query":string(),"limit":integer(1,200),"perFileLimit":integer(1,200),"includeBody":{"type":"boolean"},"relativePath":string(),"pathGlob":string(),"excludeGlob":string(),"graphWeight":{"type":"number","minimum":0,"maximum":1},"snapshotId":id(),"timeoutMs":integer(10,600000)},"required":["query"],"additionalProperties":false},"annotations":{"readOnlyHint":true,"destructiveHint":false,"openWorldHint":false}}));
++            items.push(json!({"name":"ci_retrieve","description":"Rank captured source bodies with BM25 and personalized graph relevance. Default/global preserves legacy ranking; explicit manifest_balanced_v1 uses checked manifest scopes without automatic fallback. Ranking remains a heuristic.","inputSchema":{"type":"object","properties":{"query":string(),"limit":integer(1,200),"perFileLimit":integer(1,200),"includeBody":{"type":"boolean"},"relativePath":string(),"pathGlob":string(),"excludeGlob":string(),"graphWeight":{"type":"number","minimum":0,"maximum":1},"scopeMode":{"type":"string","enum":["global","manifest_balanced_v1"]},"snapshotId":id(),"timeoutMs":integer(10,600000)},"required":["query"],"additionalProperties":false},"annotations":{"readOnlyHint":true,"destructiveHint":false,"openWorldHint":false}}));
+             items.push(json!({"name":"ci_graph","description":"Build or query an immutable graph view with explicitly selected source-bound structural, semantic, and typed Meaning layers. Meaning claims retain exact citations and unverified inference; source-only exports reject Meaning layers.","inputSchema":{"type":"object","properties":{"operation":{"enum":["build","find","trace","context","export"]},"viewId":id(),"snapshotId":id(),"options":{"type":"object"},"timeoutMs":integer(10,600000)},"required":["operation"],"additionalProperties":false},"annotations":{"readOnlyHint":true,"destructiveHint":false,"openWorldHint":false}}));
+         }
+         definitions
+@@ -466,6 +466,8 @@
+                         if name == "ci_graph" {
+                             graph_call(session, &args)
+                         } else if name == "ci_retrieve" {
++                            // Pure mode admission precedes engine selection or indexing.
++                            let _ = crate::retrieval::native_scope_mode(&args)?;
+                             let timeout = match args.get("timeoutMs") {
+                                 Some(value) => value
+                                     .as_u64()

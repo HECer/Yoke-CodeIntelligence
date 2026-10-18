@@ -1,0 +1,28 @@
+{
+  "checkedAtUtc": "2026-10-15T22:48:54.864489+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--test",
+    "monorepo_retrieval",
+    "--",
+    "--exact",
+    "same_31_source_corpus_has_literal_global_control_and_one_head_per_package",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 122.907,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-balanced-public-stub-red",
+  "logSha256": "a06bbdc0f0ab54921ef1a621889c78d754bda155db3d3eb16c6fe037b356ede9",
+  "groups": 1,
+  "passed": 0,
+  "failed": 1,
+  "ignored": 0,
+  "sourceChanges": []
+}

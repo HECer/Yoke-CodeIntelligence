@@ -1,0 +1,57 @@
+{
+  "accepted": false,
+  "aclTempRoot": "C:\\Users\\HEC_e\\AppData\\Local\\Temp\\yoke-declaration-moves-windows-20261017-r1-native",
+  "artifactSha256": {
+    "cargo-metadata.log": "8e648afaf531bb8c5bb1d1d213da758f116d0904f001c6256564e520a47abe1f",
+    "source-after.json": "6440b361f0ab6dbbc43834da0490a4e34aa2dd4de27efe371f434cb82bb021eb",
+    "source-before.json": "6440b361f0ab6dbbc43834da0490a4e34aa2dd4de27efe371f434cb82bb021eb"
+  },
+  "checkedAtUtc": "2026-10-17T14:20:40.622457+00:00",
+  "failed": 0,
+  "groups": 0,
+  "ignored": 0,
+  "interpretation": "Fresh execution only. Shared freeze required across all five phases; ignored test results are never relabeled as passing.",
+  "matrixCoverage": {},
+  "passed": 0,
+  "phase": "native",
+  "phases": [
+    "format",
+    "clippy",
+    "native",
+    "python",
+    "typescript"
+  ],
+  "results": [
+    {
+      "command": [
+        "cargo",
+        "metadata",
+        "--no-deps",
+        "--locked",
+        "--format-version",
+        "1"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "inventoryOnly": true,
+      "label": "cargo-metadata",
+      "logSha256": "8e648afaf531bb8c5bb1d1d213da758f116d0904f001c6256564e520a47abe1f",
+      "origin": "fresh_execution",
+      "passed": 0,
+      "runnerSha256": "412b796dff54e94a5ba1076204c28646f85dc1a769a4e7afa0428416b07f6a6b",
+      "seconds": 0.234,
+      "sourceManifestSha256": "6440b361f0ab6dbbc43834da0490a4e34aa2dd4de27efe371f434cb82bb021eb",
+      "tempRoot": "E:\\Yoke-Test-Scratch\\declaration-moves-windows-20261017-r1-native"
+    }
+  ],
+  "runnerSha256": "412b796dff54e94a5ba1076204c28646f85dc1a769a4e7afa0428416b07f6a6b",
+  "sourceChanges": [],
+  "sourceFiles": 3683,
+  "sourceManifestSha256": "6440b361f0ab6dbbc43834da0490a4e34aa2dd4de27efe371f434cb82bb021eb",
+  "tempRoot": "E:\\Yoke-Test-Scratch\\declaration-moves-windows-20261017-r1-native",
+  "validationErrors": [
+    "JSONDecodeError: Expecting value: line 1 column 2 (char 1)"
+  ]
+}

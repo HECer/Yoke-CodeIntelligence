@@ -1,0 +1,26 @@
+{
+  "checkedAtUtc": "2026-10-15T17:33:17.495714+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "clippy",
+    "--workspace",
+    "--all-targets",
+    "--locked",
+    "--keep-going",
+    "-j",
+    "2",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "exitCode": 0,
+  "seconds": 22.734,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave3-clippy-remaining-targets",
+  "logSha256": "6bd158f382d2274580d5a6a0949b631b91f0b5a7c57765e932f9b3797395943b",
+  "groups": 0,
+  "passed": 0,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

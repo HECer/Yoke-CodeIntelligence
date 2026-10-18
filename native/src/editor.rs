@@ -1,6 +1,6 @@
 use crate::{
     Engine,
-    capture::{Deadline, language},
+    capture::Deadline,
     model::{Snapshot, SourceFile, hash, identity, valid_id},
     paths::{normalized, obvious_secret, scoped},
     store::Store,
@@ -73,7 +73,9 @@ fn allowed_new_path(
     base: &Snapshot,
     path: &str,
     deadline: &Deadline,
+    scope: &crate::capture::CapturedSourceScope<'_>,
 ) -> Result<()> {
+    scope.check_host_write_scope(path)?;
     let absolute = scoped(&engine.root, path)?;
     ensure!(
         !base.omissions.iter().any(|omission| omission.path == path),
@@ -151,7 +153,8 @@ pub fn update(engine: &Engine, id: &str, input: &Value, deadline: &Deadline) -> 
     );
     let before = session(&engine.store, id)?;
     let base = engine.store.snapshot(&before.base_snapshot_id)?;
-    allowed_new_path(engine, &base, &path, deadline)?;
+    let scope = crate::capture::source_scope_policy(&engine.store, &base)?;
+    allowed_new_path(engine, &base, &path, deadline, &scope)?;
     let digest = hash(input.text.as_bytes());
     let prior = before.buffers.get(&path);
     ensure!(
@@ -247,14 +250,23 @@ pub fn close(store: &Store, id: &str, deadline: &Deadline) -> Result<()> {
     Ok(())
 }
 pub fn capture(engine: &mut Engine, id: &str, deadline: &Deadline) -> Result<Snapshot> {
+    capture_at(engine, id, engine.capture_epoch, deadline)
+}
+pub fn capture_at(
+    engine: &mut Engine,
+    id: &str,
+    epoch: crate::analysis::AnalyzerEpoch,
+    deadline: &Deadline,
+) -> Result<Snapshot> {
     engine.store.set_deadline(deadline)?;
     let before = session(&engine.store, id)?;
     let (disk, _, _, _) = engine.index(deadline)?;
     let mut files = disk.files.clone();
     let mut after = before.clone();
+    let scope = crate::capture::source_scope_policy(&engine.store, &disk)?;
     for buffer in before.buffers.values() {
         deadline.check()?;
-        allowed_new_path(engine, &disk, &buffer.path, deadline)?;
+        allowed_new_path(engine, &disk, &buffer.path, deadline, &scope)?;
         let saved = disk.files.iter().find(|file| file.path == buffer.path);
         let saved_hash = saved.map(|file| file.hash.clone());
         ensure!(
@@ -277,12 +289,13 @@ pub fn capture(engine: &mut Engine, id: &str, deadline: &Deadline) -> Result<Sna
             path: buffer.path.clone(),
             hash: buffer.hash.clone(),
             size: bytes.len(),
-            language: language(&buffer.path).into(),
+            language: crate::capture::language_for_snapshot(&engine.store, &disk, &buffer.path)?,
             mode: saved.map_or(0o644, |file| file.mode),
         };
         files.retain(|file| file.path != buffer.path);
         files.push(file);
     }
+    drop(scope);
     files.sort_by(|a, b| a.path.cmp(&b.path));
     let size = files
         .iter()
@@ -299,7 +312,7 @@ pub fn capture(engine: &mut Engine, id: &str, deadline: &Deadline) -> Result<Sna
         .collect();
     let snapshot = Snapshot {
         id: identity(&(
-            crate::model::ANALYZER,
+            epoch.producer(),
             &disk.id,
             id,
             before.revision,
@@ -312,7 +325,7 @@ pub fn capture(engine: &mut Engine, id: &str, deadline: &Deadline) -> Result<Sna
         omissions: disk.omissions.clone(),
         capture_consistency: "overlay-from-stable-disk-and-immutable-buffers".into(),
     };
-    let (snapshot, _, _, _) = engine.analyze_snapshot(snapshot, deadline)?;
+    let (snapshot, _, _, _) = engine.analyze_snapshot_at(epoch, snapshot, deadline)?;
     after.base_snapshot_id = disk.id;
     after.last_snapshot_id = Some(snapshot.id.clone());
     engine.store.record("overlay-snapshot",&snapshot.id,&json!({"snapshotId":snapshot.id,"sessionId":id,"revision":before.revision,"versions":versions,"baseSnapshotId":after.base_snapshot_id}))?;

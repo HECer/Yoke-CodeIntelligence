@@ -1,0 +1,39 @@
+    Checking yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r3-shadow-unavailable-v1\native)
+error: unnecessary use of `to_owned`
+   --> native\tests\historical_view_semantics.rs:983:21
+    |
+983 | /                     &node_change["before"]["originalNodeId"]
+984 | |                         .as_str()
+985 | |                         .unwrap_or("")
+986 | |                         .to_owned()
+    | |___________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#unnecessary_to_owned
+    = note: `-D clippy::unnecessary-to-owned` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::unnecessary_to_owned)]`
+help: replace it with
+    |
+983 ~                     node_change["before"]["originalNodeId"]
+984 +                         .as_str()
+985 +                         .unwrap_or("")
+    |
+
+error: unnecessary use of `to_owned`
+   --> native\tests\historical_view_semantics.rs:991:21
+    |
+991 | /                     &node_change["after"]["originalNodeId"]
+992 | |                         .as_str()
+993 | |                         .unwrap_or("")
+994 | |                         .to_owned()
+    | |___________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#unnecessary_to_owned
+help: replace it with
+    |
+991 ~                     node_change["after"]["originalNodeId"]
+992 +                         .as_str()
+993 +                         .unwrap_or("")
+    |
+
+error: could not compile `yoke-code-intelligence` (test "historical_view_semantics") due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...

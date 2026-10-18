@@ -12,6 +12,7 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
     let specific: &[&str] = match tool {
         "ci_status" => &["mode"],
         "ci_find" => &[
+            "graphViewId",
             "query",
             "kind",
             "path",
@@ -21,8 +22,25 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
             "model",
             "vector",
             "languageServer",
+            "namePath",
+            "relativePath",
+            "pathGlob",
+            "excludeGlob",
+            "includeBody",
+            "substringMatching",
+            "includeKinds",
+            "excludeKinds",
+            "ignoreCase",
+            "multiline",
+            "groupBySymbol",
+            "beforeContextLines",
+            "afterContextLines",
+            "depth",
+            "searchBody",
+            "skipIgnored",
         ],
         "ci_read" => &[
+            "graphViewId",
             "path",
             "entityId",
             "startByte",
@@ -34,6 +52,7 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
             "encoding",
         ],
         "ci_trace" => &[
+            "graphViewId",
             "entityIds",
             "direction",
             "relations",
@@ -41,7 +60,17 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
             "depth",
             "maxVisited",
         ],
-        "ci_context" => &["query", "limit", "plan", "includeMemory"],
+        "ci_context" => &[
+            "graphViewId",
+            "query",
+            "limit",
+            "plan",
+            "includeMemory",
+            "kind",
+            "path",
+            "depth",
+            "maxSourceBytes",
+        ],
         "ci_change_prepare" => &[
             "edits",
             "rename",
@@ -49,6 +78,7 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
             "insertBefore",
             "insertAfter",
             "deleteSymbol",
+            "bulkReplace",
         ],
         "ci_change_apply" => &["planId", "idempotencyKey", "mode"],
         "ci_verify" => &["planId", "profiles"],
@@ -67,7 +97,15 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
                 || specific.contains(&key.as_str()),
             "Undeclared argument: {key}"
         );
-        if ["snapshotId", "entityId", "artifactId", "planId"].contains(&key.as_str()) {
+        if [
+            "snapshotId",
+            "graphViewId",
+            "entityId",
+            "artifactId",
+            "planId",
+        ]
+        .contains(&key.as_str())
+        {
             ensure!(value.as_str().is_some_and(valid_id), "Invalid ID: {key}");
         }
         if [
@@ -80,6 +118,10 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
             "mode",
             "idempotencyKey",
             "model",
+            "namePath",
+            "relativePath",
+            "pathGlob",
+            "excludeGlob",
         ]
         .contains(&key.as_str())
         {
@@ -88,7 +130,18 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
                 "Invalid string: {key}"
             );
         }
-        if matches!(key.as_str(), "regex" | "includeMemory") {
+        if matches!(
+            key.as_str(),
+            "regex"
+                | "includeMemory"
+                | "includeBody"
+                | "substringMatching"
+                | "ignoreCase"
+                | "multiline"
+                | "groupBySymbol"
+                | "searchBody"
+                | "skipIgnored"
+        ) {
             ensure!(value.is_boolean(), "Flag must be boolean: {key}");
         }
         let range = match key.as_str() {
@@ -98,7 +151,9 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
             "limit" => Some((1, 200)),
             "offset" => Some((0, 100000)),
             "depth" => Some((0, 8)),
+            "beforeContextLines" | "afterContextLines" => Some((0, 100)),
             "maxVisited" => Some((1, 1000)),
+            "maxSourceBytes" => Some((100, 256000)),
             "startByte" | "endByte" => Some((0, 4_000_000)),
             "startLine" | "endLine" => Some((1, 4_000_000)),
             _ => None,
@@ -110,9 +165,22 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
             );
         }
     }
+    if args.get("graphViewId").is_some() {
+        validate_selected_view(tool, args)?;
+        if tool != "ci_trace" {
+            return Ok(());
+        }
+    } else if tool == "ci_context" {
+        ensure!(
+            ["kind", "path", "depth", "maxSourceBytes"]
+                .iter()
+                .all(|key| args.get(key).is_none()),
+            "Graph context options require an explicit graphViewId"
+        );
+    }
     if let Some(mode) = args.get("mode") {
         let allowed = if tool == "ci_status" {
-            &["status", "index", "analyze", "dataflow"][..]
+            &["status", "index", "analyze", "dataflow", "freshness"][..]
         } else {
             &["isolated", "workspace"][..]
         };
@@ -153,6 +221,26 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
         }
     }
     if tool == "ci_find" {
+        ensure!(
+            args.get("skipIgnored").is_none()
+                || (args.get("languageServer").is_none()
+                    && matches!(
+                        args["kind"].as_str().unwrap_or("symbol"),
+                        "symbol" | "all" | "file" | "text"
+                    )),
+            "skipIgnored requires captured symbol, file or text search"
+        );
+        for field in ["includeKinds", "excludeKinds"] {
+            if let Some(values) = args.get(field) {
+                ensure!(
+                    values.as_array().is_some_and(|values| values.len() <= 100
+                        && values
+                            .iter()
+                            .all(|value| value.as_str().is_some_and(|value| value.len() <= 100))),
+                    "Invalid symbol-kind filters"
+                );
+            }
+        }
         if let Some(request) = args.get("languageServer") {
             let request = request
                 .as_object()
@@ -160,31 +248,22 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
             ensure!(
                 request
                     .keys()
-                    .all(|key| ["operation", "path", "offset"].contains(&key.as_str())),
+                    .all(|key| ["operation", "path", "offset", "options"].contains(&key.as_str())),
                 "Unknown language server request field"
             );
             ensure!(
                 request
                     .get("operation")
                     .and_then(Value::as_str)
-                    .is_some_and(|operation| {
-                        [
-                            "definition",
-                            "declaration",
-                            "references",
-                            "implementation",
-                            "hover",
-                            "symbols",
-                        ]
-                        .contains(&operation)
-                    }),
+                    .is_some_and(|operation| { crate::lsp::READ_OPERATIONS.contains(&operation) }),
                 "Unsupported read-only language server operation"
             );
             let path = request
                 .get("path")
                 .and_then(Value::as_str)
                 .ok_or_else(|| anyhow::anyhow!("Language server source path required"))?;
-            crate::paths::normalized(path)?;
+            // Syntax is checked here; captured host scope is proved by the LSP source reader.
+            crate::paths::normalized_syntax(path)?;
             ensure!(
                 request
                     .get("offset")
@@ -194,16 +273,44 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
             );
             ensure!(
                 [
-                    "query", "kind", "model", "vector", "path", "regex", "offset", "limit"
+                    "query",
+                    "kind",
+                    "model",
+                    "vector",
+                    "path",
+                    "regex",
+                    "offset",
+                    "limit",
+                    "namePath",
+                    "relativePath",
+                    "pathGlob",
+                    "excludeGlob",
+                    "includeBody",
+                    "substringMatching",
+                    "includeKinds",
+                    "excludeKinds",
+                    "ignoreCase",
+                    "multiline",
+                    "groupBySymbol",
+                    "beforeContextLines",
+                    "afterContextLines",
+                    "depth",
+                    "searchBody"
                 ]
                 .iter()
                 .all(|field| args.get(field).is_none()),
                 "Language server navigation cannot be mixed with search fields"
             );
+            if let Some(options) = request.get("options") {
+                crate::lsp::validate_query_options(options)?;
+            }
             return Ok(());
         }
         ensure!(
             args.get("query").is_some()
+                || args.get("namePath").is_some()
+                || args.get("pathGlob").is_some()
+                || args.get("relativePath").is_some()
                 || (args["kind"] == "semantic" && args.get("vector").is_some()),
             "Find requires a query, an explicit semantic vector, or a language server request"
         );
@@ -221,7 +328,26 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
             ensure!(
                 args.get("path").is_none()
                     && args.get("regex").is_none()
-                    && args.get("offset").is_none(),
+                    && args.get("offset").is_none()
+                    && [
+                        "namePath",
+                        "relativePath",
+                        "pathGlob",
+                        "excludeGlob",
+                        "includeBody",
+                        "substringMatching",
+                        "includeKinds",
+                        "excludeKinds",
+                        "ignoreCase",
+                        "multiline",
+                        "groupBySymbol",
+                        "beforeContextLines",
+                        "afterContextLines",
+                        "depth",
+                        "searchBody"
+                    ]
+                    .iter()
+                    .all(|key| args.get(key).is_none()),
                 "Semantic retrieval does not accept text filters or offsets"
             );
             ensure!(
@@ -251,6 +377,63 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
             args["regex"] != true || args["kind"] == "text",
             "Regex requires literal text search mode"
         );
+        if args["kind"] == "text" {
+            ensure!(
+                args["query"]
+                    .as_str()
+                    .is_some_and(|query| !query.is_empty()),
+                "Text search requires a nonempty query"
+            );
+            ensure!(
+                [
+                    "namePath",
+                    "includeBody",
+                    "substringMatching",
+                    "includeKinds",
+                    "excludeKinds",
+                    "depth",
+                    "searchBody"
+                ]
+                .iter()
+                .all(|key| args.get(key).is_none()),
+                "Symbol filters require symbol search"
+            );
+        } else {
+            ensure!(
+                [
+                    "multiline",
+                    "groupBySymbol",
+                    "beforeContextLines",
+                    "afterContextLines"
+                ]
+                .iter()
+                .all(|key| args.get(key).is_none()),
+                "Text options require text search"
+            );
+        }
+        if matches!(
+            args["kind"].as_str(),
+            Some("document" | "concept" | "rationale" | "api_contract")
+        ) {
+            ensure!(
+                [
+                    "namePath",
+                    "relativePath",
+                    "pathGlob",
+                    "excludeGlob",
+                    "includeBody",
+                    "substringMatching",
+                    "includeKinds",
+                    "excludeKinds",
+                    "ignoreCase",
+                    "depth",
+                    "searchBody"
+                ]
+                .iter()
+                .all(|key| args.get(key).is_none()),
+                "Advanced filters require symbol, file or text search"
+            );
+        }
     }
     if tool == "ci_context" {
         ensure!(
@@ -315,6 +498,105 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
                 "Invalid symbol ID"
             );
         }
+    }
+    if tool == "ci_change_prepare" && args.get("bulkReplace").is_some() {
+        ensure!(
+            [
+                "edits",
+                "rename",
+                "replaceSymbol",
+                "insertBefore",
+                "insertAfter",
+                "deleteSymbol"
+            ]
+            .iter()
+            .all(|key| args.get(key).is_none()),
+            "Bulk replacement cannot be mixed with another change mode"
+        );
+        ensure!(
+            args["bulkReplace"].is_object(),
+            "Bulk replacement must be an object"
+        );
+    }
+    Ok(())
+}
+
+fn validate_selected_view(tool: &str, args: &Value) -> Result<()> {
+    let fields: &[&str] = match tool {
+        "ci_find" => &["query", "kind", "path", "limit"],
+        "ci_trace" => &[
+            "entityIds",
+            "direction",
+            "relations",
+            "resolutions",
+            "depth",
+            "maxVisited",
+        ],
+        "ci_context" => &["query", "kind", "path", "limit", "depth", "maxSourceBytes"],
+        "ci_read" => &[
+            "entityId",
+            "path",
+            "startByte",
+            "endByte",
+            "startLine",
+            "endLine",
+        ],
+        _ => bail!("Selected graph views support read-only query tools"),
+    };
+    ensure!(
+        args.as_object().unwrap().keys().all(|key| {
+            [
+                "graphViewId",
+                "snapshotId",
+                "maxBytes",
+                "tokenBudget",
+                "timeoutMs",
+                "taskId",
+            ]
+            .contains(&key.as_str())
+                || fields.contains(&key.as_str())
+        }),
+        "Selected graph view cannot be mixed with canonical query options"
+    );
+    if matches!(tool, "ci_find" | "ci_context") {
+        ensure!(
+            args["query"]
+                .as_str()
+                .is_some_and(|s| !s.is_empty() && s.len() <= 1000),
+            "Selected graph view requires a nonempty name query of at most 1000 bytes"
+        );
+        if let Some(kind) = args["kind"].as_str() {
+            ensure!(
+                !kind.is_empty()
+                    && kind.len() <= 100
+                    && !["symbol", "all", "text", "semantic"].contains(&kind),
+                "Selected graph kind must name an exact node kind, not a canonical query mode"
+            );
+        }
+        ensure!(
+            args["path"].as_str().is_none_or(|path| path.len() <= 4096),
+            "Selected graph path filter is too long"
+        );
+    }
+    if tool == "ci_context" {
+        ensure!(
+            args["limit"].as_u64().is_none_or(|n| n <= 20),
+            "Context limit must be 1..20"
+        );
+    }
+    if tool == "ci_read" {
+        ensure!(
+            args.get("entityId").is_some() != args.get("path").is_some(),
+            "Selected read requires exactly one entityId or snapshot path"
+        );
+        if let Some(path) = args["path"].as_str() {
+            crate::paths::normalized_syntax(path)?;
+        }
+        ensure!(
+            (args.get("startByte").is_none() && args.get("endByte").is_none())
+                || (args.get("startLine").is_none() && args.get("endLine").is_none()),
+            "Do not mix byte and line ranges"
+        );
     }
     Ok(())
 }

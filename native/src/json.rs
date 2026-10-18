@@ -1,4 +1,4 @@
-//! Bounded JSON decoding for host profiles. Errors never echo field values.
+//! Bounded JSON host input and output. Errors never echo field values.
 use anyhow::{Result, ensure};
 use serde::de::{DeserializeSeed, Error as _, MapAccess, SeqAccess, Visitor};
 use serde_json::Value;
@@ -102,4 +102,55 @@ pub fn parse(bytes: &[u8], max_bytes: usize) -> Result<Value> {
 /// Decode public host input without returning serde errors that quote its values.
 pub fn decode<T: serde::de::DeserializeOwned>(value: Value) -> Result<T> {
     serde_json::from_value(value).map_err(|_| anyhow::anyhow!("Invalid host input schema"))
+}
+
+/// Serialize an exact bounded JSON result under the caller's absolute deadline.
+pub fn encode_bounded<T: serde::Serialize + ?Sized>(
+    value: &T,
+    max_bytes: usize,
+    deadline: &crate::capture::Deadline,
+) -> Result<Vec<u8>> {
+    use std::io::Write;
+    struct BoundedWriter<'a> {
+        deadline: &'a crate::capture::Deadline,
+        limit: usize,
+        size: usize,
+        bytes: Option<Vec<u8>>,
+    }
+    impl Write for BoundedWriter<'_> {
+        fn write(&mut self, bytes: &[u8]) -> std::io::Result<usize> {
+            self.deadline.check().map_err(std::io::Error::other)?;
+            if bytes.len() > self.limit.saturating_sub(self.size) {
+                return Err(std::io::Error::other("JSON output exceeds byte capacity"));
+            }
+            if let Some(output) = &mut self.bytes {
+                output.extend_from_slice(bytes);
+            }
+            self.size += bytes.len();
+            Ok(bytes.len())
+        }
+        fn flush(&mut self) -> std::io::Result<()> {
+            self.deadline.check().map_err(std::io::Error::other)
+        }
+    }
+    deadline.check()?;
+    let mut counter = BoundedWriter {
+        deadline,
+        limit: max_bytes,
+        size: 0,
+        bytes: None,
+    };
+    serde_json::to_writer(&mut counter, value)?;
+    deadline.check()?;
+    let expected = counter.size;
+    let mut output = BoundedWriter {
+        deadline,
+        limit: expected,
+        size: 0,
+        bytes: Some(Vec::with_capacity(expected)),
+    };
+    serde_json::to_writer(&mut output, value)?;
+    deadline.check()?;
+    ensure!(output.size == expected, "JSON output size changed");
+    Ok(output.bytes.expect("output writer always owns its buffer"))
 }

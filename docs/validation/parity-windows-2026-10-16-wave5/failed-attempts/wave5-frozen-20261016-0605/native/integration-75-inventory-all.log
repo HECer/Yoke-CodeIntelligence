@@ -1,0 +1,17 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.96s
+     Running tests\office.rs (target\debug\deps\office-dd16d7ee5a8a673a.exe)
+forbidden_xml_scalars_cannot_enter_persisted_office_text: test
+native_docx_inspection_decodes_source_bound_unicode_paragraphs_and_tables: test
+native_xlsx_keeps_shared_inline_values_and_formula_cache_distinct: test
+office_refuses_wrong_main_root_instead_of_extracting_fake_document_text: test
+package_paths_bounds_entities_secrets_and_crc_fail_before_persistence: test
+public_cli_reads_office_without_starting_office_or_a_worker: test
+public_office_cli_retains_large_results_as_artifacts_within_its_output_budget: test
+unicode_zip_extra_fields_cannot_replace_admitted_part_identity: test
+
+8 tests, 0 benchmarks
+     Running tests\office_bounds.rs (target\debug\deps\office_bounds-9fc912b3f32f0c6c.exe)
+rejected_office_text_is_admitted_before_dom_and_extraction_copies: test
+
+1 test, 0 benchmarks

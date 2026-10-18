@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "status": "ignored_unavailable_helper_promotion_stubs_waiting_for_root_causal_red",
+  "parentAction": "act_mva5a5mg_773f4cecd8d3",
+  "owner": "/root/host_cli_review/bounded_graph",
+  "normalChangesByThisAgent": [],
+  "functionalBodies": false,
+  "ordinaryTests": 20,
+  "qualifiedIgnoredTests": 1,
+  "preservedManifests": [
+    {
+      "path": "partition/MANIFEST.json",
+      "sha256": "18e8d83be0a8985bb0d711e6321e26d6a6e410961f08d3df698a80b3caf0c2d4"
+    },
+    {
+      "path": "partition-capacity/MANIFEST.json",
+      "sha256": "369292a4411180dfd9f4fdbaed8c112902cdb28b4b259baff15a070a3be9234a"
+    },
+    {
+      "path": "partition-capacity/store-read-addendum/MANIFEST.json",
+      "sha256": "cccfe018c3a1dc1cdcc2539f536451ca213c11f0347088e224cce52589483960"
+    },
+    {
+      "path": "partition-capacity/store-read-schema-v2/MANIFEST.json",
+      "sha256": "bce1016a038a2db92a65579354982311730ed37a8ce77f5199641ae2e57dce3a"
+    }
+  ],
+  "preservedBoundFilesVerified": 18,
+  "files": [
+    {
+      "path": "PROMOTION.json",
+      "bytes": 2899,
+      "sha256": "a769a3f865143db71636844aabec58b69fabe6dae20a8ddd34ab52731a5390af"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4614,
+      "sha256": "f7064f2173c1890fa56412e7712c1c727aadb9cadc966b2d7889afb7f5aae71e"
+    },
+    {
+      "path": "retrieval_capacity.rs",
+      "bytes": 757,
+      "sha256": "c4e5214284a4cb08c84a9526f9310ff316c3f0da0501b394a02ec71d53fd5e5b"
+    },
+    {
+      "path": "retrieval_capacity_tests.rs",
+      "bytes": 7340,
+      "sha256": "738fe1d7d5b93b7ac49989dac9d159191bf1a5b055645764d2fca0887e7aab42"
+    },
+    {
+      "path": "retrieval_saved_graph.rs",
+      "bytes": 1561,
+      "sha256": "78a95b0abc94f043582eb06ad8e5fa670108feee52dd67c2e50176cbbfefd6f7"
+    },
+    {
+      "path": "retrieval_saved_graph_schema_tests.rs",
+      "bytes": 8340,
+      "sha256": "8ba206e4a30c4b52c432e18d06435719270abb510a77c9ca7b2f44147e2de848"
+    },
+    {
+      "path": "retrieval_saved_graph_tests.rs",
+      "bytes": 13169,
+      "sha256": "efa98700a143a4314af33851fc66fb152a1ee7b488afb1645f1a0722f8a368ca"
+    }
+  ],
+  "validation": {
+    "rustfmtCheck": "passed",
+    "jsonParse": "passed",
+    "cargo": "not_run",
+    "node": "not_run",
+    "featureTests": "not_run"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "status": "ignored_capacity_drafts_not_executed",
+  "action": "act_mva0w19b_ed935c0ac58d",
+  "preservedPartitionManifest": "18e8d83be0a8985bb0d711e6321e26d6a6e410961f08d3df698a80b3caf0c2d4",
+  "normalEditsAuthorized": false,
+  "files": [
+    {
+      "draft": "retrieval_capacity.rs",
+      "destination": "native/src/retrieval_capacity.rs",
+      "rootIntegration": "private mod retrieval_capacity; A later calls actual bounded_graph_fingerprint before saved Graph loading; stub is explicitly unavailable"
+    },
+    {
+      "draft": "retrieval_capacity_tests.rs",
+      "destination": "native/src/retrieval_capacity_tests.rs",
+      "ordinaryDraftTests": 7,
+      "rootIntegration": "private cfg(test) child path of retrieval_capacity.rs"
+    },
+    {
+      "draft": "retrieval_scopes_capacity_tests.rs",
+      "destination": "native/src/retrieval_scopes_capacity_tests.rs",
+      "ordinaryDraftTests": 1,
+      "ignoredQualifiedDraftTests": 5,
+      "rootIntegration": "cfg(test) child path INSIDE A retrieval_scopes.rs after separate explicit release; do not edit the frozen ignored partition copy"
+    }
+  ],
+  "recommendedRootOrder": [
+    "stream exact64MB literal SHA and poison-tail actual RED before functional stream body",
+    "all7 stream/schema/path ordinary drafts plus small real graph-read tripwire control after constructor baseline",
+    "qualified100K-path/entity paired job",
+    "qualified64MB exact/+1 real saved-graph paired job",
+    "qualified16MB ownership paired job and actual driver body-integrity ordering tripwire",
+    "qualifiedWindows4096UTF8 actual capture",
+    "optional1M observations only after>=8GB RAM/12GB disk qualification; otherwise explicitly unexecuted"
+  ],
+  "taxonomy": {
+    "entityCountOver": "Capacity(graph_entities)",
+    "observationCountOver": "Capacity(graph_observations)",
+    "streamGraphBytesOver": "Capacity(graph_json_bytes)",
+    "ownershipChargeOver": "Capacity(ownership_bytes)",
+    "unknownSerialization": "Internal(graph_serialization)",
+    "sourceCount100001": "existing native capture refuses before publication; no downstream genuine authority is manufactured",
+    "path4097": "existing normalized/capture admission refuses; syntax-only result is not source authority"
+  },
+  "causalLimitations": [
+    "The submitted Graph already exists; claims concern additional retrieval loading/allocation and source reads.",
+    "SQLite authorizer observes graph-table access, not all allocations. Real positive count+allow control required.",
+    "Poison-tail serialization catches eager traversal; independent review must still verify no full output buffer and actual production coupling.",
+    "Specific code equality distinguishes observation-count rejection from earlier graph-byte domination.",
+    "No Ready1M-observation result is possible under64MB: observation array alone>=322000001bytes.",
+    "Current disk capture count check occurs after opening/reading the next file; do not claim it prevents that inherited open.",
+    "Calibration or constructor failure is setup failure, never feature RED or certified passing skip.",
+    "All huge fixtures remain uncompiled/unexecuted and all default original full-contract certifications remain false."
+  ],
+  "rootRegistration": {
+    "lib": "mod retrieval_capacity;",
+    "insideRetrievalScopes": "#[cfg(test)] #[path = \"retrieval_scopes_capacity_tests.rs\"] mod capacity_tests;",
+    "authority": "root release required; these are strings, no source mutation"
+  },
+  "proposedRootCommands": [
+    "cargo test --manifest-path native/Cargo.toml --lib retrieval_capacity::tests",
+    "cargo test --manifest-path native/Cargo.toml --lib retrieval_scopes::capacity_tests::graph_read_tripwire_has_a_real_saved_positive_control -- --exact",
+    "cargo test --manifest-path native/Cargo.toml --lib retrieval_scopes::capacity_tests::real_100k_files_pass_then_one_real_function_rejects_entity_100001_before_graph_reload -- --exact --ignored --test-threads=1",
+    "cargo test --manifest-path native/Cargo.toml --lib retrieval_scopes::capacity_tests::real_graph_exact_64mb_passes_and_plus_one_refuses_before_saved_graph_loading -- --exact --ignored --test-threads=1",
+    "cargo test --manifest-path native/Cargo.toml --lib retrieval_scopes::capacity_tests::real_ownership_exact_16mb_passes_and_next_byte_refuses_before_body_scoring -- --exact --ignored --test-threads=1",
+    "cargo test --manifest-path native/Cargo.toml --lib retrieval_scopes::capacity_tests::genuine_4096_utf8_path_is_captured_and_4097_is_refused_by_existing_capture_boundary -- --exact --ignored --test-threads=1",
+    "cargo test --manifest-path native/Cargo.toml --lib retrieval_scopes::capacity_tests::genuine_one_million_observations_is_byte_dominated_then_plus_one_refuses_before_graph_loading -- --exact --ignored --test-threads=1"
+  ]
+}

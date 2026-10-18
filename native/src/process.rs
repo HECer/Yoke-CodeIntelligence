@@ -13,6 +13,23 @@ use std::{
     time::Duration,
 };
 
+#[derive(Debug)]
+pub(crate) struct CleanupUnproven(String);
+impl CleanupUnproven {
+    pub(crate) fn new(detail: impl Into<String>) -> Self {
+        Self(detail.into())
+    }
+}
+impl std::fmt::Display for CleanupUnproven {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Owned process cleanup could not be proven: {}", self.0)
+    }
+}
+impl std::error::Error for CleanupUnproven {}
+pub(crate) fn cleanup_unproven(error: &anyhow::Error) -> bool {
+    error.downcast_ref::<CleanupUnproven>().is_some()
+}
+
 #[derive(Clone, Copy, Debug)]
 pub struct CaptureLimits {
     pub stdin_bytes: usize,
@@ -227,6 +244,7 @@ pub fn run_capture(
 
 pub struct ManagedChild {
     inner: Box<dyn StdChildWrapper>,
+    drop_wait: bool,
 }
 impl ManagedChild {
     pub fn spawn(command: Command) -> Result<Self> {
@@ -244,7 +262,33 @@ impl ManagedChild {
         wrapper.wrap(process_wrap::std::ProcessGroup::leader());
         Ok(Self {
             inner: wrapper.spawn()?,
+            drop_wait: true,
         })
+    }
+    /// Consume an owned process and prove its exit after requesting wrapper
+    /// termination. Cleanup uses a separate bounded host budget even when the
+    /// request that owned the process has already been cancelled.
+    pub fn terminate_checked(mut self, budget: Duration) -> Result<std::process::ExitStatus> {
+        self.drop_wait = false;
+        self.inner
+            .start_kill()
+            .context("Owned process termination request failed")?;
+        ensure!(
+            !budget.is_zero() && budget <= Duration::from_secs(2),
+            "Invalid owned process cleanup budget"
+        );
+        let end = std::time::Instant::now() + budget;
+        loop {
+            if let Some(status) = self.inner.inner_mut().try_wait()? {
+                return Ok(status);
+            }
+            let remaining = end.saturating_duration_since(std::time::Instant::now());
+            ensure!(
+                !remaining.is_zero(),
+                "Owned process exit could not be proven within cleanup budget"
+            );
+            thread::sleep(remaining.min(Duration::from_millis(10)));
+        }
     }
 }
 impl Deref for ManagedChild {
@@ -260,7 +304,7 @@ impl DerefMut for ManagedChild {
 }
 impl Drop for ManagedChild {
     fn drop(&mut self) {
-        if self.inner.start_kill().is_ok() {
+        if self.inner.start_kill().is_ok() && self.drop_wait {
             let _ = self.inner.inner_mut().wait();
         }
     }

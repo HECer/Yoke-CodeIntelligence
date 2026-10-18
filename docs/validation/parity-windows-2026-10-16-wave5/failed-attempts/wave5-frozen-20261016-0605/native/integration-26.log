@@ -1,0 +1,21 @@
+    Finished `test` profile [unoptimized] target(s) in 0.77s
+     Running tests\explorer_export.rs (target\debug\deps\explorer_export-c9a7185de16e2409.exe)
+
+running 6 tests
+test graphml_dynamic_attributes_are_xml_values_not_markup ... ok
+test offline_html_preserves_canonical_graph_and_inert_hostile_labels ... ok
+test template_markers_inside_source_metadata_are_preserved_verbatim ... ok
+test native_markdown_metadata_unrepresentable_in_xml_is_refused_without_changing_graph ... ok
+test community_metadata_requires_exact_canonical_source_and_preserves_graph ... ok
+test source_bound_html_writer_is_create_only_and_idempotent ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+
+     Running tests\explorer_runtime.rs (target\debug\deps\explorer_runtime-5350e133bfddf44b.exe)
+
+running 2 tests
+test frame_scheduler_completes_once_when_animation_frames_starve_or_race ... ok
+test first_throttled_timer_finishes_bounded_layout_and_preserves_all_observations ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+

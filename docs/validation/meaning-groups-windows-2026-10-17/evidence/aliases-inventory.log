@@ -1,0 +1,16 @@
+    Finished `test` profile [unoptimized] target(s) in 0.73s
+     Running unittests src\lib.rs (E:/Yoke-Build-Cache/meaning-aliases-20261016\debug\deps\yoke-35b101204e4eb110.exe)
+meaning_aliases::tests::canonical_pair_order_is_independent_of_materialized_concept_order: test
+meaning_aliases::tests::capacities_refuse_the_complete_operation_instead_of_returning_a_top_k: test
+meaning_aliases::tests::compatibility_normalization_preserves_accent_and_script_distinctions: test
+meaning_aliases::tests::equal_native_ids_in_separate_packets_retain_qualified_proof: test
+meaning_aliases::tests::explicit_alias_overlap_retains_which_provider_terms_matched: test
+meaning_aliases::tests::invalid_host_limits_and_deadlines_are_refused: test
+meaning_aliases::tests::normalization_expansion_refuses_instead_of_truncating_a_label: test
+meaning_aliases::tests::normalized_aliases_propose_a_pair_without_merging_or_rewriting_source: test
+meaning_aliases::tests::normalized_term_dedup_preserves_label_priority_and_exact_work_admission: test
+meaning_aliases::tests::short_unrelated_names_and_empty_normalizations_do_not_get_fuzzy_matches: test
+meaning_aliases::tests::transposed_letters_are_scored_without_becoming_identity_proof: test
+meaning_aliases::tests::trigram_similarity_is_separate_from_normalized_equality: test
+
+12 tests, 0 benchmarks

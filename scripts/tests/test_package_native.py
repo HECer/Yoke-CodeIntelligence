@@ -80,17 +80,18 @@ class LicenseDiscovery(unittest.TestCase):
 class PackagingInputs(unittest.TestCase):
     """Offline host-binary/metadata fixtures; no compiler or model is invoked."""
 
-    def fixture(self, root, version):
+    def fixture(self, root, version, target_directory=None):
         script = root / "scripts/package-native.py"
         script.parent.mkdir()
-        (root / "target/release").mkdir(parents=True)
+        target_directory = target_directory or root / "target"
+        (target_directory / "release").mkdir(parents=True)
         (root / "native").mkdir()
-        binary = root / "target/release" / ("yoke.exe" if sys.platform == "win32" else "yoke")
+        binary = target_directory / "release" / ("yoke.exe" if sys.platform == "win32" else "yoke")
         binary.write_bytes(b"Labeled executable fixture")
         for name in ["LICENSE", "SECURITY.md", "CHANGELOG.md", "THIRD_PARTY_NOTICES.md", "Cargo.lock", "UPSTREAMS.json", "native/README.md"]:
             (root / name).write_text("Synthetic public guidance", encoding="utf-8")
         package = {"id": "fixture", "name": "yoke-code-intelligence", "version": "0.5.0"}
-        metadata = {"packages": [package], "resolve": {"nodes": [{"id": "fixture", "deps": []}]}}
+        metadata = {"target_directory": str(target_directory), "packages": [package], "resolve": {"nodes": [{"id": "fixture", "deps": []}]}}
 
         def invoke(*args, **kwargs):
             if args[:2] == ("rustc", "-vV"):
@@ -124,6 +125,19 @@ class PackagingInputs(unittest.TestCase):
                 self.assertEqual(json.loads(archive.read("manifest.json"))["version"], "0.5.0")
                 self.assertEqual(archive.read("SECURITY.md"), b"Synthetic public guidance")
                 self.assertEqual(archive.read("CHANGELOG.md"), b"Synthetic public guidance")
+
+    def test_external_cargo_target_directory_does_not_package_a_stale_repo_binary(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            script, invoke = self.fixture(root, "0.5.0", root / "external cache with spaces")
+            stale = root / "target/release" / ("yoke.exe" if sys.platform == "win32" else "yoke")
+            stale.parent.mkdir(parents=True)
+            stale.write_bytes(b"Stale repository-local executable")
+            output = root / "native.zip"
+            with patch.object(MODULE, "__file__", str(script)), patch.object(MODULE, "command", side_effect=invoke), patch.object(sys, "argv", [str(script), "--skip-build", "--output", str(output)]), contextlib.redirect_stdout(io.StringIO()):
+                MODULE.main()
+            with zipfile.ZipFile(output) as archive:
+                self.assertEqual(archive.read(stale.name), b"Labeled executable fixture")
 
 
 if __name__ == "__main__":

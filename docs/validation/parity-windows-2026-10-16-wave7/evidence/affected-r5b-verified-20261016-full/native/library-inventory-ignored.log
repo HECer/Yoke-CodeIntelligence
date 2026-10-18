@@ -1,0 +1,11 @@
+    Finished `test` profile [unoptimized] target(s) in 0.60s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+host_install::output_recovery_tests::output_recovery_worker: test
+retrieval_saved_graph::tests::oversized_saved_row_refuses_before_raw_payload_read_and_auto_fallback: test
+retrieval_scopes::capacity_tests::genuine_4096_utf8_path_is_captured_and_4097_is_refused_by_existing_capture_boundary: test
+retrieval_scopes::capacity_tests::genuine_one_million_observations_is_byte_dominated_then_plus_one_refuses_before_graph_loading: test
+retrieval_scopes::capacity_tests::real_100k_files_pass_then_one_real_function_rejects_entity_100001_before_graph_reload: test
+retrieval_scopes::capacity_tests::real_graph_exact_64mb_passes_and_plus_one_refuses_before_saved_graph_loading: test
+retrieval_scopes::capacity_tests::real_ownership_exact_16mb_passes_and_next_byte_refuses_before_body_scoring: test
+
+7 tests, 0 benchmarks

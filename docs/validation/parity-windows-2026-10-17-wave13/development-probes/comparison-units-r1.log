@@ -1,0 +1,23 @@
+   Compiling yoke-code-intelligence v0.5.0 (E:\Yoke-Worktrees\outcome-learning-20261017\native)
+    Finished `test` profile [unoptimized] target(s) in 2m 03s
+     Running unittests src\lib.rs (E:\Yoke-Build-Cache\outcome-learning-20261017\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 15 tests
+test graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test graph_view::comparison_boundary_tests::h15_original_rebound_full_union_has_an_exact_distinct_source_boundary_after_store_removal ... ok
+test graph_view::comparison_boundary_tests::h15_both_public_entrypoints_honor_real_inherited_cancellation_and_zero_deadline ... ok
+test graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test graph_view::comparison_boundary_tests::h15_same_checked_archive_counts_proof_twice_but_full_union_source_hashes_once ... ok
+test graph_view::comparison_input_tests::h07_pair_allows_the_first_authorized_side_then_denies_after_side_history_before_its_cas ... ok
+test graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test graph_view::comparison_pin_tests::h03_all_five_requested_pin_fields_are_admitted_on_both_sides_before_any_cas ... ok
+test graph_view::comparison_pin_tests::h03_existing_source_views_state_oracle_and_windows_cas_tripwire_qualify_without_comparison ... ok
+test graph_view::comparison_input_tests::h07_valid_current_scope_cannot_hide_a_late_original_scope_policy_denial_before_cas ... ok
+test graph_view::comparison_pin_tests::h03_missing_registration_on_either_side_refuses_before_cas_without_lookup_fallback ... ok
+test graph_view::comparison_pin_tests::h03_matching_foreign_pins_wrong_store_and_mixed_workspaces_use_early_workspace_pin_refusal ... ok
+test graph_view::comparison_pin_tests::h03_registration_internal_view_id_binding_is_checked_separately_from_the_lookup_key ... ok
+test graph_view::comparison_raw_typed_tests::raw_sql_metadata_above_exact_typed_pair_budget_remains_a_read_only_positive ... ok
+test graph_view::comparison_pin_tests::h03_one_supplied_store_read_view_survives_a_foreign_second_registration_commit ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 359 filtered out; finished in 16.54s
+

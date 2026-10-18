@@ -1,0 +1,111 @@
+   Compiling yoke-code-intelligence v0.5.0 (E:\Yoke-Worktrees\mixed-document-view-20261017\native)
+    Finished `test` profile [unoptimized] target(s) in 5.69s
+     Running tests\mixed_view_cli.rs (E:/Yoke-Build-Cache/mixed-document-view-20261017\debug\deps\mixed_view_cli-ffc3fea888a9b7f2.exe)
+
+running 8 tests
+test malformed_mixed_selection_and_query_are_rejected_before_missing_store_initialization ... FAILED
+test mixed_typed_reads_preserve_utf8_and_xml_origins_and_refuse_container_offsets ... FAILED
+test every_explicit_source_and_document_pin_is_checked_before_results_or_writes ... FAILED
+test mixed_read_global_capture_and_execution_flags_refuse_with_actual_valid_parents ... FAILED
+test global_mixed_pagination_and_case_match_oracles_are_independent_of_source_spaces ... FAILED
+test later_document_pin_denial_precedes_any_bulk_native_source_read ... FAILED
+test exact_mixed_output_and_capacity_refusals_never_publish_partial_results ... FAILED
+test mixed_find_replays_code_docx_and_xlsx_without_live_files_or_writes ... FAILED
+
+failures:
+
+---- malformed_mixed_selection_and_query_are_rejected_before_missing_store_initialization stdout ----
+
+thread 'malformed_mixed_selection_and_query_are_rejected_before_missing_store_initialization' (63848) panicked at native\tests\mixed_view_cli.rs:138:5:
+Expected mixed_view_input_invalid, stderr:error: unrecognized subcommand 'mixed-view'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- mixed_typed_reads_preserve_utf8_and_xml_origins_and_refuse_container_offsets stdout ----
+
+thread 'mixed_typed_reads_preserve_utf8_and_xml_origins_and_refuse_container_offsets' (62260) panicked at native\tests\mixed_view_cli.rs:127:5:
+stderr:error: unrecognized subcommand 'mixed-view'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- every_explicit_source_and_document_pin_is_checked_before_results_or_writes stdout ----
+
+thread 'every_explicit_source_and_document_pin_is_checked_before_results_or_writes' (73856) panicked at native\tests\mixed_view_cli.rs:127:5:
+stderr:error: unrecognized subcommand 'mixed-view'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- mixed_read_global_capture_and_execution_flags_refuse_with_actual_valid_parents stdout ----
+
+thread 'mixed_read_global_capture_and_execution_flags_refuse_with_actual_valid_parents' (70624) panicked at native\tests\mixed_view_cli.rs:127:5:
+stderr:error: unrecognized subcommand 'mixed-view'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- global_mixed_pagination_and_case_match_oracles_are_independent_of_source_spaces stdout ----
+
+thread 'global_mixed_pagination_and_case_match_oracles_are_independent_of_source_spaces' (56956) panicked at native\tests\mixed_view_cli.rs:127:5:
+stderr:error: unrecognized subcommand 'mixed-view'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- later_document_pin_denial_precedes_any_bulk_native_source_read stdout ----
+
+thread 'later_document_pin_denial_precedes_any_bulk_native_source_read' (57912) panicked at native\tests\mixed_view_cli.rs:138:5:
+Expected mixed_view_pin_mismatch, stderr:error: unrecognized subcommand 'mixed-view'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- exact_mixed_output_and_capacity_refusals_never_publish_partial_results stdout ----
+
+thread 'exact_mixed_output_and_capacity_refusals_never_publish_partial_results' (67064) panicked at native\tests\mixed_view_cli.rs:127:5:
+stderr:error: unrecognized subcommand 'mixed-view'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- mixed_find_replays_code_docx_and_xlsx_without_live_files_or_writes stdout ----
+
+thread 'mixed_find_replays_code_docx_and_xlsx_without_live_files_or_writes' (76940) panicked at native\tests\mixed_view_cli.rs:127:5:
+stderr:error: unrecognized subcommand 'mixed-view'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+
+failures:
+    every_explicit_source_and_document_pin_is_checked_before_results_or_writes
+    exact_mixed_output_and_capacity_refusals_never_publish_partial_results
+    global_mixed_pagination_and_case_match_oracles_are_independent_of_source_spaces
+    later_document_pin_denial_precedes_any_bulk_native_source_read
+    malformed_mixed_selection_and_query_are_rejected_before_missing_store_initialization
+    mixed_find_replays_code_docx_and_xlsx_without_live_files_or_writes
+    mixed_read_global_capture_and_execution_flags_refuse_with_actual_valid_parents
+    mixed_typed_reads_preserve_utf8_and_xml_origins_and_refuse_container_offsets
+
+test result: FAILED. 0 passed; 8 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.91s
+
+error: test failed, to rerun pass `--test mixed_view_cli`

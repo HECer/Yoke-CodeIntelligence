@@ -1,0 +1,33 @@
+    Finished `test` profile [unoptimized] target(s) in 0.72s
+     Running tests\meaning_cli.rs (E:/Yoke-Build-Cache/meaning-aliases-20261016\debug\deps\meaning_cli-6092092382a6115f.exe)
+
+running 13 tests
+test meaning_alias_cli_replays_exact_graph_without_provider_source_capture_or_writes ... ok
+test meaning_alias_limits_fail_before_creating_state ... ok
+test meaning_cli_admits_the_entire_selection_and_cost_before_first_worker ... ok
+test meaning_cli_build_reference_is_bounded_and_graph_reads_never_create_overflow_artifacts ... ok
+test meaning_cli_builds_queries_and_reuses_immutable_receipts_without_read_time_execution ... ok
+test meaning_cli_failed_later_claim_keeps_billing_and_no_partial_publication ... ok
+test meaning_cli_output_pipe_loss_reports_the_already_durable_job_and_graph ... ok
+test meaning_cli_read_commands_require_existing_store_and_reject_execution_configuration ... ok
+test meaning_cli_rejects_ambiguous_host_json_and_invalid_output_budget_before_state ... ok
+test meaning_cli_requires_explicit_provider_permission_before_opening_source_state ... ok
+test meaning_group_cli_rejects_ambiguous_host_review_and_limits_before_store_creation ... ok
+test meaning_group_cli_replays_parent_and_preserves_all_sql_cas_and_original_claims ... ok
+test meaning_group_cli_requires_existing_store_and_refuses_capture_or_execution_flags ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.17s
+
+     Running tests\meaning_groups_admission.rs (E:/Yoke-Build-Cache/meaning-aliases-20261016\debug\deps\meaning_groups_admission-561737e9547fb6a6.exe)
+
+running 7 tests
+test meaning_group_admission_every_hard_limit_and_all_zero_capacities_are_checked ... ok
+test meaning_group_admission_library_serialized_review_is_bounded_before_parent_loading ... ok
+test meaning_group_admission_nested_unknown_fields_and_duplicate_json_keys_refuse ... ok
+test meaning_group_admission_oversized_blank_rationale_hits_byte_guard_before_trimming ... ok
+test meaning_group_admission_per_group_member_limit_is_independent_of_total_capacity ... ok
+test meaning_group_admission_rationale_limit_counts_exact_utf8_bytes ... ok
+test meaning_group_admission_zero_output_is_a_valid_capacity ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+

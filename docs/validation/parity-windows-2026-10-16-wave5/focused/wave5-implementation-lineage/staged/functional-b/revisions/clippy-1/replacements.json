@@ -1,0 +1,18 @@
+[
+  {
+    "before": "                let metadata = scope_metadata(\n                    &run,\n                    \"auto\",\n                    \"global\",\n                    Some(&partition),\n                    code,\n                    Some((\"query_filter\", code)),\n                    Some(eligible.len()),\n                    Some(admission),\n                );",
+    "after": "                let metadata = scope_metadata(\n                    &run,\n                    Some(&partition),\n                    ScopeSelection {\n                        requested: \"auto\",\n                        effective: \"global\",\n                        reason: code,\n                        fallback: Some((\"query_filter\", code)),\n                        eligible: Some(eligible.len()),\n                    },\n                    Some(admission),\n                );"
+  },
+  {
+    "before": "    let metadata = scope_metadata(\n        run,\n        requested,\n        \"manifest_balanced_v1\",\n        Some(partition),\n        reason,\n        None,\n        Some(eligible.len()),\n        Some(admission),\n    );",
+    "after": "    let metadata = scope_metadata(\n        run,\n        Some(partition),\n        ScopeSelection {\n            requested,\n            effective: \"manifest_balanced_v1\",\n            reason,\n            fallback: None,\n            eligible: Some(eligible.len()),\n        },\n        Some(admission),\n    );"
+  },
+  {
+    "before": "    let mut metadata = scope_metadata(\n        run,\n        \"auto\",\n        \"global\",\n        None,\n        fallback.code(),\n        Some((kind, fallback.code())),\n        None,\n        Some(admission),\n    );",
+    "after": "    let mut metadata = scope_metadata(\n        run,\n        None,\n        ScopeSelection {\n            requested: \"auto\",\n            effective: \"global\",\n            reason: fallback.code(),\n            fallback: Some((kind, fallback.code())),\n            eligible: None,\n        },\n        Some(admission),\n    );"
+  },
+  {
+    "before": "fn scope_metadata(\n    run: &CheckedRetrievalRun<'_, '_, '_>,\n    requested: &str,\n    effective: &str,\n    partition: Option<&CheckedScopePartition<'_>>,\n    reason: &str,\n    fallback: Option<(&str, &str)>,\n    eligible: Option<usize>,\n    admission: Option<Value>,\n) -> Value {\n    let usage = run.usage();",
+    "after": "struct ScopeSelection<'a> {\n    requested: &'a str,\n    effective: &'a str,\n    reason: &'a str,\n    fallback: Option<(&'a str, &'a str)>,\n    eligible: Option<usize>,\n}\nfn scope_metadata(\n    run: &CheckedRetrievalRun<'_, '_, '_>,\n    partition: Option<&CheckedScopePartition<'_>>,\n    selection: ScopeSelection<'_>,\n    admission: Option<Value>,\n) -> Value {\n    let ScopeSelection {\n        requested,\n        effective,\n        reason,\n        fallback,\n        eligible,\n    } = selection;\n    let usage = run.usage();"
+  }
+]

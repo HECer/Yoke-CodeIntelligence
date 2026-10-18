@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.26s
+     Running tests\symbol_move_own_v1.rs (target\debug\deps\symbol_move_own_v1-83b3e666597bb2c3.exe)
+
+running 1 test
+test own_v1_host_opt_in_is_optional_and_default_profile_bytes_remain_identical ... FAILED
+
+failures:
+
+---- own_v1_host_opt_in_is_optional_and_default_profile_bytes_remain_identical stdout ----
+
+thread 'own_v1_host_opt_in_is_optional_and_default_profile_bytes_remain_identical' (93536) panicked at native\tests\symbol_move_own_v1.rs:206:29:
+Explicit own_v1 must be a host-selected supported profile: unknown field `refactorIntentProfile`, expected one of `passiveProfile`, `allowSourceExecution`, `tcpEndpoint`, `initializationOptions`, `settings`, `workspaceFolders`, `languageIds`, `openLanguages`
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    own_v1_host_opt_in_is_optional_and_default_profile_bytes_remain_identical
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 16 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--test symbol_move_own_v1`

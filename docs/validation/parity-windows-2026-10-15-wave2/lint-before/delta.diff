@@ -1,0 +1,225 @@
+--- before/native/src/host_install_namespace.rs
++++ after/native/src/host_install_namespace.rs
+@@ -451,7 +451,7 @@
+                 let length =
+                     unsafe { ptr::read_unaligned(ptr::addr_of!((*header).name_length)) } as usize;
+                 ensure!(
+-                    length > 0 && length % 2 == 0,
++                    length > 0 && length.is_multiple_of(2),
+                     "Host directory name length refused"
+                 );
+                 let end = offset
+@@ -461,7 +461,7 @@
+                 ensure!(end <= bytes.len(), "Host directory name is truncated");
+                 if next != 0 {
+                     ensure!(
+-                        next % 8 == 0
++                        next.is_multiple_of(8)
+                             && next >= fixed + length
+                             && offset
+                                 .checked_add(next)
+--- before/native/src/host_install_recovery.rs
++++ after/native/src/host_install_recovery.rs
+@@ -456,11 +456,11 @@
+                 journal.files[index].stage = "backed_up".into();
+                 append_event(selection, journal, d)?;
+             }
+-            if let Some(output) = run.output.as_mut() {
+-                if !run.output_at_target {
+-                    output.rename_no_replace(&target(selection, index)?, d)?;
+-                    run.output_at_target = true;
+-                }
++            if let Some(output) = run.output.as_mut()
++                && !run.output_at_target
++            {
++                output.rename_no_replace(&target(selection, index)?, d)?;
++                run.output_at_target = true;
+             }
+             if journal.files[index].stage != "published" {
+                 journal.files[index].stage = "published".into();
+@@ -525,13 +525,13 @@
+             journal.files[index].stage = "backed_up".into();
+             append_event(selection, journal, d)?;
+         }
+-        if let Some(original) = run.original.as_mut() {
+-            if !run.original_at_target {
+-                original.rename_no_replace(&target(selection, index)?, d)?;
+-                run.original_at_target = true;
+-                journal.files[index].stage = "prepared".into();
+-                append_event(selection, journal, d)?;
+-            }
++        if let Some(original) = run.original.as_mut()
++            && !run.original_at_target
++        {
++            original.rename_no_replace(&target(selection, index)?, d)?;
++            run.original_at_target = true;
++            journal.files[index].stage = "prepared".into();
++            append_event(selection, journal, d)?;
+         }
+     }
+     for (index, run) in runs.iter_mut().enumerate() {
+--- before/native/src/host_install.rs
++++ after/native/src/host_install.rs
+@@ -462,10 +462,10 @@
+     check_authority(selection, authority)?;
+     let _guards = guard_bindings(selection, d)?;
+     validate_plan(selection, plan, now_ms, false)?;
+-    if let Some(current) = head(selection, d)? {
+-        if current.plan_id == plan.id {
+-            return committed_replay(selection, plan, &current, d);
+-        }
++    if let Some(current) = head(selection, d)?
++        && current.plan_id == plan.id
++    {
++        return committed_replay(selection, plan, &current, d);
+     }
+     ensure!(
+         plan_for(selection, plan.operation.clone(), plan.created_ms, d)? == *plan,
+@@ -550,18 +550,18 @@
+         }
+         journal.phase = "applying".into();
+         append_event(selection, &mut journal, d)?;
+-        for index in 0..plan.files.len() {
+-            publish_file(selection, plan, index, &mut journal, &mut runs[index], d)?;
++        for (index, run) in runs.iter_mut().enumerate() {
++            publish_file(selection, plan, index, &mut journal, run, d)?;
+         }
+         let receipt = commit_receipt(selection, plan, &journal, d)?;
+         journal.receipt_id = Some(receipt.id.clone());
+         journal.phase = "cleanup".into();
+         append_event(selection, &mut journal, d)?;
+         for (index, run) in runs.iter_mut().enumerate() {
+-            if let Some(original) = run.original.take() {
+-                if journal.files[index].stage != "cleaned" {
+-                    original.delete_owned(d)?;
+-                }
++            if let Some(original) = run.original.take()
++                && journal.files[index].stage != "cleaned"
++            {
++                original.delete_owned(d)?;
+             }
+             journal.files[index].stage = "cleaned".into();
+             append_event(selection, &mut journal, d)?;
+@@ -1534,10 +1534,10 @@
+     d: &Deadline,
+ ) -> Result<Receipt> {
+     let previous = head(selection, d)?;
+-    if let Some(receipt) = &previous {
+-        if receipt.plan_id == plan.id {
+-            return Ok(receipt.clone());
+-        }
++    if let Some(receipt) = &previous
++        && receipt.plan_id == plan.id
++    {
++        return Ok(receipt.clone());
+     }
+     ensure!(
+         previous.as_ref().map(|r| &r.id) == plan.expected_receipt.as_ref(),
+--- before/native/src/host_install_io.rs
++++ after/native/src/host_install_io.rs
+@@ -202,13 +202,16 @@
+     const DACL_CONTROL: u16 = 0x150c;
+ 
+     #[cfg(test)]
++    type NamespaceHook = Box<dyn FnOnce() -> Result<()>>;
++
++    #[cfg(test)]
+     std::thread_local! {
+-        static BEFORE_NAMESPACE_OPEN: std::cell::RefCell<Option<Box<dyn FnOnce() -> Result<()>>>> =
++        static BEFORE_NAMESPACE_OPEN: std::cell::RefCell<Option<NamespaceHook>> =
+             std::cell::RefCell::new(None);
+     }
+ 
+     #[cfg(test)]
+-    pub(super) fn set_namespace_hook(hook: Option<Box<dyn FnOnce() -> Result<()>>>) {
++    pub(super) fn set_namespace_hook(hook: Option<NamespaceHook>) {
+         BEFORE_NAMESPACE_OPEN.with(|slot| *slot.borrow_mut() = hook);
+     }
+ 
+@@ -1573,9 +1576,8 @@
+         };
+         if set == 0 {
+             if required {
+-                return Err(std::io::Error::last_os_error())
+-                    .map_err(anyhow::Error::from)
+-                    .map_err(|error| error.context("Unheld fixture mountpoint retarget failed"));
++                return Err(anyhow::Error::from(std::io::Error::last_os_error())
++                    .context("Unheld fixture mountpoint retarget failed"));
+             }
+             return Ok(None);
+         }
+--- before/native/src/lsp.rs
++++ after/native/src/lsp.rs
+@@ -3133,7 +3133,7 @@
+     if operation == "rename" {
+         let checked =
+             check_workspace_edit(engine, snapshot, graph, tree.path(), &response, deadline)?;
+-        if let Some(staged) = staged.as_deref_mut() {
++        if let Some(staged) = staged {
+             let index = staged.len();
+             staged.push(checked);
+             return Ok(
+--- before/native/src/meaning_build.rs
++++ after/native/src/meaning_build.rs
+@@ -895,17 +895,17 @@
+ fn cleanup(store: &Store, job: &Job, d: &Deadline) {
+     let ledger = Ledger::new(store, d);
+     for p in &job.packets {
+-        if let Some(id) = &p.attempt_id {
+-            if let Ok(a) = ledger.attempt_status(id) {
+-                match a.state {
+-                    AttemptState::Reserved => {
+-                        let _ = ledger.cancel_before_send(id);
+-                    }
+-                    AttemptState::Sent => {
+-                        let _ = ledger.settle(id, None);
+-                    }
+-                    _ => {}
++        if let Some(id) = &p.attempt_id
++            && let Ok(a) = ledger.attempt_status(id)
++        {
++            match a.state {
++                AttemptState::Reserved => {
++                    let _ = ledger.cancel_before_send(id);
+                 }
++                AttemptState::Sent => {
++                    let _ = ledger.settle(id, None);
++                }
++                _ => {}
+             }
+         }
+     }
+--- before/native/src/meaning_cli.rs
++++ after/native/src/meaning_cli.rs
+@@ -69,7 +69,7 @@
+ 
+ enum PreparedOperation {
+     Build {
+-        provider: ProviderSpec,
++        provider: Box<ProviderSpec>,
+         policy: MeaningPolicy,
+     },
+     Load(String),
+@@ -159,7 +159,10 @@
+                 let reference = build_reference(&placeholder, &placeholder, &placeholder);
+                 yoke::json::encode_bounded(&reference, max_bytes - 1, deadline)
+                     .context("Meaning output budget cannot carry a durable build reference")?;
+-                PreparedOperation::Build { provider, policy }
++                PreparedOperation::Build {
++                    provider: Box::new(provider),
++                    policy,
++                }
+             }
+             Operation::Load { graph_id } => {
+                 valid_identity(graph_id)?;
+--- before/native/src/main.rs
++++ after/native/src/main.rs
+@@ -3080,7 +3080,7 @@
+     {
+         args.preflight_permission()?;
+         ensure!(
+-            cli.root == PathBuf::from(".")
++            cli.root == std::path::Path::new(".")
+                 && cli.snapshot.is_none()
+                 && cli.capture_config.is_none()
+                 && cli.include_ignored_dir.is_empty()

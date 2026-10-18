@@ -1,0 +1,47 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: methods `path` and `identity` are never used
+   --> native\src\host_install.rs:634:19
+    |
+633 | impl DurableOutputRegistration {
+    | ------------------------------ methods in this implementation
+634 |     pub(super) fn path(&self) -> &Path {
+    |                   ^^^^
+...
+637 |     pub(super) fn identity(&self) -> &str {
+    |                   ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `run_output_retain_hook` is never used
+   --> native\src\host_install_io.rs:390:8
+    |
+390 |     fn run_output_retain_hook() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib test) generated 2 warnings
+    Finished `test` profile [unoptimized] target(s) in 42.20s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 19 tests
+test host_install::io::namespace::tests::exclusive_creation_never_truncates_an_existing_leaf ... ok
+test host_install::io::namespace::tests::enumeration_limits_apply_to_real_entries_and_return_exact_metadata ... ok
+test host_install::io::namespace::tests::handle_path_uses_a_stable_volume_anchor_and_original_physical_name ... ok
+test host_install::io::namespace::tests::invalid_leaves_and_expired_deadlines_never_create_entries ... ok
+test host_install::io::namespace::tests::handle_enumeration_does_not_follow_a_retagged_parent ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_armed_empty_creation_deletes_on_last_close ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_expired_deadline_neither_creates_nor_disarms ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_armed_creation_never_escapes_a_retagged_held_parent ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_exclusive_creation_preserves_foreign_file_and_directory ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_populated_retained_output_supports_existing_owned_cleanup ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_successful_create_returns_ownership_after_host_cancellation ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_successful_clear_reports_retention_after_host_cancellation ... ok
+test host_install::io::namespace::tests::normal_directory_creation_and_entry_kind_checks_preserve_types ... ok
+test host_install::io::namespace::tests::normal_relative_creation_and_open_preserve_contents_and_created_outcome ... ok
+test host_install::io::namespace::tests::open_if_reports_creation_then_reuses_the_same_owned_lock ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_retention_keeps_exact_identity_and_subsequent_bytes ... ok
+test host_install::io::namespace::tests::retagged_held_parent_never_reads_a_foreign_leaf ... ok
+test host_install::io::namespace::tests::retagged_held_parent_never_redirects_directory_creation ... ok
+test host_install::io::namespace::tests::retagged_held_parent_never_redirects_file_creation ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 126 filtered out; finished in 0.03s
+

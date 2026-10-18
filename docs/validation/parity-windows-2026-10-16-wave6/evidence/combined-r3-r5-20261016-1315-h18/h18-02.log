@@ -1,0 +1,32 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 8.80s
+     Running tests\collection_registry_access.rs (target\debug\deps\collection_registry_access-95b2fe4353a0916e.exe)
+
+running 7 tests
+test readonly_guard_excludes_independent_writers_and_refuses_uncheckpointed_wal ... ok
+test readonly_uri_preserves_unicode_spaces_and_literal_uri_characters ... ok
+test read_only_native_archive_survives_original_source_deletion_without_writes ... ok
+test unknown_registry_open_does_not_create_state ... ok
+test native_and_checked_view_metadata_keep_distinct_kinds_and_reject_unsafe_legacy_presentation ... ok
+test foreign_metadata_requires_fresh_current_grants_for_each_inspection ... ok
+test stale_and_absent_cas_never_replace_existing_binding ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.00s
+
+     Running tests\graph_view.rs (target\debug\deps\graph_view-97c800a70b6f82cc.exe)
+
+running 11 tests
+test default_view_exposes_structural_relationships_without_replacing_canonical_graph ... ok
+test newly_derived_view_omits_legacy_config_file_signature_values_without_rewriting_history ... ok
+test context_omits_environment_values_and_clips_unicode_at_byte_budget ... ok
+test captured_readonly_dependency_proof_allows_view_and_collection_reads ... ok
+test registered_view_rejects_corrupt_cas_and_foreign_overlay_scope ... ok
+test selected_structural_artifacts_reject_forged_node_scope_lines_and_schema ... ok
+test semantic_and_structural_overlays_have_distinct_namespaces_and_provider_trust ... ok
+test source_view_remains_historical_and_rejects_forged_scope_options_and_deadlines ... ok
+test view_find_trace_context_and_export_preserve_source_and_parallel_calls ... ok
+test source_bound_view_exports_all_seven_formats ... ok
+test selected_overlay_inputs_have_an_aggregate_byte_budget ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.12s
+

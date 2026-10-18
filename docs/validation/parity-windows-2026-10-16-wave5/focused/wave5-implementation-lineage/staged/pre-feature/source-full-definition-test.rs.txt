@@ -1,0 +1,35 @@
+fn full_definition_envelope_overflow_is_an_error_without_an_artifact_fallback() {
+    let root = tempfile::tempdir().unwrap();
+    for i in 0..2 {
+        let prefix = format!("fn payment_{i}() {{\n/* ");
+        let suffix = " */\n payment();\n}\n";
+        let source = format!(
+            "{prefix}{}{suffix}",
+            "x".repeat(2_000_000 - prefix.len() - suffix.len())
+        );
+        write(root.path(), &format!("code/{i}.rs"), &source);
+    }
+    let mut s = session(Engine::open(root.path()).unwrap());
+    let before = counts(&s.engine).1;
+    let (response, body) = call(
+        &mut s,
+        "trail",
+        "trail_find_code",
+        json!({"query":"payment","limit":2,"full":true}),
+    );
+    assert_eq!(
+        response["result"]["isError"], true,
+        "Full definitions must reach hard final output admission: {body}"
+    );
+    assert!(
+        body["error"]["message"]
+            .as_str()
+            .unwrap()
+            .contains("compatibility_envelope")
+    );
+    assert_eq!(
+        counts(&s.engine).1,
+        before,
+        "No artifact or guarded-change publication on retrieval overflow"
+    );
+}

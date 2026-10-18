@@ -1,0 +1,21 @@
+    Finished `test` profile [unoptimized] target(s) in 0.66s
+     Running tests\document_graph_review.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\document_graph_review-3a585efaf29f2975.exe)
+
+running 2 tests
+test document_trace_admits_serialized_output_before_large_allocation ... ok
+test rejected_document_metadata_is_admitted_before_identity_serialization ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.61s
+
+     Running tests\editor.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\editor-42dab2ae0cfcc0b0.exe)
+
+running 6 tests
+test editor_cannot_restore_omitted_ignored_protected_or_secret_source ... ok
+test editor_buffers_are_versioned_source_bound_and_never_write_saved_files ... ok
+test editor_capture_refuses_foreign_disk_changes_and_accepts_a_real_saved_buffer ... ok
+test ancestor_ignore_policies_also_protect_unsaved_new_files ... ok
+test nested_ignore_policies_are_scoped_and_git_excludes_cannot_be_bypassed ... ok
+test effective_ignore_whitelists_apply_equally_to_saved_and_unsaved_new_paths ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+

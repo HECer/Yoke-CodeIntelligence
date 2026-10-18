@@ -1,0 +1,85 @@
+{
+  "CheckedAtUtc": "2026-10-17T16:48:31.4054668Z",
+  "Memory": {
+    "AvailableMBytes": 22016,
+    "CommittedBytes": 134299054080,
+    "CommitLimit": 139494735872,
+    "PercentCommittedBytesInUse": 96
+  },
+  "PageFiles": [
+    {
+      "Name": "D:\\pagefile.sys",
+      "AllocatedBaseSize": 10997,
+      "CurrentUsage": 160,
+      "PeakUsage": 361
+    },
+    {
+      "Name": "G:\\pagefile.sys",
+      "AllocatedBaseSize": 23828,
+      "CurrentUsage": 173,
+      "PeakUsage": 471
+    }
+  ],
+  "TopProcesses": [
+    {
+      "Id": 77280,
+      "ProcessName": "vmmemWSL",
+      "PrivateMemorySize64": 49424527360,
+      "WorkingSet64": 28497575936
+    },
+    {
+      "Id": 39632,
+      "ProcessName": "llama-server",
+      "PrivateMemorySize64": 12233179136,
+      "WorkingSet64": 8824012800
+    },
+    {
+      "Id": 36768,
+      "ProcessName": "Everything",
+      "PrivateMemorySize64": 5152305152,
+      "WorkingSet64": 2246463488
+    },
+    {
+      "Id": 39576,
+      "ProcessName": "python",
+      "PrivateMemorySize64": 4746788864,
+      "WorkingSet64": 252612608
+    },
+    {
+      "Id": 18640,
+      "ProcessName": "qemu-system-x86_64-headless",
+      "PrivateMemorySize64": 2641010688,
+      "WorkingSet64": 3007012864
+    },
+    {
+      "Id": 57760,
+      "ProcessName": "llama-server",
+      "PrivateMemorySize64": 2027753472,
+      "WorkingSet64": 150958080
+    },
+    {
+      "Id": 66680,
+      "ProcessName": "java",
+      "PrivateMemorySize64": 1986289664,
+      "WorkingSet64": 1166008320
+    },
+    {
+      "Id": 20408,
+      "ProcessName": "codex",
+      "PrivateMemorySize64": 1290932224,
+      "WorkingSet64": 921423872
+    },
+    {
+      "Id": 8792,
+      "ProcessName": "IRONWAKE",
+      "PrivateMemorySize64": 1161510912,
+      "WorkingSet64": 605097984
+    },
+    {
+      "Id": 58676,
+      "ProcessName": "SnippingTool",
+      "PrivateMemorySize64": 916955136,
+      "WorkingSet64": 122822656
+    }
+  ]
+}

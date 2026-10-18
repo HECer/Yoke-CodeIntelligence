@@ -1,0 +1,27 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 2m 30s
+     Running tests\monorepo_pre_feature_envelope.rs (target\debug\deps\monorepo_pre_feature_envelope-969d0005b34db2f9.exe)
+
+running 1 test
+test full_definition_envelope_overflow_is_an_error_without_an_artifact_fallback ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.92s
+
+     Running tests\monorepo_profiles.rs (target\debug\deps\monorepo_profiles-3140cc2d5d82f41f.exe)
+
+running 12 tests
+test compatibility_auto_is_host_selected_and_not_a_new_public_argument ... ok
+test corrupted_saved_marker_and_cancelled_host_deadline_never_return_a_fallback_success ... ok
+test explicit_native_balanced_uses_the_saved_snapshot_despite_live_manifest_changes ... ok
+test auto_fallback_is_observable_and_manifest_source_diagnostics_do_not_leak_bytes ... ok
+test native_absent_and_global_keep_an_independent_literal_legacy_golden ... ok
+test native_eight_and_compatibility_six_tool_inventories_remain_exact ... ok
+test invalid_native_modes_refuse_before_select_index_or_probe ... ok
+test full_definition_envelope_overflow_is_an_error_without_an_artifact_fallback ... ok
+test session_scope_mode_schema_is_a_strict_native_enum_without_auto_or_new_tools ... ok
+test ready_filter_fallback_retains_the_partition_and_does_not_replace_explicit_balanced ... ok
+test real_trail_and_graft_auto_select_the_small_package_and_keep_definition_conversion ... ok
+test malformed_manifest_fallback_keeps_the_four_megabytes_already_spent ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 19.70s
+

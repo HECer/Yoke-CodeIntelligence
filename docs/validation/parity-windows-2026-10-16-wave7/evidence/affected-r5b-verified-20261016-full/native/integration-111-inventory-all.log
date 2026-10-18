@@ -1,0 +1,24 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 5.56s
+     Running tests\test_map.rs (target\debug\deps\test_map-913379a96a9c85ac.exe)
+a_covered_configuration_change_still_widens_to_every_known_test: test
+actual_node_collection_separates_stdout_and_rejects_skipped_only_pass: test
+collector_requires_host_trust_and_a_real_available_command: test
+failed_tests_remain_selected_even_when_source_is_unchanged: test
+import_binds_hashes_rejects_malformed_and_retains_failed_tests: test
+node_source_stdout_cannot_forge_test_results_and_changed_copy_invalidates_hash_binding: test
+overflowing_node_reporter_output_never_publishes_a_pass: test
+selection_widens_unknown_config_and_new_tests: test
+source_stdout_cannot_fake_a_skipped_only_pass: test
+timed_out_node_collection_retains_the_previous_map: test
+v8_utf16_ranges_respect_crlf_and_narrower_zero_hit_ranges: test
+widening_with_an_empty_or_partial_caller_list_includes_all_recorded_tests: test
+
+12 tests, 0 benchmarks
+     Running tests\trail_adapter.rs (target\debug\deps\trail_adapter-26b9a5c2ec70b6a1.exe)
+named_call_trace_accepts_full_closure_without_the_native_depth_eight_limit: test
+public_trail_mcp_profile_lists_six_tools_and_accepts_legacy_query_aliases: test
+six_public_trail_tools_preserve_freshness_and_exact_file_api_contracts: test
+task_retrieval_regex_hits_and_repo_orientation_use_captured_source: test
+
+4 tests, 0 benchmarks

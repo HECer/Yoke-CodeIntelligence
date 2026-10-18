@@ -1,0 +1,20 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r3-shadow-unavailable-v1\native)
+   Compiling yoke-r5-released-qualification v0.0.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\parity-validation-20261015\next-git-impact-details\qualification-harness-v1)
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `hex`
+   --> tests\support\git_impact_fixture.rs:360:65
+    |
+360 |                         ValueRef::Text(value) => json!(["text", hex::encode(value)]),
+    |                                                                 ^^^ use of unresolved module or unlinked crate `hex`
+    |
+    = help: if you wanted to use a crate named `hex`, use `cargo add hex` to add it to your `Cargo.toml`
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `hex`
+   --> tests\support\git_impact_fixture.rs:361:65
+    |
+361 |                         ValueRef::Blob(value) => json!(["blob", hex::encode(value)]),
+    |                                                                 ^^^ use of unresolved module or unlinked crate `hex`
+    |
+    = help: if you wanted to use a crate named `hex`, use `cargo add hex` to add it to your `Cargo.toml`
+
+For more information about this error, try `rustc --explain E0433`.
+error: could not compile `yoke-r5-released-qualification` (test "git_impact_details_qualification") due to 2 previous errors

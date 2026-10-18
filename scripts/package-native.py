@@ -117,7 +117,12 @@ def main():
         included.add(current)
         pending.extend(dep["pkg"] for dep in nodes[current]["deps"])
     package = next(package for package in metadata["packages"] if package["id"] == root_id)
-    binary = repo / "target" / "release" / ("yoke.exe" if sys.platform == "win32" else "yoke")
+    # Cargo resolves CARGO_TARGET_DIR and repository configuration. A stale
+    # repository-local executable must never replace the configured build.
+    target_directory = Path(metadata["target_directory"])
+    if not target_directory.is_absolute():
+        raise RuntimeError("Cargo target directory must be absolute")
+    binary = target_directory / "release" / ("yoke.exe" if sys.platform == "win32" else "yoke")
     if not binary.is_file() or binary.is_symlink():
         raise RuntimeError("Release executable unavailable or linked")
     if command(str(binary), "--version", timeout=10).strip() != f"yoke {package['version']}":

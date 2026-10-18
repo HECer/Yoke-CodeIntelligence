@@ -1,0 +1,16 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.22s
+     Running tests\graphify_adapter.rs (target\debug\deps\graphify_adapter-e1d8de0958eea3b6.exe)
+community_and_ambiguous_neighbor_responses_honor_the_requested_budget: test
+filters_depth_and_conservative_token_byte_budget_are_real: test
+foreign_roots_unknown_arguments_and_ambiguous_names_fail_closed: test
+parallel_neighbors_exact_evidence_and_directed_shortest_path_are_preserved: test
+question_context_inference_is_labeled_and_explicit_filter_takes_precedence: test
+shortest_path_bounds_are_consistent_for_missing_and_ambiguous_endpoints: test
+ten_pinned_schemas_six_resources_and_pr_unavailability_are_explicit: test
+
+7 tests, 0 benchmarks
+     Running tests\graphify_cli.rs (target\debug\deps\graphify_cli-2f3cad2bee8ea6cb.exe)
+public_graphify_cli_exposes_ten_tools_six_resources_and_real_graph_stats: test
+
+1 test, 0 benchmarks

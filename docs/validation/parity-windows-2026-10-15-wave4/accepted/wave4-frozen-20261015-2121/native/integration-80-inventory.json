@@ -1,0 +1,29 @@
+{
+  "provider_batch_bounds": {
+    "executable": "target\\debug\\deps\\provider_batch_bounds-7b96361b355c1588.exe",
+    "ignored": [],
+    "registered": [
+      "entity_limit_rejects_before_copying_entire_unverified_graph_selection"
+    ]
+  },
+  "provider_batches": {
+    "executable": "target\\debug\\deps\\provider_batches-fe61bea4ba2699b8.exe",
+    "ignored": [],
+    "registered": [
+      "another_state_client_blocks_batch_before_spending_and_restores_original_client",
+      "bound_unknown_cost_can_later_reconcile_without_invalidating_original_response_artifact",
+      "budget_call_limits_source_limits_and_existing_namespace_reject_before_first_child",
+      "completed_and_failed_batches_are_typed_retention_roots_not_unknown_records",
+      "deadline_preserves_dispatched_unknown_and_reports_unreleased_unsent_without_retry",
+      "first_cost_overrun_blocks_remaining_reserved_chunk_and_releases_only_unsent",
+      "id_addressed_reversed_cohere_response_is_reordered_before_atomic_publication",
+      "initial_batch_registration_failure_rolls_back_all_reservations_before_launch",
+      "initially_unknown_usage_can_receive_its_first_response_report_later",
+      "partial_failure_preserves_each_reported_cost_and_never_publishes_partial_corpus",
+      "two_titan_chunks_have_separate_attempts_and_one_complete_legacy_vector_collection",
+      "unknown_costs_remain_null_and_retain_both_reservations",
+      "valid_large_per_attempt_usage_never_overflows_or_invalidates_completed_corpus",
+      "vector_and_complete_batch_publication_roll_back_together_after_billed_chunks"
+    ]
+  }
+}

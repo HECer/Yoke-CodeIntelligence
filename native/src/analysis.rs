@@ -10,86 +10,70 @@ use regex::Regex;
 use std::collections::{BTreeMap, HashMap};
 use tree_sitter::{Language, Node, ParseOptions, Parser};
 
-pub const LANGUAGES: &[&str] = &[
-    "rust",
-    "typescript",
-    "tsx",
-    "javascript",
-    "jsx",
-    "python",
-    "go",
-    "c",
-    "cpp",
-    "java",
-    "csharp",
-    "ruby",
-    "php",
-    "swift",
-    "scala",
-    "lua",
-    "bash",
-    "elixir",
-    "solidity",
-    "ocaml",
-    "ocaml-interface",
-    "zig",
-    "nix",
-    "r",
-    "kotlin",
-    "dart",
-    "clojure",
-];
+pub use crate::languages::LANGUAGES;
+
+/// An explicit extraction policy; capture/classification proofs remain separate.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum AnalyzerEpoch {
+    V8,
+    V9,
+}
+impl AnalyzerEpoch {
+    pub fn parse(producer: &str) -> Result<Self> {
+        match producer {
+            "yoke-tree-sitter-8" => Ok(Self::V8),
+            "yoke-tree-sitter-9" => Ok(Self::V9),
+            _ => anyhow::bail!("Unknown extraction analyzer epoch"),
+        }
+    }
+    pub fn active() -> Result<Self> {
+        Self::parse(ANALYZER)
+    }
+    pub fn producer(self) -> &'static str {
+        match self {
+            Self::V8 => "yoke-tree-sitter-8",
+            Self::V9 => "yoke-tree-sitter-9",
+        }
+    }
+    pub fn cache_key(self, file: &SourceFile) -> String {
+        identity(&(self.producer(), &file.language, &file.hash, &file.path))
+    }
+    pub fn derived_snapshot_id(self, base: &Snapshot, files: &[SourceFile]) -> String {
+        match self {
+            Self::V8 => identity(&(&base.id, "derived", files)),
+            Self::V9 => identity(&(&base.id, "derived", self.producer(), files)),
+        }
+    }
+}
 
 pub fn grammar(language: &str) -> Option<Language> {
-    Some(match language {
-        "rust" => tree_sitter_rust::LANGUAGE.into(),
-        "typescript" => tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into(),
-        "tsx" => tree_sitter_typescript::LANGUAGE_TSX.into(),
-        "javascript" | "jsx" => tree_sitter_javascript::LANGUAGE.into(),
-        "python" => tree_sitter_python::LANGUAGE.into(),
-        "go" => tree_sitter_go::LANGUAGE.into(),
-        "c" => tree_sitter_c::LANGUAGE.into(),
-        "cpp" => tree_sitter_cpp::LANGUAGE.into(),
-        "java" => tree_sitter_java::LANGUAGE.into(),
-        "csharp" => tree_sitter_c_sharp::LANGUAGE.into(),
-        "ruby" => tree_sitter_ruby::LANGUAGE.into(),
-        "php" => tree_sitter_php::LANGUAGE_PHP.into(),
-        "swift" => tree_sitter_swift::LANGUAGE.into(),
-        "scala" => tree_sitter_scala::LANGUAGE.into(),
-        "lua" => tree_sitter_lua::LANGUAGE.into(),
-        "bash" => tree_sitter_bash::LANGUAGE.into(),
-        "elixir" => tree_sitter_elixir::LANGUAGE.into(),
-        "solidity" => tree_sitter_solidity::LANGUAGE.into(),
-        "ocaml" => tree_sitter_ocaml::LANGUAGE_OCAML.into(),
-        "ocaml-interface" => tree_sitter_ocaml::LANGUAGE_OCAML_INTERFACE.into(),
-        "zig" => tree_sitter_zig::LANGUAGE.into(),
-        "nix" => tree_sitter_nix::LANGUAGE.into(),
-        "r" => tree_sitter_r::LANGUAGE.into(),
-        "kotlin" => tree_sitter_kotlin_ng::LANGUAGE.into(),
-        "dart" => tree_sitter_dart::LANGUAGE.into(),
-        "clojure" => tree_sitter_clojure_orchard::LANGUAGE.into(),
-        _ => return None,
-    })
+    crate::languages::grammar(language)
 }
 #[allow(clippy::too_many_arguments)]
 fn entity(
+    epoch: AnalyzerEpoch,
     file: &SourceFile,
     name: &str,
     kind: &str,
     start: usize,
     end: usize,
     text: &str,
+    line_starts: &[usize],
     parent: Option<&Entity>,
     name_range: Option<(usize, usize)>,
 ) -> Entity {
     let key = format!("{}:{kind}:{start}", file.path);
-    let signature = text[start..end]
-        .lines()
-        .next()
-        .unwrap_or("")
-        .chars()
-        .take(240)
-        .collect();
+    let signature = if kind == "file" {
+        format!("{} [{}]", file.path, file.language)
+    } else {
+        text[start..end]
+            .lines()
+            .next()
+            .unwrap_or("")
+            .chars()
+            .take(240)
+            .collect()
+    };
     Entity {
         id: String::new(),
         key,
@@ -103,12 +87,12 @@ fn entity(
         signature,
         start_byte: start,
         end_byte: end,
-        start_line: line(text, start),
-        end_line: line(text, end.saturating_sub(1)),
+        start_line: line_starts.partition_point(|offset| *offset <= start),
+        end_line: line_starts.partition_point(|offset| *offset <= end.saturating_sub(1)),
         name_start_byte: name_range.map(|r| r.0),
         name_end_byte: name_range.map(|r| r.1),
         parent_key: parent.map(|p| p.key.clone()),
-        producer: ANALYZER.into(),
+        producer: epoch.producer().into(),
     }
 }
 fn line(text: &str, offset: usize) -> usize {
@@ -121,12 +105,16 @@ fn line(text: &str, offset: usize) -> usize {
 fn kind(node: Node<'_>) -> Option<&'static str> {
     match node.kind() {
         "function_item"
+        | "local_function_statement"
         | "function_definition"
         | "function_declaration"
         | "function_expression"
         | "generator_function_declaration" => Some("function"),
         "method_definition"
         | "method_declaration"
+        | "method_signature"
+        | "abstract_method_signature"
+        | "function_signature_item"
         | "method"
         | "singleton_method"
         | "constructor_declaration" => Some("method"),
@@ -163,7 +151,29 @@ fn name_node(node: Node<'_>) -> Option<Node<'_>> {
     }
     None
 }
-fn symbol<'a>(node: Node<'a>, text: &str, language: &str) -> Option<(&'static str, Node<'a>)> {
+pub(crate) fn symbol<'a>(
+    epoch: AnalyzerEpoch,
+    node: Node<'a>,
+    text: &str,
+    language: &str,
+) -> Option<(&'static str, Node<'a>)> {
+    if language == "commonlisp" && crate::languages::commonlisp_literal_data(node, text) {
+        return None;
+    }
+    if epoch == AnalyzerEpoch::V9 {
+        if language == "verilog" && node.kind() == "task_declaration" {
+            return crate::languages::verilog_task_symbol(node);
+        }
+        if language == "commonlisp" && crate::languages::lisp_local_function(node, text).is_some() {
+            return Some(("function", node.named_child(0)?));
+        }
+    }
+    if let Some(symbol) = crate::languages::symbol(node, language, text) {
+        return Some(symbol);
+    }
+    if language == "rust" && node.kind() == "impl_item" {
+        return Some(("implementation", node.child_by_field_name("type")?));
+    }
     if language == "dart" && node.kind() == "function_declaration" {
         return Some((
             "function",
@@ -246,7 +256,18 @@ fn symbol<'a>(node: Node<'a>, text: &str, language: &str) -> Option<(&'static st
     }
     Some((kind(node)?, name_node(node)?))
 }
-fn call_target<'a>(node: Node<'a>, text: &str, language: &str) -> Option<Node<'a>> {
+pub(crate) fn call_target<'a>(
+    epoch: AnalyzerEpoch,
+    node: Node<'a>,
+    text: &str,
+    language: &str,
+) -> Option<Node<'a>> {
+    if language == "commonlisp" {
+        return crate::languages::commonlisp_call_target(node, text);
+    }
+    if let Some(target) = crate::languages::call_target(node, language) {
+        return Some(target);
+    }
     if !matches!(
         node.kind(),
         "call_expression"
@@ -264,7 +285,7 @@ fn call_target<'a>(node: Node<'a>, text: &str, language: &str) -> Option<Node<'a
         return None;
     }
     if language == "clojure" {
-        if node.kind() != "list_lit" || symbol(node, text, language).is_some() {
+        if node.kind() != "list_lit" || symbol(epoch, node, text, language).is_some() {
             return None;
         }
         return node.named_child(0).filter(|n| n.kind() == "sym_lit");
@@ -273,14 +294,14 @@ fn call_target<'a>(node: Node<'a>, text: &str, language: &str) -> Option<Node<'a
         return None;
     }
     if language == "elixir" {
-        if symbol(node, text, language).is_some() {
+        if symbol(epoch, node, text, language).is_some() {
             return None;
         }
         if let Some(arguments) = node.parent().filter(|parent| parent.kind() == "arguments")
             && arguments.named_child(0) == Some(node)
             && arguments
                 .parent()
-                .is_some_and(|parent| symbol(parent, text, language).is_some())
+                .is_some_and(|parent| symbol(epoch, parent, text, language).is_some())
         {
             return None;
         }
@@ -296,25 +317,85 @@ fn call_target<'a>(node: Node<'a>, text: &str, language: &str) -> Option<Node<'a
         })
 }
 pub fn extract(file: &SourceFile, text: &str, deadline: &Deadline) -> Result<Extraction> {
+    extract_at(AnalyzerEpoch::active()?, file, text, deadline)
+}
+pub fn extract_at(
+    epoch: AnalyzerEpoch,
+    file: &SourceFile,
+    text: &str,
+    deadline: &Deadline,
+) -> Result<Extraction> {
     deadline.check()?;
+    let mut line_starts = vec![0];
+    line_starts.extend(
+        text.bytes()
+            .enumerate()
+            .filter_map(|(offset, byte)| (byte == b'\n').then_some(offset + 1)),
+    );
     let mut output = Extraction::default();
     output.entities.push(entity(
+        epoch,
         file,
         &file.path,
         "file",
         0,
         text.len(),
         text,
+        &line_starts,
         None,
         None,
     ));
-    if let Some(language) = grammar(&file.language) {
+    if let Some(units) = crate::languages::embedded_units(&file.language, text)? {
+        output.resolution.scopes.push(crate::resolution::Scope {
+            start: 0,
+            end: text.len(),
+            parent: None,
+            function: false,
+        });
+        for unit in units {
+            deadline.check()?;
+            if let Some(message) = unit.unsupported {
+                output.diagnostics.push(Diagnostic {
+                    path: file.path.clone(),
+                    start_byte: unit.start,
+                    message,
+                    severity: "warning".into(),
+                    producer: epoch.producer().into(),
+                });
+                continue;
+            }
+            let mut selected = file.clone();
+            selected.language = unit.language.into();
+            let code = text
+                .get(unit.start..unit.end)
+                .ok_or_else(|| anyhow::anyhow!("Embedded source range invalid"))?;
+            let parsed = extract_at(epoch, &selected, code, deadline)?;
+            merge_embedded(
+                &mut output,
+                parsed,
+                unit.start,
+                line_starts.partition_point(|offset| *offset <= unit.start) - 1,
+                deadline,
+            )?;
+            if output.resolution.language.is_empty()
+                || unit.language == "typescript"
+                || unit.language == "tsx"
+            {
+                output.resolution.language = unit.language.into();
+            }
+        }
+        crate::contracts::extract_document(file, text, &mut output, deadline)?;
+        return Ok(output);
+    }
+    let effective_language = file.language.as_str();
+    let parse_text = text;
+    if let Some(language) = grammar(effective_language) {
         let mut parser = Parser::new();
         parser.set_language(&language)?;
         let mut cancelled = |_: &tree_sitter::ParseState| deadline.check().is_err();
         let tree = parser
             .parse_with_options(
-                &mut |offset, _| &text.as_bytes()[offset.min(text.len())..],
+                &mut |offset, _| &parse_text.as_bytes()[offset.min(parse_text.len())..],
                 None,
                 Some(ParseOptions::new().progress_callback(&mut cancelled)),
             )
@@ -328,17 +409,19 @@ pub fn extract(file: &SourceFile, text: &str, deadline: &Deadline) -> Result<Ext
             }
             ensure!(count <= 1_000_000, "AST node budget exceeded");
             let mut current = owner;
-            if let Some((kind, name)) = symbol(node, text, &file.language) {
+            if let Some((kind, name)) = symbol(epoch, node, text, effective_language) {
                 let name_text = name.utf8_text(text.as_bytes())?;
                 if !name_text.is_empty() && name_text.len() <= 1000 {
                     let parent = &output.entities[owner];
                     let e = entity(
+                        epoch,
                         file,
                         name_text,
                         kind,
                         node.start_byte(),
                         node.end_byte(),
                         text,
+                        &line_starts,
                         Some(parent),
                         Some((name.start_byte(), name.end_byte())),
                     );
@@ -364,7 +447,7 @@ pub fn extract(file: &SourceFile, text: &str, deadline: &Deadline) -> Result<Ext
                 start_line: node.start_position().row + 1,
                 end_line: node.end_position().row + 1,
             };
-            if let Some(target) = call_target(node, text, &file.language) {
+            if let Some(target) = call_target(epoch, node, text, effective_language) {
                 output
                     .edges
                     .push(raw(target.utf8_text(text.as_bytes())?.into(), "calls"));
@@ -411,17 +494,19 @@ pub fn extract(file: &SourceFile, text: &str, deadline: &Deadline) -> Result<Ext
                     start_byte: node.start_byte(),
                     message: format!("Syntax error near {}", node.kind()),
                     severity: "error".into(),
-                    producer: ANALYZER.into(),
+                    producer: epoch.producer().into(),
                 });
             }
             if node.kind().contains("comment") {
                 extract_rationale(
+                    epoch,
                     file,
                     text,
                     node.start_byte(),
                     node.end_byte(),
                     &output.entities[current].clone(),
                     &mut output,
+                    &line_starts,
                 );
             }
             crate::contracts::extract_code_node(
@@ -437,6 +522,16 @@ pub fn extract(file: &SourceFile, text: &str, deadline: &Deadline) -> Result<Ext
                 stack.push((child, current));
             }
         }
+        let mut semantic_file = file.clone();
+        semantic_file.language = effective_language.into();
+        crate::resolution::enrich_at(
+            epoch,
+            tree.root_node(),
+            &semantic_file,
+            text,
+            &mut output,
+            deadline,
+        )?;
     } else if file.language == "markdown" {
         let mut offset = 0;
         for text_line in text.split_inclusive('\n') {
@@ -446,12 +541,14 @@ pub fn extract(file: &SourceFile, text: &str, deadline: &Deadline) -> Result<Ext
                 if !name.is_empty() {
                     let root = output.entities[0].clone();
                     output.entities.push(entity(
+                        epoch,
                         file,
                         name,
                         "concept",
                         offset,
                         offset + text_line.len(),
                         text,
+                        &line_starts,
                         Some(&root),
                         None,
                     ));
@@ -473,16 +570,139 @@ pub fn extract(file: &SourceFile, text: &str, deadline: &Deadline) -> Result<Ext
             });
         }
     }
+    for declaration in crate::languages::pattern_declarations(&file.language, text, deadline)? {
+        deadline.check()?;
+        let root = output.entities[0].clone();
+        let mut symbol = entity(
+            epoch,
+            file,
+            declaration.name,
+            declaration.kind,
+            declaration.start,
+            declaration.end,
+            text,
+            &line_starts,
+            Some(&root),
+            Some((declaration.name_start, declaration.name_end)),
+        );
+        symbol.producer = "yoke-structural-patterns-1".into();
+        output.edges.push(RawEdge {
+            source_key: root.key.clone(),
+            target_label: symbol.key.clone(),
+            relation: "contains".into(),
+            start_byte: declaration.start,
+            end_byte: declaration.end,
+            start_line: symbol.start_line,
+            end_line: symbol.end_line,
+        });
+        output.entities.push(symbol);
+    }
     crate::contracts::extract_document(file, text, &mut output, deadline)?;
     Ok(output)
 }
+fn merge_embedded(
+    output: &mut Extraction,
+    mut unit: Extraction,
+    offset: usize,
+    line_offset: usize,
+    deadline: &Deadline,
+) -> Result<()> {
+    let root = &output.entities[0];
+    let keys: HashMap<_, _> = unit
+        .entities
+        .iter()
+        .map(|entity| {
+            (
+                entity.key.clone(),
+                if entity.kind == "file" {
+                    root.key.clone()
+                } else {
+                    format!(
+                        "{}:{}:{}",
+                        entity.path,
+                        entity.kind,
+                        entity.start_byte + offset
+                    )
+                },
+            )
+        })
+        .collect();
+    let remap = |key: &str| keys.get(key).cloned().unwrap_or_else(|| key.into());
+    for mut entity in unit
+        .entities
+        .drain(..)
+        .filter(|entity| entity.kind != "file")
+    {
+        deadline.check()?;
+        entity.key = remap(&entity.key);
+        entity.parent_key = entity.parent_key.as_deref().map(remap);
+        entity.start_byte += offset;
+        entity.end_byte += offset;
+        entity.start_line += line_offset;
+        entity.end_line += line_offset;
+        entity.name_start_byte = entity.name_start_byte.map(|byte| byte + offset);
+        entity.name_end_byte = entity.name_end_byte.map(|byte| byte + offset);
+        output.entities.push(entity);
+    }
+    for mut edge in unit.edges {
+        deadline.check()?;
+        edge.source_key = remap(&edge.source_key);
+        edge.target_label = remap(&edge.target_label);
+        edge.start_byte += offset;
+        edge.end_byte += offset;
+        edge.start_line += line_offset;
+        edge.end_line += line_offset;
+        output.edges.push(edge);
+    }
+    for mut diagnostic in unit.diagnostics {
+        diagnostic.start_byte += offset;
+        output.diagnostics.push(diagnostic);
+    }
+    let first = output.resolution.scopes.len();
+    let scope = |index: usize| if index == 0 { 0 } else { first + index - 1 };
+    for mut value in unit.resolution.scopes.into_iter().skip(1) {
+        value.start += offset;
+        value.end += offset;
+        value.parent = value.parent.map(scope);
+        output.resolution.scopes.push(value);
+    }
+    for mut binding in unit.resolution.bindings {
+        binding.scope = scope(binding.scope);
+        binding.defined_at += offset;
+        if let crate::resolution::BindingTarget::Entity(key) = &mut binding.target {
+            *key = remap(key);
+        }
+        output.resolution.bindings.push(binding);
+    }
+    for mut usage in unit.resolution.uses {
+        usage.scope = scope(usage.scope);
+        usage.start += offset;
+        usage.end += offset;
+        usage.source_key = remap(&usage.source_key);
+        output.resolution.uses.push(usage);
+    }
+    for mut arity in unit.resolution.callable_arities {
+        arity.entity_key = remap(&arity.entity_key);
+        output.resolution.callable_arities.push(arity);
+    }
+    ensure!(
+        output.entities.len() <= 1_000_000
+            && output.resolution.scopes.len() <= 100_000
+            && output.resolution.uses.len() <= 200_000,
+        "Embedded extraction aggregate budget exceeded"
+    );
+    Ok(())
+}
+#[allow(clippy::too_many_arguments)]
 fn extract_rationale(
+    epoch: AnalyzerEpoch,
     file: &SourceFile,
     text: &str,
     start: usize,
     end: usize,
     parent: &Entity,
     output: &mut Extraction,
+    line_starts: &[usize],
 ) {
     let comment = &text[start..end];
     if ["WHY:", "NOTE:", "ADR-", "RFC-"]
@@ -490,12 +710,14 @@ fn extract_rationale(
         .any(|marker| comment.contains(marker))
     {
         let e = entity(
+            epoch,
             file,
             comment.trim(),
             "rationale",
             start,
             end,
             text,
+            line_starts,
             Some(parent),
             None,
         );
@@ -550,6 +772,14 @@ pub fn assemble(
     extractions: Vec<Extraction>,
     deadline: &Deadline,
 ) -> Result<Graph> {
+    assemble_at(AnalyzerEpoch::active()?, snapshot, extractions, deadline)
+}
+pub fn assemble_at(
+    epoch: AnalyzerEpoch,
+    snapshot: &Snapshot,
+    extractions: Vec<Extraction>,
+    deadline: &Deadline,
+) -> Result<Graph> {
     let mut graph=Graph{snapshot_id:snapshot.id.clone(),coverage:Coverage{source_files:snapshot.files.len(),indexed_files:snapshot.files.len(),omissions:snapshot.omissions.len(),exhaustive:false,semantic:false,limitations:vec!["Structural candidate resolution is not compiler binding or exhaustive runtime coverage.".into(),"Unsupported text formats have full-text search but no AST semantics. Binary/media files are explicitly omitted.".into()],..Coverage::default()},..Graph::default()};
     for file in &snapshot.files {
         *graph
@@ -559,7 +789,26 @@ pub fn assemble(
             .or_default() += 1;
     }
     let mut raw_edges = Vec::new();
+    let mut scoped_records = Vec::new();
     for extraction in extractions {
+        deadline.check()?;
+        ensure!(
+            extraction.entities.iter().all(|entity| {
+                !entity.producer.starts_with("yoke-tree-sitter-")
+                    || entity.producer == epoch.producer()
+            }) && extraction.diagnostics.iter().all(|diagnostic| {
+                !diagnostic.producer.starts_with("yoke-tree-sitter-")
+                    || diagnostic.producer == epoch.producer()
+            }),
+            "Extraction analyzer epoch does not match assembly policy"
+        );
+        if let Some(file) = extraction
+            .entities
+            .iter()
+            .find(|entity| entity.kind == "file")
+        {
+            scoped_records.push((file.path.clone(), extraction.resolution));
+        }
         graph.entities.extend(extraction.entities);
         raw_edges.extend(extraction.edges);
         graph.diagnostics.extend(extraction.diagnostics);
@@ -598,19 +847,28 @@ pub fn assemble(
         .map(|e| (e.key.clone(), e.path.clone()))
         .collect();
     let hashes: HashMap<_, _> = snapshot.files.iter().map(|f| (&f.path, &f.hash)).collect();
+    let resolver = crate::resolution::Resolver::new(&graph.entities, scoped_records, deadline)?;
+    graph.coverage.limitations.push("Lexical/import/receiver bindings are syntax-local candidates. Parallel targets preserve possible dispatch; dynamic assignment, dependencies and runtime targets remain nonexhaustive.".into());
     for (index, raw) in raw_edges.into_iter().enumerate() {
         deadline.check()?;
         let path = paths
             .get(&raw.source_key)
             .ok_or_else(|| anyhow::anyhow!("Unknown edge owner"))?;
         let mut resolution = "unresolved";
-        let target = if let Some(id) = keys.get(&raw.target_label) {
+        let targets = if let Some(id) = keys.get(&raw.target_label) {
             resolution = if crate::contracts::candidate_relation(&raw.relation) {
                 "heuristic"
             } else {
                 "syntactic"
             };
-            Some(id.clone())
+            vec![Some(id.clone())]
+        } else if let Some(candidates) = resolver.resolve(path, &raw)? {
+            if candidates.is_empty() {
+                vec![None]
+            } else {
+                resolution = "heuristic";
+                candidates.into_iter().map(Some).collect()
+            }
         } else if matches!(raw.relation.as_str(), "imports" | "documents") {
             let target = if raw.relation == "imports"
                 && !raw.target_label.starts_with("./")
@@ -623,9 +881,9 @@ pub fn assemble(
             if target.is_some() {
                 resolution = "syntactic";
             }
-            target
+            vec![target]
         } else if crate::contracts::candidate_relation(&raw.relation) {
-            None
+            vec![None]
         } else {
             let candidates = names.get(&raw.target_label);
             let local: Vec<_> = candidates
@@ -642,12 +900,12 @@ pub fn assemble(
             };
             if let Some((id, _)) = found {
                 resolution = "heuristic";
-                Some(id.clone())
+                vec![Some(id.clone())]
             } else {
-                None
+                vec![None]
             }
         };
-        if target.is_none() {
+        if targets.iter().all(Option::is_none) {
             graph.coverage.unresolved += 1;
         }
         let eid = identity(&(
@@ -669,19 +927,21 @@ pub fn assemble(
             end_line: raw.end_line,
             anchor: "exact".into(),
             trust: "source-data".into(),
-            producer: ANALYZER.into(),
+            producer: epoch.producer().into(),
         });
-        graph.observations.push(Observation {
-            id: identity(&(&snapshot.id, &raw.source_key, &target, &eid)),
-            snapshot_id: snapshot.id.clone(),
-            source: keys[&raw.source_key].clone(),
-            target,
-            target_label: raw.target_label,
-            relation: raw.relation,
-            resolution: resolution.into(),
-            evidence_ids: vec![eid],
-            producer: ANALYZER.into(),
-        });
+        for target in targets {
+            graph.observations.push(Observation {
+                id: identity(&(&snapshot.id, &raw.source_key, &target, &eid)),
+                snapshot_id: snapshot.id.clone(),
+                source: keys[&raw.source_key].clone(),
+                target,
+                target_label: raw.target_label.clone(),
+                relation: raw.relation.clone(),
+                resolution: resolution.into(),
+                evidence_ids: vec![eid.clone()],
+                producer: epoch.producer().into(),
+            });
+        }
     }
     Ok(graph)
 }

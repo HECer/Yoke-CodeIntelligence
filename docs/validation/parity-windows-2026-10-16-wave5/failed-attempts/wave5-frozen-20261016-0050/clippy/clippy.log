@@ -1,0 +1,190 @@
+    Checking yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+error: this function has too many arguments (8/7)
+   --> native\src\retrieval.rs:903:1
+    |
+903 | / fn scope_metadata(
+904 | |     run: &CheckedRetrievalRun<'_, '_, '_>,
+905 | |     requested: &str,
+906 | |     effective: &str,
+...   |
+911 | |     admission: Option<Value>,
+912 | | ) -> Value {
+    | |__________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#too_many_arguments
+    = note: `-D clippy::too-many-arguments` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::too_many_arguments)]`
+
+error: manual implementation of `.is_multiple_of()`
+   --> native\src\retrieval_marker_decode.rs:399:12
+    |
+399 |         if self.at % 1_024 == 0 {
+    |            ^^^^^^^^^^^^^^^^^^^^ help: replace with: `self.at.is_multiple_of(1_024)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#manual_is_multiple_of
+    = note: `-D clippy::manual-is-multiple-of` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::manual_is_multiple_of)]`
+
+error: this loop could be written as a `for` loop
+   --> native\src\retrieval_marker_decode.rs:838:5
+    |
+838 |     while let Some(token) = scanner.next() {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: try: `for token in scanner.by_ref()`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#while_let_on_iterator
+    = note: `-D clippy::while-let-on-iterator` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::while_let_on_iterator)]`
+
+error: this `if` statement can be collapsed
+   --> native\src\retrieval_partition.rs:215:9
+    |
+215 | /         if let Some(pnpm) = workspaces
+216 | |             .iter()
+217 | |             .find(|w| w.root == npm.root && w.ecosystem == Ecosystem::Pnpm)
+...   |
+226 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+217 ~             .find(|w| w.root == npm.root && w.ecosystem == Ecosystem::Pnpm)
+218 ~             && (npm.positive != pnpm.positive || !pnpm.negative.is_empty()) {
+219 |                 let source = sources
+...
+223 |                 diagnostics.push(diagnostic(source, "conflicting_npm_pnpm_membership", None));
+224 ~             }
+    |
+
+error: this `if` statement can be collapsed
+   --> native\src\retrieval_scopes.rs:610:9
+    |
+610 | /         if let Some(source) = self.verified.get(&original.path) {
+611 | |             if source
+612 | |                 .text()
+613 | |                 .get(original.start_byte..original.end_byte)
+...   |
+618 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+610 ~         if let Some(source) = self.verified.get(&original.path)
+611 ~             && source
+612 |                 .text()
+...
+616 |                 return Err(RetrievalHardError::SourceIntegrity("document_range"));
+617 ~             }
+    |
+
+error: could not compile `yoke-code-intelligence` (lib) due to 5 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: this `if` statement can be collapsed
+   --> native\src\retrieval_saved_graph_tests.rs:237:13
+    |
+237 | /             if let AuthAction::Read {
+238 | |                 table_name: "graphs",
+239 | |                 column_name: "value",
+240 | |             } = ctx.action
+...   |
+245 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+240 ~             } = ctx.action
+241 ~                 && observed.fetch_add(1, Ordering::SeqCst) >= 2 {
+242 |                     return Authorization::Deny;
+243 ~                 }
+    |
+
+error: this `if` statement can be collapsed
+   --> native\src\retrieval_saved_graph_tests.rs:280:17
+    |
+280 | /                 if let AuthAction::Read {
+281 | |                     table_name: "graphs",
+282 | |                     column_name: "value",
+283 | |                 } = ctx.action
+...   |
+288 | |                 }
+    | |_________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+283 ~                 } = ctx.action
+284 ~                     && observed.fetch_add(1, Ordering::SeqCst) >= 2 {
+285 |                         flag.store(true, Ordering::SeqCst);
+286 ~                     }
+    |
+
+error: this `if` statement can be collapsed
+   --> native\src\retrieval_saved_graph_tests.rs:358:13
+    |
+358 | /             if let AuthAction::Read {
+359 | |                 table_name: "graphs",
+360 | |                 column_name: "value",
+361 | |             } = ctx.action
+...   |
+369 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+361 ~             } = ctx.action
+362 ~                 && observed.fetch_add(1, Ordering::SeqCst) == 2 {
+363 |                     writer
+...
+366 |                     done.store(true, Ordering::SeqCst);
+367 ~                 }
+    |
+
+error: this `if` statement can be collapsed
+   --> native\src\retrieval_saved_graph_tests.rs:416:13
+    |
+416 | /             if let AuthAction::Read {
+417 | |                 table_name: "graphs",
+418 | |                 column_name: "value",
+419 | |             } = ctx.action
+...   |
+424 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+419 ~             } = ctx.action
+420 ~                 && observed.fetch_add(1, Ordering::SeqCst) >= 2 {
+421 |                     return Authorization::Deny;
+422 ~                 }
+    |
+
+error: this `if` statement can be collapsed
+   --> native\src\retrieval_partition.rs:215:9
+    |
+215 | /         if let Some(pnpm) = workspaces
+216 | |             .iter()
+217 | |             .find(|w| w.root == npm.root && w.ecosystem == Ecosystem::Pnpm)
+...   |
+226 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+217 ~             .find(|w| w.root == npm.root && w.ecosystem == Ecosystem::Pnpm)
+218 ~             && (npm.positive != pnpm.positive || !pnpm.negative.is_empty()) {
+219 |                 let source = sources
+...
+223 |                 diagnostics.push(diagnostic(source, "conflicting_npm_pnpm_membership", None));
+224 ~             }
+    |
+
+error: could not compile `yoke-code-intelligence` (lib test) due to 9 previous errors

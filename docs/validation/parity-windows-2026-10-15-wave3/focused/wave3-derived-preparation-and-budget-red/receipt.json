@@ -1,0 +1,37 @@
+{
+  "checkedAtUtc": "2026-10-15T16:38:15.867307+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-p",
+    "yoke-code-intelligence",
+    "--locked",
+    "-j",
+    "2",
+    "--no-fail-fast",
+    "--test",
+    "derived_graph_mixed_budget",
+    "--test",
+    "derived_graph_preparation",
+    "--test",
+    "meaning_view",
+    "--test",
+    "facade_file_move",
+    "--test",
+    "facade_file_delete",
+    "--",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 288.766,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave3-derived-preparation-and-budget-red",
+  "logSha256": "fa08ffea25cebda0298a07de0c534c9b0f5039472fe8be4cb3d0b9862f72d7e7",
+  "groups": 5,
+  "passed": 28,
+  "failed": 7,
+  "ignored": 0,
+  "sourceChanges": [
+    "native/src/host_install_io.rs"
+  ]
+}

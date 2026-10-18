@@ -1,0 +1,19 @@
+{
+  "mcp_collection_grants": {
+    "executable": "target\\debug\\deps\\mcp_collection_grants-9bfb327d46861f6e.exe",
+    "ignored": [],
+    "registered": [
+      "current_principal_grants_are_injected_per_http_call_and_removed_on_upsert",
+      "native_archive_does_not_open_a_configured_but_unused_federation_receiver"
+    ]
+  },
+  "mcp_collection_grants_review": {
+    "executable": "target\\debug\\deps\\mcp_collection_grants_review-75ef68191c99f6f8.exe",
+    "ignored": [],
+    "registered": [
+      "collection_grants_are_borrowed_per_dispatch_and_sources_remain_noncanonical",
+      "non_session_profile_rejects_host_collection_grants_before_opening_source_state",
+      "replacing_principal_policy_cancels_running_session_before_waiting_for_read_lease"
+    ]
+  }
+}

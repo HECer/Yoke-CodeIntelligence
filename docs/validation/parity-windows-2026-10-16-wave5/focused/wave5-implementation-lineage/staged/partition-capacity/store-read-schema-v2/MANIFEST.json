@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 2,
+  "status": "ignored_strict_saved_schema_tests_uncompiled_unexecuted",
+  "action": "act_mva0w19b_ed935c0ac58d",
+  "owner": "/root/host_cli_review",
+  "policy": "root_explicit_strict_new_run_only",
+  "preservedManifests": [
+    {
+      "path": "partition/MANIFEST.json",
+      "sha256": "18e8d83be0a8985bb0d711e6321e26d6a6e410961f08d3df698a80b3caf0c2d4"
+    },
+    {
+      "path": "partition-capacity/MANIFEST.json",
+      "sha256": "369292a4411180dfd9f4fdbaed8c112902cdb28b4b259baff15a070a3be9234a"
+    },
+    {
+      "path": "partition-capacity/store-read-addendum/MANIFEST.json",
+      "sha256": "cccfe018c3a1dc1cdcc2539f536451ca213c11f0347088e224cce52589483960"
+    }
+  ],
+  "allPredecessorBoundFilesUnchanged": true,
+  "normalSourcesChanged": [],
+  "normalEditsAuthorized": false,
+  "functionalImplementationAuthorized": false,
+  "apiChanged": false,
+  "files": [
+    {
+      "path": "CONTRACT.md",
+      "sha256": "a6bc1a4c7e040a5e06179dfa1ebbc7a10b1a8e0df44f49b69941c8df7f24dc85",
+      "bytes": 3765,
+      "draftTests": 0
+    },
+    {
+      "path": "PROMOTION.json",
+      "sha256": "6d78d751e83d340723f6ca66a413a93298f0a0c4a2d2414595ff21ef10f119d5",
+      "bytes": 1248,
+      "draftTests": 0
+    },
+    {
+      "path": "retrieval_saved_graph_schema_tests.rs",
+      "sha256": "8ba206e4a30c4b52c432e18d06435719270abb510a77c9ca7b2f44147e2de848",
+      "bytes": 8340,
+      "draftTests": 6
+    }
+  ],
+  "ordinaryDraftTests": 6,
+  "qualifiedIgnoredDraftTests": 0,
+  "validation": {
+    "rustfmtParseCheck": "passed",
+    "jsonParse": "passed",
+    "compile": "not_run",
+    "tests": "not_run",
+    "predecessorBoundFileHashesVerified": 15
+  },
+  "review": {
+    "reviewer": "/root/decision_review",
+    "status": "pending_separate_review_record_no_manifest_mutation"
+  },
+  "claims": {
+    "nativeEpoch8And9Execution": "not_claimed",
+    "strictGuardImplementation": "not_claimed",
+    "capacityOrWindowsRuntimeAcceptance": "not_claimed"
+  },
+  "release": "Root alone promotes and records genuine baseline/deep causal RED; current ignored files authorize no normal edits or implementation."
+}

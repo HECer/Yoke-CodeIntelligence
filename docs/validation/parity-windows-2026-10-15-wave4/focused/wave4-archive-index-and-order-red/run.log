@@ -1,0 +1,70 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 57.06s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 13 tests
+test capture::archive_scope_tests::exact_native_archive_identity_denies_resealed_protected_members_and_future_fields ... ok
+test capture::archive_scope_tests::released_capture_and_overlay_receipts_remain_exact_offline_after_workspace_closes ... ok
+test capture::archive_scope_tests::offline_dependency_and_derived_scope_proofs_require_exact_options_and_origin_chain ... ok
+test meaning_build::archive_scope_tests::archive_initial_graph_row_capacity_precedes_json_decode ... FAILED
+test meaning_build::archive_scope_tests::archive_initial_snapshot_and_graph_share_one_capacity_before_decode ... FAILED
+test meaning_build::archive_scope_tests::frozen_source_index_many_members_reuse_one_bound_scope_without_timing_claim ... ok
+test meaning_build::archive_scope_tests::frozen_source_index_rechecks_complete_same_id_scope_on_every_bind ... FAILED
+test meaning_build::archive_scope_tests::frozen_source_index_refuses_conflicting_same_id_union_scope ... FAILED
+test meaning_build::archive_scope_tests::frozen_source_index_refuses_forged_same_path_hash_and_size_before_reader ... FAILED
+test meaning_build::archive_scope_tests::frozen_source_index_valid_member_and_duplicate_scope_are_admitted ... ok
+test meaning_build::archive_scope_tests::archive_initial_snapshot_row_capacity_precedes_json_decode ... FAILED
+test graph_view::archive_by_id_order_tests::archive_by_id_preflight_covers_every_manifest_before_any_cas_read ... FAILED
+test meaning_build::archive_preparation_order_tests::archive_scope_preflight_covers_every_manifest_before_any_cas_read ... ok
+
+failures:
+
+---- meaning_build::archive_scope_tests::archive_initial_graph_row_capacity_precedes_json_decode stdout ----
+
+thread 'meaning_build::archive_scope_tests::archive_initial_graph_row_capacity_precedes_json_decode' (54488) panicked at native\src\meaning_archive_scope_tests.rs:151:5:
+Initial scope capacity must be admitted before malformed JSON decoding: EOF while parsing a string at line 1 column 4113
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- meaning_build::archive_scope_tests::archive_initial_snapshot_and_graph_share_one_capacity_before_decode stdout ----
+
+thread 'meaning_build::archive_scope_tests::archive_initial_snapshot_and_graph_share_one_capacity_before_decode' (47652) panicked at native\src\meaning_archive_scope_tests.rs:151:5:
+Initial scope capacity must be admitted before malformed JSON decoding: EOF while parsing a string at line 1 column 113
+
+---- meaning_build::archive_scope_tests::frozen_source_index_rechecks_complete_same_id_scope_on_every_bind stdout ----
+
+thread 'meaning_build::archive_scope_tests::frozen_source_index_rechecks_complete_same_id_scope_on_every_bind' (94436) panicked at native\src\meaning_archive_scope_tests.rs:73:5:
+A valid earlier bind must not authorize different metadata with the same snapshot ID
+
+---- meaning_build::archive_scope_tests::frozen_source_index_refuses_conflicting_same_id_union_scope stdout ----
+
+thread 'meaning_build::archive_scope_tests::frozen_source_index_refuses_conflicting_same_id_union_scope' (69108) panicked at native\src\meaning_archive_scope_tests.rs:109:5:
+Complete union admission must reject conflicting manifests sharing an ID
+
+---- meaning_build::archive_scope_tests::frozen_source_index_refuses_forged_same_path_hash_and_size_before_reader stdout ----
+
+thread 'meaning_build::archive_scope_tests::frozen_source_index_refuses_forged_same_path_hash_and_size_before_reader' (82716) panicked at native\src\meaning_archive_scope_tests.rs:96:9:
+A path alone does not authorize changed file metadata: SourceFile { path: "a.rs", hash: "ccdd35168ab474fa5764a526cfb83621351e23682c5075b2e18d56bddf96aa30", size: 1, language: "rust", mode: 33188 }
+
+---- meaning_build::archive_scope_tests::archive_initial_snapshot_row_capacity_precedes_json_decode stdout ----
+
+thread 'meaning_build::archive_scope_tests::archive_initial_snapshot_row_capacity_precedes_json_decode' (82552) panicked at native\src\meaning_archive_scope_tests.rs:151:5:
+Initial scope capacity must be admitted before malformed JSON decoding: EOF while parsing a string at line 1 column 4113
+
+---- graph_view::archive_by_id_order_tests::archive_by_id_preflight_covers_every_manifest_before_any_cas_read stdout ----
+
+thread 'graph_view::archive_by_id_order_tests::archive_by_id_preflight_covers_every_manifest_before_any_cas_read' (96644) panicked at native\src\meaning_archive_by_id_order_tests.rs:157:5:
+A CAS read preceded complete source-policy preflight: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+
+
+failures:
+    graph_view::archive_by_id_order_tests::archive_by_id_preflight_covers_every_manifest_before_any_cas_read
+    meaning_build::archive_scope_tests::archive_initial_graph_row_capacity_precedes_json_decode
+    meaning_build::archive_scope_tests::archive_initial_snapshot_and_graph_share_one_capacity_before_decode
+    meaning_build::archive_scope_tests::archive_initial_snapshot_row_capacity_precedes_json_decode
+    meaning_build::archive_scope_tests::frozen_source_index_rechecks_complete_same_id_scope_on_every_bind
+    meaning_build::archive_scope_tests::frozen_source_index_refuses_conflicting_same_id_union_scope
+    meaning_build::archive_scope_tests::frozen_source_index_refuses_forged_same_path_hash_and_size_before_reader
+
+test result: FAILED. 6 passed; 7 failed; 0 ignored; 0 measured; 151 filtered out; finished in 1.29s
+
+error: test failed, to rerun pass `--lib`

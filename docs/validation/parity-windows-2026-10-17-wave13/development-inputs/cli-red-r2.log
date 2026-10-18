@@ -1,0 +1,45 @@
+test_explicit_source_bound_event_records_then_ranks_without_execution (__main__.FeedbackContract.test_explicit_source_bound_event_records_then_ranks_without_execution) ... FAIL
+test_explicit_utf8_transcript_import_preserves_original_bytes_and_mines_candidates (__main__.FeedbackContract.test_explicit_utf8_transcript_import_preserves_original_bytes_and_mines_candidates) ... FAIL
+test_feedback_write_grant_is_checked_before_selected_host_file_access (__main__.FeedbackContract.test_feedback_write_grant_is_checked_before_selected_host_file_access) ... FAIL
+
+======================================================================
+FAIL: test_explicit_source_bound_event_records_then_ranks_without_execution (__main__.FeedbackContract.test_explicit_source_bound_event_records_then_ranks_without_execution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Yoke-Build-Cache\outcome-learning-20261017\contract_red.py", line 87, in test_explicit_source_bound_event_records_then_ranks_without_execution
+    created = success('--allow-writes', 'feedback', 'record', '--input', str(event))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Yoke-Build-Cache\outcome-learning-20261017\contract_red.py", line 68, in success
+    self.assertEqual(result.returncode, 0, result.stderr.decode('utf-8', errors='replace'))
+AssertionError: 2 != 0 : error: unrecognized subcommand 'feedback'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+======================================================================
+FAIL: test_explicit_utf8_transcript_import_preserves_original_bytes_and_mines_candidates (__main__.FeedbackContract.test_explicit_utf8_transcript_import_preserves_original_bytes_and_mines_candidates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Yoke-Build-Cache\outcome-learning-20261017\contract_red.py", line 29, in test_explicit_utf8_transcript_import_preserves_original_bytes_and_mines_candidates
+    self.assertEqual(imported.returncode, 0, imported.stderr.decode('utf-8', errors='replace'))
+AssertionError: 2 != 0 : error: unrecognized subcommand 'feedback'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+======================================================================
+FAIL: test_feedback_write_grant_is_checked_before_selected_host_file_access (__main__.FeedbackContract.test_feedback_write_grant_is_checked_before_selected_host_file_access)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Yoke-Build-Cache\outcome-learning-20261017\contract_red.py", line 49, in test_feedback_write_grant_is_checked_before_selected_host_file_access
+    self.assertIn(b'feedback_write_permission_required', result.stderr)
+AssertionError: b'feedback_write_permission_required' not found in b"error: unrecognized subcommand 'feedback'\n\nUsage: yoke.exe [OPTIONS] <COMMAND>\n\nFor more information, try '--help'.\n"
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.525s
+
+FAILED (failures=3)

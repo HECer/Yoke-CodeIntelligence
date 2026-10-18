@@ -1,0 +1,16 @@
+    Finished `test` profile [unoptimized] target(s) in 0.75s
+     Running tests\dependency_queries.rs (target\debug\deps\dependency_queries-64e2a1f024076073.exe)
+
+running 1 test
+test explicitly_captured_dependencies_are_queryable_but_never_writable ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.19s
+
+     Running tests\derived_graph_mixed_budget.rs (target\debug\deps\derived_graph_mixed_budget-ac1f60fdd7a1b900.exe)
+
+running 1 test
+test valid_meaning_plus_default_structural_budget_failure_publishes_no_records_or_cas has been running for over 60 seconds
+test valid_meaning_plus_default_structural_budget_failure_publishes_no_records_or_cas ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 93.39s
+
