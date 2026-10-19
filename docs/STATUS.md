@@ -303,8 +303,9 @@ one immediate WAL/FULL transaction committing snapshot, graph, FTS, inherited
 scope, artifact registration and source receipt together. Ordinary single-commit
 Git capture now shares that atomic boundary. Checkout files, Git refs/index,
 latest pointer, credentials, model calls and provider/network state are unchanged.
-Persistent automatic continuation beyond a batch and unattended App integration
-remain open; this does not close the original full-history requirement.
+At that checkpoint, persistent automatic continuation beyond a batch and
+unattended App integration remained open; it did not close the original
+full-history requirement.
 
 The frozen full default Windows run executes **all 262 testable Cargo targets**
 plus the example harness, producing **263 result groups: 2,389 passed / 10 failed /
@@ -325,6 +326,46 @@ A [hash-bound elevated replay helper](validation/integration-2026-10-19/digest-h
 for the ten prerequisite failures is prepared and parsed, but has not been run.
 Windows rights are unchanged. Original inventory/certification states, the wider
 STATUS/R1–R9 gaps, hosted acceptance, packaging and release remain open.
+
+The [persistent local history jobs](../native/docs/digest-history-jobs.md)
+add durable explicit continuation across batches and process restarts. Raw
+hash-verified commit objects and ordered visits reconstruct parent discovery and
+date priority; persisted queue/exhaustion labels carry no authority. Current host
+and App grants, a frozen head/disk origin/epoch, finite cumulative quotas and exact
+revisions fence each operation. Lookahead can checkpoint at object or byte-batch
+boundaries without selecting a partially verified frontier. Source capture,
+fresh batch mapping, job progress and output admission publish atomically.
+Read-only existing-state status labels capture references as recorded progress;
+it does not claim fresh replay of every historical source body. Typed retention
+checks local source selectors; commit text and imported labels never become roots.
+
+The frozen full default run executes **all 263 testable Cargo targets** plus the
+example harness, **264 result groups: 2,402 passed / 10 failed / 39 ignored**.
+All **13 new history-job cases** pass, including real restart, SHA-1/SHA-256,
+epochs 8/9, Unicode/CRLF, branching clock skew/equal dates, cumulative budgets,
+corruption, revocation, stale revisions, rollback, retention and the real CLI.
+Separate **13 actual CLI host-path/protocol cases** pass, including a genuine
+Windows junction ancestor, alongside a **two-process CLI revision race** with
+exactly one publication and one stale refusal. Their binary hash matches the
+full run. These separate gates are not added to Cargo totals and do not replace
+the original symbolic-link fixtures.
+
+Format, all-target Clippy with warnings denied, doctests (zero registered),
+**17 Python tests**, **260 TypeScript tests / 3 existing skips**, typecheck and
+both separate actual Windows credential/TLS CLI gates pass. All **645 recorded
+runtime/test/configuration inputs** remain unchanged. Every native failure is
+independently confirmed as **Windows error 1314 at real symlink-fixture creation**;
+the underlying safety assertion is not reached. The default run remains
+unaccepted. The [job evidence](validation/integration-2026-10-19/history-jobs/index.json)
+preserves raw logs, input/binary hashes, original development failures and the
+corrected proof-byte-boundary regression. Ordinary reversible compression of
+3,472 owned older release build files preserves every SHA-256; no deletion,
+compiler/test-option or system-security setting change occurs. A fresh
+[hash-bound prerequisite replay](validation/integration-2026-10-19/history-jobs/WINDOWS-REPARSE-GATES.md)
+supersedes the prior descriptor and has not been elevated/executed by the agent.
+Unattended App integration, production/live App installation, remote source
+verification, semantic reasoning, hosted/full STATUS acceptance and original
+inventory/certification boundaries remain open.
 
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes

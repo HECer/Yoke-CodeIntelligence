@@ -73,8 +73,21 @@ crate-private pending path; ordinary publication retains its own transaction.
 Snapshot, graph, FTS, inherited scope, artifact registration and source receipt
 roll back together. CAS bytes can remain unreferenced after failure and confer
 no authority. Single-commit Git captures now share this atomic SQL boundary.
-Persistent whole-history jobs/continuation remain open; see the
+See the
 [acquisition contract](../native/docs/digest-history-acquisition.md).
+
+`digest::history_jobs` checkpoints explicit local acquisition with immutable
+head/origin selection, current host grants, cumulative budgets and exact revision
+preconditions. `git_history_read::cursor` reconstructs date-priority traversal
+from hash-verified raw commit objects and an ordered visited prefix; persisted
+queue labels or exhaustion claims carry no authority. Lookahead can checkpoint
+without choosing from a partially verified frontier. Each mapped batch and job
+revision publish in one owned immediate transaction after output admission.
+Status uses existing-only read-only state and labels capture references as
+recorded progress; it does not replay every historical source body. Retention
+validates closed local source selectors instead of walking commit text or Git
+IDs. [Persistent job contract](../native/docs/digest-history-jobs.md) records the
+finite ceilings and remaining unattended App/semantic/platform boundaries.
 
 ## Boundaries
 

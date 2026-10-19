@@ -1,0 +1,58 @@
+{
+  "recordedAt": "2026-10-19T08:19:01.074494+00:00",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "--version"
+      ],
+      "exitCode": 0,
+      "output": "cargo 1.94.1 (29ea6fb6a 2026-03-24)"
+    },
+    {
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\rustc.exe",
+        "--version"
+      ],
+      "exitCode": 0,
+      "output": "rustc 1.94.1 (e408947bf 2026-03-25)"
+    },
+    {
+      "command": [
+        "git",
+        "--version"
+      ],
+      "exitCode": 0,
+      "output": "git version 2.55.0.windows.5"
+    },
+    {
+      "command": [
+        "node",
+        "--version"
+      ],
+      "exitCode": 0,
+      "output": "v24.21.0"
+    },
+    {
+      "command": [
+        "python",
+        "--version"
+      ],
+      "exitCode": 0,
+      "output": "Python 3.14.7"
+    },
+    {
+      "command": [
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\tools\\powershell-7.6.7-win-x64\\pwsh.exe",
+        "-NoProfile",
+        "-Command",
+        "$PSVersionTable.PSVersion.ToString()"
+      ],
+      "exitCode": 0,
+      "output": "7.6.7"
+    }
+  ],
+  "currentTokenListsSymbolicLinkPrivilege": false,
+  "privilegeInspectionExitCode": 0
+}

@@ -7,9 +7,10 @@ IDs need to be collected by hand for that batch. The result can also supply the
 explicit selectors used by [offline history mapping](digest-history-mapping.md)
 and source/discussion/service composition.
 
-This is one atomic batch per invocation. Persistent whole-history jobs,
-checkpointed automatic continuation across batches and unattended App integration
-remain open. The operation does not claim whole-repository/history completeness
+This is one atomic batch per invocation. Separate explicit
+[persistent local jobs](digest-history-jobs.md) add checkpointed continuation
+across batches and process restarts. Unattended App integration remains open.
+The operation does not claim whole-repository/history completeness
 or proprietary upstream equivalence.
 
 ## Host admission

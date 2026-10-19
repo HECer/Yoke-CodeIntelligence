@@ -197,3 +197,20 @@ unique entries and reconciles local acknowledgment failure through GET after
 one receiver intake. All 34 raw artifact hashes are retained. This does not
 accept public deployment, downstream processing/query integration, whole native
 or platform/R1–R9 functionality. Prior OS1314 setup failures remain outside scope.
+
+
+[Persistent local history jobs](history-jobs/index.json) checkpoint hash-verified
+Git traversal, atomic capture/mapping/progress publication, current host grants
+and exact revisions across bounded batches and process restarts. The frozen
+full default run executes 263 testable native targets plus the example harness:
+**2,402 passed / 10 failed / 39 ignored** across 264 result groups. All thirteen
+new cases pass; all failures are real Windows symlink-fixture prerequisites
+(OS 1314), with their product assertions unreached. Thirteen separate actual
+CLI host-path/protocol cases and a two-process revision race use the identical
+binary and pass; they are not added to native totals or substituted for symlinks.
+Python17, TypeScript260/3 skipped, typecheck, format/all-target Clippy and two
+actual OS-credential/TLS gates pass with 645 frozen inputs unchanged. Raw
+development failures, source/binary hashes and reversible release-cache
+compression with 3,472 unchanged hashes are preserved. A fresh manually elevated
+replay descriptor is prepared, not executed by the agent. Unattended App,
+production/semantic/remote-source, hosted and full STATUS acceptance remain open.

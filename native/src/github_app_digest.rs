@@ -13,6 +13,8 @@ pub mod discussions;
 #[cfg(test)]
 #[path = "github_app_digest_history_tests.rs"]
 mod history_boundary_tests;
+#[path = "github_app_digest_history_jobs.rs"]
+pub mod history_jobs;
 #[path = "github_app_digest_mapping.rs"]
 mod mapping;
 #[path = "github_app_digest_rust.rs"]

@@ -788,6 +788,7 @@ fn validate_parity_records(store: &Store, deadline: &Deadline) -> Result<ParityD
             | crate::github_app::publication::RECORD_KIND
             | crate::github_app::digest::service::RECORD_KIND
             | crate::github_app::digest::service::receiver::RECORD_KIND
+            | crate::github_app::digest::history_jobs::RECORD_KIND
             | crate::github_app::pages::RECORD_KIND
             | crate::github_app::pages::REVISION_KIND => {
                 // scan validates the complete closed inline history before this pass.
@@ -1062,6 +1063,10 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
     out.all_references.extend(digest_service_roots);
     let digest_receiver_ids =
         crate::github_app::digest::service::receiver::retained_records(store, deadline)?;
+    let (digest_history_ids, digest_history_roots) =
+        crate::github_app::digest::history_jobs::retained_roots(store, deadline)?;
+    out.references.extend(digest_history_roots.iter().cloned());
+    out.all_references.extend(digest_history_roots);
     out.references
         .extend(github_worker_roots.snapshot_ids.iter().cloned());
     out.all_references.extend(github_worker_roots.snapshot_ids);
@@ -1291,6 +1296,15 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
             );
             // An authenticated remote sender supplies inert observations only;
             // no imported snapshot/hash/body field can retain local CAS state.
+            continue;
+        }
+        if kind == crate::github_app::digest::history_jobs::RECORD_KIND {
+            ensure!(
+                digest_history_ids.contains(&id),
+                "Invalid digest history job"
+            );
+            // Only source selectors validated above retain state; commit text,
+            // imported Git labels and counters never grant retention authority.
             continue;
         }
         if kind == crate::github_app::pages::RECORD_KIND

@@ -9,6 +9,7 @@ use std::{
 use yoke::{Engine, capture::Deadline};
 mod bedrock_cli;
 mod digest_history_capture_cli;
+mod digest_history_job_cli;
 mod digest_inbox_cli;
 mod digest_receiver_cli;
 mod feedback_cli;
@@ -90,6 +91,7 @@ enum ExtensionOperation {
     DigestReceiver(Box<digest_receiver_cli::Arguments>),
     DigestInbox(Box<digest_inbox_cli::Arguments>),
     DigestHistoryCapture(Box<digest_history_capture_cli::Arguments>),
+    DigestHistoryJob(Box<digest_history_job_cli::Arguments>),
     ModelsHttp(Box<HttpModelArguments>),
     ModelHttpWorker(Box<HttpModelWorkerArguments>),
     ModelsBedrock(Box<bedrock_cli::Arguments>),
@@ -1949,6 +1951,7 @@ fn run_parity(
         ExtensionOperation::DigestHistoryCapture(_) => {
             bail!("Digest history capture host dispatch error")
         }
+        ExtensionOperation::DigestHistoryJob(_) => bail!("Digest history job host dispatch error"),
         ExtensionOperation::GithubApp(_) => bail!("GitHub App host dispatch error"),
         ExtensionOperation::GithubDiscussions(_) => bail!("GitHub discussions host dispatch error"),
         ExtensionOperation::Decisions(args) => run_decisions(engine, *args, arguments, deadline),
@@ -3272,6 +3275,20 @@ fn run(cli: Cli) -> Result<bool> {
             "GitHub discussion reads select explicit host inputs; source/provider/write flags are unavailable"
         );
         return args.run(cli.timeout, cli.max_bytes);
+    }
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::DigestHistoryJob(args) = extension.as_ref()
+    {
+        ensure!(
+            cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && cli.analyzer_epoch.is_none(),
+            "History jobs inherit captured scope; source/provider options are unavailable"
+        );
+        return args.run(&cli.root, cli.allow_writes, cli.timeout, cli.max_bytes);
     }
     if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::DigestHistoryCapture(args) = extension.as_ref()

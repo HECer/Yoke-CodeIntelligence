@@ -68,6 +68,8 @@ struct Commit {
     subject: String,
     body: String,
 }
+#[path = "git_history_cursor.rs"]
+pub(crate) mod cursor;
 fn committer_timestamp(value: &str) -> Result<u64> {
     let (_, metadata) = value.rsplit_once('>').context(UNAVAILABLE)?;
     let mut fields = metadata.split_ascii_whitespace();

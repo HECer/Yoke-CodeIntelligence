@@ -11,7 +11,7 @@ and a body-excluding handoff preview. An explicit
 [service workflow](../native/docs/digest-service.md) implements exact-payload
 approval, durable submission and read-only recovery against the independently
 owned receiver contract. Configured production service acceptance,
-automatic historical acquisition and universal export parity remain open. See the
+unattended App history integration and universal export parity remain open. See the
 [captured mapping contract](../native/docs/digest-history-mapping.md).
 
 The [discussion contract](../native/docs/github-discussions.md) describes the
@@ -32,8 +32,10 @@ The explicit [atomic history acquisition path](../native/docs/digest-history-acq
 automatically selects and captures a bounded batch of history rows and direct
 parents. Exact scope/epoch inheritance, fresh mapping, aggregate acquisition
 budgets and output admission precede atomic SQL publication. It changes no
-checkout files or latest pointer. Persistent automatic continuation across
-batches and unattended App integration remain open.
+checkout files or latest pointer. Explicit
+[persistent local jobs](../native/docs/digest-history-jobs.md) now continue across
+batches and process restarts with current grants, exact revisions and cumulative
+quotas. Unattended App integration remains open.
 
 ## Captured mapping checkpoint (2026-10-19 UTC)
 

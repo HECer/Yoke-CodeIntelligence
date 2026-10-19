@@ -43,6 +43,13 @@ An existing Git report also supports [captured-hierarchy affected details](docs/
 through the Rust library and `git affected`, with separate historical source
 bindings and structural candidate explanations.
 
+Explicit [captured-history acquisition](docs/digest-history-acquisition.md) and
+[persistent local history jobs](docs/digest-history-jobs.md) capture and map
+verified Git objects under the original head's disk scope. `digest-history-job`
+supports creation, read-only status, exact-revision steps, bounded multi-batch
+runs, pause/resume and cancellation. Host grants and cumulative limits remain
+explicit; no signing key, provider/model call or source execution is introduced.
+
 ## Native capabilities
 
 - AST structure in 24 programming languages: Rust, TypeScript, JavaScript, Python, Go, C, C++, C#, Java, Ruby, PHP, Swift, Scala, Lua, Bash, Elixir, Solidity, OCaml, Zig, Nix, R, Kotlin, Dart and Clojure. TSX/JSX and OCaml interfaces are additional grammar variants. Support is structural; per-language constructs and dynamic dispatch are not exhaustive.

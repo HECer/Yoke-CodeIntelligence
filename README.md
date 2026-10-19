@@ -35,7 +35,9 @@ upstream service equivalence remain open.
 Explicit [history acquisition](native/docs/digest-history-acquisition.md) selects,
 captures and maps a bounded historical batch under the verified head's scope.
 Snapshot/graph/FTS/scope/receipt publication commits atomically after replay and
-output admission. Persistent automatic continuation across batches remains open.
+output admission. Explicit [persistent local history jobs](native/docs/digest-history-jobs.md)
+continue across batches and process restarts under current grants and exact
+revisions. Unattended App integration remains open.
 
 ## TypeScript advanced runtime
 
