@@ -177,20 +177,27 @@ pub struct Session {
     process_cleanup_unproven: bool,
 }
 fn project_root_key(path: &std::path::Path) -> Option<String> {
-    let value = path.to_str()?.replace('\\', "/");
+    Some(project_root_spelling(path.to_str()?, cfg!(windows)))
+}
+fn project_root_spelling(value: &str, windows: bool) -> String {
+    if !windows {
+        // Backslashes and a leading //?/ are ordinary POSIX path bytes. They
+        // must not select another registered root through Windows syntax rules.
+        return value.trim_end_matches('/').to_owned();
+    }
+    let value = value.replace('\\', "/");
     let value = value
         .strip_prefix("//?/")
         .unwrap_or(&value)
         .trim_end_matches('/');
     let mut value = value.to_owned();
-    if cfg!(windows) {
-        // Unicode lowercasing can merge distinct Windows names, for example
-        // U+0130 and an ASCII i followed by a combining dot. Opaque Unicode
-        // components remain exact; familiar ASCII Windows spellings still match.
-        value.make_ascii_lowercase();
-    }
-    Some(value)
+    // Unicode lowercasing can merge distinct Windows names, for example
+    // U+0130 and an ASCII i followed by a combining dot. Opaque Unicode
+    // components remain exact; familiar ASCII Windows spellings still match.
+    value.make_ascii_lowercase();
+    value
 }
+
 fn label(s: &str) -> Result<()> {
     ensure!(
         !s.is_empty()
@@ -1458,5 +1465,43 @@ impl Session {
         args["timeoutMs"] = json!(deadline.remaining().as_millis().min(600000));
         let active = self.state.active_project.clone();
         self.project_engine(&active, deadline)?.invoke(tool, args)
+    }
+}
+
+#[cfg(test)]
+mod root_spelling_tests {
+    use super::project_root_spelling;
+
+    #[test]
+    fn posix_root_selectors_preserve_literal_backslashes_prefixes_and_case() {
+        let spellings = [
+            r"/workspace/source\part",
+            "/workspace/source/part",
+            "//?/workspace/source",
+            "/workspace/source",
+            "/workspace/Source",
+            "/workspace/İ",
+            "/workspace/i\u{307}",
+        ];
+        let keys: std::collections::BTreeSet<_> = spellings
+            .iter()
+            .map(|path| project_root_spelling(path, false))
+            .collect();
+        assert_eq!(keys.len(), spellings.len());
+        for path in spellings {
+            assert_eq!(project_root_spelling(path, false), path);
+        }
+    }
+
+    #[test]
+    fn windows_root_selectors_share_device_and_ascii_case_spellings_only() {
+        assert_eq!(
+            project_root_spelling(r"\\?\C:\Work\Source\", true),
+            project_root_spelling("c:/work/source/", true)
+        );
+        assert_ne!(
+            project_root_spelling("C:/work/İ", true),
+            project_root_spelling("c:/work/i\u{307}", true)
+        );
     }
 }

@@ -731,6 +731,13 @@ fn history_reverifies_the_captured_receipt_and_commit_artifact_before_git_reads(
 #[test]
 fn history_first_sql_wait_uses_the_cli_deadline_without_store_repair() {
     let f = chain();
+    // BEGIN EXCLUSIVE in WAL mode still admits readers. Select rollback-journal
+    // mode on this owned fixture so the first SQL read really is blocked.
+    let db = rusqlite::Connection::open(f.root.join(".yoke/index.sqlite")).unwrap();
+    let mode: String = db
+        .query_row("PRAGMA journal_mode=DELETE", [], |row| row.get(0))
+        .unwrap();
+    assert_eq!(mode, "delete");
     // Calibrate only CLI startup/source admission, excluding healthy Git reads.
     let start = std::time::Instant::now();
     let baseline = super::preview(&f.root, &f.profile, &f.request)
@@ -742,18 +749,17 @@ fn history_first_sql_wait_uses_the_cli_deadline_without_store_repair() {
         "{}",
         String::from_utf8_lossy(&baseline.stderr)
     );
-    let db = rusqlite::Connection::open(f.root.join(".yoke/index.sqlite")).unwrap();
-    db.execute_batch("BEGIN EXCLUSIVE").unwrap();
     let before = files(&f.root);
+    db.execute_batch("BEGIN EXCLUSIVE").unwrap();
     let start = std::time::Instant::now();
     let output = history(&f).args(["--timeout", "25"]).output().unwrap();
     let elapsed = start.elapsed();
     assert!(!output.status.success());
     assert!(output.stdout.is_empty());
+    let stderr = String::from_utf8_lossy(&output.stderr);
     assert!(
-        String::from_utf8_lossy(&output.stderr)
-            .to_ascii_lowercase()
-            .contains("deadline")
+        stderr.to_ascii_lowercase().contains("deadline"),
+        "Blocked first SQL read must report the CLI deadline: {stderr}"
     );
     assert!(
         elapsed < baseline_time + std::time::Duration::from_millis(150),
@@ -761,6 +767,13 @@ fn history_first_sql_wait_uses_the_cli_deadline_without_store_repair() {
     );
     db.execute_batch("ROLLBACK").unwrap();
     assert_eq!(files(&f.root), before);
+    let mode: String = db
+        .query_row("PRAGMA journal_mode", [], |row| row.get(0))
+        .unwrap();
+    assert_eq!(
+        mode, "delete",
+        "Existing-only reads must not repair journal mode"
+    );
 }
 
 #[test]

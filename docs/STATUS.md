@@ -73,6 +73,18 @@ positive archive CLI fixture now explicitly grants registry coordination.
 [Repair evidence](validation/integration-2026-10-19/windows-ci-repair/index.json)
 does not replace whole-native or hosted platform acceptance, which remain open.
 
+A further scoped Windows run passes **483 native tests / 0 failed / 7 ignored**
+across ten groups, plus TypeScript typecheck and 254 tests / 3 skipped. Root
+selector tests now distinguish POSIX literal backslashes/prefixes/case from
+Windows spellings; the Unix filesystem case awaits CI. An actual SQLite oracle
+distinguishes nonblocking WAL reads from exclusive rollback-journal contention,
+including expiry, cancellation and lease recovery. The digest CLI lock fixture
+now establishes that real precondition without changing its 25 ms budget.
+Final format/all-target Clippy pass after relocating an unchanged test module;
+the exact sole inter-run delta is [proved in the evidence](validation/integration-2026-10-19/root-sql-platform/index.json).
+The R8 thematic tracker reflects integrated App functionality while retaining
+its remaining discussion/handoff/live gates and all inventory-wide boundaries.
+
 The digest now has an explicit captured-history mapping path. Verified Git tree
 facts describe changes over the captured path union; source-replayed Rust
 associations retain original IDs, producers and exact byte evidence. Qualified

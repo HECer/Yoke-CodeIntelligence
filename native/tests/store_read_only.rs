@@ -36,6 +36,68 @@ fn released(root: &Path) {
         fs2::FileExt::unlock(&file).unwrap();
     }
 }
+
+#[test]
+fn first_sql_read_distinguishes_wal_visibility_from_exclusive_rollback_journal_contention() {
+    let (root, id) = fixture();
+    let db = rusqlite::Connection::open(root.path().join(".yoke/index.sqlite")).unwrap();
+    let mode: String = db
+        .query_row("PRAGMA journal_mode=WAL", [], |row| row.get(0))
+        .unwrap();
+    assert_eq!(mode, "wal");
+    db.execute_batch("BEGIN EXCLUSIVE").unwrap();
+    // This is the actual SQLite behavior that the CLI contention fixture must
+    // distinguish: a WAL writer does not exclude a committed read snapshot.
+    let read = Store::open_existing_read_only(root.path(), &Deadline::new(2000)).unwrap();
+    assert_eq!(read.snapshot(&id).unwrap().id, id);
+    drop(read);
+    db.execute_batch("ROLLBACK; PRAGMA journal_mode=DELETE; BEGIN EXCLUSIVE")
+        .unwrap();
+
+    let deadline = Deadline::new(40);
+    let start = Instant::now();
+    let error = Store::open_existing_read_only(root.path(), &deadline)
+        .err()
+        .expect("Rollback-journal writer must exclude the first SQL read");
+    assert!(
+        deadline.check().is_err() && error.to_string().contains("deadline"),
+        "{error:#}"
+    );
+    assert!(start.elapsed() < Duration::from_millis(250));
+    released(root.path());
+
+    let cancel = Arc::new(AtomicBool::new(false));
+    let signal = Arc::clone(&cancel);
+    let worker = std::thread::spawn(move || {
+        std::thread::sleep(Duration::from_millis(20));
+        signal.store(true, Ordering::SeqCst);
+    });
+    let start = Instant::now();
+    let error = Deadline::run_bounded(&Deadline::new(5000), cancel, || {
+        Store::open_existing_read_only(root.path(), &Deadline::new(5000))
+    })
+    .err()
+    .expect("Blocked SQL read must observe host cancellation");
+    worker.join().unwrap();
+    assert!(error.to_string().contains("cancelled"), "{error:#}");
+    assert!(start.elapsed() < Duration::from_millis(250));
+    released(root.path());
+
+    db.execute_batch("ROLLBACK").unwrap();
+    let read = Store::open_existing_read_only(root.path(), &Deadline::new(2000)).unwrap();
+    assert_eq!(read.snapshot(&id).unwrap().id, id);
+    let mode: String = db
+        .query_row("PRAGMA journal_mode", [], |row| row.get(0))
+        .unwrap();
+    assert_eq!(
+        mode, "delete",
+        "Read-only admission must preserve journal policy"
+    );
+    assert_eq!(
+        std::fs::read_to_string(root.path().join("api.rs")).unwrap(),
+        "pub fn api() {}\n"
+    );
+}
 fn wait_for_release(read_only: bool) {
     for name in ["maintenance.lock", "clients.lock"] {
         let (root, id) = fixture();

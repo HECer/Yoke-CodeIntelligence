@@ -67,3 +67,12 @@ files only. Production changes retain current-host-only root selectors and bound
 TCP refusal cleanup without dispatching rejected tail bytes. A native console
 probe and URI/document-order fixtures preserve actual behavioral assertions.
 Remote validation and all broader release/platform gates remain open.
+
+The [root-selector/first-SQL follow-up](root-sql-platform/index.json) passes
+483 scoped native tests / 7 ignored across ten groups, plus TypeScript typecheck
+and 254 tests / 3 skipped. Real SQLite tests distinguish WAL visibility from
+rollback-journal reader exclusion, deadline expiry and cancellation. Portable
+spelling tests retain POSIX literal names; the separate actual Unix filesystem
+case awaits CI. Final format/Clippy and two overlapping spelling tests pass after
+the sole test-module relocation, proved by exact reconstruction of the prior
+source hash. No SQLite production policy or inventory-wide certification changes.

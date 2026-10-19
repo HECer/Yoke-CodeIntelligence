@@ -159,3 +159,38 @@ fn unicode_lowercase_expansion_cannot_turn_an_unregistered_root_into_a_selector(
         vec!["source.rs"]
     );
 }
+
+#[cfg(unix)]
+#[test]
+fn a_posix_literal_backslash_root_cannot_be_selected_by_unregistered_slash_components() {
+    let local = tempfile::tempdir().unwrap();
+    let external = tempfile::tempdir().unwrap();
+    let root = external.path().join(r"literal\name");
+    fs::create_dir(&root).unwrap();
+    fs::write(root.join("source.rs"), "fn literal_root() {}\n").unwrap();
+    let d = Deadline::new(30_000);
+    let mut session = Session::open(
+        Engine::open(local.path()).unwrap(),
+        host(&root),
+        Some("posix-root"),
+        &d,
+    )
+    .unwrap();
+    let unregistered = root.to_str().unwrap().replace('\\', "/");
+    assert!(
+        query(&mut session, &unregistered, &d)
+            .unwrap_err()
+            .to_string()
+            .contains("not host-registered")
+    );
+    for selector in ["reference", root.to_str().unwrap()] {
+        assert_eq!(
+            file_paths(&query(&mut session, selector, &d).unwrap()),
+            vec!["source.rs"]
+        );
+    }
+    assert_eq!(
+        fs::read_to_string(root.join("source.rs")).unwrap(),
+        "fn literal_root() {}\n"
+    );
+}

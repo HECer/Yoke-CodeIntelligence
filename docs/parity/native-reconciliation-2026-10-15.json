@@ -6988,16 +6988,42 @@
         "native/src/mcp_http.rs",
         "native/src/main.rs",
         "docs/github-read-provider.md",
-        "docs/parity/public-contracts-2026-10-14.json"
+      "docs/parity/public-contracts-2026-10-14.json",
+      "native/src/github_app.rs",
+      "native/src/github_app_auth.rs",
+      "native/src/github_app_ingress.rs",
+      "native/src/github_app_worker.rs",
+      "native/src/github_app_publication.rs",
+      "native/src/github_app_pages.rs",
+      "native/src/github_app_digest.rs",
+      "native/src/github_app_digest_mapping.rs",
+      "native/tests/github_app_worker_run.rs",
+      "native/tests/github_app_publication.rs",
+      "native/tests/github_app_pages_cli.rs",
+      "native/tests/github_app_digest_mapping.rs",
+      "docs/validation/integration-2026-10-19/README.md"
       ],
       "id": "R8",
       "inventoryRefs": [
         "trail:Self-hosted GitHub App",
         "trail:History digest / brain onboarding"
       ],
-      "missingBehavior": "HMAC webhook admission, installation authorization, deduplicated/superseding bounded review queues, controlled comment/capability-page publication and closed-PR discussion onboarding digest. Native GET PR reads are already present.",
+    "implementedIntegrationSlice": {
+      "checkpoint": "328ea51729a8ffa7c310c092535b159f3c56b5e7",
+      "recordedAtUtc": "2026-10-19",
+      "scope": "Integrated development source and preserved scoped evidence; no inventory-wide or service certification upgrade",
+      "behavior": [
+        "HMAC webhook admission, explicit installation authorization and bounded deduplicated/superseding queues",
+        "Durable claims, fencing, recovery and explicit source-bound native review execution",
+        "Exact approved comment publication with outcome recovery and capability-page cache/HTTP interfaces",
+        "Captured-source digest, verified committer-date history and explicit selected existing-capture file/symbol mapping"
+      ],
+      "complete": false,
+      "liveAppInstallationVerified": false
+    },
+    "missingBehavior": "Closed-PR provider discussion acquisition and source-bound digest/service handoff remain open beyond explicit captured-source, verified history and selected existing-capture mapping. Automatic historical acquisition, live App installation/deployment, full service acceptance and universal upstream contract equivalence are not established.",
       "priority": 8,
-      "suggestedScope": "Separate webhook/job/publication service around the existing GitHub reader and immutable source pipeline. Explicit write/deployment permissions belong to the host; development does not require publishing a comment or running fork source. Do not claim the proprietary hosted brain engine.",
+    "suggestedScope": "Add explicitly host-authorized, bounded closed-PR discussion observations and replayable digest/service handoff around the integrated queue, verified Git/captured-source pipeline and publication capabilities. Preserve exact source bindings, provider-claim provenance, stale preconditions, separate network/write/deployment permissions and no default model or fork-code execution. Do not claim the proprietary hosted brain engine or upgrade the unreconciled inventory from this thematic checkpoint.",
       "title": "Self-hosted GitHub App and authorized review publication"
     },
     {

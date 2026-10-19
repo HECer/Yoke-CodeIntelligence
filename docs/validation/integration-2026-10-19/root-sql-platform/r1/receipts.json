@@ -1,0 +1,143 @@
+[
+  {
+    "gate": "format",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 5.247,
+    "recordedAt": "2026-10-19T01:25:33.085710+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "clippy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--keep-going",
+      "-j2",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exitCode": 101,
+    "elapsedSeconds": 82.746,
+    "recordedAt": "2026-10-19T01:26:55.832856+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "root-sql-and-consumers",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--no-fail-fast",
+      "--lib",
+      "--test",
+      "session_root_aliases",
+      "--test",
+      "project_session",
+      "--test",
+      "session_mcp",
+      "--test",
+      "store_read_only",
+      "--test",
+      "store_cancellation",
+      "--test",
+      "github_app_digest_cli",
+      "--test",
+      "github_app_digest_mapping",
+      "--test",
+      "graphify_adapter",
+      "--test",
+      "graphify_cli",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 185.163,
+    "recordedAt": "2026-10-19T01:30:00.997065+00:00",
+    "resultGroups": [
+      {
+        "passed": 402,
+        "failed": 0,
+        "ignored": 7
+      },
+      {
+        "passed": 38,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  {
+    "gate": "typescript-typecheck",
+    "command": [
+      "npm.cmd",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 4.281,
+    "recordedAt": "2026-10-19T01:30:05.278653+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "typescript-tests",
+    "command": [
+      "npm.cmd",
+      "test"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 56.198,
+    "recordedAt": "2026-10-19T01:31:01.477558+00:00",
+    "resultGroups": []
+  }
+]

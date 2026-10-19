@@ -40,6 +40,8 @@ Lookup does not resolve arbitrary caller paths against the filesystem. Removing
 the registered project also disables its alias. Windows comparisons fold ASCII
 case only; distinct opaque Unicode spellings are not merged by Unicode lowercase
 expansion. Named project selectors remain available.
+POSIX selectors retain literal backslashes, prefix text and case. Windows path
+syntax does not make a different POSIX spelling into a registered selector.
 
 Example requests:
 
