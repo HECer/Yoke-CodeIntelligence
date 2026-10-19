@@ -2,6 +2,14 @@
 
 ## Native Rust ownership
 
+`postgres_catalog` validates received UTF-8 JSONL and reconstructs a standalone
+typed catalog archive and directed graph. `postgres_catalog_client` supplies
+fixed read-only SQL through a separately trusted/pinned host psql18 process with
+explicit endpoint, network and credential authority. Capture claims remain
+unverified data; replay never creates a code SourceSnapshot or triggers fetch.
+OID identities, parallel constraints, ordered column metadata and raw record
+byte evidence stay separate. See [PostgreSQL catalogs](../native/docs/postgres-catalog.md).
+
 `git_workflows::owners` adds per-path authored rule interpretations over an
 unchanged saved impact/area parent. An internal area callback holds the same
 checked read transaction through captured rule reads and result construction;

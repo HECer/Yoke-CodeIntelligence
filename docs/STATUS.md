@@ -674,6 +674,34 @@ These scoped results do not replace earlier whole-native failures, including
 Windows OS 1314 symlink prerequisites. Wider R5/R1-R9 work, whole-native/platform
 acceptance, main merge and release remain open.
 
+[Native received PostgreSQL catalogs](../native/docs/postgres-catalog.md) now add
+an explicitly host-authorized `postgres-catalog capture/read` path. Rust owns
+fixed serializable read-only metadata SQL, bounded client supervision, typed
+immutable archives and offline queries. A trusted SHA-pinned `psql`18 installation,
+network access and create-only output each require permission. TLS verify-full,
+SCRAM/channel binding and endpoint-scoped OS credentials are separate from
+explicit literal-loopback trust. Original received UTF-8 record ranges, routine
+overloads, directed parallel FK constraints and ordered composite column metadata
+remain intact. Definitions are stored bodies/opaque server trees or explicit
+hidden/oversize states; no placeholder SQL, column nodes or stored routine calls
+are synthesized. Imports remain unverified received data with `complete:false`.
+
+All **14 new contracts** pass. The final frozen selected run records **479 passed /
+1 failed / 11 existing ignored gates** across nine native groups; the sole failure
+is the unchanged real Windows archive-CLI symlink fixture setup (OS1314). Clippy
+for all targets, format, **17 Python tests**, mandatory typecheck and **260
+TypeScript tests / 3 existing skips** pass with **689 integrated inputs unchanged**.
+Actual Windows PostgreSQL18.6/psql18.6 validates Unicode database/role/password,
+TLS/SCRAM/channel binding, hostname/auth downgrade and quota refusals, no ambient
+profile/config authority, lost-stdout publication identity, deadline/peer cleanup,
+visible/hidden definitions and offline traversal after server shutdown. All three
+owned final-test OS credentials are removed. [Frozen evidence](validation/integration-2026-10-19/postgres-catalog/index.json)
+retains the initial API RED, actual Unicode/CRL/prompt/schema defects and corrected
+runs. These attempts are nonadditive. No libpq/server memory bound, maximum-size,
+runtime-library attestation, other-server/non-Windows/upstream certification or
+whole-native pass is claimed. Remaining R7 connectors, wider R1–R9 work, main
+merge and release stay open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

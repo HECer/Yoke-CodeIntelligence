@@ -2,6 +2,12 @@
 
 An independently implemented MIT core for local code orientation, semantic navigation, source graphs and reviewable changes. The default executable needs no Node/Python runtime, Graft, Serena, Graphify, model or API key. Standard third-party parsing/database/algorithm libraries are linked into the binary. Host-selected language servers are optional separate executables.
 
+The optional [PostgreSQL catalog host adapter](docs/postgres-catalog.md) captures
+fixed read-only metadata through an explicitly trusted/pinned psql18 installation
+into immutable received-data artifacts. `postgres-catalog read` queries these
+offline with no source Store, credential lookup or network. This bounded adapter
+does not establish server truth, original DDL, full upstream or platform parity.
+
 ## Build and use
 
 Rust 1.94.1 and the Windows MSVC toolchain are exercised locally. Cargo requires Rust 1.94.1 or newer, including the native AWS signing dependencies. Older compilers and hosted macOS/Linux CI are not claimed tested here.

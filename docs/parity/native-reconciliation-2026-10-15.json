@@ -7157,7 +7157,18 @@
         "native/src/document_graph.rs",
         "native/src/media.rs",
         "native/src/graph_exports.rs",
-        "docs/parity/public-contracts-2026-10-14.json"
+        "docs/parity/public-contracts-2026-10-14.json",
+        "native/src/postgres_catalog.rs",
+        "native/src/postgres_catalog_client.rs",
+        "native/src/postgres_catalog_query.sql",
+        "native/src/postgres_catalog_cli.rs",
+        "native/src/host_credentials.rs",
+        "native/src/platform_credentials.rs",
+        "native/tests/postgres_catalog.rs",
+        "native/tests/postgres_catalog_cli.rs",
+        "native/tests/host_credentials.rs",
+        "native/docs/postgres-catalog.md",
+        "docs/validation/integration-2026-10-19/postgres-catalog/index.json"
       ],
       "id": "R7",
       "inventoryRefs": [
@@ -7166,10 +7177,33 @@
         "graphify:url_ingest",
         "graphify:db_push"
       ],
-      "missingBehavior": "Native read-only PostgreSQL catalog acquisition; explicit Google shortcut export and URL/arxiv/PDF/social/video acquisition routes; explicit Neo4j/FalkorDB upsert. Existing local Office/media readers and generated Cypher do not supply these connectors.",
+      "missingBehavior": "The bounded native PostgreSQL host adapter now captures selected metadata and supports frozen received-data queries, with actual Windows PostgreSQL18.6/psql18.6 evidence. Full pinned upstream schema/definition equivalence, other server/client versions, non-Windows live qualification and mixed semantic/source integration remain unverified. Google shortcut export, URL/arxiv/PDF/social/video acquisition routes and Neo4j/FalkorDB upsert remain open; local Office/media readers and generated Cypher are not those connectors.",
       "priority": 7,
-      "suggestedScope": "Split by connector, starting with a bounded read-only PostgreSQL catalog importer producing frozen typed artifacts. Use host-only endpoint/credential authority; query selection must never fetch. Coordinate URL/media work with its existing owners.",
-      "title": "Explicit external-source acquisition and graph database connectors"
+      "suggestedScope": "Continue the remaining external-source and graph-database connectors as separate host-authorized bounded acquisitions into frozen typed artifacts. Preserve the native PostgreSQL received-data/authority boundary; query selection must never fetch. Validate actual backends when available and keep missing capability visible.",
+      "title": "Explicit external-source acquisition and graph database connectors",
+      "postgresCatalogCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/postgres-catalog/index.json",
+        "newContractCases": {
+          "receivedData": 8,
+          "cli": 4,
+          "credentialAdmission": 1,
+          "uriParser": 1
+        },
+        "finalScopedTotals": {
+          "passed": 479,
+          "failed": 1,
+          "ignored": 11
+        },
+        "nativeGroups": 9,
+        "actualPostgres": "18.6",
+        "actualPsql": "18.6",
+        "actualPlatform": "Windows",
+        "nonWindowsLiveValidated": false,
+        "serverTruthAttested": false,
+        "canonicalCodeSnapshot": false,
+        "fullUpstreamContractCertified": false,
+        "wholeNativeRerun": false
+      }
     },
     {
       "evidence": [
@@ -8393,6 +8427,25 @@
       ],
       "remainingReview": "Bounded area classification now replays unchanged impact details and explicitly selected same-snapshot Meaning graphs, preserves all concept memberships and equal-rank ambiguity, and uses exact directory fallback without provider calls. Modified-rename/exact quotes, captured hierarchy and actual worktree index conflicts already have separate producers. Wider ownership/semantic explanations, compiler-bound override/dispatch identity, predicted merge safety/working-file resolution, pushed-ref freshness and upstream report/schema equivalence remain open. Separate captured per-path CODEOWNERS interpretation now retains exact rule/token byte evidence, base/head and all supported matches over an unchanged impactAreas parent in the same pinned read transaction. Empty-owner winners are explicit; unsupported active rules make winners unknown, and uncaptured higher-precedence paths stay visible. The finite pattern policy, labels and captured selection do not establish full GitHub parser equivalence, actual identity, permissions, ownership or review requirements. Broader ownership and the remaining R5 interpretations stay open.",
       "fullContractCertified": false
+    },
+    {
+      "id": "native_postgres_received_catalog",
+      "behavior": "Rust owns fixed read-only serializable catalog SQL, strict bounded client rows, immutable response/archive replay and typed directed graph queries. An explicitly trusted SHA-pinned psql18 installation requires separate host network/output permission. Endpoint-scoped OS credentials enforce TLS verify-full/SCRAM/channel binding; literal loopback trust needs a separate weak-mode grant. Windows Unicode values use individually encoded fixed-key URI parameters and a private non-console password pipe. Original received record ranges, routine overload OIDs, parallel composite FK constraints and hidden/available definitions remain distinct. Imports never attest server truth, original DDL, semantic identity or execution and never create a code SourceSnapshot. Frozen reads start no client, credential lookup or network.",
+      "evidence": [
+        "native/src/postgres_catalog.rs",
+        "native/src/postgres_catalog_client.rs",
+        "native/src/postgres_catalog_query.sql",
+        "native/src/postgres_catalog_cli.rs",
+        "native/src/host_credentials.rs",
+        "native/src/platform_credentials.rs",
+        "native/tests/postgres_catalog.rs",
+        "native/tests/postgres_catalog_cli.rs",
+        "native/tests/host_credentials.rs",
+        "native/docs/postgres-catalog.md",
+        "docs/validation/integration-2026-10-19/postgres-catalog/index.json"
+      ],
+      "remainingReview": "The bounded native PostgreSQL host adapter now captures selected metadata and supports frozen received-data queries, with actual Windows PostgreSQL18.6/psql18.6 evidence. Full pinned upstream schema/definition equivalence, other server/client versions, non-Windows live qualification and mixed semantic/source integration remain unverified. Google shortcut export, URL/arxiv/PDF/social/video acquisition routes and Neo4j/FalkorDB upsert remain open; local Office/media readers and generated Cypher are not those connectors.",
+      "fullContractCertified": false
     }
   ],
   "residualCoverageRule": "R1-R9 are priorities only. residualRegister is a thematic index; every partial/unreconciled ledger row retains additional exact-contract review requirements. This is not a complete external certification.",
@@ -8493,7 +8546,7 @@
         "graphify:asr",
         "graphify:db_push"
       ],
-      "remainingBoundary": "Mixed-space semantic extraction and general cross-source graph links remain beyond the checked native/Office/frozen-PDF literal-query slice. External Postgres/Google/URL acquisition, actual ASR and graph database writes remain separate from local readers and generated Cypher."
+      "remainingBoundary": "The bounded native PostgreSQL host adapter now captures selected metadata and supports frozen received-data queries, with actual Windows PostgreSQL18.6/psql18.6 evidence. Full pinned upstream schema/definition equivalence, other server/client versions, non-Windows live qualification and mixed semantic/source integration remain unverified. Google shortcut export, URL/arxiv/PDF/social/video acquisition routes and Neo4j/FalkorDB upsert remain open; local Office/media readers and generated Cypher are not those connectors."
     },
     {
       "id": "refactor_and_provider_intent",

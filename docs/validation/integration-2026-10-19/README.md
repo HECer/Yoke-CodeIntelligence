@@ -296,3 +296,17 @@ Captured function propagation: [propagated-delete/index.json](propagated-delete/
 Portable Meaning projections: [portable-projections/index.json](portable-projections/index.json) preserves the initial API RED, intermediate packet-selection fixture failure and final nine contracts with 480/1/7 selected native results. The unchanged archive fixture retains its OS1314 symlink-creation failure. Imported data never provides source replay or semantic identity; whole-project acceptance remains open.
 
 Captured per-path owner candidates: [captured-owners/index.json](captured-owners/index.json) retains the API RED, ten new contracts, three included parser cases and 467/0/7 selected native results. Legacy owner parser/report IDs and original evidence remain unchanged. Actual ownership/GitHub permission/review authority and whole-project acceptance remain open.
+
+
+## Native PostgreSQL catalog checkpoint
+
+Source `a79444e7f2c3a9abefbf8e4d8725ba9109ceb740` and runtime merge `1705a7ea15d2f5c30470e252de2da30ff685ff47` add
+the bounded host-pinned psql18/received-data archive path. All14 new contracts
+pass; nine frozen native groups record479/1/11, with the sole unchanged archive
+CLI OS1314 fixture failure. All-target Clippy, format, Python17, mandatory
+typecheck and TypeScript260/3skip pass with unchanged integrated inputs. Actual
+PostgreSQL18.6 tests include Unicode, TLS/SCRAM/channel binding, separate
+permissions, auth/hostname/quota refusals, lost delivery identity and deadline
+cleanup. Imported claims remain data; wider R7/R1–R9, whole-native/platform,
+main and release gates remain open. [Complete scoped evidence](postgres-catalog/index.json)
+retains failures and corrected runs without adding attempt totals.
