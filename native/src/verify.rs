@@ -154,6 +154,7 @@ pub fn execute(
     for name in [
         "PATH",
         "SystemRoot",
+        "SystemDrive",
         "WINDIR",
         "USERPROFILE",
         "HOME",

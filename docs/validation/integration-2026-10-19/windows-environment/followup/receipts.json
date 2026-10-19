@@ -1,0 +1,49 @@
+[
+  {
+    "gate": "remaining-runtime",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--test",
+      "runtime",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 6.518,
+    "recordedAt": "2026-10-19T02:41:26.692063+00:00",
+    "resultGroups": [
+      {
+        "passed": 14,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  {
+    "gate": "actual-installed-language-servers",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--test",
+      "live",
+      "--",
+      "--ignored",
+      "--test-threads=2"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 40.327,
+    "recordedAt": "2026-10-19T02:42:07.019182+00:00",
+    "resultGroups": [
+      {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  }
+]

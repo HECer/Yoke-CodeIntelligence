@@ -91,3 +91,16 @@ retains only the explicit PowerShell REPL deadline failure. The six-job TypeScri
 matrix and all its npm-ci steps pass. These older runs do not validate bf6471a
 or the new optional bridge code; full acceptance, release and remaining STATUS
 work stay open.
+
+The [Windows runtime-environment follow-up](windows-environment/index.json)
+reproduces .NET Framework known-folder errors from the omitted `SystemDrive`
+and retains that runtime variable in seven filtered launchers. Original red
+process regressions and unchanged-source results are preserved. Each normal and
+8.3 TEMP process/REPL run passes 29 tests; those counts overlap. The scoped native
+run and separate remaining runtime target record 481 passed / 1 failed / 10
+ignored. The failure is unchanged real media symlink fixture setup (OS 1314),
+and is not skipped or treated as a pass. Format, all-target Clippy, TypeScript
+typecheck and 260 tests / 3 skipped pass. All 618 frozen inputs remain unchanged.
+Four actual installed Python/TypeScript/Rust server gates pass separately.
+The hosted PowerShell timeout itself has not been reproduced locally; fresh CI
+and broader platform acceptance remain open.

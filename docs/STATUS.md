@@ -107,6 +107,21 @@ are unchanged. [Scoped evidence](validation/integration-2026-10-19/upstream-comp
 records isolated dependencies and the locally built Kotlin binding, without
 upgrading full upstream parity, Serena, model/media/cloud or native acceptance.
 
+The Windows process-environment follow-up retains `SystemDrive` in seven native
+reduced-environment launchers. A real .NET Framework probe reproduces known-folder
+errors without that variable; adding only `SystemDrive` removes them. Two new
+process regressions fail before the patch and pass afterward, preserving secret
+filtering and explicit host overrides. Normal and actual 8.3 TEMP process/REPL
+runs each pass 29 tests, including the unchanged 20-second PowerShell operation.
+The scoped native validation records **481 passed / 1 failed / 10 ignored**;
+the unchanged media security fixture fails at real Windows symlink creation
+(OS 1314). Short-TEMP counts overlap. Format, all-target Clippy, typecheck and
+**260 TypeScript tests / 3 skipped** pass with 618 frozen inputs unchanged.
+Four actual installed Python/TypeScript/Rust server gates pass separately.
+This reproduces an environment defect, not the hosted PowerShell timeout itself:
+fresh remote validation remains required. [Evidence](validation/integration-2026-10-19/windows-environment/index.json)
+retains the original red tests and the unsuppressed fixture failure.
+
 The digest now has an explicit captured-history mapping path. Verified Git tree
 facts describe changes over the captured path union; source-replayed Rust
 associations retain original IDs, producers and exact byte evidence. Qualified

@@ -196,7 +196,15 @@ impl DebugAdapter {
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .env_clear();
-        for name in ["PATH", "SystemRoot", "WINDIR", "TEMP", "TMP", "LANG"] {
+        for name in [
+            "PATH",
+            "SystemRoot",
+            "SystemDrive",
+            "WINDIR",
+            "TEMP",
+            "TMP",
+            "LANG",
+        ] {
             if let Some(value) = std::env::var_os(name) {
                 command.env(name, value);
             }

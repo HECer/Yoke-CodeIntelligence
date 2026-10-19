@@ -97,6 +97,98 @@ fn source_selected_defaults_and_oversized_stdin_are_rejected_before_spawn() {
     assert!(run_capture(command, b"", &Deadline::new(10_000), limits()).is_err());
 }
 
+#[test]
+fn runtime_environment_filters_secrets_and_preserves_host_overrides() {
+    const CHILD: &str = "YOKE_PROCESS_ENV_CHILD_20261019";
+    let root = TempDir::new().unwrap();
+    if std::env::var(CHILD).as_deref() != Ok("owned") {
+        let mut child = Command::new(std::env::current_exe().unwrap());
+        child
+            .current_dir(root.path())
+            .args([
+                "--exact",
+                "runtime_environment_filters_secrets_and_preserves_host_overrides",
+                "--nocapture",
+            ])
+            .env(CHILD, "owned")
+            .env("OPENAI_API_KEY", "owned-not-a-credential")
+            .env("YOKE_UNAPPROVED_HOST_VALUE", "owned-private-value");
+        // Seed the isolated test host explicitly. The inner capture must inherit
+        // this runtime value while filtering the synthetic secret values.
+        #[cfg(windows)]
+        child.env("SystemDrive", std::env::var_os("SystemDrive").unwrap());
+        let result = run_capture(child, b"", &Deadline::new(20_000), limits()).unwrap();
+        assert_eq!(
+            result.exit_code,
+            Some(0),
+            "{}\n{}",
+            String::from_utf8_lossy(&result.stdout),
+            String::from_utf8_lossy(&result.stderr)
+        );
+        assert!(
+            result.output_complete
+                && !result.timed_out
+                && !result.output_exceeded
+                && !result.io_error
+        );
+        return;
+    }
+    assert_eq!(
+        std::env::var("OPENAI_API_KEY").unwrap(),
+        "owned-not-a-credential"
+    );
+    let program = "process.stdout.write(JSON.stringify({drive:process.env.SystemDrive??null,secret:'OPENAI_API_KEY' in process.env,unapproved:'YOKE_UNAPPROVED_HOST_VALUE' in process.env,explicit:process.env.YOKE_EXPLICIT_HOST_VALUE??null}));";
+    let result = run_capture(node(&root, program), b"", &Deadline::new(10_000), limits()).unwrap();
+    assert_eq!(result.exit_code, Some(0));
+    assert!(
+        result.output_complete && !result.timed_out && !result.output_exceeded && !result.io_error
+    );
+    let value: serde_json::Value = serde_json::from_slice(&result.stdout).unwrap();
+    assert_eq!(value["secret"], false);
+    assert_eq!(value["unapproved"], false);
+    #[cfg(windows)]
+    assert_eq!(value["drive"], std::env::var("SystemDrive").unwrap());
+    let mut override_command = node(&root, program);
+    override_command
+        .env_remove("SystemDrive")
+        .env("YOKE_EXPLICIT_HOST_VALUE", "owned-explicit");
+    let result = run_capture(override_command, b"", &Deadline::new(10_000), limits()).unwrap();
+    assert_eq!(result.exit_code, Some(0));
+    assert!(
+        result.output_complete && !result.timed_out && !result.output_exceeded && !result.io_error
+    );
+    let value: serde_json::Value = serde_json::from_slice(&result.stdout).unwrap();
+    assert!(value["drive"].is_null());
+    assert_eq!(value["explicit"], "owned-explicit");
+    assert_eq!(value["secret"], false);
+    assert_eq!(value["unapproved"], false);
+}
+
+#[cfg(windows)]
+#[test]
+fn windows_runtime_environment_supports_managed_known_folders() {
+    let root = TempDir::new().unwrap();
+    let mut command = Command::new(
+        std::path::PathBuf::from(std::env::var_os("SystemRoot").unwrap())
+            .join("System32/WindowsPowerShell/v1.0/powershell.exe"),
+    );
+    command.current_dir(root.path()).args(["-NoProfile", "-NonInteractive", "-Command", r#"$ErrorActionPreference='Stop'; if([string]::IsNullOrEmpty($env:SystemDrive)){throw 'Host system drive missing'}; $folder=[Environment]::GetFolderPath([Environment+SpecialFolder]::CommonApplicationData,[Environment+SpecialFolderOption]::DoNotVerify); if(-not [IO.Path]::IsPathRooted($folder)){throw 'Managed known folder is not absolute'}; Write-Output 'owned-windows-runtime'"#]);
+    let result = run_capture(command, b"", &Deadline::new(20_000), limits()).unwrap();
+    assert_eq!(
+        result.exit_code,
+        Some(0),
+        "{}",
+        String::from_utf8_lossy(&result.stderr)
+    );
+    assert_eq!(
+        String::from_utf8(result.stdout).unwrap().trim(),
+        "owned-windows-runtime"
+    );
+    assert!(
+        result.output_complete && !result.timed_out && !result.output_exceeded && !result.io_error
+    );
+}
+
 #[cfg(windows)]
 #[test]
 fn windows_host_fixture_does_not_allocate_a_console_window() {

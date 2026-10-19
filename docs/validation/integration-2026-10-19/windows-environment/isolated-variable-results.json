@@ -1,0 +1,15 @@
+[
+  {
+    "onlyAddedVariable": "SYSTEMDRIVE",
+    "exitCode": 0,
+    "exceptions": []
+  },
+  {
+    "onlyAddedVariable": "PUBLIC",
+    "exitCode": 0,
+    "exceptions": [
+      "CommonApplicationData|ArgumentException",
+      "CommonOemLinks|ArgumentException"
+    ]
+  }
+]

@@ -478,6 +478,7 @@ impl Session {
         for name in [
             "PATH",
             "SystemRoot",
+            "SystemDrive",
             "WINDIR",
             "USERPROFILE",
             "HOME",

@@ -267,6 +267,24 @@ fn explicitly_selected_shell_runs_and_cell_errors_preserve_namespace() {
     assert_eq!(value["result"], true);
 }
 
+#[cfg(windows)]
+#[test]
+fn selected_python_worker_preserves_windows_runtime_drive() {
+    let root = tempfile::tempdir().unwrap();
+    let setup = Deadline::new(60000);
+    let mut s = session(root.path(), HostProfile::default(), &setup);
+    let mut repl = AgentRepl::spawn(spec(), &setup).unwrap();
+    let value = repl
+        .execute(
+            &mut s,
+            "import os\nos.environ.get('SystemDrive')",
+            &Deadline::new(20000),
+        )
+        .unwrap();
+    assert_eq!(value["result"], std::env::var("SystemDrive").unwrap());
+    repl.close().unwrap();
+}
+
 #[test]
 fn python_regex_declaration_and_semantic_implementations_preserve_snapshot_anchors() {
     let root = tempfile::tempdir().unwrap();

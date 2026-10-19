@@ -193,6 +193,7 @@ impl<'a> Session<'a> {
         for name in [
             "PATH",
             "SystemRoot",
+            "SystemDrive",
             "WINDIR",
             "USERPROFILE",
             "HOME",

@@ -1705,7 +1705,7 @@ pub(crate) fn frozen_pdf_with_worker(
         .stdin(std::process::Stdio::null())
         .stdout(std::process::Stdio::piped())
         .stderr(std::process::Stdio::piped());
-    for key in ["SystemRoot", "WINDIR", "TEMP", "TMP", "LANG"] {
+    for key in ["SystemRoot", "SystemDrive", "WINDIR", "TEMP", "TMP", "LANG"] {
         if let Some(value) = std::env::var_os(key) {
             command.env(key, value);
         }

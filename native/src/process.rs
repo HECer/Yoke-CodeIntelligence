@@ -106,6 +106,7 @@ pub fn run_capture(
     for name in [
         "PATH",
         "SystemRoot",
+        "SystemDrive",
         "WINDIR",
         "USERPROFILE",
         "HOME",

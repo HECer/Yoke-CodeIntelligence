@@ -1,0 +1,176 @@
+[
+  {
+    "gate": "format",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 4.74,
+    "recordedAt": "2026-10-19T02:34:34.368830+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "process-and-repl",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--test",
+      "process",
+      "--test",
+      "agent_repl",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 86.826,
+    "recordedAt": "2026-10-19T02:36:01.200705+00:00",
+    "resultGroups": [
+      {
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  {
+    "gate": "short-temp-process-and-repl",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--test",
+      "process",
+      "--test",
+      "agent_repl",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 5.854,
+    "recordedAt": "2026-10-19T02:36:07.055672+00:00",
+    "resultGroups": [
+      {
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  {
+    "gate": "affected-runtime-contracts",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--lib",
+      "--test",
+      "runtime",
+      "--test",
+      "debug_adapter",
+      "--test",
+      "lsp",
+      "--test",
+      "lsp_lifecycle",
+      "--test",
+      "lsp_source_execution",
+      "--test",
+      "media",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 101,
+    "elapsedSeconds": 143.232,
+    "recordedAt": "2026-10-19T02:38:30.288094+00:00",
+    "resultGroups": [
+      {
+        "passed": 402,
+        "failed": 0,
+        "ignored": 7
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 1
+      },
+      {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 2
+      },
+      {
+        "passed": 12,
+        "failed": 1,
+        "ignored": 0
+      }
+    ]
+  },
+  {
+    "gate": "clippy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--keep-going",
+      "-j2",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 90.918,
+    "recordedAt": "2026-10-19T02:40:01.206476+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "typescript-typecheck",
+    "command": [
+      "npm.cmd",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 5.851,
+    "recordedAt": "2026-10-19T02:40:07.058232+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "typescript-tests",
+    "command": [
+      "npm.cmd",
+      "test"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 63.015,
+    "recordedAt": "2026-10-19T02:41:10.074218+00:00",
+    "resultGroups": []
+  }
+]
