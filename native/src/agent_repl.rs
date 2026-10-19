@@ -562,6 +562,7 @@ fn prepare_captured_file_relocation(
     session: &mut Session,
     path: &str,
     destination: &str,
+    directory_move: bool,
     deadline: &Deadline,
 ) -> Result<Value> {
     let path = crate::paths::normalized_syntax(path)?;
@@ -571,6 +572,10 @@ fn prepare_captured_file_relocation(
     let source_host = crate::paths::scoped(&engine.root, &path)?;
     match std::fs::symlink_metadata(source_host) {
         Ok(metadata) if metadata.is_dir() && !crate::paths::is_link(&metadata) => {
+            ensure!(
+                directory_move,
+                "File rename requires a captured regular file"
+            );
             return crate::semantic_refactor::invoke(
                 engine,
                 "move",
@@ -1096,7 +1101,13 @@ fn dispatch_unbounded(
                 let destination = crate::paths::normalized(&format!("{parent}/{basename}"))?;
                 // The pinned JB facade uses a parent directory. The direct
                 // native move API continues to take the final destination path.
-                return prepare_captured_file_relocation(session, &path, &destination, deadline);
+                return prepare_captured_file_relocation(
+                    session,
+                    &path,
+                    &destination,
+                    true,
+                    deadline,
+                );
             }
             match args.get("target_parent_name_path") {
                 None | Some(Value::Null) => {}
@@ -1461,6 +1472,7 @@ fn dispatch_unbounded(
                             session,
                             &path,
                             &destination,
+                            false,
                             deadline,
                         );
                     }
