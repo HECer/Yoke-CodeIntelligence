@@ -145,3 +145,20 @@ HTTPS cases cover empty own-repo discovery, Trail-Code PR623 and Rust PR163746
 raw foreign texts stay in owned external validation directories. Earlier failed
 development attempts remain separate. Prior symlink failures, hosted platform
 acceptance and broader STATUS/R1–R9 requirements are not accepted by this scope.
+
+The [digest service checkpoint](digest-service/index.json) implements the
+independently owned receiver-v1 client with exact-payload/endpoint approval,
+fresh captured-source replay, signed durable intents, one PUT and GET-only
+unknown-outcome recovery. Eighteen owned socket/SQLite/CLI cases and a typed
+MAC-manipulation unit case pass. A separate actual Windows Credential Manager
+CLI case proves persistence across processes and removes its unique credential.
+The final 20-group run passes 769 native / 0 failed / 12 ignored, Python 17,
+TypeScript 260 / 3 skipped, typecheck, format and all-target Clippy. All 629 inputs
+are unchanged within each frozen run. The original 122 RSA-fixture setup
+failures are preserved; an isolated official-checksum-verified PowerShell 7.6.7
+prerequisite supplies `pwsh.exe` without changing source/test expectations or
+global settings. The final two-file follow-up fences pending writes across
+installation changes; its entire earlier 768-test checkpoint is archived.
+All 101 raw artifact hashes are recorded. Configured production
+receiver acceptance, processing, live App deployment, prior OS1314 fixture setup
+failures, whole-platform and broader STATUS acceptance remain open.

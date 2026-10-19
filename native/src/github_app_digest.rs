@@ -15,6 +15,8 @@ mod history_boundary_tests;
 mod mapping;
 #[path = "github_app_digest_rust.rs"]
 mod rust;
+#[path = "github_app_digest_service.rs"]
+pub mod service;
 #[path = "github_app_digest_source.rs"]
 mod source;
 pub use mapping::{MappingOptions, MappingSelection};

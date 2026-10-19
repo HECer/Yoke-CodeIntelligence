@@ -38,6 +38,15 @@ human review. See the [group projection contract](../native/docs/meaning-groups.
 
 TypeScript directories and ADRs below describe the retained runtime. Snapshot identity and serialized state are runtime-specific; no implicit conversion occurs. [The native guide](../native/README.md) and [replacement criteria](RUST_REPLACEMENT.md) describe current boundaries.
 
+`github_app::digest::service` publishes only freshly replayed handoff projections
+under separate host service/network/write authority and exact-payload approval.
+Domain-separated App-key MACs and a hash-chained inline journal bind intents and
+receiver receipts. No SQL transaction spans HTTP; unknown writes prohibit retry
+and recover through a bounded read of the same receiver/proposal. Typed source
+selectors retain immutable captures. Receiver acceptance is distinct from
+processing and from proprietary upstream service equivalence. See the
+[service contract](../native/docs/digest-service.md).
+
 ## Boundaries
 
 ```text

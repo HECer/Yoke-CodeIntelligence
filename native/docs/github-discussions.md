@@ -111,10 +111,12 @@ claim that headers disclose no source information or that arbitrary secrets have
 been scrubbed.
 
 The artifact declares `reviewRequired:true` and `serviceSend:"unavailable"`.
-Generating it performs no send, durable approval or publication. The actual
-service transport, exact-payload approval and outcome/recovery lifecycle remain
-open R8 work. Full upstream/proprietary brain behavior and live App deployment
-are not certified by this component.
+Generating it performs no send, durable approval or publication. The separate
+[service workflow](digest-service.md) regenerates this projection and binds
+explicit approval to the exact submission bytes and host-selected endpoint.
+It implements a durable intent/receipt lifecycle and GET-only recovery for the
+independently owned receiver contract. Configured production acceptance, full
+upstream/proprietary brain behavior and live App deployment remain uncertified.
 
 The acquisition follows the primary GitHub
 [issue-comment](https://docs.github.com/en/rest/issues/comments),

@@ -786,6 +786,7 @@ fn validate_parity_records(store: &Store, deadline: &Deadline) -> Result<ParityD
             crate::github_app::RECORD_KIND
             | crate::github_app::worker::RECORD_KIND
             | crate::github_app::publication::RECORD_KIND
+            | crate::github_app::digest::service::RECORD_KIND
             | crate::github_app::pages::RECORD_KIND
             | crate::github_app::pages::REVISION_KIND => {
                 // scan validates the complete closed inline history before this pass.
@@ -1054,6 +1055,10 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
     )?;
     let github_page_ids =
         crate::github_app::pages::validated_inline_records(store, &github_worker_roots, deadline)?;
+    let (digest_service_ids, digest_service_roots) =
+        crate::github_app::digest::service::retained_roots(store, deadline)?;
+    out.references.extend(digest_service_roots.iter().cloned());
+    out.all_references.extend(digest_service_roots);
     out.references
         .extend(github_worker_roots.snapshot_ids.iter().cloned());
     out.all_references.extend(github_worker_roots.snapshot_ids);
@@ -1265,6 +1270,15 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
             );
             // Only the validated completed worker roots carry CAS authority. Body,
             // request, URL and other inline strings are never generic root inputs.
+            continue;
+        }
+        if kind == crate::github_app::digest::service::RECORD_KIND {
+            ensure!(
+                digest_service_ids.contains(&id),
+                "Invalid digest service history"
+            );
+            // Only closed typed source selectors above retain captured state.
+            // Payload hashes, endpoint strings and receiver IDs carry no CAS authority.
             continue;
         }
         if kind == crate::github_app::pages::RECORD_KIND

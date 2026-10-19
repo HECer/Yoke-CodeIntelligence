@@ -181,8 +181,9 @@ composition replays native source and distinguishes a verified history commit
 from a selected immutable source capture; provider text grants no source, model
 or execution authority. A reviewable handoff preview excludes discussion text,
 diff hunks, author/title strings, commit messages and native implementation or
-initializer bodies. Actual service send/approval/outcome recovery remains
-unavailable. See the [contract](../native/docs/github-discussions.md).
+initializer bodies. That discussion checkpoint leaves service sending and
+approval/outcome recovery unavailable; the subsequent workflow below adds an
+independently owned receiver contract. See the [discussion contract](../native/docs/github-discussions.md).
 
 The frozen discussion checkpoint passes **544 scoped native tests / 0 failed /
 7 ignored** across 11 groups, **17 Python tests**, typecheck, format/all-target
@@ -195,8 +196,44 @@ Rust PR 163746 with **97 observations** (description 1, conversation 35, reviews
 metadata, binary/source hashes, original development failures and final logs.
 These selected targets do not rerun or accept the preceding federation/
 maintenance symlink setup failures or the whole-platform suite. The R8 thematic
-tracker keeps actual service publication, full service acceptance and all
-inventory-wide certification gates open.
+tracker at that checkpoint keeps actual service publication, full service
+acceptance and all inventory-wide certification gates open.
+
+The subsequent [digest service client](../native/docs/digest-service.md) generates
+fresh source-bound proposals and requires approval for the exact payload,
+endpoint, workspace and App. Separate service/network/write host grants and
+current App/service repository scopes precede publication. A domain-separated,
+signed and hash-chained intent is committed before one PUT; unknown outcomes
+block retries and new submissions for that repository. GET-only recovery checks
+the same exact receipt, while 404 remains unknown. SQLite durability, reserved
+journal/output capacity, source corruption, caller SQL policy and typed
+retention are checked. Ordinary digest preview/history remains offline.
+
+The final frozen service checkpoint passes **769 selected native tests / 0 failed /
+12 ignored** across 20 groups, **17 Python tests**, typecheck, format/all-target
+Clippy and **260 TypeScript tests / 3 skipped**. All **629 inputs are unchanged**.
+Eighteen new integration cases and a typed MAC-manipulation unit case pass.
+A separate actual Windows Credential Manager CLI gate creates/removes only its
+unique signing credential and proves lost-response status/recovery across
+processes without a second PUT. This is an owned socket receiver fixture.
+The first broad run's 122 failures all occur in existing RSA fixture setup because
+`pwsh.exe` is unavailable. An isolated, official-checksum-verified PowerShell 7.6.7
+prerequisite fixes the test environment; that rerun has identical source inputs.
+A subsequent two-file follow-up makes the pending App/repository fence independent
+of installation changes and adds a real regression case. The complete prior
+768-test checkpoint is archived separately, and all checks rerun for the final
+769-test source. The new installation cannot bypass an unknown write or recover
+a revoked original scope.
+[Evidence](validation/integration-2026-10-19/digest-service/index.json) preserves
+the initial failures, final logs, exact source/binary hashes and explicit scope.
+The earlier federation/maintenance OS1314 fixture setup failures and full
+platform suite are outside this selected run and remain unaccepted.
+
+This independently owned receiver-v1 client is not an undocumented proprietary
+service adapter. Receiver acceptance does not establish processing, source
+execution or model quality. Configured production receiver acceptance,
+automatic historical acquisition, actual App installation/deployment, full
+platform acceptance and the remaining STATUS/R1–R9 requirements stay open.
 
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes

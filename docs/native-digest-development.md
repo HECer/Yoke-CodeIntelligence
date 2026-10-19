@@ -7,7 +7,10 @@ isolated development component. The explicit history reader adds bounded,
 captured-head commit messages. An explicit mapped-history path additionally
 associates already captured Git snapshots with selected commits and parents.
 Explicit closed-PR captures can now be imported into the fresh source projection
-and a body-excluding handoff preview. Actual service publication/recovery,
+and a body-excluding handoff preview. An explicit
+[service workflow](../native/docs/digest-service.md) implements exact-payload
+approval, durable submission and read-only recovery against the independently
+owned receiver contract. Configured production service acceptance,
 automatic historical acquisition and universal export parity remain open. See the
 [captured mapping contract](../native/docs/digest-history-mapping.md).
 
@@ -15,6 +18,8 @@ The [discussion contract](../native/docs/github-discussions.md) describes the
 separate host network/text grant, immutable packet replay, source associations
 and offline `--discussion-capture`/`--handoff-preview` options. Acquisition and
 composition grant no model, source execution or service publication authority.
+The separate service flags require host network/write permissions and current
+App/service grants; ordinary preview/history calls retain their read-only policy.
 
 ## Captured mapping checkpoint (2026-10-19 UTC)
 

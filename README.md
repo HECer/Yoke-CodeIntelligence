@@ -22,8 +22,11 @@ Use `target/release/yoke.exe` on Windows. Rust 1.94.1 or newer is required to bu
 
 Explicit [closed-PR discussion captures](native/docs/github-discussions.md) add
 bounded host-authorized GitHub observations to offline captured-source digests.
-The optional handoff preview excludes discussion and implementation bodies;
-service publication and its approval/recovery lifecycle remain under development.
+The optional handoff preview excludes discussion and implementation bodies.
+An explicit [digest service workflow](native/docs/digest-service.md) adds exact
+payload approval, a durable send journal and read-only outcome recovery for the
+independently owned receiver contract. Production receiver acceptance and wider
+upstream service equivalence remain open.
 
 ## TypeScript advanced runtime
 
