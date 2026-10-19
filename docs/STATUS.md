@@ -136,8 +136,27 @@ federation and maintenance. The prior contention/cleanup/shutdown tests pass.
 Format, all-target Clippy, typecheck and **260 TypeScript tests / 3 skipped**
 pass with all 619 frozen inputs unchanged. [Preserved evidence](validation/integration-2026-10-19/sqlite-absolute-deadline/index.json)
 records both the original failures and final results.
-The [deadline contract](../native/docs/sqlite-deadlines.md) retains the separate
-writable-constructor/raw-connection limits and pending hosted platform gates.
+That checkpoint leaves writable-constructor/raw-connection handling separate;
+the [current deadline contract](../native/docs/sqlite-deadlines.md) records later
+opening work and the pending hosted platform gates.
+
+Writable Store opening now shares one inherited absolute deadline across
+client admission/lease locks and initial SQLite schema/identity work. Five
+original opening regressions fail before correction, including a 120 ms parent
+ceiling permitting 3.20 seconds of setup. Seven final opening tests pass,
+covering cancellation, zero/extreme budgets before state creation, brief
+contention, identity/Unicode preservation and setup-policy disposal on success.
+The Git mapping fixture also sets its physical executable mode on Unix before
+staging and asserts clean tracked bytes/modes before capture/checkout. An owned
+Windows Git probe with explicit filemode checking reproduces the original
+index/worktree disagreement; all 13 Windows mapping tests pass. Actual Unix
+execution remains pending. The two final native commands execute 18 disjoint
+groups: **574 passed / 2 failed / 7 ignored**. Both failures remain unchanged
+Windows symlink fixture creation (OS 1314). This supersedes the preceding
+constructor limitation; other raw SQLite connections remain separate.
+Format, all-target Clippy, typecheck and **260 TypeScript tests / 3 skipped**
+pass with all 620 frozen inputs unchanged. [Evidence](validation/integration-2026-10-19/opening-and-git-mode/index.json)
+preserves the original red attempts and the explicit Unix validation boundary.
 
 The digest now has an explicit captured-history mapping path. Verified Git tree
 facts describe changes over the captured path union; source-replayed Rust

@@ -9,6 +9,8 @@ cancellation flags in connection-owned state. Record mutations recheck those
 conditions after serialization; ledger transaction admission shares the same
 policy. [SQLite deadline ownership and boundaries](../native/docs/sqlite-deadlines.md)
 describe callback lifetime, recovery and the independent raw-connection limits.
+Store opening shares its setup deadline across client locks and schema/identity
+work, inherits enclosing host cancellation and clears that policy on success.
 
 `editor` derives versioned immutable overlays; `editor_http` exposes authenticated loopback read operations. The VS Code client selects executables from user settings and queues document versions through startup/shutdown. `knowledge` validates authored assertions, sparse/external vectors and imported observations. `media` binds assets and supplied text; PDF parsing uses a resource-limited child rather than uninterruptible parsing in the main process. `federation` and `maintenance` have separately scoped integration and acceptance tests.
 

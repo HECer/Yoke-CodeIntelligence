@@ -30,9 +30,12 @@ thread_local! {
 }
 impl Deadline {
     pub fn new(ms: u64) -> Self {
+        Self::from_duration(Duration::from_millis(ms))
+    }
+    pub(crate) fn from_duration(duration: Duration) -> Self {
         let now = Instant::now();
         let mut result = Self {
-            end: now.checked_add(Duration::from_millis(ms)).unwrap_or(now),
+            end: now.checked_add(duration).unwrap_or(now),
             cancellations: Vec::new(),
         };
         HOST_DEADLINE.with(|scope| {

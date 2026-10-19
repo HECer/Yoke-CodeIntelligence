@@ -95,6 +95,13 @@ impl Fixture {
             ),
         )
         .unwrap();
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            let path = root.path().join("café.rs");
+            let mode = fs::metadata(&path).unwrap().permissions().mode();
+            fs::set_permissions(&path, fs::Permissions::from_mode(mode | 0o111)).unwrap();
+        }
         git(&host, root.path(), &["add", "--all"]);
         git(
             &host,
@@ -102,6 +109,15 @@ impl Fixture {
             &["update-index", "--chmod=+x", "--", "café.rs"],
         );
         git(&host, root.path(), &["commit", "-q", "-m", "third"]);
+        assert!(
+            git(
+                &host,
+                root.path(),
+                &["status", "--porcelain", "--untracked-files=no"]
+            )
+            .is_empty(),
+            "Owned Git fixture must have matching worktree bytes and modes before capture/checkout"
+        );
         let third = git(&host, root.path(), &["rev-parse", "HEAD"]);
         let mut engine = Engine::open(root.path()).unwrap();
         let d = Deadline::new(30_000);

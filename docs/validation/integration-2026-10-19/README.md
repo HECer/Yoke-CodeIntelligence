@@ -114,5 +114,18 @@ SQL-policy preservation and connection-lifetime regressions execute without
 gating away the security cases. Format/all-target Clippy, typecheck and 260
 TypeScript tests / 3 existing skips pass.
 The original absolute request/cancellation policy now survives SQLite lock
-waiting and record serialization; constructor/raw-connection and hosted platform
-acceptance remain separate. The final source freeze binds 619 inputs.
+waiting and record serialization. That checkpoint predates the constructor repair;
+raw-connection and hosted platform acceptance remain separate. Its final source
+freeze binds 619 inputs.
+
+The [Store opening/Git-mode follow-up](opening-and-git-mode/index.json) preserves
+five real red opening cases and a separately labeled owned Windows Git probe.
+Seven opening and 13 mapped-history tests pass. The Unix fixture now stages a
+physically executable source file and checks clean tracked bytes/modes; actual
+Unix execution remains pending. Two disjoint final native commands execute all
+18 result groups: 574 passed / 2 failed / 7 ignored. Both failures are unchanged
+Windows symlink fixture creation (OS 1314). Opening now shares its inherited
+absolute deadline/cancellation through both client locks and schema/identity
+work; successful setup clears that policy for later unrelated operations.
+Format, all-target Clippy, typecheck and 260 TypeScript tests / 3 existing skips
+pass with all 620 frozen inputs unchanged. No full platform acceptance is claimed.

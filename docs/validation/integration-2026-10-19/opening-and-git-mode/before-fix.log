@@ -1,0 +1,51 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 2.73s
+     Running tests\store_open_deadline.rs (target\debug\deps\store_open_deadline-a670cd1a22e863ae.exe)
+
+running 6 tests
+test cancelled_open_refuses_before_creating_state ... FAILED
+test opening_client_admission_and_lease_waits_observe_host_cancellation ... FAILED
+test opening_schema_wait_observes_host_cancellation ... FAILED
+test successful_open_does_not_leave_its_setup_deadline_on_later_operations ... ok
+test zero_and_unrepresentable_open_budgets_refuse_before_creating_state ... FAILED
+test opening_schema_wait_uses_the_inherited_absolute_deadline ... FAILED
+
+failures:
+
+---- cancelled_open_refuses_before_creating_state stdout ----
+
+thread 'cancelled_open_refuses_before_creating_state' (7044) panicked at native\tests\store_open_deadline.rs:50:9:
+assertion failed: Store::open(root.path()).is_err()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- opening_client_admission_and_lease_waits_observe_host_cancellation stdout ----
+
+thread 'opening_client_admission_and_lease_waits_observe_host_cancellation' (20428) panicked at native\tests\store_open_deadline.rs:136:13:
+maintenance.lock ignored cancellation: 1.9400714s
+
+---- opening_schema_wait_observes_host_cancellation stdout ----
+
+thread 'opening_schema_wait_observes_host_cancellation' (16956) panicked at native\tests\store_open_deadline.rs:102:9:
+Schema lock ignored cancellation: 3.1331248s
+
+---- zero_and_unrepresentable_open_budgets_refuse_before_creating_state stdout ----
+
+thread 'zero_and_unrepresentable_open_budgets_refuse_before_creating_state' (10096) panicked at native\tests\store_open_deadline.rs:39:9:
+assertion failed: !root.path().join(".yoke").exists()
+
+---- opening_schema_wait_uses_the_inherited_absolute_deadline stdout ----
+
+thread 'opening_schema_wait_uses_the_inherited_absolute_deadline' (8160) panicked at native\tests\store_open_deadline.rs:71:5:
+Store opening ignored its parent ceiling: 3.1976735s
+
+
+failures:
+    cancelled_open_refuses_before_creating_state
+    opening_client_admission_and_lease_waits_observe_host_cancellation
+    opening_schema_wait_observes_host_cancellation
+    opening_schema_wait_uses_the_inherited_absolute_deadline
+    zero_and_unrepresentable_open_budgets_refuse_before_creating_state
+
+test result: FAILED. 1 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.26s
+
+error: test failed, to rerun pass `--test store_open_deadline`

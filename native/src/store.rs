@@ -157,24 +157,27 @@ impl Store {
         Self::open_with_timeout(root, Duration::from_secs(10))
     }
     pub fn open_with_timeout(root: &Path, timeout: Duration) -> Result<Self> {
-        let started = Instant::now();
+        let deadline = crate::capture::Deadline::from_duration(timeout);
+        deadline.check()?;
         let dir = root.join(".yoke");
         if let Ok(meta) = fs::symlink_metadata(&dir) {
             ensure!(!is_link(&meta), "State directory must not be a link");
         }
         fs::create_dir_all(&dir)?;
         for name in ["blobs", "trees"] {
+            deadline.check()?;
             let path = dir.join(name);
             if let Ok(meta) = fs::symlink_metadata(&path) {
                 ensure!(!is_link(&meta), "State subdirectory must not be a link");
             }
             fs::create_dir_all(path)?;
         }
+        deadline.check()?;
         let admission_gate = state_lock(&dir, "maintenance.lock")?;
         let client_lock = state_lock(&dir, "clients.lock")?;
-        let end = started + timeout;
-        lock_until(&admission_gate, false, end, None)?;
-        lock_until(&client_lock, false, end, None)?;
+        let end = Instant::now() + deadline.remaining();
+        lock_until(&admission_gate, false, end, Some(&deadline))?;
+        lock_until(&client_lock, false, end, Some(&deadline))?;
         fs2::FileExt::unlock(&admission_gate)?;
         let db_path = dir.join("index.sqlite");
         for name in [
@@ -183,6 +186,7 @@ impl Store {
             "index.sqlite-shm",
             "index.sqlite-journal",
         ] {
+            deadline.check()?;
             if let Ok(meta) = fs::symlink_metadata(dir.join(name)) {
                 ensure!(
                     !is_link(&meta),
@@ -190,12 +194,11 @@ impl Store {
                 );
             }
         }
+        deadline.check()?;
         let db = Connection::open(db_path)?;
-        db.busy_timeout(
-            timeout
-                .saturating_sub(started.elapsed())
-                .min(Duration::from_secs(10)),
-        )?;
+        busy::install(&db, Some(&deadline))?;
+        let bounded = deadline.clone();
+        db.progress_handler(1000, Some(move || bounded.check().is_err()));
         db.execute_batch("PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA synchronous=FULL;
             CREATE TABLE IF NOT EXISTS meta(key TEXT PRIMARY KEY,value TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS snapshots(id TEXT PRIMARY KEY,value TEXT NOT NULL);
@@ -204,6 +207,7 @@ impl Store {
             CREATE TABLE IF NOT EXISTS records(kind TEXT NOT NULL,id TEXT NOT NULL,value TEXT NOT NULL,PRIMARY KEY(kind,id));
             CREATE VIRTUAL TABLE IF NOT EXISTS symbols USING fts5(snapshot UNINDEXED,id UNINDEXED,name,path UNINDEXED,signature);
             CREATE VIRTUAL TABLE IF NOT EXISTS documents USING fts5(snapshot UNINDEXED,path UNINDEXED,text);")?;
+        deadline.check()?;
         let workspace_id: Option<String> = db
             .query_row("SELECT value FROM meta WHERE key='workspace'", [], |r| {
                 r.get(0)
@@ -221,12 +225,18 @@ impl Store {
                     std::time::SystemTime::now(),
                     random.path()
                 ));
+                deadline.check()?;
                 db.execute("INSERT OR IGNORE INTO meta VALUES('workspace',?1)", [&id])?;
                 db.query_row("SELECT value FROM meta WHERE key='workspace'", [], |r| {
                     r.get(0)
                 })?
             }
         };
+        deadline.check()?;
+        // The setup budget bounds this opening, not future unrelated operations
+        // on the returned Store. Those select their own checked request policy.
+        db.progress_handler(0, None::<fn() -> bool>);
+        busy::install(&db, None)?;
         Ok(Self {
             dir,
             db,

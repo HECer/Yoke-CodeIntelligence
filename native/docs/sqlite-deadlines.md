@@ -41,12 +41,19 @@ code; it is not preempted. Ledger transaction admission keeps the checked Store
 policy instead of replacing it with a separate relative SQLite timeout. No new
 reservation, cost, source or recovery authority is introduced.
 
-This increment covers checked Store operations and the ledger transaction path.
-The writable Store constructor's initial schema setup retains its existing
-timeout. Existing-only read-only Store setup keeps its explicit first-SQL retry
-loop. Other independent raw SQLite connections and deliberately selected raw
-connection policies are not converted by this change. Full platform acceptance
-requires the corresponding hosted runs.
+The writable Store constructor now uses the same absolute opening deadline for
+client admission, client lease acquisition and initial schema/identity work.
+Its full `Duration` inherits any enclosing host ceiling and cancellation flags;
+zero or unrepresentable durations and already cancelled requests refuse before
+creating `.yoke`. The SQL busy and progress handlers are installed before the
+first setup statement. Successful opening clears this setup policy so future
+unrelated Store operations select their own request deadline. Initialization
+remains cooperative and can retain partial setup if a later step fails.
+
+Existing-only read-only Store setup keeps its explicit first-SQL retry loop.
+Other independent raw SQLite connections and deliberately selected raw
+connection policies remain separate. Full platform acceptance requires the
+corresponding hosted runs.
 
 Real SQLite regressions cover cancellation during a longer lock wait, elapsed
 serialization budgets, uncontended serialization-triggered cancellation for all
@@ -54,3 +61,7 @@ three record mutations, cancelled ledger admission with unchanged accounting,
 brief contention followed by exact Unicode publication, recovery and independent
 policy ownership after moving a connection. A module test removes and
 reinstalls callback registration to exercise the fail-closed lifetime boundary.
+Separate opening tests cover zero/extreme durations, cancellation before state
+creation, actual rollback-journal reader exclusion, both physical lease files,
+the inherited host ceiling, recovery, preserved workspace/Unicode data and setup
+policy disposal after a successful opening.
