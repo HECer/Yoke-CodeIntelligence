@@ -22,10 +22,11 @@ hash and cancellation checks. Only after all checks does ordinary guarded
 deletion preparation publish a plan. [File usage checks](../native/docs/file-usage.md)
 describe supported declarations and unknown consumers.
 
-`changes_symbol_delete` derives independently removable TypeScript/JavaScript
-declaration ranges from exact captured AST/entity bindings. Export and ambient
-wrappers are included only with their owning declaration; stored entity and
-usage-evidence coordinates retain their original ranges. See
+`changes_symbol_delete` derives independently removable TypeScript/JavaScript,
+Python and Rust declaration ranges from exact captured AST/entity bindings.
+Export, ambient and decorator wrappers belong only to their owning declaration;
+Rust reuses `refactor_contract`'s owned outer-attribute/documentation bundle.
+Stored entity and usage-evidence coordinates retain their original ranges. See
 [symbol deletion boundaries](../native/docs/symbol-deletion.md).
 
 `native/src` is an independent runtime with its own `.yoke` SQLite/CAS state. `capture`, `paths` and `store` own strict saved-source acquisition, immutable bytes, FTS and client/writer locking. `analysis` and `contracts` produce structural and authored observations; `query` owns retrieval, plans and directed analytics. `lsp` owns the host-selected semantic protocol, with exact source anchors and bounded excerpts. `changes`, `verify` and `process` own reviewed plans, copied execution, conditional original writes and recovery.

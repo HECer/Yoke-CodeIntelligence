@@ -236,7 +236,7 @@ fn prepare_inner(
                 "delete"
                     if matches!(
                         file.language.as_str(),
-                        "typescript" | "tsx" | "javascript" | "jsx"
+                        "typescript" | "tsx" | "javascript" | "jsx" | "rust" | "python"
                     ) =>
                 {
                     let (text, _) = source(store, snapshot, &file.path)?;

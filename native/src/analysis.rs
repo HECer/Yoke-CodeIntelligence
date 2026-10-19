@@ -259,6 +259,39 @@ pub(crate) fn symbol<'a>(
     }
     Some((kind(node)?, name_node(node)?))
 }
+/// Apply the released owner classification without rewriting stored anchors.
+/// A function nested inside a method remains a function: only its nearest
+/// declared owner participates in the function-to-method adjustment.
+pub(crate) fn declaration_symbol<'a>(
+    epoch: AnalyzerEpoch,
+    node: Node<'a>,
+    text: &str,
+    language: &str,
+    deadline: &Deadline,
+) -> Result<Option<(&'static str, Node<'a>)>> {
+    deadline.check()?;
+    let Some((mut kind, name)) = symbol(epoch, node, text, language) else {
+        return Ok(None);
+    };
+    if kind == "function" {
+        let mut parent = node.parent();
+        while let Some(owner) = parent {
+            deadline.check()?;
+            if let Some((owner_kind, _)) = symbol(epoch, owner, text, language) {
+                if matches!(
+                    owner_kind,
+                    "class" | "struct" | "interface" | "implementation"
+                ) {
+                    kind = "method";
+                }
+                break;
+            }
+            parent = owner.parent();
+        }
+    }
+    Ok(Some((kind, name)))
+}
+
 pub(crate) fn call_target<'a>(
     epoch: AnalyzerEpoch,
     node: Node<'a>,

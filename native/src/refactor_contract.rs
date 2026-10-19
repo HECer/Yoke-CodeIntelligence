@@ -480,6 +480,52 @@ pub(crate) fn parse_rust(text: &str, deadline: &Deadline) -> Result<RustSyntax> 
     }
     Ok(syntax)
 }
+/// Reuse the owned attachment grammar for deletion without changing entity or
+/// evidence coordinates and without constructing a move intent from wire data.
+pub(crate) fn symbol_deletion_range(
+    epoch: crate::analysis::AnalyzerEpoch,
+    entity: &Entity,
+    text: &str,
+    deadline: &Deadline,
+) -> Result<Range<usize>> {
+    ensure!(
+        entity.language == "rust",
+        "Rust deletion source binding missing"
+    );
+    let syntax = parse_rust(text, deadline)?;
+    let input = &text[syntax.offset..];
+    let mut stack = vec![syntax.root()];
+    let mut selected = None;
+    let mut count = 0usize;
+    while let Some(node) = stack.pop() {
+        deadline.check()?;
+        count += 1;
+        ensure!(count <= 200_000, "Rust deletion AST capacity exceeded");
+        if syntax.range(node) == (entity.start_byte..entity.end_byte)
+            && let Some((kind, name)) =
+                crate::analysis::declaration_symbol(epoch, node, input, "rust", deadline)?
+            && kind == entity.kind
+            && Some(syntax.range(name).start) == entity.name_start_byte
+            && Some(syntax.range(name).end) == entity.name_end_byte
+            && name.utf8_text(input.as_bytes())? == entity.name
+        {
+            ensure!(selected.is_none(), "Ambiguous Rust deletion AST binding");
+            selected = Some(node);
+        }
+        let mut cursor = node.walk();
+        stack.extend(node.named_children(&mut cursor));
+    }
+    let selected = selected.context("Rust deletion exact AST binding missing")?;
+    ensure!(
+        selected.parent().is_some_and(|parent| matches!(
+            parent.kind(),
+            "source_file" | "declaration_list" | "block"
+        )),
+        "Rust deletion requires an independently removable declaration"
+    );
+    Ok(source_transfer(&syntax, selected, deadline)?.range)
+}
+
 fn is_item_container(node: Node<'_>) -> bool {
     node.kind() == "source_file"
         || node.kind() == "declaration_list"
