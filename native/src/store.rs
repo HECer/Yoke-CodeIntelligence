@@ -14,6 +14,8 @@ use std::{
     time::{Duration, Instant},
 };
 
+#[path = "store_busy.rs"]
+mod busy;
 #[path = "store_read_only.rs"]
 mod read_only;
 
@@ -576,7 +578,9 @@ impl Store {
     }
     pub fn record<T: Serialize>(&self, kind: &str, id: &str, value: &T) -> Result<()> {
         self.check_deadline()?;
-        self.db.execute("INSERT INTO records VALUES(?1,?2,?3) ON CONFLICT(kind,id) DO UPDATE SET value=excluded.value",params![kind,id,serde_json::to_string(value)?])?;
+        let value = serde_json::to_string(value)?;
+        self.check_deadline()?;
+        self.db.execute("INSERT INTO records VALUES(?1,?2,?3) ON CONFLICT(kind,id) DO UPDATE SET value=excluded.value",params![kind,id,value])?;
         Ok(())
     }
     pub fn replace_record<T: Serialize>(
@@ -587,21 +591,21 @@ impl Store {
         next: &T,
     ) -> Result<bool> {
         self.check_deadline()?;
+        let next = serde_json::to_string(next)?;
+        let expected = serde_json::to_string(expected)?;
+        self.check_deadline()?;
         Ok(self.db.execute(
             "UPDATE records SET value=?1 WHERE kind=?2 AND id=?3 AND value=?4",
-            params![
-                serde_json::to_string(next)?,
-                kind,
-                id,
-                serde_json::to_string(expected)?
-            ],
+            params![next, kind, id, expected],
         )? == 1)
     }
     pub fn delete_record<T: Serialize>(&self, kind: &str, id: &str, expected: &T) -> Result<bool> {
         self.check_deadline()?;
+        let expected = serde_json::to_string(expected)?;
+        self.check_deadline()?;
         Ok(self.db.execute(
             "DELETE FROM records WHERE kind=?1 AND id=?2 AND value=?3",
-            params![kind, id, serde_json::to_string(expected)?],
+            params![kind, id, expected],
         )? == 1)
     }
     pub fn get_record<T: DeserializeOwned>(&self, kind: &str, id: &str) -> Result<T> {
@@ -733,6 +737,7 @@ impl Store {
         deadline: Option<crate::capture::Deadline>,
     ) -> Option<crate::capture::Deadline> {
         let prior = self.deadline.replace(deadline.clone());
+        busy::replace_if_present(&self.db, deadline.as_ref());
         if let Some(bounded) = deadline {
             self.db
                 .progress_handler(1000, Some(move || bounded.check().is_err()));
@@ -757,8 +762,7 @@ impl Store {
             !duration.is_zero(),
             "Request deadline exceeded before database write"
         );
-        self.db
-            .busy_timeout(duration.min(Duration::from_secs(10)))?;
+        busy::install(&self.db, deadline.as_ref())?;
         Ok(())
     }
 }

@@ -104,3 +104,15 @@ typecheck and 260 tests / 3 skipped pass. All 618 frozen inputs remain unchanged
 Four actual installed Python/TypeScript/Rust server gates pass separately.
 The hosted PowerShell timeout itself has not been reproduced locally; fresh CI
 and broader platform acceptance remain open.
+
+The [checked SQLite deadline follow-up](sqlite-absolute-deadline/index.json)
+preserves the real red cancellation, exhausted-serialization and cancelled
+publication cases. The final native command runs all 17 selected result groups:
+573 passed / 2 failed / 7 ignored. Both failures are unchanged real symlink
+fixture creation (OS 1314). Store, ledger, federation/HTTP, maintenance, digest
+SQL-policy preservation and connection-lifetime regressions execute without
+gating away the security cases. Format/all-target Clippy, typecheck and 260
+TypeScript tests / 3 existing skips pass.
+The original absolute request/cancellation policy now survives SQLite lock
+waiting and record serialization; constructor/raw-connection and hosted platform
+acceptance remain separate. The final source freeze binds 619 inputs.

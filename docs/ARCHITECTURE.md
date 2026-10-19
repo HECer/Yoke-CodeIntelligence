@@ -4,6 +4,12 @@
 
 `native/src` is an independent runtime with its own `.yoke` SQLite/CAS state. `capture`, `paths` and `store` own strict saved-source acquisition, immutable bytes, FTS and client/writer locking. `analysis` and `contracts` produce structural and authored observations; `query` owns retrieval, plans and directed analytics. `lsp` owns the host-selected semantic protocol, with exact source anchors and bounded excerpts. `changes`, `verify` and `process` own reviewed plans, copied execution, conditional original writes and recovery.
 
+Checked Store lock waits retain the original absolute deadline and host
+cancellation flags in connection-owned state. Record mutations recheck those
+conditions after serialization; ledger transaction admission shares the same
+policy. [SQLite deadline ownership and boundaries](../native/docs/sqlite-deadlines.md)
+describe callback lifetime, recovery and the independent raw-connection limits.
+
 `editor` derives versioned immutable overlays; `editor_http` exposes authenticated loopback read operations. The VS Code client selects executables from user settings and queues document versions through startup/shutdown. `knowledge` validates authored assertions, sparse/external vectors and imported observations. `media` binds assets and supplied text; PDF parsing uses a resource-limited child rather than uninterruptible parsing in the main process. `federation` and `maintenance` have separately scoped integration and acceptance tests.
 
 Rust 0.5 adds `projects` and its own compiler worker, `dataflow`, `test_map`, `providers`/`ledger`/`ollama`, `runtime` and its own Python worker, `container`, `retention`, `federation_http` and native OS credential modules. External toolchains are explicit host inputs. Model calls and execution remain outside default retrieval. Compiler/library hashes enter context identity; model attempts reserve before sending; retirement and purge recheck every durable authority root.

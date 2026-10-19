@@ -515,7 +515,6 @@ impl<'a> Ledger<'a> {
     fn transaction(&self) -> Result<Transaction<'_>> {
         self.deadline.check()?;
         self.store.set_deadline(self.deadline)?;
-        self.store.db.busy_timeout(self.deadline.remaining())?;
         Ok(Transaction::new_unchecked(
             &self.store.db,
             TransactionBehavior::Immediate,

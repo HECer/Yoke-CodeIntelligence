@@ -122,6 +122,23 @@ This reproduces an environment defect, not the hosted PowerShell timeout itself:
 fresh remote validation remains required. [Evidence](validation/integration-2026-10-19/windows-environment/index.json)
 retains the original red tests and the unsuppressed fixture failure.
 
+The checked Store/ledger SQLite follow-up replaces relative busy sleeps with
+connection-owned absolute deadline/cancellation checks. Original regressions
+reproduce a **2.26-second wait after cancellation**, an additional **632 ms**
+after serialization exhausted the deadline, and an uncontended record published
+after serialization triggered cancellation. Generic create/replace/delete now
+recheck after serialization. Nine integration regressions and a callback-lifetime
+unit case cover cancellation, finite waits, accounting recovery, exact Unicode
+publication and a connection moved out of a dropped Store to another thread.
+All 17 selected native groups execute: **573 passed / 2 failed / 7 ignored**.
+Both failures are unchanged real symlink fixture creation (OS 1314), in
+federation and maintenance. The prior contention/cleanup/shutdown tests pass.
+Format, all-target Clippy, typecheck and **260 TypeScript tests / 3 skipped**
+pass with all 619 frozen inputs unchanged. [Preserved evidence](validation/integration-2026-10-19/sqlite-absolute-deadline/index.json)
+records both the original failures and final results.
+The [deadline contract](../native/docs/sqlite-deadlines.md) retains the separate
+writable-constructor/raw-connection limits and pending hosted platform gates.
+
 The digest now has an explicit captured-history mapping path. Verified Git tree
 facts describe changes over the captured path union; source-replayed Rust
 associations retain original IDs, producers and exact byte evidence. Qualified
