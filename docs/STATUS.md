@@ -647,6 +647,33 @@ records the finite scope. Semantic alias identity/de-dup, mixed-document spaces,
 cross-history/workspace joins, outcome learning, other R1-R9 work, whole-native
 acceptance, main merge and release remain open.
 
+[Captured owner candidates](../native/docs/git-owners.md) now add `git owners`
+over an unchanged saved impact/area parent. Base/head stay separate, each rule
+and owner token retains its exact byte quote, all supported matches stay visible
+and explicit empty-owner winners are preserved. The original owner parser and
+report/replay identities remain unchanged. An internal callback keeps the same
+checked read transaction through additional captured rule reads. Unsupported
+active syntax makes winners indeterminate; uncaptured higher-precedence files
+remain visible. The finite independent pattern policy and authored labels do
+not establish actual ownership, identity, GitHub permission/review requirements
+or full upstream parser/schema equivalence. No Git/provider/network/model,
+current-source fallback, capture or Store/source publication occurs.
+
+All **10 new saved-Git/CLI contracts** and **three included library parser cases**
+pass: exact empty/rule/token quotes, same-label distinct positions, base/head,
+live-source isolation, unsupported/uncaptured cases, independent exact quotas,
+output, tampered CAS, SQL/caller transaction/cancel/deadline and offline CLI
+admission/no initialization. The frozen selected run records **467 passed /
+0 failed / 7 existing ignored gates** across four native groups. Clippy,
+format, **17 Python tests**, mandatory typecheck and **260 TypeScript tests /
+3 existing skips** pass with **681 integrated inputs unchanged**.
+[Evidence](validation/integration-2026-10-19/captured-owners/index.json) retains
+the initial API RED, implementation attempts, source hashes and unchanged
+legacy-parser proof. Hard maxima are not claimed as fully populated qualification.
+These scoped results do not replace earlier whole-native failures, including
+Windows OS 1314 symlink prerequisites. Wider R5/R1-R9 work, whole-native/platform
+acceptance, main merge and release remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

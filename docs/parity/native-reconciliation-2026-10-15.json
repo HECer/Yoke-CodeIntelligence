@@ -7089,7 +7089,13 @@
         "native/src/git_areas.rs",
         "native/src/git_areas_cli.rs",
         "native/tests/git_areas.rs",
-        "native/docs/git-areas.md"
+        "native/docs/git-areas.md",
+        "native/src/git_owners.rs",
+        "native/src/git_owners_cli.rs",
+        "native/src/git_owners_tests.rs",
+        "native/tests/git_owners.rs",
+        "native/docs/git-owners.md",
+        "docs/validation/integration-2026-10-19/captured-owners/index.json"
       ],
       "id": "R5",
       "inventoryRefs": [
@@ -7098,10 +7104,26 @@
         "graphify:affected",
         "graphify:pr_workflow"
       ],
-      "missingBehavior": "Bounded area classification now replays unchanged impact details and explicitly selected same-snapshot Meaning graphs, preserves all concept memberships and equal-rank ambiguity, and uses exact directory fallback without provider calls. Modified-rename/exact quotes, captured hierarchy and actual worktree index conflicts already have separate producers. Wider ownership/semantic explanations, compiler-bound override/dispatch identity, predicted merge safety/working-file resolution, pushed-ref freshness and upstream report/schema equivalence remain open.",
+      "missingBehavior": "Bounded area classification now replays unchanged impact details and explicitly selected same-snapshot Meaning graphs, preserves all concept memberships and equal-rank ambiguity, and uses exact directory fallback without provider calls. Modified-rename/exact quotes, captured hierarchy and actual worktree index conflicts already have separate producers. Wider ownership/semantic explanations, compiler-bound override/dispatch identity, predicted merge safety/working-file resolution, pushed-ref freshness and upstream report/schema equivalence remain open. Separate captured per-path CODEOWNERS interpretation now retains exact rule/token byte evidence, base/head and all supported matches over an unchanged impactAreas parent in the same pinned read transaction. Empty-owner winners are explicit; unsupported active rules make winners unknown, and uncaptured higher-precedence paths stay visible. The finite pattern policy, labels and captured selection do not establish full GitHub parser equivalence, actual identity, permissions, ownership or review requirements. Broader ownership and the remaining R5 interpretations stay open.",
       "priority": 5,
-      "suggestedScope": "Extend wider source-bound ownership/report interpretations over existing verified publications while retaining explicit area provenance, exact original quotes, structural hierarchy candidates and independent actual conflict observations. Concept labels remain unverified inferences; equal labels do not merge identities. No automatic capture, provider, merge, resolution, fetch, hook, filter or project execution.",
-      "title": "Git impact attribution and richer affected analysis"
+      "suggestedScope": "Extend broader source-bound ownership/report and compiler interpretations while preserving the separate finite captured rule policy, unchanged legacy publications, source/receipt provenance and visible ambiguity/unknowns. No inferred user/team/review authority, automatic Git/current-source capture, provider, merge, resolution, fetch, hook/filter/project execution or remote freshness follows.",
+      "title": "Git impact attribution and richer affected analysis",
+      "capturedOwnersCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/captured-owners/index.json",
+        "newPublicContractTestsPassed": 10,
+        "newPrivatePatternTestsPassed": 3,
+        "newTestsIncludedInScopedTotals": true,
+        "finalScopedTotals": {
+          "passed": 467,
+          "failed": 0,
+          "ignored": 7
+        },
+        "legacyOwnerParserUnchanged": true,
+        "ownerIdentityVerified": false,
+        "githubPermissionVerified": false,
+        "wholeNativeRerun": false,
+        "fullParityCertified": false
+      }
     },
     {
       "evidence": [
@@ -8356,6 +8378,21 @@
       ],
       "remainingReview": "Semantic alias identity/de-dup, mixed Office/PDF source spaces, cross-history/workspace joins, broader serialized schemas and outcome learning remain open. Checked same-snapshot native joins and lookup/degree/directed-trace consumers retain complete native source/receipt replay. Separate portable native group/join consumers now check supplied presentation structure without inheriting source authority; coherent forgeries/omissions and semantic/model quality are not verified.",
       "fullContractCertified": false
+    },
+    {
+      "id": "captured_codeowners_path_candidates",
+      "behavior": "Checked impact/area replay stays pinned through captured rule interpretation. New per-path base/head rows retain the unchanged parent, every supported matching rule and exact winning rule/owner-token bytes, including explicit empty owner lists. Unsupported active syntax makes winners indeterminate; uncaptured higher-priority files remain unknown. Legacy owner parser/report IDs stay unchanged. No user/team/permission/review/ownership truth, Git/network/model/current-source fallback or state publication is supplied.",
+      "evidence": [
+        "native/src/git_owners.rs",
+        "native/src/git_owners_cli.rs",
+        "native/src/git_owners_tests.rs",
+        "native/src/git_areas.rs",
+        "native/tests/git_owners.rs",
+        "native/docs/git-owners.md",
+        "docs/validation/integration-2026-10-19/captured-owners/index.json"
+      ],
+      "remainingReview": "Bounded area classification now replays unchanged impact details and explicitly selected same-snapshot Meaning graphs, preserves all concept memberships and equal-rank ambiguity, and uses exact directory fallback without provider calls. Modified-rename/exact quotes, captured hierarchy and actual worktree index conflicts already have separate producers. Wider ownership/semantic explanations, compiler-bound override/dispatch identity, predicted merge safety/working-file resolution, pushed-ref freshness and upstream report/schema equivalence remain open. Separate captured per-path CODEOWNERS interpretation now retains exact rule/token byte evidence, base/head and all supported matches over an unchanged impactAreas parent in the same pinned read transaction. Empty-owner winners are explicit; unsupported active rules make winners unknown, and uncaptured higher-precedence paths stay visible. The finite pattern policy, labels and captured selection do not establish full GitHub parser equivalence, actual identity, permissions, ownership or review requirements. Broader ownership and the remaining R5 interpretations stay open.",
+      "fullContractCertified": false
     }
   ],
   "residualCoverageRule": "R1-R9 are priorities only. residualRegister is a thematic index; every partial/unreconciled ledger row retains additional exact-contract review requirements. This is not a complete external certification.",
@@ -8433,7 +8470,7 @@
         "graphify:affected",
         "graphify:pr_workflow"
       ],
-      "remainingBoundary": "Compiler-bound override/dispatch identity, pushed-ref freshness, unmerged-note/week reports and remaining status-pagination/ranking semantics require review. Source-bound areas now retain every original impact/quote and saved concept/file claim, rank smaller distinct file sets with visible ties and use exact directory fallback. Existing rename/quote and captured hierarchy producers remain bounded structural candidates. Explicit per-worktree index triage observes actual unmerged stages with separately authorized Git-stage bytes; it does not predict merges, prove working-file resolution or follow other worktree source paths."
+      "remainingBoundary": "Compiler-bound override/dispatch identity, pushed-ref freshness, unmerged-note/week reports and remaining status-pagination/ranking semantics require review. Source-bound areas now retain every original impact/quote and saved concept/file claim, rank smaller distinct file sets with visible ties and use exact directory fallback. Existing rename/quote and captured hierarchy producers remain bounded structural candidates. Explicit per-worktree index triage observes actual unmerged stages with separately authorized Git-stage bytes; it does not predict merges, prove working-file resolution or follow other worktree source paths. Separate captured per-path authored owner interpretations preserve individual rule/token quotes and explicit empty/unknown winners without changing legacy reports. Actual owner/team/review authority and full GitHub pattern/schema equivalence remain unverified."
     },
     {
       "id": "meaning_dedup_feedback",
