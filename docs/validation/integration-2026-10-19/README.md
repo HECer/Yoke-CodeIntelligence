@@ -310,3 +310,18 @@ permissions, auth/hostname/quota refusals, lost delivery identity and deadline
 cleanup. Imported claims remain data; wider R7/R1–R9, whole-native/platform,
 main and release gates remain open. [Complete scoped evidence](postgres-catalog/index.json)
 retains failures and corrected runs without adding attempt totals.
+
+
+## Native received HTTP source checkpoint
+
+Source `f552be5f30615402dd73a622d03542d712769839` / runtime merge `d5fad122117fef21328d1b143d6c4ebe62248c8b` add
+host-only anonymous HTTP acquisition, immutable body replay/ranges and explicit
+frozen native PDF text. All14 new tests pass; twelve selected native groups
+record516/1/8, with the sole unchanged media-policy OS1314 setup failure.
+All-target Clippy/format, Python17, typecheck and TypeScript260/3skip pass on
+unchanged integrated inputs. Actual public HTTPS HTML/PDF and native PDF text
+pass; imported claims remain data. The owned TLS fixture's inherited Windows
+nonblocking socket was diagnosed and corrected. [Scoped evidence](source-acquisition/index.json)
+preserves attempts, hashes, lock-version proof and local-only public-payload
+receipts. Dedicated arxiv and wider R7/R1–R9, whole-native/platform, main and
+release gates remain open.

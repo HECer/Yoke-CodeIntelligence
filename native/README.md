@@ -8,6 +8,12 @@ into immutable received-data artifacts. `postgres-catalog read` queries these
 offline with no source Store, credential lookup or network. This bounded adapter
 does not establish server truth, original DDL, full upstream or platform parity.
 
+The optional [HTTP source host adapter](docs/source-acquisition.md) captures
+explicit public text/raw-HTML/PDF responses into immutable body archives.
+`source-acquisition read` replays exact ranges offline; explicit `--pdf-text`
+uses the existing bounded native parser. Article/semantic and dedicated arxiv/
+Google/social/video/database routes retain their separate capability boundaries.
+
 ## Build and use
 
 Rust 1.94.1 and the Windows MSVC toolchain are exercised locally. Cargo requires Rust 1.94.1 or newer, including the native AWS signing dependencies. Older compilers and hosted macOS/Linux CI are not claimed tested here.

@@ -2,6 +2,13 @@
 
 ## Native Rust ownership
 
+`source_acquisition` preserves typed received HTTP bodies and exact range
+queries without a code SourceSnapshot or imported authority. Its host transport
+requires a URL plus literal address, independent permissions and static TLS
+anchors; redirects/proxies/retries are disabled. Headers have normalized client
+precision, while body evidence retains exact received bytes. Explicit PDF text
+reuses the existing frozen native worker. See [HTTP source acquisition](../native/docs/source-acquisition.md).
+
 `postgres_catalog` validates received UTF-8 JSONL and reconstructs a standalone
 typed catalog archive and directed graph. `postgres_catalog_client` supplies
 fixed read-only SQL through a separately trusted/pinned host psql18 process with

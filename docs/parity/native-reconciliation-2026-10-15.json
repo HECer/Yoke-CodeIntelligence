@@ -7168,7 +7168,15 @@
         "native/tests/postgres_catalog_cli.rs",
         "native/tests/host_credentials.rs",
         "native/docs/postgres-catalog.md",
-        "docs/validation/integration-2026-10-19/postgres-catalog/index.json"
+        "docs/validation/integration-2026-10-19/postgres-catalog/index.json",
+        "native/src/source_acquisition.rs",
+        "native/src/source_acquisition_http.rs",
+        "native/src/source_acquisition_cli.rs",
+        "native/tests/source_acquisition.rs",
+        "native/tests/source_acquisition_http.rs",
+        "native/tests/source_acquisition_cli.rs",
+        "native/docs/source-acquisition.md",
+        "docs/validation/integration-2026-10-19/source-acquisition/index.json"
       ],
       "id": "R7",
       "inventoryRefs": [
@@ -7177,9 +7185,9 @@
         "graphify:url_ingest",
         "graphify:db_push"
       ],
-      "missingBehavior": "The bounded native PostgreSQL host adapter now captures selected metadata and supports frozen received-data queries, with actual Windows PostgreSQL18.6/psql18.6 evidence. Full pinned upstream schema/definition equivalence, other server/client versions, non-Windows live qualification and mixed semantic/source integration remain unverified. Google shortcut export, URL/arxiv/PDF/social/video acquisition routes and Neo4j/FalkorDB upsert remain open; local Office/media readers and generated Cypher are not those connectors.",
+      "missingBehavior": "Bounded native PostgreSQL selected-catalog acquisition and anonymous public HTTP text/raw-HTML/PDF acquisition now have actual Windows evidence. Frozen HTTP byte ranges and explicit native PDF text do not establish article/browser-DOM, semantic graph or complete PDF interpretation. Dedicated rate-aware arxiv metadata/PDF, Google shortcut export, authenticated/social/video routes and Neo4j/FalkorDB upsert remain open, as do full pinned upstream equivalence and other-server/non-Windows qualification. Generated Cypher and local readers are not those remaining connectors.",
       "priority": 7,
-      "suggestedScope": "Continue the remaining external-source and graph-database connectors as separate host-authorized bounded acquisitions into frozen typed artifacts. Preserve the native PostgreSQL received-data/authority boundary; query selection must never fetch. Validate actual backends when available and keep missing capability visible.",
+      "suggestedScope": "Continue with a dedicated rate-coordinated arxiv route over reachable public abstract/PDF endpoints, then remaining Google/social/video/authenticated/database connectors. Preserve host-only endpoint/credential authority, bounded frozen artifacts and zero query-time acquisition; do not infer article/semantic/source/server truth from received bytes.",
       "title": "Explicit external-source acquisition and graph database connectors",
       "postgresCatalogCheckpoint": {
         "index": "docs/validation/integration-2026-10-19/postgres-catalog/index.json",
@@ -7203,6 +7211,28 @@
         "canonicalCodeSnapshot": false,
         "fullUpstreamContractCertified": false,
         "wholeNativeRerun": false
+      },
+      "receivedHttpCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/source-acquisition/index.json",
+        "newContractCases": {
+          "receivedBody": 5,
+          "httpTls": 5,
+          "cliAndNativePdf": 4
+        },
+        "finalScopedTotals": {
+          "passed": 516,
+          "failed": 1,
+          "ignored": 8
+        },
+        "nativeGroups": 12,
+        "actualPlatform": "Windows",
+        "actualPublicHtml": true,
+        "actualPublicPdfAndNativeText": true,
+        "arxivNativeImplemented": false,
+        "serverTruthAttested": false,
+        "canonicalCodeSnapshot": false,
+        "wholeNativeRerun": false,
+        "fullUpstreamContractCertified": false
       }
     },
     {
@@ -8446,6 +8476,22 @@
       ],
       "remainingReview": "The bounded native PostgreSQL host adapter now captures selected metadata and supports frozen received-data queries, with actual Windows PostgreSQL18.6/psql18.6 evidence. Full pinned upstream schema/definition equivalence, other server/client versions, non-Windows live qualification and mixed semantic/source integration remain unverified. Google shortcut export, URL/arxiv/PDF/social/video acquisition routes and Neo4j/FalkorDB upsert remain open; local Office/media readers and generated Cypher are not those connectors.",
       "fullContractCertified": false
+    },
+    {
+      "id": "native_received_http_sources",
+      "behavior": "A separate host-only native HTTP acquisition CLI/library performs one anonymous GET to an explicitly selected literal address with TLS hostname verification and static trust anchors. Separate network/output/loopback permissions, no proxy/redirect/retry/credential lookup or resource/script execution. Typed immutable representation archives replay exact Unicode/CRLF body bytes and bounded base64/optional-UTF8 ranges; imported claims remain data without source/network/server authority. Explicit frozen PDF text uses the existing bounded installed native worker without Store or original-path reacquisition. HTML remains raw; arxiv domains are refused until their dedicated rate-aware connector.",
+      "evidence": [
+        "native/src/source_acquisition.rs",
+        "native/src/source_acquisition_http.rs",
+        "native/src/source_acquisition_cli.rs",
+        "native/tests/source_acquisition.rs",
+        "native/tests/source_acquisition_http.rs",
+        "native/tests/source_acquisition_cli.rs",
+        "native/docs/source-acquisition.md",
+        "docs/validation/integration-2026-10-19/source-acquisition/index.json"
+      ],
+      "remainingReview": "Bounded native PostgreSQL selected-catalog acquisition and anonymous public HTTP text/raw-HTML/PDF acquisition now have actual Windows evidence. Frozen HTTP byte ranges and explicit native PDF text do not establish article/browser-DOM, semantic graph or complete PDF interpretation. Dedicated rate-aware arxiv metadata/PDF, Google shortcut export, authenticated/social/video routes and Neo4j/FalkorDB upsert remain open, as do full pinned upstream equivalence and other-server/non-Windows qualification. Generated Cypher and local readers are not those remaining connectors.",
+      "fullContractCertified": false
     }
   ],
   "residualCoverageRule": "R1-R9 are priorities only. residualRegister is a thematic index; every partial/unreconciled ledger row retains additional exact-contract review requirements. This is not a complete external certification.",
@@ -8546,7 +8592,7 @@
         "graphify:asr",
         "graphify:db_push"
       ],
-      "remainingBoundary": "The bounded native PostgreSQL host adapter now captures selected metadata and supports frozen received-data queries, with actual Windows PostgreSQL18.6/psql18.6 evidence. Full pinned upstream schema/definition equivalence, other server/client versions, non-Windows live qualification and mixed semantic/source integration remain unverified. Google shortcut export, URL/arxiv/PDF/social/video acquisition routes and Neo4j/FalkorDB upsert remain open; local Office/media readers and generated Cypher are not those connectors."
+      "remainingBoundary": "Bounded native PostgreSQL selected-catalog acquisition and anonymous public HTTP text/raw-HTML/PDF acquisition now have actual Windows evidence. Frozen HTTP byte ranges and explicit native PDF text do not establish article/browser-DOM, semantic graph or complete PDF interpretation. Dedicated rate-aware arxiv metadata/PDF, Google shortcut export, authenticated/social/video routes and Neo4j/FalkorDB upsert remain open, as do full pinned upstream equivalence and other-server/non-Windows qualification. Generated Cypher and local readers are not those remaining connectors."
     },
     {
       "id": "refactor_and_provider_intent",

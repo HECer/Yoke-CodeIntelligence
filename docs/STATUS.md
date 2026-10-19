@@ -702,6 +702,40 @@ runtime-library attestation, other-server/non-Windows/upstream certification or
 whole-native pass is claimed. Remaining R7 connectors, wider R1–R9 work, main
 merge and release stay open.
 
+[Native received HTTP sources](../native/docs/source-acquisition.md) now add
+`source-acquisition capture/read` for explicitly selected public text, raw HTML
+and PDF representations. One host-authorized GET uses a literal socket address
+and the URL's TLS/HTTP name, with static public trust anchors, separate network/
+output/loopback permissions and no proxy, redirect, retry, credential lookup or
+script/resource fetching. Archives and ranges preserve exact body bytes,
+Unicode/CRLF and byte offsets. Headers and imported capture claims remain
+unverified data; no canonical source snapshot or semantic/server authority follows.
+Explicit frozen PDF text uses the installed native bounded worker without Store
+or original-path reacquisition. HTML article/DOM interpretation remains unavailable.
+
+All **14 new contracts** pass. The final frozen selected run records **516 passed /
+1 failed / 8 existing ignored gates** across twelve native groups. The sole failure
+is the unchanged media source-policy test's real Windows symlink setup (OS1314).
+All-target Clippy, format, **17 Python tests**, mandatory typecheck and **260
+TypeScript tests / 3 existing skips** pass with **695 integrated inputs unchanged**.
+Actual Windows native HTTPS captures example.com HTML and the W3 PDF fixture,
+replays matching hashes, extracts native PDF text and preserves publication
+identity after lost stdout. Owned protocol tests retain TLS name/root checks,
+literal-address resolution, chunked bytes, malformed/truncated/duplicate/encoded
+responses, exact quotas, independent permissions and cancel/deadline peer closure.
+[Evidence](validation/integration-2026-10-19/source-acquisition/index.json) retains
+the initial unavailable API RED, TLS-fixture Winsock10035 diagnostic and explicit
+blocking-socket correction. Package versions remain unchanged; the existing
+rustls-native-certs0.8.4 is now a direct dependency. Public payloads remain local
+with published hashes/receipts and owned replay fixtures. Attempts are nonadditive.
+
+The direct arxiv API attempt timed out; a separate public abstract-page
+investigation succeeds. These are not native arxiv acceptance. Generic capture
+refuses arxiv domains until a dedicated coordinated route is implemented.
+Arxiv/Google/social/video/authenticated/database connectors, article/semantic
+interpretation, wider R1–R9, full native/platform acceptance, main and release
+remain open; no all-library allocation or maximum-size qualification is claimed.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders
