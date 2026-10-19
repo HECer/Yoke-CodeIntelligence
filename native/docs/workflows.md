@@ -4,6 +4,7 @@ The core remains local and deterministic. Optional execution, model inference, s
 
 | Workflow | CLI | Detailed contract |
 |---|---|---|
+| Saved impact area classification | `yoke git areas <report> [--meaning <saved-graph-id>]` | [Git areas](git-areas.md) |
 | Observed worktree index conflicts | `yoke git conflicts --allow-index-read --trust-git [--allow-git-sources --scope-snapshot <id>]` | [Git conflicts](git-conflicts.md) |
 | Manifest-balanced source retrieval | Session MCP `ci_retrieve` with optional `scopeMode`; private auto in `trail_find_code` / `graft_find_code` | [Retrieval](manifest-balanced-retrieval.md) |
 | Structural intraprocedural taint candidates | `yoke dataflow [--policy policy.json]`; MCP `ci_status` with `mode: dataflow` | [Dataflow](dataflow.md) |

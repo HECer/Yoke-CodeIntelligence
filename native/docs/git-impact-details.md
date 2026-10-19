@@ -78,6 +78,8 @@ synchronous scan with checks before and after it, not an OS scheduling guarantee
 The `git impact` CLI uses the bounded derived result. Captured TypeScript
 hierarchy/same-name structural seeds are available separately through
 [affected details](git-affected-details.md), and explicit current-worktree index
-observations through [conflict triage](git-conflicts.md). Area classification,
-compiler-bound override identity, broader PR behavior and remote freshness remain
-separate. These implementations do not upgrade inventory-wide certification.
+observations through [conflict triage](git-conflicts.md). Explicit
+[area classification](git-areas.md) adds saved concept/file memberships and
+visible ties without changing this result. Compiler-bound override identity,
+broader PR behavior and remote freshness remain separate. These implementations
+do not upgrade inventory-wide certification.

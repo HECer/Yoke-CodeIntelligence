@@ -6928,7 +6928,11 @@
         "native/src/git_conflicts.rs",
         "native/src/git_conflicts_cli.rs",
         "native/tests/git_conflicts.rs",
-        "native/docs/git-conflicts.md"
+        "native/docs/git-conflicts.md",
+        "native/src/git_areas.rs",
+        "native/src/git_areas_cli.rs",
+        "native/tests/git_areas.rs",
+        "native/docs/git-areas.md"
       ],
       "id": "R5",
       "inventoryRefs": [
@@ -6937,9 +6941,9 @@
         "graphify:affected",
         "graphify:pr_workflow"
       ],
-      "missingBehavior": "Area classification and wider impact/ownership explanations remain open. Modified-rename candidates and exact captured quotes already exist in git_impact_details; captured TypeScript hierarchy/same-name structural expansion exists in git_affected. Actual explicitly selected worktree index-conflict observations and scoped exact Git-stage pages are now implemented separately, without compiler override/dispatch identity, predicted merge safety, working-file resolution, pushed-ref freshness or full upstream equivalence.",
+      "missingBehavior": "Bounded area classification now replays unchanged impact details and explicitly selected same-snapshot Meaning graphs, preserves all concept memberships and equal-rank ambiguity, and uses exact directory fallback without provider calls. Modified-rename/exact quotes, captured hierarchy and actual worktree index conflicts already have separate producers. Wider ownership/semantic explanations, compiler-bound override/dispatch identity, predicted merge safety/working-file resolution, pushed-ref freshness and upstream report/schema equivalence remain open.",
       "priority": 5,
-      "suggestedScope": "Extend the independently owned, source-bound impact-detail producer with bounded area classification. Preserve exact/heuristic identities, original quoted evidence, captured structural hierarchy candidates and actual per-worktree index observations as separate evidence spaces. No automatic merge, resolution, fetch, hooks, filters or project execution.",
+      "suggestedScope": "Extend wider source-bound ownership/report interpretations over existing verified publications while retaining explicit area provenance, exact original quotes, structural hierarchy candidates and independent actual conflict observations. Concept labels remain unverified inferences; equal labels do not merge identities. No automatic capture, provider, merge, resolution, fetch, hook, filter or project execution.",
       "title": "Git impact attribution and richer affected analysis"
     },
     {
@@ -8184,7 +8188,7 @@
         "graphify:affected",
         "graphify:pr_workflow"
       ],
-      "remainingBoundary": "Area classification, compiler-bound override/dispatch identity, pushed-ref freshness, unmerged-note/week reports and remaining status-pagination/ranking semantics require review. Existing modified-rename/exact-quote and captured hierarchy producers remain bounded structural candidates. New explicit per-worktree index triage observes actual unmerged stages with separately authorized Git-stage bytes; it does not predict merges, prove working-file resolution or follow other worktree source paths."
+      "remainingBoundary": "Compiler-bound override/dispatch identity, pushed-ref freshness, unmerged-note/week reports and remaining status-pagination/ranking semantics require review. Source-bound areas now retain every original impact/quote and saved concept/file claim, rank smaller distinct file sets with visible ties and use exact directory fallback. Existing rename/quote and captured hierarchy producers remain bounded structural candidates. Explicit per-worktree index triage observes actual unmerged stages with separately authorized Git-stage bytes; it does not predict merges, prove working-file resolution or follow other worktree source paths."
     },
     {
       "id": "meaning_dedup_feedback",

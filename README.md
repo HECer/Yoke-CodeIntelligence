@@ -43,6 +43,10 @@ Explicit [Git conflict triage](native/docs/git-conflicts.md) observes the select
 worktree's actual unmerged index. Exact stage-source pages use independent host
 read permissions and captured-path scopes; source files and index stay unchanged.
 
+[Captured impact areas](native/docs/git-areas.md) add saved concept/file memberships
+and exact directory fallback to a replayed Git report. Original quotes and
+parallel observations remain intact; tied labels stay visibly ambiguous.
+
 ## TypeScript advanced runtime
 
 Requires **Node.js 22.16+**. Python/Go and additional optional providers are installed separately. Node SQLite is experimental on the tested Node version. No model or API key is required by native indexing.

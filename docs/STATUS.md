@@ -398,6 +398,38 @@ hierarchy implementations. Area classification, wider semantic/ownership and PR
 behavior, remote freshness, whole-native/hosted/full STATUS acceptance and
 original inventory/certification boundaries remain open.
 
+Explicit [captured impact areas](../native/docs/git-areas.md) now preserve the
+complete replayed impact-detail parent and add side-qualified path, occurrence
+and group references. Optional saved Meaning graphs must match the workspace,
+exact source snapshot, canonical graph and evidence file hashes. Smaller
+supported-file sets rank first; equal minima and identical-label distinct claims
+stay visibly ambiguous. The fallback is exact captured directory spelling.
+There is no source capture, current-file/Git access, provider/credential/network
+call, graph rewrite, persistence or automatic latest selection.
+
+All **8 new saved Git/CAS/SQLite/CLI cases** pass, including unchanged original
+quotes and parallel positions, same-name concept ties, removed working files,
+provider-free offline reads, corrupt/missing Meaning refusal without fallback,
+exact output limits, zero quotas and SQL-policy/transaction/cancellation guards.
+Meaning setup uses an explicitly invoked, labeled local Node protocol worker;
+the worker is removed before offline reads. This is not live model-quality
+proof. **24 additional actual CLI host-file/protocol cases** pass on the same
+final binary, including a real junction and exact 8,192/8,193-byte boundary.
+
+The frozen **27 selected native groups** record **642 passed / 2 failed /
+7 ignored**. Both failures remain unchanged real symlink-fixture creation
+(OS 1314), before their safety assertions; separate junction cases do not replace
+them. Format, all-target Clippy with warnings denied, doctests (zero registered),
+**17 Python tests**, typecheck and **260 TypeScript tests / 3 existing skips**
+pass with all **652 recorded inputs unchanged**. The
+[area evidence](validation/integration-2026-10-19/git-areas/index.json) retains
+raw attempts, the corrected fixture assumptions, input/binary hashes, Git
+materializations and a parsed-only manual prerequisite descriptor. The R5
+tracker recognizes this bounded implementation without upgrading original
+inventory/certification states. Wider ownership/semantic interpretations,
+compiler binding, upstream schema/quality equivalence, whole-native/hosted and
+full STATUS/R1-R9 acceptance remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

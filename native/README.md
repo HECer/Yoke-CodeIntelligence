@@ -42,6 +42,9 @@ source bindings, bounded output and visible structural ambiguity.
 An existing Git report also supports [captured-hierarchy affected details](docs/git-affected-details.md)
 through the Rust library and `git affected`, with separate historical source
 bindings and structural candidate explanations.
+[Captured impact areas](docs/git-areas.md) additionally classify saved impact
+paths by explicitly selected stored concepts or exact directory spelling.
+They preserve all claims, visible ties and the original quoted parent.
 Explicit [index conflict triage](docs/git-conflicts.md) observes the selected
 worktree without changing its files or index. Git-stage source pages require
 separate host permission and checked native captured-path scopes.

@@ -45,6 +45,14 @@ and current working files. One retained read transaction pins scope metadata;
 no report, source, index or latest-pointer write occurs. See
 [index conflict triage](../native/docs/git-conflicts.md).
 
+`git_workflows::areas` replays an unchanged sealed impact-detail parent and
+optionally selected saved native Meaning graphs inside one read transaction.
+Snapshot/graph/file bindings constrain concept memberships; packet/position
+references, original quotes and every tied smallest file-set claim stay visible.
+Directory fallback is labeled a path fact. No provider, capture or publication
+is introduced; the [area contract](../native/docs/git-areas.md) records admission,
+resource bounds and the limits of these interpretations.
+
 TypeScript directories and ADRs below describe the retained runtime. Snapshot identity and serialized state are runtime-specific; no implicit conversion occurs. [The native guide](../native/README.md) and [replacement criteria](RUST_REPLACEMENT.md) describe current boundaries.
 
 `github_app::digest::service` publishes only freshly replayed handoff projections

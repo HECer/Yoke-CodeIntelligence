@@ -1,0 +1,749 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T10:44:42.393665+00:00",
+  "parentCommit": "e549daedd3bf905e4b706b23b9b83273c951e6e1",
+  "accepted": false,
+  "allLocalChecksPassed": false,
+  "wholeNativeRun": false,
+  "actualAreaCasesPassed": 8,
+  "actualCliHostPathCasesPassed": 24,
+  "frozenInputCount": 652,
+  "scopedNativeTotals": {
+    "passed": 642,
+    "failed": 2,
+    "ignored": 7
+  },
+  "nativeResultGroups": 27,
+  "allSelectedNativeTargetsRan": true,
+  "inventoryPreserved": {
+    "inventoryLedger": true,
+    "historicalInventory": true,
+    "ledgerSummary": true
+  },
+  "newSourceFiles": [
+    {
+      "source": "native/src/git_areas.rs",
+      "artifact": "new-source/native/src/git_areas.rs",
+      "sha256": "5c4d92e097cc1d6bddd5daa75b1ec56ffc98c79e0af369058407a09eb06c65c7"
+    },
+    {
+      "source": "native/src/git_areas_cli.rs",
+      "artifact": "new-source/native/src/git_areas_cli.rs",
+      "sha256": "71f839e2d7861556b62b710deb6379baf54ae4147fa0d33b2f6a0d589d561771"
+    },
+    {
+      "source": "native/tests/git_areas.rs",
+      "artifact": "new-source/native/tests/git_areas.rs",
+      "sha256": "e15450b78cc13c0b4e8b92b0b52e76f1ad32e61f7ff39fb14dbb925457552bca"
+    }
+  ],
+  "summary": {
+    "allChecksPassed": false,
+    "sourceUnchanged": true,
+    "wholeNativeRun": false,
+    "selectedIntegrationTargets": [
+      "git_areas",
+      "meaning_build",
+      "meaning_cli",
+      "meaning_graph",
+      "meaning_groups_admission",
+      "meaning_protocol",
+      "git_conflicts",
+      "git_workflows",
+      "git_cli",
+      "git_epochs",
+      "git_epoch_selection",
+      "git_review",
+      "git_affected_cli",
+      "git_affected_details",
+      "git_affected_qualification",
+      "git_impact_details",
+      "git_impact_details_cli",
+      "git_impact_details_no_git",
+      "git_impact_details_qualification",
+      "git_impact_details_sqlite_limits",
+      "capture_options",
+      "capture_policy",
+      "ignored_capture",
+      "editor",
+      "process",
+      "deadline_scope"
+    ],
+    "checks": [
+      {
+        "gate": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 5.006,
+        "recordedAt": "2026-10-19T10:32:58.258179+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--keep-going",
+          "-j1",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 169.309,
+        "recordedAt": "2026-10-19T10:35:47.567391+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "library",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j1",
+          "--lib",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 174.874,
+        "recordedAt": "2026-10-19T10:38:42.441488+00:00",
+        "resultGroups": [
+          {
+            "passed": 413,
+            "failed": 0,
+            "ignored": 7
+          }
+        ]
+      },
+      {
+        "gate": "native-selected",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "--no-fail-fast",
+          "-j1",
+          "--test",
+          "git_areas",
+          "--test",
+          "meaning_build",
+          "--test",
+          "meaning_cli",
+          "--test",
+          "meaning_graph",
+          "--test",
+          "meaning_groups_admission",
+          "--test",
+          "meaning_protocol",
+          "--test",
+          "git_conflicts",
+          "--test",
+          "git_workflows",
+          "--test",
+          "git_cli",
+          "--test",
+          "git_epochs",
+          "--test",
+          "git_epoch_selection",
+          "--test",
+          "git_review",
+          "--test",
+          "git_affected_cli",
+          "--test",
+          "git_affected_details",
+          "--test",
+          "git_affected_qualification",
+          "--test",
+          "git_impact_details",
+          "--test",
+          "git_impact_details_cli",
+          "--test",
+          "git_impact_details_no_git",
+          "--test",
+          "git_impact_details_qualification",
+          "--test",
+          "git_impact_details_sqlite_limits",
+          "--test",
+          "capture_options",
+          "--test",
+          "capture_policy",
+          "--test",
+          "ignored_capture",
+          "--test",
+          "editor",
+          "--test",
+          "process",
+          "--test",
+          "deadline_scope",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 101,
+        "timedOut": false,
+        "elapsedSeconds": 230.869,
+        "recordedAt": "2026-10-19T10:42:33.310568+00:00",
+        "resultGroups": [
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 29,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 17,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 15,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 26,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "doctests",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--doc",
+          "--locked",
+          "-j1"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 13.851,
+        "recordedAt": "2026-10-19T10:42:47.162165+00:00",
+        "resultGroups": [
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "python-contracts",
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 1.292,
+        "recordedAt": "2026-10-19T10:42:48.454266+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 4.776,
+        "recordedAt": "2026-10-19T10:42:53.230843+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 60.26,
+        "recordedAt": "2026-10-19T10:43:53.491486+00:00",
+        "resultGroups": []
+      }
+    ],
+    "scope": "Scoped Windows validation for new read-only impact-area classifier, explicit same-snapshot Meaning replay and early CLI dispatch: full library plus26 Git/Meaning/capture/scope/editor/process integration targets, all-target Clippy, Python and mandatory TypeScript checks. No shared impact/Meaning producer, HostGit, Store or source-scope implementation changes. Whole-native, hosted/platform, wider semantic/upstream and full STATUS acceptance remain separate."
+  },
+  "findings": [
+    "Explicit git areas replays the unchanged sealed impact-detail parent and optionally one to four selected saved native Meaning graphs. Workspace, exact base/head snapshot, canonical graph hash and every evidence path/content hash bind membership. Missing, foreign or corrupt requested graphs refuse instead of silently reverting to directory-only output. No source capture, Git/ref access, provider/credential/network call, publication or latest-pointer change occurs.",
+    "Exact directory spelling supplies the labeled fallback. Every saved concept, original record/support, broader membership and tied minimum remains visible under graph/packet/concept/side references. Smaller distinct supported-file sets rank first; equal names never merge identities. The parent retains exact UTF8/CRLF quotes, declarations, directed/parallel observations and byte ranges, with occurrence pointers and separate classifications/groups.",
+    "New closed limits and fixed ceilings bound paths, occurrence/manifest/concept/evidence/support/membership/assignment counts, selected Meaning artifact bytes, metadata preflight and canonical output. Disjoint payload reservations precede cloning; a final exact bounded writer admits the whole result and CLI newline before stdout. New counters do not pretend to measure inherited replay IO or hard memory/scheduler cost. One owned read view and restored SQL policy preserve current cancellation, deadline and transaction boundaries.",
+    "Eight actual saved Git/CAS/SQLite/CLI cases cover immutable parent and every occurrence, exact output-cap admission/refusal, no Git/provider on PATH, working-file deletion, equal-label distinct concept ties, smaller/broader file sets, source/receipt replay, corruption with no fallback, zero/hard limits, caller transaction/SQL/cancel/expiry, unchanged complete Store/CAS/ledger/index state and genuinely empty selected changes. Meaning setup uses an explicitly invoked owned literal Node protocol fixture, removed before offline queries; no live model quality or external provider certification is implied.",
+    "Twenty-four separate actual CLI host-input/protocol cases pass on the identical final binary: positive default/explicit files, exact8192/8193 byte boundary, relative/parent/device/ADS and a real unprivileged junction, nested unknown/missing/duplicate/authority-bearing fields, hard maxima, duplicate/too-many Meaning selectors, unused write/snapshot authority, zero timeout/output and fixed non-echoing markers. They are not added to Cargo totals or substituted for symbolic-link prerequisites.",
+    "Development preserves a Windows process-lookup failure before Cargo started (zero format/tests), four initial passing cases, a six-case run with two fixture-assumption failures, and corrected six/eight-case passes. The existing Meaning normalizer already merges byte-identical claims; distinct descriptions create two real published equal-label concepts. The fixture state oracle counts its own eight deliberate SQL tamper/restore writes; each area operation independently leaves every table, CAS blob and change count unchanged. No runtime behavior was weakened to correct these fixtures.",
+    "This scoped run is not whole-native or current hosted acceptance. Both actual Windows symlink prerequisite failures, inferred semantic identity/ownership, compiler dispatch, merge safety, upstream schema/quality, remaining full STATUS/R1-R9 functionality and original inventory/certifications remain open. No main merge, release, production deployment or public App comment is claimed."
+  ],
+  "artifacts": [
+    {
+      "path": "development/fixtures-r2-source/manifest.json",
+      "bytes": 227,
+      "sha256": "f52d9bd210b8f177c6b728bfaea527d7a3975aefd19ec12330fbe2956fc5cab7"
+    },
+    {
+      "path": "development/fixtures-r2-source/native/tests/git_areas.rs",
+      "bytes": 18382,
+      "sha256": "347c7d0f9196d6dd70d605e6f4097bfa8f9523f2109857d097e0eb0f57d64a36"
+    },
+    {
+      "path": "development/fmt-r1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/fmt-r2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/fmt-r3.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/fmt-r4.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/git-areas-cli-path-gates.py",
+      "bytes": 5535,
+      "sha256": "cf7aa8ebdf48e9c96d0c9a087d433f251903f6b29a0ceccd75f8831223dd094b"
+    },
+    {
+      "path": "development/host-default-positive.stderr.log",
+      "bytes": 34,
+      "sha256": "fa4c2e9e5377e0ef0e39d242fc707a08c13f14a8ad76635e66b6a5d7c213c66f"
+    },
+    {
+      "path": "development/host-detail-hard-max.stderr.log",
+      "bytes": 34,
+      "sha256": "b8b9e8939a912af56a91322bf5b3f4fa6f5d75baa482ab32ab2c2dd811230c0f"
+    },
+    {
+      "path": "development/host-duplicate-meaning-selection.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-duplicate-nested.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-duplicate-root.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-limit-hard-max.stderr.log",
+      "bytes": 34,
+      "sha256": "b8b9e8939a912af56a91322bf5b3f4fa6f5d75baa482ab32ab2c2dd811230c0f"
+    },
+    {
+      "path": "development/host-missing-limit.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-options-ads.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-options-device-prefix.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-options-exact-byte-cap.stderr.log",
+      "bytes": 34,
+      "sha256": "fa4c2e9e5377e0ef0e39d242fc707a08c13f14a8ad76635e66b6a5d7c213c66f"
+    },
+    {
+      "path": "development/host-options-over-byte-cap.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-options-parent.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-options-positive.stderr.log",
+      "bytes": 34,
+      "sha256": "fa4c2e9e5377e0ef0e39d242fc707a08c13f14a8ad76635e66b6a5d7c213c66f"
+    },
+    {
+      "path": "development/host-options-real-junction.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-options-relative.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-path-gates.json",
+      "bytes": 17884,
+      "sha256": "40442bff18bf023b53e9e3e3825a53830ff3ae2c2462cacaa6de81d7260ff217"
+    },
+    {
+      "path": "development/host-too-many-meaning-selections.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-unknown-details.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-unknown-limits.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-unknown-root.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-unknown-value-not-echoed.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-unused-snapshot-authority.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-unused-write-authority.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/host-zero-output.stderr.log",
+      "bytes": 34,
+      "sha256": "b8b9e8939a912af56a91322bf5b3f4fa6f5d75baa482ab32ab2c2dd811230c0f"
+    },
+    {
+      "path": "development/host-zero-timeout.stderr.log",
+      "bytes": 30,
+      "sha256": "17709ff25b1aee68cde37aa7d7167125cb8a9a33d8dba50ac3410b33f7fe4815"
+    },
+    {
+      "path": "development/launcher-r0.json",
+      "bytes": 150,
+      "sha256": "a87e8d7eaa1fb77f36aa20657b7fcdbe76b3f7631715fbd995dbea6c519e7302"
+    },
+    {
+      "path": "development/launcher-r0.py",
+      "bytes": 964,
+      "sha256": "cf4f7f9c0e54682c2d1273ebfb950bb16786ff19f6a4b21009a52e63b478c995"
+    },
+    {
+      "path": "development/native-r1.log",
+      "bytes": 751,
+      "sha256": "ea827f883b994dbdcb387cd40afe78983a1e9ddb4091b717731c59b9d3939081"
+    },
+    {
+      "path": "development/native-r2.log",
+      "bytes": 158907,
+      "sha256": "6937afe5c1f38da82e4facc6cbe0bdd0207f6460b6441ec054240c6ec7982c8d"
+    },
+    {
+      "path": "development/native-r3.log",
+      "bytes": 961,
+      "sha256": "4d34765c29f9ceab2cc5b7779291e0da71d07b9f6becb775dcad960bdf4794d5"
+    },
+    {
+      "path": "development/native-r4.log",
+      "bytes": 1156,
+      "sha256": "0900967b63aa88cabb7a4bcd709537c5d34e086508834f58789d85e8a490e223"
+    },
+    {
+      "path": "development/receipts-r1.json",
+      "bytes": 174,
+      "sha256": "c656b40c54f2afee4f48008a8655e548e9312fc3bb8f8c3a4d332585e8730728"
+    },
+    {
+      "path": "development/receipts-r2.json",
+      "bytes": 179,
+      "sha256": "d6fcaa88a48e2e5065b1d5df01a044613f8586d27ff6c1ca3df2180a0d02340b"
+    },
+    {
+      "path": "development/receipts-r3.json",
+      "bytes": 174,
+      "sha256": "51f8d7c335c502e6f25b33c591c379accc4121a6fa667337c6b99caa72c777f3"
+    },
+    {
+      "path": "development/receipts-r4.json",
+      "bytes": 174,
+      "sha256": "6814b2bcf20a0da8a6990091ee219a07e268452b88dd9b2533303ca018ce3202"
+    },
+    {
+      "path": "failure-classification.json",
+      "bytes": 1258,
+      "sha256": "8854da17c57a75658c6f9209a7276b0660867b28ee1dba286fc268c1ca012cb3"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 172,
+      "sha256": "48d181731a4d3c0f10743f10c4ebc55dc5d18a8210e9fcd75ac3043d9c0b2a44"
+    },
+    {
+      "path": "final/doctests.log",
+      "bytes": 192,
+      "sha256": "bac11e4cf8d52995bb9e7f798c44578ecc4d3c56563f30b48dbbdd917d63a650"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/library.log",
+      "bytes": 48034,
+      "sha256": "7c460302b274e61dd0fca7f9bc58bd60d65b230bb71c3a5ea7a194270519f783"
+    },
+    {
+      "path": "final/native-selected.log",
+      "bytes": 27011,
+      "sha256": "04cfb8e3d3d269b3202329f8f1ca260e3a79f16497d5c713bc2d6909a20ac957"
+    },
+    {
+      "path": "final/native-target-inventory.json",
+      "bytes": 87720,
+      "sha256": "b94b93da832912b67d9c6d14274331084ada2b960af1c60f536ca3d43e68e15c"
+    },
+    {
+      "path": "final/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "62aa1c77081061d0f6796bbd6b2acc97518c773657ef976c8944768f1a9233fb"
+    },
+    {
+      "path": "final/receipts.json",
+      "bytes": 6277,
+      "sha256": "0a843764604aa8db6424905d8d72a7a017d74ddef54584094e41e8bcbd08607a"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 69682,
+      "sha256": "120b77c2732dee91178226f6fcd728f7533b5e23f8f6352acf4d92482f08777b"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 69682,
+      "sha256": "120b77c2732dee91178226f6fcd728f7533b5e23f8f6352acf4d92482f08777b"
+    },
+    {
+      "path": "final/summary.json",
+      "bytes": 8193,
+      "sha256": "2cc1f1bb00dab117324545b362354b01b43c2acaee2f305bc4e20c4aae931739"
+    },
+    {
+      "path": "final/tested-native-binary.json",
+      "bytes": 122,
+      "sha256": "29ed7a6f95688a21c5efe014b31a3dda0a58687705364bce0346c967dc5dfeb2"
+    },
+    {
+      "path": "final/typescript-tests.log",
+      "bytes": 25033,
+      "sha256": "15fca855b3af4cb7678c79a2f09d2ef1137733fa20744860e7edbf12e8828518"
+    },
+    {
+      "path": "final/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "helper-syntax.json",
+      "bytes": 504,
+      "sha256": "80ad4a0e2ac41bf78a4f7efb05c8a62f3e50b81aceabf253b94e77843ee327a2"
+    },
+    {
+      "path": "helper-syntax.log",
+      "bytes": 72,
+      "sha256": "70563c8958a65ce6f17b8748f5085c15aeac2db0b631059e60a69b481f2b1ddf"
+    },
+    {
+      "path": "new-source/native/src/git_areas.rs",
+      "bytes": 27486,
+      "sha256": "5c4d92e097cc1d6bddd5daa75b1ec56ffc98c79e0af369058407a09eb06c65c7"
+    },
+    {
+      "path": "new-source/native/src/git_areas_cli.rs",
+      "bytes": 2057,
+      "sha256": "71f839e2d7861556b62b710deb6379baf54ae4147fa0d33b2f6a0d589d561771"
+    },
+    {
+      "path": "new-source/native/tests/git_areas.rs",
+      "bytes": 21575,
+      "sha256": "e15450b78cc13c0b4e8b92b0b52e76f1ad32e61f7ff39fb14dbb925457552bca"
+    },
+    {
+      "path": "run-elevated-reparse-checks.ps1",
+      "bytes": 5032,
+      "sha256": "bca2b2e037d31b62465915589b9a5c8ce85463f17fc6ddee1e98615667dbd8e7"
+    },
+    {
+      "path": "run-local-validation.py",
+      "bytes": 4990,
+      "sha256": "9427a0e7ba459e5c3d77a72ca7cc38473ee92204aad203163826257a71a590c0"
+    },
+    {
+      "path": "runtime-change.patch",
+      "bytes": 2465,
+      "sha256": "93c7436a78545cbec02926c3a569625578e8a89a96271f9bcde392c79d43658f"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 242719,
+      "sha256": "b0d500669ddc9555a4b380a96c5fb77dadf6339c37d4b46b9bcc3c38793ed35e"
+    },
+    {
+      "path": "windows-reparse-gates.json",
+      "bytes": 1334,
+      "sha256": "b5e50adbef2ae4f7eb31298d4f84fdccdb08143e8273bc1dd12334f2529b7f35"
+    },
+    {
+      "path": "WINDOWS-REPARSE-GATES.md",
+      "bytes": 1742,
+      "sha256": "1b4b26e06f61b9067449495876ff2cd0af0aa9241fbe6798af0009cf9bcd6adf"
+    }
+  ],
+  "sourceMaterialization": "source-materialization.json"
+}

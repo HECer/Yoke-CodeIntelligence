@@ -228,3 +228,16 @@ Both actual red regressions, intermediate failures, frozen raw artifacts and
 Git materializations are retained. Area classification, full native/platform and
 STATUS/upstream/release acceptance remain open.
 
+[Captured impact areas](git-areas/index.json) preserve the full quoted parent,
+original occurrences and all saved concept/file claims. Smaller distinct file
+sets rank first, equal minima stay ambiguous, and directory fallback remains a
+path fact. Eight actual Git/CAS/SQLite/CLI cases and 24 separate host-input gates
+pass, including removed working files, no provider/Git on PATH, corrupted Meaning
+refusal, exact limits and a real junction. The frozen 27-group run records
+**642 passed / 2 failed / 7 ignored**; both failures remain real symlink setup
+(OS1314) before safety assertions. Labeled owned Node protocol setup does not
+prove live model quality. Format/all-target Clippy, Python17, TypeScript260/3
+skipped and typecheck pass with 652 unchanged inputs. Raw attempts preserve the
+two corrected fixture assumptions, source/binary hashes and Git materialization.
+Full native/hosted/STATUS/upstream/release acceptance remains open.
+
