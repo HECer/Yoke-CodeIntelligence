@@ -21,6 +21,8 @@ use std::{
 mod checked_plan;
 #[path = "changes_directory.rs"]
 mod directory;
+#[path = "changes_symbol_delete.rs"]
+mod symbol_delete;
 pub use directory::DirectoryMove;
 pub(crate) use directory::SelectedDirectoryMove;
 
@@ -227,10 +229,19 @@ fn prepare_inner(
                 .files
                 .iter()
                 .find(|f| f.path == entity.path)
-                .unwrap();
+                .context("Symbol source absent from snapshot")?;
             let (start, end) = match operation {
                 "before" => (entity.start_byte, entity.start_byte),
                 "after" => (entity.end_byte, entity.end_byte),
+                "delete"
+                    if matches!(
+                        file.language.as_str(),
+                        "typescript" | "tsx" | "javascript" | "jsx"
+                    ) =>
+                {
+                    let (text, _) = source(store, snapshot, &file.path)?;
+                    symbol_delete::range(epoch, file, entity, &text, deadline)?
+                }
                 _ => (entity.start_byte, entity.end_byte),
             };
             let text = if operation == "delete" {
