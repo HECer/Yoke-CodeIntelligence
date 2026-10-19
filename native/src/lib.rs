@@ -1,5 +1,7 @@
 pub mod agent_repl;
 pub mod analysis;
+mod arxiv_rate;
+pub mod arxiv_source;
 pub mod capture;
 pub mod changes;
 pub mod compatibility;

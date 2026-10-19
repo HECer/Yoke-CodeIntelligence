@@ -11,7 +11,9 @@ does not establish server truth, original DDL, full upstream or platform parity.
 The optional [HTTP source host adapter](docs/source-acquisition.md) captures
 explicit public text/raw-HTML/PDF responses into immutable body archives.
 `source-acquisition read` replays exact ranges offline; explicit `--pdf-text`
-uses the existing bounded native parser. Article/semantic and dedicated arxiv/
+uses the existing bounded native parser. The dedicated
+[arXiv route](docs/arxiv-source.md) adds host-authorized metadata/PDF capture
+with shared rate coordination and exact received-tag evidence. Article/semantic,
 Google/social/video/database routes retain their separate capability boundaries.
 
 ## Build and use
