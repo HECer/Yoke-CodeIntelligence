@@ -273,3 +273,16 @@ whole run stays failed and no whole-native rerun after repair is claimed.
 Exact raw attempts, source and binary hashes remain preserved. Wider STATUS/R1-R9,
 upstream/platform, packaging, main merge and release acceptance remain open.
 
+[Captured file usage checks](file-usage/index.json) bind finite TS/JS function
+modules, conservative captured usages and exact provider definitions/references
+before one guarded deletion plan. All nine new cases pass; the final scoped run
+records **63/1/0** with one unchanged OS1314 prerequisite. A separate actual
+TypeScript/JavaScript provider/compiler/apply/recovery gate passes one Rust test
+containing two fixtures. Counts are nonadditive. The original 2,000-file deadline
+RED is retained; one checked bulk scope fixes repeated admission without changing
+the deadline or per-file checks. Final all-target Clippy and integrated format,
+Python17, typecheck and TypeScript260/3 skipped pass; 550 scoped source bindings
+and 665 unchanged integrated inputs are retained. The initial library425/0/7
+observation uses an earlier private loop. No whole-native rerun, general absence
+proof, full R1-R9, upstream/platform, packaging, main merge or release is claimed.
+

@@ -6820,7 +6820,13 @@
         "native/tests/facade_directory_move.rs",
         "native/tests/directory_move_live.rs",
         "native/docs/directory-moves.md",
-        "docs/validation/integration-2026-10-19/directory-moves/index.json"
+        "docs/validation/integration-2026-10-19/directory-moves/index.json",
+        "native/src/semantic_file_delete.rs",
+        "native/tests/facade_file_usage.rs",
+        "native/tests/file_usage_live.rs",
+        "native/tests/fixtures/file-usage-lsp.mjs",
+        "native/docs/file-usage.md",
+        "docs/validation/integration-2026-10-19/file-usage/index.json"
       ],
       "id": "R1",
       "inventoryRefs": [
@@ -6829,9 +6835,9 @@
         "serena:jet_brains_inline_symbol",
         "serena:jet_brains_rename"
       ],
-      "missingBehavior": "Finite complete captured text directory moves now have standard-LSP folder repair, one guarded resource plan, empty-directory/mode/physical-identity binding, copied-shape verification and conditional actual-rename recovery. Multiple provider languages, uncaptured or binary trees, host capture/workspace-root migration, cross-filesystem copy and broader directory/IDE reference guarantees remain open. Other symbol-parent declarations/languages, default-safe captured-file usage proof, propagated deletion, broader inline/rename/provider intents and exhaustive compiler reference binding remain open. The explicit own_v1 Rust named-declaration/negotiated-attachment slice and legacy file parent/basename behavior retain their separate evidence. Saved-plan identity/review replay, host permissions, approval, executed verification and stale/recovery gates remain mandatory; multi-plan publication is not atomic.",
+      "missingBehavior": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic.",
       "priority": 1,
-      "suggestedScope": "Continue default-safe captured-file usage checks, propagated deletion, other symbol-parent/language cases and broader inline/rename intents under checked source operations. Preserve finite directory completeness, explicit provider coverage, legacy identities and guarded application/recovery.",
+      "suggestedScope": "Continue propagated deletion and other file/declaration/language cases with checked original operations and independent postconditions. Preserve finite directory/file selection, visible provider/unknown coverage, legacy identities and guarded application/recovery.",
       "title": "Finish semantic refactoring intent contracts",
       "directoryMoveCheckpoint": {
         "index": "docs/validation/integration-2026-10-19/directory-moves/index.json",
@@ -6854,6 +6860,29 @@
         ],
         "wholeNativeRerunAfterRepair": false,
         "actualRustAnalyzerAndRustcGatePassed": true,
+        "countsAreNonadditive": true,
+        "fullParityCertified": false
+      },
+      "fileUsageCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/file-usage/index.json",
+        "finalScopedTotals": {
+          "passed": 63,
+          "failed": 1,
+          "ignored": 0
+        },
+        "integratedInputs": 665,
+        "scopedRuntimeInputsMatched": 550,
+        "actualOwnedLanguages": [
+          "typescript",
+          "javascript"
+        ],
+        "actualCompositeRustTests": 1,
+        "initialLibraryObservationOnly": {
+          "passed": 425,
+          "failed": 0,
+          "ignored": 7
+        },
+        "wholeNativeRerun": false,
         "countsAreNonadditive": true,
         "fullParityCertified": false
       }
@@ -7792,7 +7821,7 @@
         "native/tests/facade_file_rename.rs",
         "native/tests/facade_file_delete.rs"
       ],
-      "remainingReview": "Finite complete captured text directory moves now have standard-LSP folder repair, one guarded resource plan, empty-directory/mode/physical-identity binding, copied-shape verification and conditional actual-rename recovery. Multiple provider languages, uncaptured or binary trees, host capture/workspace-root migration, cross-filesystem copy and broader directory/IDE reference guarantees remain open. Other symbol-parent declarations/languages, default-safe captured-file usage proof, propagated deletion, broader inline/rename/provider intents and exhaustive compiler reference binding remain open. The explicit own_v1 Rust named-declaration/negotiated-attachment slice and legacy file parent/basename behavior retain their separate evidence. Saved-plan identity/review replay, host permissions, approval, executed verification and stale/recovery gates remain mandatory; multi-plan publication is not atomic."
+      "remainingReview": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic."
     },
     {
       "boundary": "Native Meaning inference/transport and bounded feedback have separate checked proofs. Semantic alias identity, broader mixed-source consumers, non-knowledge outcome targets and semantic transcript understanding remain open. Provider/host assertions are not execution truth or independently authenticated corroboration.",
@@ -8162,6 +8191,20 @@
       ],
       "remainingReview": "Finite complete captured text directory moves now have standard-LSP folder repair, one guarded resource plan, empty-directory/mode/physical-identity binding, copied-shape verification and conditional actual-rename recovery. Multiple provider languages, uncaptured or binary trees, host capture/workspace-root migration, cross-filesystem copy and broader directory/IDE reference guarantees remain open. Other symbol-parent declarations/languages, default-safe captured-file usage proof, propagated deletion, broader inline/rename/provider intents and exhaustive compiler reference binding remain open. The explicit own_v1 Rust named-declaration/negotiated-attachment slice and legacy file parent/basename behavior retain their separate evidence. Saved-plan identity/review replay, host permissions, approval, executed verification and stale/recovery gates remain mandatory; multi-plan publication is not atomic.",
       "fullContractCertified": false
+    },
+    {
+      "id": "captured_file_usage_checks",
+      "behavior": "Default omitted/null captured-file selection checks a bounded TS/JS function ES module, conservative captured usages and exact self-bound provider definitions/references before one ordinary guarded deletion plan. Missing/empty/truncated/foreign proof refuses; source hashes, provider policy/omissions and unknown consumers remain explicit. One admitted bulk scope retains every per-file policy/hash/cancellation check. Explicit forced deletion and approval/verification/application/recovery keep their existing gates.",
+      "evidence": [
+        "native/src/semantic_file_delete.rs",
+        "native/tests/facade_file_usage.rs",
+        "native/tests/file_usage_live.rs",
+        "native/tests/fixtures/file-usage-lsp.mjs",
+        "native/docs/file-usage.md",
+        "docs/validation/integration-2026-10-19/file-usage/index.json"
+      ],
+      "remainingReview": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic.",
+      "fullContractCertified": false
     }
   ],
   "residualCoverageRule": "R1-R9 are priorities only. residualRegister is a thematic index; every partial/unreconciled ledger row retains additional exact-contract review requirements. This is not a complete external certification.",
@@ -8273,7 +8316,7 @@
         "serena:tool:jet_brains_rename",
         "serena:tool:safe_delete_symbol"
       ],
-      "remainingBoundary": "Finite complete captured text directory moves now have standard-LSP folder repair, one guarded resource plan, empty-directory/mode/physical-identity binding, copied-shape verification and conditional actual-rename recovery. Multiple provider languages, uncaptured or binary trees, host capture/workspace-root migration, cross-filesystem copy and broader directory/IDE reference guarantees remain open. Other symbol-parent declarations/languages, default-safe captured-file usage proof, propagated deletion, broader inline/rename/provider intents and exhaustive compiler reference binding remain open. The explicit own_v1 Rust named-declaration/negotiated-attachment slice and legacy file parent/basename behavior retain their separate evidence. Saved-plan identity/review replay, host permissions, approval, executed verification and stale/recovery gates remain mandatory; multi-plan publication is not atomic."
+      "remainingBoundary": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic."
     },
     {
       "id": "managed_install_hook_lifecycle",

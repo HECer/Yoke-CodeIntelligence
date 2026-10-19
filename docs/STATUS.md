@@ -501,6 +501,43 @@ usage checks, propagated deletion and the wider STATUS/R1–R9 work remain open.
 The isolated file-usage follow-up is outside this checkpoint. Full local/hosted
 platform acceptance, packaging, main merge and release remain open.
 
+Default [captured file usage checks](../native/docs/file-usage.md) now prepare
+deletion plans for bounded TypeScript/JavaScript ES modules of named functions.
+Each declaration needs an exact source-bound provider definition and references
+including itself, with no reported usage outside the selected file. Captured
+graph/path/name candidates independently refuse possible usage. Missing, empty,
+foreign or truncated responses refuse before plan publication. Provider policy,
+source omissions and unknown consumers remain visible; `complete=false`,
+`exhaustiveCompilerProof=false` and `remainingUsagesMayBreak=true` remain.
+Explicit forced deletion, host edit permission, exact approval, executed
+verification, stale-source checks and recovery retain their separate gates.
+
+All **nine new cases** pass, including omitted/null selectors at both analyzer
+epochs, 2,000/2,001 files, 16 MB/16 MB+1 byte, eight/nine declarations,
+permissions, malformed/absent provider results and actual guarded recovery.
+The final scoped run records **63 passed / 1 failed / 0 ignored** across six
+groups; the sole failure remains real OS 1314 symlink setup in the unchanged
+forced-delete fixture. A separate actual TypeScript language-server/compiler
+gate exercises both TypeScript and JavaScript: copied compilation, approved
+application, exact recovery and used-module refusal pass. It is one Rust test
+with two owned fixtures and is nonadditive.
+
+The initial 2,000-file test exceeded its unchanged 30-second deadline while
+rebuilding source scope per read. An exact diagnostic RED is preserved.
+Bulk reads now reuse one checked captured scope while retaining all per-file
+policy, size, hash and cancellation checks; the original boundary assertion
+and deadline pass. Final all-target Clippy passes. **550 scoped runtime inputs**
+match the integrated checkout with recorded CRLF materialization; formatting,
+**17 Python tests**, mandatory typecheck and **260 TypeScript tests / 3 existing
+skips** pass with **665 integrated inputs unchanged**. The earlier 425/0/7 library
+observation uses the previous private loop and remains separately labeled.
+No whole-native rerun after this addition is claimed. The
+[file-usage evidence](validation/integration-2026-10-19/file-usage/index.json)
+retains exact attempts, source hashes and real provider/compiler outputs.
+
+Other file/declaration/language shapes, propagated deletion, broader R1–R9,
+hosted/platform acceptance, packaging, main merge and release remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

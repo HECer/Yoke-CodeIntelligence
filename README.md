@@ -51,6 +51,10 @@ parallel observations remain intact; tied labels stay visibly ambiguous.
 trees, empty directories and physical identities through configured folder
 repair, reviewed plans, copied verification and conditional recovery.
 
+[Captured file usage checks](native/docs/file-usage.md) add bounded default
+deletion planning for TypeScript/JavaScript function modules with exact
+provider bindings, conservative captured usages and visible unknown consumers.
+
 ## TypeScript advanced runtime
 
 Requires **Node.js 22.16+**. Python/Go and additional optional providers are installed separately. Node SQLite is experimental on the tested Node version. No model or API key is required by native indexing.

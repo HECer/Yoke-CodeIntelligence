@@ -1,0 +1,111 @@
+{
+  "checks": [
+    {
+      "gate": "clippy",
+      "exitCode": 0,
+      "elapsedSeconds": 208.494,
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--locked",
+        "--all-targets",
+        "--keep-going",
+        "-j1",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "groups": []
+    },
+    {
+      "gate": "scoped-native",
+      "exitCode": 101,
+      "elapsedSeconds": 218.379,
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "--no-fail-fast",
+        "-j1",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "facade_file_usage",
+        "--test",
+        "facade_file_delete",
+        "--test",
+        "semantic_refactor",
+        "--test",
+        "refactor_intents",
+        "--test",
+        "facade_directory_move",
+        "--test",
+        "plan_integrity",
+        "--",
+        "--test-threads=1"
+      ],
+      "groups": [
+        {
+          "passed": 10,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 9,
+          "failed": 1,
+          "ignored": 0
+        },
+        {
+          "passed": 9,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 13,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 15,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "actual-provider",
+      "exitCode": 0,
+      "elapsedSeconds": 19.846,
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j1",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "file_usage_live",
+        "--",
+        "--ignored",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "groups": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    }
+  ],
+  "sourceUnchanged": true,
+  "libraryReplay": "Initial R1 library425/0/7 remains a separate earlier source observation; only the new private bulk-read loop changed, and its boundary/refusal/approval/recovery integration cases are replayed here."
+}
