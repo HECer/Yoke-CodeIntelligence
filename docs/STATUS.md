@@ -615,6 +615,38 @@ a complete maximum-size provider workflow. No whole-native rerun is claimed.
 General propagation beyond this finite policy, other R1–R9 work, hosted/platform
 acceptance, main merge and release remain open.
 
+[Portable Meaning projections](../native/docs/meaning-projection.md) now read
+native group/join exports without a Store or provider and support inspection,
+node lookup, degree and bounded directed traces. Policy/node identities,
+graph/packet membership, original directed endpoints, evidence references and
+every ordered hyperedge slot are structurally checked. Parallel observations,
+selfloops, original quotes and repeated roles remain distinct. Imported replay,
+attestation and completeness claims stay nested untrusted metadata; results
+report `bindingValidation=not_replayed`, `sourceAuthority=false` and
+`complete=false`. Import cannot create a checked `JoinedGraph` capability or
+detect coherent omitted records/forgeries from the export alone.
+
+All **nine new contracts** pass, including actual exports after Store/provider
+removal, grouped and two-parent records, asymmetric traversal, exact independent
+byte/count/output boundaries, malformed/Unicode/protocol/authority/path cases,
+deadline and CLI no-initialization checks. The frozen selected run records
+**480 native tests / 1 failed / 7 existing ignored gates** across six
+groups. The failure is an unchanged archive security fixture that cannot create
+a real Windows symlink (OS 1314); it is neither skipped nor weakened. Final
+regressions use `--no-fail-fast`. The final test-only strengthening explicitly
+closes the engine and asserts removal of the original source/Store/provider
+directory. Runtime/library inputs remain identical to the preceding 429-test
+library run; it is not claimed as a second run. These are local owned protocol
+fixtures, not live-model or semantic
+quality validation. Clippy, format, **17 Python tests**, mandatory typecheck and
+**260 TypeScript tests / 3 existing skips** pass with
+**677 integrated inputs unchanged**. The initial API RED and an
+intermediate packet-selection error in the traversal test are retained with
+raw logs and source hashes. [Evidence](validation/integration-2026-10-19/portable-projections/index.json)
+records the finite scope. Semantic alias identity/de-dup, mixed-document spaces,
+cross-history/workspace joins, outcome learning, other R1-R9 work, whole-native
+acceptance, main merge and release remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

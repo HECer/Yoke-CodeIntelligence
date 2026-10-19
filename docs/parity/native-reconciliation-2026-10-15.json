@@ -6983,19 +6983,38 @@
         "native/src/meaning_join_query.rs",
         "native/src/meaning_join_query_tests.rs",
         "native/tests/meaning_join_cli.rs",
-        "native/docs/meaning-join.md"
+        "native/docs/meaning-join.md",
+        "native/src/meaning_projection.rs",
+        "native/src/meaning_projection_cli.rs",
+        "native/tests/meaning_projection_portable.rs",
+        "native/docs/meaning-projection.md",
+        "docs/validation/integration-2026-10-19/portable-projections/index.json"
       ],
-      "hostGroupingAddition": "Explicit disjoint host-selected groups preserve one-parent group schema and now extend across selected native Meaning graphs sharing one exact workspace/canonical snapshot/base-graph pin. JoinedGraph is an opaque checked query capability with lookup, degree and bounded directed traces. Complete joint stored source/receipt replay preserves graph-qualified concepts, directed parallel observations, selfloops, ordered role slots, evidence, coverage and provenance. No parent mutation, provider, capture or persistence; host assertions establish neither semantic identity nor authenticated review. Automatic semantic decisions, cross-history/workspace joins, mixed-document spaces and generic serialized projection consumers remain open.",
+      "hostGroupingAddition": "Explicit disjoint host-selected groups preserve one-parent group schema and now extend across selected native Meaning graphs sharing one exact workspace/canonical snapshot/base-graph pin. JoinedGraph is an opaque checked query capability with lookup, degree and bounded directed traces. Complete joint stored source/receipt replay preserves graph-qualified concepts, directed parallel observations, selfloops, ordered role slots, evidence, coverage and provenance. No parent mutation, provider, capture or persistence; host assertions establish neither semantic identity nor authenticated review. Automatic semantic decisions, cross-history/workspace joins, mixed-document spaces remain open. Separate bounded data-only native group/join imports now support structural inspection and queries, without source replay or checked JoinedGraph authority.",
       "id": "R2",
       "inventoryRefs": [
         "trail:Optional deep meaning build",
         "graphify:semantic_graph_hyperedges",
         "graphify:dedup"
       ],
-      "missingBehavior": "Semantic alias identity/de-dup, mixed Office/PDF source spaces, generic portable serialized projection consumers and outcome learning remain open. Checked same-snapshot native joins and lookup/degree/directed-trace consumers are evidenced separately; exact transport never supplies semantic identity or model-quality proof.",
+      "missingBehavior": "Semantic alias identity/de-dup, mixed Office/PDF source spaces, cross-history/workspace joins, broader serialized schemas and outcome learning remain open. Checked same-snapshot native joins and lookup/degree/directed-trace consumers retain complete native source/receipt replay. Separate portable native group/join consumers now check supplied presentation structure without inheriting source authority; coherent forgeries/omissions and semantic/model quality are not verified.",
       "priority": 2,
-      "suggestedScope": "Preserve complete typed source/receipt replay and the bounded checked same-snapshot joins/analytics. Define broader mixed-document and cross-history/workspace contracts and reviewed semantic alias identity without granting source authority to labels or serialized JSON.",
-      "title": "Source-bound meaning graphs, build state and alias candidates"
+      "suggestedScope": "Preserve checked native replay and the separate data-only portable projection boundary. Define mixed-document/cross-history/workspace contracts and reviewed semantic alias identity/outcome learning without granting source authority or semantic truth to labels, host assertions or serialized JSON.",
+      "title": "Source-bound meaning graphs, build state and alias candidates",
+      "portableProjectionCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/portable-projections/index.json",
+        "newDefaultTestsPassed": 9,
+        "finalScopedTotals": {
+          "passed": 480,
+          "failed": 1,
+          "ignored": 7
+        },
+        "sourceAuthority": false,
+        "sourceReplayPerformed": false,
+        "semanticIdentityEstablished": false,
+        "wholeNativeRerun": false,
+        "fullParityCertified": false
+      }
     },
     {
       "evidence": [
@@ -8324,6 +8343,19 @@
       ],
       "remainingReview": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic. Checked TypeScript/TSX/JavaScript/JSX declaration/export/ambient deletion and Rust/Python owning attribute/documentation/decorator deletion now keep original entity/evidence coordinates. Contextual method binding uses the nearest declared owner; nested functions stay functions. Multi-declarators, expression consumers, separate TS member decorators, otherwise empty required Python bodies and other-language attachment ownership remain outside these finite symbol-deletion contracts. Explicit captured_es_function_propagation_v1 now removes checked standalone target-call statements and newly unused private function dependencies in one bounded TS/JS ES module, including private cycles. Surviving reported/possible consumers and exported dependencies remain protected. Other expression consumers, module/declaration/language/file shapes, general propagation, future consumer changes and exhaustive compiler/IDE guarantees remain outside this finite policy.",
       "fullContractCertified": false
+    },
+    {
+      "id": "portable_meaning_presentation_consumers",
+      "behavior": "Storeless bounded import of native group/join presentation exports checks policy/node identity, graph/packet membership, original directed endpoint mappings, evidence references and ordered hyperedge slots. Inspection, lookup, degree and directed trace preserve parallel observations, selfloops and roles. Imported metadata stays untrusted; no checked JoinedGraph, source replay, provider, model, permission or write authority is created. Coherent omissions/forgeries remain undetectable from the supplied data alone.",
+      "evidence": [
+        "native/src/meaning_projection.rs",
+        "native/src/meaning_projection_cli.rs",
+        "native/tests/meaning_projection_portable.rs",
+        "native/docs/meaning-projection.md",
+        "docs/validation/integration-2026-10-19/portable-projections/index.json"
+      ],
+      "remainingReview": "Semantic alias identity/de-dup, mixed Office/PDF source spaces, cross-history/workspace joins, broader serialized schemas and outcome learning remain open. Checked same-snapshot native joins and lookup/degree/directed-trace consumers retain complete native source/receipt replay. Separate portable native group/join consumers now check supplied presentation structure without inheriting source authority; coherent forgeries/omissions and semantic/model quality are not verified.",
+      "fullContractCertified": false
     }
   ],
   "residualCoverageRule": "R1-R9 are priorities only. residualRegister is a thematic index; every partial/unreconciled ledger row retains additional exact-contract review requirements. This is not a complete external certification.",
@@ -8412,7 +8444,7 @@
         "graphify:dedup",
         "graphify:learning_overlay"
       ],
-      "remainingBoundary": "Checked typed native Meaning transport/replay/Registry and explicit host archive CLI are now bounded. Semantic alias identity/de-dup, generic typed joins/analytics/source-only consumers, broader mixed-document source spaces and R9 outcome/corroboration/decay/transcript feedback remain open."
+      "remainingBoundary": "Semantic alias identity/de-dup, mixed Office/PDF source spaces, cross-history/workspace joins, broader serialized schemas and outcome learning remain open. Checked same-snapshot native joins and lookup/degree/directed-trace consumers retain complete native source/receipt replay. Separate portable native group/join consumers now check supplied presentation structure without inheriting source authority; coherent forgeries/omissions and semantic/model quality are not verified. Broader R9 outcome/corroboration/decay/transcript feedback remains separate."
     },
     {
       "id": "document_external_acquisition_database",
