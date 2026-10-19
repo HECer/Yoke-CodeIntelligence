@@ -241,3 +241,19 @@ skipped and typecheck pass with 652 unchanged inputs. Raw attempts preserve the
 two corrected fixture assumptions, source/binary hashes and Git materialization.
 Full native/hosted/STATUS/upstream/release acceptance remains open.
 
+[Saved-plan integrity](plan-integrity/index.json) replays legacy IDs, complete
+captured deltas, exact review bytes and warnings before privileged plan use.
+Matching finite preparation limits prevent publishing unreadable plans. Thirteen
+integration cases, two library capacity cases and 14 actual CLI cases pass;
+the explicit owned Node verifier does not assert compiler or external-provider
+execution. The whole default run records **2426 passed / 28 failed / 39 ignored**
+across 267 groups with 654 unchanged inputs: ten real symlink prerequisites
+(OS1314), plus 18 ancestor-sharing refusals (OS32) in host-install targets.
+Both full targets pass 20 cases serially on identical binaries; replay counts
+are nonadditive and the original failures remain. Format/all-target Clippy,
+Python17, TypeScript260/3 skipped, typecheck and two real OS-credential/TLS gates
+pass. A separately recorded CI control update serializes Windows fixtures;
+remote acceptance remains open. Raw RED/build/fixture attempts and exact byte
+materializations are retained. Directory and wider STATUS/R1-R9 completion,
+main merge, upstream/platform certification and release remain open.
+

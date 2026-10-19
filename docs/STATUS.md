@@ -430,6 +430,40 @@ inventory/certification states. Wider ownership/semantic interpretations,
 compiler binding, upstream schema/quality equivalence, whole-native/hosted and
 full STATUS/R1-R9 acceptance remain open.
 
+Saved [native change plans](../native/docs/plan-integrity.md) now replay their
+released identity, complete captured file delta, exact diff bytes and test-change
+warnings before approval, new application, verification or recovery. This closes
+five reproduced integrity gaps under the explicit condition of modified saved
+plan records; it is not a demonstrated remote or cross-principal exploit.
+Analyzer 8/9 IDs and serialization remain compatible. New preparation uses the
+same finite serialized/source limits as replay, before derived result publication,
+while retaining the native 100,000-file manifest ceiling and existing CAS/publication
+boundaries. Caller transactions, SQL policy and active cancellation/deadlines survive.
+
+All **13 integration cases**, **2 library capacity cases** and **14 separate
+actual CLI cases** pass. CLI verification explicitly runs an owned Node check
+against copied fixture bytes; prerequisite rows in fault-injection tests do not
+assert compiler execution. The whole default Windows run executes every target
+and records **2,426 passed / 28 failed / 39 ignored** across **267 groups**, with
+all **654 frozen inputs unchanged**. Ten failures remain actual Windows symlink
+setup (OS 1314). Eighteen are OS 32 ancestor-sharing refusals in two host-install
+targets. Both complete targets pass **20 cases in a separate serial replay** of
+the identical binaries, default TEMP/TMP, deadlines and assertions. Those counts
+are nonadditive; the original failures remain recorded.
+
+Format, all-target Clippy with warnings denied, doctests (zero registered),
+**17 Python tests**, typecheck and **260 TypeScript tests / 3 existing skips**
+pass. Two separate actual OS-credential/TLS CLI gates also pass. A post-freeze
+CI control update selects one Windows fixture thread and keeps two on Unix;
+in-test concurrency adversaries remain unchanged. YAML syntax was parsed with
+the pinned native dependency; fresh remote CI verification remains required.
+The [plan-integrity evidence](validation/integration-2026-10-19/plan-integrity/index.json)
+retains all REDs, the interrupted pre-test build, the corrected CLI-fixture
+connection cleanup, exact source/binary hashes and the unsuppressed whole-run
+failures. Directory moves, default-safe file usage proofs, propagated deletion,
+the remaining STATUS/R1-R9 work, platform/upstream certification and release
+remain open. The separate directory implementation is outside this checkpoint.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders
