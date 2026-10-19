@@ -13,6 +13,8 @@ use serde_json::{Value, json};
 use std::{io::Read, net::SocketAddr};
 use zeroize::Zeroizing;
 
+#[path = "github_app_digest_receiver.rs"]
+pub mod receiver;
 #[path = "github_app_digest_service_state.rs"]
 mod state;
 pub const RECORD_KIND: &str = "github_app_digest_service_v1";
@@ -329,6 +331,13 @@ pub struct Client {
 }
 impl Client {
     pub fn from_os(c: &Context<'_>, d: &Deadline) -> Result<Self> {
+        Self::from_os_root(c, None, d)
+    }
+    /// Additional CA selected by the host, never by an incoming digest.
+    pub fn from_os_with_ca(c: &Context<'_>, ca: &[u8], d: &Deadline) -> Result<Self> {
+        Self::from_os_root(c, Some(ca), d)
+    }
+    fn from_os_root(c: &Context<'_>, ca: Option<&[u8]>, d: &Deadline) -> Result<Self> {
         c.admit(true, false, d)?;
         ensure!(
             !c.profile.fixture()?,
@@ -341,7 +350,7 @@ impl Client {
                 .ok_or_else(|| anyhow::anyhow!(INVALID))?,
         )
         .map_err(|_| anyhow::anyhow!("github_app_digest_service_credential_unavailable"))?;
-        Self::build(c.profile, Some(token), d)
+        Self::build(c.profile, Some(token), ca, d)
     }
     /// Numeric loopback only; never reads or forwards a production credential.
     pub fn for_fixture(c: &Context<'_>, endpoint: SocketAddr, d: &Deadline) -> Result<Self> {
@@ -353,9 +362,32 @@ impl Client {
                 && c.profile.endpoint == format!("http://{endpoint}/"),
             INVALID
         );
-        Self::build(c.profile, None, d)
+        Self::build(c.profile, None, None, d)
     }
-    fn build(profile: &Profile, token: Option<Zeroizing<Vec<u8>>>, d: &Deadline) -> Result<Self> {
+    /// Explicit synthetic token for an owned numeric-loopback receiver fixture.
+    /// Never reads a production credential or accepts an HTTP token from JSON.
+    pub fn for_fixture_token(
+        c: &Context<'_>,
+        endpoint: SocketAddr,
+        token: [u8; 32],
+        d: &Deadline,
+    ) -> Result<Self> {
+        c.admit(true, false, d)?;
+        ensure!(
+            c.profile.fixture()?
+                && endpoint.ip().is_loopback()
+                && endpoint.port() != 0
+                && c.profile.endpoint == format!("http://{endpoint}/"),
+            INVALID
+        );
+        Self::build(c.profile, Some(Zeroizing::new(token.to_vec())), None, d)
+    }
+    fn build(
+        profile: &Profile,
+        token: Option<Zeroizing<Vec<u8>>>,
+        ca: Option<&[u8]>,
+        d: &Deadline,
+    ) -> Result<Self> {
         ensure!(
             tokio::runtime::Handle::try_current().is_err(),
             "github_app_requires_synchronous_host"
@@ -363,14 +395,22 @@ impl Client {
         if rustls::crypto::CryptoProvider::get_default().is_none() {
             let _ = rustls::crypto::ring::default_provider().install_default();
         }
-        let http = reqwest::blocking::Client::builder()
+        let mut builder = reqwest::blocking::Client::builder()
             .no_proxy()
             .redirect(reqwest::redirect::Policy::none())
             .retry(reqwest::retry::never())
             .https_only(!profile.fixture()?)
-            .timeout(d.remaining())
-            .build()
-            .map_err(|_| anyhow::anyhow!(INVALID))?;
+            .timeout(d.remaining());
+        if let Some(ca) = ca {
+            ensure!(
+                !profile.fixture()? && !ca.is_empty() && ca.len() <= 32_000,
+                INVALID
+            );
+            builder = builder.add_root_certificate(
+                reqwest::Certificate::from_der(ca).map_err(|_| anyhow::anyhow!(INVALID))?,
+            );
+        }
+        let http = builder.build().map_err(|_| anyhow::anyhow!(INVALID))?;
         Ok(Self {
             endpoint: profile.endpoint.clone(),
             credential_name: profile.credential_name.clone(),

@@ -235,6 +235,35 @@ execution or model quality. Configured production receiver acceptance,
 automatic historical acquisition, actual App installation/deployment, full
 platform acceptance and the remaining STATUS/R1–R9 requirements stay open.
 
+The subsequent [native digest receiver](../native/docs/digest-receiver.md)
+implements authenticated TCP/TLS intake for the independently owned v1 contract.
+Bearer-hash grants bind the sender App/workspace/installation/repository. Exact
+wire bytes, handoff identity and endpoint-bound proposal identity are checked;
+an immutable record and receipt commit together before HTTP success. Identical
+PUTs and GETs retain the same receipt after restart. Revocation is rechecked
+after upload and serialized with commit. Original host cancellation follows the
+worker, while partial uploads and shutdown keep their request bounds. Imported
+snapshot/hash labels remain inert and never pin matching local captures.
+The sender can explicitly select an additional host CA without disabling
+certificate or hostname checks or changing the system trust store.
+
+The frozen receiver checkpoint passes **814 selected native tests / 0 failed /
+13 ignored** across 24 groups, including 14 new default receiver cases and the
+existing ingress/publication/page/retention/source regression targets. **17
+Python tests**, **260 TypeScript tests / 3 skipped**, typecheck, format and
+all-target Clippy pass with all **634 inputs unchanged**. Both separate actual
+Windows OS-credential gates pass. The new TLS gate uses real receiver/sender CLI
+processes and three unique token/TLS/signing credentials, removes those entries,
+and proves one accepted intake plus GET recovery after local acknowledgment
+failure. Wrong trust/name, scope/revocation, restart, framing, corruption,
+capacity, no late commit and detached cancellation have actual owned fixtures.
+[Receiver evidence](validation/integration-2026-10-19/digest-receiver/index.json)
+preserves all 34 raw artifact hashes, development failures and final logs.
+This is receipt-backed intake with `processingAvailable:false`. Downstream
+processing/query integration, public production deployment, automatic history
+acquisition, live App installation and full platform/STATUS acceptance remain
+open; prior OS1314 fixture failures are not rerun or accepted by this scope.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

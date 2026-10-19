@@ -47,6 +47,15 @@ selectors retain immutable captures. Receiver acceptance is distinct from
 processing and from proprietary upstream service equivalence. See the
 [service contract](../native/docs/digest-service.md).
 
+`github_app::digest::service::receiver` admits bounded host-granted digest intake
+through the shared native TCP/TLS channel. Fixed bearer-hash grants bind sender
+App/workspace/installation/repository scope. Exact wire bytes and an immutable
+receipt commit together before HTTP success; GET and identical repeats replay
+the same receipt. Imported IDs never become local source/CAS/retention authority.
+Current grants, revocation, original host cancellation and request deadlines
+govern the worker. This data store supplies no model or source-execution pipeline;
+see the [receiver contract](../native/docs/digest-receiver.md).
+
 ## Boundaries
 
 ```text

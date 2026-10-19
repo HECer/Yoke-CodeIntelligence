@@ -25,8 +25,10 @@ bounded host-authorized GitHub observations to offline captured-source digests.
 The optional handoff preview excludes discussion and implementation bodies.
 An explicit [digest service workflow](native/docs/digest-service.md) adds exact
 payload approval, a durable send journal and read-only outcome recovery for the
-independently owned receiver contract. Production receiver acceptance and wider
-upstream service equivalence remain open.
+independently owned receiver contract. The explicit
+[native receiver](native/docs/digest-receiver.md) adds authenticated TCP/TLS intake
+and immutable receipts. Public production deployment, downstream processing and
+wider upstream service equivalence remain open.
 
 ## TypeScript advanced runtime
 

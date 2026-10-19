@@ -13,7 +13,7 @@ use std::{
 #[path = "github_app_ingress_http.rs"]
 mod http;
 #[path = "github_app_ingress_socket.rs"]
-mod socket;
+pub(crate) mod socket;
 const INGRESS_INVALID: &str = "github_app_ingress_input_invalid";
 const INGRESS_CAPACITY: &str = "github_app_ingress_capacity_exceeded";
 /// Explicit host capabilities, never selected by incoming HTTP or stored JSON.

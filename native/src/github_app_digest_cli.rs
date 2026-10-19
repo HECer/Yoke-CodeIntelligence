@@ -40,6 +40,8 @@ pub struct Arguments {
     #[arg(long, global = true)]
     service_approval: Option<PathBuf>,
     #[arg(long, global = true)]
+    service_ca: Option<PathBuf>,
+    #[arg(long, global = true)]
     allow_service: bool,
     #[arg(long, global = true)]
     allow_service_network: bool,
@@ -114,6 +116,7 @@ pub struct Prepared {
     approval: Option<digest::service::Approval>,
     service_options: digest::service::Options,
     service_query: Option<(String, bool)>,
+    service_ca: Option<Vec<u8>>,
     history: Option<(
         yoke::git_workflows::HostGit,
         digest::HistoryOptions,
@@ -145,6 +148,7 @@ impl Arguments {
                 && self.allow_service_network == remote
                 && (!self.allow_fixture_service || self.allow_service)
                 && (!remote || self.allow_service)
+                && (self.service_ca.is_none() || remote)
                 && (!service_query
                     || (self.allow_service
                         && self.service_approval.is_none()
@@ -224,6 +228,7 @@ impl Arguments {
                     .service_approval
                     .as_deref()
                     .is_none_or(Path::is_absolute)
+                && self.service_ca.as_deref().is_none_or(Path::is_absolute)
                 && self
                     .discussion_capture
                     .as_deref()
@@ -250,6 +255,18 @@ impl Arguments {
             .service_approval
             .as_deref()
             .map(|p| -> Result<_> { digest::service::Approval::parse(&bytes(p, 4096, d)?) })
+            .transpose()?;
+        ensure!(
+            self.service_ca.is_none()
+                || service
+                    .as_ref()
+                    .is_some_and(|s| s.endpoint.starts_with("https:")),
+            INVALID
+        );
+        let service_ca = self
+            .service_ca
+            .as_deref()
+            .map(|p| bytes(p, 32_000, d))
             .transpose()?;
         let discussion_permission = digest::discussions::Permission {
             allow_discussions: self.allow_discussions,
@@ -326,6 +343,7 @@ impl Arguments {
                 max_output_bytes: max_bytes as usize,
             },
             service_query,
+            service_ca,
             history,
         })
     }
@@ -472,7 +490,11 @@ impl Prepared {
             let port = url.port().ok_or_else(|| anyhow::anyhow!(INVALID))?;
             digest::service::Client::for_fixture(c, std::net::SocketAddr::new(ip, port), d)
         } else {
-            digest::service::Client::from_os(c, d)
+            if let Some(ca) = &self.service_ca {
+                digest::service::Client::from_os_with_ca(c, ca, d)
+            } else {
+                digest::service::Client::from_os(c, d)
+            }
         }
     }
 }

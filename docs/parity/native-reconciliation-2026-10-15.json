@@ -7037,7 +7037,16 @@
       "configuredProductionReceiverAcceptance": false,
       "complete": false
     },
-    "missingBehavior": "Configured live production receiver acceptance, automatic historical acquisition, live App installation/deployment, full service processing acceptance and universal upstream contract equivalence remain open. The independently owned digest receiver contract now has an explicit client approval/send/status/recovery lifecycle; a receiver receipt does not prove successful processing or proprietary brain parity.",
+    "receiverDevelopment": {
+      "sourceParent": "61d3258120ac0ca2b8eb85f498d9242b21f0f0da",
+      "evidence": "docs/validation/integration-2026-10-19/digest-receiver/index.json",
+      "contract": "native/docs/digest-receiver.md",
+      "behavior": "Authenticated native receiver-v1 HTTP/TLS intake; fixed sender App/workspace/repository grants; exact wire/proposal/handoff bindings; durable immutable receipts and GET recovery; restart/idempotence/revocation/deadline checks; received IDs never confer local source or retention authority",
+      "downstreamProcessingAvailable": false,
+      "configuredPublicProductionDeployment": false,
+      "complete": false
+    },
+    "missingBehavior": "Configured public production deployment, downstream digest processing/query integration, automatic historical acquisition, live App installation/deployment and universal upstream contract equivalence remain open. The independently owned client and native receiver now implement approval/send/durable-intake/GET-recovery; a receipt is not proof of processing, remote source truth or proprietary brain parity.",
       "priority": 8,
     "suggestedScope": "Add explicitly host-authorized, bounded closed-PR discussion observations and replayable digest/service handoff around the integrated queue, verified Git/captured-source pipeline and publication capabilities. Preserve exact source bindings, provider-claim provenance, stale preconditions, separate network/write/deployment permissions and no default model or fork-code execution. Do not claim the proprietary hosted brain engine or upgrade the unreconciled inventory from this thematic checkpoint.",
       "title": "Self-hosted GitHub App and authorized review publication"

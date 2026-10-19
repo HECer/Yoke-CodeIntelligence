@@ -20,6 +20,10 @@ and offline `--discussion-capture`/`--handoff-preview` options. Acquisition and
 composition grant no model, source execution or service publication authority.
 The separate service flags require host network/write permissions and current
 App/service grants; ordinary preview/history calls retain their read-only policy.
+The [native receiver](../native/docs/digest-receiver.md) supplies authenticated,
+durable receipt-backed intake for that own contract. Received IDs and labels are
+inert sender assertions; downstream processing/query integration and public
+production deployment remain open.
 
 ## Captured mapping checkpoint (2026-10-19 UTC)
 

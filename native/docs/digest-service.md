@@ -4,7 +4,8 @@ The native `github_app::digest::service` library implements an independently
 owned receiver contract. It publishes a freshly replayed captured-source digest
 only after exact host approval. This is not an adapter for an undocumented Trail
 brain endpoint, an installed GitHub App, a model call or proof of receiver-side
-processing. A production receiver implementing this contract must be configured
+processing. The [native receiver](digest-receiver.md) now implements authenticated,
+durable intake for this contract. A production instance must still be configured
 separately; no external deployment or publication follows from development tests.
 
 The outbound digest uses the existing handoff projection: captured Rust headers
@@ -44,6 +45,9 @@ and automatic retries are unavailable. The endpoint must include its canonical
 trailing slash and no other path. Network access to a numeric loopback HTTP fixture requires a
 separate explicit host flag and `credentialName:null`; it cannot read or forward
 a production token. `localhost` is not a numeric fixture address.
+An explicit `--service-ca /host/ca.der` on send/recovery selects an additional
+bounded host CA without disabling certificate or hostname verification. No
+incoming capture or service JSON can select that file.
 
 The existing App profile supplies the current repository grant. Its signing key
 is not read for a proposal. Add these options to the existing source/discussion

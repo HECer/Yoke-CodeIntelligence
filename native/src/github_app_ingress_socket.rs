@@ -5,7 +5,7 @@ use std::{
     net::{Shutdown, TcpStream},
 };
 use zeroize::Zeroizing;
-pub(super) struct Physical<'a> {
+pub(crate) struct Physical<'a> {
     socket: TcpStream,
     deadline: &'a Deadline,
 }
@@ -42,15 +42,22 @@ impl Write for Physical<'_> {
         self.socket.flush()
     }
 }
-pub(super) enum Channel<'a> {
+pub(crate) enum Channel<'a> {
     Plain(Physical<'a>),
     Tls(Box<rustls::StreamOwned<rustls::ServerConnection, Physical<'a>>>),
 }
 impl<'a> Channel<'a> {
-    pub fn new(socket: TcpStream, shared: &Shared, deadline: &'a Deadline) -> Result<Self> {
+    pub(super) fn new(socket: TcpStream, shared: &Shared, deadline: &'a Deadline) -> Result<Self> {
+        Self::with_tls(socket, shared.tls.as_ref(), deadline)
+    }
+    pub(crate) fn with_tls(
+        socket: TcpStream,
+        tls: Option<&Arc<rustls::ServerConfig>>,
+        deadline: &'a Deadline,
+    ) -> Result<Self> {
         socket.set_nonblocking(false)?;
         let io = Physical { socket, deadline };
-        Ok(if let Some(tls) = &shared.tls {
+        Ok(if let Some(tls) = tls {
             Self::Tls(Box::new(rustls::StreamOwned::new(
                 rustls::ServerConnection::new(tls.clone())
                     .map_err(|_| anyhow::anyhow!("github_app_tls_invalid"))?,
@@ -104,13 +111,13 @@ impl Write for Channel<'_> {
         }
     }
 }
-pub(super) fn retry(error: &io::Error) -> bool {
+pub(crate) fn retry(error: &io::Error) -> bool {
     matches!(
         error.kind(),
         io::ErrorKind::TimedOut | io::ErrorKind::WouldBlock | io::ErrorKind::Interrupted
     )
 }
-pub(super) fn tls_server(material: TlsMaterial) -> Result<Arc<rustls::ServerConfig>> {
+pub(crate) fn tls_server(material: TlsMaterial) -> Result<Arc<rustls::ServerConfig>> {
     ensure!(
         !material.certificates.is_empty()
             && material.certificates.len() <= 8

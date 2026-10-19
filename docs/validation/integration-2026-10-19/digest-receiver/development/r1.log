@@ -1,0 +1,42 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 09s
+     Running tests\digest_receiver.rs (target\debug\deps\digest_receiver-db5bf7765f2a9c05.exe)
+
+running 9 tests
+test ambiguous_framing_foreign_hosts_and_bearerless_puts_refuse_before_body_or_state ... ok
+test authentication_scope_revocation_and_absent_receipts_do_not_publish_or_disclose ... FAILED
+test changed_wire_binding_and_rehashed_text_fields_cannot_enter_the_closed_handoff ... FAILED
+test real_native_client_and_receiver_commit_one_intake_and_reconcile_local_failure ... ok
+test receipt_is_immutable_for_exact_repeats_and_survives_receiver_restart ... ok
+test received_snapshot_ids_never_pin_matching_local_capture_history ... ok
+test receiver_capacity_and_sql_failure_never_return_a_false_acceptance ... ok
+test slow_partial_request_shutdown_and_initial_permissions_remain_bounded ... ok
+test actual_cli_default_denial_creates_no_state_or_listener ... ok
+
+failures:
+
+---- authentication_scope_revocation_and_absent_receipts_do_not_publish_or_disclose stdout ----
+
+thread 'reqwest-internal-sync-runtime' (19024) panicked at C:\Users\Lomi\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\reqwest-0.13.5\src\async_impl\client.rs:2501:5:
+No rustls crypto provider is configured. When using the `rustls-no-provider` feature you must install a crypto provider before building a Client. For example: `rustls::crypto::aws_lc_rs::default_provider().install_default().unwrap();` See https://docs.rs/rustls/latest/rustls/#cryptography-providers for details.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'authentication_scope_revocation_and_absent_receipts_do_not_publish_or_disclose' (18560) panicked at C:\Users\Lomi\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\reqwest-0.13.5\src\blocking\client.rs:1582:5:
+event loop thread panicked
+
+---- changed_wire_binding_and_rehashed_text_fields_cannot_enter_the_closed_handoff stdout ----
+
+thread 'reqwest-internal-sync-runtime' (20472) panicked at C:\Users\Lomi\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\reqwest-0.13.5\src\async_impl\client.rs:2501:5:
+No rustls crypto provider is configured. When using the `rustls-no-provider` feature you must install a crypto provider before building a Client. For example: `rustls::crypto::aws_lc_rs::default_provider().install_default().unwrap();` See https://docs.rs/rustls/latest/rustls/#cryptography-providers for details.
+
+thread 'changed_wire_binding_and_rehashed_text_fields_cannot_enter_the_closed_handoff' (17276) panicked at C:\Users\Lomi\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\reqwest-0.13.5\src\blocking\client.rs:1582:5:
+event loop thread panicked
+
+
+failures:
+    authentication_scope_revocation_and_absent_receipts_do_not_publish_or_disclose
+    changed_wire_binding_and_rehashed_text_fields_cannot_enter_the_closed_handoff
+
+test result: FAILED. 7 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.17s
+
+error: test failed, to rerun pass `--test digest_receiver`

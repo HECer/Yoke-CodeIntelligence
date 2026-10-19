@@ -1,0 +1,329 @@
+diff --git a/native/src/github_app_digest_cli.rs b/native/src/github_app_digest_cli.rs
+index ecaa9ae..d3a5323 100644
+--- a/native/src/github_app_digest_cli.rs
++++ b/native/src/github_app_digest_cli.rs
+@@ -40,6 +40,8 @@ pub struct Arguments {
+     #[arg(long, global = true)]
+     service_approval: Option<PathBuf>,
+     #[arg(long, global = true)]
++    service_ca: Option<PathBuf>,
++    #[arg(long, global = true)]
+     allow_service: bool,
+     #[arg(long, global = true)]
+     allow_service_network: bool,
+@@ -114,6 +116,7 @@ pub struct Prepared {
+     approval: Option<digest::service::Approval>,
+     service_options: digest::service::Options,
+     service_query: Option<(String, bool)>,
++    service_ca: Option<Vec<u8>>,
+     history: Option<(
+         yoke::git_workflows::HostGit,
+         digest::HistoryOptions,
+@@ -145,6 +148,7 @@ impl Arguments {
+                 && self.allow_service_network == remote
+                 && (!self.allow_fixture_service || self.allow_service)
+                 && (!remote || self.allow_service)
++                && (self.service_ca.is_none() || remote)
+                 && (!service_query
+                     || (self.allow_service
+                         && self.service_approval.is_none()
+@@ -224,6 +228,7 @@ impl Arguments {
+                     .service_approval
+                     .as_deref()
+                     .is_none_or(Path::is_absolute)
++                && self.service_ca.as_deref().is_none_or(Path::is_absolute)
+                 && self
+                     .discussion_capture
+                     .as_deref()
+@@ -251,6 +256,18 @@ impl Arguments {
+             .as_deref()
+             .map(|p| -> Result<_> { digest::service::Approval::parse(&bytes(p, 4096, d)?) })
+             .transpose()?;
++        ensure!(
++            self.service_ca.is_none()
++                || service
++                    .as_ref()
++                    .is_some_and(|s| s.endpoint.starts_with("https:")),
++            INVALID
++        );
++        let service_ca = self
++            .service_ca
++            .as_deref()
++            .map(|p| bytes(p, 32_000, d))
++            .transpose()?;
+         let discussion_permission = digest::discussions::Permission {
+             allow_discussions: self.allow_discussions,
+             allow_fixture: self.allow_fixture_discussions,
+@@ -326,6 +343,7 @@ impl Arguments {
+                 max_output_bytes: max_bytes as usize,
+             },
+             service_query,
++            service_ca,
+             history,
+         })
+     }
+@@ -472,7 +490,11 @@ impl Prepared {
+             let port = url.port().ok_or_else(|| anyhow::anyhow!(INVALID))?;
+             digest::service::Client::for_fixture(c, std::net::SocketAddr::new(ip, port), d)
+         } else {
+-            digest::service::Client::from_os(c, d)
++            if let Some(ca) = &self.service_ca {
++                digest::service::Client::from_os_with_ca(c, ca, d)
++            } else {
++                digest::service::Client::from_os(c, d)
++            }
+         }
+     }
+ }
+diff --git a/native/src/github_app_digest_service.rs b/native/src/github_app_digest_service.rs
+index d805026..7faa54d 100644
+--- a/native/src/github_app_digest_service.rs
++++ b/native/src/github_app_digest_service.rs
+@@ -13,6 +13,8 @@ use serde_json::{Value, json};
+ use std::{io::Read, net::SocketAddr};
+ use zeroize::Zeroizing;
+ 
++#[path = "github_app_digest_receiver.rs"]
++pub mod receiver;
+ #[path = "github_app_digest_service_state.rs"]
+ mod state;
+ pub const RECORD_KIND: &str = "github_app_digest_service_v1";
+@@ -329,6 +331,13 @@ pub struct Client {
+ }
+ impl Client {
+     pub fn from_os(c: &Context<'_>, d: &Deadline) -> Result<Self> {
++        Self::from_os_root(c, None, d)
++    }
++    /// Additional CA selected by the host, never by an incoming digest.
++    pub fn from_os_with_ca(c: &Context<'_>, ca: &[u8], d: &Deadline) -> Result<Self> {
++        Self::from_os_root(c, Some(ca), d)
++    }
++    fn from_os_root(c: &Context<'_>, ca: Option<&[u8]>, d: &Deadline) -> Result<Self> {
+         c.admit(true, false, d)?;
+         ensure!(
+             !c.profile.fixture()?,
+@@ -341,7 +350,7 @@ impl Client {
+                 .ok_or_else(|| anyhow::anyhow!(INVALID))?,
+         )
+         .map_err(|_| anyhow::anyhow!("github_app_digest_service_credential_unavailable"))?;
+-        Self::build(c.profile, Some(token), d)
++        Self::build(c.profile, Some(token), ca, d)
+     }
+     /// Numeric loopback only; never reads or forwards a production credential.
+     pub fn for_fixture(c: &Context<'_>, endpoint: SocketAddr, d: &Deadline) -> Result<Self> {
+@@ -353,9 +362,32 @@ impl Client {
+                 && c.profile.endpoint == format!("http://{endpoint}/"),
+             INVALID
+         );
+-        Self::build(c.profile, None, d)
++        Self::build(c.profile, None, None, d)
+     }
+-    fn build(profile: &Profile, token: Option<Zeroizing<Vec<u8>>>, d: &Deadline) -> Result<Self> {
++    /// Explicit synthetic token for an owned numeric-loopback receiver fixture.
++    /// Never reads a production credential or accepts an HTTP token from JSON.
++    pub fn for_fixture_token(
++        c: &Context<'_>,
++        endpoint: SocketAddr,
++        token: [u8; 32],
++        d: &Deadline,
++    ) -> Result<Self> {
++        c.admit(true, false, d)?;
++        ensure!(
++            c.profile.fixture()?
++                && endpoint.ip().is_loopback()
++                && endpoint.port() != 0
++                && c.profile.endpoint == format!("http://{endpoint}/"),
++            INVALID
++        );
++        Self::build(c.profile, Some(Zeroizing::new(token.to_vec())), None, d)
++    }
++    fn build(
++        profile: &Profile,
++        token: Option<Zeroizing<Vec<u8>>>,
++        ca: Option<&[u8]>,
++        d: &Deadline,
++    ) -> Result<Self> {
+         ensure!(
+             tokio::runtime::Handle::try_current().is_err(),
+             "github_app_requires_synchronous_host"
+@@ -363,14 +395,22 @@ impl Client {
+         if rustls::crypto::CryptoProvider::get_default().is_none() {
+             let _ = rustls::crypto::ring::default_provider().install_default();
+         }
+-        let http = reqwest::blocking::Client::builder()
++        let mut builder = reqwest::blocking::Client::builder()
+             .no_proxy()
+             .redirect(reqwest::redirect::Policy::none())
+             .retry(reqwest::retry::never())
+             .https_only(!profile.fixture()?)
+-            .timeout(d.remaining())
+-            .build()
+-            .map_err(|_| anyhow::anyhow!(INVALID))?;
++            .timeout(d.remaining());
++        if let Some(ca) = ca {
++            ensure!(
++                !profile.fixture()? && !ca.is_empty() && ca.len() <= 32_000,
++                INVALID
++            );
++            builder = builder.add_root_certificate(
++                reqwest::Certificate::from_der(ca).map_err(|_| anyhow::anyhow!(INVALID))?,
++            );
++        }
++        let http = builder.build().map_err(|_| anyhow::anyhow!(INVALID))?;
+         Ok(Self {
+             endpoint: profile.endpoint.clone(),
+             credential_name: profile.credential_name.clone(),
+diff --git a/native/src/github_app_ingress.rs b/native/src/github_app_ingress.rs
+index a66951d..3868e60 100644
+--- a/native/src/github_app_ingress.rs
++++ b/native/src/github_app_ingress.rs
+@@ -13,7 +13,7 @@ use std::{
+ #[path = "github_app_ingress_http.rs"]
+ mod http;
+ #[path = "github_app_ingress_socket.rs"]
+-mod socket;
++pub(crate) mod socket;
+ const INGRESS_INVALID: &str = "github_app_ingress_input_invalid";
+ const INGRESS_CAPACITY: &str = "github_app_ingress_capacity_exceeded";
+ /// Explicit host capabilities, never selected by incoming HTTP or stored JSON.
+diff --git a/native/src/github_app_ingress_socket.rs b/native/src/github_app_ingress_socket.rs
+index d400650..03078b8 100644
+--- a/native/src/github_app_ingress_socket.rs
++++ b/native/src/github_app_ingress_socket.rs
+@@ -5,7 +5,7 @@ use std::{
+     net::{Shutdown, TcpStream},
+ };
+ use zeroize::Zeroizing;
+-pub(super) struct Physical<'a> {
++pub(crate) struct Physical<'a> {
+     socket: TcpStream,
+     deadline: &'a Deadline,
+ }
+@@ -42,15 +42,22 @@ impl Write for Physical<'_> {
+         self.socket.flush()
+     }
+ }
+-pub(super) enum Channel<'a> {
++pub(crate) enum Channel<'a> {
+     Plain(Physical<'a>),
+     Tls(Box<rustls::StreamOwned<rustls::ServerConnection, Physical<'a>>>),
+ }
+ impl<'a> Channel<'a> {
+-    pub fn new(socket: TcpStream, shared: &Shared, deadline: &'a Deadline) -> Result<Self> {
++    pub(super) fn new(socket: TcpStream, shared: &Shared, deadline: &'a Deadline) -> Result<Self> {
++        Self::with_tls(socket, shared.tls.as_ref(), deadline)
++    }
++    pub(crate) fn with_tls(
++        socket: TcpStream,
++        tls: Option<&Arc<rustls::ServerConfig>>,
++        deadline: &'a Deadline,
++    ) -> Result<Self> {
+         socket.set_nonblocking(false)?;
+         let io = Physical { socket, deadline };
+-        Ok(if let Some(tls) = &shared.tls {
++        Ok(if let Some(tls) = tls {
+             Self::Tls(Box::new(rustls::StreamOwned::new(
+                 rustls::ServerConnection::new(tls.clone())
+                     .map_err(|_| anyhow::anyhow!("github_app_tls_invalid"))?,
+@@ -104,13 +111,13 @@ impl Write for Channel<'_> {
+         }
+     }
+ }
+-pub(super) fn retry(error: &io::Error) -> bool {
++pub(crate) fn retry(error: &io::Error) -> bool {
+     matches!(
+         error.kind(),
+         io::ErrorKind::TimedOut | io::ErrorKind::WouldBlock | io::ErrorKind::Interrupted
+     )
+ }
+-pub(super) fn tls_server(material: TlsMaterial) -> Result<Arc<rustls::ServerConfig>> {
++pub(crate) fn tls_server(material: TlsMaterial) -> Result<Arc<rustls::ServerConfig>> {
+     ensure!(
+         !material.certificates.is_empty()
+             && material.certificates.len() <= 8
+diff --git a/native/src/main.rs b/native/src/main.rs
+index ba0a6db..81070dc 100644
+--- a/native/src/main.rs
++++ b/native/src/main.rs
+@@ -8,6 +8,7 @@ use std::{
+ };
+ use yoke::{Engine, capture::Deadline};
+ mod bedrock_cli;
++mod digest_receiver_cli;
+ mod feedback_cli;
+ mod git_affected_cli;
+ mod git_impact_cli;
+@@ -84,6 +85,7 @@ enum ExtensionOperation {
+     Feedback(Box<feedback_cli::Arguments>),
+     GithubApp(Box<github_app_cli::Arguments>),
+     GithubDiscussions(Box<github_discussions_cli::Arguments>),
++    DigestReceiver(Box<digest_receiver_cli::Arguments>),
+     ModelsHttp(Box<HttpModelArguments>),
+     ModelHttpWorker(Box<HttpModelWorkerArguments>),
+     ModelsBedrock(Box<bedrock_cli::Arguments>),
+@@ -1938,6 +1940,7 @@ fn run_parity(
+         ExtensionOperation::Meaning(_) => bail!("Meaning graph host dispatch error"),
+         ExtensionOperation::MixedView(_) => bail!("Mixed views host dispatch error"),
+         ExtensionOperation::Feedback(_) => bail!("Feedback host dispatch error"),
++        ExtensionOperation::DigestReceiver(_) => bail!("Digest receiver host dispatch error"),
+         ExtensionOperation::GithubApp(_) => bail!("GitHub App host dispatch error"),
+         ExtensionOperation::GithubDiscussions(_) => bail!("GitHub discussions host dispatch error"),
+         ExtensionOperation::Decisions(args) => run_decisions(engine, *args, arguments, deadline),
+@@ -3262,6 +3265,20 @@ fn run(cli: Cli) -> Result<bool> {
+         );
+         return args.run(cli.timeout, cli.max_bytes);
+     }
++    if let Operation::Extensions(extension) = &operation
++        && let ExtensionOperation::DigestReceiver(args) = extension.as_ref()
++    {
++        ensure!(
++            cli.snapshot.is_none()
++                && cli.capture_config.is_none()
++                && cli.include_ignored_dir.is_empty()
++                && cli.language_server_config.is_none()
++                && !cli.trust_servers
++                && cli.analyzer_epoch.is_none(),
++            "Digest receiver accepts host state/configuration, not source/provider options"
++        );
++        return args.run(&cli.root, cli.allow_writes, cli.timeout, cli.max_bytes);
++    }
+     if let Operation::Extensions(extension) = &operation
+         && let ExtensionOperation::GithubApp(args) = extension.as_ref()
+     {
+diff --git a/native/src/retention.rs b/native/src/retention.rs
+index c497521..1e8b613 100644
+--- a/native/src/retention.rs
++++ b/native/src/retention.rs
+@@ -787,6 +787,7 @@ fn validate_parity_records(store: &Store, deadline: &Deadline) -> Result<ParityD
+             | crate::github_app::worker::RECORD_KIND
+             | crate::github_app::publication::RECORD_KIND
+             | crate::github_app::digest::service::RECORD_KIND
++            | crate::github_app::digest::service::receiver::RECORD_KIND
+             | crate::github_app::pages::RECORD_KIND
+             | crate::github_app::pages::REVISION_KIND => {
+                 // scan validates the complete closed inline history before this pass.
+@@ -1059,6 +1060,8 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
+         crate::github_app::digest::service::retained_roots(store, deadline)?;
+     out.references.extend(digest_service_roots.iter().cloned());
+     out.all_references.extend(digest_service_roots);
++    let digest_receiver_ids =
++        crate::github_app::digest::service::receiver::retained_records(store, deadline)?;
+     out.references
+         .extend(github_worker_roots.snapshot_ids.iter().cloned());
+     out.all_references.extend(github_worker_roots.snapshot_ids);
+@@ -1281,6 +1284,15 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
+             // Payload hashes, endpoint strings and receiver IDs carry no CAS authority.
+             continue;
+         }
++        if kind == crate::github_app::digest::service::receiver::RECORD_KIND {
++            ensure!(
++                digest_receiver_ids.contains(&id),
++                "Invalid digest receiver history"
++            );
++            // An authenticated remote sender supplies inert observations only;
++            // no imported snapshot/hash/body field can retain local CAS state.
++            continue;
++        }
+         if kind == crate::github_app::pages::RECORD_KIND
+             || kind == crate::github_app::pages::REVISION_KIND
+         {

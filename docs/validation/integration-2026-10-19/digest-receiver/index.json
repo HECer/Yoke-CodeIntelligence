@@ -1,0 +1,689 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T05:34:47.750984+00:00",
+  "parentCommit": "61d3258120ac0ca2b8eb85f498d9242b21f0f0da",
+  "accepted": false,
+  "allLocalChecksPassed": true,
+  "frozenInputCount": 634,
+  "nativeTotals": {
+    "passed": 814,
+    "failed": 0,
+    "ignored": 13
+  },
+  "nativeResultGroups": 24,
+  "actualOSCredentialGates": [
+    {
+      "gate": "actual-os-credential-cli",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--test",
+        "github_app_digest_handoff",
+        "actual_cli_send_status_and_lost_response_recovery_use_os_key_without_retry",
+        "--",
+        "--exact",
+        "--ignored",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 9.63,
+      "recordedAt": "2026-10-19T05:33:50.113351+00:00",
+      "resultGroups": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "actual-tls-receiver-cli",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--test",
+        "digest_receiver",
+        "actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_ca",
+        "--",
+        "--exact",
+        "--ignored",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.201,
+      "recordedAt": "2026-10-19T05:33:51.315130+00:00",
+      "resultGroups": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    }
+  ],
+  "newSourceFiles": [
+    {
+      "source": "native/src/github_app_digest_receiver.rs",
+      "artifact": "new-source/native/src/github_app_digest_receiver.rs",
+      "sha256": "ed9e00650bb67964efdb9a678985c634d2140b1a3ce3905f0432192d5d226ecd"
+    },
+    {
+      "source": "native/src/github_app_digest_receiver_http.rs",
+      "artifact": "new-source/native/src/github_app_digest_receiver_http.rs",
+      "sha256": "8e17bb89dce6c0a2bfba4717cb46f4b2bd46cf6d718a61a9f72799144649ed27"
+    },
+    {
+      "source": "native/src/github_app_digest_receiver_store.rs",
+      "artifact": "new-source/native/src/github_app_digest_receiver_store.rs",
+      "sha256": "71d2a3868f1a3a39cfa908958f5969d15e7d5acb32e1b2c889b1819c3c11edd3"
+    },
+    {
+      "source": "native/src/digest_receiver_cli.rs",
+      "artifact": "new-source/native/src/digest_receiver_cli.rs",
+      "sha256": "c875f2843cb48e33c1f21e09b7061cb12d0a8d9cbcc11eec09563397a01681f1"
+    },
+    {
+      "source": "native/tests/digest_receiver.rs",
+      "artifact": "new-source/native/tests/digest_receiver.rs",
+      "sha256": "1ca549cba4344ba5364dbb3672342e57c098687c8a94aadb0ca8d2d085a98be3"
+    }
+  ],
+  "summary": {
+    "allChecksPassed": true,
+    "sourceUnchanged": true,
+    "checks": [
+      {
+        "gate": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 4.553,
+        "recordedAt": "2026-10-19T05:28:56.705715+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--keep-going",
+          "-j2",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 1.134,
+        "recordedAt": "2026-10-19T05:28:57.840237+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "native-service-and-regressions",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "--no-fail-fast",
+          "-j2",
+          "--lib",
+          "--test",
+          "github",
+          "--test",
+          "github_discussions",
+          "--test",
+          "github_app_digest",
+          "--test",
+          "github_app_digest_cli",
+          "--test",
+          "github_app_digest_mapping",
+          "--test",
+          "github_app_digest_handoff",
+          "--test",
+          "github_app_cli",
+          "--test",
+          "github_app_auth_cli",
+          "--test",
+          "github_app_publication",
+          "--test",
+          "github_app_publication_cli",
+          "--test",
+          "github_app_worker",
+          "--test",
+          "github_app_worker_run",
+          "--test",
+          "retention",
+          "--test",
+          "parity_retention",
+          "--test",
+          "decision_retention",
+          "--test",
+          "meaning_retention_review",
+          "--test",
+          "store_read_only",
+          "--test",
+          "store_open_deadline",
+          "--test",
+          "store_cancellation",
+          "--test",
+          "digest_receiver",
+          "--test",
+          "github_app_ingress",
+          "--test",
+          "github_app_ingress_cli",
+          "--test",
+          "github_app_pages_cli",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 207.252,
+        "recordedAt": "2026-10-19T05:32:25.092900+00:00",
+        "resultGroups": [
+          {
+            "passed": 404,
+            "failed": 0,
+            "ignored": 7
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 35,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 38,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 18,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 20,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 102,
+            "failed": 0,
+            "ignored": 4
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 33,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 28,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 16,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "python-contracts",
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 1.214,
+        "recordedAt": "2026-10-19T05:32:26.307991+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 4.533,
+        "recordedAt": "2026-10-19T05:32:30.842016+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 69.64,
+        "recordedAt": "2026-10-19T05:33:40.482712+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "actual-os-credential-cli",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j2",
+          "--test",
+          "github_app_digest_handoff",
+          "actual_cli_send_status_and_lost_response_recovery_use_os_key_without_retry",
+          "--",
+          "--exact",
+          "--ignored",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 9.63,
+        "recordedAt": "2026-10-19T05:33:50.113351+00:00",
+        "resultGroups": [
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "actual-tls-receiver-cli",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j2",
+          "--test",
+          "digest_receiver",
+          "actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_ca",
+          "--",
+          "--exact",
+          "--ignored",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 1.201,
+        "recordedAt": "2026-10-19T05:33:51.315130+00:00",
+        "resultGroups": [
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      }
+    ],
+    "scope": "Frozen local Windows native receiver/client validation using actual owned TCP/TLS, SQLite and captured source; separate actual Windows OS-credential sender and full TLS receiver/client CLI gates. Configured public deployment, downstream processing/query integration, proprietary service equivalence and full platform/STATUS acceptance remain open."
+  },
+  "findings": [
+    "Native receiver-v1 accepts only bounded explicitly host-authorized HTTP/TLS digest intake. A SHA256 verifier of the decoded32-byte bearer scopes the sender App/workspace/installation/repository. Header authentication precedes body acquisition; final grant/revocation admission precedes transaction commit. No incoming packet configures grants, credentials, local paths or execution.",
+    "Exact wire bytes, handoff hash and endpoint/workspace/App-bound proposal ID are validated. Closed envelope/header/thread/commit field projection refuses raw discussion/body/author extensions. This is an unsigned sender-assertion format; receipt acceptance does not replay remote source CAS, establish source truth or prove processing.",
+    "Immutable accepted record and receipt are committed together under WAL/FULL with current absolute SQL policy. Same-byte repeats return the same receipt without replacing/counting a new record. Actual receiver restart retains receipt identity; GET returns receipts only. Corruption, capacity and SQL-trigger failures never become false acceptance.",
+    "Connection framing has16KiB headers, fixed bounded bodies, duplicate-header/ambiguous-length/encoding refusal, canonical Host/SNI and no browser Origin/Expect/trailer admission. One connection at a time, finite request/lifetime budgets and inherited host cancellation cover partial uploads and shutdown. Scope summaries avoid retaining a second decoded corpus during history replay.",
+    "Fourteen new default cases use actual sockets/TLS, native sender, actual SQLite/source captures and CLI default admission. They cover revocation during upload, detached cancellation, expiry/no late commit, idempotence/restart, wrong CA/name, rehashed hostile fields, actual local-ack failure followed by native GET recovery and matching local snapshot IDs not gaining retention authority.",
+    "Separate actual OS credential gates pass. The new full TLS case creates/removes only three unique Windows token/TLS/signing entries, runs real native receiver and sender CLI processes, uses an explicitly selected public CA, commits one receiver intake despite local acknowledgment failure and recovers by GET. Exactly two receiver connections terminate the owned CLI. No system root-store changes or private-key files.",
+    "Existing ingress uses the same bounded TCP/TLS channel through a semantics-preserving internal constructor extraction; original ingress/publication/page CLI, source/digest, retention and Store targets are included. Existing client fixture behavior remains unchanged; a separate synthetic-token fixture constructor and host-selected CA operation add no deserialized secret authority.",
+    "Configured public production deployment, downstream digest processing/query integration, automatic historical acquisition, live GitHub App installation, whole platform/STATUS/R1-R9 acceptance and proprietary upstream equivalence remain open. Prior OS1314 setup failures are outside this selected scope and not claimed fixed."
+  ],
+  "developmentAttempts": {
+    "r1": "7passed/2failed. Raw test-helper reqwest clients lacked the explicitly required rustls crypto-provider initialization; native client path already initializes it. Helper fixed without relaxing receiver admission.",
+    "r2": "12passed/0failed/1ignored, separate actual TLS/OS CLI gate and all-target Clippy pass.",
+    "r3": "14passed/0failed/1ignored, separate actual TLS/OS CLI gate and all-target Clippy pass. Follow-up retains original cancellation flags after start returns, tests revocation during upload and retains only small scope summaries beside raw stored bodies."
+  },
+  "artifacts": [
+    {
+      "path": "development/actual-tls-cli-r1-receipt.json",
+      "bytes": 370,
+      "sha256": "fffdba8bc51c97d9fc1aa850589b39bda9dd5ce15d0dc38626ba61e66a445bb8"
+    },
+    {
+      "path": "development/actual-tls-cli-r1.log",
+      "bytes": 361,
+      "sha256": "f2da2cfb2164ed8cc64e9f928f8787db104f24df5d3dd7332e04b599d729732d"
+    },
+    {
+      "path": "development/actual-tls-cli-r2-receipt.json",
+      "bytes": 370,
+      "sha256": "c41a64bc7bdd52886d9d2b205a6da4ed0430376f5772b261b29e6b7315576cab"
+    },
+    {
+      "path": "development/actual-tls-cli-r2.log",
+      "bytes": 361,
+      "sha256": "3db567af267eb37be4647bd2d17ee97c748c99bc0de09019fbcdeae6877cff28"
+    },
+    {
+      "path": "development/clippy-r1-receipt.json",
+      "bytes": 276,
+      "sha256": "642d74474d03e3da10445051fe2683f8012f4a7b24b0394448d948cdb71c4cf8"
+    },
+    {
+      "path": "development/clippy-r1.log",
+      "bytes": 172,
+      "sha256": "21570516a3ec371db19f2e49be1d4960b06e06b8001242b80a559b130ff46476"
+    },
+    {
+      "path": "development/clippy-r2-receipt.json",
+      "bytes": 276,
+      "sha256": "6f902b85ecfcaf1b09aff4e0b39318645a59c596603a74efdcc8ab826f80bb0d"
+    },
+    {
+      "path": "development/clippy-r2.log",
+      "bytes": 172,
+      "sha256": "d545882143d444d5b70c20356e1beda30f32d00f73ec0c406581230334f3af35"
+    },
+    {
+      "path": "development/r1-receipt.json",
+      "bytes": 249,
+      "sha256": "3b806a2e764d29a8af3bec25ed0407755d35ffd87219663316c9082ee3fb5086"
+    },
+    {
+      "path": "development/r1.log",
+      "bytes": 3129,
+      "sha256": "fbe6b98f12ae24524f40eac41b740d3dbaa7468d5af8166fda3651f029ca81f9"
+    },
+    {
+      "path": "development/r2-receipt.json",
+      "bytes": 247,
+      "sha256": "af0c8f284af4399581e0b94d9a8fd7c9b31e66135147d83cc994ec6d853947fd"
+    },
+    {
+      "path": "development/r2.log",
+      "bytes": 1625,
+      "sha256": "3d815b879e50aef752f21af0413cddb7d6d6e654a178663c980c2d59244d02ff"
+    },
+    {
+      "path": "development/r3-receipt.json",
+      "bytes": 247,
+      "sha256": "01149f2b9ee0be33a978866f127f949147f3559c63366c811a9d23a5bc3eed20"
+    },
+    {
+      "path": "development/r3.log",
+      "bytes": 1774,
+      "sha256": "e7aadbd06f025891f4b469df1ded4d33ebfaea30cf56da0ef83453761fa61901"
+    },
+    {
+      "path": "final/actual-os-credential-cli.log",
+      "bytes": 376,
+      "sha256": "59dff51c7529740b21e94d79b212e5ba8d9397919d87c1b806f4b5b48ae6c79a"
+    },
+    {
+      "path": "final/actual-tls-receiver-cli.log",
+      "bytes": 361,
+      "sha256": "692618a059d93b15a95bb08b2e1e7cfba3032db8d8ea8b59fed7f6d16a095ca4"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 60,
+      "sha256": "beb5656adba6e2c2d8bc02d18d8ee0b952df3ce5f50ae79a594613c67a769b18"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native-service-and-regressions.log",
+      "bytes": 89088,
+      "sha256": "7a971f96493f6db289e197bc395b44f44b780f891f61e8e754b812972224fc65"
+    },
+    {
+      "path": "final/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "377b71ad979168d0a7c97fa597b358e8c957e112e42b0735712025f6e621cd01"
+    },
+    {
+      "path": "final/receipts.json",
+      "bytes": 6230,
+      "sha256": "4134c61ffb3a28e2be653ff95d648b1be789c69e406b380c31605db811cf0504"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 67726,
+      "sha256": "b6c45327c02e06c6049740330a49ed3abb8de5f083da342ae445169abfe4464f"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 67726,
+      "sha256": "b6c45327c02e06c6049740330a49ed3abb8de5f083da342ae445169abfe4464f"
+    },
+    {
+      "path": "final/summary.json",
+      "bytes": 7283,
+      "sha256": "ce373fe2c79638af8450c39c1fe3745c20df6d5bc9f1b0ab29bc339cb575c738"
+    },
+    {
+      "path": "final/tested-native-binary.json",
+      "bytes": 122,
+      "sha256": "c829f78dc3f55aeb26c47d883cc0bea8edab79d2fe609504caa14e9e4487711a"
+    },
+    {
+      "path": "final/typescript-tests.log",
+      "bytes": 25050,
+      "sha256": "a4bbfef9bde3623e14ffbd836a9258f6f362902734f096fd01bd8cc80494df40"
+    },
+    {
+      "path": "final/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "new-source/native/src/digest_receiver_cli.rs",
+      "bytes": 2978,
+      "sha256": "c875f2843cb48e33c1f21e09b7061cb12d0a8d9cbcc11eec09563397a01681f1"
+    },
+    {
+      "path": "new-source/native/src/github_app_digest_receiver.rs",
+      "bytes": 19118,
+      "sha256": "ed9e00650bb67964efdb9a678985c634d2140b1a3ce3905f0432192d5d226ecd"
+    },
+    {
+      "path": "new-source/native/src/github_app_digest_receiver_http.rs",
+      "bytes": 8231,
+      "sha256": "8e17bb89dce6c0a2bfba4717cb46f4b2bd46cf6d718a61a9f72799144649ed27"
+    },
+    {
+      "path": "new-source/native/src/github_app_digest_receiver_store.rs",
+      "bytes": 8106,
+      "sha256": "71d2a3868f1a3a39cfa908958f5969d15e7d5acb32e1b2c889b1819c3c11edd3"
+    },
+    {
+      "path": "new-source/native/tests/digest_receiver.rs",
+      "bytes": 33859,
+      "sha256": "1ca549cba4344ba5364dbb3672342e57c098687c8a94aadb0ca8d2d085a98be3"
+    },
+    {
+      "path": "run-local-validation.py",
+      "bytes": 4160,
+      "sha256": "87e987c2479a0910fdfff684be943817a36813a18f6b8552cda0c5d07e30b2ca"
+    },
+    {
+      "path": "runtime-change.patch",
+      "bytes": 14145,
+      "sha256": "39d058fecd2c26fd4338a1c5cf663c36f86a22126adddb3d8a9d7073d1a45a26"
+    }
+  ],
+  "runtimeSourceMaterialization": {
+    "scope": "All11 changed runtime/test files match the frozen working tree. Git CRLF normalization is explicitly identified; no working-tree code changed after validation.",
+    "files": [
+      {
+        "path": "native/src/digest_receiver_cli.rs",
+        "frozenWorkingTreeSha256": "c875f2843cb48e33c1f21e09b7061cb12d0a8d9cbcc11eec09563397a01681f1",
+        "gitBlobSha256": "c875f2843cb48e33c1f21e09b7061cb12d0a8d9cbcc11eec09563397a01681f1",
+        "rawEqual": true,
+        "crlfToLfOnly": false,
+        "workingTreeCrlfCount": 0
+      },
+      {
+        "path": "native/src/github_app_digest_cli.rs",
+        "frozenWorkingTreeSha256": "3a188d3d165ee1dd0b7b6e35b0f26efbd664652a6121ffaffbed560d75bb66d0",
+        "gitBlobSha256": "3a188d3d165ee1dd0b7b6e35b0f26efbd664652a6121ffaffbed560d75bb66d0",
+        "rawEqual": true,
+        "crlfToLfOnly": false,
+        "workingTreeCrlfCount": 0
+      },
+      {
+        "path": "native/src/github_app_digest_receiver.rs",
+        "frozenWorkingTreeSha256": "ed9e00650bb67964efdb9a678985c634d2140b1a3ce3905f0432192d5d226ecd",
+        "gitBlobSha256": "ed9e00650bb67964efdb9a678985c634d2140b1a3ce3905f0432192d5d226ecd",
+        "rawEqual": true,
+        "crlfToLfOnly": false,
+        "workingTreeCrlfCount": 0
+      },
+      {
+        "path": "native/src/github_app_digest_receiver_http.rs",
+        "frozenWorkingTreeSha256": "8e17bb89dce6c0a2bfba4717cb46f4b2bd46cf6d718a61a9f72799144649ed27",
+        "gitBlobSha256": "8e17bb89dce6c0a2bfba4717cb46f4b2bd46cf6d718a61a9f72799144649ed27",
+        "rawEqual": true,
+        "crlfToLfOnly": false,
+        "workingTreeCrlfCount": 0
+      },
+      {
+        "path": "native/src/github_app_digest_receiver_store.rs",
+        "frozenWorkingTreeSha256": "71d2a3868f1a3a39cfa908958f5969d15e7d5acb32e1b2c889b1819c3c11edd3",
+        "gitBlobSha256": "71d2a3868f1a3a39cfa908958f5969d15e7d5acb32e1b2c889b1819c3c11edd3",
+        "rawEqual": true,
+        "crlfToLfOnly": false,
+        "workingTreeCrlfCount": 0
+      },
+      {
+        "path": "native/src/github_app_digest_service.rs",
+        "frozenWorkingTreeSha256": "6f1923f98a16a3ac3263f7c05727492093bf01185cfbf3d03af4113ebc66026a",
+        "gitBlobSha256": "6f1923f98a16a3ac3263f7c05727492093bf01185cfbf3d03af4113ebc66026a",
+        "rawEqual": true,
+        "crlfToLfOnly": false,
+        "workingTreeCrlfCount": 0
+      },
+      {
+        "path": "native/src/github_app_ingress.rs",
+        "frozenWorkingTreeSha256": "1c9d60785989a147dd47cb99e5915ea6082546b29fc1504b7dfc12c852739a55",
+        "gitBlobSha256": "c933e8b7382ea22ae8decae7013c95ba33c94369e55f6d982ffbf465bf61ddff",
+        "rawEqual": false,
+        "crlfToLfOnly": true,
+        "workingTreeCrlfCount": 355
+      },
+      {
+        "path": "native/src/github_app_ingress_socket.rs",
+        "frozenWorkingTreeSha256": "c9a4fa1b24c0ebb4e06e3127d4eef687614262e68880d89fa46658263d47118c",
+        "gitBlobSha256": "c9a4fa1b24c0ebb4e06e3127d4eef687614262e68880d89fa46658263d47118c",
+        "rawEqual": true,
+        "crlfToLfOnly": false,
+        "workingTreeCrlfCount": 0
+      },
+      {
+        "path": "native/src/main.rs",
+        "frozenWorkingTreeSha256": "5e9d146f8f0a465a802e964141f422d6a6063d9b4c7b811c6fbfd19dae702e2e",
+        "gitBlobSha256": "5e9d146f8f0a465a802e964141f422d6a6063d9b4c7b811c6fbfd19dae702e2e",
+        "rawEqual": true,
+        "crlfToLfOnly": false,
+        "workingTreeCrlfCount": 0
+      },
+      {
+        "path": "native/src/retention.rs",
+        "frozenWorkingTreeSha256": "48563c9a1c5a49a4b89e8e87722e40986725aaa9091bfb2bcad5ef39b11dfbcd",
+        "gitBlobSha256": "48563c9a1c5a49a4b89e8e87722e40986725aaa9091bfb2bcad5ef39b11dfbcd",
+        "rawEqual": true,
+        "crlfToLfOnly": false,
+        "workingTreeCrlfCount": 0
+      },
+      {
+        "path": "native/tests/digest_receiver.rs",
+        "frozenWorkingTreeSha256": "1ca549cba4344ba5364dbb3672342e57c098687c8a94aadb0ca8d2d085a98be3",
+        "gitBlobSha256": "1ca549cba4344ba5364dbb3672342e57c098687c8a94aadb0ca8d2d085a98be3",
+        "rawEqual": true,
+        "crlfToLfOnly": false,
+        "workingTreeCrlfCount": 0
+      }
+    ]
+  }
+}

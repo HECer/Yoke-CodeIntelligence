@@ -162,3 +162,18 @@ installation changes; its entire earlier 768-test checkpoint is archived.
 All 101 raw artifact hashes are recorded. Configured production
 receiver acceptance, processing, live App deployment, prior OS1314 fixture setup
 failures, whole-platform and broader STATUS acceptance remain open.
+
+The [native receiver checkpoint](digest-receiver/index.json) adds authenticated
+TCP/TLS intake, immutable exact-byte receipts and native client recovery. Fixed
+sender scope, final revocation admission, inherited cancellation and typed inert
+retention protect the boundary; no remote IDs become local source authority.
+Fourteen new default cases pass, including restart, wrong CA/name, ambiguous
+framing, SQL/capacity/corruption refusal, no late commit and matching local IDs
+not pinning capture history. The frozen 24-group run passes 814 native / 0 failed
+/ 13 ignored, Python 17, TypeScript 260 / 3 skipped, typecheck, format and
+all-target Clippy with all 634 inputs unchanged. Two separate actual Windows
+OS-credential gates pass; the new full TLS CLI gate creates/removes only three
+unique entries and reconciles local acknowledgment failure through GET after
+one receiver intake. All 34 raw artifact hashes are retained. This does not
+accept public deployment, downstream processing/query integration, whole native
+or platform/R1–R9 functionality. Prior OS1314 setup failures remain outside scope.
