@@ -2,6 +2,13 @@
 
 ## Native Rust ownership
 
+`git_workflows::owners` adds per-path authored rule interpretations over an
+unchanged saved impact/area parent. An internal area callback holds the same
+checked read transaction through captured rule reads and result construction;
+public area bytes and legacy owner/report identities stay unchanged. Exact
+rule/token byte evidence, base/head and unknown syntax/precedence remain
+separate. See [captured owner candidates](../native/docs/git-owners.md).
+
 `meaning_projection` consumes native group/join exports as bounded, untrusted
 presentation data. It checks membership, policy identities, original directed
 endpoints, evidence references and ordered hyperedge slots, then performs
