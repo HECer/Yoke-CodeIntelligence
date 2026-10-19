@@ -2,6 +2,13 @@
 
 ## Native Rust ownership
 
+`meaning_projection` consumes native group/join exports as bounded, untrusted
+presentation data. It checks membership, policy identities, original directed
+endpoints, evidence references and ordered hyperedge slots, then performs
+storeless queries. Import never creates `meaning_join::JoinedGraph`; exported
+replay and attestation claims stay nested data with top-level source authority
+false. See [portable Meaning projections](../native/docs/meaning-projection.md).
+
 `changes_plan` replays the released saved-plan identity and complete base/result
 delta, then reconstructs exact diff bytes and warnings under checked source
 policies. Approval, verification, new apply and recovery share this admission;
