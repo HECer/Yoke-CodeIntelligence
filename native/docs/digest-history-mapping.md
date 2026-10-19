@@ -8,6 +8,11 @@ digest request and pass additional snapshot IDs through host CLI arguments:
 yoke --root ABSOLUTE_PROJECT github-app --profile ABSOLUTE_PROFILE digest --allow-digest history --allow-history --trust-git --request ABSOLUTE_REQUEST --map-captured-history --captured-snapshot PARENT_SNAPSHOT_ID --captured-snapshot EARLIER_SNAPSHOT_ID --max-bytes 4000000
 ```
 
+The separate, explicitly state-writing [history acquisition command](digest-history-acquisition.md)
+can select and capture a bounded batch automatically, validate its mapping and
+publish all capture metadata atomically. Existing mapping calls retain their
+read-only contract.
+
 `--captured-snapshot` requires `--map-captured-history`. The head snapshot is
 implicit; duplicate IDs, a repeated head, malformed IDs, and two different
 captures of the same commit are refused. Additional captures must bind selected

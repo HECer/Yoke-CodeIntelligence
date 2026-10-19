@@ -6,6 +6,8 @@ use anyhow::{Context as _, Result, ensure};
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 
+#[path = "github_app_digest_acquisition.rs"]
+pub mod acquisition;
 #[path = "github_app_digest_discussions.rs"]
 pub mod discussions;
 #[cfg(test)]
@@ -92,6 +94,25 @@ impl Default for Options {
             max_replay_name_bytes: 16_000_000,
             max_lineage_metadata_bytes: 16_000_000,
         }
+    }
+}
+impl Options {
+    pub fn validate(&self) -> Result<()> {
+        let hard = Self::default();
+        ensure!(
+            self.max_symbols <= hard.max_symbols
+                && self.max_source_bytes <= hard.max_source_bytes
+                && self.max_output_bytes <= hard.max_output_bytes
+                && self.max_files <= hard.max_files
+                && self.max_entities <= hard.max_entities
+                && self.max_metadata_bytes <= hard.max_metadata_bytes
+                && self.max_ast_nodes <= hard.max_ast_nodes
+                && self.max_ast_depth <= hard.max_ast_depth
+                && self.max_replay_name_bytes <= hard.max_replay_name_bytes
+                && self.max_lineage_metadata_bytes <= hard.max_lineage_metadata_bytes,
+            CAPACITY
+        );
+        Ok(())
     }
 }
 pub struct Context<'a> {
@@ -253,20 +274,7 @@ fn preview_with_readers(
         c.store.db.is_autocommit(),
         "github_app_digest_caller_transaction_refused"
     );
-    let hard = Options::default();
-    ensure!(
-        c.options.max_symbols <= hard.max_symbols
-            && c.options.max_source_bytes <= hard.max_source_bytes
-            && c.options.max_output_bytes <= hard.max_output_bytes
-            && c.options.max_files <= hard.max_files
-            && c.options.max_entities <= hard.max_entities
-            && c.options.max_metadata_bytes <= hard.max_metadata_bytes
-            && c.options.max_ast_nodes <= hard.max_ast_nodes
-            && c.options.max_ast_depth <= hard.max_ast_depth
-            && c.options.max_replay_name_bytes <= hard.max_replay_name_bytes
-            && c.options.max_lineage_metadata_bytes <= hard.max_lineage_metadata_bytes,
-        CAPACITY
-    );
+    c.options.validate()?;
     // Each reader charges its own aggregate before decoding. The connection
     // ceiling must also admit lineage and separately bounded artifact rows.
     let row_ceiling = c

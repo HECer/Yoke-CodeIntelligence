@@ -32,6 +32,11 @@ preserve receipt-qualified rows and directed relationships without conferring
 source authority. Public production deployment, semantic reasoning and wider
 upstream service equivalence remain open.
 
+Explicit [history acquisition](native/docs/digest-history-acquisition.md) selects,
+captures and maps a bounded historical batch under the verified head's scope.
+Snapshot/graph/FTS/scope/receipt publication commits atomically after replay and
+output admission. Persistent automatic continuation across batches remains open.
+
 ## TypeScript advanced runtime
 
 Requires **Node.js 22.16+**. Python/Go and additional optional providers are installed separately. Node SQLite is experimental on the tested Node version. No model or API key is required by native indexing.

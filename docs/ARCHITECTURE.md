@@ -65,6 +65,17 @@ checks request/scope/row protocol bindings and opens no sender Store or signing
 key. Model calls, execution, semantic identity and source verification remain
 unavailable. See the [query contract](../native/docs/digest-query.md).
 
+`digest::acquisition` selects a bounded verified-head history batch and invokes
+native Git capture under one owned immediate transaction. A shared acquisition
+budget precedes commit/tree/blob admission; fresh source mapping and output
+encoding precede publication. Store publication can participate only through a
+crate-private pending path; ordinary publication retains its own transaction.
+Snapshot, graph, FTS, inherited scope, artifact registration and source receipt
+roll back together. CAS bytes can remain unreferenced after failure and confer
+no authority. Single-commit Git captures now share this atomic SQL boundary.
+Persistent whole-history jobs/continuation remain open; see the
+[acquisition contract](../native/docs/digest-history-acquisition.md).
+
 ## Boundaries
 
 ```text

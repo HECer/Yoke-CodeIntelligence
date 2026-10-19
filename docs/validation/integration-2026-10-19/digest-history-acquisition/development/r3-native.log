@@ -1,0 +1,67 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 09s
+     Running tests\capture_policy.rs (target\debug\deps\capture_policy-cc51f7a3c548b392.exe)
+
+running 9 tests
+test canonical_derived_v9_from_disk_v8_retains_v8_source_acquisition_policy ... ok
+test arbitrary_derived_id_preserves_proven_v9_capture_policy_without_claiming_extraction ... ok
+test capture_policy_traversal_is_bounded_and_honors_the_callers_expired_deadline ... ok
+test foreign_scope_receipts_and_their_native_children_do_not_grant_disk_acquisition ... ok
+test ignored_capture_v9_lineage_preserves_members_and_rejects_resealed_member_changes ... ok
+test overlay_v9_from_disk_v8_retains_the_base_capture_policy ... ok
+test resealed_scope_proof_cannot_widen_only_dirs_before_following_its_valid_origin ... ok
+test unproven_or_tampered_capture_lineage_cannot_authorize_disk_recapture ... ok
+test exact_git_capture_receipts_select_their_own_policy_and_never_fall_back_on_corruption ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.81s
+
+     Running tests\digest_history_acquisition.rs (target\debug\deps\digest_history_acquisition-aa659bff3127de20.exe)
+
+running 10 tests
+test acquisition_default_permissions_scope_and_disk_heads_do_not_publish_partial_history ... ok
+test actual_cli_acquires_history_without_app_keys_or_checkout_writes ... ok
+test caller_transaction_expiry_durability_and_sql_policy_are_preserved ... ok
+test cli_denials_precede_host_files_and_store_initialization ... ok
+test exact_output_capacity_is_admitted_before_commit_and_corrupt_existing_graph_is_never_replaced ... ok
+test late_output_or_sql_failure_rolls_back_every_snapshot_graph_fts_scope_and_receipt ... ok
+test aggregate_snapshot_file_source_tree_and_proof_budgets_never_reset_per_commit ... ok
+test public_single_commit_capture_also_rolls_back_late_proof_failure ... ok
+test zero_selected_history_reports_its_frontier_without_publishing_or_claiming_complete ... ok
+test real_sha1_and_sha256_history_is_captured_mapped_and_idempotent_with_dirty_checkout_and_epoch_inheritance ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.82s
+
+     Running tests\git_epochs.rs (target\debug\deps\git_epochs-e2ec0afa021314a0.exe)
+
+running 9 tests
+test authentic_git8_receipts_reports_and_graphs_remain_readable ... ok
+test git8_registry_archive_replays_without_the_original_workspace ... ok
+test git_epoch_accessors_install_the_new_callers_deadline ... ok
+test explicit_git9_capture_has_distinct_identity_facts_and_missing_graph_replay ... ok
+test guarded_derivative_archive_keeps_older_git_source_proof_offline ... ok
+test git_epoch_selection_rejects_invalid_receipts_missing_proofs_and_expired_deadlines ... ok
+test missing_authentic_git8_graph_replays_the_original_extraction_epoch ... ok
+test synthetic_legacy_git_receipts_remain_readable_without_an_extractor_claim ... ok
+test resealed_offline_git_proof_cannot_invent_commit_or_source_bytes ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.44s
+
+     Running tests\github_app_digest_mapping.rs (target\debug\deps\github_app_digest_mapping-b7be9e3358d19ca1.exe)
+
+running 13 tests
+test a_path_still_present_in_git_but_outside_the_new_capture_is_unavailable_not_deleted ... ok
+test actual_cli_maps_only_explicit_selectors_and_honors_exact_output_capacity ... ok
+test caller_transactions_are_refused_without_commit_or_rollback ... ok
+test corrupt_additional_proofs_and_cancelled_work_restore_the_callers_sql_policy ... ok
+test aggregate_source_metadata_ast_and_export_budgets_cannot_reset_per_snapshot ... ok
+test duplicate_declarations_preserve_every_original_candidate_without_a_forced_identity ... ok
+test mapped_cli_never_turns_its_selection_flag_into_digest_history_or_git_permission ... ok
+test exact_git_file_relations_and_qualified_symbol_candidates_keep_original_anchors ... ok
+test missing_captures_are_explicit_and_legacy_history_does_not_infer_them ... ok
+test revoked_grants_invalid_duplicate_and_head_selectors_are_rejected_before_git_execution ... ok
+test relation_work_and_commit_proof_limits_refuse_without_partial_results ... ok
+test sha256_git_objects_and_mixed_supported_capture_epochs_retain_their_provenance ... ok
+test unrelated_commits_disk_sources_and_ambiguous_captures_never_enter_the_history ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.86s
+

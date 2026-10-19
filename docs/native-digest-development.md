@@ -28,6 +28,13 @@ HTTP/CLI paths. Receipt-qualified positions retain duplicates and directed
 relations without establishing source authority or semantic identity. Public
 production deployment, source verification and semantic reasoning remain open.
 
+The explicit [atomic history acquisition path](../native/docs/digest-history-acquisition.md)
+automatically selects and captures a bounded batch of history rows and direct
+parents. Exact scope/epoch inheritance, fresh mapping, aggregate acquisition
+budgets and output admission precede atomic SQL publication. It changes no
+checkout files or latest pointer. Persistent automatic continuation across
+batches and unattended App integration remain open.
+
 ## Captured mapping checkpoint (2026-10-19 UTC)
 
 `history --map-captured-history --captured-snapshot ID` associates explicit

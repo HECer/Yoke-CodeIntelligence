@@ -295,6 +295,37 @@ live App installation, full platform/STATUS acceptance and universal upstream
 equivalence remain open. The R8 tracker retains all original inventory and
 certification states.
 
+The [atomic captured-history acquisition path](../native/docs/digest-history-acquisition.md)
+adds explicit automatic selection/capture of one bounded history batch and direct
+parents under the proven head epoch/disk-origin scope. Shared acquisition limits
+precede Git bodies, and fresh source mapping plus exact output admission precede
+one immediate WAL/FULL transaction committing snapshot, graph, FTS, inherited
+scope, artifact registration and source receipt together. Ordinary single-commit
+Git capture now shares that atomic boundary. Checkout files, Git refs/index,
+latest pointer, credentials, model calls and provider/network state are unchanged.
+Persistent automatic continuation beyond a batch and unattended App integration
+remain open; this does not close the original full-history requirement.
+
+The frozen full default Windows run executes **all 262 testable Cargo targets**
+plus the example harness, producing **263 result groups: 2,389 passed / 10 failed /
+39 ignored**. All ten new acquisition cases pass. Every failure is independently
+classified as **Windows error 1314 during real symlink-fixture creation**; the
+underlying safety assertion is not reached. No test is skipped or weakened.
+Format, all-target Clippy with warnings denied, doctests (zero registered),
+**17 Python tests**, **260 TypeScript tests / 3 existing skips**, typecheck and
+both separate actual Windows credential/TLS CLI gates pass. All **640 tracked
+runtime/test/configuration inputs remain byte-identical** during final validation.
+The [history evidence](validation/integration-2026-10-19/digest-history-acquisition/index.json)
+also preserves two earlier linker disk-space failures (zero native tests run),
+the original invalid FTS-trigger fixture and Clippy finding, all successful
+follow-ups and reversible build-cache compression with exact content hashes.
+Only Cargo build/link concurrency changes from two to one; all target selection
+and the two test threads remain intact. The default native run is not accepted.
+A [hash-bound elevated replay helper](validation/integration-2026-10-19/digest-history-acquisition/WINDOWS-REPARSE-GATES.md)
+for the ten prerequisite failures is prepared and parsed, but has not been run.
+Windows rights are unchanged. Original inventory/certification states, the wider
+STATUS/R1–R9 gaps, hosted acceptance, packaging and release remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

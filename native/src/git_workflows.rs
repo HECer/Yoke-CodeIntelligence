@@ -1072,6 +1072,52 @@ pub fn capture_commit_at(
     commit: &str,
     deadline: &Deadline,
 ) -> Result<(Snapshot, Graph)> {
+    ensure!(
+        engine.store.db.is_autocommit(),
+        "Git capture caller transaction refused"
+    );
+    crate::github_app::worker::publication_policy(&engine.store, deadline, || {
+        let tx = rusqlite::Transaction::new_unchecked(
+            &engine.store.db,
+            rusqlite::TransactionBehavior::Immediate,
+        )?;
+        let mut budget = CaptureBudget {
+            files: usize::MAX,
+            source_bytes: 64_000_000,
+            commit_bytes: 1_000_000,
+            tree_bytes: 4_000_000,
+            tree_entries: usize::MAX,
+        };
+        let result =
+            capture_commit_pending(epoch, engine, host, origin, commit, &mut budget, deadline)?;
+        deadline.check()?;
+        tx.commit()?;
+        Ok(result)
+    })
+}
+/// Shared acquisition allowances, debited before object bodies or entries are
+/// retained. The owned caller admits every bound before opening a transaction.
+pub(crate) struct CaptureBudget {
+    pub(crate) files: usize,
+    pub(crate) source_bytes: usize,
+    pub(crate) commit_bytes: usize,
+    pub(crate) tree_bytes: usize,
+    pub(crate) tree_entries: usize,
+}
+#[allow(clippy::too_many_arguments)] // Exact source origin, epoch and aggregate acquisition budget.
+pub(crate) fn capture_commit_pending(
+    epoch: crate::analysis::AnalyzerEpoch,
+    engine: &Engine,
+    host: &HostGit,
+    origin: &Snapshot,
+    commit: &str,
+    budget: &mut CaptureBudget,
+    deadline: &Deadline,
+) -> Result<(Snapshot, Graph)> {
+    ensure!(
+        !engine.store.db.is_autocommit(),
+        "Git capture requires owned transaction"
+    );
     deadline.check()?;
     engine.store.set_deadline(deadline)?;
     ensure!(
@@ -1086,9 +1132,13 @@ pub fn capture_commit_at(
         &engine.root,
         &["cat-file", "commit", commit],
         &[],
-        1_000_000,
+        budget.commit_bytes.min(1_000_000),
         deadline,
     )?;
+    budget.commit_bytes = budget
+        .commit_bytes
+        .checked_sub(commit_bytes.len())
+        .context("Git acquisition capacity exceeded")?;
     ensure!(
         object_id("commit", &commit_bytes, commit.len()) == commit,
         "Git commit object hash mismatch"
@@ -1112,9 +1162,13 @@ pub fn capture_commit_at(
         &engine.root,
         &["ls-tree", "-r", "-t", "-l", "-z", "--full-tree", &tree],
         &[],
-        4_000_000,
+        budget.tree_bytes.min(4_000_000),
         deadline,
     )?;
+    budget.tree_bytes = budget
+        .tree_bytes
+        .checked_sub(listing.len())
+        .context("Git acquisition capacity exceeded")?;
     let origin_scope = crate::capture::source_scope_policy(&engine.store, origin)?;
     let mut entries = vec![];
     let mut tree_entries = vec![];
@@ -1122,6 +1176,10 @@ pub fn capture_commit_at(
     let mut total = 0usize;
     for raw in listing.split(|b| *b == 0).filter(|part| !part.is_empty()) {
         deadline.check()?;
+        budget.tree_entries = budget
+            .tree_entries
+            .checked_sub(1)
+            .context("Git acquisition capacity exceeded")?;
         ensure!(
             entries.len() + omissions.len() < 10000,
             "Git tree entry capacity exceeded"
@@ -1181,6 +1239,14 @@ pub fn capture_commit_at(
             total <= 64_000_000,
             "Git committed source byte capacity exceeded"
         );
+        budget.source_bytes = budget
+            .source_bytes
+            .checked_sub(size)
+            .context("Git acquisition capacity exceeded")?;
+        budget.files = budget
+            .files
+            .checked_sub(1)
+            .context("Git acquisition capacity exceeded")?;
         entries.push(TreeFile {
             path: path.into(),
             language: if policy_only {
@@ -1360,7 +1426,7 @@ pub fn capture_commit_at(
         capture_consistency: "immutable_git_objects_verified".into(),
     };
     let graph = crate::analysis::assemble_at(epoch, &snapshot, parsed, deadline)?;
-    engine.store.publish_historical(&snapshot, &graph)?;
+    engine.store.publish_historical_pending(&snapshot, &graph)?;
     crate::capture::inherit_options(&engine.store, origin, &snapshot)?;
     let commit_artifact_id = engine.store.artifact(&commit_bytes)?;
     let receipt = SourceReceipt {

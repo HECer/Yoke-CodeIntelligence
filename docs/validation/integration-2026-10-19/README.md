@@ -39,6 +39,18 @@ never becomes local source authority or semantic identity. Its separate frozen
 manifest, raw logs and Git source materialization record the exact checked scope;
 this does not accept public deployment or the whole native/platform inventory.
 
+The [atomic history acquisition follow-up](digest-history-acquisition/index.json)
+captures a bounded selected-history batch under exact saved scope/epoch and
+publishes its complete SQL state only after fresh mapping/output admission.
+Its full default Windows run executes all testable targets: 2,389 passed,
+10 failed and 39 ignored across 263 groups. All failures are confirmed OS1314
+fixture prerequisites; the ten new acquisition cases and mandatory/Python/TS/
+actual credential gates pass. Persistent whole-history continuation remains open.
+The [manual elevated replay](digest-history-acquisition/WINDOWS-REPARSE-GATES.md)
+is prepared with exact source/CLI/test hashes and has not been executed. Earlier
+disk-space build failures and byte-preserving compression records are separate
+from completed test counts. No whole-native or universal acceptance is claimed.
+
 The [registry coordination follow-up](registry-coordination/index.json) adds an
 explicit host permission for a pinned read-only SQLite/WAL transaction on Unix;
 Windows retains its stronger sharing guard. The default policy serialization

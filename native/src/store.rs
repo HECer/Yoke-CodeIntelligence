@@ -648,6 +648,28 @@ impl Store {
         graph: &Graph,
         update_latest: bool,
     ) -> Result<()> {
+        self.publish_rows(snapshot, graph, update_latest, false)
+    }
+    /// Only owned atomic acquisition uses this path; public publication still
+    /// owns its transaction and refuses nesting. No latest pointer is changed.
+    pub(crate) fn publish_historical_pending(
+        &self,
+        snapshot: &Snapshot,
+        graph: &Graph,
+    ) -> Result<()> {
+        ensure!(
+            !self.db.is_autocommit(),
+            "Historical publication requires owned transaction"
+        );
+        self.publish_rows(snapshot, graph, false, true)
+    }
+    fn publish_rows(
+        &self,
+        snapshot: &Snapshot,
+        graph: &Graph,
+        update_latest: bool,
+        pending: bool,
+    ) -> Result<()> {
         self.check_deadline()?;
         let documents: Vec<_> = snapshot
             .files
@@ -668,8 +690,16 @@ impl Store {
             }
             Ok(())
         };
-        let tx = self.db.transaction()?;
-        let snapshot_inserted = tx.execute(
+        let tx = if pending {
+            None
+        } else {
+            Some(rusqlite::Transaction::new_unchecked(
+                &self.db,
+                rusqlite::TransactionBehavior::Deferred,
+            )?)
+        };
+        let db: &Connection = tx.as_deref().unwrap_or(&self.db);
+        let snapshot_inserted = db.execute(
             "INSERT OR IGNORE INTO snapshots VALUES(?1,?2)",
             params![snapshot.id, serde_json::to_string(snapshot)?],
         )?;
@@ -681,19 +711,19 @@ impl Store {
                 "snapshotId": snapshot.id, "workspaceId": snapshot.workspace_id,
                 "publishedAtMs": u64::try_from(published_at)?
             });
-            tx.execute(
+            db.execute(
                 "INSERT INTO records(kind,id,value) VALUES('snapshot-published',?1,?2)",
                 params![snapshot.id, serde_json::to_string(&receipt)?],
             )?;
         }
-        let inserted = tx.execute(
+        let inserted = db.execute(
             "INSERT OR IGNORE INTO graphs VALUES(?1,?2)",
             params![snapshot.id, serde_json::to_string(graph)?],
         )?;
         if inserted > 0 {
             for e in &graph.entities {
                 check()?;
-                tx.execute(
+                db.execute(
                     "INSERT INTO symbols VALUES(?1,?2,?3,?4,?5)",
                     params![
                         snapshot.id,
@@ -706,18 +736,29 @@ impl Store {
             }
             for (path, text) in documents {
                 check()?;
-                tx.execute(
+                db.execute(
                     "INSERT INTO documents VALUES(?1,?2,?3)",
                     params![snapshot.id, path, text],
                 )?;
             }
         }
-        check()?;
-        if update_latest {
-            tx.execute("INSERT INTO meta VALUES('latest',?1) ON CONFLICT(key) DO UPDATE SET value=excluded.value",[&snapshot.id])?;
+        if pending {
+            ensure!(
+                serde_json::to_value(self.snapshot(&snapshot.id)?)?
+                    == serde_json::to_value(snapshot)?
+                    && serde_json::to_value(self.graph(&snapshot.id)?)?
+                        == serde_json::to_value(graph)?,
+                "Immutable historical publication collision"
+            );
         }
         check()?;
-        tx.commit()?;
+        if update_latest {
+            db.execute("INSERT INTO meta VALUES('latest',?1) ON CONFLICT(key) DO UPDATE SET value=excluded.value",[&snapshot.id])?;
+        }
+        check()?;
+        if let Some(tx) = tx {
+            tx.commit()?;
+        }
         Ok(())
     }
     pub fn latest(&self) -> Result<Option<String>> {
