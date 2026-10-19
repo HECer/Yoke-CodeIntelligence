@@ -6813,7 +6813,14 @@
         "native/src/changes_plan.rs",
         "native/tests/plan_integrity.rs",
         "native/docs/plan-integrity.md",
-        "docs/validation/integration-2026-10-19/plan-integrity/index.json"
+        "docs/validation/integration-2026-10-19/plan-integrity/index.json",
+        "native/src/changes_directory.rs",
+        "native/src/semantic_directory_move.rs",
+        "native/src/changes_directory_tests.rs",
+        "native/tests/facade_directory_move.rs",
+        "native/tests/directory_move_live.rs",
+        "native/docs/directory-moves.md",
+        "docs/validation/integration-2026-10-19/directory-moves/index.json"
       ],
       "id": "R1",
       "inventoryRefs": [
@@ -6822,10 +6829,34 @@
         "serena:jet_brains_inline_symbol",
         "serena:jet_brains_rename"
       ],
-      "missingBehavior": "Nullable captured-file rename and explicit forced-file deletion retain their bounded evidence. The explicit host-selected own_v1 named-declaration file/inline-module destination and negotiated attachment-bundle slice is now evidenced separately. Directory moves, other symbol-parent declarations/languages, default-safe captured-file usage proof, propagated deletion, broader inline/rename/cross-language/provider/IDE intents and exhaustive compiler reference binding remain open. Attached outer attributes/docstrings require negotiated sourceAttachments exact_text_v1 and a separately checked sourceTextRange bundle with original entity/name anchors retained. Other declaration kinds/languages, malformed or dangling syntax, impl/trait/descendant destinations, body-changing/wrapper/copy-only/resource/virtual-coordinate edits and ambiguous effects refuse. No exhaustive compiler reference binding/repair, proprietary IDE acceptance, directory-tree move or atomic multi-plan publication follows. Existing captured-file omitted/null/exact-empty parent/basename semantics and direct-native final-filename semantics remain distinct and unchanged. Saved-plan integrity separately replays the released identity, complete captured file delta, exact review and test-change warnings before approval/application/verification/recovery, with matching finite preparation limits. This does not close the semantic capability gaps listed above.",
+      "missingBehavior": "Finite complete captured text directory moves now have standard-LSP folder repair, one guarded resource plan, empty-directory/mode/physical-identity binding, copied-shape verification and conditional actual-rename recovery. Multiple provider languages, uncaptured or binary trees, host capture/workspace-root migration, cross-filesystem copy and broader directory/IDE reference guarantees remain open. Other symbol-parent declarations/languages, default-safe captured-file usage proof, propagated deletion, broader inline/rename/provider intents and exhaustive compiler reference binding remain open. The explicit own_v1 Rust named-declaration/negotiated-attachment slice and legacy file parent/basename behavior retain their separate evidence. Saved-plan identity/review replay, host permissions, approval, executed verification and stale/recovery gates remain mandatory; multi-plan publication is not atomic.",
       "priority": 1,
-      "suggestedScope": "Preserve the explicit own_v1 Rust named-declaration/negotiated-attachment file-or-inline-module slice and file parent/basename semantics. Define other declaration/language/directory moves, default-safe usage proof and propagation with checked original operations and independent postconditions; retain broader inline/rename/provider limits.",
-      "title": "Finish semantic refactoring intent contracts"
+      "suggestedScope": "Continue default-safe captured-file usage checks, propagated deletion, other symbol-parent/language cases and broader inline/rename intents under checked source operations. Preserve finite directory completeness, explicit provider coverage, legacy identities and guarded application/recovery.",
+      "title": "Finish semantic refactoring intent contracts",
+      "directoryMoveCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/directory-moves/index.json",
+        "initialFullNativeTotals": {
+          "passed": 2463,
+          "failed": 11,
+          "ignored": 40
+        },
+        "groups": 269,
+        "frozenInputs": 661,
+        "allLocalChecksPassed": false,
+        "postFreezeRepairTotals": {
+          "passed": 496,
+          "failed": 1,
+          "ignored": 7
+        },
+        "twoRuntimeInputsRepaired": [
+          "native/src/agent_repl.rs",
+          "native/tests/facade_directory_move.rs"
+        ],
+        "wholeNativeRerunAfterRepair": false,
+        "actualRustAnalyzerAndRustcGatePassed": true,
+        "countsAreNonadditive": true,
+        "fullParityCertified": false
+      }
     },
     {
       "evidence": [
@@ -7002,98 +7033,98 @@
         "native/src/mcp_http.rs",
         "native/src/main.rs",
         "docs/github-read-provider.md",
-      "docs/parity/public-contracts-2026-10-14.json",
-      "native/src/github_app.rs",
-      "native/src/github_app_auth.rs",
-      "native/src/github_app_ingress.rs",
-      "native/src/github_app_worker.rs",
-      "native/src/github_app_publication.rs",
-      "native/src/github_app_pages.rs",
-      "native/src/github_app_digest.rs",
-      "native/src/github_app_digest_mapping.rs",
-      "native/tests/github_app_worker_run.rs",
-      "native/tests/github_app_publication.rs",
-      "native/tests/github_app_pages_cli.rs",
-      "native/tests/github_app_digest_mapping.rs",
-      "docs/validation/integration-2026-10-19/README.md"
+        "docs/parity/public-contracts-2026-10-14.json",
+        "native/src/github_app.rs",
+        "native/src/github_app_auth.rs",
+        "native/src/github_app_ingress.rs",
+        "native/src/github_app_worker.rs",
+        "native/src/github_app_publication.rs",
+        "native/src/github_app_pages.rs",
+        "native/src/github_app_digest.rs",
+        "native/src/github_app_digest_mapping.rs",
+        "native/tests/github_app_worker_run.rs",
+        "native/tests/github_app_publication.rs",
+        "native/tests/github_app_pages_cli.rs",
+        "native/tests/github_app_digest_mapping.rs",
+        "docs/validation/integration-2026-10-19/README.md"
       ],
       "id": "R8",
       "inventoryRefs": [
         "trail:Self-hosted GitHub App",
         "trail:History digest / brain onboarding"
       ],
-    "implementedIntegrationSlice": {
-      "checkpoint": "328ea51729a8ffa7c310c092535b159f3c56b5e7",
-      "recordedAtUtc": "2026-10-19",
-      "scope": "Integrated development source and preserved scoped evidence; no inventory-wide or service certification upgrade",
-      "behavior": [
-        "HMAC webhook admission, explicit installation authorization and bounded deduplicated/superseding queues",
-        "Durable claims, fencing, recovery and explicit source-bound native review execution",
-        "Exact approved comment publication with outcome recovery and capability-page cache/HTTP interfaces",
-        "Captured-source digest, verified committer-date history and explicit selected existing-capture file/symbol mapping"
-      ],
-      "complete": false,
-      "liveAppInstallationVerified": false
-    },
-    "discussionDevelopment": {
-      "sourceParent": "abe32fb3f54f4be5063af5c9b6dcf3b8cddc7d5f",
-      "evidence": "docs/validation/integration-2026-10-19/discussions/index.json",
-      "behavior": "Explicit bounded closed-PR discussion acquisition, typed unsigned-capture replay and offline source/history associations with a body-excluding handoff preview",
-      "complete": false,
-      "serviceSend": "unavailable"
-    },
-    "serviceDevelopment": {
-      "sourceParent": "830d222681bad11b83864c41d87fea9006f14b75",
-      "evidence": "docs/validation/integration-2026-10-19/digest-service/index.json",
-      "contract": "native/docs/digest-service.md",
-      "behavior": "Fresh source-bound body-excluding proposals; exact endpoint/payload approval; one PUT behind a signed durable intent; no retry after unknown outcome; bounded GET-only receipt recovery; typed source retention",
-      "receiverContract": "independently_owned_v1_not_an_undocumented_proprietary_service_adapter",
-      "configuredProductionReceiverAcceptance": false,
-      "complete": false
-    },
-    "receiverDevelopment": {
-      "sourceParent": "61d3258120ac0ca2b8eb85f498d9242b21f0f0da",
-      "evidence": "docs/validation/integration-2026-10-19/digest-receiver/index.json",
-      "contract": "native/docs/digest-receiver.md",
-      "behavior": "Authenticated native receiver-v1 HTTP/TLS intake; fixed sender App/workspace/repository grants; exact wire/proposal/handoff bindings; durable immutable receipts and GET recovery; restart/idempotence/revocation/deadline checks; received IDs never confer local source or retention authority",
-      "downstreamProcessingAvailable": false,
-      "configuredPublicProductionDeployment": false,
-      "complete": false
-    },
-    "queryDevelopment": {
-      "sourceParent": "a2481f8fa6b59f51d9b9c1d0d34f002d53373112",
-      "evidence": "docs/validation/integration-2026-10-19/digest-query/index.json",
-      "contract": "native/docs/digest-query.md",
-      "behavior": "Explicit host/per-grant metadata queries over selected immutable accepted packets. Local existing-only read-only CLI and single-POST authenticated TLS client retain receipt-qualified JSON positions, duplicate rows, directed parallel commit/reply/review relations and unverified sender provenance. Literal Unicode substring matching, pagination/counts and independent work/output/deadline bounds introduce no local source authority, model calls, signing-key lookup or derived persistence.",
-      "deterministicMetadataProcessingAvailable": true,
-      "sourceVerificationAvailable": false,
-      "semanticReasoningAvailable": false,
-      "configuredPublicProductionDeployment": false,
-      "complete": false
-    },
-    "historyAcquisitionDevelopment": {
-      "sourceParent": "4c399000d4dd870f0d0af2744e73256d49de2870",
-      "evidence": "docs/validation/integration-2026-10-19/digest-history-acquisition/index.json",
-      "contract": "native/docs/digest-history-acquisition.md",
-      "behavior": "Explicit bounded automatic selection/capture of captured-head history rows and direct parents. Proven epoch/disk-origin scope, shared commit/tree/source/file budgets, fresh source mapping and exact output admission precede atomic snapshot/graph/FTS/scope/artifact/receipt SQL publication. No checkout/latest/provider/model/key side effects. Ordinary single-commit native Git capture also publishes atomically.",
-      "boundedSelectedHistoryAcquisitionAvailable": true,
-      "persistentWholeHistoryContinuationAvailable": false,
-      "unattendedAppIntegrationAvailable": false,
-      "complete": false
-    },
-    "historyJobDevelopment": {
-      "sourceParent": "8fa03c5e6f2f8acc30ec26caebe255d2220ce9a6",
-      "evidence": "docs/validation/integration-2026-10-19/history-jobs/index.json",
-      "contract": "native/docs/digest-history-jobs.md",
-      "behavior": "Explicit persistent local history jobs replay hash-verified raw commit proofs and ordered visits before deriving their date-priority frontier. Current host/App grants, exact revisions, finite cumulative limits, atomic capture/mapping/progress/output publication, process restart and bounded multi-batch CLI driving preserve the frozen head and disk-origin scope. Typed retention validates local source selectors; status labels capture references as recorded progress without replaying every source body.",
-      "persistentLocalHistoryContinuationAvailable": true,
-      "unattendedAppIntegrationAvailable": false,
-      "unboundedHistoryOrSemanticCompleteness": false,
-      "complete": false
-    },
-    "missingBehavior": "Configured public production deployment, remote source verification, semantic reasoning, unattended App history integration, live App installation/deployment and universal upstream contract equivalence remain open. Explicit persistent local jobs now continue atomic captured-history acquisition across bounded batches and process restarts, with finite cumulative quotas and exact revision preconditions. The independently owned client and receiver implement approval/send/durable-intake/GET-recovery and separately authorized literal metadata queries. Receipt-qualified rows remain sender claims, not remote source truth or proprietary brain parity.",
+      "implementedIntegrationSlice": {
+        "checkpoint": "328ea51729a8ffa7c310c092535b159f3c56b5e7",
+        "recordedAtUtc": "2026-10-19",
+        "scope": "Integrated development source and preserved scoped evidence; no inventory-wide or service certification upgrade",
+        "behavior": [
+          "HMAC webhook admission, explicit installation authorization and bounded deduplicated/superseding queues",
+          "Durable claims, fencing, recovery and explicit source-bound native review execution",
+          "Exact approved comment publication with outcome recovery and capability-page cache/HTTP interfaces",
+          "Captured-source digest, verified committer-date history and explicit selected existing-capture file/symbol mapping"
+        ],
+        "complete": false,
+        "liveAppInstallationVerified": false
+      },
+      "discussionDevelopment": {
+        "sourceParent": "abe32fb3f54f4be5063af5c9b6dcf3b8cddc7d5f",
+        "evidence": "docs/validation/integration-2026-10-19/discussions/index.json",
+        "behavior": "Explicit bounded closed-PR discussion acquisition, typed unsigned-capture replay and offline source/history associations with a body-excluding handoff preview",
+        "complete": false,
+        "serviceSend": "unavailable"
+      },
+      "serviceDevelopment": {
+        "sourceParent": "830d222681bad11b83864c41d87fea9006f14b75",
+        "evidence": "docs/validation/integration-2026-10-19/digest-service/index.json",
+        "contract": "native/docs/digest-service.md",
+        "behavior": "Fresh source-bound body-excluding proposals; exact endpoint/payload approval; one PUT behind a signed durable intent; no retry after unknown outcome; bounded GET-only receipt recovery; typed source retention",
+        "receiverContract": "independently_owned_v1_not_an_undocumented_proprietary_service_adapter",
+        "configuredProductionReceiverAcceptance": false,
+        "complete": false
+      },
+      "receiverDevelopment": {
+        "sourceParent": "61d3258120ac0ca2b8eb85f498d9242b21f0f0da",
+        "evidence": "docs/validation/integration-2026-10-19/digest-receiver/index.json",
+        "contract": "native/docs/digest-receiver.md",
+        "behavior": "Authenticated native receiver-v1 HTTP/TLS intake; fixed sender App/workspace/repository grants; exact wire/proposal/handoff bindings; durable immutable receipts and GET recovery; restart/idempotence/revocation/deadline checks; received IDs never confer local source or retention authority",
+        "downstreamProcessingAvailable": false,
+        "configuredPublicProductionDeployment": false,
+        "complete": false
+      },
+      "queryDevelopment": {
+        "sourceParent": "a2481f8fa6b59f51d9b9c1d0d34f002d53373112",
+        "evidence": "docs/validation/integration-2026-10-19/digest-query/index.json",
+        "contract": "native/docs/digest-query.md",
+        "behavior": "Explicit host/per-grant metadata queries over selected immutable accepted packets. Local existing-only read-only CLI and single-POST authenticated TLS client retain receipt-qualified JSON positions, duplicate rows, directed parallel commit/reply/review relations and unverified sender provenance. Literal Unicode substring matching, pagination/counts and independent work/output/deadline bounds introduce no local source authority, model calls, signing-key lookup or derived persistence.",
+        "deterministicMetadataProcessingAvailable": true,
+        "sourceVerificationAvailable": false,
+        "semanticReasoningAvailable": false,
+        "configuredPublicProductionDeployment": false,
+        "complete": false
+      },
+      "historyAcquisitionDevelopment": {
+        "sourceParent": "4c399000d4dd870f0d0af2744e73256d49de2870",
+        "evidence": "docs/validation/integration-2026-10-19/digest-history-acquisition/index.json",
+        "contract": "native/docs/digest-history-acquisition.md",
+        "behavior": "Explicit bounded automatic selection/capture of captured-head history rows and direct parents. Proven epoch/disk-origin scope, shared commit/tree/source/file budgets, fresh source mapping and exact output admission precede atomic snapshot/graph/FTS/scope/artifact/receipt SQL publication. No checkout/latest/provider/model/key side effects. Ordinary single-commit native Git capture also publishes atomically.",
+        "boundedSelectedHistoryAcquisitionAvailable": true,
+        "persistentWholeHistoryContinuationAvailable": false,
+        "unattendedAppIntegrationAvailable": false,
+        "complete": false
+      },
+      "historyJobDevelopment": {
+        "sourceParent": "8fa03c5e6f2f8acc30ec26caebe255d2220ce9a6",
+        "evidence": "docs/validation/integration-2026-10-19/history-jobs/index.json",
+        "contract": "native/docs/digest-history-jobs.md",
+        "behavior": "Explicit persistent local history jobs replay hash-verified raw commit proofs and ordered visits before deriving their date-priority frontier. Current host/App grants, exact revisions, finite cumulative limits, atomic capture/mapping/progress/output publication, process restart and bounded multi-batch CLI driving preserve the frozen head and disk-origin scope. Typed retention validates local source selectors; status labels capture references as recorded progress without replaying every source body.",
+        "persistentLocalHistoryContinuationAvailable": true,
+        "unattendedAppIntegrationAvailable": false,
+        "unboundedHistoryOrSemanticCompleteness": false,
+        "complete": false
+      },
+      "missingBehavior": "Configured public production deployment, remote source verification, semantic reasoning, unattended App history integration, live App installation/deployment and universal upstream contract equivalence remain open. Explicit persistent local jobs now continue atomic captured-history acquisition across bounded batches and process restarts, with finite cumulative quotas and exact revision preconditions. The independently owned client and receiver implement approval/send/durable-intake/GET-recovery and separately authorized literal metadata queries. Receipt-qualified rows remain sender claims, not remote source truth or proprietary brain parity.",
       "priority": 8,
-    "suggestedScope": "Add explicitly host-authorized, bounded closed-PR discussion observations and replayable digest/service handoff around the integrated queue, verified Git/captured-source pipeline and publication capabilities. Preserve exact source bindings, provider-claim provenance, stale preconditions, separate network/write/deployment permissions and no default model or fork-code execution. Do not claim the proprietary hosted brain engine or upgrade the unreconciled inventory from this thematic checkpoint.",
+      "suggestedScope": "Add explicitly host-authorized, bounded closed-PR discussion observations and replayable digest/service handoff around the integrated queue, verified Git/captured-source pipeline and publication capabilities. Preserve exact source bindings, provider-claim provenance, stale preconditions, separate network/write/deployment permissions and no default model or fork-code execution. Do not claim the proprietary hosted brain engine or upgrade the unreconciled inventory from this thematic checkpoint.",
       "title": "Self-hosted GitHub App and authorized review publication"
     },
     {
@@ -7760,7 +7791,8 @@
         "native/tests/fixtures/facade-file-move-lsp.mjs",
         "native/tests/facade_file_rename.rs",
         "native/tests/facade_file_delete.rs"
-      ]
+      ],
+      "remainingReview": "Finite complete captured text directory moves now have standard-LSP folder repair, one guarded resource plan, empty-directory/mode/physical-identity binding, copied-shape verification and conditional actual-rename recovery. Multiple provider languages, uncaptured or binary trees, host capture/workspace-root migration, cross-filesystem copy and broader directory/IDE reference guarantees remain open. Other symbol-parent declarations/languages, default-safe captured-file usage proof, propagated deletion, broader inline/rename/provider intents and exhaustive compiler reference binding remain open. The explicit own_v1 Rust named-declaration/negotiated-attachment slice and legacy file parent/basename behavior retain their separate evidence. Saved-plan identity/review replay, host permissions, approval, executed verification and stale/recovery gates remain mandatory; multi-plan publication is not atomic."
     },
     {
       "boundary": "Native Meaning inference/transport and bounded feedback have separate checked proofs. Semantic alias identity, broader mixed-source consumers, non-knowledge outcome targets and semantic transcript understanding remain open. Provider/host assertions are not execution truth or independently authenticated corroboration.",
@@ -8115,6 +8147,21 @@
         "native/src/retrieval_balanced_tests.rs",
         "native/src/trail_envelope_tests.rs"
       ]
+    },
+    {
+      "id": "captured_directory_moves",
+      "behavior": "One complete captured writable text directory uses a matching host-selected standard-LSP folder request, checked original-coordinate repairs and one native guarded resource effect. Empty directories, modes and physical directory/parent identities enter directory-move-v1 identity; legacy file-only plan IDs remain unchanged. Copied verification checks the declared shape; actual rename application and conditional recovery preserve foreign writes.",
+      "evidence": [
+        "native/src/changes_directory.rs",
+        "native/src/semantic_directory_move.rs",
+        "native/src/changes_directory_tests.rs",
+        "native/tests/facade_directory_move.rs",
+        "native/tests/directory_move_live.rs",
+        "native/docs/directory-moves.md",
+        "docs/validation/integration-2026-10-19/directory-moves/index.json"
+      ],
+      "remainingReview": "Finite complete captured text directory moves now have standard-LSP folder repair, one guarded resource plan, empty-directory/mode/physical-identity binding, copied-shape verification and conditional actual-rename recovery. Multiple provider languages, uncaptured or binary trees, host capture/workspace-root migration, cross-filesystem copy and broader directory/IDE reference guarantees remain open. Other symbol-parent declarations/languages, default-safe captured-file usage proof, propagated deletion, broader inline/rename/provider intents and exhaustive compiler reference binding remain open. The explicit own_v1 Rust named-declaration/negotiated-attachment slice and legacy file parent/basename behavior retain their separate evidence. Saved-plan identity/review replay, host permissions, approval, executed verification and stale/recovery gates remain mandatory; multi-plan publication is not atomic.",
+      "fullContractCertified": false
     }
   ],
   "residualCoverageRule": "R1-R9 are priorities only. residualRegister is a thematic index; every partial/unreconciled ledger row retains additional exact-contract review requirements. This is not a complete external certification.",
@@ -8226,7 +8273,7 @@
         "serena:tool:jet_brains_rename",
         "serena:tool:safe_delete_symbol"
       ],
-      "remainingBoundary": "Directory moves and symbol-parent moves outside the explicit own_v1 Rust named-declaration/negotiated-attachment slice, propagated deletion, unsupported cross-language comment/text/reference cases, unverifiable broad replacements and provider-command intents remain open. jb.move captured-file omitted/null/exact-empty selection and explicit-parent/basename semantics are scoped green; occupied uncaptured binaries fail before provider/plan publication and native direct final-filename semantics stay unchanged. Narrow Rust/keep-definition behavior remains bounded; guarded preparation is separate from immediate mutation and multi-plan publication is not atomic. Wave3 additionally completes only nullable captured-file rename and explicit forced-file delete; default-safe usage proof and propagation remain open. Attached outer attributes/docstrings require negotiated sourceAttachments exact_text_v1 and a separately checked sourceTextRange bundle with original entity/name anchors retained. Other declaration kinds/languages, malformed or dangling syntax, impl/trait/descendant destinations, body-changing/wrapper/copy-only/resource/virtual-coordinate edits and ambiguous effects refuse. No exhaustive compiler reference binding/repair, proprietary IDE acceptance, directory-tree move or atomic multi-plan publication follows. Existing captured-file omitted/null/exact-empty parent/basename semantics and direct-native final-filename semantics remain distinct and unchanged."
+      "remainingBoundary": "Finite complete captured text directory moves now have standard-LSP folder repair, one guarded resource plan, empty-directory/mode/physical-identity binding, copied-shape verification and conditional actual-rename recovery. Multiple provider languages, uncaptured or binary trees, host capture/workspace-root migration, cross-filesystem copy and broader directory/IDE reference guarantees remain open. Other symbol-parent declarations/languages, default-safe captured-file usage proof, propagated deletion, broader inline/rename/provider intents and exhaustive compiler reference binding remain open. The explicit own_v1 Rust named-declaration/negotiated-attachment slice and legacy file parent/basename behavior retain their separate evidence. Saved-plan identity/review replay, host permissions, approval, executed verification and stale/recovery gates remain mandatory; multi-plan publication is not atomic."
     },
     {
       "id": "managed_install_hook_lifecycle",

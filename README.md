@@ -47,6 +47,10 @@ read permissions and captured-path scopes; source files and index stay unchanged
 and exact directory fallback to a replayed Git report. Original quotes and
 parallel observations remain intact; tied labels stay visibly ambiguous.
 
+[Captured directory moves](native/docs/directory-moves.md) retain complete text
+trees, empty directories and physical identities through configured folder
+repair, reviewed plans, copied verification and conditional recovery.
+
 ## TypeScript advanced runtime
 
 Requires **Node.js 22.16+**. Python/Go and additional optional providers are installed separately. Node SQLite is experimental on the tested Node version. No model or API key is required by native indexing.

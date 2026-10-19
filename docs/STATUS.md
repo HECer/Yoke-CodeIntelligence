@@ -464,6 +464,43 @@ failures. Directory moves, default-safe file usage proofs, propagated deletion,
 the remaining STATUS/R1-R9 work, platform/upstream certification and release
 remain open. The separate directory implementation is outside this checkpoint.
 
+Complete [captured text directory moves](../native/docs/directory-moves.md) now
+bind empty directories, modes and physical parent/tree identities into one plan.
+A matching host-selected standard-LSP folder request contributes checked text
+repairs. Copied verification checks directory shape; approved workspace apply
+and conditional recovery use one actual filesystem rename. File-only plan IDs,
+host permissions, stale-source checks and recovery journals remain compatible.
+
+The initial frozen full Windows serial-fixture run records **2,463 passed /
+11 failed / 40 ignored** across **269 groups**, with every testable
+target executed and **661 inputs unchanged**. 10 failures occur while creating actual Windows symlink fixtures (OS 1314), before their safety assertions. One additional failure exposed file-only jb.rename entering the directory-enabled shared helper and starting a provider. The initial full run remains failed.
+All ten new library directory cases and the folder-facade cases are included in
+these totals. Scoped development counts are nonadditive. A separate actual
+`rust-analyzer`/`rustc` gate repairs Rust module declarations and uses, compiles
+the copied result, and passes approved application and exact recovery.
+Format, all-target Clippy with warnings denied, doctests, **17 Python tests**,
+typecheck and **260 TypeScript tests / 3 existing skips** pass.
+
+A separate two-input repair confines directory selection to `jb.move` and retains
+file-only `jb.rename` refusal before provider startup, including a folder-capable
+provider. Its scoped run records **496 passed / 1 failed /
+7 ignored**; the retained failure is the unchanged OS 1314 file-delete
+setup. The original failing rename case and the new analyzer 8/9 omitted/null
+cases pass. These counts are nonadditive. Format, all-target Clippy, the actual
+Rust provider/compiler gate and the post-repair TypeScript checks pass. Exact
+source bindings identify both repaired inputs; no full native rerun after this
+repair is claimed.
+
+The [directory evidence](validation/integration-2026-10-19/directory-moves/index.json)
+retains the Windows alias RED, earlier fixture assertion, Clippy diagnostic,
+raw logs, exact source/binary hashes and the real junction/empty-shape cases.
+The selected tree admits 1–1,000 captured text files, 2,000 directories and
+16 MB counted per physical file. Multi-provider/binary trees, host-scope migration,
+cross-filesystem fallback, exhaustive reference/IDE guarantees, default-safe file
+usage checks, propagated deletion and the wider STATUS/R1–R9 work remain open.
+The isolated file-usage follow-up is outside this checkpoint. Full local/hosted
+platform acceptance, packaging, main merge and release remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

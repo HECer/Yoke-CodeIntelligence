@@ -257,3 +257,19 @@ remote acceptance remains open. Raw RED/build/fixture attempts and exact byte
 materializations are retained. Directory and wider STATUS/R1-R9 completion,
 main merge, upstream/platform certification and release remain open.
 
+[Captured directory moves](directory-moves/index.json) bind a complete text tree,
+empty directories, modes and physical identities through standard-LSP repair,
+copied-shape verification, approved rename application and conditional recovery.
+The initial complete serial-fixture run records **2463 passed / 11 failed /
+40 ignored** across 269 groups with 661 unchanged inputs. 10 failures occur while creating actual Windows symlink fixtures (OS 1314), before their safety assertions. One additional failure exposed file-only jb.rename entering the directory-enabled shared helper and starting a provider. The initial full run remains failed.
+Ten new library cases and folder-facade cases are included; earlier scoped counts
+and the separate actual rust-analyzer/rustc gate remain nonadditive. Format,
+all-target Clippy, Python17, TypeScript260/3 skipped and typecheck pass.
+The file-only rename regression has a separate two-input repair and a nonadditive
+scoped run of 496/1/7; the unchanged symlink setup failure remains.
+Both original/new rename refusals pass. Exact post-repair source, Clippy,
+TypeScript and actual Rust provider/compiler evidence are retained; the initial
+whole run stays failed and no whole-native rerun after repair is claimed.
+Exact raw attempts, source and binary hashes remain preserved. Wider STATUS/R1-R9,
+upstream/platform, packaging, main merge and release acceptance remain open.
+

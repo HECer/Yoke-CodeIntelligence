@@ -1,0 +1,19 @@
+{
+  "phase": "After fmt-r2 and before any subsequent source edit; source stable during the active Cargo run",
+  "baseCommit": "f17c8b09048049679d1ccf0cc389be3cf4aef29e",
+  "files": {
+    "native/src/agent_repl.rs": "02af89fa8bc78922f84ffe983b91585967ac50522e41926de410629c1079ff6a",
+    "native/src/changes.rs": "41df908fec7b0d3faa732d468cdcadc797f9b39f583f94125f191fb0a797f1c2",
+    "native/src/changes_directory.rs": "13f1db946213873c84a59e0d3e43540e18504e5b3cb80977dc7127a123f920b2",
+    "native/src/changes_directory_tests.rs": "7238004f49b51b88337f7e5f099fde87fccd6272aed0c34ca08858293f242a34",
+    "native/src/changes_plan.rs": "bfe907bdc1f90521aa9e3410e531f9af32997eceff4a8d60dfb7d37b2d2dfd54",
+    "native/src/container.rs": "2f6d900ad50802f712823d1281b8b05542deee5e19201faa514d94b7ecb66814",
+    "native/src/lsp.rs": "2a4cab6f748b68c5254cb36a706af0937c643e7926fa8627c4618bbcd4737144",
+    "native/src/semantic_directory_move.rs": "c4495b0e95a4af5023adb0c2ff82c62bc6c9ae4a4e5264738f6dc7a96838e3a7",
+    "native/src/semantic_refactor.rs": "0dfda618bbe6fb1b52ced19dfaa59403252e23d8ff87f6b40d787ea76efac2fc",
+    "native/src/verify.rs": "19451229edc5aab539121b450d3ee5d9092523f0998c69fd8032bc770720aa4a",
+    "native/tests/facade_directory_move.rs": "da3ef4a47c389da508c941087749a24875b7cde4a0b41682cdbefdef767f29a8",
+    "native/tests/fixtures/directory-move-lsp.mjs": "92a1f5e02a173f1217217162af5674c1fccfd7c9d2e9c07c54df9d67a0bf6d93",
+    "native/tests/plan_integrity.rs": "d23dee13a8f589f697fefbb235f5fb6045416891f8ae659aa803c72b1a7a0223"
+  }
+}
