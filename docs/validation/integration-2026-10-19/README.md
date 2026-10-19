@@ -214,3 +214,17 @@ development failures, source/binary hashes and reversible release-cache
 compression with 3,472 unchanged hashes are preserved. A fresh manually elevated
 replay descriptor is prepared, not executed by the agent. Unattended App,
 production/semantic/remote-source, hosted and full STATUS acceptance remain open.
+[Actual worktree index conflict triage](git-conflicts/index.json) adds explicit
+index/source permissions, checked native scope lineage, exact verified Git-stage
+pages and independent linked-worktree observations without source/index/state
+writes. Twelve real Git/SQLite/CLI cases and seven private protocol cases pass;
+the latter are included in the library total. The frozen 21-group scoped run
+records **577 passed / 2 failed / 7 ignored**; both failures remain OS1314 at real
+Windows symlink-fixture setup, before the safety assertions. Eighteen separate
+actual CLI host-file/protocol cases pass on the identical final binary, including
+real junctions, without replacing symlink prerequisites. Format/all-target Clippy,
+Python17, TypeScript260/3 skipped and typecheck pass with 649 unchanged inputs.
+Both actual red regressions, intermediate failures, frozen raw artifacts and
+Git materializations are retained. Area classification, full native/platform and
+STATUS/upstream/release acceptance remain open.
+

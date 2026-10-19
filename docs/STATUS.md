@@ -367,6 +367,37 @@ Unattended App integration, production/live App installation, remote source
 verification, semantic reasoning, hosted/full STATUS acceptance and original
 inventory/certification boundaries remain open.
 
+The explicit [Git conflict triage](../native/docs/git-conflicts.md) now observes
+an actual selected worktree's unmerged index, preserving every stage occurrence.
+Separate host grants and checked native captured-path lineage constrain exact
+Git-stage source pages. Imported/foreign-derived scopes cannot grant local Git
+reads; captured read-only dependencies remain readable. Raw blob hash/UTF-8/CRLF
+proofs and matching index observations do not claim canonical graph identity,
+working-file resolution, predicted merge safety or automatic conflict repair.
+
+All **12 actual Git/SQLite/CLI conflict cases** pass, including real merges,
+SHA-1/SHA-256, epochs 8/9, seven constructed stage-presence patterns, independent
+linked worktrees, exact source pages, budgets and SQL-policy restoration.
+Seven private protocol cases are included in the **413 library passes / 7
+ignored**, not added again. The frozen **21 selected native groups** record
+**577 passed / 2 failed / 7 ignored**. Both failures are unchanged real Windows
+symlink-fixture creation (OS 1314), before their safety assertions. Separate
+**18 actual CLI host-path/protocol cases** pass with the identical final binary,
+including real junctions; they do not replace symbolic-link prerequisites.
+
+Format, all-target Clippy with warnings denied, doctests (zero registered),
+**17 Python tests**, typecheck and **260 TypeScript tests / 3 existing skips**
+pass with all **649 recorded inputs unchanged**. The
+[scoped evidence](validation/integration-2026-10-19/git-conflicts/index.json)
+preserves the original foreign-scope refusal regression, malformed-page error
+marker regression, all failed/aborted development attempts, both frozen runs,
+source/binary hashes and exact Git materialization. A hash-bound manual replay
+for the two current symlink prerequisites is prepared, not run by the agent.
+R5's current tracker now recognizes existing modified-rename/quote and captured
+hierarchy implementations. Area classification, wider semantic/ownership and PR
+behavior, remote freshness, whole-native/hosted/full STATUS acceptance and
+original inventory/certification boundaries remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

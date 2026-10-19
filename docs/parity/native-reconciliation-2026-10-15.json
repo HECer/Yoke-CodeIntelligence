@@ -6922,7 +6922,13 @@
         "native/src/github.rs",
         "native/docs/git-workflows.md",
         "docs/github-read-provider.md",
-        "native/tests/git_workflows.rs"
+        "native/tests/git_workflows.rs",
+        "native/src/git_impact_details.rs",
+        "native/src/git_affected.rs",
+        "native/src/git_conflicts.rs",
+        "native/src/git_conflicts_cli.rs",
+        "native/tests/git_conflicts.rs",
+        "native/docs/git-conflicts.md"
       ],
       "id": "R5",
       "inventoryRefs": [
@@ -6931,9 +6937,9 @@
         "graphify:affected",
         "graphify:pr_workflow"
       ],
-      "missingBehavior": "Modified-rename attribution, area classification and exact quoted explanations; richer supertype/override seed expansion and actual conflict/worktree triage remain beyond plain incoming reachability/path overlap.",
+      "missingBehavior": "Area classification and wider impact/ownership explanations remain open. Modified-rename candidates and exact captured quotes already exist in git_impact_details; captured TypeScript hierarchy/same-name structural expansion exists in git_affected. Actual explicitly selected worktree index-conflict observations and scoped exact Git-stage pages are now implemented separately, without compiler override/dispatch identity, predicted merge safety, working-file resolution, pushed-ref freshness or full upstream equivalence.",
       "priority": 5,
-      "suggestedScope": "Independent impact-detail producer over existing verified Git/source/PR receipts. Keep deterministic exact identity matches separate from rename/ownership/affected candidates. Existing Git capture, history, owner suggestions, branch overlap and epoch selection are already implemented.",
+      "suggestedScope": "Extend the independently owned, source-bound impact-detail producer with bounded area classification. Preserve exact/heuristic identities, original quoted evidence, captured structural hierarchy candidates and actual per-worktree index observations as separate evidence spaces. No automatic merge, resolution, fetch, hooks, filters or project execution.",
       "title": "Git impact attribution and richer affected analysis"
     },
     {
@@ -8178,7 +8184,7 @@
         "graphify:affected",
         "graphify:pr_workflow"
       ],
-      "remainingBoundary": "Rename/area/quotes, supertype/override seeds, actual worktree/conflict triage, pushed-ref freshness, unmerged-note/week reports and remaining status-pagination/ranking semantics require review beyond existing Git/source and PR GET paths."
+      "remainingBoundary": "Area classification, compiler-bound override/dispatch identity, pushed-ref freshness, unmerged-note/week reports and remaining status-pagination/ranking semantics require review. Existing modified-rename/exact-quote and captured hierarchy producers remain bounded structural candidates. New explicit per-worktree index triage observes actual unmerged stages with separately authorized Git-stage bytes; it does not predict merges, prove working-file resolution or follow other worktree source paths."
     },
     {
       "id": "meaning_dedup_feedback",

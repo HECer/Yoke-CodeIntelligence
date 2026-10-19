@@ -21,6 +21,8 @@ pub const SOURCE_KIND: &str = "native_git_source_v1";
 pub const REPORT_KIND: &str = "native_git_workflow_v1";
 #[path = "git_affected.rs"]
 pub mod affected_details;
+#[path = "git_conflicts.rs"]
+pub mod conflicts;
 #[path = "git_history_read.rs"]
 pub(crate) mod history_read;
 pub use history_read::Options as HistoryOptions;

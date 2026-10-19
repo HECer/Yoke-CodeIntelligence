@@ -39,6 +39,10 @@ output admission. Explicit [persistent local history jobs](native/docs/digest-hi
 continue across batches and process restarts under current grants and exact
 revisions. Unattended App integration remains open.
 
+Explicit [Git conflict triage](native/docs/git-conflicts.md) observes the selected
+worktree's actual unmerged index. Exact stage-source pages use independent host
+read permissions and captured-path scopes; source files and index stay unchanged.
+
 ## TypeScript advanced runtime
 
 Requires **Node.js 22.16+**. Python/Go and additional optional providers are installed separately. Node SQLite is experimental on the tested Node version. No model or API key is required by native indexing.

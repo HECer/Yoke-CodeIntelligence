@@ -36,6 +36,15 @@ host assertions before opening state; no provider, capture or persistence is
 introduced. Host assertions do not establish semantic identity or authenticated
 human review. See the [group projection contract](../native/docs/meaning-groups.md).
 
+`git_workflows::conflicts` reads the explicit host worktree's unmerged index
+through the existing guarded Git process boundary. Independent host flags grant
+index metadata and stage-body reads; checked native capture lineage limits each
+quoted path. Matching pre/post index observations, verified raw object hashes and
+stage-qualified UTF-8 pages stay separate from canonical saved sources, graphs
+and current working files. One retained read transaction pins scope metadata;
+no report, source, index or latest-pointer write occurs. See
+[index conflict triage](../native/docs/git-conflicts.md).
+
 TypeScript directories and ADRs below describe the retained runtime. Snapshot identity and serialized state are runtime-specific; no implicit conversion occurs. [The native guide](../native/README.md) and [replacement criteria](RUST_REPLACEMENT.md) describe current boundaries.
 
 `github_app::digest::service` publishes only freshly replayed handoff projections

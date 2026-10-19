@@ -1,0 +1,22 @@
+[
+  {
+    "source": "native/src/git_conflicts.rs",
+    "sha256": "ac2f69ad33f4554147f797a1c7aaac854e68f88e60bd59898d46b947516e1dd4",
+    "provenance": "original source copy taken before page-marker correction"
+  },
+  {
+    "source": "native/src/git_conflicts_tests.rs",
+    "sha256": "73b21656e5a403cc58d627c8bb1fa069103f1ebd43438d7fb211deea5ce859d4",
+    "provenance": "reconstructed by removing the sole subsequent regression and restoring line endings; exact original frozen hash verified"
+  },
+  {
+    "source": "native/src/git_conflicts_cli.rs",
+    "sha256": "829613eef6f7ce6573bcc75ef99b7eea49c60f962676b7b020a27a252322aaee",
+    "provenance": "unchanged current bytes"
+  },
+  {
+    "source": "native/tests/git_conflicts.rs",
+    "sha256": "5a8e67b151ae9f64f82972d12759b22e80ce70129c3c237e527edfc64c9383e3",
+    "provenance": "unchanged current bytes"
+  }
+]

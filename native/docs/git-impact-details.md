@@ -75,7 +75,9 @@ line normalization/comparison/sorting, candidate construction, quote work and
 canonicalization/hashing/output. The released secret matcher remains a bounded
 synchronous scan with checks before and after it, not an OS scheduling guarantee.
 
-CLI integration is a separate root-owned additive kind-admission gate. Area
-classification, supertype/override seeds, actual conflicts, PR workflows and
-remote freshness remain distinct work. No ledger certification follows from
-implementing this bounded derived result.
+The `git impact` CLI uses the bounded derived result. Captured TypeScript
+hierarchy/same-name structural seeds are available separately through
+[affected details](git-affected-details.md), and explicit current-worktree index
+observations through [conflict triage](git-conflicts.md). Area classification,
+compiler-bound override identity, broader PR behavior and remote freshness remain
+separate. These implementations do not upgrade inventory-wide certification.
