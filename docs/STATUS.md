@@ -538,6 +538,25 @@ retains exact attempts, source hashes and real provider/compiler outputs.
 Other file/declaration/language shapes, propagated deletion, broader R1–R9,
 hosted/platform acceptance, packaging, main merge and release remain open.
 
+[Symbol deletion boundaries](../native/docs/symbol-deletion.md) now derive
+TypeScript/TSX/JavaScript/JSX declaration ranges from exact captured AST/entity
+bindings. Export and ambient wrappers belong to the deletion only with their
+owning declaration; stored symbol and usage-evidence coordinates stay intact.
+Unsupported sibling/consumer ownership refuses before plan publication.
+
+The original actual TypeScript RED left `export` behind and failed copied
+compilation with TS1030; its frozen source and output are preserved. The repair
+passes **466 selected native tests / 0 failed / 7 existing ignored gates** across
+seven groups, including eight new default cases. One separate actual provider/
+compiler test covers four owned TypeScript/JavaScript named/default-export
+fixtures: copied compilation, approved application and exact CRLF/Unicode
+recovery all pass. Counts are nonadditive. Format, all-target Clippy, **17 Python
+tests**, mandatory typecheck and **260 TypeScript tests / 3 existing skips** pass
+with unchanged frozen inputs. [Evidence](validation/integration-2026-10-19/symbol-deletion/index.json)
+binds every attempt, integrated source and Git materialization. No whole-native
+rerun is claimed. Other-language attachments, general propagation, wider R1–R9,
+hosted/platform acceptance, packaging, main merge and release remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

@@ -1,0 +1,23 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence-r1-symbol-delete\native)
+    Finished `test` profile [unoptimized] target(s) in 2m 32s
+     Running tests\symbol_delete_live.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\symbol_delete_live-23c387d80f4a5a75.exe)
+
+running 1 test
+test actual_typescript_and_javascript_exported_symbols_compile_after_delete_and_recover_exactly ... actual-typescript-export-symbol-delete-plan={"commandsExecuted":false,"complete":false,"equivalent":"independent_source_bound_safe_delete","forced":false,"plan":{"baseSnapshotId":"2de2d2d3f1bd9f671e005743263fd09caf4c1082c27fedd79c06d4a47992ff2d","createdAt":1792422252,"diff":"--- module.ts\n+++ module.ts\n@@ -1,3 +1,3 @@\n // owned compiler fixture: café 🦀\r\n-export function deleteMe() { return 1; }\r\n+export \r\n export const retained = 2;\r\n","expiresAt":1792508652,"files":[{"afterHash":"579ecd860d11ae3aaa51227c2d909d4547351661707d0186606bceac687bdaf5","beforeHash":"c37bae5665f0de0796b80a04a5860b094b379614f8589616fea228e8087ff557","mode":420,"path":"module.ts"}],"id":"5618d53d7d8586dc92b7e0f3a44ce6abaacd5a7ba3560cbbf3d480c694088622","resultSnapshotId":"725e5e36a34288171f79a163bddf76b669f4003c4c5184dd6509fac20a8f1c26","warnings":[],"workspaceId":"72ff4ca539d7c37b8ebf8f9e1a10e141059cefd6ed7e7ea60e652e73e28830a2"},"provider":"host_selected_lsp","remainingUsagesMayBreak":false,"snapshotId":"2de2d2d3f1bd9f671e005743263fd09caf4c1082c27fedd79c06d4a47992ff2d","usageCheck":{"capturedReferenceCount":0,"exhaustiveCompilerProof":false,"providerReferenceCount":0,"serverProfileHash":"bb15031be6305425af5750dac92618bb71efff322b521e438b8fb3d0217c25a7","sourceBindings":{}}}
+actual-typescript-export-symbol-delete-verification={"args":["C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\tsc.js","--noEmit","--project","tsconfig.json"],"command":"node","exitCode":2,"level":"executed","limitations":["Host-selected command ran in a copied tree under the host account; this is not an OS sandbox or proof of exhaustive test coverage."],"outputComplete":true,"outputExceeded":false,"planId":"5618d53d7d8586dc92b7e0f3a44ce6abaacd5a7ba3560cbbf3d480c694088622","snapshotId":"725e5e36a34288171f79a163bddf76b669f4003c4c5184dd6509fac20a8f1c26","sourceIntegrity":true,"status":"failed","stderr":"","stdout":"module.ts(3,1): error TS1030: 'export' modifier already seen.\r\n","timedOut":false}
+
+thread 'actual_typescript_and_javascript_exported_symbols_compile_after_delete_and_recover_exactly' (22472) panicked at native\tests\symbol_delete_live.rs:33:13:
+assertion `left == right` failed: typescript export: {"args":["C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\tsc.js","--noEmit","--project","tsconfig.json"],"command":"node","exitCode":2,"level":"executed","limitations":["Host-selected command ran in a copied tree under the host account; this is not an OS sandbox or proof of exhaustive test coverage."],"outputComplete":true,"outputExceeded":false,"planId":"5618d53d7d8586dc92b7e0f3a44ce6abaacd5a7ba3560cbbf3d480c694088622","snapshotId":"725e5e36a34288171f79a163bddf76b669f4003c4c5184dd6509fac20a8f1c26","sourceIntegrity":true,"status":"failed","stderr":"","stdout":"module.ts(3,1): error TS1030: 'export' modifier already seen.\r\n","timedOut":false}
+  left: String("failed")
+ right: "passed"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    actual_typescript_and_javascript_exported_symbols_compile_after_delete_and_recover_exactly
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.15s
+
+error: test failed, to rerun pass `--test symbol_delete_live`

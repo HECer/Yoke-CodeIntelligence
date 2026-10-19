@@ -1,0 +1,78 @@
+[
+  {
+    "name": "format",
+    "exitCode": 0,
+    "elapsedSeconds": 6.285,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ]
+  },
+  {
+    "name": "native",
+    "exitCode": 0,
+    "elapsedSeconds": 488.012,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--lib",
+      "--test",
+      "symbol_delete_ranges",
+      "--test",
+      "semantic_refactor",
+      "--test",
+      "agent_symbol_contracts",
+      "--test",
+      "agent_facade_semantics",
+      "--test",
+      "capture_changes",
+      "--test",
+      "plan_integrity",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ]
+  },
+  {
+    "name": "actual",
+    "exitCode": 0,
+    "elapsedSeconds": 46.178,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "symbol_delete_live",
+      "--",
+      "--ignored",
+      "--nocapture",
+      "--test-threads=1"
+    ]
+  },
+  {
+    "name": "clippy",
+    "exitCode": 101,
+    "elapsedSeconds": 53.945,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ]
+  }
+]

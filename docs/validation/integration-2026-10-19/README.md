@@ -286,3 +286,5 @@ and 665 unchanged integrated inputs are retained. The initial library425/0/7
 observation uses an earlier private loop. No whole-native rerun, general absence
 proof, full R1-R9, upstream/platform, packaging, main merge or release is claimed.
 
+
+Symbol declaration deletion: [symbol-deletion/index.json](symbol-deletion/index.json) preserves the actual TS1030 RED, 466/0/7 scoped native result, four actual TS/JS compiler/apply/recovery fixtures and unchanged integrated inputs. This finite checkpoint does not replace historical full-native failures or certify wider parity.

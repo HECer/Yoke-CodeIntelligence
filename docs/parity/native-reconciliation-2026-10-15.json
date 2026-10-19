@@ -6826,7 +6826,13 @@
         "native/tests/file_usage_live.rs",
         "native/tests/fixtures/file-usage-lsp.mjs",
         "native/docs/file-usage.md",
-        "docs/validation/integration-2026-10-19/file-usage/index.json"
+        "docs/validation/integration-2026-10-19/file-usage/index.json",
+        "native/src/changes.rs",
+        "native/src/changes_symbol_delete.rs",
+        "native/tests/symbol_delete_ranges.rs",
+        "native/tests/symbol_delete_live.rs",
+        "native/docs/symbol-deletion.md",
+        "docs/validation/integration-2026-10-19/symbol-deletion/index.json"
       ],
       "id": "R1",
       "inventoryRefs": [
@@ -6835,9 +6841,9 @@
         "serena:jet_brains_inline_symbol",
         "serena:jet_brains_rename"
       ],
-      "missingBehavior": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic.",
+      "missingBehavior": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic. Exact TypeScript/TSX/JavaScript/JSX symbol deletion now includes only checked owning declaration/export/ambient syntax while keeping original entity/evidence ranges. Multi-declarators, expression consumers, separate member decorators and other-language attachment ownership remain outside this finite deletion contract.",
       "priority": 1,
-      "suggestedScope": "Continue propagated deletion and other file/declaration/language cases with checked original operations and independent postconditions. Preserve finite directory/file selection, visible provider/unknown coverage, legacy identities and guarded application/recovery.",
+      "suggestedScope": "Continue propagated deletion, remaining language attachment ownership and broader file/symbol/provider cases with exact source operations, explicit unsupported coverage and independent compiler postconditions. Preserve original entity/evidence coordinates, legacy identities and guarded application/recovery.",
       "title": "Finish semantic refactoring intent contracts",
       "directoryMoveCheckpoint": {
         "index": "docs/validation/integration-2026-10-19/directory-moves/index.json",
@@ -6882,6 +6888,24 @@
           "failed": 0,
           "ignored": 7
         },
+        "wholeNativeRerun": false,
+        "countsAreNonadditive": true,
+        "fullParityCertified": false
+      },
+      "symbolDeletionCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/symbol-deletion/index.json",
+        "finalScopedTotals": {
+          "passed": 466,
+          "failed": 0,
+          "ignored": 7
+        },
+        "newDefaultCases": 8,
+        "actualCompositeRustTests": 1,
+        "actualOwnedFixtureCount": 4,
+        "actualOwnedLanguages": [
+          "typescript",
+          "javascript"
+        ],
         "wholeNativeRerun": false,
         "countsAreNonadditive": true,
         "fullParityCertified": false
@@ -7821,7 +7845,7 @@
         "native/tests/facade_file_rename.rs",
         "native/tests/facade_file_delete.rs"
       ],
-      "remainingReview": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic."
+      "remainingReview": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic. Exact TypeScript/TSX/JavaScript/JSX symbol deletion now includes only checked owning declaration/export/ambient syntax while keeping original entity/evidence ranges. Multi-declarators, expression consumers, separate member decorators and other-language attachment ownership remain outside this finite deletion contract."
     },
     {
       "boundary": "Native Meaning inference/transport and bounded feedback have separate checked proofs. Semantic alias identity, broader mixed-source consumers, non-knowledge outcome targets and semantic transcript understanding remain open. Provider/host assertions are not execution truth or independently authenticated corroboration.",
@@ -8205,6 +8229,20 @@
       ],
       "remainingReview": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic.",
       "fullContractCertified": false
+    },
+    {
+      "id": "checked_symbol_declaration_deletion_ranges",
+      "behavior": "TypeScript/TSX/JavaScript/JSX deleteSymbol derives one independently removable declaration range from an exact captured AST/entity binding, including checked owning export/ambient or single-declarator syntax. Stored entity and usage anchors remain unchanged. Unsupported consumers/siblings, malformed syntax, forged bindings and capacity/cancellation refuse. Existing usage, permission, approval, verification, stale and recovery gates remain separate.",
+      "evidence": [
+        "native/src/changes.rs",
+        "native/src/changes_symbol_delete.rs",
+        "native/tests/symbol_delete_ranges.rs",
+        "native/tests/symbol_delete_live.rs",
+        "native/docs/symbol-deletion.md",
+        "docs/validation/integration-2026-10-19/symbol-deletion/index.json"
+      ],
+      "remainingReview": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic. Exact TypeScript/TSX/JavaScript/JSX symbol deletion now includes only checked owning declaration/export/ambient syntax while keeping original entity/evidence ranges. Multi-declarators, expression consumers, separate member decorators and other-language attachment ownership remain outside this finite deletion contract.",
+      "fullContractCertified": false
     }
   ],
   "residualCoverageRule": "R1-R9 are priorities only. residualRegister is a thematic index; every partial/unreconciled ledger row retains additional exact-contract review requirements. This is not a complete external certification.",
@@ -8316,7 +8354,7 @@
         "serena:tool:jet_brains_rename",
         "serena:tool:safe_delete_symbol"
       ],
-      "remainingBoundary": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic."
+      "remainingBoundary": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic. Exact TypeScript/TSX/JavaScript/JSX symbol deletion now includes only checked owning declaration/export/ambient syntax while keeping original entity/evidence ranges. Multi-declarators, expression consumers, separate member decorators and other-language attachment ownership remain outside this finite deletion contract."
     },
     {
       "id": "managed_install_hook_lifecycle",
