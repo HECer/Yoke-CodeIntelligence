@@ -7286,7 +7286,11 @@
         "native/tests/github_app_publication.rs",
         "native/tests/github_app_pages_cli.rs",
         "native/tests/github_app_digest_mapping.rs",
-        "docs/validation/integration-2026-10-19/README.md"
+        "docs/validation/integration-2026-10-19/README.md",
+        "native/src/github_app_digest_history_process_tests.rs",
+        "native/src/process_windows_job.rs",
+        "native/src/process_windows_job_tests.rs",
+        "docs/validation/integration-2026-10-19/windows-process-exit/index.json"
       ],
       "id": "R8",
       "inventoryRefs": [
@@ -7365,7 +7369,24 @@
       "missingBehavior": "Configured public production deployment, remote source verification, semantic reasoning, unattended App history integration, live App installation/deployment and universal upstream contract equivalence remain open. Explicit persistent local jobs now continue atomic captured-history acquisition across bounded batches and process restarts, with finite cumulative quotas and exact revision preconditions. The independently owned client and receiver implement approval/send/durable-intake/GET-recovery and separately authorized literal metadata queries. Receipt-qualified rows remain sender claims, not remote source truth or proprietary brain parity.",
       "priority": 8,
       "suggestedScope": "Add explicitly host-authorized, bounded closed-PR discussion observations and replayable digest/service handoff around the integrated queue, verified Git/captured-source pipeline and publication capabilities. Preserve exact source bindings, provider-claim provenance, stale preconditions, separate network/write/deployment permissions and no default model or fork-code execution. Do not claim the proprietary hosted brain engine or upgrade the unreconciled inventory from this thematic checkpoint.",
-      "title": "Self-hosted GitHub App and authorized review publication"
+      "title": "Self-hosted GitHub App and authorized review publication",
+      "ownedProcessCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/windows-process-exit/index.json",
+        "newContractCases": 2,
+        "targetedCases": 17,
+        "finalSelectedTotals": {
+          "passed": 534,
+          "failed": 1,
+          "ignored": 8
+        },
+        "actualWindowsPostgresTlsAndFrozenPdfWorker": true,
+        "sharedExistingCleanupBudget": true,
+        "maxObservedMembersPerCleanup": 4096,
+        "pidBasedTermination": false,
+        "kernelCauseCertified": false,
+        "wholeNativeRerun": false,
+        "fullContractCertified": false
+      }
     },
     {
       "evidence": [
@@ -8506,7 +8527,7 @@
         "native/docs/postgres-catalog.md",
         "docs/validation/integration-2026-10-19/postgres-catalog/index.json"
       ],
-      "remainingReview": "The bounded native PostgreSQL host adapter now captures selected metadata and supports frozen received-data queries, with actual Windows PostgreSQL18.6/psql18.6 evidence. Full pinned upstream schema/definition equivalence, other server/client versions, non-Windows live qualification and mixed semantic/source integration remain unverified. Google shortcut export, URL/arxiv/PDF/social/video acquisition routes and Neo4j/FalkorDB upsert remain open; local Office/media readers and generated Cypher are not those connectors.",
+      "remainingReview": "Bounded PostgreSQL selected-catalog capture/frozen queries have actual Windows PostgreSQL18.6/psql18.6 evidence, now revalidated with the held-member process guard. Public HTTP and dedicated arxiv received-source routes are separately checkpointed. Full pinned upstream schema/definition equivalence, other server/client versions, non-Windows qualification and mixed semantic/source integration remain unverified. Google shortcut export, authenticated/social/video and Neo4j/FalkorDB upsert remain open; local readers/generated Cypher are not those connectors.",
       "fullContractCertified": false
     },
     {
@@ -8540,6 +8561,18 @@
         "docs/validation/integration-2026-10-19/arxiv-source/index.json"
       ],
       "remainingReview": "Bounded selected PostgreSQL catalogs, anonymous HTTP text/raw-HTML/PDF, and dedicated shared-rate-coordinated arxiv.org received metadata/PDF now have actual Windows evidence. Received citation tags and matching base-ID labels do not establish paper/version/author/server truth, a browser DOM, semantic graph or canonical code snapshot. Google shortcut export, authenticated/social/video routes, article/semantic interpretation and Neo4j/FalkorDB upsert remain open, along with full upstream and non-Windows qualification. Local files and generated Cypher are not those remaining connectors.",
+      "fullContractCertified": false
+    },
+    {
+      "id": "native_windows_owned_member_exit_proof",
+      "behavior": "Windows native process cleanup captures up to4096 nested-job member synchronization handles before requesting termination, and waits for their signals alongside the separately held root and empty job accounting within the existing cleanup budget. Incomplete/unavailable/over-budget member admission refuses proof while still requesting owned termination. No PID-based kill; recycled PIDs can cause only conservative waiting/unproven cleanup. Tests retain original liveness/time/SQLite/source restoration requirements and report original cleanup outcomes on failure.",
+      "evidence": [
+        "native/src/github_app_digest_history_process_tests.rs",
+        "native/src/process_windows_job.rs",
+        "native/src/process_windows_job_tests.rs",
+        "docs/validation/integration-2026-10-19/windows-process-exit/index.json"
+      ],
+      "remainingReview": "This bounded observed-member/OS proof is not an OS sandbox, a claim about every historical transient process, kernel API hard preemption or full upstream/non-Windows/Windows-suite acceptance. Earlier full-native failures remain; unattended App deployment/main/release and wider R1-R9 stay open.",
       "fullContractCertified": false
     }
   ],

@@ -1,0 +1,30 @@
+{
+  "policy": "up_to4_serial_trace_stop_first_failure",
+  "iterations": [
+    {
+      "iteration": 1,
+      "exitCode": 0,
+      "seconds": 4.957633972167969
+    },
+    {
+      "iteration": 2,
+      "exitCode": 0,
+      "seconds": 3.5752570629119873
+    },
+    {
+      "iteration": 3,
+      "exitCode": 0,
+      "seconds": 3.4196808338165283
+    },
+    {
+      "iteration": 4,
+      "exitCode": 0,
+      "seconds": 3.5397379398345947
+    }
+  ],
+  "inputs": 694,
+  "sourceUnchanged": true,
+  "binarySha256": "d9bc3b5f4e39edb5334e63323b9ea3417fe80a414e11cbea13c09671ed33bbfb",
+  "binaryUnchanged": true,
+  "concurrentOtherBuild": "r3 command2 builds distinct non-test process executable; this immutable unit executable is not rewritten; helper Cargo uses its private target directory"
+}

@@ -1,0 +1,30 @@
+
+running 1 test
+test github_app::digest::history_boundary_tests::history_owned_process_tests::cancellation_and_deadline_stop_owned_git_and_restore_the_same_store ... owned_job_probe stage=before_termination root=Some(21216) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_success root=Some(21216) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_termination root=Some(24580) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_success root=Some(24580) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_termination root=Some(23640) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_success root=Some(23640) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_termination root=Some(21336) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_success root=Some(21336) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_termination root=Some(19252) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_success root=Some(19252) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_termination root=Some(9540) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_success root=Some(9540) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_termination root=Some(23924) rootExited=Ok(false) idOk=1 accountingOk=1 assigned=3 active=3 pids=[23924, 8380, 24920]
+owned_job_probe stage=before_success root=Some(23924) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_termination root=Some(23640) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_success root=Some(23640) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_termination root=Some(12000) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_success root=Some(12000) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_termination root=Some(23140) rootExited=Ok(false) idOk=1 accountingOk=1 assigned=4 active=4 pids=[23140, 21336, 1724, 24580]
+owned_job_probe stage=before_success root=Some(23140) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_termination root=Some(20152) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_success root=Some(20152) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_termination root=Some(21076) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+owned_job_probe stage=before_success root=Some(21076) rootExited=Ok(true) idOk=1 accountingOk=1 assigned=0 active=0 pids=[]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 443 filtered out; finished in 3.39s
+

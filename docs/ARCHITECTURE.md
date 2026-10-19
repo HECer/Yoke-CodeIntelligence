@@ -275,3 +275,9 @@ Readonly dependency declarations extend the compiler filesystem, while the TypeS
 Advanced operations remain modules around the existing snapshot/provenance/change core: semantic providers, source-bound model enrichment, community projection, contract hints, bounded dataflow, test maps and media imports. Their command dispatch is in `cli-advanced.ts`. Source-changing provider operations prepare a ChangeManager plan rather than bypassing its preconditions.
 
 Retention scans explicit roots under an exclusive-client transaction, quarantines unreferenced blobs and only purges earlier unreferenced trash. Failures/unknown usage survive model errors. Optional Docker is containment policy, not a silent fallback around arbitrary process execution. See the operation-specific guides for residual limits.
+
+Windows explicit process cleanup holds bounded OS-reported member synchronization
+handles before termination and checks their final signals alongside the held root
+and empty job accounting in the existing cleanup budget. Missing proof remains
+an explicit failure; no PID-based termination is authorized. See the
+[owned-member checkpoint](validation/integration-2026-10-19/windows-process-exit/index.json).

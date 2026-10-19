@@ -335,3 +335,13 @@ capture with one shared journal, source-integrity proofs and mandatory integrate
 checks. Initial failures remain nonadditive. Public payloads/full abstract output
 remain local; received tag labels are not publication, version or author truth.
 No whole-native/platform/upstream, main or release certification follows.
+
+## Windows held-member cleanup checkpoint
+
+Source `ec0479d4591e8ea3afa415dcb01df8ff2a05a6e7`, runtime merge `2c3faf504cafec91adab201edaa87d5ff731af80`.
+[Indexed evidence](windows-process-exit/index.json) retains the diagnostic3/1RED,
+nonadditive eight baseline/four trace repetitions, bounded member-handle proof,
+17 targeted cases/two new OS contracts, selected534/1/8, actual
+PostgreSQL TLS/frozen-PDF-worker receipts and mandatory integrated checks.
+Original failures remain; no kernel-cause/full-native/platform/main/release
+certification follows. All preceding README bytes are preserved.

@@ -763,6 +763,29 @@ not erase earlier failures or establish their cause. Dependencies are unchanged.
 Remaining Google/social/video/database and semantic connectors, wider R1–R9,
 full native/platform acceptance, main and release stay open.
 
+[Windows owned-member exit proof](validation/integration-2026-10-19/windows-process-exit/index.json)
+now strengthens explicit process cleanup. It retains up to 4,096 observed nested
+job members' synchronization handles before termination and requires their final
+signals, the held root's exit and empty job accounting within the same existing
+cleanup budget. Incomplete or unavailable member admission still requests owned
+termination and reports missing proof. No PID-based termination is introduced.
+
+The diagnostic RED reproduces a nonsignaled owned process at normal deadline
+return with `cleanupUnproven=false`. The new guard passes **17 targeted cases**,
+including two new OS permission/ownership contracts. Final selected native
+results are **534 passed / 1 failed / 8 existing ignored gates**;
+the sole unchanged media symlink setup failure remains OS1314. All-target Clippy,
+format, mandatory typecheck, **260 TypeScript tests / 3 skips**, and **17 Python
+tests** pass with **700 integrated inputs unchanged**. Actual Windows
+PostgreSQL TLS/SCRAM/Unicode capture, cleanup of all three fixture credentials,
+lost-stdout identity and frozen native W3PDF worker replay pass on the new binary.
+
+The earlier eight same-binary and four temporary-trace passes are nonadditive.
+Temporary tracing is absent from final code. This observed-member/OS proof does
+not certify a kernel scheduling cause, every historical transient process,
+arbitrary kernel API preemption, full Windows/non-Windows/upstream acceptance,
+unattended App deployment, main or release. Wider STATUS/R1–R9 remains open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders
