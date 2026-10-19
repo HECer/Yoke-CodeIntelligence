@@ -127,6 +127,12 @@ and physical identities; copied verification, approved application and
 conditional recovery share that declared tree. The [directory move contract](docs/directory-moves.md)
 records finite limits, facade naming and unsupported multi-provider cases.
 
+[Captured file usage checks](docs/file-usage.md) add default deletion planning
+for bounded TypeScript/JavaScript modules of named functions. Exact provider
+declarations, references and conservative captured occurrences are checked
+before one ordinary guarded plan. Unknown consumers remain explicit; host
+approval and executed verification still govern application.
+
 ## Read-only context plans
 
 Use `ci_context` with a query or a plan, never both. Plans contain 1–16 validated steps and cannot execute commands or generated programs. For example:

@@ -1017,15 +1017,21 @@ fn dispatch_unbounded(
                     }
                     _ => bail!("File deletion propagate must be boolean"),
                 }
-                match args.get("delete_even_if_used") {
-                    Some(Value::Bool(true)) => {}
-                    None | Some(Value::Bool(false)) => bail!(
-                        "Safe file deletion requires a file usage proof; only explicit delete_even_if_used=true is supported"
-                    ),
+                let forced = match args.get("delete_even_if_used") {
+                    Some(Value::Bool(true)) => true,
+                    None | Some(Value::Bool(false)) => false,
                     _ => bail!("File deletion delete_even_if_used must be boolean"),
-                }
+                };
                 let path = crate::paths::normalized_syntax(text(args, "relative_path")?)?;
                 let engine = session.active_engine_at(deadline)?;
+                if !forced {
+                    return crate::semantic_refactor::invoke(
+                        engine,
+                        "safeDelete",
+                        &json!({"relativePath":path,"deleteEvenIfUsed":false,"propagate":false}),
+                        deadline,
+                    );
+                }
                 let (snapshot, graph, _, _) = engine.index(deadline)?;
                 let source_hash = {
                     let scope = crate::capture::source_scope_policy(&engine.store, &snapshot)?;
