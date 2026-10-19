@@ -258,7 +258,7 @@ pub fn execute_container(
     let tree = tempfile::Builder::new()
         .prefix("yoke-container-source-")
         .tempdir()?;
-    changes::materialize(&engine.store, &snapshot, tree.path(), deadline)?;
+    changes::materialize_plan(&engine.store, &plan, tree.path(), deadline)?;
     let control = tempfile::Builder::new()
         .prefix("yoke-container-control-")
         .tempdir()?;
@@ -425,8 +425,9 @@ pub fn execute_container(
         cleanup_confirmed = cleanup(exe, spec, control.path(), id);
     }
     timed_out |= deadline.check().is_err();
-    let source_integrity =
-        crate::verify::snapshot_integrity(&snapshot, tree.path(), deadline).unwrap_or(false);
+    let source_integrity = crate::verify::snapshot_integrity(&snapshot, tree.path(), deadline)
+        .unwrap_or(false)
+        && changes::plan_directory_integrity(&plan, &snapshot, tree.path(), deadline).is_ok();
     let approved = error.is_none()
         && exit_code == Some(0)
         && executed_tests > 0

@@ -17,10 +17,10 @@ fn d() -> Deadline {
     Deadline::new(30_000)
 }
 struct Fixture {
-    root: tempfile::TempDir,
     engine: Engine,
     plan: Plan,
     path: PathBuf,
+    root: tempfile::TempDir,
 }
 fn fixture(name: &str, epoch: AnalyzerEpoch) -> Fixture {
     let root = tempfile::tempdir().unwrap();

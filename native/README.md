@@ -121,6 +121,12 @@ exact review diff and test-change warnings before approval, new application,
 verification or recovery. See [saved plan integrity](docs/plan-integrity.md)
 for compatibility, finite limits and storage-corruption boundaries.
 
+One complete captured text directory can also move through a matching
+host-selected LSP folder operation. The plan retains empty directories, modes
+and physical identities; copied verification, approved application and
+conditional recovery share that declared tree. The [directory move contract](docs/directory-moves.md)
+records finite limits, facade naming and unsupported multi-provider cases.
+
 ## Read-only context plans
 
 Use `ci_context` with a query or a plan, never both. Plans contain 1–16 validated steps and cannot execute commands or generated programs. For example:

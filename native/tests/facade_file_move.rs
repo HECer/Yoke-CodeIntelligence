@@ -230,9 +230,8 @@ fn occupied_final_child_and_same_parent_moves_refuse_without_change_objects() {
 }
 
 #[test]
-fn directory_symbol_parent_and_malformed_file_selectors_are_explicit_refusals() {
+fn symbol_parent_and_malformed_file_selectors_are_explicit_refusals() {
     for args in [
-        json!({"relative_path":"src","target_relative_path":"target.rs"}),
         json!({"relative_path":SOURCE_PATH,"target_relative_path":"target.rs","target_parent_name_path":"Parent"}),
         json!({"relative_path":SOURCE_PATH,"target_relative_path":"target.rs","name_path":false}),
         json!({"relative_path":SOURCE_PATH,"target_relative_path":"target.rs","name_path":0}),
@@ -243,6 +242,26 @@ fn directory_symbol_parent_and_malformed_file_selectors_are_explicit_refusals() 
         assert_refused(&mut f, args);
         assert!(transcript(&f).is_empty());
     }
+}
+
+#[test]
+fn directory_move_with_a_file_only_provider_negotiates_capabilities_but_publishes_no_plan() {
+    let mut f = fixture(AnalyzerEpoch::V8, CaptureOptions::default());
+    assert_refused(
+        &mut f,
+        json!({"relative_path":"src","target_relative_path":"target.rs"}),
+    );
+    let requests = transcript(&f);
+    assert!(
+        requests
+            .iter()
+            .any(|request| request["method"] == "initialize")
+    );
+    assert!(
+        !requests
+            .iter()
+            .any(|request| request["method"] == "workspace/willRenameFiles")
+    );
 }
 
 #[test]

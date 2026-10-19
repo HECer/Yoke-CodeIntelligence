@@ -137,7 +137,7 @@ pub fn execute(
         &json!({"status":"running","level":"executed","snapshotId":snapshot.id}),
     )?;
     let tree = tempfile::Builder::new().prefix("yoke-verify-").tempdir()?;
-    changes::materialize(&engine.store, &snapshot, tree.path(), deadline)?;
+    changes::materialize_plan(&engine.store, &plan, tree.path(), deadline)?;
     let mut process = Command::new(command);
     process
         .args(args)
@@ -242,11 +242,12 @@ pub fn execute(
     let output_complete = output.iter().all(Option::is_some) && !read_error;
     let stdout = output[0].take().unwrap_or_default();
     let stderr = output[1].take().unwrap_or_default();
-    let integrity = snapshot.files.iter().all(|file| {
-        scoped(tree.path(), &file.path)
-            .and_then(|path| file_integrity(file, &path, deadline))
-            .unwrap_or(false)
-    });
+    let integrity =
+        snapshot.files.iter().all(|file| {
+            scoped(tree.path(), &file.path)
+                .and_then(|path| file_integrity(file, &path, deadline))
+                .unwrap_or(false)
+        }) && changes::plan_directory_integrity(&plan, &snapshot, tree.path(), deadline).is_ok();
     timed_out |= deadline.check().is_err();
     let passed = status.is_some_and(|s| s.success())
         && integrity

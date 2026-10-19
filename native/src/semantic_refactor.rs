@@ -7,6 +7,8 @@ use crate::{
 };
 use anyhow::{Context, Result, bail, ensure};
 use serde_json::{Value, json};
+#[path = "semantic_directory_move.rs"]
+mod directory_moves;
 #[path = "semantic_refactor_intents.rs"]
 mod intents;
 #[path = "semantic_move_intents.rs"]
@@ -240,6 +242,21 @@ pub fn invoke(
         let destination = args["targetRelativePath"]
             .as_str()
             .context("File move destination required")?;
+        let host_path = crate::paths::scoped(&engine.root, path)?;
+        match std::fs::symlink_metadata(host_path) {
+            Ok(metadata) if metadata.is_dir() && !crate::paths::is_link(&metadata) => {
+                return directory_moves::prepare(
+                    engine,
+                    &snapshot,
+                    &graph,
+                    path,
+                    destination,
+                    deadline,
+                );
+            }
+            Err(error) if error.kind() != std::io::ErrorKind::NotFound => return Err(error.into()),
+            _ => {}
+        }
         let file = graph
             .entities
             .iter()

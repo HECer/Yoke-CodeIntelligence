@@ -568,11 +568,24 @@ fn prepare_captured_file_relocation(
     let destination = crate::paths::normalized(destination)?;
     let engine = session.active_engine_at(deadline)?;
     let (snapshot, _, _, _) = engine.index(deadline)?;
+    let source_host = crate::paths::scoped(&engine.root, &path)?;
+    match std::fs::symlink_metadata(source_host) {
+        Ok(metadata) if metadata.is_dir() && !crate::paths::is_link(&metadata) => {
+            return crate::semantic_refactor::invoke(
+                engine,
+                "move",
+                &json!({"snapshotId":snapshot.id,"relativePath":path,"targetRelativePath":destination}),
+                deadline,
+            );
+        }
+        Err(error) if error.kind() != std::io::ErrorKind::NotFound => return Err(error.into()),
+        _ => {}
+    }
     {
         let scope = crate::capture::source_scope_policy(&engine.store, &snapshot)?;
-        scope.file(&path).context(
-            "Only captured file relocation is supported; directory tree operations are unavailable",
-        )?;
+        scope
+            .file(&path)
+            .context("Relocation source must be a captured file or supported complete directory")?;
         scope.check_host_write_scope(&path)?;
         scope.check_host_write_scope(&destination)?;
     }

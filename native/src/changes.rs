@@ -19,6 +19,10 @@ use std::{
 };
 #[path = "changes_plan.rs"]
 mod checked_plan;
+#[path = "changes_directory.rs"]
+mod directory;
+pub use directory::DirectoryMove;
+pub(crate) use directory::SelectedDirectoryMove;
 
 pub fn now() -> u64 {
     SystemTime::now()
@@ -78,6 +82,8 @@ pub struct Plan {
     pub files: Vec<PlannedFile>,
     pub diff: String,
     pub warnings: Vec<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub directory_move: Option<DirectoryMove>,
 }
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -146,6 +152,51 @@ pub fn prepare_at(
     snapshot: &Snapshot,
     graph: &Graph,
     args: &Value,
+    deadline: &Deadline,
+) -> Result<Plan> {
+    prepare_inner(epoch, store, snapshot, graph, args, None, deadline)
+}
+pub(crate) fn select_directory_move(
+    root: &Path,
+    store: &Store,
+    snapshot: &Snapshot,
+    source: &str,
+    destination: &str,
+    deadline: &Deadline,
+) -> Result<SelectedDirectoryMove> {
+    DirectoryMove::select(root, store, snapshot, source, destination, deadline)
+}
+pub(crate) fn prepare_directory(
+    store: &mut Store,
+    snapshot: &Snapshot,
+    graph: &Graph,
+    args: &Value,
+    selected: &SelectedDirectoryMove,
+    root: &Path,
+    deadline: &Deadline,
+) -> Result<Plan> {
+    selected.record().validate(snapshot, deadline)?;
+    selected.record().check_before(root, deadline)?;
+    let epoch =
+        crate::capture::analyzer_epoch_for_snapshot_with_deadline(store, snapshot, deadline)?;
+    prepare_inner(
+        epoch,
+        store,
+        snapshot,
+        graph,
+        args,
+        Some(selected.record()),
+        deadline,
+    )
+}
+#[allow(clippy::too_many_arguments)]
+fn prepare_inner(
+    epoch: analysis::AnalyzerEpoch,
+    store: &mut Store,
+    snapshot: &Snapshot,
+    graph: &Graph,
+    args: &Value,
+    directory_move: Option<&DirectoryMove>,
     deadline: &Deadline,
 ) -> Result<Plan> {
     let mut edits: Vec<Edit> = if let Some(value) = args.get("edits") {
@@ -228,7 +279,9 @@ pub fn prepare_at(
         } else {
             String::new()
         };
-        let mut mode = before.map_or(0o644, |f| f.mode);
+        let moved_source =
+            directory_move.and_then(|directory| directory.source_for_destination(&path));
+        let mut mode = before.or(moved_source).map_or(0o644, |f| f.mode);
         let after = match &edits[0] {
             Edit::Create { text, .. } => {
                 ensure!(
@@ -339,7 +392,11 @@ pub fn prepare_at(
                 path: path.clone(),
                 hash,
                 size: text.len(),
-                language: crate::capture::language_for_snapshot(store, snapshot, &path)?,
+                language: if let Some(original) = moved_source {
+                    original.language.clone()
+                } else {
+                    crate::capture::language_for_snapshot(store, snapshot, &path)?
+                },
                 mode,
             });
         }
@@ -355,9 +412,8 @@ pub fn prepare_at(
         capture_consistency: "derived-from-immutable".into(),
     };
     let created = now();
-    let id = identity(&(&snapshot.id, &result.id, &changed, created));
-    let plan = Plan {
-        id: id.clone(),
+    let mut plan = Plan {
+        id: String::new(),
         base_snapshot_id: snapshot.id.clone(),
         result_snapshot_id: result.id.clone(),
         workspace_id: snapshot.workspace_id.clone(),
@@ -366,7 +422,13 @@ pub fn prepare_at(
         files: changed,
         diff,
         warnings,
+        directory_move: directory_move.cloned(),
     };
+    plan.id = checked_plan::plan_identity(&plan);
+    let id = plan.id.clone();
+    if let Some(directory) = &plan.directory_move {
+        directory.validate_result(snapshot, &result, deadline)?;
+    }
     checked_plan::admit_prepared(&plan, snapshot, &result, deadline)?;
     let mut extractions = Vec::new();
     for file in &result.files {
@@ -392,6 +454,31 @@ pub fn materialize(
         &std::collections::BTreeSet::new(),
         deadline,
     )
+}
+pub(crate) fn materialize_plan(
+    store: &Store,
+    plan: &Plan,
+    target: &Path,
+    deadline: &Deadline,
+) -> Result<()> {
+    let snapshot = store.snapshot(&plan.result_snapshot_id)?;
+    materialize(store, &snapshot, target, deadline)?;
+    if let Some(directory) = &plan.directory_move {
+        directory.materialize_directories(target, deadline)?;
+        directory.check_materialized(target, &snapshot, deadline)?;
+    }
+    Ok(())
+}
+pub(crate) fn plan_directory_integrity(
+    plan: &Plan,
+    snapshot: &Snapshot,
+    root: &Path,
+    deadline: &Deadline,
+) -> Result<()> {
+    if let Some(directory) = &plan.directory_move {
+        directory.check_materialized(root, snapshot, deadline)?;
+    }
+    Ok(())
 }
 /// Host-selected omissions affect only this private copy, never captured source.
 pub fn materialize_selected_sources(
@@ -587,12 +674,7 @@ pub fn apply(
             !target.exists(),
             "Previous materialization exists without receipt; inspect recovery"
         );
-        materialize(
-            store,
-            &store.snapshot(&plan.result_snapshot_id)?,
-            &target,
-            deadline,
-        )?;
+        materialize_plan(store, &plan, &target, deadline)?;
         receipt.sandbox_path = Some(target.display().to_string());
         receipt.status = "applied".into();
         store.record("receipt", &receipt_id, &receipt)?;
@@ -632,17 +714,33 @@ pub fn apply(
             file.path
         );
     }
+    if let Some(directory) = &plan.directory_move {
+        directory.check_before(root, deadline)?;
+    }
     store.record("journal", &receipt_id, &receipt)?;
     let result = (|| -> Result<()> {
+        if let Some(directory) = &plan.directory_move {
+            directory.rename(root, deadline)?;
+        }
         for file in &plan.files {
             deadline.check()?;
-            ensure!(
-                matches_file(root, file, false)?,
-                "Concurrent source conflict"
-            );
-            write_file(store, root, file, true)?;
+            let handled = if let Some(directory) = &plan.directory_move {
+                directory.apply_file(store, root, file, deadline)?
+            } else {
+                false
+            };
+            if !handled {
+                ensure!(
+                    matches_file(root, file, false)?,
+                    "Concurrent source conflict"
+                );
+                write_file(store, root, file, true)?;
+            }
             receipt.applied_paths.push(file.path.clone());
             store.record("journal", &receipt_id, &receipt)?;
+        }
+        if let Some(directory) = &plan.directory_move {
+            directory.check_after(root, &store.snapshot(&plan.result_snapshot_id)?, deadline)?;
         }
         receipt.status = "applied".into();
         store.record("journal", &receipt_id, &receipt)?;
@@ -664,8 +762,23 @@ pub fn recover(store: &Store, root: &Path, journal: &str, allow_writes: bool) ->
         "Journal already rolled back"
     );
     let mut conflicts = Vec::new();
+    if let Some(directory) = &plan.directory_move {
+        let deadline = store.inherited_deadline(&Deadline::new(30_000))?;
+        if let Err(error) = directory.recover(store, root, &plan, &deadline) {
+            let failure = recovery_failure(store, &mut receipt, error);
+            let _ = store.record("receipt", journal, &receipt);
+            return Err(failure);
+        }
+    }
     // Check all planned files, including a write that preceded its journal update.
     for file in plan.files.iter().rev() {
+        if plan
+            .directory_move
+            .as_ref()
+            .is_some_and(|directory| directory.handles(&file.path))
+        {
+            continue;
+        }
         if matches_file(root, file, false)? {
             continue;
         }

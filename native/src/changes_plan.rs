@@ -21,6 +21,26 @@ const MAX_PLAN_BYTES: usize = 64_000_000;
 const MAX_SNAPSHOT_BYTES: usize = 32_000_000;
 const MAX_SOURCE_BYTES: usize = 128_000_000;
 
+pub(super) fn plan_identity(plan: &Plan) -> String {
+    if let Some(directory) = &plan.directory_move {
+        identity(&(
+            "directory-move-v1",
+            &plan.base_snapshot_id,
+            &plan.result_snapshot_id,
+            &plan.files,
+            plan.created_at,
+            directory,
+        ))
+    } else {
+        identity(&(
+            &plan.base_snapshot_id,
+            &plan.result_snapshot_id,
+            &plan.files,
+            plan.created_at,
+        ))
+    }
+}
+
 fn raw(store: &Store, snapshot: bool, id: &str, maximum: usize, d: &Deadline) -> Result<Value> {
     d.check()?;
     ensure!(valid_id(id), INVALID);
@@ -141,6 +161,9 @@ fn binding(
         INVALID
     );
     let epoch = capture::analyzer_epoch_for_snapshot_with_deadline(store, base, d)?;
+    if let Some(directory) = &plan.directory_move {
+        directory.validate_result(base, result, d)?;
+    }
     ensure!(
         epoch.derived_snapshot_id(base, &result.files) == result.id,
         INVALID
@@ -159,14 +182,19 @@ fn binding(
             }
             continue;
         }
+        let moved = plan
+            .directory_move
+            .as_ref()
+            .and_then(|directory| directory.source_for_destination(path));
+        let expected_mode = b.or(moved).map_or(0o644, |f| f.mode);
         expected.push(PlannedFile {
             path: path.into(),
             before_hash: b.map(|f| f.hash.clone()),
             after_hash: a.map(|f| f.hash.clone()),
-            mode: b.map_or(0o644, |f| f.mode),
+            mode: expected_mode,
         });
         if let Some(a) = a {
-            ensure!(a.mode == b.map_or(0o644, |f| f.mode), INVALID);
+            ensure!(a.mode == expected_mode, INVALID);
         }
     }
     ensure!(
@@ -283,13 +311,7 @@ pub(super) fn load(store: &Store, id: &str, d: &Deadline) -> Result<Plan> {
                     && valid_id(id)
                     && plan.workspace_id == store.workspace_id
                     && plan.created_at.checked_add(86400) == Some(plan.expires_at)
-                    && plan.id
-                        == identity(&(
-                            &plan.base_snapshot_id,
-                            &plan.result_snapshot_id,
-                            &plan.files,
-                            plan.created_at
-                        )),
+                    && plan.id == plan_identity(&plan),
                 INVALID
             );
             let base: Snapshot = crate::json::decode(raw(

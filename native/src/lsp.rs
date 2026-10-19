@@ -1258,6 +1258,7 @@ pub(crate) struct CheckedWorkspaceEdit {
     manifest_hash: String,
     pub operations: Vec<CheckedEditOperation>,
     pub files: BTreeMap<String, Option<String>>,
+    directory_move: Option<changes::SelectedDirectoryMove>,
 }
 impl CheckedWorkspaceEdit {
     fn retained_bytes(&self) -> usize {
@@ -1279,6 +1280,17 @@ impl CheckedWorkspaceEdit {
             "Checked WorkspaceEdit source binding changed"
         );
         let edits = self.edits(engine, snapshot, deadline)?;
+        if let Some(directory) = &self.directory_move {
+            return changes::prepare_directory(
+                &mut engine.store,
+                snapshot,
+                graph,
+                &json!({"edits":edits}),
+                directory,
+                &engine.root,
+                deadline,
+            );
+        }
         changes::prepare(
             &mut engine.store,
             snapshot,
@@ -1457,6 +1469,18 @@ fn check_workspace_edit(
     edit: &Value,
     deadline: &Deadline,
 ) -> Result<CheckedWorkspaceEdit> {
+    check_workspace_edit_directory(engine, snapshot, _graph, root, edit, None, deadline)
+}
+#[allow(clippy::too_many_arguments)]
+fn check_workspace_edit_directory(
+    engine: &Engine,
+    snapshot: &Snapshot,
+    _graph: &Graph,
+    root: &Path,
+    edit: &Value,
+    directory: Option<&changes::SelectedDirectoryMove>,
+    deadline: &Deadline,
+) -> Result<CheckedWorkspaceEdit> {
     ensure!(
         edit.is_object() && edit.get("changes").is_some() != edit.get("documentChanges").is_some(),
         "Ambiguous or missing WorkspaceEdit"
@@ -1537,6 +1561,40 @@ fn check_workspace_edit(
                                 .as_str()
                                 .context("Rename target URI missing")?,
                         )?;
+                        if let Some(directory) = directory {
+                            let selected = directory.record();
+                            ensure!(
+                                old == selected.source()
+                                    && new == selected.destination()
+                                    && document.get("options").is_none()
+                                    && operations.iter().all(|op| matches!(
+                                        op,
+                                        CheckedEditOperation::TextDocument { .. }
+                                    )),
+                                "Unsupported directory rename resource sequence"
+                            );
+                            for source in selected.files() {
+                                let destination = selected.destination_path(&source.path)?;
+                                virtual_file(&engine.store, snapshot, &mut files, &source.path)?;
+                                virtual_file(&engine.store, snapshot, &mut files, &destination)?;
+                                ensure!(
+                                    files[&destination].is_none(),
+                                    "Directory resource destination exists"
+                                );
+                                let text = files
+                                    .get_mut(&source.path)
+                                    .unwrap()
+                                    .take()
+                                    .context("Directory resource source missing")?;
+                                files.insert(destination, Some(text));
+                            }
+                            operations.push(CheckedEditOperation::Rename {
+                                old,
+                                new,
+                                applied: true,
+                            });
+                            continue;
+                        }
                         ensure!(
                             old != new && !old.eq_ignore_ascii_case(&new),
                             "Ambiguous resource rename"
@@ -1617,6 +1675,7 @@ fn check_workspace_edit(
         manifest_hash: identity(snapshot),
         operations,
         files,
+        directory_move: directory.cloned(),
     };
     ensure!(
         checked.files.len() <= 2000 && checked.retained_bytes() <= 32_000_000,
@@ -1746,6 +1805,7 @@ pub fn run_at_with_options(
         request,
         options,
         None,
+        None,
         deadline,
     )
 }
@@ -1765,6 +1825,7 @@ pub fn run_at_configured(
         graph,
         request,
         options,
+        None,
         None,
         deadline,
     )
@@ -1789,6 +1850,40 @@ pub(crate) fn stage_at(
         request,
         options,
         Some(&mut edits),
+        None,
+        deadline,
+    )?;
+    Ok(StagedSemantic { value, edits })
+}
+pub(crate) fn stage_directory_move_at(
+    engine: &mut Engine,
+    host: (&Server, Option<&HostConfiguration>),
+    snapshot: &Snapshot,
+    graph: &Graph,
+    selected: &changes::SelectedDirectoryMove,
+    deadline: &Deadline,
+) -> Result<StagedSemantic> {
+    let file = selected
+        .record()
+        .files()
+        .iter()
+        .find(|file| file.language == host.0.language)
+        .context("Directory move provider has no selected source file")?;
+    let mut edits = Vec::new();
+    let value = run_at_internal(
+        engine,
+        host,
+        snapshot,
+        graph,
+        SemanticRequest {
+            path: &file.path,
+            offset: 0,
+            operation: "willRenameFiles",
+            new_name: None,
+        },
+        &json!({"renamePath":selected.record().destination()}),
+        Some(&mut edits),
+        Some(selected),
         deadline,
     )?;
     Ok(StagedSemantic { value, edits })
@@ -1802,6 +1897,7 @@ fn run_at_internal(
     request: SemanticRequest<'_>,
     options: &Value,
     staged: Option<&mut Vec<CheckedWorkspaceEdit>>,
+    directory: Option<&changes::SelectedDirectoryMove>,
     deadline: &Deadline,
 ) -> Result<Value> {
     ensure!(host.0.trust, "Language server trust is required");
@@ -1809,7 +1905,7 @@ fn run_at_internal(
     let profile = server_profile(host.0, host.1, deadline)?;
     let profile_hash = identity(&profile);
     let mut value = run_at_unprofiled(
-        engine, host, snapshot, graph, request, options, staged, deadline,
+        engine, host, snapshot, graph, request, options, staged, directory, deadline,
     )?;
     value["serverProfileHash"] = json!(profile_hash);
     value["serverProfileBinding"] = profile["commandBinding"].clone();
@@ -2518,10 +2614,20 @@ fn run_at_unprofiled(
     request: SemanticRequest<'_>,
     options: &Value,
     mut staged: Option<&mut Vec<CheckedWorkspaceEdit>>,
+    directory: Option<&changes::SelectedDirectoryMove>,
     deadline: &Deadline,
 ) -> Result<Value> {
     let (server, configuration) = host;
     let options = QueryOptions::parse(options)?;
+    if let Some(directory) = directory {
+        ensure!(
+            request.operation == "willRenameFiles"
+                && options.rename_path.as_deref() == Some(directory.record().destination()),
+            "Directory move request binding mismatch"
+        );
+        directory.record().validate(snapshot, deadline)?;
+        directory.record().check_before(&engine.root, deadline)?;
+    }
     engine.store.set_deadline(deadline)?;
     deadline.check()?;
     ensure!(
@@ -2628,12 +2734,13 @@ fn run_at_unprofiled(
     );
     let mut rename_resource = None;
     if operation == "willRenameFiles" {
+        let operation_source = directory.map_or(path, |directory| directory.record().source());
         let destination = options
             .rename_path
             .as_deref()
             .context("Source-bound renamePath required")?;
         ensure!(
-            !path.eq_ignore_ascii_case(destination)
+            !operation_source.eq_ignore_ascii_case(destination)
                 && !snapshot
                     .files
                     .iter()
@@ -2655,13 +2762,10 @@ fn run_at_unprofiled(
                 "Unsupported file-operation URI scheme"
             );
             let pattern = &filter["pattern"];
-            if pattern["matches"] == "folder" {
-                continue;
-            }
             ensure!(
                 pattern
                     .get("matches")
-                    .is_none_or(|kind| kind.as_str() == Some("file")),
+                    .is_none_or(|kind| matches!(kind.as_str(), Some("file" | "folder"))),
                 "Invalid file-operation match type"
             );
             ensure!(
@@ -2675,15 +2779,28 @@ fn run_at_unprofiled(
                 .context("File-operation glob missing")?;
             let matcher =
                 crate::query_features::glob(glob, pattern["options"]["ignoreCase"] == true)?;
-            selected |= matcher.is_match(path);
+            let applies = pattern.get("matches").is_none_or(|kind| {
+                kind.as_str()
+                    == Some(if directory.is_some() {
+                        "folder"
+                    } else {
+                        "file"
+                    })
+            });
+            selected |= applies && matcher.is_match(operation_source);
         }
         ensure!(
             selected,
             "Selected source file is outside server willRenameFiles registration filters"
         );
         let target_uri = uri(&tree.path().join(destination))?;
-        params = json!({"files":[{"oldUri":document_uri,"newUri":target_uri}]});
-        rename_resource = Some(json!({"kind":"rename","oldUri":document_uri,"newUri":target_uri}));
+        let source_uri = if directory.is_some() {
+            uri(&tree.path().join(operation_source))?
+        } else {
+            document_uri.clone()
+        };
+        params = json!({"files":[{"oldUri":source_uri,"newUri":target_uri}]});
+        rename_resource = Some(json!({"kind":"rename","oldUri":source_uri,"newUri":target_uri}));
     }
     if operation == "references" {
         params["context"] =
@@ -2924,13 +3041,22 @@ fn run_at_unprofiled(
                     .clone();
             }
         }
+        if directory.is_some() {
+            ensure!(
+                documents
+                    .iter()
+                    .all(|document| document.get("kind").is_none()),
+                "Directory move provider may return only original-coordinate text edits"
+            );
+        }
         documents.push(rename);
-        let checked = check_workspace_edit(
+        let checked = check_workspace_edit_directory(
             engine,
             snapshot,
             graph,
             tree.path(),
             &json!({"documentChanges":documents}),
+            directory,
             deadline,
         )?;
         if let Some(staged) = staged.as_deref_mut() {
