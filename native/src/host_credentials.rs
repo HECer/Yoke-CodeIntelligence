@@ -122,6 +122,58 @@ pub(crate) fn read_postgres_password(binding: &str) -> Result<Zeroizing<String>>
     let bytes = read(&target("postgres", binding)?)?;
     Ok(Zeroizing::new(postgres_password(&bytes)?.to_owned()))
 }
+fn neo4j_password(bytes: &[u8]) -> Result<&str> {
+    ensure!(
+        (1..=2560).contains(&bytes.len()),
+        "Invalid Neo4j credential capacity"
+    );
+    let text = std::str::from_utf8(bytes)
+        .map_err(|_| anyhow::anyhow!("Invalid Neo4j credential format"))?;
+    ensure!(
+        !text.chars().any(char::is_control),
+        "Invalid Neo4j credential format"
+    );
+    Ok(text)
+}
+/// Create-only host import. The binding includes endpoint, pinned address and TLS policy.
+pub fn import_neo4j_password(
+    binding: &str,
+    bytes: &[u8],
+    deadline: &crate::capture::Deadline,
+) -> Result<Value> {
+    deadline.check()?;
+    ensure!(
+        cfg!(windows),
+        "neo4j_publish_credential_platform_unavailable"
+    );
+    ensure!(
+        crate::model::valid_id(binding),
+        "Invalid Neo4j credential binding"
+    );
+    neo4j_password(bytes)?;
+    #[cfg(windows)]
+    windows::write_new_bounded(&target("neo4j", binding)?, bytes, deadline)?;
+    Ok(
+        json!({"credentialBinding":binding,"credentialType":"neo4j","privateMaterial":"os_credential_store_only"}),
+    )
+}
+pub(crate) fn read_neo4j_password(
+    binding: &str,
+    deadline: &crate::capture::Deadline,
+) -> Result<Zeroizing<String>> {
+    deadline.check()?;
+    ensure!(
+        cfg!(windows),
+        "neo4j_publish_credential_platform_unavailable"
+    );
+    ensure!(
+        crate::model::valid_id(binding),
+        "Invalid Neo4j credential binding"
+    );
+    let bytes = read(&target("neo4j", binding)?)?;
+    deadline.check()?;
+    Ok(Zeroizing::new(neo4j_password(&bytes)?.to_owned()))
+}
 fn github_token_bytes(bytes: &[u8]) -> Result<&str> {
     ensure!(
         !bytes.is_empty()

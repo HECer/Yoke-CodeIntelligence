@@ -56,6 +56,7 @@ pub mod model;
 pub mod model_bedrock;
 pub mod model_http;
 mod model_protocol;
+pub mod neo4j_publish;
 pub mod notes;
 mod office;
 pub mod ollama;
