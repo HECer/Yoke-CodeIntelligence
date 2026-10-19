@@ -557,6 +557,30 @@ binds every attempt, integrated source and Git materialization. No whole-native
 rerun is claimed. Other-language attachments, general propagation, wider R1–R9,
 hosted/platform acceptance, packaging, main merge and release remain open.
 
+The subsequent [declaration attachment repair](../native/docs/symbol-deletion.md)
+extends checked symbol deletion to Rust outer attributes/documentation and
+Python decorators. Actual REDs show Rust moving `#[inline]` onto a following
+constant and Python silently attaching a decorator to the retained function.
+The Python check compiles and inspects the stdlib AST without executing project
+modules. Rust reuses the existing owned attachment grammar. Exact kind binding
+includes the nearest declared owner; nested functions remain functions. Python
+refuses deletion that would otherwise leave a required body empty.
+
+The final frozen source passes **545 selected native tests / 0 failed /
+7 existing ignored gates** across eleven groups, including seven new
+default cases and existing symbol-move contracts. Separate explicit gates pass
+three Rust harness tests covering six owned Rust/Python/TS/JS fixtures: actual
+compiler/AST/provider checks, approved application and exact recovery. Counts
+across attempts/gates are nonadditive. The initial repair's two method-binding
+refusals remain preserved with the original compiler/AST REDs.
+
+Format, all-target Clippy, **17 Python tests**, mandatory typecheck and **260
+TypeScript tests / 3 existing skips** pass with all **670 integrated inputs
+unchanged**. [Evidence](validation/integration-2026-10-19/declaration-attachments/index.json)
+records raw attempts, source hashes and Git/CRLF materialization. No whole-native
+rerun is claimed. Other declaration/language shapes, general propagation, wider
+R1–R9, hosted/platform acceptance, main merge and release remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders
