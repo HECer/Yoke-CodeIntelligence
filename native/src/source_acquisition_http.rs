@@ -32,6 +32,12 @@ pub struct Permissions {
 }
 impl Spec {
     pub fn validate(&self) -> Result<url::Url> {
+        self.validate_inner(false)
+    }
+    pub(crate) fn validate_arxiv(&self) -> Result<url::Url> {
+        self.validate_inner(true)
+    }
+    fn validate_inner(&self, arxiv_permit: bool) -> Result<url::Url> {
         let url = source::url(&self.url)?;
         source::input(
             self.address.port() > 0
@@ -47,7 +53,7 @@ impl Spec {
             url::Host::Ipv6(ip) => source::input(self.address.ip() == ip)?,
             url::Host::Domain(host) => {
                 let host = host.trim_end_matches('.');
-                if host == "arxiv.org" || host.ends_with(".arxiv.org") {
+                if (host == "arxiv.org" || host.ends_with(".arxiv.org")) && !arxiv_permit {
                     anyhow::bail!("source_acquisition_arxiv_connector_required");
                 }
             }
@@ -111,12 +117,43 @@ pub fn capture(
     limits: &Limits,
     deadline: &Deadline,
 ) -> Result<ReceivedSource> {
+    capture_inner(spec, permissions, limits, deadline, false)
+}
+pub(crate) fn capture_arxiv(
+    spec: &Spec,
+    permissions: &Permissions,
+    limits: &Limits,
+    deadline: &Deadline,
+    permit: crate::arxiv_rate::Permit,
+) -> Result<ReceivedSource> {
+    let result = capture_inner(spec, permissions, limits, deadline, true);
+    // The request is stopped before completion is recorded. Pending/crashed
+    // attempts never silently fall back to the previous rate state.
+    let completed = permit.complete()?;
+    result.map(|mut source| {
+        let mut claims = source.capture_claims().cloned().unwrap_or_else(|| json!({}));
+        claims["rateCoordination"] = json!({"scope":"host_selected_shared_file_and_coherent_utc_clocks","sequence":completed.0,"completedAtMs":completed.1,"cooldownMs":3000});
+        source.set_claims(claims);
+        source
+    })
+}
+fn capture_inner(
+    spec: &Spec,
+    permissions: &Permissions,
+    limits: &Limits,
+    deadline: &Deadline,
+    arxiv_permit: bool,
+) -> Result<ReceivedSource> {
     ensure!(
         permissions.allow_network,
         "source_acquisition_network_permission_required"
     );
     limits.validate()?;
-    let url = spec.validate()?;
+    let url = if arxiv_permit {
+        spec.validate_arxiv()?
+    } else {
+        spec.validate()?
+    };
     if url.scheme() == "http" {
         ensure!(
             permissions.allow_loopback_http,

@@ -57,9 +57,9 @@ without an original asset path or Store. It retains the parser's direct-content,
 font, resource, OCR and coverage limits from [media](media.md); it is not a
 general OS sandbox or complete PDF interpretation.
 
-arXiv domain requests require their dedicated connector and rate policy; they
-are refused by this generic transport. Google shortcuts, authenticated services,
-arXiv metadata, social/video-specific routes and graph-database upsert are separate
+arXiv domain requests use the [dedicated coordinated connector](arxiv-source.md);
+they are refused by this generic transport. Google shortcuts, authenticated services,
+social/video-specific routes and graph-database upsert are separate
 capabilities. A public endpoint timeout is unavailable live evidence, never an
 empty complete source. Actual backend/platform evidence is recorded separately.
 
