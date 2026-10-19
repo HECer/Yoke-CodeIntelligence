@@ -9,7 +9,8 @@ fn validate_target(target: &str) -> Result<()> {
     let name = target
         .strip_prefix("yoke-code-intelligence/federation/")
         .or_else(|| target.strip_prefix("yoke-code-intelligence/service/tls/"))
-        .or_else(|| target.strip_prefix("yoke-code-intelligence/service/token/"));
+        .or_else(|| target.strip_prefix("yoke-code-intelligence/service/token/"))
+        .or_else(|| target.strip_prefix("yoke-code-intelligence/service/postgres/"));
     ensure!(
         name.is_some_and(|name| !name.is_empty()
             && name.len() <= 80

@@ -30,6 +30,7 @@ mod meaning_archive_cli;
 mod meaning_cli;
 mod meaning_projection_cli;
 mod mixed_view_cli;
+mod postgres_catalog_cli;
 mod view_comparison_cli;
 struct PreparedModelProvider {
     provider: yoke::providers::ProviderSpec,
@@ -89,6 +90,7 @@ enum ExtensionOperation {
     MeaningArchive(Box<meaning_archive_cli::Arguments>),
     Meaning(Box<meaning_cli::Arguments>),
     MeaningProjection(Box<meaning_projection_cli::Arguments>),
+    PostgresCatalog(Box<postgres_catalog_cli::Arguments>),
     MixedView(Box<mixed_view_cli::Arguments>),
     Feedback(Box<feedback_cli::Arguments>),
     GithubApp(Box<github_app_cli::Arguments>),
@@ -1952,6 +1954,7 @@ fn run_parity(
         ExtensionOperation::MeaningProjection(_) => {
             bail!("Portable projection host dispatch error")
         }
+        ExtensionOperation::PostgresCatalog(_) => bail!("PostgreSQL catalog host dispatch error"),
         ExtensionOperation::MixedView(_) => bail!("Mixed views host dispatch error"),
         ExtensionOperation::Feedback(_) => bail!("Feedback host dispatch error"),
         ExtensionOperation::DigestReceiver(_) => bail!("Digest receiver host dispatch error"),
@@ -3284,6 +3287,22 @@ fn run(cli: Cli) -> Result<bool> {
             );
         }
         ensure!(options.is_none() && format.is_none(), git_impact_cli::INPUT);
+    }
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::PostgresCatalog(args) = extension.as_ref()
+    {
+        ensure!(
+            cli.root == std::path::Path::new(".")
+                && cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && !cli.allow_writes
+                && cli.analyzer_epoch.is_none(),
+            "PostgreSQL catalogs select explicit host data; source/provider/write flags are unavailable"
+        );
+        return postgres_catalog_cli::run(args, cli.timeout, cli.max_bytes);
     }
     if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::MeaningProjection(args) = extension.as_ref()
