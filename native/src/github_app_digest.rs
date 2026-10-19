@@ -6,6 +6,8 @@ use anyhow::{Context as _, Result, ensure};
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 
+#[path = "github_app_digest_discussions.rs"]
+pub mod discussions;
 #[cfg(test)]
 #[path = "github_app_digest_history_tests.rs"]
 mod history_boundary_tests;

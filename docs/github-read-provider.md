@@ -15,3 +15,10 @@ The Windows HTTP fixture explicitly restores blocking mode on accepted sockets, 
 The implementation follows the primary [GitHub pull request REST contract](https://docs.github.com/en/rest/pulls/pulls), [checks contract](https://docs.github.com/en/rest/checks/runs), [review contract](https://docs.github.com/en/rest/pulls/reviews), and [API version contract](https://docs.github.com/en/rest/about-the-rest-api/api-versions). Transport uses pinned [reqwest 0.13.5](https://docs.rs/reqwest/0.13.5/reqwest/) with native platform certificate verification.
 
 This provider is still under parity development. Exhaustive status pagination, richer triage ranking, output admission across large result sets, and the remaining adversarial freshness and patch matrix require further validation. No GitHub write operation is provided.
+
+The separate [closed-PR discussion capture](../native/docs/github-discussions.md)
+requires additional host text permission and supplies description, conversation,
+review and review-comment observations without opening a source Store. It shares
+the bounded transport and stricter pagination-filter checks. Offline digest
+composition and a body-excluding handoff preview grant no network or service
+write authority; actual service approval/publication remains open.

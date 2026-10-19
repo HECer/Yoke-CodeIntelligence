@@ -6,9 +6,15 @@ declaration metadata. This is an
 isolated development component. The explicit history reader adds bounded,
 captured-head commit messages. An explicit mapped-history path additionally
 associates already captured Git snapshots with selected commits and parents.
-Provider discussions, service handoff, automatic historical acquisition and
-universal export parity remain open. See the
+Explicit closed-PR captures can now be imported into the fresh source projection
+and a body-excluding handoff preview. Actual service publication/recovery,
+automatic historical acquisition and universal export parity remain open. See the
 [captured mapping contract](../native/docs/digest-history-mapping.md).
+
+The [discussion contract](../native/docs/github-discussions.md) describes the
+separate host network/text grant, immutable packet replay, source associations
+and offline `--discussion-capture`/`--handoff-preview` options. Acquisition and
+composition grant no model, source execution or service publication authority.
 
 ## Captured mapping checkpoint (2026-10-19 UTC)
 
@@ -129,7 +135,8 @@ or secrets. The source-header body exclusions below do not apply to explicitly
 requested commit messages. Each commit reports file differences and symbol
 associations as unavailable; empty arrays do not establish an empty change set.
 Object hashes verify bytes and parent links, not authorship, signatures or a
-remote repository. Discussions and service handoff remain unavailable.
+remote repository. Without an explicitly imported discussion capture, discussion
+observations remain unavailable. Service publication remains unavailable.
 
 Shared lease polling recognizes the platform contention error returned by fs2,
 including Windows lock violations. Host cancellation interrupts read-only opens

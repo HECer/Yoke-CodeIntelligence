@@ -129,3 +129,19 @@ absolute deadline/cancellation through both client locks and schema/identity
 work; successful setup clears that policy for later unrelated operations.
 Format, all-target Clippy, typecheck and 260 TypeScript tests / 3 existing skips
 pass with all 620 frozen inputs unchanged. No full platform acceptance is claimed.
+
+The [closed-PR discussion checkpoint](discussions/index.json) adds separate
+host-authorized network/text acquisition, typed immutable unsigned packets and
+offline native source/history composition. A handoff preview uses verified
+export headers and discussion metadata with structured body exclusion; actual
+service approval/publication/recovery remains unavailable. Fourteen new contract
+cases include protocol/budget/freshness attacks, rehashed hostile imports,
+source tampering, actual owned Git capture associations and CLI denial/offline
+composition. Final validation passes 544 scoped native / 0 failed / 7 ignored
+across 11 groups, Python 17, TypeScript 260 / 3 skipped, typecheck, format and
+all-target Clippy. All 626 inputs remain unchanged. Three actual native anonymous
+HTTPS cases cover empty own-repo discovery, Trail-Code PR623 and Rust PR163746
+(97 observations across all four channels). Only metadata/hashes are published;
+raw foreign texts stay in owned external validation directories. Earlier failed
+development attempts remain separate. Prior symlink failures, hosted platform
+acceptance and broader STATUS/R1–R9 requirements are not accepted by this scope.

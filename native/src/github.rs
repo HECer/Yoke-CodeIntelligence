@@ -8,6 +8,9 @@ use std::io::Read;
 use std::net::SocketAddr;
 use zeroize::Zeroizing;
 
+#[path = "github_discussions.rs"]
+pub mod discussions;
+
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostReadProfile {
@@ -669,6 +672,17 @@ impl Operation<'_> {
         params: &[(&str, String)],
         field: Option<&str>,
     ) -> Result<Pages> {
+        self.pages_reserved(repo, repo_id, endpoint, params, field, 0)
+    }
+    fn pages_reserved(
+        &mut self,
+        repo: &str,
+        repo_id: u64,
+        endpoint: &str,
+        params: &[(&str, String)],
+        field: Option<&str>,
+        reserve_requests: usize,
+    ) -> Result<Pages> {
         let path = format!("/repos/{repo}/{endpoint}");
         let mut items = vec![];
         let mut seen = BTreeMap::new();
@@ -677,7 +691,9 @@ impl Operation<'_> {
         let mut reason = "page_budget_exhausted";
         for page in 1..=self.client.profile.max_pages {
             self.deadline.check()?;
-            if self.requests >= self.client.profile.max_requests as usize {
+            if self.requests.saturating_add(reserve_requests)
+                >= self.client.profile.max_requests as usize
+            {
                 reason = "request_budget_exhausted";
                 break;
             }
@@ -889,6 +905,10 @@ fn next_page(
                 );
             }
         }
+        ensure!(
+            expected.keys().all(|key| keys.contains(*key)),
+            "GitHub pagination filter missing"
+        );
         next = Some(page.context("GitHub next page number missing")?);
     }
     Ok(next)

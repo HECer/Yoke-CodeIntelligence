@@ -168,8 +168,35 @@ and **254 TypeScript tests / 3 skipped**. The final row-budget follow-up passes
 **409 native tests / 7 ignored** with unchanged sources; these runs overlap.
 The [contract](../native/docs/digest-history-mapping.md) and
 [source-bound evidence](validation/integration-2026-10-19/digest-mapping/index.json)
-retain their scope. Provider discussions, service handoff, uncaptured-history
-integration, full upstream export equivalence and the wider R1–R9 work remain open.
+retain their scope. That checkpoint predates the separate discussion component
+below. Actual service publication, uncaptured-history integration, full upstream
+export equivalence and the wider R1–R9 work remain open.
+
+Closed-PR discussion acquisition now has an explicit host network/text grant,
+bounded GitHub GETs and typed unsigned-capture replay. Description, conversation,
+review and review-comment observations preserve exact UTF-8 text hashes, reported
+coordinates and reply/review IDs. Repository/PR scope, rechecked PR state,
+receipt queries, coverage and unacquired selections stay explicit. Offline
+composition replays native source and distinguishes a verified history commit
+from a selected immutable source capture; provider text grants no source, model
+or execution authority. A reviewable handoff preview excludes discussion text,
+diff hunks, author/title strings, commit messages and native implementation or
+initializer bodies. Actual service send/approval/outcome recovery remains
+unavailable. See the [contract](../native/docs/github-discussions.md).
+
+The frozen discussion checkpoint passes **544 scoped native tests / 0 failed /
+7 ignored** across 11 groups, **17 Python tests**, typecheck, format/all-target
+Clippy and **260 TypeScript tests / 3 skipped**, with all 626 tracked validation
+inputs unchanged. Three actual anonymous native HTTPS cases pass: this
+repository's currently empty closed-PR list, canonical Trail-Code PR 623, and
+Rust PR 163746 with **97 observations** (description 1, conversation 35, reviews
+25, review comments 36). Raw foreign texts are not published. The
+[evidence index](validation/integration-2026-10-19/discussions/index.json) preserves
+metadata, binary/source hashes, original development failures and final logs.
+These selected targets do not rerun or accept the preceding federation/
+maintenance symlink setup failures or the whole-platform suite. The R8 thematic
+tracker keeps actual service publication, full service acceptance and all
+inventory-wide certification gates open.
 
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes

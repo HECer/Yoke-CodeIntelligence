@@ -17,6 +17,7 @@ mod github_app_ingress_cli;
 mod github_app_pages_cli;
 mod github_app_publication_cli;
 mod github_app_worker_cli;
+mod github_discussions_cli;
 mod host_install_cli;
 mod meaning_archive_cli;
 mod meaning_cli;
@@ -82,6 +83,7 @@ enum ExtensionOperation {
     MixedView(Box<mixed_view_cli::Arguments>),
     Feedback(Box<feedback_cli::Arguments>),
     GithubApp(Box<github_app_cli::Arguments>),
+    GithubDiscussions(Box<github_discussions_cli::Arguments>),
     ModelsHttp(Box<HttpModelArguments>),
     ModelHttpWorker(Box<HttpModelWorkerArguments>),
     ModelsBedrock(Box<bedrock_cli::Arguments>),
@@ -1937,6 +1939,7 @@ fn run_parity(
         ExtensionOperation::MixedView(_) => bail!("Mixed views host dispatch error"),
         ExtensionOperation::Feedback(_) => bail!("Feedback host dispatch error"),
         ExtensionOperation::GithubApp(_) => bail!("GitHub App host dispatch error"),
+        ExtensionOperation::GithubDiscussions(_) => bail!("GitHub discussions host dispatch error"),
         ExtensionOperation::Decisions(args) => run_decisions(engine, *args, arguments, deadline),
         ExtensionOperation::Document(args) => run_document(engine, *args, arguments, deadline),
         ExtensionOperation::Retrieve { query, options } => {
@@ -3242,6 +3245,22 @@ fn run(cli: Cli) -> Result<bool> {
             "Host installation selects its explicit host files; source/provider flags are unavailable"
         );
         return host_install_cli::run(args, cli.timeout, cli.max_bytes);
+    }
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::GithubDiscussions(args) = extension.as_ref()
+    {
+        ensure!(
+            cli.root == std::path::Path::new(".")
+                && cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && !cli.allow_writes
+                && cli.analyzer_epoch.is_none(),
+            "GitHub discussion reads select explicit host inputs; source/provider/write flags are unavailable"
+        );
+        return args.run(cli.timeout, cli.max_bytes);
     }
     if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::GithubApp(args) = extension.as_ref()

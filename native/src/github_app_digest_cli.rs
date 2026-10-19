@@ -27,6 +27,14 @@ pub struct Arguments {
     max_metadata_bytes: usize,
     #[arg(long, global = true, default_value_t = 16_000_000)]
     max_lineage_metadata_bytes: usize,
+    #[arg(long, global = true)]
+    discussion_capture: Option<PathBuf>,
+    #[arg(long, global = true)]
+    allow_discussions: bool,
+    #[arg(long, global = true)]
+    allow_fixture_discussions: bool,
+    #[arg(long, global = true)]
+    handoff_preview: bool,
 }
 #[derive(Subcommand)]
 enum Operation {
@@ -82,6 +90,8 @@ pub struct Prepared {
     request: digest::PreviewRequest,
     options: digest::Options,
     output_bytes: usize,
+    discussions: Option<yoke::github::discussions::Capture>,
+    discussion_permission: digest::discussions::Permission,
     history: Option<(
         yoke::git_workflows::HostGit,
         digest::HistoryOptions,
@@ -101,6 +111,12 @@ impl Arguments {
     pub fn check_permission(&self, webhooks: bool, network: bool, writes: bool) -> Result<()> {
         ensure!(self.allow_digest, "github_app_digest_permission_required");
         ensure!(!webhooks && !network && !writes, INVALID);
+        ensure!(
+            self.discussion_capture.is_some() == self.allow_discussions
+                && (self.discussion_capture.is_some()
+                    || (!self.allow_fixture_discussions && !self.handoff_preview)),
+            INVALID
+        );
         if let Operation::History(history) = &self.operation {
             ensure!(
                 history.allow_history,
@@ -144,7 +160,12 @@ impl Arguments {
         let request_path = request.as_deref().ok_or_else(|| anyhow::anyhow!(INVALID))?;
         // Admit both paths before reading either host-selected document.
         ensure!(
-            profile_path.is_absolute() && request_path.is_absolute(),
+            profile_path.is_absolute()
+                && request_path.is_absolute()
+                && self
+                    .discussion_capture
+                    .as_deref()
+                    .is_none_or(Path::is_absolute),
             INVALID
         );
         let profile = HostProfile::parse(&bytes(profile_path, 32_000, d)?)
@@ -152,6 +173,33 @@ impl Arguments {
         let request = digest::PreviewRequest::parse(&bytes(request_path, 4096, d)?)
             .map_err(|_| public_error(d, INVALID))?;
         digest::authorize_profile(&profile, &request)?;
+        let discussion_permission = digest::discussions::Permission {
+            allow_discussions: self.allow_discussions,
+            allow_fixture: self.allow_fixture_discussions,
+            handoff_preview: self.handoff_preview,
+        };
+        let discussions = self
+            .discussion_capture
+            .as_deref()
+            .map(|path| -> Result<_> {
+                let capture = yoke::github::discussions::Capture::parse(
+                    &bytes(
+                        path,
+                        yoke::github::discussions::Profile::default().max_output_bytes,
+                        d,
+                    )?,
+                    d,
+                )?;
+                digest::discussions::authorize(
+                    &profile,
+                    &request,
+                    &capture,
+                    &discussion_permission,
+                    d,
+                )?;
+                Ok(capture)
+            })
+            .transpose()?;
         let history = history
             .map(|history| -> Result<_> {
                 let selection = if history.map_captured_history {
@@ -182,6 +230,8 @@ impl Arguments {
                 ..hard
             },
             output_bytes: max_bytes as usize,
+            discussions,
+            discussion_permission,
             history,
         })
     }
@@ -190,7 +240,29 @@ impl Prepared {
     pub fn run(self, root: &Path, d: &Deadline) -> Result<bool> {
         let store = Store::open_existing_read_only(root, d)
             .map_err(|_| public_error(d, "github_app_digest_store_unavailable"))?;
-        let value = if let Some((git, history_options, selection)) = &self.history {
+        let value = if let Some(capture) = &self.discussions {
+            let source = if let Some((git, options, selection)) = &self.history {
+                digest::discussions::Source::History {
+                    git,
+                    options,
+                    mapping: selection.as_ref(),
+                }
+            } else {
+                digest::discussions::Source::Current
+            };
+            digest::discussions::preview(
+                &digest::discussions::Context {
+                    store: &store,
+                    profile: &self.profile,
+                    options: &self.options,
+                    permission: &self.discussion_permission,
+                    source,
+                },
+                &self.request,
+                capture,
+                d,
+            )?
+        } else if let Some((git, history_options, selection)) = &self.history {
             if let Some(selection) = selection {
                 digest::preview_mapped_history_with_profile(
                     &store,
