@@ -44,3 +44,14 @@ Those fixtures pass 28 tests with one unconfigured live debugpy gate ignored;
 fresh typecheck and TypeScript tests pass 254/3 skipped. Source hashes remain
 unchanged within both follow-up validation runs. Only the two fixture files
 differ between the registry and portable-fixture source manifests.
+
+The [captured-history mapping follow-up](digest-mapping/index.json) adds explicit
+snapshot selectors to the existing verified Git history. File relations retain
+Git object/mode facts; symbol groups retain exact original source anchors and
+explicit syntax-candidate/ambiguity/unavailable states. Frozen broad validation
+passes 515 native tests / 7 ignored plus TypeScript 254/3 skipped and typecheck.
+The final row-admission refinement passes 409 native / 7 ignored; the two runs
+overlap. Both source freezes and their two-file runtime delta are preserved.
+The [actual hosted d4 platform runs](platform-d4/index.json) remain failed with
+Windows 2283/6/37, Linux 1944/38/23 and macOS 1912/70/23. No full-native or
+platform acceptance, release, deployment or main merge is claimed.

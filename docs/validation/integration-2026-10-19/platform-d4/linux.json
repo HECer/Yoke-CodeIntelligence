@@ -1,0 +1,163 @@
+{
+  "jobId": 117824956236,
+  "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39178127938/job/117824956236",
+  "groups": 256,
+  "passed": 1944,
+  "failed": 38,
+  "ignored": 23,
+  "accepted": false,
+  "failures": [
+    {
+      "test": "host_install::tests::committed_cleanup_refuses_a_rehashed_noncanonical_foreign_backup",
+      "detail": "thread 'host_install::tests::committed_cleanup_refuses_a_rehashed_noncanonical_foreign_backup' (15852) panicked at native/src/host_install.rs:1946:89:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::constructed_backup_deletion_before_event_resumes_and_apply_replays",
+      "detail": "thread 'host_install::tests::constructed_backup_deletion_before_event_resumes_and_apply_replays' (15853) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::constructed_mixed_prefix_foreign_suffix_refuses_all_recovery_before_writes",
+      "detail": "thread 'host_install::tests::constructed_mixed_prefix_foreign_suffix_refuses_all_recovery_before_writes' (15854) panicked at native/src/host_install.rs:2557:82:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::constructed_mixed_three_root_prefix_resumes_every_original_and_output",
+      "detail": "thread 'host_install::tests::constructed_mixed_three_root_prefix_resumes_every_original_and_output' (15855) panicked at native/src/host_install.rs:2557:82:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::constructed_output_rename_before_event_resumes_and_replays_without_writes",
+      "detail": "thread 'host_install::tests::constructed_output_rename_before_event_resumes_and_replays_without_writes' (15856) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::constructed_receipt_before_cleanup_event_blocks_rollback_and_resumes",
+      "detail": "thread 'host_install::tests::constructed_receipt_before_cleanup_event_blocks_rollback_and_resumes' (15857) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::constructed_rollback_direction_replays_then_allows_a_new_install_history",
+      "detail": "thread 'host_install::tests::constructed_rollback_direction_replays_then_allows_a_new_install_history' (15858) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::constructed_unjournaled_output_identity_is_preserved_and_refused",
+      "detail": "thread 'host_install::tests::constructed_unjournaled_output_identity_is_preserved_and_refused' (15859) panicked at native/src/host_install.rs:1946:89:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::explicit_initialization_recovery_repairs_only_an_empty_scaffold_and_replays",
+      "detail": "thread 'host_install::tests::explicit_initialization_recovery_repairs_only_an_empty_scaffold_and_replays' (15860) panicked at native/src/host_install.rs:1946:89:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::foreign_occupant_blocks_resume_and_rollback_without_changing_original_backup",
+      "detail": "thread 'host_install::tests::foreign_occupant_blocks_resume_and_rollback_without_changing_original_backup' (15861) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::initialization_recovery_preserves_and_refuses_foreign_contents",
+      "detail": "thread 'host_install::tests::initialization_recovery_preserves_and_refuses_foreign_contents' (15862) panicked at native/src/host_install.rs:1946:89:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::initialization_recovery_rejects_wrong_token_plan_and_authority_without_writes",
+      "detail": "thread 'host_install::tests::initialization_recovery_rejects_wrong_token_plan_and_authority_without_writes' (15863) panicked at native/src/host_install.rs:1946:89:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::journal_progress_cannot_widen_beyond_the_authorized_target_set",
+      "detail": "thread 'host_install::tests::journal_progress_cannot_widen_beyond_the_authorized_target_set' (15864) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::receipt_commit_does_not_disguise_pending_cleanup_as_successful_replay",
+      "detail": "thread 'host_install::tests::receipt_commit_does_not_disguise_pending_cleanup_as_successful_replay' (15865) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::resume_after_original_rename_publishes_owned_output_and_finishes_cleanup",
+      "detail": "thread 'host_install::tests::resume_after_original_rename_publishes_owned_output_and_finishes_cleanup' (15866) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::rollback_after_original_rename_restores_same_original_and_releases_ownership",
+      "detail": "thread 'host_install::tests::rollback_after_original_rename_restores_same_original_and_releases_ownership' (15867) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::rollback_refuses_a_rehashed_noncanonical_foreign_output_before_any_write",
+      "detail": "thread 'host_install::tests::rollback_refuses_a_rehashed_noncanonical_foreign_output_before_any_write' (15868) panicked at native/src/host_install.rs:1946:89:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::state_capacity_reserves_the_next_receipt_and_journal_before_touching_targets",
+      "detail": "thread 'host_install::tests::state_capacity_reserves_the_next_receipt_and_journal_before_touching_targets' (15869) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::successful_receipt_replay_rejects_foreign_target_edits",
+      "detail": "thread 'host_install::tests::successful_receipt_replay_rejects_foreign_target_edits' (15870) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::unknown_journal_phase_is_refused_before_it_can_accumulate_in_pending_results",
+      "detail": "thread 'host_install::tests::unknown_journal_phase_is_refused_before_it_can_accumulate_in_pending_results' (15871) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "native_archived_source_reads_use_native_proof_without_foreign_authority",
+      "detail": "thread 'native_archived_source_reads_use_native_proof_without_foreign_authority' (16797) panicked at native/tests/collections_cli_review.rs:39:5:\nyoke: Read-only registry file-sharing guard is currently Windows-only\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "captured_history::history_first_sql_wait_uses_the_cli_deadline_without_store_repair",
+      "detail": "thread 'captured_history::history_first_sql_wait_uses_the_cli_deadline_without_store_repair' (22868) panicked at native/tests/support/github_app_digest_history_cli.rs:753:5:\nassertion failed: String::from_utf8_lossy(&output.stderr).to_ascii_lowercase().contains(\"deadline\")\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "dry_run_is_deterministic_and_creates_no_source_engine_or_host_state",
+      "detail": "thread 'dry_run_is_deterministic_and_creates_no_source_engine_or_host_state' (24938) panicked at native/tests/host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence",
+      "detail": "thread 'install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence' (24940) panicked at native/tests/host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "every_target_and_host_binding_is_checked_before_first_write",
+      "detail": "thread 'every_target_and_host_binding_is_checked_before_first_write' (24939) panicked at native/tests/host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths",
+      "detail": "thread 'receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths' (24942) panicked at native/tests/host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "private_state_never_contains_unrelated_human_config_or_policy_contents",
+      "detail": "thread 'private_state_never_contains_unrelated_human_config_or_policy_contents' (24941) panicked at native/tests/host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed",
+      "detail": "thread 'state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed' (24943) panicked at native/tests/host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block",
+      "detail": "thread 'uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block' (24944) panicked at native/tests/host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_initialization_output_failure_identifies_its_durable_result",
+      "detail": "thread 'host_install_cli_initialization_output_failure_identifies_its_durable_result' (24947) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "host_install_cli_initialization_admits_a_valid_output_budget_before_writing_state",
+      "detail": "thread 'host_install_cli_initialization_admits_a_valid_output_budget_before_writing_state' (24946) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_initialization_refuses_foreign_scaffold_bytes_without_disclosing_them",
+      "detail": "thread 'host_install_cli_initialization_refuses_foreign_scaffold_bytes_without_disclosing_them' (24952) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_initialization_repairs_an_owned_scaffold_and_replays_without_source_changes",
+      "detail": "thread 'host_install_cli_initialization_repairs_an_owned_scaffold_and_replays_without_source_changes' (24954) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_installs_and_uninstalls_only_its_owned_fragment",
+      "detail": "thread 'host_install_cli_installs_and_uninstalls_only_its_owned_fragment' (24956) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried",
+      "detail": "thread 'host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried' (24958) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_planning_and_status_are_pure_and_keep_human_text_private",
+      "detail": "thread 'host_install_cli_planning_and_status_are_pure_and_keep_human_text_private' (24959) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write",
+      "detail": "thread 'host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write' (24963) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation",
+      "detail": "thread 'host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation' (24962) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    }
+  ]
+}

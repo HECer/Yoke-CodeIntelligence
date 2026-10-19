@@ -1,0 +1,89 @@
+{
+  "allChecksPassed": true,
+  "sourceUnchanged": true,
+  "checks": [
+    {
+      "gate": "format",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.3,
+      "recordedAt": "2026-10-19T00:14:47.078791+00:00"
+    },
+    {
+      "gate": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--keep-going",
+        "-j2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 99.386,
+      "recordedAt": "2026-10-19T00:16:26.467337+00:00"
+    },
+    {
+      "gate": "digest-git-library",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--no-fail-fast",
+        "--lib",
+        "--test",
+        "github_app_digest_mapping",
+        "--test",
+        "github_app_digest",
+        "--test",
+        "github_app_digest_cli",
+        "--test",
+        "git_workflows",
+        "--test",
+        "git_epochs",
+        "--test",
+        "git_epoch_selection",
+        "--test",
+        "git_review",
+        "--test",
+        "git_cli",
+        "--",
+        "--test-threads=2"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 247.358,
+      "recordedAt": "2026-10-19T00:20:33.829106+00:00"
+    },
+    {
+      "gate": "typescript-typecheck",
+      "command": [
+        "npm.cmd",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 7.257,
+      "recordedAt": "2026-10-19T00:20:41.087137+00:00"
+    },
+    {
+      "gate": "typescript-tests",
+      "command": [
+        "npm.cmd",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 73.3,
+      "recordedAt": "2026-10-19T00:21:54.388698+00:00"
+    }
+  ]
+}

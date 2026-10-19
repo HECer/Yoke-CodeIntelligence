@@ -58,6 +58,12 @@ struct HistoryArguments {
     max_commit_bytes: usize,
     #[arg(long, default_value_t = 64_000_000)]
     max_history_bytes: usize,
+    /// Map already captured source snapshots; never capture historical sources here.
+    #[arg(long)]
+    map_captured_history: bool,
+    /// Additional immutable captured Git snapshot ID (the selected head is implicit).
+    #[arg(long = "captured-snapshot", requires = "map_captured_history")]
+    captured_snapshots: Vec<String>,
 }
 impl HistoryArguments {
     fn options(&self) -> digest::HistoryOptions {
@@ -76,7 +82,11 @@ pub struct Prepared {
     request: digest::PreviewRequest,
     options: digest::Options,
     output_bytes: usize,
-    history: Option<(yoke::git_workflows::HostGit, digest::HistoryOptions)>,
+    history: Option<(
+        yoke::git_workflows::HostGit,
+        digest::HistoryOptions,
+        Option<digest::MappingSelection>,
+    )>,
 }
 fn public_error(d: &Deadline, marker: &str) -> anyhow::Error {
     d.check()
@@ -144,9 +154,19 @@ impl Arguments {
         digest::authorize_profile(&profile, &request)?;
         let history = history
             .map(|history| -> Result<_> {
+                let selection = if history.map_captured_history {
+                    let selection = digest::MappingSelection {
+                        snapshot_ids: history.captured_snapshots.clone(),
+                        limits: digest::MappingOptions::default(),
+                    };
+                    selection.validate(&request)?;
+                    Some(selection)
+                } else {
+                    None
+                };
                 let git = crate::selected_git(history.git.clone(), history.trust_git)
                     .map_err(|_| public_error(d, INVALID))?;
-                Ok((git, history.options()))
+                Ok((git, history.options(), selection))
             })
             .transpose()?;
         d.check()?;
@@ -170,16 +190,29 @@ impl Prepared {
     pub fn run(self, root: &Path, d: &Deadline) -> Result<bool> {
         let store = Store::open_existing_read_only(root, d)
             .map_err(|_| public_error(d, "github_app_digest_store_unavailable"))?;
-        let value = if let Some((git, history_options)) = &self.history {
-            digest::preview_history_with_profile(
-                &store,
-                &self.profile,
-                &self.options,
-                &self.request,
-                git,
-                history_options,
-                d,
-            )?
+        let value = if let Some((git, history_options, selection)) = &self.history {
+            if let Some(selection) = selection {
+                digest::preview_mapped_history_with_profile(
+                    &store,
+                    &self.profile,
+                    &self.options,
+                    &self.request,
+                    git,
+                    history_options,
+                    selection,
+                    d,
+                )?
+            } else {
+                digest::preview_history_with_profile(
+                    &store,
+                    &self.profile,
+                    &self.options,
+                    &self.request,
+                    git,
+                    history_options,
+                    d,
+                )?
+            }
         } else {
             digest::preview_with_profile(&store, &self.profile, &self.options, &self.request, d)?
         };

@@ -46,6 +46,28 @@ three existing skips. These scoped results are not whole-native acceptance.
 See the [registry contract](../native/docs/collection-registry-access.md) and
 [scoped evidence](validation/integration-2026-10-19/registry-coordination/index.json).
 
+At `d4edf7d`, the complete hosted runs remain failed: Windows **2,283 passed /
+6 failed / 37 ignored**, Linux **1,944 / 38 / 23**, macOS **1,912 / 70 / 23**;
+each executes 256 result groups. Windows runs the real symlink fixtures without
+OS 1314. Remaining failures include provider/source binding and runtime fixture
+issues on Windows, guarded host-install availability, initial SQL deadlines,
+macOS PDF workers and process-group cleanup. The raw platform logs and individual
+failures are [preserved separately](validation/integration-2026-10-19/platform-d4/index.json).
+These results do not establish platform acceptance.
+
+The digest now has an explicit captured-history mapping path. Verified Git tree
+facts describe changes over the captured path union; source-replayed Rust
+associations retain original IDs, producers and exact byte evidence. Qualified
+module names, duplicate candidates, uncaptured sources and absent parents remain
+distinct. Captures share source, metadata, proof, analysis and encoded-row
+budgets. The broad local run passes **515 native tests / 7 ignored**, typecheck
+and **254 TypeScript tests / 3 skipped**. The final row-budget follow-up passes
+**409 native tests / 7 ignored** with unchanged sources; these runs overlap.
+The [contract](../native/docs/digest-history-mapping.md) and
+[source-bound evidence](validation/integration-2026-10-19/digest-mapping/index.json)
+retain their scope. Provider discussions, service handoff, uncaptured-history
+integration, full upstream export equivalence and the wider R1–R9 work remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

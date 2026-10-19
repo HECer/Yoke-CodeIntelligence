@@ -10,7 +10,7 @@ use crate::{
     store::Store,
 };
 use anyhow::{Result, ensure};
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
 #[path = "git_source_lineage.rs"]
 mod lineage;
@@ -20,8 +20,18 @@ pub(super) struct Header {
     pub(super) receipt: SourceReceipt,
     pub(super) inheritance: DerivedCaptureOptionsRecord,
     pub(super) commit: Vec<u8>,
+    proof_bytes: usize,
 }
 pub(super) fn header(store: &Store, snapshot: &Snapshot, d: &Deadline) -> Result<Header> {
+    header_for_selection(store, snapshot, None, None, d)
+}
+fn header_for_selection(
+    store: &Store,
+    snapshot: &Snapshot,
+    allowed_commits: Option<&BTreeSet<String>>,
+    proof_limit: Option<usize>,
+    d: &Deadline,
+) -> Result<Header> {
     d.check()?;
     store.set_deadline(d)?;
     ensure!(
@@ -60,11 +70,34 @@ pub(super) fn header(store: &Store, snapshot: &Snapshot, d: &Deadline) -> Result
         "Git source capture origin mismatch"
     );
     crate::capture::options_for_snapshot_at(store, snapshot, AnalyzerEpoch::V9)?;
+    ensure!(
+        allowed_commits.is_none_or(|ids| ids.contains(&receipt.commit_id)),
+        "Git source commit outside selected history"
+    );
+    let proof_bytes = if let Some(limit) = proof_limit {
+        let size: usize = store.db.query_row(
+            "SELECT length(CAST(value AS BLOB)) FROM records WHERE kind='artifact' AND id=?1",
+            [&receipt.commit_artifact_id],
+            |r| r.get(0),
+        )?;
+        ensure!(size <= limit.min(64_000), LineageCapacity);
+        let registration = record_value(store, "artifact", &receipt.commit_artifact_id, size, d)?;
+        let total = usize::try_from(
+            registration["totalBytes"]
+                .as_u64()
+                .ok_or_else(|| anyhow::anyhow!("Git artifact byte count unavailable"))?,
+        )?;
+        ensure!(total <= limit - size && total <= 1_000_000, LineageCapacity);
+        size + total
+    } else {
+        0
+    };
     let commit = artifact_bytes(store, &receipt.commit_artifact_id, 1_000_000, d)?;
     Ok(Header {
         receipt,
         inheritance,
         commit,
+        proof_bytes,
     })
 }
 fn budget(snapshot: &Snapshot, maximum: usize, d: &Deadline) -> Result<()> {
@@ -119,14 +152,25 @@ pub(super) fn retained(
 }
 /// Constructed only after complete commit/tree/blob and capture-scope verification.
 pub(crate) struct VerifiedSource {
-    epoch: AnalyzerEpoch,
-    commit: String,
-    tree: String,
-    sources: BTreeMap<String, String>,
+    parts: VerifiedParts,
+}
+pub(crate) struct TreeFact {
+    pub(crate) mode: String,
+    pub(crate) object_id: String,
+    pub(crate) object_type: String,
+}
+pub(crate) struct VerifiedParts {
+    pub(crate) epoch: AnalyzerEpoch,
+    pub(crate) commit: String,
+    pub(crate) tree: String,
+    pub(crate) sources: BTreeMap<String, String>,
+    pub(crate) entries: BTreeMap<String, TreeFact>,
+    pub(crate) lineage_bytes: usize,
+    pub(crate) proof_bytes: usize,
 }
 impl VerifiedSource {
-    pub(crate) fn into_parts(self) -> (AnalyzerEpoch, String, String, BTreeMap<String, String>) {
-        (self.epoch, self.commit, self.tree, self.sources)
+    pub(crate) fn into_parts(self) -> VerifiedParts {
+        self.parts
     }
 }
 pub(crate) fn verified(
@@ -134,17 +178,38 @@ pub(crate) fn verified(
     snapshot: &Snapshot,
     maximum: usize,
     lineage_maximum: usize,
+    allowed_commits: Option<&BTreeSet<String>>,
+    proof_limit: Option<usize>,
     d: &Deadline,
 ) -> Result<VerifiedSource> {
     budget(snapshot, maximum, d)?;
-    lineage::preflight(store, snapshot, lineage_maximum, d)?;
-    let header = header(store, snapshot, d)?;
+    let lineage_bytes = lineage::preflight(store, snapshot, lineage_maximum, d)?;
+    let header = header_for_selection(store, snapshot, allowed_commits, proof_limit, d)?;
     let epoch = AnalyzerEpoch::parse(&header.receipt.analyzer)?;
     let sources = collect(store, snapshot, &header, d)?;
     Ok(VerifiedSource {
-        epoch,
-        commit: header.receipt.commit_id,
-        tree: header.receipt.tree_id,
-        sources,
+        parts: VerifiedParts {
+            epoch,
+            commit: header.receipt.commit_id,
+            tree: header.receipt.tree_id,
+            sources,
+            entries: header
+                .receipt
+                .tree_entries
+                .into_iter()
+                .map(|entry| {
+                    (
+                        entry.path,
+                        TreeFact {
+                            mode: entry.mode,
+                            object_id: entry.object_id,
+                            object_type: entry.object_type,
+                        },
+                    )
+                })
+                .collect(),
+            lineage_bytes,
+            proof_bytes: header.proof_bytes,
+        },
     })
 }

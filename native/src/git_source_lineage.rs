@@ -83,16 +83,15 @@ pub(crate) fn disk_preflight(
     snapshot: &Snapshot,
     maximum: usize,
     d: &Deadline,
-) -> Result<()> {
+) -> Result<usize> {
     ensure!(maximum <= 16_000_000, LineageCapacity);
-    disk_records(
-        &mut Budget {
-            store,
-            d,
-            remaining: maximum,
-        },
-        snapshot,
-    )
+    let mut budget = Budget {
+        store,
+        d,
+        remaining: maximum,
+    };
+    disk_records(&mut budget, snapshot)?;
+    Ok(maximum - budget.remaining)
 }
 
 pub(super) fn preflight(
@@ -100,7 +99,7 @@ pub(super) fn preflight(
     snapshot: &Snapshot,
     maximum: usize,
     d: &Deadline,
-) -> Result<()> {
+) -> Result<usize> {
     ensure!(maximum <= 16_000_000, LineageCapacity);
     let mut budget = Budget {
         store,
@@ -155,5 +154,6 @@ pub(super) fn preflight(
             && origin.kind == "disk",
         "Git preview requires a direct disk capture origin"
     );
-    disk_records(&mut budget, &origin)
+    disk_records(&mut budget, &origin)?;
+    Ok(maximum - budget.remaining)
 }

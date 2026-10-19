@@ -9,10 +9,13 @@ use serde_json::{Value, json};
 #[cfg(test)]
 #[path = "github_app_digest_history_tests.rs"]
 mod history_boundary_tests;
+#[path = "github_app_digest_mapping.rs"]
+mod mapping;
 #[path = "github_app_digest_rust.rs"]
 mod rust;
 #[path = "github_app_digest_source.rs"]
 mod source;
+pub use mapping::{MappingOptions, MappingSelection};
 
 #[derive(Clone, Copy, Debug)]
 enum Failure {
@@ -122,6 +125,32 @@ pub fn preview_with_profile(
 ) -> Result<Value> {
     preview_with_history_reader(store, profile, options, request, d, None)
 }
+/// Associate explicitly selected, already captured Git snapshots with the
+/// verified history. This never captures sources or grants provider authority.
+#[allow(clippy::too_many_arguments)] // Independent host selectors and acquisition budgets.
+pub fn preview_mapped_history_with_profile(
+    store: &Store,
+    profile: &super::HostProfile,
+    options: &Options,
+    request: &PreviewRequest,
+    git: &crate::git_workflows::HostGit,
+    history_options: &HistoryOptions,
+    selection: &MappingSelection,
+    d: &Deadline,
+) -> Result<Value> {
+    authorize_profile(profile, request)?;
+    selection.validate(request)?;
+    preview_history_mapped(
+        store,
+        profile,
+        options,
+        request,
+        git,
+        history_options,
+        Some(selection),
+        d,
+    )
+}
 /// Explicit host-selected Git reads begin only after captured-source verification.
 pub fn preview_history_with_profile(
     store: &Store,
@@ -130,6 +159,28 @@ pub fn preview_history_with_profile(
     request: &PreviewRequest,
     git: &crate::git_workflows::HostGit,
     history_options: &HistoryOptions,
+    d: &Deadline,
+) -> Result<Value> {
+    preview_history_mapped(
+        store,
+        profile,
+        options,
+        request,
+        git,
+        history_options,
+        None,
+        d,
+    )
+}
+#[allow(clippy::too_many_arguments)] // Preserves the existing public history interface.
+fn preview_history_mapped(
+    store: &Store,
+    profile: &super::HostProfile,
+    options: &Options,
+    request: &PreviewRequest,
+    git: &crate::git_workflows::HostGit,
+    history_options: &HistoryOptions,
+    selection: Option<&MappingSelection>,
     d: &Deadline,
 ) -> Result<Value> {
     authorize_profile(profile, request)?;
@@ -156,7 +207,15 @@ pub fn preview_history_with_profile(
             },
         )
     };
-    preview_with_history_reader(store, profile, options, request, d, Some(&mut reader))
+    preview_with_readers(
+        store,
+        profile,
+        options,
+        request,
+        d,
+        Some(&mut reader),
+        selection,
+    )
 }
 type HistoryReader<'a> =
     dyn FnMut(&str, &Deadline) -> Result<crate::git_workflows::history_read::History> + 'a;
@@ -166,11 +225,26 @@ fn preview_with_history_reader(
     options: &Options,
     request: &PreviewRequest,
     d: &Deadline,
+    history_reader: Option<&mut HistoryReader<'_>>,
+) -> Result<Value> {
+    preview_with_readers(store, profile, options, request, d, history_reader, None)
+}
+fn preview_with_readers(
+    store: &Store,
+    profile: &super::HostProfile,
+    options: &Options,
+    request: &PreviewRequest,
+    d: &Deadline,
     mut history_reader: Option<&mut HistoryReader<'_>>,
+    selection: Option<&MappingSelection>,
 ) -> Result<Value> {
     authorize_profile(profile, request)?;
     d.check()?;
-    let c = source::Context { store, options };
+    let c = source::Context {
+        store,
+        options,
+        proof_limit: selection.map(|selection| selection.limits.max_proof_bytes),
+    };
     ensure!(
         c.store.db.is_autocommit(),
         "github_app_digest_caller_transaction_refused"
@@ -210,12 +284,42 @@ fn preview_with_history_reader(
                 _ => anyhow::anyhow!(SOURCE),
             }
         })?;
-        let history = if let Some(reader) = history_reader.as_mut() {
+        if selection.is_some() {
+            ensure!(projected.omissions == 0, CAPACITY);
+        }
+        let mut history = if let Some(reader) = history_reader.as_mut() {
             let head = projected
                 .commit_id
                 .as_deref()
                 .context("github_app_digest_history_unavailable")?;
             Some(reader(head, d)?)
+        } else {
+            None
+        };
+        let mapped = if let Some(selection) = selection {
+            Some(
+                mapping::attach(
+                    store,
+                    options,
+                    request,
+                    &projected,
+                    history.as_mut().context(SOURCE)?,
+                    selection,
+                    d,
+                )
+                .map_err(|error| {
+                    if let Err(cause) = d.check() {
+                        return cause;
+                    }
+                    if matches!(error.downcast_ref::<Failure>(), Some(Failure::Capacity))
+                        || error.is::<crate::git_workflows::source_read::LineageCapacity>()
+                    {
+                        anyhow::anyhow!(CAPACITY)
+                    } else {
+                        anyhow::anyhow!(SOURCE)
+                    }
+                })?,
+            )
         } else {
             None
         };
@@ -253,6 +357,15 @@ fn preview_with_history_reader(
             );
             limitations.push(json!("History uses a bounded committer-date-priority traversal of hash-verified captured-head commit objects, preserves discovery order for equal dates and reverses selected rows. This is not a global timestamp sort; date lookahead shares all acquisition budgets. File differences and per-commit symbol associations are unavailable."));
             limitations.push(json!("Commit messages are untrusted repository metadata and may contain source code or secrets. Object identity does not verify authorship, signatures, provider ownership or a remote head."));
+        }
+        if let Some(mapped) = mapped {
+            value["kind"] = json!("native_captured_repository_digest_mapped_history_preview");
+            value["historyMapping"] = mapped;
+            let limitations = value["limitations"].as_array_mut().context(SOURCE)?;
+            limitations[5] = json!(
+                "History uses the existing bounded verified commit traversal. File relations cover only the union of explicitly captured paths, not every Git tree change. Missing captures are unavailable, never an empty complete result."
+            );
+            limitations.push(json!("Symbol associations compare source-replayed file-local Rust export syntax. Matching qualified names or exact declaration fingerprints do not establish semantic identity, compiler accessibility, a rename or runtime dispatch."));
         }
         crate::json::encode_bounded(&value, c.options.max_output_bytes, d).context(CAPACITY)?;
         d.check()?;

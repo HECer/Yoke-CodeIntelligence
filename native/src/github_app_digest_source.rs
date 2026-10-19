@@ -15,6 +15,7 @@ use tree_sitter::{ParseOptions, Parser, Tree};
 pub(super) struct Context<'a> {
     pub(super) store: &'a Store,
     pub(super) options: &'a Options,
+    pub(super) proof_limit: Option<usize>,
 }
 
 pub(super) struct ReadPolicy<'a> {
@@ -84,6 +85,20 @@ pub(super) struct Projection {
     pub ast_nodes: usize,
     pub commit_id: Option<String>,
     pub tree_id: Option<String>,
+    pub git_entries: Option<BTreeMap<String, crate::git_workflows::source_read::TreeFact>>,
+    pub symbol_scopes: BTreeMap<String, String>,
+    pub usage: Usage,
+}
+#[derive(Default)]
+pub(super) struct Usage {
+    pub files: usize,
+    pub source_bytes: usize,
+    pub metadata_bytes: usize,
+    pub lineage_bytes: usize,
+    pub proof_bytes: usize,
+    pub entities: usize,
+    pub ast_nodes: usize,
+    pub replay_name_bytes: usize,
 }
 fn metadata<T: DeserializeOwned>(
     c: &Context<'_>,
@@ -226,6 +241,14 @@ pub(super) fn project(
     request: &PreviewRequest,
     d: &Deadline,
 ) -> Result<Projection> {
+    project_for_commits(c, request, None, d)
+}
+pub(super) fn project_for_commits(
+    c: &Context<'_>,
+    request: &PreviewRequest,
+    allowed_commits: Option<&BTreeSet<String>>,
+    d: &Deadline,
+) -> Result<Projection> {
     let mut remaining = c.options.max_metadata_bytes;
     let snapshot: Snapshot = metadata(c, "snapshots", &request.snapshot_id, &mut remaining, d)?;
     ensure!(
@@ -245,32 +268,43 @@ pub(super) fn project(
         bytes += file.size;
     }
     let has_git = crate::git_workflows::has_source_proof(c.store, &snapshot.id).context(SOURCE)?;
-    let (epoch, commit_id, tree_id, mut retained) = if snapshot.kind == "derived" {
-        ensure!(has_git, SOURCE);
-        let (epoch, commit, tree, sources) = crate::git_workflows::source_read::verified(
-            c.store,
-            &snapshot,
-            c.options.max_source_bytes,
-            c.options.max_lineage_metadata_bytes,
-            d,
-        )
-        .map_err(lineage_error)?
-        .into_parts();
-        (epoch, Some(commit), Some(tree), Some(sources))
-    } else {
-        ensure!(!has_git, SOURCE);
-        crate::git_workflows::source_read::disk_preflight(
-            c.store,
-            &snapshot,
-            c.options.max_lineage_metadata_bytes,
-            d,
-        )
-        .map_err(lineage_error)?;
-        let epoch =
-            crate::capture::analyzer_epoch_for_snapshot_with_deadline(c.store, &snapshot, d)
-                .context(SOURCE)?;
-        (epoch, None, None, None)
-    };
+    let (epoch, commit_id, tree_id, mut retained, git_entries, lineage_bytes, proof_bytes) =
+        if snapshot.kind == "derived" {
+            ensure!(has_git, SOURCE);
+            let parts = crate::git_workflows::source_read::verified(
+                c.store,
+                &snapshot,
+                c.options.max_source_bytes,
+                c.options.max_lineage_metadata_bytes,
+                allowed_commits,
+                c.proof_limit,
+                d,
+            )
+            .map_err(lineage_error)?
+            .into_parts();
+            (
+                parts.epoch,
+                Some(parts.commit),
+                Some(parts.tree),
+                Some(parts.sources),
+                Some(parts.entries),
+                parts.lineage_bytes,
+                parts.proof_bytes,
+            )
+        } else {
+            ensure!(!has_git && allowed_commits.is_none(), SOURCE);
+            let lineage_bytes = crate::git_workflows::source_read::disk_preflight(
+                c.store,
+                &snapshot,
+                c.options.max_lineage_metadata_bytes,
+                d,
+            )
+            .map_err(lineage_error)?;
+            let epoch =
+                crate::capture::analyzer_epoch_for_snapshot_with_deadline(c.store, &snapshot, d)
+                    .context(SOURCE)?;
+            (epoch, None, None, None, None, lineage_bytes, 0)
+        };
     let scope =
         crate::capture::source_scope_policy_at(c.store, &snapshot, epoch).context(SOURCE)?;
     let graph: Graph = metadata(c, "graphs", &snapshot.id, &mut remaining, d)?;
@@ -312,6 +346,18 @@ pub(super) fn project(
         ast_nodes: 0,
         commit_id,
         tree_id,
+        git_entries,
+        symbol_scopes: BTreeMap::new(),
+        usage: Usage {
+            files: snapshot.files.len(),
+            source_bytes: bytes,
+            metadata_bytes: c.options.max_metadata_bytes - remaining,
+            lineage_bytes,
+            proof_bytes,
+            entities: graph.entities.len(),
+            ast_nodes: graph.observations.len().max(graph.evidence.len()),
+            replay_name_bytes: 0,
+        },
     };
     let mut work = Work {
         options: c.options,
@@ -379,6 +425,13 @@ pub(super) fn project(
     );
     output.omissions = output.candidates - output.symbols.len();
     output.ast_nodes = work.nodes;
+    output.usage.entities = output
+        .usage
+        .entities
+        .max(work.entities)
+        .max(output.entities);
+    output.usage.ast_nodes = output.usage.ast_nodes.max(work.nodes);
+    output.usage.replay_name_bytes = work.name_bytes;
     ensure!(retained.is_none_or(|sources| sources.is_empty()), SOURCE);
     d.check()?;
     Ok(output)

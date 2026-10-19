@@ -103,8 +103,8 @@ pub(super) fn project(
     output: &mut Projection,
     d: &Deadline,
 ) -> Result<()> {
-    let mut modules = vec![tree.root_node()];
-    while let Some(module) = modules.pop() {
+    let mut modules = vec![(tree.root_node(), String::new())];
+    while let Some((module, scope)) = modules.pop() {
         let mut cursor = module.walk();
         for node in module.named_children(&mut cursor) {
             d.check()?;
@@ -118,6 +118,16 @@ pub(super) fn project(
             if !public(node, text) {
                 continue;
             }
+            let scoped_name = node
+                .child_by_field_name("name")
+                .and_then(|name| name.utf8_text(text.as_bytes()).ok())
+                .map(|name| {
+                    if scope.is_empty() {
+                        name.to_owned()
+                    } else {
+                        format!("{scope}::{name}")
+                    }
+                });
             let kind = match node.kind() {
                 "function_item" => "function",
                 "const_item" => "constant",
@@ -130,7 +140,7 @@ pub(super) fn project(
             };
             if node.kind() == "mod_item" {
                 if let Some(body) = node.child_by_field_name("body") {
-                    modules.push(body);
+                    modules.push((body, scoped_name.clone().context(SOURCE)?));
                 } else {
                     output.visibility_unresolved += 1;
                 }
@@ -165,6 +175,10 @@ pub(super) fn project(
                 "visibility":"explicit_pub_in_file","externalVisibility":"unknown",
                 "compilerVerified":false
             }));
+            output.symbol_scopes.insert(
+                native.map_or(own_id, |e| e.id.clone()),
+                scoped_name.context(SOURCE)?,
+            );
         }
     }
     Ok(())

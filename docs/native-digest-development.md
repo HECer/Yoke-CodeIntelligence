@@ -4,9 +4,32 @@ The `github_app::digest::preview` library function projects a host-selected
 captured native disk or locally proven immutable Git source snapshot into bounded
 declaration metadata. This is an
 isolated development component. The explicit history reader adds bounded,
-captured-head commit messages. Historical file/symbol mapping, provider
-discussions, service handoff and universal export
-parity remain open.
+captured-head commit messages. An explicit mapped-history path additionally
+associates already captured Git snapshots with selected commits and parents.
+Provider discussions, service handoff, automatic historical acquisition and
+universal export parity remain open. See the
+[captured mapping contract](../native/docs/digest-history-mapping.md).
+
+## Captured mapping checkpoint (2026-10-19 UTC)
+
+`history --map-captured-history --captured-snapshot ID` associates explicit
+existing Git captures with verified selected commits and direct parents. It
+does not discover or capture additional source. Exact Git file facts remain
+separate from Rust syntax correspondence candidates and semantic identity.
+Missing captures and unsupported counterpart projections report unavailable
+states; duplicate groups retain every original declaration and byte anchor.
+
+The frozen broad run passes 515 native tests with seven explicit host gates
+ignored, plus typecheck and 254 TypeScript tests with three skips. The subsequent
+output-admission follow-up passes 409 native tests with seven ignored gates;
+counts overlap. Both runs pass format/all-target Clippy and preserve source
+hashes. Actual owned Git SHA-1/SHA-256 histories, mixed capture epochs, aggregate
+capacities, revoked grants, corrupt Rust claims, exact CLI output boundaries,
+caller transaction/SQL policy preservation and unchanged CAS are covered. The
+final runtime delta is confined to the new mapping module and its integration
+tests. See the [evidence index](validation/integration-2026-10-19/digest-mapping/index.json).
+This remains scoped development evidence; the full native suite and hosted
+platform runs are not accepted.
 
 ## Integration development checkpoint (2026-10-18 UTC)
 
@@ -41,8 +64,10 @@ The history reader now uses bounded committer-date-priority discovery rather
 than breadth-first selection. It verifies all competing frontier dates before
 choosing a row. Lookahead shares the object, byte, parent and frontier capacities;
 a visit limit can stop selection with a partially loaded frontier and explicit
-counts. Historical file/symbol mapping, provider discussions and service handoff
-remain incomplete. No live GitHub installation or deployment is certified.
+counts. The subsequent explicit-capture mapping work preserves these traversal
+rules; it does not acquire uncaptured history or provider discussions. Service
+handoff and full digest equivalence remain incomplete. No live GitHub
+installation or deployment is certified.
 
 ## Current interfaces and boundaries
 
