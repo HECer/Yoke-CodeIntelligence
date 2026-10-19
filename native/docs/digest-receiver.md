@@ -4,8 +4,9 @@
 by the [approved digest client](digest-service.md). It accepts authenticated,
 bounded JSON submissions and commits their exact wire bytes before returning a
 receipt. A repeated identical PUT and a subsequent GET return the original receipt,
-including after restart. Intake is distinct from processing: the service advertises
-`processingAvailable:false`, does not run a model and does not execute source.
+including after restart. By default the service advertises
+`processingAvailable:false`. Separately authorized [metadata queries](digest-query.md)
+add deterministic processing on read; neither mode runs a model or executes source.
 
 Incoming headers, source hashes, snapshot IDs, compiler/coverage labels and
 discussion metadata remain sender assertions. The receiver checks the closed
@@ -86,8 +87,9 @@ host token solely for an owned numeric-loopback receiver.
 
 ## Admission and receipts
 
-Only HTTP/1.1 `PUT /v1/digests/<proposalId>` and `GET` of that same path are
-supported. The Host authority and TLS server name must match the selected origin.
+Intake uses HTTP/1.1 `PUT /v1/digests/<proposalId>` and `GET` of that same path.
+The optional `POST /v1/digest-query` route requires its own host and per-grant
+query permissions. The Host authority and TLS server name must match the selected origin.
 Authentication precedes body acquisition. Duplicate headers, ambiguous lengths,
 transfer/content encodings, Expect/trailers and browser Origin headers refuse.
 PUT requires JSON content type, a fixed length and the exact `Idempotency-Key`.
@@ -127,6 +129,8 @@ retire under their existing local authority. Received metadata is stored as
 plaintext host data under the same Store access controls; no encryption-at-rest
 or complete DLP guarantee is added.
 
-This implements receipt-backed intake and client recovery. Configured public
-production deployment, downstream digest processing/query integration and full
-upstream/proprietary equivalence require separate work and evidence.
+This implements receipt-backed intake and client recovery. The separate
+[query contract](digest-query.md) describes received metadata processing and its
+limits. Configured public production deployment, automatic historical acquisition,
+source verification, semantic reasoning and full upstream/proprietary equivalence
+require separate work and evidence.

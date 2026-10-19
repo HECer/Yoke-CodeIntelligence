@@ -27,8 +27,10 @@ An explicit [digest service workflow](native/docs/digest-service.md) adds exact
 payload approval, a durable send journal and read-only outcome recovery for the
 independently owned receiver contract. The explicit
 [native receiver](native/docs/digest-receiver.md) adds authenticated TCP/TLS intake
-and immutable receipts. Public production deployment, downstream processing and
-wider upstream service equivalence remain open.
+and immutable receipts. Separately authorized [received metadata queries](native/docs/digest-query.md)
+preserve receipt-qualified rows and directed relationships without conferring
+source authority. Public production deployment, semantic reasoning and wider
+upstream service equivalence remain open.
 
 ## TypeScript advanced runtime
 

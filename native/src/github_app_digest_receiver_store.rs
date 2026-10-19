@@ -5,15 +5,15 @@ use std::time::{SystemTime, UNIX_EPOCH};
 const MAX_RECORD: usize = 8_016_384;
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
-struct Record {
+pub(super) struct Record {
     schema_version: u32,
     receiver_workspace_id: String,
-    endpoint: String,
-    principal_id: String,
-    proposal_id: String,
-    payload_hash: String,
-    received_at_unix: u64,
-    body: String,
+    pub(super) endpoint: String,
+    pub(super) principal_id: String,
+    pub(super) proposal_id: String,
+    pub(super) payload_hash: String,
+    pub(super) received_at_unix: u64,
+    pub(super) body: String,
 }
 impl Record {
     fn validate(&self, store: &Store, d: &Deadline) -> Result<Scope> {
@@ -46,12 +46,12 @@ impl Record {
         );
         Ok(s.scope())
     }
-    fn receipt(&self) -> Value {
+    pub(super) fn receipt(&self) -> Value {
         json!({"schemaVersion":1,"proposalId":self.proposal_id,"payloadHash":self.payload_hash,"receiptId":identity(self),"accepted":true})
     }
 }
-struct History {
-    records: BTreeMap<String, (Record, Scope)>,
+pub(super) struct History {
+    pub(super) records: BTreeMap<String, (Record, Scope)>,
     bytes: usize,
 }
 fn load(store: &Store, p: &Profile, d: &Deadline) -> Result<History> {
@@ -101,7 +101,7 @@ fn durable(store: &Store) -> Result<()> {
     );
     Ok(())
 }
-fn sql<T>(
+pub(super) fn sql<T>(
     store: &Store,
     p: &Profile,
     write: bool,

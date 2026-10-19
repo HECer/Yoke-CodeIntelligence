@@ -56,6 +56,15 @@ Current grants, revocation, original host cancellation and request deadlines
 govern the worker. This data store supplies no model or source-execution pipeline;
 see the [receiver contract](../native/docs/digest-receiver.md).
 
+`receiver::query` deterministically projects selected accepted metadata on read.
+Independent host/per-grant permissions protect local read-only and authenticated
+HTTP queries. Receipt-qualified JSON pointers preserve duplicate positions,
+directed parallel relations and sender-claim provenance; no imported ID becomes
+a local graph/CAS identity. The remote query client reads only the service token,
+checks request/scope/row protocol bindings and opens no sender Store or signing
+key. Model calls, execution, semantic identity and source verification remain
+unavailable. See the [query contract](../native/docs/digest-query.md).
+
 ## Boundaries
 
 ```text

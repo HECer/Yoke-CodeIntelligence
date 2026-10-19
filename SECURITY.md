@@ -36,6 +36,14 @@ Rust compiler/runtime/model/container operations require typed host profiles and
 
 The TLS source service uses fixed import/export grants, hashed bearer tokens, role checks and revocation. Its client verifies an explicitly selected CA and server name. TLS is required off loopback; plaintext loopback requires explicit client permission. TLS private keys, tokens and signing seeds stay in native OS stores and zeroizing memory. Linux Secret Service and macOS Keychain availability are actual platform prerequisites; no plaintext fallback or automatic unlocking is provided.
 
+The digest receiver's metadata queries require independent host and per-principal
+permissions, both disabled by default. Received identifiers and source/coverage
+claims remain inert sender data. Query rows bind accepted receipt and JSON
+position; they never establish local source authority, semantic identity or
+execution. Local queries open only existing read-only state. Remote queries read
+only the scoped service token, preserve TLS verification and introduce no sender
+Store, App signing-key lookup, model calls or derived record writes.
+
 Reviewed retention never grants deletion from a repository setting. Only an exact confirmed host plan can retire history or unlink committed quarantine bytes; unknown schemas/dependencies and reachable roots fail closed. Purge reports gross deleted content bytes, not a measured filesystem free-space increase.
 
 ## Retained 0.3 host capabilities

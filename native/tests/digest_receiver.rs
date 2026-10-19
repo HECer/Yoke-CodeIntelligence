@@ -20,6 +20,584 @@ use yoke::{
     store::Store,
 };
 const TOKEN: [u8; 32] = [42; 32];
+use receiver::query;
+fn query_request(s: &Source, proposal_ids: Vec<String>) -> query::Request {
+    query::Request {
+        schema_version: 1,
+        app_id: 123,
+        sender_workspace_id: s.engine.store.workspace_id.clone(),
+        installation_id: 42,
+        repository_id: 9,
+        repository: "org/repo".into(),
+        proposal_ids,
+        kinds: vec![
+            query::Kind::Symbol,
+            query::Kind::Commit,
+            query::Kind::Pull,
+            query::Kind::Observation,
+            query::Kind::Relation,
+        ],
+        text: String::new(),
+        offset: 0,
+        limit: 100,
+    }
+}
+fn query_start(
+    s: &Source,
+    host_allowed: bool,
+    grant_allowed: bool,
+) -> (tempfile::TempDir, receiver::ServerHandle) {
+    let root = tempfile::tempdir().unwrap();
+    let mut p = s.receiver_profile();
+    p.grants[0].allow_query = grant_allowed;
+    let h = receiver::start(
+        Store::open(root.path()).unwrap(),
+        p,
+        receiver::Config {
+            allow_query: host_allowed,
+            max_response_bytes: 64_000,
+            ..config()
+        },
+        &Deadline::new(20000),
+    )
+    .unwrap();
+    (root, h)
+}
+fn query_http(h: &receiver::ServerHandle, q: &Value, token: &[u8; 32]) -> (u16, Value) {
+    let c = reqwest::blocking::Client::builder()
+        .no_proxy()
+        .timeout(Duration::from_secs(5))
+        .build()
+        .unwrap();
+    let response = c
+        .post(format!("{}v1/digest-query", h.endpoint()))
+        .bearer_auth(hex::encode(token))
+        .header("Content-Type", "application/json")
+        .body(serde_json::to_vec(q).unwrap())
+        .send()
+        .unwrap();
+    let status = response.status().as_u16();
+    (
+        status,
+        serde_json::from_slice(&response.bytes().unwrap()).unwrap(),
+    )
+}
+fn receive_rich_claims(s: &Source, h: &receiver::ServerHandle) -> (String, Value) {
+    // Explicit authenticated-sender fixture. Rehashed metadata is NOT a real
+    // provider acquisition, Git walk, compiler binding or source replay.
+    let mut wire = s.proposal(&s.client_profile(h.endpoint()))["body"].clone();
+    let p = &mut wire["digest"]["payload"];
+    let symbol = p["symbols"][0].clone();
+    p["symbols"] = json!([symbol, symbol]);
+    p["symbols"][0]["name"] = json!("café");
+    p["symbols"][1]["name"] = json!("café");
+    p["commits"] = json!([{"sha":"a".repeat(40),"treeId":"b".repeat(40),"parentIds":["c".repeat(40),"c".repeat(40)],"filesStatus":"reported","symbolsStatus":"reported"}]);
+    p["threads"] = json!([{"number":7,"providerId":70,"headSha":"a".repeat(40),"baseSha":"c".repeat(40),"merged":true,"coverage":{"complete":false},"sourceAssociation":{"status":"unverified_sender_fixture"},"observations":[{"kind":"review","id":11,"bodyHash":hash(b"excluded body")},{"kind":"review_comment","id":12,"inReplyToId":99,"reviewId":11,"bodyHash":hash(b"excluded reply")}]}]);
+    wire["digest"]["id"] = json!(hash(
+        yoke::json::encode_bounded(&wire["digest"]["payload"], 4_000_000, &Deadline::new(20000))
+            .unwrap()
+    ));
+    let raw = serde_json::to_vec(&wire).unwrap();
+    let id = identity(
+        &json!({"schemaVersion":1,"workspaceId":s.engine.store.workspace_id,"appId":123,"endpoint":h.endpoint(),"payloadHash":hash(&raw)}),
+    );
+    let (status, receipt) = request(h, "PUT", &id, &TOKEN, &raw);
+    assert_eq!(status, 201);
+    (id, receipt)
+}
+#[test]
+fn queries_preserve_duplicate_ordinals_parallel_directions_and_unverified_claims() {
+    let s = Source::new();
+    let (root, h) = query_start(&s, true, true);
+    let (id, receipt) = receive_rich_claims(&s, &h);
+    let q = query_request(&s, vec![id]);
+    let (status, result) = query_http(&h, &serde_json::to_value(&q).unwrap(), &TOKEN);
+    assert_eq!(status, 200);
+    assert_eq!(result["rows"].as_array().unwrap().len(), 11);
+    assert_eq!(result["matchingRows"], 11);
+    assert_eq!(result["complete"], false);
+    assert_eq!(result["completeForSelectedMetadata"], true);
+    assert_eq!(result["manifests"][0]["receiptId"], receipt["receiptId"]);
+    let rows = result["rows"].as_array().unwrap();
+    assert_ne!(rows[0]["id"], rows[1]["id"]);
+    assert_eq!(rows[0]["metadata"], rows[1]["metadata"]);
+    let parents = rows
+        .iter()
+        .filter(|r| r["metadata"]["data"]["relation"] == "reported_commit_parent")
+        .collect::<Vec<_>>();
+    assert_eq!(parents.len(), 2);
+    assert_ne!(parents[0]["id"], parents[1]["id"]);
+    assert_eq!(
+        parents[0]["metadata"]["data"]["to"]["presentInSelectedMetadata"],
+        false
+    );
+    let reply = rows
+        .iter()
+        .find(|r| r["metadata"]["data"]["relation"] == "reported_in_reply_to")
+        .unwrap();
+    assert_eq!(reply["metadata"]["data"]["from"]["providerId"], 12);
+    assert_eq!(reply["metadata"]["data"]["to"]["providerId"], 99);
+    assert_eq!(
+        reply["metadata"]["data"]["to"]["presentInCapturedThread"],
+        false
+    );
+    let review = rows
+        .iter()
+        .find(|r| r["metadata"]["data"]["relation"] == "reported_review_membership")
+        .unwrap();
+    assert_eq!(
+        review["metadata"]["data"]["to"]["presentInCapturedThread"],
+        true
+    );
+    assert!(
+        rows.iter()
+            .all(|r| r["sourceAuthority"] == false && r["semanticIdentityEstablished"] == false)
+    );
+    assert!(!result.to_string().contains("excluded reply"));
+    assert_eq!(count(root.path()), 1);
+    h.shutdown().unwrap();
+}
+#[test]
+fn query_native_client_filters_unicode_pages_and_replays_local_read_only_without_new_records() {
+    let s = Source::new();
+    let (root, h) = query_start(&s, true, true);
+    let (id, _) = receive_rich_claims(&s, &h);
+    let profile = s.client_profile(h.endpoint());
+    let mut q = query_request(&s, vec![id]);
+    q.kinds = vec![query::Kind::Symbol];
+    q.text = "café".into();
+    q.limit = 1;
+    let options = query::client::Options {
+        allow_query: true,
+        allow_network: true,
+        allow_fixture: true,
+        max_output_bytes: 64000,
+    };
+    let remote = query::client::for_fixture(
+        &profile,
+        &s.app,
+        &q,
+        &options,
+        h.local_addr(),
+        TOKEN,
+        &Deadline::new(20000),
+    )
+    .unwrap();
+    let first = &remote["result"];
+    assert_eq!(first["matchingRows"], 2);
+    assert_eq!(first["hasMore"], true);
+    assert_eq!(first["completeForSelectedMetadata"], false);
+    q.offset = 1;
+    let second = query::client::for_fixture(
+        &profile,
+        &s.app,
+        &q,
+        &options,
+        h.local_addr(),
+        TOKEN,
+        &Deadline::new(20000),
+    )
+    .unwrap();
+    assert_eq!(second["result"]["hasMore"], false);
+    assert_ne!(first["rows"][0]["id"], second["result"]["rows"][0]["id"]);
+    let mut p = s.receiver_profile();
+    p.endpoint = h.endpoint().into();
+    p.grants[0].allow_query = true;
+    h.shutdown().unwrap();
+    let store = Store::open_existing_read_only(root.path(), &Deadline::new(20000)).unwrap();
+    let local = query::local(
+        &store,
+        &p,
+        "sender",
+        &q,
+        &query::Options {
+            allow_query: true,
+            max_output_bytes: 64000,
+            ..Default::default()
+        },
+        &Deadline::new(20000),
+    )
+    .unwrap();
+    assert_eq!(local, second["result"]);
+    assert_eq!(count(root.path()), 1);
+    q.text = "CAFÉ".into();
+    assert_eq!(
+        query::local(
+            &store,
+            &p,
+            "sender",
+            &q,
+            &query::Options {
+                allow_query: true,
+                ..Default::default()
+            },
+            &Deadline::new(20000)
+        )
+        .unwrap()["matchingRows"],
+        0
+    );
+}
+#[test]
+fn query_host_and_grant_permissions_default_deny_authentication_and_revocation_are_current() {
+    let s = Source::new();
+    let mut old = serde_json::to_value(s.receiver_profile()).unwrap();
+    old["grants"][0]
+        .as_object_mut()
+        .unwrap()
+        .remove("allowQuery");
+    assert!(
+        !receiver::Profile::parse(&serde_json::to_vec(&old).unwrap())
+            .unwrap()
+            .grants[0]
+            .allow_query
+    );
+    for (host, grant) in [(false, true), (true, false), (false, false), (true, true)] {
+        let (root, h) = query_start(&s, host, grant);
+        let p = s.proposal(&s.client_profile(h.endpoint()));
+        let id = p["proposalId"].as_str().unwrap();
+        assert_eq!(request(&h, "PUT", id, &TOKEN, &body(&p)).0, 201);
+        let q = serde_json::to_value(query_request(&s, vec![id.into()])).unwrap();
+        assert_eq!(query_http(&h, &q, &[41; 32]).0, 401);
+        assert_eq!(
+            query_http(&h, &q, &TOKEN).0,
+            if host && grant { 200 } else { 403 }
+        );
+        h.revoke("sender", &Deadline::new(20000)).unwrap();
+        assert_eq!(query_http(&h, &q, &TOKEN).0, 401);
+        assert_eq!(count(root.path()), 1);
+        h.shutdown().unwrap();
+    }
+}
+#[test]
+fn query_all_selections_are_scoped_before_any_row_and_unknown_protocol_is_refused() {
+    let s = Source::new();
+    let (root, h) = query_start(&s, true, true);
+    let (id, _) = receive_rich_claims(&s, &h);
+    let q = query_request(&s, vec![id]);
+    let mut missing = q.clone();
+    missing.proposal_ids.push("f".repeat(64));
+    let (status, response) = query_http(&h, &serde_json::to_value(missing).unwrap(), &TOKEN);
+    assert_eq!(status, 404);
+    assert!(response.get("rows").is_none());
+    let mut foreign = q.clone();
+    foreign.repository_id = 10;
+    assert_eq!(
+        query_http(&h, &serde_json::to_value(foreign).unwrap(), &TOKEN).0,
+        403
+    );
+    let mut foreign = q.clone();
+    foreign.sender_workspace_id = "f".repeat(64);
+    assert_eq!(
+        query_http(&h, &serde_json::to_value(foreign).unwrap(), &TOKEN).0,
+        403
+    );
+    let mut unknown = serde_json::to_value(&q).unwrap();
+    unknown["allowQuery"] = json!(true);
+    assert_eq!(query_http(&h, &unknown, &TOKEN).0, 400);
+    let mut duplicate = q.clone();
+    duplicate.proposal_ids.push(q.proposal_ids[0].clone());
+    assert_eq!(
+        query_http(&h, &serde_json::to_value(duplicate).unwrap(), &TOKEN).0,
+        400
+    );
+    assert_eq!(count(root.path()), 1);
+    h.shutdown().unwrap();
+}
+#[test]
+fn query_exact_work_search_and_output_budgets_refuse_whole_results_and_preserve_sql_policy() {
+    let s = Source::new();
+    let (root, h) = query_start(&s, true, true);
+    let (id, _) = receive_rich_claims(&s, &h);
+    let mut p = s.receiver_profile();
+    p.endpoint = h.endpoint().into();
+    p.grants[0].allow_query = true;
+    h.shutdown().unwrap();
+    let store = Store::open_existing_read_only(root.path(), &Deadline::new(20000)).unwrap();
+    let mut q = query_request(&s, vec![id]);
+    q.kinds = vec![query::Kind::Symbol];
+    let o = query::Options {
+        allow_query: true,
+        max_visited: 2,
+        max_output_bytes: 64000,
+        ..Default::default()
+    };
+    let call = |r: &query::Request, options: &query::Options| {
+        query::local(&store, &p, "sender", r, options, &Deadline::new(20000))
+    };
+    let exact = call(&q, &o).unwrap();
+    assert_eq!(exact["visitedRows"], 2);
+    let below = query::Options {
+        max_visited: 1,
+        ..o
+    };
+    assert!(
+        call(&q, &below)
+            .unwrap_err()
+            .to_string()
+            .contains("capacity")
+    );
+    let mut o = query::Options {
+        allow_query: true,
+        max_output_bytes: 64000,
+        ..Default::default()
+    };
+    q.text = "café".into();
+    let result = call(&q, &o).unwrap();
+    let search = result["searchBytes"].as_u64().unwrap() as usize;
+    assert!(search > 0);
+    o.max_search_bytes = search;
+    assert!(call(&q, &o).is_ok());
+    o.max_search_bytes = search - 1;
+    assert!(call(&q, &o).is_err());
+    o.max_search_bytes = 0;
+    assert!(call(&q, &o).is_err());
+    o.max_search_bytes = 32_000_000;
+    let result = call(&q, &o).unwrap();
+    let bytes = yoke::json::encode_bounded(&result, 64000, &Deadline::new(20000))
+        .unwrap()
+        .len()
+        + 1;
+    o.max_output_bytes = bytes;
+    assert_eq!(call(&q, &o).unwrap(), result);
+    o.max_output_bytes = bytes - 1;
+    assert!(call(&q, &o).is_err());
+    use rusqlite::limits::Limit;
+    let prior = store.db.limit(Limit::SQLITE_LIMIT_LENGTH).unwrap();
+    assert!(call(&q, &o).is_err());
+    assert_eq!(store.db.limit(Limit::SQLITE_LIMIT_LENGTH).unwrap(), prior);
+    store.db.execute_batch("BEGIN").unwrap();
+    assert!(
+        call(&q, &o)
+            .unwrap_err()
+            .to_string()
+            .contains("caller_transaction")
+    );
+    store.db.execute_batch("ROLLBACK").unwrap();
+    assert_eq!(count(root.path()), 1);
+}
+#[test]
+fn query_cli_default_denial_and_invalid_host_paths_never_initialize_state() {
+    use std::process::Command;
+    let root = tempfile::tempdir().unwrap();
+    let host = tempfile::tempdir().unwrap();
+    for args in [
+        vec![
+            "local",
+            "--profile",
+            "missing.json",
+            "--principal",
+            "sender",
+            "--request",
+            "missing.json",
+        ],
+        vec![
+            "remote",
+            "--profile",
+            "missing.json",
+            "--app-profile",
+            "missing.json",
+            "--request",
+            "missing.json",
+        ],
+    ] {
+        let output = Command::new(env!("CARGO_BIN_EXE_yoke"))
+            .current_dir(root.path())
+            .arg("digest-inbox")
+            .args(args)
+            .output()
+            .unwrap();
+        assert!(!output.status.success());
+        assert!(output.stdout.is_empty());
+        assert!(String::from_utf8_lossy(&output.stderr).contains("permission_required"));
+        assert!(!root.path().join(".yoke").exists());
+    }
+    let output = Command::new(env!("CARGO_BIN_EXE_yoke"))
+        .current_dir(root.path())
+        .args([
+            "digest-inbox",
+            "local",
+            "--allow-query",
+            "--profile",
+            "../missing.json",
+            "--principal",
+            "sender",
+            "--request",
+        ])
+        .arg(host.path().join("query.json"))
+        .output()
+        .unwrap();
+    assert!(!output.status.success());
+    assert!(output.stdout.is_empty());
+    assert!(!root.path().join(".yoke").exists());
+}
+#[test]
+fn query_local_cli_matches_library_and_never_adds_source_or_processing_records() {
+    let s = Source::new();
+    let (root, h) = query_start(&s, true, true);
+    let (id, _) = receive_rich_claims(&s, &h);
+    let mut p = s.receiver_profile();
+    p.endpoint = h.endpoint().into();
+    p.grants[0].allow_query = true;
+    h.shutdown().unwrap();
+    let q = query_request(&s, vec![id]);
+    let host = tempfile::tempdir().unwrap();
+    std::fs::write(
+        host.path().join("profile.json"),
+        serde_json::to_vec(&p).unwrap(),
+    )
+    .unwrap();
+    std::fs::write(
+        host.path().join("query.json"),
+        serde_json::to_vec(&q).unwrap(),
+    )
+    .unwrap();
+    let db = rusqlite::Connection::open(root.path().join(".yoke/index.sqlite")).unwrap();
+    let facts = || -> (usize, usize, usize) {
+        (
+            db.query_row("SELECT count(*) FROM records", [], |r| r.get(0))
+                .unwrap(),
+            db.query_row("SELECT count(*) FROM snapshots", [], |r| r.get(0))
+                .unwrap(),
+            db.query_row("SELECT count(*) FROM graphs", [], |r| r.get(0))
+                .unwrap(),
+        )
+    };
+    let before = facts();
+    let mut command = std::process::Command::new(env!("CARGO_BIN_EXE_yoke"));
+    command
+        .arg("--root")
+        .arg(root.path())
+        .args([
+            "--max-bytes",
+            "64000",
+            "digest-inbox",
+            "local",
+            "--allow-query",
+            "--principal",
+            "sender",
+            "--profile",
+        ])
+        .arg(host.path().join("profile.json"))
+        .arg("--request")
+        .arg(host.path().join("query.json"));
+    let output = command.output().unwrap();
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let result: Value = serde_json::from_slice(&output.stdout).unwrap();
+    assert_eq!(result["matchingRows"], 11);
+    assert_eq!(result["sourceWritten"], false);
+    assert_eq!(result["recordsWritten"], false);
+    assert_eq!(facts(), before);
+    let store = Store::open_existing_read_only(root.path(), &Deadline::new(20000)).unwrap();
+    assert_eq!(
+        query::local(
+            &store,
+            &p,
+            "sender",
+            &q,
+            &query::Options {
+                allow_query: true,
+                max_output_bytes: 64000,
+                ..Default::default()
+            },
+            &Deadline::new(20000)
+        )
+        .unwrap(),
+        result
+    );
+}
+#[test]
+fn query_revocation_during_body_and_disabled_query_authentication_refuse_without_waiting_for_complete_body()
+ {
+    let s = Source::new();
+    let (root, h) = query_start(&s, true, true);
+    let (id, _) = receive_rich_claims(&s, &h);
+    let q = serde_json::to_vec(&query_request(&s, vec![id])).unwrap();
+    let authority = h
+        .endpoint()
+        .strip_prefix("http://")
+        .unwrap()
+        .trim_end_matches('/');
+    let mut socket = TcpStream::connect(h.local_addr()).unwrap();
+    socket
+        .set_read_timeout(Some(Duration::from_secs(2)))
+        .unwrap();
+    write!(socket,"POST /v1/digest-query HTTP/1.1\r\nHost: {authority}\r\nAuthorization: Bearer {}\r\nContent-Type: application/json\r\nContent-Length: {}\r\n\r\n",hex::encode(TOKEN),q.len()).unwrap();
+    socket.write_all(&q[..1]).unwrap();
+    std::thread::sleep(Duration::from_millis(30));
+    h.revoke("sender", &Deadline::new(20000)).unwrap();
+    socket.write_all(&q[1..]).unwrap();
+    let mut response = vec![];
+    socket.read_to_end(&mut response).unwrap();
+    assert!(response.starts_with(b"HTTP/1.1 403"));
+    assert!(!String::from_utf8_lossy(&response).contains("\"rows\""));
+    assert_eq!(count(root.path()), 1);
+    h.shutdown().unwrap();
+    let (root, h) = query_start(&s, false, true);
+    let mut socket = TcpStream::connect(h.local_addr()).unwrap();
+    socket
+        .set_read_timeout(Some(Duration::from_secs(2)))
+        .unwrap();
+    let authority = h
+        .endpoint()
+        .strip_prefix("http://")
+        .unwrap()
+        .trim_end_matches('/');
+    write!(socket,"POST /v1/digest-query HTTP/1.1\r\nHost: {authority}\r\nAuthorization: Bearer {}\r\nContent-Type: application/json\r\nContent-Length: 8000\r\n\r\n",hex::encode(TOKEN)).unwrap();
+    let mut response = vec![];
+    socket.read_to_end(&mut response).unwrap();
+    assert!(response.starts_with(b"HTTP/1.1 403"));
+    assert_eq!(count(root.path()), 0);
+    h.shutdown().unwrap();
+}
+#[test]
+fn query_corrupt_storage_expiry_and_unknown_remote_permissions_never_become_empty_complete_results()
+{
+    let s = Source::new();
+    let (root, h) = query_start(&s, true, true);
+    let (id, _) = receive_rich_claims(&s, &h);
+    let mut p = s.receiver_profile();
+    p.endpoint = h.endpoint().into();
+    p.grants[0].allow_query = true;
+    let q = query_request(&s, vec![id.clone()]);
+    let service = s.client_profile(h.endpoint());
+    let disabled = query::client::Options::default();
+    assert!(
+        query::client::for_fixture(
+            &service,
+            &s.app,
+            &q,
+            &disabled,
+            h.local_addr(),
+            TOKEN,
+            &Deadline::new(20000)
+        )
+        .unwrap_err()
+        .to_string()
+        .contains("permission_required")
+    );
+    h.shutdown().unwrap();
+    let store = Store::open_existing_read_only(root.path(), &Deadline::new(20000)).unwrap();
+    let o = query::Options {
+        allow_query: true,
+        max_output_bytes: 64000,
+        ..Default::default()
+    };
+    let expired = Deadline::new(10);
+    std::thread::sleep(Duration::from_millis(15));
+    assert!(query::local(&store, &p, "sender", &q, &o, &expired).is_err());
+    let db = rusqlite::Connection::open(root.path().join(".yoke/index.sqlite")).unwrap();
+    db.execute(
+        "UPDATE records SET value='{}' WHERE kind=?1 AND id=?2",
+        rusqlite::params![receiver::RECORD_KIND, id],
+    )
+    .unwrap();
+    assert!(query::local(&store, &p, "sender", &q, &o, &Deadline::new(20000)).is_err());
+    assert_eq!(count(root.path()), 1);
+}
 fn capture() -> provider::Capture {
     // Explicit unsigned fixture import; this is not live GitHub acquisition.
     let payload=provider::Payload {repository:"org/repo".into(),repository_id:9,requested_pulls:vec![],unacquired_pulls:vec![],pulls:vec![],
@@ -159,6 +737,7 @@ impl Source {
             schema_version: 1,
             endpoint: "http://127.0.0.1:1/".into(),
             grants: vec![receiver::Access {
+                allow_query: false,
                 id: "sender".into(),
                 token_hash: hash(TOKEN),
                 app_id: 123,
@@ -816,6 +1395,7 @@ fn actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_
     let mut profile = s.receiver_profile();
     profile.endpoint = "https://127.0.0.1:0/".into();
     profile.grants[0].token_hash = token["tokenHash"].as_str().unwrap().into();
+    profile.grants[0].allow_query = true;
     std::fs::write(
         host.path().join("receiver.json"),
         serde_json::to_vec(&profile).unwrap(),
@@ -833,8 +1413,11 @@ fn actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_
             "--allow-receiver",
             "--allow-network",
             "--allow-fixture",
+            "--allow-query",
+            "--max-response-bytes",
+            "64000",
             "--max-requests",
-            "2",
+            "3",
             "--profile",
         ])
         .arg(host.path().join("receiver.json"))
@@ -926,6 +1509,56 @@ fn actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_
         serde_json::from_slice::<Value>(&recovered.stdout).unwrap()["recovered"],
         true
     );
+    // The remote query CLI uses only the service token and public CA. An
+    // unavailable App signing credential and an empty cwd prove no sender
+    // Store/key is opened by this read-only operation.
+    let q = query_request(&s, vec![approval.proposal_id.clone()]);
+    let mut query_app = app_value();
+    query_app["secretCredential"] = json!("query-no-such-signing-key");
+    std::fs::write(
+        host.path().join("query-app.json"),
+        serde_json::to_vec(&query_app).unwrap(),
+    )
+    .unwrap();
+    std::fs::write(
+        host.path().join("query.json"),
+        serde_json::to_vec(&q).unwrap(),
+    )
+    .unwrap();
+    let mut query_command = Command::new(env!("CARGO_BIN_EXE_yoke"));
+    query_command.creation_flags(0x08000000);
+    query_command
+        .current_dir(host.path())
+        .args([
+            "--max-bytes",
+            "64000",
+            "digest-inbox",
+            "remote",
+            "--allow-query",
+            "--allow-network",
+            "--profile",
+        ])
+        .arg(host.path().join("service.json"))
+        .arg("--app-profile")
+        .arg(host.path().join("query-app.json"))
+        .arg("--request")
+        .arg(host.path().join("query.json"))
+        .arg("--ca")
+        .arg(host.path().join("ca.der"));
+    let queried = query_command.output().unwrap();
+    assert!(
+        queried.status.success(),
+        "{}",
+        String::from_utf8_lossy(&queried.stderr)
+    );
+    let result: Value = serde_json::from_slice(&queried.stdout).unwrap();
+    assert_eq!(result["networkRequests"], 1);
+    assert_eq!(
+        result["result"]["manifests"][0]["proposalId"],
+        approval.proposal_id
+    );
+    assert_eq!(result["result"]["sourceAuthority"], false);
+    assert!(!host.path().join(".yoke").exists());
     let end = std::time::Instant::now() + Duration::from_secs(3);
     let status = loop {
         if let Some(status) = child.0.try_wait().unwrap() {
@@ -933,7 +1566,7 @@ fn actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_
         }
         assert!(
             std::time::Instant::now() < end,
-            "owned receiver did not finish after exactly two requests"
+            "owned receiver did not finish after exactly three requests"
         );
         std::thread::sleep(Duration::from_millis(10));
     };

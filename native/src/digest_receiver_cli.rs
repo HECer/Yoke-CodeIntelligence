@@ -18,6 +18,8 @@ pub struct Arguments {
     #[arg(long)]
     allow_receiver: bool,
     #[arg(long)]
+    allow_query: bool,
+    #[arg(long)]
     allow_network: bool,
     #[arg(long)]
     allow_remote: bool,
@@ -34,6 +36,7 @@ impl Arguments {
     pub fn run(&self, root: &Path, writes: bool, lifetime: u64, max_bytes: u64) -> Result<bool> {
         let d = Deadline::new(lifetime);
         let mut config = receiver::Config {
+            allow_query: self.allow_query,
             allow_receiver: self.allow_receiver,
             allow_network: self.allow_network,
             allow_writes: writes,

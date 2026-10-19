@@ -1,0 +1,536 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T06:06:55.041568+00:00",
+  "parentCommit": "a2481f8fa6b59f51d9b9c1d0d34f002d53373112",
+  "accepted": false,
+  "allLocalChecksPassed": true,
+  "frozenInputCount": 637,
+  "nativeTotals": {
+    "passed": 825,
+    "failed": 0,
+    "ignored": 13
+  },
+  "nativeResultGroups": 24,
+  "actualOSCredentialGates": [
+    {
+      "gate": "actual-os-credential-cli",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--test",
+        "github_app_digest_handoff",
+        "actual_cli_send_status_and_lost_response_recovery_use_os_key_without_retry",
+        "--",
+        "--exact",
+        "--ignored",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 9.596,
+      "recordedAt": "2026-10-19T06:06:34.376906+00:00",
+      "resultGroups": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "actual-tls-receiver-cli",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--test",
+        "digest_receiver",
+        "actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_ca",
+        "--",
+        "--exact",
+        "--ignored",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.524,
+      "recordedAt": "2026-10-19T06:06:35.901021+00:00",
+      "resultGroups": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    }
+  ],
+  "newSourceFiles": [
+    {
+      "source": "native/src/github_app_digest_query.rs",
+      "artifact": "new-source/native/src/github_app_digest_query.rs",
+      "sha256": "b5c4eb3dfcd06f87700dbd97cb19eff6e67308fb985a2ef01332d3e199b49f01"
+    },
+    {
+      "source": "native/src/github_app_digest_query_client.rs",
+      "artifact": "new-source/native/src/github_app_digest_query_client.rs",
+      "sha256": "6d6085da2ee0d81ec8b7a2732c1e090e1e2d55346c9607a1607d320c4fd18605"
+    },
+    {
+      "source": "native/src/digest_inbox_cli.rs",
+      "artifact": "new-source/native/src/digest_inbox_cli.rs",
+      "sha256": "b361891aab9395b114d60bedc47bd0589b65edb094617dfcbeca5b7e45f1f68a"
+    }
+  ],
+  "summary": {
+    "allChecksPassed": true,
+    "sourceUnchanged": true,
+    "checks": [
+      {
+        "gate": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 5.656,
+        "recordedAt": "2026-10-19T06:01:46.683646+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--keep-going",
+          "-j2",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 2.067,
+        "recordedAt": "2026-10-19T06:01:48.752140+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "native-service-and-regressions",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "--no-fail-fast",
+          "-j2",
+          "--lib",
+          "--test",
+          "github",
+          "--test",
+          "github_discussions",
+          "--test",
+          "github_app_digest",
+          "--test",
+          "github_app_digest_cli",
+          "--test",
+          "github_app_digest_mapping",
+          "--test",
+          "github_app_digest_handoff",
+          "--test",
+          "github_app_cli",
+          "--test",
+          "github_app_auth_cli",
+          "--test",
+          "github_app_publication",
+          "--test",
+          "github_app_publication_cli",
+          "--test",
+          "github_app_worker",
+          "--test",
+          "github_app_worker_run",
+          "--test",
+          "retention",
+          "--test",
+          "parity_retention",
+          "--test",
+          "decision_retention",
+          "--test",
+          "meaning_retention_review",
+          "--test",
+          "store_read_only",
+          "--test",
+          "store_open_deadline",
+          "--test",
+          "store_cancellation",
+          "--test",
+          "digest_receiver",
+          "--test",
+          "github_app_ingress",
+          "--test",
+          "github_app_ingress_cli",
+          "--test",
+          "github_app_pages_cli",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 201.717,
+        "recordedAt": "2026-10-19T06:05:10.469705+00:00",
+        "resultGroups": [
+          {
+            "passed": 406,
+            "failed": 0,
+            "ignored": 7
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 23,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 35,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 38,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 18,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 20,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 102,
+            "failed": 0,
+            "ignored": 4
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 33,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 28,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 16,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "python-contracts",
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 1.255,
+        "recordedAt": "2026-10-19T06:05:11.725608+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 5.082,
+        "recordedAt": "2026-10-19T06:05:16.807940+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 67.971,
+        "recordedAt": "2026-10-19T06:06:24.779726+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "actual-os-credential-cli",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j2",
+          "--test",
+          "github_app_digest_handoff",
+          "actual_cli_send_status_and_lost_response_recovery_use_os_key_without_retry",
+          "--",
+          "--exact",
+          "--ignored",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 9.596,
+        "recordedAt": "2026-10-19T06:06:34.376906+00:00",
+        "resultGroups": [
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "actual-tls-receiver-cli",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j2",
+          "--test",
+          "digest_receiver",
+          "actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_ca",
+          "--",
+          "--exact",
+          "--ignored",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 1.524,
+        "recordedAt": "2026-10-19T06:06:35.901021+00:00",
+        "resultGroups": [
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      }
+    ],
+    "scope": "Frozen local Windows received-digest metadata query/receiver/client validation using actual owned TCP/TLS, SQLite and captured source; separate actual Windows OS-credential sender and full TLS receiver/client/remote-query CLI gates. No source verification or semantic reasoning is claimed. Configured public deployment, automatic historical acquisition, proprietary service equivalence and full platform/STATUS acceptance remain open."
+  },
+  "findings": [
+    "Deterministic literal metadata queries process explicitly selected accepted packets on read. Both the receiver host and the current matching principal grant must independently allow query. Old grants default to false; intake/receipt behavior remains available without query permission. Local CLI uses an existing-only read-only Store; remote CLI reads only the service token and no sender Store or App signing key.",
+    "All 1-32 selected proposal IDs are scoped before producing any page. Current endpoint, principal, App, sender workspace, installation and repository must match. Missing/foreign selection refuses atomically rather than returning a complete empty result. Authentication precedes body acquisition; revoked grants during upload refuse before query replay. Protocol bodies cannot widen host rights.",
+    "Row identities bind immutable receipt, row family and original JSON pointer. Duplicate symbols, repeated parent edges and original observation ordinals remain distinct. Commit parents, source-association claims, replies and review membership retain directed typed relations. Presence lookup is explicitly limited to the original received digest or captured thread, never local Git/source truth.",
+    "Results retain sender coverage/omissions and false source-authority/semantic-identity flags. Metadata byte/line positions remain sender claims; the receiver anchor is only the packet JSON pointer. Literal case-sensitive Unicode matching over canonical metadata/context, pagination/counts and independent work/search/output limits introduce no model calls, source capture/execution or derived record writes. Complete remains false.",
+    "Native HTTP client validates closed protocol/request/scope/count/receipt-qualified row bindings, row-kind-specific pointers and false authority flags before publishing one response. Host-selected CA adds trust without disabling hostname validation; no retries, redirects, proxy fallback or production credentials over plaintext HTTP are added.",
+    "Nine additional default actual-socket/SQLite/CLI cases and two protocol/request unit regressions cover Unicode pagination, duplicate/parallel directed evidence, all-or-nothing scope, default query denial, current revocation during partial body, exact work/search/output boundaries, caller transaction/SQL policy restoration, corrupted storage/expiry and unchanged logical records/source counts.",
+    "The separate actual Windows OS credential/TLS gate now runs real receiver, approved sender recovery and remote query CLI processes over owned TLS. Three unique token/TLS/signing credentials are created and removed. One intake survives local sender acknowledgment failure, GET reconciles it and a third POST queries metadata from an empty cwd with a nonexistent App signing credential. No system roots, private key files, public deployment or real GitHub writes are involved.",
+    "Original inventory identities, unreconciled rows, backend runtime unknowns and false full-contract certifications are retained. Configured public production, remote source verification, semantic reasoning, automatic historical acquisition, live App installation/deployment, whole-platform/STATUS acceptance and proprietary upstream equivalence remain open. Prior OS1314 fixture failures are not accepted by this scoped run."
+  ],
+  "developmentAttempts": {
+    "r1": "20 default receiver/query cases passed, one actual OS-credential gate ignored by default. Follow-up added strict response pointer/envelope validation, typed relation-field refusal, HTTP packet reservation, local CLI/state checks and partial-body revocation/expiry/corruption regressions.",
+    "r2": "See raw receipts/logs: library plus 23 default receiver/query cases, separate actual receiver/sender/recovery/query CLI TLS gate and all-target Clippy. These overlapping counts are not added to the final totals."
+  },
+  "artifacts": [
+    {
+      "path": "development/r1-native.log",
+      "bytes": 2340,
+      "sha256": "18d612a15cd6216bfa87cb3820dd47975de4e1be0a73fdf0ba74ee2312e45823"
+    },
+    {
+      "path": "development/r2-actual-tls-cli.log",
+      "bytes": 361,
+      "sha256": "4a78b4e5ab509b473ea45be110e1ad86b0945b59ef8f7d97d5b3ac10a3e83e19"
+    },
+    {
+      "path": "development/r2-clippy.log",
+      "bytes": 172,
+      "sha256": "2ef52e659f585fdf31fab5b1b2acb06c5a7ba9e397c3ed3cdbed00095b1b51a0"
+    },
+    {
+      "path": "development/r2-native.log",
+      "bytes": 49701,
+      "sha256": "e124dc6b10ad803b82055e4da460f904e8d14697d233b9399fc39447d259aae0"
+    },
+    {
+      "path": "development/r2-receipts.json",
+      "bytes": 1475,
+      "sha256": "3c4de9f76452695fa5e29df8ee767f9f95007658cca8e5b81608995ec51da46e"
+    },
+    {
+      "path": "final/actual-os-credential-cli.log",
+      "bytes": 376,
+      "sha256": "81de0a0b2687a79d5f16fc6e70df064e372766ef45079e452924b8482748274f"
+    },
+    {
+      "path": "final/actual-tls-receiver-cli.log",
+      "bytes": 361,
+      "sha256": "be308caae767ed8f98a463cd8be4e2daf6c380618a2a706dbe2bbba2f64e113a"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 60,
+      "sha256": "f2cac31b29649fe77e5baa9291ca9467c9ceea31c29290a75340dcb131f05567"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native-service-and-regressions.log",
+      "bytes": 90236,
+      "sha256": "a8b9792c0ee58b415119799d9f5b8fa6e47932d19cfcfeab16e5bedcbcd472ed"
+    },
+    {
+      "path": "final/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "def1e08e5ac39a90aa96dd55c69ddd972010ebc8300a61449b0cb2956bb89069"
+    },
+    {
+      "path": "final/receipts.json",
+      "bytes": 6232,
+      "sha256": "6854e72e3d08bb80301562c7884d4be962e13c59ee06c861042afdce3f803673"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 68062,
+      "sha256": "a3b36ff3a77978883a0a03d7ddf3411947e1f59483949ae56751abada7cda286"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 68062,
+      "sha256": "a3b36ff3a77978883a0a03d7ddf3411947e1f59483949ae56751abada7cda286"
+    },
+    {
+      "path": "final/summary.json",
+      "bytes": 7372,
+      "sha256": "ddf79915e7d38b0193e7488d7a8515caca5d3f766475b25fa193258dda1303b3"
+    },
+    {
+      "path": "final/tested-native-binary.json",
+      "bytes": 122,
+      "sha256": "26b498d4d51c241e0ef06b9bad006cff1935fdb42d9690fc92443be7518568f3"
+    },
+    {
+      "path": "final/typescript-tests.log",
+      "bytes": 25039,
+      "sha256": "ab5915e4c395ab4190abe70630df92aa56c1cc392b68b3adc41a30b0d463f97e"
+    },
+    {
+      "path": "final/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "new-source/native/src/digest_inbox_cli.rs",
+      "bytes": 4318,
+      "sha256": "b361891aab9395b114d60bedc47bd0589b65edb094617dfcbeca5b7e45f1f68a"
+    },
+    {
+      "path": "new-source/native/src/github_app_digest_query.rs",
+      "bytes": 15916,
+      "sha256": "b5c4eb3dfcd06f87700dbd97cb19eff6e67308fb985a2ef01332d3e199b49f01"
+    },
+    {
+      "path": "new-source/native/src/github_app_digest_query_client.rs",
+      "bytes": 18059,
+      "sha256": "6d6085da2ee0d81ec8b7a2732c1e090e1e2d55346c9607a1607d320c4fd18605"
+    },
+    {
+      "path": "run-local-validation.py",
+      "bytes": 4244,
+      "sha256": "04834eed3936def5ce810220ca54719db93380e803158a63d3b72dd3a9ed02ab"
+    },
+    {
+      "path": "runtime-change.patch",
+      "bytes": 37167,
+      "sha256": "9fada9468a5474552d83721a21acaca5734a9e0e371bdd78e6801d650b674b7f"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 237339,
+      "sha256": "09bb081c4b1a4ea47a8c02912dabe95d5f968a793bace81723cd047d41b6e5e5"
+    }
+  ],
+  "sourceMaterialization": "source-materialization.json"
+}

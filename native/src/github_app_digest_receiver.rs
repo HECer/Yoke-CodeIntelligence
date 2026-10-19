@@ -15,6 +15,8 @@ use std::{
 use subtle::ConstantTimeEq;
 #[path = "github_app_digest_receiver_http.rs"]
 mod http;
+#[path = "github_app_digest_query.rs"]
+pub mod query;
 #[path = "github_app_digest_receiver_store.rs"]
 mod storage;
 pub const RECORD_KIND: &str = "github_app_digest_receiver_v1";
@@ -33,6 +35,8 @@ pub struct Access {
     pub installation_id: u64,
     pub repository_id: u64,
     pub repository: String,
+    #[serde(default)]
+    pub allow_query: bool,
 }
 impl Access {
     fn permits(&self, s: &Submission) -> bool {
@@ -122,6 +126,7 @@ impl Profile {
     }
 }
 pub struct Config {
+    pub allow_query: bool,
     pub allow_receiver: bool,
     pub allow_network: bool,
     pub allow_writes: bool,
@@ -137,6 +142,7 @@ pub struct Config {
 impl Default for Config {
     fn default() -> Self {
         Self {
+            allow_query: false,
             allow_receiver: false,
             allow_network: false,
             allow_writes: false,
@@ -525,7 +531,7 @@ pub fn start(
     let lifetime = Deadline::run_bounded(d, Arc::clone(&stop), || {
         Ok(Deadline::new(config.lifetime_ms))
     })?;
-    let announcement = json!({"schemaVersion":1,"kind":"native_digest_receiver","endpoint":profile.endpoint,"listen":address.to_string(),"tls":tls.is_some(),"sourceAuthority":false,"processingAvailable":false,"modelCalls":0,"maxPayloadBytes":profile.max_payload_bytes});
+    let announcement = json!({"schemaVersion":1,"kind":"native_digest_receiver","endpoint":profile.endpoint,"listen":address.to_string(),"tls":tls.is_some(),"sourceAuthority":false,"processingAvailable":config.allow_query,"queryAvailable":config.allow_query,"processor":"literal_metadata_projection_v1","modelCalls":0,"maxPayloadBytes":profile.max_payload_bytes});
     let shared = Shared {
         profile,
         config,
@@ -554,7 +560,7 @@ pub fn start(
             });
         }
         Ok(
-            json!({"requests":requests,"modelCalls":0,"sourceWritten":false,"processingAvailable":false}),
+            json!({"requests":requests,"modelCalls":0,"sourceWritten":false,"processingAvailable":shared.config.allow_query}),
         )
     });
     Ok(ServerHandle {

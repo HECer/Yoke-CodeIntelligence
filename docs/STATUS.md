@@ -259,10 +259,41 @@ failure. Wrong trust/name, scope/revocation, restart, framing, corruption,
 capacity, no late commit and detached cancellation have actual owned fixtures.
 [Receiver evidence](validation/integration-2026-10-19/digest-receiver/index.json)
 preserves all 34 raw artifact hashes, development failures and final logs.
-This is receipt-backed intake with `processingAvailable:false`. Downstream
+That checkpoint supplies receipt-backed intake with `processingAvailable:false`. Downstream
 processing/query integration, public production deployment, automatic history
 acquisition, live App installation and full platform/STATUS acceptance remain
 open; prior OS1314 fixture failures are not rerun or accepted by this scope.
+
+The subsequent [received metadata query path](../native/docs/digest-query.md)
+adds deterministic processing on read. HTTP queries require separate host and
+per-principal query grants, both disabled by default. Local CLI queries open
+existing read-only receiver state; the remote CLI makes one authenticated TLS
+POST with only the service token, without a sender Store or App signing key.
+Receipt-qualified JSON positions preserve duplicate rows and directed parallel
+commit-parent, reply and review relationships. Literal Unicode matching,
+pagination/counts and work/output/deadline limits retain unverified sender
+provenance. Source authority, semantic identity, model calls and derived record
+writes remain unavailable; `complete` remains false. When separately enabled,
+`processingAvailable:true` denotes this metadata projection only.
+
+The frozen query checkpoint passes **825 selected native tests / 0 failed /
+13 ignored** across 24 groups, **17 Python tests** and **260 TypeScript tests /
+3 existing skips**, plus typecheck, format and all-target Clippy with warnings
+denied. Both separate actual Windows OS-credential gates pass. The extended TLS
+gate uses real receiver/sender/recovery/query CLI processes and three unique
+temporary token/TLS/signing credentials. One PUT, one recovery GET and one query
+POST leave exactly one accepted record; query runs from an empty directory with
+a nonexistent App signing credential. All **637 inputs remain unchanged** during
+the final run. [Query evidence](validation/integration-2026-10-19/digest-query/index.json)
+preserves 24 raw artifacts, frozen source hashes and Git materialization checks
+for all 637 inputs: 86 raw-equal blobs and 551 explicitly recorded CRLF-only
+checkout materializations. All nine changed runtime/test files are raw-equal.
+Counts
+overlap prior checkpoints and are not whole-suite totals. Public production,
+remote source verification, semantic reasoning, automatic historical acquisition,
+live App installation, full platform/STATUS acceptance and universal upstream
+equivalence remain open. The R8 tracker retains all original inventory and
+certification states.
 
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes

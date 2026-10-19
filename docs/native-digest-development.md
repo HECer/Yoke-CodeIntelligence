@@ -22,8 +22,11 @@ The separate service flags require host network/write permissions and current
 App/service grants; ordinary preview/history calls retain their read-only policy.
 The [native receiver](../native/docs/digest-receiver.md) supplies authenticated,
 durable receipt-backed intake for that own contract. Received IDs and labels are
-inert sender assertions; downstream processing/query integration and public
-production deployment remain open.
+inert sender assertions. Separate [metadata query permissions](../native/docs/digest-query.md)
+enable deterministic processing on read through local read-only and authenticated
+HTTP/CLI paths. Receipt-qualified positions retain duplicates and directed
+relations without establishing source authority or semantic identity. Public
+production deployment, source verification and semantic reasoning remain open.
 
 ## Captured mapping checkpoint (2026-10-19 UTC)
 

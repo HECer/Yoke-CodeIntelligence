@@ -71,12 +71,17 @@ fn receive(
         INVALID
     );
     let method = parsed.method.ok_or_else(|| anyhow::anyhow!(INVALID))?;
-    ensure!(matches!(method, "PUT" | "GET"), INVALID);
-    let id = parsed
-        .path
-        .and_then(|p| p.strip_prefix("/v1/digests/"))
-        .filter(|id| valid_id(id))
-        .ok_or_else(|| anyhow::anyhow!(INVALID))?;
+    let is_query = method == "POST" && parsed.path == Some("/v1/digest-query");
+    ensure!(is_query || matches!(method, "PUT" | "GET"), INVALID);
+    let id = if is_query {
+        ""
+    } else {
+        parsed
+            .path
+            .and_then(|p| p.strip_prefix("/v1/digests/"))
+            .filter(|id| valid_id(id))
+            .ok_or_else(|| anyhow::anyhow!(INVALID))?
+    };
     let mut fields = BTreeMap::new();
     for h in parsed.headers.iter() {
         ensure!(
@@ -151,6 +156,14 @@ fn receive(
             matches.iter().any(|a| !revoked.contains(&a.id)),
             "github_app_digest_receiver_auth_required"
         );
+        ensure!(
+            !is_query
+                || (shared.config.allow_query
+                    && matches
+                        .iter()
+                        .any(|a| a.allow_query && !revoked.contains(&a.id))),
+            "github_app_digest_query_permission_required"
+        );
     }
     let length = fields
         .get("content-length")
@@ -189,12 +202,21 @@ fn receive(
         });
     }
     ensure!(
-        length > 0 && length <= shared.profile.max_payload_bytes,
+        length > 0
+            && length
+                <= if is_query {
+                    8192
+                } else {
+                    shared.profile.max_payload_bytes
+                },
         CAPACITY
     );
     ensure!(
-        field("idempotency-key")? == id
-            && field("content-type")?.eq_ignore_ascii_case("application/json"),
+        (if is_query {
+            !fields.contains_key("idempotency-key")
+        } else {
+            field("idempotency-key")? == id
+        }) && field("content-type")?.eq_ignore_ascii_case("application/json"),
         INVALID
     );
     let mut body = Zeroizing::new(vec![0_u8; length]);
@@ -203,6 +225,30 @@ fn receive(
         let n = read(io, &mut body[offset..], d)?;
         ensure!(n > 0, INVALID);
         offset += n;
+    }
+    if is_query {
+        let request = query::Request::parse(&body)?;
+        let revoked = shared
+            .revoked
+            .read()
+            .map_err(|_| anyhow::anyhow!(BINDING))?;
+        let allowed = matches
+            .into_iter()
+            .filter(|a| a.allow_query && !revoked.contains(&a.id))
+            .collect::<Vec<_>>();
+        ensure!(
+            !allowed.is_empty(),
+            "github_app_digest_query_permission_required"
+        );
+        let options = query::Options {
+            allow_query: shared.config.allow_query,
+            // Reserve HTTP framing before preparing a page. Overflow still
+            // produces a small static refusal rather than a partial packet.
+            max_output_bytes: shared.config.max_response_bytes.saturating_sub(256),
+            ..Default::default()
+        };
+        let value = query::run(store, &shared.profile, &allowed, &request, &options, d)?;
+        return Ok((200, value));
     }
     let submission = Submission::parse(&body, shared.profile.max_payload_bytes, d)?;
     let scope = submission.scope();
@@ -226,11 +272,16 @@ pub(super) fn serve(stream: TcpStream, store: &Store, shared: &Shared, d: &Deadl
             let marker = error.to_string();
             let status = if marker.contains("auth_required") {
                 401
-            } else if marker.contains("scope_denied") {
+            } else if marker.contains("scope_denied") || marker.contains("permission_required") {
                 403
+            } else if marker == "github_app_digest_query_selection_unavailable" {
+                404
             } else if marker.contains("capacity") {
                 507
-            } else if marker == INVALID || marker == BINDING {
+            } else if marker == INVALID
+                || marker == BINDING
+                || marker == "github_app_digest_query_input_invalid"
+            {
                 400
             } else {
                 500

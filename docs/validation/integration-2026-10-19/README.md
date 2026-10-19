@@ -31,6 +31,14 @@ contains the complete 255-target receipts and selected raw logs, not a claim tha
 missing platform, provider, proprietary, benchmark or deployment gates passed.
 Historical parity ledgers and their false full-contract certifications are kept.
 
+The [received metadata query follow-up](digest-query/index.json) adds independently
+authorized, deterministic processing on read to the owned receiver. Local
+existing-only read-only queries and a single-POST TLS client preserve receipt-bound
+positions, duplicate rows and directed parallel relationships. Sender metadata
+never becomes local source authority or semantic identity. Its separate frozen
+manifest, raw logs and Git source materialization record the exact checked scope;
+this does not accept public deployment or the whole native/platform inventory.
+
 The [registry coordination follow-up](registry-coordination/index.json) adds an
 explicit host permission for a pinned read-only SQLite/WAL transaction on Unix;
 Windows retains its stronger sharing guard. The default policy serialization
