@@ -85,6 +85,28 @@ the exact sole inter-run delta is [proved in the evidence](validation/integratio
 The R8 thematic tracker reflects integrated App functionality while retaining
 its remaining discussion/handoff/live gates and all inventory-wide boundaries.
 
+The exact hosted `328ea51` follow-up executes 258 result groups per platform:
+Windows **2,310 passed / 1 failed / 37 ignored**, Linux **1,964 / 39 / 23** and
+macOS **1,930 / 73 / 23**. Five previous Windows failures pass; the explicitly
+selected PowerShell Agent-REPL operation still exceeds its fresh deadline. The
+six-job TypeScript matrix and its clean `npm ci` steps pass. These runs predate
+`bf6471a` and the optional bridge repairs; they are not acceptance of those
+changes. [Exact-head logs and metadata](validation/integration-2026-10-19/platform-328/index.json)
+preserve every failure and keep all platform acceptance gates open.
+
+The optional retained TypeScript bridges now have actual installed Windows
+structural gates for **Graft 0.21.1 and Graphify 0.9.87**. Both preserve exact
+non-BMP UTF-8/CRLF source anchors and original files. Graphify uses a separately
+owned disposable cache with its scan root unchanged. Source verification now
+uses the existing ordinary-file/read-only-dependency admission rules for every
+captured input. Six new contract cases cover omitted-file mutation, cache/root
+separation, relative-cache refusal and cleanup. Typecheck and **260 TypeScript
+tests / 0 failed / 3 skipped** pass on a real 8.3 TEMP parent; two actual upstream
+gates pass separately on the long owned fixture path. Published provider payloads
+are unchanged. [Scoped evidence](validation/integration-2026-10-19/upstream-compatibility/index.json)
+records isolated dependencies and the locally built Kotlin binding, without
+upgrading full upstream parity, Serena, model/media/cloud or native acceptance.
+
 The digest now has an explicit captured-history mapping path. Verified Git tree
 facts describe changes over the captured path union; source-replayed Rust
 associations retain original IDs, producers and exact byte evidence. Qualified
@@ -172,18 +194,18 @@ The following report preserves the earlier environment's results. Its claims tha
 
 Exact test totals, versions and package checks are in `validation/report.json`. The synthetic microbenchmark is not an agent-quality/cost benchmark. The paired-driver acceptance harness is implemented and its accounting/independent-verifier behavior is fixture-tested; no genuine multi-arm agent campaign was run.
 
-## Remaining compatibility gates — not passed
+## External compatibility gates and remaining limits
 
 | Gate | Observed reason / status |
 |---|---|
-| Installed Graft 0.21.1 | Actual live attempt fails because the package is missing. Pinned structural bridge and source checks are implemented. |
-| Installed Graphify 0.9.87 | Actual live attempt fails because `graphifyy` is missing. Raw extraction/root/direction contracts are implemented. |
+| Installed Graft 0.21.1 | Actual Windows/Node 24 structural gate passes with UTF-8/CRLF byte anchors and unchanged sources. The unmodified Kotlin binding was built locally with MSVC; this is not full upstream certification. |
+| Installed Graphify 0.9.87 | Actual Windows/Python 3.14 structural gate passes with the same source checks and an independently owned cache. Full semantic/media/cloud functionality remains separate. |
 | Installed Serena | No installed reviewed executable configured. Capability discovery, selected tools, safe-edit planning and explicitly authorized runtime gateway have protocol tests only. |
 | Paid / hosted features | Graphify Cloud and Serena JetBrains require the user's external products/licenses; neither source nor service is bundled. Compatibility must be established against the actual installation. |
-| Clean online install | `npm ci` attempted and failed on registry DNS resolution (`EAI_AGAIN`). The exact pinned local runtime/development dependencies were restored offline for build/test. |
-| Live browser end-to-end | Actual localhost navigation was refused by managed Chromium (`ERR_BLOCKED_BY_ADMINISTRATOR`). No bypass attempted. Frontend fixture checks and real HTTP tests are separate evidence. |
-| Platforms / extension host | Windows, macOS, Node 24, GitHub-hosted CI and VS Code extension-host execution were not available. Matrix/optional live jobs prepared, not claimed run. |
-| Neural model / Leiden / Docker | Required packages, weights or daemon absent. Explicit optional interfaces exist; missing dependencies do not pass a live gate. |
+| Clean online install | The old `EAI_AGAIN` failure is historical. Exact-head hosted `npm ci` and six Node 22/24 TypeScript jobs pass at `328ea51`; the current follow-up still awaits its own hosted matrix. |
+| Live browser end-to-end | The old managed-Chromium refusal remains historical. The owned native HTTP desktop/mobile browser fixture passes separately; a full live App installation is unverified. |
+| Platforms / extension host | All three hosted native platforms execute and remain failed. An earlier actual Windows VS Code 1.140/native 0.5 checkpoint exists; the combined integration VSIX has no new extension-host acceptance. |
+| Neural model / Leiden / Docker | Native Leiden has actual tests. Optional model weights, Docker and external community backends retain their separate availability/live gates. Missing dependencies do not pass a gate. |
 | Independent audit / full agent benchmark | Neither performed. An internal review or protocol fixture cannot substitute for independent security certification or real agent cost/correctness evidence. |
 
 ## Important non-guarantees

@@ -76,3 +76,18 @@ spelling tests retain POSIX literal names; the separate actual Unix filesystem
 case awaits CI. Final format/Clippy and two overlapping spelling tests pass after
 the sole test-module relocation, proved by exact reconstruction of the prior
 source hash. No SQLite production policy or inventory-wide certification changes.
+
+The [actual optional bridge checkpoint](upstream-compatibility/index.json) passes
+both installed Graft 0.21.1/Graphify 0.9.87 gates with original UTF-8/CRLF byte
+anchors and unchanged inputs. The final default TypeScript run passes 260 tests
+with three existing skips on an actual short TEMP parent. Six new contract cases
+retain mutation and cleanup boundaries. Isolated package locks, verified
+published payloads, the unmodified Kotlin native build and original red attempts
+are preserved; no upstream source is patched or bundled into the own core.
+
+The [actual hosted 328ea51 runs](platform-328/index.json) still fail: Windows
+2,310/1/37, Linux 1,964/39/23, macOS 1,930/73/23, with 258 groups each. Windows
+retains only the explicit PowerShell REPL deadline failure. The six-job TypeScript
+matrix and all its npm-ci steps pass. These older runs do not validate bf6471a
+or the new optional bridge code; full acceptance, release and remaining STATUS
+work stay open.

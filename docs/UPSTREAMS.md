@@ -1,6 +1,6 @@
 # Optional upstream integrations
 
-Version pins and primary-source references are in ../UPSTREAMS.json. The default native engine works without these applications. Live upstream runs were not possible in the offline build environment, so treat the bridges as opt-in compatibility candidates until tested against your installed versions.
+Version pins and primary-source references are in ../UPSTREAMS.json. The default native engine works without these applications. The earlier offline environment could not run these applications. The current Windows checkpoint below records real pinned Graft/Graphify structural gates; broader upstream behavior and other installations still need their own validation.
 
 ## Graft
 
@@ -42,6 +42,29 @@ An already installed server can now be called through `lsp definition|references
 
 The native optional **Jedi 0.20.0**, **Go/go-types 1.23.2**, **clangd 17**, **NetworkX 3.6.1**, **PyMuPDF 1.26.7**, and **Pillow 12.3.0** paths now have actual installed-provider tests on Linux. The earlier blanket “no real external server run” statement above describes the historical 0.2 LSP milestone; see the current report for the 0.3 results.
 
-Graft/Graphify structural bridges now verify all captured source files and dispose their temporary trees. Actual installed Graft and Graphify attempts still fail on missing packages in this environment, so their real compatibility status has not been upgraded. Serena has a broader schema-discovered selected-tool gateway, including guarded edit preparation and explicitly authorized runtime commands; it still has no real installed Serena test here.
+Graft/Graphify structural bridges verify every captured source file under the same ordinary-file/read-only-dependency policy used for materialization. Graphify's host-owned temporary cache is separate from its explicit scan root; the parent checks allocated cleanup paths and attempts both cache and materialization cleanup on failure. Windows cache paths use their namespaced spelling. Provider cache data grants no source identity or authority. Serena has a broader schema-discovered selected-tool gateway, including guarded edit preparation and explicitly authorized runtime commands; it still has no real installed Serena test here.
+
+### Installed structural checkpoint — 2026-10-19
+
+Actual Graft 0.21.1 and Graphify 0.9.87 structural tests pass on Windows with
+Node 24.21.0/Python 3.14.7, non-BMP UTF-8, CRLF and exact original byte anchors.
+The two original Python files remain unchanged. Six separately labeled protocol
+cases exercise cache/root separation, relative-cache refusal, spawn-failure
+cleanup and mutation of source/dependency files omitted by provider output.
+The default suite passes 260 tests with three existing skips on an actual 8.3
+temporary parent. These scoped results do not certify every language, raw export,
+semantic/model/media feature or hosted product.
+
+Dependencies were installed in a separate validation environment with lifecycle
+scripts initially disabled. Only the reviewed pinned Kotlin grammar build was
+approved. MSBuild FileTracker failed on this host; the three original binding
+sources were compiled directly with installed MSVC and matching Node headers.
+Published Graft payloads and Graphify Python sources match their verified
+archives; no upstream application code was patched. The dependency lock,
+installed versions, binding hash, red attempts and exact source freezes are in
+[the preserved evidence](validation/integration-2026-10-19/upstream-compatibility/index.json).
+An npm rebuild exit alone is insufficient when lifecycle scripts remain blocked.
+No assistant hooks or model enrichment were requested, and network isolation
+remains outside the bridge contract.
 
 The own source-bound `summarize`/media pipeline provides optional meaning-layer integration independently of the structural bridge; it is not a claim that every native Graft/Graphify enrichment option is re-exported. `ADVANCED.md` explains model protocol, scope and host trust. Hosted Graphify Cloud, paid IDE backends, model weights and provider packages are separate products/dependencies.
