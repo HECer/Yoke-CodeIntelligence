@@ -39,6 +39,11 @@ The Rust library also provides [historical selected-View comparison](docs/histor
 It compares two explicitly pinned Views or checked Meaning archives with exact
 source bindings, bounded output and visible structural ambiguity.
 
+Separate [portable Meaning projection consumers](docs/meaning-projection.md)
+read serialized group/join exports and perform bounded node, degree and directed
+trace queries without a Store. Imported metadata remains untrusted; structural
+validation does not provide source replay or semantic identity.
+
 An existing Git report also supports [captured-hierarchy affected details](docs/git-affected-details.md)
 through the Rust library and `git affected`, with separate historical source
 bindings and structural candidate explanations.

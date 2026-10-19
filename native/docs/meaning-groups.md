@@ -137,4 +137,7 @@ transport byte. Existing parent/source/claim identities retain their recipes.
 `originalConceptMergesApplied: 0`, `modelCalls: 0` and `complete: false` remain
 explicit. Automatic semantic identity/deduplication, authenticated review,
 cross-graph matching, provider-assisted decisions and generic projection
-consumers remain separate work.
+consumers with independent source authority remain separate work. The separate
+[portable projection consumer](meaning-projection.md) reads native group/join
+exports as untrusted data with explicit structural validation. It does not
+perform or inherit the parent/source replay described here.

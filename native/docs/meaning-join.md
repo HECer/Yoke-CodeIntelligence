@@ -115,3 +115,7 @@ false`, `providerAttestation: unverified`, `originalConceptMergesApplied: 0`,
 `modelCalls: 0` and `complete: false`. Automatic semantic deduplication,
 cross-history/workspace joins, mixed-document source spaces and generic
 serialized projection imports remain outside this command's contract.
+
+Separate [portable projection consumers](meaning-projection.md) accept serialized
+group/join exports as untrusted data. They check presentation structure and do
+not create the opaque checked `JoinedGraph` capability or replay source bindings.
