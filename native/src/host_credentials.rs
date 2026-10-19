@@ -89,6 +89,39 @@ pub fn read_token(name: &str) -> Result<Zeroizing<Vec<u8>>> {
     ensure!(bytes.len() == 32, "Invalid service token format");
     Ok(bytes)
 }
+fn postgres_password(bytes: &[u8]) -> Result<&str> {
+    ensure!(
+        (1..=2560).contains(&bytes.len()),
+        "Invalid PostgreSQL credential capacity"
+    );
+    let text = std::str::from_utf8(bytes)
+        .map_err(|_| anyhow::anyhow!("Invalid PostgreSQL credential format"))?;
+    ensure!(
+        !text.chars().any(char::is_control),
+        "Invalid PostgreSQL credential format"
+    );
+    Ok(text)
+}
+/// Create-only host import, scoped to a validated endpoint/security binding.
+pub fn import_postgres_password(binding: &str, bytes: &[u8]) -> Result<Value> {
+    ensure!(
+        crate::model::valid_id(binding),
+        "Invalid PostgreSQL credential binding"
+    );
+    postgres_password(bytes)?;
+    write_new(&target("postgres", binding)?, bytes)?;
+    Ok(
+        json!({"credentialBinding":binding,"credentialType":"postgres","privateMaterial":"os_credential_store_only"}),
+    )
+}
+pub(crate) fn read_postgres_password(binding: &str) -> Result<Zeroizing<String>> {
+    ensure!(
+        crate::model::valid_id(binding),
+        "Invalid PostgreSQL credential binding"
+    );
+    let bytes = read(&target("postgres", binding)?)?;
+    Ok(Zeroizing::new(postgres_password(&bytes)?.to_owned()))
+}
 fn github_token_bytes(bytes: &[u8]) -> Result<&str> {
     ensure!(
         !bytes.is_empty()

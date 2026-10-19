@@ -59,6 +59,8 @@ mod office;
 pub mod ollama;
 pub mod paths;
 pub mod platform_credentials;
+pub mod postgres_catalog;
+pub mod postgres_catalog_client;
 pub mod process;
 pub mod project_session;
 pub mod projects;

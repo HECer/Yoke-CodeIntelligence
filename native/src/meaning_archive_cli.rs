@@ -191,7 +191,7 @@ fn directory_guards(path: &Path, deadline: &Deadline) -> Result<Vec<File>> {
     Ok(held)
 }
 
-fn fresh_destination(path: &Path, deadline: &Deadline) -> Result<Vec<File>> {
+pub(super) fn fresh_destination(path: &Path, deadline: &Deadline) -> Result<Vec<File>> {
     host_path(path)?;
     let parent = path
         .parent()
@@ -425,7 +425,7 @@ pub(super) fn read_input(path: &Path, cap: usize, deadline: &Deadline) -> Result
     Ok(bytes)
 }
 
-fn write_new(path: &Path, bytes: &[u8], deadline: &Deadline) -> Result<()> {
+pub(super) fn write_new(path: &Path, bytes: &[u8], deadline: &Deadline) -> Result<()> {
     let _held = fresh_destination(path, deadline)?;
     let mut temporary =
         tempfile::NamedTempFile::new_in(path.parent().context("Archive output parent absent")?)?;

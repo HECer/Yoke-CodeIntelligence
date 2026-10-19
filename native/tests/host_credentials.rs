@@ -1,5 +1,29 @@
 use yoke::host_credentials;
 #[test]
+fn postgres_credential_binding_and_private_bytes_are_checked_before_storage() {
+    for binding in [
+        "",
+        "../other",
+        "codex-agent-mail/example",
+        "a",
+        &"g".repeat(64),
+    ] {
+        let error =
+            host_credentials::import_postgres_password(binding, b"private sentinel").unwrap_err();
+        assert!(!error.to_string().contains("private sentinel"));
+    }
+    for bytes in [
+        b"".as_slice(),
+        b"private\nvalue",
+        b"private\0value",
+        &[255],
+        &vec![b'x'; 2561],
+    ] {
+        let error = host_credentials::import_postgres_password(&"a".repeat(64), bytes).unwrap_err();
+        assert!(!error.to_string().contains("private"));
+    }
+}
+#[test]
 fn host_credential_names_cannot_access_unrelated_accounts() {
     for name in [
         "",
