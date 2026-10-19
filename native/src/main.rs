@@ -4795,7 +4795,8 @@ fn run(cli: Cli) -> Result<bool> {
             plan,
             allow_test_changes,
         } => {
-            let plan = engine.approve(&plan, allow_test_changes)?;
+            let plan =
+                yoke::changes::approve_at(&engine.store, &plan, allow_test_changes, &deadline)?;
             print(&json!({"approvedPlanId":plan.id,"expiresAt":plan.expires_at}))?;
             return Ok(true);
         }

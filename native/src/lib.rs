@@ -382,7 +382,7 @@ impl Engine {
                 let id = args["planId"]
                     .as_str()
                     .ok_or_else(|| anyhow::anyhow!("planId required"))?;
-                let plan: changes::Plan = self.store.get_record("plan", id)?;
+                let plan = changes::load_checked_plan(&self.store, id, &deadline)?;
                 sid = Some(plan.result_snapshot_id.clone());
                 return Ok(json!({"verification":changes::verify_syntax(&self.store,&plan)?}));
             }

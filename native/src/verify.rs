@@ -1,9 +1,4 @@
-use crate::{
-    Engine,
-    capture::Deadline,
-    changes::{self, Plan},
-    paths::scoped,
-};
+use crate::{Engine, capture::Deadline, changes, paths::scoped};
 use anyhow::{Context, Result, ensure};
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
@@ -133,7 +128,7 @@ pub fn execute(
         !command.is_empty() && args.len() <= 100,
         "Invalid verification command"
     );
-    let plan: Plan = engine.store.get_record("plan", plan_id)?;
+    let plan = changes::load_checked_plan(&engine.store, plan_id, deadline)?;
     ensure!(plan.expires_at > changes::now(), "Plan expired");
     let snapshot = engine.store.snapshot(&plan.result_snapshot_id)?;
     engine.store.record(

@@ -2,7 +2,7 @@
 use crate::{
     Engine,
     capture::Deadline,
-    changes::{self, Plan},
+    changes,
     model::valid_id,
     paths::is_link,
     process::{self, CaptureLimits, CapturedOutput},
@@ -245,7 +245,7 @@ pub fn execute_container(
     );
     let pattern = validate(spec)?;
     deadline.check()?;
-    let plan: Plan = engine.store.get_record("plan", plan_id)?;
+    let plan = changes::load_checked_plan(&engine.store, plan_id, deadline)?;
     ensure!(
         plan.id == plan_id
             && plan.workspace_id == engine.store.workspace_id

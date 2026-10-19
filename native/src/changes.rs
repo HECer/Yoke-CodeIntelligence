@@ -17,6 +17,8 @@ use std::{
     path::Path,
     time::{SystemTime, UNIX_EPOCH},
 };
+#[path = "changes_plan.rs"]
+mod checked_plan;
 
 pub fn now() -> u64 {
     SystemTime::now()
@@ -57,7 +59,7 @@ impl Edit {
     }
 }
 #[derive(Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct PlannedFile {
     pub path: String,
     pub before_hash: Option<String>,
@@ -65,7 +67,7 @@ pub struct PlannedFile {
     pub mode: u32,
 }
 #[derive(Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Plan {
     pub id: String,
     pub base_snapshot_id: String,
@@ -352,6 +354,20 @@ pub fn prepare_at(
         omissions: snapshot.omissions.clone(),
         capture_consistency: "derived-from-immutable".into(),
     };
+    let created = now();
+    let id = identity(&(&snapshot.id, &result.id, &changed, created));
+    let plan = Plan {
+        id: id.clone(),
+        base_snapshot_id: snapshot.id.clone(),
+        result_snapshot_id: result.id.clone(),
+        workspace_id: snapshot.workspace_id.clone(),
+        created_at: created,
+        expires_at: created + 86400,
+        files: changed,
+        diff,
+        warnings,
+    };
+    checked_plan::admit_prepared(&plan, snapshot, &result, deadline)?;
     let mut extractions = Vec::new();
     for file in &result.files {
         let text = String::from_utf8(store.read_blob(&file.hash)?)?;
@@ -360,19 +376,6 @@ pub fn prepare_at(
     let result_graph = analysis::assemble_at(epoch, &result, extractions, deadline)?;
     store.publish(&result, &result_graph)?;
     crate::capture::inherit_options(store, snapshot, &result)?;
-    let created = now();
-    let id = identity(&(&snapshot.id, &result.id, &changed, created));
-    let plan = Plan {
-        id: id.clone(),
-        base_snapshot_id: snapshot.id.clone(),
-        result_snapshot_id: result.id,
-        workspace_id: snapshot.workspace_id.clone(),
-        created_at: created,
-        expires_at: created + 86400,
-        files: changed,
-        diff,
-        warnings,
-    };
     store.record("plan", &id, &plan)?;
     Ok(plan)
 }
@@ -439,23 +442,32 @@ pub fn materialize_selected_sources(
     }
     Ok(())
 }
+pub fn load_checked_plan(store: &Store, id: &str, deadline: &Deadline) -> Result<Plan> {
+    checked_plan::load(store, id, deadline)
+}
 pub fn approve(store: &Store, id: &str, allow_tests: bool) -> Result<Plan> {
-    let plan: Plan = store.get_record("plan", id)?;
-    ensure!(plan.expires_at > now(), "Plan expired");
-    ensure!(
-        allow_tests || plan.warnings.is_empty(),
-        "Test changes need explicit host approval"
-    );
-    store.record(
-        "approval",
-        id,
-        &Approval {
-            plan_id: id.into(),
-            approved_at: now(),
-            allow_test_changes: allow_tests,
-        },
-    )?;
-    Ok(plan)
+    approve_at(store, id, allow_tests, &Deadline::new(30_000))
+}
+pub fn approve_at(store: &Store, id: &str, allow_tests: bool, deadline: &Deadline) -> Result<Plan> {
+    let deadline = store.inherited_deadline(deadline)?;
+    crate::github_app::worker::publication_policy(store, &deadline, || {
+        let plan = load_checked_plan(store, id, &deadline)?;
+        ensure!(plan.expires_at > now(), "Plan expired");
+        ensure!(
+            allow_tests || plan.warnings.is_empty(),
+            "Test changes need explicit host approval"
+        );
+        store.record(
+            "approval",
+            id,
+            &Approval {
+                plan_id: id.into(),
+                approved_at: now(),
+                allow_test_changes: allow_tests,
+            },
+        )?;
+        Ok(plan)
+    })
 }
 struct WriterLock {
     file: fs::File,
@@ -553,7 +565,7 @@ pub fn apply(
         ensure!(previous.status == "applied", "Receipt requires recovery");
         return Ok(previous);
     }
-    let plan: Plan = store.get_record("plan", id)?;
+    let plan = load_checked_plan(store, id, deadline)?;
     ensure!(
         plan.workspace_id == store.workspace_id && plan.expires_at > now(),
         "Plan scope or expiry invalid"
@@ -646,7 +658,7 @@ pub fn recover(store: &Store, root: &Path, journal: &str, allow_writes: bool) ->
     ensure!(allow_writes, "Recovery requires host write permission");
     let _lock = lock(store)?;
     let mut receipt: Receipt = store.get_record("journal", journal)?;
-    let plan: Plan = store.get_record("plan", &receipt.plan_id)?;
+    let plan = load_checked_plan(store, &receipt.plan_id, &Deadline::new(30_000))?;
     ensure!(
         receipt.status != "rolled_back",
         "Journal already rolled back"
@@ -678,6 +690,11 @@ pub fn recover(store: &Store, root: &Path, journal: &str, allow_writes: bool) ->
     Ok(receipt)
 }
 pub fn verify_syntax(store: &Store, plan: &Plan) -> Result<Value> {
+    let checked = load_checked_plan(store, &plan.id, &Deadline::new(30_000))?;
+    ensure!(
+        serde_json::to_value(&checked)? == serde_json::to_value(plan)?,
+        "changes_plan_invalid"
+    );
     let before = store.graph(&plan.base_snapshot_id)?;
     let after = store.graph(&plan.result_snapshot_id)?;
     let mut baseline: BTreeMap<_, usize> = BTreeMap::new();

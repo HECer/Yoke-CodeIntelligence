@@ -116,6 +116,11 @@ yoke --allow-writes recover JOURNAL       # conditional rollback when needed
 
 An interrupted original-tree application returns `RECOVERY_REQUIRED` and `error.journalId`. This identifier remains available when the request deadline prevents updating the emergency journal: recovery also inspects files absent from `appliedPaths`. Workspace apply requires a minimum effective 1,024-byte response budget so recovery information can fit. Do not delete state when an unfinished journal exists.
 
+Saved change plans replay their original identity, complete captured file delta,
+exact review diff and test-change warnings before approval, new application,
+verification or recovery. See [saved plan integrity](docs/plan-integrity.md)
+for compatibility, finite limits and storage-corruption boundaries.
+
 ## Read-only context plans
 
 Use `ci_context` with a query or a plan, never both. Plans contain 1–16 validated steps and cannot execute commands or generated programs. For example:

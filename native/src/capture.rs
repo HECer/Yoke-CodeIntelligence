@@ -29,6 +29,25 @@ thread_local! {
     static HOST_DEADLINE: std::cell::RefCell<Option<Deadline>> = const {std::cell::RefCell::new(None)};
 }
 impl Deadline {
+    pub(crate) fn intersection(&self, other: &Self) -> Result<Self> {
+        let mut result = self.clone();
+        result.end = result.end.min(other.end);
+        for flag in &other.cancellations {
+            if !result
+                .cancellations
+                .iter()
+                .any(|f| std::sync::Arc::ptr_eq(f, flag))
+            {
+                result.cancellations.push(std::sync::Arc::clone(flag));
+            }
+        }
+        ensure!(
+            result.cancellations.len() <= 64,
+            "Host deadline nesting capacity exceeded"
+        );
+        result.check()?;
+        Ok(result)
+    }
     pub fn new(ms: u64) -> Self {
         Self::from_duration(Duration::from_millis(ms))
     }

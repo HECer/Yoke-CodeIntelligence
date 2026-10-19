@@ -782,6 +782,17 @@ impl Store {
     pub fn clear_deadline(&self) {
         self.replace_deadline(None);
     }
+    pub(crate) fn inherited_deadline(
+        &self,
+        requested: &crate::capture::Deadline,
+    ) -> Result<crate::capture::Deadline> {
+        if let Some(prior) = self.deadline.borrow().as_ref() {
+            requested.intersection(prior)
+        } else {
+            requested.check()?;
+            Ok(requested.clone())
+        }
+    }
     /// Swap only the Store-owned progress policy; scoped callers restore their saved policy.
     pub(crate) fn replace_deadline(
         &self,

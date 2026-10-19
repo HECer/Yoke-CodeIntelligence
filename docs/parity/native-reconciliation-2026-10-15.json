@@ -6809,7 +6809,11 @@
         "native/src/refactor_contract.rs",
         "native/src/semantic_move_intents.rs",
         "native/src/lsp_refactor_intents.rs",
-        "native/tests/symbol_move_declarations.rs"
+        "native/tests/symbol_move_declarations.rs",
+        "native/src/changes_plan.rs",
+        "native/tests/plan_integrity.rs",
+        "native/docs/plan-integrity.md",
+        "docs/validation/integration-2026-10-19/plan-integrity/index.json"
       ],
       "id": "R1",
       "inventoryRefs": [
@@ -6818,7 +6822,7 @@
         "serena:jet_brains_inline_symbol",
         "serena:jet_brains_rename"
       ],
-      "missingBehavior": "Nullable captured-file rename and explicit forced-file deletion retain their bounded evidence. The explicit host-selected own_v1 named-declaration file/inline-module destination and negotiated attachment-bundle slice is now evidenced separately. Directory moves, other symbol-parent declarations/languages, default-safe captured-file usage proof, propagated deletion, broader inline/rename/cross-language/provider/IDE intents and exhaustive compiler reference binding remain open. Attached outer attributes/docstrings require negotiated sourceAttachments exact_text_v1 and a separately checked sourceTextRange bundle with original entity/name anchors retained. Other declaration kinds/languages, malformed or dangling syntax, impl/trait/descendant destinations, body-changing/wrapper/copy-only/resource/virtual-coordinate edits and ambiguous effects refuse. No exhaustive compiler reference binding/repair, proprietary IDE acceptance, directory-tree move or atomic multi-plan publication follows. Existing captured-file omitted/null/exact-empty parent/basename semantics and direct-native final-filename semantics remain distinct and unchanged.",
+      "missingBehavior": "Nullable captured-file rename and explicit forced-file deletion retain their bounded evidence. The explicit host-selected own_v1 named-declaration file/inline-module destination and negotiated attachment-bundle slice is now evidenced separately. Directory moves, other symbol-parent declarations/languages, default-safe captured-file usage proof, propagated deletion, broader inline/rename/cross-language/provider/IDE intents and exhaustive compiler reference binding remain open. Attached outer attributes/docstrings require negotiated sourceAttachments exact_text_v1 and a separately checked sourceTextRange bundle with original entity/name anchors retained. Other declaration kinds/languages, malformed or dangling syntax, impl/trait/descendant destinations, body-changing/wrapper/copy-only/resource/virtual-coordinate edits and ambiguous effects refuse. No exhaustive compiler reference binding/repair, proprietary IDE acceptance, directory-tree move or atomic multi-plan publication follows. Existing captured-file omitted/null/exact-empty parent/basename semantics and direct-native final-filename semantics remain distinct and unchanged. Saved-plan integrity separately replays the released identity, complete captured file delta, exact review and test-change warnings before approval/application/verification/recovery, with matching finite preparation limits. This does not close the semantic capability gaps listed above.",
       "priority": 1,
       "suggestedScope": "Preserve the explicit own_v1 Rust named-declaration/negotiated-attachment file-or-inline-module slice and file parent/basename semantics. Define other declaration/language/directory moves, default-safe usage proof and propagation with checked original operations and independent postconditions; retain broader inline/rename/provider limits.",
       "title": "Finish semantic refactoring intent contracts"

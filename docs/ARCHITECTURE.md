@@ -2,6 +2,12 @@
 
 ## Native Rust ownership
 
+`changes_plan` replays the released saved-plan identity and complete base/result
+delta, then reconstructs exact diff bytes and warnings under checked source
+policies. Approval, verification, new apply and recovery share this admission;
+read transactions and SQL/deadline policy are scoped and restored. See
+[saved plan integrity](../native/docs/plan-integrity.md).
+
 `native/src` is an independent runtime with its own `.yoke` SQLite/CAS state. `capture`, `paths` and `store` own strict saved-source acquisition, immutable bytes, FTS and client/writer locking. `analysis` and `contracts` produce structural and authored observations; `query` owns retrieval, plans and directed analytics. `lsp` owns the host-selected semantic protocol, with exact source anchors and bounded excerpts. `changes`, `verify` and `process` own reviewed plans, copied execution, conditional original writes and recovery.
 
 Checked Store lock waits retain the original absolute deadline and host
