@@ -50,6 +50,10 @@ bindings and structural candidate explanations.
 [Captured impact areas](docs/git-areas.md) additionally classify saved impact
 paths by explicitly selected stored concepts or exact directory spelling.
 They preserve all claims, visible ties and the original quoted parent.
+Separate [captured owner candidates](docs/git-owners.md) retain exact per-rule
+and owner-token byte evidence for each base/head path. Explicit empty-owner
+rules and unsupported/uncaptured cases remain visible without verified identity
+or review authority.
 Explicit [index conflict triage](docs/git-conflicts.md) observes the selected
 worktree without changing its files or index. Git-stage source pages require
 separate host permission and checked native captured-path scopes.

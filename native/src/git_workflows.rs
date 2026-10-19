@@ -27,6 +27,8 @@ pub mod areas;
 pub mod conflicts;
 #[path = "git_history_read.rs"]
 pub(crate) mod history_read;
+#[path = "git_owners.rs"]
+pub mod owners;
 pub use history_read::Options as HistoryOptions;
 #[path = "git_impact_details.rs"]
 pub mod impact_details;

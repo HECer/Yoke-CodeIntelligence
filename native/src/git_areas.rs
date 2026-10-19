@@ -678,7 +678,25 @@ pub fn derive(
     options: &Options,
     d: &Deadline,
 ) -> Result<AreaReport> {
-    let run = || -> Result<AreaReport> {
+    derive_with(
+        store,
+        report_id,
+        meaning_graph_ids,
+        options,
+        d,
+        |report, _| Ok(report),
+    )
+}
+/// Keep additional native source interpretations within this checked read view.
+pub(crate) fn derive_with<T>(
+    store: &Store,
+    report_id: &str,
+    meaning_graph_ids: &[String],
+    options: &Options,
+    d: &Deadline,
+    finish: impl FnOnce(AreaReport, &[Snapshot; 2]) -> Result<T>,
+) -> Result<T> {
+    let run = || -> Result<Result<T>> {
         options.admit(report_id, meaning_graph_ids, d)?;
         ensure!(store.db.is_autocommit(), Failure::Input);
         crate::github_app::worker::publication_policy(store, d, || {
@@ -720,9 +738,11 @@ pub fn derive(
             let bytes = crate::json::encode_bounded(&value, options.limits.max_output_bytes, d)
                 .map_err(|_| anyhow::anyhow!(Failure::Capacity))?;
             d.check()?;
+            let result = finish(AreaReport { value, bytes }, &sources.snapshots);
+            d.check()?;
             tx.commit()?;
-            Ok(AreaReport { value, bytes })
+            Ok(result)
         })
     };
-    run().map_err(|e| public(e, d))
+    run().map_err(|e| public(e, d))?
 }
