@@ -32,6 +32,7 @@ regex = "1"
 reqwest = { version = "=0.13.5", default-features = false, features = ["blocking", "rustls-no-provider", "query"] }
 rusqlite = { version = "0.37", features = ["bundled", "hooks", "limits"] }
 rustls = { version = "0.23", default-features = false, features = ["std", "ring"] }
+rustls-native-certs = "=0.8.4"
 rcgen = "0.13"
 time = { version = "0.3", features = ["parsing"] }
 tokio = { version = "=1.53.3", features = ["rt", "time"] }
