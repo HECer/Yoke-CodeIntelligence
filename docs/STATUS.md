@@ -729,12 +729,39 @@ blocking-socket correction. Package versions remain unchanged; the existing
 rustls-native-certs0.8.4 is now a direct dependency. Public payloads remain local
 with published hashes/receipts and owned replay fixtures. Attempts are nonadditive.
 
-The direct arxiv API attempt timed out; a separate public abstract-page
-investigation succeeds. These are not native arxiv acceptance. Generic capture
-refuses arxiv domains until a dedicated coordinated route is implemented.
-Arxiv/Google/social/video/authenticated/database connectors, article/semantic
-interpretation, wider R1–R9, full native/platform acceptance, main and release
-remain open; no all-library allocation or maximum-size qualification is claimed.
+At the preceding HTTP checkpoint, the direct arxiv API attempt timed out and a
+public abstract-page investigation succeeded. The dedicated native route now has
+its own separately frozen acceptance below; generic HTTP still refuses arxiv.
+
+[Native received arXiv sources](../native/docs/arxiv-source.md) now add a
+dedicated host-authorized abstract/PDF route with literal addresses, verified TLS
+names and shared-file rate coordination. The exclusive journal spans each owned
+request; completion starts a three-second cooldown. Pending/corrupt state refuses,
+and explicit exact-hash pending recovery sends no request. Operators must share
+the same coherent-lock file and UTC clocks across participating clients.
+
+Frozen head metadata preserves each citation occurrence, repeated author labels
+and exact original whole-tag byte evidence. Decoding does not establish a browser
+DOM, paper version, author identity, server truth or a canonical code snapshot.
+No default model call, project execution or query-time acquisition is added.
+
+All **16 new contracts** pass. Final selected native evidence records
+**532 passed / 1 failed / 8 existing ignored gates** in
+15 groups. Failures remain in the evidence: `media_cannot_bypass_source_scope_links_ignore_or_protected_paths`.
+All-target Clippy, format, **17 Python tests**, mandatory typecheck and
+**260 TypeScript tests / 3 existing skips** pass with
+**700 integrated inputs unchanged**. Actual Windows native
+frontend metadata and PDF captures share completion sequences 2/4, matching
+body/archive hashes and six distinct author occurrences. Arxiv PDF text extraction
+is not claimed; public payloads and full abstract output remain ignored/local.
+
+[Evidence](validation/integration-2026-10-19/arxiv-source/index.json) preserves the
+initial API-unavailable RED, genuine comment-boundary panic and correction, two
+test-fixture corrections, the first Clippy warning and an earlier unchanged
+Git-process termination test failure. Attempts are nonadditive; later passes do
+not erase earlier failures or establish their cause. Dependencies are unchanged.
+Remaining Google/social/video/database and semantic connectors, wider R1–R9,
+full native/platform acceptance, main and release stay open.
 
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes

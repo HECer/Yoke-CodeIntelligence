@@ -1,0 +1,32 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 32s
+     Running tests\arxiv_source.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\arxiv_source-6ba7d8be364be02a.exe)
+
+running 5 tests
+test comment_crossing_head_scan_budget_returns_error_without_panicking ... ok
+test inert_and_raw_content_cannot_create_metadata_occurrences ... ok
+test malformed_ambiguous_or_over_budget_metadata_is_refused ... ok
+test received_arxiv_metadata_keeps_parallel_author_labels_and_exact_original_tag_bytes ... ok
+test selector_labels_and_version_claims_remain_separate_from_received_metadata ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests\arxiv_source_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\arxiv_source_cli-687e062540767b82.exe)
+
+running 3 tests
+test capture_grants_unknown_config_existing_output_and_recovery_grant_precede_effects ... ok
+test offline_arxiv_metadata_replay_has_no_store_and_conflicting_read_modes_refuse ... ok
+test recovery_cli_checks_exact_journal_and_retains_completed_identity_after_lost_stdout ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.12s
+
+     Running tests\arxiv_source_http.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\arxiv_source_http-dd3ec0b39c882cc8.exe)
+
+running 4 tests
+test literal_tls_capture_preserves_body_and_shared_gate_refuses_next_request ... ok
+test mismatched_selector_redirect_and_wrong_tls_name_refuse_and_complete_owned_attempt ... ok
+test pdf_route_remains_received_pdf_bytes_without_metadata_synthesis ... ok
+test stalled_owned_connection_stops_on_original_deadline_and_releases_rate_lock ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.44s
+

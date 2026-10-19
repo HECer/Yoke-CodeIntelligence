@@ -8,6 +8,9 @@ requires a URL plus literal address, independent permissions and static TLS
 anchors; redirects/proxies/retries are disabled. Headers have normalized client
 precision, while body evidence retains exact received bytes. Explicit PDF text
 reuses the existing frozen native worker. See [HTTP source acquisition](../native/docs/source-acquisition.md).
+The dedicated [arXiv source route](../native/docs/arxiv-source.md) adds explicit
+shared-file rate coordination and exact received citation-tag evidence, without
+publication/version/author authority or query-time acquisition.
 
 `postgres_catalog` validates received UTF-8 JSONL and reconstructs a standalone
 typed catalog archive and directed graph. `postgres_catalog_client` supplies

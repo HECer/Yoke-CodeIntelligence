@@ -7176,7 +7176,14 @@
         "native/tests/source_acquisition_http.rs",
         "native/tests/source_acquisition_cli.rs",
         "native/docs/source-acquisition.md",
-        "docs/validation/integration-2026-10-19/source-acquisition/index.json"
+        "docs/validation/integration-2026-10-19/source-acquisition/index.json",
+        "native/src/arxiv_source.rs",
+        "native/src/arxiv_rate.rs",
+        "native/tests/arxiv_source.rs",
+        "native/tests/arxiv_source_http.rs",
+        "native/tests/arxiv_source_cli.rs",
+        "native/docs/arxiv-source.md",
+        "docs/validation/integration-2026-10-19/arxiv-source/index.json"
       ],
       "id": "R7",
       "inventoryRefs": [
@@ -7185,9 +7192,9 @@
         "graphify:url_ingest",
         "graphify:db_push"
       ],
-      "missingBehavior": "Bounded native PostgreSQL selected-catalog acquisition and anonymous public HTTP text/raw-HTML/PDF acquisition now have actual Windows evidence. Frozen HTTP byte ranges and explicit native PDF text do not establish article/browser-DOM, semantic graph or complete PDF interpretation. Dedicated rate-aware arxiv metadata/PDF, Google shortcut export, authenticated/social/video routes and Neo4j/FalkorDB upsert remain open, as do full pinned upstream equivalence and other-server/non-Windows qualification. Generated Cypher and local readers are not those remaining connectors.",
+      "missingBehavior": "Bounded selected PostgreSQL catalogs, anonymous HTTP text/raw-HTML/PDF, and dedicated shared-rate-coordinated arxiv.org received metadata/PDF now have actual Windows evidence. Received citation tags and matching base-ID labels do not establish paper/version/author/server truth, a browser DOM, semantic graph or canonical code snapshot. Google shortcut export, authenticated/social/video routes, article/semantic interpretation and Neo4j/FalkorDB upsert remain open, along with full upstream and non-Windows qualification. Local files and generated Cypher are not those remaining connectors.",
       "priority": 7,
-      "suggestedScope": "Continue with a dedicated rate-coordinated arxiv route over reachable public abstract/PDF endpoints, then remaining Google/social/video/authenticated/database connectors. Preserve host-only endpoint/credential authority, bounded frozen artifacts and zero query-time acquisition; do not infer article/semantic/source/server truth from received bytes.",
+      "suggestedScope": "Continue remaining Google/social/video/authenticated/database connectors and cross-source semantic behavior. Preserve host-only endpoint/credential authority, exact immutable received evidence, bounded protocols, honest missing capabilities and zero query-time acquisition.",
       "title": "Explicit external-source acquisition and graph database connectors",
       "postgresCatalogCheckpoint": {
         "index": "docs/validation/integration-2026-10-19/postgres-catalog/index.json",
@@ -7231,6 +7238,31 @@
         "arxivNativeImplemented": false,
         "serverTruthAttested": false,
         "canonicalCodeSnapshot": false,
+        "wholeNativeRerun": false,
+        "fullUpstreamContractCertified": false
+      },
+      "arxivCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/arxiv-source/index.json",
+        "newContractCases": {
+          "rateJournal": 4,
+          "metadata": 5,
+          "tlsHttp": 4,
+          "cli": 3
+        },
+        "finalScopedTotals": {
+          "passed": 532,
+          "failed": 1,
+          "ignored": 8
+        },
+        "nativeGroups": 15,
+        "actualPlatform": "Windows",
+        "actualFrontendMetadata": true,
+        "actualPdfCapture": true,
+        "legacyApiUsed": false,
+        "sharedRateJournal": true,
+        "authorIdentityAttested": false,
+        "versionTruthAttested": false,
+        "serverTruthAttested": false,
         "wholeNativeRerun": false,
         "fullUpstreamContractCertified": false
       }
@@ -8479,7 +8511,7 @@
     },
     {
       "id": "native_received_http_sources",
-      "behavior": "A separate host-only native HTTP acquisition CLI/library performs one anonymous GET to an explicitly selected literal address with TLS hostname verification and static trust anchors. Separate network/output/loopback permissions, no proxy/redirect/retry/credential lookup or resource/script execution. Typed immutable representation archives replay exact Unicode/CRLF body bytes and bounded base64/optional-UTF8 ranges; imported claims remain data without source/network/server authority. Explicit frozen PDF text uses the existing bounded installed native worker without Store or original-path reacquisition. HTML remains raw; arxiv domains are refused until their dedicated rate-aware connector.",
+      "behavior": "A separate host-only native HTTP acquisition CLI/library performs one anonymous GET to an explicitly selected literal address with TLS hostname verification and static trust anchors. Separate network/output/loopback permissions, no proxy/redirect/retry/credential lookup or resource/script execution. Typed immutable representation archives replay exact Unicode/CRLF body bytes and bounded base64/optional-UTF8 ranges; imported claims remain data without source/network/server authority. Explicit frozen PDF text uses the existing bounded installed native worker without Store or original-path reacquisition. Generic HTML remains raw and generic HTTP refuses arxiv domains; the separately evidenced dedicated arxiv connector owns those requests.",
       "evidence": [
         "native/src/source_acquisition.rs",
         "native/src/source_acquisition_http.rs",
@@ -8490,7 +8522,24 @@
         "native/docs/source-acquisition.md",
         "docs/validation/integration-2026-10-19/source-acquisition/index.json"
       ],
-      "remainingReview": "Bounded native PostgreSQL selected-catalog acquisition and anonymous public HTTP text/raw-HTML/PDF acquisition now have actual Windows evidence. Frozen HTTP byte ranges and explicit native PDF text do not establish article/browser-DOM, semantic graph or complete PDF interpretation. Dedicated rate-aware arxiv metadata/PDF, Google shortcut export, authenticated/social/video routes and Neo4j/FalkorDB upsert remain open, as do full pinned upstream equivalence and other-server/non-Windows qualification. Generated Cypher and local readers are not those remaining connectors.",
+      "remainingReview": "Bounded selected PostgreSQL catalogs, anonymous HTTP text/raw-HTML/PDF, and dedicated shared-rate-coordinated arxiv.org received metadata/PDF now have actual Windows evidence. Received citation tags and matching base-ID labels do not establish paper/version/author/server truth, a browser DOM, semantic graph or canonical code snapshot. Google shortcut export, authenticated/social/video routes, article/semantic interpretation and Neo4j/FalkorDB upsert remain open, along with full upstream and non-Windows qualification. Local files and generated Cypher are not those remaining connectors.",
+      "fullContractCertified": false
+    },
+    {
+      "id": "native_received_arxiv_sources",
+      "behavior": "Host-only arxiv.org abstract/PDF acquisition from a bare ID and literal SocketAddr with TLS name verification. Independent network/output/rate-state grants and one shared checksum journal serialize owned requests and start a three-second cooldown after completion. Pending/corrupt/linked/stale state refuses; explicit exact-hash pending recovery sends no request. Storeless frozen head-META inspection preserves distinct citation occurrences and exact original whole-tag byte evidence, with finite parsing/quotas and no publication/version/author/server/source authority.",
+      "evidence": [
+        "native/src/arxiv_source.rs",
+        "native/src/arxiv_rate.rs",
+        "native/src/source_acquisition_http.rs",
+        "native/src/source_acquisition_cli.rs",
+        "native/tests/arxiv_source.rs",
+        "native/tests/arxiv_source_http.rs",
+        "native/tests/arxiv_source_cli.rs",
+        "native/docs/arxiv-source.md",
+        "docs/validation/integration-2026-10-19/arxiv-source/index.json"
+      ],
+      "remainingReview": "Bounded selected PostgreSQL catalogs, anonymous HTTP text/raw-HTML/PDF, and dedicated shared-rate-coordinated arxiv.org received metadata/PDF now have actual Windows evidence. Received citation tags and matching base-ID labels do not establish paper/version/author/server truth, a browser DOM, semantic graph or canonical code snapshot. Google shortcut export, authenticated/social/video routes, article/semantic interpretation and Neo4j/FalkorDB upsert remain open, along with full upstream and non-Windows qualification. Local files and generated Cypher are not those remaining connectors.",
       "fullContractCertified": false
     }
   ],
@@ -8592,7 +8641,7 @@
         "graphify:asr",
         "graphify:db_push"
       ],
-      "remainingBoundary": "Bounded native PostgreSQL selected-catalog acquisition and anonymous public HTTP text/raw-HTML/PDF acquisition now have actual Windows evidence. Frozen HTTP byte ranges and explicit native PDF text do not establish article/browser-DOM, semantic graph or complete PDF interpretation. Dedicated rate-aware arxiv metadata/PDF, Google shortcut export, authenticated/social/video routes and Neo4j/FalkorDB upsert remain open, as do full pinned upstream equivalence and other-server/non-Windows qualification. Generated Cypher and local readers are not those remaining connectors."
+      "remainingBoundary": "Bounded selected PostgreSQL catalogs, anonymous HTTP text/raw-HTML/PDF, and dedicated shared-rate-coordinated arxiv.org received metadata/PDF now have actual Windows evidence. Received citation tags and matching base-ID labels do not establish paper/version/author/server truth, a browser DOM, semantic graph or canonical code snapshot. Google shortcut export, authenticated/social/video routes, article/semantic interpretation and Neo4j/FalkorDB upsert remain open, along with full upstream and non-Windows qualification. Local files and generated Cypher are not those remaining connectors."
     },
     {
       "id": "refactor_and_provider_intent",

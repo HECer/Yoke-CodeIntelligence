@@ -325,3 +325,13 @@ nonblocking socket was diagnosed and corrected. [Scoped evidence](source-acquisi
 preserves attempts, hashes, lock-version proof and local-only public-payload
 receipts. Dedicated arxiv and wider R7/R1–R9, whole-native/platform, main and
 release gates remain open.
+
+## Coordinated received arXiv source checkpoint
+
+Source `b8cd7b05ef1ed0dadd3fd96f5b44cbb125a9f4ef`, runtime merge `1edc0684888ce553b814764b890829abaccea053`.
+[Indexed evidence](arxiv-source/index.json) retains 16 new contracts, selected
+532/1/8 native outcomes, actual Windows metadata/PDF
+capture with one shared journal, source-integrity proofs and mandatory integrated
+checks. Initial failures remain nonadditive. Public payloads/full abstract output
+remain local; received tag labels are not publication, version or author truth.
+No whole-native/platform/upstream, main or release certification follows.
