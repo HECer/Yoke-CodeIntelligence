@@ -562,6 +562,7 @@ fn prepare_captured_file_relocation(
     session: &mut Session,
     path: &str,
     destination: &str,
+    directory_move: bool,
     deadline: &Deadline,
 ) -> Result<Value> {
     let path = crate::paths::normalized_syntax(path)?;
@@ -571,6 +572,10 @@ fn prepare_captured_file_relocation(
     let source_host = crate::paths::scoped(&engine.root, &path)?;
     match std::fs::symlink_metadata(source_host) {
         Ok(metadata) if metadata.is_dir() && !crate::paths::is_link(&metadata) => {
+            ensure!(
+                directory_move,
+                "File rename requires a captured regular file"
+            );
             return crate::semantic_refactor::invoke(
                 engine,
                 "move",
@@ -1012,15 +1017,21 @@ fn dispatch_unbounded(
                     }
                     _ => bail!("File deletion propagate must be boolean"),
                 }
-                match args.get("delete_even_if_used") {
-                    Some(Value::Bool(true)) => {}
-                    None | Some(Value::Bool(false)) => bail!(
-                        "Safe file deletion requires a file usage proof; only explicit delete_even_if_used=true is supported"
-                    ),
+                let forced = match args.get("delete_even_if_used") {
+                    Some(Value::Bool(true)) => true,
+                    None | Some(Value::Bool(false)) => false,
                     _ => bail!("File deletion delete_even_if_used must be boolean"),
-                }
+                };
                 let path = crate::paths::normalized_syntax(text(args, "relative_path")?)?;
                 let engine = session.active_engine_at(deadline)?;
+                if !forced {
+                    return crate::semantic_refactor::invoke(
+                        engine,
+                        "safeDelete",
+                        &json!({"relativePath":path,"deleteEvenIfUsed":false,"propagate":false}),
+                        deadline,
+                    );
+                }
                 let (snapshot, graph, _, _) = engine.index(deadline)?;
                 let source_hash = {
                     let scope = crate::capture::source_scope_policy(&engine.store, &snapshot)?;
@@ -1096,7 +1107,13 @@ fn dispatch_unbounded(
                 let destination = crate::paths::normalized(&format!("{parent}/{basename}"))?;
                 // The pinned JB facade uses a parent directory. The direct
                 // native move API continues to take the final destination path.
-                return prepare_captured_file_relocation(session, &path, &destination, deadline);
+                return prepare_captured_file_relocation(
+                    session,
+                    &path,
+                    &destination,
+                    true,
+                    deadline,
+                );
             }
             match args.get("target_parent_name_path") {
                 None | Some(Value::Null) => {}
@@ -1461,6 +1478,7 @@ fn dispatch_unbounded(
                             session,
                             &path,
                             &destination,
+                            false,
                             deadline,
                         );
                     }

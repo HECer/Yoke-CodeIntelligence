@@ -15,6 +15,13 @@ client owns the single directory resource effect. Copied verification checks
 the declared shape, while approved workspace application and conditional
 recovery use one filesystem rename. See [directory moves](../native/docs/directory-moves.md).
 
+`semantic_file_delete` admits a finite captured ES module and checks graph and
+literal usage candidates before source-bound definition/reference requests.
+Bulk reads share one checked captured scope while retaining per-file policy,
+hash and cancellation checks. Only after all checks does ordinary guarded
+deletion preparation publish a plan. [File usage checks](../native/docs/file-usage.md)
+describe supported declarations and unknown consumers.
+
 `native/src` is an independent runtime with its own `.yoke` SQLite/CAS state. `capture`, `paths` and `store` own strict saved-source acquisition, immutable bytes, FTS and client/writer locking. `analysis` and `contracts` produce structural and authored observations; `query` owns retrieval, plans and directed analytics. `lsp` owns the host-selected semantic protocol, with exact source anchors and bounded excerpts. `changes`, `verify` and `process` own reviewed plans, copied execution, conditional original writes and recovery.
 
 Checked Store lock waits retain the original absolute deadline and host

@@ -183,6 +183,27 @@ fn native_directory_move_keeps_the_explicit_final_name_contract() {
     assert_eq!(records(&f), (1, 1));
     unchanged(&f);
 }
+
+#[test]
+fn captured_file_rename_cannot_gain_directory_authority_from_a_folder_capable_provider() {
+    for epoch in [AnalyzerEpoch::V8, AnalyzerEpoch::V9] {
+        for selector in [None, Some(Value::Null)] {
+            let mut f = fixture(epoch, "edits");
+            let mut args = json!({"relative_path":"src/tree","new_name":"renamed"});
+            if let Some(selector) = selector {
+                args["name_path"] = selector;
+            }
+            assert!(
+                yoke::agent_repl::invoke_facade(&mut f.session, "jb.rename", args, None, &d())
+                    .is_err()
+            );
+            assert_eq!(records(&f), (0, 0));
+            assert!(transcript(&f).is_empty());
+            unchanged(&f);
+            assert!(!f.root.path().join("src/renamed").exists());
+        }
+    }
+}
 #[test]
 fn occupied_missing_protected_and_uncaptured_tree_entries_refuse_before_provider_start() {
     for case in [

@@ -9,6 +9,8 @@ use anyhow::{Context, Result, bail, ensure};
 use serde_json::{Value, json};
 #[path = "semantic_directory_move.rs"]
 mod directory_moves;
+#[path = "semantic_file_delete.rs"]
+mod file_delete;
 #[path = "semantic_refactor_intents.rs"]
 mod intents;
 #[path = "semantic_move_intents.rs"]
@@ -342,6 +344,9 @@ pub fn invoke(
         staged.value["complete"] = json!(false);
         staged.value["commandsExecuted"] = json!(false);
         return Ok(staged.value);
+    }
+    if operation == "safeDelete" && args.get("namePath").is_none_or(Value::is_null) {
+        return file_delete::prepare(engine, &snapshot, &graph, args, deadline);
     }
     let symbol = symbol(engine, &snapshot, &graph, args, deadline)?;
     match operation {
