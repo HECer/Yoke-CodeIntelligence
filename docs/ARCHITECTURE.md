@@ -8,6 +8,13 @@ policies. Approval, verification, new apply and recovery share this admission;
 read transactions and SQL/deadline policy are scoped and restored. See
 [saved plan integrity](../native/docs/plan-integrity.md).
 
+`changes_directory` binds one complete captured text tree, including empty
+directories, modes and physical directory identities. A matching standard-LSP
+folder request contributes checked original-coordinate text repairs; the native
+client owns the single directory resource effect. Copied verification checks
+the declared shape, while approved workspace application and conditional
+recovery use one filesystem rename. See [directory moves](../native/docs/directory-moves.md).
+
 `native/src` is an independent runtime with its own `.yoke` SQLite/CAS state. `capture`, `paths` and `store` own strict saved-source acquisition, immutable bytes, FTS and client/writer locking. `analysis` and `contracts` produce structural and authored observations; `query` owns retrieval, plans and directed analytics. `lsp` owns the host-selected semantic protocol, with exact source anchors and bounded excerpts. `changes`, `verify` and `process` own reviewed plans, copied execution, conditional original writes and recovery.
 
 Checked Store lock waits retain the original absolute deadline and host
