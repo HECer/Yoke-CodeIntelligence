@@ -1,0 +1,10 @@
+    Finished `test` profile [unoptimized] target(s) in 0.56s
+     Running tests\session_root_aliases.rs (target\debug\deps\session_root_aliases-24647dcacdaf953d.exe)
+
+running 3 tests
+test aliases_are_rebuilt_from_current_host_input_and_never_restored_from_session_records ... ok
+test selected_root_alias_and_canonical_root_share_only_the_registered_query_scope ... ok
+test unicode_lowercase_expansion_cannot_turn_an_unregistered_root_into_a_selector ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.19s
+

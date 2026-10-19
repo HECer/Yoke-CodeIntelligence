@@ -40,6 +40,7 @@ fn parse(bytes: &[u8]) -> Response {
         body: bytes[end..].to_vec(),
     }
 }
+#[track_caller]
 fn exchange(address: SocketAddr, request: &[u8]) -> Response {
     let mut tcp = TcpStream::connect(address).unwrap();
     tcp.set_read_timeout(Some(Duration::from_secs(10))).unwrap();
@@ -47,9 +48,10 @@ fn exchange(address: SocketAddr, request: &[u8]) -> Response {
     let mut bytes = vec![];
     loop {
         let mut chunk = [0; 8192];
-        let count = tcp
-            .read(&mut chunk)
-            .expect("HTTP response must arrive within the host deadline");
+        let count = match tcp.read(&mut chunk) {
+            Ok(count) => count,
+            Err(error) => panic!("HTTP response must arrive within the host deadline: {error}"),
+        };
         assert_ne!(
             count, 0,
             "HTTP connection closed before a complete framed response"
@@ -455,10 +457,14 @@ fn session_capacity_expiry_and_slow_connection_shutdown_are_bounded() {
         .lock()
         .unwrap_or_else(|poisoned| poisoned.into_inner());
     let root = root();
+    // This positive capacity/expiry fixture must first initialize a usable
+    // native session. Short admission-time expiry is tested independently by
+    // the stalled-initialization cases, including their unchanged 500ms TTL.
+    let ttl = Duration::from_secs(5);
     let config = Config {
         max_sessions: 1,
         max_sessions_per_principal: 1,
-        session_ttl_ms: 100,
+        session_ttl_ms: ttl.as_millis() as u64,
         ..Config::default()
     };
     let server = mcp_http::serve(
@@ -468,12 +474,18 @@ fn session_capacity_expiry_and_slow_connection_shutdown_are_bounded() {
     .unwrap();
     let address = server.local_addr();
     let response = exchange(address, &frame(address, 17, "POST", None, Some(init()), ""));
+    assert_eq!(
+        response.status,
+        200,
+        "Initialization must complete before the admitted fixture lifetime: {}",
+        String::from_utf8_lossy(&response.body)
+    );
     let sid = &response.headers["mcp-session-id"];
     assert_eq!(
         exchange(address, &frame(address, 17, "POST", None, Some(init()), "")).status,
         429
     );
-    std::thread::sleep(Duration::from_millis(150));
+    std::thread::sleep(ttl + Duration::from_millis(50));
     assert_eq!(
         exchange(address, &frame(address, 17, "GET", Some(sid), None, "")).status,
         404

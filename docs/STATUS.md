@@ -55,6 +55,24 @@ macOS PDF workers and process-group cleanup. The raw platform logs and individua
 failures are [preserved separately](validation/integration-2026-10-19/platform-d4/index.json).
 These results do not establish platform acceptance.
 
+The subsequent Windows repair reproduces the React URI and registered-root
+failures using a real 8.3 temporary path. Host-selected root aliases now retain
+their registered query scope without filesystem lookup, persisted authority or
+Unicode lowercase expansion. The protocol fixture compares equivalent decoded
+file URIs and honors the requested document. The console fixture uses an owned
+native kernel probe, and positive setup/session fixtures retain independent
+operation/absolute-expiry checks. A further reproduced oversized-header reset
+is repaired with bounded TCP shutdown after the framed refusal: at most 16 KiB
+and 50 ms within the original deadline, without parsing discarded bytes.
+Frozen validation passes **479 native tests / 0 failed / 7 ignored** across 12
+selected groups, format and all-target Clippy with warnings denied. Eight actual
+short-path checks pass ten overlapping tests. TypeScript typecheck and 254 tests
+/ 3 skipped pass in the first run; its five-file native-only delta to the final
+run is preserved. That first run retains its Clippy and HTTP failures. The Unix
+positive archive CLI fixture now explicitly grants registry coordination.
+[Repair evidence](validation/integration-2026-10-19/windows-ci-repair/index.json)
+does not replace whole-native or hosted platform acceptance, which remain open.
+
 The digest now has an explicit captured-history mapping path. Verified Git tree
 facts describe changes over the captured path union; source-replayed Rust
 associations retain original IDs, producers and exact byte evidence. Qualified

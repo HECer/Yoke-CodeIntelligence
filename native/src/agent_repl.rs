@@ -2866,7 +2866,7 @@ mod source_binding_tests {
         let root = tempfile::tempdir().unwrap();
         let source = "// 🌍\nfn helper() {}\nfn main() { helper(); }\n";
         fs::write(root.path().join("main.rs"), source).unwrap();
-        let deadline = Deadline::new(20000);
+        let setup = Deadline::new(60000);
         let mut engine = crate::Engine::open(root.path()).unwrap();
         engine
             .register_configured_server(crate::lsp::ConfiguredServer {
@@ -2892,15 +2892,18 @@ mod source_binding_tests {
             engine,
             crate::project_session::HostProfile::default(),
             Some("source-bound-repl"),
-            &deadline,
+            &setup,
         )
         .unwrap();
-        let symbol = one_symbol(&mut session, "helper", "main.rs", None, &deadline).unwrap();
+        let symbol = one_symbol(&mut session, "helper", "main.rs", None, &setup).unwrap();
         fs::write(
             root.path().join("main.rs"),
             source.replace("helper", "holder"),
         )
         .unwrap();
+        // Query the already captured symbol under its own unchanged 20s
+        // operation budget; host/store setup is not part of this assertion.
+        let deadline = Deadline::new(20000);
         let value = semantic_from_symbol(
             &mut session,
             &symbol,

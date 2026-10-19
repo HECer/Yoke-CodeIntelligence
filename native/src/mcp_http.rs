@@ -26,6 +26,9 @@ use subtle::ConstantTimeEq;
 use zeroize::Zeroizing;
 
 const MAX_RESPONSE: usize = 16_000_000;
+#[cfg(test)]
+#[path = "mcp_http_rejection_tests.rs"]
+mod rejection_tests;
 const VERSIONS: [&str; 3] = ["2025-11-25", "2025-06-18", "2025-03-26"];
 
 /// Trusted host input, never reconstructed from an MCP message.
@@ -459,6 +462,30 @@ impl Drop for BoundSocket<'_> {
     }
 }
 impl BoundSocket<'_> {
+    fn finish_rejection(&mut self) {
+        // A close with unread TCP bytes can reset the connection and discard
+        // the framed refusal on Windows. Half-close after sending the response,
+        // then discard a bounded tail without parsing or admitting another request.
+        let _ = self.socket.shutdown(Shutdown::Write);
+        let end = Instant::now() + self.deadline.remaining().min(Duration::from_millis(50));
+        let mut bytes = Zeroizing::new([0u8; 4096]);
+        let mut remaining_bytes = 16_384;
+        while remaining_bytes > 0 && !self.stop.load(Ordering::SeqCst) {
+            let remaining = end
+                .saturating_duration_since(Instant::now())
+                .min(self.deadline.remaining());
+            if remaining.is_zero() || self.socket.set_read_timeout(Some(remaining)).is_err() {
+                break;
+            }
+            let want = remaining_bytes.min(bytes.len());
+            match self.socket.read(&mut bytes[..want]) {
+                Ok(0) => break,
+                Ok(count) => remaining_bytes -= count,
+                Err(error) if error.kind() == std::io::ErrorKind::Interrupted => continue,
+                Err(_) => break,
+            }
+        }
+    }
     fn budget(&self) -> std::io::Result<Duration> {
         if self.stop.load(Ordering::SeqCst) {
             return Err(std::io::Error::new(
@@ -1513,7 +1540,7 @@ pub fn serve(mut config: Config, principals: Vec<Principal>) -> Result<ServerHan
                                 };
                                 if let Ok(mut io) = channel {
                                     let mut origin = None;
-                                    let mut reply = match incoming(
+                                    let (mut reply, rejected) = match incoming(
                                         &mut io,
                                         &config,
                                         address,
@@ -1521,25 +1548,35 @@ pub fn serve(mut config: Config, principals: Vec<Principal>) -> Result<ServerHan
                                         &deadline,
                                         &mut origin,
                                     ) {
-                                        Ok(request) => route(
-                                            request,
-                                            &shared,
-                                            &config,
-                                            &senders,
-                                            &next,
-                                            &work_deadline,
-                                        )
-                                        .unwrap_or_else(Reply::fault),
-                                        Err(fault) => Reply::fault(fault),
+                                        Ok(request) => (
+                                            route(
+                                                request,
+                                                &shared,
+                                                &config,
+                                                &senders,
+                                                &next,
+                                                &work_deadline,
+                                            )
+                                            .unwrap_or_else(Reply::fault),
+                                            false,
+                                        ),
+                                        Err(fault) => (Reply::fault(fault), true),
                                     };
                                     reply.origin = origin;
-                                    let _ = send_reply(&mut io, reply, &deadline, &shared.stop);
+                                    let replied =
+                                        send_reply(&mut io, reply, &deadline, &shared.stop);
                                     if let Channel::Tls(stream) = &mut io {
                                         stream.conn.send_close_notify();
                                         // Use the original physical budget; never extend a
                                         // timed-out request merely to finish TLS shutdown.
                                         let _ =
                                             physical_write(&mut io, &[], &deadline, &shared.stop);
+                                    }
+                                    if rejected && replied.is_ok() {
+                                        match &mut io {
+                                            Channel::Plain(socket) => socket.finish_rejection(),
+                                            Channel::Tls(stream) => stream.sock.finish_rejection(),
+                                        }
                                     }
                                 }
                                 if let Ok(mut sockets) = shared.active.lock() {

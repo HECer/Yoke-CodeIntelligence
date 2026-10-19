@@ -49,6 +49,13 @@ limits bound connections, fixed actor workers, total/per-principal sessions,
 absolute session lifetime and requests per session. Each session stays on one
 actor because its process resources cannot safely cross threads.
 
+After sending a framing/admission refusal, the response side is half-closed.
+Shutdown may discard up to 16 KiB of remaining TCP bytes for at most 50 ms,
+within the original physical deadline and host cancellation. Discarded bytes
+are never parsed or dispatched. This bounded tail cleanup avoids resetting an
+already framed refusal merely because an oversized header left unread bytes;
+it does not promise delivery for an unbounded sending peer.
+
 The host request budget is 250–30000 ms. The final 100 ms is reserved inside
 that budget for an expiry response. Nested `Deadline::new` calls inherit the
 host ceiling and cancellation on the dispatch thread; passed clones retain

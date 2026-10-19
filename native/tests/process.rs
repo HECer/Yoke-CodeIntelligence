@@ -101,9 +101,52 @@ fn source_selected_defaults_and_oversized_stdin_are_rejected_before_spawn() {
 #[test]
 fn windows_host_fixture_does_not_allocate_a_console_window() {
     let root = TempDir::new().unwrap();
-    let mut command = Command::new("powershell.exe");
-    command.current_dir(root.path()).args(["-NoProfile", "-NonInteractive", "-Command", r#"Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class OwnedConsoleFixture { [DllImport("kernel32.dll")] public static extern IntPtr GetConsoleWindow(); }'; [OwnedConsoleFixture]::GetConsoleWindow().ToInt64()"#]);
+    // Query the actual kernel handle without requiring PowerShell's optional
+    // CodeDOM compiler and reference-assembly setup on the host image.
+    let source = root.path().join("console.rs");
+    let probe = root.path().join("console.exe");
+    std::fs::write(
+        &source,
+        r#"
+#[link(name="kernel32")]
+unsafe extern "system" { fn GetConsoleWindow() -> *mut std::ffi::c_void; }
+fn main() { println!("{}",unsafe { GetConsoleWindow() as usize }); }
+"#,
+    )
+    .unwrap();
+    let mut compiler = Command::new("rustc");
+    compiler
+        .current_dir(root.path())
+        .arg(&source)
+        .args(["--edition=2024", "-Cdebuginfo=0", "-o"])
+        .arg(&probe);
+    #[cfg(target_env = "msvc")]
+    {
+        let linker = find_msvc_tools::find_tool(std::env::consts::ARCH, "link.exe")
+            .expect("The owned native fixture requires its MSVC linker");
+        for (name, value) in linker.env() {
+            compiler.env(name, value);
+        }
+    }
+    let build = run_capture(compiler, b"", &Deadline::new(30_000), limits()).unwrap();
+    assert_eq!(
+        build.exit_code,
+        Some(0),
+        "{}",
+        String::from_utf8_lossy(&build.stderr)
+    );
+    assert!(build.output_complete && !build.timed_out && !build.output_exceeded && !build.io_error);
+    let mut command = Command::new(probe);
+    command.current_dir(root.path());
     let result = run_capture(command, b"", &Deadline::new(15_000), limits()).unwrap();
-    assert_eq!(result.exit_code, Some(0));
+    assert_eq!(
+        result.exit_code,
+        Some(0),
+        "{}",
+        String::from_utf8_lossy(&result.stderr)
+    );
     assert_eq!(String::from_utf8(result.stdout).unwrap().trim(), "0");
+    assert!(
+        result.output_complete && !result.timed_out && !result.output_exceeded && !result.io_error
+    );
 }

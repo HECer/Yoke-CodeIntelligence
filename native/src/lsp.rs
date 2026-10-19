@@ -3466,6 +3466,40 @@ mod uri_tests {
         }
     }
     #[test]
+    fn react_fixture_uses_requested_document_and_equivalent_tilde_uri_spellings() {
+        let _fixture = PROTOCOL_FIXTURE
+            .lock()
+            .unwrap_or_else(|error| error.into_inner());
+        let directory = tempfile::tempdir().unwrap();
+        let root = directory.path().join("copied~workspace");
+        fs::create_dir(&root).unwrap();
+        let setup = Deadline::new(10000);
+        let mut session = fixture("react-language-ids", &root, &setup);
+        let target = uri(&root.join("component.tsx")).unwrap();
+        assert!(target.contains('~'));
+        let encoded = target.replace('~', "%7E");
+        for (document, language) in [
+            (target, "typescriptreact"),
+            (
+                uri(&root.join("support.ts")).unwrap().replace('~', "%7E"),
+                "typescript",
+            ),
+        ] {
+            session.notify("textDocument/didOpen", json!({"textDocument":{
+                "uri":document,"languageId":language,"version":1,"text":"// fixture\nconst helper = 1;"}
+            })).unwrap();
+        }
+        let response = session
+            .request(
+                "textDocument/definition",
+                json!({"textDocument":{"uri":encoded},"position":{"line":0,"character":0}}),
+                &setup,
+            )
+            .unwrap();
+        assert_eq!(response["uri"], encoded);
+        session.shutdown(&setup).unwrap();
+    }
+    #[test]
     fn an_outside_uri_is_rejected_lexically_before_a_filesystem_lookup() {
         let directory = tempfile::tempdir().unwrap();
         let root = directory.path().join("copied-workspace");

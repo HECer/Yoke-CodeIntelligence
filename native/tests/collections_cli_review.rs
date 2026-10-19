@@ -20,10 +20,14 @@ fn native_archived_source_reads_use_native_proof_without_foreign_authority() {
     }
     source.close().unwrap();
     let never_open = absent.path().join("never-open-source");
-    let output = Command::new(env!("CARGO_BIN_EXE_yoke"))
-        .arg("--root")
-        .arg(&never_open)
-        .args(["collections", "--registry"])
+    let mut command = Command::new(env!("CARGO_BIN_EXE_yoke"));
+    command.arg("--root").arg(&never_open).arg("collections");
+    // This positive fixture explicitly grants SQLite sidecar coordination;
+    // the default refusal is covered by the separate registry contract tests.
+    #[cfg(unix)]
+    command.arg("--allow-registry-coordination");
+    let output = command
+        .arg("--registry")
         .arg(registry_root.path())
         .args([
             "read-source",

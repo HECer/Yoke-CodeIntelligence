@@ -166,12 +166,30 @@ pub struct Session {
     pub engine: Engine,
     capture_epoch: crate::analysis::AnalyzerEpoch,
     host: HostProfile,
+    // Invocation-owned selector aliases supplied by the current host. Stored
+    // session rows never grant paths, and lookup never probes requested roots.
+    project_root_aliases: BTreeMap<String, String>,
     state: State,
     persisted: String,
     others: BTreeMap<String, Engine>,
     global_notes: Option<Engine>,
     debug_adapters: BTreeMap<String, crate::debug_adapter::DebugAdapter>,
     process_cleanup_unproven: bool,
+}
+fn project_root_key(path: &std::path::Path) -> Option<String> {
+    let value = path.to_str()?.replace('\\', "/");
+    let value = value
+        .strip_prefix("//?/")
+        .unwrap_or(&value)
+        .trim_end_matches('/');
+    let mut value = value.to_owned();
+    if cfg!(windows) {
+        // Unicode lowercasing can merge distinct Windows names, for example
+        // U+0130 and an ASCII i followed by a combining dot. Opaque Unicode
+        // components remain exact; familiar ASCII Windows spellings still match.
+        value.make_ascii_lowercase();
+    }
+    Some(value)
 }
 fn label(s: &str) -> Result<()> {
     ensure!(
@@ -747,6 +765,7 @@ impl Session {
         label(&host.context)?;
         ensure!(host.projects.len() <= 100, "Too many registered projects");
         let mut names = BTreeSet::new();
+        let mut project_root_aliases = BTreeMap::new();
         for project in &mut host.projects {
             deadline.check()?;
             label(&project.name)?;
@@ -756,11 +775,21 @@ impl Session {
                     && project.root.is_absolute(),
                 "Duplicate or invalid registered project"
             );
+            let selected = project_root_key(&project.root);
             project.root = project.root.canonicalize()?;
             ensure!(
                 project.root.is_dir(),
                 "Registered project root must be a directory"
             );
+            if let (Some(selected), Some(canonical)) = (selected, project_root_key(&project.root))
+                && selected != canonical
+                && let Some(previous) = project_root_aliases.insert(selected, canonical.clone())
+            {
+                ensure!(
+                    previous == canonical,
+                    "Ambiguous host-selected project root alias"
+                );
+            }
         }
         host.projects.sort_by(|a, b| a.name.cmp(&b.name));
         ensure!(
@@ -961,6 +990,7 @@ impl Session {
             engine,
             capture_epoch,
             host,
+            project_root_aliases,
             state,
             persisted: raw.unwrap_or(serialized),
             others: BTreeMap::new(),
@@ -1171,26 +1201,22 @@ impl Session {
             root.len() <= 4096 && std::path::Path::new(root).is_absolute(),
             "Project root must be absolute"
         );
-        fn key(path: &std::path::Path) -> String {
-            let value = path.to_string_lossy().replace('\\', "/");
-            let value = value
-                .strip_prefix("//?/")
-                .unwrap_or(&value)
-                .trim_end_matches('/');
-            if cfg!(windows) {
-                value.to_lowercase()
-            } else {
-                value.to_owned()
-            }
-        }
-        let requested = key(std::path::Path::new(root));
-        let project = if requested == key(&self.engine.root) {
+        let requested =
+            project_root_key(std::path::Path::new(root)).context("Project root must be Unicode")?;
+        let requested = self
+            .project_root_aliases
+            .get(&requested)
+            .unwrap_or(&requested);
+        let project = if Some(requested.as_str()) == project_root_key(&self.engine.root).as_deref()
+        {
             "default".to_owned()
         } else {
             self.host
                 .projects
                 .iter()
-                .find(|project| key(&project.root) == requested)
+                .find(|project| {
+                    project_root_key(&project.root).as_deref() == Some(requested.as_str())
+                })
                 .map(|project| project.name.clone())
                 .context("Project root is not host-registered")?
         };

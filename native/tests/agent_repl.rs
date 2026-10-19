@@ -221,8 +221,8 @@ fn provider_hierarchies_and_symbol_diagnostics_keep_exact_source_scope() {
 fn explicitly_selected_shell_runs_and_cell_errors_preserve_namespace() {
     let root = tempfile::tempdir().unwrap();
     fs::write(root.path().join("main.rs"), "fn alpha() {}\n").unwrap();
-    let d = Deadline::new(20000);
-    let mut s = session(root.path(), HostProfile::default(), &d);
+    let setup = Deadline::new(60000);
+    let mut s = session(root.path(), HostProfile::default(), &setup);
     let mut config = spec();
     config.shell = Some(if cfg!(windows) {
         yoke::agent_repl::HostShell {
@@ -240,24 +240,30 @@ fn explicitly_selected_shell_runs_and_cell_errors_preserve_namespace() {
             arguments: vec!["-c".into()],
         }
     });
-    let mut repl = AgentRepl::spawn(config, &d).unwrap();
+    let mut repl = AgentRepl::spawn(config, &setup).unwrap();
     let cell = if cfg!(windows) {
         "remembered=17\ns.shell.execute_shell_command('Write-Output owned-shell-test')['stdout'].strip()"
     } else {
         "remembered=17\ns.shell.execute_shell_command('printf owned-shell-test')['stdout'].strip()"
     };
-    let value = repl.execute(&mut s, cell, &d).unwrap();
+    // Independent calls retain a 20s operation deadline after host/Python setup.
+    let value = repl.execute(&mut s, cell, &Deadline::new(20000)).unwrap();
     assert_eq!(value["result"], "owned-shell-test", "{value}");
     assert!(
-        repl.execute(&mut s, "raise ValueError('owned error')", &d)
-            .unwrap()["error"]
+        repl.execute(
+            &mut s,
+            "raise ValueError('owned error')",
+            &Deadline::new(20000)
+        )
+        .unwrap()["error"]
             .is_object()
     );
     assert_eq!(
-        repl.execute(&mut s, "remembered", &d).unwrap()["result"],
+        repl.execute(&mut s, "remembered", &Deadline::new(20000))
+            .unwrap()["result"],
         17
     );
-    let value=repl.execute(&mut s,"try:\n s.invoke('edit.prepare',{'trustServer':True,'edits':[]})\nexcept RuntimeError:\n rejected=True\nrejected",&d).unwrap();
+    let value=repl.execute(&mut s,"try:\n s.invoke('edit.prepare',{'trustServer':True,'edits':[]})\nexcept RuntimeError:\n rejected=True\nrejected",&Deadline::new(20000)).unwrap();
     assert_eq!(value["result"], true);
 }
 

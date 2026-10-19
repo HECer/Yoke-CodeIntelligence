@@ -1,0 +1,96 @@
+[
+  {
+    "gate": "react-uri",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--lib",
+      "react_documents_and_siblings_keep_their_ids_with_base_language_providers",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 101,
+    "elapsedSeconds": 0.887
+  },
+  {
+    "gate": "registered-root",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--test",
+      "ignored_facades",
+      "public_external_directory_queries_share_ignored_scope_without_activation_and_honor_removal",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 101,
+    "elapsedSeconds": 3.919
+  },
+  {
+    "gate": "console",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--test",
+      "process",
+      "windows_host_fixture_does_not_allocate_a_console_window",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 3.046
+  },
+  {
+    "gate": "source-binding",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--lib",
+      "provider_queries_keep_the_symbol_snapshot_after_original_source_changes",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.874
+  },
+  {
+    "gate": "shell",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--test",
+      "agent_repl",
+      "explicitly_selected_shell_runs_and_cell_errors_preserve_namespace",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 4.494
+  },
+  {
+    "gate": "http-session",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--test",
+      "mcp_http",
+      "session_capacity_expiry_and_slow_connection_shutdown_are_bounded",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 6.535
+  }
+]

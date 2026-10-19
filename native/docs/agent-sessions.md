@@ -32,6 +32,15 @@ separate host permission; modes and remote tool arguments cannot grant it.
 Global application notes use a separately selected host store. These notes are
 distinct from the coding agent's central AgentMemory service.
 
+For root-based read queries, a registered project's exact host-selected spelling
+also selects its canonical root. This includes a host-selected Windows short
+path. These aliases belong to the current invocation: session records do not
+grant them, and reopening with only the canonical root drops old spellings.
+Lookup does not resolve arbitrary caller paths against the filesystem. Removing
+the registered project also disables its alias. Windows comparisons fold ASCII
+case only; distinct opaque Unicode spellings are not merged by Unicode lowercase
+expansion. Named project selectors remain available.
+
 Example requests:
 
 ```json

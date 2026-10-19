@@ -55,3 +55,15 @@ overlap. Both source freezes and their two-file runtime delta are preserved.
 The [actual hosted d4 platform runs](platform-d4/index.json) remain failed with
 Windows 2283/6/37, Linux 1944/38/23 and macOS 1912/70/23. No full-native or
 platform acceptance, release, deployment or main merge is claimed.
+
+The [Windows short-path/HTTP repair](windows-ci-repair/index.json) preserves
+the original real 8.3 TEMP reproductions, the first frozen red run and the final
+frozen follow-up. The final selected library/Session/HTTP/process/registry run
+passes 479 tests with seven existing ignored gates across 12 groups. Format and
+all-target Clippy pass; eight short-path checks pass ten overlapping tests.
+The first run's TypeScript typecheck and 254/3 skipped results remain separate
+from its failed native/Clippy results. The inter-run delta contains five native
+files only. Production changes retain current-host-only root selectors and bound
+TCP refusal cleanup without dispatching rejected tail bytes. A native console
+probe and URI/document-order fixtures preserve actual behavioral assertions.
+Remote validation and all broader release/platform gates remain open.
