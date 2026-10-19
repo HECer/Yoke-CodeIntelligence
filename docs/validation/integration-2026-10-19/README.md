@@ -290,3 +290,5 @@ proof, full R1-R9, upstream/platform, packaging, main merge or release is claime
 Symbol declaration deletion: [symbol-deletion/index.json](symbol-deletion/index.json) preserves the actual TS1030 RED, 466/0/7 scoped native result, four actual TS/JS compiler/apply/recovery fixtures and unchanged integrated inputs. This finite checkpoint does not replace historical full-native failures or certify wider parity.
 
 Rust/Python declaration attachments: [declaration-attachments/index.json](declaration-attachments/index.json) preserves two actual compiler/AST REDs, contextual method-binding refusals, final 545/0/7 selected tests and six actual owned language fixtures. Full native/platform/upstream acceptance remains open.
+
+Captured function propagation: [propagated-delete/index.json](propagated-delete/index.json) preserves the capability RED, initial compiler failure,20 new contracts, final 577/0/7 selected native result and ten actual owned language fixtures. General propagation and full native/platform/upstream acceptance remain open.

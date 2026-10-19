@@ -1,0 +1,28 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 2m 09s
+     Running tests\propagated_delete_contract.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\propagated_delete_contract-41a0c09b17665ff5.exe)
+
+running 20 tests
+test actual_owned_byte_verification_permission_approval_stale_and_recovery_gates_remain ... ok
+test argument_dependencies_become_unused_without_sweeping_unrelated_unused_functions ... ok
+test bom_and_utf16_provider_positions_preserve_multibyte_bytes_before_the_removed_call ... ok
+test captured_byte_quota_counts_physical_duplicate_cas_members ... ok
+test captured_file_quota_admits2000_and_refuses2001_before_provider_start ... ok
+test declaration_quota_admits_sixteen_and_refuses_seventeen_before_provider_start ... ok
+test duplicate_provider_observations_and_nested_target_calls_emit_one_physical_statement_edit ... ok
+test exported_and_captured_external_dependencies_keep_their_own_dependencies ... ok
+test facade_propagation_preserves_both_epochs_force_flags_and_original_byte_anchors ... ok
+test missing_edit_or_provider_authority_and_invalid_selectors_refuse_before_provider_start ... ok
+test missing_empty_omitted_truncated_foreign_and_malformed_proofs_do_not_publish ... ok
+test private_cycles_are_pruned_together_and_surviving_consumers_keep_the_cycle ... ok
+test reported_non_reference_tokens_cannot_seed_deletion_of_an_unrelated_unused_function ... ok
+test selected_module_byte_quota_is_exact_and_checked_before_provider_start ... ok
+test source_changes_during_provider_work_are_preserved_and_refused_before_publication ... ok
+test stalled_provider_cannot_publish_after_the_original_deadline ... ok
+test unreported_identifier_and_literal_target_candidates_cannot_be_disguised_as_no_uses ... ok
+test unsupported_module_shapes_refuse_before_provider_start ... ok
+test usage_statement_quota_admits128_and_refuses129_without_publication ... ok
+test value_return_constructor_and_other_expression_consumers_refuse_without_a_plan ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 65.52s
+

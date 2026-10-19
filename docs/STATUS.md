@@ -581,6 +581,40 @@ records raw attempts, source hashes and Git/CRLF materialization. No whole-nativ
 rerun is claimed. Other declaration/language shapes, general propagation, wider
 R1–R9, hosted/platform acceptance, main merge and release remain open.
 
+[Captured function propagation](../native/docs/propagated-delete.md) now handles
+explicit symbol `propagate=true` in a finite TS/JS ES function module. Exact
+provider-bound standalone call statements are removed, then newly unused
+private dependencies can be pruned together, including private cycles.
+Surviving reported/possible consumers and exported dependencies stay protected;
+unrelated already-unused functions are preserved. Other expression consumers
+refuse before publication. One ordinary guarded plan retains original byte
+coordinates, permissions, approval, verification, stale-source and recovery
+requirements. Unknown future/dynamic/external consumers remain explicit with
+`complete=false` and `remainingUsagesMayBreak=true`.
+
+All **20 new default contracts** pass, covering cycles/liveness, argument
+dependencies, duplicate/nested calls, both epochs/force, BOM/UTF16, malformed or
+omitted proofs, authority/paths, provider-time source changes/deadline and exact
+declaration/statement/module/file/physical-byte quotas. The frozen selected run
+passes **577 native tests / 0 failed / 7 existing ignored gates** across
+fourteen groups. Five separate actual Rust harness tests cover ten owned
+TS/JS/Rust/Python compiler/AST/provider/apply/recovery fixtures. Counts across
+attempts/gates are nonadditive. The original capability refusal and initial
+borrow-checker build failure remain preserved. A subsequent adversarial RED
+showed an invalid provider comment-reference could select an unrelated unused
+function. The first role predicate also admitted an Arrow parameter in a second
+adversarial RED. Positive expression-role admission now refuses comments, strings,
+bindings and unknown roles; all four role variants remain asserted.
+
+Format, all-target Clippy, **17 Python tests**, mandatory typecheck and **260
+TypeScript tests / 3 existing skips** pass with **674 integrated inputs unchanged**.
+[Evidence](validation/integration-2026-10-19/propagated-delete/index.json) binds
+source, raw attempts and Git/CRLF materialization. Maximum-inventory quota
+probes intentionally stop at unavailable definition proof; they do not claim
+a complete maximum-size provider workflow. No whole-native rerun is claimed.
+General propagation beyond this finite policy, other R1–R9 work, hosted/platform
+acceptance, main merge and release remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders
