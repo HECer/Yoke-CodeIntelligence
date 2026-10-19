@@ -202,3 +202,72 @@ fn zero_cleanup_budget_requests_termination_and_refuses_exit_proof() {
         0
     );
 }
+
+#[test]
+fn member_query_refusal_still_requests_termination_and_preserves_unproven_cleanup() {
+    let root = tempfile::tempdir().unwrap();
+    let original = OwnedJob::new().unwrap();
+    let observed = Arc::new(OnceLock::new());
+    let mut wrapper = wrapper(root.path(), &original, &observed);
+    let _child = original.spawn_checked(&mut wrapper).unwrap();
+    let mut limited = std::ptr::null_mut();
+    // Real terminate-only alias: querying members/accounting must be refused.
+    assert_ne!(
+        unsafe {
+            DuplicateHandle(
+                GetCurrentProcess(),
+                original.job.as_raw_handle(),
+                GetCurrentProcess(),
+                &mut limited,
+                0x8,
+                0,
+                0,
+            )
+        },
+        0
+    );
+    let root_handle = original
+        .root
+        .get()
+        .unwrap()
+        .as_handle()
+        .try_clone_to_owned()
+        .unwrap();
+    let job = OwnedJob {
+        job: unsafe { OwnedHandle::from_raw_handle(limited) },
+        root: OnceLock::from(root_handle),
+        attached: AtomicBool::new(true),
+    };
+    let error = job
+        .terminate_until(Instant::now() + Duration::from_secs(2))
+        .unwrap_err();
+    assert!(super::super::cleanup_unproven(&error));
+    assert_eq!(
+        unsafe { WaitForSingleObject(observed.get().unwrap().as_raw_handle(), 2000) },
+        0,
+        "Member admission refusal must not skip the owned termination request"
+    );
+}
+
+#[test]
+fn member_waits_do_not_terminate_a_parallel_unrelated_process() {
+    struct Unrelated(Child);
+    impl Drop for Unrelated {
+        fn drop(&mut self) {
+            let _ = self.0.kill();
+            let _ = self.0.wait();
+        }
+    }
+    let root = tempfile::tempdir().unwrap();
+    let unrelated = Unrelated(command(root.path()).spawn().unwrap());
+    let observer = unrelated.0.as_handle().try_clone_to_owned().unwrap();
+    let owned = super::super::ManagedChild::spawn(command(root.path())).unwrap();
+    let owned_handle = owned.inner().as_handle().try_clone_to_owned().unwrap();
+    owned.terminate_checked(Duration::from_secs(2)).unwrap();
+    assert_exited(&owned_handle);
+    assert_eq!(
+        unsafe { WaitForSingleObject(observer.as_raw_handle(), 0) },
+        258,
+        "Synchronization-only member handles cannot authorize unrelated termination"
+    );
+}

@@ -199,23 +199,25 @@ fn cancellation_and_deadline_stop_owned_git_and_restore_the_same_store() {
             };
             let handles: Vec<_> = pids
                 .into_iter()
-                .map(|pid| {
+                .enumerate()
+                .map(|(role, pid)| {
                     let handle = ProcessHandle(unsafe { OpenProcess(0x0010_0000, 0, pid) });
                     assert!(!handle.0.is_null(), "Cannot observe the owned process");
                     assert_eq!(unsafe { WaitForSingleObject(handle.0, 0) }, 258);
-                    handle
+                    (role, pid, handle)
                 })
                 .collect();
             let started = Instant::now();
             if cancel {
                 worker_flag.store(true, Ordering::SeqCst);
             }
-            wait_returned.recv_timeout(Duration::from_secs(4)).unwrap();
-            for handle in handles {
+            let outcome = wait_returned.recv_timeout(Duration::from_secs(4)).unwrap();
+            for (role, pid, handle) in handles {
                 assert_eq!(
                     unsafe { WaitForSingleObject(handle.0, 0) },
                     0,
-                    "An owned Git process survived the digest return"
+                    "An owned Git process survived the digest return: role={role}, pid={pid}, cancel={cancel}, elapsedMs={}, outcome={outcome}",
+                    started.elapsed().as_millis()
                 );
             }
             if cancel {
@@ -236,7 +238,14 @@ fn cancellation_and_deadline_stop_owned_git_and_restore_the_same_store() {
                 &history_options,
                 &Deadline::new(2000),
             );
-            returned.send(()).unwrap();
+            let outcome = match &result {
+                Ok(_) => "unexpected_success".to_owned(),
+                Err(error) => format!(
+                    "{error:#}; cleanupUnproven={}",
+                    crate::process::cleanup_unproven(error)
+                ),
+            };
+            returned.send(outcome).unwrap();
             observer.join().unwrap();
             flag.store(false, Ordering::SeqCst);
             result
