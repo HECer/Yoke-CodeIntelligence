@@ -58,6 +58,8 @@ TypeScript member decorators, empty required Python bodies, general deletion
 propagation, exhaustive reference coverage and IDE parity remain unsupported
 by this finite contract.
 File deletion has its separate [captured file usage contract](file-usage.md).
+A separately bounded [ES function propagation policy](propagated-delete.md)
+handles checked standalone call statements and newly unused private dependencies.
 The explicit `symbol_delete_live` gate uses installed TypeScript provider and
 compiler CLIs selected through `YOKE_TS_LSP` and `YOKE_TSC`, with no fallback to
 an owned protocol fixture.

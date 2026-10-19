@@ -15,6 +15,8 @@ mod file_delete;
 mod intents;
 #[path = "semantic_move_intents.rs"]
 mod move_intents;
+#[path = "semantic_propagated_delete.rs"]
+mod propagated_delete;
 
 pub fn invoke(
     engine: &mut Engine,
@@ -349,6 +351,9 @@ pub fn invoke(
         return file_delete::prepare(engine, &snapshot, &graph, args, deadline);
     }
     let symbol = symbol(engine, &snapshot, &graph, args, deadline)?;
+    if operation == "safeDelete" && args["propagate"] == true {
+        return propagated_delete::prepare(engine, &snapshot, &graph, &symbol, args, deadline);
+    }
     match operation {
         "rename" => {
             let new_name = args["newName"].as_str().context("Rename name required")?;
@@ -418,10 +423,6 @@ pub fn invoke(
         }
         "safeDelete" => {
             let forced = args["deleteEvenIfUsed"] == true;
-            ensure!(
-                args["propagate"] != true,
-                "Propagating semantic deletion requires a provider refactoring action"
-            );
             let observations: Vec<_> = graph
                 .observations
                 .iter()

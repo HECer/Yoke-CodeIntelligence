@@ -29,6 +29,14 @@ Rust reuses `refactor_contract`'s owned outer-attribute/documentation bundle.
 Stored entity and usage-evidence coordinates retain their original ranges. See
 [symbol deletion boundaries](../native/docs/symbol-deletion.md).
 
+`semantic_propagated_delete` binds one finite ES function module to captured
+AST/entity ranges and exact host-provider definitions/references. Removed
+source regions seed a directed dependency closure; surviving reported or
+possible consumers retain candidates and their dependencies. One guarded plan
+contains nonoverlapping original-coordinate removals after captured physical
+sources are rechecked. [Function propagation](../native/docs/propagated-delete.md)
+records capacities and unknown consumers.
+
 `native/src` is an independent runtime with its own `.yoke` SQLite/CAS state. `capture`, `paths` and `store` own strict saved-source acquisition, immutable bytes, FTS and client/writer locking. `analysis` and `contracts` produce structural and authored observations; `query` owns retrieval, plans and directed analytics. `lsp` owns the host-selected semantic protocol, with exact source anchors and bounded excerpts. `changes`, `verify` and `process` own reviewed plans, copied execution, conditional original writes and recovery.
 
 Checked Store lock waits retain the original absolute deadline and host

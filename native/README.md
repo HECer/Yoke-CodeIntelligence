@@ -139,6 +139,11 @@ owning export, decorator or outer-attribute bundle. Structural entity coordinate
 stay unchanged. Unsupported
 ownership refuses; ordinary usage and application gates still apply.
 
+[Captured function propagation](docs/propagated-delete.md) can remove checked
+standalone call statements and newly unused private function dependencies in a
+bounded TS/JS module. Surviving references, possible consumers and exported
+dependencies remain protected; incomplete coverage stays explicit.
+
 ## Read-only context plans
 
 Use `ci_context` with a query or a plan, never both. Plans contain 1–16 validated steps and cannot execute commands or generated programs. For example:
