@@ -1,0 +1,34 @@
+{
+  "actualServer": "Neo4j Community2026.09.0",
+  "nativeCliTransport": true,
+  "fixedSchemaAndNamespaceBootstrap": true,
+  "separateSchemaPermissionEnforced": true,
+  "existingSnapshotUsed": true,
+  "osCredentialBindingUsed": true,
+  "sameJournalConfirmedOperationNotResent": true,
+  "lostStdoutConfirmedJournalRetained": true,
+  "responseLostAfterActualCommitLeavesPending": true,
+  "pendingApplyBlockedWithoutRequest": true,
+  "recoveryOnlyReadsAndNoWriteReplay": true,
+  "direct": {
+    "scopeKey": "314fe508edf98ae7db4402584900303d2a0d815ccf1ac23a4bb9ce6446019b68",
+    "planId": "670ed694941d14e37a438a1e01a85c9a3d80055d78a9a543847136792cab35f7",
+    "revisionId": "c3efb5d176d0a546bca641a9dd8fddcb76e2173aee87bef0477bc950e35b809b",
+    "completedOperations": 1
+  },
+  "recovered": {
+    "scopeKey": "06b38bdd2afc42f4750badd59ea0b065f1e8e36368cc8f7c6b768de94b1ea7f2",
+    "planId": "737ebaf477204e42212028843ab5b8fc89952a37648ab6ac1fda7f40a4d8be3a",
+    "revisionId": "c3f7e3f806e15e226fa5bb3dbfa4d8e83c98b16bbe72edb17f75264013c81f91",
+    "completedOperations": 1
+  },
+  "nativeBinarySha256": "26375615169dca16784adfc3636bc96beab91e65c51a6d8fbbaa06c13c560bb3",
+  "fleetDiscoveryConfiguredDisabled": true,
+  "ownedPid": 16516,
+  "listenerPidVerified": true,
+  "java": "JBR25.0.3",
+  "vendorJvmQualificationClaimed": false,
+  "nativeTlsTested": false,
+  "ownedCredentialsRemoved": 2,
+  "ownedServerStopped": true
+}

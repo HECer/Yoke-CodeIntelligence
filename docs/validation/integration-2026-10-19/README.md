@@ -345,3 +345,14 @@ nonadditive eight baseline/four trace repetitions, bounded member-handle proof,
 PostgreSQL TLS/frozen-PDF-worker receipts and mandatory integrated checks.
 Original failures remain; no kernel-cause/full-native/platform/main/release
 certification follows. All preceding README bytes are preserved.
+
+## Reviewed native Neo4j publication checkpoint
+
+Source `7ef75a2c8c88c4ea0951e6d9f562716dbfe4676a`, runtime merge `36f0ab2b51643b27c44cdbcfd2050bf1c1ea1bbb`.
+[Indexed evidence](neo4j-publish/index.json) retains21newcases, selected
+555/1/8 with the unchanged mediaOS1314failure, actualCommunity2026.09.0
+HTTPS/Unicode/parallel-row/CAS/count/schema/unknown-commit/lost-stdout checks,
+all5fixturecredential removals and server cleanup, and mandatory integrated
+checks. The cfg-import bridge preserves the exact production binary. Raw
+failures remain; no whole-native, other-platform/upstream/JVM-vendor/main/release
+certification follows. Previous README bytes are preserved.

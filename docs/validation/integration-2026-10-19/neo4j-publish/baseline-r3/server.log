@@ -1,0 +1,20 @@
+2026-10-19 22:16:21.534+0000 INFO  Logging config in use: File 'C:\Users\Lomi\AppData\Local\Temp\yoke-owned-neo4j-baseline-mb5hw3cf\conf\user-logs.xml'
+2026-10-19 22:16:21.545+0000 INFO  Starting...
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/C:/Users/Lomi/AppData/Local/YokeValidation/neo4j-2026.09.0/neo4j-community-2026.09.0/lib/jna-5.19.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+2026-10-19 22:16:22.339+0000 INFO  This instance is ServerId{556235a1} (556235a1-04b8-472a-95e3-6ac271561ca0)
+2026-10-19 22:16:23.492+0000 INFO  ======== Neo4j 2026.09.0 ========
+2026-10-19 22:16:24.104+0000 INFO  X-Forward header processing enabled with security controls
+2026-10-19 22:16:24.104+0000 WARN  SECURITY WARNING: X-Forward headers accepted from any source - configure allow_proxies
+2026-10-19 22:16:24.104+0000 WARN  SECURITY WARNING: X-Forward headers accept any hostname - configure allow_hosts
+2026-10-19 22:16:26.193+0000 INFO  Bolt enabled on 127.0.0.1:54308.
+2026-10-19 22:16:26.232+0000 INFO  This server has built-in support for online monitoring through Fleet Manager. Visit https://console.neo4j.io to get started!
+2026-10-19 22:16:26.685+0000 INFO  HTTP enabled on 127.0.0.1:54307.
+2026-10-19 22:16:26.686+0000 INFO  Remote interface available at http://localhost:54307/
+2026-10-19 22:16:26.689+0000 INFO  id: 18FC3F5C2EC2287A9C7A8C6B0FC6341A907CBC47307A0DEC0DD7D1FC021FC494
+2026-10-19 22:16:26.689+0000 INFO  name: system
+2026-10-19 22:16:26.689+0000 INFO  creationDate: 2026-10-19T22:16:24.537Z
+2026-10-19 22:16:26.689+0000 INFO  Started.

@@ -1,0 +1,15 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 56.09s
+     Running unittests src\lib.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\yoke-f14d0af26d19713e.exe)
+
+running 7 tests
+test neo4j_publish::journal::tests::durable_intent_blocks_resend_until_positive_read_recovery_is_recorded ... ok
+test neo4j_publish::journal::tests::exclusive_guarded_file_refuses_hardlinks_aliases_truncation_and_changed_chains ... ok
+test neo4j_publish::journal::tests::expired_or_regressed_approval_cannot_send_but_positive_recovery_can_be_recorded ... ok
+test neo4j_publish::transport::tests::missing_host_permissions_refuse_before_os_lookup_or_connection ... ok
+test neo4j_publish::transport::tests::pinned_address_tls_verifies_static_roots_and_original_hostname_before_credentials_are_sent ... ok
+test neo4j_publish::transport::tests::query_api_202_errors_redirect_auth_bad_shapes_and_encodings_never_report_success_or_retry ... ok
+test neo4j_publish::transport::tests::query_deadline_drops_the_owned_future_and_does_not_start_a_retry ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 446 filtered out; finished in 2.09s
+

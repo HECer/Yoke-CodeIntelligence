@@ -786,6 +786,39 @@ not certify a kernel scheduling cause, every historical transient process,
 arbitrary kernel API preemption, full Windows/non-Windows/upstream acceptance,
 unattended App deployment, main or release. Wider STATUS/R1–R9 remains open.
 
+[Reviewed native Neo4j publication](validation/integration-2026-10-19/neo4j-publish/index.json)
+now adds an explicit Windows host workflow for saved native base graphs. Offline
+plans grant no capabilities. Separate approval, network, credential, schema,
+write and journal gates protect fixed parameterized Query API v2/Cypher 5.
+Immutable scoped revisions retain original entity/evidence/observation JSON,
+byte ranges, directions, parallel observations and unresolved targets. Atomic
+expected-revision/count guards and durable pre-send intents prevent silent
+overwrite or automatic replay of unknown writes. Recovery uses only fixed reads.
+See the [host workflow](native-neo4j-publish.md).
+
+The owned Neo4j Community **2026.09.0** fixture passes actual native HTTPS,
+static-root/hostname refusals, Unicode private-pipe credentials, exact row
+roundtrips, two forced concurrent updates with exactly one commit, lost stdout,
+response loss after actual commit, historical recovery and count/schema conflict
+refusals. All five fixture credentials and the Java server are removed. JBR25.0.3
+is functional test evidence, not JVM-vendor qualification. The exact final
+production binary is unchanged across a test-only cfg-import compiler fix.
+
+There are **21 new cases**. Final 17 selected native groups record **555
+passed / 1 failed / 8 existing ignored gates**; the unchanged media
+symlink setup failure remains OS1314. All-target Clippy, format, mandatory
+typecheck, **260 TypeScript tests / 3 skips** and **17 Python tests** pass with
+**714 integrated inputs unchanged**. Native/live input proofs cover
+708 files. Earlier incremental runs are nonadditive and all recorded
+failures remain in the evidence. This is not a whole-native pass.
+
+Live publication/credentials remain Windows-only. Hash-chain metadata is not
+authentication or global journal coordination; client cancellation cannot
+guarantee server cancellation. Other Neo4j versions/JVM vendors, Enterprise RBAC,
+non-Windows and full upstream/mixed-source equivalence remain unqualified.
+FalkorDB, Google/authenticated/social/video/semantic connectors, widerR1-R9,
+unattended production, main and release remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

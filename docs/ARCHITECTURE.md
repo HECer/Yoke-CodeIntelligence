@@ -281,3 +281,13 @@ handles before termination and checks their final signals alongside the held roo
 and empty job accounting in the existing cleanup budget. Missing proof remains
 an explicit failure; no PID-based termination is authorized. See the
 [owned-member checkpoint](validation/integration-2026-10-19/windows-process-exit/index.json).
+
+Reviewed native Neo4j publication is an explicit Windows host connector over
+fixed parameterized QueryAPIv2/Cypher5. Closed offline plans and immutable saved
+base-graph rows grant no host or source authority. Separate schema bootstrap,
+network/OS-credential/write/approval/journal gates, scoped immutable revisions,
+atomic expected-revision/count guards and durable pre-send intents preserve
+parallel observations, unresolved targets and exact evidence. Unknown writes
+require positive fixed-read recovery; they are never automatically replayed.
+See the [host workflow](native-neo4j-publish.md) and
+[indexed qualification](validation/integration-2026-10-19/neo4j-publish/index.json).
