@@ -133,9 +133,10 @@ declarations, references and conservative captured occurrences are checked
 before one ordinary guarded plan. Unknown consumers remain explicit; host
 approval and executed verification still govern application.
 
-[Symbol deletion boundaries](docs/symbol-deletion.md) bind TypeScript/JavaScript
-declarations to exact captured AST nodes before including their owning export
-or ambient wrapper. Structural entity coordinates stay unchanged. Unsupported
+[Symbol deletion boundaries](docs/symbol-deletion.md) bind TypeScript/JavaScript,
+Python and Rust declarations to exact captured AST nodes before including their
+owning export, decorator or outer-attribute bundle. Structural entity coordinates
+stay unchanged. Unsupported
 ownership refuses; ordinary usage and application gates still apply.
 
 ## Read-only context plans

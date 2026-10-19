@@ -7,8 +7,7 @@ use crate::{
 use anyhow::{Context, Result, ensure};
 use tree_sitter::{Node, Parser};
 
-const UNSUPPORTED: &str =
-    "Symbol deletion requires an independently removable TypeScript/JavaScript declaration";
+const UNSUPPORTED: &str = "Symbol deletion requires an independently removable declaration";
 const MAX_NODES: usize = 200_000;
 
 fn declaration_child(parent: Node<'_>, child: Node<'_>) -> bool {
@@ -40,12 +39,21 @@ pub(super) fn range(
         entity.path == file.path && entity.language == file.language,
         "Symbol deletion source binding mismatch"
     );
+    if file.language == "rust" {
+        let selected =
+            crate::refactor_contract::symbol_deletion_range(epoch, entity, text, deadline)?;
+        return Ok((selected.start, selected.end));
+    }
+    // Python's recognized UTF-8 BOM is outside every declaration. Keep the
+    // original source and rebase parser coordinates instead of rewriting it.
+    let offset = usize::from(file.language == "python" && text.starts_with('\u{feff}')) * 3;
+    let input = &text[offset..];
     let mut parser = Parser::new();
     parser.set_language(&analysis::grammar(&file.language).context(UNSUPPORTED)?)?;
     let mut cancelled = |_: &tree_sitter::ParseState| deadline.check().is_err();
     let tree = parser
         .parse_with_options(
-            &mut |offset, _| &text.as_bytes()[offset.min(text.len())..],
+            &mut |at, _| &input.as_bytes()[at.min(input.len())..],
             None,
             Some(tree_sitter::ParseOptions::new().progress_callback(&mut cancelled)),
         )
@@ -62,13 +70,14 @@ pub(super) fn range(
         deadline.check()?;
         count += 1;
         ensure!(count <= MAX_NODES, "Symbol deletion AST capacity exceeded");
-        if node.start_byte() == entity.start_byte
-            && node.end_byte() == entity.end_byte
-            && let Some((kind, name)) = analysis::symbol(epoch, node, text, &file.language)
+        if node.start_byte() + offset == entity.start_byte
+            && node.end_byte() + offset == entity.end_byte
+            && let Some((kind, name)) =
+                analysis::declaration_symbol(epoch, node, input, &file.language, deadline)?
             && kind == entity.kind
-            && Some(name.start_byte()) == entity.name_start_byte
-            && Some(name.end_byte()) == entity.name_end_byte
-            && name.utf8_text(text.as_bytes())? == entity.name
+            && Some(name.start_byte() + offset) == entity.name_start_byte
+            && Some(name.end_byte() + offset) == entity.name_end_byte
+            && name.utf8_text(input.as_bytes())? == entity.name
         {
             ensure!(found.is_none(), "Ambiguous symbol deletion AST binding");
             found = Some(node);
@@ -77,6 +86,39 @@ pub(super) fn range(
         stack.extend(node.named_children(&mut cursor));
     }
     let mut selected = found.context("Symbol deletion exact AST binding missing")?;
+    if file.language == "python" {
+        ensure!(
+            matches!(selected.kind(), "function_definition" | "class_definition"),
+            UNSUPPORTED
+        );
+        if let Some(parent) = selected.parent()
+            && parent.kind() == "decorated_definition"
+        {
+            ensure!(
+                parent.child_by_field_name("definition") == Some(selected),
+                UNSUPPORTED
+            );
+            selected = parent;
+        }
+        let parent = selected.parent().context(UNSUPPORTED)?;
+        ensure!(matches!(parent.kind(), "module" | "block"), UNSUPPORTED);
+        if parent.kind() == "block" {
+            let mut cursor = parent.walk();
+            let mut remaining = false;
+            for child in parent.named_children(&mut cursor) {
+                deadline.check()?;
+                if child != selected && child.kind() != "comment" {
+                    remaining = true;
+                }
+            }
+            ensure!(
+                remaining,
+                "Python deletion would leave a required body empty"
+            );
+        }
+        deadline.check()?;
+        return Ok((selected.start_byte() + offset, selected.end_byte() + offset));
+    }
     let member = matches!(
         selected.kind(),
         "method_definition" | "method_signature" | "abstract_method_signature"
@@ -151,6 +193,64 @@ pub(super) fn range(
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn rust_and_python_deletion_reject_forged_anchors_and_expired_or_oversized_inputs() {
+        for (language, text) in [
+            ("rust", "// 🦀\n#[inline]\nfn delete_me() {}\n"),
+            (
+                "python",
+                "# 🦀\n@decorator\ndef delete_me():\n    return 1\n",
+            ),
+        ] {
+            let file = SourceFile {
+                path: "owned".into(),
+                hash: crate::model::hash(text),
+                size: text.len(),
+                language: language.into(),
+                mode: 0o644,
+            };
+            let entity = analysis::extract(&file, text, &Deadline::new(30_000))
+                .unwrap()
+                .entities
+                .into_iter()
+                .find(|e| e.name == "delete_me")
+                .unwrap();
+            for variant in 0..6 {
+                let mut forged = entity.clone();
+                match variant {
+                    0 => forged.start_byte = text.find('🦀').unwrap() + 1,
+                    1 => forged.end_byte -= 1,
+                    2 => forged.name = "retained".into(),
+                    3 => forged.name_start_byte = None,
+                    4 => forged.path = "../owned".into(),
+                    _ => forged.kind = "method".into(),
+                }
+                assert!(
+                    range(
+                        AnalyzerEpoch::V8,
+                        &file,
+                        &forged,
+                        text,
+                        &Deadline::new(30_000)
+                    )
+                    .is_err()
+                );
+            }
+            assert!(range(AnalyzerEpoch::V8, &file, &entity, text, &Deadline::new(0)).is_err());
+            let oversized = format!("{text}{}", " ".repeat(4_000_001));
+            assert!(
+                range(
+                    AnalyzerEpoch::V8,
+                    &file,
+                    &entity,
+                    &oversized,
+                    &Deadline::new(30_000)
+                )
+                .is_err()
+            );
+        }
+    }
+
     fn fixture(text: &str) -> (SourceFile, Entity) {
         let file = SourceFile {
             path: "module.ts".into(),
