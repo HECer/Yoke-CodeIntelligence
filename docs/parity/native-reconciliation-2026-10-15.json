@@ -7133,43 +7133,6 @@
   },
   "prioritizedRemainingScopes": [
     {
-      "compilerInlineDevelopment": {
-        "evidence": [
-          "native/src/compiler_inline.rs",
-          "native/src/compiler_inline_worker.cjs",
-          "native/tests/compiler_inline.rs",
-          "native/docs/compiler-inline.md",
-          "docs/validation/integration-2026-10-19/compiler-inline/index.json"
-        ],
-        "formatBuildAllTargetClippyPassed": true,
-        "fullContractCertified": false,
-        "hostOptIn": "inlineCompiler",
-        "implemented": true,
-        "jsxComponentBindingScenarios": 2,
-        "languageSiblingScenarios": 12,
-        "nativeFrozenInputs": 788,
-        "nativeGroups": 12,
-        "nativeTotals": {
-          "failed": 0,
-          "ignored": 9,
-          "passed": 629
-        },
-        "newCasesPassed": 18,
-        "newIntegrationCasesPassed": 16,
-        "newUnitCasesPassed": 2,
-        "otherPlatformsCertified": false,
-        "ownedNonTsLspFixtureSeparatelyLabeled": true,
-        "platformEvidence": "Windows",
-        "remaining": [
-          "Classic function declarations and wider function-body inline",
-          "Other contexts/languages and outside-file consumers",
-          "Broader symbol move contracts",
-          "Dynamic/omitted consumers, allocation identity and observed execution",
-          "Full Windows and current-head hosted/upstream acceptance"
-        ],
-        "selectedCompiler": "TypeScript 5.8.3",
-        "wholeNativeRerun": false
-      },
       "declarationAttachmentsCheckpoint": {
         "actualCompositeRustTests": 3,
         "actualOwnedFixtureCount": 6,
@@ -7549,6 +7512,43 @@
         "publicFacadeSchemasChanged": false,
         "survivingSyntaxChecked": true,
         "wholeNativeRerun": false
+      },
+      "compilerInlineDevelopment": {
+        "evidence": [
+          "native/src/compiler_inline.rs",
+          "native/src/compiler_inline_worker.cjs",
+          "native/tests/compiler_inline.rs",
+          "native/docs/compiler-inline.md",
+          "docs/validation/integration-2026-10-19/compiler-inline/index.json"
+        ],
+        "formatBuildAllTargetClippyPassed": true,
+        "fullContractCertified": false,
+        "hostOptIn": "inlineCompiler",
+        "implemented": true,
+        "jsxComponentBindingScenarios": 2,
+        "languageSiblingScenarios": 12,
+        "nativeFrozenInputs": 788,
+        "nativeGroups": 12,
+        "nativeTotals": {
+          "failed": 0,
+          "ignored": 9,
+          "passed": 629
+        },
+        "newCasesPassed": 18,
+        "newIntegrationCasesPassed": 16,
+        "newUnitCasesPassed": 2,
+        "otherPlatformsCertified": false,
+        "ownedNonTsLspFixtureSeparatelyLabeled": true,
+        "platformEvidence": "Windows",
+        "remaining": [
+          "Classic function declarations and wider function-body inline",
+          "Other contexts/languages and outside-file consumers",
+          "Broader symbol move contracts",
+          "Dynamic/omitted consumers, allocation identity and observed execution",
+          "Full Windows and current-head hosted/upstream acceptance"
+        ],
+        "selectedCompiler": "TypeScript 5.8.3",
+        "wholeNativeRerun": false
       }
     },
     {
@@ -7606,27 +7606,27 @@
         "wholeNativeRerun": false
       },
       "priority": 2,
+      "suggestedScope": "Qualify additional source/history/workspace identity scopes, wider normalization/survivor policies and actual model semantics with their own complete source/response/accounting replay. Preserve the released alias/group/join/data-only/mixed contracts and avoid replacing unavailable capabilities with empty complete results. Use the new explicit semantic-identity job only for its finite native policy: labels and scores propose candidates; model decisions remain unverified, all positive components require complete same-entity cliques, original observations remain intact and no source/execution authority follows. Continue full platform/upstream acceptance and remaining R1-R9 work.",
+      "title": "Source-bound meaning graphs, checked semantic identity and build state",
       "semanticIdentityDevelopment": {
-        "algorithm": "native_nfkc_context_lower_minhash64_lsh16x4_jaro_v1",
         "behavior": "Separate explicit native joint source/receipt-backed normalization/MinHash64/LSH16x4/Jaro candidates; one host-authorized single-use ledger/job/payload/provider attempt; immutable bound response and original billing; complete decision coverage with exact concept-support IDs; positive-clique quotient retaining every original observation and ordered role slot; provider-free checked load/status/jobs and frozen node/degree/directed-trace queries, including after Store loss. Typed retention bounds new metadata and parent replay before legacy materialization and follows validated new-job/artifact roots only.",
-        "canonicalSourceAuthority": false,
         "contract": "native/docs/meaning-identity.md",
         "evidence": "docs/validation/integration-2026-10-19/semantic-identity/index.json",
-        "executionObserved": false,
-        "fullContractCertified": false,
-        "liveSemanticQualityQualified": false,
-        "mergePolicy": "complete_same_entity_clique_or_refuse",
-        "operation": "adjudicate_meaning_identity_v1",
-        "originalClaimsModified": false,
-        "providerFilesystemIsolationEnforced": false,
+        "sourceParent": "7a61aa782462614843fcd879dfffa31e9dacd382",
         "recordKind": "native_meaning_identity_job_v1",
-        "releasedParentFormatsUnchanged": true,
+        "operation": "adjudicate_meaning_identity_v1",
+        "algorithm": "native_nfkc_context_lower_minhash64_lsh16x4_jaro_v1",
+        "mergePolicy": "complete_same_entity_clique_or_refuse",
         "scope": "selected_native_meaning_graphs_one_exact_workspace_canonical_snapshot",
+        "releasedParentFormatsUnchanged": true,
+        "originalClaimsModified": false,
         "semanticIdentityEstablished": false,
-        "sourceParent": "7a61aa782462614843fcd879dfffa31e9dacd382"
-      },
-      "suggestedScope": "Qualify additional source/history/workspace identity scopes, wider normalization/survivor policies and actual model semantics with their own complete source/response/accounting replay. Preserve the released alias/group/join/data-only/mixed contracts and avoid replacing unavailable capabilities with empty complete results. Use the new explicit semantic-identity job only for its finite native policy: labels and scores propose candidates; model decisions remain unverified, all positive components require complete same-entity cliques, original observations remain intact and no source/execution authority follows. Continue full platform/upstream acceptance and remaining R1-R9 work.",
-      "title": "Source-bound meaning graphs, checked semantic identity and build state"
+        "canonicalSourceAuthority": false,
+        "executionObserved": false,
+        "providerFilesystemIsolationEnforced": false,
+        "liveSemanticQualityQualified": false,
+        "fullContractCertified": false
+      }
     },
     {
       "evidence": [
@@ -8190,33 +8190,6 @@
         "evidence": "docs/validation/integration-2026-10-19/digest-receiver/index.json",
         "sourceParent": "61d3258120ac0ca2b8eb85f498d9242b21f0f0da"
       },
-      "receiverInterpretationDevelopment": {
-        "behavior": "Explicit host-local native Meaning layer replay joined to fresh accepted-receipt/declaration verification. Every complete submitted source unit, including context and no-claims coverage, must fit verified local file/hash/declaration bounds. All containing declaration rows and the full checked semantic layer retain original identities, directions, roles, source quotes and receipt/accounting provenance. Separate host permission admits local quotations; existing-only read-only CLI runs no provider and writes nothing.",
-        "complete": false,
-        "configuredPublicProductionDeployment": false,
-        "contract": "native/docs/received-source-interpretation.md",
-        "evidence": "docs/validation/integration-2026-10-19/received-source-interpretation/index.json",
-        "providerDispatchedByReceiver": false,
-        "semanticReasoningQualityVerified": false,
-        "senderSnapshotIdentityEstablished": false,
-        "sourceBoundLocalInterpretationAvailable": true,
-        "sourceParent": "4456fab78d4f42fea843ff2659313288bf396bef"
-      },
-      "receiverSourceDevelopment": {
-        "advertisedRustDeclarationCorrespondenceAvailable": true,
-        "behavior": "Separate host-local accepted-receipt replay and explicit independent local native snapshot replay under current receiver/source grants. All advertised Rust declarations retain original ordinal/pointer and exact local UTF-8 byte/range/entity evidence; header, reported full-declaration fingerprint, counters, optional supplied whole-file hash and claimed verified Git identity must match. Frozen private capability supports bounded export/literal selection; CLI opens existing Stores read-only without keys, network, Engine or persistence.",
-        "complete": false,
-        "configuredPublicProductionDeployment": false,
-        "contract": "native/docs/received-source-verification.md",
-        "discussionsVerified": false,
-        "evidence": "docs/validation/integration-2026-10-19/received-source-verification/index.json",
-        "historicalCommitsVerified": false,
-        "remoteRepositoryAttested": false,
-        "semanticReasoningAvailable": false,
-        "senderSnapshotIdentityEstablished": false,
-        "senderSourceDigestHashVerified": false,
-        "sourceParent": "5d806c2b1b176206c7e2535379f5d264fdfc4176"
-      },
       "serviceDevelopment": {
         "behavior": "Fresh source-bound body-excluding proposals; exact endpoint/payload approval; one PUT behind a signed durable intent; no retry after unknown outcome; bounded GET-only receipt recovery; typed source retention",
         "complete": false,
@@ -8227,7 +8200,34 @@
         "sourceParent": "830d222681bad11b83864c41d87fea9006f14b75"
       },
       "suggestedScope": "Extend broader receiver interpretation and independently verify remaining received claims, while qualifying configured App deployment separately. Existing explicit Meaning builds and the separate source-bound receiver interpretation read retain host trust/quotation permissions, original receipts/accounting, exact immutable snapshot/hash/range correspondence, directed parallel claims and ordered roles. Preserve signed App-history original plans, exact revisions and all approval/network/deployment/model boundaries; infer no universal certification.",
-      "title": "Self-hosted GitHub App and authorized review publication"
+      "title": "Self-hosted GitHub App and authorized review publication",
+      "receiverSourceDevelopment": {
+        "behavior": "Separate host-local accepted-receipt replay and explicit independent local native snapshot replay under current receiver/source grants. All advertised Rust declarations retain original ordinal/pointer and exact local UTF-8 byte/range/entity evidence; header, reported full-declaration fingerprint, counters, optional supplied whole-file hash and claimed verified Git identity must match. Frozen private capability supports bounded export/literal selection; CLI opens existing Stores read-only without keys, network, Engine or persistence.",
+        "contract": "native/docs/received-source-verification.md",
+        "evidence": "docs/validation/integration-2026-10-19/received-source-verification/index.json",
+        "sourceParent": "5d806c2b1b176206c7e2535379f5d264fdfc4176",
+        "advertisedRustDeclarationCorrespondenceAvailable": true,
+        "senderSnapshotIdentityEstablished": false,
+        "senderSourceDigestHashVerified": false,
+        "discussionsVerified": false,
+        "historicalCommitsVerified": false,
+        "semanticReasoningAvailable": false,
+        "remoteRepositoryAttested": false,
+        "complete": false,
+        "configuredPublicProductionDeployment": false
+      },
+      "receiverInterpretationDevelopment": {
+        "behavior": "Explicit host-local native Meaning layer replay joined to fresh accepted-receipt/declaration verification. Every complete submitted source unit, including context and no-claims coverage, must fit verified local file/hash/declaration bounds. All containing declaration rows and the full checked semantic layer retain original identities, directions, roles, source quotes and receipt/accounting provenance. Separate host permission admits local quotations; existing-only read-only CLI runs no provider and writes nothing.",
+        "contract": "native/docs/received-source-interpretation.md",
+        "evidence": "docs/validation/integration-2026-10-19/received-source-interpretation/index.json",
+        "sourceParent": "4456fab78d4f42fea843ff2659313288bf396bef",
+        "sourceBoundLocalInterpretationAvailable": true,
+        "providerDispatchedByReceiver": false,
+        "semanticReasoningQualityVerified": false,
+        "senderSnapshotIdentityEstablished": false,
+        "complete": false,
+        "configuredPublicProductionDeployment": false
+      }
     },
     {
       "evidence": [
@@ -8261,24 +8261,6 @@
         "trail:Session cold-start mining"
       ],
       "knowledgeFeedbackAddition": "Explicit source-bound knowledge outcomes now carry exact quotes, checked View/Meaning receipt closure and unique ordered actor/session label sequences. Ranking exposes latest-sequence votes, integer hyperbolic decay and stale/proved-supersession exclusion. Host-selected plain UTF-8 transcripts support literal candidates only; no provider or automatic session discovery.",
-      "meaningFeedbackDevelopment": {
-        "behavior": "Separate authored historical outcome events for packet-qualified local native Meaning concepts, directed relations and hyperedges. Complete original/evaluated View/source/overlay/Meaning receipt replay; original quotes contained in actual claim support, evaluated quotes explicitly same-support-path only; immutable idempotent events and subject-wide actor/session sequences across evaluated Views; historical integer ranking with original event proofs, whole-output-before-SQL admission and retention validation. No provider, capture, source edit, promotion or execution.",
-        "contract": "native/docs/meaning-outcome-feedback.md",
-        "currentApplicabilityEstablished": false,
-        "evidence": "docs/validation/integration-2026-10-19/meaning-feedback/index.json",
-        "executionObserved": false,
-        "fullContractCertified": false,
-        "independentCorroborationEstablished": false,
-        "interpretationTruthEstablished": false,
-        "legacyKnowledgeAndPlanFormatsUnchanged": true,
-        "recordKind": "native_meaning_feedback_event_v1",
-        "sourceParent": "92b090465dd70020155bd6b1be4951878849b0ca",
-        "supportedKinds": [
-          "concept",
-          "relation",
-          "hyperedge"
-        ]
-      },
       "missingBehavior": "Source-bound knowledge, saved-plan and packet-qualified Meaning outcomes retain their separate released immutable event contracts. Explicit semantic transcript candidates now use a separate host-authorized provider job over selected original imported UTF8 bytes, with single-use ledger admission, durable original response/billing, exact source/payload/response/result replay, provider-free status/jobs/checked export and typed retention. Candidates create no events. Further object surfaces, independently authenticated corroboration, live model-quality qualification, current applicability and actual application/execution evidence remain open. Labels, scores and model interpretations grant no semantic truth or authority.",
       "planFeedbackCheckpoint": {
         "broadFailures": "Two unchanged Windows symlink fixture setup OS1314 failures and one corrected new test assumption about source-scope ordering; retained without count substitution.",
@@ -8309,26 +8291,44 @@
         "workspaceApplicationObserved": false
       },
       "priority": 9,
+      "suggestedScope": "Continue remaining typed object surfaces, independent corroboration and actual execution evidence with exact source-space/receipt replay and separately qualified live providers. Preserve knowledge, saved-plan and Meaning event schemas, immutable history, actor/session sequence domains and transparent ranking. Semantic transcript candidates require host review and grant no automatic promotion, retry, native code identity or execution authority. Central AgentMemory remains separate.",
+      "title": "Outcome and corroboration learning beyond authored currentness",
+      "meaningFeedbackDevelopment": {
+        "behavior": "Separate authored historical outcome events for packet-qualified local native Meaning concepts, directed relations and hyperedges. Complete original/evaluated View/source/overlay/Meaning receipt replay; original quotes contained in actual claim support, evaluated quotes explicitly same-support-path only; immutable idempotent events and subject-wide actor/session sequences across evaluated Views; historical integer ranking with original event proofs, whole-output-before-SQL admission and retention validation. No provider, capture, source edit, promotion or execution.",
+        "contract": "native/docs/meaning-outcome-feedback.md",
+        "evidence": "docs/validation/integration-2026-10-19/meaning-feedback/index.json",
+        "sourceParent": "92b090465dd70020155bd6b1be4951878849b0ca",
+        "recordKind": "native_meaning_feedback_event_v1",
+        "supportedKinds": [
+          "concept",
+          "relation",
+          "hyperedge"
+        ],
+        "legacyKnowledgeAndPlanFormatsUnchanged": true,
+        "interpretationTruthEstablished": false,
+        "independentCorroborationEstablished": false,
+        "executionObserved": false,
+        "currentApplicabilityEstablished": false,
+        "fullContractCertified": false
+      },
       "semanticTranscriptDevelopment": {
         "behavior": "Explicit host-selected contiguous original imported UTF8 span, including full-import context within the finite cap. Separate single-attempt protocol/job and single-use reservation; bound bills retained before invalid domain/usage/provider-error/nonzero/overrun rejection; unknown sends retain reservations. Immutable original payload/reply/candidate artifacts, exact registered source and ledger replay, private checked export, read-only status/jobs, no automatic retry or candidate-to-event promotion. Typed retention validates all job states.",
         "contract": "native/docs/semantic-transcript-candidates.md",
-        "eventsCreated": 0,
         "evidence": "docs/validation/integration-2026-10-19/semantic-transcript/index.json",
-        "executionObserved": false,
-        "existingFeedbackFormatsUnchanged": true,
-        "fullContractCertified": false,
-        "independentCorroborationEstablished": false,
-        "interpretationTruthEstablished": false,
-        "liveModelQualityQualified": false,
-        "operation": "extract_transcript_feedback_v1",
-        "providerFilesystemIsolationEnforced": false,
-        "recordKind": "native_transcript_semantic_job_v1",
-        "sourceKind": "transcriptUtf8",
         "sourceParent": "dae57012519f013103541c1ee0ea21bb897a6409",
-        "sourceWriteScope": "native_parent_only"
-      },
-      "suggestedScope": "Continue remaining typed object surfaces, independent corroboration and actual execution evidence with exact source-space/receipt replay and separately qualified live providers. Preserve knowledge, saved-plan and Meaning event schemas, immutable history, actor/session sequence domains and transparent ranking. Semantic transcript candidates require host review and grant no automatic promotion, retry, native code identity or execution authority. Central AgentMemory remains separate.",
-      "title": "Outcome and corroboration learning beyond authored currentness"
+        "recordKind": "native_transcript_semantic_job_v1",
+        "operation": "extract_transcript_feedback_v1",
+        "sourceKind": "transcriptUtf8",
+        "existingFeedbackFormatsUnchanged": true,
+        "eventsCreated": 0,
+        "sourceWriteScope": "native_parent_only",
+        "providerFilesystemIsolationEnforced": false,
+        "interpretationTruthEstablished": false,
+        "independentCorroborationEstablished": false,
+        "executionObserved": false,
+        "liveModelQualityQualified": false,
+        "fullContractCertified": false
+      }
     }
   ],
   "reconciledCapabilities": [
