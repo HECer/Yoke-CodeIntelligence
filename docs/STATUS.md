@@ -852,6 +852,35 @@ versions, non-Windows and full mixed-source/upstream equivalence remain
 unqualified. Google/authenticated/social/video/article/semantic connectors,
 widerR1-R9, unattended production, main and release remain open.
 
+[Managed native Codex MCP installation](validation/integration-2026-10-19/codex-host/index.json)
+adds a separate explicit Windows `codex-mcp-v1` profile. Closed host selections
+bind source/configuration/state directories and launch objects without home
+discovery. The existing lossless TOML planner and guarded installation journals
+preserve human bytes, stale conditions and ownership. Generic v1 serialized
+identities stay unchanged. Initialization and both recovery schemas replay the
+selected profile's canonical edit. See the [workflow](native-codex-host.md).
+
+Actual **Codex CLI0.163.0** parses the installed command/argv/cwd/tool list,
+starts its configured native server and dispatches an exact Unicode/CRLF source
+read through the real MCP client. No model turn is started and the owned
+loopback model endpoint receives no request. All owned processes exit with an
+empty checked job after the bounded cleanup grace. Uninstall preserves human
+tables; process-exit/resume, kill/rollback and stale-source recovery cases pass.
+
+There are **12 new cases**. The final **13 selected native groups** record
+**558 passed / 0 failed / 8 existing ignored gates**.
+All-target Clippy with warnings denied, build and format pass. Native/live
+input proofs cover **727 files** and the exact final binary. Mandatory
+integrated checks are retained in the indexed evidence. Earlier test compiler,
+canonical-recovery and public-status assertion failures remain visible and
+incremental runs are nonadditive. The earlier media OS1314 prerequisite failure
+is outside this selection; no whole-native or platform-wide pass follows.
+
+Other branded clients/hooks, other Codex versions, interactive IDE/model tool
+selection, project-local nested config roots, non-Windows and full upstream
+qualification remain open. Multi-file visibility/power-loss guarantees are not
+established. WiderR1-R9, unattended production, main and release remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

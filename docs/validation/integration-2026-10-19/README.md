@@ -369,3 +369,15 @@ cleanup. Mandatory integrated format/Python17/typecheck/TS260+3skip pass with
 730inputs unchanged. Raw failures remain, and no whole-native, non-Windows,
 production/full-upstream/main/release certification follows. Previous README
 bytes are preserved; the broader STATUS/R1-R9 task remains active.
+
+## Managed native Codex MCP installation checkpoint
+
+Source `17967c5fbe627fd290cc3002661220082785b94a`, runtime merge `823ccf98662e7f9843481bdb611652aa618edfb9`.
+[Indexed evidence](codex-host/index.json) retains12newcases,13selectedgroups
+558/0/8, exact generic identity compatibility, actual Codex0.163 config parsing,
+MCP-client startup/dispatch and UnicodeCRLF reads, owned-process recovery and
+cleanup, and mandatory integrated format/Python17/typecheck/TS260+3skip with
+733inputs unchanged. Raw intermediate failures remain. No model turn, real
+configuration selection, whole-native/non-Windows/full-upstream/main/release
+certification follows. Previous README bytes remain preserved; broaderR1-R9
+work continues.

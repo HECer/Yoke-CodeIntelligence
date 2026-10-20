@@ -1,0 +1,1963 @@
+[
+  {
+    "direction": "sent",
+    "message": {
+      "id": 100,
+      "method": "initialize",
+      "params": {
+        "clientInfo": {
+          "name": "yoke-owned-mcp-fixture",
+          "title": "Owned Yoke fixture",
+          "version": "0.5.0"
+        },
+        "capabilities": {
+          "experimentalApi": true
+        }
+      }
+    }
+  },
+  {
+    "direction": "received",
+    "message": {
+      "id": 100,
+      "result": {
+        "userAgent": "yoke-owned-mcp-fixture/0.163.0 (Windows 10.0.19045; x86_64) dumb (yoke-owned-mcp-fixture; 0.5.0)",
+        "codexHome": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-r0sabyi3\\Codex home \ud83d\udca1",
+        "platformFamily": "windows",
+        "platformOs": "windows"
+      }
+    }
+  },
+  {
+    "direction": "received",
+    "message": {
+      "method": "remoteControl/status/changed",
+      "params": {
+        "status": "disabled",
+        "serverName": "Evy",
+        "installationId": "c2c8e82e-407f-4bf7-a9f3-360c4f361392",
+        "environmentId": null
+      },
+      "emittedAtMs": 1792458782780
+    }
+  },
+  {
+    "direction": "sent",
+    "message": {
+      "id": 101,
+      "method": "thread/start",
+      "params": {
+        "cwd": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-r0sabyi3\\source \ud83d\udca1",
+        "model": "owned-model",
+        "modelProvider": "owned_offline",
+        "approvalPolicy": "never",
+        "sandbox": "read-only",
+        "ephemeral": true,
+        "experimentalRawEvents": false,
+        "baseInstructions": "",
+        "developerInstructions": ""
+      }
+    }
+  },
+  {
+    "direction": "received",
+    "message": {
+      "id": 101,
+      "result": {
+        "thread": {
+          "id": "01a156de-7888-7ba3-acb8-f3cb96607584",
+          "environments": [
+            {
+              "environmentId": "local",
+              "cwd": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-r0sabyi3\\source \ud83d\udca1",
+              "runtimeWorkspaceRoots": [
+                "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-r0sabyi3\\source \ud83d\udca1"
+              ]
+            }
+          ],
+          "extra": null,
+          "sessionId": "01a156de-7888-7ba3-acb8-f3cb96607584",
+          "forkedFromId": null,
+          "parentThreadId": null,
+          "preview": "",
+          "ephemeral": true,
+          "section": null,
+          "sectionEnteredAt": null,
+          "projectId": null,
+          "historyMode": "paginated",
+          "modelProvider": "owned_offline",
+          "model": "owned-model",
+          "reasoningEffort": null,
+          "createdAt": 1792458782,
+          "updatedAt": 1792458782,
+          "recencyAt": 1792458782,
+          "status": {
+            "type": "idle"
+          },
+          "path": null,
+          "cwd": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-r0sabyi3\\source \ud83d\udca1",
+          "cliVersion": "0.163.0",
+          "originator": "yoke-owned-mcp-fixture",
+          "source": "vscode",
+          "canAcceptDirectInput": true,
+          "threadSource": null,
+          "agentNickname": null,
+          "agentRole": null,
+          "gitInfo": null,
+          "name": null,
+          "daybreakEnabled": null,
+          "turns": []
+        },
+        "model": "owned-model",
+        "modelProvider": "owned_offline",
+        "serviceTier": null,
+        "disabledPluginIds": [],
+        "cwd": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-r0sabyi3\\source \ud83d\udca1",
+        "runtimeWorkspaceRoots": [
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-r0sabyi3\\source \ud83d\udca1"
+        ],
+        "instructionSources": [],
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandbox": {
+          "type": "readOnly",
+          "networkAccess": false
+        },
+        "activePermissionProfile": null,
+        "reasoningEffort": null,
+        "multiAgentMode": "explicitRequestOnly"
+      }
+    }
+  },
+  {
+    "direction": "received",
+    "message": {
+      "method": "mcpServer/startupStatus/updated",
+      "params": {
+        "threadId": "01a156de-7888-7ba3-acb8-f3cb96607584",
+        "name": "yoke_owned-fixture",
+        "status": "starting",
+        "error": null,
+        "failureReason": null
+      },
+      "emittedAtMs": 1792458782924
+    }
+  },
+  {
+    "direction": "received",
+    "message": {
+      "method": "thread/started",
+      "params": {
+        "thread": {
+          "id": "01a156de-7888-7ba3-acb8-f3cb96607584",
+          "environments": [
+            {
+              "environmentId": "local",
+              "cwd": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-r0sabyi3\\source \ud83d\udca1",
+              "runtimeWorkspaceRoots": [
+                "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-r0sabyi3\\source \ud83d\udca1"
+              ]
+            }
+          ],
+          "extra": null,
+          "sessionId": "01a156de-7888-7ba3-acb8-f3cb96607584",
+          "forkedFromId": null,
+          "parentThreadId": null,
+          "preview": "",
+          "ephemeral": true,
+          "section": null,
+          "sectionEnteredAt": null,
+          "projectId": null,
+          "historyMode": "paginated",
+          "modelProvider": "owned_offline",
+          "model": "owned-model",
+          "reasoningEffort": null,
+          "createdAt": 1792458782,
+          "updatedAt": 1792458782,
+          "recencyAt": 1792458782,
+          "status": {
+            "type": "idle"
+          },
+          "path": null,
+          "cwd": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-r0sabyi3\\source \ud83d\udca1",
+          "cliVersion": "0.163.0",
+          "originator": "yoke-owned-mcp-fixture",
+          "source": "vscode",
+          "canAcceptDirectInput": true,
+          "threadSource": null,
+          "agentNickname": null,
+          "agentRole": null,
+          "gitInfo": null,
+          "name": null,
+          "daybreakEnabled": null,
+          "turns": []
+        }
+      },
+      "emittedAtMs": 1792458782924
+    }
+  },
+  {
+    "direction": "sent",
+    "message": {
+      "id": 102,
+      "method": "mcpServer/tool/call",
+      "params": {
+        "threadId": "01a156de-7888-7ba3-acb8-f3cb96607584",
+        "server": "yoke_owned-fixture",
+        "tool": "ci_read",
+        "arguments": {
+          "path": "owned.rs",
+          "startByte": 0,
+          "endByte": 57
+        }
+      }
+    }
+  },
+  {
+    "direction": "received",
+    "message": {
+      "method": "mcpServer/startupStatus/updated",
+      "params": {
+        "threadId": "01a156de-7888-7ba3-acb8-f3cb96607584",
+        "name": "yoke_owned-fixture",
+        "status": "ready",
+        "error": null,
+        "failureReason": null
+      },
+      "emittedAtMs": 1792458782978
+    }
+  },
+  {
+    "direction": "received",
+    "message": {
+      "id": 102,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"data\":{\"contentHash\":\"ea6ecd3ed836703657b29d8b66e57b06f3806e2e3bc2a519e0205f48314b9dd8\",\"endByte\":57,\"path\":\"owned.rs\",\"startByte\":0,\"text\":\"// source \ud83d\udca1\\r\\nfn alpha(){beta();beta();}\\r\\nfn beta(){}\\r\\n\",\"trust\":\"source-data\"},\"metrics\":{\"durationMs\":10,\"estimatedTokens\":216,\"externalUsage\":\"none\",\"languageServerAttempts\":0,\"localOnly\":true,\"modelCalls\":0,\"serializedBytes\":648,\"tokenCount\":\"estimated\",\"tokenMethod\":\"utf8_bytes_div_3\"},\"requestId\":\"32406c8c45a6d3a1af598ed28874bd0ca0bf9028141797b64b0133af7398d483\",\"schemaVersion\":1,\"snapshotId\":\"ec92b453e6408f60094f788daab241b7d8b0976e984306e697686242c69055ec\",\"status\":\"ok\",\"warnings\":[]}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  },
+  {
+    "direction": "sent",
+    "message": {
+      "id": 103,
+      "method": "mcpServerStatus/list",
+      "params": {
+        "threadId": "01a156de-7888-7ba3-acb8-f3cb96607584",
+        "serverName": "yoke_owned-fixture",
+        "detail": "toolsAndAuthOnly"
+      }
+    }
+  },
+  {
+    "direction": "received",
+    "message": {
+      "id": 103,
+      "result": {
+        "data": [
+          {
+            "name": "yoke_owned-fixture",
+            "runtimeStatus": "connected",
+            "pluginId": null,
+            "httpOrigin": null,
+            "serverInfo": {
+              "name": "yoke-code-intelligence",
+              "title": null,
+              "version": "0.5.0",
+              "description": null,
+              "icons": null,
+              "websiteUrl": null
+            },
+            "serverCapabilities": {
+              "resources": {
+                "subscribe": false,
+                "listChanged": false
+              },
+              "tools": {
+                "listChanged": false
+              }
+            },
+            "tools": {
+              "ci_read": {
+                "name": "ci_read",
+                "description": "Read exact immutable UTF-8 source ranges, read a selected Meaning-View claim with all of its source quotes, or page a complete result artifact. Meaning claims remain unverified inference.",
+                "inputSchema": {
+                  "additionalProperties": false,
+                  "oneOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifactId": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "cursor": {
+                          "type": "string"
+                        },
+                        "encoding": {
+                          "enum": [
+                            "utf8",
+                            "base64"
+                          ]
+                        },
+                        "endByte": {
+                          "maximum": 4000000,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "endLine": {
+                          "maximum": 4000000,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "entityId": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "maxBytes": {
+                          "maximum": 4000000,
+                          "minimum": 1024,
+                          "type": "integer"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "snapshotId": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "startByte": {
+                          "maximum": 4000000,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "startLine": {
+                          "maximum": 4000000,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "taskId": {
+                          "type": "string"
+                        },
+                        "timeoutMs": {
+                          "maximum": 600000,
+                          "minimum": 10,
+                          "type": "integer"
+                        },
+                        "tokenBudget": {
+                          "maximum": 1000000,
+                          "minimum": 1,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "endByte": {
+                          "maximum": 4000000,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "endLine": {
+                          "maximum": 4000000,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "entityId": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "graphViewId": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "maxBytes": {
+                          "maximum": 4000000,
+                          "minimum": 1024,
+                          "type": "integer"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "snapshotId": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "startByte": {
+                          "maximum": 4000000,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "startLine": {
+                          "maximum": 4000000,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "taskId": {
+                          "type": "string"
+                        },
+                        "timeoutMs": {
+                          "maximum": 600000,
+                          "minimum": 10,
+                          "type": "integer"
+                        },
+                        "tokenBudget": {
+                          "maximum": 1000000,
+                          "minimum": 1,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "graphViewId"
+                      ],
+                      "type": "object"
+                    }
+                  ],
+                  "properties": {
+                    "artifactId": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "encoding": {
+                      "enum": [
+                        "utf8",
+                        "base64"
+                      ]
+                    },
+                    "endByte": {
+                      "maximum": 4000000,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "endLine": {
+                      "maximum": 4000000,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "entityId": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "graphViewId": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "maxBytes": {
+                      "maximum": 4000000,
+                      "minimum": 1024,
+                      "type": "integer"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "snapshotId": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "startByte": {
+                      "maximum": 4000000,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "startLine": {
+                      "maximum": 4000000,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "taskId": {
+                      "type": "string"
+                    },
+                    "timeoutMs": {
+                      "maximum": 600000,
+                      "minimum": 10,
+                      "type": "integer"
+                    },
+                    "tokenBudget": {
+                      "maximum": 1000000,
+                      "minimum": 1,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "annotations": {
+                  "readOnlyHint": true,
+                  "destructiveHint": false,
+                  "openWorldHint": false
+                }
+              },
+              "ci_trace": {
+                "name": "ci_trace",
+                "description": "Traverse evidence-backed directed multiedges with explicit direction and uncertainty filters.",
+                "inputSchema": {
+                  "additionalProperties": false,
+                  "oneOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "depth": {
+                          "maximum": 8,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "direction": {
+                          "enum": [
+                            "in",
+                            "out",
+                            "both"
+                          ]
+                        },
+                        "entityIds": {
+                          "items": {
+                            "pattern": "^[a-f0-9]{64}$",
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "minItems": 1,
+                          "type": "array"
+                        },
+                        "maxBytes": {
+                          "maximum": 4000000,
+                          "minimum": 1024,
+                          "type": "integer"
+                        },
+                        "maxVisited": {
+                          "maximum": 1000,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "relations": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "resolutions": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "snapshotId": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "taskId": {
+                          "type": "string"
+                        },
+                        "timeoutMs": {
+                          "maximum": 600000,
+                          "minimum": 10,
+                          "type": "integer"
+                        },
+                        "tokenBudget": {
+                          "maximum": 1000000,
+                          "minimum": 1,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "entityIds"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "depth": {
+                          "maximum": 8,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "direction": {
+                          "enum": [
+                            "in",
+                            "out",
+                            "both"
+                          ]
+                        },
+                        "entityIds": {
+                          "items": {
+                            "pattern": "^[a-f0-9]{64}$",
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "minItems": 1,
+                          "type": "array"
+                        },
+                        "graphViewId": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "maxBytes": {
+                          "maximum": 4000000,
+                          "minimum": 1024,
+                          "type": "integer"
+                        },
+                        "maxVisited": {
+                          "maximum": 1000,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "relations": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "resolutions": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "snapshotId": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "taskId": {
+                          "type": "string"
+                        },
+                        "timeoutMs": {
+                          "maximum": 600000,
+                          "minimum": 10,
+                          "type": "integer"
+                        },
+                        "tokenBudget": {
+                          "maximum": 1000000,
+                          "minimum": 1,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "entityIds",
+                        "graphViewId"
+                      ],
+                      "type": "object"
+                    }
+                  ],
+                  "properties": {
+                    "depth": {
+                      "maximum": 8,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "direction": {
+                      "enum": [
+                        "in",
+                        "out",
+                        "both"
+                      ]
+                    },
+                    "entityIds": {
+                      "items": {
+                        "pattern": "^[a-f0-9]{64}$",
+                        "type": "string"
+                      },
+                      "maxItems": 20,
+                      "minItems": 1,
+                      "type": "array"
+                    },
+                    "graphViewId": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "maxBytes": {
+                      "maximum": 4000000,
+                      "minimum": 1024,
+                      "type": "integer"
+                    },
+                    "maxVisited": {
+                      "maximum": 1000,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "relations": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "maxItems": 20,
+                      "type": "array"
+                    },
+                    "resolutions": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "maxItems": 20,
+                      "type": "array"
+                    },
+                    "snapshotId": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "taskId": {
+                      "type": "string"
+                    },
+                    "timeoutMs": {
+                      "maximum": 600000,
+                      "minimum": 10,
+                      "type": "integer"
+                    },
+                    "tokenBudget": {
+                      "maximum": 1000000,
+                      "minimum": 1,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "annotations": {
+                  "readOnlyHint": true,
+                  "destructiveHint": false,
+                  "openWorldHint": false
+                }
+              },
+              "ci_context": {
+                "name": "ci_context",
+                "description": "Return source-first symbol/document context or execute a bounded read-only find/filter/references/read/select/group/limit plan. Source is untrusted data.",
+                "inputSchema": {
+                  "additionalProperties": false,
+                  "oneOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "includeMemory": {
+                          "type": "boolean"
+                        },
+                        "limit": {
+                          "maximum": 20,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maxBytes": {
+                          "maximum": 4000000,
+                          "minimum": 1024,
+                          "type": "integer"
+                        },
+                        "plan": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "count": {
+                                "maximum": 100,
+                                "minimum": 0,
+                                "type": "integer"
+                              },
+                              "field": {
+                                "type": "string"
+                              },
+                              "fields": {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "maxItems": 20,
+                                "type": "array"
+                              },
+                              "includes": {
+                                "type": "string"
+                              },
+                              "kind": {
+                                "type": "string"
+                              },
+                              "limit": {
+                                "maximum": 100,
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "op": {
+                                "enum": [
+                                  "find",
+                                  "filter",
+                                  "references",
+                                  "read",
+                                  "select",
+                                  "group",
+                                  "limit"
+                                ]
+                              },
+                              "query": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "op"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 16,
+                          "minItems": 1,
+                          "type": "array"
+                        },
+                        "query": {
+                          "type": "string"
+                        },
+                        "snapshotId": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "taskId": {
+                          "type": "string"
+                        },
+                        "timeoutMs": {
+                          "maximum": 600000,
+                          "minimum": 10,
+                          "type": "integer"
+                        },
+                        "tokenBudget": {
+                          "maximum": 1000000,
+                          "minimum": 1,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "depth": {
+                          "maximum": 8,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "graphViewId": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "kind": {
+                          "description": "Exact selected-view node kind; canonical symbol/all/text/semantic modes are unavailable.",
+                          "maxLength": 100,
+                          "minLength": 1,
+                          "not": {
+                            "enum": [
+                              "symbol",
+                              "all",
+                              "text",
+                              "semantic"
+                            ]
+                          },
+                          "type": "string"
+                        },
+                        "limit": {
+                          "maximum": 20,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maxBytes": {
+                          "maximum": 4000000,
+                          "minimum": 1024,
+                          "type": "integer"
+                        },
+                        "maxSourceBytes": {
+                          "maximum": 256000,
+                          "minimum": 100,
+                          "type": "integer"
+                        },
+                        "path": {
+                          "maxLength": 4096,
+                          "type": "string"
+                        },
+                        "query": {
+                          "maxLength": 1000,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "snapshotId": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "taskId": {
+                          "type": "string"
+                        },
+                        "timeoutMs": {
+                          "maximum": 600000,
+                          "minimum": 10,
+                          "type": "integer"
+                        },
+                        "tokenBudget": {
+                          "maximum": 1000000,
+                          "minimum": 1,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "query",
+                        "graphViewId"
+                      ],
+                      "type": "object"
+                    }
+                  ],
+                  "properties": {
+                    "depth": {
+                      "maximum": 8,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "graphViewId": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "includeMemory": {
+                      "type": "boolean"
+                    },
+                    "kind": {
+                      "description": "Exact selected-view node kind; canonical symbol/all/text/semantic modes are unavailable.",
+                      "maxLength": 100,
+                      "minLength": 1,
+                      "not": {
+                        "enum": [
+                          "symbol",
+                          "all",
+                          "text",
+                          "semantic"
+                        ]
+                      },
+                      "type": "string"
+                    },
+                    "limit": {
+                      "maximum": 20,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "maxBytes": {
+                      "maximum": 4000000,
+                      "minimum": 1024,
+                      "type": "integer"
+                    },
+                    "maxSourceBytes": {
+                      "maximum": 256000,
+                      "minimum": 100,
+                      "type": "integer"
+                    },
+                    "path": {
+                      "maxLength": 4096,
+                      "type": "string"
+                    },
+                    "plan": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "count": {
+                            "maximum": 100,
+                            "minimum": 0,
+                            "type": "integer"
+                          },
+                          "field": {
+                            "type": "string"
+                          },
+                          "fields": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "maxItems": 20,
+                            "type": "array"
+                          },
+                          "includes": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "type": "string"
+                          },
+                          "limit": {
+                            "maximum": 100,
+                            "minimum": 1,
+                            "type": "integer"
+                          },
+                          "op": {
+                            "enum": [
+                              "find",
+                              "filter",
+                              "references",
+                              "read",
+                              "select",
+                              "group",
+                              "limit"
+                            ]
+                          },
+                          "query": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "op"
+                        ],
+                        "type": "object"
+                      },
+                      "maxItems": 16,
+                      "minItems": 1,
+                      "type": "array"
+                    },
+                    "query": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "maxLength": 1000,
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "snapshotId": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "taskId": {
+                      "type": "string"
+                    },
+                    "timeoutMs": {
+                      "maximum": 600000,
+                      "minimum": 10,
+                      "type": "integer"
+                    },
+                    "tokenBudget": {
+                      "maximum": 1000000,
+                      "minimum": 1,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "annotations": {
+                  "readOnlyHint": true,
+                  "destructiveHint": false,
+                  "openWorldHint": false
+                }
+              },
+              "ci_find": {
+                "name": "ci_find",
+                "description": "Find source-bound structural/vector candidates, request host-registered semantic navigation, or select an already published graphViewId for exact-kind name retrieval. Structural candidates are not compiler bindings.",
+                "inputSchema": {
+                  "additionalProperties": false,
+                  "oneOf": [
+                    {
+                      "additionalProperties": false,
+                      "oneOf": [
+                        {
+                          "anyOf": [
+                            {
+                              "required": [
+                                "query"
+                              ]
+                            },
+                            {
+                              "required": [
+                                "namePath"
+                              ]
+                            },
+                            {
+                              "required": [
+                                "pathGlob"
+                              ]
+                            },
+                            {
+                              "required": [
+                                "relativePath"
+                              ]
+                            }
+                          ],
+                          "not": {
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "languageServer"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "vector"
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "not": {
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "query"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "languageServer"
+                                ]
+                              }
+                            ]
+                          },
+                          "properties": {
+                            "kind": {
+                              "const": "semantic"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "model",
+                            "vector"
+                          ]
+                        },
+                        {
+                          "not": {
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "query"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "kind"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "path"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "limit"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "offset"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "regex"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "model"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "vector"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "namePath"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "relativePath"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "pathGlob"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "excludeGlob"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "includeBody"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "substringMatching"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "includeKinds"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "excludeKinds"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "ignoreCase"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "multiline"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "groupBySymbol"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "beforeContextLines"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "afterContextLines"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "depth"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "searchBody"
+                                ]
+                              }
+                            ]
+                          },
+                          "required": [
+                            "languageServer"
+                          ]
+                        }
+                      ],
+                      "properties": {
+                        "afterContextLines": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "beforeContextLines": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "depth": {
+                          "maximum": 8,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "excludeGlob": {
+                          "type": "string"
+                        },
+                        "excludeKinds": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "maxItems": 100,
+                          "type": "array"
+                        },
+                        "groupBySymbol": {
+                          "type": "boolean"
+                        },
+                        "ignoreCase": {
+                          "type": "boolean"
+                        },
+                        "includeBody": {
+                          "type": "boolean"
+                        },
+                        "includeKinds": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "maxItems": 100,
+                          "type": "array"
+                        },
+                        "kind": {
+                          "enum": [
+                            "symbol",
+                            "file",
+                            "all",
+                            "text",
+                            "document",
+                            "semantic",
+                            "concept",
+                            "rationale",
+                            "api_contract"
+                          ]
+                        },
+                        "languageServer": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "offset": {
+                              "maximum": 4000000,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "operation": {
+                              "enum": [
+                                "definition",
+                                "declaration",
+                                "references",
+                                "implementation",
+                                "hover",
+                                "symbols",
+                                "typeDefinition",
+                                "incomingCalls",
+                                "outgoingCalls",
+                                "supertypes",
+                                "subtypes",
+                                "completion",
+                                "signatureHelp",
+                                "diagnostics",
+                                "symbolInfo",
+                                "prepareRename",
+                                "codeActions",
+                                "willRenameFiles",
+                                "capabilities"
+                              ]
+                            },
+                            "options": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "depth": {
+                                  "maximum": 8,
+                                  "minimum": 0,
+                                  "type": "integer"
+                                },
+                                "endByte": {
+                                  "maximum": 4000000,
+                                  "minimum": 0,
+                                  "type": "integer"
+                                },
+                                "excludeKinds": {
+                                  "items": {
+                                    "maximum": 26,
+                                    "minimum": 1,
+                                    "type": "integer"
+                                  },
+                                  "maxItems": 26,
+                                  "type": "array"
+                                },
+                                "includeBody": {
+                                  "type": "boolean"
+                                },
+                                "includeDeclaration": {
+                                  "type": "boolean"
+                                },
+                                "includeKinds": {
+                                  "items": {
+                                    "maximum": 26,
+                                    "minimum": 1,
+                                    "type": "integer"
+                                  },
+                                  "maxItems": 26,
+                                  "type": "array"
+                                },
+                                "maxItems": {
+                                  "maximum": 2000,
+                                  "minimum": 1,
+                                  "type": "integer"
+                                },
+                                "minSeverity": {
+                                  "maximum": 4,
+                                  "minimum": 1,
+                                  "type": "integer"
+                                },
+                                "namePathPattern": {
+                                  "type": "string"
+                                },
+                                "only": {
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "maxItems": 20,
+                                  "type": "array"
+                                },
+                                "startByte": {
+                                  "maximum": 4000000,
+                                  "minimum": 0,
+                                  "type": "integer"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "path": {
+                              "maxLength": 4096,
+                              "minLength": 1,
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "operation",
+                            "path",
+                            "offset"
+                          ],
+                          "type": "object"
+                        },
+                        "limit": {
+                          "maximum": 200,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maxBytes": {
+                          "maximum": 4000000,
+                          "minimum": 1024,
+                          "type": "integer"
+                        },
+                        "model": {
+                          "type": "string"
+                        },
+                        "multiline": {
+                          "type": "boolean"
+                        },
+                        "namePath": {
+                          "type": "string"
+                        },
+                        "offset": {
+                          "maximum": 100000,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "pathGlob": {
+                          "type": "string"
+                        },
+                        "query": {
+                          "type": "string"
+                        },
+                        "regex": {
+                          "type": "boolean"
+                        },
+                        "relativePath": {
+                          "type": "string"
+                        },
+                        "searchBody": {
+                          "type": "boolean"
+                        },
+                        "snapshotId": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "substringMatching": {
+                          "type": "boolean"
+                        },
+                        "taskId": {
+                          "type": "string"
+                        },
+                        "timeoutMs": {
+                          "maximum": 600000,
+                          "minimum": 10,
+                          "type": "integer"
+                        },
+                        "tokenBudget": {
+                          "maximum": 1000000,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "vector": {
+                          "items": {
+                            "type": "number"
+                          },
+                          "maxItems": 4096,
+                          "minItems": 1,
+                          "type": "array"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "graphViewId": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "kind": {
+                          "description": "Exact selected-view node kind; canonical symbol/all/text/semantic modes are unavailable.",
+                          "maxLength": 100,
+                          "minLength": 1,
+                          "not": {
+                            "enum": [
+                              "symbol",
+                              "all",
+                              "text",
+                              "semantic"
+                            ]
+                          },
+                          "type": "string"
+                        },
+                        "limit": {
+                          "maximum": 200,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maxBytes": {
+                          "maximum": 4000000,
+                          "minimum": 1024,
+                          "type": "integer"
+                        },
+                        "path": {
+                          "maxLength": 4096,
+                          "type": "string"
+                        },
+                        "query": {
+                          "maxLength": 1000,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "snapshotId": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "taskId": {
+                          "type": "string"
+                        },
+                        "timeoutMs": {
+                          "maximum": 600000,
+                          "minimum": 10,
+                          "type": "integer"
+                        },
+                        "tokenBudget": {
+                          "maximum": 1000000,
+                          "minimum": 1,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "query",
+                        "graphViewId"
+                      ],
+                      "type": "object"
+                    }
+                  ],
+                  "properties": {
+                    "afterContextLines": {
+                      "maximum": 100,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "beforeContextLines": {
+                      "maximum": 100,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "depth": {
+                      "maximum": 8,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "excludeGlob": {
+                      "type": "string"
+                    },
+                    "excludeKinds": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "maxItems": 100,
+                      "type": "array"
+                    },
+                    "graphViewId": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "groupBySymbol": {
+                      "type": "boolean"
+                    },
+                    "ignoreCase": {
+                      "type": "boolean"
+                    },
+                    "includeBody": {
+                      "type": "boolean"
+                    },
+                    "includeKinds": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "maxItems": 100,
+                      "type": "array"
+                    },
+                    "kind": {
+                      "anyOf": [
+                        {
+                          "enum": [
+                            "symbol",
+                            "file",
+                            "all",
+                            "text",
+                            "document",
+                            "semantic",
+                            "concept",
+                            "rationale",
+                            "api_contract"
+                          ]
+                        },
+                        {
+                          "description": "Exact selected-view node kind; canonical symbol/all/text/semantic modes are unavailable.",
+                          "maxLength": 100,
+                          "minLength": 1,
+                          "not": {
+                            "enum": [
+                              "symbol",
+                              "all",
+                              "text",
+                              "semantic"
+                            ]
+                          },
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "languageServer": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "offset": {
+                          "maximum": 4000000,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "operation": {
+                          "enum": [
+                            "definition",
+                            "declaration",
+                            "references",
+                            "implementation",
+                            "hover",
+                            "symbols",
+                            "typeDefinition",
+                            "incomingCalls",
+                            "outgoingCalls",
+                            "supertypes",
+                            "subtypes",
+                            "completion",
+                            "signatureHelp",
+                            "diagnostics",
+                            "symbolInfo",
+                            "prepareRename",
+                            "codeActions",
+                            "willRenameFiles",
+                            "capabilities"
+                          ]
+                        },
+                        "options": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "depth": {
+                              "maximum": 8,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "endByte": {
+                              "maximum": 4000000,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "excludeKinds": {
+                              "items": {
+                                "maximum": 26,
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "maxItems": 26,
+                              "type": "array"
+                            },
+                            "includeBody": {
+                              "type": "boolean"
+                            },
+                            "includeDeclaration": {
+                              "type": "boolean"
+                            },
+                            "includeKinds": {
+                              "items": {
+                                "maximum": 26,
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "maxItems": 26,
+                              "type": "array"
+                            },
+                            "maxItems": {
+                              "maximum": 2000,
+                              "minimum": 1,
+                              "type": "integer"
+                            },
+                            "minSeverity": {
+                              "maximum": 4,
+                              "minimum": 1,
+                              "type": "integer"
+                            },
+                            "namePathPattern": {
+                              "type": "string"
+                            },
+                            "only": {
+                              "items": {
+                                "type": "string"
+                              },
+                              "maxItems": 20,
+                              "type": "array"
+                            },
+                            "startByte": {
+                              "maximum": 4000000,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "path": {
+                          "maxLength": 4096,
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "operation",
+                        "path",
+                        "offset"
+                      ],
+                      "type": "object"
+                    },
+                    "limit": {
+                      "maximum": 200,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "maxBytes": {
+                      "maximum": 4000000,
+                      "minimum": 1024,
+                      "type": "integer"
+                    },
+                    "model": {
+                      "type": "string"
+                    },
+                    "multiline": {
+                      "type": "boolean"
+                    },
+                    "namePath": {
+                      "type": "string"
+                    },
+                    "offset": {
+                      "maximum": 100000,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "path": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "maxLength": 4096,
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "pathGlob": {
+                      "type": "string"
+                    },
+                    "query": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "maxLength": 1000,
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "regex": {
+                      "type": "boolean"
+                    },
+                    "relativePath": {
+                      "type": "string"
+                    },
+                    "searchBody": {
+                      "type": "boolean"
+                    },
+                    "snapshotId": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "substringMatching": {
+                      "type": "boolean"
+                    },
+                    "taskId": {
+                      "type": "string"
+                    },
+                    "timeoutMs": {
+                      "maximum": 600000,
+                      "minimum": 10,
+                      "type": "integer"
+                    },
+                    "tokenBudget": {
+                      "maximum": 1000000,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "vector": {
+                      "items": {
+                        "type": "number"
+                      },
+                      "maxItems": 4096,
+                      "minItems": 1,
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "annotations": {
+                  "readOnlyHint": true,
+                  "destructiveHint": false,
+                  "openWorldHint": true
+                }
+              },
+              "ci_retrieve": {
+                "name": "ci_retrieve",
+                "description": "Rank captured source bodies with BM25 and personalized graph relevance. Default/global preserves legacy ranking; explicit manifest_balanced_v1 uses checked manifest scopes without automatic fallback. Ranking remains a heuristic.",
+                "inputSchema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "excludeGlob": {
+                      "type": "string"
+                    },
+                    "graphWeight": {
+                      "maximum": 1,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "includeBody": {
+                      "type": "boolean"
+                    },
+                    "limit": {
+                      "maximum": 200,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "pathGlob": {
+                      "type": "string"
+                    },
+                    "perFileLimit": {
+                      "maximum": 200,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "query": {
+                      "type": "string"
+                    },
+                    "relativePath": {
+                      "type": "string"
+                    },
+                    "scopeMode": {
+                      "enum": [
+                        "global",
+                        "manifest_balanced_v1"
+                      ],
+                      "type": "string"
+                    },
+                    "snapshotId": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "timeoutMs": {
+                      "maximum": 600000,
+                      "minimum": 10,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "type": "object"
+                },
+                "annotations": {
+                  "readOnlyHint": true,
+                  "destructiveHint": false,
+                  "openWorldHint": false
+                }
+              },
+              "ci_graph": {
+                "name": "ci_graph",
+                "description": "Build or query an immutable graph view with explicitly selected source-bound structural, semantic, and typed Meaning layers. Meaning claims retain exact citations and unverified inference; source-only exports reject Meaning layers.",
+                "inputSchema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "operation": {
+                      "enum": [
+                        "build",
+                        "find",
+                        "trace",
+                        "context",
+                        "export"
+                      ]
+                    },
+                    "options": {
+                      "type": "object"
+                    },
+                    "snapshotId": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "timeoutMs": {
+                      "maximum": 600000,
+                      "minimum": 10,
+                      "type": "integer"
+                    },
+                    "viewId": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "operation"
+                  ],
+                  "type": "object"
+                },
+                "annotations": {
+                  "readOnlyHint": true,
+                  "destructiveHint": false,
+                  "openWorldHint": false
+                }
+              }
+            },
+            "toolsError": null,
+            "resources": [],
+            "resourceTemplates": [],
+            "authStatus": "unsupported"
+          }
+        ],
+        "nextCursor": null
+      }
+    }
+  },
+  {
+    "direction": "sent",
+    "message": {
+      "id": 104,
+      "method": "thread/unsubscribe",
+      "params": {
+        "threadId": "01a156de-7888-7ba3-acb8-f3cb96607584"
+      }
+    }
+  },
+  {
+    "direction": "received",
+    "message": {
+      "id": 104,
+      "result": {
+        "status": "unsubscribed"
+      }
+    }
+  }
+]

@@ -61,6 +61,11 @@ rows and evidence through separate host approval, pinned TLS/OS credentials,
 immutable revisions and read-only recovery of unknown writes. Offline plans
 grant no authority; live publication currently supports Windows.
 
+An explicit [managed Codex MCP profile](docs/native-codex-host.md) installs one
+reviewed, receipt-owned TOML entry with physical source/launch bindings and
+guarded recovery. The original generic AGENTS profile keeps its identities.
+Actual Codex0.163 MCP-client reads have owned Windows evidence.
+
 ## TypeScript advanced runtime
 
 Requires **Node.js 22.16+**. Python/Go and additional optional providers are installed separately. Node SQLite is experimental on the tested Node version. No model or API key is required by native indexing.

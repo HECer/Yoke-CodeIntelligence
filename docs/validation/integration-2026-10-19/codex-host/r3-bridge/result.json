@@ -1,0 +1,7 @@
+{
+  "path": "native/src/host_output_recovery_tests.rs",
+  "beforeSha256": "1998d479d0beb4dfdd4e5cc3c3c6506b0bdde4ea0646508d151749afc980624f",
+  "afterSha256": "47b725558b6fd4b7735c589d40ec250c6d8e30edb4d7e531606cc86a49360f88",
+  "testOnly": true,
+  "reason": "The read-only EntryInfo contains only shape/length; exact identity must come from the held file API."
+}

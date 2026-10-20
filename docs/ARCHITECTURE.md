@@ -301,3 +301,13 @@ guards and retain exact directed parallel evidence. Durable pre-execution
 intents require no-resend positive fixed-read recovery after unknown results.
 See the [host workflow](native-falkor-publish.md) and
 [indexed validation](validation/integration-2026-10-19/falkor-publish/index.json).
+
+The separate managed Codex MCP profile extends `host_install` through an optional
+closed adapter binding; absent bindings retain released generic identities.
+Physical source/config/state objects and ordinary launch paths remain host
+selections. The existing lossless TOML planner supplies the exact owned table,
+and planning, initialization, both recovery schemas and receipts use the same
+profile-specific canonical patch. No imported plan or client discovery list
+creates host/source/execution authority. See the
+[Codex workflow](native-codex-host.md) and
+[indexed validation](validation/integration-2026-10-19/codex-host/index.json).

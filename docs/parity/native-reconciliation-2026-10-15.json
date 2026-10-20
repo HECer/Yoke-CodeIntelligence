@@ -7137,7 +7137,16 @@
         "native/tests/host_install.rs",
         "native/tests/host_install_cli.rs",
         "native/docs/host-config.md",
-        "native/docs/host-install.md"
+        "native/docs/host-install.md",
+        "native/src/host_install_adapter.rs",
+        "native/src/host_install_adapter_tests.rs",
+        "native/src/host_install_cli.rs",
+        "native/src/host_install_recovery.rs",
+        "native/src/host_install_recovery_v2.rs",
+        "native/src/host_output_recovery_tests.rs",
+        "native/tests/codex_host_cli.rs",
+        "docs/native-codex-host.md",
+        "docs/validation/integration-2026-10-19/codex-host/index.json"
       ],
       "id": "R6",
       "inventoryRefs": [
@@ -7146,10 +7155,35 @@
         "graphify:agent_installations",
         "graphify:git_lifecycle"
       ],
-      "missingBehavior": "Accepted wave3 includes bounded generic-agents v2 sourceSecurityHash/output ownership recovery, held-parent identity/security checks, exact prefix/canonical checks and bounded retries. Legacy v1's unknown-output refusal remains historical. Branded clients/hooks and non-Windows runtime certification remain open. Hard cancellation/power-loss guarantees are not established; terminal rolled_back replay is not a fresh ACL/security attestation. Universal recovery/performance and full upstream certification remain unestablished.",
+      "missingBehavior": "Bounded generic-agents-v1 installation and v2 source-security/output-ownership recovery retain their accepted matrix and legacy identities. A separate explicit Windows codex-mcp-v1 profile now manages one receipt-owned config.toml stdio MCP table, with closed host selection, physical source/launch bindings, exact human TOML preservation, independent host-write authority and profile-specific canonical initialization/v1/v2 recovery. Actual CodexCLI0.163.0 parses the installed entry, starts the native server and dispatches an exact source read through its MCP client without a model turn; uninstall and actual process interruption/recovery have owned-fixture evidence. Other branded clients, hooks, interactive IDE/model tool selection, other client releases and non-Windows runtime certification remain open. Hard cancellation/power-loss/universal recovery/performance/full upstream certification remain unestablished; historical unknown-output refusal and terminal rolled_back security boundaries remain.",
       "priority": 6,
-      "suggestedScope": "Retain the checked generic-agents-v1 implementation and preserve accepted matrix evidence and add selected branded schema/hook adapters and, if required, a separate two-phase prepared-output ownership contract for automatic pre-journal recovery. No default hook/model/project execution is authorized.",
-      "title": "Managed assistant and Git-hook installation lifecycle"
+      "suggestedScope": "Continue remaining branded schema and hook adapters plus non-Windows qualification. Preserve generic legacy serialized identities, the distinct Codex profile and physical source/launch bindings, exact byte ownership/security, canonical recovery and independent host-write gates. No default model or analyzed project-code execution follows from a client config or imported plan.",
+      "title": "Managed assistant and Git-hook installation lifecycle",
+      "codexMcpCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/codex-host/index.json",
+        "newContractCases": {
+          "adapterOwnershipAndInitialization": 6,
+          "actualProcessRecovery": 3,
+          "hostCli": 3
+        },
+        "nativeGroups": 13,
+        "finalSelectedTotals": {
+          "passed": 558,
+          "failed": 0,
+          "ignored": 8
+        },
+        "actualClient": "CodexCLI0.163.0",
+        "actualPlatform": "Windows",
+        "actualClientMcpStartupAndToolDispatch": true,
+        "actualModelTurnTested": false,
+        "unicodeCrLfSourceExact": true,
+        "legacyGenericIdentitiesPreserved": true,
+        "guardedInstallationPlatforms": [
+          "windows"
+        ],
+        "fullUpstreamContractCertified": false,
+        "wholeNativeRerun": false
+      }
     },
     {
       "evidence": [
@@ -8725,6 +8759,25 @@
         "docs/validation/integration-2026-10-19/falkor-publish/index.json"
       ],
       "remainingReview": "Live credentials and guarded journals remain Windows-only. Module60002 is the finite tested profile; other versions are refused. Hash chains are integrity metadata, not authentication or global journal coordination. Matching publisher builds are required for pending plans; client cancellation cannot guarantee server cancellation. Other platforms/server versions, production/RBAC, large-capacity and full arbitrary upstream/mixed-source equivalence remain unqualified. Google/authenticated/social/video/semantic connectors, widerR1-R9/main/release and earlier platform failures remain open.",
+      "fullContractCertified": false
+    },
+    {
+      "id": "native_codex_managed_mcp_install",
+      "behavior": "Explicit Windows codex-mcp-v1 host-install adapter over the existing lossless TOML planner and guarded installation/security/v2 journal. Closed host-selected config/source/state roots and launch paths bind physical objects; legacy generic None bindings/serialized identities stay unchanged. A receipt-owned mcp_servers.yoke_<label> entry uses fixed native argv, explicit source cwd and six discovery names without granting native host policy. Planning/status never index or create source state. Exact human tables, original empty-file semantics, stale source roots, cross-profile authority, lost stdout and canonical initialization/v1/v2 recovery are checked. Actual CodexCLI0.163.0 parses/starts the installed MCP server and dispatches an exact UnicodeCRLF read with no model turn; uninstall preserves unrelated tables.",
+      "evidence": [
+        "native/docs/host-install.md",
+        "native/src/host_install.rs",
+        "native/src/host_install_adapter.rs",
+        "native/src/host_install_adapter_tests.rs",
+        "native/src/host_install_cli.rs",
+        "native/src/host_install_recovery.rs",
+        "native/src/host_install_recovery_v2.rs",
+        "native/src/host_output_recovery_tests.rs",
+        "native/tests/codex_host_cli.rs",
+        "docs/native-codex-host.md",
+        "docs/validation/integration-2026-10-19/codex-host/index.json"
+      ],
+      "remainingReview": "Managed installation/recovery remain Windows-only. This finite profile selects separate nonnested source/config/state roots and does not manage project-local .codex beneath its source. Client tool discovery settings are not native execution/write/source authority. Only CodexCLI0.163.0 and its owned MCP-client API path are live qualified; interactive IDE/model tool selection, other releases/clients/hooks and non-Windows are untested. Multi-file atomic visibility, hard cancellation/power-loss durability, universal recovery/performance, full upstream/main/release remain open. Earlier host-platform prerequisite failures remain independently recorded.",
       "fullContractCertified": false
     }
   ],
