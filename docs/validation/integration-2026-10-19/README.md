@@ -529,3 +529,13 @@ separate opt-in host links, frozen queries after both Store losses and actual
 PDF+Office CLI composition without provider files. Initial test-only Copy/Clone
 compilation failure executes0groups; green3groups27/0/0. Scoped nonadditive
 evidence, without full R4/whole-native/platform/main/release acceptance.
+
+R1-R9 status reconciliation: [indexed proof](status-r1-r9-reconciliation/index.json),
+source `fdd2419275697ddacd05c6926c1037801d7397fc` / merge `7a58a494b0db96dce4fdf6a6a3201b8ba944cf2e`. Only documentation/tracker text changes.
+All753 runtime inputs match the prior behavioral baseline exactly or by verified
+CRLF checkout materialization (579 raw,174 CRLF); inventory/historical ledgers
+and all summary counts remain unchanged. Fresh Python17 passes; native and
+TypeScript suites are not rerun for this documentation-only delta. Their prior
+630/0/7 and260+3skipped scopes retain exact source/binary boundaries. R2/R3/R8
+wording now distinguishes completed contracts from remaining implementation and
+external acceptance, without marking full parity/main/release complete.

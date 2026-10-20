@@ -1,0 +1,152 @@
+{
+  "sourceCommit": "fdd2419275697ddacd05c6926c1037801d7397fc",
+  "runtimeCommit": "7a58a494b0db96dce4fdf6a6a3201b8ba944cf2e",
+  "parentCommit": "6181fcb01522de2e1d82b7aa6c22d72a1ab65f1b",
+  "paths": [
+    "docs/REMAINING_WORK.md",
+    "docs/STATUS.md",
+    "docs/parity/native-reconciliation-2026-10-15.json",
+    "native/docs/github-app-workers.md"
+  ],
+  "runtimeBehaviorChanged": false,
+  "nativeOrTypescriptTestsRerun": false,
+  "pythonContracts": 17,
+  "runtimeInputsMatched": 753,
+  "mainOrReleaseVerified": false,
+  "kind": "status_reconciliation_validation_v1",
+  "validation": {
+    "sourceParent": "6181fcb01522de2e1d82b7aa6c22d72a1ab65f1b",
+    "runtimeInputsMatched": 753,
+    "rawEqual": 579,
+    "crlfOnly": 174,
+    "changedTrackerRows": [
+      "R2",
+      "R3",
+      "R8"
+    ],
+    "inventoryLedgerUnchanged": true,
+    "historicalInventoryUnchanged": true,
+    "ledgerSummaryUnchanged": true,
+    "noBehaviorChange": true,
+    "nativeOrTypescriptTestsRerun": false,
+    "pythonContracts": {
+      "command": [
+        "C:\\Python314\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts/tests",
+        "-v"
+      ],
+      "exitCode": 0,
+      "passed": 17,
+      "seconds": 0.64
+    },
+    "documentHashesUnchangedDuringValidation": {
+      "docs/REMAINING_WORK.md": "c9cafea72602757a49076539016f61aeec2483fc76ffccc5bd57c22535a42406",
+      "docs/STATUS.md": "6ccff784e12538bc9d954e31cd4a681aaeb1242eebdcbf545caa8df1ef154862",
+      "docs/parity/native-reconciliation-2026-10-15.json": "491d4149da11eee6fa56f84470c2d7df91f079ff60cde6ae4c5c370f33e92842",
+      "native/docs/github-app-workers.md": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef"
+    },
+    "priorAttempt": "Initial recipe compared primary raw hashes with a differently materialized worktree and refused. No native/TypeScript test ran or failed; corrected proof compares raw bytes and explicitly records CRLF-only variants.",
+    "wholeGoalComplete": false
+  },
+  "artifacts": [
+    {
+      "path": "integrated/docs/parity/native-reconciliation-2026-10-15.json",
+      "bytes": 581884,
+      "sha256": "491d4149da11eee6fa56f84470c2d7df91f079ff60cde6ae4c5c370f33e92842"
+    },
+    {
+      "path": "integrated/docs/REMAINING_WORK.md",
+      "bytes": 5706,
+      "sha256": "ec2fc627daa46ff1ce004f12c585f4d6b54986571a35e573071b187c1f5fea7e"
+    },
+    {
+      "path": "integrated/docs/STATUS.md",
+      "bytes": 118145,
+      "sha256": "6ccff784e12538bc9d954e31cd4a681aaeb1242eebdcbf545caa8df1ef154862"
+    },
+    {
+      "path": "integrated/native/docs/github-app-workers.md",
+      "bytes": 11509,
+      "sha256": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef"
+    },
+    {
+      "path": "prior-pr-body.md",
+      "bytes": 6948,
+      "sha256": "a8afbd2a2ba34bc5a469f21c68382bf046b2a583262676348ff4acb05afc14e9"
+    },
+    {
+      "path": "python-contracts.log",
+      "bytes": 2845,
+      "sha256": "5bb9b7d0a5472faaabfd4590f30b813544742e22d943040b258212fa14c525d6"
+    },
+    {
+      "path": "reconciliation.json",
+      "bytes": 1389,
+      "sha256": "bea690ee2481d562b68d83c821ec2dd9e4c10feb8fb6baf8111604c3e6d7eaab"
+    },
+    {
+      "path": "runners/ci-reconciliation-integrate.py",
+      "bytes": 5613,
+      "sha256": "5bd5c093e50fe0c9b0ec050592f34db16dd2bf068813b9d33b2fed81d9f8c6f3"
+    },
+    {
+      "path": "runners/ci-reconciliation-proof.py",
+      "bytes": 3416,
+      "sha256": "347ad86705fa5b3a4254da048fa9400d2ff6544a01241b6bbdeac14c34f02daf"
+    },
+    {
+      "path": "runners/ci-reconciliation-update.py",
+      "bytes": 5193,
+      "sha256": "400c5a135227a301293ef98a8f837256a75a1325144009354168b0eef7a5ab5e"
+    },
+    {
+      "path": "runtime-source-proof.json",
+      "bytes": 213850,
+      "sha256": "8f2441602c1b0df84712e4bdd942d090804d220b6aa55ca599b5800d6f38ac2d"
+    },
+    {
+      "path": "scoped/docs/parity/native-reconciliation-2026-10-15.json",
+      "bytes": 581884,
+      "sha256": "491d4149da11eee6fa56f84470c2d7df91f079ff60cde6ae4c5c370f33e92842"
+    },
+    {
+      "path": "scoped/docs/REMAINING_WORK.md",
+      "bytes": 5657,
+      "sha256": "c9cafea72602757a49076539016f61aeec2483fc76ffccc5bd57c22535a42406"
+    },
+    {
+      "path": "scoped/docs/STATUS.md",
+      "bytes": 118145,
+      "sha256": "6ccff784e12538bc9d954e31cd4a681aaeb1242eebdcbf545caa8df1ef154862"
+    },
+    {
+      "path": "scoped/native/docs/github-app-workers.md",
+      "bytes": 11509,
+      "sha256": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef"
+    },
+    {
+      "path": "source-integration.json",
+      "bytes": 539,
+      "sha256": "481c0973310c5ea340cfc5079211b9659216ece1e288a25aa4e22b8ebda50c94"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 1132,
+      "sha256": "629d22f2250839222898174db2834bf8d0b94982c2347b41ad351ca4c80d1998"
+    },
+    {
+      "path": "tracker-after.json",
+      "bytes": 581884,
+      "sha256": "491d4149da11eee6fa56f84470c2d7df91f079ff60cde6ae4c5c370f33e92842"
+    },
+    {
+      "path": "tracker-before.json",
+      "bytes": 580970,
+      "sha256": "a74a1410a18f8c3fef718706b415ecffb0b79bc26050517a49d22eeed34cd0a4"
+    }
+  ]
+}
