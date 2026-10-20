@@ -1,0 +1,23 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 20s
+     Running tests\transcript_semantic.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\transcript_semantic-2e8c90e17f6716bf.exe)
+
+running 15 tests
+test actual_cli_enforces_write_and_trust_before_reads_and_replays_without_config ... ok
+test bound_bills_survive_domain_usage_error_exit_and_overrun_rejection ... ok
+test current_read_caps_refuse_whole_results_without_returning_an_empty_complete_value ... ok
+test each_explicit_build_gets_a_new_attempt_and_job_pages_check_all_headers ... ok
+test exact_unicode_crlf_context_preserves_parallel_candidates_and_never_creates_events ... ok
+test interrupted_process_preserves_the_unknown_attempt_and_never_authorizes_retry ... ok
+test ledger_and_artifact_registration_tampering_refuses_without_mutating_or_resending ... ok
+test no_candidates_requires_an_explicit_coverage_response ... ok
+test original_unknown_receipt_stays_unknown_after_later_ledger_reconciliation ... ok
+test payload_response_source_header_and_rehashed_result_tampering_refuse_read_and_retention ... ok
+test publication_failure_keeps_bound_response_for_read_only_recovery_without_resending ... ok
+test replay_needs_no_provider_and_private_checked_export_survives_store_loss ... ok
+test reservation_registration_failure_is_atomic_and_unsent_reservation_is_cancelled ... ok
+test trust_utf8_source_hash_and_all_preflight_budgets_refuse_before_reservation ... ok
+test unbound_malformed_duplicate_and_incomplete_replies_keep_unknown_reservations ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.97s
+
