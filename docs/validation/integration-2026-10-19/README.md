@@ -487,3 +487,15 @@ quality checks and unchanged739native/745integratedinputs.
 Python17, typecheck and TypeScript260+3skip pass. Exact typed source spaces and
 original receipt replay remain; preparation is data only without provider calls
 or persistence. Mixed semantic execution/graph links and broaderR1-R9 remain open.
+
+## Checked mixed interpretation claim checkpoint
+
+Source `a8982d4b8d7e5434e08df81f952a6378f5abf2ed`, runtime merge `0fb15f82f66c3ebc0659ab2790158ca919238012`.
+[Indexed evidence](mixed-meaning-claims/index.json) retains5new default cases
+(including actual nativeCLI), green4groups43/0/0 and final14groups593/0/7.
+Exact typed quotations preserve four source spaces, original prepared inputs/
+receipts, parallel directed/self relations and ordered hyperedge roles. Host
+interpretation remains unverified; no provider/persistence/source authority is
+added. Quality checks, Python17, typecheck and TypeScript260+3skip pass with
+742native/747integratedinputs unchanged. Semantic provider execution,
+durable mixed graphs/general consumers and broaderR1-R9 remain open.

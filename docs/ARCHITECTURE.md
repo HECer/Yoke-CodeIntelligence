@@ -2,6 +2,18 @@
 
 ## Native Rust ownership
 
+`mixed_meaning_claims` checks host-submitted interpretation fragments against
+opaque checked mixed inputs. The shared fragment shape validator receives only
+range descriptors; legacy native callers still validate their original Binding
+paths, hashes and byte bounds first. The mixed caller creates no native Binding
+or SourceSnapshot. Exact support quotations reuse the original typed reader and
+retain native/decoded/XML/PDF coordinate precision and origins. The checked result
+borrows the checked inputs, preserves the original fragment including directed
+parallel observations and ordered roles, and exports nested source/receipt
+provenance. Host interpretation attestation remains unverified. No provider
+receipt, persistence, model execution or semantic truth is created. See
+[mixed interpretation claims](../native/docs/mixed-meaning-claims.md).
+
 `mixed_meaning_input` prepares opaque checked input data from `CheckedMixedView`.
 Typed native, Office decoded/XML and explicitly permitted PDF page references
 reuse the existing checked reader. Bounded owned read items preserve exact text,

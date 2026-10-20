@@ -1129,6 +1129,31 @@ R4, whole-native, platform, main or release acceptance. Broader R1–R9 remains
 active. See [the contract](../native/docs/mixed-views.md) and
 [indexed evidence](validation/integration-2026-10-19/mixed-meaning-inputs/index.json).
 
+The checked mixed interpretation claim path adds `--meaning-claims HOST_FILE`
+beside explicit prepared inputs. Host-submitted concepts, directed parallel/self
+relations and ordered role-bearing hyperedges retain their original keys and
+order. Every support descriptor stays inside its submitted typed unit and is
+reread from the opaque checked mixed view, including exact Unicode quotation,
+XML origins and original PDF/container pins. The original prepared input and
+native receipt/source-scope metadata remain nested. Interpretation attestation
+stays `host_submitted_unverified_interpretation` / `not_established`; source
+quotations do not establish semantic truth or canonical source authority.
+This read-only check starts no provider and persists no graph or receipt.
+
+Source `a8982d4b8d7e5434e08df81f952a6378f5abf2ed`, runtime merge `0fb15f82f66c3ebc0659ab2790158ca919238012`.
+Five new default cases cover all four spaces, directions/parallel observations,
+role slots, invalid support/coverage, exact UTF-8/output/128000-byte quote bounds,
+deadlines, explicit no-claim coverage and strict CLI preinitialization refusal.
+The actual native worker is exercised by the fixture; one new case invokes the
+actual CLI. First four groups43/0/0 and final14groups **593 passed / 0 failed / 7 ignored** pass on the
+same 742 unchanged inputs, with format/build/all-target Clippy.
+Integrated format/Python17/typecheck/TypeScript260+3skipped pass with
+747 unchanged inputs. Counts overlap and are nonadditive.
+Semantic provider extraction, durable mixed graph replay/general consumers and
+broader R1–R9 remain active. Whole-native/platform/main/release acceptance does
+not follow. See [the contract](../native/docs/mixed-meaning-claims.md) and
+[indexed evidence](validation/integration-2026-10-19/mixed-meaning-claims/index.json).
+
 ## Current native Rust implementation
 
 The default Rust executable independently owns immutable source capture/storage, 24-language structural analysis, exact UTF-8 evidence, incremental parse reuse, FTS/BM25 retrieval, bounded context plans, directed graphs/Leiden, offline exports, eight MCP tools, guarded changes/recovery and a host-selected LSP client. Graft, Serena and Graphify are unnecessary for these operations; Node/Python/model calls are unnecessary for the default native runtime.

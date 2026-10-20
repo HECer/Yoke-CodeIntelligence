@@ -154,3 +154,8 @@ Explicit [mixed-source input preparation](native/docs/mixed-views.md) exports
 checked frozen code, Office text/XML and permitted PDF page excerpts with their
 original provenance and bounded ordered context groups. It performs no model
 call; mixed semantic execution and cross-source graph relationships remain open.
+
+[Mixed interpretation claim checks](native/docs/mixed-meaning-claims.md) retain
+host-submitted directed/parallel/role-bearing observations and reread exact typed
+source support. The result preserves unverified interpretation status and
+original source provenance without a provider call or persisted graph.
