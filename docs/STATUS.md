@@ -1068,6 +1068,38 @@ runtime guarantees and broaderR1-R9 remain open. Prior OS1314 prerequisites lie
 outside this selection; no whole-native/platform/upstream/main/release acceptance
 follows.
 
+[Function binding propagation](validation/integration-2026-10-19/function-bindings/index.json)
+adds explicit `captured_es_function_propagation_v3` for single plain const/let/var
+bindings initialized directly by arrows or anonymous function expressions.
+Regular named functions remain supported. Existing function entities bind exact
+variable-declarator/name ranges; the owning statement/export supplies the wider
+removal range. Original entity/evidence/analyzer identities remain unchanged.
+Defaultv1 and explicitv2 keep their previous module boundary. Multiple/pattern/
+ambient/using/nonfunction/parenthesized/named-inner-expression forms and direct
+declaration comments refuse. Surviving assignments or value consumers cannot be
+forced away. See the [contract](../native/docs/propagated-delete.md#explicit-function-binding-policy).
+
+Eleven new cases include ten default integration tests and one actual gate.
+Final **15 selected native groups** record **592 passed /
+0 failed / 13 ignored**, with **738 inputs** unchanged.
+Actual native CLI, **TypeScript5.8.3** and **language-server5.1.3** qualify TS/JS
+const/let/var cases, async arrows and Greek names. Copied compilation, independent
+permission/approval/application and exact recovery pass without executing source
+modules. The existingv2 actual route also passes on the final freeze. Format,
+build and all-target Clippy with warnings denied pass; mandatory integrated checks
+are indexed separately. Counts overlap and are not added across phases.
+
+The original unsupported-policy regression and all intermediate source/logs remain.
+The owned protocol fixture keeps named-function lookup precedence and adds a
+variable fallback; it is not a compiler. The now-supportedv3 negative selector
+case moves to unsupportedv4. Private cycles, retained/exported dependencies,
+argument closure without unused sweeping,16/17declarations,128/129usages,
+missing/tampered proofs and automatic-semicolon boundaries are checked.
+Source/provider quotas, original deadline and guarded canonical plans remain.
+Other declaration/file/language forms, alias/rebinding/general consumer analysis
+and full upstream/IDE/whole-native/platform/main/release acceptance remain open.
+BroaderR1-R9 remains active.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

@@ -464,3 +464,16 @@ Python17, typecheck and TS260+3skip pass. No model/source execution or authority
 upgrade follows. Previous README bytes and priorPRbody are preserved; scopes
 overlap and broaderR1-R9 remains active without whole-native/platform/main/release
 acceptance.
+
+## Explicit function binding propagation checkpoint
+
+Source `bed2bc9612e4db5e90c6d710602b37d6da2f6d9d`, runtime merge `c1eb4fb0bbc715468e253789f412ff411da46058`.
+[Indexed evidence](function-bindings/index.json) retains10default+1actual newcases,
+final15selectedgroups592/0/13, exact existing variable-declarator
+function bindings and owning statement ranges, with V1/V2 boundaries retained.
+Actual nativeCLI/TypeScript5.8.3/language-server5.1.3 validate TS/JS const/let/var,
+async arrows and Greek names, copied compilation and independent apply/recovery.
+738native/744integratedinputs remain unchanged within their freezes; quality,
+Python17, typecheck and TS260+3skip pass. Source/Graph/entity identities and prior
+README bytes remain; no complete compiler/runtime/consumer or whole-native/
+platform/upstream/main/release acceptance follows. BroaderR1-R9 continues.

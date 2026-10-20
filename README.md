@@ -90,6 +90,10 @@ Native [session refactoring](native/docs/agent-sessions.md#native-semantic-plann
 prepares existing semantic plans through the session CLI and MCP interface, with
 mode, project and current-session checks and separate application authority.
 
+Explicit [function binding propagation](native/docs/propagated-delete.md#explicit-function-binding-policy)
+adds single const/let/var arrow and anonymous-function bindings while retaining
+original entity/evidence ranges, mandatory provider proofs and guarded plans.
+
 ## TypeScript advanced runtime
 
 Requires **Node.js 22.16+**. Python/Go and additional optional providers are installed separately. Node SQLite is experimental on the tested Node version. No model or API key is required by native indexing.

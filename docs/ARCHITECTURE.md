@@ -372,3 +372,12 @@ guards and original deadline. Native plan publication and independent approval,
 verification, write and recovery remain. See the
 [contract](../native/docs/agent-sessions.md#native-semantic-planning) and
 [evidence](validation/integration-2026-10-19/session-refactor/index.json).
+
+Propagation v3 extends the finite module declaration binder to single plain
+function-valued const/let/var statements. Existing variable-declarator function
+entities and exact name/ranges remain authoritative; a separate owning statement
+range supplies keyword/export/semicolon removal. No analyzer or entity identity
+is invented. The same original-region dependency closure, provider/source
+admission and surviving-AST postcondition feed one ordinary guarded plan. See the
+[contract](../native/docs/propagated-delete.md#explicit-function-binding-policy)
+and [evidence](validation/integration-2026-10-19/function-bindings/index.json).
