@@ -9,6 +9,7 @@ use crate::{
 };
 use rusqlite::{Transaction, TransactionBehavior, limits::Limit};
 use std::collections::BTreeSet;
+#[derive(Clone)]
 pub struct Options {
     pub allow_capture: bool,
     pub allow_writes: bool,

@@ -52,7 +52,7 @@ impl Selection {
     }
 }
 /// Current host grants; none are deserialized from a job/binding or request.
-#[derive(Default)]
+#[derive(Clone, Default)]
 pub struct Options {
     pub allow_app_history: bool,
     pub worker: super::Options,
@@ -60,9 +60,23 @@ pub struct Options {
     pub jobs: jobs::Options,
 }
 pub struct Context<'a> {
+    pub store: &'a Store,
+    pub host: &'a Host,
+    pub options: &'a Options,
+}
+pub struct WriteContext<'a> {
     pub engine: &'a Engine,
     pub host: &'a Host,
     pub options: &'a Options,
+}
+impl WriteContext<'_> {
+    fn read(&self) -> Context<'_> {
+        Context {
+            store: &self.engine.store,
+            host: self.host,
+            options: self.options,
+        }
+    }
 }
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -189,7 +203,7 @@ fn checked_source(
 ) -> Result<PublicationSource> {
     let source = if current {
         super::publication_source(
-            &c.engine.store,
+            c.store,
             c.host,
             &s.completion_id,
             s.expected_queue_revision.context(failure(INVALID))?,
@@ -198,7 +212,7 @@ fn checked_source(
         )
     } else {
         super::historical_publication_source(
-            &c.engine.store,
+            c.store,
             c.host,
             &s.completion_id,
             &c.options.worker,
@@ -214,13 +228,12 @@ fn checked_source(
             failure("github_app_history_worker_unavailable")
         }
     })?;
-    let receipt =
-        crate::git_workflows::validate_source(&c.engine.store, source.head_snapshot_id(), d)
-            .map_err(|_| {
-                d.check()
-                    .err()
-                    .unwrap_or_else(|| failure("github_app_history_git_head_required"))
-            })?;
+    let receipt = crate::git_workflows::validate_source(c.store, source.head_snapshot_id(), d)
+        .map_err(|_| {
+            d.check()
+                .err()
+                .unwrap_or_else(|| failure("github_app_history_git_head_required"))
+        })?;
     ensure!(
         receipt["commitId"].as_str() == Some(source.job().head_sha.as_str()),
         failure("github_app_history_git_head_required")
@@ -253,7 +266,7 @@ fn matches_source(
         failure(BINDING)
     );
     jobs::validate_app_binding(
-        &c.engine.store,
+        c.store,
         binding.app_id,
         &binding.id,
         &binding.request,
@@ -286,25 +299,50 @@ fn context<'a>(c: &'a Context<'_>) -> jobs::Context<'a> {
         options: &c.options.jobs,
     }
 }
-pub fn create(c: &Context<'_>, s: &Selection, plan: &jobs::Plan, d: &Deadline) -> Result<Value> {
+pub fn create(
+    c: &WriteContext<'_>,
+    s: &Selection,
+    plan: &jobs::Plan,
+    d: &Deadline,
+) -> Result<Value> {
+    create_with_revision(c, s, plan, None, d)
+}
+fn create_with_revision(
+    c: &WriteContext<'_>,
+    s: &Selection,
+    plan: &jobs::Plan,
+    expected_revision: Option<u64>,
+    d: &Deadline,
+) -> Result<Value> {
+    let engine = c.engine;
+    let read = c.read();
+    let c = &read;
     preflight(c, s, true, true, d)?;
     plan.validate()?;
     let hc = context(c);
-    jobs::transaction(&hc, &c.engine.store, true, d, || {
+    jobs::transaction(&hc, c.store, true, d, || {
         let source = checked_source(c, s, true, d)?;
         let id = binding_id(
-            &c.engine.store.workspace_id,
+            &c.store.workspace_id,
             c.host.profile.app_id,
             &s.completion_id,
         );
-        if let Some(binding) = load(&c.engine.store, &id, d)? {
+        if let Some(binding) = load(c.store, &id, d)? {
             ensure!(identity(&binding.plan) == identity(plan), failure(BINDING));
             matches_source(&binding, &source, c, d)?;
-            let history = jobs::status_in_transaction(&c.engine.store, &hc, &id, d)?;
+            let history = jobs::status_in_transaction(c.store, &hc, &id, d)?;
+            ensure!(
+                expected_revision.is_none_or(|r| history["revision"].as_u64() == Some(r)),
+                failure("github_app_digest_history_job_stale_revision")
+            );
             return Ok(envelope(&binding, &source, history, true, false));
         }
+        ensure!(
+            expected_revision.is_none_or(|r| r == 0),
+            failure("github_app_digest_history_job_stale_revision")
+        );
         let request = request(&source);
-        let history = jobs::create_in_transaction(c.engine, &hc, &id, &request, plan, d)?;
+        let history = jobs::create_in_transaction(engine, &hc, &id, &request, plan, d)?;
         ensure!(
             history["stateWritten"] == true,
             failure("github_app_history_foreign_job_refused")
@@ -312,7 +350,7 @@ pub fn create(c: &Context<'_>, s: &Selection, plan: &jobs::Plan, d: &Deadline) -
         let mut binding = Binding {
             schema_version: 1,
             id: id.clone(),
-            workspace_id: c.engine.store.workspace_id.clone(),
+            workspace_id: c.store.workspace_id.clone(),
             app_id: c.host.profile.app_id,
             completion_id: s.completion_id.clone(),
             worker_job_id: source.job().id.clone(),
@@ -324,12 +362,12 @@ pub fn create(c: &Context<'_>, s: &Selection, plan: &jobs::Plan, d: &Deadline) -
         };
         binding.signature256 = sign(&binding, c.host, d)?;
         let bytes = crate::json::encode_bounded(&binding, ROW_BYTES, d)?;
-        let (count,total):(usize,usize)=c.engine.store.db.query_row("SELECT count(*),COALESCE(sum(length(CAST(value AS BLOB))),0) FROM records WHERE kind=?1",[RECORD_KIND],|r|Ok((r.get(0)?,r.get(1)?)))?;
+        let (count,total):(usize,usize)=c.store.db.query_row("SELECT count(*),COALESCE(sum(length(CAST(value AS BLOB))),0) FROM records WHERE kind=?1",[RECORD_KIND],|r|Ok((r.get(0)?,r.get(1)?)))?;
         ensure!(
             count < 8 && total + bytes.len() <= 128_000,
             failure(CAPACITY)
         );
-        c.engine.store.db.execute(
+        c.store.db.execute(
             "INSERT INTO records(kind,id,value) VALUES(?1,?2,?3)",
             params![RECORD_KIND, id, std::str::from_utf8(&bytes)?],
         )?;
@@ -344,35 +382,38 @@ fn existing(
 ) -> Result<(Binding, PublicationSource)> {
     let source = checked_source(c, s, current, d)?;
     let id = binding_id(
-        &c.engine.store.workspace_id,
+        &c.store.workspace_id,
         c.host.profile.app_id,
         &s.completion_id,
     );
-    let binding = load(&c.engine.store, &id, d)?.context(failure(BINDING))?;
+    let binding = load(c.store, &id, d)?.context(failure(BINDING))?;
     matches_source(&binding, &source, c, d)?;
     Ok((binding, source))
 }
 pub fn status(c: &Context<'_>, s: &Selection, d: &Deadline) -> Result<Value> {
     preflight(c, s, false, false, d)?;
     let hc = context(c);
-    jobs::transaction(&hc, &c.engine.store, false, d, || {
+    jobs::transaction(&hc, c.store, false, d, || {
         let (binding, source) = existing(c, s, false, d)?;
-        let history = jobs::status_in_transaction(&c.engine.store, &hc, &binding.id, d)?;
+        let history = jobs::status_in_transaction(c.store, &hc, &binding.id, d)?;
         Ok(envelope(&binding, &source, history, false, false))
     })
 }
 pub fn step(
-    c: &Context<'_>,
+    c: &WriteContext<'_>,
     s: &Selection,
     revision: u64,
     git: &HostGit,
     d: &Deadline,
 ) -> Result<Value> {
+    let engine = c.engine;
+    let read = c.read();
+    let c = &read;
     preflight(c, s, true, true, d)?;
     let hc = context(c);
-    jobs::transaction(&hc, &c.engine.store, true, d, || {
+    jobs::transaction(&hc, c.store, true, d, || {
         let (binding, source) = existing(c, s, true, d)?;
-        let history = jobs::step_in_transaction(c.engine, &hc, &binding.id, revision, git, d)?;
+        let history = jobs::step_in_transaction(engine, &hc, &binding.id, revision, git, d)?;
         Ok(envelope(&binding, &source, history, true, false))
     })
 }
@@ -386,22 +427,22 @@ pub fn transition(
     let current = state == jobs::State::Active;
     preflight(c, s, true, current, d)?;
     let hc = context(c);
-    jobs::transaction(&hc, &c.engine.store, true, d, || {
+    jobs::transaction(&hc, c.store, true, d, || {
         let (binding, source) = existing(c, s, current, d)?;
         let history =
-            jobs::transition_in_transaction(&c.engine.store, &hc, &binding.id, revision, state, d)?;
+            jobs::transition_in_transaction(c.store, &hc, &binding.id, revision, state, d)?;
         Ok(envelope(&binding, &source, history, current, false))
     })
 }
 pub fn run(
-    c: &Context<'_>,
+    c: &WriteContext<'_>,
     s: &Selection,
     mut revision: u64,
     batches: usize,
     git: &HostGit,
     d: &Deadline,
 ) -> Result<Value> {
-    preflight(c, s, true, true, d)?;
+    preflight(&c.read(), s, true, true, d)?;
     ensure!((1..=128).contains(&batches), failure(CAPACITY));
     let mut result = None;
     for _ in 0..batches {
@@ -414,6 +455,129 @@ pub fn run(
         }
     }
     result.context(failure(INVALID))
+}
+
+/// Explicit host schedule; saved data cannot supply any execution permission.
+#[derive(Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct Schedule {
+    pub schema_version: u8,
+    pub expected_queue_revision: usize,
+    pub history_revision: u64,
+    pub max_batches: usize,
+    pub plan: jobs::Plan,
+}
+impl Schedule {
+    pub fn parse(raw: &[u8]) -> Result<Self> {
+        let value: Self = crate::json::parse(raw, 4096)
+            .and_then(crate::json::decode)
+            .map_err(|_| failure(INVALID))?;
+        value.validate()?;
+        Ok(value)
+    }
+    pub fn validate(&self) -> Result<()> {
+        ensure!(
+            self.schema_version == 1
+                && self.expected_queue_revision <= 2000
+                && (1..=128).contains(&self.max_batches),
+            failure(INVALID)
+        );
+        self.plan.validate()
+    }
+}
+pub struct Execution<'a> {
+    pub context: WriteContext<'a>,
+    pub client: &'a mut crate::github_app_auth::Client,
+    pub request: &'a super::RunRequest,
+    pub remote: &'a super::RunOptions,
+    pub clock: &'a super::Clock,
+    pub git: &'a HostGit,
+}
+/// Complete/replay the selected worker, bind its durable completion and acquire
+/// bounded history. Each prior phase survives a later refusal; no retry adopts
+/// the saved native revision. The original host schedule supplies that fence.
+pub fn execute(e: &mut Execution<'_>, schedule: &Schedule, d: &Deadline) -> Result<Value> {
+    let c = &e.context;
+    ensure!(
+        c.options.allow_app_history,
+        failure("github_app_history_permission_required")
+    );
+    c.options.worker.admit(true, d)?;
+    jobs::admit(&context(&c.read()), true, d)?;
+    schedule.validate()?;
+    e.request.validate()?;
+    ensure!(
+        c.options.jobs.acquisition.max_output_bytes >= 4096,
+        failure(CAPACITY)
+    );
+    // Refuse unsupported local source before authenticating a remote installation.
+    crate::git_workflows::validate_source(&c.engine.store, &e.request.head_snapshot_id, d)
+        .map_err(|_| {
+            d.check()
+                .err()
+                .unwrap_or_else(|| failure("github_app_history_git_head_required"))
+        })?;
+    let worker = super::run(
+        &super::RunContext {
+            store: &c.engine.store,
+            host: c.host,
+            options: &c.options.worker,
+            clock: e.clock,
+        },
+        e.client,
+        e.request,
+        e.remote,
+        d,
+    )?;
+    let completion = worker["completionId"]
+        .as_str()
+        .filter(|id| valid_id(id))
+        .context(failure(BINDING))?;
+    let selection = Selection {
+        schema_version: 1,
+        completion_id: completion.into(),
+        expected_queue_revision: Some(schedule.expected_queue_revision),
+    };
+    let summary = json!({"completionId":completion,"claimId":worker["claimId"],
+        "jobId":worker["jobId"],"historical":worker["historical"],
+        "workerExecutionVerified":worker["workerExecutionVerified"],
+        "installationTokenVerified":worker["installationTokenVerified"],
+        "currentHeadVerified":worker["currentHeadVerified"],"networkRequests":worker["networkRequests"]});
+    let mut envelope = json!({"kind":"github_app_worker_history_run_v1","worker":summary,
+        "history":null,"complete":false,"modelCalls":0,"sourceWritten":false,"latestChanged":false});
+    let max = c.options.jobs.acquisition.max_output_bytes;
+    let overhead = crate::json::encode_bounded(&envelope, max - 1, d)?.len() + 1;
+    let mut options = c.options.clone();
+    options.jobs.acquisition.max_output_bytes =
+        max.checked_sub(overhead).context(failure(CAPACITY))?;
+    ensure!(
+        options.jobs.acquisition.max_output_bytes >= 1024,
+        failure(CAPACITY)
+    );
+    let next = WriteContext {
+        engine: c.engine,
+        host: c.host,
+        options: &options,
+    };
+    create_with_revision(
+        &next,
+        &selection,
+        &schedule.plan,
+        Some(schedule.history_revision),
+        d,
+    )?;
+    // This uses the host-supplied revision, never the creation/status response.
+    let history = run(
+        &next,
+        &selection,
+        schedule.history_revision,
+        schedule.max_batches,
+        e.git,
+        d,
+    )?;
+    envelope["history"] = history;
+    crate::json::encode_bounded(&envelope, max - 1, d)?;
+    Ok(envelope)
 }
 /// Closed structural retention validation; key lookup and execution stay off.
 pub(crate) fn retained_roots(

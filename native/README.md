@@ -97,6 +97,13 @@ supports creation, read-only status, exact-revision steps, bounded multi-batch
 runs, pause/resume and cancellation. Host grants and cumulative limits remain
 explicit; no signing key, provider/model call or source execution is introduced.
 
+The separate [App-bound history driver](docs/app-history-integration.md) binds
+those jobs to authenticated worker completions and can run bounded batches from
+an explicitly permitted worker execution. It uses current App grants/signing keys,
+an original signed plan and exact queue/history revisions. `app-history-job`
+manages restart/status without another provider call. Production installation
+and receiver-side source verification/reasoning retain separate acceptance.
+
 ## Native capabilities
 
 - AST structure in 24 programming languages: Rust, TypeScript, JavaScript, Python, Go, C, C++, C#, Java, Ruby, PHP, Swift, Scala, Lua, Bash, Elixir, Solidity, OCaml, Zig, Nix, R, Kotlin, Dart and Clojure. TSX/JSX and OCaml interfaces are additional grammar variants. Support is structural; per-language constructs and dynamic dispatch are not exhaustive.

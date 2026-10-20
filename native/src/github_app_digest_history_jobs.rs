@@ -79,6 +79,7 @@ impl Plan {
     }
 }
 /// Current host authority only. These flags are never read from a saved plan.
+#[derive(Clone)]
 pub struct Options {
     pub allow_jobs: bool,
     pub acquisition: acquisition::Options,
@@ -241,6 +242,27 @@ fn persist(store: &Store, id: &str, old: Option<&Job>, job: &Job, d: &Deadline) 
     }
     Ok(())
 }
+pub(crate) fn admit(c: &Context<'_>, writes: bool, d: &Deadline) -> Result<()> {
+    ensure!(c.options.allow_jobs, JobFailure::State);
+    ensure!(
+        (1024..=4_000_000).contains(&c.options.acquisition.max_output_bytes),
+        JobFailure::Capacity
+    );
+    c.digest.validate()?;
+    c.profile.validate()?;
+    ensure!(
+        (1..=16).contains(&c.options.max_batch_visits)
+            && (1..=64).contains(&c.options.max_batch_objects)
+            && (1..=2_000_000).contains(&c.options.max_batch_proof_bytes),
+        JobFailure::Capacity
+    );
+    if writes {
+        c.options
+            .acquisition
+            .admit(c.digest, &HistoryOptions::default(), d)?;
+    }
+    Ok(())
+}
 pub(crate) fn transaction(
     c: &Context<'_>,
     store: &Store,
@@ -249,24 +271,7 @@ pub(crate) fn transaction(
     f: impl FnOnce() -> Result<Value>,
 ) -> Result<Value> {
     let result = (|| {
-        ensure!(c.options.allow_jobs, JobFailure::State);
-        ensure!(
-            (1024..=4_000_000).contains(&c.options.acquisition.max_output_bytes),
-            JobFailure::Capacity
-        );
-        c.digest.validate()?;
-        c.profile.validate()?;
-        ensure!(
-            (1..=16).contains(&c.options.max_batch_visits)
-                && (1..=64).contains(&c.options.max_batch_objects)
-                && (1..=2_000_000).contains(&c.options.max_batch_proof_bytes),
-            JobFailure::Capacity
-        );
-        if writes {
-            c.options
-                .acquisition
-                .admit(c.digest, &HistoryOptions::default(), d)?;
-        }
+        admit(c, writes, d)?;
         ensure!(store.db.is_autocommit(), JobFailure::State);
         crate::github_app::worker::publication_policy(store, d, || {
             use rusqlite::limits::Limit;

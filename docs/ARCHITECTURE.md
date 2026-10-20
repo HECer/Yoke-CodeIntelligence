@@ -2,6 +2,16 @@
 
 ## Native Rust ownership
 
+`github_app::worker::history` binds an authenticated completed worker, checked Git
+head and original cumulative history plan through a domain-separated HMAC. The
+generic job and binding share one existing durable transaction. Explicit worker
+execution can drive bounded batches using the host-supplied history revision;
+it never adopts a revision from status or creation. Each phase remains durable
+on later refusal. Current selection gates create/acquire/resume; historical
+status/pause/cancel still require current grants. Read-only status needs no Engine,
+Git or provider. Retention follows validated typed relationships without keys,
+conferring no execution authority. See [App history](../native/docs/app-history-integration.md).
+
 `mixed_view::provider::composition` consumes independently checked owned graphs
 and a bounded exact ordered link review. Parent-qualified concepts/observations
 retain complete original source/receipt/accounting metadata across workspaces or
