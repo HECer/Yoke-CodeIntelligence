@@ -106,6 +106,310 @@ fn wrapped_args() -> Value {
     json!({"relativePath":"module.ts","namePath":"removeMe","propagate":true,"propagationPolicy":"captured_es_function_propagation_v2"})
 }
 
+fn binding_args() -> Value {
+    json!({"relativePath":"module.ts","namePath":"removeMe","propagate":true,"propagationPolicy":"captured_es_function_propagation_v3"})
+}
+
+#[test]
+fn function_binding_policy_removes_function_values_with_exact_original_entities() {
+    for epoch in [AnalyzerEpoch::V8, AnalyzerEpoch::V9] {
+        for keyword in ["const", "let", "var"] {
+            let source = format!(
+                "\u{feff}// owned café 🦀\r\n{keyword} dependency = () => 1;\r\nexport {keyword} removeMe = function() {{ return dependency(); }};\r\nexport {keyword} keep = () => {{ void (removeMe()); return 2; }};\r\n"
+            );
+            let expected = format!(
+                "\u{feff}// owned café 🦀\r\n\r\n\r\nexport {keyword} keep = () => {{  return 2; }};\r\n"
+            );
+            let mut f = fixture(&source, "duplicates", epoch);
+            let (snapshot, graph, _, _) = f.session.engine.index(&d()).unwrap();
+            let original = serde_json::to_value(&graph).unwrap();
+            let value = yoke::semantic_refactor::invoke(
+                &mut f.session.engine,
+                "safeDelete",
+                &binding_args(),
+                &d(),
+            )
+            .unwrap();
+            assert_eq!(
+                value["propagation"]["policy"],
+                "captured_es_function_propagation_v3"
+            );
+            assert_eq!(deleted(&value), BTreeSet::from(["removeMe", "dependency"]));
+            assert_eq!(value["propagation"]["removedUsageCount"], 1);
+            assert_eq!(after(&f, &value), expected);
+            assert_eq!(
+                serde_json::to_value(f.session.engine.store.graph(&snapshot.id).unwrap()).unwrap(),
+                original
+            );
+            for declaration in value["propagation"]["deletedDeclarations"]
+                .as_array()
+                .unwrap()
+            {
+                let entity = graph
+                    .entities
+                    .iter()
+                    .find(|entity| entity.id == declaration["entityId"].as_str().unwrap())
+                    .unwrap();
+                assert_eq!(declaration["entityStartByte"], entity.start_byte);
+                assert_eq!(declaration["entityEndByte"], entity.end_byte);
+                assert_eq!(entity.kind, "function");
+                assert!(declaration["startByte"].as_u64().unwrap() < entity.start_byte as u64);
+            }
+            assert_eq!(value["complete"], false);
+            assert_eq!(
+                fs::read(f.root.path().join("module.ts")).unwrap(),
+                source.as_bytes()
+            );
+        }
+    }
+}
+
+#[test]
+fn function_binding_policy_is_explicit_and_older_policies_keep_their_module_boundary() {
+    let source = "const dependency = () => 1;\nexport const removeMe = () => dependency();\nexport function keep() { removeMe(); return 2; }\n";
+    for policy in [
+        None,
+        Some("captured_es_function_propagation_v1"),
+        Some("captured_es_function_propagation_v2"),
+    ] {
+        let mut f = fixture(source, "ok", AnalyzerEpoch::V9);
+        let mut request = binding_args();
+        if let Some(policy) = policy {
+            request["propagationPolicy"] = json!(policy);
+        } else {
+            request.as_object_mut().unwrap().remove("propagationPolicy");
+        }
+        assert!(
+            yoke::semantic_refactor::invoke(&mut f.session.engine, "safeDelete", &request, &d())
+                .is_err()
+        );
+        unpublished(&f);
+        assert!(transcript(&f).is_empty());
+    }
+    let mut f = fixture(SOURCE, "ok", AnalyzerEpoch::V9);
+    let value =
+        yoke::semantic_refactor::invoke(&mut f.session.engine, "safeDelete", &binding_args(), &d())
+            .unwrap();
+    assert_eq!(
+        deleted(&value),
+        BTreeSet::from(["leaf", "dependency", "removeMe"])
+    );
+    assert_eq!(
+        after(&f, &value),
+        "// owned café 🦀\r\n\r\n\r\n\r\nexport function keep() {  return 2; }\r\n"
+    );
+}
+
+#[test]
+fn function_binding_policy_refuses_multiple_pattern_ambient_and_non_function_bindings() {
+    for declaration in [
+        "const removeMe = () => 1, sibling = () => 2;",
+        "let removeMe = function named() {};",
+        "var removeMe = 1;",
+        "const [removeMe] = [() => 1];",
+        "const removeMe = (() => 1);",
+        "declare const removeMe: () => number;",
+        "using removeMe = () => 1;",
+        "const removeMe = factory();",
+        "const /* unclassified attachment */ removeMe = () => 1;",
+    ] {
+        let source = format!("{declaration}\nexport function keep() {{ return 2; }}\n");
+        let mut f = fixture(&source, "ok", AnalyzerEpoch::V9);
+        assert!(
+            yoke::semantic_refactor::invoke(
+                &mut f.session.engine,
+                "safeDelete",
+                &binding_args(),
+                &d()
+            )
+            .is_err(),
+            "{declaration}"
+        );
+        unpublished(&f);
+        assert!(transcript(&f).is_empty());
+    }
+}
+
+#[test]
+fn function_binding_policy_cannot_force_away_surviving_value_or_assignment_consumers() {
+    for usage in [
+        "return removeMe();",
+        "const value = removeMe; return value;",
+        "other(removeMe()); return 2;",
+        "new removeMe(); return 2;",
+        "removeMe = () => 3; return 2;",
+    ] {
+        let source = format!(
+            "export let removeMe = function() {{ return 1; }};\nexport function keep() {{ {usage} }}\n"
+        );
+        let mut f = fixture(&source, "ok", AnalyzerEpoch::V9);
+        let mut request = binding_args();
+        request["deleteEvenIfUsed"] = json!(true);
+        assert!(
+            yoke::semantic_refactor::invoke(&mut f.session.engine, "safeDelete", &request, &d())
+                .is_err(),
+            "{usage}"
+        );
+        unpublished(&f);
+        assert!(!transcript(&f).is_empty());
+    }
+}
+
+#[test]
+fn function_binding_cycles_follow_removed_regions_and_keep_surviving_or_exported_dependencies() {
+    for (export, surviving) in [(false, false), (false, true), (true, false)] {
+        let source = format!(
+            "{}const alpha = () => beta();\nconst beta = function() {{ return alpha(); }};\nexport const removeMe = () => alpha();\nexport function keep() {{ void removeMe(); {}return 2; }}\n",
+            if export { "export " } else { "" },
+            if surviving { "alpha(); " } else { "" }
+        );
+        let mut f = fixture(&source, "ok", AnalyzerEpoch::V9);
+        let value = yoke::semantic_refactor::invoke(
+            &mut f.session.engine,
+            "safeDelete",
+            &binding_args(),
+            &d(),
+        )
+        .unwrap();
+        let expected = if export || surviving {
+            BTreeSet::from(["removeMe"])
+        } else {
+            BTreeSet::from(["alpha", "beta", "removeMe"])
+        };
+        assert_eq!(deleted(&value), expected);
+        assert_eq!(value["complete"], false);
+        assert_eq!(
+            fs::read(f.root.path().join("module.ts")).unwrap(),
+            source.as_bytes()
+        );
+    }
+}
+
+#[test]
+fn function_binding_argument_dependencies_are_pruned_without_sweeping_unrelated_values() {
+    let source = "const unrelated = () => 0;\nconst argument = () => 1;\nexport const removeMe = (value = 0) => value;\nexport function keep() { void removeMe(argument()); return 2; }\n";
+    let mut f = fixture(source, "ok", AnalyzerEpoch::V9);
+    let value =
+        yoke::semantic_refactor::invoke(&mut f.session.engine, "safeDelete", &binding_args(), &d())
+            .unwrap();
+    assert_eq!(deleted(&value), BTreeSet::from(["argument", "removeMe"]));
+    assert_eq!(
+        after(&f, &value),
+        "const unrelated = () => 0;\n\n\nexport function keep() {  return 2; }\n"
+    );
+}
+
+#[test]
+fn function_binding_policy_retains_exact_provider_and_original_source_requirements() {
+    let source = "export const removeMe = () => 1;\nexport const keep = () => { void removeMe(); return 2; };\n";
+    for mode in [
+        "no-definition",
+        "foreign-definition",
+        "wrong-definition",
+        "empty-references",
+        "omit-self",
+        "omit-use",
+        "truncated",
+        "malformed-references",
+        "tamper-original",
+    ] {
+        let mut f = fixture(source, mode, AnalyzerEpoch::V9);
+        assert!(
+            yoke::semantic_refactor::invoke(
+                &mut f.session.engine,
+                "safeDelete",
+                &binding_args(),
+                &d()
+            )
+            .is_err(),
+            "{mode}"
+        );
+        assert_eq!(f.session.engine.store.db.query_row("SELECT COUNT(*) FROM records WHERE kind IN ('plan','approval','receipt','journal')",[],|r|r.get::<_,usize>(0)).unwrap(),0);
+        let expected = if mode == "tamper-original" {
+            "// foreign edit\n"
+        } else {
+            source
+        };
+        assert_eq!(
+            fs::read_to_string(f.root.path().join("module.ts")).unwrap(),
+            expected
+        );
+    }
+}
+
+#[test]
+fn function_binding_declaration_quota_admits_sixteen_and_refuses_seventeen_before_provider_start() {
+    for declarations in [16, 17] {
+        let mut source = (0..declarations - 1)
+            .map(|i| format!("const private{i} = () => {i};\n"))
+            .collect::<String>();
+        source.push_str("export const removeMe = () => 1;\n");
+        let mut f = fixture(&source, "ok", AnalyzerEpoch::V9);
+        let result = yoke::semantic_refactor::invoke(
+            &mut f.session.engine,
+            "safeDelete",
+            &binding_args(),
+            &d(),
+        );
+        if declarations == 16 {
+            let value = result.unwrap();
+            assert_eq!(value["propagation"]["providerRequestCount"], 32);
+            assert_eq!(deleted(&value), BTreeSet::from(["removeMe"]));
+        } else {
+            assert!(format!("{:#}", result.unwrap_err()).contains("propagated_delete_capacity"));
+            unpublished(&f);
+            assert!(transcript(&f).is_empty());
+        }
+    }
+}
+
+#[test]
+fn function_binding_usage_quota_admits_128_and_refuses_129_without_clipping() {
+    for count in [128, 129] {
+        let source = format!(
+            "export const removeMe = () => 1;\nexport const keep = () => {{ {}return 2; }};\n",
+            "void removeMe();".repeat(count)
+        );
+        let mut f = fixture(&source, "ok", AnalyzerEpoch::V9);
+        let result = yoke::semantic_refactor::invoke(
+            &mut f.session.engine,
+            "safeDelete",
+            &binding_args(),
+            &d(),
+        );
+        if count == 128 {
+            assert_eq!(result.unwrap()["propagation"]["removedUsageCount"], 128);
+        } else {
+            assert!(format!("{:#}", result.unwrap_err()).contains("propagated_delete_capacity"));
+            unpublished(&f);
+        }
+    }
+}
+
+#[test]
+fn function_binding_removal_cannot_merge_surviving_statement_syntax() {
+    for body in [
+        "export function keep() { first()\nvoid removeMe();\n(second)(); return 2; }\n",
+        "first()\nexport const removeMe = () => 1;\n(second)();\nexport function keep() { return 2; }\n",
+    ] {
+        let target = if body.contains("export const removeMe") {
+            ""
+        } else {
+            "export const removeMe = () => 1;\n"
+        };
+        let source = format!("const first = () => first;\nconst second = () => 2;\n{target}{body}");
+        let mut f = fixture(&source, "ok", AnalyzerEpoch::V9);
+        let result = yoke::semantic_refactor::invoke(
+            &mut f.session.engine,
+            "safeDelete",
+            &binding_args(),
+            &d(),
+        );
+        assert!(format!("{:#}", result.unwrap_err()).contains("alter surviving syntax"));
+        unpublished(&f);
+    }
+}
+
 #[test]
 fn wrapped_policy_removes_only_complete_parenthesized_await_and_void_statements() {
     for epoch in [AnalyzerEpoch::V8, AnalyzerEpoch::V9] {
@@ -240,7 +544,7 @@ fn wrapped_policy_rejects_invalid_native_selectors_before_starting_a_provider() 
         json!(7),
         json!({}),
         json!([]),
-        json!("captured_es_function_propagation_v3"),
+        json!("captured_es_function_propagation_v4"),
     ] {
         let mut f = fixture(SOURCE, "ok", AnalyzerEpoch::V9);
         let mut request = wrapped_args();

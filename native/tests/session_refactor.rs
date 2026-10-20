@@ -601,3 +601,105 @@ fn actual_native_session_cli_preserves_compiler_approval_write_and_recovery_gate
         );
     }
 }
+
+#[test]
+#[ignore = "requires YOKE_NODE, YOKE_TS_LSP and YOKE_TSC selecting actual installed tools"]
+fn actual_function_binding_policy_cli_compiles_ts_js_and_recovers_original_unicode_bytes() {
+    let node = std::env::var("YOKE_NODE").unwrap();
+    let server = std::env::var("YOKE_TS_LSP").unwrap();
+    let compiler = std::env::var("YOKE_TSC").unwrap();
+    for path in [&node, &server, &compiler] {
+        assert!(Path::new(path).is_absolute() && Path::new(path).is_file());
+    }
+    let executable = env!("CARGO_BIN_EXE_yoke");
+    let executable_hash = yoke::model::hash(fs::read(executable).unwrap());
+    println!("actual-native-session-cli-executable={executable} sha256={executable_hash}");
+    for (language, extension) in [("typescript", "ts"), ("javascript", "js")] {
+        for (keyword, value) in [
+            ("const", "() => dependency()"),
+            ("let", "function() { return dependency(); }"),
+            ("var", "async () => dependency()"),
+        ] {
+            let root = tempfile::tempdir().unwrap();
+            let inputs = tempfile::tempdir().unwrap();
+            let path = format!("module.{extension}");
+            let (dependency, target) = if keyword == "var" {
+                ("εξάρτηση", "διαγραφή")
+            } else {
+                ("dependency", "removeMe")
+            };
+            let source=format!("\u{feff}// owned café 🦀\r\n{keyword} dependency = () => 1;\r\nexport {keyword} removeMe = {value};\r\nexport {keyword} keep = async () => {{ void (await removeMe()); return 2; }};\r\n")
+                .replace("dependency",dependency).replace("removeMe",target);
+            let expected = format!(
+                "\u{feff}// owned café 🦀\r\n\r\n\r\nexport {keyword} keep = async () => {{  return 2; }};\r\n"
+            );
+            fs::write(root.path().join(&path), &source).unwrap();
+            fs::write(root.path().join("tsconfig.json"),serde_json::to_vec(&json!({"compilerOptions":{"strict":true,"module":"esnext","target":"es2022","allowJs":language=="javascript","checkJs":language=="javascript"},"include":[path]})).unwrap()).unwrap();
+            let call = json!({"operation":"safeDelete","arguments":{"relativePath":path,"namePath":target,"propagate":true,"propagationPolicy":"captured_es_function_propagation_v3"}});
+            cli_inputs(
+                inputs.path(),
+                language,
+                &node,
+                vec![server.clone(), "--stdio".into()],
+                lsp::HostConfiguration {
+                    passive_profile: Some(lsp::PassiveProfile::TypescriptLanguageServer),
+                    ..Default::default()
+                },
+                call,
+            );
+            let output = cli(root.path(), inputs.path(), true, false);
+            assert!(
+                output.status.success(),
+                "{language} {keyword}: {}",
+                String::from_utf8_lossy(&output.stderr)
+            );
+            let result: Value = serde_json::from_slice(&output.stdout).unwrap();
+            println!("actual-v3-{language}-{keyword}-plan={result}");
+            assert_eq!(result["sourceWritten"], false);
+            let value = &result["results"][0];
+            assert_eq!(
+                value["propagation"]["policy"],
+                "captured_es_function_propagation_v3"
+            );
+            assert_eq!(value["propagation"]["removedUsageCount"], 1);
+            assert_eq!(value["complete"], false);
+            let id = value["plan"]["id"].as_str().unwrap();
+            let engine = Engine::open(root.path()).unwrap();
+            let apply = json!({"planId":id,"idempotencyKey":"actual-v3-function-bindings","mode":"workspace"});
+            assert!(yoke::changes::apply(&engine.store, root.path(), &apply, true, &d()).is_err());
+            yoke::changes::approve(&engine.store, id, false).unwrap();
+            assert!(yoke::changes::apply(&engine.store, root.path(), &apply, true, &d()).is_err());
+            let command = vec![
+                compiler.clone(),
+                "--noEmit".into(),
+                "--project".into(),
+                "tsconfig.json".into(),
+            ];
+            assert!(yoke::verify::execute(&engine, id, &node, &command, false, &d()).is_err());
+            let verification =
+                yoke::verify::execute(&engine, id, &node, &command, true, &Deadline::new(60_000))
+                    .unwrap();
+            println!("actual-v3-{language}-{keyword}-verification={verification}");
+            assert_eq!(verification["status"], "passed", "{verification}");
+            assert!(yoke::changes::apply(&engine.store, root.path(), &apply, false, &d()).is_err());
+            let receipt =
+                yoke::changes::apply(&engine.store, root.path(), &apply, true, &d()).unwrap();
+            assert_eq!(
+                fs::read(root.path().join(&path)).unwrap(),
+                expected.as_bytes()
+            );
+            assert!(
+                yoke::changes::recover(&engine.store, root.path(), &receipt.id, false).is_err()
+            );
+            yoke::changes::recover(&engine.store, root.path(), &receipt.id, true).unwrap();
+            assert_eq!(
+                fs::read(root.path().join(&path)).unwrap(),
+                source.as_bytes()
+            );
+            assert_eq!(
+                yoke::model::hash(fs::read(executable).unwrap()),
+                executable_hash
+            );
+        }
+    }
+}

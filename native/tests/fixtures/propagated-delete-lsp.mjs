@@ -5,7 +5,7 @@ let buffer = Buffer.alloc(0), uri, source, changed = false;
 function reply(m, result) { const body = Buffer.from(JSON.stringify({jsonrpc:'2.0',id:m.id,result})); process.stdout.write(`Content-Length: ${body.length}\r\n\r\n`); process.stdout.write(body); }
 function position(at) { const prefix = source.slice(0, at).split('\n'); return {line:prefix.length-1,character:prefix.at(-1).length}; }
 function location(at, name, selectedUri = uri) { return {uri:selectedUri,range:{start:position(at),end:position(at+name.length)}}; }
-function declaration(name) { const regex = /\bfunction\s+([A-Za-z_$][\w$]*)/g; let match; while ((match = regex.exec(source))) if (match[1] === name) return match.index + match[0].lastIndexOf(name); return -1; }
+function declaration(name) { for (const regex of [/\bfunction\s+([A-Za-z_$][\w$]*)/g, /\b(?:const|let|var)\s+([A-Za-z_$][\w$]*)/g]) { let match; while ((match = regex.exec(source))) if (match[1] === name) return match.index + match[0].lastIndexOf(name); } return -1; }
 function word(m) { const lines=source.split('\n');let at=m.params.position.character;for(let i=0;i<m.params.position.line;i++)at+=lines[i].length+1;const regex=/[A-Za-z_$][\w$]*/g;let match;while((match=regex.exec(source)))if(at>=match.index&&at<match.index+match[0].length)return match[0];throw Error('Fixture anchor absent'); }
 function handle(m) {
  if (m.id !== undefined) fs.appendFileSync(log,JSON.stringify({method:m.method,includeDeclaration:m.params?.context?.includeDeclaration})+'\n');
