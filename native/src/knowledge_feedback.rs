@@ -13,6 +13,8 @@ use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 
+#[path = "plan_feedback.rs"]
+pub mod plans;
 #[path = "knowledge_feedback_provenance.rs"]
 mod provenance;
 #[path = "knowledge_feedback_rank.rs"]
@@ -305,5 +307,12 @@ pub(crate) struct RetainedRoots {
     pub blob_ids: BTreeSet<String>,
 }
 pub(crate) fn retained_roots(store: &Store, d: &Deadline) -> Result<RetainedRoots> {
-    storage::retained_roots(store, d).map_err(|error| sanitize(error, d))
+    (|| {
+        let mut roots = storage::retained_roots(store, d)?;
+        let plans = plans::retained_roots(store, d)?;
+        roots.snapshot_ids.extend(plans.snapshot_ids);
+        roots.blob_ids.extend(plans.blob_ids);
+        Ok(roots)
+    })()
+    .map_err(|error| sanitize(error, d))
 }
