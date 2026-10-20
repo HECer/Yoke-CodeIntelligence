@@ -477,3 +477,13 @@ async arrows and Greek names, copied compilation and independent apply/recovery.
 Python17, typecheck and TS260+3skip pass. Source/Graph/entity identities and prior
 README bytes remain; no complete compiler/runtime/consumer or whole-native/
 platform/upstream/main/release acceptance follows. BroaderR1-R9 continues.
+
+## Checked mixed meaning input preparation
+
+Source `8950d290512b775e7ef63bfd6c0814e4d133618d`, runtime merge `9587dac869fb8a6abcfc843654bb663c50e51c3f`.
+[Indexed evidence](mixed-meaning-inputs/index.json) retains7new default cases
+(including actual nativePDFworker/CLI), final13selectedgroups588/0/7,
+quality checks and unchanged739native/745integratedinputs.
+Python17, typecheck and TypeScript260+3skip pass. Exact typed source spaces and
+original receipt replay remain; preparation is data only without provider calls
+or persistence. Mixed semantic execution/graph links and broaderR1-R9 remain open.

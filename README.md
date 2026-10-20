@@ -149,3 +149,8 @@ The advanced local workflows now have independently owned Rust CLI/library paths
 ## License
 
 Own implementation: MIT. TypeScript runtime notices retained. Optional upstream applications, model weights and media libraries have their own licenses and are **not** bundled. No GPL Serena application code, paid JetBrains plugin or hosted service is included. External commands in copied trees retain process privileges unless a separately validated host/container sandbox is used.
+
+Explicit [mixed-source input preparation](native/docs/mixed-views.md) exports
+checked frozen code, Office text/XML and permitted PDF page excerpts with their
+original provenance and bounded ordered context groups. It performs no model
+call; mixed semantic execution and cross-source graph relationships remain open.

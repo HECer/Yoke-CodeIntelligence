@@ -2,6 +2,17 @@
 
 ## Native Rust ownership
 
+`mixed_meaning_input` prepares opaque checked input data from `CheckedMixedView`.
+Typed native, Office decoded/XML and explicitly permitted PDF page references
+reuse the existing checked reader. Bounded owned read items preserve exact text,
+coordinate precision and enclosing XML/container evidence; nested mixed metadata
+retains original native View/Meaning receipt and source-scope provenance. Unit IDs
+bind selected pins, labels and exact items; the input hash also binds request
+order and repeated context occurrences. Host selections establish no semantic
+identity. Exported JSON cannot construct the capability. Preparation performs no
+provider execution, source acquisition or persistence; mixed semantic execution
+and graph relationships remain separate open work. See [mixed inputs](../native/docs/mixed-views.md).
+
 `source_acquisition` preserves typed received HTTP bodies and exact range
 queries without a code SourceSnapshot or imported authority. Its host transport
 requires a URL plus literal address, independent permissions and static TLS

@@ -7275,7 +7275,9 @@
         "native/docs/mixed-pdf-views.md",
         "native/src/mixed_pdf_input.rs",
         "native/tests/mixed_pdf_view.rs",
-        "native/tests/support/mixed_pdf_fixture.rs"
+        "native/tests/support/mixed_pdf_fixture.rs",
+        "native/src/mixed_meaning_input.rs",
+        "docs/validation/integration-2026-10-19/mixed-meaning-inputs/index.json"
       ],
       "id": "R4",
       "inventoryRefs": [
@@ -7287,7 +7289,8 @@
       "suggestedScope": "Preserve distinct typed source spaces and explicit worker authority. Define mixed-space semantic inputs and graph relationships with complete original receipt/source replay; never promote decoded coordinates or provider claims into canonical source authority.",
       "title": "Typed mixed source and processed-document views",
       "mixedQueryAddition": "Checked schema1 native source/DOCX/XLSX queries and explicitly permitted schema2 frozen PDF pages share globally paged literal search and exact typed reads. Original source, container, XML and decoded page/text spaces remain distinct, with complete native View/Meaning provenance. Mixed semantic extraction and cross-source graph links remain open.",
-      "processedPdfAddition": "Strict schema2 mixed literal queries add explicitly selected registered frozen PDF pages through the separately permitted bounded native worker. Original container and decoded page hashes/UTF-8 ranges remain distinct; cached inspection text is not source proof. Native View/Meaning provenance and schema1 Office behavior remain."
+      "processedPdfAddition": "Strict schema2 mixed literal queries add explicitly selected registered frozen PDF pages through the separately permitted bounded native worker. Original container and decoded page hashes/UTF-8 ranges remain distinct; cached inspection text is not source proof. Native View/Meaning provenance and schema1 Office behavior remain.",
+      "meaningInputPreparationAddition": "Opaque checked mixed_meaning_inputs_v1 preparation preserves exact source/Office XML/decoded text/explicit PDF page reads, original mixed receipt/source replay, ordered repeated context occurrences, bounded text/materialization/output, and deterministic selected-pin/item/label binding. Data preparation calls no model/provider and writes no source or graph. Mixed semantic execution and general cross-source graph links remain open."
     },
     {
       "evidence": [

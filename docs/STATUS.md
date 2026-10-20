@@ -1108,6 +1108,27 @@ claimed. These packages predate the registry follow-up and are not a release.
 No live App installation, public comment, deployment or main merge is claimed;
 full functionality and universal parity remain open.
 
+The checked mixed-source input preparation adds a closed `--meaning-inputs`
+request and opaque library capability over existing frozen native, Office
+decoded/XML and explicitly permitted PDF page reads. Exact excerpts, original
+View/Meaning receipts and coordinate-space precision remain intact. Ordered
+context occurrences count repeated bytes separately; host labels establish no
+semantic identity. Preparation starts no provider/model or acquisition and
+persists no input, source or graph. Mixed semantic execution and general
+cross-source graph relationships remain open.
+
+Source `8950d290512b775e7ef63bfd6c0814e4d133618d`, runtime merge `9587dac869fb8a6abcfc843654bb663c50e51c3f`.
+Seven new default cases include the actual native PDF worker/CLI permission
+case; they are included in, not added to, the final 13 selected groups:
+**588 passed / 0 failed / 7 ignored**. Format, build and all-target Clippy with warnings denied pass;
+739 native inputs remain unchanged. Integrated format, Python17,
+typecheck and TypeScript260/3skipped pass with 745
+inputs unchanged. The earlier compile-only lifetime failure is retained and
+does not count as executed tests. This is scoped Windows evidence, not complete
+R4, whole-native, platform, main or release acceptance. Broader R1–R9 remains
+active. See [the contract](../native/docs/mixed-views.md) and
+[indexed evidence](validation/integration-2026-10-19/mixed-meaning-inputs/index.json).
+
 ## Current native Rust implementation
 
 The default Rust executable independently owns immutable source capture/storage, 24-language structural analysis, exact UTF-8 evidence, incremental parse reuse, FTS/BM25 retrieval, bounded context plans, directed graphs/Leiden, offline exports, eight MCP tools, guarded changes/recovery and a host-selected LSP client. Graft, Serena and Graphify are unnecessary for these operations; Node/Python/model calls are unnecessary for the default native runtime.

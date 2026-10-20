@@ -1,0 +1,523 @@
+{
+  "schemaVersion": 1,
+  "kind": "checked_mixed_meaning_input_preparation",
+  "asOf": "2026-10-20T06:04:01.546411+00:00",
+  "sourceCommit": "8950d290512b775e7ef63bfd6c0814e4d133618d",
+  "runtimeCommit": "9587dac869fb8a6abcfc843654bb663c50e51c3f",
+  "parentCommit": "d648ce1b483e1912715be1ed49c8d3ce79341a13",
+  "paths": [
+    "native/README.md",
+    "native/docs/mixed-views.md",
+    "native/src/mixed_meaning_input.rs",
+    "native/src/mixed_view.rs",
+    "native/src/mixed_view_cli.rs",
+    "native/src/mixed_view_query.rs",
+    "native/tests/mixed_pdf_view.rs",
+    "native/tests/mixed_view_cli.rs"
+  ],
+  "nativeInputsMatched": 739,
+  "nativeGroups": 13,
+  "nativeTotals": {
+    "passed": 588,
+    "failed": 0,
+    "ignored": 7
+  },
+  "newCases": {
+    "defaultIntegration": 7,
+    "actualPdfWorkerIncludedInDefault": 1
+  },
+  "nativeBinarySha256": "cab36c4bd13a2574fd26f3b00a6f0c5cba7a00a0dee09361ff6aaf8d6800cea9",
+  "nativeBinaryBytes": 159289344,
+  "binaryHashObservedAt": "2026-10-20T06:02:27.159477+00:00",
+  "wholeNativeRerun": false,
+  "fullR4Complete": false,
+  "platform": "Windows",
+  "finalNative": {
+    "sourceUnchanged": true,
+    "inputs": 739,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--lib",
+          "--test",
+          "mixed_view_cli",
+          "--test",
+          "mixed_pdf_view",
+          "--test",
+          "document_graph",
+          "--test",
+          "document_graph_review",
+          "--test",
+          "derived_graph_mixed_budget",
+          "--test",
+          "view_comparison_cli",
+          "--test",
+          "historical_view_comparison",
+          "--test",
+          "meaning_build",
+          "--test",
+          "meaning_graph",
+          "--test",
+          "meaning_protocol",
+          "--test",
+          "meaning_view",
+          "--test",
+          "meaning_join_cli",
+          "--",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "seconds": 400.9460299999919,
+        "totals": {
+          "passed": 588,
+          "failed": 0,
+          "ignored": 7
+        },
+        "groups": 13,
+        "failures": []
+      },
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 11.685938200011151
+      },
+      {
+        "name": "build",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "build",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--bin",
+          "yoke"
+        ],
+        "exitCode": 0,
+        "seconds": 7.717775600001914
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--all-targets",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "seconds": 95.17068469998776
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "integrated": {
+    "sourceUnchanged": true,
+    "frozenInputs": 745,
+    "commands": [
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 5.04
+      },
+      {
+        "name": "python-contracts",
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "seconds": 1.0
+      },
+      {
+        "name": "typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "seconds": 4.25
+      },
+      {
+        "name": "tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "seconds": 54.36
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "priorEvidenceReadme": {
+    "bytes": 33860,
+    "sha256": "8c7010ec3f0d132aa3fb4349a394c8554ba7c1ccfbcd3e4fca5056ab9afc4003"
+  },
+  "priorPRBodyArchive": {
+    "path": "prior-pr-body.md",
+    "bytes": 6617,
+    "sha256": "21979084ab76c249161d69253c2a9da0b36766a04ee3db47218ed36b730dbea0"
+  },
+  "compileOnlyAttempt": "green-r1",
+  "firstGreen": "green-r2",
+  "originalQuerySchemaOrIdentityChanged": false,
+  "decodedCoordinatesPromotedToNativeSource": false,
+  "providerOrModelCallAdded": false,
+  "sourceAcquisitionAdded": false,
+  "persistenceAdded": false,
+  "nonWindowsRuntimeValidated": false,
+  "mainOrReleaseVerified": false,
+  "notes": [
+    "green-r1 failed at compile time: extracted read item borrowed its local scope; no tests executed. The corrected helper borrows the caller scope; preparation owns only bounded exact read data. green-r2 passes30/0/0 before the final limit/preinitialization case and README addition; final evidence is separate and nonadditive.",
+    "The new PDF case uses the actual native executable through the existing bounded helper; it is a default test, not an additional ignored gate or independent model-quality validation.",
+    "Host labels and context groups do not establish semantic identity; repeated ordered occurrences remain and count byte-exactly. Exported JSON cannot construct CheckedMeaningInputs. All source/receipt authority comes from the already checked mixed view.",
+    "Existing ledger inventories and historical evidence remain. This finite preparation slice does not complete semantic execution, cross-source graph replay, R4/R1-R9 or full platform/release acceptance."
+  ],
+  "artifacts": [
+    {
+      "path": "final/build.log",
+      "bytes": 60,
+      "sha256": "c423538caa41e9d9ede2122e1bcbc967c30380bc73f63e2ad4011280a3df2011"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 168,
+      "sha256": "b818075d2b5c8fc525777994f12dfee0a48fb62260a57604d5c462d0fd89abac"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native.log",
+      "bytes": 68219,
+      "sha256": "7b4c6ff208195974abf4c2f07e3afddf0afe6ec20dc8c91b5fba86e88d91ef83"
+    },
+    {
+      "path": "final/result.json",
+      "bytes": 2434,
+      "sha256": "0f90fe7aeee4260209f6d99580708d44ca35bd4168e00f2a9e922badf0e5eabb"
+    },
+    {
+      "path": "final/runner.py",
+      "bytes": 4482,
+      "sha256": "defedd7b12dee080934de41ac3137a50aa2f31b6122a849e5b899fffe2f6bb49"
+    },
+    {
+      "path": "final/source/native/docs/mixed-views.md",
+      "bytes": 8681,
+      "sha256": "166bc625ab8cec28852c72503831a0beab023567438ee7ef090983c733103117"
+    },
+    {
+      "path": "final/source/native/README.md",
+      "bytes": 26217,
+      "sha256": "287d4a534ea6cf5d412af5c1daa2ecd041cd6b0db9e8aac9dff95e7e3a543604"
+    },
+    {
+      "path": "final/source/native/src/mixed_meaning_input.rs",
+      "bytes": 8482,
+      "sha256": "7db8bffb04c8a00e5cda63d83ce989054d9dce382237a0546c00d3063cbb55a9"
+    },
+    {
+      "path": "final/source/native/src/mixed_view.rs",
+      "bytes": 12816,
+      "sha256": "eeef8a7fb318ca977caf342fe39da22e6fde1ab47ff7c7c1e762db8ba26eb7b6"
+    },
+    {
+      "path": "final/source/native/src/mixed_view_cli.rs",
+      "bytes": 5649,
+      "sha256": "e7280964e174475ccc2f75c65b6480e636884380915ed55b853cbd7bb62d9b22"
+    },
+    {
+      "path": "final/source/native/src/mixed_view_query.rs",
+      "bytes": 27600,
+      "sha256": "410df3137691c1d7577bab37d732fa01430563c61d928e5ef96d7b61b5979635"
+    },
+    {
+      "path": "final/source/native/tests/mixed_pdf_view.rs",
+      "bytes": 19950,
+      "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0"
+    },
+    {
+      "path": "final/source/native/tests/mixed_view_cli.rs",
+      "bytes": 42529,
+      "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 79902,
+      "sha256": "8496be5dd052d6316337aae4caf5f505a957c08a72283095d6927c91f22eb644"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 79902,
+      "sha256": "8496be5dd052d6316337aae4caf5f505a957c08a72283095d6927c91f22eb644"
+    },
+    {
+      "path": "frozen-tracker.json",
+      "bytes": 575745,
+      "sha256": "3eef522806a6604fbd6089abc8c48041f737e35843d152692a9b8027642a993d"
+    },
+    {
+      "path": "green-r1/native.log",
+      "bytes": 614,
+      "sha256": "9ecac4a3c86aa8d1cf663b8c446b90ddbf0d71a557f3ef7cf59880f09e6cdf43"
+    },
+    {
+      "path": "green-r1/result.json",
+      "bytes": 814,
+      "sha256": "eff1698ff5e60e6725509d5dee8979efe395439a9a41342ccffa6725e5665dba"
+    },
+    {
+      "path": "green-r1/runner.py",
+      "bytes": 4482,
+      "sha256": "defedd7b12dee080934de41ac3137a50aa2f31b6122a849e5b899fffe2f6bb49"
+    },
+    {
+      "path": "green-r1/source/native/docs/mixed-views.md",
+      "bytes": 8681,
+      "sha256": "166bc625ab8cec28852c72503831a0beab023567438ee7ef090983c733103117"
+    },
+    {
+      "path": "green-r1/source/native/README.md",
+      "bytes": 25815,
+      "sha256": "6b09f3966d43bfb44385d249e9c19c6a16292e21273ebea73139c3390d1e3ee7"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_meaning_input.rs",
+      "bytes": 8278,
+      "sha256": "906473f6bd6c263eb0f38d6688921bf75fc50684e4771a76d69daaefc89d09fa"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_view.rs",
+      "bytes": 12816,
+      "sha256": "eeef8a7fb318ca977caf342fe39da22e6fde1ab47ff7c7c1e762db8ba26eb7b6"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_view_cli.rs",
+      "bytes": 5649,
+      "sha256": "e7280964e174475ccc2f75c65b6480e636884380915ed55b853cbd7bb62d9b22"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_view_query.rs",
+      "bytes": 27605,
+      "sha256": "c1be1e256fd2f6c4fced989c13a054183340a8d0d4d4a043c74ab9c17e83fe4f"
+    },
+    {
+      "path": "green-r1/source/native/tests/mixed_pdf_view.rs",
+      "bytes": 19950,
+      "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0"
+    },
+    {
+      "path": "green-r1/source/native/tests/mixed_view_cli.rs",
+      "bytes": 40185,
+      "sha256": "291b49ed7b4f3c2cffc1f9319bd248d2f4569af085075439e13d7a695ebe74f0"
+    },
+    {
+      "path": "green-r1/source-after.json",
+      "bytes": 79902,
+      "sha256": "360af87ca38fa8db710c51bfce0bf77b5944be4ecb47fcac2b011bbe9a5dc81b"
+    },
+    {
+      "path": "green-r1/source-before.json",
+      "bytes": 79902,
+      "sha256": "360af87ca38fa8db710c51bfce0bf77b5944be4ecb47fcac2b011bbe9a5dc81b"
+    },
+    {
+      "path": "green-r2/native.log",
+      "bytes": 3408,
+      "sha256": "68c7946cbaa4d2854dc8046c2fb6577cb544db556dd48989a0493755ebf6cfe8"
+    },
+    {
+      "path": "green-r2/result.json",
+      "bytes": 812,
+      "sha256": "dfd2efd2d7b0febc48fc77f512f03b2aff8ab3bff192aa474ac6af4f755ada3d"
+    },
+    {
+      "path": "green-r2/runner.py",
+      "bytes": 4482,
+      "sha256": "defedd7b12dee080934de41ac3137a50aa2f31b6122a849e5b899fffe2f6bb49"
+    },
+    {
+      "path": "green-r2/source/native/docs/mixed-views.md",
+      "bytes": 8681,
+      "sha256": "166bc625ab8cec28852c72503831a0beab023567438ee7ef090983c733103117"
+    },
+    {
+      "path": "green-r2/source/native/README.md",
+      "bytes": 25815,
+      "sha256": "6b09f3966d43bfb44385d249e9c19c6a16292e21273ebea73139c3390d1e3ee7"
+    },
+    {
+      "path": "green-r2/source/native/src/mixed_meaning_input.rs",
+      "bytes": 8482,
+      "sha256": "7db8bffb04c8a00e5cda63d83ce989054d9dce382237a0546c00d3063cbb55a9"
+    },
+    {
+      "path": "green-r2/source/native/src/mixed_view.rs",
+      "bytes": 12816,
+      "sha256": "eeef8a7fb318ca977caf342fe39da22e6fde1ab47ff7c7c1e762db8ba26eb7b6"
+    },
+    {
+      "path": "green-r2/source/native/src/mixed_view_cli.rs",
+      "bytes": 5649,
+      "sha256": "e7280964e174475ccc2f75c65b6480e636884380915ed55b853cbd7bb62d9b22"
+    },
+    {
+      "path": "green-r2/source/native/src/mixed_view_query.rs",
+      "bytes": 27600,
+      "sha256": "410df3137691c1d7577bab37d732fa01430563c61d928e5ef96d7b61b5979635"
+    },
+    {
+      "path": "green-r2/source/native/tests/mixed_pdf_view.rs",
+      "bytes": 19950,
+      "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0"
+    },
+    {
+      "path": "green-r2/source/native/tests/mixed_view_cli.rs",
+      "bytes": 40185,
+      "sha256": "291b49ed7b4f3c2cffc1f9319bd248d2f4569af085075439e13d7a695ebe74f0"
+    },
+    {
+      "path": "green-r2/source-after.json",
+      "bytes": 79902,
+      "sha256": "a0c44ef9693d29edb1e3e3987dfa16e008271c273063de2780de0e3504f921cb"
+    },
+    {
+      "path": "green-r2/source-before.json",
+      "bytes": 79902,
+      "sha256": "a0c44ef9693d29edb1e3e3987dfa16e008271c273063de2780de0e3504f921cb"
+    },
+    {
+      "path": "integrated/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "integrated/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "b3fe32822f15722370ffb82773b7aa7cd9c007117dc94c9103ff814600a71440"
+    },
+    {
+      "path": "integrated/result.json",
+      "bytes": 957,
+      "sha256": "dce4e25e5d47a1e4141322459a106b3f6d6cd86e700593999758e2995152f0cf"
+    },
+    {
+      "path": "integrated/source-after.json",
+      "bytes": 79861,
+      "sha256": "f237d1b1d6be369ddb34338f4b038ae043a309c1ad4bbe42cd512ddff1a6ab4c"
+    },
+    {
+      "path": "integrated/source-before.json",
+      "bytes": 79861,
+      "sha256": "f237d1b1d6be369ddb34338f4b038ae043a309c1ad4bbe42cd512ddff1a6ab4c"
+    },
+    {
+      "path": "integrated/tests.log",
+      "bytes": 25031,
+      "sha256": "a9987b22d427c258d8469d2a21d6f78eb26fc89959d7d26ba617c9b4c1fd177f"
+    },
+    {
+      "path": "integrated/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "prior-pr-body.md",
+      "bytes": 6617,
+      "sha256": "21979084ab76c249161d69253c2a9da0b36766a04ee3db47218ed36b730dbea0"
+    },
+    {
+      "path": "runners/ci-mixed-check.py",
+      "bytes": 4482,
+      "sha256": "defedd7b12dee080934de41ac3137a50aa2f31b6122a849e5b899fffe2f6bb49"
+    },
+    {
+      "path": "runners/ci-mixed-extract-read.py",
+      "bytes": 1236,
+      "sha256": "2606e7b0e2cb8a345aa3a7c2256bbde68e911eedcb41b5efb1eb10706d63f699"
+    },
+    {
+      "path": "runners/ci-mixed-integrate.py",
+      "bytes": 3781,
+      "sha256": "9ddc2e3f7b975a70cd2114f8543ba723c93255fff8b5d465150f42dc74fea883"
+    },
+    {
+      "path": "runners/ci-mixed-integrated-setup.py",
+      "bytes": 333,
+      "sha256": "cdfb41b4b5796eabfb8a9255e63fb4fe8b62e5137662cd78fc1d33252d3d59df"
+    },
+    {
+      "path": "runners/ci-mixed-integrated.py",
+      "bytes": 2192,
+      "sha256": "9d4b8c9e8acb4eb5000e2001dc9df1169acf54c401bc6bfa9c0991d1c023865d"
+    },
+    {
+      "path": "runners/ci-mixed-publish.py",
+      "bytes": 5739,
+      "sha256": "abc268ce48d4034ea2b65a547843555f6b824fc2ad559c6398517326cd4feac8"
+    },
+    {
+      "path": "runners/ci-mixed-record.py",
+      "bytes": 10944,
+      "sha256": "1e2cb9b226aea62430228203d9a2308d7a8a33f9d33ffaa62b7219dfa2933273"
+    },
+    {
+      "path": "runners/ci-mixed-setup.py",
+      "bytes": 900,
+      "sha256": "3a0eaf5bfbb5059dbbcfdfad86621d9bddc9b1946a06b08b6e8c690e9506ed96"
+    },
+    {
+      "path": "source-integration.json",
+      "bytes": 985,
+      "sha256": "f4beb36eaaf8a04f50b78167dd3cbc6e34e7f9fd9a23a15d00e1aa3b629edf1a"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 210696,
+      "sha256": "14c48a3c0e8020a2f3871099f63c2eb53bd85121f48180c07b5f8231922e7412"
+    }
+  ]
+}
