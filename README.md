@@ -86,6 +86,10 @@ Explicit native [wrapped-call propagation](native/docs/propagated-delete.md)
 can remove standalone parenthesized, `await` and `void` calls while checking
 surviving syntax, original source proofs and guarded application.
 
+Native [session refactoring](native/docs/agent-sessions.md#native-semantic-planning)
+prepares existing semantic plans through the session CLI and MCP interface, with
+mode, project and current-session checks and separate application authority.
+
 ## TypeScript advanced runtime
 
 Requires **Node.js 22.16+**. Python/Go and additional optional providers are installed separately. Node SQLite is experimental on the tested Node version. No model or API key is required by native indexing.

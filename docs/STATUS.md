@@ -1037,6 +1037,37 @@ compiler, consumer, runtime or IDE guarantees remain open. Earlier OS1314 fixtur
 prerequisites lie outside this selection; no whole-native/platform/main/release
 acceptance follows. BroaderR1-R9 work remains active.
 
+[Native session refactoring](validation/integration-2026-10-19/session-refactor/index.json)
+makes existing `safeDelete`, `rename`, `inline` and `move` plans available through
+`session --requests` and native `ci_session` with `refactor.prepare`.
+The closed envelope accepts native arguments up to64,000 serialized UTF-8 bytes.
+Mode, host-project and exact stored-session admission checks precede provider
+work. Another client's steering requires resuming the session. The original
+deadline, source/provider/snapshot bindings and native results remain; preparation
+does not steer the session or write original source. Approval, executed
+verification, workspace permission, stale-source checks and recovery remain
+separate. See the [contract](../native/docs/agent-sessions.md#native-semantic-planning).
+
+Ten new cases include nine default integration tests and one explicit actual
+gate. Final **15 selected native groups** record **577 passed /
+0 failed / 11 ignored**, with **738 inputs** unchanged.
+Actual native CLI bytes are hashed before/after use and match the final binary.
+Actual **TypeScript5.8.3** / **language-server5.1.3** validate TS/JS safeDeletev2,
+copied compiler-only results and independent approval/verification/write/stale/
+recovery gates. No analyzed module runs. Format/build/all-target Clippy with
+warnings denied pass; mandatory integrated checks are indexed separately.
+The initial unsupported-operation regression, all source variants and scoped
+results remain; counts overlap and are not additive.
+
+The normal native eight-tool and published facade argument schemas remain;
+the native session tool description advertises the added operation. Current
+session validation is an admission check, with no lease over future state or
+source changes. Native plan identity/publication behavior remains unchanged.
+Other provider intents, client installations, exhaustive compiler/consumer/
+runtime guarantees and broaderR1-R9 remain open. Prior OS1314 prerequisites lie
+outside this selection; no whole-native/platform/upstream/main/release acceptance
+follows.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

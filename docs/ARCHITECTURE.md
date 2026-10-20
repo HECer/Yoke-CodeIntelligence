@@ -362,3 +362,13 @@ canonical Plan identity and independent application authority remain. Syntax
 correspondence does not establish semantic/runtime equivalence. See the
 [contract](../native/docs/propagated-delete.md) and
 [evidence](validation/integration-2026-10-19/wrapped-propagation/index.json).
+
+Native `Session::invoke` admits a closed `refactor.prepare` envelope before
+delegating unchanged arguments to the semantic planning core. A bounded checked
+read compares the persisted session record with the opened record before provider
+work; no transaction is held over provider execution. Existing session CLI and
+native session MCP dispatch share this route, with the same mode/project/source
+guards and original deadline. Native plan publication and independent approval,
+verification, write and recovery remain. See the
+[contract](../native/docs/agent-sessions.md#native-semantic-planning) and
+[evidence](validation/integration-2026-10-19/session-refactor/index.json).

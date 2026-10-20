@@ -6856,7 +6856,11 @@
         "native/tests/member_decorators.rs",
         "docs/validation/integration-2026-10-19/member-decorators/index.json",
         "native/src/semantic_propagated_delete_ast.rs",
-        "docs/validation/integration-2026-10-19/wrapped-propagation/index.json"
+        "docs/validation/integration-2026-10-19/wrapped-propagation/index.json",
+        "native/docs/agent-sessions.md",
+        "native/src/project_session.rs",
+        "native/tests/session_refactor.rs",
+        "docs/validation/integration-2026-10-19/session-refactor/index.json"
       ],
       "id": "R1",
       "inventoryRefs": [
@@ -6865,7 +6869,7 @@
         "serena:jet_brains_inline_symbol",
         "serena:jet_brains_rename"
       ],
-      "missingBehavior": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic. Checked TypeScript/TSX/JavaScript/JSX declaration/export/ambient deletion and Rust/Python owning attribute/documentation/decorator deletion now keep original entity/evidence coordinates. Contextual method binding uses the nearest declared owner; nested functions stay functions. Multi-declarators without the explicit native sibling-preservation policy, expression consumers, unsupported decorated member/name forms, Required Python bodies without the explicit native pass policy and other-language attachment ownership remain outside these finite symbol-deletion contracts. Explicit captured_es_function_propagation_v1 now removes checked standalone target-call statements and newly unused private function dependencies in one bounded TS/JS ES module, including private cycles. Surviving reported/possible consumers and exported dependencies remain protected. Other expression consumers, module/declaration/language/file shapes, general propagation, future consumer changes and exhaustive compiler/IDE guarantees remain outside this finite policy. Explicit native deleteSymbol.emptyPythonBody reject/pass now admits one checked Python function/class deletion with a literal pass only when its required parent block would otherwise lack a non-comment statement. Full resulting syntax, exact decorator/name/kind/range binding, shared source/AST/deadline bounds and original coordinates remain checked; default/provider/facade behavior still rejects empty required bodies. Mixed operations and other languages refuse the option. Actual Python3.14.7 stdlib AST-only verification, separate permission/approval/application/recovery and native MCP have owned Windows evidence; no analyzed module/decorator executes or broader semantic/consumer guarantee follows. Separate native deleteSymbol.siblingDeclarators reject/preserve now admits one simple function-valued TS/TSX/JS/JSX variable declarator in a statement const/let/var. Two exact AST-derived byte edits remove that node and one direct parent comma while preserving other declarators, wrapper/semicolon and whitespace. Ambiguous direct comments, loop/nonstatement bindings, named expressions, other languages, mixed operations and combined policies refuse. Full resulting syntax and original source/AST/deadline bounds remain checked; absent/reject and semantic-provider/facade defaults stay strict. Actual TypeScript5.8.3 compiler-only copied-result verification for all four extensions and independent permission/approval/application/recovery have owned Windows evidence. No analyzed module execution, consumer safety, exhaustive semantic/IDE or other-platform guarantee follows. Concrete TS/TSX/JS/JSX class methods with plain identifier names now have checked contiguous preceding decorator ownership for native deletion and final provider safeDelete preparation. Up to64 direct sibling decorators and intervening whitespace/comments are admitted; other gap tokens, constructors, abstract/signature members and computed/quoted/private decorated names refuse. Parent/neighbor chains, ordinary earlier comments and original method/entity coordinates stay intact. Whole-result syntax and original source/AST/deadline bounds remain checked. Actual TypeScript5.8.3 compiler/AST plus language-server5.1.3 safeDelete and independent application/recovery have owned Windows evidence in experimentalDecorators mode. No analyzed module/decorator execution, broader consumer/dispatch/runtime proof, other modes/versions or universal IDE equivalence follows. Explicit native safeDelete.propagationPolicy captured_es_function_propagation_v2 now admits plain identifier calls within at most32 parentheses/await/void wrappers when the complete statement belongs directly to a program or block. Original provider/source/dependency/unknown-consumer contracts remain; defaultv1 and public facade schemas are unchanged. Full-result grammar plus bounded original-to-result surviving-node kind/range/order comparison refuses unintended statement merging, including automatic-semicolon boundaries. Optional/type/assertion/value/unclassified forms and lone control-flow slots refuse. Actual TypeScript5.8.3/language-server5.1.3 compiler-only TS/JS and independent permission/approval/application/recovery have owned Windows evidence; source modules never execute. Broader propagation, semantic/runtime/consumer completeness, other declarations/files/languages and full IDE/platform equivalence remain open.",
+      "missingBehavior": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic. Checked TypeScript/TSX/JavaScript/JSX declaration/export/ambient deletion and Rust/Python owning attribute/documentation/decorator deletion now keep original entity/evidence coordinates. Contextual method binding uses the nearest declared owner; nested functions stay functions. Multi-declarators without the explicit native sibling-preservation policy, expression consumers, unsupported decorated member/name forms, Required Python bodies without the explicit native pass policy and other-language attachment ownership remain outside these finite symbol-deletion contracts. Explicit captured_es_function_propagation_v1 now removes checked standalone target-call statements and newly unused private function dependencies in one bounded TS/JS ES module, including private cycles. Surviving reported/possible consumers and exported dependencies remain protected. Other expression consumers, module/declaration/language/file shapes, general propagation, future consumer changes and exhaustive compiler/IDE guarantees remain outside this finite policy. Explicit native deleteSymbol.emptyPythonBody reject/pass now admits one checked Python function/class deletion with a literal pass only when its required parent block would otherwise lack a non-comment statement. Full resulting syntax, exact decorator/name/kind/range binding, shared source/AST/deadline bounds and original coordinates remain checked; default/provider/facade behavior still rejects empty required bodies. Mixed operations and other languages refuse the option. Actual Python3.14.7 stdlib AST-only verification, separate permission/approval/application/recovery and native MCP have owned Windows evidence; no analyzed module/decorator executes or broader semantic/consumer guarantee follows. Separate native deleteSymbol.siblingDeclarators reject/preserve now admits one simple function-valued TS/TSX/JS/JSX variable declarator in a statement const/let/var. Two exact AST-derived byte edits remove that node and one direct parent comma while preserving other declarators, wrapper/semicolon and whitespace. Ambiguous direct comments, loop/nonstatement bindings, named expressions, other languages, mixed operations and combined policies refuse. Full resulting syntax and original source/AST/deadline bounds remain checked; absent/reject and semantic-provider/facade defaults stay strict. Actual TypeScript5.8.3 compiler-only copied-result verification for all four extensions and independent permission/approval/application/recovery have owned Windows evidence. No analyzed module execution, consumer safety, exhaustive semantic/IDE or other-platform guarantee follows. Concrete TS/TSX/JS/JSX class methods with plain identifier names now have checked contiguous preceding decorator ownership for native deletion and final provider safeDelete preparation. Up to64 direct sibling decorators and intervening whitespace/comments are admitted; other gap tokens, constructors, abstract/signature members and computed/quoted/private decorated names refuse. Parent/neighbor chains, ordinary earlier comments and original method/entity coordinates stay intact. Whole-result syntax and original source/AST/deadline bounds remain checked. Actual TypeScript5.8.3 compiler/AST plus language-server5.1.3 safeDelete and independent application/recovery have owned Windows evidence in experimentalDecorators mode. No analyzed module/decorator execution, broader consumer/dispatch/runtime proof, other modes/versions or universal IDE equivalence follows. Explicit native safeDelete.propagationPolicy captured_es_function_propagation_v2 now admits plain identifier calls within at most32 parentheses/await/void wrappers when the complete statement belongs directly to a program or block. Original provider/source/dependency/unknown-consumer contracts remain; defaultv1 and public facade schemas are unchanged. Full-result grammar plus bounded original-to-result surviving-node kind/range/order comparison refuses unintended statement merging, including automatic-semicolon boundaries. Optional/type/assertion/value/unclassified forms and lone control-flow slots refuse. Actual TypeScript5.8.3/language-server5.1.3 compiler-only TS/JS and independent permission/approval/application/recovery have owned Windows evidence; source modules never execute. Broader propagation, semantic/runtime/consumer completeness, other declarations/files/languages and full IDE/platform equivalence remain open. Native Session refactor.prepare now exposes existing safeDelete/rename/inline/move planning through the session CLI and native ci_session. A closed operation/arguments envelope,64000byte inner input bound, editing/planning and host-project restrictions, exact persisted-session admission check and original deadline precede provider work. Delegated native arguments/results, source/provider/snapshot preconditions and guarded application remain intact; no session steering, source writes, model/runtime grant or auto-approval is added. Native eight-tool and published facade argument schemas remain; nativeSession description advertises the route. Actual native CLI with TS5.8.3/LSP5.1.3 validates TS/JS safeDeletev2 plus compiler-only verification and separate approval/write/stale/recovery. Other provider intents, clients/platforms and broader R1-R9 remain open.",
       "priority": 1,
       "suggestedScope": "Continue broader propagation and remaining declaration/file/language/provider intents with exact original source operations, directed dependency/reference semantics and independent postconditions. Preserve finite source/proof/unknown-consumer boundaries, immutable anchors, legacy identities and guarded application/recovery.",
       "title": "Finish semantic refactoring intent contracts",
@@ -7104,6 +7108,39 @@
         "analyzedModuleExecuted": false,
         "wholeNativeRerun": false,
         "fullContractCertified": false
+      },
+      "nativeSessionRefactorCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/session-refactor/index.json",
+        "newCases": {
+          "defaultIntegration": 9,
+          "actualNativeCliCompilerAndLanguageServer": 1
+        },
+        "nativeGroups": 15,
+        "nativeTotals": {
+          "passed": 577,
+          "failed": 0,
+          "ignored": 11
+        },
+        "platform": "Windows",
+        "actualTools": {
+          "node": "C:\\Program Files\\nodejs\\node.exe",
+          "nodeSha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+          "nodeVersion": "v24.21.0",
+          "compiler": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\tsc.js",
+          "compilerSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+          "compilerVersion": "Version 5.8.3",
+          "server": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript-language-server\\lib\\cli.mjs",
+          "serverSha256": "3c2a7818315bd8399e56f461fe7da01c0f8f67a9c66108af0b655605b088dd77",
+          "serverVersion": "5.1.3",
+          "compilerLibrary": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\typescript.js",
+          "compilerLibrarySha256": "dd17428736a07e1db1a138d8a14295ddb2699ba780ee15038acdd2c6da5373a0"
+        },
+        "existingNativeArgumentsAndPlanIdentityChanged": false,
+        "publishedFacadeArgumentSchemasChanged": false,
+        "sessionSteeredOrOriginalSourceWritten": false,
+        "approvalOrExecutionAuthorityAdded": false,
+        "wholeNativeRerun": false,
+        "fullContractCertified": false
       }
     },
     {
@@ -7291,7 +7328,12 @@
         "native/src/host_output_recovery_tests.rs",
         "native/tests/codex_host_cli.rs",
         "docs/native-codex-host.md",
-        "docs/validation/integration-2026-10-19/codex-host/index.json"
+        "docs/validation/integration-2026-10-19/codex-host/index.json",
+        "native/README.md",
+        "native/docs/agent-sessions.md",
+        "native/src/project_session.rs",
+        "native/tests/session_refactor.rs",
+        "docs/validation/integration-2026-10-19/session-refactor/index.json"
       ],
       "id": "R6",
       "inventoryRefs": [
@@ -7300,7 +7342,7 @@
         "graphify:agent_installations",
         "graphify:git_lifecycle"
       ],
-      "missingBehavior": "Bounded generic-agents-v1 installation and v2 source-security/output-ownership recovery retain their accepted matrix and legacy identities. A separate explicit Windows codex-mcp-v1 profile now manages one receipt-owned config.toml stdio MCP table, with closed host selection, physical source/launch bindings, exact human TOML preservation, independent host-write authority and profile-specific canonical initialization/v1/v2 recovery. Actual CodexCLI0.163.0 parses the installed entry, starts the native server and dispatches an exact source read through its MCP client without a model turn; uninstall and actual process interruption/recovery have owned-fixture evidence. Other branded clients, hooks, interactive IDE/model tool selection, other client releases and non-Windows runtime certification remain open. Hard cancellation/power-loss/universal recovery/performance/full upstream certification remain unestablished; historical unknown-output refusal and terminal rolled_back security boundaries remain.",
+      "missingBehavior": "Bounded generic-agents-v1 installation and v2 source-security/output-ownership recovery retain their accepted matrix and legacy identities. A separate explicit Windows codex-mcp-v1 profile now manages one receipt-owned config.toml stdio MCP table, with closed host selection, physical source/launch bindings, exact human TOML preservation, independent host-write authority and profile-specific canonical initialization/v1/v2 recovery. Actual CodexCLI0.163.0 parses the installed entry, starts the native server and dispatches an exact source read through its MCP client without a model turn; uninstall and actual process interruption/recovery have owned-fixture evidence. Other branded clients, hooks, interactive IDE/model tool selection, other client releases and non-Windows runtime certification remain open. Hard cancellation/power-loss/universal recovery/performance/full upstream certification remain unestablished; historical unknown-output refusal and terminal rolled_back security boundaries remain. Native Session refactor.prepare now exposes existing safeDelete/rename/inline/move planning through the session CLI and native ci_session. A closed operation/arguments envelope,64000byte inner input bound, editing/planning and host-project restrictions, exact persisted-session admission check and original deadline precede provider work. Delegated native arguments/results, source/provider/snapshot preconditions and guarded application remain intact; no session steering, source writes, model/runtime grant or auto-approval is added. Native eight-tool and published facade argument schemas remain; nativeSession description advertises the route. Actual native CLI with TS5.8.3/LSP5.1.3 validates TS/JS safeDeletev2 plus compiler-only verification and separate approval/write/stale/recovery. Other provider intents, clients/platforms and broader R1-R9 remain open.",
       "priority": 6,
       "suggestedScope": "Continue remaining branded schema and hook adapters plus non-Windows qualification. Preserve generic legacy serialized identities, the distinct Codex profile and physical source/launch bindings, exact byte ownership/security, canonical recovery and independent host-write gates. No default model or analyzed project-code execution follows from a client config or imported plan.",
       "title": "Managed assistant and Git-hook installation lifecycle",
@@ -7328,6 +7370,39 @@
         ],
         "fullUpstreamContractCertified": false,
         "wholeNativeRerun": false
+      },
+      "nativeSessionRefactorCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/session-refactor/index.json",
+        "newCases": {
+          "defaultIntegration": 9,
+          "actualNativeCliCompilerAndLanguageServer": 1
+        },
+        "nativeGroups": 15,
+        "nativeTotals": {
+          "passed": 577,
+          "failed": 0,
+          "ignored": 11
+        },
+        "platform": "Windows",
+        "actualTools": {
+          "node": "C:\\Program Files\\nodejs\\node.exe",
+          "nodeSha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+          "nodeVersion": "v24.21.0",
+          "compiler": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\tsc.js",
+          "compilerSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+          "compilerVersion": "Version 5.8.3",
+          "server": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript-language-server\\lib\\cli.mjs",
+          "serverSha256": "3c2a7818315bd8399e56f461fe7da01c0f8f67a9c66108af0b655605b088dd77",
+          "serverVersion": "5.1.3",
+          "compilerLibrary": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\typescript.js",
+          "compilerLibrarySha256": "dd17428736a07e1db1a138d8a14295ddb2699ba780ee15038acdd2c6da5373a0"
+        },
+        "existingNativeArgumentsAndPlanIdentityChanged": false,
+        "publishedFacadeArgumentSchemasChanged": false,
+        "sessionSteeredOrOriginalSourceWritten": false,
+        "approvalOrExecutionAuthorityAdded": false,
+        "wholeNativeRerun": false,
+        "fullContractCertified": false
       }
     },
     {
@@ -9043,6 +9118,20 @@
         "docs/validation/integration-2026-10-19/wrapped-propagation/index.json"
       ],
       "remainingReview": "Finite opt-in native policy only. Defaultv1, published facade arguments and immutable Plan identity formula remain. Preserved syntax structure is not semantic/runtime/dispatch/consumer equivalence; broader R1-R9, all upstream/IDE/platform/whole-native/main/release acceptance remain open.",
+      "fullContractCertified": false
+    },
+    {
+      "id": "native_session_semantic_refactor_preparation",
+      "behavior": "Native Session refactor.prepare now exposes existing safeDelete/rename/inline/move planning through the session CLI and native ci_session. A closed operation/arguments envelope,64000byte inner input bound, editing/planning and host-project restrictions, exact persisted-session admission check and original deadline precede provider work. Delegated native arguments/results, source/provider/snapshot preconditions and guarded application remain intact; no session steering, source writes, model/runtime grant or auto-approval is added. Native eight-tool and published facade argument schemas remain; nativeSession description advertises the route. Actual native CLI with TS5.8.3/LSP5.1.3 validates TS/JS safeDeletev2 plus compiler-only verification and separate approval/write/stale/recovery. Other provider intents, clients/platforms and broader R1-R9 remain open.",
+      "evidence": [
+        "native/README.md",
+        "native/docs/agent-sessions.md",
+        "native/src/project_session.rs",
+        "native/src/protocol.rs",
+        "native/tests/session_refactor.rs",
+        "docs/validation/integration-2026-10-19/session-refactor/index.json"
+      ],
+      "remainingReview": "The stored session is checked at admission; there is no lease over future mode/source/consumer changes. Native publication retains its existing nontransactional boundary. Actual qualification exercises safeDeletev2 via native CLI; other provider intents and client installations retain separate evidence. No exhaustive compiler/runtime/consumer, full upstream/IDE/nonWindows/whole-native/platform/main/release acceptance follows.",
       "fullContractCertified": false
     }
   ],

@@ -450,3 +450,17 @@ and integrated743unchanged/Python17/typecheck/TS260+3skips pass. Both original
 refusals, corrected timestamp test and statement-merging regression are retained.
 Scoped runs overlap; no whole-native/platform/upstream/main/release acceptance
 follows. Previous README bytes remain; broaderR1-R9 continues.
+
+## Native session semantic planning checkpoint
+
+Source `74278c198740b6f81d8891c9d5245596f8ddc577`, runtime merge `896a54c1f13c75e9ab0c2bb047a58451d3991c01`.
+[Indexed evidence](session-refactor/index.json) retains9default+1actual newcases,
+final15selectedgroups577/0/11, closed nativeSession/CLI/MCP
+planning, current-state admission, unchanged native arguments and guarded plans.
+Actual nativeCLI bytes match the final binary; TypeScript5.8.3/language-server5.1.3
+validate TS/JS safeDeletev2, copied compilation and independent application/recovery.
+738native/744integratedinputs remain unchanged within their freezes; quality,
+Python17, typecheck and TS260+3skip pass. No model/source execution or authority
+upgrade follows. Previous README bytes and priorPRbody are preserved; scopes
+overlap and broaderR1-R9 remains active without whole-native/platform/main/release
+acceptance.
