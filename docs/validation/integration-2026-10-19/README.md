@@ -520,3 +520,12 @@ and directed/parallel/role semantics, including frozen queries after Store loss.
 Initial17/1 wrong expected refusal code and disk-full linker failure are retained.
 Scoped nonadditive evidence;
 cross-workspace/fullR4/whole-native/platform/main/release remain open.
+
+Checked mixed graph composition: [indexed evidence](mixed-meaning-composition/index.json),
+source `789d50bb0d9a72a3ab97a1cc9f7e8eab91493203` / merge `6702727d303cf6088a8b03702cfc76fddc434ec3`. Final20groups
+630 passed / 0 failed / 7 ignored plus format/build/Clippy; integrated Python17/typecheck/TS260+3skipped pass.
+Eight new default cases cover independent workspaces, qualified original rows,
+separate opt-in host links, frozen queries after both Store losses and actual
+PDF+Office CLI composition without provider files. Initial test-only Copy/Clone
+compilation failure executes0groups; green3groups27/0/0. Scoped nonadditive
+evidence, without full R4/whole-native/platform/main/release acceptance.

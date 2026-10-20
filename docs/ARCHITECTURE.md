@@ -2,6 +2,16 @@
 
 ## Native Rust ownership
 
+`mixed_view::provider::composition` consumes independently checked owned graphs
+and a bounded exact ordered link review. Parent-qualified concepts/observations
+retain complete original source/receipt/accounting metadata across workspaces or
+history. Authored links remain unverified data, with separate indices/degrees
+and explicit opt-in traversal. Roles imply no flow; labels imply no identity.
+Frozen queries require no Store/provider. The CLI admits explicit jobs only from
+its host-selected root, with PDF worker permission checked perparent. No JSON
+constructor, persistence, source write or default MCP change is added. See
+[mixed composition](../native/docs/mixed-meaning-composition.md).
+
 `mixed_view::provider::CheckedGraph` owns joint checked source replay and exact
 verified provider graph data; no JSON constructor exists. Its bounded literal
 lookup, directed multiedge degrees and frontier trace queries use owned data,

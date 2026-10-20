@@ -1211,6 +1211,32 @@ cross-workspace composition, external semantic qualification and whole-native/
 platform/main/release acceptance remain open. See [query contract](../native/docs/mixed-meaning-queries.md)
 and [indexed evidence](validation/integration-2026-10-19/mixed-meaning-consumers/index.json).
 
+Explicit checked mixed graph composition now combines 2..4 owned source/response-
+replayed parents with an ordered host-authored link review. Parent-qualified
+concept/observation identities, original parallel/reverse/self relations, ordered
+hyperedge slots and complete nested typed source/receipt/accounting remain.
+Host links are separate unverified assertions with independent indices and
+degree counts; traces follow them only when explicitly requested. Labels and
+aliases create no merge or semantic identity, and roles imply no flow. Library
+parents may come from different checked workspaces/history. The CLI selects
+explicit jobs from one root Store, with per-parent PDF/Office worker permission.
+No provider, persistence, source write or default MCP schema change is added.
+
+Source `789d50bb0d9a72a3ab97a1cc9f7e8eab91493203`, runtime merge `6702727d303cf6088a8b03702cfc76fddc434ec3`.
+Eight new default cases include owned Node/PDF setup, cross-workspace qualified
+keys, parallel host/provider rows, split degree counts, Unicode ambiguity,
+direction/depth0/capacity, independent parent/endpoint validation, private closed
+CLI admission, both Store losses and an actual PDF+Office same-Store CLI query
+without installed provider files. Initial feature compilation stops at a test-
+only Vec.repeat/Copy constraint before executing any test group; the fixture
+uses explicit cloning afterward. Three focused groups pass **27/0/0**. Final20groups
+**630 passed / 0 failed / 7 ignored** and format/build/all-target Clippy pass with 752
+unchanged inputs. Integrated format/Python17/typecheck/TypeScript260+3skipped pass
+with 754 unchanged inputs. Counts remain scoped and nonadditive.
+Broader analytics, semantic qualification, full R4/R1-R9 and whole-native/
+platform/main/release acceptance remain open. See [composition contract](../native/docs/mixed-meaning-composition.md)
+and [indexed evidence](validation/integration-2026-10-19/mixed-meaning-composition/index.json).
+
 ## Current native Rust implementation
 
 The default Rust executable independently owns immutable source capture/storage, 24-language structural analysis, exact UTF-8 evidence, incremental parse reuse, FTS/BM25 retrieval, bounded context plans, directed graphs/Leiden, offline exports, eight MCP tools, guarded changes/recovery and a host-selected LSP client. Graft, Serena and Graphify are unnecessary for these operations; Node/Python/model calls are unnecessary for the default native runtime.
