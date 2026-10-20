@@ -23,6 +23,8 @@ pub use meaning_claims::{
 };
 #[path = "mixed_pdf_input.rs"]
 mod pdf;
+#[path = "mixed_meaning_provider.rs"]
+pub mod provider;
 pub use pdf::{
     NativePdfWorker, PDF_EXTRACTION_POLICY, PdfPin, SelectionV2, validate_pdf_selection,
 };

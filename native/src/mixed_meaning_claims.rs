@@ -34,7 +34,7 @@ pub fn validate_meaning_claim_request(
     encode(request, MAX_CLAIM_BYTES, d)?;
     check(d)
 }
-fn range(source: &SourceRef) -> (usize, usize) {
+pub(super) fn range(source: &SourceRef) -> (usize, usize) {
     match source {
         SourceRef::SourceUtf8 {
             start_byte,
@@ -58,7 +58,7 @@ fn range(source: &SourceRef) -> (usize, usize) {
         } => (*start_byte, *end_byte),
     }
 }
-fn quote_source(source: &SourceRef, span: &Support) -> SourceRef {
+pub(super) fn quote_source(source: &SourceRef, span: &Support) -> SourceRef {
     let mut source = source.clone();
     let (start, end) = match &mut source {
         SourceRef::SourceUtf8 {
@@ -96,14 +96,14 @@ struct Quote {
 /// construct this capability or establish provider/canonical interpretation truth.
 pub struct CheckedMixedMeaningClaims<'inputs, 'source> {
     inputs: &'inputs CheckedMeaningInputs<'source>,
-    request: &'inputs MixedMeaningClaimRequest,
+    request: MixedMeaningClaimRequest,
     id: String,
     quotes: Vec<Quote>,
 }
 impl<'source> CheckedMeaningInputs<'source> {
     pub fn check_meaning_claims<'inputs>(
         &'inputs self,
-        request: &'inputs MixedMeaningClaimRequest,
+        request: &MixedMeaningClaimRequest,
         d: &Deadline,
     ) -> Result<CheckedMixedMeaningClaims<'inputs, 'source>> {
         let checked = (|| {
@@ -158,7 +158,7 @@ impl<'source> CheckedMeaningInputs<'source> {
             check(d)?;
             Ok(CheckedMixedMeaningClaims {
                 inputs: self,
-                request,
+                request: request.clone(),
                 id,
                 quotes,
             })
@@ -188,17 +188,37 @@ impl CheckedMixedMeaningClaims<'_, '_> {
         input(max_output_bytes <= MAX_OUTPUT_BYTES)?;
         let limit = max_output_bytes.min(self.inputs.view().options.max_output_bytes);
         capacity(limit > 0)?;
-        let inputs = self.inputs.export(limit, d)?;
+        self.export_data(limit, limit, false, d)
+    }
+    pub(super) fn provider_validation_export(&self, limit: usize, d: &Deadline) -> Result<Value> {
+        input((1..=64_000_000).contains(&limit))?;
+        self.export_data(limit, MAX_OUTPUT_BYTES, true, d)
+    }
+    fn export_data(
+        &self,
+        limit: usize,
+        input_limit: usize,
+        provider: bool,
+        d: &Deadline,
+    ) -> Result<Value> {
+        let inputs = self.inputs.export(input_limit, d)?;
+        let provider_id = crate::model::hash(&encode(
+            &("mixed_meaning_provider_claim_validation_v1", &self.id),
+            256,
+            d,
+        )?);
         output(&Export {
-            kind: KIND, id: &self.id, input_hash: self.inputs.input_hash(), inputs,
+            kind: if provider { "mixed_meaning_provider_claim_validation_v1" } else { KIND },
+            id: if provider { &provider_id } else { &self.id }, input_hash: self.inputs.input_hash(), inputs,
             original_fragment: &self.request.fragment, support_quotes: &self.quotes,
-            interpretation_origin: "host_submitted_unverified_interpretation",
-            provider_attestation: "not_established", canonical_source_authority: false,
+            interpretation_origin: if provider { "provider_reported_unverified_interpretation" } else { "host_submitted_unverified_interpretation" },
+            provider_attestation: if provider { "unverified" } else { "not_established" }, canonical_source_authority: false,
             complete: false, model_calls: 0, source_written: false,
             limitations: [
                 "Exact checked source support does not establish interpretation correctness, concept identity or relationship truth.",
                 "Original concept keys, claim order, parallel directed relations and ordered hyperedge participants remain separate observations.",
-                "This read-only check performs no semantic provider execution, creates no provider receipt and persists no graph.",
+                if provider { "This source-validation component performs no provider call of its own; the enclosing operation carries separate accounting and received-response provenance." }
+                else { "This read-only check performs no semantic provider execution, creates no provider receipt and persists no graph." },
             ],
         }, limit, d).map_err(|e| sanitized(e, d))
     }

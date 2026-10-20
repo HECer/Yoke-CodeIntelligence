@@ -252,6 +252,30 @@ impl CheckedMeaningInputs<'_> {
             .iter()
             .map(|unit| (unit.id.as_str(), unit.source))
     }
+    /// Provider transport is data only. The checked capability and original
+    /// receipt/source metadata remain local; exact submitted bytes are explicit.
+    pub(super) fn provider_payload(&self, contract_hash: &str, d: &Deadline) -> Result<Value> {
+        check(d)?;
+        input(valid_id(contract_hash))?;
+        let mut units = Vec::new();
+        for unit in &self.units {
+            check(d)?;
+            let text = unit
+                .item
+                .get("text")
+                .and_then(Value::as_str)
+                .ok_or_else(|| failure("mixed_view_parent_refused"))?;
+            units.push(serde_json::json!({"sourceId":unit.id,"source":unit.source,
+                "text":text,"omittedBytes":0}));
+        }
+        output(
+            &serde_json::json!({"kind":"mixed_meaning_provider_input_v1",
+            "inputHash":self.input_hash,"contractHash":contract_hash,
+            "units":units,"contextGroups":self.contexts}),
+            1_000_000,
+            d,
+        )
+    }
     pub fn export(&self, max_output_bytes: usize, d: &Deadline) -> Result<Value> {
         input(max_output_bytes <= MAX_OUTPUT_BYTES)?;
         let limit = max_output_bytes.min(self.view.options.max_output_bytes);

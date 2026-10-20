@@ -22,12 +22,19 @@ The read-only [mixed-source input preparation](docs/mixed-views.md) accepts
 explicit typed code, Office text/XML and permitted PDF page selections through
 `mixed-view --meaning-inputs HOST_JSON`. Exact excerpts and original receipt
 provenance remain separate from semantic interpretation. This prepares bounded
-data without a provider call; mixed semantic execution and graph links remain open.
+data without a provider call. Explicit semantic execution uses the separate
+trusted-host build below; general mixed-graph consumers remain open.
 
 Optional [mixed interpretation checks](docs/mixed-meaning-claims.md) validate
 host-submitted directed/parallel/role-bearing claims against those checked
 inputs and reread exact typed quotations. Interpretations remain unverified
 host data; no provider receipt, source authority or persisted graph is invented.
+
+The separate [mixed-source meaning build](docs/mixed-meaning-provider.md) runs
+one fully admitted request only with explicit trusted-provider permission.
+Immutable response/accounting records and source-bound graph replay retain
+typed spaces, original receipts, directions and roles. Status/jobs start no
+provider; unknown sends retain their reservation and never retry automatically.
 
 Rust 1.94.1 and the Windows MSVC toolchain are exercised locally. Cargo requires Rust 1.94.1 or newer, including the native AWS signing dependencies. Older compilers and hosted macOS/Linux CI are not claimed tested here.
 
