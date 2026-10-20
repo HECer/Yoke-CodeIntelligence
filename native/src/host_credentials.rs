@@ -174,6 +174,58 @@ pub(crate) fn read_neo4j_password(
     deadline.check()?;
     Ok(Zeroizing::new(neo4j_password(&bytes)?.to_owned()))
 }
+fn falkor_password(bytes: &[u8]) -> Result<&str> {
+    ensure!(
+        (1..=2560).contains(&bytes.len()),
+        "Invalid FalkorDB credential capacity"
+    );
+    let text = std::str::from_utf8(bytes)
+        .map_err(|_| anyhow::anyhow!("Invalid FalkorDB credential format"))?;
+    ensure!(
+        !text.chars().any(char::is_control),
+        "Invalid FalkorDB credential format"
+    );
+    Ok(text)
+}
+/// Create-only host import bound to the endpoint, user, pinned address and TLS policy.
+pub fn import_falkor_password(
+    binding: &str,
+    bytes: &[u8],
+    deadline: &crate::capture::Deadline,
+) -> Result<Value> {
+    deadline.check()?;
+    ensure!(
+        cfg!(windows),
+        "falkor_publish_credential_platform_unavailable"
+    );
+    ensure!(
+        crate::model::valid_id(binding),
+        "Invalid FalkorDB credential binding"
+    );
+    falkor_password(bytes)?;
+    #[cfg(windows)]
+    windows::write_new_bounded(&target("falkor", binding)?, bytes, deadline)?;
+    Ok(
+        json!({"credentialBinding":binding,"credentialType":"falkor","privateMaterial":"os_credential_store_only"}),
+    )
+}
+pub(crate) fn read_falkor_password(
+    binding: &str,
+    deadline: &crate::capture::Deadline,
+) -> Result<Zeroizing<String>> {
+    deadline.check()?;
+    ensure!(
+        cfg!(windows),
+        "falkor_publish_credential_platform_unavailable"
+    );
+    ensure!(
+        crate::model::valid_id(binding),
+        "Invalid FalkorDB credential binding"
+    );
+    let bytes = read(&target("falkor", binding)?)?;
+    deadline.check()?;
+    Ok(Zeroizing::new(falkor_password(&bytes)?.to_owned()))
+}
 fn github_token_bytes(bytes: &[u8]) -> Result<&str> {
     ensure!(
         !bytes.is_empty()

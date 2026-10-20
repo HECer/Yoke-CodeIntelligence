@@ -16,6 +16,8 @@ pub mod document_graph;
 pub mod editor;
 pub mod editor_http;
 pub mod export;
+pub mod falkor_publish;
+pub mod falkor_wire;
 pub mod federation;
 pub mod federation_archive;
 pub mod federation_http;

@@ -6,7 +6,7 @@ mod client;
 #[path = "neo4j_publish_journal.rs"]
 mod journal;
 #[path = "neo4j_publish_plan.rs"]
-mod plan;
+pub(crate) mod plan;
 #[path = "neo4j_publish_program.rs"]
 mod program;
 #[path = "neo4j_publish_transport.rs"]
