@@ -229,6 +229,17 @@ This is finite source correspondence, with no remote attestation, sender CAS
 identity, source-digest-hash verification, semantic reasoning, model calls or
 persistence. See the [verification contract](../native/docs/received-source-verification.md).
 
+The distinct `receiver::interpretation` read independently replays explicitly
+selected local native Meaning graphs and their complete source/canonical/capture/
+response/cache/accounting closure. All submitted units, including context and
+`no_claims` coverage, must fit exact local file/hash/ranges of freshly verified
+received declarations. Every containing declaration retains its original row and
+ordinal; the full checked semantic layer retains directed parallel claims,
+quotations, roles and receipt provenance. Extra host permission admits source
+quotes; existing read-only Stores, no provider dispatch and no writes remain.
+Inferences are unverified, and correspondence grants no semantic identity or
+execution evidence. See the [interpretation contract](../native/docs/received-source-interpretation.md).
+
 `digest::acquisition` selects a bounded verified-head history batch and invokes
 native Git capture under one owned immediate transaction. A shared acquisition
 budget precedes commit/tree/blob admission; fresh source mapping and output

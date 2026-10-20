@@ -7,7 +7,28 @@ complete/replay a permitted worker and acquire bounded persistent Git history.
 An authenticated binding protects the original cumulative plan; current grants,
 selected queue revisions and exact native revisions remain mandatory. Separate
 status opens an existing read-only Store. Production installation and receiver
-semantic reasoning remain open; this adds no default background task.
+broader reasoning remain open; this adds no default background task.
+
+The separate [receiver source interpretation](../native/docs/received-source-interpretation.md)
+read binds existing explicitly built native Meaning graphs to fresh received
+declaration verification. Exact local sources, canonical graph, capture/analyzer
+lineage, provider response/cache origins and accounting replay independently.
+Every complete submitted unit, including context and `no_claims` units, must fit
+verified declaration bounds and local file hashes. All containing declaration
+ordinals and the entire semantic layer remain: parallel/reverse/self relations,
+ordered roles, exact quotes and original receipt/cost provenance. Extra host
+permission admits quotations through an existing-only read-only CLI; no provider
+is resolved, model started or derived record written. Interpretations remain
+unverified inferences; broader reasoning/model quality, other packet claims,
+production deployment and whole-source/remote equivalence remain open.
+
+The final interpretation scope passes **114 Rust tests / 0 failed / 1 ignored**
+across five groups, including thirteen new cases. Format/build/all-target Clippy,
+Python17, typecheck and TypeScript260/3skipped pass. All 764 native and 763 retained
+inputs stay unchanged during their final checks and still match the committed
+source. Owned protocol fixtures qualify replay/processing, not semantic quality
+or remote billing. The initial rejected fixture and test-only Clippy correction
+remain in the [interpretation evidence](validation/integration-2026-10-19/received-source-interpretation/README.md).
 
 The separate [received-declaration verification](../native/docs/received-source-verification.md)
 contract independently replays an accepted receipt against a host-selected local

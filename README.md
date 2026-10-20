@@ -29,15 +29,20 @@ independently owned receiver contract. The explicit
 [native receiver](native/docs/digest-receiver.md) adds authenticated TCP/TLS intake
 and immutable receipts. Separately authorized [received metadata queries](native/docs/digest-query.md)
 preserve receipt-qualified rows and directed relationships without conferring
-source authority. Public production deployment, semantic reasoning and wider
-upstream service equivalence remain open.
+source authority. Separate [local declaration verification](native/docs/received-source-verification.md)
+and [source-bound interpretation](native/docs/received-source-interpretation.md)
+bind selected independent local captures and explicitly built native Meaning
+graphs without default provider execution. Public production deployment, broader
+reasoning/model quality and wider upstream service equivalence remain open.
 
 Explicit [history acquisition](native/docs/digest-history-acquisition.md) selects,
 captures and maps a bounded historical batch under the verified head's scope.
 Snapshot/graph/FTS/scope/receipt publication commits atomically after replay and
 output admission. Explicit [persistent local history jobs](native/docs/digest-history-jobs.md)
 continue across batches and process restarts under current grants and exact
-revisions. Unattended App integration remains open.
+revisions. The explicit [App history driver](native/docs/app-history-integration.md)
+binds worker completion to signed original plans and exact queue/native revisions.
+Configured production/background deployment remains open.
 
 Explicit [Git conflict triage](native/docs/git-conflicts.md) observes the selected
 worktree's actual unmerged index. Exact stage-source pages use independent host

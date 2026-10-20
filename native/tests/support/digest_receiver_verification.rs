@@ -1,4 +1,6 @@
 //! Receiver intake plus independent captured-source replay; no model/credentials.
+#[path = "digest_receiver_interpretation.rs"]
+mod interpretation;
 use super::*;
 use receiver::verification as verify;
 struct Received {

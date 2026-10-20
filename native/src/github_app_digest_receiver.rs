@@ -15,6 +15,8 @@ use std::{
 use subtle::ConstantTimeEq;
 #[path = "github_app_digest_receiver_http.rs"]
 mod http;
+#[path = "github_app_digest_receiver_interpretation.rs"]
+pub mod interpretation;
 #[path = "github_app_digest_query.rs"]
 pub mod query;
 #[path = "github_app_digest_receiver_store.rs"]

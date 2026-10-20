@@ -16,7 +16,7 @@ original inventory references and historical checkpoint evidence.
 | R5: Git interpretation | Captured impact, areas, conflict stages, hierarchy candidates and finite CODEOWNERS interpretation with original byte evidence and visible unknowns. | Wider report/ownership semantics, compiler-bound override/dispatch identity, remote freshness and upstream schema equivalence. Captured labels grant no identity, review or merge authority. |
 | R6: host lifecycle | Generic managed installation, guarded v1/v2 recovery, the separate Codex MCP profile and native session semantic planning. | Other branded client schemas and hook/statusline adapters, their actual client gates and remaining platform qualification. |
 | R7: external sources | Selected PostgreSQL catalogs; received HTTP text/raw HTML/PDF; coordinated arXiv; reviewed native Neo4j/FalkorDB publication with pinned Windows live evidence. | Google shortcuts, authenticated/social/video routes, article/semantic interpretation and wider service/version/platform qualification. |
-| R8: GitHub App | Signed queue/worker lifecycle, controlled publication/pages, explicit discussions, digest client/receiver, authorized metadata queries, persistent local history jobs, App-bound bounded worker/history execution and independent host-local received Rust declaration correspondence. | Receiver semantic reasoning and independent verification of other packet claims (sender source-digest/CAS identity, discussions and history); configured live App installation/deployment and whole-source/remote equivalence. No background service is installed. Worker per-file Git-blob checks retain their existing finite scope. |
+| R8: GitHub App | Signed queue/worker lifecycle, controlled publication/pages, explicit discussions, digest client/receiver, authorized metadata queries, persistent/App-bound history execution, independent received Rust declaration correspondence and source-bound interpretation of explicitly built local native Meaning graphs. | Broader receiver reasoning and model-quality qualification; independent verification of other packet claims (sender source-digest/CAS identity, discussions and history); configured live App installation/deployment and whole-source/remote equivalence. No background service is installed. Worker per-file Git-blob checks retain their existing finite scope. |
 | R9: outcomes | Source-bound knowledge outcomes and separate historical saved-plan outcomes with immutable authored events, exact side quotes and transparent ranking. | Additional typed targets and explicit semantic transcript candidates; independent corroboration and observed execution evidence. Supplied labels do not establish actual application or runtime truth. |
 
 The [mixed graph query](../native/docs/mixed-meaning-queries.md) and
@@ -32,8 +32,19 @@ The separate [received-declaration verification](../native/docs/received-source-
 contract checks the advertised Rust projection against explicit independently
 replayed local sources; it preserves the distinction between finite correspondence
 and sender identity, whole-source equivalence or semantic reasoning.
+The separate [receiver interpretation](../native/docs/received-source-interpretation.md)
+contract now binds independently replayed local native Meaning inferences and
+their complete submitted units to these declaration witnesses. Source quotes,
+original receipts and semantic claims remain distinct from interpretation truth.
 
 ## Acceptance still required
+
+The source-bound receiver interpretation checkpoint passes 114 Rust tests / one
+ignored case across five groups, plus format/build/all-target Clippy, Python17,
+typecheck and TypeScript260/3skipped. Its 764 native and 763 retained inputs remain
+fixed. Owned protocol fixtures qualify source/receipt processing and explicit
+cache rebound, not model quality, remote billing or production deployment. See
+[interpretation evidence](validation/integration-2026-10-19/received-source-interpretation/README.md).
 
 The independent received-declaration checkpoint passes 142 Rust tests / two
 ignored cases across five groups, plus format/build/all-target Clippy, Python17,

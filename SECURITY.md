@@ -44,6 +44,15 @@ execution. Local queries open only existing read-only state. Remote queries read
 only the scoped service token, preserve TLS verification and introduce no sender
 Store, App signing-key lookup, model calls or derived record writes.
 
+Separate received-declaration verification replays an explicitly host-selected
+local capture under current receiver/source grants. Its additional interpretation
+permission allows source quotations from independently replayed local native
+Meaning graphs only when every complete submitted unit fits matched local
+declaration/hash/range evidence. Imported IDs/reports grant no source access.
+This read opens existing Stores only, starts no provider and writes no record;
+original model inferences and billing remain unverified claims of their explicit
+build receipts. Range correspondence grants no semantic identity or execution proof.
+
 Reviewed retention never grants deletion from a repository setting. Only an exact confirmed host plan can retire history or unlink committed quarantine bytes; unknown schemas/dependencies and reachable roots fail closed. Purge reports gross deleted content bytes, not a measured filesystem free-space increase.
 
 ## Retained 0.3 host capabilities
