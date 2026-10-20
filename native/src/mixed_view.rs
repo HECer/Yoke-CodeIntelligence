@@ -10,6 +10,12 @@ use std::{
 #[path = "mixed_view_query.rs"]
 mod query;
 pub use query::{Query, SourceRef, validate_pdf_query, validate_query};
+#[path = "mixed_meaning_input.rs"]
+mod meaning_input;
+pub use meaning_input::{
+    CheckedMeaningInputs, MeaningContextGroup, MeaningInputRequest, MeaningUnitSelection,
+    validate_meaning_inputs, validate_pdf_meaning_inputs,
+};
 #[path = "mixed_pdf_input.rs"]
 mod pdf;
 pub use pdf::{

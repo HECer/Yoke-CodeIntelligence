@@ -275,9 +275,9 @@ impl<'a> From<&'a SourceRef> for Reference<'a> {
 }
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
-struct Item<'a> {
+pub(super) struct Item<'a> {
     source: Reference<'a>,
-    text: &'a str,
+    pub(super) text: &'a str,
     xml_origins: &'a [XmlOrigin],
     #[serde(skip_serializing_if = "Option::is_none")]
     container_hash: Option<&'a str>,
@@ -378,7 +378,7 @@ fn source_provenance<'a>(view: &'a CheckedMixedView, d: &Deadline) -> Result<Sou
 }
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
-struct Metadata<'a> {
+pub(super) struct Metadata<'a> {
     kind: &'static str,
     selection: SelectionRef<'a>,
     documents: Vec<documents::Header<'a>>,
@@ -421,7 +421,7 @@ struct PdfHeader<'a> {
     worker_output_reservation: usize,
     worker_authority: &'static str,
 }
-fn metadata<'a>(view: &'a CheckedMixedView, d: &Deadline) -> Result<Metadata<'a>> {
+pub(super) fn metadata<'a>(view: &'a CheckedMixedView, d: &Deadline) -> Result<Metadata<'a>> {
     let mut pdfs = Vec::new();
     for pdf in &view.pdfs {
         check(d)?;
@@ -523,6 +523,127 @@ fn collect<'a>(
     }
     Ok(())
 }
+pub(super) fn read_item<'a>(
+    view: &'a CheckedMixedView,
+    source: &'a SourceRef,
+    scope: &'a crate::graph_view::comparison_input::BoundComparisonScope<'_>,
+    d: &Deadline,
+) -> Result<Item<'a>> {
+    let snapshot = scope.snapshot();
+    let item = match source {
+        SourceRef::PdfPageText {
+            asset_id,
+            container_hash,
+            page,
+            content_hash,
+            start_byte,
+            end_byte,
+        } => {
+            let pdf = view
+                .pdfs
+                .iter()
+                .find(|p| p.asset.id == *asset_id)
+                .ok_or_else(|| failure("mixed_view_input_invalid"))?;
+            pin(pdf.asset.source_hash == *container_hash)?;
+            let page = pdf
+                .pages
+                .iter()
+                .find(|p| p.number == *page)
+                .ok_or_else(|| failure("mixed_view_input_invalid"))?;
+            pin(page.content_hash == *content_hash)?;
+            input(
+                *end_byte <= page.text.len()
+                    && page.text.is_char_boundary(*start_byte)
+                    && page.text.is_char_boundary(*end_byte),
+            )?;
+            Item {
+                source: source.into(),
+                text: &page.text[*start_byte..*end_byte],
+                xml_origins: &[],
+                container_hash: Some(&pdf.asset.source_hash),
+                asset_id: Some(&pdf.asset.id),
+                precision: "exact_derived_pdf_page_utf8_not_container_offsets",
+            }
+        }
+        SourceRef::SourceUtf8 {
+            path,
+            content_hash,
+            start_byte,
+            end_byte,
+            ..
+        } => {
+            let file = snapshot
+                .files
+                .iter()
+                .find(|f| f.path == *path)
+                .ok_or_else(|| failure("mixed_view_input_invalid"))?;
+            pin(file.hash == *content_hash)?;
+            let source_text = scope.source(file, d)?.text();
+            input(
+                *end_byte <= source_text.len()
+                    && source_text.is_char_boundary(*start_byte)
+                    && source_text.is_char_boundary(*end_byte),
+            )?;
+            Item {
+                source: source.into(),
+                text: &source_text[*start_byte..*end_byte],
+                xml_origins: &[],
+                container_hash: None,
+                asset_id: None,
+                precision: "exact_native_utf8",
+            }
+        }
+        SourceRef::DocumentDecodedText {
+            document_graph_id,
+            segment_id,
+            content_hash,
+            start_byte,
+            end_byte,
+        } => {
+            let graph = view
+                .documents
+                .iter()
+                .find(|g| documents::header(g).document_graph_id == document_graph_id)
+                .ok_or_else(|| failure("mixed_view_input_invalid"))?;
+            let header = documents::header(graph);
+            let (text, origins) =
+                documents::read_decoded(graph, segment_id, content_hash, *start_byte, *end_byte)?;
+            Item {
+                source: source.into(),
+                text,
+                xml_origins: origins,
+                container_hash: Some(header.container_hash),
+                asset_id: Some(header.asset_id),
+                precision: "exact_decoded_text_with_enclosing_xml_origins",
+            }
+        }
+        SourceRef::DocumentPartXml {
+            document_graph_id,
+            part,
+            content_hash,
+            start_byte,
+            end_byte,
+        } => {
+            let graph = view
+                .documents
+                .iter()
+                .find(|g| documents::header(g).document_graph_id == document_graph_id)
+                .ok_or_else(|| failure("mixed_view_input_invalid"))?;
+            let header = documents::header(graph);
+            let text = documents::read_xml(graph, part, content_hash, *start_byte, *end_byte)?;
+            Item {
+                source: source.into(),
+                text,
+                xml_origins: &[],
+                container_hash: Some(header.container_hash),
+                asset_id: Some(header.asset_id),
+                precision: "exact_part_xml_utf8",
+            }
+        }
+    };
+    check(d)?;
+    Ok(item)
+}
 pub(super) fn run(
     view: &CheckedMixedView,
     q: &Query,
@@ -550,123 +671,7 @@ pub(super) fn run(
             d,
         ),
         Query::Read { source } => {
-            let item = match source {
-                SourceRef::PdfPageText {
-                    asset_id,
-                    container_hash,
-                    page,
-                    content_hash,
-                    start_byte,
-                    end_byte,
-                } => {
-                    let pdf = view
-                        .pdfs
-                        .iter()
-                        .find(|p| p.asset.id == *asset_id)
-                        .ok_or_else(|| failure("mixed_view_input_invalid"))?;
-                    pin(pdf.asset.source_hash == *container_hash)?;
-                    let page = pdf
-                        .pages
-                        .iter()
-                        .find(|p| p.number == *page)
-                        .ok_or_else(|| failure("mixed_view_input_invalid"))?;
-                    pin(page.content_hash == *content_hash)?;
-                    input(
-                        *end_byte <= page.text.len()
-                            && page.text.is_char_boundary(*start_byte)
-                            && page.text.is_char_boundary(*end_byte),
-                    )?;
-                    Item {
-                        source: source.into(),
-                        text: &page.text[*start_byte..*end_byte],
-                        xml_origins: &[],
-                        container_hash: Some(&pdf.asset.source_hash),
-                        asset_id: Some(&pdf.asset.id),
-                        precision: "exact_derived_pdf_page_utf8_not_container_offsets",
-                    }
-                }
-                SourceRef::SourceUtf8 {
-                    path,
-                    content_hash,
-                    start_byte,
-                    end_byte,
-                    ..
-                } => {
-                    let file = snapshot
-                        .files
-                        .iter()
-                        .find(|f| f.path == *path)
-                        .ok_or_else(|| failure("mixed_view_input_invalid"))?;
-                    pin(file.hash == *content_hash)?;
-                    let source_text = scope.source(file, d)?.text();
-                    input(
-                        *end_byte <= source_text.len()
-                            && source_text.is_char_boundary(*start_byte)
-                            && source_text.is_char_boundary(*end_byte),
-                    )?;
-                    Item {
-                        source: source.into(),
-                        text: &source_text[*start_byte..*end_byte],
-                        xml_origins: &[],
-                        container_hash: None,
-                        asset_id: None,
-                        precision: "exact_native_utf8",
-                    }
-                }
-                SourceRef::DocumentDecodedText {
-                    document_graph_id,
-                    segment_id,
-                    content_hash,
-                    start_byte,
-                    end_byte,
-                } => {
-                    let graph = view
-                        .documents
-                        .iter()
-                        .find(|g| documents::header(g).document_graph_id == document_graph_id)
-                        .ok_or_else(|| failure("mixed_view_input_invalid"))?;
-                    let header = documents::header(graph);
-                    let (text, origins) = documents::read_decoded(
-                        graph,
-                        segment_id,
-                        content_hash,
-                        *start_byte,
-                        *end_byte,
-                    )?;
-                    Item {
-                        source: source.into(),
-                        text,
-                        xml_origins: origins,
-                        container_hash: Some(header.container_hash),
-                        asset_id: Some(header.asset_id),
-                        precision: "exact_decoded_text_with_enclosing_xml_origins",
-                    }
-                }
-                SourceRef::DocumentPartXml {
-                    document_graph_id,
-                    part,
-                    content_hash,
-                    start_byte,
-                    end_byte,
-                } => {
-                    let graph = view
-                        .documents
-                        .iter()
-                        .find(|g| documents::header(g).document_graph_id == document_graph_id)
-                        .ok_or_else(|| failure("mixed_view_input_invalid"))?;
-                    let header = documents::header(graph);
-                    let text =
-                        documents::read_xml(graph, part, content_hash, *start_byte, *end_byte)?;
-                    Item {
-                        source: source.into(),
-                        text,
-                        xml_origins: &[],
-                        container_hash: Some(header.container_hash),
-                        asset_id: Some(header.asset_id),
-                        precision: "exact_part_xml_utf8",
-                    }
-                }
-            };
+            let item = read_item(view, source, &scope, d)?;
             check(d)?;
             output(
                 &Read {
