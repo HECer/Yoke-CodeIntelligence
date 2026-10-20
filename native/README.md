@@ -280,6 +280,11 @@ After extracting a native VSIX into an isolated directory, the actual Windows ex
 
 ## Advanced local workflows
 
+[Checked mixed graph composition](docs/mixed-meaning-composition.md) combines
+explicit source-replayed parents while preserving their original concept and
+observation namespaces. Host-authored cross-links remain separate unverified
+assertions and participate in queries only when explicitly selected.
+
 Explicit [mixed interpretation graph queries](docs/mixed-meaning-queries.md)
 provide graph-qualified concept lookup, literal label/alias search, degree counts
 and directed traces over source-replayed provider graphs. Original receipts,

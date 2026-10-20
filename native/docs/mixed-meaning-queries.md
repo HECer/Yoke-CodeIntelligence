@@ -1,5 +1,9 @@
 # Checked mixed interpretation graph queries
 
+[Explicit composition](mixed-meaning-composition.md) also supports multiple
+independently checked parents with graph-qualified concepts and separately
+identified, opt-in host assertions. Original evidence and local keys remain.
+
 `mixed_view::provider::load_checked` performs the same source/response/ledger
 replay and byte comparison as `provider::load`. Its opaque `CheckedGraph` owns
 the checked native/Office/PDF source view and immutable verified graph data.
