@@ -86,6 +86,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 pub struct HostProfile {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub inline_compiler: Option<crate::projects::CompilerSpec>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub move_compiler: Option<crate::projects::CompilerSpec>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub collections: Vec<HostCollection>,
     pub projects: Vec<HostProject>,
@@ -102,6 +104,7 @@ impl Default for HostProfile {
     fn default() -> Self {
         Self {
             inline_compiler: None,
+            move_compiler: None,
             collections: Vec::new(),
             projects: Vec::new(),
             context: "agent".into(),
@@ -170,6 +173,7 @@ pub struct Session {
     capture_epoch: crate::analysis::AnalyzerEpoch,
     host: HostProfile,
     inline_compiler_binding: Option<String>,
+    move_compiler_binding: Option<String>,
     // Invocation-owned selector aliases supplied by the current host. Stored
     // session rows never grant paths, and lookup never probes requested roots.
     project_root_aliases: BTreeMap<String, String>,
@@ -930,6 +934,29 @@ impl Session {
         } else {
             fingerprint
         };
+        let move_compiler_binding = host
+            .move_compiler
+            .as_ref()
+            .map(|spec| crate::compiler_inline::host_binding(spec, deadline))
+            .transpose()?;
+        if let Some(spec) = &host.move_compiler {
+            for tool in [&spec.node, &spec.typescript] {
+                let tool = tool.canonicalize()?;
+                ensure!(
+                    !tool.starts_with(engine.root.canonicalize()?)
+                        && host
+                            .projects
+                            .iter()
+                            .all(|project| !tool.starts_with(&project.root)),
+                    "Move compiler tools must be outside all host-registered analyzed projects"
+                );
+            }
+        }
+        let fingerprint = if let Some(binding) = &move_compiler_binding {
+            identity(&(fingerprint, "host_move_compiler_v1", binding))
+        } else {
+            fingerprint
+        };
         let capture_epoch = engine.capture_epoch;
         // Preserve every original V8 host fingerprint, including its existing
         // debugger and collection wrappers. Explicit V9 sessions pin their
@@ -1026,6 +1053,7 @@ impl Session {
             capture_epoch,
             host,
             inline_compiler_binding,
+            move_compiler_binding,
             project_root_aliases,
             state,
             persisted: raw.unwrap_or(serialized),
@@ -1523,15 +1551,25 @@ impl Session {
                 deadline.check()?;
                 let compiler = if operation == "inline" {
                     self.host.inline_compiler.clone()
+                } else if operation == "move"
+                    && arguments["namePath"]
+                        .as_str()
+                        .is_some_and(|name| !name.is_empty())
+                {
+                    self.host.move_compiler.clone()
                 } else {
                     None
                 };
-                let binding = self.inline_compiler_binding.clone();
+                let binding = if operation == "move" {
+                    self.move_compiler_binding.clone()
+                } else {
+                    self.inline_compiler_binding.clone()
+                };
                 let engine = self.active_engine_at(deadline)?;
                 if let Some(spec) = compiler {
                     let path = arguments["relativePath"]
                         .as_str()
-                        .context("Inline source path required")?;
+                        .context("Compiler refactoring source path required")?;
                     let (snapshot, _, _, _) = engine.index(deadline)?;
                     let language =
                         crate::capture::validate_language(&engine.store, &snapshot, path)?;
@@ -1541,15 +1579,17 @@ impl Session {
                     ) {
                         ensure!(
                             Some(crate::compiler_inline::host_binding(&spec, deadline)?) == binding,
-                            "Inline compiler host binding changed; resume with the current host profile"
+                            "Compiler refactoring host binding changed; resume with the current host profile"
                         );
                         let mut arguments = arguments.clone();
                         if arguments.get("snapshotId").is_none() {
                             arguments["snapshotId"] = json!(snapshot.id);
                         }
-                        return crate::compiler_inline::prepare(
-                            engine, &spec, &arguments, deadline,
-                        );
+                        return if operation == "move" {
+                            crate::compiler_move::prepare(engine, &spec, &arguments, deadline)
+                        } else {
+                            crate::compiler_inline::prepare(engine, &spec, &arguments, deadline)
+                        };
                     }
                 }
                 crate::semantic_refactor::invoke(engine, operation, arguments, deadline)

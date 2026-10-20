@@ -2,6 +2,30 @@
 
 ## Current integration work
 
+Explicit [immutable compiler moves](../native/docs/compiler-move.md) add actual
+host-selected TypeScript 5.8.3 declaration moves into existing captured ES modules.
+Native syntax/binding/import-export/result checks, explicit graph-absent AST
+selection and original BOM normalization precede ordinary guarded plans.
+All **16 new cases pass** (13 integration / three unit), including fourteen
+analyzer/declaration scenarios, four encoding/language scenarios, two JSX
+component scenarios, inert repository plugins and actual CLI plus independent
+`tsc`, approval/application and conditional recovery. An additional CLI
+Array/Promise standard-library move and independent tsc gate pass separately from these Rust test counts. Invalid compiler reexports
+and import-alias collisions refuse; their independent repair remains open.
+
+The final scoped native invocation is **645 passed / 0 failed /
+9 ignored**, across 13 groups, including the library and selected
+integrations. Format, build and all-target Clippy pass on 795 fixed native
+inputs. Existing ignored entries include separately qualified large-capacity,
+Windows path and live/parent-worker fixtures; they are not counted as passed.
+Python17, typecheck and TypeScript260/3skipped pass on 789 fixed retained inputs.
+This is scoped Windows development evidence, not a whole-native or other-platform
+rerun.
+See [compiler move evidence](validation/integration-2026-10-19/compiler-move/README.md).
+Classic body inline, broader move/consumer/runtime contracts, full Windows and
+current-head hosted acceptance remain open. The existing Windows symlink-privilege
+gate and separately identified macOS PDF/runtime/timing failures remain unresolved.
+
 Explicit [immutable compiler inlining](../native/docs/compiler-inline.md) adds
 host-selected TypeScript 5.8.3 function-binding inline plans for TS/TSX/JS/JSX,
 including sibling declarations, JSX/component bindings, object shorthand and

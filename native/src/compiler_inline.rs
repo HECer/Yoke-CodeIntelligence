@@ -13,7 +13,11 @@ use sha2::{Digest, Sha256};
 use std::{collections::BTreeSet, fs, io::Read, path::Path};
 use tree_sitter::{Node, Tree};
 
-fn host_file(path: &Path, maximum: u64, d: &Deadline) -> Result<(std::path::PathBuf, String)> {
+pub(crate) fn host_file(
+    path: &Path,
+    maximum: u64,
+    d: &Deadline,
+) -> Result<(std::path::PathBuf, String)> {
     ensure!(
         path.is_absolute(),
         "Inline compiler paths must be absolute host paths"

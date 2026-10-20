@@ -9,7 +9,7 @@ original inventory references and historical checkpoint evidence.
 
 | Area | Implemented contracts | Remaining work |
 | --- | --- | --- |
-| R1: semantic edits | Guarded native/provider planning, declaration ownership, directory/file usage, TS/JS propagation/session routing and actual host-selected immutable TS5.8.3 function-binding inlining with compiler-bound consumers and independent source/effect/apply/recovery checks. | Classic function-body inline, broader moves/declaration/file/language/context shapes, dynamic or outside-file consumers and wider runtime/upstream acceptance. The compiler variable-inline action and existing LSP own_v1 move contract retain distinct finite scopes. |
+| R1: semantic edits | Guarded native/provider planning, declaration ownership, directory/file usage, TS/JS propagation/session routing and actual host-selected immutable TS5.8.3 function-binding inlining and moves into existing captured ES modules with compiler-bound consumers and independent source/effect/apply/recovery checks. | Classic function-body inline, selected-symbol reexport/import-alias collision repair, broader moves/declaration/file/language/context shapes, dynamic or outside-file consumers and wider runtime/upstream acceptance. The compiler variable-inline action and existing LSP own_v1 move contract retain distinct finite scopes. |
 | R2: meaning and identity | Checked native graphs/joins, portable projections and mixed preparation/build/query/composition. A separate native MinHash/Jaro candidate policy, durable explicit model adjudication, source-replayed positive-clique quotient and frozen node/degree/trace queries preserve every original observation. | Other source/history/workspace identity, wider normalization/survivor rules, interpretation/outcome surfaces and live semantic-quality/upstream acceptance. Existing mixed aliases and host links keep their original namespace/authority boundaries; model equivalence remains unverified. |
 | R3: historical analytics | Explicit checked pair-of-Views comparison with complete parent pins, immutable source/receipt replay and directed observations. | Remaining upstream analytics equivalence and acceptance. A bare previousSnapshotId remains insufficient to select two Views; that refusal is an intentional precondition. |
 | R4: mixed documents | Native/Office XML/decoded/PDF spaces, fixed input preparation, checked claims, explicit provider jobs, checked graph queries and independently checked cross-workspace/history composition. | Broader mixed analytics, external semantic-provider qualification and exhaustive interpretation remain open. CLI composition currently selects one explicit Store; library callers may supply separately checked parents from different workspaces. |
@@ -38,6 +38,30 @@ their complete submitted units to these declaration witnesses. Source quotes,
 original receipts and semantic claims remain distinct from interpretation truth.
 
 ## Acceptance still required
+
+Explicit [immutable compiler moves](../native/docs/compiler-move.md) add actual
+host-selected TypeScript 5.8.3 declaration moves into existing captured ES modules.
+Native syntax/binding/import-export/result checks, explicit graph-absent AST
+selection and original BOM normalization precede ordinary guarded plans.
+All **16 new cases pass** (13 integration / three unit), including fourteen
+analyzer/declaration scenarios, four encoding/language scenarios, two JSX
+component scenarios, inert repository plugins and actual CLI plus independent
+`tsc`, approval/application and conditional recovery. An additional CLI
+Array/Promise standard-library move and independent tsc gate pass separately from these Rust test counts. Invalid compiler reexports
+and import-alias collisions refuse; their independent repair remains open.
+
+The final scoped native invocation is **645 passed / 0 failed /
+9 ignored**, across 13 groups, including the library and selected
+integrations. Format, build and all-target Clippy pass on 795 fixed native
+inputs. Existing ignored entries include separately qualified large-capacity,
+Windows path and live/parent-worker fixtures; they are not counted as passed.
+Python17, typecheck and TypeScript260/3skipped pass on 789 fixed retained inputs.
+This is scoped Windows development evidence, not a whole-native or other-platform
+rerun.
+See [compiler move evidence](validation/integration-2026-10-19/compiler-move/README.md).
+Classic body inline, broader move/consumer/runtime contracts, full Windows and
+current-head hosted acceptance remain open. The existing Windows symlink-privilege
+gate and separately identified macOS PDF/runtime/timing failures remain unresolved.
 
 Explicit [immutable compiler inlining](../native/docs/compiler-inline.md) adds
 host-selected TypeScript 5.8.3 function-binding inline plans for TS/TSX/JS/JSX,

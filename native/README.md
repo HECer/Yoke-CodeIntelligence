@@ -2,6 +2,10 @@
 
 An independently implemented MIT core for local code orientation, semantic navigation, source graphs and reviewable changes. The default executable needs no Node/Python runtime, Graft, Serena, Graphify, model or API key. Standard third-party parsing/database/algorithm libraries are linked into the binary. Host-selected language servers are optional separate executables.
 
+Explicit [compiler moves](docs/compiler-move.md) prepare source-checked TS/JS
+declaration moves into existing captured modules through a host-selected compiler.
+Independent verification, approval and conditional recovery remain required.
+
 The optional [PostgreSQL catalog host adapter](docs/postgres-catalog.md) captures
 fixed read-only metadata through an explicitly trusted/pinned psql18 installation
 into immutable received-data artifacts. `postgres-catalog read` queries these

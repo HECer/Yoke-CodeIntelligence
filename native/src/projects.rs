@@ -127,6 +127,7 @@ pub(crate) fn execute(
         [
             include_str!("compiler_worker.cjs"),
             include_str!("compiler_inline_worker.cjs"),
+            include_str!("compiler_move_worker.cjs"),
         ]
         .join("\n"),
     )?;
@@ -218,7 +219,7 @@ pub(crate) fn execute(
         );
     }
     deadline.check()?;
-    if operation == "inline" {
+    if matches!(operation, "inline" | "move") {
         // No artifact, derived source or plan is published before independent
         // effect admission by the compiler-inline adapter.
         return Ok(report);

@@ -2,6 +2,13 @@
 
 ## Native Rust ownership
 
+The separate optional `moveCompiler` host profile uses actual TypeScript 5.8.3
+Move to file output over immutable captured modules. Native syntax/binding,
+import/export coverage and result-byte checks precede ordinary guarded plans.
+Graph-absent variable/namespace selection has explicit AST provenance, with no
+invented graph entity. Original BOM normalization is independently reproduced;
+invalid compiler reexports/import collisions refuse. See [compiler moves](../native/docs/compiler-move.md).
+
 The optional session `inlineCompiler` profile binds an explicitly trusted host
 Node executable and TypeScript 5.8.3 module. Rust checks captured declaration and
 reference spans, copied initializer syntax, exact statement/comma removal bundles

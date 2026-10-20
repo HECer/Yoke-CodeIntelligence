@@ -6,6 +6,7 @@ pub mod capture;
 pub mod changes;
 pub mod compatibility;
 pub mod compiler_inline;
+pub mod compiler_move;
 pub mod config_graph;
 pub mod container;
 pub mod contracts;
