@@ -1,0 +1,13 @@
+﻿from pathlib import Path
+import json,hashlib,subprocess,shutil
+work=Path(r'C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach');root=work.parent/'Yoke-CodeIntelligence';raw=root/'validation/integration-20261018/compiler-move-repairs';out=raw/'legacy-stdlib-cli';out.mkdir(exist_ok=False)
+read=lambda p:json.loads(p.read_text(encoding='utf-8-sig'));sha=lambda b:hashlib.sha256(b).hexdigest()
+prior=root/'validation/integration-20261018/compiler-move/live-stdlib-cli';receipt=read(prior/'result.json');fixture=Path(receipt['fixtureRoot']).resolve();assert fixture.name.startswith('ci-compiler-move-stdlib-') and fixture.is_dir();project=fixture/'project';host=fixture/'host'
+assert all(sha((project/n).read_bytes())==h for n,h in receipt['inputSourceHashes'].items())
+frozen=read(raw/'final-r1/source-after.json');assert all(sha((work/n).read_bytes())==h for n,h in frozen.items())
+old=read(prior/'prepare.stdout')['results'][0];binary=root/'target/debug/yoke.exe';command=[str(binary),'--root',str(project),'session','--id','stdlib','--host-profile',str(host/'host.json'),'--requests',str(host/'requests.json')];r=subprocess.run(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE);(out/'prepare.stdout').write_bytes(r.stdout);(out/'prepare.stderr').write_bytes(r.stderr);assert r.returncode==0,r.stderr[:1000];new=json.loads(r.stdout)['results'][0]
+for key in ['sourceBindings','intent','compilerHash','compilerContextId','effectDigest','standardLibraryHashes']:assert old[key]==new[key],key
+assert old['plan']['edits']==new['plan']['edits'];assert old['plan']['resultSnapshotId']==new['plan']['resultSnapshotId'];assert 'sourceRepairs' not in new and 'editComposition' not in new
+assert all(sha((project/n).read_bytes())==h for n,h in receipt['inputSourceHashes'].items());assert all(sha((work/n).read_bytes())==h for n,h in frozen.items())
+result={'allChecksPassed':True,'sourceUnchanged':True,'runtimeInputsUnchanged':True,'sameOwnedFixtureAsBaseCheckpoint':str(fixture),'priorSourceCommit':'b1da9f70a57bbca1f1573b9b54d58beca517c63c','planIdEqual':old['plan']['id']==new['plan']['id'],'priorPlanId':old['plan']['id'],'currentPlanId':new['plan']['id'],'resultSnapshotIdExact':True,'editsExact':True,'intentExact':True,'effectDigestExact':True,'sourceBindingsExact':True,'compilerContextIdExact':True,'standardLibraryHashesExact':True,'noRepairMetadataAdded':True,'executedBinarySha256':sha(binary.read_bytes()),'isAdditionalProbeNotRustTestCount':True,'command':command}
+(out/'result.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8',newline='\n');shutil.copyfile(__file__,out/'runner.py');shutil.copyfile(prior/'prepare.stdout',out/'prior-prepare.stdout');print(json.dumps({k:v for k,v in result.items() if k!='command'}))

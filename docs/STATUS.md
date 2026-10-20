@@ -37,8 +37,9 @@ All **16 new cases pass** (13 integration / three unit), including fourteen
 analyzer/declaration scenarios, four encoding/language scenarios, two JSX
 component scenarios, inert repository plugins and actual CLI plus independent
 `tsc`, approval/application and conditional recovery. An additional CLI
-Array/Promise standard-library move and independent tsc gate pass separately from these Rust test counts. Invalid compiler reexports
-and import-alias collisions refuse; their independent repair remains open.
+Array/Promise standard-library move and independent tsc gate pass separately from these Rust test counts. At that earlier checkpoint, invalid compiler reexports
+and import-alias collisions refused; the repair checkpoint above supersedes
+that limitation for the covered shapes.
 
 The final scoped native invocation is **645 passed / 0 failed /
 9 ignored**, across 13 groups, including the library and selected
