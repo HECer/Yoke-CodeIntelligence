@@ -18,6 +18,12 @@ Google/social/video/database routes retain their separate capability boundaries.
 
 ## Build and use
 
+The read-only [mixed-source input preparation](docs/mixed-views.md) accepts
+explicit typed code, Office text/XML and permitted PDF page selections through
+`mixed-view --meaning-inputs HOST_JSON`. Exact excerpts and original receipt
+provenance remain separate from semantic interpretation. This prepares bounded
+data without a provider call; mixed semantic execution and graph links remain open.
+
 Rust 1.94.1 and the Windows MSVC toolchain are exercised locally. Cargo requires Rust 1.94.1 or newer, including the native AWS signing dependencies. Older compilers and hosted macOS/Linux CI are not claimed tested here.
 
 ```sh

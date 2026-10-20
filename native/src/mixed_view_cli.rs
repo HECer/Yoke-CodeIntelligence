@@ -5,7 +5,9 @@ use std::{io::Write, path::PathBuf};
 use yoke::{
     Engine,
     capture::Deadline,
-    mixed_view::{self, NativePdfWorker, Options, Query, Selection, SelectionV2},
+    mixed_view::{
+        self, MeaningInputRequest, NativePdfWorker, Options, Query, Selection, SelectionV2,
+    },
 };
 #[derive(Args)]
 pub struct Arguments {
@@ -13,6 +15,9 @@ pub struct Arguments {
     selection: PathBuf,
     #[arg(long)]
     query: Option<String>,
+    /// Prepare bounded typed inputs from checked frozen sources, without a provider call.
+    #[arg(long, conflicts_with = "query")]
+    meaning_inputs: Option<String>,
     #[arg(long, default_value_t = 4)]
     max_documents: usize,
     #[arg(long, default_value_t = 64_000_000)]
@@ -34,8 +39,12 @@ enum Selected {
 }
 pub struct Prepared {
     selection: Selected,
-    query: Query,
+    request: Requested,
     options: Options,
+}
+enum Requested {
+    Query(Query),
+    MeaningInputs(MeaningInputRequest),
 }
 impl Arguments {
     pub fn prepare(&self, max_bytes: u64, d: &Deadline) -> Result<Prepared> {
@@ -68,24 +77,42 @@ impl Arguments {
             mixed_view::validate_selection(&selection, &options, d)?;
             Selected::Office(selection)
         };
-        let query = match &self.query {
-            None => Query::Describe {},
-            Some(raw) => yoke::json::decode(
-                yoke::json::parse(raw.as_bytes(), 16_000)
+        let request = if let Some(raw) = &self.meaning_inputs {
+            let request = yoke::json::decode(
+                yoke::json::parse(raw.as_bytes(), 64_000)
                     .map_err(|_| anyhow::anyhow!("mixed_view_input_invalid"))?,
             )
-            .map_err(|_| anyhow::anyhow!("mixed_view_input_invalid"))?,
-        };
-        match &selection {
-            Selected::Office(selection) => mixed_view::validate_query(&query, selection, d)?,
-            Selected::Pdf { selection, .. } => {
-                mixed_view::validate_pdf_query(&query, selection, d)?
+            .map_err(|_| anyhow::anyhow!("mixed_view_input_invalid"))?;
+            match &selection {
+                Selected::Office(selection) => {
+                    mixed_view::validate_meaning_inputs(&request, selection, d)?
+                }
+                Selected::Pdf { selection, .. } => {
+                    mixed_view::validate_pdf_meaning_inputs(&request, selection, d)?
+                }
             }
-        }
+            Requested::MeaningInputs(request)
+        } else {
+            let query = match &self.query {
+                None => Query::Describe {},
+                Some(raw) => yoke::json::decode(
+                    yoke::json::parse(raw.as_bytes(), 16_000)
+                        .map_err(|_| anyhow::anyhow!("mixed_view_input_invalid"))?,
+                )
+                .map_err(|_| anyhow::anyhow!("mixed_view_input_invalid"))?,
+            };
+            match &selection {
+                Selected::Office(selection) => mixed_view::validate_query(&query, selection, d)?,
+                Selected::Pdf { selection, .. } => {
+                    mixed_view::validate_pdf_query(&query, selection, d)?
+                }
+            }
+            Requested::Query(query)
+        };
         d.check()?;
         Ok(Prepared {
             selection,
-            query,
+            request,
             options,
         })
     }
@@ -100,7 +127,12 @@ impl Prepared {
                 mixed_view::load_with_pdf(&engine.store, selection, worker, &self.options, d)?
             }
         };
-        let result = view.query(&self.query, self.options.max_output_bytes, d)?;
+        let result = match &self.request {
+            Requested::Query(query) => view.query(query, self.options.max_output_bytes, d)?,
+            Requested::MeaningInputs(request) => view
+                .prepare_meaning_inputs(request, d)?
+                .export(self.options.max_output_bytes, d)?,
+        };
         let bytes = yoke::json::encode_bounded(&result, self.options.max_output_bytes, d)
             .map_err(|_| anyhow::anyhow!("mixed_view_capacity_exceeded"))?;
         d.check()?;

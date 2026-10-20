@@ -1,5 +1,37 @@
 # Checked mixed source/document queries
 
+`mixed-view --meaning-inputs HOST_JSON` prepares bounded input data for later
+semantic processing from the same checked frozen sources. It conflicts with
+`--query`. The closed request has `schemaVersion: 1`, 1 through 16 `units`
+(`label`, `source` typed read reference), and optional `contextGroups`
+(`label`, ordered `units` label list). Labels are unique within their respective
+unit/group namespace, 1 through 64 ASCII letters, digits, `_` or `-`.
+Each group selects 1 through 16 unit occurrences; at most 16 groups are allowed.
+Each unit selects a nonempty range of at most 16,384 exact UTF-8 bytes. Repeated
+selections remain separate observations and repeated context occurrences count
+each time toward the combined 1,000,000 context text-byte bound. Labels and
+ordering assert no semantic identity or corroboration.
+
+The library returns opaque `CheckedMeaningInputs` only through
+`CheckedMixedView::prepare_meaning_inputs`; exported JSON cannot construct the
+capability. The `mixed_meaning_inputs_v1` export contains exact read `item`s,
+unit IDs bound to the selected pins/label/item, the ordered context unit IDs,
+byte totals, and nested `mixedView` metadata with original receipt/source-scope
+provenance. The input hash also binds request order and context groups. No
+decoded coordinate becomes native source authority. Schema 2 PDF selections
+still require explicit `--native-pdf-text`, and retain original container pins,
+page text hashes and unverified worker attestation.
+
+The request is bounded to 64,000 serialized bytes; each materialized read item,
+including XML origins, is bounded to 256,000 encoded bytes. The existing combined
+output and deadline limits apply without partial stdout or saved overflow.
+`unitTextBytes` counts all selected units; `contextTextBytes` counts occurrences
+inside explicit groups, not prompt wire bytes, tokens or provider cost.
+Preparation runs no semantic provider/model and creates no graph relationship,
+receipt or persisted input. `modelCalls: 0`, `sourceWritten: false` and
+`complete: false` remain explicit. Mixed semantic execution and graph replay
+are separate capabilities still to be implemented.
+
 `mixed-view` selects one explicitly pinned native source View and one through
 four checked DOCX/XLSX document graphs in the same workspace. It replays the
 source View and its original overlay/Meaning receipts, reconstructs documents

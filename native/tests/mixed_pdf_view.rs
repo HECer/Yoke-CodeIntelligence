@@ -16,6 +16,100 @@ use yoke::{
 #[path = "support/mixed_pdf_fixture.rs"]
 mod support;
 use support::*;
+
+#[test]
+fn mixed_meaning_pdf_inputs_replay_frozen_original_pages_and_require_explicit_worker_permission() {
+    let f = fixture();
+    let d = Deadline::new(60000);
+    let view = mixed_view::load_with_pdf(
+        &f.engine.store,
+        &f.selection,
+        &worker(),
+        &Options::default(),
+        &d,
+    )
+    .unwrap();
+    let found = view
+        .query(
+            &query(json!({"operation":"find","query":"storage","ignoreCase":true})),
+            4_000_000,
+            &d,
+        )
+        .unwrap();
+    let request = json!({"schemaVersion":1,"units":found["items"].as_array().unwrap().iter().enumerate()
+        .map(|(n,item)|json!({"label":format!("u{n}"),"source":item["source"]})).collect::<Vec<_>>(),
+        "contextGroups":[{"label":"mixed","units":["u2","u0","u1","u2"]}]});
+    let file = f.dir.path().join("selection.json");
+    fs::write(&file, serde_json::to_vec(&f.selection).unwrap()).unwrap();
+    for name in ["billing.rs", "office.docx", "notes.pdf"] {
+        fs::remove_file(f.dir.path().join(name)).unwrap();
+    }
+    let before = state(&f.engine);
+    let run = |permission: bool| {
+        let mut c = Command::new(env!("CARGO_BIN_EXE_yoke"));
+        c.arg("--root")
+            .arg(&f.engine.root)
+            .args([
+                "--timeout",
+                "60000",
+                "--max-bytes",
+                "4000000",
+                "mixed-view",
+                "--selection",
+            ])
+            .arg(&file)
+            .arg("--meaning-inputs")
+            .arg(request.to_string());
+        if permission {
+            c.arg("--native-pdf-text");
+        }
+        c.output().unwrap()
+    };
+    let denied = run(false);
+    assert!(!denied.status.success());
+    assert!(denied.stdout.is_empty());
+    assert!(String::from_utf8_lossy(&denied.stderr).contains("mixed_view_pdf_permission_required"));
+    let output = run(true);
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let result: Value = serde_json::from_slice(&output.stdout).unwrap();
+    assert_eq!(result["mixedView"]["selection"]["schemaVersion"], 2);
+    assert_eq!(result["mixedView"]["pdfs"][0]["containerHash"], hash(pdf()));
+    for (unit, item) in result["units"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .zip(found["items"].as_array().unwrap())
+    {
+        let read = view
+            .query(
+                &query(json!({"operation":"read","source":item["source"]})),
+                4_000_000,
+                &d,
+            )
+            .unwrap();
+        assert_eq!(unit["item"], read["item"]);
+    }
+    let typed = serde_json::from_value(request.clone()).unwrap();
+    assert_eq!(
+        view.prepare_meaning_inputs(&typed, &d)
+            .unwrap()
+            .export(4_000_000, &d)
+            .unwrap(),
+        result
+    );
+    let mut stale = request;
+    stale["units"][2]["source"]["contentHash"] = json!("0".repeat(64));
+    let stale = serde_json::from_value(stale).unwrap();
+    refused(
+        view.prepare_meaning_inputs(&stale, &d),
+        "mixed_view_pin_mismatch",
+    );
+    assert_eq!(state(&f.engine), before);
+}
 fn query(value: Value) -> Query {
     yoke::json::decode(value).unwrap()
 }

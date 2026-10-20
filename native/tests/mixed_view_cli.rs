@@ -84,8 +84,11 @@ struct Input {
     documents: Vec<Value>,
 }
 fn input() -> Input {
+    input_with_source(SOURCE)
+}
+fn input_with_source(source: &str) -> Input {
     let dir = tempfile::tempdir().unwrap();
-    fs::write(dir.path().join("lib.rs"), SOURCE).unwrap();
+    fs::write(dir.path().join("lib.rs"), source).unwrap();
     fs::write(dir.path().join("notes.docx"), docx()).unwrap();
     fs::write(dir.path().join("book.xlsx"), xlsx()).unwrap();
     let mut engine = Engine::open(dir.path()).unwrap();
@@ -736,6 +739,22 @@ fn mixed_source_provenance_retains_exact_meaning_packets_coverage_and_search_sco
             "receipt_replay_only"
         }));
     assert_eq!(fs::read(&pair.marker).unwrap(), calls);
+    let found = success(
+        command(&pair.engine.root, &file, 4_000_000, &[])
+            .args(["--query", "{\"operation\":\"find\",\"query\":\"storage\"}"])
+            .output()
+            .unwrap(),
+    );
+    let request = json!({"schemaVersion":1,"units":[{"label":"receipt","source":found["items"][0]["source"]}]});
+    let prepared = success(
+        command(&pair.engine.root, &file, 4_000_000, &[])
+            .arg("--meaning-inputs")
+            .arg(request.to_string())
+            .output()
+            .unwrap(),
+    );
+    assert_eq!(prepared["mixedView"]["sourceProvenance"], *provenance);
+    assert_eq!(fs::read(&pair.marker).unwrap(), calls);
 }
 
 #[test]
@@ -759,6 +778,295 @@ fn mixed_library_search_admission_bounds_bytes_before_whitespace_normalization()
             "mixed_view_input_invalid"
         );
     }
+}
+
+fn meaning_request(i: &Input) -> Value {
+    let found = success(run(i, json!({"operation":"find","query":"storage"}), &[]));
+    let units: Vec<_> = found["items"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .enumerate()
+        .map(|(n, item)| json!({"label":format!("unit{n}"),"source":item["source"]}))
+        .collect();
+    json!({"schemaVersion":1,"units":units,"contextGroups":[{"label":"ordered","units":["unit1","unit0","unit1"]}]})
+}
+fn meaning_run(i: &Input, request: &Value, budget: usize) -> Output {
+    command(&i.engine.root, &i.file, budget, &[])
+        .arg("--meaning-inputs")
+        .arg(serde_json::to_string(request).unwrap())
+        .output()
+        .unwrap()
+}
+#[test]
+fn mixed_meaning_inputs_preserve_exact_spaces_repetitions_and_frozen_sources_without_writes() {
+    let i = input();
+    let mut request = meaning_request(&i);
+    let start = DOC_XML.find("&amp;").unwrap();
+    request["units"].as_array_mut().unwrap().push(json!({"label":"xml","source":{
+        "kind":"documentPartXml","documentGraphId":i.documents[0]["documentGraphId"],
+        "part":"word/document.xml","contentHash":hash(DOC_XML),"startByte":start,"endByte":start+5}}));
+    for name in ["lib.rs", "notes.docx", "book.xlsx"] {
+        fs::remove_file(i.engine.root.join(name)).unwrap();
+    }
+    let before = state(&i);
+    let result = success(meaning_run(&i, &request, 4_000_000));
+    assert_eq!(result["kind"], "mixed_meaning_inputs_v1");
+    assert_eq!(result["modelCalls"], 0);
+    assert_eq!(result["sourceWritten"], false);
+    assert_eq!(result["complete"], false);
+    let units = result["units"].as_array().unwrap();
+    let mut bytes = 0;
+    for (unit, selection) in units.iter().zip(request["units"].as_array().unwrap()) {
+        let read = success(run(
+            &i,
+            json!({"operation":"read","source":selection["source"]}),
+            &[],
+        ));
+        assert_eq!(unit["item"], read["item"]);
+        assert_eq!(
+            unit["textBytes"],
+            unit["item"]["text"].as_str().unwrap().len()
+        );
+        assert_eq!(
+            result["mixedView"]["sourceProvenance"],
+            read["sourceProvenance"]
+        );
+        bytes += unit["textBytes"].as_u64().unwrap();
+    }
+    assert_eq!(result["unitTextBytes"], bytes);
+    assert_eq!(units.last().unwrap()["item"]["text"], "&amp;");
+    assert_eq!(
+        result["contextGroups"][0]["unitIds"],
+        json!([units[1]["id"], units[0]["id"], units[1]["id"]])
+    );
+    assert_eq!(result["contextTextBytes"], 21);
+    assert_eq!(success(meaning_run(&i, &request, 4_000_000)), result);
+    assert_eq!(state(&i), before);
+}
+#[test]
+fn mixed_meaning_labels_select_observations_without_deduplicating_or_asserting_identity() {
+    let i = input();
+    let mut request = meaning_request(&i);
+    request["units"] = json!([{"label":"first","source":request["units"][0]["source"]},{"label":"second","source":request["units"][0]["source"]}]);
+    request["contextGroups"] = json!([]);
+    let first = success(meaning_run(&i, &request, 4_000_000));
+    assert_eq!(first["units"][0]["item"], first["units"][1]["item"]);
+    assert_ne!(first["units"][0]["id"], first["units"][1]["id"]);
+    request["contextGroups"] = json!([{"label":"claim","units":["second","first"]}]);
+    let second = success(meaning_run(&i, &request, 4_000_000));
+    assert_ne!(first["inputHash"], second["inputHash"]);
+    assert_eq!(first["units"], second["units"]);
+}
+#[test]
+fn mixed_meaning_rejects_closed_protocol_labels_counts_refs_and_unicode_splits() {
+    let i = input();
+    let request = meaning_request(&i);
+    let before = state(&i);
+    let mut invalid = Vec::new();
+    for (key, value) in [
+        ("schemaVersion", json!(2)),
+        ("units", json!([])),
+        ("provider", json!("ignored")),
+    ] {
+        let mut r = request.clone();
+        r[key] = value;
+        invalid.push(r);
+    }
+    for label in ["", "bad label", "../path", "é", &"x".repeat(65)] {
+        let mut r = request.clone();
+        r["units"][0]["label"] = json!(label);
+        invalid.push(r);
+    }
+    let mut r = request.clone();
+    r["units"][1]["label"] = r["units"][0]["label"].clone();
+    invalid.push(r);
+    for source in [
+        json!({"kind":"opaqueContainer","startByte":0,"endByte":1}),
+        {
+            let mut s = request["units"][0]["source"].clone();
+            s["path"] = json!("../lib.rs");
+            s
+        },
+        {
+            let mut s = request["units"][0]["source"].clone();
+            s["snapshotId"] = json!("0".repeat(64));
+            s
+        },
+        {
+            let mut s = request["units"][0]["source"].clone();
+            s["endByte"] = s["startByte"].clone();
+            s
+        },
+        {
+            let mut s = request["units"][0]["source"].clone();
+            s["endByte"] = json!(s["startByte"].as_u64().unwrap() + 16_385);
+            s
+        },
+    ] {
+        let mut r = request.clone();
+        r["units"][0]["source"] = source;
+        invalid.push(r);
+    }
+    for groups in [
+        json!([{"label":"bad","units":["missing"]}]),
+        json!([{"label":"bad","units":[]}]),
+        json!([{"label":"same","units":["unit0"]},{"label":"same","units":["unit0"]}]),
+        json!([{"label":"many","units":vec!["unit0";17]}]),
+    ] {
+        let mut r = request.clone();
+        r["contextGroups"] = groups;
+        invalid.push(r);
+    }
+    let found = success(run(&i, json!({"operation":"find","query":"\u{e9}"}), &[]));
+    let mut r = request.clone();
+    r["units"][0]["source"] = found["items"][0]["source"].clone();
+    r["units"][0]["source"]["startByte"] =
+        json!(r["units"][0]["source"]["startByte"].as_u64().unwrap() + 1);
+    invalid.push(r);
+    for r in invalid {
+        refused(meaning_run(&i, &r, 4_000_000), "mixed_view_input_invalid");
+    }
+    assert_eq!(state(&i), before);
+}
+#[test]
+fn mixed_meaning_exact_output_budget_and_cli_conflicts_refuse_without_partial_stdout() {
+    let i = input();
+    let request = meaning_request(&i);
+    let before = state(&i);
+    let output = meaning_run(&i, &request, 4_000_000);
+    let size = output.stdout.len();
+    success(output);
+    success(meaning_run(&i, &request, size));
+    refused(
+        meaning_run(&i, &request, size - 1),
+        "mixed_view_capacity_exceeded",
+    );
+    refused(
+        command(&i.engine.root, &i.file, 4_000_000, &[])
+            .args([
+                "--query",
+                "{\"operation\":\"describe\"}",
+                "--meaning-inputs",
+            ])
+            .arg(request.to_string())
+            .output()
+            .unwrap(),
+        "cannot be used with",
+    );
+    assert_eq!(state(&i), before);
+}
+#[test]
+fn mixed_meaning_context_budget_counts_repeated_occurrences_and_library_deadlines() {
+    use yoke::mixed_view::{self, MeaningInputRequest, Selection};
+    let source = format!("// {}\r\npub fn storage() {{}}\r\n", "a".repeat(16_384));
+    let i = input_with_source(&source);
+    let selection: Selection = serde_json::from_value(i.selection.clone()).unwrap();
+    let d = Deadline::new(60000);
+    let view = mixed_view::load(&i.engine.store, &selection, &Default::default(), &d).unwrap();
+    let reference = json!({"kind":"sourceUtf8","viewId":selection.source.view_id,"snapshotId":selection.source.snapshot_id,
+        "path":"lib.rs","contentHash":hash(&source),"startByte":3,"endByte":3+16_384});
+    let mut request = json!({"schemaVersion":1,"units":[{"label":"u","source":reference}],"contextGroups":
+        (0..3).map(|n|json!({"label":format!("g{n}"),"units":vec!["u";16]})).collect::<Vec<_>>()});
+    let typed: MeaningInputRequest = serde_json::from_value(request.clone()).unwrap();
+    let before = state(&i);
+    let prepared = view.prepare_meaning_inputs(&typed, &d).unwrap();
+    assert_eq!(
+        prepared.export(4_000_000, &d).unwrap()["contextTextBytes"],
+        786432
+    );
+    request["contextGroups"]
+        .as_array_mut()
+        .unwrap()
+        .push(json!({"label":"overflow","units":vec!["u";16]}));
+    let overflow = serde_json::from_value(request).unwrap();
+    assert_eq!(
+        view.prepare_meaning_inputs(&overflow, &d)
+            .err()
+            .unwrap()
+            .to_string(),
+        "mixed_view_capacity_exceeded"
+    );
+    let expired = Deadline::new(0);
+    assert_eq!(
+        view.prepare_meaning_inputs(&typed, &expired)
+            .err()
+            .unwrap()
+            .to_string(),
+        "mixed_view_deadline_exceeded"
+    );
+    assert_eq!(
+        prepared
+            .export(4_000_000, &expired)
+            .unwrap_err()
+            .to_string(),
+        "mixed_view_deadline_exceeded"
+    );
+    assert_eq!(state(&i), before);
+}
+
+#[test]
+fn mixed_meaning_selection_limits_and_strict_json_precede_store_initialization() {
+    let i = input();
+    let mut request = meaning_request(&i);
+    request["units"] = json!(
+        (0..16)
+            .map(|n| json!({"label":format!("u{n}"),"source":request["units"][0]["source"]}))
+            .collect::<Vec<_>>()
+    );
+    request["contextGroups"] = json!(
+        (0..16)
+            .map(|n| json!({"label":format!("g{n}"),"units":["u0"]}))
+            .collect::<Vec<_>>()
+    );
+    let before = state(&i);
+    let result = success(meaning_run(&i, &request, 4_000_000));
+    assert_eq!(result["units"].as_array().unwrap().len(), 16);
+    let empty = tempfile::tempdir().unwrap();
+    let mut extra_unit = request.clone();
+    extra_unit["units"]
+        .as_array_mut()
+        .unwrap()
+        .push(json!({"label":"u16","source":request["units"][0]["source"]}));
+    let mut extra_group = request.clone();
+    extra_group["contextGroups"]
+        .as_array_mut()
+        .unwrap()
+        .push(json!({"label":"g16","units":["u0"]}));
+    let mut extra_field = request.clone();
+    extra_field["units"][0]["sourceWritten"] = json!(true);
+    for raw in [
+        extra_unit.to_string(),
+        extra_group.to_string(),
+        extra_field.to_string(),
+        "{\"schemaVersion\":1,\"schemaVersion\":1,\"units\":[]}".into(),
+        format!(
+            "{{\"schemaVersion\":1,\"units\":[],\"padding\":\"{}\"}}",
+            "x".repeat(20_000)
+        ),
+    ] {
+        refused(
+            command(empty.path(), &i.file, 4_000_000, &[])
+                .arg("--meaning-inputs")
+                .arg(raw)
+                .output()
+                .unwrap(),
+            "mixed_view_input_invalid",
+        );
+    }
+    assert!(!empty.path().join(".yoke").exists());
+    use yoke::mixed_view::{MeaningInputRequest, Selection};
+    let mut huge = request;
+    huge["units"][0]["label"] = json!("x".repeat(64_000));
+    let typed: MeaningInputRequest = serde_json::from_value(huge).unwrap();
+    let selection: Selection = serde_json::from_value(i.selection.clone()).unwrap();
+    assert_eq!(
+        yoke::mixed_view::validate_meaning_inputs(&typed, &selection, &Deadline::new(60000))
+            .unwrap_err()
+            .to_string(),
+        "mixed_view_capacity_exceeded"
+    );
+    assert_eq!(state(&i), before);
 }
 
 #[test]
