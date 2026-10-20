@@ -13,7 +13,7 @@ function run(input){
  const compilerHash=sha(boundedRead(input.compiler,16_000_000));
  const ts=require(input.compiler);
  assert(ts.version==='5.8.3' && typeof ts.matchFiles==='function','Unsupported host TypeScript version');
- assert(input.schema===1 && ['analyze','build'].includes(input.operation),'Compiler request contract');
+ assert(input.schema===1 && ['analyze','build','inline'].includes(input.operation),'Compiler request contract');
  const slash=p=>p.replaceAll('\\','/'),root=slash(path.resolve(process.cwd(),'virtual'));
  const library=slash(path.dirname(ts.getDefaultLibFilePath({target:ts.ScriptTarget.ES2022})));
  const abs=p=>slash(path.resolve(root,p));
@@ -72,6 +72,7 @@ function run(input){
   active.delete(name);done.add(name);
  };
  for(const name of projects.keys())visit(name);
+ if(input.operation==='inline')return inlineVariable({input,ts,sha,assert,source,projects,read,fileExists,directoryExists,getDirectories,readDirectory,root,abs,rel,slash,span,diagnostic,libCache,compilerHash,limitations});
  const contexts=[];let status='passed',exitCode=null;
  if(input.operation==='analyze'){
   if(!projects.size){limitations.push('No configured project: inferred context is nonexhaustive.');projects.set('[inferred]',{name:'[inferred]',problems:[],parsed:{fileNames:[...source.keys()].filter(p=>/\.[cm]?[jt]sx?$/.test(p)),options:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext,moduleResolution:ts.ModuleResolutionKind.Bundler,allowJs:true,checkJs:true,jsx:ts.JsxEmit.Preserve,noEmit:true},projectReferences:[]}});}

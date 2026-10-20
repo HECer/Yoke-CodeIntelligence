@@ -322,3 +322,8 @@ Explicit [function binding propagation](docs/propagated-delete.md#explicit-funct
 adds single plain const/let/var arrow or anonymous-function bindings under v3.
 Original entity/evidence ranges, mandatory provider proofs and guarded application
 remain; defaultv1 and explicitv2 keep their named-function module boundary.
+
+An explicit [immutable compiler inline profile](docs/compiler-inline.md) adds
+actual TypeScript 5.8.3 function-binding inlining for TS/TSX/JS/JSX through native
+sessions and `jb.inline_symbol`. Exact source/effect checks and independent
+verification, approval, application and recovery remain separate.

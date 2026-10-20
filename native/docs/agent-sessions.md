@@ -254,3 +254,10 @@ nontransactional publication boundary. Approval, executed verification, workspac
 write permission, stale-source checks and conditional recovery remain separate.
 Providers still require trusted host registration; requests grant no source
 execution or model authority. Unsupported native cases fail explicitly.
+
+An optional host `inlineCompiler` selects the actual immutable TypeScript 5.8.3
+compiler for TS/JS function-binding inline plans through this same route and
+`jb.inline_symbol`. Executable/module hashes join the session binding; absent
+registration preserves existing identities and other languages keep their LSP
+route. See [compiler inlining](compiler-inline.md) for the host profile, independent
+source/effect checks, `keepDefinition`, limits and remaining scope.

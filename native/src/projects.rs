@@ -9,6 +9,8 @@ use crate::{
 use anyhow::{Context, Result, ensure};
 use serde_json::{Value, json};
 use std::{collections::BTreeMap, fs, path::PathBuf, process::Command};
+#[derive(Clone, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct CompilerSpec {
     pub node: PathBuf,
     pub typescript: PathBuf,
@@ -20,7 +22,7 @@ pub fn analyze(
     spec: &CompilerSpec,
     deadline: &Deadline,
 ) -> Result<Value> {
-    execute(store, snapshot, spec, "analyze", deadline)
+    execute(store, snapshot, spec, "analyze", None, deadline)
 }
 pub fn build(
     store: &Store,
@@ -28,13 +30,14 @@ pub fn build(
     spec: &CompilerSpec,
     deadline: &Deadline,
 ) -> Result<Value> {
-    execute(store, snapshot, spec, "build", deadline)
+    execute(store, snapshot, spec, "build", None, deadline)
 }
-fn execute(
+pub(crate) fn execute(
     store: &Store,
     snapshot: &Snapshot,
     spec: &CompilerSpec,
     operation: &str,
+    intent: Option<Value>,
     deadline: &Deadline,
 ) -> Result<Value> {
     ensure!(
@@ -98,25 +101,35 @@ fn execute(
     );
     for file in &snapshot.files {
         deadline.check()?;
-        let text = String::from_utf8(store.read_blob(&file.hash)?)?;
         bytes = bytes
-            .checked_add(text.len())
+            .checked_add(file.size)
             .context("Compiler input size overflow")?;
         ensure!(
             bytes <= 10_000_000,
             "Compiler immutable input exceeds 10 MB"
         );
+        let text = String::from_utf8(store.read_blob_exact(&file.hash, file.size, 10_000_000)?)?;
         contents.insert(file.path.clone(), text);
         bindings.insert(file.path.clone(), file.hash.clone());
     }
-    let input = json!({"schema":1,"operation":operation,"snapshotId":snapshot.id,"compiler":compiler,"contents":contents,"sourceBindings":bindings});
+    let mut input = json!({"schema":1,"operation":operation,"snapshotId":snapshot.id,"compiler":compiler,"contents":contents,"sourceBindings":bindings});
+    if let Some(intent) = intent {
+        input["intent"] = intent;
+    }
     let payload = serde_json::to_vec(&input)?;
     let input_hash = hash(&payload);
     let dir = tempfile::Builder::new()
         .prefix("yoke-compiler-")
         .tempdir()?;
     let worker = dir.path().join("compiler.cjs");
-    fs::write(&worker, include_bytes!("compiler_worker.cjs"))?;
+    fs::write(
+        &worker,
+        [
+            include_str!("compiler_worker.cjs"),
+            include_str!("compiler_inline_worker.cjs"),
+        ]
+        .join("\n"),
+    )?;
     let mut command = Command::new(node);
     command
         .arg("--max-old-space-size=512")
@@ -141,8 +154,8 @@ fn execute(
             .take(2000)
             .collect::<String>()
     );
-    let mut report: Value =
-        serde_json::from_slice(&capture.stdout).context("Invalid compiler worker response")?;
+    let mut report: Value = crate::json::parse(&capture.stdout, 32_000_000)
+        .context("Invalid compiler worker response")?;
     ensure!(
         report["schema"] == 1
             && report["operation"] == operation
@@ -205,6 +218,11 @@ fn execute(
         );
     }
     deadline.check()?;
+    if operation == "inline" {
+        // No artifact, derived source or plan is published before independent
+        // effect admission by the compiler-inline adapter.
+        return Ok(report);
+    }
     let artifact = store.artifact(&serde_json::to_vec(&report)?)?;
     if let Some(outputs) = report["outputs"].as_array_mut() {
         for output in outputs {

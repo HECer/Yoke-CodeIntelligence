@@ -20,3 +20,9 @@ Solution builds use the pinned compiler's solution builder with a virtual output
 Limits include 20,000 captured files, 10 MB source/configuration text, 128 projects, 500,000 visited AST nodes, 100,000 bindings per context, 20,000 diagnostics/outputs, 20 MB generated content, 16 MB request and 32 MB reply. The trusted worker has a 512 MB Node heap limit and one shared request deadline. Heap limits are not an OS sandbox. The host compiler process retains host privileges.
 
 Run `cargo test --locked --test projects` for actual compiler tests covering historical source, Unicode anchors, inherited include/exclude configuration, conflicting path aliases, project-reference navigation/builds, cyclic/missing/empty projects, forbidden output and denied execution/plugin authority.
+
+The separate [compiler inline adapter](compiler-inline.md) uses the same immutable
+filesystem and pinned installation for an explicit host-selected variable-inline
+action. It checks unpublished original-coordinate effects before an ordinary
+guarded plan; analysis/build reports retain their existing public operations and
+artifact contracts.

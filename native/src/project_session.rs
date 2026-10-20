@@ -84,6 +84,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub inline_compiler: Option<crate::projects::CompilerSpec>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub collections: Vec<HostCollection>,
     pub projects: Vec<HostProject>,
@@ -99,6 +101,7 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            inline_compiler: None,
             collections: Vec::new(),
             projects: Vec::new(),
             context: "agent".into(),
@@ -166,6 +169,7 @@ pub struct Session {
     pub engine: Engine,
     capture_epoch: crate::analysis::AnalyzerEpoch,
     host: HostProfile,
+    inline_compiler_binding: Option<String>,
     // Invocation-owned selector aliases supplied by the current host. Stored
     // session rows never grant paths, and lookup never probes requested roots.
     project_root_aliases: BTreeMap<String, String>,
@@ -902,6 +906,30 @@ impl Session {
         } else {
             identity(&(fingerprint, "host_collections_v1", &host.collections))
         };
+        let inline_compiler_binding = host
+            .inline_compiler
+            .as_ref()
+            .map(|spec| crate::compiler_inline::host_binding(spec, deadline))
+            .transpose()?;
+        if let Some(spec) = &host.inline_compiler {
+            for tool in [&spec.node, &spec.typescript] {
+                let tool = tool.canonicalize()?;
+                ensure!(
+                    !tool.starts_with(engine.root.canonicalize()?)
+                        && host
+                            .projects
+                            .iter()
+                            .all(|project| !tool.starts_with(&project.root)),
+                    "Inline compiler tools must be outside all host-registered analyzed projects"
+                );
+            }
+        }
+        // Absent opt-in preserves all existing serialized host/session identities.
+        let fingerprint = if let Some(binding) = &inline_compiler_binding {
+            identity(&(fingerprint, "host_inline_compiler_v1", binding))
+        } else {
+            fingerprint
+        };
         let capture_epoch = engine.capture_epoch;
         // Preserve every original V8 host fingerprint, including its existing
         // debugger and collection wrappers. Explicit V9 sessions pin their
@@ -997,6 +1025,7 @@ impl Session {
             engine,
             capture_epoch,
             host,
+            inline_compiler_binding,
             project_root_aliases,
             state,
             persisted: raw.unwrap_or(serialized),
@@ -1492,7 +1521,37 @@ impl Session {
                     "Session state changed concurrently; resume the session before preparing a refactoring"
                 );
                 deadline.check()?;
+                let compiler = if operation == "inline" {
+                    self.host.inline_compiler.clone()
+                } else {
+                    None
+                };
+                let binding = self.inline_compiler_binding.clone();
                 let engine = self.active_engine_at(deadline)?;
+                if let Some(spec) = compiler {
+                    let path = arguments["relativePath"]
+                        .as_str()
+                        .context("Inline source path required")?;
+                    let (snapshot, _, _, _) = engine.index(deadline)?;
+                    let language =
+                        crate::capture::validate_language(&engine.store, &snapshot, path)?;
+                    if matches!(
+                        language.as_str(),
+                        "typescript" | "tsx" | "javascript" | "jsx"
+                    ) {
+                        ensure!(
+                            Some(crate::compiler_inline::host_binding(&spec, deadline)?) == binding,
+                            "Inline compiler host binding changed; resume with the current host profile"
+                        );
+                        let mut arguments = arguments.clone();
+                        if arguments.get("snapshotId").is_none() {
+                            arguments["snapshotId"] = json!(snapshot.id);
+                        }
+                        return crate::compiler_inline::prepare(
+                            engine, &spec, &arguments, deadline,
+                        );
+                    }
+                }
                 crate::semantic_refactor::invoke(engine, operation, arguments, deadline)
             }
             _ => bail!("Unsupported session operation"),

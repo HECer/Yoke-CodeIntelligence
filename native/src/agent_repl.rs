@@ -1133,10 +1133,9 @@ fn dispatch_unbounded(
                 "Symbol-parent move requires an explicit provider destination refactoring capability"
             );
         }
-        return crate::semantic_refactor::invoke(
-            session.active_engine_at(deadline)?,
-            operation,
-            &target,
+        return session.invoke(
+            "refactor.prepare",
+            &json!({"operation":operation,"arguments":target}),
             deadline,
         );
     }

@@ -2,6 +2,27 @@
 
 ## Current integration work
 
+Explicit [immutable compiler inlining](../native/docs/compiler-inline.md) adds
+host-selected TypeScript 5.8.3 function-binding inline plans for TS/TSX/JS/JSX,
+including sibling declarations, JSX/component bindings, object shorthand and
+retained definitions. Compiler source/binding/diagnostic checks and independent
+native initializer/removal/result checks precede ordinary guarded plans. Existing
+other-language LSP routes and absent-profile session identities remain intact.
+
+All **18 new cases pass** (16 integration / two unit), including twelve actual
+language/sibling scenarios, component-shadowing checks, inert repository plugins,
+actual CLI plus independent `tsc` verification, approval/application and conditional
+recovery. The owned non-TS LSP preservation fixture is separately labeled.
+The final scoped run is **629 passed / 0 failed / 9 ignored**, across 12 groups;
+format/build/all-target Clippy, Python17, typecheck and
+TypeScript260/3skipped pass on **788 fixed native / 783 fixed
+retained inputs**. Earlier failed development/link runs remain archived, including
+the disk-exhausted link that ran no tests and verified build-cache cleanup.
+Classic function declarations, broader moves, other contexts/languages, runtime
+equivalence and full native/current-head hosted acceptance remain open. The earlier
+Windows symlink-privilege gate remains unresolved; its original test and source
+reader were not weakened. See [compiler inline evidence](validation/integration-2026-10-19/compiler-inline/README.md).
+
 Explicit [native semantic identity](../native/docs/meaning-identity.md) adds
 source-replayed MinHash/Jaro candidates, one host-authorized model adjudication
 job and a lossless positive-clique quotient. Original concepts, directed parallel

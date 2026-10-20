@@ -2,6 +2,14 @@
 
 ## Native Rust ownership
 
+The optional session `inlineCompiler` profile binds an explicitly trusted host
+Node executable and TypeScript 5.8.3 module. Rust checks captured declaration and
+reference spans, copied initializer syntax, exact statement/comma removal bundles
+and the final bytes before one guarded plan. The compiler uses immutable virtual
+source, checks free bindings and before/after diagnostics, and loads no repository
+plugins or modules. Existing LSP routes, analyzer identities and independent
+application/recovery gates remain. See [compiler inlining](../native/docs/compiler-inline.md).
+
 `meaning_identity` consumes existing joint native Meaning source/receipt replay,
 then computes a fixed bounded normalization/MinHash/LSH/Jaro candidate set. One
 explicit host-provider attempt uses a separate ledger/job/payload contract and

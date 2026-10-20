@@ -5,6 +5,12 @@ checks their explicit `WorkspaceEdit` results. It does not execute provider
 commands, infer authority from action titles, or implement a proprietary IDE.
 Session edit permission is checked before a provider is queried.
 
+The optional [immutable TypeScript compiler path](compiler-inline.md) additionally
+supports actual TS/JS function-binding inline actions through host-selected session
+registration. It checks compiler-bound consumers, copied initializer structure,
+comma/declaration removal and `keepDefinition` before guarded preparation. The
+existing standard-LSP and owned `own_v1` protocols retain their contracts.
+
 Direct native `safeDelete` has an explicit
 [`propagationPolicy` v2](propagated-delete.md#explicit-wrapped-call-policy) for
 complete standalone calls wrapped in parentheses, `await` or `void`. Default v1

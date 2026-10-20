@@ -9,7 +9,7 @@ original inventory references and historical checkpoint evidence.
 
 | Area | Implemented contracts | Remaining work |
 | --- | --- | --- |
-| R1: semantic edits | Guarded native/provider planning, exact declaration ownership, directory/file usage checks, explicit TS/JS propagation and session routing. | Broader declaration, file and language shapes and provider intents, especially inline/move and compiler-bound consumer behavior; qualify each extension with its actual selected provider and independent apply/recovery. |
+| R1: semantic edits | Guarded native/provider planning, declaration ownership, directory/file usage, TS/JS propagation/session routing and actual host-selected immutable TS5.8.3 function-binding inlining with compiler-bound consumers and independent source/effect/apply/recovery checks. | Classic function-body inline, broader moves/declaration/file/language/context shapes, dynamic or outside-file consumers and wider runtime/upstream acceptance. The compiler variable-inline action and existing LSP own_v1 move contract retain distinct finite scopes. |
 | R2: meaning and identity | Checked native graphs/joins, portable projections and mixed preparation/build/query/composition. A separate native MinHash/Jaro candidate policy, durable explicit model adjudication, source-replayed positive-clique quotient and frozen node/degree/trace queries preserve every original observation. | Other source/history/workspace identity, wider normalization/survivor rules, interpretation/outcome surfaces and live semantic-quality/upstream acceptance. Existing mixed aliases and host links keep their original namespace/authority boundaries; model equivalence remains unverified. |
 | R3: historical analytics | Explicit checked pair-of-Views comparison with complete parent pins, immutable source/receipt replay and directed observations. | Remaining upstream analytics equivalence and acceptance. A bare previousSnapshotId remains insufficient to select two Views; that refusal is an intentional precondition. |
 | R4: mixed documents | Native/Office XML/decoded/PDF spaces, fixed input preparation, checked claims, explicit provider jobs, checked graph queries and independently checked cross-workspace/history composition. | Broader mixed analytics, external semantic-provider qualification and exhaustive interpretation remain open. CLI composition currently selects one explicit Store; library callers may supply separately checked parents from different workspaces. |
@@ -38,6 +38,27 @@ their complete submitted units to these declaration witnesses. Source quotes,
 original receipts and semantic claims remain distinct from interpretation truth.
 
 ## Acceptance still required
+
+Explicit [immutable compiler inlining](../native/docs/compiler-inline.md) adds
+host-selected TypeScript 5.8.3 function-binding inline plans for TS/TSX/JS/JSX,
+including sibling declarations, JSX/component bindings, object shorthand and
+retained definitions. Compiler source/binding/diagnostic checks and independent
+native initializer/removal/result checks precede ordinary guarded plans. Existing
+other-language LSP routes and absent-profile session identities remain intact.
+
+All **18 new cases pass** (16 integration / two unit), including twelve actual
+language/sibling scenarios, component-shadowing checks, inert repository plugins,
+actual CLI plus independent `tsc` verification, approval/application and conditional
+recovery. The owned non-TS LSP preservation fixture is separately labeled.
+The final scoped run is **629 passed / 0 failed / 9 ignored**, across 12 groups;
+format/build/all-target Clippy, Python17, typecheck and
+TypeScript260/3skipped pass on **788 fixed native / 783 fixed
+retained inputs**. Earlier failed development/link runs remain archived, including
+the disk-exhausted link that ran no tests and verified build-cache cleanup.
+Classic function declarations, broader moves, other contexts/languages, runtime
+equivalence and full native/current-head hosted acceptance remain open. The earlier
+Windows symlink-privilege gate remains unresolved; its original test and source
+reader were not weakened. See [compiler inline evidence](validation/integration-2026-10-19/compiler-inline/README.md).
 
 Native semantic identity passes all 22 new cases (18 integration / four unit),
 including independent MinHash vectors, exact source/original billing replay,
