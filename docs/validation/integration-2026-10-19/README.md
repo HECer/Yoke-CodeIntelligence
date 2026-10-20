@@ -421,3 +421,18 @@ Native734inputs/exact binary and integrated740inputs remain frozen. Format/
 build/Clippy-Dwarnings and mandatory Python17/typecheck/TS260+3skips pass. No
 analyzed-module execution, consumer/semantic/IDE or whole-native/platform/main/
 release certification follows. Prior README bytes remain; broaderR1-R9 continues.
+
+## Concrete class-method decorator ownership checkpoint
+
+Source `d64281c9cdd612b22c15966540dd0748e0fac586`, runtime merge `af5dc154232881b7b646d6892b87b3f3bf082bbc`.
+[Indexed evidence](member-decorators/index.json) retains1unit+8default+2actual
+newcases, final12selectedgroups577/0/11, exact contiguous method/decorator
+ownership, original anchors and independent authority/recovery gates. Actual
+TypeScript5.8.3 compiler/AST verifies all four extensions and class/neighbor
+association; language-server5.1.3safeDelete produces the same checked plan.
+The experimental-decorator fixtures execute no analyzed module/decorator.
+Existing sibling/Python gates pass on the identical final736-input freeze.
+Format/build/Clippy-Dwarnings and integrated742unchanged/Python17/typecheck/
+TS260+3skips pass. Invalid formatter-overlap baseline and corrected missing-entity
+test assumption remain. No whole-native/platform/upstream/main/release acceptance
+follows. Previous README bytes remain; broaderR1-R9 continues.

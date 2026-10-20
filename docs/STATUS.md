@@ -970,6 +970,43 @@ comment attachments, consumer safety and general semantic/IDE equivalence stay
 open. Earlier OS1314 prerequisites lie outside this finite selection; no
 whole-native/platform acceptance follows. BroaderR1-R9, main and release remain open.
 
+[Concrete class-method decorator ownership](validation/integration-2026-10-19/member-decorators/index.json)
+adds a checked deletion range for plain-named concrete TS/TSX/JS/JSX methods.
+After exact original AST/name/kind/range binding, up to64 contiguous direct
+sibling decorators and their whitespace/comment gaps belong to the selected
+method. Parent and neighbor decorations, ordinary earlier comments and original
+entity/evidence coordinates remain intact. Unsupported gap tokens, constructor,
+abstract/signature and computed/quoted/private decorated names refuse. The
+entire resulting source is parsed under the original bounds. This adds a
+previously refused native and provider-finalization case; no input/authority
+schema changes. See the [contract](../native/docs/symbol-deletion.md).
+
+There are **11 new cases**: one unit admission, eight default integration and
+two explicitly selected actual gates. Final **12 selected native groups** record
+**577 passed / 0 failed / 11 ignored**, including **468 / 0 / 7 library tests**,
+with **736 inputs** unchanged. Actual **TypeScript5.8.3** compiler/AST checks all
+four extensions and proves parent/neighbor decorator association; actual
+**language-server5.1.3** safeDelete produces the same checked source plan.
+The fixtures use `experimentalDecorators: true`. Independent permission,
+approval, application and exact-recovery checks pass without executing analyzed
+modules or decorators. Existing sibling/Python gates are revalidated on the
+identical final source. Format/build/all-target Clippy-Dwarnings pass;
+mandatory integrated checks are indexed separately.
+
+The initial baseline overlapped a still-running formatter and had changed
+source hashes; it is retained as invalid frozen evidence and contributes no
+accepted counts. A clean repeated baseline proves the original refusal. An
+early negative test assumed every unsupported form had an indexed method;
+the corrected test treats a missing entity as an unknown selection. All logs
+and source manifests remain. Scoped runs and actual gates are nonadditive.
+
+Saved-plan identity, insert/replace ranges and independent usage, write,
+verification, stale-source and recovery contracts remain. Other member/name/
+language forms, decorator modes/versions, compiler/consumer/dispatch/runtime
+proof and universal IDE parity stay open. Earlier OS1314 prerequisites are
+outside this finite selection; no whole-native/platform/main/release acceptance
+follows. BroaderR1-R9 work remains active.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

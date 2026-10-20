@@ -6851,7 +6851,10 @@
         "docs/validation/integration-2026-10-19/python-empty-suite/index.json",
         "native/src/changes_sibling_delete.rs",
         "native/tests/sibling_declarators.rs",
-        "docs/validation/integration-2026-10-19/sibling-declarators/index.json"
+        "docs/validation/integration-2026-10-19/sibling-declarators/index.json",
+        "native/src/changes_member_decorators.rs",
+        "native/tests/member_decorators.rs",
+        "docs/validation/integration-2026-10-19/member-decorators/index.json"
       ],
       "id": "R1",
       "inventoryRefs": [
@@ -6860,7 +6863,7 @@
         "serena:jet_brains_inline_symbol",
         "serena:jet_brains_rename"
       ],
-      "missingBehavior": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic. Checked TypeScript/TSX/JavaScript/JSX declaration/export/ambient deletion and Rust/Python owning attribute/documentation/decorator deletion now keep original entity/evidence coordinates. Contextual method binding uses the nearest declared owner; nested functions stay functions. Multi-declarators without the explicit native sibling-preservation policy, expression consumers, separate TS member decorators, Required Python bodies without the explicit native pass policy and other-language attachment ownership remain outside these finite symbol-deletion contracts. Explicit captured_es_function_propagation_v1 now removes checked standalone target-call statements and newly unused private function dependencies in one bounded TS/JS ES module, including private cycles. Surviving reported/possible consumers and exported dependencies remain protected. Other expression consumers, module/declaration/language/file shapes, general propagation, future consumer changes and exhaustive compiler/IDE guarantees remain outside this finite policy. Explicit native deleteSymbol.emptyPythonBody reject/pass now admits one checked Python function/class deletion with a literal pass only when its required parent block would otherwise lack a non-comment statement. Full resulting syntax, exact decorator/name/kind/range binding, shared source/AST/deadline bounds and original coordinates remain checked; default/provider/facade behavior still rejects empty required bodies. Mixed operations and other languages refuse the option. Actual Python3.14.7 stdlib AST-only verification, separate permission/approval/application/recovery and native MCP have owned Windows evidence; no analyzed module/decorator executes or broader semantic/consumer guarantee follows. Separate native deleteSymbol.siblingDeclarators reject/preserve now admits one simple function-valued TS/TSX/JS/JSX variable declarator in a statement const/let/var. Two exact AST-derived byte edits remove that node and one direct parent comma while preserving other declarators, wrapper/semicolon and whitespace. Ambiguous direct comments, loop/nonstatement bindings, named expressions, other languages, mixed operations and combined policies refuse. Full resulting syntax and original source/AST/deadline bounds remain checked; absent/reject and semantic-provider/facade defaults stay strict. Actual TypeScript5.8.3 compiler-only copied-result verification for all four extensions and independent permission/approval/application/recovery have owned Windows evidence. No analyzed module execution, consumer safety, exhaustive semantic/IDE or other-platform guarantee follows.",
+      "missingBehavior": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic. Checked TypeScript/TSX/JavaScript/JSX declaration/export/ambient deletion and Rust/Python owning attribute/documentation/decorator deletion now keep original entity/evidence coordinates. Contextual method binding uses the nearest declared owner; nested functions stay functions. Multi-declarators without the explicit native sibling-preservation policy, expression consumers, unsupported decorated member/name forms, Required Python bodies without the explicit native pass policy and other-language attachment ownership remain outside these finite symbol-deletion contracts. Explicit captured_es_function_propagation_v1 now removes checked standalone target-call statements and newly unused private function dependencies in one bounded TS/JS ES module, including private cycles. Surviving reported/possible consumers and exported dependencies remain protected. Other expression consumers, module/declaration/language/file shapes, general propagation, future consumer changes and exhaustive compiler/IDE guarantees remain outside this finite policy. Explicit native deleteSymbol.emptyPythonBody reject/pass now admits one checked Python function/class deletion with a literal pass only when its required parent block would otherwise lack a non-comment statement. Full resulting syntax, exact decorator/name/kind/range binding, shared source/AST/deadline bounds and original coordinates remain checked; default/provider/facade behavior still rejects empty required bodies. Mixed operations and other languages refuse the option. Actual Python3.14.7 stdlib AST-only verification, separate permission/approval/application/recovery and native MCP have owned Windows evidence; no analyzed module/decorator executes or broader semantic/consumer guarantee follows. Separate native deleteSymbol.siblingDeclarators reject/preserve now admits one simple function-valued TS/TSX/JS/JSX variable declarator in a statement const/let/var. Two exact AST-derived byte edits remove that node and one direct parent comma while preserving other declarators, wrapper/semicolon and whitespace. Ambiguous direct comments, loop/nonstatement bindings, named expressions, other languages, mixed operations and combined policies refuse. Full resulting syntax and original source/AST/deadline bounds remain checked; absent/reject and semantic-provider/facade defaults stay strict. Actual TypeScript5.8.3 compiler-only copied-result verification for all four extensions and independent permission/approval/application/recovery have owned Windows evidence. No analyzed module execution, consumer safety, exhaustive semantic/IDE or other-platform guarantee follows. Concrete TS/TSX/JS/JSX class methods with plain identifier names now have checked contiguous preceding decorator ownership for native deletion and final provider safeDelete preparation. Up to64 direct sibling decorators and intervening whitespace/comments are admitted; other gap tokens, constructors, abstract/signature members and computed/quoted/private decorated names refuse. Parent/neighbor chains, ordinary earlier comments and original method/entity coordinates stay intact. Whole-result syntax and original source/AST/deadline bounds remain checked. Actual TypeScript5.8.3 compiler/AST plus language-server5.1.3 safeDelete and independent application/recovery have owned Windows evidence in experimentalDecorators mode. No analyzed module/decorator execution, broader consumer/dispatch/runtime proof, other modes/versions or universal IDE equivalence follows.",
       "priority": 1,
       "suggestedScope": "Continue broader propagation and remaining declaration/file/language/provider intents with exact original source operations, directed dependency/reference semantics and independent postconditions. Preserve finite source/proof/unknown-consumer boundaries, immutable anchors, legacy identities and guarded application/recovery.",
       "title": "Finish semantic refactoring intent contracts",
@@ -7025,6 +7028,43 @@
         "semanticProviderFacadePolicyChanged": false,
         "legacyPlanShapeOrIdentityChanged": false,
         "analyzedModuleExecuted": false,
+        "wholeNativeRerun": false,
+        "fullContractCertified": false
+      },
+      "memberDecoratorCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/member-decorators/index.json",
+        "newCases": {
+          "unitAdmission": 1,
+          "defaultIntegration": 8,
+          "actualCompilerAndAst": 1,
+          "actualLanguageServerSafeDelete": 1
+        },
+        "nativeGroups": 12,
+        "nativeTotals": {
+          "passed": 577,
+          "failed": 0,
+          "ignored": 11
+        },
+        "platform": "Windows",
+        "actualTools": {
+          "node": "C:\\Program Files\\nodejs\\node.exe",
+          "nodeSha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+          "nodeVersion": "v24.21.0",
+          "compiler": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\tsc.js",
+          "compilerSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+          "compilerVersion": "Version 5.8.3",
+          "server": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript-language-server\\lib\\cli.mjs",
+          "serverSha256": "3c2a7818315bd8399e56f461fe7da01c0f8f67a9c66108af0b655605b088dd77",
+          "serverVersion": "5.1.3",
+          "compilerLibrary": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\typescript.js",
+          "compilerLibrarySha256": "dd17428736a07e1db1a138d8a14295ddb2699ba780ee15038acdd2c6da5373a0"
+        },
+        "compilerFixtureMode": "experimentalDecorators=true",
+        "previouslyRefusedConcreteMemberOwnershipAdded": true,
+        "nativeInputSchemaChanged": false,
+        "existingInsertReplaceCoordinatesChanged": false,
+        "legacyPlanShapeOrIdentityChanged": false,
+        "analyzedModuleOrDecoratorExecuted": false,
         "wholeNativeRerun": false,
         "fullContractCertified": false
       }
@@ -8933,6 +8973,22 @@
         "docs/validation/integration-2026-10-19/sibling-declarators/index.json"
       ],
       "remainingReview": "No native default, semantic-provider/facade behavior, saved-plan schema/identity or write/execution/approval/recovery authority is changed. Syntax/source operations do not establish unusedness, compiler reference completeness, runtime behavior or consumer safety. Direct inter-declarator comments and other binding/container shapes remain unsupported. Full upstream/IDE/all-language/nonWindows/platform/main/release and broaderR1-R9 remain open.",
+      "fullContractCertified": false
+    },
+    {
+      "id": "native_concrete_class_method_decorator_ownership",
+      "behavior": "Native deleteSymbol and final provider safeDelete preparation now admit a checked owning range for a concrete TS/TSX/JS/JSX class method with a plain identifier name and up to64 preceding direct sibling decorators. Original AST/name/kind/range binding, whitespace-only gaps with admitted comments, full-result syntax replay and source/AST/deadline bounds preserve parent/neighbor chains, earlier comments and original entity/evidence coordinates. Constructors, signature/abstract and computed/quoted/private decorated names or unsupported gaps refuse. NativeMCP, selected compiler/AST and actual language-server safeDelete, independent application gates and exact recovery have owned Windows evidence. No new input/write/execution/approval authority is introduced.",
+      "evidence": [
+        "native/README.md",
+        "native/docs/semantic-refactor-intents.md",
+        "native/docs/symbol-deletion.md",
+        "native/src/changes_member_decorators.rs",
+        "native/src/changes_symbol_delete.rs",
+        "native/tests/member_decorators.rs",
+        "native/tests/symbol_delete_ranges.rs",
+        "docs/validation/integration-2026-10-19/member-decorators/index.json"
+      ],
+      "remainingReview": "This adds previously refused concrete-method ownership; insert/replace coordinates, ordinary undecorated effects and immutable saved-plan shapes/identity remain. Actual qualification uses TypeScript5.8.3, language-server5.1.3 and experimentalDecorators mode. Other decorator modes/transforms/versions, remaining member/name/language forms, exhaustive references/dispatch/consumer/runtime guarantees, full IDE/upstream/nonWindows/whole-platform/main/release and broaderR1-R9 remain open.",
       "fullContractCertified": false
     }
   ],

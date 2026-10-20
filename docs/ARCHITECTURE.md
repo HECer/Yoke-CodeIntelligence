@@ -342,3 +342,13 @@ and ordinary canonical saved-plan/application gates remain. Python and default/
 semantic-provider policies retain their existing contracts. See the
 [contract](../native/docs/symbol-deletion.md) and
 [evidence](validation/integration-2026-10-19/sibling-declarators/index.json).
+
+Concrete class-method deletion derives an owning decorator range from the same
+checked original TS/JS AST binding. Bounded preceding sibling decorators and
+intervening comment/whitespace gaps are admitted without rewriting method
+coordinates; full-result parsing checks the proposed bytes. Parent/neighbor
+chains and undecorated/insert/replace behavior remain. The native and final
+safeDelete paths share this source boundary, while provider usage/host authority
+and canonical plan/application/recovery remain separate. See the
+[contract](../native/docs/symbol-deletion.md) and
+[evidence](validation/integration-2026-10-19/member-decorators/index.json).
