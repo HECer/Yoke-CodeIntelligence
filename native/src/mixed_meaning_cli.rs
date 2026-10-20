@@ -52,6 +52,14 @@ enum Operation {
         #[arg(long)]
         native_pdf_text: bool,
     },
+    /// Query one source-replayed graph without a provider or inferred hyperedge flow.
+    Query {
+        job_id: String,
+        #[arg(long)]
+        query: PathBuf,
+        #[arg(long)]
+        native_pdf_text: bool,
+    },
 }
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -82,6 +90,11 @@ enum Selected {
     },
     Load {
         id: String,
+        pdf: Option<NativePdfWorker>,
+    },
+    Query {
+        id: String,
+        query: provider::query::Query,
         pdf: Option<NativePdfWorker>,
     },
 }
@@ -200,6 +213,24 @@ impl Arguments {
                     limit: *limit,
                 }
             }
+            Operation::Query {
+                job_id,
+                query,
+                native_pdf_text,
+            } => {
+                ensure!(
+                    yoke::model::valid_id(job_id),
+                    "mixed_meaning_job_id_invalid"
+                );
+                let query: provider::query::Query =
+                    host_file(query, "mixed_meaning_query_invalid")?;
+                provider::query::validate(&query, d)?;
+                Selected::Query {
+                    id: job_id.clone(),
+                    query,
+                    pdf: pdf_worker(*native_pdf_text, d)?,
+                }
+            }
             Operation::Load {
                 job_id,
                 native_pdf_text,
@@ -240,6 +271,13 @@ impl Prepared {
                 limit,
             } => provider::jobs(&engine.store, task, *offset, *limit, d)?,
             Selected::Load { id, pdf } => provider::load(&engine.store, id, pdf.as_ref(), d)?,
+            Selected::Query { id, query, pdf } => {
+                provider::load_checked(&engine.store, id, pdf.as_ref(), d)?.query(
+                    query,
+                    self.max_bytes - 1,
+                    d,
+                )?
+            }
         };
         let emitted = (|| -> Result<bool> {
             let bytes = yoke::json::encode_bounded(&result, self.max_bytes - 1, d)?;
