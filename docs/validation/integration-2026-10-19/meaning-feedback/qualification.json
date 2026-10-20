@@ -1,0 +1,40 @@
+{
+  "baseIntegration": "92b090465dd70020155bd6b1be4951878849b0ca",
+  "broaderNativeScopePassed": false,
+  "nativeTotals": {
+    "passed": 74,
+    "failed": 1,
+    "ignored": 0
+  },
+  "nativeGroups": 5,
+  "newCasesPassed": 13,
+  "newCasesFailed": 0,
+  "newCases": [
+    "cases::actual_cli_record_rank_and_lost_stdout_retries_use_explicit_writes_and_no_provider",
+    "cases::cli_permission_and_closed_input_refusals_precede_missing_workspace_initialization",
+    "cases::closed_shapes_subject_uniqueness_limit_counts_and_ordering_do_not_create_an_empty_complete_result",
+    "cases::input_source_pair_event_and_output_limits_refuse_before_any_publication",
+    "cases::missing_meaning_selection_missing_source_and_corrupt_event_refuse_retention_and_ranking",
+    "cases::parallel_and_reverse_relation_targets_keep_independent_subjects_and_scores",
+    "cases::sql_publication_failure_read_transaction_and_expired_deadline_preserve_state_and_limits",
+    "changed_evaluated_crlf_source_retains_historical_events_without_claiming_semantic_identity",
+    "exact_unicode_ranges_and_path_admission_cannot_be_forged_by_rehashing_events",
+    "independent_label_sessions_latest_sequences_future_events_and_integer_decay_are_visible",
+    "origin_support_membership_refuses_other_claim_paths_foreign_kinds_and_unselected_graphs",
+    "out_of_order_timestamp_conflicts_and_other_subjects_never_rewrite_original_outcomes",
+    "three_typed_targets_preserve_original_packets_parallel_directions_roles_and_receipt_unknowns"
+  ],
+  "failedTest": "windows_host_aliases_cannot_read_protected_files_or_alternate_streams",
+  "failedAt": "native/tests/feedback_cli.rs:1100:59",
+  "cause": "Windows OS1314 at unchanged symlink_file fixture setup; no application alias read reached.",
+  "originalSecurityTestFileUnchangedExceptCheckoutCRLF": true,
+  "originalSecurityTestWorkingSha256": "7e195c04031a7ea7a754c184256f72ad1f5c3858473a2bb1ba6a42ddbae15ea6",
+  "originalSecurityTestGitBlobSha256": "7c6005fe8014f42b3e2c7d27a513011dc09a2732ab5f4af02eb370bb6a5f1e97",
+  "hostInputReaderFunctionUnchanged": true,
+  "hostInputReaderNormalizedSha256": "17d36b5ebfb2ae87dcc082ab7fd5ae12693cf473b39f7233af6387898c1812e0",
+  "hostPrivileges": "host-privileges.txt",
+  "hostPrerequisites": "host-prerequisites.json",
+  "fixtureOrPermissionGuardWeakened": false,
+  "wholeNativeRerun": false,
+  "fullGoalComplete": false
+}
