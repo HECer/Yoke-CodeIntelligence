@@ -291,3 +291,13 @@ parallel observations, unresolved targets and exact evidence. Unknown writes
 require positive fixed-read recovery; they are never automatically replayed.
 See the [host workflow](native-neo4j-publish.md) and
 [indexed qualification](validation/integration-2026-10-19/neo4j-publish/index.json).
+
+Reviewed FalkorDB publication is a separate Windows host connector with pure
+RESP2 framing, closed offline plans and fixed typed parameter encoding. Literal
+sockets/TLS/OS credentials and independent grants stay outside repository data.
+WATCH/EXEC admits one fresh graph root before separately journaled operational
+schema steps; immutable revisions use atomic expected-revision/property/count
+guards and retain exact directed parallel evidence. Durable pre-execution
+intents require no-resend positive fixed-read recovery after unknown results.
+See the [host workflow](native-falkor-publish.md) and
+[indexed validation](validation/integration-2026-10-19/falkor-publish/index.json).

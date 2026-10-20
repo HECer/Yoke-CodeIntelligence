@@ -1,0 +1,267 @@
+{
+  "modules": [
+    [
+      "name",
+      "graph",
+      "ver",
+      60002,
+      "path",
+      "/var/lib/falkordb/bin/falkordb.so",
+      "args",
+      []
+    ],
+    [
+      "name",
+      "vectorset",
+      "ver",
+      1,
+      "path",
+      "",
+      "args",
+      []
+    ]
+  ],
+  "unicode-parameter": [
+    [
+      "value"
+    ],
+    [
+      [
+        "quoted 💡 ' \" \\ \r\n"
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 4.933806 milliseconds",
+      "Graph version: 0"
+    ]
+  ],
+  "parallel-create": [
+    [
+      "count(r)",
+      "count(s)"
+    ],
+    [
+      [
+        1,
+        1
+      ]
+    ],
+    [
+      "Labels added: 1",
+      "Nodes created: 2",
+      "Properties set: 4",
+      "Relationships created: 2",
+      "Cached execution: 0",
+      "Query internal execution time: 70.631882 milliseconds",
+      "Graph version: 1"
+    ]
+  ],
+  "parallel-read": [
+    [
+      "a.id",
+      "r.id",
+      "b.id"
+    ],
+    [
+      [
+        "a",
+        "one",
+        "b"
+      ],
+      [
+        "a",
+        "two",
+        "b"
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 19.072793 milliseconds",
+      "Graph version: 1"
+    ]
+  ],
+  "foreach-support": [
+    [
+      "1"
+    ],
+    [
+      [
+        1
+      ]
+    ],
+    [
+      "Labels added: 1",
+      "Nodes created: 2",
+      "Properties set: 2",
+      "Cached execution: 0",
+      "Query internal execution time: 10.446222 milliseconds",
+      "Graph version: 2"
+    ]
+  ],
+  "subquery-support": [
+    [
+      "n"
+    ],
+    [
+      [
+        1
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 2.464920 milliseconds",
+      "Graph version: 2"
+    ]
+  ],
+  "division-error": {
+    "error": "Division by zero"
+  },
+  "map-parameter": [
+    [
+      "$row.key",
+      "$row.props.value"
+    ],
+    [
+      [
+        "owned",
+        "data"
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 0.900329 milliseconds",
+      "Graph version: 2"
+    ]
+  ],
+  "dynamic-map-keys": [
+    [
+      "all(k IN keys(m) WHERE m[k]>0)"
+    ],
+    [
+      [
+        "true"
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 2.896199 milliseconds",
+      "Graph version: 2"
+    ]
+  ],
+  "count-subquery": {
+    "error": "Invalid input '(': expected ':', ',' or '}', errCtx: RETURN COUNT { MATCH (n:Owned) } AS count, pos 20"
+  },
+  "node-key-index": [
+    [
+      "Indices created: 1",
+      "Cached execution: 0",
+      "Query internal execution time: 13.984919 milliseconds",
+      "Graph version: 3"
+    ]
+  ],
+  "constraint-create": "PENDING",
+  "constraints-0": [
+    [
+      "type",
+      "label",
+      "properties",
+      "entitytype",
+      "status"
+    ],
+    [
+      [
+        "UNIQUE",
+        "Owned",
+        "[id]",
+        "NODE",
+        "OPERATIONAL"
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 3.783697 milliseconds",
+      "Graph version: 4"
+    ]
+  ],
+  "duplicate-after-write": {
+    "error": "unique constraint violation on node of type Owned"
+  },
+  "constraint-rollback-state": [
+    [
+      "a.touched"
+    ],
+    [
+      [
+        null
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 0.842140 milliseconds",
+      "Graph version: 4"
+    ]
+  ],
+  "arithmetic-after-write": {
+    "error": "Division by zero"
+  },
+  "arithmetic-rollback-state": [
+    [
+      "a.touched"
+    ],
+    [
+      [
+        null
+      ]
+    ],
+    [
+      "Cached execution: 1",
+      "Query internal execution time: 0.207260 milliseconds",
+      "Graph version: 4"
+    ]
+  ],
+  "nested-foreach": [
+    [
+      "1"
+    ],
+    [
+      [
+        1
+      ]
+    ],
+    [
+      "Nodes created: 2",
+      "Properties set: 4",
+      "Cached execution: 0",
+      "Query internal execution time: 11.037081 milliseconds",
+      "Graph version: 5"
+    ]
+  ],
+  "watch-start": "OK",
+  "other-write": [
+    [
+      "Labels added: 1",
+      "Nodes created: 1",
+      "Properties set: 1",
+      "Cached execution: 0",
+      "Query internal execution time: 1.925919 milliseconds",
+      "Graph version: 6"
+    ]
+  ],
+  "watched-exec": null,
+  "watched-exec-no-write": [
+    [
+      "count(n)"
+    ],
+    [
+      [
+        0
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 0.061890 milliseconds",
+      "Graph version: 6"
+    ]
+  ]
+}

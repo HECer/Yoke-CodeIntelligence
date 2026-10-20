@@ -7200,7 +7200,25 @@
         "native/src/neo4j_publish_transport_tests.rs",
         "native/tests/neo4j_publish.rs",
         "native/tests/neo4j_publish_cli.rs",
-        "docs/validation/integration-2026-10-19/neo4j-publish/index.json"
+        "docs/validation/integration-2026-10-19/neo4j-publish/index.json",
+        "native/examples/falkor_owned_probe.rs",
+        "native/src/falkor_publish.rs",
+        "native/src/falkor_publish_checks.rs",
+        "native/src/falkor_publish_checks_tests.rs",
+        "native/src/falkor_publish_cli.rs",
+        "native/src/falkor_publish_client.rs",
+        "native/src/falkor_publish_journal.rs",
+        "native/src/falkor_publish_journal_tests.rs",
+        "native/src/falkor_publish_plan.rs",
+        "native/src/falkor_publish_program.rs",
+        "native/src/falkor_publish_transport.rs",
+        "native/src/falkor_publish_transport_tests.rs",
+        "native/src/falkor_wire.rs",
+        "native/tests/falkor_publish.rs",
+        "native/tests/falkor_publish_cli.rs",
+        "native/tests/falkor_wire.rs",
+        "docs/native-falkor-publish.md",
+        "docs/validation/integration-2026-10-19/falkor-publish/index.json"
       ],
       "id": "R7",
       "inventoryRefs": [
@@ -7209,9 +7227,9 @@
         "graphify:url_ingest",
         "graphify:db_push"
       ],
-      "missingBehavior": "Bounded selected PostgreSQL catalogs, anonymous HTTP text/raw-HTML/PDF, dedicated shared-rate-coordinated arxiv.org metadata/PDF, and reviewed Windows native saved-base-graph Neo4j upsert now have actual evidence. Neo4j supports explicit schema/namespace bootstrap, pinned HTTPS/OS credentials, immutable parallel/directed/evidence-preserving revisions, atomic CAS/count guards, approval journals and read-only unknown-result recovery; this does not certify arbitrary upstream graph equivalence, Enterprise RBAC, other server versions or non-Windows publication. Google shortcut export, authenticated/social/video routes, article/semantic interpretation and FalkorDB upsert remain open, along with broader mixed-source and upstream qualification. Received records do not establish source/server/paper/author/compiler/execution authority.",
+      "missingBehavior": "Bounded selected PostgreSQL catalogs, anonymous HTTP text/raw-HTML/PDF, shared-rate-coordinated arxiv.org metadata/PDF, reviewed Windows native saved-base-graph Neo4j and FalkorDB publication now have actual evidence. FalkorDB6.0.2 has pinned TCP/TLS/OS credentials, a fresh-graph WATCH/EXEC bootstrap, operational schema checks, immutable exact directed/parallel/evidence-preserving revisions, atomic expected-revision/count guards, approval journals and no-resend positive read recovery. This does not certify arbitrary upstream or mixed-source graph equivalence, production/RBAC, other server versions or non-Windows publication. Google shortcut export, authenticated/social/video routes and article/semantic interpretation remain open. Received records never establish source/server/paper/author/compiler/execution authority.",
       "priority": 7,
-      "suggestedScope": "Continue FalkorDB, Google shortcut, social/video/authenticated connectors, cross-source semantic behavior and wider Neo4j/platform qualification. Preserve explicit host endpoint/credential/write/approval/recovery authority, exact immutable evidence, bounded protocols, honest missing capabilities and zero query-time acquisition.",
+      "suggestedScope": "Continue Google shortcut, social/video/authenticated connectors, cross-source semantic behavior and wider database/platform qualification. Preserve explicit endpoint/credential/write/approval/recovery authority, exact immutable evidence, bounded protocols, honest missing capabilities and zero query-time acquisition.",
       "title": "Explicit external-source acquisition and graph database connectors",
       "postgresCatalogCheckpoint": {
         "index": "docs/validation/integration-2026-10-19/postgres-catalog/index.json",
@@ -7307,6 +7325,37 @@
           "windows"
         ],
         "jvmVendorQualificationClaimed": false,
+        "sourceAuthority": false,
+        "serverAttested": false,
+        "fullUpstreamContractCertified": false,
+        "wholeNativeRerun": false
+      },
+      "falkorPublishCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/falkor-publish/index.json",
+        "newContractCases": {
+          "wire": 6,
+          "offlinePlansAndPayloads": 4,
+          "transportSchemaJournal": 9,
+          "hostCli": 6
+        },
+        "finalSelectedTotals": {
+          "passed": 580,
+          "failed": 1,
+          "ignored": 8
+        },
+        "nativeGroups": 20,
+        "actualServer": "FalkorDB6.0.2 graphModule60002",
+        "actualPlatform": "Windows",
+        "actualTlsAndUnicodePassword": true,
+        "forcedConcurrentCas": true,
+        "lostStdoutAndUnknownCommitReadRecovery": true,
+        "readRecoveryAfterLaterActiveRevision": true,
+        "actualCountAndSchemaConflictRefusals": true,
+        "foreignGraphNoAdoptionAndNativeWatchConflict": true,
+        "sameBinaryNeo4jCompatibilityRevalidated": true,
+        "guardedPublicationPlatforms": [
+          "windows"
+        ],
         "sourceAuthority": false,
         "serverAttested": false,
         "fullUpstreamContractCertified": false,
@@ -8573,7 +8622,7 @@
         "native/docs/postgres-catalog.md",
         "docs/validation/integration-2026-10-19/postgres-catalog/index.json"
       ],
-      "remainingReview": "Bounded PostgreSQL selected-catalog capture/frozen queries have actual Windows PostgreSQL18.6/psql18.6 evidence, revalidated with the held-member process guard. Public HTTP, dedicated arxiv and bounded reviewed native Neo4j publication are separately checkpointed. Full pinned upstream schema/definition equivalence, other server/client versions, non-Windows qualification and mixed semantic/source integration remain unverified. Google shortcut export, authenticated/social/video and FalkorDB upsert remain open; local readers/generated Cypher are not those connectors.",
+      "remainingReview": "Bounded PostgreSQL selected-catalog capture/frozen queries have actual Windows PostgreSQL18.6/psql18.6 evidence. Public HTTP, dedicated arxiv and reviewed native Neo4j/FalkorDB publication are separately checkpointed. Full pinned upstream schema/definition equivalence, other server/client versions, non-Windows and mixed semantic/source integration remain unverified. Google shortcut export and authenticated/social/video/semantic connectors remain open.",
       "fullContractCertified": false
     },
     {
@@ -8645,7 +8694,37 @@
         "native/tests/neo4j_publish_cli.rs",
         "docs/validation/integration-2026-10-19/neo4j-publish/index.json"
       ],
-      "remainingReview": "Guarded publication and credential operations are Windows-only. Journal hash integrity is not authentication or global coordination across different host paths; matching publisher builds are required for existing plans. Client cancellation does not guarantee server cancellation. Enterprise RBAC, other Neo4j/JVM/server/platform profiles, full arbitrary upstream/mixed-source graph equivalence and unattended deployment remain unverified. FalkorDB/Google/authenticated/social/video/semantic connectors and widerR1-R9/main/release remain open. Earlier whole-native/platform failures remain.",
+      "remainingReview": "Guarded publication/credentials remain Windows-only. Journal integrity is not authentication or cross-path global coordination; matching builds are needed for pending plans and client cancellation cannot guarantee server cancellation. The final FalkorDB connector binary also revalidates the actual owned Neo4j Community2026.09.0 profile. Enterprise RBAC, other Neo4j/JVM/server/platform profiles, full arbitrary upstream/mixed-source equivalence and unattended deployment remain unverified. Google/authenticated/social/video/semantic connectors, widerR1-R9/main/release and earlier platform failures remain open.",
+      "fullContractCertified": false
+    },
+    {
+      "id": "native_falkor_reviewed_snapshot_publish",
+      "behavior": "Explicit reviewed Windows native saved-base-graph publication through bounded native RESP2 and fixed parameterized FalkorDB6.0.2 Cypher. Pinned TCP/TLS/static roots/hostname, create-only private-pipe OS credentials, independent host grants, fresh graph WATCH/EXISTS/MULTI-one-initialize/EXEC plus5 indexed properties/3 operational unique constraints, exact original row JSON/evidence/ranges/directions/parallel/unresolved preservation, immutable scoped revisions with atomic expected-revision/known-property/actual-count guards, durable guarded approval/intent journal and no-resend positive read recovery. Actual native plain/TLS/Unicode, response-loss-after-commit, forced concurrent updates, historical recovery, foreign-graph/real-WATCH/schema/count refusals and lost stdout pass on an owned external6.0.2 VM. Same final binary revalidates Neo4j.",
+      "evidence": [
+        "native/examples/falkor_owned_probe.rs",
+        "native/src/falkor_publish.rs",
+        "native/src/falkor_publish_checks.rs",
+        "native/src/falkor_publish_checks_tests.rs",
+        "native/src/falkor_publish_cli.rs",
+        "native/src/falkor_publish_client.rs",
+        "native/src/falkor_publish_journal.rs",
+        "native/src/falkor_publish_journal_tests.rs",
+        "native/src/falkor_publish_plan.rs",
+        "native/src/falkor_publish_program.rs",
+        "native/src/falkor_publish_transport.rs",
+        "native/src/falkor_publish_transport_tests.rs",
+        "native/src/falkor_wire.rs",
+        "native/src/host_credentials.rs",
+        "native/src/lib.rs",
+        "native/src/main.rs",
+        "native/src/neo4j_publish.rs",
+        "native/tests/falkor_publish.rs",
+        "native/tests/falkor_publish_cli.rs",
+        "native/tests/falkor_wire.rs",
+        "docs/native-falkor-publish.md",
+        "docs/validation/integration-2026-10-19/falkor-publish/index.json"
+      ],
+      "remainingReview": "Live credentials and guarded journals remain Windows-only. Module60002 is the finite tested profile; other versions are refused. Hash chains are integrity metadata, not authentication or global journal coordination. Matching publisher builds are required for pending plans; client cancellation cannot guarantee server cancellation. Other platforms/server versions, production/RBAC, large-capacity and full arbitrary upstream/mixed-source equivalence remain unqualified. Google/authenticated/social/video/semantic connectors, widerR1-R9/main/release and earlier platform failures remain open.",
       "fullContractCertified": false
     }
   ],

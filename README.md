@@ -55,6 +55,12 @@ repair, reviewed plans, copied verification and conditional recovery.
 deletion planning for TypeScript/JavaScript function modules with exact
 provider bindings, conservative captured usages and visible unknown consumers.
 
+Explicit reviewed [Neo4j](docs/native-neo4j-publish.md) and
+[FalkorDB](docs/native-falkor-publish.md) publication preserve saved native graph
+rows and evidence through separate host approval, pinned TLS/OS credentials,
+immutable revisions and read-only recovery of unknown writes. Offline plans
+grant no authority; live publication currently supports Windows.
+
 ## TypeScript advanced runtime
 
 Requires **Node.js 22.16+**. Python/Go and additional optional providers are installed separately. Node SQLite is experimental on the tested Node version. No model or API key is required by native indexing.

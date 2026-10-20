@@ -356,3 +356,16 @@ all5fixturecredential removals and server cleanup, and mandatory integrated
 checks. The cfg-import bridge preserves the exact production binary. Raw
 failures remain; no whole-native, other-platform/upstream/JVM-vendor/main/release
 certification follows. Previous README bytes are preserved.
+
+## Reviewed native FalkorDB publication checkpoint
+
+Source `c15cf10dcccc293af3288868708d8f68e98a77bd`, runtime merge `9e583987a2654b3d1adc27abc59737cd07961b5e`.
+[Indexed evidence](falkor-publish/index.json) retains25newcases and20selected
+native groups580/1/8 with the unchanged mediaOS1314failure; actual6.0.2 native
+TLS/Unicode/parallel-row/CAS/count/schema/unknown-commit/historical/WATCH/foreign
+graph/lost-stdout checks; all5credential removals and VM cleanup. The identical
+final binary revalidates the owned Neo4j fixture and its5credential/server
+cleanup. Mandatory integrated format/Python17/typecheck/TS260+3skip pass with
+730inputs unchanged. Raw failures remain, and no whole-native, non-Windows,
+production/full-upstream/main/release certification follows. Previous README
+bytes are preserved; the broader STATUS/R1-R9 task remains active.

@@ -1,0 +1,14 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 36s
+     Running tests\falkor_wire.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\falkor_wire-df771c1e39a0db93.exe)
+
+running 6 tests
+test array_counts_and_nesting_have_independent_admission_limits ... ok
+test command_bulk_lengths_keep_unicode_nuls_and_crlf_as_data ... ok
+test exact_capacity_is_admitted_and_lower_budgets_refuse_before_bulk_allocation ... ok
+test expiry_does_no_io_and_short_reads_keep_exact_frame_boundaries ... ok
+test malformed_numbers_framing_truncation_and_trailing_replies_are_refused ... ok
+test nil_empty_error_binary_and_nested_replies_remain_distinct ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

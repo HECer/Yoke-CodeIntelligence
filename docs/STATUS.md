@@ -819,6 +819,39 @@ non-Windows and full upstream/mixed-source equivalence remain unqualified.
 FalkorDB, Google/authenticated/social/video/semantic connectors, widerR1-R9,
 unattended production, main and release remain open.
 
+[Reviewed native FalkorDB publication](validation/integration-2026-10-19/falkor-publish/index.json)
+adds a separate explicit Windows host workflow for saved native base graphs.
+Closed offline plans grant no authority. The native bounded RESP2/TCP/TLS client
+uses pinned sockets, verified hostnames/static roots and private-pipe OS
+credentials. Fresh-graph WATCH/EXEC initialization, five indexed properties and
+three operational unique constraints precede reviewed publication. Immutable
+revisions preserve all original row JSON, byte evidence, directions, parallel
+observations and unresolved targets; atomic expected-revision/count guards,
+durable pre-send intents and positive fixed-read recovery prevent silent
+overwrite or automatic replay of unknown results. See the
+[host workflow](native-falkor-publish.md).
+
+The owned **FalkorDB6.0.2/module60002** VM passes actual native TLS, wrong-root
+and hostname refusals, Unicode credentials, exact row roundtrips, two forced
+concurrent updates with one commit, lost stdout/commit response, historical
+recovery, count/schema conflicts, foreign graph preservation and actual native
+WATCH/EXEC interference. All five fixture credentials and the owned VM are
+removed. The same final binary revalidates the full owned Neo4j connector live
+fixture; its five credentials and Java server are also removed.
+
+There are **25 new cases**. The final **20 selected native groups** record
+**580 passed / 1 unchanged media OS1314 failure / 8 existing ignored gates**.
+All-target Clippy with warnings denied and format pass; **724 native inputs**
+and each live binary remain unchanged during their recorded runs. Mandatory
+integrated checks are retained in the indexed evidence. Earlier incremental
+results are nonadditive and recorded failures remain visible. This is not a
+whole-native or other-platform pass.
+
+Only module60002 is admitted. Production/RBAC, other database/JVM/server
+versions, non-Windows and full mixed-source/upstream equivalence remain
+unqualified. Google/authenticated/social/video/article/semantic connectors,
+widerR1-R9, unattended production, main and release remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

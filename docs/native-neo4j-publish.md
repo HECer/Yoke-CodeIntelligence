@@ -10,7 +10,8 @@ This is a scoped connector, not full upstream or platform certification.
 Neo4j Community 2026.09.0 is the actual development-server profile. Its owned
 fixtures use JBR 25.0.3; that functional evidence does not qualify the JVM vendor
 against Neo4j's supported-vendor table. Enterprise RBAC, other server releases,
-Bolt, FalkorDB and non-Windows publication remain separate work.
+Bolt and non-Windows publication remain separate work. FalkorDB now has its own
+[separately qualified native workflow](native-falkor-publish.md).
 
 Use a host-selected target file. For example, the following documentation-only
 address requires an actual host-selected endpoint and public trust anchors:
