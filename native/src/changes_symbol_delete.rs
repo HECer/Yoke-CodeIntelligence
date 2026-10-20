@@ -29,6 +29,36 @@ pub(super) fn range(
     text: &str,
     deadline: &Deadline,
 ) -> Result<(usize, usize)> {
+    let selected = selection(epoch, file, entity, text, false, deadline)?;
+    Ok((selected.start, selected.end))
+}
+
+pub(super) struct Deletion {
+    pub start: usize,
+    pub end: usize,
+    pub replacement: &'static str,
+}
+pub(super) fn python_with_empty_body(
+    epoch: AnalyzerEpoch,
+    file: &SourceFile,
+    entity: &Entity,
+    text: &str,
+    deadline: &Deadline,
+) -> Result<Deletion> {
+    ensure!(
+        file.language == "python",
+        "Empty Python body policy requires Python source"
+    );
+    selection(epoch, file, entity, text, true, deadline)
+}
+fn selection(
+    epoch: AnalyzerEpoch,
+    file: &SourceFile,
+    entity: &Entity,
+    text: &str,
+    fill_empty_python_body: bool,
+    deadline: &Deadline,
+) -> Result<Deletion> {
     deadline.check()?;
     ensure!(
         text.len() <= 4_000_000 && !text.contains('\0'),
@@ -42,7 +72,11 @@ pub(super) fn range(
     if file.language == "rust" {
         let selected =
             crate::refactor_contract::symbol_deletion_range(epoch, entity, text, deadline)?;
-        return Ok((selected.start, selected.end));
+        return Ok(Deletion {
+            start: selected.start,
+            end: selected.end,
+            replacement: "",
+        });
     }
     // Python's recognized UTF-8 BOM is outside every declaration. Keep the
     // original source and rebase parser coordinates instead of rewriting it.
@@ -102,6 +136,7 @@ pub(super) fn range(
         }
         let parent = selected.parent().context(UNSUPPORTED)?;
         ensure!(matches!(parent.kind(), "module" | "block"), UNSUPPORTED);
+        let mut replacement = "";
         if parent.kind() == "block" {
             let mut cursor = parent.walk();
             let mut remaining = false;
@@ -112,12 +147,42 @@ pub(super) fn range(
                 }
             }
             ensure!(
-                remaining,
+                remaining || fill_empty_python_body,
                 "Python deletion would leave a required body empty"
+            );
+            if !remaining {
+                replacement = "pass";
+            }
+        }
+        if fill_empty_python_body {
+            // Check the exact resulting source using the same bounded parser.
+            // No analyzed module is imported or executed. BOM stays outside
+            // parser coordinates and is untouched in the actual byte edit.
+            let after = format!(
+                "{}{}{}",
+                &input[..selected.start_byte()],
+                replacement,
+                &input[selected.end_byte()..]
+            );
+            let checked = parser
+                .parse_with_options(
+                    &mut |at, _| &after.as_bytes()[at.min(after.len())..],
+                    None,
+                    Some(tree_sitter::ParseOptions::new().progress_callback(&mut cancelled)),
+                )
+                .context("Symbol deletion result parser cancelled")?;
+            deadline.check()?;
+            ensure!(
+                !checked.root_node().has_error(),
+                "Python deletion result must have error-free syntax"
             );
         }
         deadline.check()?;
-        return Ok((selected.start_byte() + offset, selected.end_byte() + offset));
+        return Ok(Deletion {
+            start: selected.start_byte() + offset,
+            end: selected.end_byte() + offset,
+            replacement,
+        });
     }
     let member = matches!(
         selected.kind(),
@@ -187,12 +252,75 @@ pub(super) fn range(
         UNSUPPORTED
     );
     deadline.check()?;
-    Ok((selected.start_byte(), selected.end_byte()))
+    Ok(Deletion {
+        start: selected.start_byte(),
+        end: selected.end_byte(),
+        replacement: "",
+    })
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn explicit_python_pass_checks_source_capacity_syntax_deadline_and_exact_anchor() {
+        let text = "class Parent:\n    def delete_me(self): pass\n";
+        let file = SourceFile {
+            path: "module.py".into(),
+            hash: crate::model::hash(text),
+            size: text.len(),
+            language: "python".into(),
+            mode: 0o644,
+        };
+        let entity = analysis::extract(&file, text, &Deadline::new(30_000))
+            .unwrap()
+            .entities
+            .into_iter()
+            .find(|e| e.name == "delete_me")
+            .unwrap();
+        assert!(
+            python_with_empty_body(AnalyzerEpoch::V9, &file, &entity, text, &Deadline::new(0))
+                .is_err()
+        );
+        for input in [
+            format!("{text}{}", " ".repeat(4_000_001)),
+            format!("{text}\0"),
+            format!("{text}def invalid(:\n"),
+        ] {
+            assert!(
+                python_with_empty_body(
+                    AnalyzerEpoch::V9,
+                    &file,
+                    &entity,
+                    &input,
+                    &Deadline::new(30_000)
+                )
+                .is_err()
+            );
+        }
+        let mut forged = entity.clone();
+        forged.start_byte += 1;
+        assert!(
+            python_with_empty_body(
+                AnalyzerEpoch::V9,
+                &file,
+                &forged,
+                text,
+                &Deadline::new(30_000)
+            )
+            .is_err()
+        );
+        let exact = format!("{text}{}", " ".repeat(4_000_000 - text.len()));
+        let selected = python_with_empty_body(
+            AnalyzerEpoch::V9,
+            &file,
+            &entity,
+            &exact,
+            &Deadline::new(30_000),
+        )
+        .unwrap();
+        assert_eq!(selected.replacement, "pass");
+    }
     #[test]
     fn rust_and_python_deletion_reject_forged_anchors_and_expired_or_oversized_inputs() {
         for (language, text) in [

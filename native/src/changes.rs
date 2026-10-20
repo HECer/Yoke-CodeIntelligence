@@ -32,6 +32,36 @@ pub fn now() -> u64 {
         .expect("system clock after epoch")
         .as_secs()
 }
+pub(crate) fn validate_python_delete_policy(args: &Value) -> Result<()> {
+    for name in ["rename", "replaceSymbol", "insertBefore", "insertAfter"] {
+        ensure!(
+            args[name].get("emptyPythonBody").is_none(),
+            "Empty Python body policy belongs to deleteSymbol"
+        );
+    }
+    if let Some(policy) = args["deleteSymbol"].get("emptyPythonBody") {
+        ensure!(
+            policy
+                .as_str()
+                .is_some_and(|p| matches!(p, "reject" | "pass")),
+            "Unknown empty Python body policy"
+        );
+        ensure!(
+            [
+                "edits",
+                "rename",
+                "replaceSymbol",
+                "insertBefore",
+                "insertAfter",
+                "bulkReplace"
+            ]
+            .iter()
+            .all(|key| args.get(key).is_none()),
+            "Empty Python body policy cannot be mixed with other changes"
+        );
+    }
+    Ok(())
+}
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(tag = "kind", rename_all = "lowercase", deny_unknown_fields)]
 pub enum Edit {
@@ -201,6 +231,7 @@ fn prepare_inner(
     directory_move: Option<&DirectoryMove>,
     deadline: &Deadline,
 ) -> Result<Plan> {
+    validate_python_delete_policy(args)?;
     let mut edits: Vec<Edit> = if let Some(value) = args.get("edits") {
         serde_json::from_value(value.clone())?
     } else {
@@ -230,6 +261,13 @@ fn prepare_inner(
                 .iter()
                 .find(|f| f.path == entity.path)
                 .context("Symbol source absent from snapshot")?;
+            let mut delete_text = "";
+            if value.get("emptyPythonBody").is_some() {
+                ensure!(
+                    file.language == "python",
+                    "Empty Python body policy requires Python source"
+                );
+            }
             let (start, end) = match operation {
                 "before" => (entity.start_byte, entity.start_byte),
                 "after" => (entity.end_byte, entity.end_byte),
@@ -240,12 +278,20 @@ fn prepare_inner(
                     ) =>
                 {
                     let (text, _) = source(store, snapshot, &file.path)?;
-                    symbol_delete::range(epoch, file, entity, &text, deadline)?
+                    if value["emptyPythonBody"] == "pass" {
+                        let selected = symbol_delete::python_with_empty_body(
+                            epoch, file, entity, &text, deadline,
+                        )?;
+                        delete_text = selected.replacement;
+                        (selected.start, selected.end)
+                    } else {
+                        symbol_delete::range(epoch, file, entity, &text, deadline)?
+                    }
                 }
                 _ => (entity.start_byte, entity.end_byte),
             };
             let text = if operation == "delete" {
-                ""
+                delete_text
             } else {
                 value["text"]
                     .as_str()

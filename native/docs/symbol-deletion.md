@@ -38,6 +38,14 @@ No implicit `pass` or replacement program is inserted. A recognized leading
 UTF-8 BOM stays outside the deletion, with parser coordinates rebased to the
 original bytes. Decorator expressions are parsed as source and never executed.
 
+An explicit native-only `deleteSymbol.emptyPythonBody: "pass"` now permits
+one otherwise-empty required Python block to receive exactly `pass` in the
+checked declaration's place. It checks the full resulting syntax, preserves
+decorator ownership and original coordinates, and refuses mixed operations.
+Absent policy or explicit `reject` retain the default above. The independent
+semantic-provider/facade paths retain that default. See the
+[additional contract](semantic-refactor-intents.md#explicit-native-python-empty-body-deletion).
+
 Rust uses the existing owned attachment grammar from symbol moves. Its exact
 AST/entity binding includes outer attributes, outer documentation and comments
 between those attachments and the selected declaration. Ordinary comments
@@ -54,7 +62,8 @@ Syntax ownership does not prove that a declaration is unused or that the
 result compiles. Verification runs only when explicitly requested and trusted.
 
 Other language deletion boundaries retain their existing behavior. Separate
-TypeScript member decorators, empty required Python bodies, general deletion
+TypeScript member decorators, empty required Python bodies without the explicit
+native policy above, general deletion
 propagation, exhaustive reference coverage and IDE parity remain unsupported
 by this finite contract.
 File deletion has its separate [captured file usage contract](file-usage.md).

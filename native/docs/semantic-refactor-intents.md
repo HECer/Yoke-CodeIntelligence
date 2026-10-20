@@ -233,3 +233,46 @@ host-selected bounded contract above; captured-file `jb.move` selectors follow
 the separate facade contract. Independently
 owned protocol fixtures establish the local contract; they do not establish live
 IDE or compiler parity.
+
+## Explicit native Python empty-body deletion
+
+Native `ci_change_prepare` accepts an optional closed policy on `deleteSymbol`:
+
+```json
+{
+  "snapshotId": "CAPTURED_SNAPSHOT_SHA256",
+  "deleteSymbol": {
+    "entityId": "CAPTURED_ENTITY_SHA256",
+    "emptyPythonBody": "pass"
+  }
+}
+```
+
+Replace the placeholders with actual captured IDs. Omitting `emptyPythonBody`
+or selecting `reject` retains the released refusal when deletion would leave
+a required Python block without a statement. Explicit `pass` inserts exactly
+that keyword at the checked declaration's original start only when its parent
+block has no other non-comment statement. Existing docstrings, assignments,
+siblings and module-level deletion need no filler. The selected function/class
+owns its checked decorator wrapper; parent decorators and neighboring comments
+remain outside that edit. Original entity/evidence coordinates, source bytes,
+BOM, CRLF and indentation stay authoritative.
+
+The option is Python-only and cannot be mixed with explicit edits, another
+symbol operation, rename or bulk replacement. Unknown values, JSON types or
+fields refuse. The original source must have error-free syntax and match the
+exact bounded AST declaration/name/kind/ranges. The same bounded parser checks
+the entire resulting Python text after the proposed replacement, under the
+shared deadline. Source is limited to 4,000,000 bytes and the original AST walk
+to 200,000 nodes. No analyzed module, decorator, model or provider is executed.
+
+This is an additional explicit native byte-edit contract. The eight-tool MCP
+surface and existing default deletion behavior remain. Semantic-provider/facade
+deletion still uses its original policy. Saved plan shapes, exact delta/review
+replay and legacy identities remain unchanged; new planned bytes use the normal
+plan identity. This option creates no approval, verification, application or
+recovery authority. Workspace application still needs separate host write
+permission, exact approval, executed verification and fresh source conditions.
+Host-selected Python stdlib AST-only verification can inspect a copied result
+without importing or executing the analyzed module; that check establishes
+syntax/selected structure, not runtime behavior or exhaustive consumer safety.
