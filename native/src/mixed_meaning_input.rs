@@ -116,6 +116,8 @@ struct Unit<'a> {
     label: &'a str,
     text_bytes: usize,
     item: Value,
+    #[serde(skip)]
+    source: &'a SourceRef,
 }
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -177,6 +179,7 @@ fn prepare<'a>(
             label: &unit.label,
             text_bytes,
             item: crate::json::parse(&item_bytes, MAX_ITEM_BYTES)?,
+            source: &unit.source,
         });
     }
     let mut contexts = Vec::new();
@@ -238,6 +241,17 @@ struct Export<'a, 'b> {
     limitations: [&'static str; 4],
 }
 impl CheckedMeaningInputs<'_> {
+    pub fn input_hash(&self) -> &str {
+        &self.input_hash
+    }
+    pub(super) fn view(&self) -> &CheckedMixedView {
+        self.view
+    }
+    pub(super) fn sources(&self) -> impl Iterator<Item = (&str, &SourceRef)> {
+        self.units
+            .iter()
+            .map(|unit| (unit.id.as_str(), unit.source))
+    }
     pub fn export(&self, max_output_bytes: usize, d: &Deadline) -> Result<Value> {
         input(max_output_bytes <= MAX_OUTPUT_BYTES)?;
         let limit = max_output_bytes.min(self.view.options.max_output_bytes);

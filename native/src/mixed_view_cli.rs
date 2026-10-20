@@ -6,7 +6,8 @@ use yoke::{
     Engine,
     capture::Deadline,
     mixed_view::{
-        self, MeaningInputRequest, NativePdfWorker, Options, Query, Selection, SelectionV2,
+        self, MeaningInputRequest, MixedMeaningClaimRequest, NativePdfWorker, Options, Query,
+        Selection, SelectionV2,
     },
 };
 #[derive(Args)]
@@ -18,6 +19,9 @@ pub struct Arguments {
     /// Prepare bounded typed inputs from checked frozen sources, without a provider call.
     #[arg(long, conflicts_with = "query")]
     meaning_inputs: Option<String>,
+    /// Check host-submitted unverified interpretation data from this JSON file.
+    #[arg(long, requires = "meaning_inputs")]
+    meaning_claims: Option<PathBuf>,
     #[arg(long, default_value_t = 4)]
     max_documents: usize,
     #[arg(long, default_value_t = 64_000_000)]
@@ -44,7 +48,10 @@ pub struct Prepared {
 }
 enum Requested {
     Query(Query),
-    MeaningInputs(MeaningInputRequest),
+    MeaningInputs {
+        inputs: MeaningInputRequest,
+        claims: Option<MixedMeaningClaimRequest>,
+    },
 }
 impl Arguments {
     pub fn prepare(&self, max_bytes: u64, d: &Deadline) -> Result<Prepared> {
@@ -91,7 +98,22 @@ impl Arguments {
                     mixed_view::validate_pdf_meaning_inputs(&request, selection, d)?
                 }
             }
-            Requested::MeaningInputs(request)
+            let claims = self
+                .meaning_claims
+                .as_ref()
+                .map(|path| -> Result<MixedMeaningClaimRequest> {
+                    let value = super::input_json(path, 1_000_000)
+                        .map_err(|_| anyhow::anyhow!("mixed_meaning_claim_invalid"))?;
+                    let claims = yoke::json::decode(value)
+                        .map_err(|_| anyhow::anyhow!("mixed_meaning_claim_invalid"))?;
+                    mixed_view::validate_meaning_claim_request(&claims, d)?;
+                    Ok(claims)
+                })
+                .transpose()?;
+            Requested::MeaningInputs {
+                inputs: request,
+                claims,
+            }
         } else {
             let query = match &self.query {
                 None => Query::Describe {},
@@ -129,9 +151,15 @@ impl Prepared {
         };
         let result = match &self.request {
             Requested::Query(query) => view.query(query, self.options.max_output_bytes, d)?,
-            Requested::MeaningInputs(request) => view
-                .prepare_meaning_inputs(request, d)?
-                .export(self.options.max_output_bytes, d)?,
+            Requested::MeaningInputs { inputs, claims } => {
+                let prepared = view.prepare_meaning_inputs(inputs, d)?;
+                match claims {
+                    Some(claims) => prepared
+                        .check_meaning_claims(claims, d)?
+                        .export(self.options.max_output_bytes, d)?,
+                    None => prepared.export(self.options.max_output_bytes, d)?,
+                }
+            }
         };
         let bytes = yoke::json::encode_bounded(&result, self.options.max_output_bytes, d)
             .map_err(|_| anyhow::anyhow!("mixed_view_capacity_exceeded"))?;
