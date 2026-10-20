@@ -30,6 +30,7 @@ mod host_install_cli;
 mod meaning_archive_cli;
 mod meaning_cli;
 mod meaning_projection_cli;
+mod mixed_meaning_cli;
 mod mixed_view_cli;
 mod neo4j_publish_cli;
 mod postgres_catalog_cli;
@@ -98,6 +99,7 @@ enum ExtensionOperation {
     FalkorPublish(Box<falkor_publish_cli::Arguments>),
     SourceAcquisition(Box<source_acquisition_cli::Arguments>),
     MixedView(Box<mixed_view_cli::Arguments>),
+    MixedMeaning(Box<mixed_meaning_cli::Arguments>),
     Feedback(Box<feedback_cli::Arguments>),
     GithubApp(Box<github_app_cli::Arguments>),
     GithubDiscussions(Box<github_discussions_cli::Arguments>),
@@ -1965,6 +1967,7 @@ fn run_parity(
         ExtensionOperation::FalkorPublish(_) => bail!("FalkorDB publication host dispatch error"),
         ExtensionOperation::SourceAcquisition(_) => bail!("Source acquisition host dispatch error"),
         ExtensionOperation::MixedView(_) => bail!("Mixed views host dispatch error"),
+        ExtensionOperation::MixedMeaning(_) => bail!("Mixed meaning host dispatch error"),
         ExtensionOperation::Feedback(_) => bail!("Feedback host dispatch error"),
         ExtensionOperation::DigestReceiver(_) => bail!("Digest receiver host dispatch error"),
         ExtensionOperation::DigestInbox(_) => bail!("Digest inbox host dispatch error"),
@@ -3573,6 +3576,30 @@ fn run(cli: Cli) -> Result<bool> {
         let prepared = args.prepare(cli.max_bytes, &deadline)?;
         validate_existing_batch_store(&cli.root, &deadline)
             .map_err(|_| anyhow::anyhow!("feedback_store_unavailable"))?;
+        let engine = Engine::open_with_timeout(&cli.root, deadline.remaining())?;
+        engine.store.set_deadline(&deadline)?;
+        return prepared.run(&engine, &deadline);
+    }
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::MixedMeaning(args) = extension.as_ref()
+    {
+        ensure!(
+            (10..=600_000).contains(&cli.timeout),
+            "Mixed meaning timeout is invalid"
+        );
+        ensure!(
+            cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.analyzer_epoch.is_none()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && !cli.allow_writes,
+            "Mixed meaning selects stored source without capture, language servers or source writes"
+        );
+        let deadline = Deadline::new(cli.timeout);
+        let prepared = args.prepare(cli.max_bytes, &deadline)?;
+        validate_existing_batch_store(&cli.root, &deadline)?;
         let engine = Engine::open_with_timeout(&cli.root, deadline.remaining())?;
         engine.store.set_deadline(&deadline)?;
         return prepared.run(&engine, &deadline);

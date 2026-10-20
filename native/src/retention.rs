@@ -876,6 +876,22 @@ fn validate_parity_records(store: &Store, deadline: &Deadline) -> Result<ParityD
                 // only CAS objects belong in the artifact roots set.
                 artifacts.extend(roots.artifact_ids);
             }
+            crate::mixed_view::provider::JOB_KIND => {
+                let roots = crate::mixed_view::provider::validate_retained_record(
+                    store,
+                    &kind,
+                    &id,
+                    &json_value(&raw)?,
+                    deadline,
+                )?;
+                add_meaning_dependencies(
+                    store,
+                    roots,
+                    &mut artifacts,
+                    &mut typed_references,
+                    deadline,
+                )?;
+            }
             crate::meaning_build::JOB_KIND
             | crate::meaning_build::CACHE_KIND
             | crate::meaning_build::GRAPH_KIND => {

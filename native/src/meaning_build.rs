@@ -1420,8 +1420,18 @@ fn fingerprint(
     policy: &MeaningPolicy,
     d: &Deadline,
 ) -> Result<(String, PathBuf)> {
+    fingerprint_host_provider(store, provider, &policy.provider_input_files, d)
+}
+/// Shared trusted-host implementation identity; it grants no source capability
+/// and requires no fabricated native snapshot or selection policy.
+pub(crate) fn fingerprint_host_provider(
+    store: &Store,
+    provider: &ProviderSpec,
+    provider_input_files: &[PathBuf],
+    d: &Deadline,
+) -> Result<(String, PathBuf)> {
     ensure!(
-        policy.provider_input_files.len() <= 64,
+        provider_input_files.len() <= 64,
         "Too many host-selected provider input files"
     );
     let exe = resolve_executable(store, &provider.command)?;
@@ -1444,7 +1454,7 @@ fn fingerprint(
             );
         }
     }
-    for file in &policy.provider_input_files {
+    for file in provider_input_files {
         ensure!(
             file.is_absolute(),
             "Provider input files require explicit absolute host paths"

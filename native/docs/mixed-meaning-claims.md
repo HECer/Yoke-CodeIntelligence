@@ -45,5 +45,6 @@ support text is bounded to 128,000 bytes, each materialized read item to 256,000
 encoded bytes, and their combined materialization to 4,000,000 bytes. Final
 output still obeys the caller's combined budget including the nested inputs.
 Deadline/cancellation failures and invalid inputs produce no partial stdout,
-saved overflow or source/database changes. Semantic provider extraction,
-durable mixed-graph publication/replay and general graph consumers remain open.
+saved overflow or source/database changes. Explicit provider extraction and
+durable publication/replay use the separate [trusted-host build](mixed-meaning-provider.md).
+General mixed graph consumers remain open.

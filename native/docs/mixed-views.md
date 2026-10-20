@@ -30,7 +30,8 @@ inside explicit groups, not prompt wire bytes, tokens or provider cost.
 Preparation runs no semantic provider/model and creates no graph relationship,
 receipt or persisted input. `modelCalls: 0`, `sourceWritten: false` and
 `complete: false` remain explicit. Mixed semantic execution and graph replay
-are separate capabilities still to be implemented.
+use the separate [trusted-host build](mixed-meaning-provider.md). General mixed
+graph consumers remain open.
 
 `mixed-view` selects one explicitly pinned native source View and one through
 four checked DOCX/XLSX document graphs in the same workspace. It replays the
@@ -137,6 +138,7 @@ host cancellation apply throughout; refusals produce no partial stdout or
 saved result. `complete: false`, `modelCalls: 0` and `sourceWritten: false`
 remain explicit. This schema1 capability covers native source and DOCX/XLSX.
 Schema2 adds [frozen PDF pages](mixed-pdf-views.md) through an explicit native
-worker capability. Mixed-space semantic extraction, cross-workspace joins and
-general cross-source graph links remain open; these query contracts do not
-establish full R4 or universal parity.
+worker capability. Explicit mixed semantic extraction and durable replay use
+the separate [trusted-host build](mixed-meaning-provider.md). Cross-workspace
+joins and general graph consumers remain open; these literal query contracts
+do not establish full R4 or universal parity.
