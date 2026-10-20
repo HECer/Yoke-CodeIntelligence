@@ -162,6 +162,11 @@ owning export, decorator or outer-attribute bundle. Structural entity coordinate
 stay unchanged. Unsupported
 ownership refuses; ordinary usage and application gates still apply.
 
+Native `deleteSymbol.emptyPythonBody: "pass"` explicitly fills an otherwise empty
+required Python suite after exact declaration/decorator selection and result
+syntax checking. The default remains rejection, with ordinary plan/application
+gates intact. See the [finite contract](docs/semantic-refactor-intents.md#explicit-native-python-empty-body-deletion).
+
 [Captured function propagation](docs/propagated-delete.md) can remove checked
 standalone call statements and newly unused private function dependencies in a
 bounded TS/JS module. Surviving references, possible consumers and exported

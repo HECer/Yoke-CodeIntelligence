@@ -490,7 +490,8 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
                 .ok_or_else(|| anyhow::anyhow!("Symbol operation must be an object"))?;
             ensure!(
                 obj.keys()
-                    .all(|k| ["entityId", "text", "newName"].contains(&k.as_str())),
+                    .all(|k| ["entityId", "text", "newName"].contains(&k.as_str())
+                        || (name == "deleteSymbol" && k == "emptyPythonBody")),
                 "Unknown symbol operation field"
             );
             ensure!(
@@ -498,6 +499,9 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
                 "Invalid symbol ID"
             );
         }
+    }
+    if tool == "ci_change_prepare" {
+        crate::changes::validate_python_delete_policy(args)?;
     }
     if tool == "ci_change_prepare" && args.get("bulkReplace").is_some() {
         ensure!(
