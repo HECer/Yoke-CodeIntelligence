@@ -5,6 +5,12 @@ checks their explicit `WorkspaceEdit` results. It does not execute provider
 commands, infer authority from action titles, or implement a proprietary IDE.
 Session edit permission is checked before a provider is queried.
 
+Direct native `safeDelete` has an explicit
+[`propagationPolicy` v2](propagated-delete.md#explicit-wrapped-call-policy) for
+complete standalone calls wrapped in parentheses, `await` or `void`. Default v1
+and facade arguments retain their existing contract. All provider/source checks
+and independent verification, approval, application and recovery gates remain.
+
 ## Unpublished admission
 
 An internal checked batch binds the workspace, immutable snapshot manifest and

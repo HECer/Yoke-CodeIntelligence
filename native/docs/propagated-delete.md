@@ -58,3 +58,43 @@ external, omitted or differently configured consumers remain unknown. This
 finite native policy does not establish general propagated deletion or IDE
 equivalence. See [symbol deletion boundaries](symbol-deletion.md) for ordinary
 declaration deletion and [file usage checks](file-usage.md) for file selection.
+
+## Explicit wrapped-call policy
+
+Direct native semantic `safeDelete` additionally accepts
+`propagationPolicy: "captured_es_function_propagation_v2"` with `propagate:true`
+and a nonempty symbol `namePath`. Omission selects v1; explicitly selecting
+`captured_es_function_propagation_v1` retains its original effects. This native
+selector does not change the published facade schemas or accept a new facade
+argument. Unknown values, nulls, nontext policies and policy selection without
+symbol propagation refuse before indexing or starting a provider.
+
+V2 can remove a plain identifier call wrapped in at most 32 combined parentheses,
+`await` expressions and unary `void` expressions, such as `((removeMe()));`,
+`await (removeMe());` or `void (await removeMe());`. The complete expression
+statement must belong directly to the program or a statement block. Each wrapper
+must contain exactly its one supported expression. The original complete
+statement bytes are removed once, including nested calls, while adjacent
+comments, BOM, UTF-8 and line endings remain. Dependency propagation uses the
+same removed original regions and retains surviving/exported dependencies.
+
+Value consumers, other unary operators, optional calls, parenthesized callees,
+type arguments/assertions, non-null assertions, wrapper comments and other
+unclassified children remain outside v2. A lone `if`, loop, label or switch-case
+statement slot is not removable; an explicit block can retain its empty body.
+The entire proposed source is reparsed before publishing a plan, under the same
+256,000-byte source bound and original deadline/cancellation. Grammar acceptance
+does not prove type correctness or runtime equivalence. V2 retains all original
+provider/source proofs, capacities, guarded application and unknown-consumer
+limits, reporting its distinct policy and `complete:false`.
+
+The result must also retain every surviving named and anonymous syntax node's
+kind, nesting, field role, order and mapped original byte range. Only fully
+removed original subtrees are omitted from this comparison, with a shared
+200,000 visited-node budget. This refuses unintended merges across automatic
+semicolon boundaries without inserting punctuation. Syntax correspondence still
+does not establish semantic or runtime equivalence.
+The undelimited program container starts at physical byte zero for this
+comparison; all child-node coordinates remain exact. Leading whitespace left
+by removing the first declaration is retained even when the parser's program
+node starts at the next surviving token.
