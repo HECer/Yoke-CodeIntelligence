@@ -6842,7 +6842,13 @@
         "native/tests/propagated_delete_live.rs",
         "native/tests/fixtures/propagated-delete-lsp.mjs",
         "native/docs/propagated-delete.md",
-        "docs/validation/integration-2026-10-19/propagated-delete/index.json"
+        "docs/validation/integration-2026-10-19/propagated-delete/index.json",
+        "native/README.md",
+        "native/src/mcp_http_rejection_tests.rs",
+        "native/src/protocol.rs",
+        "native/src/validation.rs",
+        "native/tests/python_empty_suite.rs",
+        "docs/validation/integration-2026-10-19/python-empty-suite/index.json"
       ],
       "id": "R1",
       "inventoryRefs": [
@@ -6851,7 +6857,7 @@
         "serena:jet_brains_inline_symbol",
         "serena:jet_brains_rename"
       ],
-      "missingBehavior": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic. Checked TypeScript/TSX/JavaScript/JSX declaration/export/ambient deletion and Rust/Python owning attribute/documentation/decorator deletion now keep original entity/evidence coordinates. Contextual method binding uses the nearest declared owner; nested functions stay functions. Multi-declarators, expression consumers, separate TS member decorators, otherwise empty required Python bodies and other-language attachment ownership remain outside these finite symbol-deletion contracts. Explicit captured_es_function_propagation_v1 now removes checked standalone target-call statements and newly unused private function dependencies in one bounded TS/JS ES module, including private cycles. Surviving reported/possible consumers and exported dependencies remain protected. Other expression consumers, module/declaration/language/file shapes, general propagation, future consumer changes and exhaustive compiler/IDE guarantees remain outside this finite policy.",
+      "missingBehavior": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic. Checked TypeScript/TSX/JavaScript/JSX declaration/export/ambient deletion and Rust/Python owning attribute/documentation/decorator deletion now keep original entity/evidence coordinates. Contextual method binding uses the nearest declared owner; nested functions stay functions. Multi-declarators, expression consumers, separate TS member decorators, Required Python bodies without the explicit native pass policy and other-language attachment ownership remain outside these finite symbol-deletion contracts. Explicit captured_es_function_propagation_v1 now removes checked standalone target-call statements and newly unused private function dependencies in one bounded TS/JS ES module, including private cycles. Surviving reported/possible consumers and exported dependencies remain protected. Other expression consumers, module/declaration/language/file shapes, general propagation, future consumer changes and exhaustive compiler/IDE guarantees remain outside this finite policy. Explicit native deleteSymbol.emptyPythonBody reject/pass now admits one checked Python function/class deletion with a literal pass only when its required parent block would otherwise lack a non-comment statement. Full resulting syntax, exact decorator/name/kind/range binding, shared source/AST/deadline bounds and original coordinates remain checked; default/provider/facade behavior still rejects empty required bodies. Mixed operations and other languages refuse the option. Actual Python3.14.7 stdlib AST-only verification, separate permission/approval/application/recovery and native MCP have owned Windows evidence; no analyzed module/decorator executes or broader semantic/consumer guarantee follows.",
       "priority": 1,
       "suggestedScope": "Continue broader propagation and remaining declaration/file/language/provider intents with exact original source operations, directed dependency/reference semantics and independent postconditions. Preserve finite source/proof/unknown-consumer boundaries, immutable anchors, legacy identities and guarded application/recovery.",
       "title": "Finish semantic refactoring intent contracts",
@@ -6959,6 +6965,34 @@
         "wholeNativeRerun": false,
         "countsAreNonadditive": true,
         "fullParityCertified": false
+      },
+      "pythonEmptySuiteCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/python-empty-suite/index.json",
+        "newCases": {
+          "unitAdmission": 1,
+          "defaultIntegration": 8,
+          "actualPythonAstOnly": 1
+        },
+        "nativeGroups": 10,
+        "nativeTotals": {
+          "passed": 559,
+          "failed": 0,
+          "ignored": 8
+        },
+        "platform": "Windows",
+        "actualPython": {
+          "path": "C:\\Python314\\python.exe",
+          "sha256": "4942b86a6597e5aee0128daa00050ed79bc21f6e709a78eb19cbfeb0c2f39ac9",
+          "version": "Python 3.14.7"
+        },
+        "nativePolicy": "deleteSymbol.emptyPythonBody=reject|pass",
+        "defaultPolicyChanged": false,
+        "semanticProviderFacadePolicyChanged": false,
+        "analyzedModuleOrDecoratorExecuted": false,
+        "legacyPlanShapeOrIdentityChanged": false,
+        "testOnlyHttpDeadlineCorrection": true,
+        "wholeNativeRerun": false,
+        "fullContractCertified": false
       }
     },
     {
@@ -8829,6 +8863,24 @@
         "docs/validation/integration-2026-10-19/plan-feedback/index.json"
       ],
       "remainingReview": "Host labels and outcomes do not authenticate independent identity, correctness or execution. Derived results represent planned bytes; current applicability, actual application and observed execution remain false even with supplied verification/approval rows. Plan JSON reader is limited to128000bytes; additional object targets and semantic transcript interpretation remain open.14new cases pass; the broader failed attempt and final targeted63/1 Windows symlink prerequisite failure are retained, not relabeled as whole-native acceptance. Full upstream/platform/main/release and broaderR1-R9 remain open.",
+      "fullContractCertified": false
+    },
+    {
+      "id": "native_python_explicit_empty_suite_deletion",
+      "behavior": "Explicit native-only deleteSymbol.emptyPythonBody reject/pass retains the strict released default and adds one checked literalpass replacement when a required Python parentblock has no other noncomment statement. Exact AST declaration/name/kind/source range and owning decorator selection, original source/entity coordinates, BOM/Unicode/CRLF/indentation, bounded full-result syntax replay and independent ordinary immutableplan/application/recovery gates remain intact. Closed argument/nativeMCP admission rejects unknown policy values/types, otherlanguages and mixed operations before capture/publication. Actual Python3.14.7 AST-only copied-result verification and approved application/exact recovery have owned Windows evidence; analyzed modules/decorators are not executed.",
+      "evidence": [
+        "native/README.md",
+        "native/docs/semantic-refactor-intents.md",
+        "native/docs/symbol-deletion.md",
+        "native/src/changes.rs",
+        "native/src/changes_symbol_delete.rs",
+        "native/src/mcp_http_rejection_tests.rs",
+        "native/src/protocol.rs",
+        "native/src/validation.rs",
+        "native/tests/python_empty_suite.rs",
+        "docs/validation/integration-2026-10-19/python-empty-suite/index.json"
+      ],
+      "remainingReview": "This finite native singleton edit does not change semantic-provider/facade defaults or establish unusedness, exhaustive references, compiler/runtime behavior, other language attachment ownership, mixed operations, arbitrary refactoring/IDE parity, nonWindows acceptance, main or release. Corrected HTTP fixture now checks configured OS timeout<=original20ms plus unchanged250msupperbound rather than requiring full budget exhaustion; HTTP runtime source is unchanged. Earlier failed test assumptions/logs remain. BroaderR1-R9 staysopen.",
       "fullContractCertified": false
     }
   ],

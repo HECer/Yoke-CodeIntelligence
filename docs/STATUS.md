@@ -907,6 +907,39 @@ are not consumed as proof. No model, provider, capture or project execution
 occurs in these operations. Additional targets, semantic transcript learning,
 broaderR1-R9, whole-native/platform acceptance, main and release remain open.
 
+[Explicit native Python empty-suite deletion](validation/integration-2026-10-19/python-empty-suite/index.json)
+adds closed `deleteSymbol.emptyPythonBody: reject|pass` to native preparation.
+The absent/reject default remains unchanged. Explicit `pass` fills only a
+required parent block with no other non-comment statement, after exact original
+AST/name/kind/range/decorator binding and before whole-result syntax replay.
+Original coordinates, BOM, Unicode, CRLF, indentation and neighboring comments
+remain intact. Mixed edits and other languages refuse the option. See the
+[finite contract](../native/docs/semantic-refactor-intents.md#explicit-native-python-empty-body-deletion).
+
+There are **10 new cases**: one unit admission, eight default integration and
+one explicitly selected actual-Python gate. The final **10 selected native
+groups** record **559 passed / 0 failed / 8 existing ignored gates** with
+**732 inputs** unchanged. Actual **Python3.14.7** parses the copied source using
+stdlib AST only, then separate permission/approval/application/recovery checks
+preserve exact source bytes. The module and unknown decorators never execute.
+Native MCP prepares the exact plan without granting application or execution.
+Format/build/all-target Clippy with warnings denied pass; mandatory integrated
+format/Python/typecheck/TypeScript results are indexed separately.
+
+The retained first new test assumed Rust Result errors instead of the API's
+error envelope; the corrected test checks denial and unchanged state. An
+earlier broad run records **558/1/8**: an unchanged HTTP fixture required idle
+cleanup to exhaust its20ms budget. Its test now checks the configured socket
+timeout against that original ceiling and retains the250ms wall-clock upper
+bound. HTTP runtime source and the exact production binary remain unchanged
+across this test-only correction. Incremental runs are nonadditive.
+
+Semantic-provider/facade defaults, saved-plan shapes/identities and independent
+usage/approval/verification/stale/recovery gates remain. This finite policy does
+not establish consumer safety or general refactoring semantics. Earlier OS1314
+prerequisite failures lie outside this selection; no whole-native/platform
+acceptance follows. BroaderR1-R9, hosted acceptance, main and release remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

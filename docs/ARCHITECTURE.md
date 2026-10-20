@@ -322,3 +322,13 @@ retention replay preserve original receipt/source roles. Plan results remain
 planned bytes and no approval, execution/application receipt or current-workspace
 authority follows. See the [contract](../native/docs/outcome-feedback.md) and
 [indexed evidence](validation/integration-2026-10-19/plan-feedback/index.json).
+
+Native Python declaration deletion has an explicit singleton empty-body policy.
+Closed validation precedes capture and rejects mixed operations or invalid
+policy data. Original checked AST/decorator/name/kind/ranges select the edit;
+only an otherwise-empty required suite receives literalpass. Full resulting
+syntax is parsed under the same deadline/source bounds. Native defaults and
+semantic-provider/facade callers retain strict rejection, while immutable
+plan identities, source coordinates and independent application gates stay
+unchanged. See the [contract](../native/docs/semantic-refactor-intents.md#explicit-native-python-empty-body-deletion)
+and [evidence](validation/integration-2026-10-19/python-empty-suite/index.json).

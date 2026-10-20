@@ -70,6 +70,10 @@ Explicit [saved-plan feedback](native/docs/outcome-feedback.md#authored-outcomes
 records source-bound authored historical outcomes and exposes transparent
 ranking. Planned result bytes and labels grant no application or execution authority.
 
+An explicit native [Python empty-suite deletion policy](native/docs/semantic-refactor-intents.md#explicit-native-python-empty-body-deletion)
+can prepare a checked `pass` replacement while preserving the strict default
+and ordinary approval, verification and source-recovery gates.
+
 ## TypeScript advanced runtime
 
 Requires **Node.js 22.16+**. Python/Go and additional optional providers are installed separately. Node SQLite is experimental on the tested Node version. No model or API key is required by native indexing.

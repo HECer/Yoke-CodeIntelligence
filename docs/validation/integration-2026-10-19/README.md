@@ -394,3 +394,17 @@ and mandatory integrated format/Python17/typecheck/TS260+3skip with737inputs
 unchanged are recorded. No observed application/execution, independent
 corroboration, current applicability, whole-native/platform/main/release
 certification follows. Earlier README bytes remain; broaderR1-R9 continues.
+
+## Explicit native Python empty-suite deletion checkpoint
+
+Source `d37abc179208b02c46ae1998689963a9be935eb6`, runtime merge `0ce017ab212953bc9a705961f74ace297a9dc31b`.
+[Indexed evidence](python-empty-suite/index.json) retains1unit+8default+1actual
+newcases, final10selectedgroups559/0/8, actual Python3.14.7 AST-only verification,
+independent application/recovery gates and nativeMCP. The original error-envelope
+assumption and558/1/8idle-timeout test failure remain with their corrections.
+HTTP runtime source and exact binary stay unchanged across the test-only socket
+ceiling correction. Format/build/Clippy-Dwarnings and mandatory integrated
+format/Python17/typecheck/TS260+3skips pass with738inputs unchanged. No analyzed
+module/decorator execution, semantic-provider policy change, whole-native/platform/
+main/release certification follows. Previous README bytes remain; broaderR1-R9
+work continues.

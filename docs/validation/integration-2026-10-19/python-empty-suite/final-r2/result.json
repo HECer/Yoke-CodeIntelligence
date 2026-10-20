@@ -1,0 +1,99 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 732,
+  "commands": [
+    {
+      "name": "native",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--no-fail-fast",
+        "--lib",
+        "--test",
+        "python_empty_suite",
+        "--test",
+        "declaration_attachment_ranges",
+        "--test",
+        "symbol_delete_ranges",
+        "--test",
+        "protocol_connection",
+        "--test",
+        "plan_integrity",
+        "--test",
+        "plan_feedback",
+        "--test",
+        "semantic_refactor",
+        "--test",
+        "refactor_intents",
+        "--test",
+        "propagated_delete_contract",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 287.4613563000021,
+      "totals": {
+        "passed": 559,
+        "failed": 0,
+        "ignored": 8
+      },
+      "groups": 10,
+      "failures": []
+    },
+    {
+      "name": "format",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 5.032663099991623
+    },
+    {
+      "name": "build",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "build",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--bin",
+        "yoke"
+      ],
+      "exitCode": 0,
+      "seconds": 7.286434900001041
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "seconds": 40.83934250001039
+    }
+  ],
+  "allChecksPassed": true,
+  "wholeNativeRerun": false
+}
