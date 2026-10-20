@@ -2,6 +2,11 @@
 
 ## Current integration work
 
+The [remaining-work map](REMAINING_WORK.md) reconciles current R1–R9 behavior,
+concrete implementation gaps and separate acceptance gates. It accounts for
+the completed mixed graph consumers/composition and existing discussion/digest
+contracts while retaining every historical failure and inventory boundary.
+
 Local branch `integrate/native-parity-github-app-20261018` combines the separate
 `c5178b2` parity/Wave 14 and `7b8eabb` GitHub App checkpoints. Both remain absent
 from `main` at the start of this integration. Their historical evidence is

@@ -1,10 +1,12 @@
 # Durable native GitHub review workers
 
-This slice is in development on the isolated GitHub App branch. It extends the
-signed webhook queue with durable claims, recovery, release, status and explicit
-native execution against existing source snapshots. Controlled publication and
-closed-discussion digests remain separate pending work. A worker completion is a
-source-bound structural report, not a full semantic review or publication receipt.
+Durable workers extend the signed webhook queue with claims, recovery, release,
+status and explicit native execution against existing source snapshots. Separate
+[controlled publication](github-app-publication.md) and
+[closed-discussion digest](github-discussions.md) contracts are available.
+Unattended App history-job integration and configured live installation/deployment
+remain open. A worker completion is a source-bound structural report; publication
+and semantic reasoning retain their own contracts and acceptance requirements.
 
 ## Claim and recovery contract
 

@@ -7204,7 +7204,10 @@
         "native/src/meaning_projection_cli.rs",
         "native/tests/meaning_projection_portable.rs",
         "native/docs/meaning-projection.md",
-        "docs/validation/integration-2026-10-19/portable-projections/index.json"
+        "docs/validation/integration-2026-10-19/portable-projections/index.json",
+        "native/docs/mixed-meaning-composition.md",
+        "native/src/mixed_meaning_composition.rs",
+        "docs/validation/integration-2026-10-19/mixed-meaning-composition/index.json"
       ],
       "hostGroupingAddition": "Explicit disjoint host-selected groups preserve one-parent group schema and now extend across selected native Meaning graphs sharing one exact workspace/canonical snapshot/base-graph pin. JoinedGraph is an opaque checked query capability with lookup, degree and bounded directed traces. Complete joint stored source/receipt replay preserves graph-qualified concepts, directed parallel observations, selfloops, ordered role slots, evidence, coverage and provenance. No parent mutation, provider, capture or persistence; host assertions establish neither semantic identity nor authenticated review. Automatic semantic decisions, cross-history/workspace joins, mixed-document spaces remain open. Separate bounded data-only native group/join imports now support structural inspection and queries, without source replay or checked JoinedGraph authority.",
       "id": "R2",
@@ -7213,9 +7216,9 @@
         "graphify:semantic_graph_hyperedges",
         "graphify:dedup"
       ],
-      "missingBehavior": "Semantic alias identity/de-dup, mixed Office/PDF source spaces, cross-history/workspace joins, broader serialized schemas and outcome learning remain open. Checked same-snapshot native joins and lookup/degree/directed-trace consumers retain complete native source/receipt replay. Separate portable native group/join consumers now check supplied presentation structure without inheriting source authority; coherent forgeries/omissions and semantic/model quality are not verified.",
+      "missingBehavior": "Explicit semantic alias identity/de-duplication policy, broader interpretation/outcome behavior and full upstream contract equivalence remain open. Checked same-snapshot native joins and their lookup/degree/directed-trace consumers retain complete native source/receipt replay. Separate portable native group/join consumers validate supplied presentation structure without source authority. The separate mixed-source APIs now cover typed Office XML/decoded/PDF preparation, source-checked claims, explicit durable provider jobs, checked graph consumers and independently checked cross-history/workspace library composition with graph-qualified keys and unverified opt-in host links. Legacy native join schemas remain unchanged. Coherent data-only forgeries/omissions, semantic/model quality and independent interpretation truth remain unverified.",
       "priority": 2,
-      "suggestedScope": "Preserve checked native replay and the separate data-only portable projection boundary. Define mixed-document/cross-history/workspace contracts and reviewed semantic alias identity/outcome learning without granting source authority or semantic truth to labels, host assertions or serialized JSON.",
+      "suggestedScope": "Retain native checked replay and the separate portable-data and mixed-source capability boundaries. Continue explicit semantic identity/outcome policy without promoting aliases, host assertions or serialized JSON into source or semantic authority. Reuse the implemented R4 mixed preparation/provider/query/composition contracts rather than reimplementing those capabilities.",
       "title": "Source-bound meaning graphs, build state and alias candidates",
       "portableProjectionCheckpoint": {
         "index": "docs/validation/integration-2026-10-19/portable-projections/index.json",
@@ -7254,7 +7257,7 @@
         "graphify:report_analytics",
         "graphify:graph_query"
       ],
-      "missingBehavior": "Checked historical pair-of-Views comparison is implemented in the Rust library and explicit pinned graph compare-views CLI. Selected analytics previousSnapshotId remains refused because it does not pin both View selections. Full pinned upstream analytics semantics remain uncertified.",
+      "missingBehavior": "Checked historical pair-of-Views comparison is implemented in the Rust library and explicit pinned graph compare-views CLI. Selected analytics previousSnapshotId remains refused because it does not pin both View selections. Remaining full pinned upstream analytics equivalence is an acceptance/qualification gap; this field does not describe the implemented pair comparison as missing behavior.",
       "priority": 3,
       "suggestedScope": "Retain explicit workspace/snapshot/View/artifact/base-graph pins, original overlay/Meaning receipts and directed multiedge/source precision. Any future analytics-comparison consumer must select both immutable Views explicitly; do not infer View identity from previousSnapshotId or treat mixed binary-document source spaces as ordinary UTF-8 Views.",
       "title": "Selected-View analytics residual: checked historical comparisons"
@@ -7774,9 +7777,9 @@
         "unboundedHistoryOrSemanticCompleteness": false,
         "complete": false
       },
-      "missingBehavior": "Configured public production deployment, remote source verification, semantic reasoning, unattended App history integration, live App installation/deployment and universal upstream contract equivalence remain open. Explicit persistent local jobs now continue atomic captured-history acquisition across bounded batches and process restarts, with finite cumulative quotas and exact revision preconditions. The independently owned client and receiver implement approval/send/durable-intake/GET-recovery and separately authorized literal metadata queries. Receipt-qualified rows remain sender claims, not remote source truth or proprietary brain parity.",
+      "missingBehavior": "Configured public production deployment/live App installation, unattended App history-job integration, receiver-side independent source verification and semantic reasoning, whole-repository remote equality and universal upstream contract equivalence remain open. Existing worker per-file remote Git-blob/patch checks retain their finite checked-source contract; matching metadata is not an atomic whole-tree proof. Explicit persistent local jobs continue atomic captured-history acquisition across bounded batches and process restarts with cumulative quotas and exact revision preconditions. The independently owned client/receiver implement approval/send/durable-intake/GET-recovery and separately authorized literal metadata queries. Receipt-qualified rows remain sender claims, not receiver-verified source truth or proprietary brain parity.",
       "priority": 8,
-      "suggestedScope": "Add explicitly host-authorized, bounded closed-PR discussion observations and replayable digest/service handoff around the integrated queue, verified Git/captured-source pipeline and publication capabilities. Preserve exact source bindings, provider-claim provenance, stale preconditions, separate network/write/deployment permissions and no default model or fork-code execution. Do not claim the proprietary hosted brain engine or upgrade the unreconciled inventory from this thematic checkpoint.",
+      "suggestedScope": "Integrate explicit persistent history jobs with the durable App worker lifecycle under current grants, exact job/head/revision preconditions and cumulative quotas. Preserve idempotent recovery, separate network/write/deployment/model authority and original immutable source/receipt bindings. Existing bounded closed-PR discussion captures and digest/service handoff already have separate implemented contracts; do not reimplement them or infer hosted semantic parity.",
       "title": "Self-hosted GitHub App and authorized review publication",
       "ownedProcessCheckpoint": {
         "index": "docs/validation/integration-2026-10-19/windows-process-exit/index.json",
