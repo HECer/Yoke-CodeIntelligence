@@ -75,6 +75,11 @@ Explicit [saved-plan feedback](native/docs/outcome-feedback.md#authored-outcomes
 records source-bound authored historical outcomes and exposes transparent
 ranking. Planned result bytes and labels grant no application or execution authority.
 
+Separate [Meaning claim outcomes](native/docs/meaning-outcome-feedback.md) retain
+packet-qualified concepts, directed relations and hyperedges, original receipts
+and exact source evidence. Authored labels and historical scores establish no
+semantic truth, independent corroboration or observed execution.
+
 An explicit native [Python empty-suite deletion policy](native/docs/semantic-refactor-intents.md#explicit-native-python-empty-body-deletion)
 can prepare a checked `pass` replacement while preserving the strict default
 and ordinary approval, verification and source-recovery gates.

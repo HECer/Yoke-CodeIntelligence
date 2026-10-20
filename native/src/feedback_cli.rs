@@ -29,6 +29,14 @@ pub struct Arguments {
 }
 #[derive(Subcommand)]
 enum Operation {
+    MeaningRecord {
+        #[arg(long)]
+        input: PathBuf,
+    },
+    MeaningRank {
+        #[arg(long)]
+        input: PathBuf,
+    },
     PlanRecord {
         #[arg(long)]
         input: PathBuf,
@@ -59,6 +67,8 @@ enum Operation {
     },
 }
 enum Input {
+    MeaningRecord(Box<feedback::meaning::Draft>),
+    MeaningRank(Box<feedback::meaning::RankInput>),
     PlanRecord(Box<feedback::plans::Draft>),
     PlanRank(Box<feedback::plans::RankInput>),
     Record(Box<Draft>),
@@ -152,6 +162,7 @@ impl Arguments {
         let write = matches!(
             self.operation,
             Operation::Record { .. }
+                | Operation::MeaningRecord { .. }
                 | Operation::PlanRecord { .. }
                 | Operation::ImportTranscript { .. }
         );
@@ -179,6 +190,20 @@ impl Arguments {
         feedback::validate_options(&options)?;
         let input = (|| -> Result<Input> {
             Ok(match &self.operation {
+                Operation::MeaningRecord { input } => {
+                    let bytes = host_bytes(input, feedback::MAX_DRAFT_BYTES, d)?;
+                    let draft =
+                        yoke::json::decode(yoke::json::parse(&bytes, feedback::MAX_DRAFT_BYTES)?)?;
+                    feedback::meaning::validate_draft(&draft, d)?;
+                    Input::MeaningRecord(Box::new(draft))
+                }
+                Operation::MeaningRank { input } => {
+                    let bytes = host_bytes(input, feedback::MAX_DRAFT_BYTES, d)?;
+                    let query =
+                        yoke::json::decode(yoke::json::parse(&bytes, feedback::MAX_DRAFT_BYTES)?)?;
+                    feedback::meaning::validate_rank(&query, d)?;
+                    Input::MeaningRank(Box::new(query))
+                }
                 Operation::PlanRecord { input } => {
                     let bytes = host_bytes(input, feedback::MAX_DRAFT_BYTES, d)?;
                     let draft =
@@ -234,6 +259,12 @@ impl Arguments {
 impl Prepared {
     pub fn run(&self, engine: &Engine, d: &Deadline) -> Result<bool> {
         let result = match &self.input {
+            Input::MeaningRecord(input) => {
+                feedback::meaning::record(&engine.store, input, &self.options, d)?
+            }
+            Input::MeaningRank(input) => {
+                feedback::meaning::rank(&engine.store, input, &self.options, d)?
+            }
             Input::PlanRecord(input) => {
                 feedback::plans::record(&engine.store, input, &self.options, d)?
             }

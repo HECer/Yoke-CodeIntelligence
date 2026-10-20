@@ -414,6 +414,18 @@ planned bytes and no approval, execution/application receipt or current-workspac
 authority follows. See the [contract](../native/docs/outcome-feedback.md) and
 [indexed evidence](validation/integration-2026-10-19/plan-feedback/index.json).
 
+The separate `knowledge::feedback::meaning` namespace adds authored outcomes for
+packet-qualified native Meaning concepts, directed relations and hyperedges.
+Sealed original/evaluated View/source/overlay/receipt replay precedes recognizing
+the exact kind/graph/packet/claim. Original quotes must lie in actual claim
+support; evaluated quotes establish exact bytes in a support path only. Stable
+origin/reference subjects keep actor/session sequences across evaluated Views;
+ranking replays each historical event and retains all dispositions. Borrowed
+complete packet/provenance serialization admits output before immutable SQL
+insertion; retention validates original roots. Inference truth, semantic identity,
+current applicability and execution remain unestablished. See the
+[Meaning outcome contract](../native/docs/meaning-outcome-feedback.md).
+
 Native Python declaration deletion has an explicit singleton empty-body policy.
 Closed validation precedes capture and rejects mixed operations or invalid
 policy data. Original checked AST/decorator/name/kind/ranges select the edit;

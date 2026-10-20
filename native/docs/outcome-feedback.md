@@ -148,7 +148,9 @@ There is no provider call, implicit capture, source edit, automatic promotion,
 or overflow artifact. Original View limitations, overlays, Meaning selections,
 packet coverage, provenance and source-scope roles remain visible. The scope
 covers native knowledge outcomes, saved-plan outcomes below, and literal
-transcript candidates. General semantic learning, additional object types,
+transcript candidates. Separate [Meaning claim outcomes](meaning-outcome-feedback.md)
+add packet-qualified concepts, directed relations and hyperedges without changing
+these schemas. General semantic learning, further object types,
 independently authenticated corroboration and execution truth remain open.
 
 ## Authored outcomes for saved change plans

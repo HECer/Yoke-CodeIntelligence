@@ -6,8 +6,32 @@ The explicit [App history driver](../native/docs/app-history-integration.md) can
 complete/replay a permitted worker and acquire bounded persistent Git history.
 An authenticated binding protects the original cumulative plan; current grants,
 selected queue revisions and exact native revisions remain mandatory. Separate
-status opens an existing read-only Store. Production installation and receiver
-broader reasoning remain open; this adds no default background task.
+status opens an existing read-only Store. Production installation and broader
+receiver reasoning remain open; this adds no default background task.
+
+Separate [Meaning claim outcomes](../native/docs/meaning-outcome-feedback.md)
+extend R9 with packet-qualified concepts, directed relations and hyperedges.
+Original/evaluated View, source, overlay and Meaning receipt closures replay
+before source-bound immutable events or historical ranking are admitted. Original
+quotes must fit actual claim support; later evaluated quotes explicitly establish
+same-support-path bytes only. All original packets, parallel directions, roles,
+unknown receipt costs and per-event evaluated pins remain visible. Subject-wide
+actor/session sequences prevent duplicate votes across evaluated Views. Whole
+output precedes SQL publication, and retention validates every event's original
+source closure. Labels/scores establish no semantic truth, current applicability,
+independent corroboration or observed execution. Semantic transcript candidates
+and remaining object/platform/upstream qualification stay open.
+
+All **13 new Meaning-outcome cases pass**. The final broader five-target run is
+**74 passed / 1 failed / 0 ignored**: the unchanged Windows host-alias security
+fixture fails at `symlink_file` setup with OS1314 before an application read.
+The host token lacks `SeCreateSymbolicLinkPrivilege` and Developer Mode is not
+configured. Neither that test nor the existing host-file reader was weakened;
+their exact unchanged bodies are verified. This is a failed broader native run,
+not a whole-platform pass. Format/build/all-target Clippy, Python17, typecheck
+and TypeScript260/3skipped pass. All 770 native and 768 retained inputs stay
+unchanged during their final checks and still match source. See
+[Meaning outcome evidence](validation/integration-2026-10-19/meaning-feedback/README.md).
 
 The separate [receiver source interpretation](../native/docs/received-source-interpretation.md)
 read binds existing explicitly built native Meaning graphs to fresh received
