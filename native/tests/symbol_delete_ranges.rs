@@ -107,7 +107,6 @@ fn multi_declarators_named_expressions_object_methods_and_loop_bindings_refuse_b
         "const retained = function deleteMe() {};\n",
         "const retained = { deleteMe() {}, other() {} };\n",
         "for (let deleteMe = () => 1; false;) {}\n",
-        "class Parent { @decorate deleteMe() {} retained() {} }\n",
         "export function deleteMe() {}\n/* malformed",
     ] {
         let root = tempfile::tempdir().unwrap();

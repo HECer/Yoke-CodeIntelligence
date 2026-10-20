@@ -20,8 +20,16 @@ removed from program or statement-block containers. A function-valued variable
 requires a single declarator in its owning `const`, `let` or `var` declaration.
 An enclosing export or ambient wrapper is included only when it owns that
 declaration. Named default function/class expressions require their direct
-owning export. A class/interface member requires a class or type body; a
-separate preceding decorator refuses until its ownership can be checked.
+owning export. A class/interface member requires a class or type body.
+Concrete class methods with a plain identifier name can include an owning
+contiguous preceding decorator chain. At most 64 direct sibling decorators,
+intervening comments and whitespace are admitted; other gap tokens refuse.
+Ordinary comments before the first decorator remain outside the deletion.
+Parent-class and previous/next-member decorator chains stay separate. The full
+resulting source must parse without errors under the original shared deadline.
+Constructors, abstract/signature-only members and computed, quoted or private
+decorated names remain outside this finite ownership contract. A method without
+a preceding decorator retains its existing deletion range.
 
 Multiple declarators, named expressions inside other expressions, object
 literal methods and loop bindings refuse rather than removing their consumers
@@ -82,8 +90,8 @@ source preconditions and conditional recovery retain their separate contracts.
 Syntax ownership does not prove that a declaration is unused or that the
 result compiles. Verification runs only when explicitly requested and trusted.
 
-Other language deletion boundaries retain their existing behavior. Separate
-TypeScript member decorators, empty required Python bodies without the explicit
+Other language deletion boundaries retain their existing behavior. Unsupported
+decorated member/name forms, empty required Python bodies without the explicit
 native policy above, general deletion
 propagation, exhaustive reference coverage and IDE parity remain unsupported
 by this finite contract.
@@ -101,3 +109,10 @@ The separate `sibling_declarators` actual gate selects `YOKE_NODE` and `YOKE_TSC
 for compiler-only verification of captured TS/JS/TSX/JSX results, followed by
 independent permission/approval/application/exact-recovery checks. No analyzed
 module is executed by that compiler check.
+The explicit `member_decorators` actual gates select the installed compiler/AST
+API and TypeScript language server. They check direct native and provider-based
+`safeDelete`, parent/neighbor decorator ownership, independent authority gates,
+exact application and recovery. The executed compiler fixtures use
+`experimentalDecorators: true`; other compiler versions, decorator modes and
+transform/runtime behavior require separate qualification. Neither analyzed
+modules nor decorator expressions are executed.

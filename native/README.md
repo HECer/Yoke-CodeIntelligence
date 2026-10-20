@@ -172,6 +172,11 @@ checked TS/JS function-valued variable and its direct AST comma, preserving
 other declarators and original bytes. Ambiguous comments and mixed operations
 refuse. See [symbol deletion](docs/symbol-deletion.md).
 
+Concrete named TS/JS class-method deletion also checks and removes its owning
+decorator chain while preserving class/neighbor decorators and original entity
+coordinates. Unsupported name/member forms refuse; provider-based `safeDelete`
+uses the same final plan boundary. See [the finite contract](docs/semantic-refactor-intents.md#concrete-class-method-decorator-ownership).
+
 [Captured function propagation](docs/propagated-delete.md) can remove checked
 standalone call statements and newly unused private function dependencies in a
 bounded TS/JS module. Surviving references, possible consumers and exported

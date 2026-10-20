@@ -295,3 +295,23 @@ deletions preserve all unrelated bytes. Direct inter-declarator comments and
 unsupported binding/container forms refuse before publication. The complete
 result must parse without syntax errors under the original deadline and finite
 source/AST bounds. See [symbol deletion](symbol-deletion.md) for exact boundaries.
+
+## Concrete class-method decorator ownership
+
+Native `deleteSymbol` and the final source-preparation step of provider-based
+`safeDelete` now bind preceding decorators to a selected concrete TS/JS class
+method with a plain identifier name. The original method/name/entity coordinates
+remain unchanged. Only deletion derives a broader checked owning range: up to
+64 contiguous direct sibling decorators, their intervening comments and
+whitespace, and the exact method body. Earlier comments, class decorators and
+other members' decorations remain outside it. Unsupported gap tokens, constructor,
+signature/abstract members and computed/quoted/private decorated names refuse.
+Whole-result syntax replay uses the same finite source/AST/deadline bounds.
+
+No new input flag or host authority is introduced. Existing symbol insert/
+replace ranges, usage checks, immutable plan identity, approval, verification,
+write permission, stale conditions and recovery remain separate. Actual
+compiler/AST and language-server evidence qualifies the selected installed
+versions and legacy experimental-decorator fixture mode. It does not establish
+unusedness, exhaustive reference/dispatch semantics, other decorator modes or
+general IDE/compiler equivalence.

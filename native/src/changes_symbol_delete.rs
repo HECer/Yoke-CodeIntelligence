@@ -9,6 +9,8 @@ use tree_sitter::{Node, Parser};
 
 const UNSUPPORTED: &str = "Symbol deletion requires an independently removable declaration";
 const MAX_NODES: usize = 200_000;
+#[path = "changes_member_decorators.rs"]
+mod member_decorators;
 #[path = "changes_sibling_delete.rs"]
 mod siblings;
 
@@ -292,16 +294,6 @@ fn selection(
         selected = parent;
     }
     let parent = selected.parent().context(UNSUPPORTED)?;
-    if member {
-        let mut previous = selected.prev_named_sibling();
-        while previous.is_some_and(|node| node.kind() == "comment") {
-            previous = previous.and_then(|node| node.prev_named_sibling());
-        }
-        ensure!(
-            previous.is_none_or(|node| node.kind() != "decorator"),
-            "Decorated member deletion requires a checked decorator ownership range"
-        );
-    }
     ensure!(
         if member {
             matches!(
@@ -313,9 +305,29 @@ fn selection(
         },
         UNSUPPORTED
     );
+    let start = if member {
+        member_decorators::start(selected, input, deadline)?
+    } else {
+        selected.start_byte()
+    };
+    if start != selected.start_byte() {
+        let after = format!("{}{}", &input[..start], &input[selected.end_byte()..]);
+        let checked = parser
+            .parse_with_options(
+                &mut |at, _| &after.as_bytes()[at.min(after.len())..],
+                None,
+                Some(tree_sitter::ParseOptions::new().progress_callback(&mut cancelled)),
+            )
+            .context("Member deletion result parser cancelled")?;
+        deadline.check()?;
+        ensure!(
+            !checked.root_node().has_error(),
+            "Member deletion result must have error-free syntax"
+        );
+    }
     deadline.check()?;
     Ok(Deletion {
-        start: selected.start_byte(),
+        start,
         end: selected.end_byte(),
         replacement: "",
         separator: None,
@@ -325,6 +337,66 @@ fn selection(
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn decorated_member_admission_keeps_source_ast_deadline_and_original_name_bindings() {
+        let text = "class Parent { @decorator deleteMe() {} kept() {} }\n";
+        let file = SourceFile {
+            path: "module.ts".into(),
+            hash: crate::model::hash(text),
+            size: text.len(),
+            language: "typescript".into(),
+            mode: 0o644,
+        };
+        let entity = analysis::extract(&file, text, &Deadline::new(30_000))
+            .unwrap()
+            .entities
+            .into_iter()
+            .find(|e| e.name == "deleteMe")
+            .unwrap();
+        assert!(range(AnalyzerEpoch::V9, &file, &entity, text, &Deadline::new(0)).is_err());
+        for input in [
+            format!("{text}{}", " ".repeat(4_000_001)),
+            format!("{text}\0"),
+            format!("{text}class invalid {{"),
+            format!("{text}{}", "0;".repeat(MAX_NODES)),
+        ] {
+            assert!(
+                range(
+                    AnalyzerEpoch::V9,
+                    &file,
+                    &entity,
+                    &input,
+                    &Deadline::new(30_000)
+                )
+                .is_err()
+            );
+        }
+        let mut forged = entity.clone();
+        forged.start_byte = text.find('@').unwrap();
+        assert!(
+            range(
+                AnalyzerEpoch::V9,
+                &file,
+                &forged,
+                text,
+                &Deadline::new(30_000)
+            )
+            .is_err()
+        );
+        let exact = format!("{text}{}", " ".repeat(4_000_000 - text.len()));
+        assert_eq!(
+            range(
+                AnalyzerEpoch::V9,
+                &file,
+                &entity,
+                &exact,
+                &Deadline::new(30_000)
+            )
+            .unwrap()
+            .0,
+            text.find('@').unwrap()
+        );
+    }
     #[test]
     fn sibling_deletion_obeys_source_ast_syntax_and_deadline_bounds() {
         let text = "const deleteMe = () => 1, kept = () => 2;\n";
