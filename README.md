@@ -74,6 +74,10 @@ An explicit native [Python empty-suite deletion policy](native/docs/semantic-ref
 can prepare a checked `pass` replacement while preserving the strict default
 and ordinary approval, verification and source-recovery gates.
 
+Explicit native [TS/JS sibling preservation](native/docs/symbol-deletion.md)
+can delete one checked function-valued declarator and its AST comma while
+keeping unrelated declarations and the strict default intact.
+
 ## TypeScript advanced runtime
 
 Requires **Node.js 22.16+**. Python/Go and additional optional providers are installed separately. Node SQLite is experimental on the tested Node version. No model or API key is required by native indexing.

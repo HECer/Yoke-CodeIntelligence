@@ -332,3 +332,13 @@ semantic-provider/facade callers retain strict rejection, while immutable
 plan identities, source coordinates and independent application gates stay
 unchanged. See the [contract](../native/docs/semantic-refactor-intents.md#explicit-native-python-empty-body-deletion)
 and [evidence](validation/integration-2026-10-19/python-empty-suite/index.json).
+
+Native declaration deletion has a separate explicit sibling-preservation policy
+for simple TS/JS function-valued variables. The opaque original AST binding
+selects a statement declarator and a direct parent comma; independent byte
+edits preserve delimiter trivia and all surviving declaration bytes. Ambiguous
+direct comments refuse. Full-result parsing, closed singleton policy validation
+and ordinary canonical saved-plan/application gates remain. Python and default/
+semantic-provider policies retain their existing contracts. See the
+[contract](../native/docs/symbol-deletion.md) and
+[evidence](validation/integration-2026-10-19/sibling-declarators/index.json).

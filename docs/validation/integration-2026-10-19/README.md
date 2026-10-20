@@ -408,3 +408,16 @@ format/Python17/typecheck/TS260+3skips pass with738inputs unchanged. No analyzed
 module/decorator execution, semantic-provider policy change, whole-native/platform/
 main/release certification follows. Previous README bytes remain; broaderR1-R9
 work continues.
+
+## Explicit native TS/JS sibling-declarator deletion checkpoint
+
+Source `e896318abd1375abe4dea1f686b6512f4750b333`, runtime merge `51972e519a683f36e795d9cb99a903a74f94e6e5`.
+[Indexed evidence](sibling-declarators/index.json) retains1unit+8default+1actual
+newcases, final11selectedgroups568/0/9, exact AST-delimited source edits, strict
+defaults and ambiguous-comment refusals. Actual Node24.21/TypeScript5.8.3
+compile copied TS/JS/TSX/JSX results and check approved application/exact recovery;
+the existing Python AST-only gate also passes on the identical final source.
+Native734inputs/exact binary and integrated740inputs remain frozen. Format/
+build/Clippy-Dwarnings and mandatory Python17/typecheck/TS260+3skips pass. No
+analyzed-module execution, consumer/semantic/IDE or whole-native/platform/main/
+release certification follows. Prior README bytes remain; broaderR1-R9 continues.

@@ -940,6 +940,36 @@ not establish consumer safety or general refactoring semantics. Earlier OS1314
 prerequisite failures lie outside this selection; no whole-native/platform
 acceptance follows. BroaderR1-R9, hosted acceptance, main and release remain open.
 
+[Explicit TS/JS sibling-declarator deletion](validation/integration-2026-10-19/sibling-declarators/index.json)
+adds closed native `deleteSymbol.siblingDeclarators: reject|preserve`. The
+absent/reject default remains strict. Explicit preservation binds one simple
+function-valued TS/TSX/JS/JSX variable in a statement `const`, `let` or `var`,
+then removes that original AST node and one direct parent comma as two separate
+byte edits. Other declarators, export/ambient wrappers, semicolon, whitespace
+and original entity/evidence coordinates stay intact. Nested commas are not
+delimiters. Ambiguous direct comments, unsupported bindings/containers, mixed
+edits and combined policies refuse. Full-result syntax replay retains the
+source/AST/deadline bounds. See the [contract](../native/docs/symbol-deletion.md).
+
+There are **10 new cases**: one unit admission, eight default integration and
+one explicitly selected actual-compiler gate. Final **11 selected native groups**
+record **568 passed / 0 failed / 9 existing ignored gates**, including
+**467 / 0 / 7 library tests**, with **734 inputs** unchanged. Actual
+**TypeScript5.8.3 / Node24.21.0** compile the copied TS, JS, TSX and JSX results,
+then separate permission/approval/application/recovery checks preserve exact
+BOM/Unicode/CRLF source. No analyzed module executes. The previously implemented
+Python AST-only application/recovery gate is revalidated on the identical final
+source. Format/build/all-target Clippy with warnings denied pass; mandatory
+integrated format/Python/typecheck/TypeScript results are indexed separately.
+
+Earlier 15/0/1 and 26/0/1 selected runs and the initial actual compiler gate stay
+separate and nonadditive. Native MCP prepares the exact effect without source
+write or execution authority. Saved plan shapes/identities, semantic-provider/
+facade defaults and independent application gates remain. Other source shapes,
+comment attachments, consumer safety and general semantic/IDE equivalence stay
+open. Earlier OS1314 prerequisites lie outside this finite selection; no
+whole-native/platform acceptance follows. BroaderR1-R9, main and release remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

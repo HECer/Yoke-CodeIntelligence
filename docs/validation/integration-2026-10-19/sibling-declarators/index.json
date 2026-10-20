@@ -1,0 +1,997 @@
+{
+  "schemaVersion": 1,
+  "kind": "native_ts_js_preserved_sibling_declarators",
+  "asOf": "2026-10-20T02:50:13.195662+00:00",
+  "sourceCommit": "e896318abd1375abe4dea1f686b6512f4750b333",
+  "runtimeCommit": "51972e519a683f36e795d9cb99a903a74f94e6e5",
+  "parentCommit": "b3b7cebe5ff6da68d9b54ac53906a04c332373fd",
+  "paths": [
+    "native/README.md",
+    "native/docs/semantic-refactor-intents.md",
+    "native/docs/symbol-deletion.md",
+    "native/src/changes.rs",
+    "native/src/changes_sibling_delete.rs",
+    "native/src/changes_symbol_delete.rs",
+    "native/src/protocol.rs",
+    "native/src/validation.rs",
+    "native/tests/sibling_declarators.rs"
+  ],
+  "newCases": {
+    "unitAdmission": 1,
+    "defaultIntegration": 8,
+    "actualCompiler": 1
+  },
+  "nativeGroups": 11,
+  "nativeTotals": {
+    "passed": 568,
+    "failed": 0,
+    "ignored": 9
+  },
+  "nativeInputsMatched": 734,
+  "nativeBinarySha256": "234ae8075873578e6ee5f3d59eb50dd2559a63eb5f0dc703c897b033b5cfd6e4",
+  "actualCompiler": {
+    "node": "C:\\Program Files\\nodejs\\node.exe",
+    "nodeSha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+    "nodeVersion": "v24.21.0",
+    "compiler": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\node_modules\\typescript\\bin\\tsc",
+    "compilerSha256": "8d5fa5bd883fec0979fc2004f1fe1d99aef40570155d550eadc0b03b55513bf0",
+    "compilerVersion": "Version 5.8.3"
+  },
+  "actualExistingPythonPolicyRevalidated": true,
+  "productionBinaryUnchangedSinceNativeTests": true,
+  "wholeNativeRerun": false,
+  "platform": "Windows",
+  "nativeInputs": 734,
+  "integratedInputs": 740,
+  "finalNative": {
+    "sourceUnchanged": true,
+    "inputs": 734,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--lib",
+          "--test",
+          "sibling_declarators",
+          "--test",
+          "python_empty_suite",
+          "--test",
+          "symbol_delete_ranges",
+          "--test",
+          "declaration_attachment_ranges",
+          "--test",
+          "protocol_connection",
+          "--test",
+          "plan_integrity",
+          "--test",
+          "plan_feedback",
+          "--test",
+          "semantic_refactor",
+          "--test",
+          "refactor_intents",
+          "--test",
+          "propagated_delete_contract",
+          "--",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "seconds": 315.0812607000116,
+        "totals": {
+          "passed": 568,
+          "failed": 0,
+          "ignored": 9
+        },
+        "groups": 11,
+        "failures": []
+      },
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 5.251044400007231
+      },
+      {
+        "name": "build",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "build",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--bin",
+          "yoke"
+        ],
+        "exitCode": 0,
+        "seconds": 7.357448299997486
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--all-targets",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "seconds": 89.5719531000068
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "actualCompilerGate": {
+    "sourceUnchanged": true,
+    "inputs": 734,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--test",
+          "sibling_declarators",
+          "--",
+          "--test-threads=1",
+          "--ignored",
+          "--nocapture"
+        ],
+        "exitCode": 0,
+        "seconds": 3.7786292000091635,
+        "totals": {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        },
+        "groups": 1,
+        "failures": []
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "actualExistingPythonGate": {
+    "sourceUnchanged": true,
+    "inputs": 734,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--test",
+          "python_empty_suite",
+          "--",
+          "--test-threads=1",
+          "--ignored",
+          "--nocapture"
+        ],
+        "exitCode": 0,
+        "seconds": 1.1360197000030894,
+        "totals": {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        },
+        "groups": 1,
+        "failures": []
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "integrated": {
+    "sourceUnchanged": true,
+    "frozenInputs": 740,
+    "commands": [
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 7.11
+      },
+      {
+        "name": "python-contracts",
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "seconds": 0.73
+      },
+      {
+        "name": "typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "seconds": 3.1
+      },
+      {
+        "name": "tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "seconds": 74.62
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "priorEvidenceReadme": {
+    "bytes": 29266,
+    "sha256": "099976cfcea5930d5e81b5c0c7910790d1a0968fd0e7703eeea7d50b98ed136b"
+  },
+  "nativeDefaultDeletionPolicyChanged": false,
+  "semanticProviderFacadePolicyChanged": false,
+  "legacyPlanSchemaOrIdentityChanged": false,
+  "analyzedModuleExecuted": false,
+  "fullUpstreamContractCertified": false,
+  "nonWindowsRuntimeValidated": false,
+  "mainOrReleaseVerified": false,
+  "notes": [
+    "Own MIT explicit native siblingDeclarators reject/preserve policy, with no dependency or provider/model changes. Absent/reject retains released strict refusal for multi-declarator statements. The option is limited to a singleton simple TS/TSX/JS/JSX function-valued variable binding in an ordinary const/let/var program or statement-block declaration. Native eight-tool MCP adds only the closed optional field. Combined deletion policies, mixed edits and invalid values/types refuse before capture or publication.",
+    "Full original AST/name/kind/path/language/range binding produces an opaque checked selection. Only a direct parent comma is selected; nested commas in initializer/parameters/types/strings/JSX are not delimiter candidates. Two separate original-coordinate deletions preserve all unrelated declarators, export/ambient wrappers, semicolon and whitespace. A single declarator retains its existing whole-statement effect. The complete resulting source is reparsed under the same deadline,4MB source and200000-node walk bounds. No source formatting or entity/evidence-coordinate rewriting occurs.",
+    "Direct inter-declarator comments can carry ambiguous attachments, so this finite policy refuses them rather than deleting or reattaching those bytes. Comments inside an admitted initializer belong to its existing AST range. Loop/nonstatement bindings, named expressions/methods, non-simple selected names, other languages and unsupported forms refuse. Source syntax/binding does not establish unusedness, consumer safety, compiler reference completeness or runtime behavior. Semantic-provider/facade callers keep strict defaults.",
+    "New distinct cases are1unit admission,8default integration and1explicit actual compiler gate. Literal independent expected-byte tables cover first/middle/last positions, const/let/var, all four extensions, analyzer8/9, BOM/Unicode/CRLF, nested commas and owned comments. Separate refusals cover direct comments, malformed source, exact source/AST capacities and deadline, forged anchors/paths/kinds, policy JSON and mixed operations. Positive nativeMCP initialization/tool dispatch prepares the exact planned effect with modelCalls0 and no write/execution grants.",
+    "Actual Node24.21.0 and TypeScript5.8.3 compile copied TS,JS,TSX,JSX results with fixed owned tsconfig and intrinsic JSX declarations. This is --noEmit compiler execution, not analyzed-module execution; no project scripts/plugins are selected. The gate checks pre-verification/pre-approval/write denials, exact approved application and source recovery. Runtime metadata hashes the selected Node executable and bin/tsc launcher; it does not claim a complete TypeScript SDK/dependency attestation. No vendor implementation is copied into the core or evidence.",
+    "Initial3groups15/0/1 and later4groups26/0/1 pass, as does the first explicit actual compiler gate. These overlapping runs are nonadditive. Final11selected groups record568/0/9, including467/0/7 library and8/0/1 new default integration. Format/build/alltargetClippy-Dwarnings pass. Final734native inputs are unchanged. The exact159118848byte production binary234ae8075873578e6ee5f3d59eb50dd2559a63eb5f0dc703c897b033b5cfd6e4 remains identical after the build, final compiler and existing Python gate, and integrated checks.",
+    "The explicit final actual compiler gate qualifies all four source extensions on the exact final734-input freeze. The existing Python AST-only permission/application/recovery gate is also rerun on that identical source after the common policy dispatch refactor. Gates are not added to default-run totals. All initial source bodies, full manifests, command logs and final sources are retained; no failure or successful variant is invented.",
+    "All734native inputs materialize exactly or through CRLF-only checkout differences. The captured PostgreSQL JSONL remains2779bytes and f67a05349a6cedf55222afd3bb3231c169d382dd4b078d76544daac517530b47 raw-equal. Integrated format/Python17/typecheck/TS260+3skips pass with740inputs unchanged. Original353inventory/73unreconciled/77backendunknown and false full-contract flags, plus prior evidence README bytes, remain unchanged.",
+    "This finite selected Windows validation does not replace whole-native or whole-platform acceptance. Earlier OS1314 prerequisite failures remain outside the selection. Other comment/binding/container/language forms, generalized refactoring/consumer guarantees, semantic-provider options, full upstream/IDE equivalence, nonWindows, main/release and broaderR1-R9 remain open. The full task and coordination actions stay active."
+  ],
+  "artifacts": [
+    {
+      "path": "documentation-proof.json",
+      "bytes": 283,
+      "sha256": "5129e7cfc94da30de72082b5a6b76a43369c21476ad1c36281cd36766845dbf3"
+    },
+    {
+      "path": "final/build.log",
+      "bytes": 60,
+      "sha256": "cc51ee7667d34b0703cbed6e43fa4dfd2cccb8ce8aa5a63aa6ead1907eed862b"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 168,
+      "sha256": "0cc72ddb99dfbc0874cfb277c2577053463e0858e6b95438844338995a71d6fc"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native-test-binary.json",
+      "bytes": 360,
+      "sha256": "6d7bd9f3874d717635a477c0412d0e13f7353b433cf1252b34efeb1079a1a01b"
+    },
+    {
+      "path": "final/native.log",
+      "bytes": 66273,
+      "sha256": "3cbb037cb199b2e17cb706d2b30d658692d0d911b69545ad6a898c64054ee027"
+    },
+    {
+      "path": "final/result.json",
+      "bytes": 2355,
+      "sha256": "265648d81a266fda17fe2a91119f460a35da7142ca11dfe3ec8840a79a9c38bc"
+    },
+    {
+      "path": "final/runner.py",
+      "bytes": 4088,
+      "sha256": "d5ea3142cde81fb9852f75500c8f63a3fc06650a49f518f95c65bf3fbc8f6874"
+    },
+    {
+      "path": "final/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 18502,
+      "sha256": "337eaec3b517b98b8df50a6385aa6e33dead0f4c0bc69da0ff1cb348880bdb5e"
+    },
+    {
+      "path": "final/source/native/docs/symbol-deletion.md",
+      "bytes": 6877,
+      "sha256": "e381ae8242ed29ebd9b34bae74e370103c9b7a765312f60b6e1bd4ccda9d1bae"
+    },
+    {
+      "path": "final/source/native/README.md",
+      "bytes": 24624,
+      "sha256": "f9b6922a2a288a3b604d608e1eb6ecb0c6c554b82de3776fe2b6c3c8c0d8f9f1"
+    },
+    {
+      "path": "final/source/native/src/changes.rs",
+      "bytes": 33784,
+      "sha256": "f1826e81498a8d47da2992e9af5fc8e612b43fb8507f8b41fdee1227fb2be77f"
+    },
+    {
+      "path": "final/source/native/src/changes_sibling_delete.rs",
+      "bytes": 3460,
+      "sha256": "8a1266be2422990ea641e1f9d92ac290b4c94a72344bce4181acd3e0bfb8f975"
+    },
+    {
+      "path": "final/source/native/src/changes_symbol_delete.rs",
+      "bytes": 20263,
+      "sha256": "7c4f523df8426d306ef59a47143bed52b78b14f3379b628a3102d203357da05f"
+    },
+    {
+      "path": "final/source/native/src/model_protocol.rs",
+      "bytes": 35314,
+      "sha256": "28b698bd9ee83674ad27ad22087a182ca4de85960b73fcf120b4d41954047cb1"
+    },
+    {
+      "path": "final/source/native/src/protocol.rs",
+      "bytes": 50486,
+      "sha256": "382acedfb73e08ec17a5d3421184e7626fba7eace9a88f95cdc8dc287eeb5135"
+    },
+    {
+      "path": "final/source/native/src/validation.rs",
+      "bytes": 20391,
+      "sha256": "7d47fe72c22c85c4fdf83c97f9c1e984aa697470581ac72178954cdeb2a9f87e"
+    },
+    {
+      "path": "final/source/native/tests/capture_changes.rs",
+      "bytes": 2269,
+      "sha256": "49e5c1d7db01ebf6f546b436ea53602c79e07f3892f4234bc509a51a12d84a6a"
+    },
+    {
+      "path": "final/source/native/tests/meaning_protocol.rs",
+      "bytes": 9918,
+      "sha256": "f84b22eecd19f431dd9cc7ae62853c5efdcc0a7aed7187cdfc8ef66019a87158"
+    },
+    {
+      "path": "final/source/native/tests/python_empty_suite.rs",
+      "bytes": 16370,
+      "sha256": "f75a65ed9396ffcba7ada50dcec322ba16824ae0bacd4fdf20149434487684c2"
+    },
+    {
+      "path": "final/source/native/tests/sibling_declarators.rs",
+      "bytes": 19527,
+      "sha256": "8d45e80b48f36b60b98bf36ba9c84d93e33aa7e8b029a9cf3dbe8e98c148c69a"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 79346,
+      "sha256": "1a92873f5f3a5edee66d80395e7b11312001213a024bf4754332e49a73065309"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 79346,
+      "sha256": "1a92873f5f3a5edee66d80395e7b11312001213a024bf4754332e49a73065309"
+    },
+    {
+      "path": "frozen-tracker.json",
+      "bytes": 549325,
+      "sha256": "e26c93e7f32f4a0cd8e119e443e51677f2535f66968478117e56e7d55e53e7d2"
+    },
+    {
+      "path": "integrated/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "integrated/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "e4df418be58e3812f0cbb0e41eb25e88d7a697052c5f6c129e69002e90c20104"
+    },
+    {
+      "path": "integrated/result.json",
+      "bytes": 957,
+      "sha256": "75004cf5e4cae627cd1400e6030d7461d095e77ed47e38771a09ccd6ce62fd59"
+    },
+    {
+      "path": "integrated/source-after.json",
+      "bytes": 79305,
+      "sha256": "26e4d4b57a1e66f2f065b957fa7136d24cf3be05455b1a8dcc79732367c69197"
+    },
+    {
+      "path": "integrated/source-before.json",
+      "bytes": 79305,
+      "sha256": "26e4d4b57a1e66f2f065b957fa7136d24cf3be05455b1a8dcc79732367c69197"
+    },
+    {
+      "path": "integrated/tests.log",
+      "bytes": 25053,
+      "sha256": "0bd09a44961b10ba60457490799af6ad17ebe87e9a1dfbc0fa2546440d822c6b"
+    },
+    {
+      "path": "integrated/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "live-final-r2/compiler-runtime.json",
+      "bytes": 416,
+      "sha256": "b2b0947ac6a52b514a006e08cb6707ca173820f108803405bd8d1957b53bee02"
+    },
+    {
+      "path": "live-final-r2/native.log",
+      "bytes": 6586,
+      "sha256": "3c1cc64d0745b0ebc79896653fcd8c7dd53bdd706bec4fce18a7db3a67aaa2cf"
+    },
+    {
+      "path": "live-final-r2/result.json",
+      "bytes": 817,
+      "sha256": "72c91e6b7beb112e38f0a2c224c1497ef37f07b90a6dfd26c50aacf0388abde8"
+    },
+    {
+      "path": "live-final-r2/runner.py",
+      "bytes": 4088,
+      "sha256": "d5ea3142cde81fb9852f75500c8f63a3fc06650a49f518f95c65bf3fbc8f6874"
+    },
+    {
+      "path": "live-final-r2/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 18502,
+      "sha256": "337eaec3b517b98b8df50a6385aa6e33dead0f4c0bc69da0ff1cb348880bdb5e"
+    },
+    {
+      "path": "live-final-r2/source/native/docs/symbol-deletion.md",
+      "bytes": 6877,
+      "sha256": "e381ae8242ed29ebd9b34bae74e370103c9b7a765312f60b6e1bd4ccda9d1bae"
+    },
+    {
+      "path": "live-final-r2/source/native/README.md",
+      "bytes": 24624,
+      "sha256": "f9b6922a2a288a3b604d608e1eb6ecb0c6c554b82de3776fe2b6c3c8c0d8f9f1"
+    },
+    {
+      "path": "live-final-r2/source/native/src/changes.rs",
+      "bytes": 33784,
+      "sha256": "f1826e81498a8d47da2992e9af5fc8e612b43fb8507f8b41fdee1227fb2be77f"
+    },
+    {
+      "path": "live-final-r2/source/native/src/changes_sibling_delete.rs",
+      "bytes": 3460,
+      "sha256": "8a1266be2422990ea641e1f9d92ac290b4c94a72344bce4181acd3e0bfb8f975"
+    },
+    {
+      "path": "live-final-r2/source/native/src/changes_symbol_delete.rs",
+      "bytes": 20263,
+      "sha256": "7c4f523df8426d306ef59a47143bed52b78b14f3379b628a3102d203357da05f"
+    },
+    {
+      "path": "live-final-r2/source/native/src/model_protocol.rs",
+      "bytes": 35314,
+      "sha256": "28b698bd9ee83674ad27ad22087a182ca4de85960b73fcf120b4d41954047cb1"
+    },
+    {
+      "path": "live-final-r2/source/native/src/protocol.rs",
+      "bytes": 50486,
+      "sha256": "382acedfb73e08ec17a5d3421184e7626fba7eace9a88f95cdc8dc287eeb5135"
+    },
+    {
+      "path": "live-final-r2/source/native/src/validation.rs",
+      "bytes": 20391,
+      "sha256": "7d47fe72c22c85c4fdf83c97f9c1e984aa697470581ac72178954cdeb2a9f87e"
+    },
+    {
+      "path": "live-final-r2/source/native/tests/capture_changes.rs",
+      "bytes": 2269,
+      "sha256": "49e5c1d7db01ebf6f546b436ea53602c79e07f3892f4234bc509a51a12d84a6a"
+    },
+    {
+      "path": "live-final-r2/source/native/tests/meaning_protocol.rs",
+      "bytes": 9918,
+      "sha256": "f84b22eecd19f431dd9cc7ae62853c5efdcc0a7aed7187cdfc8ef66019a87158"
+    },
+    {
+      "path": "live-final-r2/source/native/tests/python_empty_suite.rs",
+      "bytes": 16370,
+      "sha256": "f75a65ed9396ffcba7ada50dcec322ba16824ae0bacd4fdf20149434487684c2"
+    },
+    {
+      "path": "live-final-r2/source/native/tests/sibling_declarators.rs",
+      "bytes": 19527,
+      "sha256": "8d45e80b48f36b60b98bf36ba9c84d93e33aa7e8b029a9cf3dbe8e98c148c69a"
+    },
+    {
+      "path": "live-final-r2/source-after.json",
+      "bytes": 79346,
+      "sha256": "1a92873f5f3a5edee66d80395e7b11312001213a024bf4754332e49a73065309"
+    },
+    {
+      "path": "live-final-r2/source-before.json",
+      "bytes": 79346,
+      "sha256": "1a92873f5f3a5edee66d80395e7b11312001213a024bf4754332e49a73065309"
+    },
+    {
+      "path": "live-python-final-r2/compiler-runtime.json",
+      "bytes": 416,
+      "sha256": "b2b0947ac6a52b514a006e08cb6707ca173820f108803405bd8d1957b53bee02"
+    },
+    {
+      "path": "live-python-final-r2/native.log",
+      "bytes": 2108,
+      "sha256": "a8d44ef76f96ee99c7f1fee0f7c46138bd780acd079519c81de2e19f2ba11497"
+    },
+    {
+      "path": "live-python-final-r2/result.json",
+      "bytes": 816,
+      "sha256": "693ee0282bf46f66dae16feed094da1e4bf16cf63687f12b547a62082a65148a"
+    },
+    {
+      "path": "live-python-final-r2/runner.py",
+      "bytes": 4088,
+      "sha256": "d5ea3142cde81fb9852f75500c8f63a3fc06650a49f518f95c65bf3fbc8f6874"
+    },
+    {
+      "path": "live-python-final-r2/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 18502,
+      "sha256": "337eaec3b517b98b8df50a6385aa6e33dead0f4c0bc69da0ff1cb348880bdb5e"
+    },
+    {
+      "path": "live-python-final-r2/source/native/docs/symbol-deletion.md",
+      "bytes": 6877,
+      "sha256": "e381ae8242ed29ebd9b34bae74e370103c9b7a765312f60b6e1bd4ccda9d1bae"
+    },
+    {
+      "path": "live-python-final-r2/source/native/README.md",
+      "bytes": 24624,
+      "sha256": "f9b6922a2a288a3b604d608e1eb6ecb0c6c554b82de3776fe2b6c3c8c0d8f9f1"
+    },
+    {
+      "path": "live-python-final-r2/source/native/src/changes.rs",
+      "bytes": 33784,
+      "sha256": "f1826e81498a8d47da2992e9af5fc8e612b43fb8507f8b41fdee1227fb2be77f"
+    },
+    {
+      "path": "live-python-final-r2/source/native/src/changes_sibling_delete.rs",
+      "bytes": 3460,
+      "sha256": "8a1266be2422990ea641e1f9d92ac290b4c94a72344bce4181acd3e0bfb8f975"
+    },
+    {
+      "path": "live-python-final-r2/source/native/src/changes_symbol_delete.rs",
+      "bytes": 20263,
+      "sha256": "7c4f523df8426d306ef59a47143bed52b78b14f3379b628a3102d203357da05f"
+    },
+    {
+      "path": "live-python-final-r2/source/native/src/model_protocol.rs",
+      "bytes": 35314,
+      "sha256": "28b698bd9ee83674ad27ad22087a182ca4de85960b73fcf120b4d41954047cb1"
+    },
+    {
+      "path": "live-python-final-r2/source/native/src/protocol.rs",
+      "bytes": 50486,
+      "sha256": "382acedfb73e08ec17a5d3421184e7626fba7eace9a88f95cdc8dc287eeb5135"
+    },
+    {
+      "path": "live-python-final-r2/source/native/src/validation.rs",
+      "bytes": 20391,
+      "sha256": "7d47fe72c22c85c4fdf83c97f9c1e984aa697470581ac72178954cdeb2a9f87e"
+    },
+    {
+      "path": "live-python-final-r2/source/native/tests/capture_changes.rs",
+      "bytes": 2269,
+      "sha256": "49e5c1d7db01ebf6f546b436ea53602c79e07f3892f4234bc509a51a12d84a6a"
+    },
+    {
+      "path": "live-python-final-r2/source/native/tests/meaning_protocol.rs",
+      "bytes": 9918,
+      "sha256": "f84b22eecd19f431dd9cc7ae62853c5efdcc0a7aed7187cdfc8ef66019a87158"
+    },
+    {
+      "path": "live-python-final-r2/source/native/tests/python_empty_suite.rs",
+      "bytes": 16370,
+      "sha256": "f75a65ed9396ffcba7ada50dcec322ba16824ae0bacd4fdf20149434487684c2"
+    },
+    {
+      "path": "live-python-final-r2/source/native/tests/sibling_declarators.rs",
+      "bytes": 19527,
+      "sha256": "8d45e80b48f36b60b98bf36ba9c84d93e33aa7e8b029a9cf3dbe8e98c148c69a"
+    },
+    {
+      "path": "live-python-final-r2/source-after.json",
+      "bytes": 79346,
+      "sha256": "1a92873f5f3a5edee66d80395e7b11312001213a024bf4754332e49a73065309"
+    },
+    {
+      "path": "live-python-final-r2/source-before.json",
+      "bytes": 79346,
+      "sha256": "1a92873f5f3a5edee66d80395e7b11312001213a024bf4754332e49a73065309"
+    },
+    {
+      "path": "live-r1/compiler-runtime.json",
+      "bytes": 416,
+      "sha256": "b2b0947ac6a52b514a006e08cb6707ca173820f108803405bd8d1957b53bee02"
+    },
+    {
+      "path": "live-r1/native.log",
+      "bytes": 6693,
+      "sha256": "7dd5dd319f205f581b7e2b307a1f3a7e5c6ac60bcde3d50bb43812f9fd31a983"
+    },
+    {
+      "path": "live-r1/result.json",
+      "bytes": 816,
+      "sha256": "0083db02bc390d9e843989aa534498cd039144e0b035733344a1e08998a986c7"
+    },
+    {
+      "path": "live-r1/runner.py",
+      "bytes": 4088,
+      "sha256": "d5ea3142cde81fb9852f75500c8f63a3fc06650a49f518f95c65bf3fbc8f6874"
+    },
+    {
+      "path": "live-r1/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 17298,
+      "sha256": "196a4591ddbaa4e5a87b2f2bc702508b97011249c733e98db467240d9312ae5f"
+    },
+    {
+      "path": "live-r1/source/native/docs/symbol-deletion.md",
+      "bytes": 5163,
+      "sha256": "ad052cb82d70a52ebfdeb003e22f8768f92278d61ae650ef967a7ca8ea983c4c"
+    },
+    {
+      "path": "live-r1/source/native/README.md",
+      "bytes": 24329,
+      "sha256": "3732d8b4080b3b43be9b6efdc2062c8d42948d830aaa87857358fab5826cc50b"
+    },
+    {
+      "path": "live-r1/source/native/src/changes.rs",
+      "bytes": 33784,
+      "sha256": "f1826e81498a8d47da2992e9af5fc8e612b43fb8507f8b41fdee1227fb2be77f"
+    },
+    {
+      "path": "live-r1/source/native/src/changes_sibling_delete.rs",
+      "bytes": 3460,
+      "sha256": "8a1266be2422990ea641e1f9d92ac290b4c94a72344bce4181acd3e0bfb8f975"
+    },
+    {
+      "path": "live-r1/source/native/src/changes_symbol_delete.rs",
+      "bytes": 20263,
+      "sha256": "7c4f523df8426d306ef59a47143bed52b78b14f3379b628a3102d203357da05f"
+    },
+    {
+      "path": "live-r1/source/native/src/model_protocol.rs",
+      "bytes": 35314,
+      "sha256": "28b698bd9ee83674ad27ad22087a182ca4de85960b73fcf120b4d41954047cb1"
+    },
+    {
+      "path": "live-r1/source/native/src/protocol.rs",
+      "bytes": 50486,
+      "sha256": "382acedfb73e08ec17a5d3421184e7626fba7eace9a88f95cdc8dc287eeb5135"
+    },
+    {
+      "path": "live-r1/source/native/src/validation.rs",
+      "bytes": 20391,
+      "sha256": "7d47fe72c22c85c4fdf83c97f9c1e984aa697470581ac72178954cdeb2a9f87e"
+    },
+    {
+      "path": "live-r1/source/native/tests/capture_changes.rs",
+      "bytes": 2269,
+      "sha256": "49e5c1d7db01ebf6f546b436ea53602c79e07f3892f4234bc509a51a12d84a6a"
+    },
+    {
+      "path": "live-r1/source/native/tests/meaning_protocol.rs",
+      "bytes": 9918,
+      "sha256": "f84b22eecd19f431dd9cc7ae62853c5efdcc0a7aed7187cdfc8ef66019a87158"
+    },
+    {
+      "path": "live-r1/source/native/tests/python_empty_suite.rs",
+      "bytes": 16370,
+      "sha256": "f75a65ed9396ffcba7ada50dcec322ba16824ae0bacd4fdf20149434487684c2"
+    },
+    {
+      "path": "live-r1/source/native/tests/sibling_declarators.rs",
+      "bytes": 19527,
+      "sha256": "8d45e80b48f36b60b98bf36ba9c84d93e33aa7e8b029a9cf3dbe8e98c148c69a"
+    },
+    {
+      "path": "live-r1/source-after.json",
+      "bytes": 79346,
+      "sha256": "004894aaa4a758ee2257126637985898a6895f9d81060d029c781a3bc606bef4"
+    },
+    {
+      "path": "live-r1/source-before.json",
+      "bytes": 79346,
+      "sha256": "004894aaa4a758ee2257126637985898a6895f9d81060d029c781a3bc606bef4"
+    },
+    {
+      "path": "r1/native.log",
+      "bytes": 2437,
+      "sha256": "90c8df9fe75307fba1cb1385d8039651f4739e7fd5ce990014d5985c993e70c3"
+    },
+    {
+      "path": "r1/result.json",
+      "bytes": 873,
+      "sha256": "c6aea8c93f21ca149381805151d5cd91f1f73c8a4fe493525007611538740c40"
+    },
+    {
+      "path": "r1/runner.py",
+      "bytes": 3335,
+      "sha256": "9bb71d85185151977dcd59da883468603c2fce6bfd6a099a42f2511e00fe85eb"
+    },
+    {
+      "path": "r1/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 17298,
+      "sha256": "196a4591ddbaa4e5a87b2f2bc702508b97011249c733e98db467240d9312ae5f"
+    },
+    {
+      "path": "r1/source/native/docs/symbol-deletion.md",
+      "bytes": 5163,
+      "sha256": "ad052cb82d70a52ebfdeb003e22f8768f92278d61ae650ef967a7ca8ea983c4c"
+    },
+    {
+      "path": "r1/source/native/README.md",
+      "bytes": 24329,
+      "sha256": "3732d8b4080b3b43be9b6efdc2062c8d42948d830aaa87857358fab5826cc50b"
+    },
+    {
+      "path": "r1/source/native/src/changes.rs",
+      "bytes": 33784,
+      "sha256": "f1826e81498a8d47da2992e9af5fc8e612b43fb8507f8b41fdee1227fb2be77f"
+    },
+    {
+      "path": "r1/source/native/src/changes_sibling_delete.rs",
+      "bytes": 3460,
+      "sha256": "8a1266be2422990ea641e1f9d92ac290b4c94a72344bce4181acd3e0bfb8f975"
+    },
+    {
+      "path": "r1/source/native/src/changes_symbol_delete.rs",
+      "bytes": 18550,
+      "sha256": "f4179c70f40e1461553f7c802b5ee376714ff94c6f8d77a74080f27b058d5b8a"
+    },
+    {
+      "path": "r1/source/native/src/model_protocol.rs",
+      "bytes": 35314,
+      "sha256": "28b698bd9ee83674ad27ad22087a182ca4de85960b73fcf120b4d41954047cb1"
+    },
+    {
+      "path": "r1/source/native/src/protocol.rs",
+      "bytes": 50486,
+      "sha256": "382acedfb73e08ec17a5d3421184e7626fba7eace9a88f95cdc8dc287eeb5135"
+    },
+    {
+      "path": "r1/source/native/src/validation.rs",
+      "bytes": 20391,
+      "sha256": "7d47fe72c22c85c4fdf83c97f9c1e984aa697470581ac72178954cdeb2a9f87e"
+    },
+    {
+      "path": "r1/source/native/tests/capture_changes.rs",
+      "bytes": 2269,
+      "sha256": "49e5c1d7db01ebf6f546b436ea53602c79e07f3892f4234bc509a51a12d84a6a"
+    },
+    {
+      "path": "r1/source/native/tests/meaning_protocol.rs",
+      "bytes": 9918,
+      "sha256": "f84b22eecd19f431dd9cc7ae62853c5efdcc0a7aed7187cdfc8ef66019a87158"
+    },
+    {
+      "path": "r1/source/native/tests/python_empty_suite.rs",
+      "bytes": 16370,
+      "sha256": "f75a65ed9396ffcba7ada50dcec322ba16824ae0bacd4fdf20149434487684c2"
+    },
+    {
+      "path": "r1/source/native/tests/sibling_declarators.rs",
+      "bytes": 3632,
+      "sha256": "36e9d82007ddf8b47e934cd719b2439254b8e0967db674f1593b75129fa62b35"
+    },
+    {
+      "path": "r1/source-after.json",
+      "bytes": 79346,
+      "sha256": "014fadb2b9f03e8a959b975e260e8ba4201dfc33a232ce4140c44bd56540c4da"
+    },
+    {
+      "path": "r1/source-before.json",
+      "bytes": 79346,
+      "sha256": "014fadb2b9f03e8a959b975e260e8ba4201dfc33a232ce4140c44bd56540c4da"
+    },
+    {
+      "path": "r2/native.log",
+      "bytes": 3638,
+      "sha256": "875c6f2a5a4cc5c0a0d55a114836752d9e28b40e77724d53da7f2a658052280a"
+    },
+    {
+      "path": "r2/result.json",
+      "bytes": 922,
+      "sha256": "c7e8e63b71573f37cd1405adf7f2df42e3aaaddee53d49fa81b7daeeb6313fac"
+    },
+    {
+      "path": "r2/runner.py",
+      "bytes": 3335,
+      "sha256": "9bb71d85185151977dcd59da883468603c2fce6bfd6a099a42f2511e00fe85eb"
+    },
+    {
+      "path": "r2/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 17298,
+      "sha256": "196a4591ddbaa4e5a87b2f2bc702508b97011249c733e98db467240d9312ae5f"
+    },
+    {
+      "path": "r2/source/native/docs/symbol-deletion.md",
+      "bytes": 5163,
+      "sha256": "ad052cb82d70a52ebfdeb003e22f8768f92278d61ae650ef967a7ca8ea983c4c"
+    },
+    {
+      "path": "r2/source/native/README.md",
+      "bytes": 24329,
+      "sha256": "3732d8b4080b3b43be9b6efdc2062c8d42948d830aaa87857358fab5826cc50b"
+    },
+    {
+      "path": "r2/source/native/src/changes.rs",
+      "bytes": 33784,
+      "sha256": "f1826e81498a8d47da2992e9af5fc8e612b43fb8507f8b41fdee1227fb2be77f"
+    },
+    {
+      "path": "r2/source/native/src/changes_sibling_delete.rs",
+      "bytes": 3460,
+      "sha256": "8a1266be2422990ea641e1f9d92ac290b4c94a72344bce4181acd3e0bfb8f975"
+    },
+    {
+      "path": "r2/source/native/src/changes_symbol_delete.rs",
+      "bytes": 20263,
+      "sha256": "7c4f523df8426d306ef59a47143bed52b78b14f3379b628a3102d203357da05f"
+    },
+    {
+      "path": "r2/source/native/src/model_protocol.rs",
+      "bytes": 35314,
+      "sha256": "28b698bd9ee83674ad27ad22087a182ca4de85960b73fcf120b4d41954047cb1"
+    },
+    {
+      "path": "r2/source/native/src/protocol.rs",
+      "bytes": 50486,
+      "sha256": "382acedfb73e08ec17a5d3421184e7626fba7eace9a88f95cdc8dc287eeb5135"
+    },
+    {
+      "path": "r2/source/native/src/validation.rs",
+      "bytes": 20391,
+      "sha256": "7d47fe72c22c85c4fdf83c97f9c1e984aa697470581ac72178954cdeb2a9f87e"
+    },
+    {
+      "path": "r2/source/native/tests/capture_changes.rs",
+      "bytes": 2269,
+      "sha256": "49e5c1d7db01ebf6f546b436ea53602c79e07f3892f4234bc509a51a12d84a6a"
+    },
+    {
+      "path": "r2/source/native/tests/meaning_protocol.rs",
+      "bytes": 9918,
+      "sha256": "f84b22eecd19f431dd9cc7ae62853c5efdcc0a7aed7187cdfc8ef66019a87158"
+    },
+    {
+      "path": "r2/source/native/tests/python_empty_suite.rs",
+      "bytes": 16370,
+      "sha256": "f75a65ed9396ffcba7ada50dcec322ba16824ae0bacd4fdf20149434487684c2"
+    },
+    {
+      "path": "r2/source/native/tests/sibling_declarators.rs",
+      "bytes": 15355,
+      "sha256": "f15d90beedb8ac198ca67f8c9760a827c3a63b1fba7f18bf2ae8ab6bb26a299d"
+    },
+    {
+      "path": "r2/source-after.json",
+      "bytes": 79346,
+      "sha256": "d18f5c7720c6abf9b3f9196906436022f9fb3754e4d7f51f81871ed99fb6fae8"
+    },
+    {
+      "path": "r2/source-before.json",
+      "bytes": 79346,
+      "sha256": "d18f5c7720c6abf9b3f9196906436022f9fb3754e4d7f51f81871ed99fb6fae8"
+    },
+    {
+      "path": "runners/ci-siblings-binary.py",
+      "bytes": 896,
+      "sha256": "071041fefbf7f3abb3e8b3561e31843a58ff3c01ffd42a05c041466983806e83"
+    },
+    {
+      "path": "runners/ci-siblings-check.py",
+      "bytes": 4088,
+      "sha256": "d5ea3142cde81fb9852f75500c8f63a3fc06650a49f518f95c65bf3fbc8f6874"
+    },
+    {
+      "path": "runners/ci-siblings-commit.py",
+      "bytes": 4608,
+      "sha256": "85a3e333e2e3bade5463d6c21919f14a2c8ccc33225b9cbbdb34f6a1a19a0d66"
+    },
+    {
+      "path": "runners/ci-siblings-docs.py",
+      "bytes": 8327,
+      "sha256": "11eb9a2ad03e30c20b40ed7f67058e576b27805d5353197874201a392ebbb30e"
+    },
+    {
+      "path": "runners/ci-siblings-integrated.py",
+      "bytes": 2190,
+      "sha256": "93b377112c3d05c024118b954de478a93bf49db2c7922ade1355fee7602a3f30"
+    },
+    {
+      "path": "runners/ci-siblings-live-test.rs",
+      "bytes": 3528,
+      "sha256": "743f7670dbabbfe2fb210c1bd4c087e2851da3141813fcce70ec13c71bcb0c25"
+    },
+    {
+      "path": "runners/ci-siblings-more-tests.rs",
+      "bytes": 9183,
+      "sha256": "50770bd6c6d28cfef02880b33ba9262eeb301c5d09671cdca80b2a546c2f477d"
+    },
+    {
+      "path": "runners/ci-siblings-pr.py",
+      "bytes": 5150,
+      "sha256": "88adbc90327311960cfe0555aad8d98ba62d2903ff5c059b457a362322f839c7"
+    },
+    {
+      "path": "runners/ci-siblings-preserve.py",
+      "bytes": 9129,
+      "sha256": "76549c39add41ef36f83a695838d159ecb4e83cc9a3efb712465bc50787f9089"
+    },
+    {
+      "path": "runners/ci-siblings-probe-setup.py",
+      "bytes": 667,
+      "sha256": "7a9959d0f63e27bbdfbd4403db95abfdca84fd82aaf8ab455af252e183a0867d"
+    },
+    {
+      "path": "runners/ci-siblings-runner-setup.py",
+      "bytes": 1684,
+      "sha256": "a5879f0b65f43210e36cdf3680b3433064d921c3eef67ca262b3427f28d5eadc"
+    },
+    {
+      "path": "runners/ci-siblings-stage.py",
+      "bytes": 3868,
+      "sha256": "4de1f8db8e78a07476d1420c8d2f5de653e839b8e675b691dfc0af0da3d65a6d"
+    },
+    {
+      "path": "runners/ci-siblings-wire.py",
+      "bytes": 405,
+      "sha256": "3ea7a93067db54ac90c55b52ab4a59b733ab7565fe2f3e158f6f1265994b850d"
+    },
+    {
+      "path": "source-commit.json",
+      "bytes": 428,
+      "sha256": "1f70bdf41cd7cb8b0f49c0ee3ab029b87c1286415ac5981b15220f16d9406bcb"
+    },
+    {
+      "path": "source-integration.json",
+      "bytes": 1472,
+      "sha256": "6233e1f102b057d0365f8421bb2a78ced37a3c80ee5fd8e69be4a7a46fa975e2"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 209085,
+      "sha256": "85ad034169f4d0b5265ced71978174d418727e5eeb18c88c044215945d1ab4d0"
+    }
+  ]
+}
