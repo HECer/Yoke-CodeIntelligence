@@ -1,5 +1,10 @@
 # Integration development evidence, 2026-10-19 local
 
+Function-owned var hoisting now has [separate evidence](function-var-hoisting/README.md):
+original-byte reconstruction, parameter/catch/loop bindings and type witnesses;
+109 scoped integration passes, seven units and two separately selected live
+session passes. Counts overlap; full STATUS/Windows acceptance remains open.
+
 This owned evidence records the combined Wave 14 / GitHub App checkpoint and its
 subsequent CI/test repairs. It is not release or universal-parity acceptance.
 `index.json` binds the selected raw artifacts and their precise scopes.
