@@ -12,6 +12,8 @@ use std::{
     },
     time::{SystemTime, UNIX_EPOCH},
 };
+#[path = "github_app_worker_history.rs"]
+pub mod history;
 #[path = "github_app_worker_source.rs"]
 mod source;
 #[path = "github_app_worker_state.rs"]
@@ -306,6 +308,9 @@ pub(crate) struct PublicationSource {
     review: source::Review,
 }
 impl PublicationSource {
+    pub(crate) fn head_snapshot_id(&self) -> &str {
+        &self.review.head_snapshot_id
+    }
     pub(crate) fn completed_at_unix(&self) -> u64 {
         self.completed_at_unix
     }
