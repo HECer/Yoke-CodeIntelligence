@@ -178,6 +178,8 @@ coordinates. Unsupported name/member forms refuse; provider-based `safeDelete`
 uses the same final plan boundary. See [the finite contract](docs/semantic-refactor-intents.md#concrete-class-method-decorator-ownership).
 
 [Captured function propagation](docs/propagated-delete.md) can remove checked
+standalone calls wrapped in parentheses, `await` or `void` through the explicit
+native `propagationPolicy` v2; omission retains v1. It can also remove
 standalone call statements and newly unused private function dependencies in a
 bounded TS/JS module. Surviving references, possible consumers and exported
 dependencies remain protected; incomplete coverage stays explicit.

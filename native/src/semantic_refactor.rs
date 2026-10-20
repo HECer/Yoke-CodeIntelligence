@@ -32,6 +32,7 @@ pub fn invoke(
             "relativePath",
             "deleteEvenIfUsed",
             "propagate",
+            "propagationPolicy",
         ],
         "inline" => &["snapshotId", "namePath", "relativePath", "keepDefinition"],
         "rename" => &[
@@ -80,6 +81,9 @@ pub fn invoke(
             args.get(key).is_none_or(Value::is_boolean),
             "Invalid semantic refactoring flag"
         );
+    }
+    if operation == "safeDelete" {
+        propagated_delete::validate_policy(args)?;
     }
     let (snapshot, graph, _, _) = engine.index(deadline)?;
     ensure!(

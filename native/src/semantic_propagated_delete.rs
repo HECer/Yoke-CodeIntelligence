@@ -15,11 +15,31 @@ use std::{
 };
 use tree_sitter::{Parser, Tree};
 
+#[path = "semantic_propagated_delete_ast.rs"]
+mod result_ast;
+
 const UNSUPPORTED: &str = "Propagation requires one captured TypeScript/JavaScript ES module of named function declarations and independently removable call statements";
 const CAPACITY: &str = "propagated_delete_capacity";
 const MAX_DECLARATIONS: usize = 16;
 const MAX_REFERENCES: usize = 4000;
 const MAX_USAGES: usize = 128;
+const DIRECT: &str = "captured_es_function_propagation_v1";
+const WRAPPED: &str = "captured_es_function_propagation_v2";
+const MAX_WRAPPERS: usize = 32;
+
+pub(super) fn validate_policy(args: &Value) -> Result<()> {
+    if let Some(policy) = args.get("propagationPolicy") {
+        ensure!(
+            matches!(policy.as_str(), Some(DIRECT | WRAPPED))
+                && args["propagate"] == true
+                && args["namePath"]
+                    .as_str()
+                    .is_some_and(|name| !name.is_empty()),
+            "Propagation policy requires a supported policy, propagate=true and a symbol selection"
+        );
+    }
+    Ok(())
+}
 
 #[derive(Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -393,7 +413,13 @@ fn reference_token(tree: &Tree, start: usize, end: usize) -> bool {
     }
 }
 
-fn removable_call(tree: &Tree, location: &Location, path: &str) -> Option<Range<usize>> {
+fn removable_call(
+    tree: &Tree,
+    location: &Location,
+    path: &str,
+    text: &str,
+    wrapped: bool,
+) -> Option<Range<usize>> {
     if location.path != path {
         return None;
     }
@@ -408,8 +434,96 @@ fn removable_call(tree: &Tree, location: &Location, path: &str) -> Option<Range<
     if call.kind() != "call_expression" || call.child_by_field_name("function") != Some(name) {
         return None;
     }
-    let statement = call.parent()?;
-    (statement.kind() == "expression_statement").then(|| statement.byte_range())
+    if !wrapped {
+        let statement = call.parent()?;
+        return (statement.kind() == "expression_statement").then(|| statement.byte_range());
+    }
+    // Only a plain identifier call: optional chains, type arguments and
+    // unclassified call children do not acquire new authority.
+    if call.child_count() != 2
+        || call.named_child_count() != 2
+        || call.child_by_field_name("arguments") != call.named_child(1)
+    {
+        return None;
+    }
+    let mut expression = call;
+    let mut wrappers = 0;
+    loop {
+        let parent = expression.parent()?;
+        if parent.kind() == "expression_statement" {
+            return matches!(parent.parent()?.kind(), "program" | "statement_block")
+                .then(|| parent.byte_range());
+        }
+        if wrappers == MAX_WRAPPERS || parent.named_child_count() != 1 {
+            return None;
+        }
+        match parent.kind() {
+            "parenthesized_expression" | "await_expression"
+                if parent.named_child(0) == Some(expression) => {}
+            "unary_expression"
+                if parent.child_by_field_name("argument") == Some(expression)
+                    && parent
+                        .child_by_field_name("operator")?
+                        .utf8_text(text.as_bytes())
+                        .ok()?
+                        == "void" => {}
+            _ => return None,
+        }
+        expression = parent;
+        wrappers += 1;
+    }
+}
+
+fn checked_result(
+    file: &SourceFile,
+    text: &str,
+    before: &Tree,
+    edits: &[Edit],
+    d: &Deadline,
+) -> Result<()> {
+    let mut spans: Vec<_> = edits
+        .iter()
+        .map(|edit| match edit {
+            Edit::Replace {
+                start_byte,
+                end_byte,
+                ..
+            } => Ok(*start_byte..*end_byte),
+            _ => anyhow::bail!("Unexpected propagated deletion effect"),
+        })
+        .collect::<Result<_>>()?;
+    spans.sort_unstable_by_key(|span| std::cmp::Reverse(span.start));
+    let mut after = text.to_string();
+    let mut previous = text.len();
+    for span in &spans {
+        d.check()?;
+        ensure!(
+            span.start <= span.end
+                && span.end <= previous
+                && after.is_char_boundary(span.start)
+                && after.is_char_boundary(span.end),
+            "Invalid propagated deletion ranges"
+        );
+        previous = span.start;
+        after.replace_range(span.clone(), "");
+    }
+    let mut parser = Parser::new();
+    parser.set_language(&analysis::grammar(&file.language).context(UNSUPPORTED)?)?;
+    let mut cancelled = |_: &tree_sitter::ParseState| d.check().is_err();
+    let tree = parser
+        .parse_with_options(
+            &mut |at, _| &after.as_bytes()[at.min(after.len())..],
+            None,
+            Some(tree_sitter::ParseOptions::new().progress_callback(&mut cancelled)),
+        )
+        .context("Propagation result parser cancelled")?;
+    d.check()?;
+    ensure!(
+        !tree.root_node().has_error(),
+        "Propagated deletion would leave invalid syntax"
+    );
+    result_ast::unchanged(before, &tree, &spans, d)?;
+    Ok(())
 }
 
 fn removed(location: &Location, path: &str, regions: &BTreeSet<(usize, usize)>) -> bool {
@@ -427,6 +541,12 @@ pub(super) fn prepare(
     d: &Deadline,
 ) -> Result<Value> {
     d.check()?;
+    validate_policy(args)?;
+    let policy = args
+        .get("propagationPolicy")
+        .and_then(Value::as_str)
+        .unwrap_or(DIRECT);
+    let wrapped = policy == WRAPPED;
     let file = snapshot
         .files
         .iter()
@@ -578,7 +698,7 @@ pub(super) fn prepare(
     let mut usages = BTreeSet::new();
     for location in &module.declarations[target].reported {
         d.check()?;
-        if let Some(span) = removable_call(&module.tree, location, &file.path) {
+        if let Some(span) = removable_call(&module.tree, location, &file.path, text, wrapped) {
             usages.insert((span.start, span.end));
             ensure!(usages.len() <= MAX_USAGES, CAPACITY);
         }
@@ -702,8 +822,11 @@ pub(super) fn prepare(
         });
     }
     let retained: Vec<_> = live.iter().map(|index| {let declaration=&module.declarations[*index];json!({"entityId":declaration.entity.id,"name":declaration.entity.name,"exported":declaration.exported,"capturedExternalNameCandidate":declaration.external_literal,"reason":"surviving_reported_or_possible_reference_or_export"})}).collect();
-    let proof = json!({"policy":"captured_es_function_propagation_v1","performed":true,"deletedDeclarations":deleted_metadata,"removedUsageCount":usages.len(),"removedUsages":usages.iter().map(|(start,end)|json!({"path":file.path,"contentHash":file.hash,"startByte":start,"endByte":end,"kind":"expression_statement"})).collect::<Vec<_>>(),"retainedCandidates":retained,"providerRequestCount":module.declarations.len()*2,"providerReferenceCount":provider_references,"reportedAndPossibleEvidenceCount":total_references,"capturedFileCount":snapshot.files.len(),"capturedManifestHash":identity(&snapshot.files),"exhaustiveCompilerProof":false,"providerContext":provider_context});
+    let proof = json!({"policy":policy,"performed":true,"deletedDeclarations":deleted_metadata,"removedUsageCount":usages.len(),"removedUsages":usages.iter().map(|(start,end)|json!({"path":file.path,"contentHash":file.hash,"startByte":start,"endByte":end,"kind":"expression_statement"})).collect::<Vec<_>>(),"retainedCandidates":retained,"providerRequestCount":module.declarations.len()*2,"providerReferenceCount":provider_references,"reportedAndPossibleEvidenceCount":total_references,"capturedFileCount":snapshot.files.len(),"capturedManifestHash":identity(&snapshot.files),"exhaustiveCompilerProof":false,"providerContext":provider_context});
     ensure!(serde_json::to_vec(&proof)?.len() <= 128_000, CAPACITY);
+    if wrapped {
+        checked_result(&file, text, &module.tree, &edits, d)?;
+    }
     originals(engine, snapshot, d)?;
     let plan = changes::prepare(
         &mut engine.store,
