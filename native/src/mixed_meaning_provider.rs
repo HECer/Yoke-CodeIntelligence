@@ -13,6 +13,8 @@ use rusqlite::{
 use serde::de::DeserializeOwned;
 use std::path::PathBuf;
 
+#[path = "mixed_meaning_composition.rs"]
+pub mod composition;
 #[path = "mixed_meaning_query.rs"]
 pub mod query;
 

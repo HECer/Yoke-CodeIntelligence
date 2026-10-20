@@ -60,6 +60,21 @@ enum Operation {
         #[arg(long)]
         native_pdf_text: bool,
     },
+    /// Compose explicitly selected checked jobs; host links remain unverified.
+    Compose {
+        #[arg(long = "job-id", required = true)]
+        job_ids: Vec<String>,
+        #[arg(long)]
+        review: PathBuf,
+        #[arg(long)]
+        query: Option<PathBuf>,
+        #[arg(long, requires = "query")]
+        include_host_links: bool,
+        #[arg(long, default_value_t = 64_000_000)]
+        max_input_bytes: usize,
+        #[arg(long)]
+        native_pdf_text: bool,
+    },
 }
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -80,8 +95,17 @@ struct HostBuild {
     policy: Policy,
     pdf: Option<NativePdfWorker>,
 }
+struct HostComposition {
+    job_ids: Vec<String>,
+    review: provider::composition::Review,
+    query: Option<provider::query::Query>,
+    include_host_links: bool,
+    max_input_bytes: usize,
+    pdf: Option<NativePdfWorker>,
+}
 enum Selected {
     Build(Box<HostBuild>),
+    Compose(Box<HostComposition>),
     Status(String),
     Jobs {
         task: String,
@@ -122,6 +146,48 @@ impl Arguments {
         );
         d.check()?;
         let selected = match &self.operation {
+            Operation::Compose {
+                job_ids,
+                review,
+                query,
+                include_host_links,
+                max_input_bytes,
+                native_pdf_text,
+            } => {
+                ensure!(
+                    (2..=4).contains(&job_ids.len())
+                        && job_ids.iter().all(|id| yoke::model::valid_id(id))
+                        && job_ids
+                            .iter()
+                            .collect::<std::collections::BTreeSet<_>>()
+                            .len()
+                            == job_ids.len()
+                        && (1..=64_000_000).contains(max_input_bytes),
+                    "mixed_meaning_composition_invalid"
+                );
+                let review: provider::composition::Review =
+                    host_file(review, "mixed_meaning_composition_invalid")?;
+                provider::composition::validate_review(&review, d)?;
+                ensure!(
+                    review.graph_ids.len() == job_ids.len(),
+                    "mixed_meaning_composition_invalid"
+                );
+                let query = query
+                    .as_ref()
+                    .map(|p| host_file::<provider::query::Query>(p, "mixed_meaning_query_invalid"))
+                    .transpose()?;
+                if let Some(q) = &query {
+                    provider::query::validate(q, d)?;
+                }
+                Selected::Compose(Box::new(HostComposition {
+                    job_ids: job_ids.clone(),
+                    review,
+                    query,
+                    include_host_links: *include_host_links,
+                    max_input_bytes: *max_input_bytes,
+                    pdf: pdf_worker(*native_pdf_text, d)?,
+                }))
+            }
             Operation::Build {
                 selection,
                 inputs,
@@ -255,6 +321,37 @@ impl Arguments {
 impl Prepared {
     pub fn run(&self, engine: &Engine, d: &Deadline) -> Result<bool> {
         let result = match &self.selected {
+            Selected::Compose(selected) => {
+                let mut graphs = Vec::new();
+                for id in &selected.job_ids {
+                    d.check()?;
+                    let status = provider::status(&engine.store, id, d)?;
+                    let needs_pdf = status["requiresNativePdfText"]
+                        .as_bool()
+                        .ok_or_else(|| anyhow::anyhow!("mixed_meaning_record_invalid"))?;
+                    graphs.push(provider::load_checked(
+                        &engine.store,
+                        id,
+                        if needs_pdf {
+                            selected.pdf.as_ref()
+                        } else {
+                            None
+                        },
+                        d,
+                    )?);
+                }
+                let composition = provider::composition::compose(
+                    graphs,
+                    &selected.review,
+                    selected.max_input_bytes,
+                    d,
+                )?;
+                if let Some(q) = &selected.query {
+                    composition.query(q, selected.include_host_links, self.max_bytes - 1, d)?
+                } else {
+                    composition.export(self.max_bytes - 1, d)?
+                }
+            }
             Selected::Build(build) => provider::build(
                 &engine.store,
                 &build.selection,

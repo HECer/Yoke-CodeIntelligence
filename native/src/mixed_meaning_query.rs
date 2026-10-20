@@ -37,7 +37,7 @@ pub enum Query {
 fn invalid() -> anyhow::Error {
     failure("mixed_meaning_query_invalid")
 }
-fn reference_valid(r: &ConceptRef) -> bool {
+pub(super) fn reference_valid(r: &ConceptRef) -> bool {
     valid_id(&r.graph_id)
         && !r.key.is_empty()
         && r.key.len() <= 80
