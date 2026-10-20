@@ -1,6 +1,7 @@
 //! Explicit feedback input admission precedes source Store access and publication.
-use anyhow::{Result, ensure};
+use anyhow::{Context as _, Result, ensure};
 use clap::{Args, Subcommand};
+use serde::Deserialize;
 use std::{
     fs,
     io::{Read, Write},
@@ -9,7 +10,8 @@ use std::{
 use yoke::{
     Engine,
     capture::Deadline,
-    knowledge::feedback::{self, Draft, Options, RankInput},
+    knowledge::feedback::{self, Draft, Options, RankInput, semantic_transcript as semantic},
+    providers::ProviderSpec,
 };
 
 #[derive(Args)]
@@ -29,6 +31,34 @@ pub struct Arguments {
 }
 #[derive(Subcommand)]
 enum Operation {
+    /// Explicit host model attempt over selected imported UTF-8 bytes.
+    SemanticMine {
+        #[arg(long)]
+        request: PathBuf,
+        #[arg(long)]
+        config: PathBuf,
+        #[arg(long)]
+        policy: PathBuf,
+        #[arg(long)]
+        trust_provider: bool,
+    },
+    /// Replay saved candidates without provider configuration or execution.
+    SemanticLoad {
+        #[arg(long)]
+        job: String,
+    },
+    SemanticStatus {
+        #[arg(long)]
+        job: String,
+    },
+    SemanticJobs {
+        #[arg(long)]
+        task: String,
+        #[arg(long, default_value_t = 0)]
+        offset: usize,
+        #[arg(long, default_value_t = 25)]
+        limit: usize,
+    },
     MeaningRecord {
         #[arg(long)]
         input: PathBuf,
@@ -67,6 +97,14 @@ enum Operation {
     },
 }
 enum Input {
+    SemanticMine(Box<SemanticBuild>),
+    SemanticLoad(String),
+    SemanticStatus(String),
+    SemanticJobs {
+        task: String,
+        offset: usize,
+        limit: usize,
+    },
     MeaningRecord(Box<feedback::meaning::Draft>),
     MeaningRank(Box<feedback::meaning::RankInput>),
     PlanRecord(Box<feedback::plans::Draft>),
@@ -79,6 +117,23 @@ enum Input {
         author: String,
     },
     Mine(String),
+}
+struct SemanticBuild {
+    request: semantic::Request,
+    provider: ProviderSpec,
+    policy: semantic::Policy,
+}
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct SemanticPolicy {
+    contract_hash: String,
+    #[serde(default)]
+    provider_input_files: Vec<PathBuf>,
+    #[serde(default = "semantic_result_bytes")]
+    max_result_bytes: usize,
+}
+fn semantic_result_bytes() -> usize {
+    4_000_000
 }
 pub struct Prepared {
     input: Input,
@@ -165,11 +220,18 @@ impl Arguments {
                 | Operation::MeaningRecord { .. }
                 | Operation::PlanRecord { .. }
                 | Operation::ImportTranscript { .. }
+                | Operation::SemanticMine { .. }
         );
         if write {
             ensure!(allow_writes, "feedback_write_permission_required");
         } else {
             ensure!(!allow_writes, "feedback_input_invalid");
+        }
+        if let Operation::SemanticMine { trust_provider, .. } = &self.operation {
+            ensure!(
+                *trust_provider,
+                "transcript_semantic_provider_permission_required"
+            );
         }
         Ok(())
     }
@@ -190,6 +252,78 @@ impl Arguments {
         feedback::validate_options(&options)?;
         let input = (|| -> Result<Input> {
             Ok(match &self.operation {
+                Operation::SemanticMine {
+                    request,
+                    config,
+                    policy,
+                    trust_provider,
+                } => {
+                    ensure!(
+                        *trust_provider,
+                        "transcript_semantic_provider_permission_required"
+                    );
+                    let r: semantic::Request = yoke::json::decode(yoke::json::parse(
+                        &host_bytes(request, 64_000, d)?,
+                        64_000,
+                    )?)?;
+                    let p: super::HostProvider = yoke::json::decode(yoke::json::parse(
+                        &host_bytes(config, 64_000, d)?,
+                        64_000,
+                    )?)?;
+                    let policy: SemanticPolicy = yoke::json::decode(yoke::json::parse(
+                        &host_bytes(policy, 128_000, d)?,
+                        128_000,
+                    )?)?;
+                    let provider = ProviderSpec {
+                        trusted: true,
+                        command: p.command,
+                        args: p.args,
+                        model_id: p.model_id,
+                        model_version: p.model_version,
+                        task_id: p.task_id,
+                        currency: p.currency,
+                        max_cost_micros: p.max_cost_micros,
+                        task_limit_micros: p.task_limit_micros,
+                    };
+                    let policy = semantic::Policy {
+                        contract_hash: policy.contract_hash,
+                        provider_input_files: policy.provider_input_files,
+                        max_result_bytes: policy.max_result_bytes,
+                    };
+                    semantic::validate_request(&r, d)?;
+                    semantic::validate_host_configuration(&provider, &policy, d)?;
+                    Input::SemanticMine(Box::new(SemanticBuild {
+                        request: r,
+                        provider,
+                        policy,
+                    }))
+                }
+                Operation::SemanticLoad { job } | Operation::SemanticStatus { job } => {
+                    ensure!(yoke::model::valid_id(job), "feedback_input_invalid");
+                    if matches!(&self.operation, Operation::SemanticLoad { .. }) {
+                        Input::SemanticLoad(job.clone())
+                    } else {
+                        Input::SemanticStatus(job.clone())
+                    }
+                }
+                Operation::SemanticJobs {
+                    task,
+                    offset,
+                    limit,
+                } => {
+                    ensure!(
+                        !task.trim().is_empty()
+                            && task.len() <= 200
+                            && !task.chars().any(char::is_control)
+                            && (1..=100).contains(limit),
+                        "feedback_input_invalid"
+                    );
+                    Input::SemanticJobs {
+                        task: task.clone(),
+                        offset: *offset,
+                        limit: *limit,
+                    }
+                }
                 Operation::MeaningRecord { input } => {
                     let bytes = host_bytes(input, feedback::MAX_DRAFT_BYTES, d)?;
                     let draft =
@@ -259,6 +393,22 @@ impl Arguments {
 impl Prepared {
     pub fn run(&self, engine: &Engine, d: &Deadline) -> Result<bool> {
         let result = match &self.input {
+            Input::SemanticMine(b) => semantic::build(
+                &engine.store,
+                &b.request,
+                &b.provider,
+                &b.policy,
+                &self.options,
+                d,
+            )?,
+            Input::SemanticLoad(id) => semantic::load(&engine.store, id, &self.options, d)?
+                .export(self.options.max_output_bytes, d)?,
+            Input::SemanticStatus(id) => semantic::status(&engine.store, id, &self.options, d)?,
+            Input::SemanticJobs {
+                task,
+                offset,
+                limit,
+            } => semantic::jobs(&engine.store, task, *offset, *limit, &self.options, d)?,
             Input::MeaningRecord(input) => {
                 feedback::meaning::record(&engine.store, input, &self.options, d)?
             }
@@ -282,13 +432,21 @@ impl Prepared {
             }
             Input::Mine(id) => feedback::mine(&engine.store, id, &self.options, d)?,
         };
-        let bytes = yoke::json::encode_bounded(&result, self.options.max_output_bytes, d)
-            .map_err(|_| anyhow::anyhow!("feedback_capacity_exceeded"))?;
-        d.check()?;
-        let mut stdout = std::io::stdout().lock();
-        stdout.write_all(&bytes)?;
-        stdout.write_all(b"\n")?;
-        stdout.flush()?;
+        let emitted = (|| -> Result<()> {
+            let bytes = yoke::json::encode_bounded(&result, self.options.max_output_bytes, d)
+                .map_err(|_| anyhow::anyhow!("feedback_capacity_exceeded"))?;
+            d.check()?;
+            let mut stdout = std::io::stdout().lock();
+            stdout.write_all(&bytes)?;
+            stdout.write_all(b"\n")?;
+            stdout.flush()?;
+            Ok(())
+        })();
+        if matches!(&self.input, Input::SemanticMine(_)) {
+            emitted.with_context(|| format!("transcript_semantic_publication_committed: job {}; inspect feedback semantic-status; do not retry the build automatically", result["jobId"].as_str().unwrap_or("unknown")))?;
+        } else {
+            emitted?;
+        }
         Ok(true)
     }
 }

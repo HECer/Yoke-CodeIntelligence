@@ -2,6 +2,18 @@
 
 ## Native Rust ownership
 
+`knowledge::feedback::semantic_transcript` owns a separate imported UTF-8 source
+space and explicit single-attempt host-provider contract. Atomic ledger/job/input
+registration precedes dispatch; original bound bills/replies remain durable before
+domain rejection, unknown sends retain reservations and no job grants another send.
+Provider-free replay checks original transcript/header/CAS, payload, response,
+ledger and exact reconstructed candidates. Private immutable checked exports survive
+Store loss. Typed retention validates all job states before recognizing their roots.
+Candidates retain parallel observations and ordered quotes, create no outcome events
+and establish no semantic truth or observed execution. Source-write claims apply
+to the native parent; trusted providers have no claimed filesystem isolation. See
+[semantic transcript candidates](../native/docs/semantic-transcript-candidates.md).
+
 `github_app::worker::history` binds an authenticated completed worker, checked Git
 head and original cumulative history plan through a domain-separated HMAC. The
 generic job and binding share one existing durable transaction. Explicit worker

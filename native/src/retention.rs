@@ -797,7 +797,8 @@ fn validate_parity_records(store: &Store, deadline: &Deadline) -> Result<ParityD
             crate::knowledge::feedback::EVENT_KIND
             | crate::knowledge::feedback::TRANSCRIPT_KIND
             | crate::knowledge::feedback::plans::EVENT_KIND
-            | crate::knowledge::feedback::meaning::EVENT_KIND => {
+            | crate::knowledge::feedback::meaning::EVENT_KIND
+            | crate::knowledge::feedback::semantic_transcript::JOB_KIND => {
                 // scan validates the complete feedback set once before this pass.
             }
             crate::decision_records::REVISION_KIND

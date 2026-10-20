@@ -2,6 +2,26 @@
 
 ## Current integration work
 
+Explicit [semantic transcript candidates](../native/docs/semantic-transcript-candidates.md)
+add one host-authorized provider attempt over selected original imported UTF-8
+bytes. Durable source/payload/response/ledger/result replay supports provider-free
+status, pagination and checked review. Bound bills survive domain rejection,
+unknown sends keep reservations, and no job grants an automatic retry. Duplicate
+candidates and ordered exact quotes remain distinct. They create no outcome events
+and establish no semantic truth, independent corroboration or observed execution.
+Owned protocol fixtures qualify processing and recovery; live model-quality and
+broader object/platform/upstream acceptance remain open.
+
+All **15 new transcript cases pass**, including actual CLI permission ordering,
+lost-stdout recovery after committed publication and replay after provider/config
+removal. The final broader nine-target run is **93 passed / 1 failed / 0 ignored**;
+the unchanged Windows host-alias fixture fails at symlink setup with OS1314.
+Neither its original test nor the original host-file reader was weakened or
+skipped. Format/build/all-target Clippy, Python17, typecheck and
+TypeScript260/3skipped pass on **775 fixed native / 772 fixed retained inputs**.
+This remains a failed broader native run and pending full/hosted acceptance. See
+[transcript evidence](validation/integration-2026-10-19/semantic-transcript/README.md).
+
 The explicit [App history driver](../native/docs/app-history-integration.md) can
 complete/replay a permitted worker and acquire bounded persistent Git history.
 An authenticated binding protects the original cumulative plan; current grants,
@@ -19,8 +39,8 @@ unknown receipt costs and per-event evaluated pins remain visible. Subject-wide
 actor/session sequences prevent duplicate votes across evaluated Views. Whole
 output precedes SQL publication, and retention validates every event's original
 source closure. Labels/scores establish no semantic truth, current applicability,
-independent corroboration or observed execution. Semantic transcript candidates
-and remaining object/platform/upstream qualification stay open.
+independent corroboration or observed execution. Remaining object/platform/upstream
+qualification stays open.
 
 All **13 new Meaning-outcome cases pass**. The final broader five-target run is
 **74 passed / 1 failed / 0 ignored**: the unchanged Windows host-alias security

@@ -17,7 +17,7 @@ original inventory references and historical checkpoint evidence.
 | R6: host lifecycle | Generic managed installation, guarded v1/v2 recovery, the separate Codex MCP profile and native session semantic planning. | Other branded client schemas and hook/statusline adapters, their actual client gates and remaining platform qualification. |
 | R7: external sources | Selected PostgreSQL catalogs; received HTTP text/raw HTML/PDF; coordinated arXiv; reviewed native Neo4j/FalkorDB publication with pinned Windows live evidence. | Google shortcuts, authenticated/social/video routes, article/semantic interpretation and wider service/version/platform qualification. |
 | R8: GitHub App | Signed queue/worker lifecycle, controlled publication/pages, explicit discussions, digest client/receiver, authorized metadata queries, persistent/App-bound history execution, independent received Rust declaration correspondence and source-bound interpretation of explicitly built local native Meaning graphs. | Broader receiver reasoning and model-quality qualification; independent verification of other packet claims (sender source-digest/CAS identity, discussions and history); configured live App installation/deployment and whole-source/remote equivalence. No background service is installed. Worker per-file Git-blob checks retain their existing finite scope. |
-| R9: outcomes | Separate source-bound knowledge, historical saved-plan and packet-qualified native Meaning concept/relation/hyperedge outcomes with immutable authored events, exact side quotes, original source/receipt replay and transparent ranking. | Further object surfaces and explicit semantic transcript candidates; independent corroboration, model-quality qualification and observed execution evidence. Supplied labels do not establish semantic truth, current applicability or actual application/runtime truth. |
+| R9: outcomes | Separate source-bound knowledge, historical saved-plan and packet-qualified native Meaning concept/relation/hyperedge outcomes with immutable authored events, exact side quotes, original source/receipt replay and transparent ranking. Explicit semantic transcript candidates add a separate host-provider job and checked original UTF-8/receipt/accounting replay without creating events. | Further object surfaces; independent corroboration, live model-quality qualification and observed execution evidence. Supplied labels and candidates do not establish semantic truth, current applicability or actual application/runtime truth. |
 
 The [mixed graph query](../native/docs/mixed-meaning-queries.md) and
 [composition](../native/docs/mixed-meaning-composition.md) contracts now cover
@@ -38,6 +38,16 @@ their complete submitted units to these declaration witnesses. Source quotes,
 original receipts and semantic claims remain distinct from interpretation truth.
 
 ## Acceptance still required
+
+Semantic transcript candidates pass all 15 new cases. The broader nine-target
+native run records 93 passed / one failed / zero ignored. The unchanged Windows
+host-alias fixture still fails before application reads at symlink setup, OS1314;
+its test file and host-file reader remain exact. Format/build/all-target Clippy,
+Python17, typecheck and TypeScript260/3skipped pass on fixed 775 native / 772
+retained inputs. Owned Node processes qualify the explicit protocol and recovery,
+including actual CLI lost stdout, original billing and source replay; live model
+quality, independently authenticated corroboration and observed execution remain
+unqualified. See [transcript evidence](validation/integration-2026-10-19/semantic-transcript/README.md).
 
 Meaning claim outcomes pass all 13 new cases. Their broader five-target native
 run records 74 passed / one failed / zero ignored. The unchanged Windows alias

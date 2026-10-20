@@ -5,6 +5,10 @@ replays their original source proofs, and ranks a selected set with a visible
 integer policy. These project records are separate from coding-agent AgentMemory.
 Actor, session, timestamp, success and corroboration remain host assertions.
 
+Separate explicit [semantic transcript candidates](semantic-transcript-candidates.md)
+use a host-authorized provider and durable receipt over selected imported UTF-8
+bytes. They remain unverified review candidates and create no outcome events.
+
 All operations require an existing native Store. `record`, `plan-record` and
 `import-transcript` additionally require global `--allow-writes`:
 

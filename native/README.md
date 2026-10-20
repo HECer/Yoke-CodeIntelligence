@@ -234,6 +234,12 @@ Knowledge records are project assertions with source hashes and explicit stalene
 
 Explicit [outcome feedback](docs/outcome-feedback.md) binds authored results to original native Views and exact source or imported transcript quotes. Ranking exposes sequence selection, integer age decay and stale-source exclusions; literal transcript mining returns candidates for explicit host selection. Assertions and ranking scores never establish observed execution or independent corroboration.
 
+Separate explicit [semantic transcript candidates](docs/semantic-transcript-candidates.md)
+use one host-authorized provider attempt over selected imported UTF-8 bytes.
+Durable jobs retain bound original replies and accounting; source-checked replay,
+status and candidate review start no provider. Candidates create no outcome events
+and grant no source, semantic-truth or execution authority.
+
 `feedback plan-record` and `plan-rank` separately bind authored historical outcomes
 to replayed saved change plans and their exact base/planned-result source bytes.
 The original knowledge-event format stays unchanged. Planned results and scores

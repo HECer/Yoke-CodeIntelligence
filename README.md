@@ -80,6 +80,11 @@ packet-qualified concepts, directed relations and hyperedges, original receipts
 and exact source evidence. Authored labels and historical scores establish no
 semantic truth, independent corroboration or observed execution.
 
+Explicit [semantic transcript candidates](native/docs/semantic-transcript-candidates.md)
+make one host-authorized model attempt over selected original imported UTF-8
+bytes. Durable source/response/accounting replay supports provider-free review;
+candidates create no outcome events and remain unverified interpretations.
+
 An explicit native [Python empty-suite deletion policy](native/docs/semantic-refactor-intents.md#explicit-native-python-empty-body-deletion)
 can prepare a checked `pass` replacement while preserving the strict default
 and ordinary approval, verification and source-recovery gates.

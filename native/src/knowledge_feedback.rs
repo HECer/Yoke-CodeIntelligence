@@ -21,6 +21,8 @@ pub mod plans;
 mod provenance;
 #[path = "knowledge_feedback_rank.rs"]
 mod ranking;
+#[path = "transcript_semantic.rs"]
+pub mod semantic_transcript;
 #[path = "knowledge_feedback_store.rs"]
 mod storage;
 #[path = "knowledge_feedback_transcript.rs"]
@@ -317,6 +319,9 @@ pub(crate) fn retained_roots(store: &Store, d: &Deadline) -> Result<RetainedRoot
         let meaning = meaning::retained_roots(store, d)?;
         roots.snapshot_ids.extend(meaning.snapshot_ids);
         roots.blob_ids.extend(meaning.blob_ids);
+        roots
+            .blob_ids
+            .extend(semantic_transcript::retained_roots(store, d)?.blob_ids);
         Ok(roots)
     })()
     .map_err(|error| sanitize(error, d))
