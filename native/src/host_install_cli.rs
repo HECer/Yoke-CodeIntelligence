@@ -72,6 +72,18 @@ struct SelectionFile {
     executable: PathBuf,
     policy: PathBuf,
     state_root: PathBuf,
+    #[serde(default)]
+    adapter: Option<AdapterSelection>,
+}
+#[derive(Deserialize)]
+#[serde(
+    tag = "kind",
+    rename_all = "snake_case",
+    rename_all_fields = "camelCase",
+    deny_unknown_fields
+)]
+enum AdapterSelection {
+    CodexMcpV1 { source_root: PathBuf },
 }
 impl Arguments {
     pub fn preflight_permission(&self) -> Result<()> {
@@ -173,14 +185,26 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
     let file: SelectionFile =
         yoke::json::decode(super::input_json(args.selection_path(), 128_000)?)?;
     deadline.check()?;
-    let selection = Selection::new(
-        &file.installation,
-        &file.target_roots,
-        &file.executable,
-        &file.policy,
-        &file.state_root,
-        &deadline,
-    )?;
+    let selection = if let Some(AdapterSelection::CodexMcpV1 { source_root }) = &file.adapter {
+        Selection::codex_mcp(
+            &file.installation,
+            &file.target_roots,
+            &file.executable,
+            &file.policy,
+            &file.state_root,
+            source_root,
+            &deadline,
+        )?
+    } else {
+        Selection::new(
+            &file.installation,
+            &file.target_roots,
+            &file.executable,
+            &file.policy,
+            &file.state_root,
+            &deadline,
+        )?
+    };
     match &args.operation {
         Operation::Plan { .. } => print(
             &host_install::plan_install(&selection, now_ms()?, &deadline)?,
@@ -254,7 +278,7 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
                 .map(|root| -> Result<String> {
                     let root = root.canonicalize()?;
                     Ok(root
-                        .join("AGENTS.md")
+                        .join(selection.target_filename())
                         .to_str()
                         .context("Non-UTF8 host output path")?
                         .to_owned())

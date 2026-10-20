@@ -41,3 +41,11 @@ The Windows test suite includes actual child processes driving `apply()`, follow
 A focused debug test completed a 16-target recovery in 24.020 seconds with its unchanged 30-second cooperative deadline. Diagnostic inclusive spans included 23.518 seconds across 51 journal appends, 13.933 seconds across 52 full history loads, and 8.096 seconds across 54 capacity scans. These spans overlap and must not be summed. This is local test evidence, not a release benchmark or latency guarantee. Reusing a held metadata-directory reader within each scan remains a separate future optimization; no history or content checks are skipped to obtain this result.
 
 Legacy schema 1 can still leave an unidentified auxiliary file if a process dies before journaling its identity. That recovery path preserves and refuses the file and requires explicit reconciliation. Schema 2 likewise preserves and refuses any unknown auxiliary occupant. Hash or path resemblance never establishes ownership. Private host state is an explicitly host-controlled authority boundary; record hashes establish consistency and do not authenticate storage writable by an adversary.
+
+The separate `codex-mcp-v1` profile now manages an explicitly selected Codex
+`config.toml` using the same guarded installation and recovery. Its distinct
+profile and optional adapter binding retain generic v1 identities. See the
+[Codex workflow](../../docs/native-codex-host.md) for the finite Windows profile,
+source-directory binding, exact TOML ownership and actual Codex0.163 MCP-client
+validation. Other branded clients, hooks and non-Windows certification remain
+open; the generic profile alone makes no branded-client claim.

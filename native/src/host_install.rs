@@ -12,10 +12,13 @@ use std::{
     path::{Component, Path, PathBuf},
 };
 
+#[path = "host_install_adapter.rs"]
+mod adapter;
 #[path = "host_install_io.rs"]
 mod io;
 #[path = "host_install_recovery.rs"]
 mod recovery;
+pub use adapter::AdapterBinding;
 
 pub const PROFILE_ID: &str = "generic-agents-v1";
 pub const STATE_DIRECTORY: &str = "yoke-host-install-v1";
@@ -47,6 +50,8 @@ pub struct Bindings {
     pub executable: FileBinding,
     pub policy: FileBinding,
     pub state_root: DirectoryBinding,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub adapter: Option<AdapterBinding>,
 }
 
 /// Constructed by the host CLI, never deserialized from a plan or repository.
@@ -116,6 +121,7 @@ impl Selection {
             installation: installation.into(),
             bindings: Bindings {
                 roots,
+                adapter: None,
                 executable,
                 policy,
                 state_root: DirectoryBinding {
@@ -126,6 +132,15 @@ impl Selection {
         })
     }
     pub fn installation_id(&self) -> String {
+        if let Some(binding) = &self.bindings.adapter {
+            return identity(&(
+                adapter::CODEX_PROFILE,
+                &self.installation,
+                &self.bindings.roots,
+                &self.bindings.state_root,
+                binding,
+            ));
+        }
         identity(&(
             PROFILE_ID,
             &self.installation,
@@ -319,7 +334,6 @@ pub fn recover_initialization(
         status: "initialized".into(),
     };
     result.id = identity(&result);
-    let authored = body(selection)?;
     let mut originals = Vec::new();
     for (index, file) in plan.files.iter().enumerate() {
         let current = io::read_file(&target(selection, index)?, MAX_FILE, false, d)?;
@@ -329,7 +343,7 @@ pub fn recover_initialization(
             "Host initialization plan target changed"
         );
         let bytes = current.as_ref().map_or(&[][..], |f| f.bytes.as_slice());
-        let patch = host_config::agents_patch(bytes, Some(&authored), None, d)?;
+        let patch = adapter::patch(selection, bytes, true, None, d)?;
         let output = host_config::apply_patch(bytes, &patch, d)?;
         ensure!(
             patch == file.patch
@@ -900,6 +914,7 @@ fn guard_bindings(selection: &Selection, d: &Deadline) -> Result<Guards> {
         );
         files.push(file);
     }
+    adapter::guard(selection, &mut dirs, &mut files, d)?;
     Ok(Guards {
         _directories: dirs,
         _files: files,
@@ -953,7 +968,7 @@ fn target(selection: &Selection, index: usize) -> Result<PathBuf> {
             .context("Host target root index outside authority")?
             .path,
     )
-    .join("AGENTS.md"))
+    .join(adapter::filename(selection)))
 }
 fn state(selection: &Selection) -> PathBuf {
     Path::new(&selection.bindings.state_root.path).join(STATE_DIRECTORY)
@@ -1005,7 +1020,6 @@ fn plan_for(
             "No active owned host installation"
         );
     }
-    let authored = body(selection)?;
     let mut files = Vec::new();
     let mut total = 0usize;
     for index in 0..selection.bindings.roots.len() {
@@ -1023,16 +1037,7 @@ fn plan_for(
             .map(|r| r.files.get(index).context("Host receipt target absent"))
             .transpose()?;
         let owned = previous.and_then(|f| f.owned_fragment.as_ref());
-        let patch = host_config::agents_patch(
-            bytes,
-            if operation == Operation::Install {
-                Some(authored.as_slice())
-            } else {
-                None
-            },
-            owned,
-            d,
-        )?;
+        let patch = adapter::patch(selection, bytes, operation == Operation::Install, owned, d)?;
         let output = host_config::apply_patch(bytes, &patch, d)?;
         let created = previous.map_or(actual.is_none(), |f| f.created_by_installation);
         let after_hash = if operation == Operation::Uninstall && created && output.is_empty() {
@@ -1042,7 +1047,7 @@ fn plan_for(
         };
         files.push(PlannedFile {
             root_index: index,
-            path: "AGENTS.md".into(),
+            path: adapter::filename(selection).into(),
             before_hash: actual.as_ref().map(|f| f.hash.clone()),
             before_identity: actual.as_ref().map(|f| f.identity.clone()),
             after_hash,
@@ -1053,7 +1058,7 @@ fn plan_for(
     let mut plan = Plan {
         schema_version: 1,
         id: String::new(),
-        profile: PROFILE_ID.into(),
+        profile: adapter::profile(selection).into(),
         installation_id: selection.installation_id(),
         installation: selection.installation.clone(),
         operation,
@@ -1180,7 +1185,7 @@ fn names(directory: &Path, maximum: usize, d: &Deadline) -> Result<Vec<PathBuf>>
 fn validate_receipt(selection: &Selection, receipt: &Receipt) -> Result<()> {
     ensure!(
         receipt.schema_version == 1
-            && receipt.profile == PROFILE_ID
+            && receipt.profile == adapter::profile(selection)
             && valid_id(&receipt.id)
             && receipt_id(receipt) == receipt.id
             && valid_id(&receipt.plan_id)
@@ -1198,13 +1203,14 @@ fn validate_receipt(selection: &Selection, receipt: &Receipt) -> Result<()> {
         receipt.installation_id == selection.installation_id()
             && receipt.bindings.roots == selection.bindings.roots
             && receipt.bindings.state_root == selection.bindings.state_root
+            && receipt.bindings.adapter == selection.bindings.adapter
             && receipt.files.len() == selection.bindings.roots.len(),
         "Host receipt ownership root mismatch"
     );
     for (index, file) in receipt.files.iter().enumerate() {
         ensure!(
             file.root_index == index
-                && file.path == "AGENTS.md"
+                && file.path == adapter::filename(selection)
                 && file.after_hash.as_deref().is_none_or(valid_id),
             "Invalid host receipt target"
         );
@@ -1281,7 +1287,7 @@ fn load_plan(selection: &Selection, id: &str, d: &Deadline) -> Result<Plan> {
         plan.id == id
             && plan_id(&plan) == id
             && plan.schema_version == 1
-            && plan.profile == PROFILE_ID
+            && matches!(plan.profile.as_str(), PROFILE_ID | adapter::CODEX_PROFILE)
             && !plan.bindings.roots.is_empty()
             && plan.bindings.roots.len() <= 16
             && plan.files.len() == plan.bindings.roots.len()
@@ -1512,7 +1518,7 @@ fn check_authority(selection: &Selection, authority: &WriteAuthority) -> Result<
 fn validate_plan(selection: &Selection, plan: &Plan, now_ms: u64, recovery: bool) -> Result<()> {
     ensure!(
         plan.schema_version == 1
-            && plan.profile == PROFILE_ID
+            && plan.profile == adapter::profile(selection)
             && valid_id(&plan.id)
             && plan_id(plan) == plan.id
             && plan.installation_id == selection.installation_id()
@@ -1533,7 +1539,7 @@ fn validate_plan(selection: &Selection, plan: &Plan, now_ms: u64, recovery: bool
     for (index, file) in plan.files.iter().enumerate() {
         ensure!(
             file.root_index == index
-                && file.path == "AGENTS.md"
+                && file.path == adapter::filename(selection)
                 && file.before_hash.as_deref().is_none_or(valid_id)
                 && file.after_hash.as_deref().is_none_or(valid_id)
                 && file.before_hash.is_some() == file.before_identity.is_some()
@@ -1891,7 +1897,7 @@ fn projected_receipt(
         generation: previous.map_or(1, |r| r.generation + 1),
         plan_id: plan.id.clone(),
         installation_id: plan.installation_id.clone(),
-        profile: PROFILE_ID.into(),
+        profile: adapter::profile(selection).into(),
         bindings: plan.bindings.clone(),
         operation: plan.operation.clone(),
         status: if plan.operation == Operation::Install {
@@ -1923,6 +1929,9 @@ fn projected_receipt(
     Ok(receipt)
 }
 
+#[cfg(all(test, windows))]
+#[path = "host_install_adapter_tests.rs"]
+mod adapter_tests;
 #[cfg(all(test, windows))]
 #[path = "host_output_recovery_tests.rs"]
 mod output_recovery_tests;

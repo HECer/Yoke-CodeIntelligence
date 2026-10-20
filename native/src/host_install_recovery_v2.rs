@@ -607,7 +607,6 @@ fn canonical_outputs(
             "Host uninstall recovery lacks ownership"
         );
     }
-    let authored = body(selection)?;
     for (index, (file, run)) in plan.files.iter().zip(runs).enumerate() {
         if committed && run.changed && file.before_hash.is_some() && run.original.is_none() {
             continue;
@@ -619,9 +618,10 @@ fn canonical_outputs(
         let previous = previous
             .filter(|r| r.status == "installed")
             .map(|r| &r.files[index]);
-        let patch = host_config::agents_patch(
+        let patch = adapter::patch(
+            selection,
             bytes,
-            (plan.operation == Operation::Install).then_some(authored.as_slice()),
+            plan.operation == Operation::Install,
             previous.and_then(|f| f.owned_fragment.as_ref()),
             d,
         )?;
@@ -724,7 +724,7 @@ fn rollback_receipt(
         generation: previous.map_or(1, |r| r.generation),
         plan_id: plan.id.clone(),
         installation_id: plan.installation_id.clone(),
-        profile: PROFILE_ID.into(),
+        profile: adapter::profile(selection).into(),
         bindings: plan.bindings.clone(),
         operation: plan.operation.clone(),
         status: "rolled_back".into(),
