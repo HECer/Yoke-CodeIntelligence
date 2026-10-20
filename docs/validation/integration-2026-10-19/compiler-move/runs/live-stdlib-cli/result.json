@@ -1,0 +1,58 @@
+{
+  "allChecksPassed": true,
+  "sourceUnchanged": true,
+  "frozenRuntimeInputsUnchanged": true,
+  "fixtureRoot": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\ci-compiler-move-stdlib-cspbg7fc",
+  "inputSourceHashes": {
+    "source.ts": "a45bfc367ef03fc54ae51a8db648ffc1810c916dfa73b2571251382fd4617fde",
+    "target.ts": "adf8d526e612268dd898c7ed971e3989cf135fe1d414bbac5fc6a0d2ecf6b644",
+    "consumer.ts": "b507cc65ea36fb0e2815620f6e953f50b211505cb6fc7057e68eb78b3a8f727a",
+    "tsconfig.json": "47b41c64d2e3ec660e6562a92ddca1a7984db6353d810d38dc03ff64b8c8cf87"
+  },
+  "executedBinarySha256": "acd661de292d2f58026e9f03439dce139885c356fe231e95d6ed1ee745c1b209",
+  "compilerSha256": "dd17428736a07e1db1a138d8a14295ddb2699ba780ee15038acdd2c6da5373a0",
+  "knownStaticBindingsCompared": 13,
+  "standardLibraryHashCount": 63,
+  "resultSnapshotId": "b12c92f7fdefe2a9fbc88c1b8fae25930e8a6c5275d519ba4c3ee58768480d45",
+  "independentTscPassed": true,
+  "sourceExecuted": false,
+  "projectApplied": false,
+  "isAdditionalCliProbeNotRustTestCount": true,
+  "commands": [
+    {
+      "name": "prepare",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\ci-compiler-move-stdlib-cspbg7fc\\project",
+        "session",
+        "--id",
+        "stdlib",
+        "--host-profile",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\ci-compiler-move-stdlib-cspbg7fc\\host\\host.json",
+        "--requests",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\ci-compiler-move-stdlib-cspbg7fc\\host\\requests.json"
+      ],
+      "exitCode": 0,
+      "seconds": 4.23797720001312
+    },
+    {
+      "name": "independent-tsc",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\ci-compiler-move-stdlib-cspbg7fc\\project",
+        "verify",
+        "--plan",
+        "98a9b4d58ecfd4a9ff7648af3f4c14e09d89f7df22d0c3ec99854f5ed4f47a1d",
+        "--trust-project",
+        "--command",
+        "C:\\Program Files\\nodejs\\node.exe",
+        "--arg=C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\node_modules\\typescript\\lib\\tsc.js",
+        "--arg=--noEmit"
+      ],
+      "exitCode": 0,
+      "seconds": 0.8906475999974646
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 3.28s
+     Running tests\compiler_move.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\compiler_move-25835ff4cf375f5e.exe)
+
+running 13 tests
+test actual_cli_move_requires_independent_tsc_approval_and_conditional_recovery ... ok
+test actual_compiler_broken_selected_reexports_and_import_alias_collisions_are_refused ... ok
+test actual_declaration_matrix_keeps_original_graph_identity_and_explicit_ast_origin ... ok
+test actual_exported_function_move_repairs_split_consumer_imports_without_source_writes ... ok
+test actual_imported_free_bindings_and_unrelated_reexports_preserve_side_effect_statements ... ok
+test actual_jsdoc_class_move_repairs_namespace_consumer_and_keeps_unrelated_member ... ok
+test actual_jsx_component_moves_keep_intrinsic_properties_and_typed_props ... ok
+test actual_language_matrix_keeps_bom_unicode_crlf_and_repository_plugins_inert ... ok
+test actual_private_free_dependency_preserves_same_offset_compiler_insertion_order ... ok
+test compiler_profile_rejects_tools_in_analyzed_roots_and_detects_changed_module_bytes ... ok
+test invalid_paths_stale_selection_trust_context_and_directives_publish_no_plan ... ok
+test move_profile_is_optional_host_bound_and_routed_through_the_existing_facade ... ok
+test readonly_consumer_and_ambiguous_context_cannot_publish_compiler_move_plans ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 58.02s
+
