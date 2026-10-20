@@ -1,0 +1,44 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 755,
+  "commands": [
+    {
+      "name": "native",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--no-fail-fast",
+        "--test",
+        "github_app_worker_history",
+        "--test",
+        "digest_history_jobs",
+        "--test",
+        "github_app_worker_run",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 143.27148170000874,
+      "totals": {
+        "passed": 41,
+        "failed": 0,
+        "ignored": 0
+      },
+      "groups": 2,
+      "failures": [
+        "a_disk_snapshot_or_an_unrelated_worker_record_cannot_become_history_authority",
+        "authenticated_original_plan_and_native_job_must_survive_every_retry",
+        "changed_queue_blocks_acquisition_but_allows_historical_pause_and_status",
+        "checked_completion_creates_one_signed_job_and_offline_status_uses_read_only_store"
+      ]
+    }
+  ],
+  "allChecksPassed": false,
+  "wholeNativeRerun": false
+}

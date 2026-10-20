@@ -1,0 +1,152 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 17s
+     Running tests\github_app_history_bridge.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_history_bridge-8ed3bfb891b4baaa.exe)
+
+running 11 tests
+test a_disk_snapshot_or_an_unrelated_worker_record_cannot_become_history_authority ... ok
+test actual_cli_lost_stdout_status_pause_resume_and_run_use_the_owned_os_key ... ignored, Requires an outer controller owning one temporary Windows signing credential
+test authenticated_original_plan_and_native_job_must_survive_every_retry ... ok
+test changed_queue_blocks_acquisition_but_allows_historical_pause_and_status ... ok
+test checked_completion_creates_one_signed_job_and_offline_status_uses_read_only_store ... 
+thread '<unnamed>' (24616) panicked at native\tests\support/github_app_worker_history_fixture.rs:321:22:
+called `Option::unwrap()` on a `None` value
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'checked_completion_creates_one_signed_job_and_offline_status_uses_read_only_store' (23196) panicked at native\tests\support/github_app_worker_history_fixture.rs:219:10:
+called `Result::unwrap()` on an `Err` value: github_app_transport_failed
+
+thread 'checked_completion_creates_one_signed_job_and_offline_status_uses_read_only_store' (23196) panicked at native\tests\support/github_app_worker_history_fixture.rs:368:44:
+called `Result::unwrap()` on an `Err` value: Any { .. }
+stack backtrace:
+   0:     0x7ff77fafea62 - std::backtrace_rs::backtrace::win64::trace
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\..\..\backtrace\src\backtrace\win64.rs:85
+   1:     0x7ff77fafea62 - std::backtrace_rs::backtrace::trace_unsynchronized
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\..\..\backtrace\src\backtrace\mod.rs:66
+   2:     0x7ff77fafea62 - std::sys::backtrace::_print_fmt
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\backtrace.rs:74
+   3:     0x7ff77fafea62 - std::sys::backtrace::impl$0::print::impl$0::fmt
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\backtrace.rs:44
+   4:     0x7ff77fb0a7e1 - core::fmt::write
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\fmt\mod.rs:0
+   5:     0x7ff77fad6d84 - std::io::default_write_fmt
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\io\mod.rs:639
+   6:     0x7ff77fad6d84 - std::io::Write::write_fmt<std::sys::stdio::windows::Stderr>
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\io\mod.rs:1994
+   7:     0x7ff77faf06b0 - std::sys::backtrace::BacktraceLock::print
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\backtrace.rs:47
+   8:     0x7ff77faf06b0 - std::panicking::default_hook::closure$0
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:292
+   9:     0x7ff77faf04c8 - std::panicking::default_hook
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:319
+  10:     0x7ff77faf09e2 - std::panicking::panic_with_hook
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:825
+  11:     0x7ff77faf0784 - std::panicking::panic_handler::closure$0
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:698
+  12:     0x7ff77faea6df - std::sys::backtrace::__rust_end_short_backtrace<std::panicking::panic_handler::closure_env$0,never$>
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\backtrace.rs:182
+  13:     0x7ff77fad304e - std::panicking::panic_handler
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:689
+  14:     0x7ff78003e0ed - core::panicking::panic_fmt
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\panicking.rs:80
+  15:     0x7ff78003dc17 - core::result::unwrap_failed
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\result.rs:1867
+  16:     0x7ff77e3f73de - <github_app_history_bridge::Provider as core::ops::drop::Drop>::drop::h0a94f6b6b59ffc80
+  17:     0x7ff77e4007cb - core::ptr::drop_in_place<github_app_history_bridge::Provider>::h8d67850b88e5781e
+  18:     0x7ff77e3ef62a - github_app_history_bridge::a_disk_snapshot_or_an_unrelated_worker_record_cannot_become_history_authority::{{closure}}::h4324a79424de1956
+  19:     0x7ffb845fbb00 - _CxxFrameHandler3
+  20:     0x7ffb845e3a9d - is_exception_typeof
+  21:     0x7ffb845fae8d - _C_specific_handler
+  22:     0x7ffb845e2ce2 - is_exception_typeof
+  23:     0x7ffb845fb8f8 - _CxxFrameHandler3
+  24:     0x7ffbaf6b29ef - _chkstk
+  25:     0x7ffbaf640939 - RtlUnwindEx
+  26:     0x7ffb845fb3d6 - _C_specific_handler
+  27:     0x7ffb845e1c20 - is_exception_typeof
+  28:     0x7ffb845e2dd8 - is_exception_typeof
+  29:     0x7ffb845fb8f8 - _CxxFrameHandler3
+  30:     0x7ffbaf6b296f - _chkstk
+  31:     0x7ffbaf662554 - RtlRaiseException
+  32:     0x7ffbaf6622a7 - RtlRaiseException
+  33:     0x7ffbaccf5369 - RaiseException
+  34:     0x7ffb845e55a9 - CxxThrowException
+  35:     0x7ff77fafef5d - panic_unwind::imp::throw_exception
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\panic_unwind\src\seh.rs:368
+  36:     0x7ff77fafee35 - panic_unwind::imp::panic
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\panic_unwind\src\seh.rs:302
+  37:     0x7ff77fafee35 - panic_unwind::__rust_start_panic
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\panic_unwind\src\lib.rs:108
+  38:     0x7ff77fad2d7f - std::panicking::rust_panic
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:886
+  39:     0x7ff77faf0a5a - std::panicking::panic_with_hook
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:850
+  40:     0x7ff77faf0784 - std::panicking::panic_handler::closure$0
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:698
+  41:     0x7ff77faea6df - std::sys::backtrace::__rust_end_short_backtrace<std::panicking::panic_handler::closure_env$0,never$>
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\backtrace.rs:182
+  42:     0x7ff77fad304e - std::panicking::panic_handler
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:689
+  43:     0x7ff78003e0ed - core::panicking::panic_fmt
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\panicking.rs:80
+  44:     0x7ff78003dc17 - core::result::unwrap_failed
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\result.rs:1867
+  45:     0x7ff77e3ea167 - github_app_history_bridge::a_disk_snapshot_or_an_unrelated_worker_record_cannot_become_history_authority::{{closure}}::h4324a79424de1956
+  46:     0x7ff77e3ef593 - github_app_history_bridge::a_disk_snapshot_or_an_unrelated_worker_record_cannot_become_history_authority::{{closure}}::h4324a79424de1956
+  47:     0x7ff77e3f01da - github_app_history_bridge::binding::{{closure}}::h336e6f923e56cfac
+  48:     0x7ff77e3f1543 - github_app_history_bridge::checked_completion_creates_one_signed_job_and_offline_status_uses_read_only_store::{{closure}}::hc6362c5a6ee401e6
+  49:     0x7ff77e400012 - core::ops::function::FnOnce::call_once::hc2ec53b3b8d4104f
+  50:     0x7ff77faacd90 - core::ops::function::FnOnce::call_once
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\ops\function.rs:250
+  51:     0x7ff77faacd90 - test::__rust_begin_short_backtrace<enum2$<core::result::Result<tuple$<>,alloc::string::String> >,enum2$<core::result::Result<tuple$<>,alloc::string::String> > (*)()>
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\test\src\lib.rs:663
+  52:     0x7ff77fac5f9d - test::run_test_in_process
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\test\src\lib.rs:686
+  53:     0x7ff77fac5f9d - test::run_test::closure$0
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\test\src\lib.rs:607
+  54:     0x7ff77fa97a2c - test::run_test::closure$1
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\test\src\lib.rs:637
+  55:     0x7ff77fa97a2c - std::sys::backtrace::__rust_begin_short_backtrace<test::run_test::closure_env$1,tuple$<> >
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\backtrace.rs:166
+  56:     0x7ff77fa9bec2 - std::thread::lifecycle::spawn_unchecked::closure$1::closure$0
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\thread\lifecycle.rs:91
+  57:     0x7ff77fa9bec2 - core::panic::unwind_safe::impl$25::call_once
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\panic\unwind_safe.rs:274
+  58:     0x7ff77fa9bec2 - std::panicking::catch_unwind::do_call
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:581
+  59:     0x7ff77fa9bec2 - std::panicking::catch_unwind
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:544
+  60:     0x7ff77fa9bec2 - std::panic::catch_unwind
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panic.rs:359
+  61:     0x7ff77fa9bec2 - std::thread::lifecycle::spawn_unchecked::closure$1
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\thread\lifecycle.rs:89
+  62:     0x7ff77fa9bec2 - core::ops::function::FnOnce::call_once<std::thread::lifecycle::spawn_unchecked::closure_env$1<test::run_test::closure_env$1,tuple$<> >,tuple$<> >
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\ops\function.rs:250
+  63:     0x7ff77fae2358 - std::sys::thread::windows::impl$0::new::thread_start
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\thread\windows.rs:58
+  64:     0x7ffbaf247374 - BaseThreadInitThunk
+  65:     0x7ffbaf65cc91 - RtlUserThreadStart
+error: test failed, to rerun pass `--test github_app_history_bridge`
+
+Caused by:
+  process didn't exit successfully: `C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_history_bridge-8ed3bfb891b4baaa.exe --test-threads=1 --nocapture` (exit code: 0xc0000409, STATUS_STACK_BUFFER_OVERRUN)
+     Running tests\github_app_history_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_history_cli-0443c4f0aced00c6.exe)
+
+running 3 tests
+test budgets_and_read_only_scope_refuse_before_profiles_keys_or_store ... ok
+test closed_selection_and_plan_errors_precede_credential_resolution_and_missing_source ... ok
+test every_operation_requires_explicit_app_and_job_permission_before_host_files ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.76s
+
+     Running tests\github_app_worker_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_worker_cli-81c8c16e00e25432.exe)
+
+running 5 tests
+test read_only_worker_commands_refuse_network_and_write_authority ... ok
+test worker_inherited_zero_queue_limits_precede_missing_host_files_and_keys ... ok
+test worker_mutation_permissions_precede_missing_request_profiles_and_source ... ok
+test worker_zero_history_and_output_limits_precede_all_host_files ... ok
+test worker_zero_remote_limits_precede_auth_files_credentials_and_source ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.35s
+
+error: 1 target failed:
+    `--test github_app_history_bridge`
