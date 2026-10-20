@@ -4,6 +4,12 @@ This owned evidence records the combined Wave 14 / GitHub App checkpoint and its
 subsequent CI/test repairs. It is not release or universal-parity acceptance.
 `index.json` binds the selected raw artifacts and their precise scopes.
 
+The [classic function-body checkpoint](function-body-inline/README.md) adds finite
+original-byte statement expansion, checked parameter/finally semantics and direct-
+eval exclusions. Its latest 14, preceding guard 86 and broader 668 passes have separate
+frozen inputs and are nonadditive. Full STATUS/R1-R9 and platform acceptance remain
+open. Failed development phases and corrected native CLI counterprobes are retained.
+
 The frozen baseline at `6dea3919` executed all 255 native targets: 2,272 passed,
 11 failed and 37 default ignored; zero doctests were registered. Source hashes
 were unchanged. Ten failures occurred while constructing real Windows symlinks

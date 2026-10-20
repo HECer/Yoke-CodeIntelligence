@@ -1,0 +1,26 @@
+{
+  "cases": [
+    {
+      "expression": "(eval)('typeof helper')",
+      "exitCode": 0,
+      "incorrectlyAdmittedPlan": true,
+      "fixture": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\ci-inline-wrapped-eval-red-iv8ak90r"
+    },
+    {
+      "expression": "eval!('typeof helper')",
+      "exitCode": 0,
+      "incorrectlyAdmittedPlan": true,
+      "fixture": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\ci-inline-wrapped-eval-red-8fp5f23p"
+    },
+    {
+      "expression": "(eval as (source:string)=>any)('typeof helper')",
+      "exitCode": 0,
+      "incorrectlyAdmittedPlan": true,
+      "fixture": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\ci-inline-wrapped-eval-red-mbox7sor"
+    }
+  ],
+  "sourceUnchanged": true,
+  "analyzedCodeExecuted": false,
+  "binaryHashBefore": "104ca72007dea6da10e255f479d41417d0c4b70156aa0d4e222bf1926c7c6930",
+  "binaryHashAfter": "104ca72007dea6da10e255f479d41417d0c4b70156aa0d4e222bf1926c7c6930"
+}

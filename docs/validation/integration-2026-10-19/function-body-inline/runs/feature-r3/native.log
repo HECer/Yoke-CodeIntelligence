@@ -1,0 +1,10 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+error[E0432]: unresolved import `yoke::agent_sessions`
+ --> native\tests\compiler_inline_body.rs:4:11
+  |
+4 | use yoke::agent_sessions::HostProfile;
+  |           ^^^^^^^^^^^^^^ could not find `agent_sessions` in `yoke`
+
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `yoke-code-intelligence` (test "compiler_inline_body") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
