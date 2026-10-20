@@ -193,7 +193,7 @@ pub fn validate_input(input: &MeaningInput, deadline: &Deadline) -> Result<()> {
 }
 fn checked_support(
     support: &[Support],
-    bindings: &BTreeMap<&str, &Binding>,
+    bindings: &BTreeMap<&str, (usize, usize)>,
     used: &mut BTreeSet<String>,
     unique: &mut BTreeSet<Support>,
     deadline: &Deadline,
@@ -209,9 +209,9 @@ fn checked_support(
             .get(span.source_id.as_str())
             .context("Meaning support cites an unsubmitted source")?;
         ensure!(
-            span.start_byte >= binding.start_byte
+            span.start_byte >= binding.0
                 && span.start_byte < span.end_byte
-                && span.end_byte <= binding.end_byte
+                && span.end_byte <= binding.1
                 && seen.insert(span),
             "Meaning support escaped its submitted source or was repeated"
         );
@@ -233,6 +233,31 @@ pub fn validate_fragment_shape(
 ) -> Result<()> {
     deadline.check()?;
     let bindings = bindings_checked(bindings, deadline)?;
+    let ranges = bindings
+        .into_iter()
+        .map(|(id, b)| (id, (b.start_byte, b.end_byte)))
+        .collect();
+    validate_fragment_ranges(fragment, &ranges, deadline)
+}
+/// Shape-only descriptors. No path, snapshot, source text or read authority is
+/// constructed here; callers must independently check their own source spaces.
+pub(crate) fn validate_fragment_ranges(
+    fragment: &Fragment,
+    bindings: &BTreeMap<&str, (usize, usize)>,
+    deadline: &Deadline,
+) -> Result<()> {
+    deadline.check()?;
+    ensure!(
+        !bindings.is_empty() && bindings.len() <= 16,
+        "Meaning source count exceeds capacity"
+    );
+    for (id, (start, end)) in bindings {
+        deadline.check()?;
+        ensure!(
+            crate::model::valid_id(id) && start < end && end - start <= 16384,
+            "Invalid meaning support range descriptor"
+        );
+    }
     ensure!(
         fragment.concepts.len() <= 128
             && fragment.relations.len() <= 256
@@ -257,7 +282,7 @@ pub fn validate_fragment_shape(
             text(alias, 160, true)?;
             ensure!(aliases.insert(alias), "Duplicate meaning alias");
         }
-        checked_support(&node.support, &bindings, &mut used, &mut unique, deadline)?;
+        checked_support(&node.support, bindings, &mut used, &mut unique, deadline)?;
     }
     for edge in &fragment.relations {
         deadline.check()?;
@@ -267,7 +292,7 @@ pub fn validate_fragment_shape(
             keys.contains(edge.source.as_str()) && keys.contains(edge.target.as_str()),
             "Meaning relation has a missing endpoint"
         );
-        checked_support(&edge.support, &bindings, &mut used, &mut unique, deadline)?;
+        checked_support(&edge.support, bindings, &mut used, &mut unique, deadline)?;
     }
     for edge in &fragment.hyperedges {
         deadline.check()?;
@@ -292,7 +317,7 @@ pub fn validate_fragment_shape(
             concepts.len() >= 2,
             "Meaning hyperedge requires distinct concepts"
         );
-        checked_support(&edge.support, &bindings, &mut used, &mut unique, deadline)?;
+        checked_support(&edge.support, bindings, &mut used, &mut unique, deadline)?;
     }
     let mut covered = BTreeSet::new();
     for coverage in &fragment.coverage {

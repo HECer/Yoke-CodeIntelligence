@@ -24,6 +24,11 @@ explicit typed code, Office text/XML and permitted PDF page selections through
 provenance remain separate from semantic interpretation. This prepares bounded
 data without a provider call; mixed semantic execution and graph links remain open.
 
+Optional [mixed interpretation checks](docs/mixed-meaning-claims.md) validate
+host-submitted directed/parallel/role-bearing claims against those checked
+inputs and reread exact typed quotations. Interpretations remain unverified
+host data; no provider receipt, source authority or persisted graph is invented.
+
 Rust 1.94.1 and the Windows MSVC toolchain are exercised locally. Cargo requires Rust 1.94.1 or newer, including the native AWS signing dependencies. Older compilers and hosted macOS/Linux CI are not claimed tested here.
 
 ```sh

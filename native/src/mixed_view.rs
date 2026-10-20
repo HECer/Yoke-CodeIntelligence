@@ -16,6 +16,11 @@ pub use meaning_input::{
     CheckedMeaningInputs, MeaningContextGroup, MeaningInputRequest, MeaningUnitSelection,
     validate_meaning_inputs, validate_pdf_meaning_inputs,
 };
+#[path = "mixed_meaning_claims.rs"]
+mod meaning_claims;
+pub use meaning_claims::{
+    CheckedMixedMeaningClaims, MixedMeaningClaimRequest, validate_meaning_claim_request,
+};
 #[path = "mixed_pdf_input.rs"]
 mod pdf;
 pub use pdf::{
