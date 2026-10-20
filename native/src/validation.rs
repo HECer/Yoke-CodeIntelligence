@@ -491,7 +491,8 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
             ensure!(
                 obj.keys()
                     .all(|k| ["entityId", "text", "newName"].contains(&k.as_str())
-                        || (name == "deleteSymbol" && k == "emptyPythonBody")),
+                        || (name == "deleteSymbol"
+                            && ["emptyPythonBody", "siblingDeclarators"].contains(&k.as_str()))),
                 "Unknown symbol operation field"
             );
             ensure!(
@@ -501,7 +502,7 @@ pub fn validate(tool: &str, args: &Value) -> Result<()> {
         }
     }
     if tool == "ci_change_prepare" {
-        crate::changes::validate_python_delete_policy(args)?;
+        crate::changes::validate_symbol_delete_policies(args)?;
     }
     if tool == "ci_change_prepare" && args.get("bulkReplace").is_some() {
         ensure!(

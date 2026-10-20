@@ -30,6 +30,27 @@ including BOM, Unicode and line endings, remain intact. Comments inside a
 removed wrapper are part of that declaration. Insert-before, insert-after and
 replace-symbol operations retain their original entity coordinates.
 
+Native preparation has an additional explicit singleton option:
+`deleteSymbol.siblingDeclarators: "preserve"` (default/explicit `reject` retains
+the rule above). For TS/TSX/JS/JSX simple function-valued variable bindings in
+ordinary `const`/`let`/`var` statements, it removes the exact bound declarator
+and exactly one direct AST comma as separate byte edits. Other declarators,
+export/ambient wrappers, semicolon and all remaining whitespace stay intact.
+Nested commas in parameters, strings, types, expressions or JSX are not
+statement separators. A single declarator retains the existing whole-statement
+deletion effect. The entire resulting source is parsed again under the same
+source/AST/deadline limits before preparation proceeds.
+
+Comments between declarators have ambiguous attachment ownership and refuse
+this finite policy. Comments within an admitted initializer remain part of that
+declarator. Non-simple target bindings, loop initializers, named expressions,
+methods, other languages, mixed edits and combined deletion policies refuse.
+The eight-tool native MCP schema explicitly lists `reject|preserve`; no default
+or semantic-provider/facade deletion behavior changes. This option establishes
+exact syntax/source operations, not unusedness, compiler-bound references,
+runtime behavior or general consumer safety. Application/recovery gates and
+saved plan shapes/identity remain unchanged.
+
 Python function and class definitions include their owning decorated-definition
 node. The selected wrapper must directly own that exact definition. Definitions
 in a required body can be removed only when another non-comment statement
@@ -76,3 +97,7 @@ The separate `declaration_attachments_live` gate uses installed `YOKE_RUSTC` and
 `YOKE_PYTHON` tools. It compiles owned Rust source and compiles/inspects the
 Python stdlib AST without executing project modules, then checks approved
 application and exact source recovery.
+The separate `sibling_declarators` actual gate selects `YOKE_NODE` and `YOKE_TSC`
+for compiler-only verification of captured TS/JS/TSX/JSX results, followed by
+independent permission/approval/application/exact-recovery checks. No analyzed
+module is executed by that compiler check.

@@ -276,3 +276,22 @@ permission, exact approval, executed verification and fresh source conditions.
 Host-selected Python stdlib AST-only verification can inspect a copied result
 without importing or executing the analyzed module; that check establishes
 syntax/selected structure, not runtime behavior or exhaustive consumer safety.
+
+## Explicit native sibling-declarator deletion
+
+Native `ci_change_prepare.deleteSymbol` can separately select
+`"siblingDeclarators": "preserve"` to delete one captured TS/JS function-valued
+variable binding while preserving its siblings. The default is `reject`, and
+the ordinary semantic-provider/facade routes retain their current behavior.
+This singleton option cannot be combined with `emptyPythonBody`, another symbol
+operation, explicit edits, rename or bulk replacement. It grants no usage,
+approval, source-write, verification or recovery authority.
+
+The selected identifier/declarator must bind the exact original source AST.
+Only a plain statement `const`, `let` or `var` in program/statement-block scope
+and its checked export/ambient wrappers are admitted. One direct parent comma
+is selected from the AST, never from textual delimiter search. Two separate
+deletions preserve all unrelated bytes. Direct inter-declarator comments and
+unsupported binding/container forms refuse before publication. The complete
+result must parse without syntax errors under the original deadline and finite
+source/AST bounds. See [symbol deletion](symbol-deletion.md) for exact boundaries.
