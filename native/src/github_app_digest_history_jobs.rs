@@ -79,6 +79,7 @@ impl Plan {
     }
 }
 /// Current host authority only. These flags are never read from a saved plan.
+#[derive(Clone)]
 pub struct Options {
     pub allow_jobs: bool,
     pub acquisition: acquisition::Options,
@@ -241,7 +242,28 @@ fn persist(store: &Store, id: &str, old: Option<&Job>, job: &Job, d: &Deadline) 
     }
     Ok(())
 }
-fn sql(
+pub(crate) fn admit(c: &Context<'_>, writes: bool, d: &Deadline) -> Result<()> {
+    ensure!(c.options.allow_jobs, JobFailure::State);
+    ensure!(
+        (1024..=4_000_000).contains(&c.options.acquisition.max_output_bytes),
+        JobFailure::Capacity
+    );
+    c.digest.validate()?;
+    c.profile.validate()?;
+    ensure!(
+        (1..=16).contains(&c.options.max_batch_visits)
+            && (1..=64).contains(&c.options.max_batch_objects)
+            && (1..=2_000_000).contains(&c.options.max_batch_proof_bytes),
+        JobFailure::Capacity
+    );
+    if writes {
+        c.options
+            .acquisition
+            .admit(c.digest, &HistoryOptions::default(), d)?;
+    }
+    Ok(())
+}
+pub(crate) fn transaction(
     c: &Context<'_>,
     store: &Store,
     writes: bool,
@@ -249,24 +271,7 @@ fn sql(
     f: impl FnOnce() -> Result<Value>,
 ) -> Result<Value> {
     let result = (|| {
-        ensure!(c.options.allow_jobs, JobFailure::State);
-        ensure!(
-            (1024..=4_000_000).contains(&c.options.acquisition.max_output_bytes),
-            JobFailure::Capacity
-        );
-        c.digest.validate()?;
-        c.profile.validate()?;
-        ensure!(
-            (1..=16).contains(&c.options.max_batch_visits)
-                && (1..=64).contains(&c.options.max_batch_objects)
-                && (1..=2_000_000).contains(&c.options.max_batch_proof_bytes),
-            JobFailure::Capacity
-        );
-        if writes {
-            c.options
-                .acquisition
-                .admit(c.digest, &HistoryOptions::default(), d)?;
-        }
+        admit(c, writes, d)?;
         ensure!(store.db.is_autocommit(), JobFailure::State);
         crate::github_app::worker::publication_policy(store, d, || {
             use rusqlite::limits::Limit;
@@ -313,6 +318,7 @@ fn sql(
             return e;
         }
         if e.is::<JobFailure>()
+            || e.is::<crate::github_app::worker::history::Refusal>()
             || e.is::<Failure>()
             || e.is::<git_workflows::history_read::Capacity>()
         {
@@ -358,48 +364,67 @@ pub fn create(
     plan: &Plan,
     d: &Deadline,
 ) -> Result<Value> {
-    sql(c, &engine.store, true, d, || {
-        plan.validate()?;
-        authorize_profile(c.profile, request)?;
-        let key = key(&engine.store.workspace_id, c.profile.app_id, id)?;
-        if let Some(job) = read(&engine.store, &key, d)? {
-            ensure!(
-                identity(&job.request) == identity(request)
-                    && identity(&job.plan) == identity(plan),
-                JobFailure::Invalid
-            );
-            let cursor = current(c, &engine.store, &job, d)?;
-            return Ok(summary(&job, &cursor, false));
-        }
-        let (head, origin) = head(engine, c, request, d)?;
-        let job = Job {
-            schema_version: 1,
-            workspace_id: engine.store.workspace_id.clone(),
-            app_id: c.profile.app_id,
-            job_id: id.into(),
-            request: request.clone(),
-            head_commit_id: head.commit_id.context(SOURCE)?,
-            origin_snapshot_id: origin.id,
-            analyzer: head.analyzer,
-            plan: plan.clone(),
-            revision: 0,
-            state: State::Active,
-            proof: Proof::default(),
-            captures: BTreeMap::new(),
-            totals: Totals::default(),
-        };
-        let cursor = replay(&engine.store, &job, d)?;
-        persist(&engine.store, &key, None, &job, d)?;
-        Ok(summary(&job, &cursor, true))
+    transaction(c, &engine.store, true, d, || {
+        create_in_transaction(engine, c, id, request, plan, d)
     })
 }
+pub(crate) fn create_in_transaction(
+    engine: &Engine,
+    c: &Context<'_>,
+    id: &str,
+    request: &PreviewRequest,
+    plan: &Plan,
+    d: &Deadline,
+) -> Result<Value> {
+    ensure!(!engine.store.db.is_autocommit(), JobFailure::State);
+    plan.validate()?;
+    authorize_profile(c.profile, request)?;
+    let key = key(&engine.store.workspace_id, c.profile.app_id, id)?;
+    if let Some(job) = read(&engine.store, &key, d)? {
+        ensure!(
+            identity(&job.request) == identity(request) && identity(&job.plan) == identity(plan),
+            JobFailure::Invalid
+        );
+        let cursor = current(c, &engine.store, &job, d)?;
+        return Ok(summary(&job, &cursor, false));
+    }
+    let (head, origin) = head(engine, c, request, d)?;
+    let job = Job {
+        schema_version: 1,
+        workspace_id: engine.store.workspace_id.clone(),
+        app_id: c.profile.app_id,
+        job_id: id.into(),
+        request: request.clone(),
+        head_commit_id: head.commit_id.context(SOURCE)?,
+        origin_snapshot_id: origin.id,
+        analyzer: head.analyzer,
+        plan: plan.clone(),
+        revision: 0,
+        state: State::Active,
+        proof: Proof::default(),
+        captures: BTreeMap::new(),
+        totals: Totals::default(),
+    };
+    let cursor = replay(&engine.store, &job, d)?;
+    persist(&engine.store, &key, None, &job, d)?;
+    Ok(summary(&job, &cursor, true))
+}
 pub fn status(store: &Store, c: &Context<'_>, id: &str, d: &Deadline) -> Result<Value> {
-    sql(c, store, false, d, || {
-        let key = key(&store.workspace_id, c.profile.app_id, id)?;
-        let job = read(store, &key, d)?.context(JobFailure::Invalid)?;
-        let cursor = current(c, store, &job, d)?;
-        Ok(summary(&job, &cursor, false))
+    transaction(c, store, false, d, || {
+        status_in_transaction(store, c, id, d)
     })
+}
+pub(crate) fn status_in_transaction(
+    store: &Store,
+    c: &Context<'_>,
+    id: &str,
+    d: &Deadline,
+) -> Result<Value> {
+    ensure!(!store.db.is_autocommit(), JobFailure::State);
+    let key = key(&store.workspace_id, c.profile.app_id, id)?;
+    let job = read(store, &key, d)?.context(JobFailure::Invalid)?;
+    let cursor = current(c, store, &job, d)?;
+    Ok(summary(&job, &cursor, false))
 }
 pub fn transition(
     store: &Store,
@@ -409,26 +434,37 @@ pub fn transition(
     state: State,
     d: &Deadline,
 ) -> Result<Value> {
-    sql(c, store, true, d, || {
-        let key = key(&store.workspace_id, c.profile.app_id, id)?;
-        let old = read(store, &key, d)?.context(JobFailure::Invalid)?;
-        let cursor = current(c, store, &old, d)?;
-        ensure!(old.revision == revision, JobFailure::Stale);
-        ensure!(
-            matches!(
-                (old.state, state),
-                (State::Active, State::Paused | State::Cancelled)
-                    | (State::Paused, State::Active | State::Cancelled)
-            ),
-            JobFailure::State
-        );
-        let mut job = old.clone();
-        job.state = state;
-        job.revision += 1;
-        replay(store, &job, d)?;
-        persist(store, &key, Some(&old), &job, d)?;
-        Ok(summary(&job, &cursor, true))
+    transaction(c, store, true, d, || {
+        transition_in_transaction(store, c, id, revision, state, d)
     })
+}
+pub(crate) fn transition_in_transaction(
+    store: &Store,
+    c: &Context<'_>,
+    id: &str,
+    revision: u64,
+    state: State,
+    d: &Deadline,
+) -> Result<Value> {
+    ensure!(!store.db.is_autocommit(), JobFailure::State);
+    let key = key(&store.workspace_id, c.profile.app_id, id)?;
+    let old = read(store, &key, d)?.context(JobFailure::Invalid)?;
+    let cursor = current(c, store, &old, d)?;
+    ensure!(old.revision == revision, JobFailure::Stale);
+    ensure!(
+        matches!(
+            (old.state, state),
+            (State::Active, State::Paused | State::Cancelled)
+                | (State::Paused, State::Active | State::Cancelled)
+        ),
+        JobFailure::State
+    );
+    let mut job = old.clone();
+    job.state = state;
+    job.revision += 1;
+    replay(store, &job, d)?;
+    persist(store, &key, Some(&old), &job, d)?;
+    Ok(summary(&job, &cursor, true))
 }
 pub fn step(
     engine: &Engine,
@@ -438,154 +474,184 @@ pub fn step(
     git: &HostGit,
     d: &Deadline,
 ) -> Result<Value> {
-    sql(c, &engine.store, true, d, || {
-        let key = key(&engine.store.workspace_id, c.profile.app_id, id)?;
-        let old = read(&engine.store, &key, d)?.context(JobFailure::Invalid)?;
-        let mut cursor = current(c, &engine.store, &old, d)?;
-        ensure!(old.revision == revision, JobFailure::Stale);
-        ensure!(old.state == State::Active, JobFailure::State);
-        let (head, origin) = head(engine, c, &old.request, d)?;
-        ensure!(
-            head.commit_id.as_deref() == Some(old.head_commit_id.as_str())
-                && head.analyzer == old.analyzer
-                && origin.id == old.origin_snapshot_id,
-            SOURCE
-        );
-        let mut job = old.clone();
-        let (mut objects, mut proof_bytes, mut visits) = (0usize, 0usize, 0usize);
-        let mut rows = vec![];
-        while visits < c.options.max_batch_visits && !cursor.exhausted() {
-            while cursor.next_pending().is_some() && objects < c.options.max_batch_objects {
-                let Some(bytes) = cursor.read_pending(
-                    git,
-                    &engine.root,
-                    &mut job.proof,
-                    c.options.max_batch_proof_bytes.saturating_sub(proof_bytes),
-                    d,
-                )?
-                else {
-                    // Preserve admitted lookahead when only this batch's byte
-                    // remainder is too small. A fresh batch must fit an object.
-                    ensure!(objects > 0, JobFailure::Capacity);
-                    break;
-                };
-                proof_bytes += bytes;
-                objects += 1;
-            }
-            if cursor.next_pending().is_some() {
-                break;
-            }
-            let Some((oid, row)) = cursor.visit(d)? else {
+    transaction(c, &engine.store, true, d, || {
+        step_in_transaction(engine, c, id, revision, git, d)
+    })
+}
+pub(crate) fn step_in_transaction(
+    engine: &Engine,
+    c: &Context<'_>,
+    id: &str,
+    revision: u64,
+    git: &HostGit,
+    d: &Deadline,
+) -> Result<Value> {
+    ensure!(!engine.store.db.is_autocommit(), JobFailure::State);
+    let key = key(&engine.store.workspace_id, c.profile.app_id, id)?;
+    let old = read(&engine.store, &key, d)?.context(JobFailure::Invalid)?;
+    let mut cursor = current(c, &engine.store, &old, d)?;
+    ensure!(old.revision == revision, JobFailure::Stale);
+    ensure!(old.state == State::Active, JobFailure::State);
+    let (head, origin) = head(engine, c, &old.request, d)?;
+    ensure!(
+        head.commit_id.as_deref() == Some(old.head_commit_id.as_str())
+            && head.analyzer == old.analyzer
+            && origin.id == old.origin_snapshot_id,
+        SOURCE
+    );
+    let mut job = old.clone();
+    let (mut objects, mut proof_bytes, mut visits) = (0usize, 0usize, 0usize);
+    let mut rows = vec![];
+    while visits < c.options.max_batch_visits && !cursor.exhausted() {
+        while cursor.next_pending().is_some() && objects < c.options.max_batch_objects {
+            let Some(bytes) = cursor.read_pending(
+                git,
+                &engine.root,
+                &mut job.proof,
+                c.options.max_batch_proof_bytes.saturating_sub(proof_bytes),
+                d,
+            )?
+            else {
+                // Preserve admitted lookahead when only this batch's byte
+                // remainder is too small. A fresh batch must fit an object.
+                ensure!(objects > 0, JobFailure::Capacity);
                 break;
             };
-            job.proof.visited.push(oid);
-            visits += 1;
-            if let Some(row) = row {
-                rows.push(row);
-            }
+            proof_bytes += bytes;
+            objects += 1;
         }
-        let targets = Cursor::required_captures(&job.head_commit_id, &job.proof, d)?;
-        ensure!(targets.len() <= job.plan.max_captures, JobFailure::Capacity);
-        let a = &c.options.acquisition;
-        let mut remaining = CaptureBudget {
-            files: a
-                .max_files
-                .min(job.plan.max_candidate_files - job.totals.files),
-            source_bytes: a
-                .max_source_bytes
-                .min(job.plan.max_source_bytes - job.totals.source_bytes),
-            commit_bytes: a
-                .max_commit_bytes
-                .min(job.plan.max_commit_bytes - job.totals.commit_bytes),
-            tree_bytes: a
-                .max_tree_bytes
-                .min(job.plan.max_tree_bytes - job.totals.tree_bytes),
-            tree_entries: a
-                .max_tree_entries
-                .min(job.plan.max_tree_entries - job.totals.tree_entries),
+        if cursor.next_pending().is_some() {
+            break;
+        }
+        let Some((oid, row)) = cursor.visit(d)? else {
+            break;
         };
-        let initial = Totals {
-            files: remaining.files,
-            source_bytes: remaining.source_bytes,
-            commit_bytes: remaining.commit_bytes,
-            tree_bytes: remaining.tree_bytes,
-            tree_entries: remaining.tree_entries,
-        };
-        let mut added = vec![];
-        for oid in targets.difference(&job.captures.keys().cloned().collect()) {
-            let (snapshot, _) = git_workflows::capture_commit_pending(
-                AnalyzerEpoch::parse(&job.analyzer)?,
-                engine,
-                git,
-                &origin,
-                oid,
-                &mut remaining,
-                d,
-            )?;
-            job.captures.insert(oid.clone(), snapshot.id.clone());
-            added.push(snapshot.id);
+        job.proof.visited.push(oid);
+        visits += 1;
+        if let Some(row) = row {
+            rows.push(row);
         }
-        job.totals.files += initial.files - remaining.files;
-        job.totals.source_bytes += initial.source_bytes - remaining.source_bytes;
-        job.totals.commit_bytes += initial.commit_bytes - remaining.commit_bytes;
-        job.totals.tree_bytes += initial.tree_bytes - remaining.tree_bytes;
-        job.totals.tree_entries += initial.tree_entries - remaining.tree_entries;
-        let mut selected = BTreeSet::new();
-        for row in &rows {
-            for oid in
-                std::iter::once(&row["sha"]).chain(row["parentIds"].as_array().context(SOURCE)?)
-            {
-                let oid = oid.as_str().context(SOURCE)?;
-                if oid != job.head_commit_id {
-                    selected.insert(job.captures.get(oid).context(SOURCE)?.clone());
-                }
-            }
-        }
-        ensure!(selected.len() < a.max_snapshots, JobFailure::Capacity);
-        for (oid, id) in job.captures.iter().filter(|(_, id)| selected.contains(*id)) {
-            let receipt: Value = engine.store.get_record(git_workflows::SOURCE_KIND, id)?;
-            ensure!(
-                receipt["originSnapshotId"] == origin.id
-                    && receipt["commitId"] == *oid
-                    && receipt["analyzer"] == job.analyzer,
-                SOURCE
-            );
-        }
-        rows.reverse();
-        let mut history = History {
-            commits: rows,
-            summary: json!({"selectionOrder":"commit_date_priority_parent_insertion_order",
-            "outputOrder":"reverse_selection_order_within_batch","visitedCommits":visits,"objectsRead":objects,
-            "rawCommitBytes":proof_bytes,"frontierCommits":cursor.frontier_len(),"exhausted":cursor.exhausted(),"complete":false}),
-        };
-        let mapping = mapping::attach(
-            &engine.store,
-            c.digest,
-            &job.request,
-            &head,
-            &mut history,
-            &MappingSelection {
-                snapshot_ids: selected.into_iter().collect(),
-                limits: MappingOptions {
-                    max_snapshots: a.max_snapshots,
-                    ..Default::default()
-                },
-            },
+    }
+    let targets = Cursor::required_captures(&job.head_commit_id, &job.proof, d)?;
+    ensure!(targets.len() <= job.plan.max_captures, JobFailure::Capacity);
+    let a = &c.options.acquisition;
+    let mut remaining = CaptureBudget {
+        files: a
+            .max_files
+            .min(job.plan.max_candidate_files - job.totals.files),
+        source_bytes: a
+            .max_source_bytes
+            .min(job.plan.max_source_bytes - job.totals.source_bytes),
+        commit_bytes: a
+            .max_commit_bytes
+            .min(job.plan.max_commit_bytes - job.totals.commit_bytes),
+        tree_bytes: a
+            .max_tree_bytes
+            .min(job.plan.max_tree_bytes - job.totals.tree_bytes),
+        tree_entries: a
+            .max_tree_entries
+            .min(job.plan.max_tree_entries - job.totals.tree_entries),
+    };
+    let initial = Totals {
+        files: remaining.files,
+        source_bytes: remaining.source_bytes,
+        commit_bytes: remaining.commit_bytes,
+        tree_bytes: remaining.tree_bytes,
+        tree_entries: remaining.tree_entries,
+    };
+    let mut added = vec![];
+    for oid in targets.difference(&job.captures.keys().cloned().collect()) {
+        let (snapshot, _) = git_workflows::capture_commit_pending(
+            AnalyzerEpoch::parse(&job.analyzer)?,
+            engine,
+            git,
+            &origin,
+            oid,
+            &mut remaining,
             d,
         )?;
-        ensure!(mapping["unavailableCommits"] == 0, SOURCE);
-        job.revision += 1;
-        if cursor.exhausted() {
-            job.state = State::Complete;
+        job.captures.insert(oid.clone(), snapshot.id.clone());
+        added.push(snapshot.id);
+    }
+    job.totals.files += initial.files - remaining.files;
+    job.totals.source_bytes += initial.source_bytes - remaining.source_bytes;
+    job.totals.commit_bytes += initial.commit_bytes - remaining.commit_bytes;
+    job.totals.tree_bytes += initial.tree_bytes - remaining.tree_bytes;
+    job.totals.tree_entries += initial.tree_entries - remaining.tree_entries;
+    let mut selected = BTreeSet::new();
+    for row in &rows {
+        for oid in std::iter::once(&row["sha"]).chain(row["parentIds"].as_array().context(SOURCE)?)
+        {
+            let oid = oid.as_str().context(SOURCE)?;
+            if oid != job.head_commit_id {
+                selected.insert(job.captures.get(oid).context(SOURCE)?.clone());
+            }
         }
-        let checked = replay(&engine.store, &job, d)?;
-        persist(&engine.store, &key, Some(&old), &job, d)?;
-        let mut value = summary(&job, &checked, true);
-        value["kind"] = json!("native_digest_history_job_batch");
-        value["batch"] = json!({"history":history.summary,"commits":history.commits,"historyMapping":mapping,
-            "newSnapshotIds":added,"mappedSourceBodiesReplayed":true});
-        Ok(value)
-    })
+    }
+    ensure!(selected.len() < a.max_snapshots, JobFailure::Capacity);
+    for (oid, id) in job.captures.iter().filter(|(_, id)| selected.contains(*id)) {
+        let receipt: Value = engine.store.get_record(git_workflows::SOURCE_KIND, id)?;
+        ensure!(
+            receipt["originSnapshotId"] == origin.id
+                && receipt["commitId"] == *oid
+                && receipt["analyzer"] == job.analyzer,
+            SOURCE
+        );
+    }
+    rows.reverse();
+    let mut history = History {
+        commits: rows,
+        summary: json!({"selectionOrder":"commit_date_priority_parent_insertion_order",
+        "outputOrder":"reverse_selection_order_within_batch","visitedCommits":visits,"objectsRead":objects,
+        "rawCommitBytes":proof_bytes,"frontierCommits":cursor.frontier_len(),"exhausted":cursor.exhausted(),"complete":false}),
+    };
+    let mapping = mapping::attach(
+        &engine.store,
+        c.digest,
+        &job.request,
+        &head,
+        &mut history,
+        &MappingSelection {
+            snapshot_ids: selected.into_iter().collect(),
+            limits: MappingOptions {
+                max_snapshots: a.max_snapshots,
+                ..Default::default()
+            },
+        },
+        d,
+    )?;
+    ensure!(mapping["unavailableCommits"] == 0, SOURCE);
+    job.revision += 1;
+    if cursor.exhausted() {
+        job.state = State::Complete;
+    }
+    let checked = replay(&engine.store, &job, d)?;
+    persist(&engine.store, &key, Some(&old), &job, d)?;
+    let mut value = summary(&job, &checked, true);
+    value["kind"] = json!("native_digest_history_job_batch");
+    value["batch"] = json!({"history":history.summary,"commits":history.commits,"historyMapping":mapping,
+        "newSnapshotIds":added,"mappedSourceBodiesReplayed":true});
+    Ok(value)
+}
+pub(crate) fn validate_app_binding(
+    store: &Store,
+    app_id: u64,
+    id: &str,
+    request: &PreviewRequest,
+    plan: &Plan,
+    d: &Deadline,
+) -> Result<String> {
+    let key = key(&store.workspace_id, app_id, id)?;
+    let job = read(store, &key, d)?.context(JobFailure::Invalid)?;
+    ensure!(
+        job.app_id == app_id
+            && job.job_id == id
+            && identity(&job.request) == identity(request)
+            && identity(&job.plan) == identity(plan),
+        JobFailure::Invalid
+    );
+    replay(store, &job, d)?;
+    Ok(key)
 }
 pub(crate) fn retained_roots(
     store: &Store,

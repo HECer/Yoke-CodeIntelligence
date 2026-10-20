@@ -61,18 +61,44 @@ enum Operation {
         max_report_bytes: usize,
         #[arg(long, default_value_t = 3000)]
         max_files: usize,
+        #[arg(long)]
+        history_schedule: Option<PathBuf>,
+        #[arg(long)]
+        allow_app_history: bool,
+        #[arg(long)]
+        allow_history_jobs: bool,
+        #[arg(long)]
+        allow_history_capture: bool,
+        #[arg(long)]
+        trust_history_git: bool,
+        #[arg(long)]
+        history_git: Option<PathBuf>,
     },
+}
+struct HistoryPrepared {
+    schedule: worker::history::Schedule,
+    options: worker::history::Options,
+    git: yoke::git_workflows::HostGit,
 }
 enum Input {
     Claim(worker::ClaimRequest),
     Release(String, String),
     Recover(String),
     Status(worker::StatusRequest),
-    Run(worker::RunRequest, Box<auth::Client>, worker::RunOptions),
+    Run(
+        worker::RunRequest,
+        Box<auth::Client>,
+        worker::RunOptions,
+        Option<Box<HistoryPrepared>>,
+    ),
 }
 enum Admitted {
     Local(Input),
-    Run(worker::RunRequest, auth::AuthProfile),
+    Run(
+        worker::RunRequest,
+        auth::AuthProfile,
+        Option<Box<HistoryPrepared>>,
+    ),
 }
 pub struct Prepared {
     host: app::Host,
@@ -107,6 +133,35 @@ impl Arguments {
         } else {
             ensure!(!network, INVALID);
         }
+        if let Operation::Run {
+            history_schedule,
+            allow_app_history,
+            allow_history_jobs,
+            allow_history_capture,
+            trust_history_git,
+            history_git,
+            ..
+        } = &self.operation
+        {
+            if history_schedule.is_some() {
+                ensure!(
+                    *allow_app_history
+                        && *allow_history_jobs
+                        && *allow_history_capture
+                        && *trust_history_git,
+                    "github_app_history_permission_required"
+                );
+            } else {
+                ensure!(
+                    !allow_app_history
+                        && !allow_history_jobs
+                        && !allow_history_capture
+                        && !trust_history_git
+                        && history_git.is_none(),
+                    INVALID
+                );
+            }
+        }
         Ok(())
     }
     pub fn prepare(
@@ -138,6 +193,16 @@ impl Arguments {
             queue,
         };
         options.admit(write, d)?;
+        if let Operation::Run {
+            history_schedule: Some(_),
+            ..
+        } = &self.operation
+        {
+            ensure!(
+                options.max_output_bytes >= 4096,
+                "github_app_history_capacity_exceeded"
+            );
+        }
         let remote = if let Operation::Run {
             max_requests,
             max_response_bytes,
@@ -195,16 +260,44 @@ impl Arguments {
             Operation::Run {
                 request,
                 auth_profile: path,
+                history_schedule,
+                history_git,
                 ..
             } => {
                 let request = worker::RunRequest::parse(&host_bytes(request.as_deref(), 4096, d)?)?;
                 let profile = auth::AuthProfile::parse(&host_bytes(path.as_deref(), 32_000, d)?)?;
-                Admitted::Run(request, profile)
+                let history = if let Some(path) = history_schedule {
+                    let schedule =
+                        worker::history::Schedule::parse(&host_bytes(Some(path), 4096, d)?)?;
+                    let git = crate::selected_git(history_git.clone(), true)?;
+                    Some(Box::new(HistoryPrepared {
+                        schedule,
+                        git,
+                        options: worker::history::Options {
+                            allow_app_history: true,
+                            worker: options.clone(),
+                            digest: app::digest::Options::default(),
+                            jobs: app::digest::history_jobs::Options {
+                                allow_jobs: true,
+                                acquisition: app::digest::acquisition::Options {
+                                    allow_capture: true,
+                                    allow_writes: options.queue.allow_writes,
+                                    max_output_bytes: options.max_output_bytes,
+                                    ..Default::default()
+                                },
+                                ..Default::default()
+                            },
+                        },
+                    }))
+                } else {
+                    None
+                };
+                Admitted::Run(request, profile, history)
             }
         };
         let host = app::Host::from_os(profile)?;
         let input = match input {
-            Admitted::Run(request, profile) => {
+            Admitted::Run(request, profile, history) => {
                 let client = auth::Client::production(
                     profile,
                     auth::Options {
@@ -217,6 +310,7 @@ impl Arguments {
                     request,
                     Box::new(client),
                     remote.ok_or_else(|| anyhow::anyhow!(INVALID))?,
+                    history,
                 )
             }
             Admitted::Local(input) => input,
@@ -259,7 +353,23 @@ impl Prepared {
             Input::Status(request) => {
                 worker::status(&engine.store, &self.host, request, &self.options, &clock, d)?
             }
-            Input::Run(request, client, remote) => worker::run(
+            Input::Run(request, client, remote, Some(history)) => worker::history::execute(
+                &mut worker::history::Execution {
+                    context: worker::history::WriteContext {
+                        engine,
+                        host: &self.host,
+                        options: &history.options,
+                    },
+                    client,
+                    request,
+                    remote,
+                    clock: &clock,
+                    git: &history.git,
+                },
+                &history.schedule,
+                d,
+            )?,
+            Input::Run(request, client, remote, None) => worker::run(
                 &worker::RunContext {
                     store: &engine.store,
                     host: &self.host,

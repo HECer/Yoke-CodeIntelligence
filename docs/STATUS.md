@@ -2,6 +2,23 @@
 
 ## Current integration work
 
+The explicit [App history driver](../native/docs/app-history-integration.md) can
+complete/replay a permitted worker and acquire bounded persistent Git history.
+An authenticated binding protects the original cumulative plan; current grants,
+selected queue revisions and exact native revisions remain mandatory. Separate
+status opens an existing read-only Store. Production installation and receiver
+source verification/reasoning remain open; this adds no default background task.
+
+The App-history scope passes **300 Rust tests / six default ignored cases**
+across 14 target groups: 13 normal Cargo targets (287 passed) and the unchanged
+13-test history-job target linked with an explicit test profile and a separate
+output suffix after Windows retained a crashed linker's file lock. The additional
+actual Windows CLI/Credential Manager gate passes with verified temporary-key
+removal. Format/build/all-target Clippy, Python17, typecheck and TypeScript260/3skipped
+pass. All 758 native inputs remain fixed across the final checks; this is scoped
+evidence, not a whole-native or hosted-platform pass. See
+[App-history evidence](validation/integration-2026-10-19/app-history-integration/README.md).
+
 The hosted Ubuntu test job at `d819d71` executed **2,381 passed, 36 failed,
 36 ignored** across 302 test-result groups. Every failure came from a
 host-install fixture reaching its explicitly Windows-only guarded backend.

@@ -1,0 +1,20 @@
+    Finished `test` profile [unoptimized] target(s) in 0.54s
+     Running tests\github_app_worker_history.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_worker_history-d183e1a85f1029f4.exe)
+
+running 1 test
+test checked_completion_creates_one_signed_job_and_offline_status_uses_read_only_store ... 
+thread 'checked_completion_creates_one_signed_job_and_offline_status_uses_read_only_store' (13940) panicked at native\tests\support/github_app_worker_history_fixture.rs:72:234:
+called `Result::unwrap()` on an `Err` value: github_app_http_refused
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    checked_completion_creates_one_signed_job_and_offline_status_uses_read_only_store
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 7 filtered out; finished in 0.76s
+
+error: test failed, to rerun pass `--test github_app_worker_history`
+error: 1 target failed:
+    `--test github_app_worker_history`

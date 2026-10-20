@@ -4,8 +4,9 @@ Durable workers extend the signed webhook queue with claims, recovery, release,
 status and explicit native execution against existing source snapshots. Separate
 [controlled publication](github-app-publication.md) and
 [closed-discussion digest](github-discussions.md) contracts are available.
-Unattended App history-job integration and configured live installation/deployment
-remain open. A worker completion is a source-bound structural report; publication
+Explicit [App-bound history execution](app-history-integration.md) can drive
+persistent local acquisition after a durable completion. Configured live
+installation/deployment remains open. A worker completion is a source-bound structural report; publication
 and semantic reasoning retain their own contracts and acceptance requirements.
 
 ## Claim and recovery contract

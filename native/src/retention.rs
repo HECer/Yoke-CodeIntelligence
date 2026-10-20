@@ -785,6 +785,7 @@ fn validate_parity_records(store: &Store, deadline: &Deadline) -> Result<ParityD
         match kind.as_str() {
             crate::github_app::RECORD_KIND
             | crate::github_app::worker::RECORD_KIND
+            | crate::github_app::worker::history::RECORD_KIND
             | crate::github_app::publication::RECORD_KIND
             | crate::github_app::digest::service::RECORD_KIND
             | crate::github_app::digest::service::receiver::RECORD_KIND
@@ -1082,6 +1083,7 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
         crate::github_app::digest::service::receiver::retained_records(store, deadline)?;
     let (digest_history_ids, digest_history_roots) =
         crate::github_app::digest::history_jobs::retained_roots(store, deadline)?;
+    let app_history_ids = crate::github_app::worker::history::retained_roots(store, deadline)?;
     out.references.extend(digest_history_roots.iter().cloned());
     out.all_references.extend(digest_history_roots);
     out.references
@@ -1286,6 +1288,15 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
             );
             // Only validated typed head/base roots above carry source authority.
             // Inert report JSON, Git IDs, MACs and request text are never walked.
+            continue;
+        }
+        if kind == crate::github_app::worker::history::RECORD_KIND {
+            ensure!(
+                app_history_ids.contains(&(kind.clone(), id.clone())),
+                "Invalid App history binding"
+            );
+            // Binding foreign keys are checked against real worker/history rows.
+            // Existing typed worker/job roots alone retain source and CAS state.
             continue;
         }
         if kind == crate::github_app::publication::RECORD_KIND {

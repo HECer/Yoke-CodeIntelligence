@@ -21,6 +21,7 @@ mod git_impact_cli;
 mod git_owners_cli;
 mod github_app_cli;
 mod github_app_digest_cli;
+mod github_app_history_cli;
 mod github_app_ingress_cli;
 mod github_app_pages_cli;
 mod github_app_publication_cli;
@@ -107,6 +108,7 @@ enum ExtensionOperation {
     DigestInbox(Box<digest_inbox_cli::Arguments>),
     DigestHistoryCapture(Box<digest_history_capture_cli::Arguments>),
     DigestHistoryJob(Box<digest_history_job_cli::Arguments>),
+    AppHistoryJob(Box<github_app_history_cli::Arguments>),
     ModelsHttp(Box<HttpModelArguments>),
     ModelHttpWorker(Box<HttpModelWorkerArguments>),
     ModelsBedrock(Box<bedrock_cli::Arguments>),
@@ -1975,6 +1977,7 @@ fn run_parity(
             bail!("Digest history capture host dispatch error")
         }
         ExtensionOperation::DigestHistoryJob(_) => bail!("Digest history job host dispatch error"),
+        ExtensionOperation::AppHistoryJob(_) => bail!("App history job host dispatch error"),
         ExtensionOperation::GithubApp(_) => bail!("GitHub App host dispatch error"),
         ExtensionOperation::GithubDiscussions(_) => bail!("GitHub discussions host dispatch error"),
         ExtensionOperation::Decisions(args) => run_decisions(engine, *args, arguments, deadline),
@@ -3432,6 +3435,20 @@ fn run(cli: Cli) -> Result<bool> {
             "GitHub discussion reads select explicit host inputs; source/provider/write flags are unavailable"
         );
         return args.run(cli.timeout, cli.max_bytes);
+    }
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::AppHistoryJob(args) = extension.as_ref()
+    {
+        ensure!(
+            cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && cli.analyzer_epoch.is_none(),
+            "App history jobs inherit checked completion scope; source/provider options are unavailable"
+        );
+        return args.run(&cli.root, cli.allow_writes, cli.timeout, cli.max_bytes);
     }
     if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::DigestHistoryJob(args) = extension.as_ref()
