@@ -881,6 +881,32 @@ selection, project-local nested config roots, non-Windows and full upstream
 qualification remain open. Multi-file visibility/power-loss guarantees are not
 established. WiderR1-R9, unattended production, main and release remain open.
 
+[Saved-plan outcome feedback](validation/integration-2026-10-19/plan-feedback/index.json)
+adds explicit `feedback plan-record` and `plan-rank` over existing native Stores.
+Canonical saved-plan replay, full base/derived View proofs and exact changed-file
+side quotes bind authored historical outcomes to planned source bytes. A separate
+event schema preserves released knowledge-event identities. Ordered immutable
+history, visible integer decay/session selection, output-before-insert SQL
+publication and validated retention roots retain their explicit budgets.
+See the [contract](../native/docs/outcome-feedback.md#authored-outcomes-for-saved-change-plans).
+
+All **14 new cases pass**. The broad **14-group** run records **585 passed /
+3 failed / 7 ignored**: two unchanged Windows symlink fixture setup failures
+(OS1314), plus a new test that assumed primary source-scope ordering. The test
+now selects the explicit role and snapshot ID. The corrected **4-group** run
+records **63 passed / 1 failed / 0 ignored**, with the existing feedback symlink
+prerequisite still failing. Format, build and all-target Clippy with warnings
+denied pass. The library's **465 passed / 0 failed / 7 ignored** remains bound
+to identical production sources; only the test changes across the recorded
+bridge, and the exact production binary is unchanged. The scoped runs are
+nonadditive; mandatory integrated checks are indexed separately.
+
+Planned results never establish actual application, execution, independent
+corroboration or current applicability. Mutable verification/approval records
+are not consumed as proof. No model, provider, capture or project execution
+occurs in these operations. Additional targets, semantic transcript learning,
+broaderR1-R9, whole-native/platform acceptance, main and release remain open.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

@@ -7536,18 +7536,51 @@
         "native/src/main.rs",
         "native/src/meaning_build.rs",
         "native/src/retention.rs",
-        "native/tests/feedback_cli.rs"
+        "native/tests/feedback_cli.rs",
+        "native/src/plan_feedback.rs",
+        "native/src/plan_feedback_rank.rs",
+        "native/src/plan_feedback_store.rs",
+        "native/tests/plan_feedback.rs",
+        "docs/validation/integration-2026-10-19/plan-feedback/index.json"
       ],
       "id": "R9",
       "inventoryRefs": [
         "graphify:learning_overlay",
         "trail:Session cold-start mining"
       ],
-      "missingBehavior": "Broader object targets and semantic transcript understanding beyond literal candidate matching remain open. Independent corroboration or execution truth is not established by host labels or supplied outcomes. The bounded knowledge-only event, ranking and explicit transcript slice has separate Windows evidence.",
+      "missingBehavior": "Native knowledge outcomes and separate authored historical saved-plan outcomes now have bounded Windows evidence. The plan path replays canonical saved-plan base/derived Views, exact changed-file side quotes and original receipt/source closures; it retains ordered immutable events, explicit integer ranking, zero execution/application/current-applicability authority and validated retention roots. Additional object targets and semantic transcript understanding beyond literal matching remain open. Independent corroboration and observed execution truth are not established by host labels, supplied outcomes, approval rows or mutable verification records.",
       "priority": 9,
-      "suggestedScope": "Retain immutable source proofs and transparent arithmetic. Define typed outcomes for additional object targets and explicit semantic transcript candidates without granting source/write authority, inventing execution proof or replacing the central AgentMemory backend.",
+      "suggestedScope": "Continue additional typed targets and explicit semantic transcript candidates with original source-space and receipt replay. Preserve the separate released knowledge schema and saved-plan format, immutable history, transparent arithmetic and independent write/approval/recovery gates. Planned result bytes never establish actual application/execution/current applicability; do not replace central AgentMemory or invent independent identity/corroboration.",
       "title": "Outcome and corroboration learning beyond authored currentness",
-      "knowledgeFeedbackAddition": "Explicit source-bound knowledge outcomes now carry exact quotes, checked View/Meaning receipt closure and unique ordered actor/session label sequences. Ranking exposes latest-sequence votes, integer hyperbolic decay and stale/proved-supersession exclusion. Host-selected plain UTF-8 transcripts support literal candidates only; no provider or automatic session discovery."
+      "knowledgeFeedbackAddition": "Explicit source-bound knowledge outcomes now carry exact quotes, checked View/Meaning receipt closure and unique ordered actor/session label sequences. Ranking exposes latest-sequence votes, integer hyperbolic decay and stale/proved-supersession exclusion. Host-selected plain UTF-8 transcripts support literal candidates only; no provider or automatic session discovery.",
+      "planFeedbackCheckpoint": {
+        "index": "docs/validation/integration-2026-10-19/plan-feedback/index.json",
+        "newCases": 14,
+        "platform": "Windows",
+        "recordKind": "native_plan_feedback_event_v1",
+        "legacyKnowledgeFormatUnchanged": true,
+        "finalSelectedGroups": 4,
+        "finalSelectedTotals": {
+          "passed": 63,
+          "failed": 1,
+          "ignored": 0
+        },
+        "broadNativeGroups": 14,
+        "broadNativeTotals": {
+          "passed": 585,
+          "failed": 3,
+          "ignored": 7
+        },
+        "broadFailures": "Two unchanged Windows symlink fixture setup OS1314 failures and one corrected new test assumption about source-scope ordering; retained without count substitution.",
+        "testOnlyCorrection": "Select the explicit primary_evidence role and snapshot identity, preserve receipt_replay_only scopes.",
+        "productionBinaryUnchangedFromBroadNativeTests": true,
+        "executionObserved": false,
+        "workspaceApplicationObserved": false,
+        "independentCorroborationEstablished": false,
+        "currentApplicabilityEstablished": false,
+        "wholeNativeRerun": false,
+        "fullContractCertified": false
+      }
     }
   ],
   "reconciledCapabilities": [
@@ -8778,6 +8811,24 @@
         "docs/validation/integration-2026-10-19/codex-host/index.json"
       ],
       "remainingReview": "Managed installation/recovery remain Windows-only. This finite profile selects separate nonnested source/config/state roots and does not manage project-local .codex beneath its source. Client tool discovery settings are not native execution/write/source authority. Only CodexCLI0.163.0 and its owned MCP-client API path are live qualified; interactive IDE/model tool selection, other releases/clients/hooks and non-Windows are untested. Multi-file atomic visibility, hard cancellation/power-loss durability, universal recovery/performance, full upstream/main/release remain open. Earlier host-platform prerequisite failures remain independently recorded.",
+      "fullContractCertified": false
+    },
+    {
+      "id": "native_saved_plan_outcome_feedback",
+      "behavior": "Explicit feedback plan-record/plan-rank bind authored historical outcomes to canonical saved change plans, fully replayed native base/derived View proofs and exact changed-file origin/evaluated source quotes. Ordered immutable plan/actor/session label events are idempotent; retrospective ranking retains all selected events, visible future/superseded dispositions and overflow-safe integer hyperbolic decay. Separate event schema preserves released knowledge IDs. All input/source/pair/event/output quotas, immediate output-before-insert publication, late stdout loss and validated retention roots remain explicit. No model/provider/capture/application/execution or approval occurs.",
+      "evidence": [
+        "native/README.md",
+        "native/docs/outcome-feedback.md",
+        "native/src/feedback_cli.rs",
+        "native/src/knowledge_feedback.rs",
+        "native/src/plan_feedback.rs",
+        "native/src/plan_feedback_rank.rs",
+        "native/src/plan_feedback_store.rs",
+        "native/src/retention.rs",
+        "native/tests/plan_feedback.rs",
+        "docs/validation/integration-2026-10-19/plan-feedback/index.json"
+      ],
+      "remainingReview": "Host labels and outcomes do not authenticate independent identity, correctness or execution. Derived results represent planned bytes; current applicability, actual application and observed execution remain false even with supplied verification/approval rows. Plan JSON reader is limited to128000bytes; additional object targets and semantic transcript interpretation remain open.14new cases pass; the broader failed attempt and final targeted63/1 Windows symlink prerequisite failure are retained, not relabeled as whole-native acceptance. Full upstream/platform/main/release and broaderR1-R9 remain open.",
       "fullContractCertified": false
     }
   ],

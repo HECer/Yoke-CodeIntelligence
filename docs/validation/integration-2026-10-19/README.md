@@ -381,3 +381,16 @@ cleanup, and mandatory integrated format/Python17/typecheck/TS260+3skip with
 configuration selection, whole-native/non-Windows/full-upstream/main/release
 certification follows. Previous README bytes remain preserved; broaderR1-R9
 work continues.
+
+## Saved-plan outcome feedback checkpoint
+
+Source `8948144aab9fad21fe2944318b84936d255f93e7`, runtime merge `95111a342fdd6e7297105e1fca09de33916f7bc2`.
+[Indexed evidence](plan-feedback/index.json) retains14newcases, the broad
+14group585/3/7attempt and corrected4group63/1/0run, including unchangedOS1314
+prerequisite failures and the exact test-only primary-role correction. Native
+source731/binary proofs, canonical planned-byte/source binding, immutable
+history, explicit integer ranking, lost-stdout idempotency, validated retention
+and mandatory integrated format/Python17/typecheck/TS260+3skip with737inputs
+unchanged are recorded. No observed application/execution, independent
+corroboration, current applicability, whole-native/platform/main/release
+certification follows. Earlier README bytes remain; broaderR1-R9 continues.

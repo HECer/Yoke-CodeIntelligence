@@ -311,3 +311,14 @@ profile-specific canonical patch. No imported plan or client discovery list
 creates host/source/execution authority. See the
 [Codex workflow](native-codex-host.md) and
 [indexed validation](validation/integration-2026-10-19/codex-host/index.json).
+
+Saved-plan feedback uses a separate immutable event kind beneath the existing
+knowledge feedback module. It admits bounded stored plan JSON, replays the
+canonical plan and both native View/source closures, and checks exact quotes
+against changed-file hashes on their explicitly selected original/planned side.
+Immediate SQL publication follows sequence, source, quota and whole-output
+admission; reads retain the pinned transaction. Historical integer ranking and
+retention replay preserve original receipt/source roles. Plan results remain
+planned bytes and no approval, execution/application receipt or current-workspace
+authority follows. See the [contract](../native/docs/outcome-feedback.md) and
+[indexed evidence](validation/integration-2026-10-19/plan-feedback/index.json).
