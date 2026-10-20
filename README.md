@@ -186,6 +186,7 @@ source-bound replay. Status/jobs start no provider; unknown sends retain their
 reservation and never retry automatically. Interpretations remain unverified.
 
 Explicit [immutable compiler inlining](native/docs/compiler-inline.md) adds
-host-selected TypeScript 5.8.3 function-binding inline plans for TS/TSX/JS/JSX
+host-selected TypeScript 5.8.3 function-binding and finite classic function-body
+inline plans for TS/TSX/JS/JSX
 through native sessions and the existing facade, with exact source/effect checks
 and separate verification, approval, application and recovery.

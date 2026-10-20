@@ -12,6 +12,8 @@ use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::{collections::BTreeSet, fs, io::Read, path::Path};
 use tree_sitter::{Node, Tree};
+#[path = "compiler_inline_body.rs"]
+mod body;
 
 pub(crate) fn host_file(
     path: &Path,
@@ -541,6 +543,21 @@ pub fn prepare(
     );
     let (source, hash) = crate::query::source(&engine.store, &snapshot, path)?;
     let tree = parse(&file.language, &source, d)?;
+    if let Some(declaration) = body::classic(&tree, &symbol, &source, d)? {
+        return body::prepare(
+            engine,
+            spec,
+            &snapshot,
+            &graph,
+            &symbol,
+            &source,
+            &tree,
+            declaration,
+            keep,
+            &binding,
+            d,
+        );
+    }
     let node = selected(&tree, &symbol, &source, d)?;
     let intent = json!({"path":path,"name":symbol.name,"startByte":symbol.start_byte,"endByte":symbol.end_byte,"nameStartByte":symbol.name_start_byte,"nameEndByte":symbol.name_end_byte,"keepDefinition":keep});
     let report = crate::projects::execute(

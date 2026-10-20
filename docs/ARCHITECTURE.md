@@ -2,6 +2,15 @@
 
 ## Native Rust ownership
 
+Classic function-body inlining uses independent original-byte statement frames
+through the optional `inlineCompiler` profile. Arguments evaluate before separate
+parameter/body scopes; checked defaults, rest/patterns and labelled returns keep
+finite source and compiler binding correspondence. Normal completion clears a
+return cancelled by finally control flow. Every replacement is reconstructed
+natively before ordinary planning; static observations do not attest general
+runtime equivalence. Var-hoisting and wider invocation/expression forms remain
+open. See [compiler inlining](../native/docs/compiler-inline.md).
+
 The compiler-move repair stage reconstructs direct named reexport partitions and
 fresh local import aliases from original/current immutable source anchors.
 Native original-byte pieces compose staged changes while preserving untouched

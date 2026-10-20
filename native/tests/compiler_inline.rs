@@ -378,7 +378,6 @@ fn compiler_inline_refuses_unsupported_and_unsafe_inputs_without_hidden_plans() 
         "const x=1; const helper=(n:number)=>n+x; export function caller(){const x=2; return helper(x);}",
         "const helper=()=>this; export const result=helper();",
         "const helper=(n:number)=>n+1; export const broken:number='wrong'; export const x=helper(2);",
-        "function helper(n:number){return n+1;} export const x=helper(2);",
     ] {
         let (root, mut engine) = fixture(source);
         let result = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false), &d());
