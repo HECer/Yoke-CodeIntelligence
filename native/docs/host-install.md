@@ -1,5 +1,11 @@
 # Managed generic host installation
 
+The guarded filesystem backend is Windows-only. Successful installation and
+recovery fixtures run on Windows. Unix API/CLI tests instead require the explicit
+unsupported-backend refusal, preserve existing target and interrupted state bytes,
+and verify that no source store is created. Permission-precedence tests run on
+both platforms. This does not establish a Unix installation capability.
+
 The `host_install` module is being developed and tested against owned temporary fixtures. It does not install into the developer's real agent, home or Git configuration during development. The initial profile is `generic-agents-v1`, which manages one instruction block in explicitly selected `AGENTS.md` files. This does not certify installation into any branded client's configuration or implement prompt/edit/session hooks.
 
 The host explicitly selects an installation label, existing absolute target directories, a native executable, a host policy file and an existing private state directory outside the targets. Planning and status must not open a source Engine or Store, create state files or change configuration. Executable and policy bytes are hashed without executing the executable or persisting policy contents.

@@ -2,6 +2,21 @@
 
 ## Current integration work
 
+The hosted Ubuntu test job at `d819d71` executed **2,381 passed, 36 failed,
+36 ignored** across 302 test-result groups. Every failure came from a
+host-install fixture reaching its explicitly Windows-only guarded backend.
+Successful installation/recovery fixtures are now scoped to Windows; Unix
+tests require explicit refusal without target/state mutation or private output.
+Permission-precedence checks remain cross-platform. The failed run is retained;
+this fixture correction awaits fresh hosted Unix verification.
+
+The correction passes 159 local Windows Rust tests with one existing
+parent-spawned worker ignored, all-target Clippy with warnings denied,
+format/build, 17 Python contracts, TypeScript typecheck and 260 TypeScript tests
+with three skipped. All 41 original installation test bodies remain unchanged.
+See [platform-test evidence](validation/integration-2026-10-19/host-install-platform/README.md)
+for exact frozen inputs and the pending Unix execution boundary.
+
 The [remaining-work map](REMAINING_WORK.md) reconciles current R1–R9 behavior,
 concrete implementation gaps and separate acceptance gates. It accounts for
 the completed mixed graph consumers/composition and existing discussion/digest

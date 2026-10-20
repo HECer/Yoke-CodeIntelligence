@@ -1,9 +1,15 @@
-use serde_json::{Value, json};
+#[cfg(windows)]
+use serde_json::Value;
+use serde_json::json;
 use std::{
     collections::BTreeMap,
     fs,
     path::{Path, PathBuf},
-    process::{Command, Output, Stdio},
+    process::{Command, Output},
+};
+#[cfg(windows)]
+use std::{
+    process::Stdio,
     time::{Duration, Instant},
 };
 
@@ -71,6 +77,7 @@ impl Fixture {
         }
     }
 }
+#[cfg(windows)]
 fn success(output: Output) -> Value {
     assert!(
         output.status.success(),
@@ -79,10 +86,12 @@ fn success(output: Output) -> Value {
     );
     serde_json::from_slice(&output.stdout).unwrap()
 }
+#[cfg(windows)]
 fn save_plan(path: &Path, plan: &Value) {
     fs::write(path, serde_json::to_vec(plan).unwrap()).unwrap();
 }
 
+#[cfg(windows)]
 fn close_stdout_and_wait(mut command: Command) -> Output {
     let (reader, writer) = std::io::pipe().unwrap();
     drop(reader);
@@ -113,6 +122,7 @@ fn close_stdout_and_wait(mut command: Command) -> Output {
     output
 }
 
+#[cfg(windows)]
 fn interrupted_initialization(state_root: &Path) -> PathBuf {
     let scaffold = state_root.join(yoke::host_install::STATE_DIRECTORY);
     fs::create_dir(&scaffold).unwrap();
@@ -144,7 +154,84 @@ fn state_bytes(root: &Path) -> BTreeMap<PathBuf, Option<Vec<u8>>> {
     result
 }
 
+#[cfg(unix)]
 #[test]
+fn unix_selection_refuses_the_unavailable_guarded_backend_without_mutation() {
+    let fixture = Fixture::new();
+    let before = state_bytes(fixture.directory.path());
+    let error = yoke::host_install::Selection::new(
+        "fixture-cli",
+        &[fixture.path("target")],
+        &fixture.path("selected.exe"),
+        &fixture.path("policy.json"),
+        &fixture.path("state"),
+        &yoke::capture::Deadline::new(10_000),
+    )
+    .err()
+    .expect("Unix must not fabricate the guarded Windows capability");
+    assert_eq!(
+        error.to_string(),
+        "Host-install guarded filesystem backend is Windows-only"
+    );
+    assert_eq!(state_bytes(fixture.directory.path()), before);
+    fixture.assert_source_store_absent();
+}
+
+#[cfg(unix)]
+#[test]
+fn unix_cli_refuses_every_host_install_operation_without_mutation_or_private_output() {
+    let fixture = Fixture::new();
+    // A pre-existing interrupted scaffold must also remain untouched.
+    let scaffold = fixture.path("state/yoke-host-install-v1");
+    fs::create_dir(&scaffold).unwrap();
+    fs::write(scaffold.join("writer.lock"), b"private owned fixture lock").unwrap();
+    let before = state_bytes(fixture.directory.path());
+    let journal = "a".repeat(64);
+    for (operation, extra) in [
+        ("plan", vec![]),
+        ("uninstall-plan", vec![]),
+        ("status", vec![]),
+        (
+            "apply",
+            vec!["--plan", "absent.json", "--allow-host-writes"],
+        ),
+        (
+            "recover-initialization",
+            vec!["--plan", "absent.json", "--allow-host-writes"],
+        ),
+        (
+            "recover",
+            vec![
+                "--journal",
+                journal.as_str(),
+                "--mode",
+                "rollback",
+                "--allow-host-writes",
+            ],
+        ),
+    ] {
+        let output = fixture.call(operation, &extra);
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        assert!(!output.status.success(), "{operation}");
+        assert!(
+            stderr.contains("Host-install guarded filesystem backend is Windows-only"),
+            "{operation}: {stderr}"
+        );
+        assert!(output.stdout.is_empty(), "{operation}");
+        for private in [
+            "Private fixture wording",
+            "private owned fixture lock",
+            "planning",
+        ] {
+            assert!(!stderr.contains(private), "{operation}: {stderr}");
+        }
+        assert_eq!(state_bytes(fixture.directory.path()), before, "{operation}");
+        fixture.assert_source_store_absent();
+    }
+}
+
+#[test]
+#[cfg(windows)]
 fn host_install_cli_planning_and_status_are_pure_and_keep_human_text_private() {
     let fixture = Fixture::new();
     let plan = success(fixture.call("plan", &[]));
@@ -165,6 +252,7 @@ fn host_install_cli_planning_and_status_are_pure_and_keep_human_text_private() {
 }
 
 #[test]
+#[cfg(windows)]
 fn host_install_cli_installs_and_uninstalls_only_its_owned_fragment() {
     let fixture = Fixture::new();
     let plan = success(fixture.call("plan", &[]));
@@ -227,6 +315,7 @@ fn host_install_cli_write_permission_precedes_selection_or_plan_reads() {
 }
 
 #[test]
+#[cfg(windows)]
 fn host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation() {
     let fixture = Fixture::new();
     let original = fs::read(fixture.path("selection.json")).unwrap();
@@ -262,6 +351,7 @@ fn host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mu
 }
 
 #[test]
+#[cfg(windows)]
 fn host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried() {
     let fixture = Fixture::new();
     let plan = success(fixture.call("plan", &[]));
@@ -321,6 +411,7 @@ fn host_install_cli_output_failure_identifies_the_committed_result_and_can_be_re
 }
 
 #[test]
+#[cfg(windows)]
 fn host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write() {
     let fixture = Fixture::new();
     let mut selection: Value =
@@ -400,6 +491,7 @@ fn host_install_cli_initialization_permission_precedes_selection_and_plan_reads(
 }
 
 #[test]
+#[cfg(windows)]
 fn host_install_cli_initialization_repairs_an_owned_scaffold_and_replays_without_source_changes() {
     let fixture = Fixture::new();
     let plan = success(fixture.call("plan", &[]));
@@ -444,6 +536,7 @@ fn host_install_cli_initialization_repairs_an_owned_scaffold_and_replays_without
 }
 
 #[test]
+#[cfg(windows)]
 fn host_install_cli_initialization_refuses_foreign_scaffold_bytes_without_disclosing_them() {
     let fixture = Fixture::new();
     let plan = success(fixture.call("plan", &[]));
@@ -478,6 +571,7 @@ fn host_install_cli_initialization_refuses_foreign_scaffold_bytes_without_disclo
 }
 
 #[test]
+#[cfg(windows)]
 fn host_install_cli_initialization_admits_a_valid_output_budget_before_writing_state() {
     let fixture = Fixture::new();
     let mut state = fixture.path("long-state");
@@ -539,6 +633,7 @@ fn host_install_cli_initialization_admits_a_valid_output_budget_before_writing_s
 }
 
 #[test]
+#[cfg(windows)]
 fn host_install_cli_initialization_output_failure_identifies_its_durable_result() {
     let fixture = Fixture::new();
     let plan = success(fixture.call("plan", &[]));

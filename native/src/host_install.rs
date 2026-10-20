@@ -1936,7 +1936,8 @@ mod adapter_tests;
 #[path = "host_output_recovery_tests.rs"]
 mod output_recovery_tests;
 
-#[cfg(test)]
+// These recovery fixtures require the guarded Windows filesystem backend.
+#[cfg(all(test, windows))]
 mod tests {
     use super::*;
     fn bootstrap_fixture() -> (tempfile::TempDir, Selection, Plan) {

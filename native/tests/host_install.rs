@@ -1,3 +1,6 @@
+//! Successful installation and recovery require the guarded Windows backend.
+#![cfg(windows)]
+
 use std::{fs, path::PathBuf};
 use tempfile::TempDir;
 use yoke::{
