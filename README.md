@@ -159,3 +159,8 @@ call; mixed semantic execution and cross-source graph relationships remain open.
 host-submitted directed/parallel/role-bearing observations and reread exact typed
 source support. The result preserves unverified interpretation status and
 original source provenance without a provider call or persisted graph.
+
+Explicit [mixed-source meaning builds](native/docs/mixed-meaning-provider.md)
+add trusted host-provider execution, durable accounting/response artifacts and
+source-bound replay. Status/jobs start no provider; unknown sends retain their
+reservation and never retry automatically. Interpretations remain unverified.

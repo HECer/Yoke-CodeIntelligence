@@ -7281,21 +7281,28 @@
         "native/src/mixed_meaning_claims.rs",
         "native/docs/mixed-meaning-claims.md",
         "native/tests/mixed_meaning_claims.rs",
-        "docs/validation/integration-2026-10-19/mixed-meaning-claims/index.json"
+        "docs/validation/integration-2026-10-19/mixed-meaning-claims/index.json",
+        "native/src/mixed_meaning_provider.rs",
+        "native/src/mixed_meaning_cli.rs",
+        "native/src/retention.rs",
+        "native/tests/mixed_meaning_provider.rs",
+        "native/docs/mixed-meaning-provider.md",
+        "docs/validation/integration-2026-10-19/mixed-meaning-provider/index.json"
       ],
       "id": "R4",
       "inventoryRefs": [
         "graphify:office_documents",
         "graphify:semantic_graph_hyperedges"
       ],
-      "missingBehavior": "Mixed-space semantic extraction and general cross-source graph links remain open. Checked source/Office queries and explicitly permitted frozen PDF page text now have separate bounded Windows evidence; no rendered layout, OCR or exhaustive binary-document interpretation is implied.",
+      "missingBehavior": "General mixed-space graph lookup/analytics, cross-workspace joins and full external semantic-provider qualification remain open. Typed preparation, checked host claims and explicit source-bound provider jobs with durable accounting/replay have bounded Windows evidence; no complete layout/OCR, model-quality or exhaustive binary-document interpretation is implied.",
       "priority": 4,
-      "suggestedScope": "Preserve distinct typed source spaces and explicit worker authority. Define mixed-space semantic inputs and graph relationships with complete original receipt/source replay; never promote decoded coordinates or provider claims into canonical source authority.",
+      "suggestedScope": "Add opaque checked mixed interpretation graph lookup/degree/directed-trace consumers without promoting serialized JSON, aliases or provider claims into canonical source authority. Preserve original typed source/receipt replay, parallel observations and ordered role slots; retain explicit PDF worker and trusted-provider boundaries.",
       "title": "Typed mixed source and processed-document views",
       "mixedQueryAddition": "Checked schema1 native source/DOCX/XLSX queries and explicitly permitted schema2 frozen PDF pages share globally paged literal search and exact typed reads. Original source, container, XML and decoded page/text spaces remain distinct, with complete native View/Meaning provenance. Mixed semantic extraction and cross-source graph links remain open.",
       "processedPdfAddition": "Strict schema2 mixed literal queries add explicitly selected registered frozen PDF pages through the separately permitted bounded native worker. Original container and decoded page hashes/UTF-8 ranges remain distinct; cached inspection text is not source proof. Native View/Meaning provenance and schema1 Office behavior remain.",
       "meaningInputPreparationAddition": "Opaque checked mixed_meaning_inputs_v1 preparation preserves exact source/Office XML/decoded text/explicit PDF page reads, original mixed receipt/source replay, ordered repeated context occurrences, bounded text/materialization/output, and deterministic selected-pin/item/label binding. Data preparation calls no model/provider and writes no source or graph. Mixed semantic execution and general cross-source graph links remain open.",
-      "mixedInterpretationClaimAddition": "Opaque checked mixed_meaning_claims_v1 validates host-submitted unverified interpretations against exact checked inputHash/unit ranges and re-read typed support quotations. Original concept keys/aliases, claim order, directed parallel/self relations and ordered hyperedge roles remain. No provider receipt or semantic truth is invented; no decoded space becomes native source authority. No execution/persistence is added. Semantic provider extraction, durable mixed graph publication/replay and general graph consumers remain open."
+      "mixedInterpretationClaimAddition": "Opaque checked mixed_meaning_claims_v1 validates host-submitted unverified interpretations against exact checked inputHash/unit ranges and re-read typed support quotations. Original concept keys/aliases, claim order, directed parallel/self relations and ordered hyperedge roles remain. No provider receipt or semantic truth is invented; no decoded space becomes native source authority. No execution/persistence is added. Semantic provider extraction, durable mixed graph publication/replay and general graph consumers remain open.",
+      "mixedSemanticProviderAddition": "Explicit trusted mixed-meaning build admits one fixed typed input set, fingerprints host provider inputs, atomically reserves/registers a single-use ledger/job, records fully bound costs before domain/error rejection, preserves unknown holds without retries, and publishes immutable response/source-bound graph artifacts with exact row preconditions. Provider-free status/jobs and source/response graph replay retain original pins/provenance, directions/parallel claims/ordered roles; PDF source replay needs separate host worker permission. Typed retention reconstructs saved-data quotations and real parent roots without a PDF process. Own Node protocol fixtures do not qualify semantic model quality or independent billing. General checked graph consumers/cross-workspace joins/fullR4 remain open."
     },
     {
       "evidence": [

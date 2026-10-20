@@ -2,6 +2,21 @@
 
 ## Native Rust ownership
 
+`mixed_view::provider` and the separate `mixed-meaning` CLI use a fixed typed
+mixed-source wire contract under explicit trusted-host permission. Existing
+fingerprinting takes host input paths without a fabricated native selection.
+Atomic ledger/job registration precedes one single-use send; a fully bound bill
+is recorded before domain/error rejection. Unknown sends retain reservations
+without retries. Immutable input, payload, raw response and graph artifacts are
+linked through exact row preconditions. Provider-free status/jobs preserve
+original versus later aggregate accounting; graph load replays checked source
+and response under separate PDF worker permission. Typed retention recomputes
+native/document/media roots and exact saved-data quote consistency without a
+PDF process. Saved JSON supplies no checked source capability. Interpretations
+and provider reports remain unverified; native parent source writes remain off,
+while an explicitly trusted provider has no claimed OS/network isolation. See
+[mixed provider builds](../native/docs/mixed-meaning-provider.md).
+
 `mixed_meaning_claims` checks host-submitted interpretation fragments against
 opaque checked mixed inputs. The shared fragment shape validator receives only
 range descriptors; legacy native callers still validate their original Binding

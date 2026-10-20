@@ -499,3 +499,15 @@ interpretation remains unverified; no provider/persistence/source authority is
 added. Quality checks, Python17, typecheck and TypeScript260+3skip pass with
 742native/747integratedinputs unchanged. Semantic provider execution,
 durable mixed graphs/general consumers and broaderR1-R9 remain open.
+
+## Explicit mixed semantic-provider checkpoint
+
+Source `7ce36b5f96842442874dec43d2ae7b99f83eab63`, runtime merge `efec81bd0d387031a4c270a1a447379a1ca070d0`.
+[Indexed evidence](mixed-meaning-provider/index.json) retains11new default cases,
+owned Node/PDF process and actual CLI protocol flows, unknown holds/bound bills,
+source/response replay and corruption-refusing retention. Final18groups
+614/0/7, quality, Python17, typecheck and TypeScript260+3skip pass with
+746native/750integratedinputs unchanged. Original native source recipes,
+ledger inventories and prior evidence remain. No semantic-model quality, real
+billing, fullR4/upstream/platform/main/release certification follows; broader
+STATUS/R1-R9 stays active.

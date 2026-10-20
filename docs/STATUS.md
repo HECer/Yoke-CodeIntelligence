@@ -1154,6 +1154,36 @@ broader R1–R9 remain active. Whole-native/platform/main/release acceptance doe
 not follow. See [the contract](../native/docs/mixed-meaning-claims.md) and
 [indexed evidence](validation/integration-2026-10-19/mixed-meaning-claims/index.json).
 
+The separate `mixed-meaning build` now executes one fully admitted, explicitly
+trusted host request over typed native/Office/PDF units and fixed context groups.
+It registers a single-use ledger/job before sending, accounts for a completely
+bound reply before semantic/error rejection, retains unknown reservations and
+publishes immutable original response and graph artifacts with exact row
+preconditions. Status/jobs start no provider; load replays original source,
+receipts, exact quotations and ledger response events. PDF replay retains its
+own explicit worker permission. Retention recomputes native/document/media
+dependencies and stored quote consistency without launching a PDF process.
+Original aliases, claim order, directed parallel/self observations and ordered
+hyperedge roles remain. Interpretations/usage/bills stay unverified; later ledger
+reconciliation does not upgrade original unknown receipts. No default model
+call, analyzed-source capture, automatic project-code execution or native-source
+promotion is added.
+
+Source `7ce36b5f96842442874dec43d2ae7b99f83eab63`, runtime merge `efec81bd0d387031a4c270a1a447379a1ca070d0`.
+Eleven new default cases include actual owned Node/PDF protocol processes and
+one end-to-end CLI workflow, Unicode/four-space evidence, invalid usage/claims/
+error/overrun accounting, malformed/unbound replies, unknown-cost reconciliation,
+caller transaction/SQLite limits, metadata4096/4097 admission, private malformed
+host config and corrupted quote retention. These are protocol/host-process
+qualifications; no semantic model, real service billing or model quality was
+evaluated. Final18groups **614 passed / 0 failed / 7 ignored** and format/build/all-target Clippy pass
+with 746 unchanged inputs. Integrated format/Python17/typecheck/
+TypeScript260+3skipped pass with 750 inputs unchanged.
+Earlier failed/diagnostic variants remain separate and nonadditive. General
+mixed graph consumers, cross-workspace composition, full R4/R1–R9, whole-native/
+platform/main/release acceptance remain open. See [the contract](../native/docs/mixed-meaning-provider.md)
+and [indexed evidence](validation/integration-2026-10-19/mixed-meaning-provider/index.json).
+
 ## Current native Rust implementation
 
 The default Rust executable independently owns immutable source capture/storage, 24-language structural analysis, exact UTF-8 evidence, incremental parse reuse, FTS/BM25 retrieval, bounded context plans, directed graphs/Leiden, offline exports, eight MCP tools, guarded changes/recovery and a host-selected LSP client. Graft, Serena and Graphify are unnecessary for these operations; Node/Python/model calls are unnecessary for the default native runtime.
