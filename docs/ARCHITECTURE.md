@@ -7,15 +7,17 @@ fresh local import aliases from original/current immutable source anchors.
 Native original-byte pieces compose staged changes while preserving untouched
 regions. Shorthand property keys and value bindings have separate correspondence
 roles. Repair steps share the compiler's operation budget and retain final
-source/binding/API/verification gates; diagnostic-free missing-import substitutions
-remain refused. See [compiler moves](../native/docs/compiler-move.md).
+source/binding/API/verification gates. Captured omitted imports and source-owned
+free dependencies have independent origin, module and insertion checks. Required
+source exports are disclosed; computed `__proto__` keys preserve own-property
+semantics. Unsupported substitutions still refuse. See [compiler moves](../native/docs/compiler-move.md).
 
 The separate optional `moveCompiler` host profile uses actual TypeScript 5.8.3
 Move to file output over immutable captured modules. Native syntax/binding,
 import/export coverage and result-byte checks precede ordinary guarded plans.
 Graph-absent variable/namespace selection has explicit AST provenance, with no
 invented graph entity. Original BOM normalization is independently reproduced;
-invalid compiler reexports/import collisions refuse. See [compiler moves](../native/docs/compiler-move.md).
+unsupported compiler effects refuse. See [compiler moves](../native/docs/compiler-move.md).
 
 The optional session `inlineCompiler` profile binds an explicitly trusted host
 Node executable and TypeScript 5.8.3 module. Rust checks captured declaration and

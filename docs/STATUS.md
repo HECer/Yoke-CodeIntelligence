@@ -2,6 +2,35 @@
 
 ## Current integration work
 
+Captured missing compiler-move imports now reconstruct original named/default/
+namespace bindings and source-owned top-level free dependencies. Native checks
+bind original/current definitions and references, exact relative module targets
+and declaration-boundary import/export insertions before complete-result
+syntax/binding/API and ordinary guarded-plan gates. Original target declarations
+retain their names. Shorthand `__proto__` uses a computed own-property key;
+prototype-setter substitutions have a distinct native syntax signature.
+
+Six additional integration cases pass, with twelve imported-binding scenarios,
+twelve private/public/default/aliased source-dependency scenarios, combined repairs,
+BOM/CRLF/directive/path coverage and three explicit owned JavaScript property
+oracles. Two existing integrations and two unit cases now cover omitted imports,
+three actual CLI/independent tsc/approval/apply/conditional recovery scenarios and
+coherent forged origins, module paths, source exports, references and budgets.
+The final scoped native run is **659 passed / 0 failed /
+9 existing ignored**, across 13 groups on 799 fixed native inputs.
+Format/build/all-target Clippy pass. Development phases are not added to totals.
+Python17, TypeScript typecheck and TypeScript260/3skipped pass on 793 fixed
+retained inputs. The same owned no-repair Array/Promise CLI fixture preserves
+exact files/diff/result snapshot/intent/bindings/context/effect digest without
+adding repair metadata. Fresh timestamped plan IDs differ under the unchanged
+identity formula. The earlier arXiv state-I/O failure and its same-binary passing
+recheck remain archived; its underlying cause was not localized.
+
+Classic body inline, unsupported attributes and sibling bundles, wider shapes,
+runtime/upstream qualification and full Windows/current-head hosted acceptance
+remain open. Existing OS1314 and macOS PDF/runtime/timing failures remain
+unresolved. See [missing-import evidence](validation/integration-2026-10-19/compiler-move-missing/README.md).
+
 Explicit [compiler move repairs](../native/docs/compiler-move.md#source-only-compiler-repairs)
 now split direct named reexports and give generated imports fresh local aliases
 without renaming original target/dependency declarations. Native original/current
@@ -23,8 +52,9 @@ retained inputs. The same owned no-repair Array/Promise fixture retains its
 exact files/diff/result snapshot/intent/context/effect digest; fresh timestamped
 plan IDs differ under the unchanged identity formula.
 
-Missing shorthand-only dependency imports still refuse when native bindings
-detect a diagnostic-free substitution. Their synthesis, classic body inline,
+At the earlier repair checkpoint, missing shorthand-only imports still refused.
+The missing-import checkpoint above supersedes that limitation for captured
+imports and supported source declarations. Classic body inline,
 wider shapes/runtime/upstream acceptance and full Windows/current-head hosted
 acceptance remain open. Existing OS1314 and macOS PDF/runtime/timing failures
 remain unresolved. See [repair evidence](validation/integration-2026-10-19/compiler-move-repairs/README.md).

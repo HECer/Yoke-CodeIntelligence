@@ -9,7 +9,7 @@ original inventory references and historical checkpoint evidence.
 
 | Area | Implemented contracts | Remaining work |
 | --- | --- | --- |
-| R1: semantic edits | Guarded native/provider planning, declaration ownership, directory/file usage, TS/JS propagation/session routing and actual host-selected immutable TS5.8.3 function-binding inlining and moves into existing captured ES modules with checked direct reexport/local-alias repairs, compiler-bound consumers and independent source/effect/apply/recovery checks. | Classic function-body inline, shorthand-only dependency import synthesis and remaining reexport/import shapes, broader moves/declaration/file/language/context shapes, dynamic or outside-file consumers and wider runtime/upstream acceptance. The compiler variable-inline action and existing LSP own_v1 move contract retain distinct finite scopes. |
+| R1: semantic edits | Guarded native/provider planning, declaration ownership, directory/file usage, TS/JS propagation/session routing and actual host-selected immutable TS5.8.3 function-binding inlining and moves into existing captured ES modules with checked direct reexport/local-alias repairs, captured omitted imports and source dependency exports, compiler-bound consumers and independent source/effect/apply/recovery checks. | Classic function-body inline, unsupported import attributes and sibling declaration bundles, remaining reexport/import shapes, broader moves/declaration/file/language/context shapes, dynamic or outside-file consumers and wider runtime/upstream acceptance. The compiler variable-inline action and existing LSP own_v1 move contract retain distinct finite scopes. |
 | R2: meaning and identity | Checked native graphs/joins, portable projections and mixed preparation/build/query/composition. A separate native MinHash/Jaro candidate policy, durable explicit model adjudication, source-replayed positive-clique quotient and frozen node/degree/trace queries preserve every original observation. | Other source/history/workspace identity, wider normalization/survivor rules, interpretation/outcome surfaces and live semantic-quality/upstream acceptance. Existing mixed aliases and host links keep their original namespace/authority boundaries; model equivalence remains unverified. |
 | R3: historical analytics | Explicit checked pair-of-Views comparison with complete parent pins, immutable source/receipt replay and directed observations. | Remaining upstream analytics equivalence and acceptance. A bare previousSnapshotId remains insufficient to select two Views; that refusal is an intentional precondition. |
 | R4: mixed documents | Native/Office XML/decoded/PDF spaces, fixed input preparation, checked claims, explicit provider jobs, checked graph queries and independently checked cross-workspace/history composition. | Broader mixed analytics, external semantic-provider qualification and exhaustive interpretation remain open. CLI composition currently selects one explicit Store; library callers may supply separately checked parents from different workspaces. |
@@ -39,6 +39,35 @@ original receipts and semantic claims remain distinct from interpretation truth.
 
 ## Acceptance still required
 
+Captured missing compiler-move imports now reconstruct original named/default/
+namespace bindings and source-owned top-level free dependencies. Native checks
+bind original/current definitions and references, exact relative module targets
+and declaration-boundary import/export insertions before complete-result
+syntax/binding/API and ordinary guarded-plan gates. Original target declarations
+retain their names. Shorthand `__proto__` uses a computed own-property key;
+prototype-setter substitutions have a distinct native syntax signature.
+
+Six additional integration cases pass, with twelve imported-binding scenarios,
+twelve private/public/default/aliased source-dependency scenarios, combined repairs,
+BOM/CRLF/directive/path coverage and three explicit owned JavaScript property
+oracles. Two existing integrations and two unit cases now cover omitted imports,
+three actual CLI/independent tsc/approval/apply/conditional recovery scenarios and
+coherent forged origins, module paths, source exports, references and budgets.
+The final scoped native run is **659 passed / 0 failed /
+9 existing ignored**, across 13 groups on 799 fixed native inputs.
+Format/build/all-target Clippy pass. Development phases are not added to totals.
+Python17, TypeScript typecheck and TypeScript260/3skipped pass on 793 fixed
+retained inputs. The same owned no-repair Array/Promise CLI fixture preserves
+exact files/diff/result snapshot/intent/bindings/context/effect digest without
+adding repair metadata. Fresh timestamped plan IDs differ under the unchanged
+identity formula. The earlier arXiv state-I/O failure and its same-binary passing
+recheck remain archived; its underlying cause was not localized.
+
+Classic body inline, unsupported attributes and sibling bundles, wider shapes,
+runtime/upstream qualification and full Windows/current-head hosted acceptance
+remain open. Existing OS1314 and macOS PDF/runtime/timing failures remain
+unresolved. See [missing-import evidence](validation/integration-2026-10-19/compiler-move-missing/README.md).
+
 Explicit [compiler move repairs](../native/docs/compiler-move.md#source-only-compiler-repairs)
 now split direct named reexports and give generated imports fresh local aliases
 without renaming original target/dependency declarations. Native original/current
@@ -60,8 +89,9 @@ retained inputs. The same owned no-repair Array/Promise fixture retains its
 exact files/diff/result snapshot/intent/context/effect digest; fresh timestamped
 plan IDs differ under the unchanged identity formula.
 
-Missing shorthand-only dependency imports still refuse when native bindings
-detect a diagnostic-free substitution. Their synthesis, classic body inline,
+At the earlier repair checkpoint, missing shorthand-only imports still refused.
+The missing-import checkpoint above supersedes that limitation for captured
+imports and supported source declarations. Classic body inline,
 wider shapes/runtime/upstream acceptance and full Windows/current-head hosted
 acceptance remain open. Existing OS1314 and macOS PDF/runtime/timing failures
 remain unresolved. See [repair evidence](validation/integration-2026-10-19/compiler-move-repairs/README.md).

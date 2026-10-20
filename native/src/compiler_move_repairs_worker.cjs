@@ -3,6 +3,7 @@
 function repairCompilerMove(env,service,program,selected,compilerEdits,makeService,compilerOperations){
  const {ts,assert,source,abs,rel,slash,span}=env,file=abs(env.input.intent.path),destination=abs(env.input.intent.destination);
  const original=new Map(Object.entries(env.input.contents).map(([p,t])=>[abs(p),t])),tables=new Map(),repairs=[];
+ const shorthand=(name,newName)=>name==='__proto__'?'["__proto__"]: '+newName:name+': '+newName;
  let operations=compilerOperations,visits=0;const tick=()=>assert(++visits<=2_000_000,'Move repair AST capacity');
  const raw=p=>Buffer.from(original.get(abs(p))),table=p=>{if(!tables.has(p))tables.set(p,[{start:0,end:raw(p).length}]);return tables.get(p);};
  const split=(p,parts,at)=>{let cursor=0;for(let i=0;i<parts.length;i++){const part=parts[i],size=part.text===undefined?part.end-part.start:Buffer.byteLength(part.text);if(at===cursor)return i;if(at<cursor+size){const offset=at-cursor;let left,right;if(part.text===undefined){left={start:part.start,end:part.start+offset};right={start:part.start+offset,end:part.end};}else{const b=Buffer.from(part.text);left={text:b.subarray(0,offset).toString('utf8')};right={text:b.subarray(offset).toString('utf8')};assert(Buffer.byteLength(left.text)===offset&&Buffer.byteLength(right.text)===size-offset,'Move repair UTF-8 split');}parts.splice(i,1,left,right);return i+1;}cursor+=size;}assert(at===cursor,'Move repair piece offset');return parts.length;};
@@ -59,12 +60,58 @@ function repairCompilerMove(env,service,program,selected,compilerEdits,makeServi
      const declarations=sf.statements.filter(n=>n.kind===selected.kind&&nameOf(n)?.text===env.input.intent.name);assert(declarations.length===1,'Move repaired declaration unavailable');const currentIdentifiers=identifiers(declarations[0]);assert(currentIdentifiers.length===oldIdentifiers.length,'Move copied identifier structure changed');
      while(used.has('__ci_move_'+serial)){serial++;assert(serial<=100_000,'Move fresh alias capacity');}const newName='__ci_move_'+serial++;used.add(newName);const references=indices.map(i=>{const n=currentIdentifiers[i];assert(n.text===name.text,'Move copied free reference spelling mismatch');return n;});
      const importText=ts.isImportSpecifier(name.parent)&&!name.parent.propertyName?name.getText(sf)+' as '+newName:newName;
-     const changes=[{...span(sf,name.getStart(sf),name.end),text:importText},...references.map(n=>({...span(sf,n.getStart(sf),n.end),text:ts.isShorthandPropertyAssignment(n.parent)?n.getText(sf)+': '+newName:newName}))];
+     const changes=[{...span(sf,name.getStart(sf),name.end),text:importText},...references.map(n=>({...span(sf,n.getStart(sf),n.end),text:ts.isShorthandPropertyAssignment(n.parent)?shorthand(n.text,newName):newName}))];
      next={repair:{kind:'importAlias',importName:span(sf,name.getStart(sf),name.end),originalReferences:indices.map(i=>span(oldIdentifiers[i].getSourceFile(),oldIdentifiers[i].getStart(),oldIdentifiers[i].end)),currentReferences:references.map(n=>span(sf,n.getStart(sf),n.end)),newName},changes};break;
     }if(next)break;
    }
   }finally{currentService.dispose();}
   if(!next)break;applyRepair(next.repair,next.changes);assert(round<255,'Move alias repair capacity');
+ }
+ // The compiler can omit imports used only by object shorthand. Recover only
+ // original captured import bindings; never infer a module from a bare name.
+ const moduleTextFor=(modulePath,currentProgram)=>{
+  const relative=slash(path.relative(path.dirname(destination),modulePath)),base=relative.startsWith('../')?relative:'./'+relative,stem=base.replace(/(?:\.d)?\.[cm]?[jt]sx?$/,'');
+  const candidates=[stem,stem+'.js',stem+'.mjs',stem+'.cjs',base],host={fileExists:env.fileExists,readFile:env.read,directoryExists:env.directoryExists,getDirectories:env.getDirectories,realpath:p=>slash(path.resolve(p))};
+  const name=candidates.find(candidate=>{const resolved=ts.resolveModuleName(candidate,destination,currentProgram.getCompilerOptions(),host).resolvedModule;return resolved&&slash(path.resolve(resolved.resolvedFileName))===modulePath;});assert(name!==undefined,'Move missing-import destination module specifier unavailable');return JSON.stringify(name);
+ };
+ const origins=[];for(const node of selected.getSourceFile().statements)if(ts.isImportDeclaration(node)&&!node.attributes)for(const [name]of importNames(node))origins.push({node,name,symbol:checker.getSymbolAtLocation(name)});
+ for(let round=0;round<256;round++){
+  const currentService=makeService();let next;
+  try{
+   const currentProgram=currentService.getProgram(),c=currentProgram.getTypeChecker(),sf=currentProgram.getSourceFile(destination),declarations=sf.statements.filter(n=>n.kind===selected.kind&&nameOf(n)?.text===env.input.intent.name);
+   assert(declarations.length===1,'Move missing-import declaration unavailable');const moved=declarations[0],currentIdentifiers=identifiers(moved);assert(currentIdentifiers.length===oldIdentifiers.length,'Move missing-import identifier structure changed');
+   for(const origin of origins){
+    const indices=[...free].filter(([i])=>symbolAt(checker,oldIdentifiers[i])===origin.symbol).map(([i])=>i);if(!indices.length)continue;
+    if(indices.every(i=>symbolKey(c,symbolAt(c,currentIdentifiers[i]))===free.get(i)))continue;
+    const module=checker.getSymbolAtLocation(origin.node.moduleSpecifier),moduleFile=module?.declarations?.find(ts.isSourceFile)?.fileName;assert(moduleFile&&original.has(slash(path.resolve(moduleFile))),'Move missing-import module must be captured');
+    const moduleText=moduleTextFor(slash(path.resolve(moduleFile)),currentProgram);
+    while(used.has('__ci_move_'+serial)){serial++;assert(serial<=100_000,'Move fresh alias capacity');}const newName='__ci_move_'+serial++;used.add(newName);
+    const parent=origin.name.parent,originalName=span(origin.name.getSourceFile(),origin.name.getStart(),origin.name.end);let binding;
+    if(ts.isImportSpecifier(parent))binding='{'+(parent.propertyName?parent.getText().slice(0,origin.name.getStart()-parent.getStart())+newName:parent.getText()+' as '+newName)+'}';
+    else if(ts.isNamespaceImport(parent))binding=parent.getText().slice(0,origin.name.getStart()-parent.getStart())+newName;
+    else {assert(ts.isImportClause(parent),'Move missing-import original binding shape');binding=newName;}
+    const line=sf.text.includes('\r\n')?'\r\n':'\n',text=line+'import '+(origin.node.importClause.isTypeOnly?'type ':'')+binding+' from '+moduleText+';'+line,insertion=span(sf,moved.end,moved.end),references=indices.map(i=>currentIdentifiers[i]);
+    const changes=[{...insertion,text},...references.map(n=>({...span(sf,n.getStart(sf),n.end),text:ts.isShorthandPropertyAssignment(n.parent)?shorthand(n.text,newName):newName}))];
+    next={repair:{kind:'missingImport',originalImport:span(origin.node.getSourceFile(),origin.node.getStart(),origin.node.end),originalName,insertion,originalReferences:indices.map(i=>span(oldIdentifiers[i].getSourceFile(),oldIdentifiers[i].getStart(),oldIdentifiers[i].end)),currentReferences:references.map(n=>span(sf,n.getStart(sf),n.end)),newName,moduleText},changes};break;
+   }
+  }finally{currentService.dispose();}
+  if(!next)break;applyRepair(next.repair,next.changes);assert(round<255,'Move missing-import repair capacity');
+ }
+ const locals=[];for(const node of selected.getSourceFile().statements)if(node!==selected)for(const declaration of ts.isVariableStatement(node)?node.declarationList.declarations:[node])if(declaration.name&&ts.isIdentifier(declaration.name))locals.push({name:declaration.name,symbol:checker.getSymbolAtLocation(declaration.name)});
+ for(let round=0;round<256;round++){
+  const currentService=makeService();let next;
+  try{
+   const currentProgram=currentService.getProgram(),c=currentProgram.getTypeChecker(),sf=currentProgram.getSourceFile(destination),originalSource=currentProgram.getSourceFile(file),moved=sf.statements.filter(n=>n.kind===selected.kind&&nameOf(n)?.text===env.input.intent.name);assert(moved.length===1,'Move source-dependency declaration unavailable');const ids=identifiers(moved[0]);assert(ids.length===oldIdentifiers.length,'Move source-dependency identifier structure changed');
+   for(const local of locals){
+    const indices=[...free].filter(([i])=>symbolAt(checker,oldIdentifiers[i])===local.symbol).map(([i])=>i);if(!indices.length||indices.every(i=>symbolKey(c,symbolAt(c,ids[i]))===free.get(i)))continue;
+    const matches=originalSource.statements.flatMap(n=>(ts.isVariableStatement(n)?[...n.declarationList.declarations]:[n]).filter(d=>d.name&&ts.isIdentifier(d.name)&&d.name.text===local.name.text).map(d=>({statement:n,name:d.name})));assert(matches.length===1,'Move source-dependency original declaration unavailable');const dependency=matches[0],key=symbolKey(c,c.getSymbolAtLocation(dependency.name)),exported=originalSource.symbol&&c.getExportsOfModule(originalSource.symbol).some(s=>s.getName()===local.name.text&&symbolKey(c,s)===key);
+    while(used.has('__ci_move_'+serial)){serial++;assert(serial<=100_000,'Move fresh alias capacity');}const newName='__ci_move_'+serial++;used.add(newName);const insertion=span(sf,moved[0].end,moved[0].end),exportInsertion=exported?null:span(originalSource,dependency.statement.end,dependency.statement.end),line=sf.text.includes('\r\n')?'\r\n':'\n',moduleText=moduleTextFor(file,currentProgram),references=indices.map(i=>ids[i]);
+    const changes=[{...insertion,text:line+'import { '+local.name.text+' as '+newName+' } from '+moduleText+';'+line},...references.map(n=>({...span(sf,n.getStart(sf),n.end),text:ts.isShorthandPropertyAssignment(n.parent)?shorthand(n.text,newName):newName}))];
+    if(exportInsertion){const sourceLine=originalSource.text.includes('\r\n')?'\r\n':'\n';changes.push({...exportInsertion,text:sourceLine+'export { '+local.name.text+' };'+sourceLine});}
+    next={repair:{kind:'sourceDependency',originalDefinition:span(local.name.getSourceFile(),local.name.getStart(),local.name.end),currentDefinition:span(originalSource,dependency.name.getStart(),dependency.name.end),exportInsertion,insertion,originalReferences:indices.map(i=>span(oldIdentifiers[i].getSourceFile(),oldIdentifiers[i].getStart(),oldIdentifiers[i].end)),currentReferences:references.map(n=>span(sf,n.getStart(sf),n.end)),newName,moduleText},changes};break;
+   }
+  }finally{currentService.dispose();}
+  if(!next)break;applyRepair(next.repair,next.changes);assert(round<255,'Move source-dependency repair capacity');
  }
  if(!repairs.length)return{repairs,edits:compilerEdits};const edits=[];
  for(const p of [...tables.keys()].sort((a,b)=>Buffer.compare(Buffer.from(a),Buffer.from(b)))){let cursor=0,pending='';const emit=end=>{if(cursor!==end||pending){if(raw(p).subarray(cursor,end).toString('utf8')!==pending)edits.push({path:p,startByte:cursor,endByte:end,text:pending});}pending='';};for(const part of table(p)){if(part.text!==undefined){pending+=part.text;continue;}assert(part.start>=cursor,'Move original pieces reordered');emit(part.start);cursor=part.end;}emit(raw(p).length);}

@@ -63,179 +63,243 @@ fn original_byte_composition_matches_independent_sequential_utf8_edits() {
 
 #[test]
 fn coherent_repaired_effects_still_require_original_bindings_ownership_and_property_keys() {
-    let root = tempfile::tempdir().unwrap();
-    for (name, text) in [
-        (
-            "source.ts",
-            "import {delta as step} from './dep';\nexport function helper(n:number){return {step,n:n+step};}\nexport const keep=3;\n",
-        ),
-        ("target.ts", "const step=20;\nexport const other=step;\n"),
-        (
-            "consumer.ts",
-            "export {helper as renamed,keep} from './source';\n",
-        ),
-        ("dep.ts", "export const delta=2;\n"),
-        (
-            "tsconfig.json",
-            r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true},"files":["source.ts","target.ts","consumer.ts"]}"#,
-        ),
+    for source in [
+        "import {delta as step} from './dep';\nexport function helper(n:number){return {step,n:n+step};}\nexport const keep=3;\n",
+        "import {delta as step} from './dep';\nexport function helper(n:number){return {step,n};}\nexport const keep=3;\n",
+        "const step=2;\nexport function helper(n:number){return {step,n};}\nexport const keep=3;\n",
+        "const step=2;\nconst jump=3;\nexport function helper(n:number){return {step,jump,n};}\nexport const keep=3;\n",
     ] {
-        std::fs::write(root.path().join(name), text).unwrap();
-    }
-    let mut engine = Engine::open(root.path()).unwrap();
-    let (snapshot, graph, _, _) = engine.index(&deadline()).unwrap();
-    let symbol = Declaration::from_graph(
-        graph
-            .entities
-            .iter()
-            .find(|e| e.path == "source.ts" && e.name == "helper")
-            .unwrap()
-            .clone(),
-    );
-    let before: Contents = snapshot
-        .files
-        .iter()
-        .map(|f| {
+        let root = tempfile::tempdir().unwrap();
+        for (name, text) in [
+            ("source.ts", source),
+            ("target.ts", "const step=20;\nexport const other=step;\n"),
             (
-                f.path.clone(),
-                crate::query::source(&engine.store, &snapshot, &f.path)
-                    .unwrap()
-                    .0,
-            )
-        })
-        .collect();
-    let tree = ast::parse("typescript", &before["source.ts"], &deadline()).unwrap();
-    let selected = ast::named_statement(&tree, &before["source.ts"], "helper", &deadline())
-        .unwrap()
-        .unwrap();
-    let spec = compiler();
-    let report=crate::projects::execute(&engine.store,&snapshot,&spec,"move",Some(json!({"path":"source.ts","destination":"target.ts","name":"helper","startByte":selected.statement.start_byte(),"endByte":selected.statement.end_byte()})),&deadline()).unwrap();
-    assert_eq!(report["move"]["repairs"].as_array().unwrap().len(), 2);
-    let check = |value: Value| -> Result<Contents> {
-        let mut effect: Effect = crate::json::decode(value)?;
-        let original = super::super::normalize(&effect.raw_edits, &before, &deadline())?;
-        let (edits, after) = admit(
-            &before,
-            &original,
-            &effect,
-            &snapshot,
-            &symbol,
-            "target.ts",
-            &deadline(),
-        )?;
-        effect.edits = edits;
-        effect.result_hashes = effect
-            .edits
+                "consumer.ts",
+                "export {helper as renamed,keep} from './source';\n",
+            ),
+            ("dep.ts", "export const delta=2;\n"),
+            (
+                "tsconfig.json",
+                r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true},"files":["source.ts","target.ts","consumer.ts"]}"#,
+            ),
+        ] {
+            std::fs::write(root.path().join(name), text).unwrap();
+        }
+        let mut engine = Engine::open(root.path()).unwrap();
+        let (snapshot, graph, _, _) = engine.index(&deadline()).unwrap();
+        let symbol = Declaration::from_graph(
+            graph
+                .entities
+                .iter()
+                .find(|e| e.path == "source.ts" && e.name == "helper")
+                .unwrap()
+                .clone(),
+        );
+        let before: Contents = snapshot
+            .files
             .iter()
-            .map(|e| (e.path.clone(), crate::model::hash(&after[&e.path])))
+            .map(|f| {
+                (
+                    f.path.clone(),
+                    crate::query::source(&engine.store, &snapshot, &f.path)
+                        .unwrap()
+                        .0,
+                )
+            })
             .collect();
-        super::super::bindings::check(
-            &engine,
-            &spec,
-            &snapshot,
-            &symbol,
-            "target.ts",
-            &before,
-            &after,
-            &effect,
-            &report,
-            &deadline(),
-        )?;
-        Ok(after)
-    };
-    let after = check(report["move"].clone()).unwrap();
-    let mut exhausted = report["move"].clone();
-    let raw = exhausted["rawEdits"].as_array_mut().unwrap();
-    let count = 2000 - raw.len();
-    let path = raw[0]["path"].clone();
-    let mut prefix: Vec<Value> = (0..count)
+        let tree = ast::parse("typescript", &before["source.ts"], &deadline()).unwrap();
+        let selected = ast::named_statement(&tree, &before["source.ts"], "helper", &deadline())
+            .unwrap()
+            .unwrap();
+        let spec = compiler();
+        let report=crate::projects::execute(&engine.store,&snapshot,&spec,"move",Some(json!({"path":"source.ts","destination":"target.ts","name":"helper","startByte":selected.statement.start_byte(),"endByte":selected.statement.end_byte()})),&deadline()).unwrap();
+        assert!(report["move"]["repairs"].as_array().unwrap().len() >= 2);
+        let check = |value: Value| -> Result<Contents> {
+            let mut effect: Effect = crate::json::decode(value)?;
+            let original = super::super::normalize(&effect.raw_edits, &before, &deadline())?;
+            let (edits, after) = admit(
+                &before,
+                &original,
+                &effect,
+                &snapshot,
+                &symbol,
+                "target.ts",
+                &deadline(),
+            )?;
+            effect.edits = edits;
+            effect.result_hashes = effect
+                .edits
+                .iter()
+                .map(|e| (e.path.clone(), crate::model::hash(&after[&e.path])))
+                .collect();
+            super::super::bindings::check(
+                &engine,
+                &spec,
+                &snapshot,
+                &symbol,
+                "target.ts",
+                &before,
+                &after,
+                &effect,
+                &report,
+                &deadline(),
+            )?;
+            Ok(after)
+        };
+        let after = check(report["move"].clone()).unwrap();
+        if report["move"]["repairs"].as_array().unwrap().len() == 3 {
+            let mut bad = report["move"].clone();
+            bad["repairs"][2]["newName"] = bad["repairs"][1]["newName"].clone();
+            assert!(check(bad).unwrap_err().to_string().contains("fresh"));
+        }
+        let missing = report["move"]["repairs"][1]["kind"] == "missingImport";
+        let local = report["move"]["repairs"][1]["kind"] == "sourceDependency";
+        let mut exhausted = report["move"].clone();
+        let raw = exhausted["rawEdits"].as_array_mut().unwrap();
+        let count = 2000 - raw.len();
+        let path = raw[0]["path"].clone();
+        let mut prefix: Vec<Value> = (0..count)
         .map(|ordinal| json!({"path":path,"startByte":0,"endByte":0,"text":"","ordinal":ordinal}))
         .collect();
-    for edit in raw.iter_mut().filter(|e| e["path"] == path) {
-        edit["ordinal"] = json!(edit["ordinal"].as_u64().unwrap() + count as u64);
-    }
-    prefix.append(raw);
-    *raw = prefix;
-    assert!(
-        check(exhausted).is_err(),
-        "repair operations must share the original compiler operation budget"
-    );
-
-    for (pointer, value) in [
-        ("/repairs/0/selected", json!([1])),
-        ("/repairs/0/moduleText", json!("'./dep'")),
-        (
-            "/repairs/0/current/text",
-            json!("export {keep} from './source';"),
-        ),
-        ("/repairs/1/importName/path", json!("source.ts")),
-        ("/repairs/1/newName", json!("step")),
-        ("/repairs/1/newName", json!("__ci_move_0001")),
-        ("/repairs/1/originalReferences/0/path", json!("target.ts")),
-        ("/repairs/1/currentReferences/0/startByte", json!(0)),
-        ("/composition", json!("unchecked")),
-    ] {
-        let mut bad = report["move"].clone();
-        *bad.pointer_mut(pointer).unwrap() = value;
-        assert!(check(bad).is_err(), "{pointer}");
-    }
-    let mut bad = report["move"].clone();
-    bad["repairs"][1]["currentReferences"][1] = bad["repairs"][1]["currentReferences"][0].clone();
-    assert!(check(bad).is_err());
-    for field in ["command", "authority", "writePermission"] {
-        let mut bad = report["move"].clone();
-        bad["repairs"][0][field] = json!(true);
-        assert!(crate::json::decode::<Effect>(bad).is_err());
-    }
-    // Even coherently changed source and key-span reports cannot rename the
-    // property represented by the original shorthand's shared source anchor.
-    let mut effect: Effect = crate::json::decode(report["move"].clone()).unwrap();
-    let mut changed = after.clone();
-    let start = changed["target.ts"].find("step:").unwrap();
-    changed
-        .get_mut("target.ts")
-        .unwrap()
-        .replace_range(start..start + 4, "stap");
-    for binding in &mut effect.after.bindings {
-        if binding.span.path == "target.ts" && binding.span.start_byte == start {
-            binding.span.text = "stap".into();
+        for edit in raw.iter_mut().filter(|e| e["path"] == path) {
+            edit["ordinal"] = json!(edit["ordinal"].as_u64().unwrap() + count as u64);
         }
-        for target in &mut binding.targets {
-            if let Target::Captured { span } = target
-                && span.path == "target.ts"
-                && span.start_byte == start
-            {
-                span.text = "stap".into();
+        prefix.append(raw);
+        *raw = prefix;
+        assert!(
+            check(exhausted).is_err(),
+            "repair operations must share the original compiler operation budget"
+        );
+
+        for (pointer, value) in [
+            ("/repairs/0/selected", json!([1])),
+            ("/repairs/0/moduleText", json!("'./dep'")),
+            (
+                "/repairs/0/current/text",
+                json!("export {keep} from './source';"),
+            ),
+            ("/repairs/1/newName", json!("step")),
+            ("/repairs/1/newName", json!("__ci_move_0001")),
+            ("/repairs/1/originalReferences/0/path", json!("target.ts")),
+            ("/repairs/1/currentReferences/0/startByte", json!(0)),
+            ("/repairs/1/currentReferences/0/path", json!("source.ts")),
+            ("/composition", json!("unchecked")),
+        ] {
+            let mut bad = report["move"].clone();
+            *bad.pointer_mut(pointer).unwrap() = value;
+            assert!(check(bad).is_err(), "{pointer}");
+        }
+        let origin_pointer = if local {
+            "/repairs/1/originalDefinition/path"
+        } else if missing {
+            "/repairs/1/originalName/path"
+        } else {
+            "/repairs/1/importName/path"
+        };
+        let mut bad = report["move"].clone();
+        *bad.pointer_mut(origin_pointer).unwrap() = json!("consumer.ts");
+        assert!(check(bad).is_err());
+        if local {
+            let mut omitted = report["move"].clone();
+            omitted["repairs"][1]["exportInsertion"] = Value::Null;
+            assert!(
+                check(omitted)
+                    .unwrap_err()
+                    .to_string()
+                    .contains("export reconstruction")
+            );
+            for (pointer, value) in [
+                ("/repairs/1/moduleText", json!("\"./dep\"")),
+                ("/repairs/1/exportInsertion/startByte", json!(0)),
+                ("/repairs/1/currentDefinition/path", json!("target.ts")),
+                ("/repairs/1/originalDefinition/text", json!("keep")),
+            ] {
+                let mut bad = report["move"].clone();
+                *bad.pointer_mut(pointer).unwrap() = value;
+                assert!(check(bad).is_err(), "{pointer}");
             }
         }
+        if missing {
+            for (pointer, value) in [
+                ("/repairs/1/moduleText", json!("\"./source\"")),
+                ("/repairs/1/moduleText", json!("\"../outside\"")),
+                (
+                    "/repairs/1/moduleText",
+                    json!("\"./dep\";export const forged=1;"),
+                ),
+                ("/repairs/1/insertion/startByte", json!(0)),
+                ("/repairs/1/originalImport/path", json!("target.ts")),
+            ] {
+                let mut bad = report["move"].clone();
+                *bad.pointer_mut(pointer).unwrap() = value;
+                assert!(check(bad).is_err(), "{pointer}");
+            }
+        }
+        let mut bad = report["move"].clone();
+        bad["repairs"][1]["currentReferences"]
+            .as_array_mut()
+            .unwrap()
+            .push(report["move"]["repairs"][1]["currentReferences"][0].clone());
+        bad["repairs"][1]["originalReferences"]
+            .as_array_mut()
+            .unwrap()
+            .push(report["move"]["repairs"][1]["originalReferences"][0].clone());
+        assert!(check(bad).is_err());
+        for field in ["command", "authority", "writePermission"] {
+            let mut bad = report["move"].clone();
+            bad["repairs"][0][field] = json!(true);
+            assert!(crate::json::decode::<Effect>(bad).is_err());
+        }
+        // Even coherently changed source and key-span reports cannot rename the
+        // property represented by the original shorthand's shared source anchor.
+        let mut effect: Effect = crate::json::decode(report["move"].clone()).unwrap();
+        let mut changed = after.clone();
+        let start = changed["target.ts"].find("step:").unwrap();
+        changed
+            .get_mut("target.ts")
+            .unwrap()
+            .replace_range(start..start + 4, "stap");
+        for binding in &mut effect.after.bindings {
+            if binding.span.path == "target.ts" && binding.span.start_byte == start {
+                binding.span.text = "stap".into();
+            }
+            for target in &mut binding.targets {
+                if let Target::Captured { span } = target
+                    && span.path == "target.ts"
+                    && span.start_byte == start
+                {
+                    span.text = "stap".into();
+                }
+            }
+        }
+        effect.result_hashes.insert(
+            "target.ts".into(),
+            crate::model::hash(&changed["target.ts"]),
+        );
+        assert!(
+            super::super::bindings::check(
+                &engine,
+                &spec,
+                &snapshot,
+                &symbol,
+                "target.ts",
+                &before,
+                &changed,
+                &effect,
+                &report,
+                &deadline()
+            )
+            .is_err()
+        );
+        assert_eq!(
+            engine
+                .store
+                .db
+                .query_row("SELECT COUNT(*) FROM records WHERE kind='plan'", [], |r| {
+                    r.get::<_, usize>(0)
+                })
+                .unwrap(),
+            0
+        );
     }
-    effect.result_hashes.insert(
-        "target.ts".into(),
-        crate::model::hash(&changed["target.ts"]),
-    );
-    assert!(
-        super::super::bindings::check(
-            &engine,
-            &spec,
-            &snapshot,
-            &symbol,
-            "target.ts",
-            &before,
-            &changed,
-            &effect,
-            &report,
-            &deadline()
-        )
-        .is_err()
-    );
-    assert_eq!(
-        engine
-            .store
-            .db
-            .query_row("SELECT COUNT(*) FROM records WHERE kind='plan'", [], |r| {
-                r.get::<_, usize>(0)
-            })
-            .unwrap(),
-        0
-    );
 }

@@ -5,6 +5,8 @@ use anyhow::{Context, Result, ensure};
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
 use tree_sitter::{Node, Tree};
+#[path = "compiler_move_dependency_import.rs"]
+mod dependency_import;
 #[cfg(test)]
 #[path = "compiler_move_repair_tests.rs"]
 mod tests;
@@ -28,6 +30,25 @@ pub(super) enum Repair {
         original_references: Vec<Span>,
         current_references: Vec<Span>,
         new_name: String,
+    },
+    MissingImport {
+        original_import: Span,
+        original_name: Span,
+        insertion: Span,
+        original_references: Vec<Span>,
+        current_references: Vec<Span>,
+        new_name: String,
+        module_text: String,
+    },
+    SourceDependency {
+        original_definition: Span,
+        current_definition: Span,
+        export_insertion: Option<Span>,
+        insertion: Span,
+        original_references: Vec<Span>,
+        current_references: Vec<Span>,
+        new_name: String,
+        module_text: String,
     },
 }
 #[derive(Debug, Clone)]
@@ -308,7 +329,313 @@ struct ContextForRepair<'a> {
     destination: &'a str,
     effect: &'a Effect,
 }
+fn relative_module_candidates(destination: &str, module: &str) -> Vec<String> {
+    let destination: Vec<_> = destination.split('/').collect();
+    let directory = &destination[..destination.len().saturating_sub(1)];
+    let module: Vec<_> = module.split('/').collect();
+    let common = directory
+        .iter()
+        .zip(&module)
+        .take_while(|(a, b)| a == b)
+        .count();
+    let mut parts = vec![".."; directory.len() - common];
+    parts.extend_from_slice(&module[common..]);
+    let relative = parts.join("/");
+    let base = if relative.starts_with("../") {
+        relative
+    } else {
+        format!("./{relative}")
+    };
+    let stem = [
+        ".d.mts", ".d.cts", ".d.tsx", ".d.jsx", ".d.mjs", ".d.cjs", ".d.ts", ".d.js", ".mts",
+        ".cts", ".tsx", ".jsx", ".mjs", ".cjs", ".ts", ".js",
+    ]
+    .iter()
+    .find_map(|suffix| base.strip_suffix(suffix))
+    .unwrap_or(&base);
+    vec![
+        stem.into(),
+        format!("{stem}.js"),
+        format!("{stem}.mjs"),
+        format!("{stem}.cjs"),
+        base.clone(),
+    ]
+}
 impl ContextForRepair<'_> {
+    fn missing_import(&self, repair: &Repair, d: &Deadline) -> Result<Vec<TextEdit>> {
+        let Repair::MissingImport {
+            original_import,
+            original_name,
+            insertion,
+            original_references,
+            current_references,
+            new_name,
+            module_text,
+        } = repair
+        else {
+            anyhow::bail!("Move missing-import repair kind mismatch");
+        };
+        ensure!(
+            original_import.path == self.symbol.path
+                && original_name.path == self.symbol.path
+                && insertion.path == self.destination
+                && insertion.start_byte == insertion.end_byte
+                && insertion.text.is_empty()
+                && module_text.len() <= 4096
+                && !module_text.contains('\0'),
+            "Move missing-import repair origin/insertion mismatch"
+        );
+        let module_name: String = serde_json::from_str(module_text)?;
+        ensure!(
+            serde_json::to_string(&module_name)? == *module_text
+                && !module_name.is_empty()
+                && !module_name.contains('\0'),
+            "Move missing-import module literal mismatch"
+        );
+        let original_tree = self.tree(original_import, true, d)?;
+        original_name.check(self.before)?;
+        let import = exact(&original_tree, original_import, d)?;
+        ensure!(
+            import.kind() == "import_statement"
+                && import.parent().is_some_and(|p| p.kind() == "program"),
+            "Move missing-import origin must be a top-level import"
+        );
+        let mut cursor = import.walk();
+        ensure!(
+            import
+                .named_children(&mut cursor)
+                .all(|n| matches!(n.kind(), "import_clause" | "string" | "comment")),
+            "Move missing-import attributes or unsupported syntax"
+        );
+        let name = exact(&original_tree, original_name, d)?;
+        ensure!(
+            name.kind() == "identifier"
+                && name.start_byte() >= import.start_byte()
+                && name.end_byte() <= import.end_byte(),
+            "Move missing-import name ownership mismatch"
+        );
+        let evidence = self
+            .effect
+            .before
+            .modules
+            .iter()
+            .find(|m| m.path == self.symbol.path)
+            .and_then(|m| {
+                m.imports
+                    .iter()
+                    .find(|i| i.kind == "import" && i.span.key() == original_import.key())
+            })
+            .context("Move missing-import original module evidence absent")?;
+        ensure!(
+            evidence.module.resolution == "resolved"
+                && matches!(evidence.module.targets.as_slice(),
+            [Target::Module { path }] if self.before.contains_key(path)),
+            "Move missing-import requires one captured original module"
+        );
+        let Target::Module { path: module_path } = &evidence.module.targets[0] else {
+            unreachable!()
+        };
+        ensure!(
+            relative_module_candidates(self.destination, module_path).contains(&module_name),
+            "Move missing-import specifier is not relative to the captured original module"
+        );
+        let binding = evidence
+            .names
+            .iter()
+            .find(|b| b.span == *original_name)
+            .context("Move missing-import original local binding absent")?;
+        ensure!(
+            binding.resolution == "resolved" && !binding.targets.is_empty(),
+            "Move missing-import original local binding unresolved"
+        );
+        let parent = name.parent().context("Move missing-import clause absent")?;
+        let text = &self.before[&original_import.path];
+        let binding_text = match parent.kind() {
+            "import_specifier" => {
+                let specifier =
+                    crate::paths::utf8_range(text, parent.start_byte(), parent.end_byte())?;
+                if parent
+                    .child_by_field_name("alias")
+                    .is_some_and(|a| a.id() == name.id())
+                {
+                    format!(
+                        "{{{}{new_name}}}",
+                        crate::paths::utf8_range(text, parent.start_byte(), name.start_byte())?
+                    )
+                } else {
+                    ensure!(
+                        parent.child_by_field_name("alias").is_none(),
+                        "Move missing-import local name must own its alias"
+                    );
+                    format!("{{{specifier} as {new_name}}}")
+                }
+            }
+            "namespace_import" => format!(
+                "{}{new_name}",
+                crate::paths::utf8_range(text, parent.start_byte(), name.start_byte())?
+            ),
+            "import_clause" => new_name.clone(),
+            _ => anyhow::bail!("Move missing-import original name is not an import binding"),
+        };
+        let mut cursor = import.walk();
+        let type_only = import.children(&mut cursor).any(|n| n.kind() == "type");
+        let current_tree = self.tree(insertion, false, d)?;
+        let moved = ast::named_statement(
+            &current_tree,
+            &self.current[self.destination],
+            &self.symbol.name,
+            d,
+        )?
+        .context("Move missing-import moved declaration absent")?;
+        ensure!(
+            insertion.start_byte == moved.statement.end_byte(),
+            "Move missing-import insertion escapes selected statement boundary"
+        );
+        let line = if self.current[self.destination].contains("\r\n") {
+            "\r\n"
+        } else {
+            "\n"
+        };
+        let mut changes = self.free_reference_changes(
+            original_references,
+            current_references,
+            new_name,
+            Some(&binding.targets),
+            d,
+        )?;
+        changes.push(TextEdit {
+            path: insertion.path.clone(),
+            start_byte: insertion.start_byte,
+            end_byte: insertion.end_byte,
+            text: format!(
+                "{line}import {}{binding_text} from {module_text};{line}",
+                if type_only { "type " } else { "" }
+            ),
+        });
+        changes.sort_by_key(|e| e.start_byte);
+        ensure!(
+            changes.windows(2).all(|p| p[0].end_byte <= p[1].start_byte),
+            "Move missing-import references overlap insertion"
+        );
+        Ok(changes)
+    }
+    fn free_reference_changes(
+        &self,
+        original_references: &[Span],
+        current_references: &[Span],
+        new_name: &str,
+        expected_targets: Option<&[Target]>,
+        d: &Deadline,
+    ) -> Result<Vec<TextEdit>> {
+        ensure!(
+            !original_references.is_empty()
+                && original_references.len() == current_references.len()
+                && original_references.len() <= 2000
+                && current_references
+                    .first()
+                    .is_some_and(|s| s.path == self.destination),
+            "Move repair reference scope/capacity mismatch"
+        );
+        let suffix = new_name
+            .strip_prefix("__ci_move_")
+            .context("Move repair fresh alias namespace mismatch")?;
+        ensure!(
+            suffix.len() <= 6
+                && suffix.bytes().all(|b| b.is_ascii_digit())
+                && suffix
+                    .parse::<usize>()
+                    .is_ok_and(|n| (1..=100_000).contains(&n) && suffix == n.to_string())
+                && !self
+                    .effect
+                    .before
+                    .bindings
+                    .iter()
+                    .any(|b| b.span.text == new_name),
+            "Move repair alias is not fresh within its source observations"
+        );
+        let tree = self.tree(&current_references[0], false, d)?;
+        let mut stack = vec![tree.root_node()];
+        let mut visits = 0usize;
+        while let Some(node) = stack.pop() {
+            d.check()?;
+            visits += 1;
+            ensure!(
+                visits <= 200_000,
+                "Move fresh-alias syntax capacity exceeded"
+            );
+            ensure!(
+                !(node.kind().contains("identifier")
+                    && node.utf8_text(self.current[&current_references[0].path].as_bytes())?
+                        == new_name),
+                "Move repair alias is not fresh within current syntax"
+            );
+            let mut cursor = node.walk();
+            stack.extend(node.named_children(&mut cursor));
+        }
+        let moved =
+            ast::named_statement(&tree, &self.current[self.destination], &self.symbol.name, d)?
+                .context("Move repair moved declaration absent")?;
+        let mut original_keys = BTreeSet::new();
+        let mut current_keys = BTreeSet::new();
+        let mut targets = expected_targets;
+        let mut changes = vec![];
+        for (original, current) in original_references.iter().zip(current_references) {
+            d.check()?;
+            original.check(self.before)?;
+            current.check(self.current)?;
+            ensure!(
+                original.path == self.symbol.path
+                    && original.start_byte >= self.symbol.start_byte
+                    && original.end_byte <= self.symbol.end_byte
+                    && current.path == self.destination
+                    && current.start_byte >= moved.node.start_byte()
+                    && current.end_byte <= moved.node.end_byte()
+                    && original_keys.insert(original.key())
+                    && current_keys.insert(current.key()),
+                "Move repair references escape selected declaration or repeat"
+            );
+            let binding = self
+                .effect
+                .before
+                .bindings
+                .iter()
+                .find(|b| b.span.key() == original.key())
+                .context("Move repair original reference evidence absent")?;
+            ensure!(binding.resolution=="resolved"&&!binding.targets.is_empty()&&binding.targets.iter().all(|t|!matches!(t,Target::Library{..})&&!matches!(t,Target::Captured{span}if span.path==self.symbol.path&&span.start_byte>=self.symbol.start_byte&&span.end_byte<=self.symbol.end_byte)),"Move repair requires captured free binding");
+            if let Some(expected) = targets {
+                ensure!(
+                    expected == binding.targets.as_slice(),
+                    "Move repair original reference targets differ"
+                );
+            } else {
+                targets = Some(&binding.targets);
+            }
+            let node = exact(&tree, current, d)?;
+            ensure!(
+                matches!(
+                    node.kind(),
+                    "identifier" | "type_identifier" | "shorthand_property_identifier"
+                ),
+                "Move repair reference must be an identifier"
+            );
+            let text = if node.kind() == "shorthand_property_identifier" {
+                if current.text == "__proto__" {
+                    format!("[\"__proto__\"]: {new_name}")
+                } else {
+                    format!("{}: {new_name}", current.text)
+                }
+            } else {
+                new_name.to_owned()
+            };
+            changes.push(TextEdit {
+                path: current.path.clone(),
+                start_byte: current.start_byte,
+                end_byte: current.end_byte,
+                text,
+            });
+        }
+        Ok(changes)
+    }
     fn tree(&self, span: &Span, original: bool, d: &Deadline) -> Result<Tree> {
         let contents = if original { self.before } else { self.current };
         span.check(contents)?;
@@ -322,6 +649,8 @@ impl ContextForRepair<'_> {
     }
     fn changes(&self, repair: &Repair, d: &Deadline) -> Result<Vec<TextEdit>> {
         match repair {
+            Repair::SourceDependency { .. } => self.dependency_import(repair, d),
+            Repair::MissingImport { .. } => self.missing_import(repair, d),
             Repair::Reexport {
                 original,
                 current,
@@ -431,23 +760,6 @@ impl ContextForRepair<'_> {
                         && original_references.len() <= 2000,
                     "Move import alias repair scope/capacity mismatch"
                 );
-                let suffix = new_name
-                    .strip_prefix("__ci_move_")
-                    .context("Move repair fresh alias namespace mismatch")?;
-                ensure!(
-                    suffix.len() <= 6
-                        && suffix.bytes().all(|b| b.is_ascii_digit())
-                        && suffix
-                            .parse::<usize>()
-                            .is_ok_and(|n| (1..=100_000).contains(&n) && suffix == n.to_string())
-                        && !self
-                            .effect
-                            .before
-                            .bindings
-                            .iter()
-                            .any(|b| b.span.text == *new_name),
-                    "Move repair alias is not fresh within its source observations"
-                );
                 let tree = self.tree(import_name, false, d)?;
                 let node = exact(&tree, import_name, d)?;
                 ensure!(
@@ -458,13 +770,6 @@ impl ContextForRepair<'_> {
                         )),
                     "Move repair alias does not own an import binding"
                 );
-                let moved = ast::named_statement(
-                    &tree,
-                    &self.current[self.destination],
-                    &self.symbol.name,
-                    d,
-                )?
-                .context("Move repair moved declaration absent")?;
                 let import_text = if node.parent().is_some_and(|p| {
                     p.kind() == "import_specifier" && p.child_by_field_name("alias").is_none()
                 }) {
@@ -478,60 +783,21 @@ impl ContextForRepair<'_> {
                     end_byte: import_name.end_byte,
                     text: import_text,
                 }];
-                let mut original_keys = BTreeSet::new();
-                let mut current_keys = BTreeSet::new();
-                let mut targets = None;
-                for (original, current) in original_references.iter().zip(current_references) {
-                    d.check()?;
-                    original.check(self.before)?;
-                    current.check(self.current)?;
-                    ensure!(
-                        original.path == self.symbol.path
-                            && original.start_byte >= self.symbol.start_byte
-                            && original.end_byte <= self.symbol.end_byte
-                            && current.path == self.destination
-                            && current.start_byte >= moved.node.start_byte()
-                            && current.end_byte <= moved.node.end_byte()
-                            && original_keys.insert(original.key())
-                            && current_keys.insert(current.key()),
-                        "Move alias references escape selected declaration or repeat"
-                    );
-                    let binding = self
-                        .effect
-                        .before
-                        .bindings
-                        .iter()
-                        .find(|b| b.span.key() == original.key())
-                        .context("Move repair original reference evidence absent")?;
-                    ensure!(binding.resolution=="resolved"&&!binding.targets.is_empty()&&binding.targets.iter().all(|t|!matches!(t,Target::Library{..})&&!matches!(t,Target::Captured{span}if span.path==self.symbol.path&&span.start_byte>=self.symbol.start_byte&&span.end_byte<=self.symbol.end_byte)),"Move alias repair requires captured free binding");
-                    if let Some(expected) = targets {
-                        ensure!(
-                            expected == &binding.targets,
-                            "Move alias original reference targets differ"
-                        );
-                    } else {
-                        targets = Some(&binding.targets);
-                    }
-                    let n = exact(&tree, current, d)?;
-                    ensure!(
-                        matches!(
-                            n.kind(),
-                            "identifier" | "type_identifier" | "shorthand_property_identifier"
-                        ),
-                        "Move repair reference must be an identifier"
-                    );
-                    let text = if n.kind() == "shorthand_property_identifier" {
-                        format!("{}: {new_name}", current.text)
-                    } else {
-                        new_name.clone()
-                    };
-                    changes.push(TextEdit {
-                        path: current.path.clone(),
-                        start_byte: current.start_byte,
-                        end_byte: current.end_byte,
-                        text,
-                    });
-                }
+                let references = self.free_reference_changes(
+                    original_references,
+                    current_references,
+                    new_name,
+                    None,
+                    d,
+                )?;
+                let targets = self
+                    .effect
+                    .before
+                    .bindings
+                    .iter()
+                    .find(|b| b.span.key() == original_references[0].key())
+                    .map(|b| &b.targets);
+                changes.extend(references);
                 if let Some(module) = self
                     .effect
                     .before
@@ -609,6 +875,73 @@ pub(super) fn admit(
     }
     let edits = compose(&tables, before, d)?;
     for repair in &effect.repairs {
+        if let Repair::SourceDependency {
+            original_definition,
+            new_name,
+            ..
+        } = repair
+        {
+            let imports: Vec<_> = effect
+                .after
+                .modules
+                .iter()
+                .filter(|m| m.path == destination)
+                .flat_map(|m| &m.imports)
+                .filter(|i| i.kind == "import" && i.names.iter().any(|n| n.span.text == *new_name))
+                .collect();
+            ensure!(
+                imports.len() == 1
+                    && imports[0].module.resolution == "resolved"
+                    && imports[0].module.targets
+                        == [Target::Module {
+                            path: symbol.path.clone()
+                        }],
+                "Move source-dependency import does not target original source module"
+            );
+            ensure!(
+                effect
+                    .after
+                    .modules
+                    .iter()
+                    .filter(|m| m.path == symbol.path)
+                    .flat_map(|m| &m.exports)
+                    .any(|e| e.name == original_definition.text && e.resolution == "resolved"),
+                "Move source-dependency export absent"
+            );
+        }
+        if let Repair::MissingImport {
+            original_import,
+            new_name,
+            ..
+        } = repair
+        {
+            d.check()?;
+            let original = effect
+                .before
+                .modules
+                .iter()
+                .find(|m| m.path == original_import.path)
+                .and_then(|m| {
+                    m.imports
+                        .iter()
+                        .find(|i| i.span.key() == original_import.key())
+                })
+                .context("Move missing-import original linkage absent")?;
+            let matching: Vec<_> = effect
+                .after
+                .modules
+                .iter()
+                .filter(|m| m.path == destination)
+                .flat_map(|m| &m.imports)
+                .filter(|i| i.kind == "import" && i.names.iter().any(|n| n.span.text == *new_name))
+                .collect();
+            ensure!(
+                matching.len() == 1
+                    && matching[0].module.resolution == "resolved"
+                    && matching[0].module.targets == original.module.targets,
+                "Move missing-import destination module binding mismatch"
+            );
+        }
         if let Repair::Reexport {
             original, selected, ..
         } = repair

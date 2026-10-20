@@ -113,9 +113,25 @@ Up to 256 repair steps share the original 2,000-operation budget. Final syntax,
 static bindings, export APIs, source/result hashes, permissions and independent
 verification/application/recovery gates still apply to the complete result.
 
-This is not an exhaustive compiler bug workaround. TypeScript can also omit a
-required import when its only use is shorthand. A diagnostic-free substitution
-of an existing target variable is explicitly rejected by native binding checks;
-missing-import synthesis remains open. Wider export/import/context shapes,
-runtime semantics and full acceptance remain unqualified. The own_v1 LSP
-contract retains its separate finite scope.
+Omitted free dependencies now have separate repairs. `missingImport` selects an
+original named/default/namespace import binding and only its captured free
+references. `sourceDependency` selects an original top-level source declaration
+and adds a named source export only when needed. Original and current definition
+anchors, declaration boundaries, imported targets and new module linkage are
+checked independently. New specifiers must be relative candidates for the exact
+captured original module; the compiler resolves that same candidate before use.
+No bare identifier lookup guesses a dependency or grants new source access.
+Imports are inserted after the moved statement, preserving original preambles,
+directives and adjoining documentation. Existing source export APIs remain bound.
+
+Shorthand `__proto__` expands to `["__proto__"]: alias`, retaining an own data
+property. Native syntax correspondence distinguishes this from the prototype
+setter form `__proto__: alias`; a static binding match cannot disguise that
+semantic change. An explicit owned regression fixture checks actual property
+and prototype behavior. Preparation itself still executes no analyzed source.
+
+These remain finite compiler repairs, not an exhaustive bug workaround. Sibling
+declaration bundles, unsupported import attributes, broader export/import/context
+and destination/language shapes, module evaluation order, runtime equivalence
+and full acceptance remain unqualified. The own_v1 LSP contract retains its
+separate finite scope.

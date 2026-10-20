@@ -369,14 +369,24 @@ fn emit(
             node.child_by_field_name("key")
                 .zip(node.child_by_field_name("value"))
                 .filter(|(key, value)| {
-                    key.kind() == "property_identifier" && value.kind() == "identifier"
+                    value.kind() == "identifier"
+                        && ((key.kind() == "property_identifier"
+                            && key
+                                .utf8_text(text.as_bytes())
+                                .is_ok_and(|s| s != "__proto__"))
+                            || (key.kind() == "computed_property_name"
+                                && key.utf8_text(text.as_bytes()) == Ok("[\"__proto__\"]")))
                 })
         } else {
             None
         };
         if let Some((key, value)) = object_pair {
             let key_range = (key.start_byte(), key.end_byte());
-            let key_text = key.utf8_text(text.as_bytes())?;
+            let key_text = if key.kind() == "computed_property_name" {
+                "__proto__"
+            } else {
+                key.utf8_text(text.as_bytes())?
+            };
             aliases.extend([range, key_range]);
             out.events.push(Event {
                 signature: format!("@object-key:{}:{key_text}", key_text.len()),

@@ -84,6 +84,21 @@ fn native_syntax_correspondence_keeps_operators_precedence_comments_and_for_sepa
     };
     for (a, b, equal) in [
         (
+            "function f(){return {__proto__};}",
+            "function f(){return {[\"__proto__\"]: alias};}",
+            true,
+        ),
+        (
+            "function f(){return {__proto__};}",
+            "function f(){return {__proto__: alias};}",
+            false,
+        ),
+        (
+            "function f(){return {__proto__};}",
+            "function f(){return {[\"wrong\"]: alias};}",
+            false,
+        ),
+        (
             "function f(){return 1+2}",
             "function f() { return 1 + 2; }",
             true,
