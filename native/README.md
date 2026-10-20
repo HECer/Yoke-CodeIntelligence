@@ -280,6 +280,11 @@ After extracting a native VSIX into an isolated directory, the actual Windows ex
 
 ## Advanced local workflows
 
+Explicit [mixed interpretation graph queries](docs/mixed-meaning-queries.md)
+provide graph-qualified concept lookup, literal label/alias search, degree counts
+and directed traces over source-replayed provider graphs. Original receipts,
+parallel observations and ordered hyperedge roles remain; queries call no model.
+
 Rust now owns configured TypeScript/JavaScript analysis and virtual solution builds, intraprocedural dataflow candidates, per-test coverage/selection, executable model providers with durable accounting, a local Ollama adapter, persistent Python debugging/REPL, authenticated signed TLS source exchange, reviewed history retirement/quarantine purge and digest-pinned Docker verification. See [workflow commands](docs/workflows.md) and their individual contracts. These operations require explicit host authority; default indexing remains independent of external runtimes and models.
 
 The independently written compiler/debugger workers use the actual selected TypeScript compiler or Python runtime; they do not depend on Graft, Serena or Graphify. Private credentials use native OS stores, with unavailable or locked services failing explicitly. Linux/macOS code and CI definitions are supplied; this Windows session does not certify those OS stores. The retained TypeScript 0.3 implementation has separate state and remains available. Advanced IDE refactorings, arbitrary language servers, proprietary hosted services and exhaustive correctness are outside the measured evidence. See [the acceptance matrix](../docs/RUST_REPLACEMENT.md) and [status](../docs/STATUS.md).

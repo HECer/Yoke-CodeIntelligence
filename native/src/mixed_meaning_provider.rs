@@ -13,6 +13,34 @@ use rusqlite::{
 use serde::de::DeserializeOwned;
 use std::path::PathBuf;
 
+#[path = "mixed_meaning_query.rs"]
+pub mod query;
+
+/// Only source/response replay constructs this immutable, store-independent
+/// capability. Exported JSON cannot construct it or grant source authority.
+pub struct CheckedGraph {
+    _source: CheckedMixedView,
+    value: Value,
+    fragment: Fragment,
+}
+impl CheckedGraph {
+    pub fn id(&self) -> &str {
+        self.value["id"].as_str().expect("checked graph identity")
+    }
+    pub fn export(&self, max_output_bytes: usize, d: &Deadline) -> Result<Value> {
+        input(max_output_bytes <= MAX_GRAPH)?;
+        output(&self.value, max_output_bytes, d)
+    }
+    pub fn query(
+        &self,
+        query: &query::Query,
+        max_output_bytes: usize,
+        d: &Deadline,
+    ) -> Result<Value> {
+        query::run(self, query, max_output_bytes, d).map_err(|e| sanitized(e, d))
+    }
+}
+
 pub const JOB_KIND: &str = "native_mixed_meaning_job_v1";
 pub const OPERATION: &str = "extract_mixed_meaning_v1";
 const MAX_JOB: usize = 256_000;
@@ -1091,6 +1119,14 @@ pub fn load(
     pdf_worker: Option<&NativePdfWorker>,
     d: &Deadline,
 ) -> Result<Value> {
+    load_checked(store, id, pdf_worker, d).map(|graph| graph.value)
+}
+pub fn load_checked(
+    store: &Store,
+    id: &str,
+    pdf_worker: Option<&NativePdfWorker>,
+    d: &Deadline,
+) -> Result<CheckedGraph> {
     load_impl(store, id, pdf_worker, d).map_err(|e| sanitized(e, d))
 }
 fn load_impl(
@@ -1098,7 +1134,7 @@ fn load_impl(
     id: &str,
     pdf_worker: Option<&NativePdfWorker>,
     d: &Deadline,
-) -> Result<Value> {
+) -> Result<CheckedGraph> {
     let job = load_job(store, id, d)?;
     input(job.state == "complete")?;
     let (saved, payload) = artifacts(store, &job, d)?;
@@ -1127,8 +1163,13 @@ fn load_impl(
     input(actual == encode(&expected, job.max_graph_bytes, d)?)?;
     expected["providerCallsThisRead"] = serde_json::json!(0);
     expected["artifactId"] = serde_json::json!(id);
+    let fragment = crate::json::decode(expected["sourceValidation"]["originalFragment"].clone())?;
     check(d)?;
-    Ok(expected)
+    Ok(CheckedGraph {
+        _source: view,
+        value: expected,
+        fragment,
+    })
 }
 /// Closed metadata/ledger/artifact dependency validation for retention. This
 /// does not construct a source capability or interpret saved PDF page data.

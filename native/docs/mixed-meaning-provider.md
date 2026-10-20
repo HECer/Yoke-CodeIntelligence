@@ -1,5 +1,9 @@
 # Explicit checked mixed-source meaning builds
 
+Source-replayed graphs also support [checked literal graph queries](mixed-meaning-queries.md)
+through `load_checked` and `mixed-meaning query`. These preserve original
+provenance, directed observations and ordered roles without provider execution.
+
 `mixed-meaning build` runs one fixed, fully admitted request through an explicitly
 trusted host provider. It selects existing frozen native, Office decoded/XML and
 optionally PDF page inputs. It captures no source and starts no language server
