@@ -1,0 +1,32 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+error[E0618]: expected function, found `&Vec<serde_json::Value>`
+   --> native\tests\meaning_identity.rs:414:18
+    |
+160 | fn rows(f: &MeaningPair) -> Vec<(String, String, String)> {
+    | --------------------------------------------------------- this function of the same name is available here, but it's shadowed by the local binding
+...
+363 |     let rows = degree["rows"].as_array().unwrap();
+    |         ---- `rows` has type `&Vec<serde_json::Value>`
+...
+414 |     let before = rows(&f);
+    |                  ^^^^----
+    |                  |
+    |                  call expression requires function
+
+error[E0618]: expected function, found `&Vec<serde_json::Value>`
+   --> native\tests\meaning_identity.rs:421:16
+    |
+160 | fn rows(f: &MeaningPair) -> Vec<(String, String, String)> {
+    | --------------------------------------------------------- this function of the same name is available here, but it's shadowed by the local binding
+...
+363 |     let rows = degree["rows"].as_array().unwrap();
+    |         ---- `rows` has type `&Vec<serde_json::Value>`
+...
+421 |     assert_eq!(rows(&f), before);
+    |                ^^^^----
+    |                |
+    |                call expression requires function
+
+For more information about this error, try `rustc --explain E0618`.
+error: could not compile `yoke-code-intelligence` (test "meaning_identity") due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
