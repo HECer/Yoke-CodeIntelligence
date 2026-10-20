@@ -32,33 +32,42 @@ pub fn now() -> u64 {
         .expect("system clock after epoch")
         .as_secs()
 }
-pub(crate) fn validate_python_delete_policy(args: &Value) -> Result<()> {
+pub(crate) fn validate_symbol_delete_policies(args: &Value) -> Result<()> {
     for name in ["rename", "replaceSymbol", "insertBefore", "insertAfter"] {
         ensure!(
-            args[name].get("emptyPythonBody").is_none(),
-            "Empty Python body policy belongs to deleteSymbol"
+            args[name].get("emptyPythonBody").is_none()
+                && args[name].get("siblingDeclarators").is_none(),
+            "Deletion policy belongs to deleteSymbol"
         );
     }
-    if let Some(policy) = args["deleteSymbol"].get("emptyPythonBody") {
-        ensure!(
-            policy
-                .as_str()
-                .is_some_and(|p| matches!(p, "reject" | "pass")),
-            "Unknown empty Python body policy"
-        );
-        ensure!(
-            [
-                "edits",
-                "rename",
-                "replaceSymbol",
-                "insertBefore",
-                "insertAfter",
-                "bulkReplace"
-            ]
-            .iter()
-            .all(|key| args.get(key).is_none()),
-            "Empty Python body policy cannot be mixed with other changes"
-        );
+    ensure!(
+        args["deleteSymbol"].get("emptyPythonBody").is_none()
+            || args["deleteSymbol"].get("siblingDeclarators").is_none(),
+        "Symbol deletion policies cannot be combined"
+    );
+    for (name, choices) in [
+        ("emptyPythonBody", ["reject", "pass"]),
+        ("siblingDeclarators", ["reject", "preserve"]),
+    ] {
+        if let Some(policy) = args["deleteSymbol"].get(name) {
+            ensure!(
+                policy.as_str().is_some_and(|p| choices.contains(&p)),
+                "Unknown symbol deletion policy"
+            );
+            ensure!(
+                [
+                    "edits",
+                    "rename",
+                    "replaceSymbol",
+                    "insertBefore",
+                    "insertAfter",
+                    "bulkReplace"
+                ]
+                .iter()
+                .all(|key| args.get(key).is_none()),
+                "Symbol deletion policy cannot be mixed with other changes"
+            );
+        }
     }
     Ok(())
 }
@@ -231,7 +240,7 @@ fn prepare_inner(
     directory_move: Option<&DirectoryMove>,
     deadline: &Deadline,
 ) -> Result<Plan> {
-    validate_python_delete_policy(args)?;
+    validate_symbol_delete_policies(args)?;
     let mut edits: Vec<Edit> = if let Some(value) = args.get("edits") {
         serde_json::from_value(value.clone())?
     } else {
@@ -262,10 +271,20 @@ fn prepare_inner(
                 .find(|f| f.path == entity.path)
                 .context("Symbol source absent from snapshot")?;
             let mut delete_text = "";
+            let mut separator = None;
             if value.get("emptyPythonBody").is_some() {
                 ensure!(
                     file.language == "python",
                     "Empty Python body policy requires Python source"
+                );
+            }
+            if value.get("siblingDeclarators").is_some() {
+                ensure!(
+                    matches!(
+                        file.language.as_str(),
+                        "typescript" | "tsx" | "javascript" | "jsx"
+                    ),
+                    "Sibling declarators policy requires TypeScript or JavaScript source"
                 );
             }
             let (start, end) = match operation {
@@ -283,6 +302,12 @@ fn prepare_inner(
                             epoch, file, entity, &text, deadline,
                         )?;
                         delete_text = selected.replacement;
+                        (selected.start, selected.end)
+                    } else if value["siblingDeclarators"] == "preserve" {
+                        let selected = symbol_delete::preserving_declarators(
+                            epoch, file, entity, &text, deadline,
+                        )?;
+                        separator = selected.separator;
                         (selected.start, selected.end)
                     } else {
                         symbol_delete::range(epoch, file, entity, &text, deadline)?
@@ -304,6 +329,15 @@ fn prepare_inner(
                 end_byte: end,
                 text: text.into(),
             });
+            if let Some((start_byte, end_byte)) = separator {
+                edits.push(Edit::Replace {
+                    path: file.path.clone(),
+                    expected_hash: file.hash.clone(),
+                    start_byte,
+                    end_byte,
+                    text: String::new(),
+                });
+            }
         }
     }
     if args.get("rename").is_some() {

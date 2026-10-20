@@ -167,6 +167,11 @@ required Python suite after exact declaration/decorator selection and result
 syntax checking. The default remains rejection, with ordinary plan/application
 gates intact. See the [finite contract](docs/semantic-refactor-intents.md#explicit-native-python-empty-body-deletion).
 
+Native `deleteSymbol.siblingDeclarators: "preserve"` can separately remove one
+checked TS/JS function-valued variable and its direct AST comma, preserving
+other declarators and original bytes. Ambiguous comments and mixed operations
+refuse. See [symbol deletion](docs/symbol-deletion.md).
+
 [Captured function propagation](docs/propagated-delete.md) can remove checked
 standalone call statements and newly unused private function dependencies in a
 bounded TS/JS module. Surviving references, possible consumers and exported
