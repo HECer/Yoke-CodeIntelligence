@@ -1457,6 +1457,44 @@ impl Session {
                 self.require_edit_permission()?;
                 self.call_active("ci_change_prepare", args.clone(), deadline)
             }
+            "refactor.prepare" => {
+                fields(args, &["operation", "arguments"])?;
+                let operation = args["operation"]
+                    .as_str()
+                    .context("Native refactoring operation required")?;
+                ensure!(
+                    matches!(operation, "safeDelete" | "rename" | "inline" | "move"),
+                    "Unsupported native refactoring operation"
+                );
+                let arguments = args
+                    .get("arguments")
+                    .filter(|value| value.is_object())
+                    .context("Native refactoring arguments must be an object")?;
+                ensure!(
+                    serde_json::to_vec(arguments)?.len() <= 64_000,
+                    "Native refactoring input capacity exceeded"
+                );
+                self.require_edit_permission()?;
+                deadline.check()?;
+                self.engine.store.set_deadline(deadline)?;
+                let current = self
+                    .engine
+                    .store
+                    .db
+                    .query_row(
+                        "SELECT 1 FROM records WHERE kind=?1 AND id=?2 AND value=?3",
+                        params![RECORD_KIND, self.state.id, self.persisted],
+                        |row| row.get::<_, i64>(0),
+                    )
+                    .optional()?;
+                ensure!(
+                    current == Some(1),
+                    "Session state changed concurrently; resume the session before preparing a refactoring"
+                );
+                deadline.check()?;
+                let engine = self.active_engine_at(deadline)?;
+                crate::semantic_refactor::invoke(engine, operation, arguments, deadline)
+            }
             _ => bail!("Unsupported session operation"),
         }
     }
