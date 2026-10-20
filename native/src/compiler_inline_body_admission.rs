@@ -59,6 +59,10 @@ struct Effect {
     action_kind: String,
     frames: Vec<Frame>,
     references: Vec<Span>,
+    #[serde(default)]
+    var_assignments: Vec<Binding>,
+    #[serde(default)]
+    var_types: Vec<Type>,
     before: Observations,
     after: Observations,
     before_diagnostics: Vec<Value>,
@@ -238,6 +242,7 @@ struct Checker<'a> {
     after: &'a Contents,
     path: &'a str,
     origins: &'a [Origin],
+    aliases: &'a BTreeMap<variables::Range, variables::Range>,
     spec: &'a CompilerSpec,
     libraries: &'a Value,
     cache: BTreeMap<String, String>,
@@ -246,6 +251,7 @@ struct Checker<'a> {
 impl Checker<'_> {
     fn targets(&mut self, targets: &[Target], after: bool, d: &Deadline) -> Result<Vec<String>> {
         let mut ids = vec![];
+        let mut merged = BTreeSet::new();
         for target in targets {
             d.check()?;
             let id = match target {
@@ -273,13 +279,30 @@ impl Checker<'_> {
                     } else {
                         (span.start_byte, span.end_byte)
                     };
-                    identity(&(
-                        "body_original_definition_v1",
-                        &span.path,
+                    let (start, end) = if span.path == self.path {
+                        self.aliases
+                            .get(&(start, end))
+                            .copied()
+                            .unwrap_or((start, end))
+                    } else {
+                        (start, end)
+                    };
+                    let text = crate::paths::utf8_range(
+                        self.before
+                            .get(&span.path)
+                            .context("Body target original source absent")?,
                         start,
                         end,
-                        &span.text,
-                    ))
+                    )?;
+                    let id =
+                        identity(&("body_original_definition_v1", &span.path, start, end, text));
+                    if span.path == self.path
+                        && self.aliases.contains_key(&(start, end))
+                        && !merged.insert(id.clone())
+                    {
+                        continue;
+                    }
+                    id
                 }
                 Target::Library {
                     name,
@@ -365,15 +388,62 @@ fn check(
         "Body effect contract mismatch"
     );
     let mut expected = vec![];
+    let vars = variables::analyze(declaration, source, d)?;
+    ensure!(
+        e.var_types.len() == vars.groups.len(),
+        "Body var type witness coverage mismatch"
+    );
+    let mut hints = vec![];
+    let mut type_bytes = 0usize;
+    for (g, t) in vars.groups.iter().zip(&e.var_types) {
+        d.check()?;
+        let id = g.ids[0];
+        type_bytes = type_bytes.saturating_add(t.r#type.len());
+        ensure!(
+            t.span.path == symbol.path
+                && t.span.start_byte == id.start_byte()
+                && t.span.end_byte == id.end_byte()
+                && t.span.text == id.utf8_text(source.as_bytes())?
+                && !t.r#type.is_empty()
+                && t.r#type.len() <= 16_000
+                && type_bytes <= 2_000_000,
+            "Body var original type witness mismatch"
+        );
+        if let Some(original) = e.before.types.iter().find(|v| key(&v.span) == key(&t.span)) {
+            ensure!(
+                original.r#type == t.r#type,
+                "Body var type contradicts declaration observation"
+            );
+        }
+        hints.push(
+            if g.annotation.is_none() && g.function.is_none() && variables::primitive(&t.r#type) {
+                Some(t.r#type.clone())
+            } else {
+                None
+            },
+        );
+    }
+    if hints.iter().all(Option::is_none) {
+        hints.clear();
+    }
+    ensure!(
+        e.var_assignments.len() == vars.ids.len(),
+        "Body var assignment witness coverage mismatch"
+    );
     let mut synthetic = BTreeSet::new();
     let mut call_names = BTreeSet::new();
     let mut rendered_bytes = 0usize;
     let mut copy_count = 0usize;
     for frame in &e.frames {
         d.check()?;
+        ensure!(
+            frame.var_types == hints,
+            "Body var frame type hints differ from original witnesses"
+        );
         for name in std::iter::once(&frame.names.result)
             .chain(std::iter::once(&frame.names.exit))
             .chain(&frame.names.arguments)
+            .chain(&frame.names.var_parameters)
         {
             ensure!(
                 synthetic.insert(name.clone()),
@@ -552,11 +622,13 @@ fn check(
         }
         stack.extend(children(n));
     }
+    let aliases = vars.aliases();
     let mut checker = Checker {
         before: &before,
         after: &after,
         path: &symbol.path,
         origins: &origins,
+        aliases: &aliases,
         spec,
         libraries: &report["standardLibraryHashes"],
         cache: BTreeMap::new(),
@@ -566,7 +638,35 @@ fn check(
     for b in bm.values() {
         checker.targets(&b.targets, false, d)?;
     }
+    let mut assignments = BTreeMap::new();
+    for b in &e.var_assignments {
+        d.check()?;
+        exact(&b.span, &before)?;
+        let site = (b.span.start_byte, b.span.end_byte);
+        let node = vars
+            .ids
+            .get(&site)
+            .context("Body var witness has no original binding site")?;
+        ensure!(
+            b.span.path == symbol.path
+                && b.resolution == "resolved"
+                && !b.targets.is_empty()
+                && b.targets.len() <= 128
+                && assignments.insert(key(&b.span), b).is_none(),
+            "Body var assignment witness shape mismatch"
+        );
+        let original = vars.assignment_origin(*node, source, d)?;
+        let expected = bm
+            .get(&(symbol.path.clone(), original.0, original.1))
+            .context("Body var original value binding absent")?;
+        ensure!(
+            checker.targets(&b.targets, false, d)?
+                == checker.targets(&expected.targets, false, d)?,
+            "Body var initialization changes its original lexical target"
+        );
+    }
     let mut compared = 0usize;
+    let mut assignment_properties = 0usize;
     for b in bm.values() {
         d.check()?;
         let locations: Vec<_> = if b.span.path != symbol.path {
@@ -589,19 +689,42 @@ fn check(
         };
         if locations.is_empty() {
             ensure!(
-                key(&b.span) == definition_key || call_names.contains(&key(&b.span)),
+                key(&b.span) == definition_key
+                    || call_names.contains(&key(&b.span))
+                    || b.span.path == symbol.path
+                        && vars.removable(b.span.start_byte, b.span.end_byte),
                 "Body removes an unexplained original identifier"
             );
             continue;
         }
-        for (at, _) in locations {
+        for (at, role) in locations {
+            let original = if role == "var_assignment" {
+                assignments.get(&key(&b.span)).copied().unwrap_or(b)
+            } else {
+                b
+            };
             let a = am
                 .remove(&at)
                 .context("Body result binding coverage absent")?;
+            if role == "var_property" {
+                // A binding-pattern property read becomes an assignment-pattern
+                // PropertyAssignment name. TypeScript reports that own syntax
+                // symbol, not the original input-type property. Only the exact
+                // independently reconstructed key may make this transition.
+                ensure!(
+                    b.span.text == a.span.text
+                        && a.resolution == "resolved"
+                        && a.targets.len() == 1
+                        && matches!(&a.targets[0], Target::Captured{span} if key(span) == key(&a.span)),
+                    "Body var assignment property lacks its own exact syntax target"
+                );
+                assignment_properties += 1;
+                continue;
+            }
             ensure!(
                 b.span.text == a.span.text
-                    && b.resolution == a.resolution
-                    && checker.targets(&b.targets, false, d)?
+                    && original.resolution == a.resolution
+                    && checker.targets(&original.targets, false, d)?
                         == checker.targets(&a.targets, true, d)?,
                 "Body changed an original static binding"
             );
@@ -668,7 +791,7 @@ fn check(
     Ok((
         changes,
         result,
-        json!({"knownStaticBindingsCompared":compared,"survivingDeclarationTypesCompared":type_count,"sourceReconstruction":"original_function_body_frames_v1","complete":false}),
+        json!({"knownStaticBindingsCompared":compared,"survivingDeclarationTypesCompared":type_count,"sourceReconstruction":"original_function_body_frames_v1","varAssignmentPropertiesChecked":assignment_properties,"functionVarGroups":vars.groups.iter().map(|g|json!({"name":g.name,"declarations":g.ids.iter().map(|n|json!({"startByte":n.start_byte(),"endByte":n.end_byte()})).collect::<Vec<_>>(),"parameter":g.parameter.map(|n|json!({"startByte":n.start_byte(),"endByte":n.end_byte()})),"function":g.function.map(|n|json!({"startByte":n.start_byte(),"endByte":n.end_byte()}))})).collect::<Vec<_>>(),"complete":false}),
     ))
 }
 #[allow(clippy::too_many_arguments)]

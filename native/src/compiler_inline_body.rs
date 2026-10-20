@@ -7,6 +7,8 @@ use std::collections::BTreeSet;
 mod admission;
 #[path = "compiler_inline_body_parameters.rs"]
 mod parameters;
+#[path = "compiler_inline_body_vars.rs"]
+mod variables;
 pub(super) use admission::{classic, prepare};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -15,6 +17,8 @@ pub(super) struct Names {
     result: String,
     exit: String,
     arguments: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    var_parameters: Vec<String>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -25,6 +29,8 @@ pub(super) struct Frame {
     call_end: usize,
     names: Names,
     result_type: Option<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    var_types: Vec<Option<String>>,
 }
 #[derive(Debug)]
 pub(super) struct Copy {
@@ -40,6 +46,20 @@ pub(super) struct Rendered {
     pub copies: Vec<Copy>,
 }
 impl Rendered {
+    fn append(&mut self, other: Rendered) -> Result<()> {
+        let offset = self.text.len();
+        self.generated(&other.text)?;
+        ensure!(
+            self.copies.len().saturating_add(other.copies.len()) <= 20_000,
+            "Function-body copy capacity exceeded"
+        );
+        self.copies.extend(other.copies.into_iter().map(|mut c| {
+            c.output_start += offset;
+            c.output_end += offset;
+            c
+        }));
+        Ok(())
+    }
     fn generated(&mut self, text: &str) -> Result<()> {
         ensure!(
             self.text.len().saturating_add(text.len()) <= 4_000_000,
@@ -163,8 +183,7 @@ fn scope_forms(body: Node<'_>, source: &str, d: &Deadline) -> Result<()> {
         ensure!(
             !matches!(
                 n.kind(),
-                "variable_declaration"
-                    | "with_statement"
+                "with_statement"
                     | "await_expression"
                     | "yield_expression"
                     | "this"
@@ -279,6 +298,11 @@ pub(super) fn render(
         "Function-body statement ownership mismatch"
     );
     scope_forms(declaration, source, d)?;
+    let vars = variables::analyze(declaration, source, d)?;
+    ensure!(
+        vars.copies() == frame.names.var_parameters.len(),
+        "Var parameter copy shape mismatch"
+    );
     let called = call
         .child_by_field_name("function")
         .context("Function-body call target absent")?;
@@ -309,6 +333,7 @@ pub(super) fn render(
     let names: Vec<_> = std::iter::once(&frame.names.result)
         .chain(std::iter::once(&frame.names.exit))
         .chain(&frame.names.arguments)
+        .chain(&frame.names.var_parameters)
         .collect();
     ensure!(
         names.iter().all(|n| fresh_name(n))
@@ -399,32 +424,59 @@ pub(super) fn render(
         line,
         d,
     )?;
+    vars.captures(&mut out, source, &frame.names, line)?;
     out.generated(&format!("{}: ", frame.names.exit))?;
-    let mut cursor = body.start_byte();
+    out.original(source, body.start_byte(), body.start_byte() + 1, "body")?;
+    if !vars.groups.is_empty() {
+        out.generated(line)?;
+        vars.hoists(
+            &mut out,
+            source,
+            &frame.names,
+            &frame.var_types,
+            language,
+            line,
+        )?;
+    }
+    let mut replacements = vec![];
+    for change in &vars.changes {
+        let (start, end) = change.range();
+        replacements.push((start, end, variables::replacement(change, source, d)?));
+    }
     for ret in returns(body, d)? {
-        out.original(source, cursor, ret.start_byte(), "body")?;
+        let mut value_out = Rendered::default();
         let values = children(ret);
         ensure!(
             values.len() <= 1,
             "Function-body return expression multiplicity"
         );
-        out.generated(&format!("{{ {} = ", frame.names.result))?;
+        value_out.generated(&format!("{{ {} = ", frame.names.result))?;
         let tail_start = if let Some(value) = values.first() {
-            out.generated("(")?;
-            out.original(source, ret.start_byte() + 6, value.end_byte(), "body")?;
-            out.generated(")")?;
+            value_out.generated("(")?;
+            value_out.original(source, ret.start_byte() + 6, value.end_byte(), "body")?;
+            value_out.generated(")")?;
             value.end_byte()
         } else {
-            out.generated("void 0")?;
+            value_out.generated("void 0")?;
             ret.start_byte() + 6
         };
-        out.original(source, tail_start, ret.end_byte(), "body")?;
-        out.generated(&format!("; break {}; }}", frame.names.exit))?;
-        cursor = ret.end_byte();
+        value_out.original(source, tail_start, ret.end_byte(), "body")?;
+        value_out.generated(&format!("; break {}; }}", frame.names.exit))?;
+        replacements.push((ret.start_byte(), ret.end_byte(), value_out));
+    }
+    replacements.sort_by_key(|r| r.0);
+    ensure!(
+        replacements.len() <= 2000 && replacements.windows(2).all(|p| p[0].1 <= p[1].0),
+        "Body var/return reconstruction overlap or capacity"
+    );
+    let mut cursor = body.start_byte() + 1;
+    for (start, end, value) in replacements {
+        out.original(source, cursor, start, "body")?;
+        out.append(value)?;
+        cursor = end;
     }
     out.original(source, cursor, body.end_byte() - 1, "body")?;
-    // A finally break/continue can cancel a pending return. Normal completion
-    // must therefore clear its earlier value; an actual return exits the label.
+    // A finally break/continue can cancel a pending return.
     out.generated(&format!("{line}{} = void 0;{line}", frame.names.result))?;
     out.original(source, body.end_byte() - 1, body.end_byte(), "body")?;
     out.generated(&format!("{line}}}{line}}}{line}"))?;
@@ -516,6 +568,17 @@ mod tests {
             "const events=[];function helper(n){if(n){events.push(n);return n;}events.push(0);}const a=helper(2);const b=helper(0);globalThis.observed={a,b,events};",
             "const events=[];function helper(n){return /* begin */ events.push(n),n+2 /* end */;}const result=helper(/* café */3,/* extra */4,/* trailing */);globalThis.observed={result,events};",
             "const events=[];function helper(){events.push('called');return 7;}function outer(flag){if(flag)return helper(/* empty */);return 2;}globalThis.observed=[outer(false),outer(true),events];",
+            "function helper(n){var x=n+1;return x;}const result=helper(2);globalThis.observed=result;",
+            "function helper(){var before=typeof x;var x=1;return [before,x];}const result=helper();globalThis.observed=result;",
+            "function helper(n){var n=n+1;return n;}const result=helper(2);globalThis.observed=result;",
+            "function helper(n=1,f=()=>n){var n=2;return [n,f()];}const result=helper();globalThis.observed=result;",
+            "function helper(){const fs=[];for(var i=0;i<3;i++)fs.push(()=>i);return fs.map(f=>f());}const result=helper();globalThis.observed=result;",
+            "function helper(){const fs=[];for(var [n] of [[1],[2]])fs.push(()=>n);return fs.map(f=>f());}const result=helper();globalThis.observed=result;",
+            "function helper(){const fs=[];for(var n in {a:1,b:2})fs.push(()=>n);return fs.map(f=>f());}const result=helper();globalThis.observed=result;",
+            "function helper(){var {x:n=3,...rest}={y:4};return [n,rest];}const result=helper();globalThis.observed=result;",
+            "function helper(){try{throw 1;}catch(e){var e=2;}return e;}const result=helper();globalThis.observed={result,empty:result===undefined};",
+            "function helper(){var f;function f(){return 1;}return f();}const result=helper();globalThis.observed=result;",
+            "function helper(){var f=()=>1;return f.name;}const result=helper();globalThis.observed=result;",
         ];
         for source in cases {
             let d = Deadline::new(30_000);
@@ -558,7 +621,8 @@ mod tests {
                     serial += 1;
                     v
                 };
-                let names = Names {
+                let mut names = Names {
+                    var_parameters: vec![],
                     result: fresh(),
                     exit: fresh(),
                     arguments: children(call.child_by_field_name("arguments").unwrap())
@@ -566,6 +630,11 @@ mod tests {
                         .map(|_| fresh())
                         .collect(),
                 };
+                names.var_parameters = (0..variables::analyze(declaration, source, &d)
+                    .unwrap()
+                    .copies())
+                    .map(|_| fresh())
+                    .collect();
                 let frame = Frame {
                     statement_start: statement.start_byte(),
                     statement_end: statement.end_byte(),
@@ -573,6 +642,7 @@ mod tests {
                     call_end: call.end_byte(),
                     names,
                     result_type: None,
+                    var_types: vec![],
                 };
                 let out = render(&tree, source, "javascript", declaration, &frame, &d).unwrap();
                 for copy in &out.copies {
@@ -629,11 +699,13 @@ mod tests {
             call_start,
             call_end: source.len() - 1,
             names: Names {
+                var_parameters: vec![],
                 result: "__ci_inline_1".into(),
                 exit: "__ci_inline_2".into(),
                 arguments: vec!["__ci_inline_3".into(), "__ci_inline_4".into()],
             },
             result_type: None,
+            var_types: vec![],
         };
         let out = render(&tree, source, "typescript", declaration, &frame, &d).unwrap();
         assert!(

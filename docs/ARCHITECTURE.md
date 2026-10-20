@@ -8,8 +8,10 @@ parameter/body scopes; checked defaults, rest/patterns and labelled returns keep
 finite source and compiler binding correspondence. Normal completion clears a
 return cancelled by finally control flow. Every replacement is reconstructed
 natively before ordinary planning; static observations do not attest general
-runtime equivalence. Var-hoisting and wider invocation/expression forms remain
-open. See [compiler inlining](../native/docs/compiler-inline.md).
+runtime equivalence. Function-owned var hoists retain original-position
+initializers, shared loop storage and separate parameter/catch assignment roles.
+Explicit annotations and fixed primitive hints retain admitted compiler types.
+Wider inferred types and invocation/expression forms remain open. See [compiler inlining](../native/docs/compiler-inline.md).
 
 The compiler-move repair stage reconstructs direct named reexport partitions and
 fresh local import aliases from original/current immutable source anchors.

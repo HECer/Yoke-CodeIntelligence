@@ -39,6 +39,26 @@ a finally break/continue can cancel a pending return. Original finally blocks
 still run and may override a return. An explicit return annotation is copied
 from source; inferred primitive return hints have a fixed keyword whitelist.
 
+Function-owned `var` names are hoisted once inside the body block. Initializers
+stay at their original execution positions, including ordinary `for`, `for-in`
+and `for-of` loops. The hoisted storage is shared by loop closures; it does not
+create a fresh lexical variable for each iteration. Duplicate and escaped names
+use their decoded function binding. Nested functions and classes retain their
+own declarations unchanged. Parameter collisions copy initialized parameter
+values before the body block, so closures created by parameter defaults retain
+their separate parameter environment. A `var` initializer inside a simple
+same-name `catch` still assigns the catch parameter while retaining its distinct
+function-owned declaration.
+
+Original explicit type annotations provide contextual typing for initializers.
+Inferred primitive storage types use the same fixed keyword whitelist, with exact
+original type witnesses and explicit initial `undefined` storage. Other inferred
+types must pass the full projected compiler context without generated arbitrary
+type expressions. Some valid runtime forms, including TypeScript's rejected
+function/var declaration combinations, therefore still refuse at the compiler
+gate. Destructuring property reads and assignment-property syntax have separate
+checked correspondence roles; raw compiler observations remain intact.
+
 Native admission checks exact function/call/statement anchors, canonical fresh
 names (including escaped identifier spellings), source-copy correspondences,
 complete reported bound-call coverage and original identifier coverage. Before
@@ -56,7 +76,7 @@ rows and 10,000 type rows per observation set. Each type is at most 16 KB, with
 2 MB aggregate type text per set. Shared compiler request/reply/deadline bounds
 still apply. Limits refuse instead of clipping a complete result.
 
-`var` hoisting, invocation-bound `this`/`super`/`arguments`/meta properties,
+Invocation-bound `this`/`super`/`arguments`/meta properties,
 async/generator/generic frames, spread arguments, wider expression sequencing,
 nominal private classes and broader declaration/context/runtime equivalence
 remain open. Such inputs fail visibly. Body expansion remains `complete=false`

@@ -2,37 +2,36 @@
 
 ## Current integration work
 
-Classic function-body expansion now has a separate native statement-frame route
-under the existing optional `inlineCompiler` profile. Arguments evaluate before
-defaults/rest/destructuring parameters. Original body/caller bytes, nested returns,
-finally cancellation, static targets and declaration type coverage are checked
-before ordinary guarded planning. Anonymous default names and contextual types
-retain their source meaning. Direct eval refuses even through parentheses, Unicode
-escapes and TypeScript erasures/instantiations. Preparation executes no analyzed code.
+Classic function-body expansion under the optional `inlineCompiler` profile now
+reconstructs function-owned `var` hoists, original-position initializers and shared
+loop storage. Parameter copies preserve default-closure environments; duplicate,
+escaped, destructured and simple catch bindings have separate exact source and
+assignment correspondence. Nested scopes retain their own declarations. Original
+annotations and fixed primitive hints preserve admitted compiler types. Arguments,
+defaults/rest, labelled returns, finally cancellation and eval refusal retain their
+existing contract. Preparation executes no analyzed source.
 
-The final targeted compiler/body run is **14 passed / 0 failed**, across two
-groups on 805 unchanged native inputs, with format/build/all-target Clippy passed.
-Before the final wrapper extension, the guard phase passed four units plus
-82 integration tests with two existing gates ignored. The preceding broader
-snapshot passed **668 / 0 / 9 existing ignored**, across 14 groups. Those are
-different frozen source sets and overlapping scopes; counts are not added.
-Python17, typecheck and TypeScript260/3skipped pass on 799 fixed retained inputs.
-Only documentation/tracker metadata changes after these checks, with a separate
-proof preserving all runtime bytes and all other decoded tracker data.
+The broad scoped run passed **109 integrations / 0 failures / 2 existing ignored**
+across eight targets, plus seven body units, on 807 unchanged native inputs.
+After restoring two original Unicode test literals, all production text and the
+other 806 inputs match that freeze. The current review passes seven body units and
+separately executes both previously ignored live session tests with actual
+TypeScript 5.8.3 and language-server 5.1.3. Format/build/all-target Clippy pass.
+Python17, typecheck and TypeScript260/3skipped pass on 801 fixed retained inputs.
+The distinct frozen scopes overlap; totals are not added.
 
-Seven new integration functions cover twelve parameter and eleven control-flow
-scenarios, both analyzer epochs, retained definitions, JS/export forms, two real
-CLI verification/approval/apply/recovery scenarios and nine eval refusals. Four
-additional real CLI counterprobes leave no plan/report/derived snapshot and retain
-all input bytes. Runtime comparisons execute only owned literal fixtures. Failed
-development phases, the finally regression and earlier incorrect eval admissions
-remain indexed beside their corrected checks.
+Two new integration functions cover 21 var scenarios; three new unit functions
+cover forged assignment/type/property/capture witnesses, Unicode and budgets.
+Four body CLI verification/approval/apply/recovery scenarios include two new var
+cases. Runtime comparisons execute only owned literal fixtures. Failed development
+phases and the original invalid TypeScript fixture remain archived. Only documented
+metadata changes follow the accepted checks, with exact runtime and tracker proofs.
 
-Var hoisting, wider expression/invocation/declaration/language/consumer forms and
-full R1-R9/Windows/current-head hosted/upstream acceptance remain open. Existing
-OS1314/macOS failures and production App deployment remain separate. See
+Wider inferred types, expression/invocation/declaration/language/consumer forms and
+full STATUS/R1-R9/Windows/current-head hosted/upstream acceptance remain open.
+Existing OS1314/macOS failures and production App deployment remain separate. See
 [the body contract](../native/docs/compiler-inline.md#classic-function-body-statements)
-and [owned evidence](validation/integration-2026-10-19/function-body-inline/README.md).
+and [var evidence](validation/integration-2026-10-19/function-var-hoisting/README.md).
 
 Captured missing compiler-move imports now reconstruct original named/default/
 namespace bindings and source-owned top-level free dependencies. Native checks

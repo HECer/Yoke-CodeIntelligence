@@ -239,9 +239,98 @@ fn parameter_initialization_preserves_defaults_rest_patterns_optional_types_and_
     }
 }
 #[test]
+fn actual_var_hoisting_preserves_parameter_environments_loops_patterns_and_catch_assignments() {
+    for source in [
+        "function helper(n:number):number{var x=n+1;return x;}const result=helper(2);export const observed=result;",
+        "function helper(n=1,f=()=>n):number[]{var n=2;return [n,f()];}const result=helper();export const observed=result;",
+        "function helper(n:number):number{var n:number;n++;return n;}const result=helper(2);export const observed=result;",
+        "function helper():number{var x:number=1;var x:number;x++;return x;}const result=helper();export const observed=result;",
+        "function helper():number[]{const fs:Array<()=>number>=[];for(var i=0;i<3;i++)fs.push(()=>i);return fs.map(f=>f());}const result=helper();export const observed=result;",
+        "function helper():number[]{const fs:Array<()=>number>=[];for(var [n] of [[1],[2]])fs.push(()=>n);return fs.map(f=>f());}const result=helper();export const observed=result;",
+        "function helper():string[]{const fs:Array<()=>string>=[];for(var n in {a:1,b:2})fs.push(()=>n);return fs.map(f=>f());}const result=helper();export const observed=result;",
+        "function helper():unknown{var {x:n=3,...rest}:{x?:number,y?:number}={y:4};return [n,rest];}const result=helper();export const observed=result;",
+        "function helper():unknown{try{throw 1;}catch(e){var e=2;}return e;}const result=helper();export const observed={result,empty:result===undefined};",
+        "function helper():string[]{const fs:Array<()=>string>=[];for(var i=0;i<3;i++)fs.push(()=>i.toFixed());return fs.map(f=>f());}const result=helper();export const observed=result;",
+        "function helper(n:number):number{type Count=number;var x:Count=n+1;return x;}const result=helper(2);export const observed=result;",
+        "function helper(n:number):()=>number{var x=n;return ()=>++x;}const a=helper(1);const b=helper(10);export const observed=[a(),a(),b(),a(),b()];",
+        "function helper(n:number):number{var \\u006e:number;n++;return n;}const result=helper(2);export const observed=result;",
+    ] {
+        let (root, mut engine) = fixture(source, "ts");
+        let result =
+            yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+                .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        let after = planned(&engine, &result, "ts");
+        same_execution(source, &after);
+        assert!(!after.contains("var "), "{after}");
+        assert_eq!(
+            fs::read_to_string(root.path().join("main.ts")).unwrap(),
+            source
+        );
+    }
+}
+#[test]
+fn var_lowering_keeps_jsdoc_nested_scopes_comments_unicode_and_finally() {
+    for (source, language) in [
+        (
+            "/** @param {number} n */\nfunction helper(n){var x=n+1;return x;}const result=helper(2);export const observed=result;",
+            "js",
+        ),
+        (
+            "function helper(){/** @type {Array<()=>number>} */ const fs=[];for(var i=0;i<3;i++)fs.push(()=>i);return fs.map(f=>f());}const result=helper();export const observed=result;",
+            "js",
+        ),
+        (
+            "function helper(n=1,read=()=>n){var n=2;return [n,read()];}const result=helper();export const observed=result;",
+            "js",
+        ),
+        (
+            "function helper():number{function inner(){var x=4;return x;}class Local{static {var x=7;}value(){var x=3;return x;}}var x=inner();return x+new Local().value();}const result=helper();export const observed=result;",
+            "ts",
+        ),
+        (
+            "// 🌍\r\nfunction helper(n:number):number{var /* café */ 値 /* lhs */ : number /* equals */ = /* rhs */ n+1, /* comma */ x:number; x=値;return x;}\r\nconst result=helper(2);export const observed=result;\r\n",
+            "ts",
+        ),
+        (
+            "function helper():unknown{var xs:number[]=[];for(var i=0;i<2;i++){try{return i;}finally{xs.push(i);continue;}}return [i,xs];}const result=helper();export const observed=result;",
+            "ts",
+        ),
+        (
+            "function helper():number{var {x:f=()=>{const {n:v}:{n:number}={n:4};return v;}}:{x?:()=>number}={};return f();}const result=helper();export const observed=result;",
+            "ts",
+        ),
+        (
+            "function helper():unknown{var {a:{x:n=3}}:{a:{x?:number}}={a:{}};return n;}const result=helper();export const observed=result;",
+            "ts",
+        ),
+    ] {
+        let (root, mut engine) = fixture(source, language);
+        let result =
+            yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, language), &d())
+                .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        let after = planned(&engine, &result, language);
+        same_execution(source, &after);
+        for comment in [
+            "/* café */",
+            "/* lhs */",
+            "/* equals */",
+            "/* rhs */",
+            "/* comma */",
+        ] {
+            if source.contains(comment) {
+                assert!(after.contains(comment), "{after}");
+            }
+        }
+        assert_eq!(
+            fs::read_to_string(root.path().join(format!("main.{language}"))).unwrap(),
+            source
+        );
+    }
+}
+#[test]
 fn unsafe_or_unowned_body_forms_refuse_before_any_plan_or_derived_source() {
     for source in [
-        "function helper(n:number){var x=n+1;return x;} export const observed=helper(2);",
+        "function helper():number{var f;function f(){return 4;}return f();}const result=helper();export const observed=result;",
         "function helper(n:number){return arguments[0];} export const observed=helper(2);",
         "function helper(n:number):unknown{return this;} export const observed=helper(2);",
         "async function helper(n:number){return n+1;} export const observed=helper(2);",
@@ -341,6 +430,14 @@ fn body_cli_plans_require_independent_verification_approval_and_foreign_preservi
         (
             "export function helper({n=2}:{n?:number}={}):number{return n+1;}export const observed=helper();\n",
             true,
+        ),
+        (
+            "function helper(n=1,read=()=>n):number[]{var n=2;return [n,read()];}export const observed=helper();\n",
+            false,
+        ),
+        (
+            "function helper():number[]{const fs:Array<()=>number>=[];for(var i=0;i<3;i++)fs.push(()=>i);return fs.map(f=>f());}export const observed=helper();\n",
+            false,
         ),
     ] {
         let (root, mut engine) = fixture(source, "ts");
