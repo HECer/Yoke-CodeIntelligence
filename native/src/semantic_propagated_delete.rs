@@ -13,7 +13,7 @@ use std::{
     collections::{BTreeMap, BTreeSet},
     ops::Range,
 };
-use tree_sitter::{Parser, Tree};
+use tree_sitter::{Node, Parser, Tree};
 
 #[path = "semantic_propagated_delete_ast.rs"]
 mod result_ast;
@@ -25,12 +25,13 @@ const MAX_REFERENCES: usize = 4000;
 const MAX_USAGES: usize = 128;
 const DIRECT: &str = "captured_es_function_propagation_v1";
 const WRAPPED: &str = "captured_es_function_propagation_v2";
+const BINDINGS: &str = "captured_es_function_propagation_v3";
 const MAX_WRAPPERS: usize = 32;
 
 pub(super) fn validate_policy(args: &Value) -> Result<()> {
     if let Some(policy) = args.get("propagationPolicy") {
         ensure!(
-            matches!(policy.as_str(), Some(DIRECT | WRAPPED))
+            matches!(policy.as_str(), Some(DIRECT | WRAPPED | BINDINGS))
                 && args["propagate"] == true
                 && args["namePath"]
                     .as_str()
@@ -66,11 +67,41 @@ struct Module {
     declarations: Vec<Declaration>,
 }
 
+fn declaration(node: Node<'_>, bindings: bool) -> Result<Node<'_>> {
+    if node.kind() == "function_declaration" && node.child_by_field_name("body").is_some() {
+        return Ok(node);
+    }
+    ensure!(
+        bindings && matches!(node.kind(), "lexical_declaration" | "variable_declaration"),
+        UNSUPPORTED
+    );
+    ensure!(
+        node.named_child_count() == 1
+            && node
+                .child(0)
+                .is_some_and(|token| matches!(token.kind(), "const" | "let" | "var")),
+        "Propagation requires one statement function-valued binding"
+    );
+    let binding = node.named_child(0).context(UNSUPPORTED)?;
+    let name = binding.child_by_field_name("name").context(UNSUPPORTED)?;
+    let value = binding.child_by_field_name("value").context(UNSUPPORTED)?;
+    ensure!(
+        binding.kind() == "variable_declarator"
+            && name.kind() == "identifier"
+            && matches!(value.kind(), "arrow_function" | "function_expression")
+            && value.child_by_field_name("body").is_some()
+            && value.child_by_field_name("name").is_none(),
+        "Propagation requires a plain binding to an arrow or anonymous function"
+    );
+    Ok(binding)
+}
+
 fn parse(
     file: &SourceFile,
     text: &str,
     graph: &Graph,
     selected: &Entity,
+    bindings: bool,
     d: &Deadline,
 ) -> Result<Module> {
     ensure!(text.len() <= 256_000, CAPACITY);
@@ -105,10 +136,7 @@ fn parse(
         } else {
             root
         };
-        ensure!(
-            node.kind() == "function_declaration" && node.child_by_field_name("body").is_some(),
-            UNSUPPORTED
-        );
+        let node = declaration(node, bindings)?;
         let name = node.child_by_field_name("name").context(UNSUPPORTED)?;
         let name_text = name.utf8_text(text.as_bytes())?;
         ensure!(
@@ -546,7 +574,7 @@ pub(super) fn prepare(
         .get("propagationPolicy")
         .and_then(Value::as_str)
         .unwrap_or(DIRECT);
-    let wrapped = policy == WRAPPED;
+    let wrapped = policy != DIRECT;
     let file = snapshot
         .files
         .iter()
@@ -566,7 +594,7 @@ pub(super) fn prepare(
     );
     let texts = inventory(engine, snapshot, selected, d)?;
     let text = texts.get(&file.path).context(UNSUPPORTED)?;
-    let mut module = parse(&file, text, graph, selected, d)?;
+    let mut module = parse(&file, text, graph, selected, policy == BINDINGS, d)?;
     originals(engine, snapshot, d)?;
     let mut provider_context = None;
     let mut total_references = 0usize;

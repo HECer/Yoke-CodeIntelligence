@@ -270,3 +270,8 @@ The native [session refactoring route](docs/agent-sessions.md#native-semantic-pl
 exposes existing semantic plans through `session --requests` and `ci_session`.
 It retains mode, project, current-session, provider and source checks, with
 separate approval, verification, workspace writes and recovery.
+
+Explicit [function binding propagation](docs/propagated-delete.md#explicit-function-binding-policy)
+adds single plain const/let/var arrow or anonymous-function bindings under v3.
+Original entity/evidence ranges, mandatory provider proofs and guarded application
+remain; defaultv1 and explicitv2 keep their named-function module boundary.
