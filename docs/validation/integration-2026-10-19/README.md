@@ -1,5 +1,10 @@
 # Integration development evidence, 2026-10-19 local
 
+Source-derived inferred var types have [separate evidence](function-body-types/README.md):
+original-byte cold carriers, destructured type coverage and ordered control frames;
+111 scoped integration passes and nine body units. Counts overlap; full STATUS/
+Windows acceptance remains open.
+
 Function-owned var hoisting now has [separate evidence](function-var-hoisting/README.md):
 original-byte reconstruction, parameter/catch/loop bindings and type witnesses;
 109 scoped integration passes, seven units and two separately selected live
