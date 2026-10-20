@@ -29,6 +29,14 @@ pub struct Arguments {
 }
 #[derive(Subcommand)]
 enum Operation {
+    PlanRecord {
+        #[arg(long)]
+        input: PathBuf,
+    },
+    PlanRank {
+        #[arg(long)]
+        input: PathBuf,
+    },
     Record {
         #[arg(long)]
         input: PathBuf,
@@ -51,6 +59,8 @@ enum Operation {
     },
 }
 enum Input {
+    PlanRecord(Box<feedback::plans::Draft>),
+    PlanRank(Box<feedback::plans::RankInput>),
     Record(Box<Draft>),
     Rank(Box<RankInput>),
     Transcript {
@@ -141,7 +151,9 @@ impl Arguments {
     pub fn check_permission(&self, allow_writes: bool) -> Result<()> {
         let write = matches!(
             self.operation,
-            Operation::Record { .. } | Operation::ImportTranscript { .. }
+            Operation::Record { .. }
+                | Operation::PlanRecord { .. }
+                | Operation::ImportTranscript { .. }
         );
         if write {
             ensure!(allow_writes, "feedback_write_permission_required");
@@ -167,6 +179,20 @@ impl Arguments {
         feedback::validate_options(&options)?;
         let input = (|| -> Result<Input> {
             Ok(match &self.operation {
+                Operation::PlanRecord { input } => {
+                    let bytes = host_bytes(input, feedback::MAX_DRAFT_BYTES, d)?;
+                    let draft =
+                        yoke::json::decode(yoke::json::parse(&bytes, feedback::MAX_DRAFT_BYTES)?)?;
+                    feedback::plans::validate_draft(&draft, d)?;
+                    Input::PlanRecord(Box::new(draft))
+                }
+                Operation::PlanRank { input } => {
+                    let bytes = host_bytes(input, feedback::MAX_DRAFT_BYTES, d)?;
+                    let query =
+                        yoke::json::decode(yoke::json::parse(&bytes, feedback::MAX_DRAFT_BYTES)?)?;
+                    feedback::plans::validate_rank(&query, d)?;
+                    Input::PlanRank(Box::new(query))
+                }
                 Operation::Record { input } => {
                     let bytes = host_bytes(input, feedback::MAX_DRAFT_BYTES, d)?;
                     let draft: Draft =
@@ -208,6 +234,12 @@ impl Arguments {
 impl Prepared {
     pub fn run(&self, engine: &Engine, d: &Deadline) -> Result<bool> {
         let result = match &self.input {
+            Input::PlanRecord(input) => {
+                feedback::plans::record(&engine.store, input, &self.options, d)?
+            }
+            Input::PlanRank(input) => {
+                feedback::plans::rank(&engine.store, input, &self.options, d)?
+            }
             Input::Record(input) => feedback::record(&engine.store, input, &self.options, d)?,
             Input::Rank(input) => feedback::rank(&engine.store, input, &self.options, d)?,
             Input::Transcript {

@@ -192,6 +192,11 @@ Knowledge records are project assertions with source hashes and explicit stalene
 
 Explicit [outcome feedback](docs/outcome-feedback.md) binds authored results to original native Views and exact source or imported transcript quotes. Ranking exposes sequence selection, integer age decay and stale-source exclusions; literal transcript mining returns candidates for explicit host selection. Assertions and ranking scores never establish observed execution or independent corroboration.
 
+`feedback plan-record` and `plan-rank` separately bind authored historical outcomes
+to replayed saved change plans and their exact base/planned-result source bytes.
+The original knowledge-event format stays unchanged. Planned results and scores
+grant no current applicability, application, verification or execution authority.
+
 The editor command prints one loopback endpoint and a random per-process bearer token. Keep this token private. The API exposes saved/unsaved capture and read tools; it cannot grant source writes or select provider executables. Buffer text and immutable history are retained in local state. A Rust VSIX can be built from a matching native archive with `python scripts/package-vscode.py --native-archive ARCHIVE --output PACKAGE.vsix`.
 
 `ci_read artifactId` and MCP resources expose registered published artifacts or ordinary local-snapshot source hashes. Unpublished and remote-only raw blobs are unavailable through those generic paths. Artifact pages are snapshot-neutral; authoritative scope remains in the original artifact or explicit source query. Binary paging requires `encoding: "base64"` and advances byte cursors without dropping bytes.
