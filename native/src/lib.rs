@@ -49,6 +49,7 @@ pub mod meaning_aliases;
 pub mod meaning_build;
 pub mod meaning_graph;
 pub mod meaning_groups;
+pub mod meaning_identity;
 pub mod meaning_join;
 pub mod meaning_projection;
 pub mod meaning_view;

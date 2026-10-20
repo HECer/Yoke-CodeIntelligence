@@ -10,7 +10,7 @@ original inventory references and historical checkpoint evidence.
 | Area | Implemented contracts | Remaining work |
 | --- | --- | --- |
 | R1: semantic edits | Guarded native/provider planning, exact declaration ownership, directory/file usage checks, explicit TS/JS propagation and session routing. | Broader declaration, file and language shapes and provider intents, especially inline/move and compiler-bound consumer behavior; qualify each extension with its actual selected provider and independent apply/recovery. |
-| R2: meaning and identity | Checked native graphs/joins, portable data projections, and the separate mixed-source preparation/build/query/composition contracts. | Explicit semantic identity/deduplication policy and broader interpretation/outcome behavior. Existing mixed capabilities preserve separate namespaces; aliases and host link assertions establish no identity. |
+| R2: meaning and identity | Checked native graphs/joins, portable projections and mixed preparation/build/query/composition. A separate native MinHash/Jaro candidate policy, durable explicit model adjudication, source-replayed positive-clique quotient and frozen node/degree/trace queries preserve every original observation. | Other source/history/workspace identity, wider normalization/survivor rules, interpretation/outcome surfaces and live semantic-quality/upstream acceptance. Existing mixed aliases and host links keep their original namespace/authority boundaries; model equivalence remains unverified. |
 | R3: historical analytics | Explicit checked pair-of-Views comparison with complete parent pins, immutable source/receipt replay and directed observations. | Remaining upstream analytics equivalence and acceptance. A bare previousSnapshotId remains insufficient to select two Views; that refusal is an intentional precondition. |
 | R4: mixed documents | Native/Office XML/decoded/PDF spaces, fixed input preparation, checked claims, explicit provider jobs, checked graph queries and independently checked cross-workspace/history composition. | Broader mixed analytics, external semantic-provider qualification and exhaustive interpretation remain open. CLI composition currently selects one explicit Store; library callers may supply separately checked parents from different workspaces. |
 | R5: Git interpretation | Captured impact, areas, conflict stages, hierarchy candidates and finite CODEOWNERS interpretation with original byte evidence and visible unknowns. | Wider report/ownership semantics, compiler-bound override/dispatch identity, remote freshness and upstream schema equivalence. Captured labels grant no identity, review or merge authority. |
@@ -38,6 +38,18 @@ their complete submitted units to these declaration witnesses. Source quotes,
 original receipts and semantic claims remain distinct from interpretation truth.
 
 ## Acceptance still required
+
+Native semantic identity passes all 22 new cases (18 integration / four unit),
+including independent MinHash vectors, exact source/original billing replay,
+complete-clique policy, lossless topology, frozen queries, bounded SQL admission
+and actual CLI recovery. The broader ten-target run **failed: 574 passed / one
+failed / seven ignored**. The unchanged Windows host-alias fixture still fails
+at symlink setup, OS1314. Its file and host reader remain exact; original alias
+normalization/Jaro bodies are unchanged, and legacy join CLI13 passes. Format,
+build, all-target Clippy, Python17, typecheck and TypeScript260/3skipped pass on
+fixed 784 native / 780 retained inputs. Actual semantic accuracy and further
+source/history/workspace/upstream/platform qualification remain open. See
+[identity evidence](validation/integration-2026-10-19/semantic-identity/README.md).
 
 Semantic transcript candidates pass all 15 new cases. The broader nine-target
 native run records 93 passed / one failed / zero ignored. The unchanged Windows

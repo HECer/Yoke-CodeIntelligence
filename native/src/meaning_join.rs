@@ -316,6 +316,27 @@ pub struct JoinedGraph {
     value: Value,
     graph_ids: Vec<String>,
 }
+/// Internal engine adapter. Only the separate source/response-checked identity
+/// capability exposes this quotient query path to external callers.
+pub(crate) fn query_identity_projection(
+    value: &Value,
+    graph_ids: &[String],
+    q: &Query,
+    limit: usize,
+    d: &Deadline,
+) -> Result<Value> {
+    input(value["kind"] == "meaning_identity_quotient_v1")?;
+    query::run_projection(
+        value,
+        graph_ids,
+        q,
+        limit,
+        64_000_000,
+        "meaning_identity_query_v1",
+        d,
+    )
+    .map_err(|e| sanitized(e, d))
+}
 impl JoinedGraph {
     pub fn as_value(&self) -> &Value {
         &self.value

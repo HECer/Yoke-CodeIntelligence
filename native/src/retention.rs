@@ -737,6 +737,7 @@ type ParityDependencies = (
     BTreeSet<String>,
     BTreeSet<String>,
     BTreeSet<String>,
+    BTreeSet<String>,
 );
 fn add_meaning_dependencies(
     store: &Store,
@@ -762,10 +763,12 @@ fn add_meaning_dependencies(
     Ok(())
 }
 fn validate_parity_records(store: &Store, deadline: &Deadline) -> Result<ParityDependencies> {
+    crate::meaning_identity::admit_retained_namespace(store, deadline)?;
     let mut recognized = BTreeSet::new();
     let mut artifacts = BTreeSet::new();
     let mut federation_namespaces = BTreeSet::new();
     let mut typed_references = BTreeSet::new();
+    let mut identity_artifacts = BTreeSet::new();
     let mut statement = store
         .db
         .prepare("SELECT kind,id,value FROM records ORDER BY kind,id")?;
@@ -879,6 +882,22 @@ fn validate_parity_records(store: &Store, deadline: &Deadline) -> Result<ParityD
                 // only CAS objects belong in the artifact roots set.
                 artifacts.extend(roots.artifact_ids);
             }
+            crate::meaning_identity::JOB_KIND => {
+                let roots = crate::meaning_identity::validate_retained_record(
+                    store,
+                    &id,
+                    &json_value(&raw)?,
+                    deadline,
+                )?;
+                identity_artifacts.extend(roots.artifacts.iter().cloned());
+                add_meaning_dependencies(
+                    store,
+                    roots,
+                    &mut artifacts,
+                    &mut typed_references,
+                    deadline,
+                )?;
+            }
             crate::mixed_view::provider::JOB_KIND => {
                 let roots = crate::mixed_view::provider::validate_retained_record(
                     store,
@@ -955,6 +974,7 @@ fn validate_parity_records(store: &Store, deadline: &Deadline) -> Result<ParityD
         artifacts,
         federation_namespaces,
         typed_references,
+        identity_artifacts,
     ))
 }
 fn known_artifact(value: &Value) -> Result<bool> {
@@ -1107,8 +1127,13 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
         .collect();
     out.references.extend(feedback_ids.iter().cloned());
     out.all_references.extend(feedback_ids);
-    let (parity_records, parity_artifacts, federation_namespaces, typed_references) =
-        validate_parity_records(store, deadline)?;
+    let (
+        parity_records,
+        parity_artifacts,
+        federation_namespaces,
+        typed_references,
+        identity_artifacts,
+    ) = validate_parity_records(store, deadline)?;
     out.references.extend(typed_references.iter().cloned());
     out.all_references.extend(typed_references);
     out.references.extend(parity_artifacts.iter().cloned());
@@ -1274,6 +1299,14 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
         if !known_kind(&kind) && !parity_records.contains(&(kind.clone(), id.clone())) {
             out.unknown.insert(kind.clone());
         }
+        if kind == crate::meaning_identity::JOB_KIND {
+            ensure!(
+                parity_records.contains(&(kind.clone(), id.clone())),
+                "Invalid meaning identity job"
+            );
+            // Only the already validated typed closure supplies roots.
+            continue;
+        }
         if kind == crate::github_app::RECORD_KIND {
             ensure!(
                 github_inline_ids.contains(&id),
@@ -1406,6 +1439,11 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
                     out.unknown.insert("artifact:capacity".into());
                 } else {
                     checked_hash(&path, artifact_id, deadline)?;
+                    if identity_artifacts.contains(artifact_id) {
+                        // Bound payload/reply/result strings are observations,
+                        // never additional retention grants.
+                        continue;
+                    }
                     match serde_json::from_slice::<Value>(&fs::read(path)?) {
                         Ok(content) => {
                             if !parity_artifacts.contains(artifact_id) && !known_artifact(&content)?

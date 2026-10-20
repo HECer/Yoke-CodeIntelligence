@@ -30,6 +30,7 @@ mod github_discussions_cli;
 mod host_install_cli;
 mod meaning_archive_cli;
 mod meaning_cli;
+mod meaning_identity_cli;
 mod meaning_projection_cli;
 mod mixed_meaning_cli;
 mod mixed_view_cli;
@@ -94,6 +95,7 @@ enum ExtensionOperation {
     HostInstall(Box<host_install_cli::Arguments>),
     MeaningArchive(Box<meaning_archive_cli::Arguments>),
     Meaning(Box<meaning_cli::Arguments>),
+    MeaningIdentity(Box<meaning_identity_cli::Arguments>),
     MeaningProjection(Box<meaning_projection_cli::Arguments>),
     PostgresCatalog(Box<postgres_catalog_cli::Arguments>),
     Neo4jPublish(Box<neo4j_publish_cli::Arguments>),
@@ -1961,6 +1963,7 @@ fn run_parity(
         ExtensionOperation::HostInstall(_) => bail!("Host installation dispatch error"),
         ExtensionOperation::MeaningArchive(_) => bail!("Meaning archive host dispatch error"),
         ExtensionOperation::Meaning(_) => bail!("Meaning graph host dispatch error"),
+        ExtensionOperation::MeaningIdentity(_) => bail!("Meaning identity host dispatch error"),
         ExtensionOperation::MeaningProjection(_) => {
             bail!("Portable projection host dispatch error")
         }
@@ -3572,6 +3575,28 @@ fn run(cli: Cli) -> Result<bool> {
             .map_err(|_| anyhow::anyhow!("github_app_store_unavailable"))?;
         let engine = Engine::open_with_timeout(&cli.root, deadline.remaining())
             .map_err(|_| anyhow::anyhow!("github_app_store_unavailable"))?;
+        engine.store.set_deadline(&deadline)?;
+        return prepared.run(&engine, &deadline);
+    }
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::MeaningIdentity(args) = extension.as_ref()
+    {
+        args.check_permission(cli.allow_writes)?;
+        ensure!(
+            (10..=600_000).contains(&cli.timeout)
+                && cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.analyzer_epoch.is_none()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers,
+            "meaning_identity_input_invalid"
+        );
+        let deadline = Deadline::new(cli.timeout);
+        let prepared = args.prepare(cli.max_bytes, &deadline)?;
+        validate_existing_batch_store(&cli.root, &deadline)
+            .map_err(|_| anyhow::anyhow!("meaning_identity_store_unavailable"))?;
+        let engine = Engine::open_with_timeout(&cli.root, deadline.remaining())?;
         engine.store.set_deadline(&deadline)?;
         return prepared.run(&engine, &deadline);
     }

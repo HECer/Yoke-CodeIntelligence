@@ -90,10 +90,28 @@ fn resolve<'a>(nodes: &'a [Value], reference: &ConceptRef, d: &Deadline) -> Resu
     Err(failure("meaning_join_input_invalid"))
 }
 pub(super) fn run(graph: &JoinedGraph, q: &Query, limit: usize, d: &Deadline) -> Result<Value> {
-    validate_query(q, &graph.graph_ids, d)?;
-    input(limit <= MAX_OUTPUT)?;
+    run_projection(
+        graph.as_value(),
+        &graph.graph_ids,
+        q,
+        limit,
+        MAX_OUTPUT,
+        "meaning_join_query_v1",
+        d,
+    )
+}
+pub(super) fn run_projection(
+    value: &Value,
+    graph_ids: &[String],
+    q: &Query,
+    limit: usize,
+    maximum: usize,
+    kind: &'static str,
+    d: &Deadline,
+) -> Result<Value> {
+    validate_query(q, graph_ids, d)?;
+    input(limit <= maximum)?;
     capacity(limit > 0)?;
-    let value = graph.as_value();
     let nodes = rows(value, "nodes")?;
     let relations = rows(value, "relations")?;
     let hyperedges = rows(value, "hyperedges")?;
@@ -196,7 +214,7 @@ pub(super) fn run(graph: &JoinedGraph, q: &Query, limit: usize, d: &Deadline) ->
             .filter(|(k, _)| !matches!(k.as_str(), "kind" | "nodes" | "relations" | "hyperedges"))
             .map(|(k, v)| (k.as_str(), v))
             .collect(),
-        kind: "meaning_join_query_v1",
+        kind,
         query: q,
         traversal: "directed_relations_only",
         selection: "induced_relations_and_fully_contained_hyperedges",

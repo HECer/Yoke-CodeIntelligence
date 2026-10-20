@@ -2,6 +2,30 @@
 
 ## Current integration work
 
+Explicit [native semantic identity](../native/docs/meaning-identity.md) adds
+source-replayed MinHash/Jaro candidates, one host-authorized model adjudication
+job and a lossless positive-clique quotient. Original concepts, directed parallel
+observations, role slots and original receipts remain unchanged. Provider-free
+node/degree/trace queries consume the frozen checked result, including after Store
+loss. Bound bills and unknown reservations retain their original meaning through
+failure/recovery and later ledger observations. Model interpretations establish
+no semantic truth or execution. Broader source/history/workspace identity,
+upstream normalization/survivor rules and live semantic quality remain open.
+
+All **22 new identity cases pass** (18 integration / four unit), with independent
+MinHash vectors, actual CLI/lost-stdout recovery, unchanged original unknown costs
+after both identity/source-ledger reconciliation, bounded SQL materialization,
+source/receipt tampering, non-clique refusal and frozen topology queries. The
+broader ten-target native run **failed: 574 passed / 1 failed / 7 ignored**. The
+unchanged host-alias security fixture still fails during symlink setup, OS1314;
+neither it nor the original host-file reader was weakened or skipped. Format,
+build, all-target Clippy, Python17, typecheck and TypeScript260/3skipped pass on
+**784 fixed native / 780 fixed retained inputs**. Existing alias normalization/Jaro
+bodies remain exact, and all thirteen legacy join CLI cases pass. These are scoped
+processing/recovery checks, not live semantic quality, whole-native/current hosted
+acceptance or release certification. See
+[identity evidence](validation/integration-2026-10-19/semantic-identity/README.md).
+
 Explicit [semantic transcript candidates](../native/docs/semantic-transcript-candidates.md)
 add one host-authorized provider attempt over selected original imported UTF-8
 bytes. Durable source/payload/response/ledger/result replay supports provider-free

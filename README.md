@@ -85,6 +85,11 @@ make one host-authorized model attempt over selected original imported UTF-8
 bytes. Durable source/response/accounting replay supports provider-free review;
 candidates create no outcome events and remain unverified interpretations.
 
+Explicit [semantic identity](native/docs/meaning-identity.md) compares checked
+native Meaning claims and asks a separately authorized host model to adjudicate
+candidates. Positive cliques produce a lossless quotient with provider-free
+queries; original claims, directed observations, role slots and receipts remain.
+
 An explicit native [Python empty-suite deletion policy](native/docs/semantic-refactor-intents.md#explicit-native-python-empty-body-deletion)
 can prepare a checked `pass` replacement while preserving the strict default
 and ordinary approval, verification and source-recovery gates.

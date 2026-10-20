@@ -130,7 +130,7 @@ struct Report<'a> {
     limitations: [&'static str; 3],
 }
 
-fn normalized(raw: &str, d: &Deadline) -> Result<String> {
+pub(crate) fn normalized(raw: &str, d: &Deadline) -> Result<String> {
     let mut compatible = String::new();
     for (index, ch) in raw.nfkc().enumerate() {
         d.check()?;
@@ -178,7 +178,7 @@ fn term<'a>(raw: &'a str, kind: &'static str, d: &Deadline) -> Result<Option<Ter
     }))
 }
 
-fn jaro_winkler(left: &[char], right: &[char], d: &Deadline) -> Result<u16> {
+pub(crate) fn jaro_winkler(left: &[char], right: &[char], d: &Deadline) -> Result<u16> {
     if left == right {
         return Ok(10000);
     }

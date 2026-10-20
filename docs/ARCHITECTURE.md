@@ -2,6 +2,19 @@
 
 ## Native Rust ownership
 
+`meaning_identity` consumes existing joint native Meaning source/receipt replay,
+then computes a fixed bounded normalization/MinHash/LSH/Jaro candidate set. One
+explicit host-provider attempt uses a separate ledger/job/payload contract and
+immutable raw response. Complete per-pair source-supported model decisions admit
+only positive cliques; sparse transitive chains, conflicts or missing coverage
+refuse publication while preserving bound billing. The private frozen quotient
+retains every original concept, directed observation and ordered role slot.
+Node/degree/directed-trace consumers share the existing join query engine behind
+a separate checked capability and schema. No original claim is rewritten, and
+neither labels nor model decisions establish semantic truth or execution. Typed
+retention bounds new job/source metadata before legacy materialization and follows
+only validated roots of new jobs/artifacts. See [semantic identity](../native/docs/meaning-identity.md).
+
 `knowledge::feedback::semantic_transcript` owns a separate imported UTF-8 source
 space and explicit single-attempt host-provider contract. Atomic ledger/job/input
 registration precedes dispatch; original bound bills/replies remain durable before

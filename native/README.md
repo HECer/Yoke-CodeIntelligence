@@ -240,6 +240,12 @@ Durable jobs retain bound original replies and accounting; source-checked replay
 status and candidate review start no provider. Candidates create no outcome events
 and grant no source, semantic-truth or execution authority.
 
+Separate [semantic identity](docs/meaning-identity.md) combines explicit native
+MinHash/Jaro candidate policy, one host-authorized model attempt and exact
+source/response/accounting replay. Only complete positive cliques group nodes;
+all original claims, parallel directions and ordered roles remain. Read-only
+node/degree/trace queries operate on the checked frozen quotient without a model.
+
 `feedback plan-record` and `plan-rank` separately bind authored historical outcomes
 to replayed saved change plans and their exact base/planned-result source bytes.
 The original knowledge-event format stays unchanged. Planned results and scores
