@@ -6,6 +6,11 @@ implementation of a proprietary hosted service or a source verification service.
 No model, compiler, source capture, sender signing key or project execution is
 started by a query. Results are computed on read; no derived record is persisted.
 
+The distinct [host-local verification command](received-source-verification.md)
+requires a separate source root/profile, receipt pin and permission. Its checked
+declaration correspondence does not alter this metadata processor or promote
+its received rows into source facts.
+
 Both the receiver's host `--allow-query` flag and the matching profile grant's
 `"allowQuery":true` are required for HTTP queries. Both default to false. An
 existing intake grant alone still permits only PUT/receipt GET. Authentication
@@ -128,6 +133,8 @@ overflow refuses the whole result. The remote client checks protocol shape,
 request/scope/receipt-qualified row bindings and false authority flags before
 exposing the result, wrapped with `networkRequests:1`.
 
-Public production deployment, automatic historical acquisition, live App
-installation, source verification, semantic reasoning and universal upstream
-equivalence remain separate open work.
+The separate [App history driver](app-history-integration.md) provides explicit
+bounded acquisition, and [host-local verification](received-source-verification.md)
+checks finite received Rust declaration correspondence. Public production,
+live App installation, broader packet verification, semantic reasoning and
+universal upstream equivalence remain open.

@@ -1,4 +1,6 @@
 //! Actual owned receiver/client sockets, SQLite, source and host credentials.
+#[path = "support/digest_receiver_verification.rs"]
+mod source_verification;
 use serde_json::{Value, json};
 use std::{
     io::{Read, Write},

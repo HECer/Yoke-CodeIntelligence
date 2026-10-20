@@ -15,6 +15,11 @@ or prove that a header excludes every private detail. It does not convert receiv
 IDs into local source captures, graph facts, filesystem paths or retention roots.
 No proprietary brain or upstream service implementation is claimed.
 
+A separate explicitly permitted [local declaration verification](received-source-verification.md)
+can compare the advertised Rust projection with an independently selected capture.
+This does not change receipt acceptance or HTTP metadata-query authority, and does
+not supply the missing sender CAS, discussion verification or semantic reasoning.
+
 ## Host configuration
 
 The host selects an absolute profile path. The following IDs are placeholders;
@@ -131,6 +136,8 @@ or complete DLP guarantee is added.
 
 This implements receipt-backed intake and client recovery. The separate
 [query contract](digest-query.md) describes received metadata processing and its
-limits. Configured public production deployment, automatic historical acquisition,
-source verification, semantic reasoning and full upstream/proprietary equivalence
-require separate work and evidence.
+limits. The separate [App history driver](app-history-integration.md) and
+[host-local declaration verification](received-source-verification.md) have
+their own explicit grants and finite contracts. Configured public production,
+broader packet verification, semantic reasoning and full upstream/proprietary
+equivalence require separate work and evidence.

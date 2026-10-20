@@ -19,6 +19,8 @@ mod http;
 pub mod query;
 #[path = "github_app_digest_receiver_store.rs"]
 mod storage;
+#[path = "github_app_digest_receiver_verification.rs"]
+pub mod verification;
 pub const RECORD_KIND: &str = "github_app_digest_receiver_v1";
 const INVALID: &str = "github_app_digest_receiver_input_invalid";
 const BINDING: &str = "github_app_digest_receiver_binding_invalid";

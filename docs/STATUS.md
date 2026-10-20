@@ -7,7 +7,29 @@ complete/replay a permitted worker and acquire bounded persistent Git history.
 An authenticated binding protects the original cumulative plan; current grants,
 selected queue revisions and exact native revisions remain mandatory. Separate
 status opens an existing read-only Store. Production installation and receiver
-source verification/reasoning remain open; this adds no default background task.
+semantic reasoning remain open; this adds no default background task.
+
+The separate [received-declaration verification](../native/docs/received-source-verification.md)
+contract independently replays an accepted receipt against a host-selected local
+capture under current receiver/source grants. The read-only `digest-inbox verify`
+CLI checks all advertised Rust declaration fingerprints, original ordinals,
+headers, UTF-8 byte bounds and projection counters; supplied whole-file hashes
+and claimed verified Git identities are also compared. It retains foreign and
+local identities separately and refuses empty claims, stale pins, corruption or
+capacity overflow. Matching fingerprints do not attest remote ownership, sender
+snapshot identity or whole-source equivalence. Sender source-digest hashes,
+discussions, history claims and semantic reasoning remain unverified. No model,
+network request, project execution or persistent verification record is added.
+
+The final verification scope passes **142 Rust tests / 0 failed / 2 ignored**
+across five groups, including twelve new default cases with actual owned receiver,
+Git and CLI processes. Format/build/all-target Clippy, Python17, typecheck and
+TypeScript260/3skipped pass. Both native and retained checks keep 761 inputs
+unchanged during execution. Two existing contract documents were reconciled
+afterward without runtime/test changes; raw manifests and materialization proof
+preserve that distinction. This is scoped local evidence, not a whole-native or
+hosted Unix pass. See
+[verification evidence](validation/integration-2026-10-19/received-source-verification/README.md).
 
 The App-history scope passes **300 Rust tests / six default ignored cases**
 across 14 target groups: 13 normal Cargo targets (287 passed) and the unchanged

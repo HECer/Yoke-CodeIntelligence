@@ -214,7 +214,20 @@ directed parallel relations and sender-claim provenance; no imported ID becomes
 a local graph/CAS identity. The remote query client reads only the service token,
 checks request/scope/row protocol bindings and opens no sender Store or signing
 key. Model calls, execution, semantic identity and source verification remain
-unavailable. See the [query contract](../native/docs/digest-query.md).
+unavailable in that metadata contract. See the [query contract](../native/docs/digest-query.md).
+
+The separate host-local `receiver::verification` contract replays one accepted
+receipt and an explicitly selected independent local snapshot. Current receiver
+and source App grants precede read-only existing Store access. Every advertised
+Rust declaration, its original ordinal, header, byte bounds and reported full
+declaration fingerprint must match the locally recomputed projection. Optional
+whole-file hashes and claimed verified Git IDs are independently compared when
+present; foreign IDs never select local sources. A private frozen capability
+supports bounded export and literal selection after Store loss. Empty claims,
+omission, stale receipt pins, corruption and work/output overflow refuse.
+This is finite source correspondence, with no remote attestation, sender CAS
+identity, source-digest-hash verification, semantic reasoning, model calls or
+persistence. See the [verification contract](../native/docs/received-source-verification.md).
 
 `digest::acquisition` selects a bounded verified-head history batch and invokes
 native Git capture under one owned immediate transaction. A shared acquisition

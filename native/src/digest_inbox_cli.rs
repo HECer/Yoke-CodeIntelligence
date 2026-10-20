@@ -11,7 +11,7 @@ use yoke::{
         HostProfile,
         digest::service::{
             self,
-            receiver::{self, query},
+            receiver::{self, query, verification},
         },
     },
     store::Store,
@@ -25,6 +25,7 @@ pub struct Arguments {
 enum Operation {
     Local(Local),
     Remote(Remote),
+    Verify(LocalVerification),
 }
 #[derive(Args)]
 struct Local {
@@ -56,6 +57,29 @@ struct Remote {
     #[arg(long)]
     allow_network: bool,
 }
+#[derive(Args)]
+struct LocalVerification {
+    #[arg(long)]
+    profile: PathBuf,
+    #[arg(long)]
+    principal: String,
+    #[arg(long)]
+    request: PathBuf,
+    #[arg(long)]
+    source_root: PathBuf,
+    #[arg(long)]
+    source_profile: PathBuf,
+    #[arg(long)]
+    allow_query: bool,
+    #[arg(long)]
+    allow_source_verification: bool,
+    #[arg(long)]
+    require_git_identity: bool,
+    #[arg(long, default_value_t = 4000)]
+    max_symbols: usize,
+    #[arg(long, default_value_t = 32_000_000)]
+    max_source_bytes: usize,
+}
 fn bytes(path: &Path, cap: usize, d: &Deadline) -> Result<Vec<u8>> {
     ensure!(path.is_absolute(), "github_app_digest_query_input_invalid");
     crate::feedback_cli::host_bytes(path, cap, d)
@@ -65,6 +89,18 @@ impl Arguments {
     pub fn run(&self, root: &Path, timeout: u64, max_bytes: u64) -> Result<bool> {
         // Permission precedes file/Store/credential acquisition.
         match &self.command {
+            Operation::Verify(a) => {
+                ensure!(
+                    a.allow_query && a.allow_source_verification,
+                    "github_app_digest_verification_permission_required"
+                );
+                ensure!(
+                    a.source_root.is_absolute()
+                        && (1..=4000).contains(&a.max_symbols)
+                        && a.max_source_bytes <= 32_000_000,
+                    "github_app_digest_verification_input_invalid"
+                );
+            }
             Operation::Local(a) => {
                 ensure!(a.allow_query, "github_app_digest_query_permission_required")
             }
@@ -73,12 +109,59 @@ impl Arguments {
                 "github_app_digest_query_permission_required"
             ),
         }
+        let max_allowed = if matches!(self.command, Operation::Verify(_)) {
+            16_000_000
+        } else {
+            65_536
+        };
         ensure!(
-            (10..=600_000).contains(&timeout) && (1024..=65_536).contains(&max_bytes),
+            (10..=600_000).contains(&timeout) && (1024..=max_allowed).contains(&max_bytes),
             "github_app_digest_query_capacity_exceeded"
         );
         let d = Deadline::new(timeout);
         let value = match &self.command {
+            Operation::Verify(a) => {
+                let profile = receiver::Profile::parse(&bytes(&a.profile, 32_000, &d)?)?;
+                let source_profile = HostProfile::parse(&bytes(&a.source_profile, 32_000, &d)?)?;
+                let request = verification::Request::parse(&bytes(&a.request, 8192, &d)?)?;
+                let options = verification::Options {
+                    allow_query: a.allow_query,
+                    allow_verification: a.allow_source_verification,
+                    require_git_identity: a.require_git_identity,
+                    max_symbols: a.max_symbols,
+                    max_output_bytes: max_bytes as usize,
+                    ..Default::default()
+                };
+                verification::admit(
+                    &profile,
+                    &a.principal,
+                    &source_profile,
+                    &request,
+                    &options,
+                    &d,
+                )?;
+                let source_options = yoke::github_app::digest::Options {
+                    max_source_bytes: a.max_source_bytes,
+                    ..Default::default()
+                };
+                source_options.validate()?;
+                let receiver = Store::open_existing_read_only(root, &d)?;
+                let source = Store::open_existing_read_only(&a.source_root, &d)?;
+                verification::verify(
+                    &verification::Context {
+                        receiver_store: &receiver,
+                        receiver_profile: &profile,
+                        principal: &a.principal,
+                        source_store: &source,
+                        source_profile: &source_profile,
+                        source_options: &source_options,
+                        options: &options,
+                    },
+                    &request,
+                    &d,
+                )?
+                .export(max_bytes as usize, &d)?
+            }
             Operation::Local(a) => {
                 let profile = receiver::Profile::parse(&bytes(&a.profile, 32_000, &d)?)?;
                 let request = query::Request::parse(&bytes(&a.request, 8192, &d)?)?;
