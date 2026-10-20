@@ -129,6 +129,7 @@ pub(crate) fn execute(
             include_str!("compiler_inline_worker.cjs"),
             include_str!("compiler_inline_body_worker.cjs"),
             include_str!("compiler_inline_body_vars_worker.cjs"),
+            include_str!("compiler_inline_body_types_worker.cjs"),
             include_str!("compiler_move_worker.cjs"),
             include_str!("compiler_move_repairs_worker.cjs"),
         ]

@@ -220,6 +220,12 @@ fn var_witnesses_cannot_forge_parameter_copies_catch_targets_types_or_property_r
         ("/frames/0/varTypes/0", json!("number; hidden()")),
         ("/frames/0/names/varParameters", json!([])),
         ("/frames/0/names/varParameters/0", json!("n")),
+        ("/frames/0/varSeedGroups", json!([])),
+        ("/frames/0/varSeedGroups", json!([2, 2])),
+        ("/frames/0/varSeedGroups", json!([0])),
+        ("/frames/0/names/varSeeds", json!([])),
+        ("/frames/0/names/varSeeds/0", json!("n")),
+        ("/varTypes/2/type", json!("number; hidden()")),
     ] {
         let mut bad = baseline.clone();
         *bad.pointer_mut(pointer).unwrap() = value;
@@ -255,11 +261,12 @@ fn var_witnesses_cannot_forge_parameter_copies_catch_targets_types_or_property_r
         .find(|b| b["span"]["text"] == "x")
         .unwrap()["targets"]
         .clone();
+    let assignment_property = result.find("( {x:").unwrap() + 3;
     bad["after"]["bindings"]
         .as_array_mut()
         .unwrap()
         .iter_mut()
-        .find(|b| b["span"]["text"] == "x")
+        .find(|b| b["span"]["text"] == "x" && b["span"]["startByte"] == assignment_property)
         .unwrap()["targets"] = other_property;
     let error = admit(bad)
         .err()
@@ -268,6 +275,22 @@ fn var_witnesses_cannot_forge_parameter_copies_catch_targets_types_or_property_r
         format!("{error:#}").contains("assignment property"),
         "{error:#}"
     );
+    let mut bad = baseline.clone();
+    bad["before"]["types"]
+        .as_array_mut()
+        .unwrap()
+        .retain(|t| t["span"]["text"] != "rest");
+    assert!(admit(bad).is_err(), "omitted destructured type witness");
+    let mut bad = baseline.clone();
+    let changed = bad["edits"][1]["text"]
+        .as_str()
+        .unwrap()
+        .replace("void 0 !== void 0", "void 0 === void 0");
+    bad["edits"][1]["text"] = json!(changed);
+    bad["resultHash"] = json!(crate::model::hash(
+        result.replace("void 0 !== void 0", "void 0 === void 0")
+    ));
+    assert!(admit(bad).is_err(), "executable type witness");
     let mut bad = baseline.clone();
     let changed = bad["edits"][1]["text"]
         .as_str()

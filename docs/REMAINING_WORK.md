@@ -9,7 +9,7 @@ original inventory references and historical checkpoint evidence.
 
 | Area | Implemented contracts | Remaining work |
 | --- | --- | --- |
-| R1: semantic edits | Guarded native/provider planning, declaration ownership, directory/file usage, TS/JS propagation/session routing and actual host-selected immutable TS5.8.3 function-binding inlining, finite classic function-body statement expansion with checked var hoisting and moves into existing captured ES modules with checked direct reexport/local-alias repairs, captured omitted imports and source dependency exports, compiler-bound consumers and independent source/effect/apply/recovery checks. | Wider inferred types and body/expression/invocation forms, unsupported import attributes and sibling declaration bundles, remaining reexport/import shapes, broader moves/declaration/file/language/context shapes, dynamic or outside-file consumers and wider runtime/upstream acceptance. The compiler variable-inline action and existing LSP own_v1 move contract retain distinct finite scopes. |
+| R1: semantic edits | Guarded native/provider planning, declaration ownership, directory/file usage, TS/JS propagation/session routing and actual host-selected immutable TS5.8.3 function-binding inlining, finite classic function-body statement expansion with checked var hoisting and moves into existing captured ES modules with checked direct reexport/local-alias repairs, captured omitted imports and source dependency exports, compiler-bound consumers and independent source/effect/apply/recovery checks. | Remaining inferred return/parameter/annotation contexts, strict diagnostic combinations and wider body/expression/invocation forms, unsupported import attributes and sibling declaration bundles, remaining reexport/import shapes, broader moves/declaration/file/language/context shapes, dynamic or outside-file consumers and wider runtime/upstream acceptance. The compiler variable-inline action and existing LSP own_v1 move contract retain distinct finite scopes. |
 | R2: meaning and identity | Checked native graphs/joins, portable projections and mixed preparation/build/query/composition. A separate native MinHash/Jaro candidate policy, durable explicit model adjudication, source-replayed positive-clique quotient and frozen node/degree/trace queries preserve every original observation. | Other source/history/workspace identity, wider normalization/survivor rules, interpretation/outcome surfaces and live semantic-quality/upstream acceptance. Existing mixed aliases and host links keep their original namespace/authority boundaries; model equivalence remains unverified. |
 | R3: historical analytics | Explicit checked pair-of-Views comparison with complete parent pins, immutable source/receipt replay and directed observations. | Remaining upstream analytics equivalence and acceptance. A bare previousSnapshotId remains insufficient to select two Views; that refusal is an intentional precondition. |
 | R4: mixed documents | Native/Office XML/decoded/PDF spaces, fixed input preparation, checked claims, explicit provider jobs, checked graph queries and independently checked cross-workspace/history composition. | Broader mixed analytics, external semantic-provider qualification and exhaustive interpretation remain open. CLI composition currently selects one explicit Store; library callers may supply separately checked parents from different workspaces. |
@@ -40,35 +40,39 @@ original receipts and semantic claims remain distinct from interpretation truth.
 ## Acceptance still required
 
 Classic function-body expansion under the optional `inlineCompiler` profile now
-reconstructs function-owned `var` hoists, original-position initializers and shared
-loop storage. Parameter copies preserve default-closure environments; duplicate,
-escaped, destructured and simple catch bindings have separate exact source and
-assignment correspondence. Nested scopes retain their own declarations. Original
-annotations and fixed primitive hints preserve admitted compiler types. Arguments,
-defaults/rest, labelled returns, finally cancellation and eval refusal retain their
-existing contract. Preparation executes no analyzed source.
+preserves nonprimitive inferred `var` storage using fresh `typeof` carriers from
+original declarations or loop heads at their lexical sites. Native reconstruction
+checks original source, destructured declaration types and every copied binding.
+The fixed pure-false guard `void 0 !== void 0` keeps copied initializers, iterables
+and reads inert; carrier bindings are function/module scoped. Actual body storage
+remains lexical and fresh per expansion. Quoted shorthand keys, labels, unbraced
+control slots and composed insertion/return edits retain source correspondence.
+Arguments, parameter/default environments, shared var storage, labelled returns,
+finally cancellation and eval refusal retain their existing guarded contract.
+Preparation executes no analyzed source or arbitrary compiler type expressions.
 
-The broad scoped run passed **109 integrations / 0 failures / 2 existing ignored**
-across eight targets, plus seven body units, on 807 unchanged native inputs.
-After restoring two original Unicode test literals, all production text and the
-other 806 inputs match that freeze. The current review passes seven body units and
-separately executes both previously ignored live session tests with actual
-TypeScript 5.8.3 and language-server 5.1.3. Format/build/all-target Clippy pass.
-Python17, typecheck and TypeScript260/3skipped pass on 801 fixed retained inputs.
-The distinct frozen scopes overlap; totals are not added.
+The final scoped run passed **111 integrations / 0 failures / 2 existing ignored**
+across eight targets, plus nine body units, on 809 unchanged native inputs.
+Format/build/all-target Clippy with warnings denied pass. Python 17, typecheck and
+TypeScript 260 / 3 existing skips pass on 803 fixed retained inputs. These frozen
+scopes overlap; totals are not added. Only documented metadata changes follow,
+with exact runtime and tracker preservation checks.
 
-Two new integration functions cover 21 var scenarios; three new unit functions
-cover forged assignment/type/property/capture witnesses, Unicode and budgets.
-Four body CLI verification/approval/apply/recovery scenarios include two new var
-cases. Runtime comparisons execute only owned literal fixtures. Failed development
-phases and the original invalid TypeScript fixture remain archived. Only documented
-metadata changes follow the accepted checks, with exact runtime and tracker proofs.
+Two added integration functions cover 22 inferred object/array/tuple/union/function/
+loop/destructuring scenarios and two cases with enabled strict diagnostic options.
+Two new unit functions and extended admission tests cover original UTF-8/CRLF bytes,
+quoted property keys, deadlines and coherent forged carrier/type/guard witnesses.
+Five body CLI cases include one new inferred loop case with independent tsc,
+approval, application and foreign-preserving recovery. Runtime comparisons execute
+only owned literal fixtures. Failed development phases remain archived.
 
-Wider inferred types, expression/invocation/declaration/language/consumer forms and
-full STATUS/R1-R9/Windows/current-head hosted/upstream acceptance remain open.
-Existing OS1314/macOS failures and production App deployment remain separate. See
-[the body contract](../native/docs/compiler-inline.md#classic-function-body-statements)
-and [var evidence](validation/integration-2026-10-19/function-var-hoisting/README.md).
+Inferred return/parameter/annotation contexts, other diagnostic-option combinations,
+wider expression/invocation/declaration/language/consumer forms and full STATUS/
+R1-R9/Windows/current-head hosted/upstream acceptance remain open. A returning-body
+fixture with `allowUnreachableCode:false` still visibly refuses; its precise cause
+has not been localized. Existing OS1314/macOS failures and production App deployment
+remain separate. See [the body contract](../native/docs/compiler-inline.md#classic-function-body-statements)
+and [inferred-type evidence](validation/integration-2026-10-19/function-body-types/README.md).
 
 Captured missing compiler-move imports now reconstruct original named/default/
 namespace bindings and source-owned top-level free dependencies. Native checks

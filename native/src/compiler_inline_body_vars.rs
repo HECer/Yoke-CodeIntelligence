@@ -283,11 +283,13 @@ impl Plan<'_> {
         &self,
         out: &mut Rendered,
         source: &str,
-        names: &Names,
-        hints: &[Option<String>],
+        frame: &Frame,
+        typed: &inferred::Plan<'_>,
         language: &str,
         line: &str,
     ) -> Result<()> {
+        let names = &frame.names;
+        let hints = &frame.var_types;
         ensure!(
             hints.is_empty() || hints.len() == self.groups.len(),
             "Var type hint shape mismatch"
@@ -299,27 +301,35 @@ impl Plan<'_> {
                 continue;
             }
             let hint = hints.get(i).and_then(Option::as_deref);
+            let inferred = typed.name_for(i, names);
             if let Some(hint) = hint {
                 ensure!(
                     primitive(hint) && g.annotation.is_none(),
                     "Var type hint unavailable"
                 );
-                if js {
-                    out.generated(&format!("/** @type {{{hint}}} */ "))?;
-                }
+            }
+            if js && (hint.is_some() || inferred.is_some()) {
+                let annotation = inferred
+                    .map(|name| format!("typeof {name}"))
+                    .unwrap_or_else(|| hint.unwrap().to_owned());
+                out.generated(&format!("/** @type {{{annotation}}} */ "))?;
             }
             let id = g.ids[0];
             out.generated("let ")?;
             out.original(source, id.start_byte(), id.end_byte(), "var_hoist")?;
             if let Some(t) = g.annotation {
                 out.original(source, t.start_byte(), t.end_byte(), "var_type")?;
-            } else if !js && let Some(hint) = hint {
-                out.generated(&format!(": {hint}"))?;
+            } else if !js {
+                if let Some(name) = inferred {
+                    out.generated(&format!(": typeof {name}"))?;
+                } else if let Some(hint) = hint {
+                    out.generated(&format!(": {hint}"))?;
+                }
             }
             if g.parameter.is_some() {
                 out.generated(&format!(" = {}", names.var_parameters[index]))?;
                 index += 1;
-            } else if g.annotation.is_some() || hint.is_some() {
+            } else if g.annotation.is_some() || hint.is_some() || inferred.is_some() {
                 out.generated(if js {
                     " = /** @type {any} */ (void 0)"
                 } else {

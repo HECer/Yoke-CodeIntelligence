@@ -5,6 +5,8 @@ use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
 #[path = "compiler_inline_body_admission.rs"]
 mod admission;
+#[path = "compiler_inline_body_types.rs"]
+mod inferred;
 #[path = "compiler_inline_body_parameters.rs"]
 mod parameters;
 #[path = "compiler_inline_body_vars.rs"]
@@ -19,6 +21,8 @@ pub(super) struct Names {
     arguments: Vec<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     var_parameters: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    var_seeds: Vec<String>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -31,6 +35,8 @@ pub(super) struct Frame {
     result_type: Option<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     var_types: Vec<Option<String>>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    var_seed_groups: Vec<usize>,
 }
 #[derive(Debug)]
 pub(super) struct Copy {
@@ -299,8 +305,10 @@ pub(super) fn render(
     );
     scope_forms(declaration, source, d)?;
     let vars = variables::analyze(declaration, source, d)?;
+    let typed = inferred::analyze(&vars, &frame.var_seed_groups, source, d)?;
     ensure!(
-        vars.copies() == frame.names.var_parameters.len(),
+        vars.copies() == frame.names.var_parameters.len()
+            && typed.name_count == frame.names.var_seeds.len(),
         "Var parameter copy shape mismatch"
     );
     let called = call
@@ -334,10 +342,11 @@ pub(super) fn render(
         .chain(std::iter::once(&frame.names.exit))
         .chain(&frame.names.arguments)
         .chain(&frame.names.var_parameters)
+        .chain(&frame.names.var_seeds)
         .collect();
+    let name_set: BTreeSet<_> = names.iter().map(|n| n.as_str()).collect();
     ensure!(
-        names.iter().all(|n| fresh_name(n))
-            && names.iter().collect::<BTreeSet<_>>().len() == names.len(),
+        names.iter().all(|n| fresh_name(n)) && name_set.len() == names.len(),
         "Function-body synthetic names are not distinct canonical names"
     );
     let mut stack = vec![tree.root_node()];
@@ -352,7 +361,7 @@ pub(super) fn render(
         if n.kind().contains("identifier") {
             let text = parameters::identifier_name(n.utf8_text(source.as_bytes())?, d)?;
             ensure!(
-                !names.iter().any(|name| name.as_str() == text),
+                !name_set.contains(text.as_str()),
                 "Function-body synthetic name is already in source"
             );
         }
@@ -429,16 +438,9 @@ pub(super) fn render(
     out.original(source, body.start_byte(), body.start_byte() + 1, "body")?;
     if !vars.groups.is_empty() {
         out.generated(line)?;
-        vars.hoists(
-            &mut out,
-            source,
-            &frame.names,
-            &frame.var_types,
-            language,
-            line,
-        )?;
+        vars.hoists(&mut out, source, frame, &typed, language, line)?;
     }
-    let mut replacements = vec![];
+    let mut replacements = typed.changes(source, &frame.names, line, d)?;
     for change in &vars.changes {
         let (start, end) = change.range();
         replacements.push((start, end, variables::replacement(change, source, d)?));
@@ -464,7 +466,7 @@ pub(super) fn render(
         value_out.generated(&format!("; break {}; }}", frame.names.exit))?;
         replacements.push((ret.start_byte(), ret.end_byte(), value_out));
     }
-    replacements.sort_by_key(|r| r.0);
+    replacements.sort_by_key(|r| (r.0, r.1));
     ensure!(
         replacements.len() <= 2000 && replacements.windows(2).all(|p| p[0].1 <= p[1].0),
         "Body var/return reconstruction overlap or capacity"
@@ -623,6 +625,7 @@ mod tests {
                 };
                 let mut names = Names {
                     var_parameters: vec![],
+                    var_seeds: vec![],
                     result: fresh(),
                     exit: fresh(),
                     arguments: children(call.child_by_field_name("arguments").unwrap())
@@ -643,6 +646,7 @@ mod tests {
                     names,
                     result_type: None,
                     var_types: vec![],
+                    var_seed_groups: vec![],
                 };
                 let out = render(&tree, source, "javascript", declaration, &frame, &d).unwrap();
                 for copy in &out.copies {
@@ -700,12 +704,14 @@ mod tests {
             call_end: source.len() - 1,
             names: Names {
                 var_parameters: vec![],
+                var_seeds: vec![],
                 result: "__ci_inline_1".into(),
                 exit: "__ci_inline_2".into(),
                 arguments: vec!["__ci_inline_3".into(), "__ci_inline_4".into()],
             },
             result_type: None,
             var_types: vec![],
+            var_seed_groups: vec![],
         };
         let out = render(&tree, source, "typescript", declaration, &frame, &d).unwrap();
         assert!(

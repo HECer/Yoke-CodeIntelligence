@@ -78,6 +78,23 @@ fn same_execution(before: &str, after: &str) {
         String::from_utf8_lossy(&output.stderr)
     );
 }
+fn assert_only_inert_type_vars(after: &str) {
+    let spec = compiler();
+    let script = format!(
+        r#"const ts=require({});const sf=ts.createSourceFile('after.ts',{},ts.ScriptTarget.ES2022,true);function bound(n){{if(ts.isIdentifier(n))return[n.text];return n.elements.flatMap(e=>ts.isOmittedExpression(e)?[]:bound(e.name));}}function zero(n){{return ts.isVoidExpression(n)&&ts.isNumericLiteral(n.expression)&&n.expression.text==='0';}}function visit(n){{if(ts.isVariableDeclarationList(n)&&!(n.flags&ts.NodeFlags.BlockScoped)){{let inert=false;for(let p=n.parent;p;p=p.parent)if(ts.isIfStatement(p)&&ts.isBinaryExpression(p.expression)&&p.expression.operatorToken.kind===ts.SyntaxKind.ExclamationEqualsEqualsToken&&zero(p.expression.left)&&zero(p.expression.right)&&p.thenStatement.pos<=n.pos&&p.thenStatement.end>=n.end)inert=true;if(!inert||n.declarations.flatMap(d=>bound(d.name)).some(s=>!/^__ci_inline_[1-9][0-9]*$/.test(s)))throw Error('unhoisted original var or executable type witness');}}ts.forEachChild(n,visit);}}visit(sf);"#,
+        serde_json::to_string(&spec.typescript).unwrap(),
+        serde_json::to_string(after).unwrap()
+    );
+    let output = Command::new(spec.node)
+        .args(["-e", &script])
+        .output()
+        .unwrap();
+    assert!(
+        output.status.success(),
+        "{}\n{after}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+}
 
 #[test]
 fn actual_classic_body_expansion_removes_the_call_and_retains_the_original_definition_only_when_requested()
@@ -261,7 +278,7 @@ fn actual_var_hoisting_preserves_parameter_environments_loops_patterns_and_catch
                 .unwrap_or_else(|e| panic!("{source}: {e:#}"));
         let after = planned(&engine, &result, "ts");
         same_execution(source, &after);
-        assert!(!after.contains("var "), "{after}");
+        assert_only_inert_type_vars(&after);
         assert_eq!(
             fs::read_to_string(root.path().join("main.ts")).unwrap(),
             source
@@ -328,8 +345,134 @@ fn var_lowering_keeps_jsdoc_nested_scopes_comments_unicode_and_finally() {
     }
 }
 #[test]
+fn inferred_var_types_keep_object_array_tuple_union_function_and_nested_loop_closures() {
+    for (source, language) in [
+        (
+            "function helper():number[]{const fs:Array<()=>number>=[];for(var row of [<const>[\"a\",1],<const>[\"bb\",2]])fs.push(()=>row[0].length);return fs.map(f=>f());}const result=helper();export const observed=result;",
+            "ts",
+        ),
+        (
+            "// 🌍\r\nfunction helper():()=>number{var {\\u0072ow}={row:{n:3}};return ()=>row.n;}\r\nconst result=helper();export const observed=result();\r\n",
+            "ts",
+        ),
+        (
+            "function helper():number[]{const fs:Array<()=>number>=[];for(var row of [{n:1},{n:2}])fs.push(()=>row.n);return fs.map(f=>f());}const result=helper();export const observed=result;",
+            "ts",
+        ),
+        (
+            "function helper():number[]{const fs:Array<()=>number>=[];for(var row of [[1],[2]])fs.push(()=>row[0]);return fs.map(f=>f());}const result=helper();export const observed=result;",
+            "ts",
+        ),
+        (
+            "function helper():number[]{const fs:Array<()=>number>=[];for(var row of [[\"a\",1] as const,[\"bb\",2] as const])fs.push(()=>row[0].length);return fs.map(f=>f());}const result=helper();export const observed=result;",
+            "ts",
+        ),
+        (
+            "function helper():number[]{const fs:Array<()=>number>=[];for(var fn of [(x:number)=>x+1,(x:number)=>x+2])fs.push(()=>fn(3));return fs.map(f=>f());}const result=helper();export const observed=result;",
+            "ts",
+        ),
+        (
+            "function helper():number[]{const fs:Array<()=>number>=[];for(var row of [{n:1},null])fs.push(()=>row?.n??0);return fs.map(f=>f());}const result=helper();export const observed=result;",
+            "ts",
+        ),
+        (
+            "function helper():number[]{const fs:Array<()=>number>=[];for(var [key,row] of new Map([[1,{n:1}],[2,{n:2}]]))fs.push(()=>row.n+key);return fs.map(f=>f());}const result=helper();export const observed=result;",
+            "ts",
+        ),
+        (
+            "function helper():()=>number{var read=()=>row.n;var row={n:3};return read;}const result=helper();export const observed=result();",
+            "ts",
+        ),
+        (
+            "function helper(n:number):number[]{const fs:Array<()=>number>=[];outer:for(var row of [{n:1},{n:2}]){if(row.n===n)continue outer;fs.push(()=>row.n);}return fs.map(f=>f());}const result=helper(1);export const observed=result;",
+            "ts",
+        ),
+        (
+            "const events:number[]=[];function rows(){events.push(1);return [{n:1},{n:2}];}function helper():number[]{const fs:Array<()=>number>=[];for(var row of rows())fs.push(()=>row.n);return fs.map(f=>f());}const result=helper();export const observed={result,events};",
+            "ts",
+        ),
+        (
+            "const events:number[]=[];function helper():()=>number{var read=()=>row.n;var row=(events.push(1),{n:3});return read;}const result=helper();export const observed={value:result(),events};",
+            "ts",
+        ),
+        (
+            "function helper():number[]{const fs:Array<()=>number>=[];for(var row={n:1};row.n<3;row.n++)fs.push(()=>row.n);return fs.map(f=>f());}const result=helper();export const observed=result;",
+            "ts",
+        ),
+        (
+            "function helper(flag:boolean):()=>number{if(flag)var row={n:1};else row={n:2};return ()=>row.n;}const a=helper(true);const b=helper(false);export const observed=[a(),b()];",
+            "ts",
+        ),
+        (
+            "function helper():number[]{const fs:Array<()=>number>=[];for(var a of [[{n:1}]])for(var b of a)fs.push(()=>b.n);return fs.map(f=>f());}const result=helper();export const observed=result;",
+            "ts",
+        ),
+        (
+            "function helper():()=>number{var a={n:1};var b={n:2};return ()=>a.n+b.n;}const result=helper();export const observed=result();",
+            "ts",
+        ),
+        (
+            "function helper(){/** @type {Array<()=>number>} */const fs=[];for(var row of [{n:1},{n:2}])fs.push(()=>row.n);return fs.map(f=>f()).join(',');}const result=helper();export const observed=result;",
+            "js",
+        ),
+        (
+            "function helper(){/** @type {Array<()=>number>} */const fs=[];for(var row of [[1],[2]])fs.push(()=>row[0]);return fs.map(f=>f()).join(',');}const result=helper();export const observed=result;",
+            "js",
+        ),
+        (
+            "function helper():()=>number{var {row}={row:{n:3}};return ()=>row.n;}const result=helper();export const observed=result();",
+            "ts",
+        ),
+        (
+            "function helper():()=>number{var {row={n:3}}:{row?:{n:number}}={};return ()=>row.n;}const result=helper();export const observed=result();",
+            "ts",
+        ),
+        (
+            "function helper():()=>number{var {__proto__}={[\"__proto__\"]:{n:3}};return ()=>__proto__.n;}const result=helper();export const observed=result();",
+            "ts",
+        ),
+        (
+            "function helper():()=>number{for(let i=1;i<3;i++)var row={n:i};return ()=>row.n;}const result=helper();export const observed=result();",
+            "ts",
+        ),
+    ] {
+        let (root, mut engine) = fixture(source, language);
+        let r =
+            yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, language), &d())
+                .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        let after = planned(&engine, &r, language);
+        assert!(after.contains("if (void 0 !== void 0)"), "{after}");
+        assert!(after.contains("typeof __ci_inline_"), "{after}");
+        same_execution(source, &after);
+        assert_eq!(
+            fs::read_to_string(root.path().join(format!("main.{language}"))).unwrap(),
+            source
+        );
+    }
+}
+#[test]
+fn inert_inference_preserves_enabled_compiler_diagnostics_and_initializer_counts() {
+    for source in [
+        "const events:number[]=[];function helper(){var row={n:3};events.push(row.n);}helper();export const observed=events;",
+        "const events:number[]=[];function helper(){var {key,row}={key:1,row:{n:3}};events.push(row.n+key);}helper();export const observed=events;",
+    ] {
+        let (root, mut engine) = fixture(source, "ts");
+        fs::write(root.path().join("tsconfig.json"),r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true,"allowUnreachableCode":false,"noUnusedLocals":true,"noUnusedParameters":true,"noFallthroughCasesInSwitch":true},"files":["main.ts"]}"#).unwrap();
+        let r = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+            .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        let after = planned(&engine, &r, "ts");
+        assert_only_inert_type_vars(&after);
+        same_execution(source, &after);
+        assert_eq!(
+            fs::read_to_string(root.path().join("main.ts")).unwrap(),
+            source
+        );
+    }
+}
+#[test]
 fn unsafe_or_unowned_body_forms_refuse_before_any_plan_or_derived_source() {
     for source in [
+        "type Const={n:number};function helper():unknown{return {} as Const;}function caller(){type Const={m:string};return helper();}export const observed=caller();",
         "function helper():number{var f;function f(){return 4;}return f();}const result=helper();export const observed=result;",
         "function helper(n:number){return arguments[0];} export const observed=helper(2);",
         "function helper(n:number):unknown{return this;} export const observed=helper(2);",
@@ -423,6 +566,10 @@ fn wrapped_eval_in_the_body_or_caller_cannot_publish_a_plan() {
 #[test]
 fn body_cli_plans_require_independent_verification_approval_and_foreign_preserving_recovery() {
     for (source, keep) in [
+        (
+            "function helper():number[]{const fs:Array<()=>number>=[];for(var row of [{n:1},{n:2}])fs.push(()=>row.n);return fs.map(f=>f());}export const observed=helper();\n",
+            false,
+        ),
         (
             "function helper(n=2):number{try{return n+1;}finally{n++;}}export const observed=helper();\n",
             false,

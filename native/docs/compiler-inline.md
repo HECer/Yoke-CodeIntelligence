@@ -53,8 +53,17 @@ function-owned declaration.
 Original explicit type annotations provide contextual typing for initializers.
 Inferred primitive storage types use the same fixed keyword whitelist, with exact
 original type witnesses and explicit initial `undefined` storage. Other inferred
-types must pass the full projected compiler context without generated arbitrary
-type expressions. Some valid runtime forms, including TypeScript's rejected
+storage types now use fresh `typeof` carriers inferred from original declarations
+or loop heads at their original lexical positions. Native reconstruction wraps
+those copied expressions in the fixed guard `void 0 !== void 0`. Both operands
+evaluate to `undefined`; the copied initializers, iterable expressions and reads
+cannot execute. The type carriers' `var` bindings are scoped by the containing
+function/module, while actual body storage remains lexical and fresh per expansion.
+No arbitrary compiler type expression is inserted. Quoted shorthand keys preserve
+decoded property names; labelled and unbraced statements retain their control scope.
+Source/member bindings and destructured declaration types remain separately checked.
+The fixed guard preserves compiler diagnostic options; it does not suppress errors.
+Some valid runtime forms, including TypeScript's rejected
 function/var declaration combinations, therefore still refuse at the compiler
 gate. Destructuring property reads and assignment-property syntax have separate
 checked correspondence roles; raw compiler observations remain intact.
@@ -75,6 +84,9 @@ frame, 4 MB aggregate replacement text, 20,000 source-copy pieces, 100,000 bindi
 rows and 10,000 type rows per observation set. Each type is at most 16 KB, with
 2 MB aggregate type text per set. Shared compiler request/reply/deadline bounds
 still apply. Limits refuse instead of clipping a complete result.
+Source inference additionally admits at most 512 original declaration/loop sites,
+2,000 carrier names and fewer than 2,000 labels in an owning chain. Carrier text,
+copy pieces, compiler observations and aggregate edits share the limits above.
 
 Invocation-bound `this`/`super`/`arguments`/meta properties,
 async/generator/generic frames, spread arguments, wider expression sequencing,

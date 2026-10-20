@@ -11,7 +11,12 @@ natively before ordinary planning; static observations do not attest general
 runtime equivalence. Function-owned var hoists retain original-position
 initializers, shared loop storage and separate parameter/catch assignment roles.
 Explicit annotations and fixed primitive hints retain admitted compiler types.
-Wider inferred types and invocation/expression forms remain open. See [compiler inlining](../native/docs/compiler-inline.md).
+Nonprimitive var storage additionally uses fixed typeof syntax with fresh carriers
+inferred from original declarations or loop heads at their lexical sites. The fixed
+pure-false void guard prevents copied expressions and reads from executing without
+suppressing enabled compiler diagnostics. Native byte reconstruction, raw binding/
+type coverage and source-ordered composition preserve keys, labels and control slots.
+Remaining inferred contexts and invocation/expression forms remain open. See [compiler inlining](../native/docs/compiler-inline.md).
 
 The compiler-move repair stage reconstructs direct named reexport partitions and
 fresh local import aliases from original/current immutable source anchors.

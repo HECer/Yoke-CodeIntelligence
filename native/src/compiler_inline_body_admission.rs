@@ -222,16 +222,36 @@ fn type_coverage(tree: &Tree, path: &str, rows: &[Type], d: &Deadline) -> Result
             "assignment_pattern" if n.parent().is_some_and(|p| p.kind() == "formal_parameters") => {
                 n.child_by_field_name("left")
             }
+            "for_in_statement" if n.child_by_field_name("kind").is_some() => {
+                n.child_by_field_name("left")
+            }
+            "catch_clause" => n.child_by_field_name("parameter"),
             "rest_pattern" if n.parent().is_some_and(|p| p.kind() == "formal_parameters") => {
                 children(n).first().copied()
             }
             _ => None,
         };
-        if let Some(name) = name.filter(|n| n.kind() == "identifier") {
-            ensure!(
-                reported.contains(&(path.to_owned(), name.start_byte(), name.end_byte())),
-                "Body declaration type coverage absent"
-            );
+        if let Some(pattern) = name {
+            let names = if matches!(
+                pattern.kind(),
+                "identifier"
+                    | "array_pattern"
+                    | "object_pattern"
+                    | "assignment_pattern"
+                    | "object_assignment_pattern"
+                    | "rest_pattern"
+                    | "shorthand_property_identifier_pattern"
+            ) {
+                variables::bound(pattern, d)?
+            } else {
+                vec![]
+            };
+            for name in names {
+                ensure!(
+                    reported.contains(&(path.to_owned(), name.start_byte(), name.end_byte())),
+                    "Body declaration type coverage absent"
+                );
+            }
         }
         stack.extend(children(n));
     }
@@ -394,8 +414,9 @@ fn check(
         "Body var type witness coverage mismatch"
     );
     let mut hints = vec![];
+    let mut seed_groups = vec![];
     let mut type_bytes = 0usize;
-    for (g, t) in vars.groups.iter().zip(&e.var_types) {
+    for (index, (g, t)) in vars.groups.iter().zip(&e.var_types).enumerate() {
         d.check()?;
         let id = g.ids[0];
         type_bytes = type_bytes.saturating_add(t.r#type.len());
@@ -422,6 +443,13 @@ fn check(
                 None
             },
         );
+        if g.annotation.is_none()
+            && g.function.is_none()
+            && g.parameter.is_none()
+            && !variables::primitive(&t.r#type)
+        {
+            seed_groups.push(index);
+        }
     }
     if hints.iter().all(Option::is_none) {
         hints.clear();
@@ -437,14 +465,16 @@ fn check(
     for frame in &e.frames {
         d.check()?;
         ensure!(
-            frame.var_types == hints,
+            frame.var_types == hints && frame.var_seed_groups == seed_groups,
             "Body var frame type hints differ from original witnesses"
         );
         for name in std::iter::once(&frame.names.result)
             .chain(std::iter::once(&frame.names.exit))
             .chain(&frame.names.arguments)
             .chain(&frame.names.var_parameters)
+            .chain(&frame.names.var_seeds)
         {
+            d.check()?;
             ensure!(
                 synthetic.insert(name.clone()),
                 "Body name reused across frames"
