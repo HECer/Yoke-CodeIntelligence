@@ -1,0 +1,702 @@
+{
+  "schemaVersion": 1,
+  "kind": "native-immutable-compiler-move-missing-imports",
+  "sourceCommit": "fabc0971f91c9bf5b29c371050fce7cb4e8f79ae",
+  "baseIntegration": "ec8b89f56ed503e292a05fa608b19de6637b5f38",
+  "scope": [
+    "Captured omitted named/default/namespace and source-dependency imports",
+    "Independent original/current definitions, exports, fresh aliases, relative module linkage and original-byte reconstruction",
+    "Prototype-safe shorthand key/value correspondence with explicit owned regression execution",
+    "Scoped Windows development evidence; full STATUS remains incomplete"
+  ],
+  "finalPhase": "final-r3",
+  "retainedPhase": "retained-r1",
+  "phases": [
+    {
+      "phase": "arxiv-recheck-r1",
+      "resultPath": "runs/arxiv-recheck-r1/result.json",
+      "allChecksPassed": true,
+      "inputs": null,
+      "runtimeRecheckOnly": true
+    },
+    {
+      "phase": "compile-r3",
+      "resultPath": "runs/compile-r3/result.json",
+      "allChecksPassed": true,
+      "inputs": 799,
+      "runtimeRecheckOnly": false
+    },
+    {
+      "phase": "feature-r1",
+      "resultPath": "runs/feature-r1/result.json",
+      "allChecksPassed": false,
+      "inputs": 798,
+      "runtimeRecheckOnly": false
+    },
+    {
+      "phase": "feature-r2",
+      "resultPath": "runs/feature-r2/result.json",
+      "allChecksPassed": true,
+      "inputs": 798,
+      "runtimeRecheckOnly": false
+    },
+    {
+      "phase": "final-r1",
+      "resultPath": "runs/final-r1/result.json",
+      "allChecksPassed": false,
+      "inputs": 799,
+      "runtimeRecheckOnly": false
+    },
+    {
+      "phase": "final-r3",
+      "resultPath": "runs/final-r3/result.json",
+      "allChecksPassed": true,
+      "inputs": 799,
+      "runtimeRecheckOnly": false
+    },
+    {
+      "phase": "legacy-stdlib-cli-r1",
+      "resultPath": "runs/legacy-stdlib-cli-r1/result.json",
+      "allChecksPassed": true,
+      "inputs": null,
+      "runtimeRecheckOnly": false
+    },
+    {
+      "phase": "retained-r1",
+      "resultPath": "runs/retained-r1/result.json",
+      "allChecksPassed": true,
+      "inputs": 793,
+      "runtimeRecheckOnly": false
+    },
+    {
+      "phase": "targeted-r3",
+      "resultPath": "runs/targeted-r3/result.json",
+      "allChecksPassed": true,
+      "inputs": 799,
+      "runtimeRecheckOnly": false
+    },
+    {
+      "phase": "final-r2",
+      "resultPath": "runs/final-r2/aborted.json",
+      "status": "intentionally_aborted",
+      "allChecksPassed": false
+    }
+  ],
+  "files": [
+    {
+      "path": "runs/arxiv-recheck-r1/native.log",
+      "bytes": 490,
+      "sha256": "224c76160c7735bbdf1cef2d4f8b723c3f8555ffc2229f4db63c55cefca8d141"
+    },
+    {
+      "path": "runs/arxiv-recheck-r1/result.json",
+      "bytes": 434,
+      "sha256": "4790af4b34b95f3e91e4df3c846dbe5a26fa2fcb9f41006fb6faeaf55fa64db7"
+    },
+    {
+      "path": "runs/compile-r3/check.log",
+      "bytes": 168,
+      "sha256": "72b3694c2e4ce05a52be5657f9d6fa4e2f568b4e4498eb9befcf4589c671b4e0"
+    },
+    {
+      "path": "runs/compile-r3/result.json",
+      "bytes": 535,
+      "sha256": "5379c634a728727726017ad7d4f1468df1ca43642f767f843f5a7f0f4ce74b0c"
+    },
+    {
+      "path": "runs/compile-r3/runner.py",
+      "bytes": 3389,
+      "sha256": "9ac2ca3f1a1096b9503cdb5028b8d695181d967ca13a2484dcefe7adca07ce00"
+    },
+    {
+      "path": "runs/compile-r3/source/native/src/compiler_move_ast.rs",
+      "bytes": 22274,
+      "sha256": "edf9d352cd08da2fbaf47d927ce9f762014a46e4b3ce3bf5c5474988d2ebaff2"
+    },
+    {
+      "path": "runs/compile-r3/source/native/src/compiler_move_dependency_import.rs",
+      "bytes": 5267,
+      "sha256": "9708ce95de454beef1542265845c6235e7abd9e1b0756683c5159fc7b98ee3cc"
+    },
+    {
+      "path": "runs/compile-r3/source/native/src/compiler_move_repair_tests.rs",
+      "bytes": 11825,
+      "sha256": "a6778b5bc438ab19056d6c5b0dfaf0d08f9576db9bbac3e17607c44e0f393724"
+    },
+    {
+      "path": "runs/compile-r3/source/native/src/compiler_move_repairs.rs",
+      "bytes": 36643,
+      "sha256": "b3c238100836689099c3e6a005d15f4db737c27b1472c8b16b852467d5259e69"
+    },
+    {
+      "path": "runs/compile-r3/source/native/src/compiler_move_repairs_worker.cjs",
+      "bytes": 19025,
+      "sha256": "e06ab23bae2488b646d9b030962753652e551d798a06c85f13a6b2f65cee718f"
+    },
+    {
+      "path": "runs/compile-r3/source/native/tests/compiler_move.rs",
+      "bytes": 44002,
+      "sha256": "65d9fd6275dd1806d10dc30d9e890cf9e53c46b5d003ab17ff2873c558fb1c46"
+    },
+    {
+      "path": "runs/compile-r3/source-after.json",
+      "bytes": 86658,
+      "sha256": "b85f126e8d78323cc06c1e4532986c01127abede1773f00e41f109e1eb60947b"
+    },
+    {
+      "path": "runs/compile-r3/source-before.json",
+      "bytes": 86658,
+      "sha256": "b85f126e8d78323cc06c1e4532986c01127abede1773f00e41f109e1eb60947b"
+    },
+    {
+      "path": "runs/evidence.py",
+      "bytes": 7073,
+      "sha256": "712faf43d557a4f2fd1aaa088df6bb7194020739e75ffc263ed11cf1287df139"
+    },
+    {
+      "path": "runs/feature-r1/native.log",
+      "bytes": 3011,
+      "sha256": "055309dea0c126d28e0f6144f040564ad573ad5b16c0f168e1a485956260e309"
+    },
+    {
+      "path": "runs/feature-r1/result.json",
+      "bytes": 878,
+      "sha256": "6fe1f765fdcb5e301f9fc28891ff9bd77a2c270138dacacac2a9aa06699c05c4"
+    },
+    {
+      "path": "runs/feature-r1/runner.py",
+      "bytes": 3389,
+      "sha256": "9ac2ca3f1a1096b9503cdb5028b8d695181d967ca13a2484dcefe7adca07ce00"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_move_repairs.rs",
+      "bytes": 36888,
+      "sha256": "a551da926654434610583119e4db229f2c44df2d0c1f36ca3de5e1ad468240d1"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_move_repairs_worker.cjs",
+      "bytes": 15743,
+      "sha256": "5862ed3f1fdc4469320b8459f0c42a20655287cc1c1aec0e91b945bcd6425938"
+    },
+    {
+      "path": "runs/feature-r1/source/native/tests/compiler_move.rs",
+      "bytes": 37894,
+      "sha256": "0d9319dee356d81f65ff2f3fd899c8f8dc869f837c170727e8c961e5d7b29415"
+    },
+    {
+      "path": "runs/feature-r1/source-after.json",
+      "bytes": 86538,
+      "sha256": "b8fb752ebbaba356a56b43d9c77e6e1d29d619e5a01014591ccd5fa753853934"
+    },
+    {
+      "path": "runs/feature-r1/source-before.json",
+      "bytes": 86538,
+      "sha256": "b8fb752ebbaba356a56b43d9c77e6e1d29d619e5a01014591ccd5fa753853934"
+    },
+    {
+      "path": "runs/feature-r2/native.log",
+      "bytes": 58218,
+      "sha256": "d9c5c2815732955ecfbd7087786150a35381fcdac467c439978fe819f7e30cd3"
+    },
+    {
+      "path": "runs/feature-r2/result.json",
+      "bytes": 783,
+      "sha256": "71bf7d5f8cab11fe6b194fdc25dc9a2bf11d6761f3b59d07ee08be5c2aeee012"
+    },
+    {
+      "path": "runs/feature-r2/runner.py",
+      "bytes": 3389,
+      "sha256": "9ac2ca3f1a1096b9503cdb5028b8d695181d967ca13a2484dcefe7adca07ce00"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_move_repair_tests.rs",
+      "bytes": 11022,
+      "sha256": "1513edea33cf6c62f9d7bcb13e1a92ac78e306861ed0a30ba53b5d071873124e"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_move_repairs.rs",
+      "bytes": 34758,
+      "sha256": "377c8dedb258bd75e0ef453f504fd1005022ac9bc99170f7c82eaf0a8d1f79a8"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_move_repairs_worker.cjs",
+      "bytes": 15711,
+      "sha256": "94de96f2e4f136dabc0d2e3dea9180f76d6c75ba69632c4420f87ae84c3a10b4"
+    },
+    {
+      "path": "runs/feature-r2/source/native/tests/compiler_move.rs",
+      "bytes": 39144,
+      "sha256": "407460c72165adfc7488ac6e18ff9cabdb4408917ca7231a19c80d3e6cad975e"
+    },
+    {
+      "path": "runs/feature-r2/source-after.json",
+      "bytes": 86538,
+      "sha256": "6b78c3f5f12cdcf8918402316c0afdea01e9f915a85fefd58e57fc735e725422"
+    },
+    {
+      "path": "runs/feature-r2/source-before.json",
+      "bytes": 86538,
+      "sha256": "6b78c3f5f12cdcf8918402316c0afdea01e9f915a85fefd58e57fc735e725422"
+    },
+    {
+      "path": "runs/final-r1/build.log",
+      "bytes": 61,
+      "sha256": "9f3308c4af3814337a712087d0f211f557d9636508596b32dae9338c1d92b27f"
+    },
+    {
+      "path": "runs/final-r1/clippy.log",
+      "bytes": 915,
+      "sha256": "86b66ccc0287ad6861838aa93dc50cf216d647ee35263b3b767e73baf1096c5e"
+    },
+    {
+      "path": "runs/final-r1/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/final-r1/native.log",
+      "bytes": 76232,
+      "sha256": "faa932c0808938227dfd3c0ccba783d773bd55d3d5575b862fe8d3fa685e1bc6"
+    },
+    {
+      "path": "runs/final-r1/result.json",
+      "bytes": 2714,
+      "sha256": "3c90382670936f03356d46d5e3fb6b472049e11ce315c607f9b3d0bc0ad25db1"
+    },
+    {
+      "path": "runs/final-r1/runner.py",
+      "bytes": 3532,
+      "sha256": "311c418f4b7d59c68bc623f6544dc2258196941216a0ebba01217721f147d194"
+    },
+    {
+      "path": "runs/final-r1/source/native/docs/compiler-move.md",
+      "bytes": 7376,
+      "sha256": "68fe68816858fab697279143ced0556d6a4660a6404916097608505577b5c64b"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move_ast.rs",
+      "bytes": 22274,
+      "sha256": "edf9d352cd08da2fbaf47d927ce9f762014a46e4b3ce3bf5c5474988d2ebaff2"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move_dependency_import.rs",
+      "bytes": 5263,
+      "sha256": "21605cb5add6885aecf3de7a464264c219ac6b8003d9d0b5bb890e56a467a904"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move_repair_tests.rs",
+      "bytes": 11825,
+      "sha256": "a6778b5bc438ab19056d6c5b0dfaf0d08f9576db9bbac3e17607c44e0f393724"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move_repairs.rs",
+      "bytes": 36643,
+      "sha256": "b3c238100836689099c3e6a005d15f4db737c27b1472c8b16b852467d5259e69"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move_repairs_worker.cjs",
+      "bytes": 19048,
+      "sha256": "45d9b46ec83b46bf445d7e54f0b982ea442e6c4b953ec4d02c91bc2f11e6c9f5"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move_tests.rs",
+      "bytes": 8546,
+      "sha256": "2fd9d3ded67035dcb2c3a32b01278af6c526d7e9ee4e54f58a8e8753527b0a6f"
+    },
+    {
+      "path": "runs/final-r1/source/native/tests/compiler_move.rs",
+      "bytes": 45049,
+      "sha256": "d6868409f9265a78c7f213f63253066248d2bbbbc994ac52aa50dbd88162e601"
+    },
+    {
+      "path": "runs/final-r1/source-after.json",
+      "bytes": 86658,
+      "sha256": "380392a985233d831b5026233c219f1b0045805b6795da4bdcb4955810f47ce6"
+    },
+    {
+      "path": "runs/final-r1/source-before.json",
+      "bytes": 86658,
+      "sha256": "380392a985233d831b5026233c219f1b0045805b6795da4bdcb4955810f47ce6"
+    },
+    {
+      "path": "runs/final-r2/aborted.json",
+      "bytes": 391,
+      "sha256": "a13878190779a28248fee5915034713113695a94a0fd4f899d9f971e370847bb"
+    },
+    {
+      "path": "runs/final-r2/native.log",
+      "bytes": 107,
+      "sha256": "4895353b141559e58c6317d6ab721c185169827a5fe0551da56609ac0461e969"
+    },
+    {
+      "path": "runs/final-r2/runner.py",
+      "bytes": 3532,
+      "sha256": "311c418f4b7d59c68bc623f6544dc2258196941216a0ebba01217721f147d194"
+    },
+    {
+      "path": "runs/final-r2/source/native/docs/compiler-move.md",
+      "bytes": 7376,
+      "sha256": "68fe68816858fab697279143ced0556d6a4660a6404916097608505577b5c64b"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_move_ast.rs",
+      "bytes": 22274,
+      "sha256": "edf9d352cd08da2fbaf47d927ce9f762014a46e4b3ce3bf5c5474988d2ebaff2"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_move_dependency_import.rs",
+      "bytes": 7306,
+      "sha256": "04cf25d7f75bbacd1e1321fef0cd6e09a235945126d0402a09ea5d63f1435541"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_move_repair_tests.rs",
+      "bytes": 12543,
+      "sha256": "b1d6b34c1d3d2a9c9b8872dec73c99cd8faa7fe47861028b9ccd31eb07478cd9"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_move_repairs.rs",
+      "bytes": 37362,
+      "sha256": "3a923215d7685577f4a10276a6187f59c8377fc2b7431a947705ffebb1d398f9"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_move_repairs_worker.cjs",
+      "bytes": 19048,
+      "sha256": "45d9b46ec83b46bf445d7e54f0b982ea442e6c4b953ec4d02c91bc2f11e6c9f5"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_move_tests.rs",
+      "bytes": 8546,
+      "sha256": "2fd9d3ded67035dcb2c3a32b01278af6c526d7e9ee4e54f58a8e8753527b0a6f"
+    },
+    {
+      "path": "runs/final-r2/source/native/tests/compiler_move.rs",
+      "bytes": 45140,
+      "sha256": "3b152b9cfb538817a2a6fa25dbb551a77403eba14713925bd8e540e56b645c00"
+    },
+    {
+      "path": "runs/final-r2/source-before.json",
+      "bytes": 86658,
+      "sha256": "cbc8977e59e96d5f2f74aefb8a6595e8e92e647aad5c6af9a590c4ed2bc14d7e"
+    },
+    {
+      "path": "runs/final-r3/build.log",
+      "bytes": 60,
+      "sha256": "01033d7f31f09ac8463d7a3842b56c51c523eb4696b7eec3f2d474751e395101"
+    },
+    {
+      "path": "runs/final-r3/clippy.log",
+      "bytes": 168,
+      "sha256": "66287449e59ac4ce1051266c1fff728dfbeb0686bf341a104074831b2143e2a8"
+    },
+    {
+      "path": "runs/final-r3/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/final-r3/native.log",
+      "bytes": 74828,
+      "sha256": "60dc1b5c170a5f560004c48425757af7f28c38c9b7da8efe47e7092dc22c0021"
+    },
+    {
+      "path": "runs/final-r3/result.json",
+      "bytes": 2423,
+      "sha256": "3e1667a3481c3a86b633f7e05732fed8703f7bb557d6dc54f444702c95bd32c4"
+    },
+    {
+      "path": "runs/final-r3/runner.py",
+      "bytes": 3532,
+      "sha256": "311c418f4b7d59c68bc623f6544dc2258196941216a0ebba01217721f147d194"
+    },
+    {
+      "path": "runs/final-r3/source/native/docs/compiler-move.md",
+      "bytes": 7376,
+      "sha256": "68fe68816858fab697279143ced0556d6a4660a6404916097608505577b5c64b"
+    },
+    {
+      "path": "runs/final-r3/source/native/src/compiler_move_ast.rs",
+      "bytes": 22274,
+      "sha256": "edf9d352cd08da2fbaf47d927ce9f762014a46e4b3ce3bf5c5474988d2ebaff2"
+    },
+    {
+      "path": "runs/final-r3/source/native/src/compiler_move_dependency_import.rs",
+      "bytes": 7306,
+      "sha256": "04cf25d7f75bbacd1e1321fef0cd6e09a235945126d0402a09ea5d63f1435541"
+    },
+    {
+      "path": "runs/final-r3/source/native/src/compiler_move_repair_tests.rs",
+      "bytes": 12616,
+      "sha256": "4187429acfd1ee75521ba5e419ef8affda18f7c6b2f59303552597f617a02ab9"
+    },
+    {
+      "path": "runs/final-r3/source/native/src/compiler_move_repairs.rs",
+      "bytes": 37494,
+      "sha256": "9c9be193d7a0ef43e0f6dc78afe195a5da299f1fb4d8427be6fd3a96a86cbf21"
+    },
+    {
+      "path": "runs/final-r3/source/native/src/compiler_move_repairs_worker.cjs",
+      "bytes": 19048,
+      "sha256": "45d9b46ec83b46bf445d7e54f0b982ea442e6c4b953ec4d02c91bc2f11e6c9f5"
+    },
+    {
+      "path": "runs/final-r3/source/native/src/compiler_move_tests.rs",
+      "bytes": 8546,
+      "sha256": "2fd9d3ded67035dcb2c3a32b01278af6c526d7e9ee4e54f58a8e8753527b0a6f"
+    },
+    {
+      "path": "runs/final-r3/source/native/tests/compiler_move.rs",
+      "bytes": 45140,
+      "sha256": "3b152b9cfb538817a2a6fa25dbb551a77403eba14713925bd8e540e56b645c00"
+    },
+    {
+      "path": "runs/final-r3/source-after.json",
+      "bytes": 86658,
+      "sha256": "a8a563c5b1011bce61fb791d7a208b1c19525b47431d914c90dc1ff1a4fcc123"
+    },
+    {
+      "path": "runs/final-r3/source-before.json",
+      "bytes": 86658,
+      "sha256": "a8a563c5b1011bce61fb791d7a208b1c19525b47431d914c90dc1ff1a4fcc123"
+    },
+    {
+      "path": "runs/legacy-stdlib-cli-r1/prepare.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/legacy-stdlib-cli-r1/prepare.stdout",
+      "bytes": 9172,
+      "sha256": "9279649d8280d835bba19731846599a2525c8b0f85e713608d57c6f54bc831ae"
+    },
+    {
+      "path": "runs/legacy-stdlib-cli-r1/prior-prepare.stdout",
+      "bytes": 9172,
+      "sha256": "acb936c249ef1e6212d17b6ee5223e350e9fa44b9b7f5e535ffbcd658b40271d"
+    },
+    {
+      "path": "runs/legacy-stdlib-cli-r1/result.json",
+      "bytes": 1447,
+      "sha256": "0a3ecfcb68519b8f6bf6e00cc79959b259ea4f89f9a51f6774a266815ffb39f7"
+    },
+    {
+      "path": "runs/legacy-stdlib-cli-r1/runner.py",
+      "bytes": 2994,
+      "sha256": "80844cac55d599325951f6d079f580dd0d4be92abe099ab83642d4fbb512277a"
+    },
+    {
+      "path": "runs/materialization.json",
+      "bytes": 248591,
+      "sha256": "cee072453e612a273e666a6021a4092b62d3a892e5593afc9d24f6f36fd08c6b"
+    },
+    {
+      "path": "runs/metadata-proof.json",
+      "bytes": 257,
+      "sha256": "b639122eae040895120dff154688f8d714783f0d9b7e791f98293b37cc0e6f1a"
+    },
+    {
+      "path": "runs/metadata.py",
+      "bytes": 7346,
+      "sha256": "793112d549f88010480d692efe08f787a0e6128edabc5b36f31474d55b6f2a27"
+    },
+    {
+      "path": "runs/prior-pr.json",
+      "bytes": 33362,
+      "sha256": "f7aa8712cefe3d7bbd01b0b8411af533c4febdf9fdf1eacc5b49b86c383a2777"
+    },
+    {
+      "path": "runs/qualification.json",
+      "bytes": 7949,
+      "sha256": "afdcca1f8838bce9e21a9ccb06ed769adfc7c1e26d7e38d5e2fc0835978e9dd3"
+    },
+    {
+      "path": "runs/retained-r1/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "210f9e10cb99f0cab43822638fc099f992477b25d9f608bbf8f22bf4d199088d"
+    },
+    {
+      "path": "runs/retained-r1/result.json",
+      "bytes": 738,
+      "sha256": "16110f3e3b5eecc5958d65c05a9210edea3da5f0ed6a6a91e714c9ea4fb78440"
+    },
+    {
+      "path": "runs/retained-r1/runner.py",
+      "bytes": 2181,
+      "sha256": "f2ba0833e8194f73ee03c9ca822369059ff6ec2bd622a4fd0c955a55c2200eb9"
+    },
+    {
+      "path": "runs/retained-r1/source-after.json",
+      "bytes": 85270,
+      "sha256": "18551aec48275716e0cf2ea00d4d7e0a688bc8e09b39b67ec9f047c8a198fa53"
+    },
+    {
+      "path": "runs/retained-r1/source-before.json",
+      "bytes": 85270,
+      "sha256": "18551aec48275716e0cf2ea00d4d7e0a688bc8e09b39b67ec9f047c8a198fa53"
+    },
+    {
+      "path": "runs/retained-r1/tests.log",
+      "bytes": 25047,
+      "sha256": "76a30652fa8593e8f9dde9c26e0ec10b62c11f42ae6372a025e3a518b9a0d9d9"
+    },
+    {
+      "path": "runs/retained-r1/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "runs/targeted-r3/native.log",
+      "bytes": 2711,
+      "sha256": "b9c0a06fc0c3466030d1de7debfcf8f1d0a2c6179bf391ed3959dc335971459c"
+    },
+    {
+      "path": "runs/targeted-r3/result.json",
+      "bytes": 1233,
+      "sha256": "e0d53629721286e190b3d4bf99e30554c137cfe45c6dc5cde85ef88ac0eeeb8e"
+    },
+    {
+      "path": "runs/targeted-r3/runner.py",
+      "bytes": 3532,
+      "sha256": "311c418f4b7d59c68bc623f6544dc2258196941216a0ebba01217721f147d194"
+    },
+    {
+      "path": "runs/targeted-r3/source/native/docs/compiler-move.md",
+      "bytes": 7376,
+      "sha256": "68fe68816858fab697279143ced0556d6a4660a6404916097608505577b5c64b"
+    },
+    {
+      "path": "runs/targeted-r3/source/native/src/compiler_move_ast.rs",
+      "bytes": 22274,
+      "sha256": "edf9d352cd08da2fbaf47d927ce9f762014a46e4b3ce3bf5c5474988d2ebaff2"
+    },
+    {
+      "path": "runs/targeted-r3/source/native/src/compiler_move_dependency_import.rs",
+      "bytes": 5263,
+      "sha256": "21605cb5add6885aecf3de7a464264c219ac6b8003d9d0b5bb890e56a467a904"
+    },
+    {
+      "path": "runs/targeted-r3/source/native/src/compiler_move_repair_tests.rs",
+      "bytes": 11825,
+      "sha256": "a6778b5bc438ab19056d6c5b0dfaf0d08f9576db9bbac3e17607c44e0f393724"
+    },
+    {
+      "path": "runs/targeted-r3/source/native/src/compiler_move_repairs.rs",
+      "bytes": 36643,
+      "sha256": "b3c238100836689099c3e6a005d15f4db737c27b1472c8b16b852467d5259e69"
+    },
+    {
+      "path": "runs/targeted-r3/source/native/src/compiler_move_repairs_worker.cjs",
+      "bytes": 19048,
+      "sha256": "45d9b46ec83b46bf445d7e54f0b982ea442e6c4b953ec4d02c91bc2f11e6c9f5"
+    },
+    {
+      "path": "runs/targeted-r3/source/native/src/compiler_move_tests.rs",
+      "bytes": 8546,
+      "sha256": "2fd9d3ded67035dcb2c3a32b01278af6c526d7e9ee4e54f58a8e8753527b0a6f"
+    },
+    {
+      "path": "runs/targeted-r3/source/native/tests/compiler_move.rs",
+      "bytes": 44163,
+      "sha256": "5f7a814ae11cca7af09cd5495eb84c96cd11d13116980de22f51d8aad8755c26"
+    },
+    {
+      "path": "runs/targeted-r3/source-after.json",
+      "bytes": 86658,
+      "sha256": "34cdd08c7b477555ebedd239d5c05252027f0db65b018710e65ce4f95cdaf7c4"
+    },
+    {
+      "path": "runs/targeted-r3/source-before.json",
+      "bytes": 86658,
+      "sha256": "34cdd08c7b477555ebedd239d5c05252027f0db65b018710e65ce4f95cdaf7c4"
+    },
+    {
+      "path": "runs/targeted-r3/units.log",
+      "bytes": 1015,
+      "sha256": "f8368bf1a9f0fa668f7b855927b7eea52b0e08512f8ddf2d1e334032e89cd290"
+    },
+    {
+      "path": "runs/tools.json",
+      "bytes": 578,
+      "sha256": "44cfff0a3ac1b07092b1a9be52f11b84bd9afc8f3dc9ee5e299eafcc77d9e176"
+    },
+    {
+      "path": "runs/worker-private-probe/request.json",
+      "bytes": 1402,
+      "sha256": "6e4c0d05a1ced02fa0cd35f40d1492e8ad8a706d628f2c3490c1671988c28d36"
+    },
+    {
+      "path": "runs/worker-private-probe/stderr.log",
+      "bytes": 1643,
+      "sha256": "4747f1c8021532fa5847b8deea41503314a52716289fcdec796dbe9afbad648f"
+    },
+    {
+      "path": "runs/worker-private-probe/stdout.json",
+      "bytes": 15589,
+      "sha256": "6dcb37b834932d3f5f00adc36abc5224727eca028947896a6b88df56e1148235"
+    },
+    {
+      "path": "runs/worker-private-probe/worker.cjs",
+      "bytes": 50562,
+      "sha256": "2ee9e1fbc393be6831e66a6a6c3df01c85a92e5b554d8f2f0243ae6fd8415141"
+    },
+    {
+      "path": "runs/worker-r1/request.json",
+      "bytes": 1425,
+      "sha256": "a8682ba60ff2f3c37d3d5d6e5df6f230bb33a76e4bee76e21ca54098ccddf879"
+    },
+    {
+      "path": "runs/worker-r1/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/worker-r1/stdout.json",
+      "bytes": 19178,
+      "sha256": "c5cb0041c1d50566d78113377feb7a219b9c6be117283dc7119c49b847c681dd"
+    },
+    {
+      "path": "runs/worker-r1/worker.cjs",
+      "bytes": 50510,
+      "sha256": "94174e71c82ab991dd3f0873e320df82f3b67cd9b8e1b70d3d8b0e36dac0facf"
+    },
+    {
+      "path": "runs/worker-r3-local/request.json",
+      "bytes": 1400,
+      "sha256": "35fca81f8074fe96e10b6a5112acf0108d15a376a121a1802634340ad35576d3"
+    },
+    {
+      "path": "runs/worker-r3-local/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/worker-r3-local/stdout.json",
+      "bytes": 17679,
+      "sha256": "087b1adcb37a373dafa14d82319b4a4c1fd90833cb3fa8a24388a50e30ec031d"
+    },
+    {
+      "path": "runs/worker-r3-local/worker.cjs",
+      "bytes": 53815,
+      "sha256": "31965d059e9393c2ff00d7cec7341653cef4bf55f8dc6239f189f4112b4907da"
+    },
+    {
+      "path": "runs/worker-r3-proto/request.json",
+      "bytes": 1461,
+      "sha256": "b9f9650bed36244361907572083090b69da8eb8eec2185fb95ab777bf8179c07"
+    },
+    {
+      "path": "runs/worker-r3-proto/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/worker-r3-proto/stdout.json",
+      "bytes": 19905,
+      "sha256": "d751ccc357b66607f05303608ad94e1803885cf1b8df4bcfefdf1e8b9529ca28"
+    },
+    {
+      "path": "runs/worker-r3-proto/worker.cjs",
+      "bytes": 53815,
+      "sha256": "31965d059e9393c2ff00d7cec7341653cef4bf55f8dc6239f189f4112b4907da"
+    }
+  ]
+}

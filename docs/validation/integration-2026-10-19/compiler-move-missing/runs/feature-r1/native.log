@@ -1,0 +1,44 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 41s
+     Running tests\compiler_move.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\compiler_move-25835ff4cf375f5e.exe)
+
+running 21 tests
+test actual_cli_move_requires_independent_tsc_approval_and_conditional_recovery ... ok
+test actual_compiler_selected_reexports_and_import_alias_collisions_are_repaired ... ok
+test actual_declaration_matrix_keeps_original_graph_identity_and_explicit_ast_origin ... ok
+test actual_exported_function_move_repairs_split_consumer_imports_without_source_writes ... ok
+test actual_imported_free_bindings_and_unrelated_reexports_preserve_side_effect_statements ... ok
+test actual_jsdoc_class_move_repairs_namespace_consumer_and_keeps_unrelated_member ... ok
+test actual_jsx_component_moves_keep_intrinsic_properties_and_typed_props ... ok
+test actual_language_matrix_keeps_bom_unicode_crlf_and_repository_plugins_inert ... ok
+test actual_private_free_dependency_preserves_same_offset_compiler_insertion_order ... ok
+test combined_reexport_alias_and_shorthand_repairs_preserve_public_keys_and_original_declarations ... ok
+test compiler_profile_rejects_tools_in_analyzed_roots_and_detects_changed_module_bytes ... ok
+test invalid_paths_stale_selection_trust_context_and_directives_publish_no_plan ... ok
+test missing_import_relocation_retains_bom_crlf_directives_comments_and_repeated_property_keys ... FAILED
+test move_profile_is_optional_host_bound_and_routed_through_the_existing_facade ... ok
+test namespace_default_type_only_and_global_shadow_aliases_keep_their_original_bindings ... ok
+test omitted_shorthand_import_is_reconstructed_without_rebinding_the_target ... ok
+test private_free_binding_collisions_are_repaired_without_renaming_source_or_target_declarations ... ok
+test readonly_consumer_and_ambiguous_context_cannot_publish_compiler_move_plans ... ok
+test readonly_reexport_repair_refuses_before_any_plan_publication ... ok
+test selected_reexports_preserve_multiple_aliases_type_flags_comments_and_crlf_bom ... ok
+test shorthand_only_named_default_namespace_and_combined_imports_keep_original_bindings ... ok
+
+failures:
+
+---- missing_import_relocation_retains_bom_crlf_directives_comments_and_repeated_property_keys stdout ----
+
+thread 'missing_import_relocation_retains_bom_crlf_directives_comments_and_repeated_property_keys' (26172) panicked at native\tests\compiler_move.rs:469:172:
+called `Result::unwrap()` on an `Err` value: Move source/destination directives differ
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    missing_import_relocation_retains_bom_crlf_directives_comments_and_repeated_property_keys
+
+test result: FAILED. 20 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 153.85s
+
+error: test failed, to rerun pass `--test compiler_move`
+error: 1 target failed:
+    `--test compiler_move`
