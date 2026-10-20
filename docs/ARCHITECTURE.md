@@ -2,6 +2,15 @@
 
 ## Native Rust ownership
 
+`mixed_view::provider::CheckedGraph` owns joint checked source replay and exact
+verified provider graph data; no JSON constructor exists. Its bounded literal
+lookup, directed multiedge degrees and frontier trace queries use owned data,
+including after Store loss. Original indexed claims, ordered repeated roles and
+nested source/receipt/accounting metadata remain; hyperedges do not imply flow.
+Existing provider load JSON and artifact identities are unchanged. The separate
+CLI query requires PDF authority only during load and starts no model. See
+[mixed graph queries](../native/docs/mixed-meaning-queries.md).
+
 `mixed_view::provider` and the separate `mixed-meaning` CLI use a fixed typed
 mixed-source wire contract under explicit trusted-host permission. Existing
 fingerprinting takes host input paths without a fabricated native selection.

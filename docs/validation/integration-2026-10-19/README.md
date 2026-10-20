@@ -511,3 +511,12 @@ source/response replay and corruption-refusing retention. Final18groups
 ledger inventories and prior evidence remain. No semantic-model quality, real
 billing, fullR4/upstream/platform/main/release certification follows; broader
 STATUS/R1-R9 stays active.
+
+Checked mixed interpretation graph consumers: [indexed evidence](mixed-meaning-consumers/index.json),
+source `0ddc05e21d408417ebb40b1563fac61f2f8ed37b` / merge `3d316808c622857f4380a2ecaea9cb794ff98717`. Final19groups
+622/0/7 and format/build/Clippy pass; integrated Python17/typecheck/
+TypeScript260+3skipped pass. Eight new cases preserve original source/receipt
+and directed/parallel/role semantics, including frozen queries after Store loss.
+Initial17/1 wrong expected refusal code and disk-full linker failure are retained.
+Scoped nonadditive evidence;
+cross-workspace/fullR4/whole-native/platform/main/release remain open.
