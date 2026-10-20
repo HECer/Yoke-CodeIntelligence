@@ -2,6 +2,33 @@
 
 ## Current integration work
 
+Explicit [compiler move repairs](../native/docs/compiler-move.md#source-only-compiler-repairs)
+now split direct named reexports and give generated imports fresh local aliases
+without renaming original target/dependency declarations. Native original/current
+source-anchor checks, captured free-binding checks and original-byte piece
+composition precede the existing complete-result syntax/binding/API gates.
+Shorthand property keys retain their independent definition anchors.
+
+All **eight additional Rust cases pass** (six integration / two unit); two
+existing integration cases now also exercise repaired outputs. Coverage includes
+four import forms, three reexport styles, 128 UTF-8 composition sequences with
+eight edits each, coherent forged effects, a shared operation budget and actual
+CLI plus independent tsc/approval/apply/conditional recovery for both original
+and repaired plans. The final scoped native run is **653 passed /
+0 failed / 9 existing ignored**, across 13 groups on 798 fixed
+native inputs. Format/build/all-target Clippy pass. Counts include the new cases;
+development phases are not added to these totals.
+Python17, TypeScript typecheck and TypeScript260/3skipped pass on 792 fixed
+retained inputs. The same owned no-repair Array/Promise fixture retains its
+exact files/diff/result snapshot/intent/context/effect digest; fresh timestamped
+plan IDs differ under the unchanged identity formula.
+
+Missing shorthand-only dependency imports still refuse when native bindings
+detect a diagnostic-free substitution. Their synthesis, classic body inline,
+wider shapes/runtime/upstream acceptance and full Windows/current-head hosted
+acceptance remain open. Existing OS1314 and macOS PDF/runtime/timing failures
+remain unresolved. See [repair evidence](validation/integration-2026-10-19/compiler-move-repairs/README.md).
+
 Explicit [immutable compiler moves](../native/docs/compiler-move.md) add actual
 host-selected TypeScript 5.8.3 declaration moves into existing captured ES modules.
 Native syntax/binding/import-export/result checks, explicit graph-absent AST

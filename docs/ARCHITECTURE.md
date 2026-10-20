@@ -2,6 +2,14 @@
 
 ## Native Rust ownership
 
+The compiler-move repair stage reconstructs direct named reexport partitions and
+fresh local import aliases from original/current immutable source anchors.
+Native original-byte pieces compose staged changes while preserving untouched
+regions. Shorthand property keys and value bindings have separate correspondence
+roles. Repair steps share the compiler's operation budget and retain final
+source/binding/API/verification gates; diagnostic-free missing-import substitutions
+remain refused. See [compiler moves](../native/docs/compiler-move.md).
+
 The separate optional `moveCompiler` host profile uses actual TypeScript 5.8.3
 Move to file output over immutable captured modules. Native syntax/binding,
 import/export coverage and result-byte checks precede ordinary guarded plans.

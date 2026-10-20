@@ -76,7 +76,7 @@ unrelated reexports and inert repository plugins have owned regression evidence.
 
 All edited paths must be captured writable TS/JS files; a read-only consumer
 needing repair refuses the whole plan. No resources are created. Bounds include
-20,000 files/10 MB input, 2,000 original operations, 4 MB per changed file and
+20,000 files/10 MB input, 2,000 combined original/repair operations, 4 MB per changed file and
 16 MB total changed output. Protocol/AST/library and inherited deadline bounds
 remain. Independent verification, explicit approval, stale-source preconditions,
 application and conditional recovery use the existing changes pipeline. Real
@@ -91,8 +91,31 @@ evaluation-order guarantee or observed execution. Other contexts/languages,
 merged declarations, sibling binding bundles, new resources, symbol-parent
 destinations and full upstream acceptance remain open.
 
-TypeScript 5.8.3 can leave selected-symbol reexports unrepaired and introduce
-import aliases colliding with target declarations. Actual tests require both
-outputs to fail before publication. Independent repairs remain R1 work; checks
-are not weakened to admit invalid output. The own_v1 LSP contract retains its
-separate finite scope.
+## Source-only compiler repairs
+
+TypeScript 5.8.3 can leave direct named reexports of the selected declaration
+unrepaired and import dependencies under names already used in the target.
+The separate repair stage partitions selected reexport specifiers, retaining
+external aliases, type-only flags, comments and source styles. Its module
+specifier comes from the original language service's File Rename analysis;
+no file is renamed. Namespace/default/type-only imports and imports that would
+shadow an original global binding receive fresh local aliases. Original target
+and dependency declarations retain their names. Object shorthand expansion
+preserves its original property key and separately checked value binding.
+
+Rust independently checks each repair's original/current source anchors,
+selected export membership, captured free references and import-name ownership.
+It reconstructs the edits and an original-byte piece table. The table composes
+later edits inside compiler-inserted text without replacing untouched file
+regions. `sourceRepairs` and `editComposition:original_byte_pieces_v1` disclose
+these steps only when used. The original no-repair operation list remains intact.
+Up to 256 repair steps share the original 2,000-operation budget. Final syntax,
+static bindings, export APIs, source/result hashes, permissions and independent
+verification/application/recovery gates still apply to the complete result.
+
+This is not an exhaustive compiler bug workaround. TypeScript can also omit a
+required import when its only use is shorthand. A diagnostic-free substitution
+of an existing target variable is explicitly rejected by native binding checks;
+missing-import synthesis remains open. Wider export/import/context shapes,
+runtime semantics and full acceptance remain unqualified. The own_v1 LSP
+contract retains its separate finite scope.

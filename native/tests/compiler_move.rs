@@ -247,7 +247,7 @@ fn actual_jsx_component_moves_keep_intrinsic_properties_and_typed_props() {
 }
 
 #[test]
-fn actual_compiler_broken_selected_reexports_and_import_alias_collisions_are_refused() {
+fn actual_compiler_selected_reexports_and_import_alias_collisions_are_repaired() {
     let source = "import {delta as step} from './dep';\nexport function helper(n:number){return n+step;}\nexport const keep=3;\n";
     for (target, consumer) in [
         (
@@ -261,13 +261,14 @@ fn actual_compiler_broken_selected_reexports_and_import_alias_collisions_are_ref
     ] {
         let (root, mut engine) = fixture(source, target, consumer);
         fs::write(root.path().join("dep.ts"), "export const delta=2;\n").unwrap();
-        let error = yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d())
-            .unwrap_err();
-        assert!(
-            error.to_string().contains("errors after refactoring"),
-            "{error:#}"
-        );
-        unpublished(&engine);
+        let result =
+            yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).unwrap();
+        assert_eq!(result["sourceRepairs"].as_array().unwrap().len(), 1);
+        if consumer.starts_with("export") {
+            assert!(planned(&engine, &result, "consumer.ts").contains("./target"));
+        } else {
+            assert!(planned(&engine, &result, "target.ts").contains("__ci_move_"));
+        }
         source_unchanged(root.path(), source, target, consumer);
     }
 }
@@ -345,6 +346,130 @@ fn compiler_profile_rejects_tools_in_analyzed_roots_and_detects_changed_module_b
             &d()
         )
         .is_err()
+    );
+}
+
+#[test]
+fn combined_reexport_alias_and_shorthand_repairs_preserve_public_keys_and_original_declarations() {
+    let source = "import {delta as step} from './dep';\nexport function helper(n:number){const __ci_move_1=n;return {step,n:__ci_move_1+step};}\nexport const keep=3;\n";
+    let target = "const step=20;\nexport const other=step;\n";
+    let consumer = "export {helper as renamed,keep} from './source';\nimport {helper,keep as localKeep} from './source';\nexport const answer=helper(localKeep).step;\n";
+    let (root, mut engine) = fixture(source, target, consumer);
+    fs::write(root.path().join("dep.ts"), "export const delta=2;\n").unwrap();
+    let result =
+        yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).unwrap();
+    let target_after = planned(&engine, &result, "target.ts");
+    assert!(target_after.contains("const step=20"), "{target_after}");
+    assert!(target_after.contains("step: __ci_move_2"), "{target_after}");
+    assert!(
+        target_after.contains("__ci_move_1+__ci_move_2"),
+        "{target_after}"
+    );
+    assert_eq!(result["sourceRepairs"].as_array().unwrap().len(), 2);
+    assert_eq!(result["editComposition"], "original_byte_pieces_v1");
+    source_unchanged(root.path(), source, target, consumer);
+}
+
+#[test]
+fn private_free_binding_collisions_are_repaired_without_renaming_source_or_target_declarations() {
+    let source = "const delta=2;\nfunction helper(n:number){return {delta,n:n+delta};}\nexport const answer=helper(1);\n";
+    let target = "const delta=20;\nexport const other=delta;\n";
+    let consumer = "export {};\n";
+    let (root, mut engine) = fixture(source, target, consumer);
+    let result =
+        yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).unwrap();
+    assert!(planned(&engine, &result, "source.ts").contains("export const delta=2"));
+    let after = planned(&engine, &result, "target.ts");
+    assert!(after.contains("const delta=20"), "{after}");
+    assert!(after.contains("delta: __ci_move_"), "{after}");
+    source_unchanged(root.path(), source, target, consumer);
+}
+
+#[test]
+fn native_binding_admission_rejects_diagnostic_free_missing_shorthand_import() {
+    let source = "import {delta as step} from './dep';\nexport function helper(){return {step};}\nexport const keep=3;\n";
+    let target = "const step=20;\nexport const other=step;\n";
+    let consumer = "export {helper as renamed} from './source';\n";
+    let (root, mut engine) = fixture(source, target, consumer);
+    fs::write(root.path().join("dep.ts"), "export const delta=2;\n").unwrap();
+    let error =
+        yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).unwrap_err();
+    assert!(error.to_string().contains("binding"), "{error:#}");
+    unpublished(&engine);
+    source_unchanged(root.path(), source, target, consumer);
+}
+
+#[test]
+fn namespace_default_type_only_and_global_shadow_aliases_keep_their_original_bindings() {
+    for (source, dependency, target) in [
+        (
+            "import * as api from './dep';\nexport function helper(n:number){return api.delta+n;}\nexport const keep=3;\n",
+            "export const delta=2;\n",
+            "const api={delta:20}; export const other=api.delta;\n",
+        ),
+        (
+            "import step from './dep';\nexport function helper(n:number){return step(n);}\nexport const keep=3;\n",
+            "export default function delta(n:number){return n+2;}\n",
+            "const step=20; export const other=step;\n",
+        ),
+        (
+            "import type {Config as Item} from './dep';\nexport function helper(n:Item){return n.value;}\nexport const keep=3;\n",
+            "export interface Config{value:number}\n",
+            "interface Item{other:number} export const other:Item={other:20};\n",
+        ),
+        (
+            "import {Array} from './dep';\nexport function helper(n:number){return Array(n);}\nexport const keep=3;\n",
+            "export function Array(n:number){return n+2;}\n",
+            "export const other=Array.from([20]);\n",
+        ),
+    ] {
+        let consumer = "export {helper as renamed,keep} from './source';\n";
+        let (root, mut engine) = fixture(source, target, consumer);
+        fs::write(root.path().join("dep.ts"), dependency).unwrap();
+        let result = yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d())
+            .unwrap_or_else(|error| panic!("{source}: {error:#}"));
+        assert!(planned(&engine, &result, "target.ts").contains("__ci_move_"));
+        source_unchanged(root.path(), source, target, consumer);
+    }
+}
+
+#[test]
+fn selected_reexports_preserve_multiple_aliases_type_flags_comments_and_crlf_bom() {
+    for consumer in [
+        "export {helper as first,helper as second,keep} from './source';",
+        "\u{feff}// 🌍\r\nexport { /* , } */ helper as renamed, keep, /* tail */ } from './source';\r\n",
+        "export type {helper as signature} from './source';\n",
+    ] {
+        let source = "export function helper(n:number){return n+1;}\nexport const keep=3;\n";
+        let target = "export const other=4;\n";
+        let (root, mut engine) = fixture(source, target, consumer);
+        let result = yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d())
+            .unwrap_or_else(|error| panic!("{consumer}: {error:#}"));
+        let after = planned(&engine, &result, "consumer.ts");
+        assert!(after.contains("./target"), "{after}");
+        if consumer.contains("/* , } */") {
+            assert!(after.starts_with("\u{feff}// 🌍\r\n"));
+            assert_eq!(after.matches("/* , } */").count(), 1);
+            assert_eq!(after.matches("/* tail */").count(), 1);
+        }
+        source_unchanged(root.path(), source, target, consumer);
+    }
+}
+
+#[test]
+fn readonly_reexport_repair_refuses_before_any_plan_publication() {
+    let source = "export function helper(n:number){return n+1;}\nexport const keep=3;\n";
+    let (root, mut engine) = fixture(source, "export {};\n", "export {};\n");
+    fs::create_dir(root.path().join("vendor")).unwrap();
+    let reexport = "export {helper as renamed} from '../source';\n";
+    fs::write(root.path().join("vendor/consumer.ts"), reexport).unwrap();
+    fs::write(root.path().join("tsconfig.json"),r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true},"files":["source.ts","target.ts","consumer.ts","vendor/consumer.ts"]}"#).unwrap();
+    engine.capture_options.read_only_dependency_dirs = vec!["vendor".into()];
+    assert!(yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).is_err());
+    unpublished(&engine);
+    assert_eq!(
+        fs::read_to_string(root.path().join("vendor/consumer.ts")).unwrap(),
+        reexport
     );
 }
 
@@ -517,82 +642,107 @@ fn move_profile_is_optional_host_bound_and_routed_through_the_existing_facade() 
 fn actual_cli_move_requires_independent_tsc_approval_and_conditional_recovery() {
     use std::process::Command;
     use yoke::project_session::HostProfile;
-    let source = "const delta=2;\nfunction helper(n:number){return n+delta;}\nexport const answer=helper(1);\n";
-    let target = "export const other=4;\n";
-    let consumer = "export {};\n";
-    let (root, mut engine) = fixture(source, target, consumer);
-    let spec = compiler();
-    let host = tempfile::tempdir().unwrap();
-    fs::write(
-        host.path().join("host.json"),
-        serde_json::to_vec(&HostProfile {
-            move_compiler: Some(spec.clone()),
-            ..Default::default()
-        })
-        .unwrap(),
-    )
-    .unwrap();
-    fs::write(host.path().join("requests.json"),serde_json::to_vec(&json!([{"operation":"refactor.prepare","args":{"operation":"move","arguments":args("helper")}}])).unwrap()).unwrap();
-    let output = Command::new(env!("CARGO_BIN_EXE_yoke"))
-        .arg("--root")
-        .arg(root.path())
-        .args(["session", "--id", "move-cli", "--host-profile"])
-        .arg(host.path().join("host.json"))
-        .arg("--requests")
-        .arg(host.path().join("requests.json"))
-        .output()
-        .unwrap();
-    assert!(
-        output.status.success(),
-        "{}",
-        String::from_utf8_lossy(&output.stderr)
-    );
-    let value: Value = serde_json::from_slice(&output.stdout).unwrap();
-    let id = value["results"][0]["plan"]["id"].as_str().unwrap();
-    engine.allow_writes = true;
-    engine.approve(id, false).unwrap();
-    assert_eq!(
-        engine
-            .invoke(
-                "ci_change_apply",
-                json!({"planId":id,"mode":"workspace","idempotencyKey":"unverified"})
+    for repaired in [false, true] {
+        let (source, target, consumer) = if repaired {
+            (
+                "import {delta as step} from './dep';\nexport function helper(n:number){return {step,n:n+step};}\nexport const keep=3;\n",
+                "const step=20; export const other=step;\n",
+                "export {helper as renamed,keep} from './source';\n",
             )
-            .unwrap()["status"],
-        "error"
-    );
-    let verify = Command::new(env!("CARGO_BIN_EXE_yoke"))
-        .arg("--root")
-        .arg(root.path())
-        .args(["verify", "--plan", id, "--trust-project", "--command"])
-        .arg(&spec.node)
-        .arg(format!(
-            "--arg={}",
-            spec.typescript.parent().unwrap().join("tsc.js").display()
-        ))
-        .arg("--arg=--noEmit")
-        .output()
-        .unwrap();
-    assert!(
-        verify.status.success(),
-        "{}",
-        String::from_utf8_lossy(&verify.stderr)
-    );
-    let applied = engine
-        .invoke(
-            "ci_change_apply",
-            json!({"planId":id,"mode":"workspace","idempotencyKey":"verified"}),
+        } else {
+            (
+                "const delta=2;\nfunction helper(n:number){return n+delta;}\nexport const answer=helper(1);\n",
+                "export const other=4;\n",
+                "export {};\n",
+            )
+        };
+        let (root, mut engine) = fixture(source, target, consumer);
+        if repaired {
+            fs::write(root.path().join("dep.ts"), "export const delta=2;\n").unwrap();
+        }
+        let spec = compiler();
+        let host = tempfile::tempdir().unwrap();
+        fs::write(
+            host.path().join("host.json"),
+            serde_json::to_vec(&HostProfile {
+                move_compiler: Some(spec.clone()),
+                ..Default::default()
+            })
+            .unwrap(),
         )
         .unwrap();
-    assert_eq!(applied["status"], "ok", "{applied}");
-    let expected = fs::read(root.path().join("source.ts")).unwrap();
-    let receipt = applied["data"]["receipt"]["id"].as_str().unwrap();
-    fs::write(root.path().join("source.ts"), "// foreign writer\n").unwrap();
-    assert!(yoke::changes::recover(&engine.store, &engine.root, receipt, true).is_err());
-    assert_eq!(
-        fs::read_to_string(root.path().join("source.ts")).unwrap(),
-        "// foreign writer\n"
-    );
-    fs::write(root.path().join("source.ts"), expected).unwrap();
-    yoke::changes::recover(&engine.store, &engine.root, receipt, true).unwrap();
-    source_unchanged(root.path(), source, target, consumer);
+        fs::write(host.path().join("requests.json"),serde_json::to_vec(&json!([{"operation":"refactor.prepare","args":{"operation":"move","arguments":args("helper")}}])).unwrap()).unwrap();
+        let output = Command::new(env!("CARGO_BIN_EXE_yoke"))
+            .arg("--root")
+            .arg(root.path())
+            .args(["session", "--id", "move-cli", "--host-profile"])
+            .arg(host.path().join("host.json"))
+            .arg("--requests")
+            .arg(host.path().join("requests.json"))
+            .output()
+            .unwrap();
+        assert!(
+            output.status.success(),
+            "{}",
+            String::from_utf8_lossy(&output.stderr)
+        );
+        let value: Value = serde_json::from_slice(&output.stdout).unwrap();
+        if repaired {
+            assert_eq!(
+                value["results"][0]["sourceRepairs"]
+                    .as_array()
+                    .unwrap()
+                    .len(),
+                2
+            );
+        }
+        source_unchanged(root.path(), source, target, consumer);
+        let id = value["results"][0]["plan"]["id"].as_str().unwrap();
+        engine.allow_writes = true;
+        engine.approve(id, false).unwrap();
+        assert_eq!(
+            engine
+                .invoke(
+                    "ci_change_apply",
+                    json!({"planId":id,"mode":"workspace","idempotencyKey":"unverified"})
+                )
+                .unwrap()["status"],
+            "error"
+        );
+        let verify = Command::new(env!("CARGO_BIN_EXE_yoke"))
+            .arg("--root")
+            .arg(root.path())
+            .args(["verify", "--plan", id, "--trust-project", "--command"])
+            .arg(&spec.node)
+            .arg(format!(
+                "--arg={}",
+                spec.typescript.parent().unwrap().join("tsc.js").display()
+            ))
+            .arg("--arg=--noEmit")
+            .output()
+            .unwrap();
+        assert!(
+            verify.status.success(),
+            "{}",
+            String::from_utf8_lossy(&verify.stderr)
+        );
+        let applied = engine
+            .invoke(
+                "ci_change_apply",
+                json!({"planId":id,"mode":"workspace","idempotencyKey":"verified"}),
+            )
+            .unwrap();
+        assert_eq!(applied["status"], "ok", "{applied}");
+        let expected = fs::read(root.path().join("source.ts")).unwrap();
+        let receipt = applied["data"]["receipt"]["id"].as_str().unwrap();
+        fs::write(root.path().join("source.ts"), "// foreign writer\n").unwrap();
+        assert!(yoke::changes::recover(&engine.store, &engine.root, receipt, true).is_err());
+        assert_eq!(
+            fs::read_to_string(root.path().join("source.ts")).unwrap(),
+            "// foreign writer\n"
+        );
+        fs::write(root.path().join("source.ts"), expected).unwrap();
+        yoke::changes::recover(&engine.store, &engine.root, receipt, true).unwrap();
+        source_unchanged(root.path(), source, target, consumer);
+    }
 }

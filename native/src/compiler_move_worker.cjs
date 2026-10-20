@@ -93,11 +93,14 @@ function moveSymbolToFile(env) {
    bytes+=output.length;assert(output.length<=4_000_000&&bytes<=16_000_000,'Move result capacity');const value=output.toString('utf8');assert(Buffer.from(value).equals(output),'Move result UTF-8');source.set(p,value);edits.push(...normalized);resultHashes[rel(p)]=sha(output);
   }
   assert(seen.has(file)&&seen.has(destination),'Move did not change both selected files');
+  const repaired=repairCompilerMove(env,service,program,selected[0],edits,makeService,rawEdits.length);
+  for(const p of Object.keys(resultHashes))delete resultHashes[p];
+  for(const edit of repaired.edits)resultHashes[edit.path]=sha(source.get(abs(edit.path)));
   const afterService=makeService();let after,afterDiagnostics;
   try{const program=afterService.getProgram();afterDiagnostics=ts.getPreEmitDiagnostics(program).map(d=>diagnostic(d,context.name));assert(afterDiagnostics.length<=20_000&&!afterDiagnostics.some(d=>d.severity==='error'),'Move compiler context has errors after refactoring');after=inspect(program);}finally{afterService.dispose();}
   const libraries=Object.fromEntries([...libCache].filter(([,value])=>value!==undefined).map(([p,value])=>[path.basename(p),sha(value)]).sort(([a],[b])=>a.localeCompare(b)));
   const options=JSON.parse(JSON.stringify(context.parsed.options,(key,value)=>key==='configFile'?undefined:typeof value==='string'?value.replaceAll(root,'[snapshot]'):value));
   const contextId=sha(JSON.stringify([input.snapshotId,context.name,context.parsed.fileNames.map(rel).sort(),options,ts.version,compilerHash,libraries]));
-  return{schema:1,operation:'move',snapshotId:input.snapshotId,inputHash:process.argv[2],compiler:ts.version,compilerHash,sourceBindings:input.sourceBindings,sourceExecuted:false,sourceTreeWritten:false,exhaustive:false,status:'passed',contexts:[],diagnostics:[],outputs:[],standardLibraryHashes:libraries,limitations:[...limitations,'Known static compiler bindings are checked; dynamic/omitted consumers and module evaluation order remain unverified.'],move:{schema:1,normalization:'ordered_insertions_and_original_bom_v1',config:context.name,contextId,actionKind:action.kind,before,after,rawEdits,edits,resultHashes,beforeDiagnostics,afterDiagnostics}};
+  return{schema:1,operation:'move',snapshotId:input.snapshotId,inputHash:process.argv[2],compiler:ts.version,compilerHash,sourceBindings:input.sourceBindings,sourceExecuted:false,sourceTreeWritten:false,exhaustive:false,status:'passed',contexts:[],diagnostics:[],outputs:[],standardLibraryHashes:libraries,limitations:[...limitations,'Known static compiler bindings are checked; dynamic/omitted consumers and module evaluation order remain unverified.'],move:{schema:1,normalization:'ordered_insertions_and_original_bom_v1',config:context.name,contextId,actionKind:action.kind,before,after,rawEdits,edits:repaired.edits,resultHashes,beforeDiagnostics,afterDiagnostics,...(repaired.repairs.length?{repairs:repaired.repairs,composition:"original_byte_pieces_v1"}:{})}};
  }finally{source.clear();for(const [p,value]of original)source.set(p,value);service.dispose();}
 }

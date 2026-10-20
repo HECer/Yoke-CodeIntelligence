@@ -360,6 +360,43 @@ fn emit(
         }
         let range = (node.start_byte(), node.end_byte());
         let raw = node.utf8_text(text.as_bytes())?;
+        // A shorthand has two roles at one source span: the immutable property
+        // key and the referenced value. Keep the key's definition anchor while
+        // comparing the value binding independently after alias expansion.
+        let object_pair = if node.kind() == "shorthand_property_identifier" {
+            Some((node, node))
+        } else if node.kind() == "pair" {
+            node.child_by_field_name("key")
+                .zip(node.child_by_field_name("value"))
+                .filter(|(key, value)| {
+                    key.kind() == "property_identifier" && value.kind() == "identifier"
+                })
+        } else {
+            None
+        };
+        if let Some((key, value)) = object_pair {
+            let key_range = (key.start_byte(), key.end_byte());
+            let key_text = key.utf8_text(text.as_bytes())?;
+            aliases.extend([range, key_range]);
+            out.events.push(Event {
+                signature: format!("@object-key:{}:{key_text}", key_text.len()),
+                range: key_range,
+                aliases,
+                identifier: false,
+                binding: None,
+                text: String::new(),
+            });
+            let value_range = (value.start_byte(), value.end_byte());
+            out.events.push(Event {
+                signature: "@object-value".into(),
+                range: value_range,
+                aliases: vec![],
+                identifier: true,
+                binding: Some(value_range),
+                text: value.utf8_text(text.as_bytes())?.into(),
+            });
+            continue;
+        }
         let property = match node.kind() {
             "member_expression" => node.child_by_field_name("property"),
             "nested_type_identifier" | "nested_identifier" => node.child_by_field_name("name"),

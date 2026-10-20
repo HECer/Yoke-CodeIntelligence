@@ -14,6 +14,8 @@ use std::collections::{BTreeMap, BTreeSet};
 mod ast;
 #[path = "compiler_move_bindings.rs"]
 mod bindings;
+#[path = "compiler_move_repairs.rs"]
+mod repairs;
 #[cfg(test)]
 #[path = "compiler_move_tests.rs"]
 mod tests;
@@ -157,6 +159,10 @@ struct RawEdit {
 struct Effect {
     schema: u32,
     normalization: String,
+    #[serde(default)]
+    repairs: Vec<repairs::Repair>,
+    #[serde(default)]
+    composition: Option<String>,
     config: String,
     context_id: String,
     action_kind: String,
@@ -470,12 +476,20 @@ pub fn prepare(
             || before.contains_key(&effect.config) && effect.config.ends_with(".json"),
         "Move compiler configuration is outside captured source"
     );
-    let edits = normalize(&effect.raw_edits, &before, d)?;
+    let original_edits = normalize(&effect.raw_edits, &before, d)?;
+    let (edits, after) = repairs::admit(
+        &before,
+        &original_edits,
+        &effect,
+        &snapshot,
+        &symbol,
+        destination,
+        d,
+    )?;
     ensure!(
         edits == effect.edits,
         "Move normalized operations differ from original compiler changes"
     );
-    let after = apply(&edits, &before, d)?;
     let changed: BTreeSet<_> = edits.iter().map(|edit| edit.path.as_str()).collect();
     ensure!(
         changed.contains(path)
@@ -534,7 +548,10 @@ pub fn prepare(
         &json!({"edits":native_edits}),
         d,
     )?;
-    Ok(
-        json!({"snapshotId":snapshot.id,"plan":plan,"intent":intent,"provider":"host_selected_typescript_compiler","compiler":"5.8.3","hostBinding":host_binding,"compilerHash":report["compilerHash"],"compilerContextId":effect.context_id,"sourceBindings":report["sourceBindings"],"standardLibraryHashes":report["standardLibraryHashes"],"effectDigest":identity(&report["move"]),"bindingCheck":proof,"limitations":report["limitations"],"equivalent":"independent_compiler_move_to_existing_file","complete":false,"commandsExecuted":false,"sourceExecuted":false,"sourceTreeWritten":false,"verificationRequired":true}),
-    )
+    let mut result = json!({"snapshotId":snapshot.id,"plan":plan,"intent":intent,"provider":"host_selected_typescript_compiler","compiler":"5.8.3","hostBinding":host_binding,"compilerHash":report["compilerHash"],"compilerContextId":effect.context_id,"sourceBindings":report["sourceBindings"],"standardLibraryHashes":report["standardLibraryHashes"],"effectDigest":identity(&report["move"]),"bindingCheck":proof,"limitations":report["limitations"],"equivalent":"independent_compiler_move_to_existing_file","complete":false,"commandsExecuted":false,"sourceExecuted":false,"sourceTreeWritten":false,"verificationRequired":true});
+    if !effect.repairs.is_empty() {
+        result["sourceRepairs"] = serde_json::to_value(&effect.repairs)?;
+        result["editComposition"] = json!(effect.composition);
+    }
+    Ok(result)
 }
