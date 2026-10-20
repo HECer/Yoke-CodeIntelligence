@@ -436,3 +436,17 @@ Format/build/Clippy-Dwarnings and integrated742unchanged/Python17/typecheck/
 TS260+3skips pass. Invalid formatter-overlap baseline and corrected missing-entity
 test assumption remain. No whole-native/platform/upstream/main/release acceptance
 follows. Previous README bytes remain; broaderR1-R9 continues.
+
+## Explicit wrapped-call propagation checkpoint
+
+Source `ee4cbf15cb934dd3f288b55aa81aa3f391848df1`, runtime merge `9f9366790a4111f1c73702ab0300257f81665dcc`.
+[Indexed evidence](wrapped-propagation/index.json) retains1unit+9default+1actual new
+cases, final13selectedgroups587/0/13, original provider/source bindings, exact
+wrapped-statement removals and bounded surviving-syntax correspondence. Unknown
+consumers stay visible; v1/facade defaults and canonical Plan identity remain.
+Actual TypeScript5.8.3/language-server5.1.3 validate v1/v2 TS/JS copied results and
+guarded application/recovery without running source modules. Format/build/Clippy
+and integrated743unchanged/Python17/typecheck/TS260+3skips pass. Both original
+refusals, corrected timestamp test and statement-merging regression are retained.
+Scoped runs overlap; no whole-native/platform/upstream/main/release acceptance
+follows. Previous README bytes remain; broaderR1-R9 continues.

@@ -1007,6 +1007,36 @@ proof and universal IDE parity stay open. Earlier OS1314 prerequisites are
 outside this finite selection; no whole-native/platform/main/release acceptance
 follows. BroaderR1-R9 work remains active.
 
+[Explicit wrapped-call propagation](validation/integration-2026-10-19/wrapped-propagation/index.json)
+adds Rust API `safeDelete.propagationPolicy: captured_es_function_propagation_v2`.
+It admits complete standalone plain calls within at most32 parentheses, `await`
+or `void` wrappers, directly in a program or block. Defaultv1 and published
+facade schemas stay unchanged. Original provider/source bindings and dependency
+closure remain; unknown consumers remain visible. Full-result grammar and
+bounded surviving-node kind/nesting/field/order/mapped-byte comparisons refuse unintended
+statement merging at automatic-semicolon boundaries. Other expression consumers,
+optional/type/assertion/unclassified forms and lone control-flow slots refuse.
+See the [contract](../native/docs/propagated-delete.md).
+
+There are **eleven new cases**: one unit, nine default integration and one actual gate.
+Final **13 selected native groups** record **587 passed / 0 failed / 13 ignored**,
+including **469 / 0 / 7 library tests**, with **737 inputs** unchanged.
+Actual **TypeScript5.8.3** and **language-server5.1.3** validate copied TS/JS
+results for both v1 and v2, with separately exercised execution permission,
+approval, write permission, exact application and recovery. No analyzed module
+runs. Format/build/all-target Clippy-Dwarnings pass; mandatory integrated checks
+are indexed separately. Counts overlap and are not added to other runs.
+
+The first selected run records26/1/0 because a new test compared independently
+created plan IDs/timestamps. Its correction compares bound snapshots and exact
+effects while retaining the released identity formula. An intermediate passing
+run predates the additional surviving-syntax guard. A fresh regression proves
+the statement-merging risk before the guard; every log/source variant remains.
+Other propagation/declaration/file/language/provider intents and exhaustive
+compiler, consumer, runtime or IDE guarantees remain open. Earlier OS1314 fixture
+prerequisites lie outside this selection; no whole-native/platform/main/release
+acceptance follows. BroaderR1-R9 work remains active.
+
 Windows ZIP and VSIX development packages were built at `9f48353`: 313 dependency
 licenses and 551 complete notice files were checked. The extracted CLI passes
 index/find/context/exact Unicode-source reads with only Windows system folders

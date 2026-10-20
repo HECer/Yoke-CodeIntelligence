@@ -82,6 +82,10 @@ Checked [class-method decorator ownership](native/docs/symbol-deletion.md)
 extends native and provider-finalized deletion while preserving neighboring
 decorators, immutable anchors and independent application gates.
 
+Explicit native [wrapped-call propagation](native/docs/propagated-delete.md)
+can remove standalone parenthesized, `await` and `void` calls while checking
+surviving syntax, original source proofs and guarded application.
+
 ## TypeScript advanced runtime
 
 Requires **Node.js 22.16+**. Python/Go and additional optional providers are installed separately. Node SQLite is experimental on the tested Node version. No model or API key is required by native indexing.

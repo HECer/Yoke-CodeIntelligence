@@ -352,3 +352,13 @@ safeDelete paths share this source boundary, while provider usage/host authority
 and canonical plan/application/recovery remain separate. See the
 [contract](../native/docs/symbol-deletion.md) and
 [evidence](validation/integration-2026-10-19/member-decorators/index.json).
+
+Explicit native propagation v2 derives complete wrapped-call statement removals
+from the same original AST/provider bindings. Before publication, a second
+grammar tree must preserve every surviving node kind, order and mapped original
+byte range within a shared200000-node budget. This refuses newly merged unrelated
+expressions at automatic-semicolon boundaries. Defaultv1, facade schemas,
+canonical Plan identity and independent application authority remain. Syntax
+correspondence does not establish semantic/runtime equivalence. See the
+[contract](../native/docs/propagated-delete.md) and
+[evidence](validation/integration-2026-10-19/wrapped-propagation/index.json).
