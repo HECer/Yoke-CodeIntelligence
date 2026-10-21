@@ -85,6 +85,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
     #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub startup_project: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub steering: Option<crate::session_steering::HostSteering>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub inline_compiler: Option<crate::projects::CompilerSpec>,
@@ -105,6 +107,7 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            startup_project: None,
             steering: None,
             inline_compiler: None,
             move_compiler: None,
@@ -789,6 +792,17 @@ impl Session {
         }
         crate::session_steering::validate(&host)?;
         label(&host.context)?;
+        if let Some(project) = &host.startup_project {
+            label(project)?;
+            ensure!(
+                project == "default"
+                    || host
+                        .projects
+                        .iter()
+                        .any(|p| p.name == *project && !p.query_only),
+                "Startup project is not available for activation"
+            );
+        }
         ensure!(host.projects.len() <= 100, "Too many registered projects");
         let mut names = BTreeSet::new();
         let mut project_root_aliases = BTreeMap::new();
@@ -978,6 +992,11 @@ impl Session {
         } else {
             fingerprint
         };
+        let fingerprint = if let Some(project) = &host.startup_project {
+            identity(&(fingerprint, "host_startup_project_v1", project))
+        } else {
+            fingerprint
+        };
         // Preserve every original V8 host fingerprint, including its existing
         // debugger and collection wrappers. Explicit V9 sessions pin their
         // source policy before selecting or creating persistent state.
@@ -1019,6 +1038,11 @@ impl Session {
                     && state.context == host.context,
                 "Session host binding changed"
             );
+            ensure!(
+                crate::session_steering::single_project_startup(&host)
+                    .is_none_or(|project| state.active_project == project),
+                "Stored session violates the fixed startup project"
+            );
             if crate::session_steering::enabled(&host) {
                 let resolved = crate::session_steering::resolve(
                     &host,
@@ -1043,10 +1067,15 @@ impl Session {
                 label: owned_label,
                 workspace_id: engine.store.workspace_id.clone(),
                 host_fingerprint: fingerprint,
-                active_project: "default".into(),
+                active_project: host.startup_project.as_deref().unwrap_or("default").into(),
                 context: host.context.clone(),
                 modes: if crate::session_steering::enabled(&host) {
-                    crate::session_steering::resolve(&host, "default", None)?.modes
+                    crate::session_steering::resolve(
+                        &host,
+                        host.startup_project.as_deref().unwrap_or("default"),
+                        None,
+                    )?
+                    .modes
                 } else {
                     host.modes.clone()
                 },
@@ -1280,6 +1309,11 @@ impl Session {
     }
     fn update(&mut self, mut next: State, deadline: &Deadline) -> Result<()> {
         deadline.check()?;
+        ensure!(
+            crate::session_steering::single_project_startup(&self.host)
+                .is_none_or(|project| next.active_project == project),
+            "Session update violates the fixed startup project"
+        );
         self.engine.store.set_deadline(deadline)?;
         next.revision = next
             .revision
@@ -1432,6 +1466,12 @@ impl Session {
                 if let Some(steering) = self.steering()? {
                     value["steering"] = serde_json::to_value(steering)?;
                 }
+                if let Some(project) = &self.host.startup_project {
+                    value["startupProject"] = json!(project);
+                    value["projectActivationLocked"] = json!(
+                        crate::session_steering::single_project_startup(&self.host).is_some()
+                    );
+                }
                 Ok(value)
             }
             "listProjects" => {
@@ -1444,6 +1484,10 @@ impl Session {
             }
             "activate" => {
                 fields(args, &["project"])?;
+                ensure!(
+                    crate::session_steering::single_project_startup(&self.host).is_none(),
+                    "Project activation is disabled for the fixed startup project"
+                );
                 let name = args["project"].as_str().context("Project name required")?;
                 ensure!(
                     name == "default"
@@ -1464,6 +1508,10 @@ impl Session {
             "removeProject" => {
                 fields(args, &["project"])?;
                 let name = args["project"].as_str().context("Project name required")?;
+                ensure!(
+                    crate::session_steering::single_project_startup(&self.host) != Some(name),
+                    "The fixed startup project cannot be removed"
+                );
                 ensure!(
                     name != "default" && self.host.projects.iter().any(|p| p.name == name),
                     "Project is not host-registered"

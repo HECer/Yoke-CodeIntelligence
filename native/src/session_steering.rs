@@ -122,6 +122,12 @@ pub fn enabled(host: &HostProfile) -> bool {
     host.steering.is_some()
         || (host.context != "agent" && CONTEXTS.contains(&host.context.as_str()))
 }
+/// Host selection only; source configuration cannot select or trust a project.
+pub(crate) fn single_project_startup(host: &HostProfile) -> Option<&str> {
+    matches!(host.context.as_str(), "ide" | "claude-code" | "grok")
+        .then_some(host.startup_project.as_deref())
+        .flatten()
+}
 fn known_mode(host: &HostProfile, name: &str) -> bool {
     MODES.contains(&name)
         || host
@@ -482,6 +488,16 @@ pub(crate) fn resolve(
     out.add("cli".into(), &s.cli.instructions, &s.cli.excluded_tools);
     out.excluded_apis
         .extend(s.cli.excluded_apis.iter().cloned());
+    if let Some(project) = single_project_startup(host) {
+        out.excluded_tools.insert("activate_project".into());
+        out.add(
+            "host.startupProject".into(),
+            &format!(
+                "The host fixed this session to registered project {project}. Project activation is disabled; modes grant no additional permissions."
+            ),
+            &[],
+        );
+    }
     ensure!(
         out.instructions().len() <= 131072,
         "Expanded steering instruction capacity exceeded"
