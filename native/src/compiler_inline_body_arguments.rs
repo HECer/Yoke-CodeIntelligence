@@ -161,6 +161,10 @@ pub(super) fn emit(
     d.check()?;
     let args = children(list);
     let names = &frame.names.argument_capture;
+    ensure!(
+        !frame.dense_arguments || (!frame.direct_arguments && names.len() == 7 && !args.is_empty()),
+        "Dense argument witness lacks a collector"
+    );
     if frame.direct_arguments {
         ensure!(
             !args.is_empty()
@@ -394,10 +398,22 @@ pub(super) fn emit(
     out.original(source, cursor, list.end_byte(), "argument_trivia")?;
     out.generated(&format!(";{line}"))?;
     for (index, arg) in frame.names.arguments.iter().enumerate() {
-        out.generated(&format!(
-            "const {arg} = {}[{index}];void {arg};{line}",
-            names[4]
-        ))?;
+        out.generated(&format!("const {arg} = "))?;
+        if frame.dense_arguments && js {
+            out.generated(&format!(
+                "/** @type {{(typeof {})[{index}]}} */ (",
+                names[4]
+            ))?;
+        }
+        out.generated(&format!("{}[{index}]", names[4]))?;
+        if frame.dense_arguments {
+            if js {
+                out.generated(")")?;
+            } else {
+                out.generated(&format!(" as (typeof {})[{index}]", names[4]))?;
+            }
+        }
+        out.generated(&format!(";void {arg};{line}"))?;
     }
     Ok(())
 }

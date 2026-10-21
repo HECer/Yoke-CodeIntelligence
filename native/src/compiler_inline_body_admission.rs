@@ -475,6 +475,7 @@ fn check(
             .chain(&frame.names.var_seeds)
             .chain(&frame.names.return_type)
             .chain(&frame.names.argument_capture)
+            .chain(&frame.predicate_names)
         {
             d.check()?;
             ensure!(
@@ -636,6 +637,11 @@ fn check(
     }
     // Independent syntax coverage prevents omission of a selected-file identifier
     // from both compiler observation sets from disguising a lost consumer.
+    let track_exports = e
+        .frames
+        .iter()
+        .any(|frame| !frame.predicate_names.is_empty());
+    let mut exported_bindings = BTreeSet::new();
     let mut stack = vec![tree.root_node()];
     let mut count = 0usize;
     while let Some(n) = stack.pop() {
@@ -654,10 +660,25 @@ fn check(
                 | "shorthand_property_identifier_pattern"
                 | "statement_identifier"
         ) {
-            ensure!(
-                bm.contains_key(&(symbol.path.clone(), n.start_byte(), n.end_byte())),
-                "Body original identifier coverage absent"
-            );
+            let binding = bm
+                .get(&(symbol.path.clone(), n.start_byte(), n.end_byte()))
+                .context("Body original identifier coverage absent")?;
+            if track_exports
+                && n.parent()
+                    .is_some_and(|parent| parent.kind() == "export_specifier")
+            {
+                for target in &binding.targets {
+                    if let Target::Captured { span } = target
+                        && span.path == symbol.path
+                    {
+                        exported_bindings.insert((span.start_byte, span.end_byte));
+                        ensure!(
+                            exported_bindings.len() <= 100_000,
+                            "Predicate exported binding capacity exceeded"
+                        );
+                    }
+                }
+            }
         }
         stack.extend(children(n));
     }
@@ -737,6 +758,25 @@ fn check(
             continue;
         }
         for (at, role) in locations {
+            if role == "predicate_argument" {
+                ensure!(
+                    b.resolution == "resolved" && b.targets.len() == 1,
+                    "Predicate relay lacks a single lexical target"
+                );
+                let Target::Captured { span } = &b.targets[0] else {
+                    anyhow::bail!("Predicate relay cannot reread a global/library value")
+                };
+                ensure!(
+                    span.path == symbol.path,
+                    "Predicate relay target is outside caller source"
+                );
+                predicates::lexical_target(tree, span.start_byte, span.end_byte, source, d)?;
+                ensure!(
+                    !exported_bindings.contains(&(span.start_byte, span.end_byte)),
+                    "Predicate relay target is separately exported"
+                );
+            }
+
             let original = if role == "var_assignment" {
                 assignments.get(&key(&b.span)).copied().unwrap_or(b)
             } else {

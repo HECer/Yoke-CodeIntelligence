@@ -2,6 +2,111 @@
 use super::*;
 
 #[test]
+fn predicate_effects_cannot_activate_the_signature_or_forge_relay_flow_and_bindings() {
+    let root = tempfile::tempdir().unwrap();
+    let source = "// owned \u{03c0}\nfunction helper(value:unknown):value is string{return typeof value==='string';}\nexport function run(input:unknown){const ok=helper(input);return ok?input.length:0;}\nexport const observed=run('owned');\n";
+    fs::write(root.path().join("main.ts"), source).unwrap();
+    fs::write(root.path().join("tsconfig.json"),r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true},"files":["main.ts"]}"#).unwrap();
+    let mut engine = Engine::open(root.path()).unwrap();
+    let d = Deadline::new(60000);
+    let (snapshot, graph, _, _) = engine.index(&d).unwrap();
+    let symbol =
+        crate::agent_repl::source_symbol(&engine.store, &snapshot, &graph, "helper", "main.ts", &d)
+            .unwrap();
+    let tree = parse("typescript", source, &d).unwrap();
+    let declaration = classic(&tree, &symbol, source, &d).unwrap().unwrap();
+    let spec = CompilerSpec {
+        node: std::env::split_paths(&std::env::var_os("PATH").unwrap())
+            .map(|p| p.join(if cfg!(windows) { "node.exe" } else { "node" }))
+            .find(|p| p.is_file())
+            .unwrap()
+            .canonicalize()
+            .unwrap(),
+        typescript: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("../node_modules/typescript/lib/typescript.js")
+            .canonicalize()
+            .unwrap(),
+        trusted: true,
+    };
+    let intent = json!({"path":symbol.path,"name":symbol.name,"startByte":symbol.start_byte,"endByte":symbol.end_byte,"nameStartByte":symbol.name_start_byte,"nameEndByte":symbol.name_end_byte,"keepDefinition":false});
+    let report = crate::projects::execute(
+        &engine.store,
+        &snapshot,
+        &spec,
+        "inlineBody",
+        Some(intent),
+        &d,
+    )
+    .unwrap();
+    let baseline = report["bodyInline"].clone();
+    let admit = |value: Value, deadline: &Deadline| -> Result<String> {
+        let effect: Effect = crate::json::decode(value)?;
+        Ok(check(
+            &engine,
+            &spec,
+            &snapshot,
+            &symbol,
+            source,
+            &tree,
+            declaration,
+            false,
+            &effect,
+            &report,
+            deadline,
+        )?
+        .1)
+    };
+    let result = admit(baseline.clone(), &d).unwrap();
+    for (field, value) in [
+        ("predicateNames", json!([])),
+        ("predicateNames", json!(["__ci_inline_4"])),
+        (
+            "predicateNames",
+            json!(["console", "__ci_inline_5", "__ci_inline_6"]),
+        ),
+        ("inferredPredicateParameter", json!(0)),
+        ("resultType", json!("boolean")),
+        ("predicateKind", json!("assertion")),
+        ("denseArguments", json!(true)),
+    ] {
+        let mut bad = baseline.clone();
+        bad["frames"][0][field] = value;
+        assert!(admit(bad, &d).is_err(), "{field}");
+    }
+    let relay = baseline["frames"][0]["predicateNames"][1].as_str().unwrap();
+    let computed = baseline["frames"][0]["names"]["result"].as_str().unwrap();
+    for (from, to) in [
+        (
+            "if (void 0 !== void 0)".to_string(),
+            "if (void 0 === void 0)".to_string(),
+        ),
+        (format!("=>{computed}"), "=>true".into()),
+        (
+            format!("{relay}(input)"),
+            format!("{relay}(void 0 as never)"),
+        ),
+    ] {
+        let mut bad = baseline.clone();
+        let edit = bad["edits"]
+            .as_array_mut()
+            .unwrap()
+            .iter_mut()
+            .find(|edit| edit["text"].as_str().unwrap().contains(&from))
+            .unwrap();
+        let changed = edit["text"].as_str().unwrap().replace(&from, &to);
+        edit["text"] = json!(changed);
+        bad["resultHash"] = json!(crate::model::hash(result.replace(&from, &to)));
+        assert!(admit(bad, &d).is_err(), "{from}");
+    }
+    assert!(admit(baseline, &Deadline::new(0)).is_err());
+    assert_eq!(
+        fs::read_to_string(root.path().join("main.ts")).unwrap(),
+        source
+    );
+    assert_eq!(engine.store.db.query_row("SELECT COUNT(*) FROM records WHERE kind IN ('plan','approval','receipt','journal','native_compiler_report_v1')",[],|r|r.get::<_,usize>(0)).unwrap(),0);
+}
+
+#[test]
 fn body_effects_cannot_forge_source_bindings_origins_types_paths_or_output() {
     let root = tempfile::tempdir().unwrap();
     let source = "// 🌍\n/** @returns {()=>{length:number}} */\nfunction helper(n:()=>number) {const values=[n()];return ()=>({length:values.length});}\nexport const answer=helper(()=>2);\n";

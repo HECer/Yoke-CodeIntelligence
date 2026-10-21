@@ -11,6 +11,8 @@ mod arguments;
 mod inferred;
 #[path = "compiler_inline_body_parameters.rs"]
 mod parameters;
+#[path = "compiler_inline_body_predicates.rs"]
+mod predicates;
 #[path = "compiler_inline_body_vars.rs"]
 mod variables;
 pub(super) use admission::{classic, prepare};
@@ -53,6 +55,12 @@ pub(super) struct Frame {
     argument_templates: Vec<DocPiece>,
     #[serde(default)]
     direct_arguments: bool,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    predicate_names: Vec<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    inferred_predicate_parameter: Option<usize>,
+    #[serde(default, skip_serializing_if = "false_flag")]
+    dense_arguments: bool,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -60,6 +68,9 @@ pub(super) struct DocPiece {
     start_byte: usize,
     end_byte: usize,
     tag: bool,
+}
+fn false_flag(value: &bool) -> bool {
+    !*value
 }
 fn fixed_const_assertion(tree: &Tree, start: usize, end: usize) -> bool {
     tree.root_node()
@@ -647,6 +658,7 @@ pub(super) fn render(
         .chain(&frame.names.var_seeds)
         .chain(&frame.names.return_type)
         .chain(&frame.names.argument_capture)
+        .chain(&frame.predicate_names)
         .collect();
     let name_set: BTreeSet<_> = names.iter().map(|n| n.as_str()).collect();
     ensure!(
@@ -685,8 +697,15 @@ pub(super) fn render(
     if wrap {
         out.generated(&format!("{{{line}"))?;
     }
+    let predicate = predicates::begin(&mut out, source, declaration, frame, language, line, d)?;
     out.generated(&format!("let {}", frame.names.result))?;
-    if let Some(annotation) = declaration.child_by_field_name("return_type") {
+    if let Some(predicate) = predicate {
+        out.generated(if predicate.assertion {
+            ": (void) | undefined"
+        } else {
+            ": (boolean) | undefined"
+        })?;
+    } else if let Some(annotation) = declaration.child_by_field_name("return_type") {
         out.generated(": (")?;
         out.original(
             source,
@@ -772,7 +791,9 @@ pub(super) fn render(
     out.original(source, body.end_byte() - 1, body.end_byte(), "body")?;
     // A finally break/continue can cancel a pending return.
     out.generated(&format!("{line}{} = void 0;{line}", frame.names.result))?;
-    out.generated(&format!("}}{line}}}{line}}}{line}"))?;
+    out.generated(&format!("}}{line}}}{line}"))?;
+    predicates::finish(&mut out, frame, line)?;
+    out.generated(&format!("}}{line}"))?;
     out.original(
         source,
         caller_start(source, statement, d)?,
@@ -784,7 +805,9 @@ pub(super) fn render(
         annotated.is_none() || frame.result_type.is_none(),
         "Function-body return annotation must retain its original source"
     );
-    if let Some(annotation) = annotated {
+    if let Some(predicate) = predicate {
+        predicates::result(&mut out, source, &args, frame, predicate, d)?;
+    } else if let Some(annotation) = annotated {
         ensure!(
             matches!(language, "typescript" | "tsx")
                 && source.as_bytes().get(annotation.start_byte()) == Some(&b':'),
@@ -937,6 +960,9 @@ mod tests {
             argument_docs: vec![],
             argument_templates: vec![],
             direct_arguments: false,
+            predicate_names: vec![],
+            inferred_predicate_parameter: None,
+            dense_arguments: false,
         };
         let doc = "/** @returns {{n:number}} */";
         for (prefix, suffix, attached) in [
@@ -1106,7 +1132,7 @@ mod tests {
             "function helper(){for(let n=0;n<2;n++){try{return n;}finally{continue;}}}const result=helper();globalThis.observed={result,isUndefined:result===undefined};",
             "function helper(n){const inner=()=>{return n+1;};return inner();}const result=helper(3);globalThis.observed=result;",
             "const events=[];function helper(n){if(n){events.push(n);return n;}events.push(0);}const a=helper(2);const b=helper(0);globalThis.observed={a,b,events};",
-            "const events=[];function helper(n){return /* begin */ events.push(n),n+2 /* end */;}const result=helper(/* café */3,/* extra */4,/* trailing */);globalThis.observed={result,events};",
+            "const events=[];function helper(n){return /* begin */ events.push(n),n+2 /* end */;}const result=helper(/* cafÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â© */3,/* extra */4,/* trailing */);globalThis.observed={result,events};",
             "const events=[];function helper(){events.push('called');return 7;}function outer(flag){if(flag)return helper(/* empty */);return 2;}globalThis.observed=[outer(false),outer(true),events];",
             "function helper(n){var x=n+1;return x;}const result=helper(2);globalThis.observed=result;",
             "function helper(){var before=typeof x;var x=1;return [before,x];}const result=helper();globalThis.observed=result;",
@@ -1196,6 +1222,9 @@ mod tests {
                     argument_docs,
                     argument_templates: vec![],
                     direct_arguments: false,
+                    predicate_names: vec![],
+                    inferred_predicate_parameter: None,
+                    dense_arguments: false,
                     statement_start: statement.start_byte(),
                     statement_end: statement.end_byte(),
                     call_start: call.start_byte(),
@@ -1239,7 +1268,12 @@ mod tests {
                 "{}\n{after}",
                 String::from_utf8_lossy(&output.stderr)
             );
-            for comment in ["/* café */", "/* extra */", "/* trailing */", "/* empty */"] {
+            for comment in [
+                "/* cafÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â© */",
+                "/* extra */",
+                "/* trailing */",
+                "/* empty */",
+            ] {
                 if source.contains(comment) {
                     assert!(after.contains(comment));
                 }
@@ -1260,6 +1294,9 @@ mod tests {
             argument_docs: vec![],
             argument_templates: vec![],
             direct_arguments: false,
+            predicate_names: vec![],
+            inferred_predicate_parameter: None,
+            dense_arguments: false,
             statement_start,
             statement_end: source.len(),
             call_start,
