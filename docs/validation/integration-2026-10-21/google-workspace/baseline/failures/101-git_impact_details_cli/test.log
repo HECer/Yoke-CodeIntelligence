@@ -1,0 +1,37 @@
+    Finished `test` profile [unoptimized] target(s) in 0.86s
+     Running tests\git_impact_details_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\git_impact_details_cli-d6aaffa18eaa1361.exe)
+
+running 15 tests
+test closed_checkpointed_store_with_special_host_path_returns_complete_canonical_cli_result ... ok
+test explicit_zero_hard_budgets_are_capacity_refusals_instead_of_defaults ... ok
+test global_stdout_cap_includes_lf_for_json_and_html_without_clamping_options ... ok
+test historical_details_need_no_git_live_sources_latest_capture_or_provider ... ok
+test impact_options_and_html_flags_refuse_legacy_kinds_instead_of_silent_ignoring ... ok
+test incomplete_existing_stores_refuse_without_schema_directory_lock_or_journal_initialization ... ok
+test invalid_report_and_domain_flags_are_static_without_creating_missing_store ... ok
+test invalid_uninitialized_wal_shm_pairs_refuse_without_physical_mutation ... ok
+test legacy_load_render_and_three_digest_values_keep_existing_contracts ... ok
+test public_impact_details_cli_returns_complete_canonical_library_result_and_literal_sources ... ok
+test public_impact_details_html_is_exact_sealed_render_and_escapes_source_markup ... ok
+test strict_options_reject_unknown_duplicate_bad_utf8_and_oversize_without_diagnostics_leaks ... ok
+test valid_closed_options_at_exact_raw_cap_succeed_and_one_more_byte_refuses ... ok
+test windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive ... FAILED
+test zero_quote_caps_preserve_explicit_options_and_report_omissions ... ok
+
+failures:
+
+---- windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive stdout ----
+
+thread 'windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive' (2616) panicked at native\tests\git_impact_details_cli.rs:698:10:
+real Windows file reparse prerequisite: Os { code: 1314, kind: Uncategorized, message: "Dem Client fehlt ein erforderliches Recht." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive
+
+test result: FAILED. 14 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.34s
+
+error: test failed, to rerun pass `--test git_impact_details_cli`
+error: 1 target failed:
+    `--test git_impact_details_cli`

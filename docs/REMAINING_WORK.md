@@ -15,7 +15,7 @@ original inventory references and historical checkpoint evidence.
 | R4: mixed documents | Native/Office XML/decoded/PDF spaces, fixed input preparation, checked claims, explicit provider jobs, checked graph queries and independently checked cross-workspace/history composition. | Broader mixed analytics, external semantic-provider qualification and exhaustive interpretation remain open. CLI composition currently selects one explicit Store; library callers may supply separately checked parents from different workspaces. |
 | R5: Git interpretation | Captured impact, areas, conflict stages, hierarchy candidates and finite CODEOWNERS interpretation with original byte evidence and visible unknowns. | Wider report/ownership semantics, compiler-bound override/dispatch identity, remote freshness and upstream schema equivalence. Captured labels grant no identity, review or merge authority. |
 | R6: host lifecycle | Generic managed installation, guarded v1/v2 recovery, the separate Codex MCP profile and native session semantic planning. | Other branded client schemas and hook/statusline adapters, their actual client gates and remaining platform qualification. |
-| R7: external sources | Selected PostgreSQL catalogs; received HTTP text/raw HTML/PDF; coordinated arXiv; reviewed native Neo4j/FalkorDB publication with pinned Windows live evidence. | Google shortcuts, authenticated/social/video routes, article/semantic interpretation and wider service/version/platform qualification. |
+| R7: external sources | Selected PostgreSQL catalogs; received HTTP text/raw HTML/PDF; coordinated arXiv; explicit hash-selected Google shortcut capture through a trusted gws client, immutable export replay and separate native XLSX inspection; reviewed native Neo4j/FalkorDB publication with pinned Windows live evidence. | Google resource-key transport and authenticated export qualification; further authenticated/social/video routes, article/semantic interpretation and wider service/version/platform qualification. |
 | R8: GitHub App | Signed queue/worker lifecycle, controlled publication/pages, explicit discussions, digest client/receiver, authorized metadata queries, persistent/App-bound history execution, independent received Rust declaration correspondence and source-bound interpretation of explicitly built local native Meaning graphs. | Broader receiver reasoning and model-quality qualification; independent verification of other packet claims (sender source-digest/CAS identity, discussions and history); configured live App installation/deployment and whole-source/remote equivalence. No background service is installed. Worker per-file Git-blob checks retain their existing finite scope. |
 | R9: outcomes | Separate source-bound knowledge, historical saved-plan and packet-qualified native Meaning concept/relation/hyperedge outcomes with immutable authored events, exact side quotes, original source/receipt replay and transparent ranking. Explicit semantic transcript candidates add a separate host-provider job and checked original UTF-8/receipt/accounting replay without creating events. | Further object surfaces; independent corroboration, live model-quality qualification and observed execution evidence. Supplied labels and candidates do not establish semantic truth, current applicability or actual application/runtime truth. |
 
@@ -340,7 +340,15 @@ These scopes overlap earlier runs and do not establish a whole-native or hosted
 platform pass. [Mixed-composition evidence](validation/integration-2026-10-19/mixed-meaning-composition/index.json)
 preserves source variants and the initial test-fixture compilation failure.
 
-A fresh complete native run and current-head hosted acceptance remain open.
+A complete baseline at `6951ff9` attempted all 310 native groups: 2,904 passed,
+ten OS1314 symlink-setup failures and 53 ignored. One additionally linker-blocked
+group passes thirteen unchanged tests with an alternate output suffix. All 927
+inputs/tools/CLI stay fixed; example compilation passes. Windows symlink and
+current-head hosted acceptance remain open. The separate
+[Google export contract](../native/docs/google-workspace.md) passes 33 scoped Rust
+tests plus format/all-target Clippy, retained typecheck/260 tests/3 skips and an
+actual pinned-client ADC-fallback refusal. Resource-key transport and successful
+authenticated export are not qualified by those local contracts.
 Historical Windows OS1314 symlink setup and hosted failures retain their original
 logs; no fixture or permission gate is weakened to turn them into a pass.
 External service qualification retains its exact selected runtime, version,

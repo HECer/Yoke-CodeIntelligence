@@ -16,6 +16,38 @@ pub struct Arguments {
 }
 #[derive(Subcommand)]
 enum Operation {
+    /// Explicitly export one hash-selected Google Workspace shortcut with a trusted host client.
+    GoogleCapture {
+        #[arg(long)]
+        config: PathBuf,
+        #[arg(long)]
+        source_root: PathBuf,
+        #[arg(long)]
+        output: PathBuf,
+        #[arg(long)]
+        allow_shortcut_read: bool,
+        #[arg(long)]
+        allow_network: bool,
+        #[arg(long)]
+        allow_exporter_execution: bool,
+        #[arg(long)]
+        allow_client_state: bool,
+        #[arg(long)]
+        allow_output: bool,
+        #[arg(long)]
+        limits: Option<PathBuf>,
+    },
+    /// Replay received export bytes without a client, credentials, Store or network.
+    GoogleRead {
+        #[arg(long)]
+        input: PathBuf,
+        #[arg(long, requires = "end_byte", conflicts_with = "office_text")]
+        start_byte: Option<usize>,
+        #[arg(long, requires = "start_byte", conflicts_with = "office_text")]
+        end_byte: Option<usize>,
+        #[arg(long)]
+        office_text: bool,
+    },
     ArxivCapture {
         #[arg(long)]
         config: PathBuf,
@@ -79,6 +111,108 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
     let cap = max_bytes as usize - 1;
     let mut committed_reply = None;
     let value = match &args.operation {
+        Operation::GoogleCapture {
+            config,
+            source_root,
+            output,
+            allow_shortcut_read,
+            allow_network,
+            allow_exporter_execution,
+            allow_client_state,
+            allow_output,
+            limits,
+        } => {
+            ensure!(
+                *allow_shortcut_read
+                    && *allow_network
+                    && *allow_exporter_execution
+                    && *allow_client_state
+                    && *allow_output,
+                "google_workspace_host_permission_required"
+            );
+            ensure!(
+                source_root.is_absolute(),
+                "google_workspace_absolute_source_root_required"
+            );
+            let raw = super::meaning_archive_cli::read_input(config, 131072, &deadline)?;
+            let spec: yoke::google_workspace::CaptureSpec =
+                yoke::json::parse(&raw, 131072).and_then(yoke::json::decode)?;
+            let limits = if let Some(path) = limits {
+                let raw = super::meaning_archive_cli::read_input(path, 16384, &deadline)?;
+                yoke::json::parse(&raw, 16384)
+                    .and_then(yoke::json::decode::<yoke::google_workspace::Limits>)?
+            } else {
+                yoke::google_workspace::Limits::default()
+            };
+            limits.validate()?;
+            // Keep host-selected ancestry visible to the no-link input reader.
+            let path = yoke::paths::scoped(source_root, &spec.shortcut_path)?;
+            let shortcut = super::meaning_archive_cli::read_input(&path, 65536, &deadline)?;
+            let root = std::fs::canonicalize(source_root)?;
+            let selected =
+                yoke::google_workspace::Shortcut::parse(&spec.shortcut_path, &shortcut, &deadline)?;
+            selected
+                .metadata()
+                .check_selection(&spec.expected_shortcut_sha256, &spec.expected_file_id)?;
+            let _held = super::meaning_archive_cli::fresh_destination(output, &deadline)?;
+            let shape = |id: &str, bytes: usize| {
+                json!({"kind":"native_google_workspace_capture_v1",
+                "sourceId":id,"bodySha256":id,"archiveHash":id,"archiveBytes":bytes,
+                "output":output,"outputCreated":true,"captureClaimsAreAuthority":false,
+                "googleIdentityVerified":false,"accountIdentityVerified":false,
+                "exporterInvocations":2,"exporterHashMatchedAtCapture":true,
+                "shortcutMatchedBeforeAndAfter":true,
+                "modelCalls":0,"sourceExecuted":false,"complete":false})
+            };
+            yoke::json::encode_bounded(&shape(&"f".repeat(64), usize::MAX), cap, &deadline)?;
+            let source = yoke::google_workspace::capture(
+                &root,
+                &shortcut,
+                &spec,
+                &yoke::google_workspace::Permissions {
+                    allow_network: *allow_network,
+                    allow_exporter_execution: *allow_exporter_execution,
+                    allow_client_state: *allow_client_state,
+                },
+                &limits,
+                &deadline,
+            )?;
+            // A completed export cannot silently publish against a changed selection.
+            let after = super::meaning_archive_cli::read_input(&path, 65536, &deadline)?;
+            ensure!(
+                after == shortcut,
+                "google_workspace_shortcut_changed_after_export"
+            );
+            let bytes = source.archive(&deadline)?;
+            let inspected = source.summary();
+            let mut value = shape(inspected["sourceId"].as_str().unwrap(), bytes.len());
+            value["bodySha256"] = inspected["bodySha256"].clone();
+            value["archiveHash"] = json!(yoke::model::hash(&bytes));
+            let reply = yoke::json::encode_bounded(&value, cap, &deadline)?;
+            super::meaning_archive_cli::write_new(output, &bytes, &deadline)?;
+            committed_reply = Some(reply);
+            value
+        }
+        Operation::GoogleRead {
+            input,
+            start_byte,
+            end_byte,
+            office_text,
+        } => {
+            let raw = super::meaning_archive_cli::read_input(input, 16_000_000, &deadline)?;
+            let source = yoke::google_workspace::ReceivedExport::from_archive(
+                &raw,
+                &yoke::google_workspace::Limits::default(),
+                &deadline,
+            )?;
+            if *office_text {
+                source.inspect_office(&deadline)?
+            } else if let (Some(start), Some(end)) = (start_byte, end_byte) {
+                source.read(*start, *end, &deadline)?
+            } else {
+                source.summary()
+            }
+        }
         Operation::ArxivCapture {
             config,
             output,

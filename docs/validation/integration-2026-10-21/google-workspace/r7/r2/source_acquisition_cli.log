@@ -1,0 +1,12 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r7-google\native)
+    Finished `test` profile [unoptimized] target(s) in 3.21s
+     Running tests\source_acquisition_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\source_acquisition_cli-4e0753e46c8486b6.exe)
+
+running 4 tests
+test explicit_pdf_text_uses_the_native_bounded_worker_without_store_or_original_path ... ok
+test frozen_ranges_replay_without_a_workspace_and_source_flags_are_refused ... ok
+test host_permissions_and_existing_output_precede_config_or_network_effects ... ok
+test real_cli_capture_is_create_only_and_ignores_ambient_proxy_settings ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.31s
+

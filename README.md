@@ -20,6 +20,12 @@ Use `target/release/yoke.exe` on Windows. Rust 1.94.1 or newer is required to bu
 
 [Selected graph queries](native/docs/selected-graph-queries.md) and [graph analytics](native/docs/graph-extensions.md) preserve the original source evidence. Explicit [meaning extraction](native/docs/meaning-cli.md) adds concepts, directed relationships and ordered hyperedges with quoted source support, immutable receipts and a cost ledger. Loading, querying and inspecting those graphs never starts a provider. [Refactoring intent checks](native/docs/semantic-refactor-intents.md) and [lossless host configuration patches](native/docs/host-config.md) describe their supported inputs and boundaries.
 
+Explicit [Google Workspace capture](native/docs/google-workspace.md) selects
+hash-bound Docs/Sheets/Slides shortcuts and a trusted host gws client, with separate
+source/network/execution/account-state/output grants. Immutable received exports
+replay offline; XLSX inspection never evaluates formulas. Resource-key transport
+and authenticated live export qualification remain open.
+
 Explicit [closed-PR discussion captures](native/docs/github-discussions.md) add
 bounded host-authorized GitHub observations to offline captured-source digests.
 The optional handoff preview excludes discussion and implementation bodies.

@@ -2,6 +2,31 @@
 
 ## Current integration work
 
+The complete native baseline at `6951ff9` attempted all 310 registered groups:
+2,904 passed, ten failed and 53 remained ignored. All ten runtime failures occur
+while creating Windows symlink fixtures (OS1314). `digest_history_jobs` additionally
+had a held linker output; its unchanged normal test-profile harness passes all
+thirteen tests under a separate output filename. The original held file/processes
+remain untouched. All 927 inputs, tools and the baseline CLI stayed unchanged;
+example compilation passes. This is not complete Windows acceptance.
+
+The separate explicit [Google Workspace route](../native/docs/google-workspace.md)
+now binds original shortcuts, host-selected IDs and trusted gws execution to
+create-only immutable export archives. Storeless byte replay and separate bounded
+XLSX inspection retain received-body/XML coordinates. Host-only source, network,
+execution, client-state and output grants precede effects; ambient model/log/token
+settings and unrelated gcloud ADC fallback cannot select authority. Ten units,
+three CLI cases, one multi-case owned-client test and nineteen existing source
+acquisition regressions pass. Format/all-target Clippy pass; the final fixture
+lint correction has a separate passing process/format/Clippy recheck. Typecheck
+and TypeScript 260/3 existing skips pass. The actual pinned gws client also refuses
+empty selected state with blocked ADC fallback and creates no export.
+
+Resource-key transport and authenticated Google export remain open, as do other
+R1-R9 work, Windows symlink acceptance and current-head hosted qualification.
+These results do not establish full upstream equivalence or a release.
+See the [baseline and Google evidence](validation/integration-2026-10-21/google-workspace/README.md).
+
 Attached caller JSDoc now stays with its original lexical declaration after the
 inserted statements. Native derives the widened edit extent from original syntax;
 there is no provider range override. Every removed definition leaves an empty

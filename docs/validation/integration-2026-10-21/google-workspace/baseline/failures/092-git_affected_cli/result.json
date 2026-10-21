@@ -1,0 +1,79 @@
+{
+  "group": "git_affected_cli",
+  "index": 92,
+  "freeBytesBefore": 3375616000,
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "git_affected_cli",
+        "--no-run",
+        "--message-format=json-render-diagnostics"
+      ],
+      "exitCode": 0,
+      "seconds": 3.5160996000049636
+    },
+    {
+      "name": "test",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "git_affected_cli",
+        "--no-fail-fast",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 8.870728800015058
+    }
+  ],
+  "deletedNewTestArtifacts": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\git_affected_cli-11e3b8916c943a1a.exe",
+      "bytes": 101532160,
+      "sha256": "37094f1273d9cafc47992e0425d433d78a5268075fc9ed64b747017309a71565",
+      "deleted": true
+    },
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\git_affected_cli-11e3b8916c943a1a.pdb",
+      "bytes": 11268096,
+      "sha256": "9131cbff11e0396ba030a9911de3c64ee6c4d88b750b3310aa95815b198e29aa",
+      "deleted": true
+    }
+  ],
+  "testExecutables": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\git_affected_cli-11e3b8916c943a1a.exe",
+      "sha256": "37094f1273d9cafc47992e0425d433d78a5268075fc9ed64b747017309a71565",
+      "existedBefore": false
+    }
+  ],
+  "totals": {
+    "passed": 7,
+    "failed": 1,
+    "ignored": 0
+  },
+  "resultGroups": 1,
+  "failures": [
+    "affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success"
+  ],
+  "allChecksPassed": false,
+  "sourceUnchanged": true,
+  "freeBytesAfter": 3372699648
+}

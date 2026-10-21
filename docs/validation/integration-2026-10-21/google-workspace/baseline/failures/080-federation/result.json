@@ -1,0 +1,79 @@
+{
+  "group": "federation",
+  "index": 80,
+  "freeBytesBefore": 3377528832,
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "federation",
+        "--no-run",
+        "--message-format=json-render-diagnostics"
+      ],
+      "exitCode": 0,
+      "seconds": 3.332272900006501
+    },
+    {
+      "name": "test",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "federation",
+        "--no-fail-fast",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 4.751245699997526
+    }
+  ],
+  "deletedNewTestArtifacts": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\federation-7b5a146e77cd3691.exe",
+      "bytes": 100804096,
+      "sha256": "f09ccc913a762413e6e74433f5edf461043a68717f9bbb647fa664d27d3f2319",
+      "deleted": true
+    },
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\federation-7b5a146e77cd3691.pdb",
+      "bytes": 10596352,
+      "sha256": "15ad3837b2e4ee95cf839b548e2bbcef88d7316671837b02bce11fea50ceafb0",
+      "deleted": true
+    }
+  ],
+  "testExecutables": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\federation-7b5a146e77cd3691.exe",
+      "sha256": "f09ccc913a762413e6e74433f5edf461043a68717f9bbb647fa664d27d3f2319",
+      "existedBefore": false
+    }
+  ],
+  "totals": {
+    "passed": 12,
+    "failed": 1,
+    "ignored": 0
+  },
+  "resultGroups": 1,
+  "failures": [
+    "receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority"
+  ],
+  "allChecksPassed": false,
+  "sourceUnchanged": true,
+  "freeBytesAfter": 3376513024
+}

@@ -1,0 +1,79 @@
+{
+  "group": "feedback_cli",
+  "index": 87,
+  "freeBytesBefore": 3378319360,
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "feedback_cli",
+        "--no-run",
+        "--message-format=json-render-diagnostics"
+      ],
+      "exitCode": 0,
+      "seconds": 4.028995100001339
+    },
+    {
+      "name": "test",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "feedback_cli",
+        "--no-fail-fast",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 6.108483499992872
+    }
+  ],
+  "deletedNewTestArtifacts": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\feedback_cli-25e01215a6b90f09.exe",
+      "bytes": 119796736,
+      "sha256": "6949be129fc9dbd15e5baf08ca7be11c966f0bfe749be4685e30387d39f71374",
+      "deleted": true
+    },
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\feedback_cli-25e01215a6b90f09.pdb",
+      "bytes": 21762048,
+      "sha256": "4f567a2c7c419e4ebd2eb515d343c4814d75d08c81df93f08bb929f195c971ad",
+      "deleted": true
+    }
+  ],
+  "testExecutables": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\feedback_cli-25e01215a6b90f09.exe",
+      "sha256": "6949be129fc9dbd15e5baf08ca7be11c966f0bfe749be4685e30387d39f71374",
+      "existedBefore": false
+    }
+  ],
+  "totals": {
+    "passed": 20,
+    "failed": 1,
+    "ignored": 0
+  },
+  "resultGroups": 1,
+  "failures": [
+    "windows_host_aliases_cannot_read_protected_files_or_alternate_streams"
+  ],
+  "allChecksPassed": false,
+  "sourceUnchanged": true,
+  "freeBytesAfter": 3374596096
+}

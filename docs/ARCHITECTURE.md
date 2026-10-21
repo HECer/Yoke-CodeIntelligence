@@ -158,6 +158,16 @@ identity. Exported JSON cannot construct the capability. Preparation performs no
 provider execution, source acquisition or persistence; mixed semantic execution
 and graph relationships remain separate open work. See [mixed inputs](../native/docs/mixed-views.md).
 
+`google_workspace` binds one original shortcut hash and selected file ID to an
+explicit trusted gws export. Source/network/client-execution/client-state/output
+permissions remain host-only. Private job cwd and fixed arguments exclude source
+`.env`, ambient models/logging/token overrides and unrelated gcloud ADC fallback.
+The received export archive binds exact body bytes and safe declared metadata;
+offline replay establishes no Google/account/client attestation. Separate XLSX
+inspection keeps original container/XML source spaces and cached values without
+formula execution. Resource-key transport and authenticated live acceptance are
+still open. See [Google Workspace](../native/docs/google-workspace.md).
+
 `source_acquisition` preserves typed received HTTP bodies and exact range
 queries without a code SourceSnapshot or imported authority. Its host transport
 requires a URL plus literal address, independent permissions and static TLS
