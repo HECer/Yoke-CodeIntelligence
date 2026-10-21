@@ -2,6 +2,17 @@
 
 ## Current integration work
 
+The complete native default recheck at `bcf442b` attempts all 316 registered
+groups: **2,951 passed, 10 failed and 53 explicitly ignored**. Examples compile,
+and all 941 inputs, tools and the CLI remain unchanged. Every failure is an
+original Windows symlink fixture with OS1314; no compile failures remain. The
+digest-history group now passes normally without an alternate output flag.
+Actual Junction import/export and directory-move security cases also pass. The
+user requested progress without enabling Developer Mode; no system setting is
+changed. File-symlink acceptance remains open and is not replaced by Junctions.
+See the [complete baseline evidence](validation/integration-2026-10-21/native-baseline-floats/README.md).
+This is not complete Windows/R1-R9, hosted, main or release acceptance.
+
 Canonical source-category reports now participate in retention through exact
 read-only reconstruction of their saved sources, options and historical analysis.
 Rehashed changes to scores/audit/policy/future fields and signed zero refuse;
@@ -16,7 +27,7 @@ control preserves both legacy and source-category v1 raw stdout/report/Markdown
 identities, and actual retention/purge plans recognize its saved dependencies.
 No deletion, model or analyzed-source execution occurs in this control. Failed
 development phases and the stronger signed-zero counterexample remain archived.
-The shared parser feature still needs a complete native recheck; broader R3
+The complete native recheck records the shared parser feature; broader R3
 community policy, R1-R9/platform/hosted/upstream acceptance remain open. See the
 [exact replay evidence](validation/integration-2026-10-21/policy-retention-floats/README.md).
 
