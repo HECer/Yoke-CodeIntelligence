@@ -168,10 +168,7 @@ pub fn invoke(
     deadline: &Deadline,
 ) -> Result<Value> {
     deadline.check()?;
-    ensure!(
-        session.tool_allowed(name),
-        "Tool excluded by session steering"
-    );
+    session.require_tool(name, deadline)?;
     let operation = operation(name)?;
     let (_, _, properties) = definitions()
         .into_iter()

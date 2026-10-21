@@ -929,6 +929,14 @@ fn serve_backend_state(
             continue;
         };
         let method = message["method"].as_str().unwrap();
+        if matches!(method, "initialize" | "tools/list" | "tools/call")
+            && let Some(session) = backend.session()
+            && let Err(reason) =
+                session.check_fixed_tool_state(&crate::capture::Deadline::new(120000))
+        {
+            send(error(id, -32001, &reason.to_string()))?;
+            continue;
+        }
         let prior_tools =
             (method == "tools/call" && backend.list_changes()).then(|| backend.tools());
         let response = match method {

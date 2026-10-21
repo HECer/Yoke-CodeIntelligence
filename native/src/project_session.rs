@@ -1155,6 +1155,25 @@ impl Session {
         self.steering()
             .is_ok_and(|s| s.is_none_or(|s| s.allows(name)))
     }
+    pub(crate) fn check_fixed_tool_state(&self, deadline: &Deadline) -> Result<()> {
+        if self
+            .host
+            .steering
+            .as_ref()
+            .is_some_and(|s| s.has_fixed_tools())
+        {
+            self.check_current_state(
+                deadline,
+                "Session state changed concurrently; resume before using selected tools",
+            )?;
+        }
+        Ok(())
+    }
+    pub(crate) fn require_tool(&self, name: &str, deadline: &Deadline) -> Result<()> {
+        self.check_fixed_tool_state(deadline)?;
+        ensure!(self.tool_allowed(name), "Tool excluded by session steering");
+        Ok(())
+    }
     pub fn require_repl_api(&self, method: &str) -> Result<()> {
         ensure!(
             crate::agent_repl::facade_contract()["methods"]
@@ -1346,6 +1365,7 @@ impl Session {
         Ok(())
     }
     fn project_engine(&mut self, name: &str, deadline: &Deadline) -> Result<&mut Engine> {
+        self.check_fixed_tool_state(deadline)?;
         ensure!(
             self.engine.capture_epoch == self.capture_epoch,
             "Session source analyzer differs from its pinned host policy"
@@ -1465,6 +1485,7 @@ impl Session {
     }
     pub fn invoke(&mut self, operation: &str, args: &Value, deadline: &Deadline) -> Result<Value> {
         deadline.check()?;
+        self.check_fixed_tool_state(deadline)?;
         if operation.starts_with("collections.") {
             return self.collection_invoke(operation, args, None, deadline);
         }

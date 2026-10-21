@@ -658,10 +658,7 @@ pub fn invoke(
     deadline: &Deadline,
 ) -> Result<Value> {
     deadline.check()?;
-    ensure!(
-        session.tool_allowed(name),
-        "Tool excluded by session steering"
-    );
+    session.require_tool(name, deadline)?;
     let inventory = tools();
     let definition = inventory
         .as_array()

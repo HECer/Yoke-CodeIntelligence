@@ -36,6 +36,8 @@ pub struct Definition {
     pub read_only_memory_patterns: Vec<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub ignored_memory_patterns: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub fixed_tools: Vec<String>,
 }
 #[derive(Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
@@ -50,6 +52,8 @@ pub struct Layer {
     pub read_only_memory_patterns: Vec<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub ignored_memory_patterns: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub fixed_tools: Vec<String>,
 }
 #[derive(Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
@@ -69,6 +73,21 @@ pub struct HostSteering {
     pub modes: BTreeMap<String, Definition>,
 }
 impl HostSteering {
+    pub fn has_fixed_tools(&self) -> bool {
+        std::iter::once(&self.global)
+            .chain(std::iter::once(&self.cli))
+            .chain(
+                self.projects
+                    .values()
+                    .flat_map(|p| [&p.project, &p.project_local]),
+            )
+            .any(|l| !l.fixed_tools.is_empty())
+            || self
+                .contexts
+                .values()
+                .chain(self.modes.values())
+                .any(|d| !d.fixed_tools.is_empty())
+    }
     pub fn has_memory_patterns(&self) -> bool {
         std::iter::once(&self.global)
             .chain(std::iter::once(&self.cli))
@@ -120,6 +139,10 @@ pub struct Resolved {
     pub read_only_memory_patterns: Vec<String>,
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub ignored_memory_patterns: Vec<String>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub fixed_tools: Vec<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub fixed_tools_source: Option<String>,
     pub fragments: Vec<Fragment>,
     pub authority: &'static str,
 }
@@ -203,6 +226,13 @@ fn definition(instructions: &str, tools: &[String], known: &BTreeSet<String>) ->
     );
     Ok(())
 }
+fn fixed_selection(fixed: &[String], excluded: &[String], known: &BTreeSet<String>) -> Result<()> {
+    ensure!(
+        fixed.is_empty() || excluded.is_empty(),
+        "Fixed tools cannot share a layer with excluded tools"
+    );
+    definition("", fixed, known)
+}
 fn api_selection(values: &[String]) -> Result<()> {
     if values.is_empty() {
         return Ok(());
@@ -245,6 +275,7 @@ pub(crate) fn validate(host: &HostProfile) -> Result<()> {
                 "Built-in context cannot be redefined"
             );
             definition(&d.instructions, &d.excluded_tools, &known)?;
+            fixed_selection(&d.fixed_tools, &d.excluded_tools, &known)?;
             api_selection(&d.excluded_apis)?;
             crate::notes::memory_patterns(
                 &d.read_only_memory_patterns,
@@ -258,6 +289,7 @@ pub(crate) fn validate(host: &HostProfile) -> Result<()> {
                 "Built-in mode cannot be redefined"
             );
             definition(&d.instructions, &d.excluded_tools, &known)?;
+            fixed_selection(&d.fixed_tools, &d.excluded_tools, &known)?;
             api_selection(&d.excluded_apis)?;
             crate::notes::memory_patterns(
                 &d.read_only_memory_patterns,
@@ -299,6 +331,7 @@ fn validate_layer(host: &HostProfile, l: &Layer, known: &BTreeSet<String>) -> Re
     }
     selection(host, &l.added_modes)?;
     definition(&l.instructions, &l.excluded_tools, known)?;
+    fixed_selection(&l.fixed_tools, &l.excluded_tools, known)?;
     api_selection(&l.excluded_apis)?;
     crate::notes::memory_patterns(&l.read_only_memory_patterns, &l.ignored_memory_patterns)?;
     Ok(())
@@ -432,12 +465,20 @@ impl Resolved {
     }
     pub fn allows(&self, name: &str) -> bool {
         let identity = crate::trail_adapter::steering_identity(name);
-        !self.excluded_tools.iter().any(|excluded| {
-            excluded == name
+        let equivalent = |selected: &String| {
+            selected == name
                 || identity.is_some_and(|identity| {
-                    crate::trail_adapter::steering_identity(excluded) == Some(identity)
+                    crate::trail_adapter::steering_identity(selected) == Some(identity)
                 })
-        })
+        };
+        !self.excluded_tools.iter().any(equivalent)
+            && (self.fixed_tools.is_empty() || self.fixed_tools.iter().any(equivalent))
+    }
+    fn select_fixed(&mut self, source: String, tools: &[String]) {
+        if !tools.is_empty() {
+            self.fixed_tools = tools.to_vec();
+            self.fixed_tools_source = Some(source);
+        }
     }
     fn add(&mut self, source: String, instructions: &str, tools: &[String]) {
         if !instructions.is_empty() {
@@ -497,6 +538,8 @@ pub(crate) fn resolve(
         excluded_apis: BTreeSet::new(),
         read_only_memory_patterns: Vec::new(),
         ignored_memory_patterns: Vec::new(),
+        fixed_tools: Vec::new(),
+        fixed_tools_source: None,
         fragments: Vec::new(),
         authority: "advisory_instructions_and_tool_restrictions_only",
     };
@@ -510,6 +553,7 @@ pub(crate) fn resolve(
         extend_unique(&mut out.ignored_memory_patterns, &l.ignored_memory_patterns);
         extend_unique(&mut out.added_modes, &l.added_modes);
         out.add((*source).into(), &l.instructions, &l.excluded_tools);
+        out.select_fixed((*source).into(), &l.fixed_tools);
     }
     extend_unique(&mut out.added_modes, &s.cli.added_modes);
     extend_unique(&mut out.modes, &out.added_modes);
@@ -534,6 +578,7 @@ pub(crate) fn resolve(
         &context.instructions,
         &context.excluded_tools,
     );
+    out.select_fixed(format!("context:{}", host.context), &context.fixed_tools);
     for name in out.modes.clone() {
         let d = s
             .modes
@@ -547,8 +592,10 @@ pub(crate) fn resolve(
         );
         extend_unique(&mut out.ignored_memory_patterns, &d.ignored_memory_patterns);
         out.add(format!("mode:{name}"), &d.instructions, &d.excluded_tools);
+        out.select_fixed(format!("mode:{name}"), &d.fixed_tools);
     }
     out.add("cli".into(), &s.cli.instructions, &s.cli.excluded_tools);
+    out.select_fixed("cli".into(), &s.cli.fixed_tools);
     out.excluded_apis
         .extend(s.cli.excluded_apis.iter().cloned());
     extend_unique(
