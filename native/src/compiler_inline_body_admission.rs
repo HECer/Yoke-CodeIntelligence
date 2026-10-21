@@ -473,6 +473,7 @@ fn check(
             .chain(&frame.names.arguments)
             .chain(&frame.names.var_parameters)
             .chain(&frame.names.var_seeds)
+            .chain(&frame.names.return_type)
         {
             d.check()?;
             ensure!(
@@ -508,7 +509,12 @@ fn check(
             )) && symbol.start_byte == declaration.start_byte(),
             "Body exported/unsupported declaration must be retained"
         );
-        expected.push((symbol.start_byte, symbol.end_byte, String::new(), vec![]));
+        let deletion = if return_docs(source, declaration, d)?.is_empty() {
+            String::new()
+        } else {
+            ";".into()
+        };
+        expected.push((symbol.start_byte, symbol.end_byte, deletion, vec![]));
     }
     expected.sort_by_key(|e| e.0);
     ensure!(
@@ -761,8 +767,18 @@ fn check(
             compared += 1;
         }
     }
+    let mut const_assertions = 0usize;
     for a in am.values() {
         d.check()?;
+        if a.span.path == symbol.path
+            && a.span.text == "const"
+            && matches!(a.resolution.as_str(), "unbound" | "no_declarations")
+            && a.targets.is_empty()
+            && fixed_const_assertion(&result_tree, a.span.start_byte, a.span.end_byte)
+        {
+            const_assertions += 1;
+            continue;
+        }
         ensure!(
             a.span.path == symbol.path && synthetic.contains(&a.span.text),
             "Body unexplained new identifier observation"
@@ -821,7 +837,7 @@ fn check(
     Ok((
         changes,
         result,
-        json!({"knownStaticBindingsCompared":compared,"survivingDeclarationTypesCompared":type_count,"sourceReconstruction":"original_function_body_frames_v1","varAssignmentPropertiesChecked":assignment_properties,"functionVarGroups":vars.groups.iter().map(|g|json!({"name":g.name,"declarations":g.ids.iter().map(|n|json!({"startByte":n.start_byte(),"endByte":n.end_byte()})).collect::<Vec<_>>(),"parameter":g.parameter.map(|n|json!({"startByte":n.start_byte(),"endByte":n.end_byte()})),"function":g.function.map(|n|json!({"startByte":n.start_byte(),"endByte":n.end_byte()}))})).collect::<Vec<_>>(),"complete":false}),
+        json!({"knownStaticBindingsCompared":compared,"fixedConstTypeAssertionsChecked":const_assertions,"survivingDeclarationTypesCompared":type_count,"sourceReconstruction":"original_function_body_frames_v1","varAssignmentPropertiesChecked":assignment_properties,"functionVarGroups":vars.groups.iter().map(|g|json!({"name":g.name,"declarations":g.ids.iter().map(|n|json!({"startByte":n.start_byte(),"endByte":n.end_byte()})).collect::<Vec<_>>(),"parameter":g.parameter.map(|n|json!({"startByte":n.start_byte(),"endByte":n.end_byte()})),"function":g.function.map(|n|json!({"startByte":n.start_byte(),"endByte":n.end_byte()}))})).collect::<Vec<_>>(),"complete":false}),
     ))
 }
 #[allow(clippy::too_many_arguments)]

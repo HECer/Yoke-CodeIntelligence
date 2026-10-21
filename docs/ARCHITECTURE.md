@@ -16,7 +16,16 @@ inferred from original declarations or loop heads at their lexical sites. The fi
 pure-false void guard prevents copied expressions and reads from executing without
 suppressing enabled compiler diagnostics. Native byte reconstruction, raw binding/
 type coverage and source-ordered composition preserve keys, labels and control slots.
-Remaining inferred contexts and invocation/expression forms remain open. See [compiler inlining](../native/docs/compiler-inline.md).
+A fixed runtime-true guard retains the original body block and enabled reachability
+checks; normal completion clears cancelled returns outside it, with a label only
+for actual outer returns. Inferred result types use fixed typeof syntax over an inert
+result carrier from a
+never-executed source-function call with already evaluated fresh argument temps.
+Attached JSDoc templates, literal inference and free bindings retain checked scope.
+Empty declaration statements protect neighboring annotation/typedef ownership.
+Original/fixed result assertions use a fixed unknown intermediate. Native
+comment/BOM ownership, fresh names and copied binding/type checks remain mandatory.
+Further return/parameter/annotation contexts and invocation/expression forms remain open. See [compiler inlining](../native/docs/compiler-inline.md).
 
 The compiler-move repair stage reconstructs direct named reexport partitions and
 fresh local import aliases from original/current immutable source anchors.

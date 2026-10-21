@@ -16,8 +16,9 @@ from original source. It does not claim to be a TypeScript built-in refactor.
 
 ## Classic function-body statements
 
-One owning strict ES module can select a nonasync, nongeneric function declaration
-with complete direct calls in that captured file. A call must occupy one whole
+One owning strict ES module can select a nonasync function declaration without a
+TypeScript type-parameter list and complete direct calls in that captured file.
+A call must occupy one whole
 single-declarator lexical initializer, return expression or expression statement.
 Return/expression statements receive a block so unbraced branches retain their
 control scope. Exported definitions require `keepDefinition=true`; captured
@@ -34,10 +35,43 @@ parameter types also provide contextual typing for copied default expressions;
 no arbitrary compiler-supplied type text is inserted.
 
 Outer returns assign a fresh result and break a fresh label; nested function
-returns stay intact. Normal body completion clears the result to `void 0`, since
+returns stay intact. The original body block is the consequent of the fixed
+runtime-true guard `void 0 === void 0`; an outer labelled block is emitted only
+when outer returns need its label. This retains enabled unreachable-code and
+unused-label diagnostics without adding unreachable scaffold statements. Normal
+body completion, after that original block, clears the result to `void 0`, since
 a finally break/continue can cancel a pending return. Original finally blocks
 still run and may override a return. An explicit return annotation is copied
 from source; inferred primitive return hints have a fixed keyword whitelist.
+Generated result assertions use a fixed intermediate `unknown` assertion so a
+throwing/never-returning source does not make the scaffold's undefined path an
+invalid conversion. The original compiler context must still have no errors.
+Other inferred result types use fixed `typeof` syntax over a fresh result carrier.
+A separate function carrier has exact original parameters and body, including
+attached leading JSDoc comments for JavaScript typing. Trailing comments on the
+previous statement are excluded, including newlines inside block comments. A call
+through the function carrier uses only the already evaluated fresh argument
+temporaries, preserving JSDoc template instantiation, literal types and argument
+order without reevaluating source expressions. Both carrier initializers and the
+result read occur only under `void 0 !== void 0`; the clone and its call never
+execute. Every copied binding and generated argument mapping has independent
+native correspondence. The compiler additionally checks free type/value bindings
+in JSDoc type expressions and template defaults against the original consumer
+scope; local documentation declarations remain owned by the copied signature.
+No ambient `ReturnType` helper or arbitrary compiler type expression is trusted.
+Literal const/contextual results use a fixed readonly `value` wrapper and indexed
+typeof query to prevent widening; other contexts retain ordinary inference. A
+generated TypeScript const-assertion token is admitted only at its exact parsed
+assertion position, without accepting arbitrary new identifiers.
+Module typedef/callback/import declarations stay at their original site. When an
+attached comment mixes such declarations with function typing, only original
+function-tag byte ranges are copied into fresh comment delimiters. Native checks
+attached-comment containment, ordering, a closed tag set, UTF-8 bounds and a
+512-piece limit. This preserves alias identity while templates remain scoped to
+the function copy; source comments and raw type observations are retained.
+Removing a definition with attached leading JSDoc leaves a fixed empty statement
+at its original declaration span. Original comment bytes and typedefs remain;
+the comments cannot silently reannotate the following declaration.
 
 Function-owned `var` names are hoisted once inside the body block. Initializers
 stay at their original execution positions, including ordinary `for`, `for-in`
@@ -87,6 +121,10 @@ still apply. Limits refuse instead of clipping a complete result.
 Source inference additionally admits at most 512 original declaration/loop sites,
 2,000 carrier names and fewer than 2,000 labels in an owning chain. Carrier text,
 copy pieces, compiler observations and aggregate edits share the limits above.
+Inferred result carriers use two fresh names per frame. JSDoc ownership admits
+at most 64 attached documentation comments, with at most 200,000 contiguous
+comments and 200,000 leading whitespace characters inspected. These checks also
+guard definition removal; complete source copies share the byte/copy/AST limits.
 
 Invocation-bound `this`/`super`/`arguments`/meta properties,
 async/generator/generic frames, spread arguments, wider expression sequencing,

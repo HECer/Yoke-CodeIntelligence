@@ -272,6 +272,7 @@ mod tests {
     use super::*;
     fn names(seeds: Vec<String>) -> Names {
         Names {
+            return_type: vec![],
             result: "__ci_inline_1".into(),
             exit: "__ci_inline_2".into(),
             arguments: vec![],

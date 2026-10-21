@@ -4,7 +4,7 @@ use super::*;
 #[test]
 fn body_effects_cannot_forge_source_bindings_origins_types_paths_or_output() {
     let root = tempfile::tempdir().unwrap();
-    let source = "// 🌍\nfunction helper(n:number):number {const values=[n];return values.length;}\nexport const answer=helper(2);\n";
+    let source = "// 🌍\n/** @returns {{length:number}} */\nfunction helper(n:number) {const values=[n];return {length:values.length};}\nexport const answer=helper(2);\n";
     fs::write(root.path().join("main.ts"), source).unwrap();
     fs::write(root.path().join("tsconfig.json"), r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","noEmit":true},"files":["main.ts"]}"#).unwrap();
     let mut engine = Engine::open(root.path()).unwrap();
@@ -57,6 +57,18 @@ fn body_effects_cannot_forge_source_bindings_origins_types_paths_or_output() {
         .1)
     };
     let result = admit(baseline.clone(), &d).unwrap();
+    for (field, value) in [
+        ("literalBox", json!(true)),
+        ("docPieces", json!([])),
+        (
+            "docPieces",
+            json!([{"startByte":0,"endByte":source.len(),"tag":true}]),
+        ),
+    ] {
+        let mut bad = baseline.clone();
+        bad["frames"][0][field] = value;
+        assert!(admit(bad, &d).is_err(), "{field}");
+    }
     assert!(!result.contains("helper(2)"));
     let mut missing_types = baseline.clone();
     missing_types["before"]["types"] = json!([]);
@@ -77,6 +89,13 @@ fn body_effects_cannot_forge_source_bindings_origins_types_paths_or_output() {
             baseline["frames"][0]["names"]["result"].clone(),
         ),
         ("/frames/0/resultType", json!("number; hidden()")),
+        ("/frames/0/names/returnType", json!([])),
+        ("/frames/0/names/returnType", json!(["__ci_inline_8"])),
+        ("/frames/0/names/returnType/0", json!("answer")),
+        (
+            "/frames/0/names/returnType/1",
+            baseline["frames"][0]["names"]["returnType"][0].clone(),
+        ),
         ("/references/0/path", json!("/outside.ts")),
         ("/references/0/text", json!("answer")),
         ("/edits/0/text", json!("// hidden deletion")),
@@ -113,6 +132,55 @@ fn body_effects_cannot_forge_source_bindings_origins_types_paths_or_output() {
     bad["resultHash"] = json!(crate::model::hash(
         result.replace("values.length", "values.length+1")
     ));
+    assert!(admit(bad, &d).is_err());
+    for (from, to) in [
+        ("if (void 0 === void 0)", "if (void 0 !== void 0)"),
+        ("if (void 0 !== void 0)", "if (void 0 === void 0)"),
+        (" as unknown as (typeof ", " as unknown as (never & typeof "),
+    ] {
+        let mut bad = baseline.clone();
+        let changed = bad["edits"][1]["text"].as_str().unwrap().replace(from, to);
+        assert_ne!(changed, bad["edits"][1]["text"].as_str().unwrap());
+        bad["edits"][1]["text"] = json!(changed);
+        bad["resultHash"] = json!(crate::model::hash(result.replace(from, to)));
+        assert!(admit(bad, &d).is_err(), "{from}");
+    }
+    let from = format!(
+        "{}({})",
+        baseline["frames"][0]["names"]["returnType"][0]
+            .as_str()
+            .unwrap(),
+        baseline["frames"][0]["names"]["arguments"][0]
+            .as_str()
+            .unwrap()
+    );
+    let to = format!(
+        "{}(void 0)",
+        baseline["frames"][0]["names"]["returnType"][0]
+            .as_str()
+            .unwrap()
+    );
+    let mut bad = baseline.clone();
+    let changed = bad["edits"][1]["text"]
+        .as_str()
+        .unwrap()
+        .replace(&from, &to);
+    assert_ne!(changed, bad["edits"][1]["text"].as_str().unwrap());
+    bad["edits"][1]["text"] = json!(changed);
+    bad["resultHash"] = json!(crate::model::hash(result.replace(&from, &to)));
+    assert!(admit(bad, &d).is_err());
+    let mut bad = baseline.clone();
+    assert_eq!(bad["edits"][0]["text"], ";");
+    bad["edits"][0]["text"] = json!("");
+    let mut changed = source.to_owned();
+    for edit in bad["edits"].as_array().unwrap().iter().rev() {
+        changed.replace_range(
+            edit["startByte"].as_u64().unwrap() as usize
+                ..edit["endByte"].as_u64().unwrap() as usize,
+            edit["text"].as_str().unwrap(),
+        );
+    }
+    bad["resultHash"] = json!(crate::model::hash(changed));
     assert!(admit(bad, &d).is_err());
     // Omission from both witnesses cannot hide the loss of an original identifier.
     let mut bad = baseline.clone();

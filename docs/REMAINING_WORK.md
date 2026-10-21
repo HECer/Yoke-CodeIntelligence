@@ -9,7 +9,7 @@ original inventory references and historical checkpoint evidence.
 
 | Area | Implemented contracts | Remaining work |
 | --- | --- | --- |
-| R1: semantic edits | Guarded native/provider planning, declaration ownership, directory/file usage, TS/JS propagation/session routing and actual host-selected immutable TS5.8.3 function-binding inlining, finite classic function-body statement expansion with checked var hoisting and moves into existing captured ES modules with checked direct reexport/local-alias repairs, captured omitted imports and source dependency exports, compiler-bound consumers and independent source/effect/apply/recovery checks. | Remaining inferred return/parameter/annotation contexts, strict diagnostic combinations and wider body/expression/invocation forms, unsupported import attributes and sibling declaration bundles, remaining reexport/import shapes, broader moves/declaration/file/language/context shapes, dynamic or outside-file consumers and wider runtime/upstream acceptance. The compiler variable-inline action and existing LSP own_v1 move contract retain distinct finite scopes. |
+| R1: semantic edits | Guarded native/provider planning, declaration ownership, directory/file usage, TS/JS propagation/session routing and actual host-selected immutable TS5.8.3 function-binding inlining, finite classic function-body statement expansion with checked var hoisting and moves into existing captured ES modules with checked direct reexport/local-alias repairs, captured omitted imports and source dependency exports, compiler-bound consumers and independent source/effect/apply/recovery checks. | Further return/predicate/parameter/annotation contexts, diagnostic combinations and wider body/expression/invocation forms, unsupported import attributes and sibling declaration bundles, remaining reexport/import shapes, broader moves/declaration/file/language/context shapes, dynamic or outside-file consumers and wider runtime/upstream acceptance. The compiler variable-inline action and existing LSP own_v1 move contract retain distinct finite scopes. |
 | R2: meaning and identity | Checked native graphs/joins, portable projections and mixed preparation/build/query/composition. A separate native MinHash/Jaro candidate policy, durable explicit model adjudication, source-replayed positive-clique quotient and frozen node/degree/trace queries preserve every original observation. | Other source/history/workspace identity, wider normalization/survivor rules, interpretation/outcome surfaces and live semantic-quality/upstream acceptance. Existing mixed aliases and host links keep their original namespace/authority boundaries; model equivalence remains unverified. |
 | R3: historical analytics | Explicit checked pair-of-Views comparison with complete parent pins, immutable source/receipt replay and directed observations. | Remaining upstream analytics equivalence and acceptance. A bare previousSnapshotId remains insufficient to select two Views; that refusal is an intentional precondition. |
 | R4: mixed documents | Native/Office XML/decoded/PDF spaces, fixed input preparation, checked claims, explicit provider jobs, checked graph queries and independently checked cross-workspace/history composition. | Broader mixed analytics, external semantic-provider qualification and exhaustive interpretation remain open. CLI composition currently selects one explicit Store; library callers may supply separately checked parents from different workspaces. |
@@ -40,39 +40,52 @@ original receipts and semantic claims remain distinct from interpretation truth.
 ## Acceptance still required
 
 Classic function-body expansion under the optional `inlineCompiler` profile now
-preserves nonprimitive inferred `var` storage using fresh `typeof` carriers from
-original declarations or loop heads at their lexical sites. Native reconstruction
-checks original source, destructured declaration types and every copied binding.
-The fixed pure-false guard `void 0 !== void 0` keeps copied initializers, iterables
-and reads inert; carrier bindings are function/module scoped. Actual body storage
-remains lexical and fresh per expansion. Quoted shorthand keys, labels, unbraced
-control slots and composed insertion/return edits retain source correspondence.
-Arguments, parameter/default environments, shared var storage, labelled returns,
-finally cancellation and eval refusal retain their existing guarded contract.
-Preparation executes no analyzed source or arbitrary compiler type expressions.
+retains enabled unreachable-code and unused-label diagnostics. The original body
+block runs under the fixed runtime-true guard `void 0 === void 0`; only actual outer
+returns need an exit label. Normal completion clears a return cancelled by finally
+control flow outside the original body. Throwing and never-typed return paths keep
+their runtime behavior, including a declared-never call that actually returns.
 
-The final scoped run passed **111 integrations / 0 failures / 2 existing ignored**
-across eight targets, plus nine body units, on 809 unchanged native inputs.
+Nonprimitive inferred result types use fixed `typeof` syntax over a fresh result
+carrier. A separate original-parameter/body function carrier, with attached leading
+JSDoc, is called only with the already evaluated argument temporaries. Literal const/contextual values use a fixed readonly wrapper and indexed typeof
+query; other values retain ordinary inference. Original module type declarations
+stay at their original site, with only bounded source function-tag pieces copied
+when needed, preserving typedef identity. Both
+initializers and the read remain under `void 0 !== void 0`; neither clone nor call
+executes. This preserves JSDoc template/literal instantiation without reevaluating
+arguments. Fixed empty statements protect neighboring declarations from orphaned
+documentation while retaining original comment/typedef bytes. The compiler checks
+free documentation type/value bindings against the consumer scope. Original/fixed annotations use a fixed intermediate
+unknown assertion
+for generated undefined paths. Native reconstruction checks source bytes, comment
+ownership, fresh names, copied bindings and surviving caller types. Original var
+storage carriers, argument/default environments, labelled returns, finally
+cancellation and eval refusal retain their existing guarded contract. Preparation
+executes no analyzed source or arbitrary compiler type expressions.
+
+The final scoped run passed **113 integrations / 0 failures / 2 existing ignored**
+across eight targets, plus eleven body units, on 809 unchanged native inputs.
 Format/build/all-target Clippy with warnings denied pass. Python 17, typecheck and
 TypeScript 260 / 3 existing skips pass on 803 fixed retained inputs. These frozen
 scopes overlap; totals are not added. Only documented metadata changes follow,
 with exact runtime and tracker preservation checks.
 
-Two added integration functions cover 22 inferred object/array/tuple/union/function/
-loop/destructuring scenarios and two cases with enabled strict diagnostic options.
-Two new unit functions and extended admission tests cover original UTF-8/CRLF bytes,
-quoted property keys, deadlines and coherent forged carrier/type/guard witnesses.
-Five body CLI cases include one new inferred loop case with independent tsc,
-approval, application and foreign-preserving recovery. Runtime comparisons execute
-only owned literal fixtures. Failed development phases remain archived.
+Two added integration functions cover 26 strict completion/type scenarios plus
+thirteen generic/documentation positives and one explicit shadowing refusal. Two new
+unit functions cover attached/trailing comments, BOM/Unicode, original bytes,
+deadlines and bounds; extended admission tests reject forged guards, names and
+type queries, carrier argument maps and documentation neutralization. Nine body
+CLI cases include four new strict TS/JS cases with independent tsc, approval, application and foreign-preserving recovery. Runtime
+comparisons execute only owned literal fixtures. Failed development phases retain
+the original invalid test fixtures and the BOM regression caught by the new unit.
 
-Inferred return/parameter/annotation contexts, other diagnostic-option combinations,
+Further return/predicate/parameter/annotation contexts, diagnostic combinations,
 wider expression/invocation/declaration/language/consumer forms and full STATUS/
-R1-R9/Windows/current-head hosted/upstream acceptance remain open. A returning-body
-fixture with `allowUnreachableCode:false` still visibly refuses; its precise cause
-has not been localized. Existing OS1314/macOS failures and production App deployment
-remain separate. See [the body contract](../native/docs/compiler-inline.md#classic-function-body-statements)
-and [inferred-type evidence](validation/integration-2026-10-19/function-body-types/README.md).
+R1-R9/Windows/current-head hosted/upstream acceptance remain open. Existing
+OS1314/macOS failures and production App deployment remain separate. See
+[the body contract](../native/docs/compiler-inline.md#classic-function-body-statements)
+and [completion/type evidence](validation/integration-2026-10-19/function-body-completion/README.md).
 
 Captured missing compiler-move imports now reconstruct original named/default/
 namespace bindings and source-owned top-level free dependencies. Native checks

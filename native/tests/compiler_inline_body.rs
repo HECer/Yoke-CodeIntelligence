@@ -61,9 +61,12 @@ fn unpublished(engine: &Engine) {
     );
 }
 fn same_execution(before: &str, after: &str) {
+    same_execution_mode(before, after, false);
+}
+fn same_execution_mode(before: &str, after: &str, await_result: bool) {
     let spec = compiler();
     let script = format!(
-        "const ts=require({});const vm=require('node:vm');function observe(s){{const js=ts.transpileModule(s,{{compilerOptions:{{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS}}}}).outputText;const c={{exports:{{}}}};vm.runInNewContext(js,c,{{timeout:1000}});return JSON.stringify(c.exports.observed);}}if(observe({})!==observe({}))throw Error('owned body observations changed');",
+        "const ts=require({});const vm=require('node:vm');const {{isPromise}}=require('node:util').types;async function observe(s){{const js=ts.transpileModule(s,{{compilerOptions:{{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS}}}}).outputText;const c={{exports:{{}}}};vm.runInNewContext(js,c,{{timeout:1000}});let value=c.exports.observed;if({await_result}&&isPromise(value)){{let timer;try{{value=await Promise.race([value,new Promise((_,reject)=>{{timer=setTimeout(()=>reject(Error('owned async fixture timed out')),1000);}})]);}}finally{{clearTimeout(timer);}}}}return JSON.stringify(value);}}(async()=>{{if(await observe({})!==await observe({}))throw Error('owned body observations changed');}})().catch(e=>{{console.error(e);process.exitCode=1;}});",
         serde_json::to_string(&spec.typescript).unwrap(),
         serde_json::to_string(before).unwrap(),
         serde_json::to_string(after).unwrap()
@@ -470,6 +473,270 @@ fn inert_inference_preserves_enabled_compiler_diagnostics_and_initializer_counts
     }
 }
 #[test]
+fn strict_completion_preserves_returns_throws_cancellation_and_inferred_result_types() {
+    for (language, keep, source) in [
+        (
+            "ts",
+            false,
+            "function helper():number{var row={n:3};return row.n;}const result=helper();export const observed=result;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper():number{throw new Error(\"owned\");}try{helper();}catch(e){}export const observed=1;",
+        ),
+        (
+            "ts",
+            false,
+            "const opaque=(()=>{return 4;}) as unknown as ()=>never;function helper():number{return opaque();}const result=helper();export const observed=result;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper():number|undefined{exit:while(true){try{return 1;}finally{break exit;}}}const result=helper();export const observed=result;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper():number{try{return 1;}finally{return 2;}}const result=helper();export const observed=result;",
+        ),
+        (
+            "ts",
+            false,
+            "const events:number[]=[];function helper(){var row={n:3};events.push(row.n);}helper();export const observed=events;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(n:number){return {value:n};}const result=helper(3);export const observed=result.value;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(){return ()=>3;}const result=helper();export const observed=result();",
+        ),
+        (
+            "js",
+            false,
+            "/** @param {number} n */\nfunction helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+        ),
+        (
+            "js",
+            false,
+            "/** @returns {number|string} */\nfunction helper(){return 3;}const result=helper();export const observed=result;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(){class Local{n=3;}return new Local();}const result=helper();export const observed=result.n;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(){type Local={n:number};const row:Local={n:3};return row;}const result=helper();export const observed=result.n;",
+        ),
+        (
+            "ts",
+            false,
+            "function stop():never{throw new Error('owned');}function helper():number{return stop();}const events:string[]=[];try{helper();}catch(e){events.push((e as Error).message);}export const observed=events;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper():never{throw new Error('owned');}const events:string[]=[];try{helper();}catch(e){events.push((e as Error).message);}export const observed=events;",
+        ),
+        (
+            "ts",
+            false,
+            "const events:number[]=[];function helper():number|undefined{for(let n=0;n<2;n++){try{return n;}finally{events.push(n);continue;}}}const result=helper();export const observed={result,empty:result===undefined,events};",
+        ),
+        (
+            "js",
+            false,
+            "/** first doc */\n/* between */\n/** @param {number} n @returns {{value:number}} */\nfunction helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+        ),
+        (
+            "js",
+            true,
+            "/** @param {number} n */\nexport function helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+        ),
+        (
+            "js",
+            false,
+            "/** @returns {number} */\nfunction helper(){throw new Error('owned');}const events=[];try{helper();}catch(e){if(e instanceof Error)events.push(e.message);else throw e;}export const observed=events;",
+        ),
+        (
+            "ts",
+            false,
+            "const events:number[]=[];function helper(){function nested(){return 3;}events.push(nested());}helper();export const observed=events;",
+        ),
+        (
+            "ts",
+            false,
+            "// 🌍\r\nfunction helper(){var 値={n:3};return /* café */ 値;}\r\nconst result=helper();export const observed=result.n;\r\n",
+        ),
+        (
+            "js",
+            false,
+            "export const marker=1;/** @returns {string|number} */ function helper(){return {value:3};}const result=helper();export const observed={marker,result};",
+        ),
+        (
+            "js",
+            true,
+            "export const marker=1;/** @returns {string|number} */ export function helper(){return {value:3};}const result=helper();export const observed={marker,result};",
+        ),
+        (
+            "js",
+            false,
+            "export const marker=1;/* multiline\n */ /** @returns {string|number} */ function helper(){return {value:3};}const result=helper();export const observed={marker,result};",
+        ),
+        (
+            "js",
+            false,
+            "export const marker=1;\u{2028}/** @returns {string|number} */ function helper(){return {value:3};}const result=helper();export const observed={marker,result};",
+        ),
+        (
+            "js",
+            false,
+            "\u{feff}/** @returns {{n:number}} */ function helper(){return {n:3};}const result=helper();export const observed=result.n;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(){return 3 as const;}const result=helper();export const observed=result+1;",
+        ),
+    ] {
+        let (root, mut engine) = fixture(source, language);
+        let config = json!({"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true,"allowUnreachableCode":false,"allowUnusedLabels":false,"noUnusedLocals":true,"noUnusedParameters":true,"noFallthroughCasesInSwitch":true,"allowJs":true,"checkJs":true},"files":[format!("main.{language}")]});
+        fs::write(
+            root.path().join("tsconfig.json"),
+            serde_json::to_vec(&config).unwrap(),
+        )
+        .unwrap();
+        let r =
+            yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(keep, language), &d())
+                .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        let after = planned(&engine, &r, language);
+        assert!(after.contains("if (void 0 === void 0)"), "{after}");
+        assert_eq!(r["sourceExecuted"], false);
+        same_execution(source, &after);
+        assert_eq!(
+            fs::read_to_string(root.path().join(format!("main.{language}"))).unwrap(),
+            source
+        );
+        assert_eq!(
+            fs::read(root.path().join("tsconfig.json")).unwrap(),
+            serde_json::to_vec(&config).unwrap()
+        );
+    }
+}
+#[test]
+fn jsdoc_call_types_and_removed_comments_preserve_templates_await_yield_and_neighbors() {
+    for (await_result, source) in [
+        (
+            false,
+            "let input=3;\n/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}const result=helper(input);export const observed=result+1;",
+        ),
+        (
+            false,
+            "let input={n:3};\n/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}const result=helper(input);export const observed=result.n;",
+        ),
+        (
+            false,
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}const result=helper(3);export const observed=result+1;",
+        ),
+        (
+            false,
+            "/** @type {string|null} */ let value=\"owned\";\n/** @template T\n * @param {T} n\n * @param {null} later\n * @returns {T} */\nfunction helper(n,later){void later;return n;}const result=helper(value,(value=null));export const observed=result.length;",
+        ),
+        (
+            true,
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}export async function outer(){const result=helper(await Promise.resolve(3));return result+1;}export const observed=outer();",
+        ),
+        (
+            false,
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}\n/** @returns {Generator<number,number,number>} */\nexport function* outer(){const result=helper(yield 3);return result+1;}const iterator=outer();export const observed=[iterator.next(),iterator.next(4)];",
+        ),
+        (
+            false,
+            "/** @returns {number} */\nfunction helper(){return 3;}export function other(){return {n:1};}const result=helper();export const observed=[result,other().n];",
+        ),
+        (
+            false,
+            "/** @typedef {{n:number}} Row */\nfunction helper(){return 3;}\n/** @type {Row} */ const other={n:4};const result=helper();export const observed=result+other.n;",
+        ),
+        (
+            false,
+            "/** @typedef {{n:number}} Row */\n/** @returns {Row} */\nfunction helper(){return {n:3};}\n/** @type {Row} */ const other={n:4};const result=helper();export const observed=result.n+other.n;",
+        ),
+        (
+            false,
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}let result=helper(3);export const observed=result+1;",
+        ),
+        (
+            false,
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}export function outer(){return helper(3);}export const observed=outer();",
+        ),
+        (
+            false,
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}\n/** @returns {3} */\nexport function outer(){return helper(3);}export const observed=outer();",
+        ),
+    ] {
+        let (root, mut engine) = fixture(source, "js");
+        let p = root.path().join("tsconfig.json");
+        let mut config: Value = serde_json::from_slice(&fs::read(&p).unwrap()).unwrap();
+        for (key, value) in [
+            ("allowUnreachableCode", false),
+            ("allowUnusedLabels", false),
+            ("noUnusedLocals", true),
+            ("noUnusedParameters", true),
+        ] {
+            config["compilerOptions"][key] = json!(value);
+        }
+        fs::write(&p, serde_json::to_vec(&config).unwrap()).unwrap();
+        let r = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "js"), &d())
+            .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        let after = planned(&engine, &r, "js");
+        assert!(!after.contains("function helper"), "{after}");
+        assert_eq!(r["sourceExecuted"], false);
+        same_execution_mode(source, &after, await_result);
+        assert_eq!(
+            fs::read_to_string(root.path().join("main.js")).unwrap(),
+            source
+        );
+        assert_eq!(fs::read(&p).unwrap(), serde_json::to_vec(&config).unwrap());
+    }
+    let source = "/** @returns {import('./types').Row} */\nfunction helper(){return {n:3};}const result=helper();export const observed=result.n;";
+    let (root, mut engine) = fixture(source, "js");
+    let types = "export interface Row { n:number }\n";
+    fs::write(root.path().join("types.ts"), types).unwrap();
+    let r =
+        yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "js"), &d()).unwrap();
+    let after = planned(&engine, &r, "js");
+    same_execution(source, &after);
+    assert_eq!(
+        fs::read_to_string(root.path().join("main.js")).unwrap(),
+        source
+    );
+    assert_eq!(
+        fs::read_to_string(root.path().join("types.ts")).unwrap(),
+        types
+    );
+    let source = "/** @typedef {{n:number,left?:number}} Row */\nconst outside={n:3};\n/** @returns {Row} */\nfunction helper(){return outside;}export function outer(){\n/** @typedef {{n:number,right?:number}} Row */ const marker=0;void marker;\n/** @type {Row} */ const local={n:4};void local;const result=helper();return typeof result;}export const observed=outer();";
+    let (root, mut engine) = fixture(source, "js");
+    let error = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "js"), &d())
+        .unwrap_err();
+    assert!(
+        format!("{error:#}").contains("Body documentation free binding would change at consumer"),
+        "{error:#}"
+    );
+    unpublished(&engine);
+    assert_eq!(
+        fs::read_to_string(root.path().join("main.js")).unwrap(),
+        source
+    );
+}
+#[test]
 fn unsafe_or_unowned_body_forms_refuse_before_any_plan_or_derived_source() {
     for source in [
         "type Const={n:number};function helper():unknown{return {} as Const;}function caller(){type Const={m:string};return helper();}export const observed=caller();",
@@ -565,29 +832,72 @@ fn wrapped_eval_in_the_body_or_caller_cannot_publish_a_plan() {
 }
 #[test]
 fn body_cli_plans_require_independent_verification_approval_and_foreign_preserving_recovery() {
-    for (source, keep) in [
+    for (source, keep, strict, language) in [
+        (
+            "let input={n:3};\n/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}const result=helper(input);export const observed=result.n;",
+            false,
+            true,
+            "js",
+        ),
+        (
+            "/** @returns {number} */\nfunction helper(){return 3;}export function other(){return {n:1};}const result=helper();export const observed=[result,other().n];",
+            false,
+            true,
+            "js",
+        ),
+        (
+            "function helper(){var row={n:3};return row;}export const observed=helper();\n",
+            false,
+            true,
+            "ts",
+        ),
+        (
+            "function helper():number|undefined{exit:while(true){try{return 1;}finally{break exit;}}}export const observed=helper();\n",
+            false,
+            true,
+            "ts",
+        ),
         (
             "function helper():number[]{const fs:Array<()=>number>=[];for(var row of [{n:1},{n:2}])fs.push(()=>row.n);return fs.map(f=>f());}export const observed=helper();\n",
             false,
+            false,
+            "ts",
         ),
         (
             "function helper(n=2):number{try{return n+1;}finally{n++;}}export const observed=helper();\n",
             false,
+            false,
+            "ts",
         ),
         (
             "export function helper({n=2}:{n?:number}={}):number{return n+1;}export const observed=helper();\n",
             true,
+            false,
+            "ts",
         ),
         (
             "function helper(n=1,read=()=>n):number[]{var n=2;return [n,read()];}export const observed=helper();\n",
             false,
+            false,
+            "ts",
         ),
         (
             "function helper():number[]{const fs:Array<()=>number>=[];for(var i=0;i<3;i++)fs.push(()=>i);return fs.map(f=>f());}export const observed=helper();\n",
             false,
+            false,
+            "ts",
         ),
     ] {
-        let (root, mut engine) = fixture(source, "ts");
+        let (root, mut engine) = fixture(source, language);
+        if strict {
+            let p = root.path().join("tsconfig.json");
+            let mut config: Value = serde_json::from_slice(&fs::read(&p).unwrap()).unwrap();
+            config["compilerOptions"]["allowUnreachableCode"] = json!(false);
+            config["compilerOptions"]["allowUnusedLabels"] = json!(false);
+            config["compilerOptions"]["noUnusedLocals"] = json!(true);
+            config["compilerOptions"]["noUnusedParameters"] = json!(true);
+            fs::write(p, serde_json::to_vec(&config).unwrap()).unwrap();
+        }
         let spec = compiler();
         let host = tempfile::tempdir().unwrap();
         fs::write(
@@ -599,7 +909,7 @@ fn body_cli_plans_require_independent_verification_approval_and_foreign_preservi
             .unwrap(),
         )
         .unwrap();
-        fs::write(host.path().join("requests.json"),serde_json::to_vec(&json!([{"operation":"refactor.prepare","args":{"operation":"inline","arguments":args(keep,"ts")}}])).unwrap()).unwrap();
+        fs::write(host.path().join("requests.json"),serde_json::to_vec(&json!([{"operation":"refactor.prepare","args":{"operation":"inline","arguments":args(keep,language)}}])).unwrap()).unwrap();
         let output = Command::new(env!("CARGO_BIN_EXE_yoke"))
             .arg("--root")
             .arg(root.path())
@@ -655,20 +965,24 @@ fn body_cli_plans_require_independent_verification_approval_and_foreign_preservi
             )
             .unwrap();
         assert_eq!(applied["status"], "ok", "{applied}");
-        let expected = fs::read(root.path().join("main.ts")).unwrap();
+        let expected = fs::read(root.path().join(format!("main.{language}"))).unwrap();
         same_execution(source, std::str::from_utf8(&expected).unwrap());
         assert_ne!(expected, source.as_bytes());
         let receipt = applied["data"]["receipt"]["id"].as_str().unwrap();
-        fs::write(root.path().join("main.ts"), "// foreign writer\n").unwrap();
+        fs::write(
+            root.path().join(format!("main.{language}")),
+            "// foreign writer\n",
+        )
+        .unwrap();
         assert!(yoke::changes::recover(&engine.store, &engine.root, receipt, true).is_err());
         assert_eq!(
-            fs::read_to_string(root.path().join("main.ts")).unwrap(),
+            fs::read_to_string(root.path().join(format!("main.{language}"))).unwrap(),
             "// foreign writer\n"
         );
-        fs::write(root.path().join("main.ts"), expected).unwrap();
+        fs::write(root.path().join(format!("main.{language}")), expected).unwrap();
         yoke::changes::recover(&engine.store, &engine.root, receipt, true).unwrap();
         assert_eq!(
-            fs::read_to_string(root.path().join("main.ts")).unwrap(),
+            fs::read_to_string(root.path().join(format!("main.{language}"))).unwrap(),
             source
         );
     }

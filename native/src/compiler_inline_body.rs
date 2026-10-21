@@ -23,6 +23,8 @@ pub(super) struct Names {
     var_parameters: Vec<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     var_seeds: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    return_type: Vec<String>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -37,6 +39,28 @@ pub(super) struct Frame {
     var_types: Vec<Option<String>>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     var_seed_groups: Vec<usize>,
+    #[serde(default)]
+    literal_box: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    doc_pieces: Option<Vec<DocPiece>>,
+}
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub(super) struct DocPiece {
+    start_byte: usize,
+    end_byte: usize,
+    tag: bool,
+}
+fn fixed_const_assertion(tree: &Tree, start: usize, end: usize) -> bool {
+    tree.root_node()
+        .descendant_for_byte_range(start, end)
+        .is_some_and(|n| {
+            n.start_byte() == start
+                && n.end_byte() == end
+                && n.kind() == "const"
+                && n.parent()
+                    .is_some_and(|p| p.kind() == "as_expression" && p.end_byte() == end)
+        })
 }
 #[derive(Debug)]
 pub(super) struct Copy {
@@ -262,6 +286,206 @@ fn returns<'a>(body: Node<'a>, d: &Deadline) -> Result<Vec<Node<'a>>> {
     );
     Ok(found)
 }
+fn return_docs<'a>(source: &str, declaration: Node<'a>, d: &Deadline) -> Result<Vec<Node<'a>>> {
+    d.check()?;
+    let owner = declaration
+        .parent()
+        .filter(|n| n.kind() == "export_statement")
+        .unwrap_or(declaration);
+    let mut before = owner.prev_named_sibling();
+    let mut end = owner.start_byte();
+    let mut comments = vec![];
+    let mut count = 0;
+    let mut docs = vec![];
+    while let Some(n) = before {
+        d.check()?;
+        if n.kind() != "comment"
+            || !crate::paths::utf8_range(source, n.end_byte(), end)?
+                .chars()
+                .all(|c| c.is_whitespace() || c == '\u{feff}')
+        {
+            break;
+        }
+        count += 1;
+        ensure!(
+            count <= 200_000,
+            "Body return type comment scan capacity exceeded"
+        );
+        comments.push(n);
+        end = n.start_byte();
+        before = n.prev_named_sibling();
+    }
+    let mut leading = end == 0;
+    if !comments.is_empty() {
+        for (visited, (index, ch)) in source[..end].char_indices().rev().enumerate() {
+            d.check()?;
+            ensure!(
+                visited < 200_000,
+                "Body return type whitespace capacity exceeded"
+            );
+            if !ch.is_whitespace() && ch != '\u{feff}' {
+                break;
+            }
+            leading |= matches!(ch, '\r' | '\n') || index == 0;
+        }
+    }
+    let mut cursor = end;
+    for comment in comments.into_iter().rev() {
+        d.check()?;
+        leading |= crate::paths::utf8_range(source, cursor, comment.start_byte())?
+            .bytes()
+            .any(|b| matches!(b, b'\r' | b'\n'));
+        let text = comment.utf8_text(source.as_bytes())?;
+        if leading && text.starts_with("/**") && !text.starts_with("/**/") {
+            docs.push(comment);
+            ensure!(
+                docs.len() <= 64,
+                "Body return type comment capacity exceeded"
+            );
+        }
+        cursor = comment.end_byte();
+    }
+    Ok(docs)
+}
+fn documentation_pieces(
+    source: &str,
+    declaration: Node<'_>,
+    frame: &Frame,
+    d: &Deadline,
+) -> Result<Vec<DocPiece>> {
+    let docs = return_docs(source, declaration, d)?;
+    let Some(pieces) = &frame.doc_pieces else {
+        return Ok(docs
+            .iter()
+            .map(|n| DocPiece {
+                start_byte: n.start_byte(),
+                end_byte: n.end_byte(),
+                tag: false,
+            })
+            .collect());
+    };
+    ensure!(
+        pieces.len() <= 512,
+        "Body documentation piece capacity exceeded"
+    );
+    ensure!(
+        docs.iter()
+            .any(|n| n.utf8_text(source.as_bytes()).is_ok_and(|s| [
+                "@typedef",
+                "@callback",
+                "@import"
+            ]
+            .iter()
+            .any(|tag| s.contains(tag)))),
+        "Body split documentation lacks original declarations"
+    );
+    let mut end = 0;
+    for piece in pieces {
+        d.check()?;
+        ensure!(
+            piece.start_byte >= end && piece.start_byte < piece.end_byte,
+            "Body documentation piece order mismatch"
+        );
+        let text = crate::paths::utf8_range(source, piece.start_byte, piece.end_byte)?;
+        ensure!(
+            piece.tag
+                && docs.iter().any(|n| piece.start_byte >= n.start_byte() + 3
+                    && piece.end_byte <= n.end_byte() - 2)
+                && !text.contains("*/"),
+            "Body documentation piece outside original comment"
+        );
+        let name = text
+            .strip_prefix('@')
+            .context("Body documentation tag marker absent")?
+            .split(|c: char| !c.is_ascii_alphabetic())
+            .next()
+            .unwrap_or("");
+        ensure!(
+            [
+                "param",
+                "returns",
+                "return",
+                "template",
+                "this",
+                "type",
+                "satisfies",
+                "overload",
+                "constructor",
+                "class",
+                "extends",
+                "augments",
+                "implements"
+            ]
+            .contains(&name),
+            "Body documentation tag outside function contract"
+        );
+        end = piece.end_byte;
+    }
+    Ok(pieces.clone())
+}
+fn return_witness(
+    out: &mut Rendered,
+    source: &str,
+    declaration: Node<'_>,
+    frame: &Frame,
+    language: &str,
+    line: &str,
+    d: &Deadline,
+) -> Result<()> {
+    d.check()?;
+    let names = &frame.names;
+    if names.return_type.is_empty() {
+        return Ok(());
+    }
+    ensure!(
+        names.return_type.len() == 2,
+        "Body return type name count mismatch"
+    );
+    let docs = documentation_pieces(source, declaration, frame, d)?;
+    out.generated(&format!(
+        "if (void 0 !== void 0) {{{line}var {} = ",
+        names.return_type[0]
+    ))?;
+    for doc in docs {
+        if doc.tag {
+            out.generated("/** ")?;
+        }
+        out.original(source, doc.start_byte, doc.end_byte, "return_witness")?;
+        if doc.tag {
+            out.generated(" */")?;
+        }
+        out.generated(line)?;
+    }
+    let parameters = declaration
+        .child_by_field_name("parameters")
+        .context("Body return type parameters absent")?;
+    out.generated("function")?;
+    out.original(
+        source,
+        parameters.start_byte(),
+        declaration.end_byte(),
+        "return_witness",
+    )?;
+    out.generated(&format!(";var {} = ", names.return_type[1]))?;
+    let js = matches!(language, "javascript" | "jsx");
+    if frame.literal_box {
+        out.generated(if js {
+            "/** @type {const} */ ({[\"value\"]: "
+        } else {
+            "({[\"value\"]: "
+        })?;
+    }
+    out.generated(&format!(
+        "{}({})",
+        names.return_type[0],
+        names.arguments.join(","),
+    ))?;
+    if frame.literal_box {
+        out.generated(if js { "})" } else { "} as const)" })?;
+    }
+    out.generated(&format!(";void {};{line}}}{line}", names.return_type[1]))?;
+    Ok(())
+}
 /// This renderer never trusts a supplied replacement string. Every original
 /// expression, comment and body fragment is sliced from the checked source.
 pub(super) fn render(
@@ -304,6 +528,23 @@ pub(super) fn render(
         "Function-body statement ownership mismatch"
     );
     scope_forms(declaration, source, d)?;
+    let return_nodes = returns(body, d)?;
+    documentation_pieces(source, declaration, frame, d)?;
+    ensure!(
+        !frame.literal_box || frame.names.return_type.len() == 2,
+        "Body literal carrier lacks inferred result"
+    );
+    ensure!(
+        frame.names.return_type.len()
+            == if declaration.child_by_field_name("return_type").is_none()
+                && frame.result_type.is_none()
+            {
+                2
+            } else {
+                0
+            },
+        "Body return type witness shape mismatch"
+    );
     let vars = variables::analyze(declaration, source, d)?;
     let typed = inferred::analyze(&vars, &frame.var_seed_groups, source, d)?;
     ensure!(
@@ -343,6 +584,7 @@ pub(super) fn render(
         .chain(&frame.names.arguments)
         .chain(&frame.names.var_parameters)
         .chain(&frame.names.var_seeds)
+        .chain(&frame.names.return_type)
         .collect();
     let name_set: BTreeSet<_> = names.iter().map(|n| n.as_str()).collect();
     ensure!(
@@ -424,6 +666,7 @@ pub(super) fn render(
         "argument_trivia",
     )?;
     out.generated(line)?;
+    return_witness(&mut out, source, declaration, frame, language, line, d)?;
     out.generated(&format!("{{{line}"))?;
     parameters::emit(
         &mut out,
@@ -434,7 +677,10 @@ pub(super) fn render(
         d,
     )?;
     vars.captures(&mut out, source, &frame.names, line)?;
-    out.generated(&format!("{}: ", frame.names.exit))?;
+    if !return_nodes.is_empty() {
+        out.generated(&format!("{}: ", frame.names.exit))?;
+    }
+    out.generated(&format!("{{{line}if (void 0 === void 0) "))?;
     out.original(source, body.start_byte(), body.start_byte() + 1, "body")?;
     if !vars.groups.is_empty() {
         out.generated(line)?;
@@ -445,7 +691,7 @@ pub(super) fn render(
         let (start, end) = change.range();
         replacements.push((start, end, variables::replacement(change, source, d)?));
     }
-    for ret in returns(body, d)? {
+    for ret in return_nodes {
         let mut value_out = Rendered::default();
         let values = children(ret);
         ensure!(
@@ -478,10 +724,10 @@ pub(super) fn render(
         cursor = end;
     }
     out.original(source, cursor, body.end_byte() - 1, "body")?;
+    out.original(source, body.end_byte() - 1, body.end_byte(), "body")?;
     // A finally break/continue can cancel a pending return.
     out.generated(&format!("{line}{} = void 0;{line}", frame.names.result))?;
-    out.original(source, body.end_byte() - 1, body.end_byte(), "body")?;
-    out.generated(&format!("{line}}}{line}}}{line}"))?;
+    out.generated(&format!("}}{line}}}{line}}}{line}"))?;
     out.original(source, statement.start_byte(), call.start_byte(), "caller")?;
     let annotated = declaration.child_by_field_name("return_type");
     ensure!(
@@ -494,7 +740,7 @@ pub(super) fn render(
                 && source.as_bytes().get(annotation.start_byte()) == Some(&b':'),
             "Function-body return annotation shape mismatch"
         );
-        out.generated(&format!("({} as (", frame.names.result))?;
+        out.generated(&format!("({} as unknown as (", frame.names.result))?;
         out.original(
             source,
             annotation.start_byte() + 1,
@@ -520,12 +766,28 @@ pub(super) fn render(
             "Function-body generated return type unavailable"
         );
         out.generated(&if matches!(language, "javascript" | "jsx") {
-            format!("/** @type {{{hint}}} */ ({})", frame.names.result)
+            format!(
+                "/** @type {{{hint}}} */ (/** @type {{unknown}} */ ({}))",
+                frame.names.result
+            )
         } else {
-            format!("({} as ({hint}))", frame.names.result)
+            format!("({} as unknown as ({hint}))", frame.names.result)
         })?;
     } else {
-        out.generated(&frame.names.result)?;
+        let names = &frame.names.return_type;
+        let hint = if frame.literal_box {
+            format!("(typeof {})[\"value\"]", names[1])
+        } else {
+            format!("typeof {}", names[1])
+        };
+        out.generated(&if matches!(language, "javascript" | "jsx") {
+            format!(
+                "/** @type {{{hint}}} */ (/** @type {{unknown}} */ ({}))",
+                frame.names.result
+            )
+        } else {
+            format!("({} as unknown as ({hint}))", frame.names.result)
+        })?;
     }
     out.original(source, call.end_byte(), statement.end_byte(), "caller")?;
     if wrap {
@@ -537,6 +799,141 @@ pub(super) fn render(
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn fixed_const_type_tokens_cannot_be_other_keywords_properties_or_comment_text() {
+        let d = Deadline::new(10_000);
+        for (source, expected) in [
+            ("let x=({[\"value\"]:3} as const);", true),
+            ("const x=3;", false),
+            ("let x=\"const\";", false),
+            ("// as const\nlet x=3;", false),
+            ("type X={const:number};", false),
+            ("let x={} as Namespace.const;", false),
+        ] {
+            let tree = parse("typescript", source, &d).unwrap();
+            let at = source.rfind("const").unwrap();
+            assert_eq!(
+                fixed_const_assertion(&tree, at, at + 5),
+                expected,
+                "{source}"
+            );
+            assert!(!fixed_const_assertion(
+                &tree,
+                source.len() + 1,
+                source.len() + 2
+            ));
+        }
+    }
+    #[test]
+    fn return_type_witnesses_keep_comment_ownership_original_bytes_and_bounds() {
+        let names = Names {
+            result: "__ci_inline_1".into(),
+            exit: "__ci_inline_2".into(),
+            arguments: vec![],
+            var_parameters: vec![],
+            var_seeds: vec![],
+            return_type: vec!["__ci_inline_3".into(), "__ci_inline_4".into()],
+        };
+        let frame = Frame {
+            statement_start: 0,
+            statement_end: 0,
+            call_start: 0,
+            call_end: 0,
+            names,
+            result_type: None,
+            var_types: vec![],
+            var_seed_groups: vec![],
+            literal_box: false,
+            doc_pieces: None,
+        };
+        let doc = "/** @returns {{n:number}} */";
+        for (prefix, suffix, attached) in [
+            (format!("{doc}\n"), "", true),
+            (format!("const marker=1;{doc} "), "", false),
+            (format!("const marker=1;\n{doc} "), "", true),
+            (
+                format!("const marker=1;/* multiline\n */ {doc} "),
+                "",
+                false,
+            ),
+            (format!("const marker=1;\u{2028}{doc} "), "", false),
+            (format!("\u{feff}{doc} "), "", true),
+            (format!("{doc}\u{feff} "), "", true),
+            (format!("{{{doc} "), "}", false),
+            (format!("{{\r\n{doc} "), "}", true),
+        ] {
+            let source = format!("{prefix}function helper(n=3){{return {{n}};}}{suffix}");
+            let d = Deadline::new(10_000);
+            let tree = parse("javascript", &source, &d).unwrap();
+            let mut stack = vec![tree.root_node()];
+            let mut found = None;
+            while let Some(n) = stack.pop() {
+                if n.kind() == "function_declaration" {
+                    found = Some(n);
+                    break;
+                }
+                stack.extend(children(n));
+            }
+            let declaration = found.unwrap();
+            let mut out = Rendered::default();
+            return_witness(
+                &mut out,
+                &source,
+                declaration,
+                &frame,
+                "javascript",
+                "\n",
+                &d,
+            )
+            .unwrap();
+            assert_eq!(out.text.contains(doc), attached, "{source}");
+            for c in &out.copies {
+                assert_eq!(
+                    &source[c.original_start..c.original_end],
+                    &out.text[c.output_start..c.output_end]
+                );
+                assert_eq!(c.role, "return_witness");
+            }
+            assert!(
+                return_witness(
+                    &mut Rendered::default(),
+                    &source,
+                    declaration,
+                    &frame,
+                    "javascript",
+                    "\n",
+                    &Deadline::new(0)
+                )
+                .is_err()
+            );
+        }
+        for prefix in [
+            "/** ordinary */\n".repeat(65),
+            format!("{}{}\n", " ".repeat(200_001), doc),
+        ] {
+            let source = format!("{prefix}function helper(){{return {{n:3}};}}");
+            let d = Deadline::new(10_000);
+            let tree = parse("javascript", &source, &d).unwrap();
+            let mut c = tree.root_node().walk();
+            let declaration = tree
+                .root_node()
+                .named_children(&mut c)
+                .find(|n| n.kind() == "function_declaration")
+                .unwrap();
+            assert!(
+                return_witness(
+                    &mut Rendered::default(),
+                    &source,
+                    declaration,
+                    &frame,
+                    "javascript",
+                    "\n",
+                    &d
+                )
+                .is_err()
+            );
+        }
+    }
     #[test]
     fn invocation_identifiers_refuse_wrappers_and_unicode_escapes_without_execution() {
         for expression in [
@@ -624,6 +1021,7 @@ mod tests {
                     v
                 };
                 let mut names = Names {
+                    return_type: vec![],
                     var_parameters: vec![],
                     var_seeds: vec![],
                     result: fresh(),
@@ -638,7 +1036,10 @@ mod tests {
                     .copies())
                     .map(|_| fresh())
                     .collect();
+                names.return_type = (0..2).map(|_| fresh()).collect();
                 let frame = Frame {
+                    literal_box: false,
+                    doc_pieces: None,
                     statement_start: statement.start_byte(),
                     statement_end: statement.end_byte(),
                     call_start: call.start_byte(),
@@ -698,11 +1099,14 @@ mod tests {
         let call_start = source.rfind("helper(").unwrap();
         let statement_start = source.find("const answer").unwrap();
         let frame = Frame {
+            literal_box: false,
+            doc_pieces: None,
             statement_start,
             statement_end: source.len(),
             call_start,
             call_end: source.len() - 1,
             names: Names {
+                return_type: vec!["__ci_inline_5".into(), "__ci_inline_6".into()],
                 var_parameters: vec![],
                 var_seeds: vec![],
                 result: "__ci_inline_1".into(),
@@ -728,7 +1132,13 @@ mod tests {
             );
             assert!(matches!(
                 copy.role,
-                "argument" | "argument_trivia" | "parameter" | "body" | "caller" | "return_type"
+                "argument"
+                    | "argument_trivia"
+                    | "parameter"
+                    | "body"
+                    | "caller"
+                    | "return_type"
+                    | "return_witness"
             ));
         }
         let mut bad = frame.clone();
