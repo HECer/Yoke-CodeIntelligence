@@ -18,12 +18,17 @@ use std::{
 #[path = "graph_analysis_policy.rs"]
 mod policy;
 pub use policy::{Category as AnalysisCategory, SourceCategoryPolicy};
+#[path = "graph_community_policy.rs"]
+mod community;
+pub use community::CommunityPolicy;
 
 pub const REPORT_KIND: &str = "native_graph_report_v1";
 pub const VIEW_REPORT_KIND: &str = "native_graph_view_report_v1";
 const VIEW_REPORT_PRODUCER: &str = "yoke-graph-view-report-1";
 const CATEGORY_PRODUCER: &str = "yoke-source-category-report-1";
 const CATEGORY_VIEW_PRODUCER: &str = "yoke-source-category-view-report-1";
+const COMMUNITY_PRODUCER: &str = "yoke-community-policy-report-1";
+const COMMUNITY_VIEW_PRODUCER: &str = "yoke-community-policy-view-report-1";
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -50,6 +55,8 @@ pub struct AnalysisOptions {
     pub previous_snapshot_id: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub source_category_policy: Option<SourceCategoryPolicy>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub community_policy: Option<CommunityPolicy>,
 }
 fn default_limit() -> usize {
     10
@@ -80,6 +87,7 @@ impl Default for AnalysisOptions {
             max_community_size: 0,
             previous_snapshot_id: None,
             source_category_policy: None,
+            community_policy: None,
         }
     }
 }
@@ -366,6 +374,7 @@ struct Derived {
     degree: BTreeMap<String, usize>,
     excluded: BTreeSet<String>,
     quality: Option<f64>,
+    community_details: Option<Value>,
 }
 fn edge_weight(edge: &Observation, options: &AnalysisOptions) -> f64 {
     if let Some(policy) = &options.source_category_policy {
@@ -418,92 +427,112 @@ fn derive(graph: &Graph, options: &AnalysisOptions, deadline: &Deadline) -> Resu
             }
         }
     }
-    let mut excluded = BTreeSet::new();
-    if let Some(percentile) = options.exclude_hubs_percentile
-        && !nodes.is_empty()
-    {
-        let mut counts: Vec<_> = degree.values().copied().collect();
-        counts.sort();
-        let position = if options.source_category_policy.is_some() {
-            ((counts.len() as f64 * percentile / 100.0).floor() as usize)
-                .saturating_sub(1)
-                .min(counts.len() - 1)
-        } else {
-            ((counts.len() - 1) as f64 * percentile / 100.0).floor() as usize
-        };
-        let threshold = counts[position];
-        excluded.extend(
-            degree
-                .iter()
-                .filter(|(_, n)| **n > threshold)
-                .map(|(id, _)| id.clone()),
-        );
-    }
-    let active: Vec<_> = nodes
-        .iter()
-        .enumerate()
-        .filter(|(_, n)| !excluded.contains(&n.id))
-        .map(|(i, _)| i)
-        .collect();
-    let compact: BTreeMap<_, _> = active.iter().enumerate().map(|(a, b)| (*b, a)).collect();
-    let mut builder = leiden_rs::GraphDataBuilder::new(active.len());
-    for edge in &graph.observations {
-        deadline.check()?;
-        if let Some(target) = &edge.target {
-            let a = index[edge.source.as_str()];
-            let b = index[target.as_str()];
-            let weight = edge_weight(edge, options);
-            if weight > 0.0
-                && let (Some(a), Some(b)) = (compact.get(&a), compact.get(&b))
+    let (groups, excluded, quality, community_details) = match options.community_policy {
+        Some(CommunityPolicy::NeighborMajorityV1 {}) => {
+            let ids: Vec<_> = nodes.iter().map(|node| node.id.as_str()).collect();
+            let selected = community::partition(&ids, &adjacency, options, deadline)?;
+            (
+                selected.groups,
+                selected.excluded,
+                selected.quality,
+                Some(selected.details),
+            )
+        }
+        None => {
+            let mut excluded = BTreeSet::new();
+            if let Some(percentile) = options.exclude_hubs_percentile
+                && !nodes.is_empty()
             {
-                builder.add_edge(*a, *b, weight)?;
+                let mut counts: Vec<_> = degree.values().copied().collect();
+                counts.sort();
+                let position = if options.source_category_policy.is_some() {
+                    ((counts.len() as f64 * percentile / 100.0).floor() as usize)
+                        .saturating_sub(1)
+                        .min(counts.len() - 1)
+                } else {
+                    ((counts.len() - 1) as f64 * percentile / 100.0).floor() as usize
+                };
+                let threshold = counts[position];
+                excluded.extend(
+                    degree
+                        .iter()
+                        .filter(|(_, n)| **n > threshold)
+                        .map(|(id, _)| id.clone()),
+                );
             }
-        }
-    }
-    deadline.check()?;
-    let output = leiden_rs::Leiden::new(leiden_rs::LeidenConfig {
-        resolution: options.resolution,
-        max_iterations: options.max_iterations,
-        seed: Some(options.seed),
-        max_comm_size: options.max_community_size,
-        ..Default::default()
-    })
-    .run(&builder.build()?)?;
-    deadline.check()?;
-    let mut groups: BTreeMap<usize, Vec<usize>> = output
-        .partition
-        .communities()
-        .into_iter()
-        .map(|(cid, members)| (cid, members.into_iter().map(|i| active[i]).collect()))
-        .collect();
-    let mut assigned: BTreeMap<usize, usize> = groups
-        .iter()
-        .flat_map(|(cid, members)| members.iter().map(move |node| (*node, *cid)))
-        .collect();
-    let mut next = groups.keys().next_back().map_or(0, |c| c + 1);
-    for (i, node) in nodes.iter().enumerate() {
-        deadline.check()?;
-        if !excluded.contains(&node.id) {
-            continue;
-        }
-        let mut votes = BTreeMap::<usize, f64>::new();
-        for (neighbor, weight) in &adjacency[i] {
-            if let Some(cid) = assigned.get(neighbor) {
-                *votes.entry(*cid).or_default() += weight;
+            let active: Vec<_> = nodes
+                .iter()
+                .enumerate()
+                .filter(|(_, n)| !excluded.contains(&n.id))
+                .map(|(i, _)| i)
+                .collect();
+            let compact: BTreeMap<_, _> = active.iter().enumerate().map(|(a, b)| (*b, a)).collect();
+            let mut builder = leiden_rs::GraphDataBuilder::new(active.len());
+            for edge in &graph.observations {
+                deadline.check()?;
+                if let Some(target) = &edge.target {
+                    let a = index[edge.source.as_str()];
+                    let b = index[target.as_str()];
+                    let weight = edge_weight(edge, options);
+                    if weight > 0.0
+                        && let (Some(a), Some(b)) = (compact.get(&a), compact.get(&b))
+                    {
+                        builder.add_edge(*a, *b, weight)?;
+                    }
+                }
             }
+            deadline.check()?;
+            let output = leiden_rs::Leiden::new(leiden_rs::LeidenConfig {
+                resolution: options.resolution,
+                max_iterations: options.max_iterations,
+                seed: Some(options.seed),
+                max_comm_size: options.max_community_size,
+                ..Default::default()
+            })
+            .run(&builder.build()?)?;
+            deadline.check()?;
+            let mut groups: BTreeMap<usize, Vec<usize>> = output
+                .partition
+                .communities()
+                .into_iter()
+                .map(|(cid, members)| (cid, members.into_iter().map(|i| active[i]).collect()))
+                .collect();
+            let mut assigned: BTreeMap<usize, usize> = groups
+                .iter()
+                .flat_map(|(cid, members)| members.iter().map(move |node| (*node, *cid)))
+                .collect();
+            let mut next = groups.keys().next_back().map_or(0, |c| c + 1);
+            for (i, node) in nodes.iter().enumerate() {
+                deadline.check()?;
+                if !excluded.contains(&node.id) {
+                    continue;
+                }
+                let mut votes = BTreeMap::<usize, f64>::new();
+                for (neighbor, weight) in &adjacency[i] {
+                    if let Some(cid) = assigned.get(neighbor) {
+                        *votes.entry(*cid).or_default() += weight;
+                    }
+                }
+                let cid = votes
+                    .into_iter()
+                    .max_by(|(a, wa), (b, wb)| wa.total_cmp(wb).then_with(|| b.cmp(a)))
+                    .map(|(cid, _)| cid)
+                    .unwrap_or_else(|| {
+                        let c = next;
+                        next += 1;
+                        c
+                    });
+                groups.entry(cid).or_default().push(i);
+                assigned.insert(i, cid);
+            }
+            (
+                groups,
+                excluded,
+                output.quality.is_finite().then_some(output.quality),
+                None,
+            )
         }
-        let cid = votes
-            .into_iter()
-            .max_by(|(a, wa), (b, wb)| wa.total_cmp(wb).then_with(|| b.cmp(a)))
-            .map(|(cid, _)| cid)
-            .unwrap_or_else(|| {
-                let c = next;
-                next += 1;
-                c
-            });
-        groups.entry(cid).or_default().push(i);
-        assigned.insert(i, cid);
-    }
+    };
     let mut communities = Vec::new();
     let mut membership = BTreeMap::new();
     for members in groups.values() {
@@ -555,7 +584,11 @@ fn derive(graph: &Graph, options: &AnalysisOptions, deadline: &Deadline) -> Resu
             }
         }
         let cohesion = if members.len() < 2 {
-            0.0
+            if options.community_policy.is_some() {
+                1.0
+            } else {
+                0.0
+            }
         } else {
             2.0 * pairs.len() as f64 / (members.len() * (members.len() - 1)) as f64
         };
@@ -574,7 +607,8 @@ fn derive(graph: &Graph, options: &AnalysisOptions, deadline: &Deadline) -> Resu
         membership,
         degree,
         excluded,
-        quality: output.quality.is_finite().then_some(output.quality),
+        quality,
+        community_details,
     })
 }
 pub(crate) fn communities(graph: &Graph, deadline: &Deadline) -> Result<Vec<Value>> {
@@ -733,8 +767,10 @@ fn build_report(
             "classifications":"declared_projection_categories_not_source_or_execution_attestation",
             "originalResolutionPreserved":true,"baseWeights":"host_selected_relation_weights_default_one"});
         report["clustering"]["uncertainWeightAppliesTo"] = json!("policy_ambiguous_only");
-        report["clustering"]["hubPercentilePolicy"] =
-            json!("floor_count_times_percentile_minus_one_clamped");
+        if options.community_policy.is_none() {
+            report["clustering"]["hubPercentilePolicy"] =
+                json!("floor_count_times_percentile_minus_one_clamped");
+        }
         let mut unmapped = BTreeMap::<String, usize>::new();
         for edge in &graph.observations {
             deadline.check()?;
@@ -744,13 +780,21 @@ fn build_report(
         }
         report["audit"]["unmappedPolicyResolutions"] = json!(unmapped);
     }
+    report["producer"] = json!(canonical_producer(options));
     Ok(report)
 }
+fn canonical_producer(options: &AnalysisOptions) -> &'static str {
+    match options.community_policy {
+        Some(CommunityPolicy::NeighborMajorityV1 {}) => COMMUNITY_PRODUCER,
+        None if options.source_category_policy.is_some() => CATEGORY_PRODUCER,
+        None => PRODUCER,
+    }
+}
 fn view_producer(options: &AnalysisOptions) -> &'static str {
-    if options.source_category_policy.is_some() {
-        CATEGORY_VIEW_PRODUCER
-    } else {
-        VIEW_REPORT_PRODUCER
+    match options.community_policy {
+        Some(CommunityPolicy::NeighborMajorityV1 {}) => COMMUNITY_VIEW_PRODUCER,
+        None if options.source_category_policy.is_some() => CATEGORY_VIEW_PRODUCER,
+        None => VIEW_REPORT_PRODUCER,
     }
 }
 fn build_report_inner(
@@ -940,9 +984,17 @@ fn build_report_inner(
         }
     }
     let bindings: Vec<_> = graph.entities.iter().map(|e| anchor(snapshot, e)).collect();
-    Ok(
-        json!({"producer":PRODUCER,"workspaceId":snapshot.workspace_id,"snapshotId":snapshot.id,"graphHash":identity(graph),"previousSnapshotId":options.previous_snapshot_id,"previousGraphHash":previous_graph_hash,"options":options,"sourceBindings":bindings,"evidenceAnchors":graph.evidence,"audit":{"totalEntities":graph.entities.len(),"totalObservations":graph.observations.len(),"byResolution":by_resolution,"byRelation":by_relation,"unresolvedObservations":graph.observations.iter().filter(|e|e.target.is_none()).count(),"omissions":snapshot.omissions,"coverage":graph.coverage,"confidenceMeaning":"source_and_analysis_categories_not_probabilities"},"godNodes":gods,"communities":derived.communities,"clustering":{"algorithm":"leiden","producer":"leiden-rs-0.8.1","resolution":options.resolution,"seed":options.seed,"maxIterations":options.max_iterations,"maxCommunitySize":options.max_community_size,"uncertainWeight":options.uncertain_weight,"excludeHubsPercentile":options.exclude_hubs_percentile,"excludedHubs":derived.excluded,"quality":derived.quality,"projection":"undirected_weighted_resolved_observations_parallel_weight_retained","cancellation":"before_and_after_bounded_library_call_not_inside_leiden","hubReattachment":"weighted_majority_then_standalone_may_exceed_max_community_size"},"surprises":surprises,"questions":questions,"diff":diff,"modelCalls":0,"complete":false,"limitations":LIMITATIONS}),
-    )
+    let mut report = json!({"producer":PRODUCER,"workspaceId":snapshot.workspace_id,"snapshotId":snapshot.id,"graphHash":identity(graph),"previousSnapshotId":options.previous_snapshot_id,"previousGraphHash":previous_graph_hash,"options":options,"sourceBindings":bindings,"evidenceAnchors":graph.evidence,"audit":{"totalEntities":graph.entities.len(),"totalObservations":graph.observations.len(),"byResolution":by_resolution,"byRelation":by_relation,"unresolvedObservations":graph.observations.iter().filter(|e|e.target.is_none()).count(),"omissions":snapshot.omissions,"coverage":graph.coverage,"confidenceMeaning":"source_and_analysis_categories_not_probabilities"},"godNodes":gods,"communities":derived.communities,"clustering":{"algorithm":"leiden","producer":"leiden-rs-0.8.1","resolution":options.resolution,"seed":options.seed,"maxIterations":options.max_iterations,"maxCommunitySize":options.max_community_size,"uncertainWeight":options.uncertain_weight,"excludeHubsPercentile":options.exclude_hubs_percentile,"excludedHubs":derived.excluded,"quality":derived.quality,"projection":"undirected_weighted_resolved_observations_parallel_weight_retained","cancellation":"before_and_after_bounded_library_call_not_inside_leiden","hubReattachment":"weighted_majority_then_standalone_may_exceed_max_community_size"},"surprises":surprises,"questions":questions,"diff":diff,"modelCalls":0,"complete":false,"limitations":LIMITATIONS});
+    if let Some(details) = derived.community_details {
+        report["clustering"]["communityPolicy"] = details;
+        report["clustering"]["projection"] =
+            json!("undirected_sum_positive_resolved_observation_weights");
+        report["clustering"]["hubReattachment"] =
+            json!("distinct_neighbor_majority_then_stranded_then_bounded_split");
+        report["clustering"]["hubPercentilePolicy"] =
+            json!("floor_count_times_percentile_minus_one_clamped_unique_positive_degree");
+    }
+    Ok(report)
 }
 
 #[derive(Serialize, Deserialize)]

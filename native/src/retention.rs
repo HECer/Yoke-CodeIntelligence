@@ -367,7 +367,13 @@ fn report_shape(
     bytes: &[u8],
     deadline: &Deadline,
 ) -> Result<()> {
-    if record.options.source_category_policy.is_some() {
+    if record.options.source_category_policy.is_some() || record.options.community_policy.is_some()
+    {
+        let mismatch = if record.options.community_policy.is_some() {
+            "Retained community policy report differs from canonical reconstruction"
+        } else {
+            "Retained source-category report differs from canonical reconstruction"
+        };
         ensure!(
             serde_json::to_vec(&crate::graph_extensions::reconstruct_report(
                 store,
@@ -376,7 +382,7 @@ fn report_shape(
                 &record.options,
                 deadline,
             )?)? == bytes,
-            "Retained source-category report differs from canonical reconstruction"
+            "{mismatch}"
         );
         return Ok(());
     }
