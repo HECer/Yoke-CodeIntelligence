@@ -92,6 +92,25 @@ struct Edge {
     basis: Option<String>,
     conditional: Option<bool>,
     invocation_kind: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    candidate_instance: Option<usize>,
+}
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct TypeArgument {
+    display: String,
+    flags: u32,
+}
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct Instance {
+    owner: usize,
+    type_display: String,
+    class_type_display: String,
+    observed_type_display: String,
+    arguments: Vec<TypeArgument>,
+    anchor: Span,
+    syntax_kind: String,
 }
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -104,6 +123,7 @@ struct Unavailable {
 struct Hierarchy {
     schema: u32,
     nodes: Vec<Node>,
+    instances: Vec<Instance>,
     relations: Vec<Edge>,
     unavailable: Vec<Unavailable>,
     pair_visits: usize,
@@ -189,6 +209,7 @@ pub(crate) fn observe(
                 && !parsed.complete
                 && !parsed.runtime_dispatch_established
                 && parsed.nodes.len() <= options.max_nodes
+                && parsed.instances.len() <= options.max_nodes
                 && parsed.relations.len() <= options.max_relations
                 && parsed.unavailable.len() <= options.max_relations
                 && parsed.pair_visits <= options.max_pair_visits
@@ -236,6 +257,71 @@ pub(crate) fn observe(
                 .find(|f| f.path == node.declaration.path)
                 .context("Compiler declaration file missing")?;
             nodes.push(json!({"id":node_id,"kind":node.kind,"name":node.name,"declaration":node.declaration,"selection":node.selection,"static":node.is_static,"hasBody":node.has_body,"contentHash":file.hash,"baseEntityIds":bindings}));
+        }
+        let mut instances = vec![];
+        let mut witness_bytes = 0usize;
+        let mut argument_visits = 0usize;
+        for (position, instance) in parsed.instances.iter().enumerate() {
+            deadline.check()?;
+            instance.anchor.check(&sources)?;
+            ensure!(
+                instance.owner < nodes.len()
+                    && parsed.nodes[instance.owner].kind == "ClassDeclaration"
+                    && instance.anchor.start_byte < instance.anchor.end_byte
+                    && !instance.syntax_kind.is_empty()
+                    && !instance.arguments.is_empty()
+                    && [
+                        &instance.type_display,
+                        &instance.class_type_display,
+                        &instance.observed_type_display
+                    ]
+                    .iter()
+                    .all(|s| !s.is_empty()),
+                "Invalid compiler instance witness"
+            );
+            ensure!(
+                instance.syntax_kind.len() <= 80
+                    && instance.arguments.len() <= options.max_nodes
+                    && [
+                        &instance.type_display,
+                        &instance.class_type_display,
+                        &instance.observed_type_display
+                    ]
+                    .iter()
+                    .all(|s| s.len() <= 4096),
+                "Compiler instance witness capacity exceeded"
+            );
+            for argument in &instance.arguments {
+                deadline.check()?;
+                argument_visits = argument_visits
+                    .checked_add(1)
+                    .context("Compiler type argument capacity overflow")?;
+                ensure!(
+                    !argument.display.is_empty(),
+                    "Invalid compiler type argument display"
+                );
+                ensure!(
+                    argument_visits <= options.max_pair_visits && argument.display.len() <= 4096,
+                    "Compiler type argument capacity exceeded"
+                );
+            }
+            witness_bytes = witness_bytes
+                .checked_add(serde_json::to_vec(instance)?.len())
+                .context("Compiler instance byte capacity overflow")?;
+            ensure!(
+                witness_bytes <= 4000000,
+                "Compiler instance byte capacity exceeded"
+            );
+            let mut value = serde_json::to_value(instance)?;
+            value["owner"] = nodes[instance.owner]["id"].clone();
+            value["id"] = json!(identity(&(
+                "native_compiler_instance_witness_v1",
+                &snapshot.id,
+                id,
+                position,
+                &value
+            )));
+            instances.push(value);
         }
         let invocations: BTreeSet<_> = parsed
             .relations
@@ -312,6 +398,14 @@ pub(crate) fn observe(
             let no_dispatch = edge.resolved_target.is_none()
                 && edge.candidate_owner.is_none()
                 && edge.basis.is_none();
+            ensure!(
+                edge.candidate_instance.is_none()
+                    || (edge.relation == "possibleDispatch"
+                        && edge
+                            .candidate_instance
+                            .is_some_and(|n| n < parsed.instances.len())),
+                "Invalid compiler instance reference"
+            );
             ensure!(
                 matches!(
                     edge.relation.as_str(),
@@ -405,11 +499,13 @@ pub(crate) fn observe(
                         && edge
                             .candidate_owner
                             .is_some_and(|n| parsed.nodes[n].kind == "ClassDeclaration")
-                        && matches!(
-                            (to.is_static, edge.basis.as_deref()),
-                            (false, Some("compiler_type_assignability"))
-                                | (true, Some("compiler_constructor_type_assignability"))
-                        )
+                        && match (to.is_static, edge.basis.as_deref(), edge.candidate_instance) {
+                            (false, Some("compiler_type_assignability"), None)
+                            | (true, Some("compiler_constructor_type_assignability"), None) => true,
+                            (false, Some("compiler_captured_instance_assignability"), Some(n)) =>
+                                edge.candidate_owner == Some(parsed.instances[n].owner),
+                            _ => false,
+                        }
                         && matches!(
                             edge.invocation_kind.as_deref(),
                             Some("call" | "taggedTemplate")
@@ -496,6 +592,9 @@ pub(crate) fn observe(
             ] {
                 value[key] = index.map_or(Value::Null, |n| nodes[n]["id"].clone());
             }
+            if let Some(index) = edge.candidate_instance {
+                value["candidateInstance"] = instances[index]["id"].clone();
+            }
             value["id"] = json!(identity(&(
                 "native_compiler_hierarchy_relation_v1",
                 &snapshot.id,
@@ -514,13 +613,13 @@ pub(crate) fn observe(
                 "Compiler hierarchy coverage reason too long"
             );
         }
-        contexts.push(json!({"contextId":id,"config":context["config"],"options":context["options"],"files":context["files"],"standardLibraryHashes":context["standardLibraryHashes"],"nodes":nodes,"relations":relations,"unavailable":parsed.unavailable,"pairVisits":parsed.pair_visits,"astNodes":parsed.ast_nodes,"complete":false}));
+        contexts.push(json!({"contextId":id,"config":context["config"],"options":context["options"],"files":context["files"],"standardLibraryHashes":context["standardLibraryHashes"],"nodes":nodes,"instances":instances,"relations":relations,"unavailable":parsed.unavailable,"pairVisits":parsed.pair_visits,"astNodes":parsed.ast_nodes,"complete":false}));
     }
     ensure!(
         !contexts.is_empty(),
         "Compiler hierarchy has no captured context"
     );
     Ok(
-        json!({"schema":"native_compiler_hierarchy_v1","snapshotId":snapshot.id,"graphHash":identity(graph),"sourceBindings":raw["sourceBindings"],"captureOmissions":snapshot.omissions,"captureConsistency":snapshot.capture_consistency,"compiler":raw["compiler"],"compilerHash":raw["compilerHash"],"inputHash":raw["inputHash"],"standardLibraryHashes":raw["standardLibraryHashes"],"compilerLimitations":raw["limitations"],"contexts":contexts,"compilerBindingEstablished":true,"runtimeDispatchEstablished":false,"complete":false,"limitations":["Trusted host compiler observations are not an independent compiler correctness attestation.","Possible dispatch compares captured non-generic instance types and captured constructor types with the static receiver; generic instance instantiations and closed-world/runtime proof remain unavailable.","Construct-result class bindings are static result types, not identities of the runtime constructor value. Unsupported and external declarations remain explicit coverage entries; baseline source graphs are unchanged."]}),
+        json!({"schema":"native_compiler_hierarchy_v1","snapshotId":snapshot.id,"graphHash":identity(graph),"sourceBindings":raw["sourceBindings"],"captureOmissions":snapshot.omissions,"captureConsistency":snapshot.capture_consistency,"compiler":raw["compiler"],"compilerHash":raw["compilerHash"],"inputHash":raw["inputHash"],"standardLibraryHashes":raw["standardLibraryHashes"],"compilerLimitations":raw["limitations"],"contexts":contexts,"compilerBindingEstablished":true,"runtimeDispatchEstablished":false,"complete":false,"limitations":["Trusted host compiler observations are not an independent compiler correctness attestation.","Possible dispatch compares captured declared instance/constructor types and source-witnessed generic instance types with the static receiver; unobserved instantiations and closed-world/runtime proof remain unavailable.","Construct-result class bindings are static result types, not identities of the runtime constructor value. Unsupported and external declarations remain explicit coverage entries; baseline source graphs are unchanged."]}),
     )
 }

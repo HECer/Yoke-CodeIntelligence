@@ -79,13 +79,35 @@ and different candidate owners sharing one body keep separate proofs. This is
 candidate impact, not proof of initializer execution or a general field-effects
 analysis; unsupported field/accessor/implicit execution observations remain open.
 
-`possibleDispatch` separately compares both captured non-generic class instance
-types and captured class constructor types with the static method receiver type.
-The basis distinguishes `compiler_type_assignability` from
-`compiler_constructor_type_assignability`. A structural interface can therefore
-be implemented by an instance method or by a method on a constructor value;
-matching spelling alone never suffices. Generic constructor values support
-static-member checks, while generic instance instantiations remain unavailable.
+`possibleDispatch` separately compares captured declared class instance types,
+captured class constructor types and source-observed generic instance types with
+the static receiver type. Its basis distinguishes `compiler_type_assignability`,
+`compiler_constructor_type_assignability` and
+`compiler_captured_instance_assignability`. A structural interface can be matched
+by an instance method or a method on a constructor value. Generic constructor
+values keep static-member checks; generic instance checks use the actual checker
+types observed at captured type syntax, typed declaration names, call/new/tag
+results, heritage and method receivers. They do not instantiate an unseen family
+with guessed `any` or inferred type arguments chosen by the query.
+
+Each context has a separate `instances` table. A witness retains its captured
+class owner, exact original source anchor and syntax kind, observed/effective/
+class type displays and actual argument displays/TypeScript flags. Alias uses and
+separate source locations remain separate; displays are not semantic identities.
+Union branches remain separate candidates, while an intersection keeps its whole
+effective type for compatibility. Phantom type parameters and source-authored
+`any`, `unknown` or symbolic parameters follow actual checker behavior and keep
+their original flags. JSDoc-template classes use checker-declared parameters.
+Unobserved instantiations remain explicit coverage, with `complete: false`.
+
+Generic method proofs reference their exact `candidateInstance` witness and class
+owner. Native checks the closed schema, source/UTF-8 bounds, owner/reference and
+context bindings before mapping witness IDs. The invocation pairing checks still
+apply. Distinct witness and direct-callee roles survive even when they share one
+body. The optional field is omitted for ordinary declared/constructor candidates,
+preserving those relation facts. Candidate methods and original graphs remain
+separate from actual object creation, runtime reachability or execution.
+
 Actual method bodies, original resolved signature, candidate class, conditional
 flag and original call/tag quote stay in every proof. Each possible relation
 must pair with the exact original resolved invocation's source, target, range,
@@ -99,7 +121,7 @@ parameters and expressions have finite type-based candidate enumeration. `super`
 and private method calls retain their direct bindings. These are static compiler
 observations and conservative type-compatible candidates, not data-flow/runtime
 reachability or a closed-world execution guarantee. Class expressions, unsupported
-receiver types, property/accessor effects, generic instance instantiations,
+receiver types, property/accessor effects, unobserved generic instantiations,
 implicit execution phases and external bodies retain visible limitations.
 
 Original changed declarations seed the incoming walk by exact native declaration
@@ -116,7 +138,11 @@ Unmapped originals and depth-boundary incoming counts are explicit.
 Each side admits at most 5000 original graph entities, 50000 observations and
 100000 evidence rows. Compiler input is at most 10 MB. Per compiler context the
 defaults/maxima are 5000 nodes, 20000 relations/coverage entries, 200000 pair
-visits and 500000 AST nodes. Incoming traversal separately admits at most 20000
+visits and 500000 AST nodes. Each context independently admits at most
+`maxNodes` instance witnesses and at most `maxNodes` arguments per witness.
+The native argument-visit bound is `maxPairVisits`; cumulative raw witness JSON
+is at most 4000000 bytes and every type/argument display at most 4096 UTF-8 bytes.
+Displays are never silently truncated, and virtual host paths are sanitized. Incoming traversal separately admits at most 20000
 states, 20000 proof rows and 200000 seed/edge visits across all sides/contexts.
 The library `compiler_affected::Options` can lower these bounds and select depth
 through 32; capacity exhaustion refuses instead of silently truncating evidence.

@@ -107,7 +107,7 @@ function run(input){
    const files=p.parsed.fileNames.map(rel).filter(Boolean).sort();
    const libraries=Object.fromEntries(program.getSourceFiles().filter(sf=>libCache.has(slash(path.resolve(sf.fileName)))).map(sf=>[path.basename(sf.fileName),sha(sf.text)]).sort(([a],[b])=>a.localeCompare(b)));
    const context={config:p.name,contextId:sha(JSON.stringify([input.snapshotId,p.name,options,files,ts.version,compilerHash,libraries])),options,files,standardLibraryHashes:libraries,status:errors.some(d=>d.severity==='error')?'failed':'passed',diagnostics:errors,bindings};
-   if(input.operation==='hierarchy')context.hierarchy=compilerHierarchy({input,ts,checker,program,span,source,slash,rel,assert});
+   if(input.operation==='hierarchy')context.hierarchy=compilerHierarchy({input,ts,checker,program,span,source,slash,rel,root,assert});
    contexts.push(context);
   }
   status=diagnostics.some(d=>d.severity==='error')?'failed':contexts.some(c=>c.files.length)?'passed':'incomplete';

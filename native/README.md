@@ -86,7 +86,8 @@ bindings and structural candidate explanations.
 A separate explicit [`git compiler-affected`](docs/git-compiler-affected.md) query
 uses a trusted immutable TypeScript program for override/call/constructor/tag
 bindings and finite instance/constructor-value targets, preserving original reports
-and visible limitations.
+and visible limitations. Generic instance targets additionally retain actual
+checker type arguments and original source/context witnesses.
 [Captured impact areas](docs/git-areas.md) additionally classify saved impact
 paths by explicitly selected stored concepts or exact directory spelling.
 They preserve all claims, visible ties and the original quoted parent.

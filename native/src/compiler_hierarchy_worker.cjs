@@ -1,8 +1,8 @@
 // Own compiler observations over the same immutable program as ordinary analysis.
-function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,assert}){
+function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,root,assert}){
  const limits=input.intent;
  for(const [key,max] of [['maxNodes',5000],['maxRelations',20000],['maxPairVisits',200000]])assert(Number.isSafeInteger(limits[key])&&limits[key]>=0&&limits[key]<=max,'Hierarchy capacity contract');
- const nodes=[],relations=[],unavailable=[],unavailableSeen=new Set(),byDecl=new Map(),types=[],calls=[];let ast=0,pairVisits=0;
+ const nodes=[],relations=[],unavailable=[],unavailableSeen=new Set(),byDecl=new Map(),types=[],calls=[],witnessNodes=new Set(),instances=[],instancesByOwner=new Map(),typesBySymbol=new Map();let ast=0,pairVisits=0,witnessBytes=0;
  const captured=node=>node&&source.has(slash(node.getSourceFile().fileName));
  const isMethod=node=>ts.isMethodDeclaration(node)||ts.isMethodSignature(node);
  const staticMember=node=>!!(ts.getCombinedModifierFlags(node)&ts.ModifierFlags.Static);
@@ -28,14 +28,39 @@ function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,asser
   function walk(node){
    assert(++ast<=500000,'Hierarchy AST capacity');
    if(ts.isClassDeclaration(node)||ts.isInterfaceDeclaration(node)){
-    if(node.name){const symbol=checker.getSymbolAtLocation(node.name);if(symbol){const type=checker.getDeclaredTypeOfSymbol(symbol);types.push({node,symbol,type,id:addNode(node)});}}
+    if(node.name){const symbol=checker.getSymbolAtLocation(node.name);if(symbol){const type=checker.getDeclaredTypeOfSymbol(symbol),item={node,symbol,type,id:addNode(node),generic:!!type.typeParameters?.length};types.push(item);if(!typesBySymbol.has(symbol)||ts.isClassDeclaration(node))typesBySymbol.set(symbol,item);}}
     else unknown('anonymous_type_not_enumerated',node);
    }else if(ts.isClassExpression(node))unknown('class_expression_not_enumerated',node);
    if(ts.isFunctionLike(node)&&!ts.isFunctionTypeNode(node))addNode(node);
    if(ts.isCallExpression(node)||ts.isNewExpression(node)||ts.isTaggedTemplateExpression(node))calls.push(node);
+   if(ts.isTypeNode(node)||ts.isExpressionWithTypeArguments(node)||ts.isCallExpression(node)||ts.isNewExpression(node)||ts.isTaggedTemplateExpression(node))witnessNodes.add(node);
+   if((ts.isVariableDeclaration(node)||ts.isParameter(node)||ts.isPropertyDeclaration(node)||ts.isPropertySignature(node)||ts.isBindingElement(node))&&node.name)witnessNodes.add(node.name);
    ts.forEachChild(node,walk);
   }walk(sf);
  }
+ for(const call of calls){const expression=ts.isTaggedTemplateExpression(call)?call.tag:call.expression;if(ts.isPropertyAccessExpression(expression)||ts.isElementAccessExpression(expression))witnessNodes.add(expression.expression);}
+ function display(type,node){const text=checker.typeToString(type,node,ts.TypeFormatFlags.NoTruncation|ts.TypeFormatFlags.UseFullyQualifiedType).replaceAll(root,'[snapshot]');assert(text.length&&Buffer.byteLength(text)<=4096,'Hierarchy type display capacity');return text;}
+ for(const node of witnessNodes){
+  tick();const observed=checker.getTypeAtLocation(node),branches=[observed],recorded=new Map();
+  while(branches.length){
+   tick();const effective=branches.pop();if(effective.isUnion()){branches.push(...[...effective.types].reverse());continue;}
+   const parts=[effective],seenParts=new Set();
+   while(parts.length){
+    tick();const part=parts.pop();if(seenParts.has(part))continue;seenParts.add(part);
+    if(part.isIntersection()){parts.push(...[...part.types].reverse());continue;}
+    if(!(part.flags&ts.TypeFlags.Object)||!(part.objectFlags&ts.ObjectFlags.Reference))continue;
+    const item=typesBySymbol.get(part.getSymbol());if(!item||!item.generic||!ts.isClassDeclaration(item.node))continue;
+    const args=checker.getTypeArguments(part);if(!args.length)continue;
+    const seen=recorded.get(effective)||new Set();if(seen.has(part))continue;seen.add(part);recorded.set(effective,seen);
+    assert(instances.length<limits.maxNodes&&args.length<=limits.maxNodes,'Hierarchy instance witness capacity');
+    const anchor=span(node.getSourceFile(),node.getStart(),node.getEnd());
+    const raw={owner:item.id,typeDisplay:display(effective,node),classTypeDisplay:display(part,node),observedTypeDisplay:display(observed,node),arguments:args.map(arg=>{tick();assert(Number.isSafeInteger(arg.flags)&&arg.flags>=0&&arg.flags<=4294967295,'Hierarchy type flags');return{display:display(arg,node),flags:arg.flags};}),anchor,syntaxKind:ts.SyntaxKind[node.kind]};
+    witnessBytes+=Buffer.byteLength(JSON.stringify(raw));assert(witnessBytes<=4000000,'Hierarchy instance witness byte capacity');
+    const id=instances.length;instances.push(raw);const list=instancesByOwner.get(item.id)||[];list.push({id,type:effective});instancesByOwner.set(item.id,list);
+   }
+  }
+ }
+ for(const item of types)if(item.generic&&ts.isClassDeclaration(item.node))unknown('unobserved_generic_instantiations_not_enumerated',item.node);
  for(const item of types){
   for(const member of item.node.members){
    if(isMethod(member))edge('declaresMember',item.id,addNode(member),member.name);
@@ -129,16 +154,18 @@ function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,asser
   const name=checker.getSymbolAtLocation(target.name)?.getName();if(!name){unknown('method_symbol_unavailable',call);continue;}
   for(const candidate of types){
    tick();if(!ts.isClassDeclaration(candidate.node))continue;
-   for(const [staticSide,type,basis] of [[false,candidate.type,'compiler_type_assignability'],[true,checker.getTypeOfSymbolAtLocation(candidate.symbol,expression),'compiler_constructor_type_assignability']]){
-    tick();if(!staticSide&&candidate.node.typeParameters?.length){unknown('generic_candidate_instantiations_not_enumerated',candidate.node);continue;}
+   const variants=candidate.generic?(instancesByOwner.get(candidate.id)||[]).map(w=>[false,w.type,'compiler_captured_instance_assignability',w.id]):[[false,candidate.type,'compiler_type_assignability',undefined]];
+   variants.push([true,checker.getTypeOfSymbolAtLocation(candidate.symbol,expression),'compiler_constructor_type_assignability',undefined]);
+   for(const [staticSide,type,basis,candidateInstance] of variants){
+    tick();
     if(!checker.isTypeAssignableTo(type,receiver))continue;
     const property=checker.getPropertyOfType(type,name);
     for(const declaration of property?.declarations||[]){
-     tick();if(!ts.isMethodDeclaration(declaration)||!declaration.body||staticMember(declaration)!==staticSide||privateMember(declaration)||declaration===target)continue;
-     edge('possibleDispatch',from,addNode(declaration),call,{resolvedTarget:to,candidateOwner:candidate.id,basis,invocationKind,conditional});
+     tick();if(!ts.isMethodDeclaration(declaration)||!declaration.body||staticMember(declaration)!==staticSide||privateMember(declaration)||(declaration===target&&candidateInstance===undefined))continue;
+     edge('possibleDispatch',from,addNode(declaration),call,{resolvedTarget:to,candidateOwner:candidate.id,basis,invocationKind,conditional,...(candidateInstance===undefined?{}:{candidateInstance})});
     }
    }
   }
  }
- return{schema:1,nodes,relations,unavailable,pairVisits,astNodes:ast,complete:false,runtimeDispatchEstablished:false};
+ return{schema:1,nodes,instances,relations,unavailable,pairVisits,astNodes:ast,complete:false,runtimeDispatchEstablished:false};
 }

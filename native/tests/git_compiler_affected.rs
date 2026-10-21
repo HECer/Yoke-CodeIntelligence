@@ -83,6 +83,23 @@ fn edges<'a>(c: &'a Value, relation: &str, from: &str, to: &str) -> Vec<&'a Valu
         .filter(|e| e["relation"] == relation && e["source"] == from && e["target"] == to)
         .collect()
 }
+fn instance_witnesses<'a>(
+    c: &'a Value,
+    owner: &str,
+    anchor: &str,
+    argument: &str,
+) -> Vec<&'a Value> {
+    c["instances"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|w| {
+            w["owner"] == owner
+                && w["anchor"]["text"] == anchor
+                && w["arguments"][0]["display"] == argument
+        })
+        .collect()
+}
 #[test]
 fn real_compiler_distinguishes_overrides_structural_dispatch_and_parallel_calls() {
     let f = configured(SOURCE, &SOURCE.replace("DERIVED_BASE", "DERIVED_HEAD"));
@@ -204,7 +221,7 @@ fn aliases_generic_heritage_diamonds_and_overload_implementation_keep_distinct_p
             .as_array()
             .unwrap()
             .iter()
-            .any(|u| u["reason"] == "generic_candidate_instantiations_not_enumerated")
+            .any(|u| u["reason"] == "unobserved_generic_instantiations_not_enumerated")
     );
     assert_eq!(
         c["relations"]
@@ -759,6 +776,254 @@ fn class_only_changes_reach_dynamic_constructor_callers_when_the_body_is_inherit
     assert_eq!(edges(c, "constructResult", &literal, &derived).len(), 1);
     assert!(edges(c, "possibleConstructValue", &literal, &derived).is_empty());
     assert_eq!(r["runtimeDispatchEstablished"], false);
+    assert_eq!(state(&f.engine), before);
+}
+#[test]
+fn captured_generic_instances_preserve_arguments_aliases_union_intersection_and_parallel_witnesses()
+{
+    let source = concat!(
+        "\u{feff}// π 😀 e\u{301}\r\nexport interface Runner {run(v:string):string;}\r\ninterface Extra extends Runner {extra:true;}\r\ninterface ObjectRunner {run(v:{value:string}):{value:string};}\r\n",
+        "class Box<T>{constructor(public value:T){}run(v:T):T{const marker='BOX_OLD';return v;}clone():Box<T>{return this;}}\r\ninterface Box<T>{ optional?:T; }\r\n",
+        "class Phantom<T>{run(v:string){return 'PHANTOM_OLD'+v;}}\r\nclass Missing<T>{run(v:T):T{return v;}}\r\n",
+        "type TextBox=Box<string>;type Both=Box<string>|Box<number>;type WithExtra=Box<string>&{extra:true};\r\n",
+        "const inferred=new Box('x');const numberBox=new Box<number>(1);let alias!:TextBox;let both!:Both;let extended!:WithExtra;let phantom!:Phantom<number>;let anyBox!:Box<any>;let unknownBox!:Box<unknown>;let objectBox!:Box<{value:string}>;\r\n",
+        "function caller(x:Runner){x.run('a');x.run('b');}\r\nfunction extraCaller(x:Extra){return x.run('e');}\r\nfunction objectCaller(x:ObjectRunner){return x.run({value:'v'});}\r\n"
+    );
+    let f = configured(source, &source.replace("_OLD", "_HEAD"));
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let owner = node_id(c, "Box", "BOX_HEAD");
+    let body = node_id(c, "run", "BOX_HEAD");
+    let caller = node_id(c, "caller", "x.run('a')");
+    let extra = node_id(c, "extraCaller", "x.run('e')");
+    let object = node_id(c, "objectCaller", "x.run({value");
+    let inferred = instance_witnesses(c, &owner, "new Box('x')", "string");
+    assert_eq!(inferred.len(), 1);
+    let id = &inferred[0]["id"];
+    let from_inferred: Vec<_> = edges(c, "possibleDispatch", &caller, &body)
+        .into_iter()
+        .filter(|e| e["candidateInstance"] == *id)
+        .collect();
+    assert_eq!(from_inferred.len(), 2);
+    assert_ne!(from_inferred[0]["id"], from_inferred[1]["id"]);
+    assert_ne!(
+        from_inferred[0]["proof"]["startByte"],
+        from_inferred[1]["proof"]["startByte"]
+    );
+    assert!(
+        from_inferred
+            .iter()
+            .all(|e| e["basis"] == "compiler_captured_instance_assignability"
+                && e["candidateOwner"] == owner)
+    );
+    for witness in c["instances"].as_array().unwrap().iter().filter(|w| {
+        w["owner"] == owner
+            && matches!(
+                w["arguments"][0]["display"].as_str(),
+                Some("number" | "unknown")
+            )
+    }) {
+        assert!(
+            edges(c, "possibleDispatch", &caller, &body)
+                .iter()
+                .all(|e| e["candidateInstance"] != witness["id"]),
+            "An incompatible instance was admitted by its generic class name"
+        );
+    }
+    let union_string = instance_witnesses(c, &owner, "Both", "string");
+    let union_number = instance_witnesses(c, &owner, "Both", "number");
+    assert_eq!(union_string.len(), 1);
+    assert_eq!(union_number.len(), 1);
+    assert!(
+        edges(c, "possibleDispatch", &caller, &body)
+            .iter()
+            .any(|e| e["candidateInstance"] == union_string[0]["id"])
+    );
+    let intersection = instance_witnesses(c, &owner, "WithExtra", "string");
+    assert_eq!(intersection.len(), 1);
+    assert!(
+        edges(c, "possibleDispatch", &extra, &body)
+            .iter()
+            .any(|e| e["candidateInstance"] == intersection[0]["id"])
+    );
+    assert!(
+        edges(c, "possibleDispatch", &extra, &body)
+            .iter()
+            .all(|e| e["candidateInstance"] != *id),
+        "Intersection properties must not be erased to the class component"
+    );
+    let any = instance_witnesses(c, &owner, "Box<any>", "any");
+    assert_eq!(any.len(), 1);
+    assert_eq!(any[0]["arguments"][0]["flags"], 1);
+    assert!(
+        edges(c, "possibleDispatch", &caller, &body)
+            .iter()
+            .any(|e| e["candidateInstance"] == any[0]["id"]),
+        "Source-authored any stays explicit rather than being invented or hidden"
+    );
+    let object_witness = c["instances"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|w| w["owner"] == owner && w["anchor"]["text"] == "Box<{value:string}>")
+        .unwrap();
+    assert!(
+        edges(c, "possibleDispatch", &object, &body)
+            .iter()
+            .any(|e| e["candidateInstance"] == object_witness["id"])
+    );
+    let phantom_owner = node_id(c, "Phantom", "PHANTOM_HEAD");
+    let phantom_body = node_id(c, "run", "PHANTOM_HEAD");
+    let phantom = instance_witnesses(c, &phantom_owner, "Phantom<number>", "number");
+    assert_eq!(phantom.len(), 1);
+    assert!(
+        edges(c, "possibleDispatch", &caller, &phantom_body)
+            .iter()
+            .any(|e| e["candidateInstance"] == phantom[0]["id"]),
+        "Unused type parameters do not invent nominal incompatibility"
+    );
+    let missing = node_id(c, "Missing", "class Missing");
+    assert!(
+        c["instances"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|w| w["owner"] != missing)
+    );
+    assert!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["relation"] == "possibleDispatch")
+            .all(|e| e["candidateOwner"] != missing),
+        "An unobserved generic family cannot be filled with guessed any"
+    );
+    assert!(
+        r["incomingProofs"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|p| p["sourceNodeId"] == caller)
+    );
+    assert_eq!(r["runtimeDispatchEstablished"], false);
+    assert_eq!(r["complete"], false);
+    assert_eq!(state(&f.engine), before);
+}
+#[test]
+fn generic_witnesses_and_assignability_remain_separate_per_compiler_context() {
+    let source = "export interface Runner{run(v:string):string;}\nclass Generic<T>{constructor(public value:T){}run(v:T):T|null{const marker='OLD';return v;}}\nconst observed=new Generic('s');\nfunction caller(x:Runner){return x.run('s');}\n";
+    let head = source.replace("'OLD'", "'HEAD'");
+    let strict =
+        json!({"compilerOptions":{"strict":true,"target":"ES2022","noEmit":true},"files":[P]})
+            .to_string();
+    let loose=json!({"compilerOptions":{"strict":false,"strictNullChecks":false,"target":"ES2022","noEmit":true},"files":[format!("../{P}")]}).to_string();
+    let f = Fixture::new(
+        &[
+            (P, source),
+            ("tsconfig.json", &strict),
+            ("loose/tsconfig.json", &loose),
+        ],
+        &[
+            (P, &head),
+            ("tsconfig.json", &strict),
+            ("loose/tsconfig.json", &loose),
+        ],
+    );
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let mut contexts = BTreeMap::new();
+    let mut identities = vec![];
+    for c in r["head"]["contexts"].as_array().unwrap() {
+        let caller = node_id(c, "caller", "x.run");
+        let body = node_id(c, "run", "'HEAD'");
+        let owner = node_id(c, "Generic", "'HEAD'");
+        let witnesses = instance_witnesses(c, &owner, "new Generic('s')", "string");
+        assert_eq!(witnesses.len(), 1);
+        let count = edges(c, "possibleDispatch", &caller, &body)
+            .iter()
+            .filter(|e| e["candidateInstance"] == witnesses[0]["id"])
+            .count();
+        contexts.insert(c["config"].as_str().unwrap(), count);
+        identities.push(
+            c["instances"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|w| w["id"].as_str().unwrap())
+                .collect::<std::collections::BTreeSet<_>>(),
+        );
+    }
+    assert_eq!(contexts["tsconfig.json"], 0);
+    assert_eq!(contexts["loose/tsconfig.json"], 1);
+    assert!(identities[0].is_disjoint(&identities[1]));
+    assert_eq!(state(&f.engine), before);
+}
+#[test]
+fn imported_alias_shadowing_and_jsdoc_generic_classes_bind_to_their_actual_class_symbols() {
+    let source = "import {Box as Imported} from './types';\r\nimport {JsBox} from './box.js';\r\nexport interface Runner{run(v:string):string;}\r\nclass Box<T>{constructor(public value:T){}run(v:T):T{const marker='LOCAL_OLD';return v;}}\r\nconst good=new Imported('s');const bad=new Box(1);const js=new JsBox('j');\r\nfunction caller(x:Runner){return x.run('c');}\r\n";
+    let types = "export class Box<T>{constructor(public value:T){}run(v:T):T{const marker='IMPORTED_OLD';return v;}}\r\n";
+    let js = "/** @template T */\r\nexport class JsBox{\r\n/** @param {T} value */\r\nconstructor(value){this.value=value;}\r\n/**\r\n * @param {T} v\r\n * @returns {T}\r\n */\r\nrun(v){const marker='JS_OLD';return v;}\r\n}\r\n";
+    let cfg=json!({"compilerOptions":{"strict":true,"allowJs":true,"checkJs":true,"target":"ES2022","module":"CommonJS","noEmit":true},"files":[P,"src/types.ts","src/box.js"]}).to_string();
+    let source_head = source.replace("_OLD", "_HEAD");
+    let types_head = types.replace("_OLD", "_HEAD");
+    let js_head = js.replace("_OLD", "_HEAD");
+    let f = Fixture::new(
+        &[
+            (P, source),
+            ("src/types.ts", types),
+            ("src/box.js", js),
+            ("tsconfig.json", &cfg),
+        ],
+        &[
+            (P, &source_head),
+            ("src/types.ts", &types_head),
+            ("src/box.js", &js_head),
+            ("tsconfig.json", &cfg),
+        ],
+    );
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let caller = node_id(c, "caller", "x.run");
+    for (class, body, anchor) in [
+        ("Box", "IMPORTED_HEAD", "new Imported('s')"),
+        ("JsBox", "JS_HEAD", "new JsBox('j')"),
+    ] {
+        let owner = node_id(c, class, body);
+        let target = node_id(c, "run", body);
+        let witness = instance_witnesses(c, &owner, anchor, "string");
+        assert_eq!(witness.len(), 1);
+        assert!(
+            edges(c, "possibleDispatch", &caller, &target)
+                .iter()
+                .any(|e| e["candidateInstance"] == witness[0]["id"])
+        );
+    }
+    assert!(
+        edges(
+            c,
+            "possibleDispatch",
+            &caller,
+            &node_id(c, "run", "LOCAL_HEAD")
+        )
+        .is_empty()
+    );
+    assert_eq!(state(&f.engine), before);
+}
+#[test]
+fn generic_type_displays_are_bounded_without_silent_truncation_or_state_publication() {
+    let properties = (0..600)
+        .map(|i| format!("p{i}:string;"))
+        .collect::<String>();
+    let source = format!(
+        "export class Box<T>{{run(v:T):T{{return v;}}}}\nlet observed!:Box<{{{properties}}}>;\n"
+    );
+    let f = configured(&source, &source);
+    let before = state(&f.engine);
+    let error = run(&f, &Default::default()).unwrap_err().to_string();
+    assert!(error.contains("type display capacity"), "{error}");
     assert_eq!(state(&f.engine), before);
 }
 #[test]

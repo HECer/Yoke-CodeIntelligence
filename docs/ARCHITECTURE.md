@@ -13,6 +13,9 @@ inherited bodies do not hide class-only changes from incoming traversal.
 Native checks endpoints, owners, source ranges and capacities; original graphs/reports remain
 unchanged. Host/module/worker hashes, library/configuration pins and visible
 coverage stay separate from independent compiler correctness or execution proof.
+Source-observed generic instances retain exact type/argument/syntax witnesses,
+with separate union branches and complete intersection types. Candidate witness
+IDs are source/context scoped; display strings never stand in for type identity.
 See [the contract](../native/docs/git-compiler-affected.md).
 
 The separate live Explorer owns a fixed host Engine/capture selection and cached
