@@ -1,5 +1,9 @@
 # Integration development evidence, 2026-10-19 local
 
+Return contextual types and anonymous runtime names have [separate evidence](function-body-return-contexts/README.md):
+original source annotations and fixed name barriers; 115 scoped integration
+passes and twelve units. Counts overlap; full STATUS/Windows acceptance remains open.
+
 Body completion and call-specific result types have [separate evidence](function-body-completion/README.md):
 source-derived carriers, guarded control flow and JSDoc ownership; 113 scoped
 integration passes and eleven units. Counts overlap; full STATUS/Windows acceptance
