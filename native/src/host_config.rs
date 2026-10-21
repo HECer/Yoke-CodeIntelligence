@@ -3,8 +3,11 @@ use crate::capture::Deadline;
 use crate::model::hash;
 use anyhow::{Result, ensure};
 use serde::{Deserialize, Serialize};
+#[path = "host_config_claude_hooks.rs"]
+mod claude_hooks;
 #[path = "host_config_mcp.rs"]
 mod mcp;
+pub use claude_hooks::patch as claude_hook_settings_patch;
 pub use mcp::json_mcp_patch;
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -13,6 +16,7 @@ pub enum Format {
     AgentsMarkdown,
     JsoncNamedEntry,
     JsonMcpNamedEntryV1,
+    ClaudeHookSettingsV1,
     TomlTable,
 }
 
@@ -305,6 +309,7 @@ pub fn apply_patch(input: &[u8], patch: &Patch, deadline: &Deadline) -> Result<V
                 checked_jsonc_owned(&output, owned, deadline)?;
             }
             Format::JsonMcpNamedEntryV1 => mcp::checked_owned(&output, owned, deadline)?,
+            Format::ClaudeHookSettingsV1 => claude_hooks::checked(&output, owned, deadline)?,
             Format::TomlTable => {
                 checked_toml_owned(&output, owned, deadline)?;
             }

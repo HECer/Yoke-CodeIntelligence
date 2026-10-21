@@ -8,6 +8,7 @@ use std::{
 };
 use yoke::{Engine, capture::Deadline};
 mod bedrock_cli;
+mod claude_session_start_cli;
 mod digest_history_capture_cli;
 mod digest_history_job_cli;
 mod digest_inbox_cli;
@@ -94,6 +95,7 @@ enum ExtensionOperation {
     Skills(Box<SkillArguments>),
     Decisions(Box<DecisionArguments>),
     HostInstall(Box<host_install_cli::Arguments>),
+    ClaudeSessionStart(Box<claude_session_start_cli::Arguments>),
     MeaningArchive(Box<meaning_archive_cli::Arguments>),
     Meaning(Box<meaning_cli::Arguments>),
     MeaningIdentity(Box<meaning_identity_cli::Arguments>),
@@ -1962,6 +1964,7 @@ fn run_parity(
         }
         ExtensionOperation::Skills(_) => bail!("Skill host dispatch error"),
         ExtensionOperation::HostInstall(_) => bail!("Host installation dispatch error"),
+        ExtensionOperation::ClaudeSessionStart(_) => bail!("Claude hook dispatch error"),
         ExtensionOperation::MeaningArchive(_) => bail!("Meaning archive host dispatch error"),
         ExtensionOperation::Meaning(_) => bail!("Meaning graph host dispatch error"),
         ExtensionOperation::MeaningIdentity(_) => bail!("Meaning identity host dispatch error"),
@@ -3424,6 +3427,22 @@ fn run(cli: Cli) -> Result<bool> {
             "This meaning archive operation does not select a source workspace"
         );
         return meaning_archive_cli::run(args, &cli.root, cli.timeout, cli.max_bytes);
+    }
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::ClaudeSessionStart(args) = extension.as_ref()
+    {
+        ensure!(
+            cli.root == std::path::Path::new(".")
+                && cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && !cli.allow_writes
+                && cli.analyzer_epoch.is_none(),
+            "Claude hook selects explicit host bindings; source/provider flags are unavailable"
+        );
+        return args.run(cli.timeout, cli.max_bytes);
     }
     if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::HostInstall(args) = extension.as_ref()

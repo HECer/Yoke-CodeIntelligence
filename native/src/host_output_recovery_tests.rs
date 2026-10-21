@@ -133,6 +133,25 @@ fn selection_for_count(root: &Path, count: usize, d: &Deadline) -> Result<Select
     let roots = (0..count)
         .map(|index| fixture_target(&root, index))
         .collect::<Vec<_>>();
+    match fs::read(root.join("claude-hook-profile")) {
+        Ok(marker) => {
+            ensure!(
+                marker == b"claude-session-hooks-v1",
+                "Unknown hook fixture marker"
+            );
+            return Selection::claude_session_hooks(
+                "actual-output-interruption",
+                &roots,
+                &root.join("native.exe"),
+                &root.join("policy.json"),
+                &root.join("state"),
+                &root.join("source"),
+                d,
+            );
+        }
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+        Err(error) => return Err(error).context("Cannot read owned hook fixture marker"),
+    }
     match fs::read(root.join("json-profile")) {
         Ok(marker) => {
             let client: JsonMcpClient = serde_json::from_slice(&marker)?;
@@ -2436,5 +2455,88 @@ fn json_pending_recovery_refuses_replaced_source_bindings_for_each_profile_witho
             "Refused JSON recovery mutated state or target"
         );
     }
+    Ok(())
+}
+
+fn new_claude_hook_fixture() -> Result<Interrupted> {
+    let mut fixture = new_fixture(SOURCE, 1)?;
+    let root = fixture
+        .fixture
+        .as_ref()
+        .context("Owned hook fixture missing")?
+        .path()
+        .canonicalize()?;
+    fs::create_dir(root.join("source"))?;
+    fs::write(root.join("claude-hook-profile"), b"claude-session-hooks-v1")?;
+    fixture.selection = selection_for_count(&root, 1, &Deadline::new(30000))?;
+    fixture.plan = plan_install(&fixture.selection, 1000, &Deadline::new(30000))?;
+    Ok(fixture)
+}
+#[test]
+fn claude_hooks_actual_partial_exit_resumes_and_uninstall_removes_only_owned_settings() -> Result<()>
+{
+    let mut fixture = new_claude_hook_fixture()?;
+    interrupt_worker(&mut fixture, "partial", Termination::Exit, false)?;
+    let receipt = fixture.recover(RecoveryMode::Resume)?;
+    ensure!(
+        receipt.profile == claude_hooks::PROFILE && receipt.status == "installed",
+        "Hook resume differs"
+    );
+    let value: serde_json::Value = serde_json::from_slice(&fs::read(fixture.target()?)?)?;
+    ensure!(
+        value["hooks"]["SessionStart"][0]["hooks"][0]["args"].is_array(),
+        "Hook exec args missing"
+    );
+    let remove = plan_uninstall(&fixture.selection, 1003, &Deadline::new(30000))?;
+    apply(
+        &fixture.selection,
+        &WriteAuthority::new(&fixture.selection),
+        &remove,
+        1004,
+        &Deadline::new(30000),
+    )?;
+    absent(&fixture.target()?)?;
+    ensure!(
+        fs::read(fixture.target()?.with_file_name("AGENTS.md"))? == SOURCE,
+        "Foreign instructions changed"
+    );
+    Ok(())
+}
+#[test]
+fn claude_hooks_actual_prepared_kill_rolls_back_to_absent_without_foreign_changes() -> Result<()> {
+    let mut fixture = new_claude_hook_fixture()?;
+    interrupt_worker(&mut fixture, "prepared", Termination::Kill, false)?;
+    let receipt = fixture.recover(RecoveryMode::Rollback)?;
+    ensure!(receipt.status == "rolled_back", "Hook rollback differs");
+    absent(&fixture.target()?)?;
+    absent(&fixture.after()?)?;
+    ensure!(
+        fs::read(fixture.target()?.with_file_name("AGENTS.md"))? == SOURCE,
+        "Foreign instructions changed"
+    );
+    Ok(())
+}
+#[test]
+fn claude_hooks_pending_recovery_refuses_replaced_source_without_writes() -> Result<()> {
+    let mut fixture = new_claude_hook_fixture()?;
+    interrupt_worker(&mut fixture, "prepared", Termination::Exit, false)?;
+    let root = fixture
+        .fixture
+        .as_ref()
+        .context("Owned fixture missing")?
+        .path();
+    fs::rename(root.join("source"), root.join("moved-source"))?;
+    fs::create_dir(root.join("source"))?;
+    let before = state_manifest(&fixture.selection)?;
+    ensure!(
+        fixture.recover(RecoveryMode::Resume).is_err()
+            && fixture.recover(RecoveryMode::Rollback).is_err(),
+        "Stale hook source accepted"
+    );
+    ensure!(
+        before == state_manifest(&fixture.selection)?,
+        "Refused hook recovery wrote state"
+    );
+    absent(&fixture.target()?)?;
     Ok(())
 }

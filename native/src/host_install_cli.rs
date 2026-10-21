@@ -83,6 +83,9 @@ struct SelectionFile {
     deny_unknown_fields
 )]
 enum AdapterSelection {
+    ClaudeSessionHooksV1 {
+        source_root: PathBuf,
+    },
     CodexMcpV1 {
         source_root: PathBuf,
     },
@@ -192,6 +195,17 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
         yoke::json::decode(super::input_json(args.selection_path(), 128_000)?)?;
     deadline.check()?;
     let selection = match &file.adapter {
+        Some(AdapterSelection::ClaudeSessionHooksV1 { source_root }) => {
+            Selection::claude_session_hooks(
+                &file.installation,
+                &file.target_roots,
+                &file.executable,
+                &file.policy,
+                &file.state_root,
+                source_root,
+                &deadline,
+            )?
+        }
         Some(AdapterSelection::CodexMcpV1 { source_root }) => Selection::codex_mcp(
             &file.installation,
             &file.target_roots,

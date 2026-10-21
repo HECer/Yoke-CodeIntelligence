@@ -42,6 +42,12 @@ pub enum AdapterBinding {
         executable_path: String,
         policy_path: String,
     },
+    ClaudeSessionHooksV1 {
+        source_root: DirectoryBinding,
+        source_path: String,
+        executable_path: String,
+        policy_path: String,
+    },
     JsonMcpV1 {
         client: JsonMcpClient,
         source_root: DirectoryBinding,
@@ -54,6 +60,7 @@ pub(super) fn profile(selection: &Selection) -> &'static str {
     match &selection.bindings.adapter {
         None => PROFILE_ID,
         Some(AdapterBinding::CodexMcpV1 { .. }) => CODEX_PROFILE,
+        Some(AdapterBinding::ClaudeSessionHooksV1 { .. }) => claude_hooks::PROFILE,
         Some(AdapterBinding::JsonMcpV1 { client, .. }) => client.profile(),
     }
 }
@@ -61,6 +68,7 @@ pub(super) fn filename(selection: &Selection) -> &'static str {
     match &selection.bindings.adapter {
         None => "AGENTS.md",
         Some(AdapterBinding::CodexMcpV1 { .. }) => "config.toml",
+        Some(AdapterBinding::ClaudeSessionHooksV1 { .. }) => claude_hooks::FILENAME,
         Some(AdapterBinding::JsonMcpV1 { client, .. }) => client.filename(),
     }
 }
@@ -177,6 +185,12 @@ pub(super) fn guard(
             executable_path,
             policy_path,
         }
+        | AdapterBinding::ClaudeSessionHooksV1 {
+            source_root,
+            source_path,
+            executable_path,
+            policy_path,
+        }
         | AdapterBinding::JsonMcpV1 {
             source_root,
             source_path,
@@ -286,6 +300,18 @@ pub(super) fn patch(
     prior: Option<&OwnedFragment>,
     d: &Deadline,
 ) -> Result<Patch> {
+    if matches!(
+        selection.bindings.adapter,
+        Some(AdapterBinding::ClaudeSessionHooksV1 { .. })
+    ) {
+        let authored = claude_hooks::body(selection)?;
+        return host_config::claude_hook_settings_patch(
+            bytes,
+            install.then_some(authored.as_slice()),
+            prior,
+            d,
+        );
+    }
     if selection.bindings.adapter.is_none() {
         let authored = body(selection)?;
         return host_config::agents_patch(bytes, install.then_some(authored.as_slice()), prior, d);

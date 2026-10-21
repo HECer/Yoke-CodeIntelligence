@@ -14,6 +14,9 @@ use std::{
 
 #[path = "host_install_adapter.rs"]
 mod adapter;
+#[path = "host_install_claude_hooks.rs"]
+mod claude_hooks;
+pub use claude_hooks::session_start as claude_session_start;
 #[path = "host_install_io.rs"]
 mod io;
 #[path = "host_install_recovery.rs"]
@@ -1036,6 +1039,12 @@ fn plan_for(
             .filter(|r| r.status == "installed")
             .map(|r| r.files.get(index).context("Host receipt target absent"))
             .transpose()?;
+        if adapter::profile(selection) == claude_hooks::PROFILE && previous.is_none() {
+            ensure!(
+                actual.is_none(),
+                "Existing Claude hook settings cannot be adopted"
+            );
+        }
         let owned = previous.and_then(|f| f.owned_fragment.as_ref());
         let patch = adapter::patch(selection, bytes, operation == Operation::Install, owned, d)?;
         let output = host_config::apply_patch(bytes, &patch, d)?;
