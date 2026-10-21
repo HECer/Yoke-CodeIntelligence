@@ -39,6 +39,26 @@ original receipts and semantic claims remain distinct from interpretation truth.
 
 ## Acceptance still required
 
+Exact override/implementation contract associations now extend the compiler
+incoming walk without inventing generic instances or dispatch. Separate outgoing
+contract proofs preserve original IDs/directions and parallel bindings; unchanged
+supertypes are marked originalSeed:false. Correct zero/one-cost distance
+relaxation retains shorter states and longer alternative proofs. Depth0/boundary
+and combined proof/visit/output limits remain explicit.
+
+An actual published-CLI RED misses the caller of an uninstantiated generic
+override. GREEN on the SAME original report reaches its exact changed-method
+row while preserving every original compiler hierarchy value, row/seed/source
+binding, worker/profile and prior proof field.26 query functions plus51 project/
+Git functions pass (77 distinct,0 ignores), with Clippy/fmt/build/typecheck and
+npm260/3existing skips on IDENTICAL1014 inputs. Passed26-test evidence is reused,
+not rerun. Exact LF/refusal/state/legacy/compiler/constructor controls pass;
+Jobs end empty. See [the contract](../native/docs/git-compiler-affected.md) and
+[indexed evidence](validation/integration-2026-10-21/git-compiler-contract-expansions/README.md).
+These are conservative source-contract associations, not changed supertype
+declarations or actual execution. Broader R5/R1-R9/inventory/Windows/upstream/
+main/release acceptance and the historical ten OS1314 prerequisites stay open.
+
 Compiler-bound property references now retain separate read/write/delete
 modes, applicable getter/setter effects and direct function-initializer source
 ownership. Resolved invocation signatures, original slots, candidate classes and
