@@ -39,6 +39,28 @@ original receipts and semantic claims remain distinct from interpretation truth.
 
 ## Acceptance still required
 
+The separate `explorer` command now serves a private authenticated loopback
+source view. `--allow-rebuild` independently grants manual capture; request data
+cannot widen the fixed root/options or grant permission. Reload reads cached
+bytes, and rebuild requires the exact expected snapshot/revision. Failed builds
+retain the old view; immutable captures can persist before an export failure.
+An opaque source iframe retains its offline CSP. Static exports stay byte-exact.
+See the [live contract](../native/docs/explorer.md#authenticated-local-live-workflow)
+and [indexed evidence](validation/integration-2026-10-21/explorer-live/README.md).
+
+The scoped guard passes31 Rust cases, including six new live cases, all-target
+Clippy, format, typecheck and TypeScript260/3 existing skips. A real browser
+preconnection stall is reproduced by a failing regression, fixed with a separate
+short admission deadline, then rechecked. The final two access-label changes
+repeat all six live cases, native rebuild, syntax/format and eleven final actual
+Chrome156 images, all visually inspected. Source edits, saved-view reloads,
+new/unchanged capture, stale refusal, full page reload, mobile, denied host grant,
+missing capability and sandbox JSON download pass with zero JS exceptions.
+Private capability/process files are excluded; all included evidence is scanned
+against ten owned ephemeral capabilities. Full STATUS/R1-R9, Windows, hosted/
+upstream/main/release acceptance remain open. The complete98ffa78 suite is
+historical before both Explorer additions, with ten original OS1314 prerequisites.
+
 The explicit `html-source` export now embeds checked immutable captured files
 with Code/Context/Outline tabs, paged source/outline, exact observation quotes,
 keyboard tabs and relationship verb chips. It preserves original directed and
@@ -54,8 +76,8 @@ the rebuilt native CLI repeats the five new cases and passes twelve actual
 Chrome156 captures, all visually inspected, with exact Unicode byte highlights,
 quote/download/graph preservation, keyboard tabs and visible desktop/mobile
 selection. Three real visual rounds retain their intermediate limitations.
-Live rebuild/reload, broader UI/upstream/platform/hosted and full STATUS/R1-R9
-acceptance remain open. The complete 98ffa78 suite below predates this addition;
+Broader UI/upstream/platform/hosted and full STATUS/R1-R9 acceptance remain open;
+the separately authorized live workflow is described above. The complete 98ffa78 suite below predates this addition;
 its ten original OS1314 prerequisites and all ignores remain unchanged.
 
 The complete native default run at `98ffa78` attempts all 320 registered
@@ -72,7 +94,7 @@ full Windows/R1-R9/hosted/upstream/main/release acceptance remain open. The olde
 bcf442b baseline and individual scoped counts below remain separately labeled.
 The historical supplemental audit confirms the legacy metadata-only explorer's
 header-only panel. The separate source-bearing mode above supplies the new tabs
-and chips; live rebuild/reload remains open.
+and chips; the separate live workflow above supplies manual rebuild/reload.
 
 Explicit/inferred TypeScript predicates and assertions now preserve caller flow
 through an inert source signature and fixed computed-result relay. Eligible

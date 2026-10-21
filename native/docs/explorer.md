@@ -1,4 +1,4 @@
-# Offline source graph explorer
+# Offline and live source graph explorer
 
 HTML exports retain the entire canonical graph in inert JSON. Symbol results are paginated in groups of 100; search and kind, language and relation filters apply to all results. The canvas shows the current page plus a matching selection, with at most 5,000 directed observations; the relationship panel exposes every incident observation through pages of 40. Indexed adjacency and evidence maps avoid repeated whole-graph scans when selecting a symbol.
 
@@ -55,3 +55,56 @@ implemented by this static export.
 The [Windows checkpoint](../../docs/validation/integration-2026-10-21/explorer-source/README.md)
 records meaningful Unicode/hostile-text/source-integrity/budget/write/CLI checks,
 actual legacy-byte preservation and three real browser development rounds.
+
+## Authenticated local live workflow
+
+`yoke --root /project explorer` captures the ordinary selected host source once
+and announces a private loopback URL. `--snapshot <id>` instead selects that
+immutable initial capture. Open the announced URL locally; its fragment is a
+capability and must not be shared. It becomes an Authorization header, never a
+query parameter or cookie. Reloading the page keeps the fragment and reopens
+the same authenticated saved server view. Stopping the process revokes the URL.
+
+`yoke --root /project explorer --allow-rebuild` separately grants manual capture.
+The initial root, analyzer/capture options and export limits remain fixed by the
+host. Rebuild from disk submits exactly `expectedSnapshotId` and `expectedRevision`.
+Both must match the current server view before any capture starts; stale attempts
+return409. Request JSON cannot grant the flag or supply a root, options or tools.
+The source graph/UTF8 export must finish before cached HTML is replaced. Original
+snapshots remain immutable; even an unchanged successful capture advances the
+revision. Source graph uncertainty, parallel observations and evidence remain.
+
+Reload saved view performs a read of the cached HTML, with no disk recapture.
+Another authorized client can advance the server view; a stale client must reload
+it before rebuilding. Failed capture/export keeps the cached view/revision. Native
+indexing can already have persisted a capture before a later export fails; the
+server reports that boundary and does not pretend to undo immutable history.
+This is an explicit manual workflow, without automatic filesystem watching.
+No analyzed source is executed, no model/provider starts, no source file is edited,
+and neither the ordinary MCP tools nor static HTML exports gain network authority.
+
+The server accepts IPv4 loopback only with exact Host and same-origin-or-absent
+Origin. Public `GET /` is source-free bootstrap; authenticated `GET /api/view`
+returns the cached checked source HTML and its snapshot/revision/grant headers.
+Only authenticated `POST /api/rebuild` can request a capture, and it still needs
+the host grant. Failure/unauthenticated responses contain no source binding.
+HTTP1.1/CRLF, unique headers, no transfer coding/Expect/pipelining, complete1024-byte
+JSON bodies and closed duplicate-free fields are enforced. A separate at-most
+1000ms request-admission deadline prevents idle speculative sockets from consuming
+the configurable capture deadline. Source/graph/export bounds are unchanged.
+
+The generated source graph lives in an opaque sandbox with scripts/downloads
+allowed for the trusted Explorer, parent DOM access denied and its original
+`connect-src 'none'` policy intact. Captured source remains text. The parent page
+can connect only to its own origin. All responses use no-store/no-referrer, and
+the live server provides no cross-origin access or arbitrary file endpoint.
+Default operation runs until stopped; optional `--max-requests` is1..100000 and
+counts every accepted socket, including refused/unused connections. `--port` binds
+the chosen IPv4 loopback port;0 selects a free port. `--timeout` governs each
+capture/response within10..600000ms. Library callers use `explorer_http::Config`
+with the explicit fixed source export budgets. No background service is installed.
+
+The [live Windows evidence](../../docs/validation/integration-2026-10-21/explorer-live/README.md)
+preserves the actual browser-found idle-connection defect and failing/passing
+regression, all guard scopes, exact legacy HTML and final functional/visual checks.
+Private test capabilities and process/profile files are excluded from publication.

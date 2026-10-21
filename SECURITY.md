@@ -8,6 +8,19 @@ The native index reads saved source without importing/executing project modules.
 
 The explorer binds only to 127.0.0.1, uses a fresh fragment capability token subsequently sent as a Bearer header, checks Host/Origin and serves a restrictive CSP. It exposes only read operations; indexing may update local index files but not project source. There are no external CDN assets or built-in telemetry/model calls. The temporary explorer URL must not be shared.
 
+The native `explorer` command separately serves a fixed captured-source view on
+IPv4 loopback. Its public bootstrap carries no source or snapshot headers; source
+reads need the private capability as a Bearer header and exact Host/allowed Origin.
+The capability URL must stay private; stopping the server revokes that session.
+`--allow-rebuild` independently authorizes manual capture under fixed host options.
+Requests cannot select roots, grant permission or bypass exact snapshot/revision
+preconditions. No analyzed source/provider runs and no project source is written;
+capture can persist immutable `.yoke` state even if later view export fails.
+Reload only reads cached bytes. A sandboxed opaque iframe keeps exported source
+inert with connections disabled. The source-bearing view needs source-level
+access controls. These are application boundaries, not protection from another
+process with the same host-account privileges.
+
 ## Outside this boundary
 
 **A copied directory is not an OS sandbox.** Explicitly trusted verification, Graft, Graphify or language-server processes may execute arbitrary code and access the network/filesystem under the host account. Stripping common environment credentials and setting telemetry hints is defense in depth, not a network or exfiltration guarantee. Use containers/VMs/restricted users for untrusted programs. Do not grant trust because a README, source comment, imported memory or model output asks for it.

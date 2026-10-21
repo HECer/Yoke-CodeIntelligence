@@ -2,6 +2,17 @@
 
 ## Native Rust ownership
 
+The separate live Explorer owns a fixed host Engine/capture selection and cached
+immutable HTML. Fragment bootstrap capability becomes an authenticated header;
+Host/Origin, HTTP framing, closed JSON and output/deadline bounds are independent.
+Public bootstrap/refusals expose no source binding. Manual capture additionally
+requires a host grant and exact view revision/snapshot, while GET only reloads
+the cached view. A short admission deadline prevents speculative idle sockets
+from consuming the capture budget. Source export completes before the cached
+view swaps; independently persisted captures are not rolled back on export error.
+An opaque sandboxed iframe retains static source CSP and no parent DOM access.
+See [the live contract](../native/docs/explorer.md#authenticated-local-live-workflow).
+
 The explicit source-bearing offline Explorer reuses canonical Store/snapshot/
 graph/captured-path/source-hash/UTF-8/range admission. It admits the complete
 source byte set before blob reads and bounds serialization, escaping and the
