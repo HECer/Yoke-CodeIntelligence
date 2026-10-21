@@ -144,6 +144,168 @@ pub fn write_explorer(
     let bytes = serialize_explorer(store, snapshot, graph, deadline)?;
     write_bytes(&bytes, path, Some(deadline))
 }
+
+/// Explicit source-bearing offline export. The old metadata-only HTML is unchanged.
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct SourceExplorerOptions {
+    pub max_source_bytes: usize,
+    pub max_output_bytes: usize,
+}
+impl Default for SourceExplorerOptions {
+    fn default() -> Self {
+        Self {
+            max_source_bytes: 16_000_000,
+            max_output_bytes: 64_000_000,
+        }
+    }
+}
+pub fn serialize_source_explorer(
+    store: &Store,
+    snapshot: &Snapshot,
+    graph: &Graph,
+    options: &SourceExplorerOptions,
+    deadline: &Deadline,
+) -> Result<Vec<u8>> {
+    deadline.check()?;
+    ensure!(
+        options.max_source_bytes <= 32_000_000
+            && (1024..=128_000_000).contains(&options.max_output_bytes),
+        "Invalid source explorer byte limits"
+    );
+    // Admit the complete source set before opening any blob. No partial export.
+    let mut total = 0usize;
+    for file in &snapshot.files {
+        deadline.check()?;
+        total = total
+            .checked_add(file.size)
+            .ok_or_else(|| anyhow::anyhow!("Source explorer size overflow"))?;
+        ensure!(
+            total <= options.max_source_bytes,
+            "Source explorer source byte budget exceeded"
+        );
+    }
+    let sources = crate::graph_extensions::sources(store, snapshot, graph, deadline)?;
+    #[derive(serde::Serialize)]
+    struct SourceEntry<'a> {
+        binding: &'a crate::model::SourceFile,
+        text: &'a str,
+    }
+    #[derive(serde::Serialize)]
+    #[serde(rename_all = "camelCase")]
+    struct Payload<'a> {
+        schema: &'static str,
+        producer: &'static str,
+        workspace_id: &'a str,
+        snapshot_id: &'a str,
+        graph_hash: String,
+        files: Vec<SourceEntry<'a>>,
+        omissions: &'a [crate::model::Omission],
+        coverage: &'a crate::model::Coverage,
+        source_bytes: usize,
+        freshness: &'static str,
+    }
+    let files = snapshot
+        .files
+        .iter()
+        .map(|file| SourceEntry {
+            binding: file,
+            text: &sources[&file.path],
+        })
+        .collect();
+    let payload = Payload {
+        schema: "yoke-source-explorer-v1",
+        producer: "yoke-source-explorer-1",
+        workspace_id: &snapshot.workspace_id,
+        snapshot_id: &snapshot.id,
+        graph_hash: crate::model::identity(graph),
+        files,
+        omissions: &snapshot.omissions,
+        coverage: &graph.coverage,
+        source_bytes: total,
+        freshness: "immutable_capture_not_current_disk",
+    };
+    struct Bounded<'a> {
+        bytes: Vec<u8>,
+        limit: usize,
+        deadline: &'a Deadline,
+    }
+    impl Write for Bounded<'_> {
+        fn write(&mut self, bytes: &[u8]) -> std::io::Result<usize> {
+            self.deadline.check().map_err(std::io::Error::other)?;
+            if bytes.len() > self.limit.saturating_sub(self.bytes.len()) {
+                return Err(std::io::Error::other(
+                    "Source explorer output byte budget exceeded",
+                ));
+            }
+            self.bytes.extend_from_slice(bytes);
+            Ok(bytes.len())
+        }
+        fn flush(&mut self) -> std::io::Result<()> {
+            Ok(())
+        }
+    }
+    let mut serialized = Bounded {
+        bytes: Vec::new(),
+        limit: options.max_output_bytes,
+        deadline,
+    };
+    serde_json::to_writer(&mut serialized, &payload)?;
+    let mut escaped = Bounded {
+        bytes: Vec::new(),
+        limit: options.max_output_bytes,
+        deadline,
+    };
+    for character in std::str::from_utf8(&serialized.bytes)?.chars() {
+        match character {
+            '&' => escaped.write_all(b"\\u0026")?,
+            '<' => escaped.write_all(b"\\u003c")?,
+            '>' => escaped.write_all(b"\\u003e")?,
+            '\u{2028}' => escaped.write_all(b"\\u2028")?,
+            '\u{2029}' => escaped.write_all(b"\\u2029")?,
+            _ => {
+                let mut bytes = [0; 4];
+                escaped.write_all(character.encode_utf8(&mut bytes).as_bytes())?;
+            }
+        }
+    }
+    let base = serialize_explorer(store, snapshot, graph, deadline)?;
+    let base = std::str::from_utf8(&base)?;
+    // Captured values were JSON-escaped; only the final trusted body terminator
+    // is split. User text and template marker strings are never interpreted.
+    let (before, after) = base
+        .rsplit_once("</body>")
+        .ok_or_else(|| anyhow::anyhow!("Missing explorer body terminator"))?;
+    let mut output = Bounded {
+        bytes: Vec::new(),
+        limit: options.max_output_bytes,
+        deadline,
+    };
+    for part in [
+        before.as_bytes(),
+        b"<script type=\"application/json\" id=\"sources\">",
+        &escaped.bytes,
+        b"</script>",
+        include_bytes!("explorer_source.html"),
+        b"</body>",
+        after.as_bytes(),
+    ] {
+        output.write_all(part)?;
+    }
+    deadline.check()?;
+    Ok(output.bytes)
+}
+pub fn write_source_explorer(
+    store: &Store,
+    snapshot: &Snapshot,
+    graph: &Graph,
+    path: &Path,
+    options: &SourceExplorerOptions,
+    deadline: &Deadline,
+) -> Result<()> {
+    let bytes = serialize_source_explorer(store, snapshot, graph, options, deadline)?;
+    write_bytes(&bytes, path, Some(deadline))
+}
 pub fn write(graph: &Graph, format: &str, path: &Path) -> Result<()> {
     write_bytes(&serialize(graph, format)?, path, None)
 }

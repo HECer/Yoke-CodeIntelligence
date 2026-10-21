@@ -135,7 +135,7 @@ pub(crate) fn validate_options(options: &AnalysisOptions) -> Result<()> {
     );
     Ok(())
 }
-fn sources(
+pub(crate) fn sources(
     store: &Store,
     snapshot: &Snapshot,
     graph: &Graph,

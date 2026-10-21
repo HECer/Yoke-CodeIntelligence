@@ -4892,13 +4892,26 @@ fn run(cli: Cli) -> Result<bool> {
         Operation::Export { format, output } => {
             let (snapshot, graph) = engine.select(&arguments, &deadline)?;
             let output = output.unwrap_or_else(|| {
-                engine
-                    .store
-                    .dir
-                    .join("exports")
-                    .join(format!("{}.{}", snapshot.id, format))
+                engine.store.dir.join("exports").join(format!(
+                    "{}.{}",
+                    snapshot.id,
+                    if format == "html-source" {
+                        "source.html"
+                    } else {
+                        &format
+                    }
+                ))
             });
-            if format == "html" {
+            if format == "html-source" {
+                yoke::export::write_source_explorer(
+                    &engine.store,
+                    &snapshot,
+                    &graph,
+                    &output,
+                    &Default::default(),
+                    &deadline,
+                )?;
+            } else if format == "html" {
                 yoke::export::write_explorer(&engine.store, &snapshot, &graph, &output, &deadline)?;
             } else {
                 yoke::export::write(&graph, &format, &output)?;
