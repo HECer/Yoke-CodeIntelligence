@@ -13,7 +13,7 @@ original inventory references and historical checkpoint evidence.
 | R2: meaning and identity | Checked native graphs/joins, portable projections and mixed preparation/build/query/composition. A separate native MinHash/Jaro candidate policy, durable explicit model adjudication, source-replayed positive-clique quotient and frozen node/degree/trace queries preserve every original observation. | Other source/history/workspace identity, wider normalization/survivor rules, interpretation/outcome surfaces and live semantic-quality/upstream acceptance. Existing mixed aliases and host links keep their original namespace/authority boundaries; model equivalence remains unverified. |
 | R3: historical analytics | Explicit checked pair-of-Views comparison with complete parent pins, immutable source/receipt replay and directed observations; optional source-category mappings, relation projection weights, ambiguity-only scaling, explicit hub filters and explained runtime-family/source-kind surprise ranking, with separate policy producers, exact legacy report preservation and checked canonical/View retention replay; explicit neighbor-majority-v1 unique-neighbor hub holdout/voting and two bounded split stages with stable source ordering. | Broader partition/library differences, upstream analytics equivalence and acceptance remain open. A bare previousSnapshotId remains insufficient to select two Views; that refusal is an intentional precondition. |
 | R4: mixed documents | Native/Office XML/decoded/PDF spaces, fixed input preparation, checked claims, explicit provider jobs, checked graph queries and independently checked cross-workspace/history composition. | Broader mixed analytics, external semantic-provider qualification and exhaustive interpretation remain open. CLI composition currently selects one explicit Store; library callers may supply separately checked parents from different workspaces. |
-| R5: Git interpretation | Captured impact, areas, conflict stages, hierarchy candidates, CODEOWNERS and owner changes with original byte evidence; separate trusted immutable TypeScript heritage/override/contract/call/tag/constructor/overload bindings, distinct static construct-result classes, separate constructor class-value/body roles for inherited-body impact and finite declared/constructor/source-witnessed generic instance targets with exact argument/context/source proofs and bounded incoming walks. | Wider report/ownership semantics, unobserved generic instantiations, field/accessor/implicit execution effects, wider member/language/receiver/configuration forms, config-only effects, remote freshness and upstream schema/whole-source equivalence. Compiler candidates and captured labels grant no identity, execution, review or merge authority. |
+| R5: Git interpretation | Captured impact, areas, conflict stages, hierarchy candidates, CODEOWNERS and owner changes with original byte evidence; separate trusted immutable TypeScript heritage/override/contract/call/tag/constructor/overload bindings, distinct static construct-result classes, separate constructor class-value/body roles for inherited-body impact and finite declared/constructor/source-witnessed generic instance targets with exact argument/context/source proofs, separate property-slot/accessor/initializer roles and bounded incoming walks. | Wider report/ownership semantics, unobserved generic instantiations, wider property/accessor/implicit execution effects, wider member/language/receiver/configuration forms, config-only effects, remote freshness and upstream schema/whole-source equivalence. Compiler candidates and captured labels grant no identity, execution, review or merge authority. |
 | R6: host lifecycle | Generic managed installation, guarded v1/v2 recovery, separate Codex and strict JSON Cursor/Claude Code/Claude Desktop MCP profiles, actual isolated Claude2.1.306 managed-file health, explicit whole-file SessionStart settings with read-only physically bound context and observed actual init-only success/stale-policy refusal, and native session semantic planning. | Claude explicit-file session/tool dispatch and Cursor/Desktop runtime qualification; further branded schemas, broader hook events, interactive context consumption, statusline adapters and remaining platform qualification. |
 | R7: external sources | Selected PostgreSQL catalogs; received HTTP text/raw HTML/PDF; coordinated arXiv; explicit hash-selected Google shortcut capture through a trusted gws client, immutable export replay and separate native XLSX inspection; reviewed native Neo4j/FalkorDB publication with pinned Windows live evidence. | Google resource-key transport and authenticated export qualification; further authenticated/social/video routes, article/semantic interpretation and wider service/version/platform qualification. |
 | R8: GitHub App | Signed queue/worker lifecycle, controlled publication/pages, explicit discussions, digest client/receiver, authorized metadata queries, persistent/App-bound history execution, independent received Rust declaration correspondence and source-bound interpretation of explicitly built local native Meaning graphs. | Broader receiver reasoning and model-quality qualification; independent verification of other packet claims (sender source-digest/CAS identity, discussions and history); configured live App installation/deployment and whole-source/remote equivalence. No background service is installed. Worker per-file Git-blob checks retain their existing finite scope. |
@@ -38,6 +38,27 @@ their complete submitted units to these declaration witnesses. Source quotes,
 original receipts and semantic claims remain distinct from interpretation truth.
 
 ## Acceptance still required
+
+Compiler-bound property references now retain separate read/write/delete
+modes, applicable getter/setter effects and direct function-initializer source
+ownership. Resolved invocation signatures, original slots, candidate classes and
+actual generic witnesses remain separate. Optional-chain reads and logical
+conditional writes keep different metadata; unique symbols use compiler slot
+identity. Returned/assigned function values and implicit effects are not guessed.
+
+The current frozen guard passes73 Rust functions (22 query,51 project/Git),
+all-target Clippy, format, build, typecheck and npm260/3 existing skips on1014
+exact inputs. Actual CLI/provider comparison preserves every old node/fact/type
+witness on the same checked capture and adds parallel property/effect roles.
+Forged pair/mode/witness/initializer proofs refuse. Exact LF bounds/refusals,
+old affected/compiler bytes, inherited-constructor facts and owned source/Git/
+Store bytes pass; Jobs end empty. The initial18-pass/2-fail development phase
+and unique-symbol API counterexample remain archived. See
+[the contract](../native/docs/git-compiler-affected.md) and
+[indexed evidence](validation/integration-2026-10-21/git-compiler-properties/README.md).
+Wider implicit/member/configuration effects and full R5/R1-R9/Windows/upstream/
+main/release acceptance remain open. Earlier counts retain their own source
+checkpoints; the historical whole-native baseline keeps ten OS1314 prerequisites.
 
 Generic method targets now use actual source-witnessed compiler instance types.
 Per-context witnesses retain class identity, original UTF-8 anchors and actual

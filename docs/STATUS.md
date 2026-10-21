@@ -2,6 +2,27 @@
 
 ## Current integration work
 
+Compiler-bound property references now retain separate read/write/delete
+modes, applicable getter/setter effects and direct function-initializer source
+ownership. Resolved invocation signatures, original slots, candidate classes and
+actual generic witnesses remain separate. Optional-chain reads and logical
+conditional writes keep different metadata; unique symbols use compiler slot
+identity. Returned/assigned function values and implicit effects are not guessed.
+
+The current frozen guard passes73 Rust functions (22 query,51 project/Git),
+all-target Clippy, format, build, typecheck and npm260/3 existing skips on1014
+exact inputs. Actual CLI/provider comparison preserves every old node/fact/type
+witness on the same checked capture and adds parallel property/effect roles.
+Forged pair/mode/witness/initializer proofs refuse. Exact LF bounds/refusals,
+old affected/compiler bytes, inherited-constructor facts and owned source/Git/
+Store bytes pass; Jobs end empty. The initial18-pass/2-fail development phase
+and unique-symbol API counterexample remain archived. See
+[the contract](../native/docs/git-compiler-affected.md) and
+[indexed evidence](validation/integration-2026-10-21/git-compiler-properties/README.md).
+Wider implicit/member/configuration effects and full R5/R1-R9/Windows/upstream/
+main/release acceptance remain open. Earlier counts retain their own source
+checkpoints; the historical whole-native baseline keeps ten OS1314 prerequisites.
+
 Generic method targets now use actual source-witnessed compiler instance types.
 Per-context witnesses retain class identity, original UTF-8 anchors and actual
 type arguments/flags; union branches and complete intersections stay distinct.
