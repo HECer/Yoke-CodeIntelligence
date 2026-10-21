@@ -1,5 +1,10 @@
 # Integration development evidence, 2026-10-19 local
 
+Argument callable contexts and once-only evaluation have [separate evidence](function-body-argument-contexts/README.md):
+source signatures, fixed collection and direct scalar bindings;116 scoped
+integration passes and fourteen units. Counts overlap; full STATUS/Windows
+acceptance remains open.
+
 Return contextual types and anonymous runtime names have [separate evidence](function-body-return-contexts/README.md):
 original source annotations and fixed name barriers; 115 scoped integration
 passes and twelve units. Counts overlap; full STATUS/Windows acceptance remains open.

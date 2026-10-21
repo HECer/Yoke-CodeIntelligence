@@ -1,0 +1,1 @@
+const events:string[]=[];function helper(n=(events.push("default"),3)):number{return n;}const result=helper((events.push("arg"),undefined));export const observed={result,events};

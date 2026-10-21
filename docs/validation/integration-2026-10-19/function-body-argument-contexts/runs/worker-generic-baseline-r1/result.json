@@ -1,0 +1,26 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "[\"\",3]",
+      "after": "[\"__ci_inline_3\",3]",
+      "ownedRuntimeSame": false,
+      "beforeTypes": [
+        "() => 3"
+      ],
+      "afterTypes": [
+        "() => number"
+      ],
+      "resultTypesExact": false
+    }
+  ],
+  "allChecksPassed": false,
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "ownedLiteralFixturesExecuted": true,
+  "diagnosticOnlyWorkerPatch": true
+}

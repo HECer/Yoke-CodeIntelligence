@@ -1,0 +1,1 @@
+function helper(n:number):number{var x=n+1;return x;}const result=helper(2);export const observed=result;

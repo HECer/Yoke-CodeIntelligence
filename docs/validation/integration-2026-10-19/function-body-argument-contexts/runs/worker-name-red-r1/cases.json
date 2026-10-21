@@ -1,0 +1,1 @@
+[{"language": "ts", "source": "function helper(fn:()=>number):string{return fn.name;}const result=helper(()=>3);export const observed=result;"}, {"language": "ts", "source": "function helper(fn:()=>number):string{return fn.name;}const result=helper(function(){return 3;});export const observed=result;"}]

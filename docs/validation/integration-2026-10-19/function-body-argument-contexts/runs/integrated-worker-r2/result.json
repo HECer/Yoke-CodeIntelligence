@@ -1,0 +1,330 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 1,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 2,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 3,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 4,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 5,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 6,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "string"
+      ],
+      "afterTypes": [
+        "string"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 7,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "string"
+      ],
+      "afterTypes": [
+        "string"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 8,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "string"
+      ],
+      "afterTypes": [
+        "string"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 9,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 10,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "3",
+      "after": "3",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "{ n: number; }"
+      ],
+      "afterTypes": [
+        "{ n: number; }"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 11,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "[\"\",3]",
+      "after": "[\"\",3]",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "() => 3"
+      ],
+      "afterTypes": [
+        "() => 3"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 12,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "6",
+      "after": "6",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 13,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "{\"result\":3,\"events\":[]}",
+      "after": "{\"result\":3,\"events\":[]}",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 14,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "{\"result\":3,\"events\":[\"arg\",\"default\"]}",
+      "after": "{\"result\":3,\"events\":[\"arg\",\"default\"]}",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 15,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "3"
+      ],
+      "afterTypes": [
+        "3"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 16,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "3",
+      "after": "3",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 17,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "3",
+      "after": "3",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 18,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"1,2\"",
+      "after": "\"1,2\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "string"
+      ],
+      "afterTypes": [
+        "string"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 19,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    }
+  ],
+  "allChecksPassed": true,
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "ownedLiteralFixturesExecuted": true,
+  "diagnosticOnlyWorkerPatch": true
+}
