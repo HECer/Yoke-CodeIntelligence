@@ -55,6 +55,11 @@ Explicit [Git conflict triage](native/docs/git-conflicts.md) observes the select
 worktree's actual unmerged index. Exact stage-source pages use independent host
 read permissions and captured-path scopes; source files and index stay unchanged.
 
+Explicit [compiler-bound Git impact](native/docs/git-compiler-affected.md) separately
+checks immutable TypeScript base/head programs with a host-trusted compiler.
+Resolved calls, override bindings and type-based possible dispatch retain their
+original byte proofs and separate context identities; no execution is inferred.
+
 [Captured impact areas](native/docs/git-areas.md) add saved concept/file memberships
 and exact directory fallback to a replayed Git report. Original quotes and
 parallel observations remain intact; tied labels stay visibly ambiguous.

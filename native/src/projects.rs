@@ -16,6 +16,20 @@ pub struct CompilerSpec {
     pub typescript: PathBuf,
     pub trusted: bool,
 }
+pub(crate) fn worker_source() -> String {
+    [
+        include_str!("compiler_worker.cjs"),
+        include_str!("compiler_inline_worker.cjs"),
+        include_str!("compiler_inline_body_worker.cjs"),
+        include_str!("compiler_inline_body_arguments_worker.cjs"),
+        include_str!("compiler_inline_body_vars_worker.cjs"),
+        include_str!("compiler_inline_body_types_worker.cjs"),
+        include_str!("compiler_move_worker.cjs"),
+        include_str!("compiler_move_repairs_worker.cjs"),
+        include_str!("compiler_hierarchy_worker.cjs"),
+    ]
+    .join("\n")
+}
 pub fn analyze(
     store: &Store,
     snapshot: &Snapshot,
@@ -122,20 +136,7 @@ pub(crate) fn execute(
         .prefix("yoke-compiler-")
         .tempdir()?;
     let worker = dir.path().join("compiler.cjs");
-    fs::write(
-        &worker,
-        [
-            include_str!("compiler_worker.cjs"),
-            include_str!("compiler_inline_worker.cjs"),
-            include_str!("compiler_inline_body_worker.cjs"),
-            include_str!("compiler_inline_body_arguments_worker.cjs"),
-            include_str!("compiler_inline_body_vars_worker.cjs"),
-            include_str!("compiler_inline_body_types_worker.cjs"),
-            include_str!("compiler_move_worker.cjs"),
-            include_str!("compiler_move_repairs_worker.cjs"),
-        ]
-        .join("\n"),
-    )?;
+    fs::write(&worker, worker_source())?;
     let mut command = Command::new(node);
     command
         .arg("--max-old-space-size=512")
@@ -224,9 +225,9 @@ pub(crate) fn execute(
         );
     }
     deadline.check()?;
-    if matches!(operation, "inline" | "move" | "inlineBody") {
-        // No artifact, derived source or plan is published before independent
-        // effect admission by the compiler-inline adapter.
+    if matches!(operation, "inline" | "move" | "inlineBody" | "hierarchy") {
+        // Effect adapters admit edits before publication. Hierarchy observations
+        // are independently source-checked and remain an ephemeral read result.
         return Ok(report);
     }
     let artifact = store.artifact(&serde_json::to_vec(&report)?)?;

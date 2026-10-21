@@ -49,6 +49,11 @@ incoming-reference candidates from an existing verified report. For source
 quotations and deleted/added-path similarity, use the separate
 [Git impact-details command](git-impact-details-cli.md).
 
+The separate [`git compiler-affected`](git-compiler-affected.md) command adds
+explicit host-trusted TypeScript observations over the same checked historical
+sides. Resolved calls, overrides and finite type-based possible dispatch are
+separate from captured structural candidates and actual execution.
+
 New workflows honor the typed host `Engine.capture_epoch` selection for both the
 working capture and every committed comparison side. The default remains analyzer
 8; explicitly selecting analyzer 9 does not mix analyzer-8 historical declarations

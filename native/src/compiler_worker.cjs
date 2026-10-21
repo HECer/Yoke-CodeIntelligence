@@ -13,7 +13,7 @@ function run(input){
  const compilerHash=sha(boundedRead(input.compiler,16_000_000));
  const ts=require(input.compiler);
  assert(ts.version==='5.8.3' && typeof ts.matchFiles==='function','Unsupported host TypeScript version');
- assert(input.schema===1 && ['analyze','build','inline','move','inlineBody'].includes(input.operation),'Compiler request contract');
+ assert(input.schema===1 && ['analyze','build','inline','move','inlineBody','hierarchy'].includes(input.operation),'Compiler request contract');
  const slash=p=>p.replaceAll('\\','/'),root=slash(path.resolve(process.cwd(),'virtual'));
  const library=slash(path.dirname(ts.getDefaultLibFilePath({target:ts.ScriptTarget.ES2022})));
  const abs=p=>slash(path.resolve(root,p));
@@ -76,7 +76,7 @@ function run(input){
  if(input.operation==='inlineBody')return inlineFunctionBody({input,ts,sha,assert,source,projects,read,fileExists,directoryExists,getDirectories,readDirectory,root,abs,rel,slash,span,diagnostic,libCache,compilerHash,limitations});
  if(input.operation==='move')return moveSymbolToFile({input,ts,sha,assert,source,projects,read,fileExists,directoryExists,getDirectories,readDirectory,root,abs,rel,slash,span,diagnostic,libCache,compilerHash,limitations});
  const contexts=[];let status='passed',exitCode=null;
- if(input.operation==='analyze'){
+ if(input.operation==='analyze'||input.operation==='hierarchy'){
   if(!projects.size){limitations.push('No configured project: inferred context is nonexhaustive.');projects.set('[inferred]',{name:'[inferred]',problems:[],parsed:{fileNames:[...source.keys()].filter(p=>/\.[cm]?[jt]sx?$/.test(p)),options:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext,moduleResolution:ts.ModuleResolutionKind.Bundler,allowJs:true,checkJs:true,jsx:ts.JsxEmit.Preserve,noEmit:true},projectReferences:[]}});}
   let count=0;
   for(const p of projects.values()){
@@ -106,7 +106,9 @@ function run(input){
    const options=JSON.parse(JSON.stringify(p.parsed.options,(key,value)=>key==='configFile'?undefined:typeof value==='string'?value.replaceAll(root,'[snapshot]'):value));
    const files=p.parsed.fileNames.map(rel).filter(Boolean).sort();
    const libraries=Object.fromEntries(program.getSourceFiles().filter(sf=>libCache.has(slash(path.resolve(sf.fileName)))).map(sf=>[path.basename(sf.fileName),sha(sf.text)]).sort(([a],[b])=>a.localeCompare(b)));
-   contexts.push({config:p.name,contextId:sha(JSON.stringify([input.snapshotId,p.name,options,files,ts.version,compilerHash,libraries])),options,files,standardLibraryHashes:libraries,status:errors.some(d=>d.severity==='error')?'failed':'passed',diagnostics:errors,bindings});
+   const context={config:p.name,contextId:sha(JSON.stringify([input.snapshotId,p.name,options,files,ts.version,compilerHash,libraries])),options,files,standardLibraryHashes:libraries,status:errors.some(d=>d.severity==='error')?'failed':'passed',diagnostics:errors,bindings};
+   if(input.operation==='hierarchy')context.hierarchy=compilerHierarchy({input,ts,checker,program,span,source,slash,rel,assert});
+   contexts.push(context);
   }
   status=diagnostics.some(d=>d.severity==='error')?'failed':contexts.some(c=>c.files.length)?'passed':'incomplete';
  }else{

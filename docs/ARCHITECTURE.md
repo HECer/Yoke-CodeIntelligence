@@ -2,6 +2,15 @@
 
 ## Native Rust ownership
 
+The explicit Git compiler-affected query releases the checked report read view
+before trusted host compiler execution and revalidates original pins afterward.
+Independent snapshot/project contexts retain actual checker declarations, exact
+UTF-8 quotes, overload-body links and type-based possible targets. Native checks
+endpoints, owners, source ranges and capacities; original graphs/reports remain
+unchanged. Host/module/worker hashes, library/configuration pins and visible
+coverage stay separate from independent compiler correctness or execution proof.
+See [the contract](../native/docs/git-compiler-affected.md).
+
 The separate live Explorer owns a fixed host Engine/capture selection and cached
 immutable HTML. Fragment bootstrap capability becomes an authenticated header;
 Host/Origin, HTTP framing, closed JSON and output/deadline bounds are independent.

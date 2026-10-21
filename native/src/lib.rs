@@ -5,6 +5,7 @@ pub mod arxiv_source;
 pub mod capture;
 pub mod changes;
 pub mod compatibility;
+mod compiler_hierarchy;
 pub mod compiler_inline;
 pub mod compiler_move;
 pub mod config_graph;

@@ -17,6 +17,7 @@ mod falkor_publish_cli;
 mod feedback_cli;
 mod git_affected_cli;
 mod git_areas_cli;
+mod git_compiler_affected_cli;
 mod git_conflicts_cli;
 mod git_impact_cli;
 mod git_owner_changes_cli;
@@ -2465,6 +2466,7 @@ fn run_document(
 }
 #[derive(Subcommand)]
 enum GitOperation {
+    CompilerAffected(Box<git_compiler_affected_cli::Arguments>),
     OwnerChanges(Box<git_owner_changes_cli::Arguments>),
     Owners(Box<git_owners_cli::Arguments>),
     Areas(Box<git_areas_cli::Arguments>),
@@ -2551,6 +2553,7 @@ fn run_git(mut engine: Engine, operation: GitOperation, deadline: &Deadline) -> 
             print(&yoke::git_workflows::load(&engine.store, &id, deadline)?)?;
         }
         GitOperation::Affected { .. } => bail!(git_affected_cli::INPUT),
+        GitOperation::CompilerAffected(_) => bail!(git_compiler_affected_cli::INPUT),
         GitOperation::Render { id, format } => {
             let report = yoke::git_workflows::load(&engine.store, &id, deadline)?;
             let text = yoke::git_workflows::render(&engine.store, &report, &format, deadline)?;
@@ -3293,6 +3296,22 @@ fn run(cli: Cli) -> Result<bool> {
                 && !cli.trust_servers
                 && !cli.allow_writes,
             "git_conflicts_input_invalid"
+        );
+        return args.run(&cli.root, cli.timeout, cli.max_bytes);
+    }
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::Git(git) = extension.as_ref()
+        && let GitOperation::CompilerAffected(args) = &git.operation
+    {
+        ensure!(
+            cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.analyzer_epoch.is_none()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && !cli.allow_writes,
+            git_compiler_affected_cli::INPUT
         );
         return args.run(&cli.root, cli.timeout, cli.max_bytes);
     }

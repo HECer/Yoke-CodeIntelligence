@@ -23,6 +23,8 @@ pub const REPORT_KIND: &str = "native_git_workflow_v1";
 pub mod affected_details;
 #[path = "git_areas.rs"]
 pub mod areas;
+#[path = "git_compiler_affected.rs"]
+pub mod compiler_affected;
 #[path = "git_conflicts.rs"]
 pub mod conflicts;
 #[path = "git_history_read.rs"]
