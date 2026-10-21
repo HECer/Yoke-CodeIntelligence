@@ -73,3 +73,14 @@ Duplicate JSON keys, unknown fields/versions, invalid budgets and expired deadli
 refuse before report publication. Selected-report replay reconstructs the exact
 policy, checked View, original bytes and artifact identity; changed stored policy
 metadata cannot reinterpret an earlier artifact.
+
+Canonical policy reports also participate in retention. Their source scope,
+options, prior snapshot comparison and full native report are reconstructed
+read-only and compared as exact serialized bytes before retaining report,
+Markdown and source roots. Rehashing modified scores, audit, policy or unknown
+fields does not establish validity. Signed-zero differences are rejected even
+though JSON Value equality treats those floats as equal. The pinned JSON parser
+uses float_roundtrip to preserve finite IEEE values through saved JSON; duplicate,
+depth/node/byte, nonfinite and deadline boundaries remain in force. The legacy
+report shape validator and published v1 producers remain separate. Future
+analysis behavior needs its own explicit policy/producer so old reports can replay.

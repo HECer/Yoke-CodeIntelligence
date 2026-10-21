@@ -2,6 +2,24 @@
 
 ## Current integration work
 
+Canonical source-category reports now participate in retention through exact
+read-only reconstruction of their saved sources, options and historical analysis.
+Rehashed changes to scores/audit/policy/future fields and signed zero refuse;
+report/Markdown and both historical source roots remain protected. The original
+legacy shape checks remain. The already pinned JSON parser now uses exact float
+roundtrips, fixing one-bit changes that could invalidate legitimate persisted
+reports. Dependency versions and the lockfile stay unchanged.
+
+The scoped guard passes 101 Rust tests across fifteen targets, format, all-target
+Clippy, typecheck and TypeScript 260/3 existing skips. An actual same-snapshot CLI
+control preserves both legacy and source-category v1 raw stdout/report/Markdown
+identities, and actual retention/purge plans recognize its saved dependencies.
+No deletion, model or analyzed-source execution occurs in this control. Failed
+development phases and the stronger signed-zero counterexample remain archived.
+The shared parser feature still needs a complete native recheck; broader R3
+community policy, R1-R9/platform/hosted/upstream acceptance remain open. See the
+[exact replay evidence](validation/integration-2026-10-21/policy-retention-floats/README.md).
+
 Explicit [JSON MCP host profiles](native-json-hosts.md) now manage receipt-owned
 Cursor `mcp.json`, Claude Code external `.mcp.json` and Claude Desktop config
 entries through the guarded Windows installer. Strict unique-key JSON patches

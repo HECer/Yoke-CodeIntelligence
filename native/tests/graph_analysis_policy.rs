@@ -20,6 +20,118 @@ fn fixture() -> (tempfile::TempDir, Engine, Snapshot, Graph) {
     let (snapshot, graph, _, _) = engine.index(&Deadline::new(30000)).unwrap();
     (root, engine, snapshot, graph)
 }
+
+#[test]
+fn canonical_policy_retention_replays_reports_and_pins_both_historical_sources() {
+    for with_previous in [false, true] {
+        let (root, mut engine, first, first_graph) = fixture();
+        let d = Deadline::new(30000);
+        let (snapshot, graph) = if with_previous {
+            fs::write(
+                root.path().join("src/b.rs"),
+                "pub fn beta(){ alpha();alpha(); }\n",
+            )
+            .unwrap();
+            let (s, g, _, _) = engine.index(&d).unwrap();
+            (s, g)
+        } else {
+            (first.clone(), first_graph)
+        };
+        let options = AnalysisOptions {
+            source_category_policy: Some(SourceCategoryPolicy::default()),
+            previous_snapshot_id: with_previous.then(|| first.id.clone()),
+            ..Default::default()
+        };
+        let report =
+            graph_extensions::analyze(&engine.store, &snapshot, &graph, &options, &d).unwrap();
+        let id = report["artifactId"].as_str().unwrap();
+        let original = engine.store.read_artifact(id).unwrap();
+        fs::write(
+            root.path().join("src/b.rs"),
+            "pub fn beta(){ alpha(); }\npub fn latest(){}\n",
+        )
+        .unwrap();
+        engine.index(&d).unwrap();
+        let plan =
+            yoke::retention::plan(&engine.store, &yoke::retention::Policy::default(), &d).unwrap();
+        assert_eq!(plan["unknownDependencyKinds"], json!([]));
+        assert_eq!(plan["snapshotIds"], json!([]));
+        let purge = yoke::retention::purge_plan(&engine.store, 0, &d).unwrap();
+        assert_eq!(purge["unknownDependencyKinds"], json!([]));
+        for item in purge["items"].as_array().unwrap() {
+            assert_ne!(item["blobId"], report["artifactId"]);
+            assert_ne!(item["blobId"], report["markdownArtifactId"]);
+            for file in first.files.iter().chain(&snapshot.files) {
+                assert_ne!(item["blobId"], file.hash);
+            }
+        }
+        assert_eq!(engine.store.read_artifact(id).unwrap(), original);
+        assert!(yoke::retention::purge_plan(&engine.store, 0, &Deadline::new(0)).is_err());
+        engine.store.set_deadline(&d).unwrap();
+        assert_eq!(engine.store.read_artifact(id).unwrap(), original);
+    }
+}
+
+#[test]
+fn canonical_policy_retention_rejects_rehashed_reports_and_preserves_their_bytes() {
+    for mutation in ["score", "audit", "policy", "future", "zero_sign"] {
+        let (_root, engine, snapshot, graph) = fixture();
+        let d = Deadline::new(30000);
+        let options = AnalysisOptions {
+            source_category_policy: Some(SourceCategoryPolicy::default()),
+            uncertain_weight: 0.0,
+            ..Default::default()
+        };
+        let original =
+            graph_extensions::analyze(&engine.store, &snapshot, &graph, &options, &d).unwrap();
+        let old_id = original["artifactId"].as_str().unwrap();
+        let mut record: Value = engine
+            .store
+            .get_record(graph_extensions::REPORT_KIND, old_id)
+            .unwrap();
+        let mut report: Value =
+            serde_json::from_slice(&engine.store.read_artifact(old_id).unwrap()).unwrap();
+        match mutation {
+            "score" => report["communities"][0]["cohesion"] = json!(0.123456789),
+            "audit" => report["audit"]["unmappedPolicyResolutions"] = json!({"syntactic":999}),
+            "policy" => {
+                report["analysisPolicy"]["configuration"]["relationWeights"]["calls"] = json!(0.0)
+            }
+            "future" => report["futureSourceDependencies"] = json!(["opaque"]),
+            "zero_sign" => report["clustering"]["uncertainWeight"] = json!(-0.0),
+            _ => unreachable!(),
+        }
+        let bytes = serde_json::to_vec(&report).unwrap();
+        let id = engine.store.artifact(&bytes).unwrap();
+        assert_ne!(id, old_id);
+        record["artifactId"] = json!(id);
+        // These mutations change no Markdown-rendered field. Keep its original
+        // consistent hash so refusal must validate the canonical JSON report.
+        engine
+            .store
+            .db
+            .execute(
+                "INSERT INTO records(kind,id,value) VALUES(?1,?2,?3)",
+                rusqlite::params![
+                    graph_extensions::REPORT_KIND,
+                    id,
+                    serde_json::to_string(&record).unwrap(),
+                ],
+            )
+            .unwrap();
+        let result = yoke::retention::purge_plan(&engine.store, 0, &d);
+        assert!(
+            result.is_err()
+                || !result.unwrap()["unknownDependencyKinds"]
+                    .as_array()
+                    .unwrap()
+                    .is_empty(),
+            "{mutation}"
+        );
+        assert_eq!(engine.store.read_artifact(&id).unwrap(), bytes);
+        assert!(engine.store.read_artifact(old_id).is_ok());
+    }
+}
 #[test]
 fn explicit_policy_preserves_original_graph_and_legacy_report_identity() {
     let (_root, engine, snapshot, graph) = fixture();

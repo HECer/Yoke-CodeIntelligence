@@ -364,8 +364,22 @@ fn report_shape(
     graph: &Graph,
     report: &Value,
     record: &ReportRecord,
+    bytes: &[u8],
     deadline: &Deadline,
 ) -> Result<()> {
+    if record.options.source_category_policy.is_some() {
+        ensure!(
+            serde_json::to_vec(&crate::graph_extensions::reconstruct_report(
+                store,
+                snapshot,
+                graph,
+                &record.options,
+                deadline,
+            )?)? == bytes,
+            "Retained source-category report differs from canonical reconstruction"
+        );
+        return Ok(());
+    }
     fields_only(
         report,
         &[
@@ -689,7 +703,7 @@ fn validate_report_export(
             serde_json::to_vec(&report)? == bytes,
             "Noncanonical retained report"
         );
-        report_shape(store, &snapshot, &graph, &report, &record, deadline)?;
+        report_shape(store, &snapshot, &graph, &report, &record, &bytes, deadline)?;
         ensure!(
             parity_artifact(store, &record.markdown_artifact_id, deadline)?
                 == crate::graph_extensions::markdown(&report).as_bytes(),

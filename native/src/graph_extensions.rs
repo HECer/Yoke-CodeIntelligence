@@ -662,17 +662,7 @@ pub fn analyze(
     options: &AnalysisOptions,
     deadline: &Deadline,
 ) -> Result<Value> {
-    validate_options(options)?;
-    let _sources = sources(store, snapshot, graph, deadline)?;
-    let previous = if let Some(id) = &options.previous_snapshot_id {
-        let old = store.snapshot(id)?;
-        let old_graph = store.graph(id)?;
-        let diff = compare(store, &old, &old_graph, snapshot, graph, deadline)?;
-        Some((old_graph, diff))
-    } else {
-        None
-    };
-    let mut report = build_report(snapshot, graph, options, previous.as_ref(), deadline)?;
+    let mut report = reconstruct_report(store, snapshot, graph, options, deadline)?;
     let bytes = serde_json::to_vec(&report)?;
     ensure!(
         bytes.len() <= MAX_BYTES,
@@ -703,6 +693,28 @@ pub fn analyze(
     report["artifactId"] = json!(artifact);
     report["markdownArtifactId"] = json!(markdown_artifact);
     Ok(report)
+}
+
+/// Read-only canonical reconstruction for publication and dependency validation.
+/// Producer v1 algorithms and serialized options remain immutable.
+pub(crate) fn reconstruct_report(
+    store: &Store,
+    snapshot: &Snapshot,
+    graph: &Graph,
+    options: &AnalysisOptions,
+    deadline: &Deadline,
+) -> Result<Value> {
+    validate_options(options)?;
+    let _sources = sources(store, snapshot, graph, deadline)?;
+    let previous = if let Some(id) = &options.previous_snapshot_id {
+        let old = store.snapshot(id)?;
+        let old_graph = store.graph(id)?;
+        let diff = compare(store, &old, &old_graph, snapshot, graph, deadline)?;
+        Some((old_graph, diff))
+    } else {
+        None
+    };
+    build_report(snapshot, graph, options, previous.as_ref(), deadline)
 }
 
 // Pure report construction: source-scope validation and publication belong to

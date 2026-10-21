@@ -15,8 +15,11 @@ original resolution strings to declared report categories. Relation weights,
 ambiguity scaling and node display filters belong to that derived policy;
 original directed/parallel observations and source bindings remain authoritative.
 Runtime-family/source-kind surprise components have explicit reasons. Policy
-reports and checked View registrations use separate producers and exact replay;
-the absent-policy branch preserves released options/artifact identities. See
+reports and checked View registrations use separate producers and exact replay.
+Canonical policy retention reconstructs source/options/history read-only and
+compares exact serialized bytes; signed zero cannot pass by Value equality. The
+pinned JSON parser preserves finite float roundtrips. The absent-policy branch
+preserves released options/artifact identities. See
 [the policy contract](../native/docs/source-category-policy.md).
 
 Classic function-body inlining uses independent original-byte statement frames
