@@ -3,9 +3,11 @@
 Windows scoped checks pass six numerical units and 97 graph/View/retention
 integrations, formatting and all-target Clippy with warnings denied. An actual
 CLI control preserves both old report families and repeats the selected mode
-byte-exactly with original graph/source evidence. Primary-checkout integration
-and retained TypeScript checks remain separate pending steps. This is not full
-upstream or platform acceptance.
+byte-exactly with original graph/source evidence. The primary checkout separately
+repeats all twelve new cases, formatting and
+all-target Clippy, then passes typecheck and TypeScript260/3 existing skips. The
+repeated cases overlap the earlier counts. Its own compiled CLI control also
+passes with frozen inputs. This is not full upstream or platform acceptance.
 
 `AnalysisOptions.communityPolicy` selects a separate numerical policy:
 

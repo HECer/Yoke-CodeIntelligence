@@ -2,6 +2,24 @@
 
 ## Current integration work
 
+An optional [community projection policy](../native/docs/community-policy.md)
+now adds unique-neighbor hub degree/voting, stranded-node holdout and bounded
+oversized/sparse split passes. Canonical and selected-View producers pin this
+explicit mode. Source-order ties avoid snapshot-ID churn; original directed and
+parallel observations, resolution labels, source bytes and evidence stay intact.
+The old default and source-category-only v1 reports preserve exact raw CLI and
+artifact/Markdown identities. No successful split or hard final size is claimed.
+
+Six numerical units and 97 integrations pass with format/all-target Clippy.
+The integrated primary checkout repeats all twelve new cases (overlapping),
+format/Clippy, typecheck and TypeScript260/3 existing skips. Both actual compiled
+CLI controls preserve old report families, repeat new mode bytes with/without
+source categories and pass saved-root retention plans. All scoped inputs stay
+frozen during checks; documentation follows. No model/analyzed-source execution
+occurs in these controls. See the [indexed evidence](validation/integration-2026-10-21/community-policy/README.md).
+The complete bcf442b baseline below predates the new mode; a new-head whole-native
+run, full R3/R1-R9/upstream/hosted/platform/main/release acceptance remain open.
+
 The complete native default recheck at `bcf442b` attempts all 316 registered
 groups: **2,951 passed, 10 failed and 53 explicitly ignored**. Examples compile,
 and all 941 inputs, tools and the CLI remain unchanged. Every failure is an

@@ -22,6 +22,14 @@ pinned JSON parser preserves finite float roundtrips. The absent-policy branch
 preserves released options/artifact identities. See
 [the policy contract](../native/docs/source-category-policy.md).
 
+Explicit neighbor-majority-v1 community analysis separately selects an
+undirected positive-weight projection, unique-neighbor hub degree/voting,
+stranded-node holdout and two bounded split stages. Source-order ties avoid
+snapshot-hash churn. Its canonical/View producers and exact retention replay
+bind the selected options; no split or final maximum-size guarantee is invented.
+Absent community options preserve both older report families. See the
+[community contract](../native/docs/community-policy.md).
+
 Classic function-body inlining uses independent original-byte statement frames
 through the optional `inlineCompiler` profile. Arguments evaluate before separate
 parameter/body scopes; checked defaults, rest/patterns and labelled returns keep
