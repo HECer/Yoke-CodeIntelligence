@@ -94,6 +94,10 @@ pub fn invoke_serena(
     deadline: &Deadline,
 ) -> Result<Value> {
     deadline.check()?;
+    ensure!(
+        session.tool_allowed(name),
+        "Tool excluded by session steering"
+    );
     let inventory = contracts();
     let row = inventory["tools"]
         .as_array()
@@ -198,6 +202,10 @@ pub fn invoke_serena_with_repl(
     deadline: &Deadline,
 ) -> Result<Value> {
     deadline.check()?;
+    ensure!(
+        session.tool_allowed(name),
+        "Tool excluded by session steering"
+    );
     let inventory = contracts();
     let row = inventory["tools"]
         .as_array()

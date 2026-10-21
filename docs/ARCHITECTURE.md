@@ -2,6 +2,15 @@
 
 ## Native Rust ownership
 
+Optional host-owned session steering resolves bounded global/project/local
+defaults and CLI selection with persistent base/added modes. Literal context and
+mode guidance never evaluates templates or grants authority. MCP catalogs and
+dispatch share exact exclusions; real catalog changes emit bounded notifications
+through stdio or finite HTTP SSE. Versioned host bindings, recomputed effective
+modes and CAS updates preserve stale/forgery/concurrency refusal. The legacy
+default agent profile retains its original serialized identities.
+See [the native contract](../native/docs/session-steering.md).
+
 The explicit Git compiler-affected query releases the checked report read view
 before trusted host compiler execution and revalidates original pins afterward.
 Independent snapshot/project contexts retain actual checker declarations, exact

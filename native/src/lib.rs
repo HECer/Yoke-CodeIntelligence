@@ -95,6 +95,7 @@ pub mod runtime;
 pub mod semantic_enrichment;
 pub mod semantic_refactor;
 pub mod server_catalog;
+pub mod session_steering;
 pub mod skill_takeaways;
 pub mod source_acquisition;
 pub mod source_acquisition_http;

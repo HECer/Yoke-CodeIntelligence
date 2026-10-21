@@ -145,6 +145,15 @@ fn operation(name: &str) -> Result<&str> {
         name => name,
     })
 }
+/// One owned query identity across both public prefixes and their legacy aliases.
+pub(crate) fn steering_identity(name: &str) -> Option<&str> {
+    operation(name).ok().filter(|op| {
+        matches!(
+            *op,
+            "find_code" | "find_all" | "trace_calls" | "file_api" | "repo_map" | "check_freshness"
+        )
+    })
+}
 fn count(value: &Value, maximum: usize) -> Result<usize> {
     let n = value
         .as_u64()
@@ -159,6 +168,10 @@ pub fn invoke(
     deadline: &Deadline,
 ) -> Result<Value> {
     deadline.check()?;
+    ensure!(
+        session.tool_allowed(name),
+        "Tool excluded by session steering"
+    );
     let operation = operation(name)?;
     let (_, _, properties) = definitions()
         .into_iter()

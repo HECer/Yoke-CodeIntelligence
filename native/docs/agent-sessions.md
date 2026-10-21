@@ -1,5 +1,9 @@
 # Native project sessions and source retrieval
 
+[Host-owned context and mode steering](session-steering.md) adds effective
+instructions, layered selection and MCP catalog/dispatch restrictions. The
+legacy default agent profile retains its original identities and catalog.
+
 The Windows-first parity implementation provides persistent project steering,
 authored application notes, source queries, guarded edit plans, and an optional
 trusted Python REPL. This document describes implemented interfaces; it does not

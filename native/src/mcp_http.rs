@@ -429,6 +429,7 @@ struct Reply {
     body: Vec<u8>,
     session: Option<String>,
     origin: Option<String>,
+    event_stream: bool,
 }
 impl Reply {
     fn empty(status: u16) -> Self {
@@ -437,6 +438,7 @@ impl Reply {
             body: vec![],
             session: None,
             origin: None,
+            event_stream: false,
         }
     }
     fn fault(fault: Fault) -> Self {
@@ -445,6 +447,7 @@ impl Reply {
             body: serde_json::to_vec(&json!({"error":fault.1})).expect("static error"),
             session: None,
             origin: None,
+            event_stream: false,
         }
     }
 }
@@ -865,7 +868,11 @@ fn send_reply(
         reply.body.len()
     );
     if !reply.body.is_empty() {
-        header.push_str("Content-Type: application/json\r\n");
+        header.push_str(if reply.event_stream {
+            "Content-Type: text/event-stream\r\n"
+        } else {
+            "Content-Type: application/json\r\n"
+        });
     }
     if reply.status == 405 {
         header.push_str("Allow: POST, DELETE, OPTIONS\r\n");
@@ -1027,9 +1034,22 @@ fn actor(receiver: mpsc::Receiver<Job>, shared: Arc<Shared>, config: Arc<Config>
                                 .map_err(|_| anyhow::anyhow!("MCP version state unavailable"))? =
                                 Some(version.into());
                         }
+                        let notifications = session.state.take_notifications();
                         let mut reply = match value {
                             Some(value) => {
-                                let body = serde_json::to_vec(&value)?;
+                                let event_stream = !notifications.is_empty();
+                                let body = if event_stream {
+                                    let mut body = Vec::new();
+                                    for event in notifications.iter().chain(std::iter::once(&value))
+                                    {
+                                        body.extend_from_slice(b"event: message\ndata: ");
+                                        serde_json::to_writer(&mut body, event)?;
+                                        body.extend_from_slice(b"\n\n");
+                                    }
+                                    body
+                                } else {
+                                    serde_json::to_vec(&value)?
+                                };
                                 ensure!(
                                     body.len() <= MAX_RESPONSE,
                                     "MCP response exceeds transport capacity"
@@ -1039,6 +1059,7 @@ fn actor(receiver: mpsc::Receiver<Job>, shared: Arc<Shared>, config: Arc<Config>
                                     body,
                                     session: None,
                                     origin: None,
+                                    event_stream,
                                 }
                             }
                             None => Reply::empty(202),
