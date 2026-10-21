@@ -1,0 +1,182 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "exitCode": 0,
+      "error": "",
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "callerTypesExact": true,
+      "literalBox": false
+    },
+    {
+      "case": 1,
+      "exitCode": 0,
+      "error": "",
+      "beforeTypes": [
+        "{ n: number; }"
+      ],
+      "afterTypes": [
+        "{ n: number; }"
+      ],
+      "callerTypesExact": true,
+      "literalBox": false
+    },
+    {
+      "case": 2,
+      "exitCode": 0,
+      "error": "",
+      "beforeTypes": [
+        "3"
+      ],
+      "afterTypes": [
+        "3"
+      ],
+      "callerTypesExact": true,
+      "literalBox": true
+    },
+    {
+      "case": 3,
+      "exitCode": 0,
+      "error": "",
+      "beforeTypes": [
+        "string"
+      ],
+      "afterTypes": [
+        "string"
+      ],
+      "callerTypesExact": true,
+      "literalBox": false
+    },
+    {
+      "case": 4,
+      "exitCode": 0,
+      "error": "",
+      "beforeTypes": [
+        "() => Promise<number>",
+        "number"
+      ],
+      "afterTypes": [
+        "() => Promise<number>",
+        "number"
+      ],
+      "callerTypesExact": true,
+      "literalBox": false
+    },
+    {
+      "case": 5,
+      "exitCode": 0,
+      "error": "",
+      "beforeTypes": [
+        "() => Generator<number, number, number>",
+        "number"
+      ],
+      "afterTypes": [
+        "() => Generator<number, number, number>",
+        "number"
+      ],
+      "callerTypesExact": true,
+      "literalBox": false
+    },
+    {
+      "case": 6,
+      "exitCode": 0,
+      "error": "",
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "callerTypesExact": true,
+      "literalBox": false
+    },
+    {
+      "case": 7,
+      "exitCode": 0,
+      "error": "",
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "callerTypesExact": true,
+      "literalBox": false
+    },
+    {
+      "case": 8,
+      "exitCode": 0,
+      "error": "",
+      "beforeTypes": [
+        "Row"
+      ],
+      "afterTypes": [
+        "{ n: number; }"
+      ],
+      "callerTypesExact": false,
+      "literalBox": false
+    },
+    {
+      "case": 9,
+      "exitCode": 0,
+      "error": "",
+      "beforeTypes": [
+        "3"
+      ],
+      "afterTypes": [
+        "3"
+      ],
+      "callerTypesExact": true,
+      "literalBox": true
+    },
+    {
+      "case": 10,
+      "exitCode": 0,
+      "error": "",
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "callerTypesExact": true,
+      "literalBox": false
+    },
+    {
+      "case": 11,
+      "exitCode": 0,
+      "error": "",
+      "beforeTypes": [
+        "() => number"
+      ],
+      "afterTypes": [
+        "() => number"
+      ],
+      "callerTypesExact": true,
+      "literalBox": false
+    },
+    {
+      "case": 12,
+      "exitCode": 0,
+      "error": "",
+      "beforeTypes": [
+        "() => 3"
+      ],
+      "afterTypes": [
+        "() => 3"
+      ],
+      "callerTypesExact": true,
+      "literalBox": true
+    }
+  ],
+  "allChecksPassed": false,
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "prototypeWorkerPatch": true
+}

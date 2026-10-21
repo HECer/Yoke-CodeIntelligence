@@ -1,5 +1,10 @@
 # Integration development evidence, 2026-10-19 local
 
+Body completion and call-specific result types have [separate evidence](function-body-completion/README.md):
+source-derived carriers, guarded control flow and JSDoc ownership; 113 scoped
+integration passes and eleven units. Counts overlap; full STATUS/Windows acceptance
+remains open.
+
 Source-derived inferred var types have [separate evidence](function-body-types/README.md):
 original-byte cold carriers, destructured type coverage and ordered control frames;
 111 scoped integration passes and nine body units. Counts overlap; full STATUS/
