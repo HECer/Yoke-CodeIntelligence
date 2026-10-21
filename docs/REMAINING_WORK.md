@@ -1,5 +1,27 @@
 # Remaining implementation and acceptance
 
+An explicit host startupProject now selects a registered project (or default)
+before initial modes, instructions or MCP catalogs are resolved. In ide,
+claude-code and grok contexts, activation is hidden/refused and removing the
+fixed project is refused across session, compatibility and real Python callback
+paths. Stored project forgery, stale CAS and changed host selection refuse.
+Other contexts start selected but retain project switching and resume their
+current project. No-setting host/session identities and actual old CLI output
+remain exact. Selection adds no read, write, execution or project trust grant.
+
+At source c47813b1, 142 distinct Rust functions pass across 24 scoped targets
+(8 new startup functions,3 existing ignores), with 1019 unchanged input hashes.
+The 34 focused functions are reused on identical inputs; 20 other targets,
+all-target Clippy -Dwarnings, fmt/build/typecheck and npm 260/3 existing skips pass.
+Actual published-CLI RED and the SAME original source/profile/requests/session
+GREEN qualify startup admission, concrete-project MCP catalog/dispatch, primary
+selection and restart. Old session rows/source/Git and registered Unicode target
+bytes remain exact. See [the contract](../native/docs/session-steering.md)
+and [indexed evidence](validation/integration-2026-10-21/session-startup-project/README.md).
+This qualifies explicit native startup selection, not YAML/client equivalence,
+all 25 settings, the 353 inventory or full R1-R9/Windows/main/release acceptance.
+Ten original OS1314 prerequisites remain unchanged; no system settings changed.
+
 Native host-owned context/mode steering now also selects REPL API groups or
 individual methods through explicit excludedApis settings. Per-cell discovery
 and every host callback enforce the current policy, including cached callables,

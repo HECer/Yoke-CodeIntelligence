@@ -17,6 +17,13 @@ declaration/context origins; cached callables and the generic native helper
 cannot bypass selection. Ordinary tool adapters use a separate host-owned
 origin. Empty API fields preserve preceding serialized identities and results.
 
+Explicit host startup project selection additionally pins its own fingerprint
+wrapper while preserving absent-setting identities. Single-project contexts
+select concrete initial modes/catalogs and enforce activation/removal admission
+in the central session operations. Resume checks the fixed project and host
+binding; other contexts retain their current saved project. No source setting
+can select a project or grant authority.
+
 The explicit Git compiler-affected query releases the checked report read view
 before trusted host compiler execution and revalidates original pins afterward.
 Independent snapshot/project contexts retain actual checker declarations, exact

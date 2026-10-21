@@ -100,9 +100,8 @@ bytes remain intact. Unknown/duplicate tools, unknown settings, NULs and exceede
 bounds fail before session publication or a mode update.
 
 This qualifies the native steering mechanism. Upstream YAML file discovery,
-arbitrary Jinja templates, automatic activation commands, client-specific
-single-project startup and the remaining 25 project settings are not certified
-by it. In particular, repository instructions never authorize code execution.
+arbitrary Jinja templates, automatic activation commands, complete client
+equivalence and the remaining 25 project settings are not certified by it. In particular, repository instructions never authorize code execution.
 
 ## REPL API exclusions
 
@@ -152,3 +151,36 @@ not launch an image to determine its type. This uses
 [Windows executable classification](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getbinarytypew)
 and changes no system or privilege settings. Classification is not a sandbox or
 proof of arbitrary valid-program startup behavior.
+
+## Explicit startup project
+
+The host profile optionally accepts startupProject, an exact registered name
+or default for the primary root. A new session selects it before resolving
+project/project-local instructions, modes and tool restrictions. Unknown names,
+paths, confusables, overlong labels and query-only registrations refuse before
+session publication. No project source setting is loaded or trusted by this
+field, and project selection never executes an activation command.
+
+With ide, claude-code or grok, an explicit startup selection fixes the active
+project for that session. activate_project is hidden and refused; direct
+session activate and generic Python callbacks also refuse, even when selecting
+the same project. Removing the fixed project is refused. Modes remain mutable
+under their existing policy/CAS gates and cannot unlock project activation.
+These native contexts implement the documented single-project startup behavior;
+[the pinned public configuration contract](https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/docs/02-usage/050_configuration.md#contexts)
+is the functional reference, not copied application code or prompt text.
+
+Other contexts use startupProject only for a newly created session; they retain
+ordinary project switching, and resume retains the current saved project.
+Changing the host startup selection or context changes the binding and refuses
+an old session. Fixed-project resume additionally rejects a stored active
+project which differs from the pinned selection. Host registration, independent
+query-project scopes, source access, read-only and execution grants still apply.
+This fixes active-project steering and does not create an OS or source sandbox.
+
+configuration adds startupProject and projectActivationLocked only when the host
+selected the option. With no selection, serialization, fingerprint domain,
+configuration and existing activation semantics retain their original bytes.
+The primary --root remains the session-state owner; startupProject chooses the
+active registered project for session-backed operations. The independent native
+eight-tool profile retains its existing primary-Engine contract.
