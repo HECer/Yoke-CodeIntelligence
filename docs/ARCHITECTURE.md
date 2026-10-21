@@ -23,7 +23,10 @@ result carrier from a
 never-executed source-function call with already evaluated fresh argument temps.
 Attached JSDoc templates, literal inference and free bindings retain checked scope.
 Empty declaration statements protect neighboring annotation/typedef ownership.
-Context-sensitive arguments use a fixed pure rest collector with an inert
+Caller JSDoc moves once with its original lexical declaration in the same
+scope, after generated statements; the native parser derives the widened edit
+extent and exact source correspondence. Copied callee function tags stay in one
+contract comment so template/parameter/return binders remain together. Context-sensitive arguments use a fixed pure rest collector with an inert
 source-derived callable signature. Original arguments run once before existing
 parameter/default/body lowering; raw dense-array indexing avoids iterator hooks.
 Bounded original documentation pieces retain compiler type authority and native

@@ -495,7 +495,11 @@ fn check(
             "Body aggregate frame output/correspondence capacity exceeded"
         );
         expected.push((
-            frame.statement_start,
+            caller_start(
+                source,
+                node_at(tree, frame.statement_start, frame.statement_end, d)?,
+                d,
+            )?,
             frame.statement_end,
             rendered.text,
             rendered.copies,
@@ -510,11 +514,9 @@ fn check(
             )) && symbol.start_byte == declaration.start_byte(),
             "Body exported/unsupported declaration must be retained"
         );
-        let deletion = if return_docs(source, declaration, d)?.is_empty() {
-            String::new()
-        } else {
-            ";".into()
-        };
+        // Keep a statement boundary even without attached callee docs: removing
+        // a preceding token must not turn its trailing JSDoc into leading docs.
+        let deletion = ";".into();
         expected.push((symbol.start_byte, symbol.end_byte, deletion, vec![]));
     }
     expected.sort_by_key(|e| e.0);

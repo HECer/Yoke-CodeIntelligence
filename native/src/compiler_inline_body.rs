@@ -383,6 +383,16 @@ fn return_docs<'a>(source: &str, declaration: Node<'a>, d: &Deadline) -> Result<
     }
     Ok(docs)
 }
+// Move attached caller documentation with its original lexical declaration.
+// The source parser determines the widened edit; the provider supplies no range.
+fn caller_start(source: &str, statement: Node<'_>, d: &Deadline) -> Result<usize> {
+    if matches!(statement.kind(), "lexical_declaration" | "export_statement") {
+        return Ok(return_docs(source, statement, d)?
+            .first()
+            .map_or(statement.start_byte(), Node::start_byte));
+    }
+    Ok(statement.start_byte())
+}
 fn documentation_pieces(
     source: &str,
     declaration: Node<'_>,
@@ -459,6 +469,30 @@ fn documentation_pieces(
     }
     Ok(pieces.clone())
 }
+fn emit_documentation(
+    out: &mut Rendered,
+    source: &str,
+    docs: &[DocPiece],
+    role: &'static str,
+    line: &str,
+) -> Result<()> {
+    let tags = docs.first().is_some_and(|doc| doc.tag);
+    ensure!(
+        docs.iter().all(|doc| doc.tag == tags),
+        "Body documentation recipe is mixed"
+    );
+    if tags {
+        out.generated("/** ")?;
+    }
+    for doc in docs {
+        out.original(source, doc.start_byte, doc.end_byte, role)?;
+        out.generated(line)?;
+    }
+    if tags {
+        out.generated(&format!(" */{line}"))?;
+    }
+    Ok(())
+}
 fn return_witness(
     out: &mut Rendered,
     source: &str,
@@ -482,16 +516,7 @@ fn return_witness(
         "if (void 0 !== void 0) {{{line}var {} = ",
         names.return_type[0]
     ))?;
-    for doc in docs {
-        if doc.tag {
-            out.generated("/** ")?;
-        }
-        out.original(source, doc.start_byte, doc.end_byte, "return_witness")?;
-        if doc.tag {
-            out.generated(" */")?;
-        }
-        out.generated(line)?;
-    }
+    emit_documentation(out, source, &docs, "return_witness", line)?;
     let parameters = declaration
         .child_by_field_name("parameters")
         .context("Body return type parameters absent")?;
@@ -748,7 +773,12 @@ pub(super) fn render(
     // A finally break/continue can cancel a pending return.
     out.generated(&format!("{line}{} = void 0;{line}", frame.names.result))?;
     out.generated(&format!("}}{line}}}{line}}}{line}"))?;
-    out.original(source, statement.start_byte(), call.start_byte(), "caller")?;
+    out.original(
+        source,
+        caller_start(source, statement, d)?,
+        call.start_byte(),
+        "caller",
+    )?;
     let annotated = declaration.child_by_field_name("return_type");
     ensure!(
         annotated.is_none() || frame.result_type.is_none(),
@@ -994,6 +1024,55 @@ mod tests {
                 )
                 .is_err()
             );
+        }
+    }
+    #[test]
+    fn caller_comment_ownership_is_derived_from_bounded_original_syntax() {
+        for (prefix, suffix, attached) in [
+            ("/** @type {number} */\n", "", true),
+            ("const marker=1;/** @type {number} */ ", "", false),
+            ("const marker=1;\n/** @type {number} */ ", "", true),
+            ("\u{feff}/** @type {number} */ ", "", true),
+            ("/** @type {number} */\u{feff} ", "", true),
+            ("{/** @type {number} */ ", "}", false),
+            ("{\r\n/** @type {number} */ ", "}", true),
+            ("const marker=1;\u{2028}/** @type {number} */ ", "", false),
+            (
+                "// \u{03c0}\u{1f30d}\r\n/** ordinary */\r\n/* retained */\r\n/** @type {number} */ ",
+                "",
+                true,
+            ),
+            ("/* ordinary */ ", "", false),
+        ] {
+            let source = format!("{prefix}const result=helper();{suffix}");
+            let d = Deadline::new(10_000);
+            let tree = parse("javascript", &source, &d).unwrap();
+            let start = source.find("const result").unwrap();
+            let statement =
+                node_at(&tree, start, start + "const result=helper();".len(), &d).unwrap();
+            let at = caller_start(&source, statement, &d).unwrap();
+            assert_eq!(
+                at,
+                if attached {
+                    source.find("/**").unwrap()
+                } else {
+                    start
+                },
+                "{source}"
+            );
+            assert!(source.is_char_boundary(at));
+            assert!(caller_start(&source, statement, &Deadline::new(0)).is_err());
+        }
+        for prefix in [
+            "/** ordinary */\n".repeat(65),
+            format!("{}\n/** @type {{number}} */\n", " ".repeat(200_001)),
+        ] {
+            let source = format!("{prefix}const result=helper();");
+            let d = Deadline::new(10_000);
+            let tree = parse("javascript", &source, &d).unwrap();
+            let start = source.find("const result").unwrap();
+            let statement = node_at(&tree, start, source.len(), &d).unwrap();
+            assert!(caller_start(&source, statement, &d).is_err());
         }
     }
     #[test]

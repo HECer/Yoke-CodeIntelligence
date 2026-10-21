@@ -1050,6 +1050,93 @@ fn argument_capture_keeps_contextual_types_generic_literals_names_defaults_and_h
     }
 }
 #[test]
+fn caller_documentation_keeps_its_declaration_context_typedef_identity_and_exact_bytes() {
+    for (language, source) in [
+        (
+            "js",
+            "/** @template T\n * @returns {T} */\nfunction make(){return /** @type {T} */ (/** @type {unknown} */ (3));}\n/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}\n/** @type {3} */ const result=helper(make());export const observed=result+1;",
+        ),
+        (
+            "js",
+            "function helper(){return 3;}\n/** @type {number} */ const result=helper();export const observed=result;",
+        ),
+        (
+            "js",
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}\n/** @type {3} */ export const result=helper(3);export const observed=result+1;",
+        ),
+        (
+            "js",
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}\n/** @typedef {3} Result\n * @type {Result} */ const result=helper(3);export const observed=result+1;",
+        ),
+        (
+            "js",
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}\n/** @typedef {3} Result */\n/** @type {Result} */ const result=helper(3);/** @type {Result} */ const other=3;export const observed=result+other;",
+        ),
+        (
+            "js",
+            "/** @typedef {string} Result */\n/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}\nfunction caller(){\n/** @typedef {3} Result */\n/** @type {Result} */ const result=helper(3);return result;}export const observed=caller()+1;",
+        ),
+        (
+            "js",
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}\n/** annotation */\n// retained\n/** @type {3} */ /* retained block */ const result=helper(3);export const observed=result+1;",
+        ),
+        (
+            "js",
+            "// \u{03c0}\u{1f30d}\r\n/** @template T\r\n * @returns {T} */\r\nfunction make(){return /** @type {T} */ (/** @type {unknown} */ (3));}\r\n/** @template T\r\n * @param {T} n\r\n * @returns {T} */\r\nfunction helper(n){return n;}\r\n/** @type {3} */ const result=helper(make());export const observed=result+1;",
+        ),
+        (
+            "js",
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}\nconst before=3;/** @type {3} */ const result=helper(before);export const observed=result+1;",
+        ),
+        (
+            "js",
+            "\u{feff}/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}\n/** @type {3} */ const result=helper(3);export const observed=result+1;",
+        ),
+        (
+            "js",
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}\n/** @type {3} */ const first=helper(3);\n/** @type {4} */ const result=helper(4);export const observed=first+result;",
+        ),
+        (
+            "ts",
+            "function helper(n:number):number{return n;}\n/** @type {number} */ const result=helper(3);export const observed=result;",
+        ),
+        (
+            "js",
+            "function helper(){return 3;}/** @type {3} */ const result=helper();export const observed=result;",
+        ),
+    ] {
+        let (root, mut engine) = fixture(source, language);
+        let path = root.path().join("tsconfig.json");
+        let mut config: Value = serde_json::from_slice(&fs::read(&path).unwrap()).unwrap();
+        for option in ["allowUnreachableCode", "allowUnusedLabels"] {
+            config["compilerOptions"][option] = json!(false);
+        }
+        for option in ["noUnusedLocals", "noUnusedParameters"] {
+            config["compilerOptions"][option] = json!(true);
+        }
+        fs::write(path, serde_json::to_vec(&config).unwrap()).unwrap();
+        let r =
+            yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, language), &d())
+                .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        let after = planned(&engine, &r, language);
+        same_execution(source, &after);
+        assert_eq!(r["sourceExecuted"], false);
+        assert_eq!(r["verificationRequired"], true);
+        assert_eq!(
+            after.matches("@typedef").count(),
+            source.matches("@typedef").count()
+        );
+        assert_eq!(
+            after.matches("@type {3}").count(),
+            source.matches("@type {3}").count()
+        );
+        assert_eq!(
+            fs::read_to_string(root.path().join(format!("main.{language}"))).unwrap(),
+            source
+        );
+    }
+}
+#[test]
 fn unsafe_or_unowned_body_forms_refuse_before_any_plan_or_derived_source() {
     for source in [
         "type Const={n:number};function helper():unknown{return {} as Const;}function caller(){type Const={m:string};return helper();}export const observed=caller();",
@@ -1146,6 +1233,18 @@ fn wrapped_eval_in_the_body_or_caller_cannot_publish_a_plan() {
 #[test]
 fn body_cli_plans_require_independent_verification_approval_and_foreign_preserving_recovery() {
     for (source, keep, strict, language) in [
+        (
+            "function helper(){return 3;}/** @type {3} */ const result=helper();export const observed=result;",
+            false,
+            true,
+            "js",
+        ),
+        (
+            "/** @template T\n * @returns {T} */\nfunction make(){return /** @type {T} */ (/** @type {unknown} */ (3));}\n/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}\n/** @type {3} */ const result=helper(make());export const observed=result+1;",
+            false,
+            true,
+            "js",
+        ),
         (
             "function helper(fn:(n:number)=>number):number{return fn(3);}const result=helper(n=>n+1);export const observed=result;",
             false,

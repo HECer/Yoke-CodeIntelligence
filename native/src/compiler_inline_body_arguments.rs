@@ -258,16 +258,13 @@ pub(super) fn emit(
         "if (void 0 !== void 0) {{{line}var {} = ",
         names[0]
     ))?;
-    for doc in documentation_pieces(source, declaration, frame, d)? {
-        if doc.tag {
-            out.generated("/** ")?;
-        }
-        out.original(source, doc.start_byte, doc.end_byte, "argument_signature")?;
-        if doc.tag {
-            out.generated(" */")?;
-        }
-        out.generated(line)?;
-    }
+    emit_documentation(
+        out,
+        source,
+        &documentation_pieces(source, declaration, frame, d)?,
+        "argument_signature",
+        line,
+    )?;
     out.generated("function")?;
     out.original(
         source,

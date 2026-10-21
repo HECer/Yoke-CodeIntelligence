@@ -294,3 +294,19 @@ languages, multiple owning contexts, consumers outside the selected file,
 alternative escaped identifier spellings, unowned removal trivia and other
 replacement shapes remain explicit boundaries. Broader function-body inline,
 symbol moves and universal IDE parity require further implementation and evidence.
+
+Attached caller JSDoc stays with the original lexical declaration after the
+inserted statements. The source parser independently derives the widened edit
+extent; the compiler provides no documentation-range override. Original comment
+bytes, trivia and typedef declarations move once in the same lexical scope,
+including exported declarations. Existing source correspondences retain type
+declaration identity. Trailing comments that were not attached remain in place.
+When original callee documentation also declares module typedefs/callbacks/imports,
+its copied function tags form one contract comment. Keeping template, parameter
+and return tags together preserves their binder on inert function expressions.
+Unknown fields, changed comment extents/types and coherent forged projections
+remain subject to independent native reconstruction and application gates.
+
+Removing any body definition leaves a fixed empty statement. This preserves the
+original statement boundary even when a trailing JSDoc comment was not attached
+to either declaration; deletion cannot turn it into a generated variable type.

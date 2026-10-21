@@ -39,6 +39,32 @@ original receipts and semantic claims remain distinct from interpretation truth.
 
 ## Acceptance still required
 
+Attached caller JSDoc now stays with its original lexical declaration after the
+inserted statements. Native derives the widened edit extent from original syntax;
+there is no provider range override. Every removed definition leaves an empty
+statement to stop trailing comments from acquiring a new annotation owner.
+Comments/trivia move once in the same scope,
+retaining typedef identity, exports, UTF-8/CRLF bytes and surviving types. Copied
+callee function tags form one contract comment so template, parameter and return
+tags keep their common binder. The original caller @type{3}/generic-factory
+counterexample and a nested typedef/template counterexample now pass.
+
+One new integration function covers thirteen positive cases. Two new units cover
+original attachment/budget rules and coherent forged comment extents/types/output;
+two additional CLI cases pass independent tsc, approval, apply and conditional
+foreign-preserving recovery (seventeen CLI scenarios total). The scoped regression
+passes 117 integrations / 0 failures / 2 existing ignored across eight targets and
+sixteen body units on 811 unchanged native inputs; fmt/build/all-target Clippy pass.
+Python 17, typecheck and TypeScript 260 / 3 existing skips pass on 805 unchanged
+retained inputs. Counts overlap. Preparation executes no analyzed source.
+
+Broader generic/expected-result contexts, actual TypeScript generic frames,
+predicate/parameter/annotation/diagnostic and wider invocation/expression/
+declaration/language/consumer semantics, other R1-R9 work and complete Windows/
+current-head hosted/upstream acceptance remain open. See the
+[caller-documentation evidence](validation/integration-2026-10-19/function-body-caller-docs/README.md).
+The following argument-context results belong to the preceding source checkpoint.
+
 Context-sensitive arguments now keep original callable typing through a fixed
 pure rest collector. The original argument list executes once before parameter
 defaults, rest/pattern initialization and the original body. Fresh raw arrays are

@@ -513,3 +513,112 @@ fn argument_doc_types_and_raw_collection_cannot_forge_bounds_names_or_execution(
     );
     assert_eq!(engine.store.db.query_row("SELECT COUNT(*) FROM records WHERE kind IN ('plan','approval','receipt','journal','native_compiler_report_v1')",[],|r|r.get::<_,usize>(0)).unwrap(),0);
 }
+
+#[test]
+fn caller_documentation_cannot_forge_source_extent_ownership_or_copied_types() {
+    let root = tempfile::tempdir().unwrap();
+    let source = "// \u{03c0}\n/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}\n/** @typedef {3} Result */\n/** @type {Result} */ const result=helper(3);/** @type {Result} */ const other=3;export const observed=result+other;";
+    fs::write(root.path().join("main.js"), source).unwrap();
+    fs::write(root.path().join("tsconfig.json"), r#"{"compilerOptions":{"strict":true,"allowJs":true,"checkJs":true,"target":"ES2022","module":"ESNext","noEmit":true},"files":["main.js"]}"#).unwrap();
+    let mut engine = Engine::open(root.path()).unwrap();
+    let d = Deadline::new(60_000);
+    let (snapshot, graph, _, _) = engine.index(&d).unwrap();
+    let symbol =
+        crate::agent_repl::source_symbol(&engine.store, &snapshot, &graph, "helper", "main.js", &d)
+            .unwrap();
+    let tree = parse("javascript", source, &d).unwrap();
+    let declaration = classic(&tree, &symbol, source, &d).unwrap().unwrap();
+    let spec = CompilerSpec {
+        node: std::env::split_paths(&std::env::var_os("PATH").unwrap())
+            .map(|p| p.join(if cfg!(windows) { "node.exe" } else { "node" }))
+            .find(|p| p.is_file())
+            .unwrap()
+            .canonicalize()
+            .unwrap(),
+        typescript: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("../node_modules/typescript/lib/typescript.js")
+            .canonicalize()
+            .unwrap(),
+        trusted: true,
+    };
+    let intent = json!({"path":symbol.path,"name":symbol.name,"startByte":symbol.start_byte,"endByte":symbol.end_byte,"nameStartByte":symbol.name_start_byte,"nameEndByte":symbol.name_end_byte,"keepDefinition":false});
+    let report = crate::projects::execute(
+        &engine.store,
+        &snapshot,
+        &spec,
+        "inlineBody",
+        Some(intent),
+        &d,
+    )
+    .unwrap();
+    let baseline = report["bodyInline"].clone();
+    let admit = |value: Value, deadline: &Deadline| -> Result<String> {
+        let effect: Effect = crate::json::decode(value)?;
+        Ok(check(
+            &engine,
+            &spec,
+            &snapshot,
+            &symbol,
+            source,
+            &tree,
+            declaration,
+            false,
+            &effect,
+            &report,
+            deadline,
+        )?
+        .1)
+    };
+    let result = admit(baseline.clone(), &d).unwrap();
+    let start = source.find("/** @typedef").unwrap();
+    let statement = source.find("const result").unwrap();
+    assert_eq!(baseline["edits"][1]["startByte"], start);
+    assert!(result.find("let __ci_inline_1;").unwrap() < result.find("/** @typedef").unwrap());
+    assert_eq!(result.matches("@typedef").count(), 1);
+    let coherent = |value: &mut Value| {
+        let mut output = source.to_owned();
+        for edit in value["edits"].as_array().unwrap().iter().rev() {
+            output.replace_range(
+                edit["startByte"].as_u64().unwrap() as usize
+                    ..edit["endByte"].as_u64().unwrap() as usize,
+                edit["text"].as_str().unwrap(),
+            );
+        }
+        value["resultHash"] = json!(crate::model::hash(output));
+    };
+    for changed_start in [0, statement, start + 1, source.len() + 1] {
+        let mut bad = baseline.clone();
+        bad["edits"][1]["startByte"] = json!(changed_start);
+        assert!(admit(bad, &d).is_err());
+    }
+    // The old statement extent plus retained documentation would attach @type
+    // to a generated temp. Even a coherent projection/hash must refuse.
+    let mut bad = baseline.clone();
+    let replacement = bad["edits"][1]["text"]
+        .as_str()
+        .unwrap()
+        .replace(&source[start..statement], "");
+    bad["edits"][1]["startByte"] = json!(statement);
+    bad["edits"][1]["text"] = json!(replacement);
+    coherent(&mut bad);
+    assert!(admit(bad, &d).is_err());
+    for (from, to) in [
+        ("@type {Result}", "@type {number}"),
+        ("@typedef {3}", "@typedef {number}"),
+    ] {
+        let mut bad = baseline.clone();
+        let replacement = bad["edits"][1]["text"].as_str().unwrap().replace(from, to);
+        bad["edits"][1]["text"] = json!(replacement);
+        coherent(&mut bad);
+        assert!(admit(bad, &d).is_err());
+    }
+    let mut bad = baseline.clone();
+    bad["frames"][0]["callerStart"] = json!(start);
+    assert!(admit(bad, &d).is_err());
+    assert!(admit(baseline, &Deadline::new(0)).is_err());
+    assert_eq!(
+        fs::read_to_string(root.path().join("main.js")).unwrap(),
+        source
+    );
+    assert_eq!(engine.store.db.query_row("SELECT COUNT(*) FROM records WHERE kind IN ('plan','approval','receipt','journal','native_compiler_report_v1')",[],|r|r.get::<_,usize>(0)).unwrap(),0);
+}
