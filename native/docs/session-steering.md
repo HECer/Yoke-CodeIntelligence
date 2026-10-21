@@ -103,3 +103,52 @@ This qualifies the native steering mechanism. Upstream YAML file discovery,
 arbitrary Jinja templates, automatic activation commands, client-specific
 single-project startup and the remaining 25 project settings are not certified
 by it. In particular, repository instructions never authorize code execution.
+
+## REPL API exclusions
+
+Each layer and custom context/mode definition additionally accepts
+`excludedApis`, a list of exact declared facade names (`mem`, `lsp`, etc.) or
+methods (`mem.read_memory`, `lsp.find_symbol`, etc.). Exclusions accumulate across
+the same six layers and are exposed as `configuration.steering.excludedApis`.
+Unknown, duplicate, wildcard or visually confusable names refuse. Empty fields
+are omitted from serialization, preserving prior host/session identities and
+legacy configuration/results when no API exclusions are selected.
+
+The host supplies the current selected method names before each explicitly
+authorized Python cell. Group/method discovery reflects that cell's selection;
+stored namespace objects also consult it. The host checks every callback again,
+so retained callables and edits to Python discovery globals cannot bypass an
+excluded API. Selection changes during a cell apply immediately to callbacks;
+discovery refreshes on the next cell. Registered API policies also check the
+exact persisted session revision before executing a cell and before callbacks.
+Resume after an external session change.
+
+Declaration-regex and project-context callbacks retain their original facade
+identity through qualified private bridge names. A project-context entry checks
+both its constructor and read-context APIs, including a manager cached before a
+mode change. Ambiguous legacy private callbacks refuse while restrictions are
+active. The generic native `s.invoke` helper is hidden and unavailable under an
+active API restriction; use selected declared APIs. This prevents that helper
+from bypassing the declared selection.
+
+API selection applies to REPL cells. Ordinary public tools retain their separate
+tool selection. Host-generated declaration/shell adapter cells use an internal
+tool origin that callers cannot provide through MCP arguments; their tool and
+independent host execution/source gates remain mandatory. The next user cell
+restores its own API selection.
+
+Excluding every API produces explicit empty discovery while ordinary trusted
+Python computation remains available. API restrictions are steering, not an OS
+sandbox. They never grant Python, shell, debugger, provider or source-write
+authority. Optional API inclusion and fixed interface/tool-set selection remain
+separate requirements; unsupported settings are rejected rather than accepted
+without effect.
+
+On Windows, starting an explicitly trusted Python worker first classifies the
+selected program as a 32-/64-bit Windows executable. Invalid image bytes refuse
+before process creation; explicitly selected `.cmd`/`.bat` launchers retain their
+existing managed path. Pure host registration still executes nothing and does
+not launch an image to determine its type. This uses
+[Windows executable classification](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getbinarytypew)
+and changes no system or privilege settings. Classification is not a sandbox or
+proof of arbitrary valid-program startup behavior.

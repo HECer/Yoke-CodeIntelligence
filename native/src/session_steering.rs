@@ -30,6 +30,8 @@ pub const LEGACY_INSTRUCTIONS: &str = "Use fs, symbol and source-bound graph que
 pub struct Definition {
     pub instructions: String,
     pub excluded_tools: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub excluded_apis: Vec<String>,
 }
 #[derive(Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
@@ -38,6 +40,8 @@ pub struct Layer {
     pub added_modes: Vec<String>,
     pub instructions: String,
     pub excluded_tools: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub excluded_apis: Vec<String>,
 }
 #[derive(Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
@@ -56,6 +60,20 @@ pub struct HostSteering {
     pub contexts: BTreeMap<String, Definition>,
     pub modes: BTreeMap<String, Definition>,
 }
+impl HostSteering {
+    pub fn has_api_exclusions(&self) -> bool {
+        !self.global.excluded_apis.is_empty()
+            || !self.cli.excluded_apis.is_empty()
+            || self.projects.values().any(|p| {
+                !p.project.excluded_apis.is_empty() || !p.project_local.excluded_apis.is_empty()
+            })
+            || self
+                .contexts
+                .values()
+                .chain(self.modes.values())
+                .any(|d| !d.excluded_apis.is_empty())
+    }
+}
 #[derive(Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Fragment {
@@ -73,6 +91,8 @@ pub struct Resolved {
     pub base_modes: Vec<String>,
     pub added_modes: Vec<String>,
     pub excluded_tools: BTreeSet<String>,
+    #[serde(skip_serializing_if = "BTreeSet::is_empty")]
+    pub excluded_apis: BTreeSet<String>,
     pub fragments: Vec<Fragment>,
     pub authority: &'static str,
 }
@@ -150,6 +170,28 @@ fn definition(instructions: &str, tools: &[String], known: &BTreeSet<String>) ->
     );
     Ok(())
 }
+fn api_selection(values: &[String]) -> Result<()> {
+    if values.is_empty() {
+        return Ok(());
+    }
+    let contract = crate::agent_repl::facade_contract();
+    let methods = contract["methods"]
+        .as_object()
+        .expect("Owned facade methods");
+    let groups: BTreeSet<_> = methods
+        .keys()
+        .filter_map(|s| s.split_once('.').map(|(group, _)| group))
+        .collect();
+    ensure!(
+        values.len() <= methods.len() + groups.len()
+            && values.iter().collect::<BTreeSet<_>>().len() == values.len()
+            && values
+                .iter()
+                .all(|s| methods.contains_key(s) || groups.contains(s.as_str())),
+        "Unknown or duplicate excluded REPL API"
+    );
+    Ok(())
+}
 pub(crate) fn validate(host: &HostProfile) -> Result<()> {
     if !enabled(host) {
         return Ok(());
@@ -170,6 +212,7 @@ pub(crate) fn validate(host: &HostProfile) -> Result<()> {
                 "Built-in context cannot be redefined"
             );
             definition(&d.instructions, &d.excluded_tools, &known)?;
+            api_selection(&d.excluded_apis)?;
         }
         for (name, d) in &s.modes {
             label(name)?;
@@ -178,6 +221,7 @@ pub(crate) fn validate(host: &HostProfile) -> Result<()> {
                 "Built-in mode cannot be redefined"
             );
             definition(&d.instructions, &d.excluded_tools, &known)?;
+            api_selection(&d.excluded_apis)?;
         }
         ensure!(
             CONTEXTS.contains(&host.context.as_str()) || s.contexts.contains_key(&host.context),
@@ -209,7 +253,8 @@ fn validate_layer(host: &HostProfile, l: &Layer, known: &BTreeSet<String>) -> Re
         selection(host, modes)?;
     }
     selection(host, &l.added_modes)?;
-    definition(&l.instructions, &l.excluded_tools, known)
+    definition(&l.instructions, &l.excluded_tools, known)?;
+    api_selection(&l.excluded_apis)
 }
 fn context_definition(name: &str) -> Definition {
     let instructions = match name {
@@ -257,6 +302,7 @@ fn context_definition(name: &str) -> Definition {
     Definition {
         instructions,
         excluded_tools,
+        excluded_apis: Vec::new(),
     }
 }
 fn mode_definition(name: &str) -> Definition {
@@ -318,6 +364,7 @@ fn mode_definition(name: &str) -> Definition {
     Definition {
         instructions: instructions.into(),
         excluded_tools: tools.iter().map(|s| (*s).into()).collect(),
+        excluded_apis: Vec::new(),
     }
 }
 fn extend_unique(out: &mut Vec<String>, values: &[String]) {
@@ -328,6 +375,12 @@ fn extend_unique(out: &mut Vec<String>, values: &[String]) {
     }
 }
 impl Resolved {
+    pub fn api_allowed(&self, method: &str) -> bool {
+        !self.excluded_apis.contains(method)
+            && !method
+                .split_once('.')
+                .is_some_and(|(group, _)| self.excluded_apis.contains(group))
+    }
     pub fn allows(&self, name: &str) -> bool {
         let identity = crate::trail_adapter::steering_identity(name);
         !self.excluded_tools.iter().any(|excluded| {
@@ -392,11 +445,13 @@ pub(crate) fn resolve(
         base_modes: s.base_modes.clone(),
         added_modes: Vec::new(),
         excluded_tools: BTreeSet::new(),
+        excluded_apis: BTreeSet::new(),
         fragments: Vec::new(),
         authority: "advisory_instructions_and_tool_restrictions_only",
     };
     extend_unique(&mut out.modes, selected);
     for (source, l) in &layers {
+        out.excluded_apis.extend(l.excluded_apis.iter().cloned());
         extend_unique(&mut out.added_modes, &l.added_modes);
         out.add((*source).into(), &l.instructions, &l.excluded_tools);
     }
@@ -408,6 +463,8 @@ pub(crate) fn resolve(
         .get(&host.context)
         .cloned()
         .unwrap_or_else(|| context_definition(&host.context));
+    out.excluded_apis
+        .extend(context.excluded_apis.iter().cloned());
     out.add(
         format!("context:{}", host.context),
         &context.instructions,
@@ -419,9 +476,12 @@ pub(crate) fn resolve(
             .get(&name)
             .cloned()
             .unwrap_or_else(|| mode_definition(&name));
+        out.excluded_apis.extend(d.excluded_apis.iter().cloned());
         out.add(format!("mode:{name}"), &d.instructions, &d.excluded_tools);
     }
     out.add("cli".into(), &s.cli.instructions, &s.cli.excluded_tools);
+    out.excluded_apis
+        .extend(s.cli.excluded_apis.iter().cloned());
     ensure!(
         out.instructions().len() <= 131072,
         "Expanded steering instruction capacity exceeded"

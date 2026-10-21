@@ -18,6 +18,44 @@ use std::{
 const MAX_FRAME: usize = 4_000_000;
 type WorkerInput = SyncSender<(Vec<u8>, Sender<Result<()>>)>;
 
+#[cfg(windows)]
+fn admit_windows_python_image(executable: &std::path::Path) -> Result<()> {
+    use std::os::windows::ffi::OsStrExt;
+    // Explicit batch launchers are handled by the existing owned process path.
+    if executable
+        .extension()
+        .and_then(|s| s.to_str())
+        .is_some_and(|s| s.eq_ignore_ascii_case("cmd") || s.eq_ignore_ascii_case("bat"))
+    {
+        return Ok(());
+    }
+    #[link(name = "kernel32")]
+    unsafe extern "system" {
+        fn GetBinaryTypeW(application: *const u16, binary_type: *mut u32) -> i32;
+    }
+    let path = executable
+        .canonicalize()
+        .context("Selected Python image is unavailable")?;
+    let path: Vec<u16> = path
+        .as_os_str()
+        .encode_wide()
+        .chain(std::iter::once(0))
+        .collect();
+    ensure!(
+        path.len() <= 32768 && !path[..path.len() - 1].contains(&0),
+        "Invalid selected Python image path"
+    );
+    let mut kind = 0u32;
+    // Classification reads executable metadata; it does not launch selected bytes.
+    // SAFETY: path is live, NUL-terminated UTF-16; kind is writable for the call.
+    let classified = unsafe { GetBinaryTypeW(path.as_ptr(), &mut kind) };
+    ensure!(
+        classified != 0 && matches!(kind, 0 | 6),
+        "Selected Python host requires a Windows PE executable or an explicit batch launcher"
+    );
+    Ok(())
+}
+
 #[derive(Clone, Debug)]
 pub struct HostShell {
     pub command: PathBuf,
@@ -154,6 +192,9 @@ impl AgentRepl {
     pub fn spawn(spec: ReplSpec, deadline: &Deadline) -> Result<Self> {
         deadline.check()?;
         Self::validate_spec(&spec)?;
+        #[cfg(windows)]
+        admit_windows_python_image(&spec.python)?;
+        deadline.check()?;
         let directory = tempfile::Builder::new()
             .prefix("yoke-agent-repl-")
             .tempdir()?;
@@ -296,6 +337,24 @@ impl AgentRepl {
         code: &str,
         deadline: &Deadline,
     ) -> Result<Value> {
+        self.execute_owned(session, code, deadline, true)
+    }
+    /// Only independently validated, host-generated tool-adapter cells use this path.
+    pub(crate) fn execute_tool(
+        &mut self,
+        session: &mut Session,
+        code: &str,
+        deadline: &Deadline,
+    ) -> Result<Value> {
+        self.execute_owned(session, code, deadline, false)
+    }
+    fn execute_owned(
+        &mut self,
+        session: &mut Session,
+        code: &str,
+        deadline: &Deadline,
+        apply_api_selection: bool,
+    ) -> Result<Value> {
         ensure!(
             self.child.is_some(),
             "Agent REPL state was lost; open a new worker"
@@ -304,7 +363,7 @@ impl AgentRepl {
             !code.is_empty() && code.len() <= 128000 && !code.contains('\0'),
             "Invalid agent REPL code budget"
         );
-        let result = self.execute_inner(session, code, deadline);
+        let result = self.execute_inner(session, code, deadline, apply_api_selection);
         if let Err(error) = result {
             if let Err(cleanup) = self.close() {
                 return Err(cleanup.context(format!(
@@ -320,15 +379,20 @@ impl AgentRepl {
         session: &mut Session,
         code: &str,
         deadline: &Deadline,
+        apply_api_selection: bool,
     ) -> Result<Value> {
         self.next += 1;
         let request_id = self.next;
         let mut callbacks = 0usize;
         let mut last_call_id = 0u64;
-        self.send(
-            &json!({"event":"execute","requestId":request_id,"code":code}),
-            deadline,
-        )?;
+        let mut request = json!({"event":"execute","requestId":request_id,"code":code});
+        if apply_api_selection {
+            session.check_repl_state(deadline)?;
+            if let Some(methods) = session.selected_repl_methods()? {
+                request["selectedMethods"] = json!(methods);
+            }
+        }
+        self.send(&request, deadline)?;
         loop {
             let message = self.receive(deadline)?;
             ensure!(
@@ -347,14 +411,25 @@ impl AgentRepl {
                         "Agent REPL callback identity/count budget exceeded"
                     );
                     last_call_id = call.call_id;
-                    let response = dispatch(
-                        session,
-                        &self.spec,
-                        &call.method,
-                        &call.arguments,
-                        call.project.as_deref(),
-                        deadline,
-                    );
+                    let response = if apply_api_selection {
+                        dispatch_repl(
+                            session,
+                            &self.spec,
+                            &call.method,
+                            &call.arguments,
+                            call.project.as_deref(),
+                            deadline,
+                        )
+                    } else {
+                        dispatch(
+                            session,
+                            &self.spec,
+                            &call.method,
+                            &call.arguments,
+                            call.project.as_deref(),
+                            deadline,
+                        )
+                    };
                     let reply = match response {
                         Ok(value) => {
                             json!({"event":"reply","requestId":request_id,"callId":call.call_id,"result":value,"error":null})
@@ -697,6 +772,48 @@ fn one_symbol(
     );
     Ok(items[0].clone())
 }
+fn repl_callback_identity(method: &str) -> Option<(&'static str, &'static str)> {
+    match method {
+        "bridge.lsp.find_declaration.source" => {
+            Some(("lsp.find_declaration", "bridge.declaration_source"))
+        }
+        "bridge.lsp.find_declaration.at" => Some(("lsp.find_declaration", "bridge.declaration_at")),
+        "bridge.jb.find_declaration.source" => {
+            Some(("jb.find_declaration", "bridge.declaration_source"))
+        }
+        "bridge.jb.find_declaration.at" => Some(("jb.find_declaration", "bridge.declaration_at")),
+        "bridge.ext.project_context.enter" => {
+            Some(("ext.project_context", "ext.read_project_context"))
+        }
+        _ => None,
+    }
+}
+fn dispatch_repl(
+    session: &mut Session,
+    spec: &ReplSpec,
+    method: &str,
+    args: &Value,
+    project: Option<&str>,
+    deadline: &Deadline,
+) -> Result<Value> {
+    session.check_repl_state(deadline)?;
+    if let Some((api, callback)) = repl_callback_identity(method) {
+        session.require_repl_api(api)?;
+        if api == "ext.project_context" {
+            session.require_repl_api("ext.read_project_context")?;
+        }
+        return dispatch(session, spec, callback, args, project, deadline);
+    }
+    if session.selected_repl_methods()?.is_some() {
+        ensure!(
+            !method.starts_with("native."),
+            "Generic native callbacks are unavailable under REPL API restrictions; use selected declared APIs"
+        );
+        session.require_repl_api(method)?;
+    }
+    dispatch(session, spec, method, args, project, deadline)
+}
+
 fn dispatch(
     session: &mut Session,
     spec: &ReplSpec,
@@ -705,6 +822,7 @@ fn dispatch(
     project: Option<&str>,
     deadline: &Deadline,
 ) -> Result<Value> {
+    let method = repl_callback_identity(method).map_or(method, |(_, callback)| callback);
     let limit = args
         .get("max_answer_chars")
         .map(|value| {

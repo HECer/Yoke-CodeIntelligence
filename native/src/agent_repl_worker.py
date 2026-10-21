@@ -16,6 +16,8 @@ _MAX_FRAME = 4_000_000
 _request_id = 0
 _call_id = 0
 _methods = {}
+_all_methods = {}
+_api_selection_active = False
 _output_limit = 0
 
 
@@ -82,7 +84,7 @@ class _ProjectContext:
         self.project = project
 
     def __enter__(self):
-        _rpc("ext.read_project_context", {"project_name": self.project})
+        _rpc("bridge.ext.project_context.enter", {"project_name": self.project})
         return _Facade(self.project)
 
     def __exit__(self, *_):
@@ -114,7 +116,7 @@ class _Group:
             if method == "ext.project_context":
                 return _ProjectContext(values["project_name"])
             if method in ("lsp.find_declaration", "jb.find_declaration"):
-                source = _rpc("bridge.declaration_source", values, self.project)
+                source = _rpc("bridge." + method + ".source", values, self.project)
                 expression = re.compile(values["regex"], re.MULTILINE | re.DOTALL)
                 if expression.groups != 1:
                     raise RuntimeError("Declaration regex requires exactly one capturing group")
@@ -128,7 +130,8 @@ class _Group:
                 if match is None or match.start(1) < 0 or match.start(1) == match.end(1):
                     raise RuntimeError("Declaration regex has no nonempty symbol occurrence")
                 offset = source["startByte"] + len(selected[:match.start(1)].encode("utf-8"))
-                return _rpc("bridge.declaration_at", {"path": source["path"], "snapshotId": source["snapshotId"],
+                return _rpc("bridge." + method + ".at",
+                            {"path": source["path"], "snapshotId": source["snapshotId"],
                             "contentHash": source["contentHash"], "offset": offset,
                             "includeBody": values.get("include_body", False), "includeInfo": values.get("include_info", False)}, self.project)
             return _rpc(method, values, self.project)
@@ -141,6 +144,23 @@ class _Facade:
         for group in {name.split(".", 1)[0] for name in _methods}:
             setattr(self, group, _Group(group, project))
         self._project = project
+
+    def __getattribute__(self, name):
+        value = object.__getattribute__(self, name)
+        if _api_selection_active:
+            if name == "invoke" or (type(value) is _Group and not any(
+                    method.startswith(value.group + ".") for method in _methods)):
+                raise AttributeError(name)
+        return value
+
+    def __dir__(self):
+        names = object.__dir__(self)
+        if not _api_selection_active:
+            return names
+        attributes = object.__getattribute__(self, "__dict__")
+        return [name for name in names if name != "invoke" and not (
+            type(attributes.get(name)) is _Group and not any(
+                method.startswith(name + ".") for method in _methods))]
 
     def invoke(self, operation, arguments=None):
         return _rpc("native." + operation, {} if arguments is None else arguments, self._project)
@@ -196,11 +216,12 @@ def _safe(value, seen=None, depth=0, count=None):
 
 
 def _run():
-    global _request_id, _methods, _output_limit
+    global _request_id, _methods, _all_methods, _api_selection_active, _output_limit
     boot = _read()
     if boot.get("event") != "boot":
         raise RuntimeError("Missing worker boot")
     _methods = boot["methods"]
+    _all_methods = _methods
     _output_limit = boot["maxOutputBytes"]
     namespace = {"__name__": "__yoke_agent_repl__", "s": _Facade()}
     _send({"event": "ready", "schemaVersion": 1, "facadeMethods": len(_methods)})
@@ -210,6 +231,16 @@ def _run():
             return
         if request.get("event") != "execute":
             raise RuntimeError("Unknown host request")
+        _api_selection_active = "selectedMethods" in request
+        if _api_selection_active:
+            selected = request["selectedMethods"]
+            if (type(selected) is not list or len(selected) > len(_all_methods)
+                    or any(type(name) is not str or name not in _all_methods for name in selected)
+                    or len(set(selected)) != len(selected)):
+                raise RuntimeError("Invalid host API selection")
+            _methods = {name: args for name, args in _all_methods.items() if name in selected}
+        else:
+            _methods = _all_methods
         _request_id = request["requestId"]
         budget = [0, False]
         stdout, stderr = _Output(budget), _Output(budget)

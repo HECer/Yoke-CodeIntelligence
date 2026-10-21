@@ -241,7 +241,7 @@ pub fn invoke_serena_with_repl(
         );
         let encoded = serde_json::to_string(&serde_json::to_string(&args)?)?;
         let code = format!("s.{method}(**__import__('json').loads({encoded}))");
-        let response = runtime.execute(session, &code, deadline)?;
+        let response = runtime.execute_tool(session, &code, deadline)?;
         ensure!(
             response["error"].is_null(),
             "Python facade failed: {}",

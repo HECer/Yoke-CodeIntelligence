@@ -1122,6 +1122,58 @@ impl Session {
         self.steering()
             .is_ok_and(|s| s.is_none_or(|s| s.allows(name)))
     }
+    pub fn require_repl_api(&self, method: &str) -> Result<()> {
+        ensure!(
+            crate::agent_repl::facade_contract()["methods"]
+                .get(method)
+                .is_some(),
+            "Unknown declared REPL API"
+        );
+        ensure!(
+            self.steering()?.is_none_or(|s| s.api_allowed(method)),
+            "API excluded by session steering"
+        );
+        Ok(())
+    }
+    pub(crate) fn check_repl_state(&self, deadline: &Deadline) -> Result<()> {
+        deadline.check()?;
+        if self
+            .host
+            .steering
+            .as_ref()
+            .is_some_and(|s| s.has_api_exclusions())
+        {
+            self.engine.store.set_deadline(deadline)?;
+            let current: bool = self.engine.store.db.query_row(
+                "SELECT EXISTS(SELECT 1 FROM records WHERE kind=?1 AND id=?2 AND value=?3)",
+                params![RECORD_KIND, self.state.id, self.persisted],
+                |r| r.get(0),
+            )?;
+            ensure!(
+                current,
+                "Session state changed concurrently; resume before using REPL APIs"
+            );
+        }
+        Ok(())
+    }
+    /// None preserves the legacy worker frame and complete facade discovery.
+    pub fn selected_repl_methods(&self) -> Result<Option<Vec<String>>> {
+        let Some(steering) = self.steering()? else {
+            return Ok(None);
+        };
+        if steering.excluded_apis.is_empty() {
+            return Ok(None);
+        }
+        Ok(Some(
+            crate::agent_repl::facade_contract()["methods"]
+                .as_object()
+                .expect("Owned facade contract")
+                .keys()
+                .filter(|name| steering.api_allowed(name))
+                .cloned()
+                .collect(),
+        ))
+    }
     pub fn instructions(&self) -> String {
         self.steering()
             .expect("Validated immutable session steering")

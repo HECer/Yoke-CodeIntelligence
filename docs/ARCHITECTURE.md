@@ -11,6 +11,12 @@ modes and CAS updates preserve stale/forgery/concurrency refusal. The legacy
 default agent profile retains its original serialized identities.
 See [the native contract](../native/docs/session-steering.md).
 
+Explicit REPL API exclusions additionally bind per-cell discovery and every
+host callback to current session policy. Qualified private bridges preserve
+declaration/context origins; cached callables and the generic native helper
+cannot bypass selection. Ordinary tool adapters use a separate host-owned
+origin. Empty API fields preserve preceding serialized identities and results.
+
 The explicit Git compiler-affected query releases the checked report read view
 before trusted host compiler execution and revalidates original pins afterward.
 Independent snapshot/project contexts retain actual checker declarations, exact
