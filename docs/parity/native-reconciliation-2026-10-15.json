@@ -10208,7 +10208,7 @@
         "serenaConfigurationEntries",
         "serenaConfigurationMembers"
       ],
-      "remainingBoundary": "Dashboard unavailable. Native bounded host-owned context/mode steering now qualifies layered selection, literal guidance, tool restrictions/aliases and persistence; upstream file selection/YAML/Jinja, client-specific semantics, all25 project keys and complete9-mode/16-context equivalence still require individual review. Windows full Cargo HTTP startup/cleanup timeout remains unqualified despite complete direct18-function passes.",
+      "remainingBoundary": "Dashboard unavailable. Native bounded host-owned context/mode and REPL API steering qualifies layered guidance/selection, tool and API restrictions, aliases and persistence; upstream file selection/YAML/Jinja, fixed tool/interface/included-optional API selection, single-project startup, all25 project keys and complete9-mode/16-context equivalence require individual review. The defensive Windows invalid-image admission and all18 unchanged HTTP tests pass under normal Cargo; earlier failures and later pre-fix successes remain historical evidence, without a general Windows causal claim.",
       "nativeSteeringCheckpoint": {
         "sourceCommit": "51772d7a57835e97fed056287382e9daabd3c38e",
         "index": "docs/validation/integration-2026-10-21/session-steering/index.json",
@@ -10218,6 +10218,19 @@
         "full18McpFunctionsPassedDirect": true,
         "cargoMcpFullInvocationQualified": false,
         "openWindowsIssue": "act_mvikljwl_3d1f129403be",
+        "fullParityCertified": false
+      },
+      "nativeReplApiCheckpoint": {
+        "sourceCommit": "8d80a94fa53417bd2337a34e12f96922196965e5",
+        "index": "docs/validation/integration-2026-10-21/repl-api-selection/index.json",
+        "frozenInputs": 1018,
+        "distinctRustFunctionsPassed": 134,
+        "existingIgnored": 3,
+        "newFunctions": 8,
+        "identicalInputFunctionsReused": 38,
+        "normalCargoAll18McpFunctionsPassed": true,
+        "defensiveWindowsImageAdmissionQualified": true,
+        "generalWindowsRootCauseEstablished": false,
         "fullParityCertified": false
       }
     },

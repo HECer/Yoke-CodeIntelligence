@@ -1,23 +1,33 @@
 # Remaining implementation and acceptance
 
-Native host-owned session steering now gives contexts and composable modes
-actual instructions and MCP catalog/dispatch effects. Layered defaults, base/
-added modes, literal custom definitions and persistent override/reset retain
-host authority, CAS/stale checks and legacy default-agent identities. Trail/
-Graft aliases share the original six query identities. Real stdio and finite
-HTTP SSE catalog-change notifications are bounded.
+Native host-owned context/mode steering now also selects REPL API groups or
+individual methods through explicit excludedApis settings. Per-cell discovery
+and every host callback enforce the current policy, including cached callables,
+private declaration/context bridges and in-cell mode changes. Ordinary trusted
+tool adapters retain their distinct origin. Empty API settings retain preceding
+serialized identities, fingerprints and actual CLI results. Steering grants no
+Python, shell, debugger, source-write or operating-system sandbox authority.
 
-126 distinct scoped Rust functions pass (3 existing ignores), including12 new
-functions and all18 unchanged HTTP functions as a complete direct binary run.
-All1017 input hashes, Clippy/fmt/build/typecheck and npm260/3existing skips pass.
-Actual saved-fixture context and alias RED/GREEN, original schemas/rows/source/
-Git/Store and legacy raw-output controls pass. The full Windows Cargo-launched
-HTTP suite still has an unresolved10060/startup-cleanup timeout despite direct
-suite and isolated Cargo passes; its failed attempts are retained and follow-up
-remains active. This is not full Windows acceptance. See [the native contract](../native/docs/session-steering.md)
-and [indexed evidence](validation/integration-2026-10-21/session-steering/README.md).
-All353 original identities/assessments, broader configuration/client/R1-R9 work,
-ten original OS1314 prerequisites and full main/release acceptance remain open.
+At source8d80a94f, 134 distinct Rust functions pass across23 scoped targets
+(8 new functions,3 existing ignores), with all1018 input hashes unchanged.
+The38 passed functions from the focused guard are reused on identical inputs;
+20 other targets, all-target Clippy -Dwarnings, fmt/build/typecheck and npm260/
+3existing skips pass. Actual published-CLI RED and the SAME original fixture
+GREEN qualify API selection, host refusal, namespace survival and exact legacy
+raw output/source/Git/Store bytes. See [the contract](../native/docs/session-steering.md)
+and [indexed evidence](validation/integration-2026-10-21/repl-api-selection/README.md).
+
+Windows worker startup now classifies an explicit executable with GetBinaryTypeW
+before CreateProcess; non-executable .exe data refuses promptly. Pure host
+validation remains non-executing, managed .cmd/.bat paths remain supported,
+and all18 unchanged HTTP tests pass in one normal Cargo invocation. Historical
+10060/timeouts and later successful pre-fix Cargo diagnostics are retained;
+this qualifies the defensive invalid-image path, not a general OS root cause.
+No Developer Mode, elevation, system setting or original symlink fixture changed.
+The preceding [context/mode checkpoint](validation/integration-2026-10-21/session-steering/README.md)
+keeps its original126-function/source51772d7a results and failed attempts.
+All353 ledger identities/assessments, broader configuration/client/R1-R9 work,
+ten original OS1314 prerequisites and full Windows/main/release acceptance stay open.
 
 
 This map reconciles the R1–R9 tracker with the current integration.
