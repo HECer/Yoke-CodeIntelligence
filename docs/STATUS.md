@@ -2,6 +2,31 @@
 
 ## Current integration work
 
+The explicit compiler/Git query now retains new/super/tagged invocation kinds,
+constructor overload-to-body bindings and separate static construct-result class
+roles. Inherited constructor declarations, implicit source-less signatures and
+union result classes stay distinct. Finite constructor-value candidates and
+instance/static method candidates use actual checker assignability; original
+signature, candidate owner and exact invocation proof remain separate. Literal
+class references keep direct bindings. Native admission pairs original source,
+target, range, kind and conditional flags before incoming traversal.
+
+The current guard passes 63 Rust functions (12 compiler-query, 51 project/Git),
+all-target Clippy, format, native build, typecheck and npm 260/3 existing skips on
+1013 unchanged inputs. An initial 11-pass/1-fail union counterexample exposed a
+lost candidate role; the fix removes pruning and retains the original assertion.
+A later overload oracle is strengthened to keep separate Base/Derived owners
+sharing one body, with exact original sites per owner and no production change.
+Actual isolated CLI repetition, constructor/static/tag roles, parallel proofs,
+exact LF envelope/refusals, all owned source/Git/Store bytes and empty process
+Jobs pass. Both old captured-affected and original compiler stdout/artifact stay
+exact. See [the contract](../native/docs/git-compiler-affected.md) and
+[indexed evidence](validation/integration-2026-10-21/git-compiler-invocations/README.md).
+Earlier scoped counts below retain their own pinned source checkpoints. Generic
+instance instantiations, field/accessor/implicit effects, wider configurations,
+ownership/schema/upstream and full Windows/R1-R9 acceptance remain open. The
+whole-native 98ffa78 baseline is historical before both Explorer/compiler changes.
+
 The explicit `git compiler-affected` read query now uses a host-trusted immutable
 TypeScript 5.8.3 program for separate override, contract, resolved-call, overload
 body and type-based possible-instance-target observations. Exact original UTF-8
