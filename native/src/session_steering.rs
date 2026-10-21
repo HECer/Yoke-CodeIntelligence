@@ -32,6 +32,10 @@ pub struct Definition {
     pub excluded_tools: Vec<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub excluded_apis: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub read_only_memory_patterns: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub ignored_memory_patterns: Vec<String>,
 }
 #[derive(Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
@@ -42,6 +46,10 @@ pub struct Layer {
     pub excluded_tools: Vec<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub excluded_apis: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub read_only_memory_patterns: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub ignored_memory_patterns: Vec<String>,
 }
 #[derive(Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
@@ -61,6 +69,21 @@ pub struct HostSteering {
     pub modes: BTreeMap<String, Definition>,
 }
 impl HostSteering {
+    pub fn has_memory_patterns(&self) -> bool {
+        std::iter::once(&self.global)
+            .chain(std::iter::once(&self.cli))
+            .chain(
+                self.projects
+                    .values()
+                    .flat_map(|p| [&p.project, &p.project_local]),
+            )
+            .any(|l| {
+                !l.read_only_memory_patterns.is_empty() || !l.ignored_memory_patterns.is_empty()
+            })
+            || self.contexts.values().chain(self.modes.values()).any(|d| {
+                !d.read_only_memory_patterns.is_empty() || !d.ignored_memory_patterns.is_empty()
+            })
+    }
     pub fn has_api_exclusions(&self) -> bool {
         !self.global.excluded_apis.is_empty()
             || !self.cli.excluded_apis.is_empty()
@@ -93,6 +116,10 @@ pub struct Resolved {
     pub excluded_tools: BTreeSet<String>,
     #[serde(skip_serializing_if = "BTreeSet::is_empty")]
     pub excluded_apis: BTreeSet<String>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub read_only_memory_patterns: Vec<String>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub ignored_memory_patterns: Vec<String>,
     pub fragments: Vec<Fragment>,
     pub authority: &'static str,
 }
@@ -219,6 +246,10 @@ pub(crate) fn validate(host: &HostProfile) -> Result<()> {
             );
             definition(&d.instructions, &d.excluded_tools, &known)?;
             api_selection(&d.excluded_apis)?;
+            crate::notes::memory_patterns(
+                &d.read_only_memory_patterns,
+                &d.ignored_memory_patterns,
+            )?;
         }
         for (name, d) in &s.modes {
             label(name)?;
@@ -228,6 +259,10 @@ pub(crate) fn validate(host: &HostProfile) -> Result<()> {
             );
             definition(&d.instructions, &d.excluded_tools, &known)?;
             api_selection(&d.excluded_apis)?;
+            crate::notes::memory_patterns(
+                &d.read_only_memory_patterns,
+                &d.ignored_memory_patterns,
+            )?;
         }
         ensure!(
             CONTEXTS.contains(&host.context.as_str()) || s.contexts.contains_key(&host.context),
@@ -250,7 +285,11 @@ pub(crate) fn validate(host: &HostProfile) -> Result<()> {
     }
     selection(host, &host.modes)?;
     for project in std::iter::once("default").chain(host.projects.iter().map(|p| p.name.as_str())) {
-        resolve(host, project, None)?;
+        let resolved = resolve(host, project, None)?;
+        crate::notes::memory_patterns(
+            &resolved.read_only_memory_patterns,
+            &resolved.ignored_memory_patterns,
+        )?;
     }
     Ok(())
 }
@@ -260,7 +299,9 @@ fn validate_layer(host: &HostProfile, l: &Layer, known: &BTreeSet<String>) -> Re
     }
     selection(host, &l.added_modes)?;
     definition(&l.instructions, &l.excluded_tools, known)?;
-    api_selection(&l.excluded_apis)
+    api_selection(&l.excluded_apis)?;
+    crate::notes::memory_patterns(&l.read_only_memory_patterns, &l.ignored_memory_patterns)?;
+    Ok(())
 }
 fn context_definition(name: &str) -> Definition {
     let instructions = match name {
@@ -309,6 +350,7 @@ fn context_definition(name: &str) -> Definition {
         instructions,
         excluded_tools,
         excluded_apis: Vec::new(),
+        ..Default::default()
     }
 }
 fn mode_definition(name: &str) -> Definition {
@@ -371,6 +413,7 @@ fn mode_definition(name: &str) -> Definition {
         instructions: instructions.into(),
         excluded_tools: tools.iter().map(|s| (*s).into()).collect(),
         excluded_apis: Vec::new(),
+        ..Default::default()
     }
 }
 fn extend_unique(out: &mut Vec<String>, values: &[String]) {
@@ -452,12 +495,19 @@ pub(crate) fn resolve(
         added_modes: Vec::new(),
         excluded_tools: BTreeSet::new(),
         excluded_apis: BTreeSet::new(),
+        read_only_memory_patterns: Vec::new(),
+        ignored_memory_patterns: Vec::new(),
         fragments: Vec::new(),
         authority: "advisory_instructions_and_tool_restrictions_only",
     };
     extend_unique(&mut out.modes, selected);
     for (source, l) in &layers {
         out.excluded_apis.extend(l.excluded_apis.iter().cloned());
+        extend_unique(
+            &mut out.read_only_memory_patterns,
+            &l.read_only_memory_patterns,
+        );
+        extend_unique(&mut out.ignored_memory_patterns, &l.ignored_memory_patterns);
         extend_unique(&mut out.added_modes, &l.added_modes);
         out.add((*source).into(), &l.instructions, &l.excluded_tools);
     }
@@ -471,6 +521,14 @@ pub(crate) fn resolve(
         .unwrap_or_else(|| context_definition(&host.context));
     out.excluded_apis
         .extend(context.excluded_apis.iter().cloned());
+    extend_unique(
+        &mut out.read_only_memory_patterns,
+        &context.read_only_memory_patterns,
+    );
+    extend_unique(
+        &mut out.ignored_memory_patterns,
+        &context.ignored_memory_patterns,
+    );
     out.add(
         format!("context:{}", host.context),
         &context.instructions,
@@ -483,11 +541,28 @@ pub(crate) fn resolve(
             .cloned()
             .unwrap_or_else(|| mode_definition(&name));
         out.excluded_apis.extend(d.excluded_apis.iter().cloned());
+        extend_unique(
+            &mut out.read_only_memory_patterns,
+            &d.read_only_memory_patterns,
+        );
+        extend_unique(&mut out.ignored_memory_patterns, &d.ignored_memory_patterns);
         out.add(format!("mode:{name}"), &d.instructions, &d.excluded_tools);
     }
     out.add("cli".into(), &s.cli.instructions, &s.cli.excluded_tools);
     out.excluded_apis
         .extend(s.cli.excluded_apis.iter().cloned());
+    extend_unique(
+        &mut out.read_only_memory_patterns,
+        &s.cli.read_only_memory_patterns,
+    );
+    extend_unique(
+        &mut out.ignored_memory_patterns,
+        &s.cli.ignored_memory_patterns,
+    );
+    crate::notes::memory_pattern_limits(
+        &out.read_only_memory_patterns,
+        &out.ignored_memory_patterns,
+    )?;
     if let Some(project) = single_project_startup(host) {
         out.excluded_tools.insert("activate_project".into());
         out.add(

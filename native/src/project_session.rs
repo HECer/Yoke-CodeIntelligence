@@ -1049,6 +1049,10 @@ impl Session {
                     &state.active_project,
                     state.mode_override.as_deref(),
                 )?;
+                notes::memory_patterns(
+                    &resolved.read_only_memory_patterns,
+                    &resolved.ignored_memory_patterns,
+                )?;
                 ensure!(
                     state.modes == resolved.modes,
                     "Stored session steering changed"
@@ -1170,19 +1174,24 @@ impl Session {
             .host
             .steering
             .as_ref()
-            .is_some_and(|s| s.has_api_exclusions())
+            .is_some_and(|s| s.has_api_exclusions() || s.has_memory_patterns())
         {
-            self.engine.store.set_deadline(deadline)?;
-            let current: bool = self.engine.store.db.query_row(
-                "SELECT EXISTS(SELECT 1 FROM records WHERE kind=?1 AND id=?2 AND value=?3)",
-                params![RECORD_KIND, self.state.id, self.persisted],
-                |r| r.get(0),
+            self.check_current_state(
+                deadline,
+                "Session state changed concurrently; resume before using REPL APIs",
             )?;
-            ensure!(
-                current,
-                "Session state changed concurrently; resume before using REPL APIs"
-            );
         }
+        Ok(())
+    }
+    fn check_current_state(&self, deadline: &Deadline, message: &str) -> Result<()> {
+        deadline.check()?;
+        self.engine.store.set_deadline(deadline)?;
+        let current: bool = self.engine.store.db.query_row(
+            "SELECT EXISTS(SELECT 1 FROM records WHERE kind=?1 AND id=?2 AND value=?3)",
+            params![RECORD_KIND, self.state.id, self.persisted],
+            |r| r.get(0),
+        )?;
+        ensure!(current, "{message}");
         Ok(())
     }
     /// None preserves the legacy worker frame and complete facade discovery.
@@ -1213,12 +1222,16 @@ impl Session {
     }
     fn resolve_next_modes(&self, next: &mut State) -> Result<()> {
         if self.steering_enabled() {
-            next.modes = crate::session_steering::resolve(
+            let resolved = crate::session_steering::resolve(
                 &self.host,
                 &next.active_project,
                 next.mode_override.as_deref(),
-            )?
-            .modes;
+            )?;
+            notes::memory_patterns(
+                &resolved.read_only_memory_patterns,
+                &resolved.ignored_memory_patterns,
+            )?;
+            next.modes = resolved.modes;
         }
         Ok(())
     }
@@ -1599,6 +1612,17 @@ impl Session {
                 self.project_engine(name, deadline)?.invoke(tool, call)
             }
             _ if operation.starts_with("notes.") => {
+                if self
+                    .host
+                    .steering
+                    .as_ref()
+                    .is_some_and(|s| s.has_memory_patterns())
+                {
+                    self.check_current_state(
+                        deadline,
+                        "Session state changed concurrently; resume before using memory policies",
+                    )?;
+                }
                 ensure!(
                     !self.state.modes.iter().any(|m| m == "no-memories"),
                     "Notes disabled by session mode"
@@ -1615,6 +1639,19 @@ impl Session {
                     .context("Note arguments must be object")?
                     .remove("scope");
                 let policy = self.host.notes_policy.clone();
+                let memory_patterns = self
+                    .steering()?
+                    .filter(|s| {
+                        !s.read_only_memory_patterns.is_empty()
+                            || !s.ignored_memory_patterns.is_empty()
+                    })
+                    .map(|s| {
+                        notes::memory_patterns(
+                            &s.read_only_memory_patterns,
+                            &s.ignored_memory_patterns,
+                        )
+                    })
+                    .transpose()?;
                 let active = self.state.active_project.clone();
                 if global {
                     let root = self
@@ -1634,7 +1671,7 @@ impl Session {
                     } else {
                         &self.others[&active].store
                     };
-                    notes::invoke(
+                    notes::invoke_with_patterns(
                         source_store,
                         &self
                             .global_notes
@@ -1646,12 +1683,13 @@ impl Session {
                         operation.trim_start_matches("notes."),
                         &spec,
                         &policy,
+                        memory_patterns.as_ref(),
                         deadline,
                     )
                 } else {
                     let engine = self.project_engine(&active, deadline)?;
                     let (snapshot, _, _, _) = engine.index(deadline)?;
-                    notes::invoke(
+                    notes::invoke_with_patterns(
                         &engine.store,
                         &engine.store,
                         &snapshot,
@@ -1659,6 +1697,7 @@ impl Session {
                         operation.trim_start_matches("notes."),
                         &spec,
                         &policy,
+                        memory_patterns.as_ref(),
                         deadline,
                     )
                 }

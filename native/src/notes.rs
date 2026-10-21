@@ -6,7 +6,7 @@ use crate::{
     store::Store,
 };
 use anyhow::{Context, Result, bail, ensure};
-use regex::{Regex, RegexBuilder};
+use regex::{Regex, RegexBuilder, RegexSet, RegexSetBuilder};
 use rusqlite::{OptionalExtension, Transaction, TransactionBehavior, params};
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
@@ -30,6 +30,46 @@ pub struct Policy {
     pub ignored_patterns: Vec<String>,
     #[serde(default)]
     pub writable: bool,
+}
+/// Explicit session regex restrictions are separate from the original glob policy.
+pub(crate) struct MemoryPatterns {
+    readonly: RegexSet,
+    ignored: RegexSet,
+}
+pub(crate) fn memory_patterns(readonly: &[String], ignored: &[String]) -> Result<MemoryPatterns> {
+    memory_pattern_limits(readonly, ignored)?;
+    let build = |values: &[String]| {
+        RegexSetBuilder::new(values)
+            .size_limit(1000000)
+            .dfa_size_limit(1000000)
+            .build()
+            .context("Invalid or oversized memory regex policy")
+    };
+    Ok(MemoryPatterns {
+        readonly: build(readonly)?,
+        ignored: build(ignored)?,
+    })
+}
+pub(crate) fn memory_pattern_limits(readonly: &[String], ignored: &[String]) -> Result<()> {
+    ensure!(
+        readonly.len() <= 100
+            && ignored.len() <= 100
+            && readonly
+                .iter()
+                .chain(ignored)
+                .map(String::len)
+                .sum::<usize>()
+                <= 32768,
+        "Memory regex policy capacity exceeded"
+    );
+    for values in [readonly, ignored] {
+        ensure!(
+            values.iter().collect::<BTreeSet<_>>().len() == values.len()
+                && values.iter().all(|s| s.len() <= 4096 && !s.contains('\0')),
+            "Invalid or duplicate memory regex policy"
+        );
+    }
+    Ok(())
 }
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -66,11 +106,13 @@ struct Head {
 struct Rules {
     readonly: Vec<Regex>,
     ignored: Vec<Regex>,
+    readonly_regex: Option<RegexSet>,
+    ignored_regex: Option<RegexSet>,
     writable: bool,
     scope: Scope,
 }
 impl Rules {
-    fn new(p: &Policy, scope: Scope) -> Result<Self> {
+    fn new(p: &Policy, scope: Scope, patterns: Option<&MemoryPatterns>) -> Result<Self> {
         ensure!(
             p.read_only_patterns.len() <= 100 && p.ignored_patterns.len() <= 100,
             "Too many note policies"
@@ -86,6 +128,8 @@ impl Rules {
                 .iter()
                 .map(|p| crate::query_features::glob(p, false))
                 .collect::<Result<_>>()?,
+            readonly_regex: patterns.map(|p| p.readonly.clone()),
+            ignored_regex: patterns.map(|p| p.ignored.clone()),
             writable: p.writable,
             scope,
         })
@@ -93,13 +137,23 @@ impl Rules {
     fn hidden(&self, n: &str) -> bool {
         self.ignored.iter().any(|r| {
             r.is_match(n) || self.scope == Scope::Global && r.is_match(&format!("global/{n}"))
-        })
+        }) || self.regex_matches(&self.ignored_regex, n)
     }
     fn readonly(&self, n: &str) -> bool {
         !self.writable
             || self.readonly.iter().any(|r| {
                 r.is_match(n) || self.scope == Scope::Global && r.is_match(&format!("global/{n}"))
             })
+            || self.regex_matches(&self.readonly_regex, n)
+    }
+    fn regex_matches(&self, patterns: &Option<RegexSet>, name: &str) -> bool {
+        patterns.as_ref().is_some_and(|patterns| {
+            if self.scope == Scope::Global {
+                patterns.is_match(&format!("global/{name}"))
+            } else {
+                patterns.is_match(name)
+            }
+        })
     }
     fn visible(&self, n: &str) -> Result<()> {
         ensure!(!self.hidden(n), "Note unavailable under host policy");
@@ -498,6 +552,22 @@ pub fn invoke(
     policy: &Policy,
     deadline: &Deadline,
 ) -> Result<Value> {
+    invoke_with_patterns(
+        source, store, snapshot, scope, operation, args, policy, None, deadline,
+    )
+}
+#[allow(clippy::too_many_arguments)]
+pub(crate) fn invoke_with_patterns(
+    source: &Store,
+    store: &Store,
+    snapshot: &Snapshot,
+    scope: Scope,
+    operation: &str,
+    args: &Value,
+    policy: &Policy,
+    patterns: Option<&MemoryPatterns>,
+    deadline: &Deadline,
+) -> Result<Value> {
     source.set_deadline(deadline)?;
     store.set_deadline(deadline)?;
     deadline.check()?;
@@ -536,7 +606,7 @@ pub fn invoke(
         object.keys().all(|k| allowed.contains(&k.as_str())),
         "Unknown note argument"
     );
-    let rules = Rules::new(policy, scope)?;
+    let rules = Rules::new(policy, scope, patterns)?;
     let tx = Transaction::new_unchecked(&store.db, TransactionBehavior::Immediate)?;
     let result = match operation {
         "list" => {
