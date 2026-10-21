@@ -17,6 +17,7 @@ pub mod decision_records;
 pub mod document_graph;
 pub mod editor;
 pub mod editor_http;
+pub mod explorer_http;
 pub mod export;
 pub mod falkor_publish;
 pub mod falkor_wire;

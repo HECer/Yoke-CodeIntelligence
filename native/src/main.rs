@@ -238,6 +238,11 @@ enum Operation {
         port: u16,
         max_requests: Option<usize>,
     },
+    Explorer {
+        port: u16,
+        max_requests: Option<usize>,
+        allow_rebuild: bool,
+    },
     Export {
         format: String,
         output: Option<PathBuf>,
@@ -485,6 +490,15 @@ enum ParsedGroup3 {
 
 #[derive(Subcommand)]
 enum ParsedGroup4 {
+    /// Authenticated loopback source Explorer. Rebuild permission is separate.
+    Explorer {
+        #[arg(long, default_value_t = 0)]
+        port: u16,
+        #[arg(long)]
+        max_requests: Option<usize>,
+        #[arg(long)]
+        allow_rebuild: bool,
+    },
     Editor {
         #[arg(long, default_value_t = 0)]
         port: u16,
@@ -725,6 +739,15 @@ impl From<ParsedOperation> for Operation {
                 ParsedGroup3::MediaPdfWorker { input } => Operation::MediaPdfWorker { input },
             },
             ParsedOperation::Group4(group) => match *group {
+                ParsedGroup4::Explorer {
+                    port,
+                    max_requests,
+                    allow_rebuild,
+                } => Operation::Explorer {
+                    port,
+                    max_requests,
+                    allow_rebuild,
+                },
                 ParsedGroup4::Editor { port, max_requests } => {
                     Operation::Editor { port, max_requests }
                 }
@@ -3779,6 +3802,7 @@ fn run(cli: Cli) -> Result<bool> {
                     | Operation::Serve
                     | Operation::Watch { .. }
                     | Operation::Export { .. }
+                    | Operation::Explorer { .. }
             ) || matches!(
                 &operation,
                 Operation::Extensions(extension)
@@ -4761,6 +4785,25 @@ fn run(cli: Cli) -> Result<bool> {
                 )?,
             };
             print_bounded(&engine, &data, cli.max_bytes)?;
+            return Ok(true);
+        }
+        Operation::Explorer {
+            port,
+            max_requests,
+            allow_rebuild,
+        } => {
+            yoke::explorer_http::serve(
+                &mut engine,
+                yoke::explorer_http::Config {
+                    port,
+                    request_timeout_ms: cli.timeout,
+                    max_requests,
+                    allow_rebuild,
+                    snapshot_id: arguments["snapshotId"].as_str().map(str::to_owned),
+                    export_options: Default::default(),
+                },
+                io::stdout().lock(),
+            )?;
             return Ok(true);
         }
         Operation::Editor { port, max_requests } => {
