@@ -1,5 +1,28 @@
 # Remaining implementation and acceptance
 
+Optional host fixedTools now selects a nonempty MCP tool base through the six
+steering layers, with exact fixedToolsSource provenance and cumulative exclusions.
+Same-layer exclusion conflicts and unknown/duplicate selectors refuse. Original
+Trail/Graft operation identities cover both prefixes and legacy aliases. Current
+persisted state is checked before session-backed tool discovery/dispatch and
+direct adapters; stale parallel sessions return an error rather than an empty
+successful catalog. Empty settings preserve preceding bindings and raw results.
+Tool selection grants no source write, approval, execution or Python API authority.
+
+At source 10586eba, 203 distinct Rust functions pass across 33 scoped targets
+(3 existing ignores), including 8 new functions and broader Trail/Graphify
+adapter/CLI/review/body/query checks. Eight focused targets supply 62 functions
+on identical 1021 input hashes; 25 other targets, Clippy -Dwarnings, fmt/build/
+typecheck and npm 260/3 existing skips pass. Actual published-CLI RED and the
+SAME original CLI/MCP fixture GREEN retain all 53 schemas and raw results without
+the setting; the new base returns the exact 2-schema subset and enforces calls.
+Original records/source/Git and complete legacy logical SQL remain exact. See
+[the contract](../native/docs/session-steering.md) and
+[indexed evidence](validation/integration-2026-10-22/session-fixed-tools/README.md).
+Interface/optional inclusion and wider configuration/client/R1-R9/353/Windows/
+main/release acceptance remain open. Ten OS1314 fixtures and system settings stay
+unchanged; this is a finite native checkpoint.
+
 Host-owned readOnlyMemoryPatterns and ignoredMemoryPatterns now apply bounded
 regular expressions to named application notes through all six steering layers.
 Canonical global/name matching stays distinct from project names; the original

@@ -32,6 +32,12 @@ or mode CAS; selected-note calls and registered-policy REPL cells recheck exact
 persisted state. Default serialized identities and immutable authored revisions
 remain intact.
 
+Nonempty fixed tool bases additionally resolve with layer provenance, while
+other-layer exclusions remain cumulative. Central MCP discovery and adapters
+check current persisted state under registered fixed policies. Stale discovery
+returns an explicit error. Original query-family aliases share selection and
+exclusion identity; API selection and host execution/write gates stay separate.
+
 The explicit Git compiler-affected query releases the checked report read view
 before trusted host compiler execution and revalidates original pins afterward.
 Independent snapshot/project contexts retain actual checker declarations, exact

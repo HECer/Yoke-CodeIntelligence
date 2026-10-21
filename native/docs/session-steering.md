@@ -232,3 +232,50 @@ This is a bounded native regex contract. Python-regex equivalence, automatic YAM
 loading, arbitrary upstream file access and all remaining settings are separate
 requirements. Repository data never selects this policy or grants authority. Independent host
 CLI use and same-account database access remain outside session steering.
+
+## Fixed MCP tool bases
+
+Every host layer and custom context/mode definition optionally accepts fixedTools.
+A nonempty list replaces the default base; an empty list leaves the preceding
+base in place. With no selected fixed base, the preceding native catalog remains
+unchanged. Resolution order is global, active project, project-local, fixed
+context, each active mode in resolved order, then CLI. The last nonempty base
+wins. configuration.steering exposes fixedTools and fixedToolsSource only when
+a base is selected. The [pinned public settings template](https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/resources/serena_config.template.yml)
+supplies the functional base-selection/conflict reference, not application code.
+
+Names must be exact known native/session/Serena/Trail/Graft/Graphify tool entries
+or recognized original query aliases. Unknown names, wildcards, paths, Unicode
+confusables and duplicates refuse. A layer or custom definition cannot combine
+nonempty fixedTools and excludedTools. Exclusions from other layers still apply,
+including built-in context/mode and fixed-startup-project restrictions. A base
+never re-enables an excluded tool. Existing host-policy size/tool-count bounds
+apply before session publication.
+
+The six original Trail/Graft query identities cover both prefixes and all their
+legacy aliases. Selecting graft_find_code therefore selects the same original
+find-code operation through trail_find_code or graft_ask. It does not select a
+different query family. Other tool names keep their exact entry identity. Each
+session-backed MCP profile filters its original definitions without rewriting
+schemas or inventing unavailable entries. The independent native eight-tool
+profile retains its primary-Engine contract.
+
+Tools/list, dispatch and direct adapters check a registered fixed policy against
+the exact persisted session record. This also applies when the current mode has
+no fixed base but another registered mode does. A parallel mode/project change
+requires resume; stale initialization/discovery/call returns an explicit error,
+not an empty complete catalog. Real catalog changes retain the existing bounded
+stdio/HTTP list-change notifications. Source-backed session operations and
+engines also reject stale fixed-policy sessions before source work.
+
+This selects MCP tools. It neither grants nor replaces Python API selection;
+an explicitly trusted host REPL keeps its separate API/operation gates. A visible
+edit tool may prepare an immutable review plan while application still requires
+its original host permission, approval and stale/recovery guards. Read-only
+project and fixed-startup restrictions remain enforced. There is no source,
+shell, model, runtime trust or source-write permission derived from a tool list.
+Interface selection and optional tool/API inclusion remain separate settings;
+unsupported fields refuse instead of being accepted without an effect.
+
+Empty fields are omitted so preceding serialized profiles, fingerprints,
+configuration, schemas and actual raw CLI/MCP results stay byte-identical.
