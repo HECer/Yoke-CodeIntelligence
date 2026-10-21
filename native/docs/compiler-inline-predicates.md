@@ -61,7 +61,14 @@ the relay or replace source-derived targets. Source and snapshots remain immutab
 during preparation; only explicitly owned test literals are executed by runtime
 oracles.
 
-Current scoped native/CLI qualification is pending. JSDoc predicates, generics,
+The scoped guard passes146 distinct Rust functions/2 existing ignored, including
+ten new-target integrations and nineteen body units. Format/all-target Clippy,
+fresh primary library/CLI build, typecheck and TypeScript260/3 existing skips
+pass; all1002 validated inputs match primary byte-exactly. Each actual binary
+passes four owned CLI verification/approval/apply/conditional-recovery scenarios
+and before/after literal runtime comparisons. See the
+[indexed evidence](../../docs/validation/integration-2026-10-21/function-body-predicates/README.md).
+JSDoc predicates, generics,
 invocation-bound `this`, wider expression sequencing, all predicate target forms,
 runtime/upstream equivalence and full R1/R1-R9 acceptance remain separate gates.
 The existing body result remains `complete=false`.

@@ -2,6 +2,15 @@
 
 ## Native Rust ownership
 
+Classic compiler-selected body expansion preserves predicate/assertion caller
+flow through an inert original signature and fixed relay of the computed result.
+Native derives explicit source targets, restricts generated references to ordinary
+captured lexical bindings and matches separate exports by declaration identity.
+Inferred predicates retain the trusted compiler boundary; complete surviving
+observations still agree. Known dense argument indices retain element types and
+genuine undefined. Original evaluation and independent write gates remain. See
+the [predicate contract](../native/docs/compiler-inline-predicates.md).
+
 The optional Claude SessionStart adapter owns an entire external settings file,
 leaving foreign hook arrays alone. Literal native argv carries the original
 physical bindings. A bounded unique-key stdin callback checks the current

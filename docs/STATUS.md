@@ -2,6 +2,28 @@
 
 ## Current integration work
 
+The optional TypeScript5.8.3 classic body route now preserves explicit/inferred
+predicate and assertion caller flow with an inert original signature and fixed
+computed-result relay. Pure generated caller references require one captured
+ordinary lexical binding; separate exports/aliases are declaration-bound.
+Calls/getters are never replayed. Known dense indices retain element types under
+noUncheckedIndexedAccess, including genuine undefined. Complete surviving
+compiler observations and independent write gates remain.
+
+The scoped guard passes146 Rust functions/2 existing ignored across ten new-target
+integrations, nineteen body units and117 regression integrations. Format/all-target
+Clippy,1002 byte-exact primary inputs, fresh primary library/CLI build, typecheck
+and TypeScript260/3 existing skips pass. Each actual binary passes four owned CLI
+controls with independent tsc, verification, approval, application, foreign-byte
+refusal/conditional recovery and equal literal runtime observations. All process
+jobs end empty; preparation executes no analyzed source. Failed causal phases
+and diagnostic-only probes stay separate. See the
+[predicate evidence](validation/integration-2026-10-21/function-body-predicates/README.md)
+and [contract](../native/docs/compiler-inline-predicates.md).
+JSDoc predicates, generic/this/wider forms, full R1-R9 and current-head whole-native/
+hosted/platform/upstream/main/release acceptance stay open. The full bcf442b
+baseline and its ten OS1314 failures remain historical and explicit.
+
 The optional [Claude SessionStart settings](../native/docs/claude-session-hooks.md)
 profile now owns one external JSON file through the guarded installer. It does
 not adopt existing files or edit foreign hook arrays. Literal executable/args,

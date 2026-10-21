@@ -63,8 +63,14 @@ when outer returns need its label. This retains enabled unreachable-code and
 unused-label diagnostics without adding unreachable scaffold statements. Normal
 body completion, after that original block, clears the result to `void 0`, since
 a finally break/continue can cancel a pending return. Original finally blocks
-still run and may override a return. An explicit return annotation is copied
+still run and may override a return. An explicit ordinary value return annotation is copied
 from source; inferred primitive return hints have a fixed keyword whitelist.
+[Predicate/assertion signatures](compiler-inline-predicates.md) use an inert
+original signature and fixed result relay instead of treating a predicate as a
+value type. Eligible captured lexical targets retain a separately checked pure
+caller reference for narrowing; calls/getters are never repeated. Dense collector
+indices retain original tuple element types under noUncheckedIndexedAccess,
+including genuine undefined alternatives.
 That original TypeScript annotation also types the result storage, with a fixed
 undefined alternative for normal completion. Assigning returned expressions into
 this storage retains contextual typing for function-valued properties, methods,
