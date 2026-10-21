@@ -39,6 +39,22 @@ original receipts and semantic claims remain distinct from interpretation truth.
 
 ## Acceptance still required
 
+The complete native default run at `98ffa78` attempts all 320 registered
+groups, including the new community, owner-change, Claude hook and predicate
+code: **2,991 passed, 10 failed and 53 explicitly ignored**.
+All three examples compile. All 1002 source/control inputs, selected tools
+and the existing primary CLI remain unchanged. Every failure is an original
+symlink fixture with actual OS1314; there are no compile failures or additional
+unexplained failures. Both actual Junction security cases pass. No test timeout,
+fixture, ignore or system setting is changed. See the
+[complete current-source evidence](validation/integration-2026-10-21/native-baseline-current/README.md).
+This is a complete attempted default suite. Ten file-symlink prerequisites and
+full Windows/R1-R9/hosted/upstream/main/release acceptance remain open. The older
+bcf442b baseline and individual scoped counts below remain separately labeled.
+The supplemental real-browser audit confirms the current explorer's header-only
+source panel and missing Code/Context/Outline tabs, verb chips and live workflow.
+It preserves legacy scope and does not certify those unavailable features.
+
 Explicit/inferred TypeScript predicates and assertions now preserve caller flow
 through an inert source signature and fixed computed-result relay. Eligible
 ordinary lexical bindings have independently checked pure caller references;
