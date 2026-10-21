@@ -39,6 +39,42 @@ original receipts and semantic claims remain distinct from interpretation truth.
 
 ## Acceptance still required
 
+Context-sensitive arguments now keep original callable typing through a fixed
+pure rest collector. The original argument list executes once before parameter
+defaults, rest/pattern initialization and the original body. Fresh raw arrays are
+read only at their own dense indices, preserving behavior when Array iterators
+are replaced. Inert original/signature carriers provide source-derived types;
+original JSDoc parameter/template pieces have bounded native byte checks and
+compiler free-binding checks. Simple literal/identifier arguments retain direct
+fresh bindings and existing generic scalar inference. Both finite recipes have
+independent native reconstruction and unchanged caller/argument type comparisons.
+Preparation executes no analyzed source. Actual parameter/body environments,
+finally behavior and ordinary verification/approval/application/recovery remain.
+
+One added integration function covers twenty owned positive cases: callback,
+property, tuple, rest and pattern contexts; generic function-value literal types;
+anonymous arrow/function/class names; never-typed argument values; default order;
+hostile iterators and scalar/var compatibility. Three additional CLI cases pass
+independent tsc, approval, application and foreign-preserving recovery. Two added
+units and extended actual-host tests reject forged documentation/source ranges,
+UTF-8 boundaries, names, recipes, raw destructuring and extra executable code.
+
+The scoped regression passes **116 integrations / 0 failures / 2 existing ignored**
+across eight targets and fourteen body units on 811 unchanged native inputs.
+Format/build/all-target Clippy pass. Python 17, typecheck and TypeScript 260 / 3
+existing skips pass on 805 unchanged retained inputs. Counts overlap. Failed
+development evidence retains a stricter old var assertion over an inert clone,
+exact owned native/runtime controls, and generic scalar widening (3 to number).
+The corrected direct scalar recipe preserves the old var test without weakening
+it. Synthetic worker/signature probes are distinct from native admission.
+
+Caller JSDoc annotation ownership, mixed generic and expected-result contexts,
+TypeScript generic frames, other
+parameter/annotation and broader R1-R9 work, complete Windows and current-head
+hosted/upstream acceptance remain open. See the
+[argument evidence](validation/integration-2026-10-19/function-body-argument-contexts/README.md).
+The following return-context results belong to the preceding source checkpoint.
+
 The return-context extension preserves original TypeScript return annotations as
 contextual types for generated result storage, with a fixed undefined alternative
 for normal completion. Function-valued properties, methods, tuples and callbacks

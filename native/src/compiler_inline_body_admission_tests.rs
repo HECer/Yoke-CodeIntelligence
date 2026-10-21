@@ -4,7 +4,7 @@ use super::*;
 #[test]
 fn body_effects_cannot_forge_source_bindings_origins_types_paths_or_output() {
     let root = tempfile::tempdir().unwrap();
-    let source = "// 🌍\n/** @returns {()=>{length:number}} */\nfunction helper(n:number) {const values=[n];return ()=>({length:values.length});}\nexport const answer=helper(2);\n";
+    let source = "// 🌍\n/** @returns {()=>{length:number}} */\nfunction helper(n:()=>number) {const values=[n()];return ()=>({length:values.length});}\nexport const answer=helper(()=>2);\n";
     fs::write(root.path().join("main.ts"), source).unwrap();
     fs::write(root.path().join("tsconfig.json"), r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","noEmit":true},"files":["main.ts"]}"#).unwrap();
     let mut engine = Engine::open(root.path()).unwrap();
@@ -58,6 +58,7 @@ fn body_effects_cannot_forge_source_bindings_origins_types_paths_or_output() {
     };
     let result = admit(baseline.clone(), &d).unwrap();
     for (field, value) in [
+        ("directArguments", json!(true)),
         ("literalBox", json!(true)),
         ("docPieces", json!([])),
         (
@@ -69,7 +70,7 @@ fn body_effects_cannot_forge_source_bindings_origins_types_paths_or_output() {
         bad["frames"][0][field] = value;
         assert!(admit(bad, &d).is_err(), "{field}");
     }
-    assert!(!result.contains("helper(2)"));
+    assert!(!result.contains("helper(()=>2)"));
     let mut missing_types = baseline.clone();
     missing_types["before"]["types"] = json!([]);
     missing_types["after"]["types"] = json!([]);
@@ -89,6 +90,20 @@ fn body_effects_cannot_forge_source_bindings_origins_types_paths_or_output() {
             baseline["frames"][0]["names"]["result"].clone(),
         ),
         ("/frames/0/resultType", json!("number; hidden()")),
+        ("/frames/0/names/argumentCapture", json!([])),
+        ("/frames/0/names/argumentCapture/0", json!("answer")),
+        (
+            "/frames/0/names/argumentCapture/1",
+            baseline["frames"][0]["names"]["argumentCapture"][0].clone(),
+        ),
+        (
+            "/frames/0/argumentDocs",
+            json!([{"piece":null,"optional":false}]),
+        ),
+        (
+            "/frames/0/argumentTemplates",
+            json!([{"startByte":0,"endByte":4,"tag":true}]),
+        ),
         ("/frames/0/names/returnType", json!([])),
         ("/frames/0/names/returnType", json!(["__ci_inline_8"])),
         ("/frames/0/names/returnType/0", json!("answer")),
@@ -379,6 +394,121 @@ fn var_witnesses_cannot_forge_parameter_copies_catch_targets_types_or_property_r
     assert!(admit(bad).is_err());
     assert_eq!(
         fs::read_to_string(root.path().join("main.ts")).unwrap(),
+        source
+    );
+    assert_eq!(engine.store.db.query_row("SELECT COUNT(*) FROM records WHERE kind IN ('plan','approval','receipt','journal','native_compiler_report_v1')",[],|r|r.get::<_,usize>(0)).unwrap(),0);
+}
+
+#[test]
+fn argument_doc_types_and_raw_collection_cannot_forge_bounds_names_or_execution() {
+    let root = tempfile::tempdir().unwrap();
+    let source = "// \u{03c0}\n/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}const result=helper(()=>3);export const observed=[result.name,result()];";
+    fs::write(root.path().join("main.js"), source).unwrap();
+    fs::write(root.path().join("tsconfig.json"), r#"{"compilerOptions":{"strict":true,"allowJs":true,"checkJs":true,"target":"ES2022","module":"ESNext","noEmit":true},"files":["main.js"]}"#).unwrap();
+    let mut engine = Engine::open(root.path()).unwrap();
+    let d = Deadline::new(60_000);
+    let (snapshot, graph, _, _) = engine.index(&d).unwrap();
+    let symbol =
+        crate::agent_repl::source_symbol(&engine.store, &snapshot, &graph, "helper", "main.js", &d)
+            .unwrap();
+    let tree = parse("javascript", source, &d).unwrap();
+    let declaration = classic(&tree, &symbol, source, &d).unwrap().unwrap();
+    let spec = CompilerSpec {
+        node: std::env::split_paths(&std::env::var_os("PATH").unwrap())
+            .map(|p| p.join(if cfg!(windows) { "node.exe" } else { "node" }))
+            .find(|p| p.is_file())
+            .unwrap()
+            .canonicalize()
+            .unwrap(),
+        typescript: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("../node_modules/typescript/lib/typescript.js")
+            .canonicalize()
+            .unwrap(),
+        trusted: true,
+    };
+    let intent = json!({"path":symbol.path,"name":symbol.name,"startByte":symbol.start_byte,"endByte":symbol.end_byte,"nameStartByte":symbol.name_start_byte,"nameEndByte":symbol.name_end_byte,"keepDefinition":false});
+    let report = crate::projects::execute(
+        &engine.store,
+        &snapshot,
+        &spec,
+        "inlineBody",
+        Some(intent),
+        &d,
+    )
+    .unwrap();
+    let baseline = report["bodyInline"].clone();
+    let admit = |value: Value, deadline: &Deadline| -> Result<String> {
+        let effect: Effect = crate::json::decode(value)?;
+        Ok(check(
+            &engine,
+            &spec,
+            &snapshot,
+            &symbol,
+            source,
+            &tree,
+            declaration,
+            false,
+            &effect,
+            &report,
+            deadline,
+        )?
+        .1)
+    };
+    let result = admit(baseline.clone(), &d).unwrap();
+
+    for (pointer, value) in [
+        ("/frames/0/argumentDocs/0/piece/startByte", json!(0)),
+        (
+            "/frames/0/argumentDocs/0/piece/endByte",
+            json!(source.len() + 1),
+        ),
+        ("/frames/0/argumentDocs/0/piece/tag", json!(true)),
+        (
+            "/frames/0/argumentTemplates/0/startByte",
+            json!(source.find("@param").unwrap()),
+        ),
+        ("/frames/0/argumentTemplates/0/endByte", json!(source.len())),
+        ("/frames/0/names/argumentCapture", json!([])),
+    ] {
+        let mut bad = baseline.clone();
+        *bad.pointer_mut(pointer).unwrap() = value;
+        assert!(admit(bad, &d).is_err(), "{pointer}");
+    }
+    let names = &baseline["frames"][0]["names"]["argumentCapture"];
+    let origin = names[0].as_str().unwrap();
+    let collector = names[2].as_str().unwrap();
+    let rest = names[3].as_str().unwrap();
+    let raw = names[4].as_str().unwrap();
+    let arg = baseline["frames"][0]["names"]["arguments"][0]
+        .as_str()
+        .unwrap();
+    for (from, to) in [
+        (
+            format!("const {raw} = {collector}("),
+            format!("const {raw} = {origin}("),
+        ),
+        (format!("(...{rest})=>{rest}"), format!("(...{rest})=>[]")),
+        (
+            format!("const {arg} = {raw}[0];"),
+            format!("const [{arg}] = {raw};"),
+        ),
+    ] {
+        let mut bad = baseline.clone();
+        let changed = bad["edits"][1]["text"]
+            .as_str()
+            .unwrap()
+            .replace(&from, &to);
+        assert_ne!(changed, bad["edits"][1]["text"].as_str().unwrap());
+        bad["edits"][1]["text"] = json!(changed);
+        bad["resultHash"] = json!(crate::model::hash(result.replace(&from, &to)));
+        assert!(admit(bad, &d).is_err(), "{from}");
+    }
+    let mut bad = baseline.clone();
+    bad["frames"][0]["argumentDocs"][0]["command"] = json!("hidden");
+    assert!(admit(bad, &d).is_err());
+    assert!(admit(baseline, &Deadline::new(0)).is_err());
+    assert_eq!(
+        fs::read_to_string(root.path().join("main.js")).unwrap(),
         source
     );
     assert_eq!(engine.store.db.query_row("SELECT COUNT(*) FROM records WHERE kind IN ('plan','approval','receipt','journal','native_compiler_report_v1')",[],|r|r.get::<_,usize>(0)).unwrap(),0);

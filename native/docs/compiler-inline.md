@@ -25,11 +25,33 @@ control scope. Exported definitions require `keepDefinition=true`; captured
 consumers outside the file, recursive references and noncall/write consumers refuse.
 
 Every argument, including extra arguments, is evaluated once before any parameter
-initialization. A separate lexical block initializes parameters left to right,
+initialization.
+Simple literal and identifier arguments retain direct fresh bindings so original
+generic literal inference is preserved. Other arguments use a fixed pure rest
+collector receiving the original argument list once. Both finite recipes retain
+original source/binding/type checks; direct anonymous expressions also receive a
+source-derived name barrier if that recipe is supplied. Its
+callable type comes from an inert source-parameter signature; no analyzed function
+or default is invoked to collect values. Original signatures and generated tuple
+return types preserve contextual callback/property/tuple types, JSDoc template
+instantiation and anonymous argument names. Fresh raw argument arrays are read
+only at their own dense indices. Destructuring these arrays would invoke a
+potentially replaced Array iterator and is deliberately excluded. The existing
+parameter initialization then consumes the fresh argument bindings, preserving
+left-to-right defaults, rest/pattern effects and parameter/body environments.
+Two original-source function carriers remain inside the fixed false void guard:
+one supplies fallback parameter types, and the other supplies the callable
+signature with a fixed throwing body. Its parameter defaults never execute.
+Only the generated `(...fresh) => fresh` collector executes in an applied program;
+preparation still executes no analyzed source. Source-derived documentation type
+pieces and template tags retain the existing compiler free-binding checks.
+Native checks attached-comment containment, UTF-8 bounds and exact source copies;
+the host compiler supplies the bounded JSDoc type/tag enumeration. A separate lexical block initializes parameters left to right,
 then the original body block follows. Defaults, rest arrays, object/array patterns
 and optional TypeScript annotations are supported within the admitted scope.
-Parameter and argument comments retain their exact original bytes while their
-actual AST separator commas are omitted. Anonymous default function/class names
+Parameter and argument comments retain their exact original bytes. Parameter
+separator commas are omitted when lowering declarations. Argument commas stay in
+the original collector call list; direct fresh bindings omit only the AST separators. Anonymous default function/class names
 use computed own-property initialization, including the `__proto__` name. Original
 parameter types also provide contextual typing for copied default expressions;
 no arbitrary compiler-supplied type text is inserted.
@@ -137,7 +159,10 @@ still apply. Limits refuse instead of clipping a complete result.
 Source inference additionally admits at most 512 original declaration/loop sites,
 2,000 carrier names and fewer than 2,000 labels in an owning chain. Carrier text,
 copy pieces, compiler observations and aggregate edits share the limits above.
-Inferred result carriers use two fresh names per frame. JSDoc ownership admits
+Argument collection uses seven fresh names for a nonempty call, at most 64
+parameter documentation slots and 64 template pieces, each at most 16 KB.
+Original signature binding reads admit at most 2,000 parameter bindings and share
+the output/copy/AST/deadline bounds. Inferred result carriers use two fresh names per frame. JSDoc ownership admits
 at most 64 attached documentation comments, with at most 200,000 contiguous
 comments and 200,000 leading whitespace characters inspected. These checks also
 guard definition removal; complete source copies share the byte/copy/AST limits.

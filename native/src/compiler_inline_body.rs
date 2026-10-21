@@ -5,6 +5,8 @@ use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
 #[path = "compiler_inline_body_admission.rs"]
 mod admission;
+#[path = "compiler_inline_body_arguments.rs"]
+mod arguments;
 #[path = "compiler_inline_body_types.rs"]
 mod inferred;
 #[path = "compiler_inline_body_parameters.rs"]
@@ -25,6 +27,8 @@ pub(super) struct Names {
     var_seeds: Vec<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     return_type: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    argument_capture: Vec<String>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -43,6 +47,12 @@ pub(super) struct Frame {
     literal_box: bool,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     doc_pieces: Option<Vec<DocPiece>>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    argument_docs: Vec<arguments::Doc>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    argument_templates: Vec<DocPiece>,
+    #[serde(default)]
+    direct_arguments: bool,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -611,6 +621,7 @@ pub(super) fn render(
         .chain(&frame.names.var_parameters)
         .chain(&frame.names.var_seeds)
         .chain(&frame.names.return_type)
+        .chain(&frame.names.argument_capture)
         .collect();
     let name_set: BTreeSet<_> = names.iter().map(|n| n.as_str()).collect();
     ensure!(
@@ -661,48 +672,16 @@ pub(super) fn render(
         out.generated(") | undefined")?;
     }
     out.generated(&format!(";{line}{{{line}"))?;
-    let mut argument_cursor = argument_list.start_byte() + 1;
-    let mut separators_cursor = argument_list.walk();
-    let separators: Vec<_> = argument_list
-        .children(&mut separators_cursor)
-        .filter(|n| n.kind() == ",")
-        .collect();
-    for (arg, generated) in args.iter().zip(&frame.names.arguments) {
-        out.generated(&format!("const {generated} = ("))?;
-        for comma in &separators {
-            if comma.start_byte() >= argument_cursor && comma.end_byte() <= arg.start_byte() {
-                out.original(
-                    source,
-                    argument_cursor,
-                    comma.start_byte(),
-                    "argument_trivia",
-                )?;
-                argument_cursor = comma.end_byte();
-            }
-        }
-        out.original(source, argument_cursor, arg.start_byte(), "argument_trivia")?;
-        out.original(source, arg.start_byte(), arg.end_byte(), "argument")?;
-        out.generated(&format!(");{line}"))?;
-        argument_cursor = arg.end_byte();
-    }
-    for comma in &separators {
-        if comma.start_byte() >= argument_cursor {
-            out.original(
-                source,
-                argument_cursor,
-                comma.start_byte(),
-                "argument_trivia",
-            )?;
-            argument_cursor = comma.end_byte();
-        }
-    }
-    out.original(
+    arguments::emit(
+        &mut out,
         source,
-        argument_cursor,
-        argument_list.end_byte() - 1,
-        "argument_trivia",
+        declaration,
+        argument_list,
+        frame,
+        language,
+        line,
+        d,
     )?;
-    out.generated(line)?;
     return_witness(&mut out, source, declaration, frame, language, line, d)?;
     out.generated(&format!("{{{line}"))?;
     parameters::emit(
@@ -912,6 +891,7 @@ mod tests {
             var_parameters: vec![],
             var_seeds: vec![],
             return_type: vec!["__ci_inline_3".into(), "__ci_inline_4".into()],
+            argument_capture: vec![],
         };
         let frame = Frame {
             statement_start: 0,
@@ -924,6 +904,9 @@ mod tests {
             var_seed_groups: vec![],
             literal_box: false,
             doc_pieces: None,
+            argument_docs: vec![],
+            argument_templates: vec![],
+            direct_arguments: false,
         };
         let doc = "/** @returns {{n:number}} */";
         for (prefix, suffix, attached) in [
@@ -1101,6 +1084,7 @@ mod tests {
                 };
                 let mut names = Names {
                     return_type: vec![],
+                    argument_capture: vec![],
                     var_parameters: vec![],
                     var_seeds: vec![],
                     result: fresh(),
@@ -1116,9 +1100,23 @@ mod tests {
                     .map(|_| fresh())
                     .collect();
                 names.return_type = (0..2).map(|_| fresh()).collect();
+                if !names.arguments.is_empty() {
+                    names.argument_capture = (0..7).map(|_| fresh()).collect();
+                }
+                let argument_docs = if names.arguments.is_empty() {
+                    vec![]
+                } else {
+                    children(declaration.child_by_field_name("parameters").unwrap())
+                        .iter()
+                        .map(|_| arguments::Doc::default())
+                        .collect()
+                };
                 let frame = Frame {
                     literal_box: false,
                     doc_pieces: None,
+                    argument_docs,
+                    argument_templates: vec![],
+                    direct_arguments: false,
                     statement_start: statement.start_byte(),
                     statement_end: statement.end_byte(),
                     call_start: call.start_byte(),
@@ -1180,12 +1178,16 @@ mod tests {
         let frame = Frame {
             literal_box: false,
             doc_pieces: None,
+            argument_docs: vec![],
+            argument_templates: vec![],
+            direct_arguments: false,
             statement_start,
             statement_end: source.len(),
             call_start,
             call_end: source.len() - 1,
             names: Names {
                 return_type: vec!["__ci_inline_5".into(), "__ci_inline_6".into()],
+                argument_capture: (7..=13).map(|n| format!("__ci_inline_{n}")).collect(),
                 var_parameters: vec![],
                 var_seeds: vec![],
                 result: "__ci_inline_1".into(),
@@ -1198,7 +1200,7 @@ mod tests {
         };
         let out = render(&tree, source, "typescript", declaration, &frame, &d).unwrap();
         assert!(
-            out.text.find("const __ci_inline_3 = (n++)").unwrap()
+            out.text.find("__ci_inline_9(n++,2)").unwrap()
                 < out.text.find("let n:number = __ci_inline_3").unwrap()
         );
         assert!(out.text.contains("break __ci_inline_2"));
@@ -1218,6 +1220,7 @@ mod tests {
                     | "caller"
                     | "return_type"
                     | "return_witness"
+                    | "argument_signature"
             ));
         }
         let mut bad = frame.clone();

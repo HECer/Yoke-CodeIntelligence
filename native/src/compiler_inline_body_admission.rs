@@ -474,6 +474,7 @@ fn check(
             .chain(&frame.names.var_parameters)
             .chain(&frame.names.var_seeds)
             .chain(&frame.names.return_type)
+            .chain(&frame.names.argument_capture)
         {
             d.check()?;
             ensure!(

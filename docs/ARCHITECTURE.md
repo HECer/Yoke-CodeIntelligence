@@ -23,7 +23,14 @@ result carrier from a
 never-executed source-function call with already evaluated fresh argument temps.
 Attached JSDoc templates, literal inference and free bindings retain checked scope.
 Empty declaration statements protect neighboring annotation/typedef ownership.
-Original TypeScript return annotations also contextually type result storage, with
+Context-sensitive arguments use a fixed pure rest collector with an inert
+source-derived callable signature. Original arguments run once before existing
+parameter/default/body lowering; raw dense-array indexing avoids iterator hooks.
+Bounded original documentation pieces retain compiler type authority and native
+byte/binding checks. Simple literal/identifier arguments keep direct bindings and
+generic scalar inference. Both recipes retain exact surviving caller/argument
+types and independent application gates. Original TypeScript return annotations
+also contextually type result storage, with
 a fixed undefined alternative for normal completion. Fixed void-comma return
 barriers retain anonymous function/class runtime names. Exact source annotation
 and barrier reconstruction precede binding/type checks. Original/fixed result

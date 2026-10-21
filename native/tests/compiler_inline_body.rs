@@ -939,6 +939,117 @@ fn return_annotations_cannot_capture_consumer_type_shadows() {
     );
 }
 #[test]
+fn argument_capture_keeps_contextual_types_generic_literals_names_defaults_and_hostile_iterators() {
+    for (language, source) in [
+        (
+            "ts",
+            "function helper(fn:(n:number)=>number):number{return fn(3);}const result=helper(n=>n+1);export const observed=result;",
+        ),
+        (
+            "ts",
+            "function helper(fn:(n:number)=>number, later=(0)):number{return fn(3)+later;}const result=helper(function(n){return n+1;});export const observed=result;",
+        ),
+        (
+            "ts",
+            "function helper(value:{run:(n:number)=>number}):number{return value.run(3);}const result=helper({run:n=>n+1});export const observed=result;",
+        ),
+        (
+            "ts",
+            "function helper(values: [(n:number)=>number]):number{return values[0](3);}const result=helper([n=>n+1]);export const observed=result;",
+        ),
+        (
+            "ts",
+            "function helper(...values:Array<(n:number)=>number>):number{return values[0](3);}const result=helper(n=>n+1);export const observed=result;",
+        ),
+        (
+            "js",
+            "/** @param {(n:number)=>number} fn */\nfunction helper(fn){return fn(3);}const result=helper(n=>n+1);export const observed=result;",
+        ),
+        (
+            "ts",
+            "function helper(fn:()=>number):string{return fn.name;}const result=helper(()=>3);export const observed=result;",
+        ),
+        (
+            "ts",
+            "function helper(fn:()=>number):string{return fn.name;}const result=helper(function(){return 3;});export const observed=result;",
+        ),
+        (
+            "ts",
+            "function helper(fn:new()=>object):string{return fn.name;}const result=helper(class{});export const observed=result;",
+        ),
+        (
+            "ts",
+            "const opaque=(()=>{return 4;}) as unknown as ()=>never;function helper(n:number):number{return n;}const result=helper(opaque());export const observed=result;",
+        ),
+        (
+            "js",
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}const result=helper({n:3});export const observed=result.n;",
+        ),
+        (
+            "js",
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}const result=helper(()=>3);export const observed=[result.name,result()];",
+        ),
+        (
+            "ts",
+            "function helper(n:[number,string]):number{return n[0]+n[1].length;}const result=helper([3,\"own\"]);export const observed=result;",
+        ),
+        (
+            "ts",
+            "const events:string[]=[];const previous=Array.prototype[Symbol.iterator];Array.prototype[Symbol.iterator]=(function*(){events.push(\"iterator\");yield ()=>99;}) as unknown as typeof previous;function helper(fn:()=>number):number{return fn();}const result=helper(()=>3);export const observed={result,events};",
+        ),
+        (
+            "ts",
+            "const events:string[]=[];function helper(n=(events.push(\"default\"),3)):number{return n;}const result=helper((events.push(\"arg\"),undefined));export const observed={result,events};",
+        ),
+        (
+            "js",
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}const result=helper(3);export const observed=result+1;",
+        ),
+        (
+            "ts",
+            "function helper(n:number):number{var x=n+1;return x;}const result=helper(2);export const observed=result;",
+        ),
+        (
+            "ts",
+            "function helper(n:number):number{var n:number;n++;return n;}const result=helper(2);export const observed=result;",
+        ),
+        (
+            "js",
+            "/** @param {...number} ns */\nfunction helper(...ns){return ns.join(\",\");}const result=helper(1,2);export const observed=result;",
+        ),
+        (
+            "js",
+            "/** @param {{run:(n:number)=>number}} options */\nfunction helper({run}){return run(3);}const result=helper({run:n=>n+1});export const observed=result;",
+        ),
+    ] {
+        let (root, mut engine) = fixture(source, language);
+        let path = root.path().join("tsconfig.json");
+        let mut config: Value = serde_json::from_slice(&fs::read(&path).unwrap()).unwrap();
+        for option in ["allowUnreachableCode", "allowUnusedLabels"] {
+            config["compilerOptions"][option] = json!(false);
+        }
+        for option in [
+            "noUnusedLocals",
+            "noUnusedParameters",
+            "noFallthroughCasesInSwitch",
+        ] {
+            config["compilerOptions"][option] = json!(true);
+        }
+        fs::write(path, serde_json::to_vec(&config).unwrap()).unwrap();
+        let r =
+            yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, language), &d())
+                .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        let after = planned(&engine, &r, language);
+        same_execution(source, &after);
+        assert_eq!(r["sourceExecuted"], false);
+        assert_eq!(r["verificationRequired"], true);
+        assert_eq!(
+            fs::read_to_string(root.path().join(format!("main.{language}"))).unwrap(),
+            source
+        );
+    }
+}
+#[test]
 fn unsafe_or_unowned_body_forms_refuse_before_any_plan_or_derived_source() {
     for source in [
         "type Const={n:number};function helper():unknown{return {} as Const;}function caller(){type Const={m:string};return helper();}export const observed=caller();",
@@ -1035,6 +1146,24 @@ fn wrapped_eval_in_the_body_or_caller_cannot_publish_a_plan() {
 #[test]
 fn body_cli_plans_require_independent_verification_approval_and_foreign_preserving_recovery() {
     for (source, keep, strict, language) in [
+        (
+            "function helper(fn:(n:number)=>number):number{return fn(3);}const result=helper(n=>n+1);export const observed=result;",
+            false,
+            true,
+            "ts",
+        ),
+        (
+            "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}const result=helper(()=>3);export const observed=[result.name,result()];",
+            false,
+            true,
+            "js",
+        ),
+        (
+            "const events:string[]=[];const previous=Array.prototype[Symbol.iterator];Array.prototype[Symbol.iterator]=(function*(){events.push(\"iterator\");yield ()=>99;}) as unknown as typeof previous;function helper(fn:()=>number):number{return fn();}const result=helper(()=>3);export const observed={result,events};",
+            false,
+            true,
+            "ts",
+        ),
         (
             "function helper(): {run:(n:number)=>number} {return {run:n=>n+1};}const result=helper();export const observed=result.run(3);",
             false,

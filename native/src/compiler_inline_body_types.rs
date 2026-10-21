@@ -273,6 +273,7 @@ mod tests {
     fn names(seeds: Vec<String>) -> Names {
         Names {
             return_type: vec![],
+            argument_capture: vec![],
             result: "__ci_inline_1".into(),
             exit: "__ci_inline_2".into(),
             arguments: vec![],
