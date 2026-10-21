@@ -143,6 +143,13 @@ fn finish(
                             | "possibleConstructValue"
                             | "constructResult"
                             | "signatureImplementation"
+                            | "accessesProperty"
+                            | "possiblePropertyAccess"
+                            | "gets"
+                            | "sets"
+                            | "possibleGets"
+                            | "possibleSets"
+                            | "propertyInitializer"
                     )
                 ) {
                     incoming

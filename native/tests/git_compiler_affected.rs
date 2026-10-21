@@ -150,7 +150,11 @@ fn real_compiler_distinguishes_overrides_structural_dispatch_and_parallel_calls(
             .unwrap()
             .iter()
             .filter(|e| e["proof"]["text"].as_str().unwrap().contains("super.save"))
-            .all(|e| e["relation"] == "calls")
+            .all(|e| e["relation"] == "calls"
+                || (e["relation"] == "accessesProperty"
+                    && e["target"] == base
+                    && e["accessMode"] == "read"
+                    && e["conditional"] == false))
     );
     let static_derived = node_id(c, "staticSave", "+ 'd'");
     let static_base = node_id(c, "staticSave", "return v;");
@@ -167,7 +171,11 @@ fn real_compiler_distinguishes_overrides_structural_dispatch_and_parallel_calls(
                 .as_str()
                 .unwrap()
                 .contains("Base.staticSave"))
-            .all(|e| e["relation"] == "calls")
+            .all(|e| e["relation"] == "calls"
+                || (e["relation"] == "accessesProperty"
+                    && e["target"] == static_base
+                    && e["accessMode"] == "read"
+                    && e["conditional"] == false))
     );
     assert_eq!(result["runtimeDispatchEstablished"], false);
     assert_eq!(result["complete"], false);
@@ -1112,6 +1120,311 @@ fn corrupt_captured_source_cannot_be_replaced_by_current_disk() {
     assert!(run(&f, &Default::default()).is_err());
     fs::write(&path, &original).unwrap();
     assert_eq!(state(&f.engine), before);
+}
+
+#[test]
+fn property_slots_accessor_effects_and_returned_function_calls_remain_separate() {
+    let source = concat!(
+        "\u{feff}// π 😀 e\u{301}\r\nexport interface Runner { run(v:string):string; }\r\n",
+        "class Field { run = (v:string) => 'FIELD_OLD'+v; }\r\n",
+        "class Accessor { get run(): (v:string)=>string { const marker='GET_OLD'; return v=>'RETURNED'+v; } }\r\n",
+        "class Wrong { run = (v:number) => v; }\r\n",
+        "function via(x:Runner) { x.run('a'); x.run('b'); }\r\n",
+        "function direct(x:Accessor) { return x.run('c'); }\r\n"
+    );
+    let f = configured(source, &source.replace("_OLD", "_HEAD"));
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let caller = node_id(c, "via", "x.run");
+    let field = node_id(c, "run", "FIELD_HEAD");
+    let getter = node_id(c, "run", "GET_HEAD");
+    let wrong = node_id(c, "run", "v:number");
+    assert_eq!(edges(c, "possiblePropertyAccess", &caller, &field).len(), 2);
+    assert_eq!(edges(c, "possibleGets", &caller, &getter).len(), 2);
+    assert!(edges(c, "possiblePropertyAccess", &caller, &wrong).is_empty());
+    let direct = node_id(c, "direct", "x.run");
+    assert_eq!(edges(c, "gets", &direct, &getter).len(), 1);
+    assert!(
+        edges(c, "calls", &direct, &getter).is_empty(),
+        "Getter body is not the returned function invocation"
+    );
+    let invocation = c["relations"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|e| e["relation"] == "calls" && e["source"] == direct)
+        .unwrap();
+    let signature = c["nodes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| n["id"] == invocation["target"])
+        .unwrap();
+    assert_eq!(signature["kind"], "FunctionType");
+    assert!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|e| e["relation"] == "propertyInitializer" && e["source"] == field)
+    );
+    assert!(
+        !c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|e| e["relation"] == "propertyInitializer" && e["source"] == getter)
+    );
+    for edge in c["relations"].as_array().unwrap() {
+        let proof = &edge["proof"];
+        let head = source.replace("_OLD", "_HEAD");
+        assert_eq!(
+            &head[proof["startByte"].as_u64().unwrap() as usize
+                ..proof["endByte"].as_u64().unwrap() as usize],
+            proof["text"].as_str().unwrap()
+        );
+    }
+    assert!(
+        r["states"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|s| s["nodeId"] == caller)
+    );
+    assert_eq!(state(&f.engine), before);
+}
+
+#[test]
+fn property_read_write_delete_and_optional_chain_effects_preserve_the_original_access() {
+    let source = concat!(
+        "export class Box { get value():number {return 1;} set value(v:number) {const marker='SET_OLD';} get fn(): (()=>number)|undefined{return ()=>1;} }\n",
+        "function effects(x:Box,y:Box|undefined) { x.value; x.value=2; x.value+=1; x.value++; x.value ||= 3; x.value &&= 4; x.value ??= 5; x.fn?.(); y?.fn?.(); y?.fn?.name; ({a:x.value}={a:1}); [x.value]=[2]; for(x.value of [3]){} }\n",
+        "interface Optional {value?:number;} function remove(x:Optional){delete x.value;}\n"
+    );
+    let f = configured(source, &source.replace("SET_OLD", "SET_HEAD"));
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let getter = node_id(c, "value", "return 1");
+    let setter = node_id(c, "value", "SET_HEAD");
+    let caller = node_id(c, "effects", "x.value");
+    let gets = edges(c, "gets", &caller, &getter);
+    let sets = edges(c, "sets", &caller, &setter);
+    assert_eq!(
+        gets.len(),
+        6,
+        "read, compound, increment and three logical assignments read"
+    );
+    assert_eq!(
+        sets.len(),
+        9,
+        "assignment, compound, increment, three logical, two patterns and for-of write"
+    );
+    for edge in gets.iter().chain(sets.iter()) {
+        assert_eq!(edge["proof"]["text"], "x.value");
+        assert_eq!(edge["conditional"], false);
+    }
+    assert_eq!(
+        sets.iter()
+            .filter(|e| e["writeConditional"] == true)
+            .count(),
+        3
+    );
+    let fn_getter = node_id(c, "fn", "return ()=>1");
+    let optional_gets = edges(c, "gets", &caller, &fn_getter);
+    assert_eq!(optional_gets.len(), 3);
+    assert_eq!(
+        optional_gets
+            .iter()
+            .filter(|e| e["conditional"] == false)
+            .count(),
+        1,
+        "x.fn?.() still reads fn before the invocation null check"
+    );
+    let remove = node_id(c, "remove", "delete x.value");
+    assert!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["source"] == remove)
+            .all(|e| e["relation"] != "gets" && e["relation"] != "sets")
+    );
+    assert!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|e| e["source"] == remove
+                && e["relation"] == "accessesProperty"
+                && e["accessMode"] == "delete")
+    );
+    assert_eq!(state(&f.engine), before);
+}
+
+#[test]
+fn computed_private_static_and_generic_property_slots_use_compiler_identity() {
+    let source = concat!(
+        "export {};declare const key:unique symbol;const literal='run';\n",
+        "interface Runner{run(v:string):string;} class Generic<T>{constructor(public value:T){} run=(v:T):T=>v; [key]=(v:T):T=>v;}\n",
+        "const good=new Generic('s');const bad=new Generic(1);\n",
+        "class Base {static run=(v:string)=>'BASE_OLD'+v; #fn=()=>1; read(){return this.#fn();}}\n",
+        "class Derived extends Base {static override run=(v:string)=>'DERIVED'+v; #fn=()=>2; override read(){return this.#fn();}}\n",
+        "function via(x:Runner){x[literal]('x');} function symbolic(x:Generic<string>){return x[key]('s');}\n",
+        "function fixed(){return Base.run('s');} function dynamic(C:typeof Base){return C.run('s');}\n"
+    );
+    let f = configured(source, &source.replace("BASE_OLD", "BASE_HEAD"));
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let caller = node_id(c, "via", "x[literal]");
+    let field = node_id(c, "run", "v:T");
+    let owner = node_id(c, "Generic", "v:T");
+    let positive = edges(c, "possiblePropertyAccess", &caller, &field);
+    assert!(!positive.is_empty());
+    for edge in positive {
+        let witness = c["instances"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|i| i["id"] == edge["candidateInstance"])
+            .unwrap();
+        assert_eq!(witness["owner"], owner);
+        assert_eq!(witness["arguments"][0]["display"], "string");
+    }
+    let symbolic = node_id(c, "symbolic", "x[key]");
+    let symbol_field = node_id(c, "[key]", "v:T");
+    assert_eq!(
+        edges(c, "accessesProperty", &symbolic, &symbol_field).len(),
+        1
+    );
+    let fixed = node_id(c, "fixed", "Base.run");
+    let dynamic = node_id(c, "dynamic", "C.run");
+    let derived = node_id(c, "run", "DERIVED");
+    assert!(edges(c, "possiblePropertyAccess", &fixed, &derived).is_empty());
+    assert_eq!(
+        edges(c, "possiblePropertyAccess", &dynamic, &derived).len(),
+        1
+    );
+    assert!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["relation"] == "possiblePropertyAccess")
+            .all(|e| {
+                let target = c["nodes"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == e["target"])
+                    .unwrap();
+                !target["name"].as_str().unwrap().starts_with('#')
+            })
+    );
+}
+
+#[test]
+fn unsupported_property_values_and_implicit_effects_remain_visible_and_budgeted() {
+    let source = concat!(
+        "export {};function external(v:string){return v;}class Box{run=external; accessor value=1;get fn(){return external;}}\n",
+        "interface Index{[key:string]:number;}function indexed(x:Index,key:string){return x[key];}\n",
+        "function implicit(x:Box){const {value}=x;const copy={...x};for(const n of [1]){x.value=n;}return [value,copy];}\n"
+    );
+    let f = configured(source, &source.replace("value=1", "value=2"));
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    for reason in [
+        "callable_property_initializer_not_direct_function",
+        "returned_accessor_function_values_not_enumerated",
+        "auto_accessor_implicit_bodies_not_enumerated",
+        "property_key_not_finite_compiler_literal",
+        "implicit_destructuring_or_spread_effects_not_enumerated",
+        "implicit_iteration_effects_not_enumerated",
+    ] {
+        assert!(
+            c["unavailable"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|u| u["reason"] == reason),
+            "Missing coverage: {reason}"
+        );
+    }
+    let indexed = node_id(c, "indexed", "x[key]");
+    assert!(
+        !c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|e| e["source"] == indexed && e["relation"] == "accessesProperty")
+    );
+    assert!(
+        run(
+            &f,
+            &Options {
+                max_relations: 1,
+                ..Default::default()
+            }
+        )
+        .is_err()
+    );
+    assert_eq!(r["complete"], false);
+    assert_eq!(state(&f.engine), before);
+}
+
+#[test]
+fn forged_property_effects_instances_and_initializer_proofs_refuse_without_state_changes() {
+    let source = "export interface Runner{run(v:string):string;} class Field{run=(v:string)=>v;} class Accessor{get run(){const marker='OLD';return(v:string)=>v;}} class Generic<T>{constructor(public value:T){}run=(v:T)=>v;} const observed=new Generic('s');function via(x:Runner){return x.run('s');} function direct(x:Accessor){return x.run('d');}\n";
+    let f = configured(source, &source.replace("'OLD'", "'HEAD'"));
+    let before = state(&f.engine);
+    let host = tempfile::tempdir().unwrap();
+    let mut selected = spec();
+    let actual_path = selected.typescript.to_string_lossy();
+    let actual = actual_path.strip_prefix(r"\\?\").unwrap_or(&actual_path);
+    let module = host.path().join("owned-adversarial-compiler.cjs");
+    let prefix = format!(
+        "const ts=require({});Object.defineProperty(Object.prototype,'toJSON',{{configurable:true,value:function(){{const report=this;if(report.schema===1&&report.operation==='hierarchy'){{for(const c of report.contexts||[]){{const h=c.hierarchy;if(!h)continue;",
+        serde_json::to_string(actual).unwrap()
+    );
+    let suffix = "}}return report;}});module.exports=ts;";
+    for (mutation, expected) in [
+        (
+            "const direct=h.nodes.findIndex(n=>n.name==='direct');h.relations=h.relations.filter(e=>e.relation!=='accessesProperty'||e.source!==direct);",
+            "Invalid direct property binding",
+        ),
+        (
+            "for(const e of h.relations)if(e.relation==='possibleGets')e.accessMode='delete';",
+            "Invalid compiler possible property binding",
+        ),
+        (
+            "for(const e of h.relations)if(e.relation==='possiblePropertyAccess')e.candidateInstance=999999;",
+            "Invalid compiler instance reference",
+        ),
+        (
+            "for(const e of h.relations)if(e.relation==='propertyInitializer')e.proof=h.nodes.find(n=>n.kind==='GetAccessor').selection;",
+            "Invalid captured property initializer",
+        ),
+    ] {
+        fs::write(&module, format!("{prefix}{mutation}{suffix}")).unwrap();
+        selected.typescript = module.clone();
+        let error = match compiler_affected::derive(
+            &f.engine.store,
+            f.report["artifactId"].as_str().unwrap(),
+            &selected,
+            &Default::default(),
+            &Deadline::new(60000),
+        ) {
+            Err(error) => error.to_string(),
+            Ok(_) => panic!("Forged report accepted; expected {expected}"),
+        };
+        assert!(
+            error.contains(expected),
+            "Expected {expected}, received {error}"
+        );
+        assert_eq!(state(&f.engine), before);
+    }
 }
 #[test]
 fn compiler_diagnostics_are_refusal_and_captured_javascript_is_never_imported() {

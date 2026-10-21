@@ -94,6 +94,10 @@ struct Edge {
     invocation_kind: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     candidate_instance: Option<usize>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    access_mode: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    write_conditional: Option<bool>,
 }
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -133,6 +137,17 @@ struct Hierarchy {
 }
 fn method(node: &Node) -> bool {
     matches!(node.kind.as_str(), "MethodDeclaration" | "MethodSignature")
+}
+fn property(node: &Node) -> bool {
+    method(node)
+        || matches!(
+            node.kind.as_str(),
+            "PropertyDeclaration"
+                | "PropertySignature"
+                | "GetAccessor"
+                | "SetAccessor"
+                | "Parameter"
+        )
 }
 fn contains(outer: &Span, inner: &Span) -> bool {
     outer.path == inner.path
@@ -381,6 +396,60 @@ pub(crate) fn observe(
             )
         };
         let mut relations = vec![];
+        let property_bindings: BTreeSet<_> = parsed
+            .relations
+            .iter()
+            .map(|binding| {
+                (
+                    binding.relation.as_str(),
+                    binding.source,
+                    binding.target,
+                    (
+                        binding.proof.path.as_str(),
+                        binding.proof.start_byte,
+                        binding.proof.end_byte,
+                    ),
+                    (
+                        binding.access_mode.as_deref(),
+                        binding.conditional,
+                        binding.write_conditional,
+                    ),
+                    (
+                        binding.resolved_target,
+                        binding.candidate_owner,
+                        binding.candidate_instance,
+                        binding.basis.as_deref(),
+                    ),
+                )
+            })
+            .collect();
+        let property_binding = |edge: &Edge, relation: &str, target: usize| {
+            property_bindings.contains(&(
+                relation,
+                edge.source,
+                target,
+                (
+                    edge.proof.path.as_str(),
+                    edge.proof.start_byte,
+                    edge.proof.end_byte,
+                ),
+                (
+                    edge.access_mode.as_deref(),
+                    edge.conditional,
+                    edge.write_conditional,
+                ),
+                if relation == "possiblePropertyAccess" {
+                    (
+                        edge.resolved_target,
+                        edge.candidate_owner,
+                        edge.candidate_instance,
+                        edge.basis.as_deref(),
+                    )
+                } else {
+                    (None, None, None, None)
+                },
+            ))
+        };
         for (position, edge) in parsed.relations.iter().enumerate() {
             deadline.check()?;
             edge.proof.check(&sources)?;
@@ -400,10 +469,15 @@ pub(crate) fn observe(
                 && edge.basis.is_none();
             ensure!(
                 edge.candidate_instance.is_none()
-                    || (edge.relation == "possibleDispatch"
-                        && edge
-                            .candidate_instance
-                            .is_some_and(|n| n < parsed.instances.len())),
+                    || (matches!(
+                        edge.relation.as_str(),
+                        "possibleDispatch"
+                            | "possiblePropertyAccess"
+                            | "possibleGets"
+                            | "possibleSets"
+                    ) && edge
+                        .candidate_instance
+                        .is_some_and(|n| n < parsed.instances.len())),
                 "Invalid compiler instance reference"
             );
             ensure!(
@@ -417,7 +491,85 @@ pub(crate) fn observe(
                 ) || edge.invocation_kind.is_none(),
                 "Invocation kind on a non-invocation relation"
             );
+            let property_access = matches!(
+                edge.relation.as_str(),
+                "accessesProperty"
+                    | "possiblePropertyAccess"
+                    | "gets"
+                    | "sets"
+                    | "possibleGets"
+                    | "possibleSets"
+            );
+            ensure!(
+                if property_access {
+                    property(to)
+                        && matches!(
+                            edge.access_mode.as_deref(),
+                            Some("read" | "write" | "readWrite" | "delete")
+                        )
+                        && edge.conditional.is_some()
+                        && edge.write_conditional.is_some()
+                        && (edge.write_conditional != Some(true)
+                            || edge.access_mode.as_deref() == Some("readWrite"))
+                } else {
+                    edge.access_mode.is_none() && edge.write_conditional.is_none()
+                },
+                "Invalid compiler property access metadata"
+            );
             match edge.relation.as_str() {
+                "declaresProperty" => ensure!(
+                    matches!(
+                        from.kind.as_str(),
+                        "ClassDeclaration" | "InterfaceDeclaration"
+                    ) && property(to)
+                        && !method(to)
+                        && contains(&from.declaration, &to.declaration)
+                        && edge.proof == to.selection
+                        && edge.owner.is_none()
+                        && no_dispatch
+                        && edge.conditional.is_none(),
+                    "Invalid compiler property ownership"
+                ),
+                "propertyInitializer" => ensure!(
+                    from.kind == "PropertyDeclaration"
+                        && matches!(to.kind.as_str(), "ArrowFunction" | "FunctionExpression")
+                        && to.has_body
+                        && contains(&from.declaration, &to.declaration)
+                        && edge.proof == to.declaration
+                        && edge.basis.as_deref() == Some("captured_function_initializer")
+                        && edge.owner.is_none()
+                        && edge.resolved_target.is_none()
+                        && edge.candidate_owner.is_none()
+                        && edge.conditional.is_none(),
+                    "Invalid captured property initializer"
+                ),
+                "accessesProperty" | "gets" | "sets" => ensure!(
+                    edge.owner.is_none()
+                        && no_dispatch
+                        && (edge.relation == "accessesProperty"
+                            || property_binding(edge, "accessesProperty", edge.target)),
+                    "Invalid direct property binding"
+                ),
+                "possiblePropertyAccess" | "possibleGets" | "possibleSets" => ensure!(
+                    edge.owner.is_none()
+                        && edge
+                            .resolved_target
+                            .is_some_and(|n| property(&parsed.nodes[n])
+                                && property_binding(edge, "accessesProperty", n))
+                        && edge
+                            .candidate_owner
+                            .is_some_and(|n| parsed.nodes[n].kind == "ClassDeclaration")
+                        && match (to.is_static, edge.basis.as_deref(), edge.candidate_instance) {
+                            (false, Some("compiler_type_assignability"), None)
+                            | (true, Some("compiler_constructor_type_assignability"), None) => true,
+                            (false, Some("compiler_captured_instance_assignability"), Some(n)) =>
+                                edge.candidate_owner == Some(parsed.instances[n].owner),
+                            _ => false,
+                        }
+                        && (edge.relation == "possiblePropertyAccess"
+                            || property_binding(edge, "possiblePropertyAccess", edge.target)),
+                    "Invalid compiler possible property binding"
+                ),
                 "extends" | "implements" => ensure!(
                     matches!(
                         from.kind.as_str(),
@@ -555,6 +707,20 @@ pub(crate) fn observe(
                 ),
                 _ => anyhow::bail!("Unknown compiler hierarchy relation"),
             }
+            if matches!(edge.relation.as_str(), "gets" | "possibleGets") {
+                ensure!(
+                    to.kind == "GetAccessor"
+                        && matches!(edge.access_mode.as_deref(), Some("read" | "readWrite")),
+                    "Invalid getter effect"
+                );
+            }
+            if matches!(edge.relation.as_str(), "sets" | "possibleSets") {
+                ensure!(
+                    to.kind == "SetAccessor"
+                        && matches!(edge.access_mode.as_deref(), Some("write" | "readWrite")),
+                    "Invalid setter effect"
+                );
+            }
             match edge.relation.as_str() {
                 "extends" | "implements" => ensure!(
                     contains(&from.declaration, &edge.proof),
@@ -572,7 +738,13 @@ pub(crate) fn observe(
                 | "possibleDispatch"
                 | "possibleConstruct"
                 | "possibleConstructValue"
-                | "constructResult" => ensure!(
+                | "constructResult"
+                | "accessesProperty"
+                | "possiblePropertyAccess"
+                | "gets"
+                | "sets"
+                | "possibleGets"
+                | "possibleSets" => ensure!(
                     contains(&from.declaration, &edge.proof),
                     "Compiler call proof outside its caller"
                 ),

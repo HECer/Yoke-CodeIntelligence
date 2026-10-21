@@ -27,6 +27,7 @@ pub(crate) fn worker_source() -> String {
         include_str!("compiler_move_worker.cjs"),
         include_str!("compiler_move_repairs_worker.cjs"),
         include_str!("compiler_hierarchy_worker.cjs"),
+        include_str!("compiler_properties_worker.cjs"),
     ]
     .join("\n")
 }

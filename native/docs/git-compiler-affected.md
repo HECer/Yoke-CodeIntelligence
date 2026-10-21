@@ -114,6 +114,45 @@ must pair with the exact original resolved invocation's source, target, range,
 kind and conditional flag. Constructor facts without a source signature require
 the explicit matching missing-signature coverage entry.
 
+Property observations use separate roles. `declaresProperty` binds physical
+class/interface field and accessor declarations. `accessesProperty` retains the
+checker-bound slot declarations at each original dot/element access, including
+parameter properties and method slots. `accessMode` distinguishes `read`, `write`,
+`readWrite` and `delete`. A slot can have both getter and setter declarations;
+these references alone claim no invocation of either body. Separate `gets` and
+`sets` retain only the applicable accessor effect. Delete invokes neither.
+Assignment/destructuring assignment targets, updates and for-in/of targets keep
+their access modes; implicit reads from destructuring/spread and iterator
+protocol effects remain explicit missing coverage.
+
+`conditional` records syntactic optional-chain short circuiting, including
+continued chains. It is not general control-flow or execution evidence.
+For `x.fn?.()`, the property read is unconditional and the invocation conditional;
+for `x?.fn()`, both are conditional. `writeConditional` separately marks the
+short-circuited write of `||=`, `&&=` and `??=`; their initial read is not made
+conditional by that flag. Original invocation signatures remain `calls` facts.
+A getter body is never substituted for a returned-function invocation target.
+
+`possiblePropertyAccess`, `possibleGets` and `possibleSets` preserve the original
+slot binding and exact access proof/modes alongside each type-assignable class
+candidate. Declared instances, constructor values and actual source-witnessed
+generic instances keep their separate bases/owners/witnesses. Fixed class
+references, private slots and super accesses retain direct bindings. Finite
+literal and unique-symbol element keys use actual compiler symbols; unknown
+runtime keys remain missing coverage. Unique-symbol slot identity comes from
+the public compiler property list, never its displayed string name.
+
+`propertyInitializer` binds a field only to a direct arrow/function-expression
+initializer, through erased wrappers, with its exact contained source body.
+It establishes syntax ownership, not the current property value, initializer
+execution or a possible call target. Incoming reference impact can therefore
+connect a changed field body to its source slot and consumers while preserving
+the actual resolved invocation signature separately. Assigned function values,
+getter return values and auto-accessor implicit bodies are not guessed.
+Native closed-schema admission checks source containment, access metadata,
+applicable accessor kind and exact original/candidate access pairing. New
+optional metadata is absent from older relation roles.
+
 Direct checker-bound class references (including imported aliases, qualified
 names and erased parentheses/type assertions) retain direct invocation bindings;
 the query does not turn `Base.staticMethod()` into a call to Derived. Variables,
@@ -121,13 +160,14 @@ parameters and expressions have finite type-based candidate enumeration. `super`
 and private method calls retain their direct bindings. These are static compiler
 observations and conservative type-compatible candidates, not data-flow/runtime
 reachability or a closed-world execution guarantee. Class expressions, unsupported
-receiver types, property/accessor effects, unobserved generic instantiations,
+receiver types, wider property/accessor effects, unobserved generic instantiations,
 implicit execution phases and external bodies retain visible limitations.
 
 Original changed declarations seed the incoming walk by exact native declaration
 binding or explicitly labeled original-source containment. Containment is byte
 ownership, not semantic equivalence. Incoming traversal follows calls, possible
-method/constructor targets, construct-result classes and overload-body links. It preserves every parallel proof,
+method/constructor targets, construct-result classes, overload-body links and
+separately labelled property references/effects/initializer ownership. It preserves every parallel proof,
 including repeated call sites, while avoiding repeated states for one seed.
 Sides, project contexts and changed rows remain separate. Every source range is
 checked against original captured UTF-8 bytes; live disk is not a replacement.

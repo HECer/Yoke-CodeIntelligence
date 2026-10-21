@@ -16,6 +16,12 @@ coverage stay separate from independent compiler correctness or execution proof.
 Source-observed generic instances retain exact type/argument/syntax witnesses,
 with separate union branches and complete intersection types. Candidate witness
 IDs are source/context scoped; display strings never stand in for type identity.
+Property slot references, applicable getter/setter effects and direct function
+initializer ownership are distinct from resolved invocation signatures. Candidate
+accesses pair exact original slot/proof/modes and actual class/type witnesses;
+syntactic optional reads and logical conditional writes remain separate. Native
+checks source containment and pairings without inferring returned function values
+or runtime property state.
 See [the contract](../native/docs/git-compiler-affected.md).
 
 The separate live Explorer owns a fixed host Engine/capture selection and cached

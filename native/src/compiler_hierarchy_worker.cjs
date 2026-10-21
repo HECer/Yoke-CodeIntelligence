@@ -112,7 +112,7 @@ function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,root,
   let caller=call.parent;while(caller&&!ts.isFunctionLike(caller)&&!ts.isSourceFile(caller))caller=caller.parent;
   const constructing=ts.isNewExpression(call),tagged=ts.isTaggedTemplateExpression(call),expression=tagged?call.tag:call.expression;
   const invocationKind=constructing?'new':tagged?'taggedTemplate':expression.kind===ts.SyntaxKind.SuperKeyword?'super':'call';
-  const conditional=!!(call.questionDotToken||expression.questionDotToken),from=addNode(caller),to=target&&captured(target)?addNode(target):null;
+  const conditional=!!(ts.isOptionalChain(call)||ts.isOptionalChain(expression)),from=addNode(caller),to=target&&captured(target)?addNode(target):null;
   if(to!==null)edge('calls',from,to,call,{invocationKind,conditional});
   else unknown(constructing&&signature&&!target?'construct_signature_has_no_source_declaration':'call_target_not_captured_declaration',call);
   if(constructing){
@@ -167,5 +167,6 @@ function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,root,
    }
   }
  }
+ compilerProperties({ts,checker,program,source,slash,types,instancesByOwner,addNode,edge,unknown,tick,captured,staticMember,privateMember,fixedClassReference});
  return{schema:1,nodes,instances,relations,unavailable,pairVisits,astNodes:ast,complete:false,runtimeDispatchEstablished:false};
 }
