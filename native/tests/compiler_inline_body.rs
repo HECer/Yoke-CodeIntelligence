@@ -737,6 +737,208 @@ fn jsdoc_call_types_and_removed_comments_preserve_templates_await_yield_and_neig
     );
 }
 #[test]
+fn explicit_return_contexts_and_anonymous_return_names_retain_types_and_owned_execution() {
+    for (language, keep, source) in [
+        (
+            "ts",
+            false,
+            "function helper(): {run:(n:number)=>number} {return {run:n=>n+1};}const result=helper();export const observed=result.run(3);",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(): (n:number)=>number {return n=>n+1;}const result=helper();export const observed=[result(3),result.name];",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(): {run(n:number):number} {return {run(n){return n+2;}};}const result=helper();export const observed=result.run(3);",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(): [(n:number)=>number,string] {return [n=>n+1,\"owned\"];}const result=helper();export const observed=[result[0](3),result[1]];",
+        ),
+        (
+            "ts",
+            false,
+            "type Result={kind:\"owned\",run:(n:number)=>number};function helper():Result {return {kind:\"owned\",run:n=>n+1};}const result=helper();export const observed=result.run(3);",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(){return function(){};}const result=helper();export const observed=result.name;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(){return ()=>3;}const result=helper();export const observed=[result.name,result()];",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(){return class{};}const result=helper();export const observed=result.name;",
+        ),
+        (
+            "js",
+            false,
+            "function helper(){return function(){};}const result=helper();export const observed=result.name;",
+        ),
+        (
+            "js",
+            false,
+            "function helper(){return ()=>3;}const result=helper();export const observed=[result.name,result()];",
+        ),
+        (
+            "js",
+            false,
+            "function helper(){return class{};}const result=helper();export const observed=result.name;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(): (n:number)=>number {try{return n=>n+1;}finally{return n=>n+2;}}const result=helper();export const observed=[result.name,result(3)];",
+        ),
+        (
+            "ts",
+            false,
+            "function helper():()=>void{return ()=>3;}const result=helper();export const observed=[result.name,result()];",
+        ),
+        (
+            "ts",
+            false,
+            "function helper():{value:number}|undefined {exit:while(true){try{return {value:3};}finally{break exit;}}}const result=helper();export const observed=result===undefined;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper():((n:number)=>number)|undefined {exit:while(true){try{return n=>n+1;}finally{break exit;}}}const result=helper();export const observed=result===undefined;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(): (n:number)=>number {return function owned(n){return n+1;};}const result=helper();export const observed=[result.name,result(3)];",
+        ),
+        (
+            "ts",
+            false,
+            "// 🌍\r\nfunction helper(): readonly [(n:number)=>number,\"é\"] {return [n=>n+1,\"é\"];}\r\nconst result=helper();export const observed=[result[0](3),result[1]];\r\n",
+        ),
+        (
+            "ts",
+            true,
+            "export function helper(): {run:(n:number)=>number} {return {run:n=>n+1};}const result=helper();export const observed=result.run(3);",
+        ),
+        (
+            "ts",
+            false,
+            "const result=helper();function helper(): {run:(n:number)=>number} {return {run:n=>n+1};}export const observed=result.run(3);",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(flag:boolean):(n:number)=>number {if(flag)return n=>n+1;return function(n){return n+2;};}const a=helper(true);const b=helper(false);export const observed=[a.name,b.name,a(3),b(3)];",
+        ),
+        (
+            "ts",
+            false,
+            "const opaque=(()=>{return 4;}) as unknown as ()=>never;function helper():number{return opaque();}const result=helper();export const observed=result;",
+        ),
+        (
+            "ts",
+            false,
+            "const opaque=(()=>{return 4;}) as unknown as ()=>never;function helper():never{return opaque();}const result=helper();export const observed=result;",
+        ),
+        (
+            "ts",
+            false,
+            "const opaque=(()=>{return 4;}) as unknown as ()=>never;function helper():void{return opaque();}const result=helper();export const observed=result;",
+        ),
+        (
+            "ts",
+            false,
+            "const opaque=(()=>{return 4;}) as unknown as ()=>never;function helper(){return opaque();}const result=helper();export const observed=result;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(){return (((function(){})));}const result=helper();export const observed=result.name;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(){return ((()=>3) as (()=>number));}const result=helper();export const observed=result.name;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(){return <(()=>number)>(()=>3);}const result=helper();export const observed=result.name;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(){return ((()=>3) satisfies (()=>number));}const result=helper();export const observed=result.name;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(){return (function(){})!;}const result=helper();export const observed=result.name;",
+        ),
+        (
+            "ts",
+            false,
+            "function helper(){return (<T>(n:T)=>n)<number>;}const result=helper();export const observed=result.name;",
+        ),
+        (
+            "js",
+            false,
+            "function helper(){return /** @type {()=>number} */ (()=>3);}const result=helper();export const observed=[result.name,result()];",
+        ),
+    ] {
+        let (root, mut engine) = fixture(source, language);
+        let p = root.path().join("tsconfig.json");
+        let mut config: Value = serde_json::from_slice(&fs::read(&p).unwrap()).unwrap();
+        for option in ["allowUnreachableCode", "allowUnusedLabels"] {
+            config["compilerOptions"][option] = json!(false);
+        }
+        for option in [
+            "noUnusedLocals",
+            "noUnusedParameters",
+            "noFallthroughCasesInSwitch",
+        ] {
+            config["compilerOptions"][option] = json!(true);
+        }
+        fs::write(p, serde_json::to_vec(&config).unwrap()).unwrap();
+        let r =
+            yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(keep, language), &d())
+                .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        let after = planned(&engine, &r, language);
+        same_execution(source, &after);
+        assert_eq!(r["sourceExecuted"], false);
+        assert_eq!(r["verificationRequired"], true);
+        assert_eq!(
+            fs::read_to_string(root.path().join(format!("main.{language}"))).unwrap(),
+            source
+        );
+    }
+}
+#[test]
+fn return_annotations_cannot_capture_consumer_type_shadows() {
+    let source = "type Result={run:(n:number)=>number};function helper():Result{return {run:n=>n+1};}export function outer(){type Result={value:number};const unused:Result={value:3};const result=helper();return result.run(unused.value);}";
+    let (root, mut engine) = fixture(source, "ts");
+    let error = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+        .unwrap_err();
+    assert!(
+        format!("{error:#}").contains("Body free binding would change"),
+        "{error:#}"
+    );
+    unpublished(&engine);
+    assert_eq!(
+        fs::read_to_string(root.path().join("main.ts")).unwrap(),
+        source
+    );
+}
+#[test]
 fn unsafe_or_unowned_body_forms_refuse_before_any_plan_or_derived_source() {
     for source in [
         "type Const={n:number};function helper():unknown{return {} as Const;}function caller(){type Const={m:string};return helper();}export const observed=caller();",
@@ -833,6 +1035,24 @@ fn wrapped_eval_in_the_body_or_caller_cannot_publish_a_plan() {
 #[test]
 fn body_cli_plans_require_independent_verification_approval_and_foreign_preserving_recovery() {
     for (source, keep, strict, language) in [
+        (
+            "function helper(): {run:(n:number)=>number} {return {run:n=>n+1};}const result=helper();export const observed=result.run(3);",
+            false,
+            true,
+            "ts",
+        ),
+        (
+            "function helper(): (n:number)=>number {return n=>n+1;}const result=helper();export const observed=[result(3),result.name];",
+            false,
+            true,
+            "ts",
+        ),
+        (
+            "function helper(){return class{};}const result=helper();export const observed=result.name;",
+            false,
+            true,
+            "js",
+        ),
         (
             "let input={n:3};\n/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}const result=helper(input);export const observed=result.n;",
             false,

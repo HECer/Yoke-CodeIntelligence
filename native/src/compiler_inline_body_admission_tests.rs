@@ -4,7 +4,7 @@ use super::*;
 #[test]
 fn body_effects_cannot_forge_source_bindings_origins_types_paths_or_output() {
     let root = tempfile::tempdir().unwrap();
-    let source = "// 🌍\n/** @returns {{length:number}} */\nfunction helper(n:number) {const values=[n];return {length:values.length};}\nexport const answer=helper(2);\n";
+    let source = "// 🌍\n/** @returns {()=>{length:number}} */\nfunction helper(n:number) {const values=[n];return ()=>({length:values.length});}\nexport const answer=helper(2);\n";
     fs::write(root.path().join("main.ts"), source).unwrap();
     fs::write(root.path().join("tsconfig.json"), r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","noEmit":true},"files":["main.ts"]}"#).unwrap();
     let mut engine = Engine::open(root.path()).unwrap();
@@ -134,6 +134,7 @@ fn body_effects_cannot_forge_source_bindings_origins_types_paths_or_output() {
     ));
     assert!(admit(bad, &d).is_err());
     for (from, to) in [
+        ("(void 0,", "("),
         ("if (void 0 === void 0)", "if (void 0 !== void 0)"),
         ("if (void 0 !== void 0)", "if (void 0 === void 0)"),
         (" as unknown as (typeof ", " as unknown as (never & typeof "),
@@ -359,6 +360,15 @@ fn var_witnesses_cannot_forge_parameter_copies_catch_targets_types_or_property_r
         result.replace("void 0 !== void 0", "void 0 === void 0")
     ));
     assert!(admit(bad).is_err(), "executable type witness");
+    let from = ": (unknown) | undefined";
+    let to = ": any";
+    let mut bad = baseline.clone();
+    let changed = bad["edits"][1]["text"].as_str().unwrap().replace(from, to);
+    assert_ne!(changed, bad["edits"][1]["text"].as_str().unwrap());
+    bad["edits"][1]["text"] = json!(changed);
+    bad["resultHash"] = json!(crate::model::hash(result.replace(from, to)));
+    assert!(admit(bad).is_err(), "forged return storage context");
+
     let mut bad = baseline.clone();
     let changed = bad["edits"][1]["text"]
         .as_str()

@@ -122,6 +122,32 @@ impl Rendered {
         Ok(())
     }
 }
+fn anonymous_return_value(mut value: Node<'_>, d: &Deadline) -> Result<bool> {
+    for _ in 0..2000 {
+        d.check()?;
+        match value.kind() {
+            "arrow_function" | "function_expression" | "generator_function" | "class" => {
+                return Ok(value.child_by_field_name("name").is_none());
+            }
+            "parenthesized_expression"
+            | "as_expression"
+            | "satisfies_expression"
+            | "non_null_expression"
+            | "instantiation_expression" => {
+                value = *children(value)
+                    .first()
+                    .context("Return value wrapper is empty")?;
+            }
+            "type_assertion" => {
+                value = *children(value)
+                    .last()
+                    .context("Return type assertion is empty")?;
+            }
+            _ => return Ok(false),
+        }
+    }
+    anyhow::bail!("Return value wrapper capacity exceeded")
+}
 fn fresh_name(name: &str) -> bool {
     name.strip_prefix("__ci_inline_").is_some_and(|suffix| {
         suffix.len() <= 6
@@ -623,7 +649,18 @@ pub(super) fn render(
     if wrap {
         out.generated(&format!("{{{line}"))?;
     }
-    out.generated(&format!("let {};{line}{{{line}", frame.names.result))?;
+    out.generated(&format!("let {}", frame.names.result))?;
+    if let Some(annotation) = declaration.child_by_field_name("return_type") {
+        out.generated(": (")?;
+        out.original(
+            source,
+            annotation.start_byte() + 1,
+            annotation.end_byte(),
+            "return_type",
+        )?;
+        out.generated(") | undefined")?;
+    }
+    out.generated(&format!(";{line}{{{line}"))?;
     let mut argument_cursor = argument_list.start_byte() + 1;
     let mut separators_cursor = argument_list.walk();
     let separators: Vec<_> = argument_list
@@ -700,7 +737,11 @@ pub(super) fn render(
         );
         value_out.generated(&format!("{{ {} = ", frame.names.result))?;
         let tail_start = if let Some(value) = values.first() {
-            value_out.generated("(")?;
+            value_out.generated(if anonymous_return_value(*value, d)? {
+                "(void 0,"
+            } else {
+                "("
+            })?;
             value_out.original(source, ret.start_byte() + 6, value.end_byte(), "body")?;
             value_out.generated(")")?;
             value.end_byte()
@@ -799,6 +840,44 @@ pub(super) fn render(
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn anonymous_return_barriers_follow_expression_wrappers_and_preserve_never_call_flow() {
+        let d = Deadline::new(10_000);
+        for (value, expected) in [
+            ("()=>3", true),
+            ("function(){}", true),
+            ("function*(){}", true),
+            ("class{}", true),
+            ("(((function(){})))", true),
+            ("((()=>3) as (()=>number))", true),
+            ("<(()=>number)>(()=>3)", true),
+            ("((()=>3) satisfies (()=>number))", true),
+            ("(function(){})!", true),
+            ("(<T>(n:T)=>n)<number>", true),
+            ("opaque()", false),
+            ("(opaque())", false),
+            ("opaque() as number", false),
+            ("(void 0,()=>3)", false),
+            ("{run:()=>3}", false),
+            ("flag?()=>3:()=>4", false),
+            ("'()=>3'", false),
+            ("function named(){}", false),
+            ("class Named{}", false),
+        ] {
+            let source = format!("function helper(){{return {value};}}");
+            let tree = parse("typescript", &source, &d).unwrap();
+            let declaration = tree.root_node().named_child(0).unwrap();
+            let ret = returns(declaration.child_by_field_name("body").unwrap(), &d).unwrap()[0];
+            let expression = children(ret)[0];
+            assert_eq!(
+                anonymous_return_value(expression, &d).unwrap(),
+                expected,
+                "{value}: {}",
+                expression.to_sexp()
+            );
+            assert!(anonymous_return_value(expression, &Deadline::new(0)).is_err());
+        }
+    }
     #[test]
     fn fixed_const_type_tokens_cannot_be_other_keywords_properties_or_comment_text() {
         let d = Deadline::new(10_000);

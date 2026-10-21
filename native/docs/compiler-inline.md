@@ -43,6 +43,22 @@ body completion, after that original block, clears the result to `void 0`, since
 a finally break/continue can cancel a pending return. Original finally blocks
 still run and may override a return. An explicit return annotation is copied
 from source; inferred primitive return hints have a fixed keyword whitelist.
+That original TypeScript annotation also types the result storage, with a fixed
+undefined alternative for normal completion. Assigning returned expressions into
+this storage retains contextual typing for function-valued properties, methods,
+tuples and callbacks. Source type identifiers retain the original binding checks;
+a consumer type shadow refuses. No worker-supplied type expression replaces the
+annotation. Anonymous returned function/class expressions use a fixed
+`(void 0, originalExpression)` barrier so
+anonymous arrows, function expressions and classes keep the empty runtime name
+of a returned expression, rather than acquiring the generated result variable's
+name. Parentheses and erased TypeScript wrappers retain this classification.
+Named expressions and other return values use the original expression wrapper.
+In particular, never-typed calls keep their existing compiler flow; inserting a
+comma wrapper would make a subsequent generated break appear unreachable.
+The void operand adds no
+source evaluation and preserves contextual typing. Finally overrides and
+cancellation retain the completion behavior described above.
 Generated result assertions use a fixed intermediate `unknown` assertion so a
 throwing/never-returning source does not make the scaffold's undefined path an
 invalid conversion. The original compiler context must still have no errors.

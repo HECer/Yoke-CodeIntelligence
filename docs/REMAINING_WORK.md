@@ -39,6 +39,39 @@ original receipts and semantic claims remain distinct from interpretation truth.
 
 ## Acceptance still required
 
+The return-context extension preserves original TypeScript return annotations as
+contextual types for generated result storage, with a fixed undefined alternative
+for normal completion. Function-valued properties, methods, tuples and callbacks
+retain their original parameter types. Source identifiers keep the same binding
+checks; consumer type shadows refuse. Source-derived void-comma barriers prevent anonymous
+returned arrows, function expressions and classes from acquiring synthetic result
+variable names. Original named expressions, evaluation order and finally behavior
+remain intact. Native reconstruction checks the exact annotation and barrier.
+
+Thirty-one new owned positive scenarios and one type-shadow refusal pass in two added
+integration functions, plus nineteen source-wrapper classification cases in one new unit, with
+Unicode/CRLF, retained exports and before-definition
+calls. Three additional CLI cases pass independent tsc, verification, approval,
+application and foreign-preserving recovery. Coherently forged annotations and
+removed name barriers refuse despite matching forged result hashes.
+
+The scoped regression passes **115 integrations / 0 failures / 2 existing ignored**
+across eight targets and twelve body units on 809 unchanged native inputs.
+Format/build/all-target Clippy pass. Python 17, typecheck and TypeScript 260 / 3
+existing skips pass on 803 unchanged retained inputs. Counts overlap. The original
+owned CLI rejection and the sixteen-case worker red/green comparison are retained:
+eight original projected compiler errors and seven runtime name changes become
+sixteen exact type/runtime matches. Synthetic probes claim no native admission;
+runtime comparisons execute only owned literal fixtures.
+
+Further predicate, argument/parameter/annotation and broader R1-R9 work, full
+Windows and current-head hosted/upstream acceptance remain open. See the
+[return-context evidence](validation/integration-2026-10-19/function-body-return-contexts/README.md).
+The initial 114-pass/one-failure guard caught TS7027 from an overly broad comma
+wrapper. The final source classifies anonymous values through erased wrappers and
+keeps ordinary never-call flow; four never cases and the 31-case worker probe pass.
+The following completion/type results belong to the preceding source checkpoint.
+
 Classic function-body expansion under the optional `inlineCompiler` profile now
 retains enabled unreachable-code and unused-label diagnostics. The original body
 block runs under the fixed runtime-true guard `void 0 === void 0`; only actual outer
