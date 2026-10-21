@@ -2,6 +2,25 @@
 
 ## Current integration work
 
+Native host-owned session steering now gives contexts and composable modes
+actual instructions and MCP catalog/dispatch effects. Layered defaults, base/
+added modes, literal custom definitions and persistent override/reset retain
+host authority, CAS/stale checks and legacy default-agent identities. Trail/
+Graft aliases share the original six query identities. Real stdio and finite
+HTTP SSE catalog-change notifications are bounded.
+
+126 distinct scoped Rust functions pass (3 existing ignores), including12 new
+functions and all18 unchanged HTTP functions as a complete direct binary run.
+All1017 input hashes, Clippy/fmt/build/typecheck and npm260/3existing skips pass.
+Actual saved-fixture context and alias RED/GREEN, original schemas/rows/source/
+Git/Store and legacy raw-output controls pass. The full Windows Cargo-launched
+HTTP suite still has an unresolved10060/startup-cleanup timeout despite direct
+suite and isolated Cargo passes; its failed attempts are retained and follow-up
+remains active. This is not full Windows acceptance. See [the native contract](../native/docs/session-steering.md)
+and [indexed evidence](validation/integration-2026-10-21/session-steering/README.md).
+All353 original identities/assessments, broader configuration/client/R1-R9 work,
+ten original OS1314 prerequisites and full main/release acceptance remain open.
+
 Exact override/implementation contract associations now extend the compiler
 incoming walk without inventing generic instances or dispatch. Separate outgoing
 contract proofs preserve original IDs/directions and parallel bindings; unchanged

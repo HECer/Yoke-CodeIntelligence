@@ -34,8 +34,10 @@ access. Permitted origins receive scoped CORS headers on authentication errors.
 
 The implementation follows the pinned MCP 2025-11-25 Streamable HTTP transport:
 one bounded JSON-RPC request or notification per POST, with both JSON and event
-stream types in Accept. Requests receive JSON responses; accepted notifications
-receive empty 202 responses. GET returns 405: unsolicited SSE streams, event
+stream types in Accept. Ordinary requests receive JSON responses; accepted notifications
+receive empty 202 responses. Under explicit [session steering](session-steering.md),
+a request changing the tool catalog receives finite SSE notification events
+followed by its JSON-RPC response. No unsolicited channel is opened. GET returns 405: unsolicited SSE streams, event
 replay and resumable streams are not implemented. DELETE closes a session.
 Initialization returns a cryptographically random session identifier; subsequent
 messages bind it to the same principal, immutable host generation and negotiated
