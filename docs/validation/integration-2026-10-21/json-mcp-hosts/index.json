@@ -1,0 +1,640 @@
+{
+  "files": [
+    {
+      "path": "archive-and-docs.py",
+      "bytes": 11059,
+      "sha256": "1ec11a5f428994188a002265122391ace6268152e3047a76ea41fbad60394bc2"
+    },
+    {
+      "path": "checkpoint.json",
+      "bytes": 12242,
+      "sha256": "e32a0118442453dd89581a22590436d5cdd15383b4d42365a0817c86ee47200a"
+    },
+    {
+      "path": "client-file-live-r1/install-plan.stderr",
+      "bytes": 192,
+      "sha256": "09ee122b465729fa33ee41634311ec20909409200eac6e7a088f6e334819c281"
+    },
+    {
+      "path": "client-file-live-r1/install-plan.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-file-live-r1/progress.json",
+      "bytes": 548,
+      "sha256": "e8e6582d6dc45aebdc1929e2bf1a75d157425da78679959a06106e92e693123e"
+    },
+    {
+      "path": "client-file-live-r1/result.json",
+      "bytes": 1099,
+      "sha256": "7ec26a4f08041396b5d995cf4a2b8ea09101407bd961acf2270b796390026791"
+    },
+    {
+      "path": "client-file-live-r2/actual-client-get.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-file-live-r2/actual-client-get.stdout",
+      "bytes": 536,
+      "sha256": "4015e603486d4e4ce0f6ba752a5dae45feb48fa3927e90b20547ca3283e626c0"
+    },
+    {
+      "path": "client-file-live-r2/actual-client-list.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-file-live-r2/actual-client-list.stdout",
+      "bytes": 382,
+      "sha256": "ef03a4c09bc4b77fd3330b7abe3f5fc2de3911086305869894405e4f460cf0b1"
+    },
+    {
+      "path": "client-file-live-r2/index-owned-source.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-file-live-r2/index-owned-source.stdout",
+      "bytes": 1426,
+      "sha256": "477efa0f4b33b38836ff7e0598afc0d59de224ddbf2d8594e1e4306f367616e2"
+    },
+    {
+      "path": "client-file-live-r2/install-apply.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-file-live-r2/install-apply.stdout",
+      "bytes": 516,
+      "sha256": "ad74b2c26202ad92501c13feb027da241ce98510a29f7506e08013a57da65683"
+    },
+    {
+      "path": "client-file-live-r2/install-plan.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-file-live-r2/install-plan.stdout",
+      "bytes": 5696,
+      "sha256": "c6cdfd4c8c3679de4d150e4c2b96b37b73ccca4674dea3dbed75ecbbdba8a6e9"
+    },
+    {
+      "path": "client-file-live-r2/installed-config.json",
+      "bytes": 433,
+      "sha256": "7eeca99ecd14881dc6681992ca8f20abb11c390e570de9d80bbc8862a3fb5602"
+    },
+    {
+      "path": "client-file-live-r2/progress.json",
+      "bytes": 3776,
+      "sha256": "cdc30fadc88b58fe1d2152ac9743a88c1c3534bce05025133c6d9fae5bc0d998"
+    },
+    {
+      "path": "client-file-live-r2/result.json",
+      "bytes": 4849,
+      "sha256": "ce1a8d500cbcc690ad9dfd49e0b75a79cfcfbae7304a18b7ae744e00923d93dc"
+    },
+    {
+      "path": "client-file-live-r2/uninstall-apply.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-file-live-r2/uninstall-apply.stdout",
+      "bytes": 520,
+      "sha256": "6af24749cc36a6634a2c660c91f71dea9b1906f5c04dfd0f8340e0cd1391a2eb"
+    },
+    {
+      "path": "client-file-live-r2/uninstall-plan.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-file-live-r2/uninstall-plan.stdout",
+      "bytes": 4073,
+      "sha256": "ab75ab626e2dd6e7932e7c82e17ebcac3d4d1f6d245238b4264225c65222e49b"
+    },
+    {
+      "path": "client-help-r1/mcp-get.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-help-r1/mcp-get.stdout",
+      "bytes": 277,
+      "sha256": "7961e77466834146cafae27308f39c070064b5e1aeb95ebe771201c7d089b21d"
+    },
+    {
+      "path": "client-help-r1/mcp-list.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-help-r1/mcp-list.stdout",
+      "bytes": 267,
+      "sha256": "c980803755ace854237197f3891e4e463f87d79a2f34ed9d153827585279c66e"
+    },
+    {
+      "path": "client-help-r1/mcp.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-help-r1/mcp.stdout",
+      "bytes": 2474,
+      "sha256": "7119050de7984dc9d616f6b632fa3ee7fef92667eb5298ba57c73051e59cad46"
+    },
+    {
+      "path": "client-help-r1/result.json",
+      "bytes": 681,
+      "sha256": "844114cee1b7eb7565df3c4f0721e378615af04b90b51aa1799b96122b433076"
+    },
+    {
+      "path": "client-help-r1/root.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-help-r1/root.stdout",
+      "bytes": 22319,
+      "sha256": "b10f5c36adfe3285f6c5a0d18284f466e6c4486499de56ef62745e13312a7fbc"
+    },
+    {
+      "path": "client-live-r1/install-plan.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r1/install-plan.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r1/progress.json",
+      "bytes": 480,
+      "sha256": "717e85952e0813573ac7536664a2f96e1358dad2710e57ee03f690095f40c336"
+    },
+    {
+      "path": "client-live-r1/result.json",
+      "bytes": 1061,
+      "sha256": "e0fbe07ef5825e06fda55c5c0ddb489b372ab78d8ba6a7ee36729c1e9d7e6bf9"
+    },
+    {
+      "path": "client-live-r2/actual-client-get.stderr",
+      "bytes": 80,
+      "sha256": "455614ec0a94b2d326bd3a433dc92fdb9a08beee42a908c7f2c456cf15646dd9"
+    },
+    {
+      "path": "client-live-r2/actual-client-get.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r2/actual-client-list.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r2/actual-client-list.stdout",
+      "bytes": 65,
+      "sha256": "9d1a7c33f8d28d239e37dc3965e51922cf31f13b4db921a190b1193688f6a6ea"
+    },
+    {
+      "path": "client-live-r2/index-owned-source.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r2/index-owned-source.stdout",
+      "bytes": 1426,
+      "sha256": "be7aad986f4477aa12c26249e8d273fb2d2bce60c62c2ccb639415fc84c5f671"
+    },
+    {
+      "path": "client-live-r2/install-apply.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r2/install-apply.stdout",
+      "bytes": 516,
+      "sha256": "780bfcb36753655b97176699da52703911a0261c43a9fd7610ad9ddd0e444078"
+    },
+    {
+      "path": "client-live-r2/install-plan.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r2/install-plan.stdout",
+      "bytes": 5704,
+      "sha256": "c785018ea2143e70bade7fe3497c4a9a62dd25324663c9b76b5478ef297b1715"
+    },
+    {
+      "path": "client-live-r2/installed-config.json",
+      "bytes": 433,
+      "sha256": "9d7d8c0e175cfd4f07e0f63eb518d2edde9c35192789aac9aae591b0033720af"
+    },
+    {
+      "path": "client-live-r2/progress.json",
+      "bytes": 4204,
+      "sha256": "e9b7f53b4fdbdc6259135f739ad140635141d5a5bfce0e07478502bdb76cc8f5"
+    },
+    {
+      "path": "client-live-r2/result.json",
+      "bytes": 5102,
+      "sha256": "8c1ee8531f8c7aaeae904b970589c38d5e5f2a708b6b94bf484fc09aac88dfaf"
+    },
+    {
+      "path": "client-live-r2/uninstall-apply.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r2/uninstall-apply.stdout",
+      "bytes": 520,
+      "sha256": "c199f959d06dbcdb5372a2bed759a2d067fb20f4cc28058a5affae33391bdf3c"
+    },
+    {
+      "path": "client-live-r2/uninstall-plan.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r2/uninstall-plan.stdout",
+      "bytes": 4077,
+      "sha256": "53d15de5bb0a2e258fe4e78852941054a91c9448885f0201197a9bd52462471e"
+    },
+    {
+      "path": "client-live-r3/actual-client-get.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r3/actual-client-get.stdout",
+      "bytes": 540,
+      "sha256": "a7781f50887b0a2b806b1981d6a6513e2e241b23ec918c9647ce77de81d52850"
+    },
+    {
+      "path": "client-live-r3/actual-client-import-entry.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r3/actual-client-import-entry.stdout",
+      "bytes": 62,
+      "sha256": "0afafe8759874bb50ae9553d160664014a066ffda2cdf26a567336022de21f8b"
+    },
+    {
+      "path": "client-live-r3/actual-client-list.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r3/actual-client-list.stdout",
+      "bytes": 382,
+      "sha256": "1259ce5acadce852e654bc2691d3cd9a7ecb17189a21e054d7a674f5a42b8325"
+    },
+    {
+      "path": "client-live-r3/actual-client-remove-entry.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r3/actual-client-remove-entry.stdout",
+      "bytes": 173,
+      "sha256": "3e04c327a6d4362c53084ae8cba902dcf39f6a38bcb8562833714d15bfb735f0"
+    },
+    {
+      "path": "client-live-r3/index-owned-source.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r3/index-owned-source.stdout",
+      "bytes": 1426,
+      "sha256": "7b007a3cd353c6c733e5cc87b62e56908222ea648d7754b5670b6bca869e7fec"
+    },
+    {
+      "path": "client-live-r3/install-apply.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r3/install-apply.stdout",
+      "bytes": 516,
+      "sha256": "06b53e72707338ce474bf46df96435f31ff8478683eb3cdce4c64a61d6add4d7"
+    },
+    {
+      "path": "client-live-r3/install-plan.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r3/install-plan.stdout",
+      "bytes": 5704,
+      "sha256": "26bb82d443fa706d9b9d98450999a52b4c41e09e064085e6308c9161e2fd3c69"
+    },
+    {
+      "path": "client-live-r3/installed-config.json",
+      "bytes": 433,
+      "sha256": "14f940a35dfb3fb8f238f3a70a32a99a29d4a66c3dfefa9388145a3e33cbcbb5"
+    },
+    {
+      "path": "client-live-r3/progress.json",
+      "bytes": 5193,
+      "sha256": "fca56fac6675f74620a7927cc9a742ea529d06597255a35c4869af7f5df53879"
+    },
+    {
+      "path": "client-live-r3/result.json",
+      "bytes": 6231,
+      "sha256": "7080063052da5899a9dafe161a2ea9591329f43d81cb229955e20636edf2a380"
+    },
+    {
+      "path": "client-live-r3/uninstall-apply.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r3/uninstall-apply.stdout",
+      "bytes": 520,
+      "sha256": "f51b8fcd3ad5c4c286f5e31eb121d1a250a60b037f04d9605d9f42b60e86ae8e"
+    },
+    {
+      "path": "client-live-r3/uninstall-plan.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-live-r3/uninstall-plan.stdout",
+      "bytes": 4077,
+      "sha256": "18c5717c42b4a1988407a363a16fb05c6afa8c9c3786b5c83c4e4220af1da5b9"
+    },
+    {
+      "path": "client-prep-r1/manifest.json",
+      "bytes": 2101,
+      "sha256": "2c2e75d5231f4169ca23e4a14f62608bd862bca4e21d7eb64456e8a9140f7896"
+    },
+    {
+      "path": "client-prep-r1/result.json",
+      "bytes": 727,
+      "sha256": "f0c29cea5d221783229737152c80e1ed4e5a28b8f7cd4a8dcd5922b0876c762f"
+    },
+    {
+      "path": "client-prep-r1/version.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "client-prep-r1/version.stdout",
+      "bytes": 22,
+      "sha256": "dc3d56549d7ae73a42ae7c663cd0656c0b9847e6beb1a98c63ba4efd92a3f785"
+    },
+    {
+      "path": "client-prep-r1/version.txt",
+      "bytes": 7,
+      "sha256": "8ab67572917965e66d0c082f2fc49c017ebc680e8d8aaacf790e533431efd5b8"
+    },
+    {
+      "path": "controllers/ci-r6-claude-client-prep.py",
+      "bytes": 2874,
+      "sha256": "b6e197e75469ad2c6858de42de5d63043cc9e27a86cec013d3b375845fcc82b0"
+    },
+    {
+      "path": "controllers/ci-r6-claude-file-live.py",
+      "bytes": 8477,
+      "sha256": "608ddcacee6160e05e0ca3916eb8cf9482ee1aa7571818ceed0f6decab74a017"
+    },
+    {
+      "path": "controllers/ci-r6-claude-help.py",
+      "bytes": 1634,
+      "sha256": "901525e4a289977c41ae331f8d24416629bb12fdc5cf75b894cd1c88ac38f598"
+    },
+    {
+      "path": "controllers/ci-r6-claude-live.py",
+      "bytes": 8378,
+      "sha256": "3fcee045d9d61ebf214d183466268ad83659fac04d609f13978d5b2147622e7a"
+    },
+    {
+      "path": "controllers/ci-r6-host-guard.py",
+      "bytes": 3563,
+      "sha256": "63994ae4ef6c67088b66ed979189e5d03dbd2193d72fea222749b61071b96a8f"
+    },
+    {
+      "path": "controllers/ci-r6-json-patch-check.py",
+      "bytes": 2752,
+      "sha256": "c687cd6289d3a5a6c75132721b09000f520c6c3840449fc8edc6853f1f35e533"
+    },
+    {
+      "path": "guard-r1/fmt.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "guard-r1/json_host_profiles.log",
+      "bytes": 1680,
+      "sha256": "de8c086c17a92d5834203bb8515ddbe8c7749dfac58be7c2815115d4fefe2879"
+    },
+    {
+      "path": "guard-r1/progress.json",
+      "bytes": 1409,
+      "sha256": "3a47a2fe33612ca2bc612be1f9abff0e6989955f16424c658aef0b20db0ad011"
+    },
+    {
+      "path": "guard-r1/result.json",
+      "bytes": 1841,
+      "sha256": "ce6a74b742a475ba20fbf433fd439b83d55bec3094544a0a2781158748a80696"
+    },
+    {
+      "path": "guard-r1/source-after.json",
+      "bytes": 100012,
+      "sha256": "0cf8e7da98990f969c58846d016207f99e7df34acd38b8128008531301bfde68"
+    },
+    {
+      "path": "guard-r1/source-before.json",
+      "bytes": 100012,
+      "sha256": "0cf8e7da98990f969c58846d016207f99e7df34acd38b8128008531301bfde68"
+    },
+    {
+      "path": "guard-r2/clippy.log",
+      "bytes": 172,
+      "sha256": "9c72a23314a1139c385197e7bf1c787dbfaeb84035d6ec6da1c9a8c11548f242"
+    },
+    {
+      "path": "guard-r2/codex_host_cli.log",
+      "bytes": 650,
+      "sha256": "bc1679b6a210b1c69ae04e1f21c46ce402c6969ca1ca8fd2691f19714e1992b9"
+    },
+    {
+      "path": "guard-r2/fmt.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "guard-r2/host_config.log",
+      "bytes": 2158,
+      "sha256": "a914f8bba1a5106bf64263e1119f66f0222f48689c9ac941912e3dde97b0c8f7"
+    },
+    {
+      "path": "guard-r2/host_install_units.log",
+      "bytes": 15790,
+      "sha256": "b3d9823003d44ec2e0679e317dc6e7990565008a74948c10f948dc94d52faf36"
+    },
+    {
+      "path": "guard-r2/host_mcp_config.log",
+      "bytes": 703,
+      "sha256": "0a9fb95776d2b4d1196127877ea76525dd242abdfd7cacd00a0fad5a7e5c0834"
+    },
+    {
+      "path": "guard-r2/json_host_profiles.log",
+      "bytes": 730,
+      "sha256": "bf4acc45d0e2e4593c6493b61d5677239ef56656a9fcc8a99a3ccaf4f766f082"
+    },
+    {
+      "path": "guard-r2/progress.json",
+      "bytes": 6224,
+      "sha256": "f1d06442d1310e9cdca160d2afd7b1729482e9ad7f002b9b0dd3b9f563a3e54b"
+    },
+    {
+      "path": "guard-r2/result.json",
+      "bytes": 7027,
+      "sha256": "0a5c91ef670e4b3b9fca3b4beb7645aa437b56c48b90ca904efa19d9257fac1a"
+    },
+    {
+      "path": "guard-r2/retained.log",
+      "bytes": 25047,
+      "sha256": "924dd5a2941a87f7293f1eee9fa43c08d5c8af4a80abf0cee779a414a033fe47"
+    },
+    {
+      "path": "guard-r2/source-after.json",
+      "bytes": 100012,
+      "sha256": "9047d7e3c7d54093012bc63a7518357377a0e5b86f6295094758e58c3d84cfc6"
+    },
+    {
+      "path": "guard-r2/source-before.json",
+      "bytes": 100012,
+      "sha256": "9047d7e3c7d54093012bc63a7518357377a0e5b86f6295094758e58c3d84cfc6"
+    },
+    {
+      "path": "guard-r2/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "guard-r3/clippy.log",
+      "bytes": 172,
+      "sha256": "f72606fe7d3a8f46d97a946c76c7abb31cdd6e1b0ee157cc6b8b0fd991f6c612"
+    },
+    {
+      "path": "guard-r3/codex_host_cli.log",
+      "bytes": 651,
+      "sha256": "a16bd12f1a20337f6d73e93ee1c1bcc45a3e15814521e98267b3afad7558a1c8"
+    },
+    {
+      "path": "guard-r3/fmt.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "guard-r3/host_config.log",
+      "bytes": 2158,
+      "sha256": "5d9033d21d004d60029c87505b81d6faef44d826f3b9f99e1732ec4b6cf233f9"
+    },
+    {
+      "path": "guard-r3/host_install_units.log",
+      "bytes": 16186,
+      "sha256": "2ee1d72ef33ec4d5156aed621abaa6e728bea6a251e30e0290b9048f4d6b5313"
+    },
+    {
+      "path": "guard-r3/host_mcp_config.log",
+      "bytes": 703,
+      "sha256": "592a6c6fedca6657ff4b1f72df1fbd6d9574e7dac3472f2f44d954b21162bd01"
+    },
+    {
+      "path": "guard-r3/json_host_profiles.log",
+      "bytes": 729,
+      "sha256": "ff76beed8df309b52a4ac99105ed169ac2ed66fa7cd0f0f1c8a4746d655f9df6"
+    },
+    {
+      "path": "guard-r3/progress.json",
+      "bytes": 6226,
+      "sha256": "3d08f090026ff3da892d07f53e9f7c04f415256665cc3d2f3344af8e204cbfad"
+    },
+    {
+      "path": "guard-r3/result.json",
+      "bytes": 7029,
+      "sha256": "c6822761943109e83a56135fa355463a1d2cd56423cdb47aa500b7fd4cbc8387"
+    },
+    {
+      "path": "guard-r3/retained.log",
+      "bytes": 25029,
+      "sha256": "38d0cbab90ed06b99122bb09b2fb80ae3bab5ed558358aa648d8bb6483339853"
+    },
+    {
+      "path": "guard-r3/source-after.json",
+      "bytes": 100012,
+      "sha256": "7db4fd04fcb6035a97a68010da8f6101774dc8fc8456f6163ac1b1bb2ede739c"
+    },
+    {
+      "path": "guard-r3/source-before.json",
+      "bytes": 100012,
+      "sha256": "7db4fd04fcb6035a97a68010da8f6101774dc8fc8456f6163ac1b1bb2ede739c"
+    },
+    {
+      "path": "guard-r3/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "patch-r1/host_mcp_config.log",
+      "bytes": 7250,
+      "sha256": "dc42cebf29db242f2562209160c1ccf250989cf1b352617a09db82c2896e9dd5"
+    },
+    {
+      "path": "patch-r1/result.json",
+      "bytes": 770,
+      "sha256": "2ee90b4d92cb74f9559bd789e4e697508a36d51ed7ec072cd6aecedcfc8ff8a6"
+    },
+    {
+      "path": "patch-r1/source-after.json",
+      "bytes": 89309,
+      "sha256": "5d7994bfb9df061376f394f90bc42fbab96422ce5ceb6adccedd4a7f7cc4b786"
+    },
+    {
+      "path": "patch-r1/source-before.json",
+      "bytes": 89309,
+      "sha256": "5d7994bfb9df061376f394f90bc42fbab96422ce5ceb6adccedd4a7f7cc4b786"
+    },
+    {
+      "path": "patch-r2/host_config.log",
+      "bytes": 2158,
+      "sha256": "49f24ed0e2f4f08952f4f054f50d53ce33c491ea79fc71ed25813cb97124a0b5"
+    },
+    {
+      "path": "patch-r2/host_mcp_config.log",
+      "bytes": 704,
+      "sha256": "1338ee534a8d14c66feffbc2813f2e3988cfebbc76fa0ce2a841de403f09dab4"
+    },
+    {
+      "path": "patch-r2/result.json",
+      "bytes": 2511,
+      "sha256": "3ee83485c4f81566246c43bc6f3c0583c9ea34297641806ff521a0958a9249f4"
+    },
+    {
+      "path": "patch-r2/source-after.json",
+      "bytes": 89309,
+      "sha256": "62f60bdf637e10f91163a457fae5fbe8a024ac8b34952c82d8208a5f086d86bb"
+    },
+    {
+      "path": "patch-r2/source-before.json",
+      "bytes": 89309,
+      "sha256": "62f60bdf637e10f91163a457fae5fbe8a024ac8b34952c82d8208a5f086d86bb"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2257,
+      "sha256": "4c283f653715bcd9683600a8642dfeec7dc31652739e7aebcdda73de0d194edb"
+    }
+  ],
+  "copiedRawFilesByteExact": true
+}

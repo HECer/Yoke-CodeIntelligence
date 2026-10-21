@@ -18,7 +18,7 @@ mod adapter;
 mod io;
 #[path = "host_install_recovery.rs"]
 mod recovery;
-pub use adapter::AdapterBinding;
+pub use adapter::{AdapterBinding, JsonMcpClient, JsonMcpSource};
 
 pub const PROFILE_ID: &str = "generic-agents-v1";
 pub const STATE_DIRECTORY: &str = "yoke-host-install-v1";
@@ -134,7 +134,7 @@ impl Selection {
     pub fn installation_id(&self) -> String {
         if let Some(binding) = &self.bindings.adapter {
             return identity(&(
-                adapter::CODEX_PROFILE,
+                adapter::profile(self),
                 &self.installation,
                 &self.bindings.roots,
                 &self.bindings.state_root,
@@ -1283,21 +1283,21 @@ fn load_plan(selection: &Selection, id: &str, d: &Deadline) -> Result<Plan> {
         &state(selection).join("plans").join(format!("{id}.json")),
         d,
     )?;
+    let owner = Selection {
+        installation: plan.installation.clone(),
+        bindings: plan.bindings.clone(),
+    };
     ensure!(
         plan.id == id
             && plan_id(&plan) == id
             && plan.schema_version == 1
-            && matches!(plan.profile.as_str(), PROFILE_ID | adapter::CODEX_PROFILE)
+            && plan.profile == adapter::profile(&owner)
             && !plan.bindings.roots.is_empty()
             && plan.bindings.roots.len() <= 16
             && plan.files.len() == plan.bindings.roots.len()
             && plan.installation.len() <= 64,
         "Host plan identity/schema mismatch"
     );
-    let owner = Selection {
-        installation: plan.installation.clone(),
-        bindings: plan.bindings.clone(),
-    };
     validate_plan(&owner, &plan, plan.created_ms, true)?;
     Ok(plan)
 }

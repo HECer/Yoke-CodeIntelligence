@@ -1,6 +1,31 @@
-# Release status — native 0.5.0 and retained TypeScript 0.3.0
+# Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
 ## Current integration work
+
+Explicit [JSON MCP host profiles](native-json-hosts.md) now manage receipt-owned
+Cursor `mcp.json`, Claude Code external `.mcp.json` and Claude Desktop config
+entries through the guarded Windows installer. Strict unique-key JSON patches
+create missing parents/files and preserve foreign values, Unicode/BOM/CRLF and
+human formatting. Exact profile/source/launch bindings, independent write gates,
+no-adoption rules and v1/v2 recovery remain mandatory. Client interpolation paths
+are refused; generic/Codex serialized identities stay unchanged.
+
+The final scoped guard passes 175 Rust tests with one explicit child worker
+ignored, format, all-target Clippy, typecheck and TypeScript 260/3 existing skips.
+Three new process-interruption functions exercise each JSON profile: partial
+exit/resume/uninstall, prepared forced kill/rollback of the original file object,
+and replaced-source refusals without state changes. Actual Claude Code 2.1.306
+loads the managed file in an isolated test directory and reports Connected;
+private import of the exact generated entry also connects. No login or model turn
+is requested. All process jobs in these connected live gates are verified empty; config and
+source bytes roundtrip unchanged. Failed development phases remain archived.
+
+Claude status subcommands ignore global `--mcp-config`; the passing file gate
+loads `.mcp.json` from the owned client working directory with only its test
+server approved in private settings. Interactive explicit-file loading, model
+selection/tool dispatch, Cursor/Desktop runtimes, hooks/statuslines and broader
+R1-R9/Windows/current-head hosted/upstream qualification remain open. See the
+[exact evidence](validation/integration-2026-10-21/json-mcp-hosts/README.md).
 
 An optional [source-category analysis policy](../native/docs/source-category-policy.md)
 now supplies explicit resolution/category mappings, relation projection weights,
@@ -434,7 +459,7 @@ with three skipped. All 41 original installation test bodies remain unchanged.
 See [platform-test evidence](validation/integration-2026-10-19/host-install-platform/README.md)
 for exact frozen inputs and the pending Unix execution boundary.
 
-The [remaining-work map](REMAINING_WORK.md) reconciles current R1–R9 behavior,
+The [remaining-work map](REMAINING_WORK.md) reconciles current R1â€“R9 behavior,
 concrete implementation gaps and separate acceptance gates. It accounts for
 the completed mixed graph consumers/composition and existing discussion/digest
 contracts while retaining every historical failure and inventory boundary.
@@ -607,7 +632,7 @@ The [contract](../native/docs/digest-history-mapping.md) and
 [source-bound evidence](validation/integration-2026-10-19/digest-mapping/index.json)
 retain their scope. That checkpoint predates the separate discussion component
 below. Actual service publication, uncaptured-history integration, full upstream
-export equivalence and the wider R1–R9 work remain open.
+export equivalence and the wider R1â€“R9 work remain open.
 
 Closed-PR discussion acquisition now has an explicit host network/text grant,
 bounded GitHub GETs and typed unsigned-capture replay. Description, conversation,
@@ -670,7 +695,7 @@ This independently owned receiver-v1 client is not an undocumented proprietary
 service adapter. Receiver acceptance does not establish processing, source
 execution or model quality. Configured production receiver acceptance,
 automatic historical acquisition, actual App installation/deployment, full
-platform acceptance and the remaining STATUS/R1–R9 requirements stay open.
+platform acceptance and the remaining STATUS/R1â€“R9 requirements stay open.
 
 The subsequent [native digest receiver](../native/docs/digest-receiver.md)
 implements authenticated TCP/TLS intake for the independently owned v1 contract.
@@ -762,7 +787,7 @@ and the two test threads remain intact. The default native run is not accepted.
 A [hash-bound elevated replay helper](validation/integration-2026-10-19/digest-history-acquisition/WINDOWS-REPARSE-GATES.md)
 for the ten prerequisite failures is prepared and parsed, but has not been run.
 Windows rights are unchanged. Original inventory/certification states, the wider
-STATUS/R1–R9 gaps, hosted acceptance, packaging and release remain open.
+STATUS/R1â€“R9 gaps, hosted acceptance, packaging and release remain open.
 
 The [persistent local history jobs](../native/docs/digest-history-jobs.md)
 add durable explicit continuation across batches and process restarts. Raw
@@ -931,10 +956,10 @@ repair is claimed.
 The [directory evidence](validation/integration-2026-10-19/directory-moves/index.json)
 retains the Windows alias RED, earlier fixture assertion, Clippy diagnostic,
 raw logs, exact source/binary hashes and the real junction/empty-shape cases.
-The selected tree admits 1–1,000 captured text files, 2,000 directories and
+The selected tree admits 1â€“1,000 captured text files, 2,000 directories and
 16 MB counted per physical file. Multi-provider/binary trees, host-scope migration,
 cross-filesystem fallback, exhaustive reference/IDE guarantees, default-safe file
-usage checks, propagated deletion and the wider STATUS/R1–R9 work remain open.
+usage checks, propagated deletion and the wider STATUS/R1â€“R9 work remain open.
 The isolated file-usage follow-up is outside this checkpoint. Full local/hosted
 platform acceptance, packaging, main merge and release remain open.
 
@@ -972,7 +997,7 @@ No whole-native rerun after this addition is claimed. The
 [file-usage evidence](validation/integration-2026-10-19/file-usage/index.json)
 retains exact attempts, source hashes and real provider/compiler outputs.
 
-Other file/declaration/language shapes, propagated deletion, broader R1–R9,
+Other file/declaration/language shapes, propagated deletion, broader R1â€“R9,
 hosted/platform acceptance, packaging, main merge and release remain open.
 
 [Symbol deletion boundaries](../native/docs/symbol-deletion.md) now derive
@@ -991,7 +1016,7 @@ recovery all pass. Counts are nonadditive. Format, all-target Clippy, **17 Pytho
 tests**, mandatory typecheck and **260 TypeScript tests / 3 existing skips** pass
 with unchanged frozen inputs. [Evidence](validation/integration-2026-10-19/symbol-deletion/index.json)
 binds every attempt, integrated source and Git materialization. No whole-native
-rerun is claimed. Other-language attachments, general propagation, wider R1–R9,
+rerun is claimed. Other-language attachments, general propagation, wider R1â€“R9,
 hosted/platform acceptance, packaging, main merge and release remain open.
 
 The subsequent [declaration attachment repair](../native/docs/symbol-deletion.md)
@@ -1016,7 +1041,7 @@ TypeScript tests / 3 existing skips** pass with all **670 integrated inputs
 unchanged**. [Evidence](validation/integration-2026-10-19/declaration-attachments/index.json)
 records raw attempts, source hashes and Git/CRLF materialization. No whole-native
 rerun is claimed. Other declaration/language shapes, general propagation, wider
-R1–R9, hosted/platform acceptance, main merge and release remain open.
+R1â€“R9, hosted/platform acceptance, main merge and release remain open.
 
 [Captured function propagation](../native/docs/propagated-delete.md) now handles
 explicit symbol `propagate=true` in a finite TS/JS ES function module. Exact
@@ -1049,7 +1074,7 @@ TypeScript tests / 3 existing skips** pass with **674 integrated inputs unchange
 source, raw attempts and Git/CRLF materialization. Maximum-inventory quota
 probes intentionally stop at unavailable definition proof; they do not claim
 a complete maximum-size provider workflow. No whole-native rerun is claimed.
-General propagation beyond this finite policy, other R1–R9 work, hosted/platform
+General propagation beyond this finite policy, other R1â€“R9 work, hosted/platform
 acceptance, main merge and release remain open.
 
 [Portable Meaning projections](../native/docs/meaning-projection.md) now read
@@ -1136,7 +1161,7 @@ owned final-test OS credentials are removed. [Frozen evidence](validation/integr
 retains the initial API RED, actual Unicode/CRL/prompt/schema defects and corrected
 runs. These attempts are nonadditive. No libpq/server memory bound, maximum-size,
 runtime-library attestation, other-server/non-Windows/upstream certification or
-whole-native pass is claimed. Remaining R7 connectors, wider R1–R9 work, main
+whole-native pass is claimed. Remaining R7 connectors, wider R1â€“R9 work, main
 merge and release stay open.
 
 [Native received HTTP sources](../native/docs/source-acquisition.md) now add
@@ -1197,7 +1222,7 @@ initial API-unavailable RED, genuine comment-boundary panic and correction, two
 test-fixture corrections, the first Clippy warning and an earlier unchanged
 Git-process termination test failure. Attempts are nonadditive; later passes do
 not erase earlier failures or establish their cause. Dependencies are unchanged.
-Remaining Google/social/video/database and semantic connectors, wider R1–R9,
+Remaining Google/social/video/database and semantic connectors, wider R1â€“R9,
 full native/platform acceptance, main and release stay open.
 
 [Windows owned-member exit proof](validation/integration-2026-10-19/windows-process-exit/index.json)
@@ -1221,7 +1246,7 @@ The earlier eight same-binary and four temporary-trace passes are nonadditive.
 Temporary tracing is absent from final code. This observed-member/OS proof does
 not certify a kernel scheduling cause, every historical transient process,
 arbitrary kernel API preemption, full Windows/non-Windows/upstream acceptance,
-unattended App deployment, main or release. Wider STATUS/R1–R9 remains open.
+unattended App deployment, main or release. Wider STATUS/R1â€“R9 remains open.
 
 [Reviewed native Neo4j publication](validation/integration-2026-10-19/neo4j-publish/index.json)
 now adds an explicit Windows host workflow for saved native base graphs. Offline
@@ -1562,7 +1587,7 @@ case; they are included in, not added to, the final 13 selected groups:
 typecheck and TypeScript260/3skipped pass with 745
 inputs unchanged. The earlier compile-only lifetime failure is retained and
 does not count as executed tests. This is scoped Windows evidence, not complete
-R4, whole-native, platform, main or release acceptance. Broader R1–R9 remains
+R4, whole-native, platform, main or release acceptance. Broader R1â€“R9 remains
 active. See [the contract](../native/docs/mixed-views.md) and
 [indexed evidence](validation/integration-2026-10-19/mixed-meaning-inputs/index.json).
 
@@ -1587,7 +1612,7 @@ same 742 unchanged inputs, with format/build/all-target Clippy.
 Integrated format/Python17/typecheck/TypeScript260+3skipped pass with
 747 unchanged inputs. Counts overlap and are nonadditive.
 Semantic provider extraction, durable mixed graph replay/general consumers and
-broader R1–R9 remain active. Whole-native/platform/main/release acceptance does
+broader R1â€“R9 remain active. Whole-native/platform/main/release acceptance does
 not follow. See [the contract](../native/docs/mixed-meaning-claims.md) and
 [indexed evidence](validation/integration-2026-10-19/mixed-meaning-claims/index.json).
 
@@ -1617,7 +1642,7 @@ evaluated. Final18groups **614 passed / 0 failed / 7 ignored** and format/build/
 with 746 unchanged inputs. Integrated format/Python17/typecheck/
 TypeScript260+3skipped pass with 750 inputs unchanged.
 Earlier failed/diagnostic variants remain separate and nonadditive. General
-mixed graph consumers, cross-workspace composition, full R4/R1–R9, whole-native/
+mixed graph consumers, cross-workspace composition, full R4/R1â€“R9, whole-native/
 platform/main/release acceptance remain open. See [the contract](../native/docs/mixed-meaning-provider.md)
 and [indexed evidence](validation/integration-2026-10-19/mixed-meaning-provider/index.json).
 

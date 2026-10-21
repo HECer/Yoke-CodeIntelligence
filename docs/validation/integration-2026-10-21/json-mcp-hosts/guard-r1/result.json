@@ -1,0 +1,62 @@
+{
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 5.999707200011471,
+      "sourceUnchanged": true,
+      "totals": [],
+      "deletedNewArtifacts": []
+    },
+    {
+      "name": "json_host_profiles",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "json_host_profiles",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 94.31390959999408,
+      "sourceUnchanged": true,
+      "totals": [
+        [
+          "2",
+          "2",
+          "0"
+        ]
+      ],
+      "deletedNewArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\json_host_profiles-22a88fd708a4f465.exe",
+          "sha256": "3e2b97c5602150a35dca45e06ebfd92a9fe9a8758c0024bbf301d3a6e27c6e64"
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\json_host_profiles-22a88fd708a4f465.pdb",
+          "sha256": "39093683f67f3678cb545ae427fc8813ad258d877d279efff28da2420f925332"
+        }
+      ]
+    }
+  ],
+  "sourceUnchanged": true,
+  "allChecksPassed": false,
+  "scope": "JSON MCP profiles plus generic/Codex host configuration and recovery regressions",
+  "realUserConfigChanged": false,
+  "clientRuntimeValidated": false,
+  "cliSha256": "f29bdc4b74008ffb20197b17ebf33dce020b64e2f81c4441ed6246d62554359a"
+}

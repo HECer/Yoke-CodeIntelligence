@@ -1,0 +1,31 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 32s
+     Running tests\json_host_profiles.rs (target\debug\deps\json_host_profiles-22a88fd708a4f465.exe)
+
+running 4 tests
+test all_json_profiles_bind_literal_launch_and_complete_owned_install_uninstall ... FAILED
+test cli_json_selection_is_closed_and_planning_has_no_write_or_runtime_authority ... ok
+test cross_profile_authority_stale_bindings_and_interpolation_cannot_write_config ... ok
+test native_lifecycle_keeps_foreign_servers_and_rejects_unowned_entries ... FAILED
+
+failures:
+
+---- all_json_profiles_bind_literal_launch_and_complete_owned_install_uninstall stdout ----
+
+thread 'all_json_profiles_bind_literal_launch_and_complete_owned_install_uninstall' (25908) panicked at native\tests\json_host_profiles.rs:85:76:
+called `Result::unwrap()` on an `Err` value: Host plan identity/schema mismatch
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- native_lifecycle_keeps_foreign_servers_and_rejects_unowned_entries stdout ----
+
+thread 'native_lifecycle_keeps_foreign_servers_and_rejects_unowned_entries' (29520) panicked at native\tests\json_host_profiles.rs:129:68:
+called `Result::unwrap()` on an `Err` value: Host plan identity/schema mismatch
+
+
+failures:
+    all_json_profiles_bind_literal_launch_and_complete_owned_install_uninstall
+    native_lifecycle_keeps_foreign_servers_and_rejects_unowned_entries
+
+test result: FAILED. 2 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.40s
+
+error: test failed, to rerun pass `--test json_host_profiles`

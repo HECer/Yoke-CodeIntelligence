@@ -53,5 +53,8 @@ The separate `codex-mcp-v1` profile now manages an explicitly selected Codex
 profile and optional adapter binding retain generic v1 identities. See the
 [Codex workflow](../../docs/native-codex-host.md) for the finite Windows profile,
 source-directory binding, exact TOML ownership and actual Codex0.163 MCP-client
-validation. Other branded clients, hooks and non-Windows certification remain
-open; the generic profile alone makes no branded-client claim.
+validation. Separate [strict JSON MCP profiles](../../docs/native-json-hosts.md) now manage
+Cursor, Claude Code external configuration and Claude Desktop schemas using the
+same guarded machinery. Actual isolated Claude2.1.306 file health is finite
+client evidence; other runtime/hook/non-Windows qualification remains open. The
+generic profile alone makes no branded-client claim.

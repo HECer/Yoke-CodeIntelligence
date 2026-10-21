@@ -2,6 +2,14 @@
 
 ## Native Rust ownership
 
+Explicit JSON MCP clients share guarded host installation through closed typed
+adapter bindings and distinct profile identities. Scoped strict-JSON ownership
+tracks exact server member bytes and created shells; configuration remains
+separate from source and private journal roots. Client launches are literal
+host-selected argv, with no approval/model defaults. The same canonical edits
+and physical bindings govern ordinary apply and interrupted recovery. See the
+[JSON client contract](native-json-hosts.md).
+
 Optional source-category graph analysis uses an explicit bounded mapping from
 original resolution strings to declared report categories. Relation weights,
 ambiguity scaling and node display filters belong to that derived policy;

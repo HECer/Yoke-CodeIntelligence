@@ -83,7 +83,13 @@ struct SelectionFile {
     deny_unknown_fields
 )]
 enum AdapterSelection {
-    CodexMcpV1 { source_root: PathBuf },
+    CodexMcpV1 {
+        source_root: PathBuf,
+    },
+    JsonMcpV1 {
+        source_root: PathBuf,
+        client: host_install::JsonMcpClient,
+    },
 }
 impl Arguments {
     pub fn preflight_permission(&self) -> Result<()> {
@@ -185,8 +191,8 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
     let file: SelectionFile =
         yoke::json::decode(super::input_json(args.selection_path(), 128_000)?)?;
     deadline.check()?;
-    let selection = if let Some(AdapterSelection::CodexMcpV1 { source_root }) = &file.adapter {
-        Selection::codex_mcp(
+    let selection = match &file.adapter {
+        Some(AdapterSelection::CodexMcpV1 { source_root }) => Selection::codex_mcp(
             &file.installation,
             &file.target_roots,
             &file.executable,
@@ -194,16 +200,30 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
             &file.state_root,
             source_root,
             &deadline,
-        )?
-    } else {
-        Selection::new(
+        )?,
+        Some(AdapterSelection::JsonMcpV1 {
+            source_root,
+            client,
+        }) => Selection::json_mcp(
+            &file.installation,
+            &file.target_roots,
+            &file.executable,
+            &file.policy,
+            &file.state_root,
+            host_install::JsonMcpSource {
+                root: source_root,
+                client: *client,
+            },
+            &deadline,
+        )?,
+        None => Selection::new(
             &file.installation,
             &file.target_roots,
             &file.executable,
             &file.policy,
             &file.state_root,
             &deadline,
-        )?
+        )?,
     };
     match &args.operation {
         Operation::Plan { .. } => print(

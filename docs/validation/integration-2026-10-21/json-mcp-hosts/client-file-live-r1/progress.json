@@ -1,0 +1,21 @@
+[
+  {
+    "name": "install-plan",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--timeout",
+      "60000",
+      "host-install",
+      "plan",
+      "--selection",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-claude-mcp-i17w9gea\\selection.json"
+    ],
+    "startedSuspended": true,
+    "assignedBeforeResume": true,
+    "pid": 31416,
+    "exitCode": 1,
+    "activeAtParentExit": 1,
+    "activeAfterCleanup": 0,
+    "seconds": 0.081
+  }
+]

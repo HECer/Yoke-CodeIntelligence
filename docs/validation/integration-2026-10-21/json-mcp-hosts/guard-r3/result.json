@@ -1,0 +1,248 @@
+{
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 5.8820369000022765,
+      "sourceUnchanged": true,
+      "totals": [],
+      "deletedNewArtifacts": []
+    },
+    {
+      "name": "json_host_profiles",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "json_host_profiles",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 11.384096499998122,
+      "sourceUnchanged": true,
+      "totals": [
+        [
+          "4",
+          "0",
+          "0"
+        ]
+      ],
+      "deletedNewArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\json_host_profiles-22a88fd708a4f465.exe",
+          "sha256": "80846d7cce85a24daa0c6c99c2b34b420643267885e59632c7997b2608c1f052"
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\json_host_profiles-22a88fd708a4f465.pdb",
+          "sha256": "d6d55019ef2e14c54c37637340919277e167faa9f401dd5a5503c09ff1eeb3d0"
+        }
+      ]
+    },
+    {
+      "name": "host_mcp_config",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "host_mcp_config",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 3.8036671000008937,
+      "sourceUnchanged": true,
+      "totals": [
+        [
+          "4",
+          "0",
+          "0"
+        ]
+      ],
+      "deletedNewArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\host_mcp_config-c9107a97af37c0c1.exe",
+          "sha256": "8335a06e594e70113a8b60f335351a05b1bd37b4f83511ff53b3de259c6ab779"
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\host_mcp_config-c9107a97af37c0c1.pdb",
+          "sha256": "c1bbdbc0aef387a3c732c71a28e1b0e085c339e3b09e22bfe58c41bea36ff2c9"
+        }
+      ]
+    },
+    {
+      "name": "host_config",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "host_config",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 4.29794629997923,
+      "sourceUnchanged": true,
+      "totals": [
+        [
+          "22",
+          "0",
+          "0"
+        ]
+      ],
+      "deletedNewArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\host_config-6f5b88c83ad58897.exe",
+          "sha256": "977f7f4e52022c2e7263455ec791deff3df0c243d9f236712a6e7bcd0b46635c"
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\host_config-6f5b88c83ad58897.pdb",
+          "sha256": "3aa1e71216b85c51138b9adb6727e23bf0fa498c175ed11e8cbe4f3c3634f347"
+        }
+      ]
+    },
+    {
+      "name": "host_install_units",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--lib",
+        "host_install::",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 165.68693799999892,
+      "sourceUnchanged": true,
+      "totals": [
+        [
+          "142",
+          "0",
+          "1"
+        ]
+      ],
+      "deletedNewArtifacts": []
+    },
+    {
+      "name": "codex_host_cli",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "codex_host_cli",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 24.953791700012516,
+      "sourceUnchanged": true,
+      "totals": [
+        [
+          "3",
+          "0",
+          "0"
+        ]
+      ],
+      "deletedNewArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\codex_host_cli-30e493c532153888.exe",
+          "sha256": "e77f724b2ed052771aa9175d413b477dff9448d083b36f8dc3a2f75477125adb"
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\codex_host_cli-30e493c532153888.pdb",
+          "sha256": "645559475402e2688139251253942767ccd5d290a9826ce55cd8ab192ea0d3f8"
+        }
+      ]
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "seconds": 61.78976459999103,
+      "sourceUnchanged": true,
+      "totals": [],
+      "deletedNewArtifacts": []
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "npm.cmd",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 4.6850771000026725,
+      "sourceUnchanged": true,
+      "totals": [],
+      "deletedNewArtifacts": []
+    },
+    {
+      "name": "retained",
+      "command": [
+        "npm.cmd",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 60.58226310001919,
+      "sourceUnchanged": true,
+      "totals": [],
+      "deletedNewArtifacts": []
+    }
+  ],
+  "sourceUnchanged": true,
+  "allChecksPassed": true,
+  "scope": "JSON MCP profiles plus generic/Codex host configuration and recovery regressions",
+  "realUserConfigChanged": false,
+  "clientRuntimeValidated": false,
+  "cliSha256": "39241a19acd6fcd7bd47acb8d1a9bf467ddc88af6e4335791ba49149f7ac2da8"
+}

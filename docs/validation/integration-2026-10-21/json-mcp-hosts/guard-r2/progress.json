@@ -1,0 +1,240 @@
+[
+  {
+    "name": "fmt",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 5.7509313999908045,
+    "sourceUnchanged": true,
+    "totals": [],
+    "deletedNewArtifacts": []
+  },
+  {
+    "name": "json_host_profiles",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "json_host_profiles",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "seconds": 110.09925639998983,
+    "sourceUnchanged": true,
+    "totals": [
+      [
+        "4",
+        "0",
+        "0"
+      ]
+    ],
+    "deletedNewArtifacts": [
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\json_host_profiles-22a88fd708a4f465.exe",
+        "sha256": "1d0898207f6ef8118619b083bfdbef1f18fdf432fc0fa40c6fb2c3de42b137fb"
+      },
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\json_host_profiles-22a88fd708a4f465.pdb",
+        "sha256": "4106ed7dcaa520d3fa835e298b0858d8bdfdd107faa49c7d12fe5724dfe2a9e4"
+      }
+    ]
+  },
+  {
+    "name": "host_mcp_config",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "host_mcp_config",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "seconds": 10.439458299981197,
+    "sourceUnchanged": true,
+    "totals": [
+      [
+        "4",
+        "0",
+        "0"
+      ]
+    ],
+    "deletedNewArtifacts": [
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\host_mcp_config-c9107a97af37c0c1.exe",
+        "sha256": "05b88a855593719ba81220b06891c4413925a2f21ba317617709619dca3a2cdc"
+      },
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\host_mcp_config-c9107a97af37c0c1.pdb",
+        "sha256": "9ee10e3c956be8202779f5a6926c3aa287d3f5c56dd73d0927a5e2ed50bd3ea6"
+      }
+    ]
+  },
+  {
+    "name": "host_config",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "host_config",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "seconds": 3.566864699998405,
+    "sourceUnchanged": true,
+    "totals": [
+      [
+        "22",
+        "0",
+        "0"
+      ]
+    ],
+    "deletedNewArtifacts": [
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\host_config-6f5b88c83ad58897.exe",
+        "sha256": "accaf604f70636e38382dd43e21e873a6a027e48479668ec7163f981d972346c"
+      },
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\host_config-6f5b88c83ad58897.pdb",
+        "sha256": "e66fcfd9a81796b2db2790d3451216ab773f74d1b313ea7380e33a9f3da8d53b"
+      }
+    ]
+  },
+  {
+    "name": "host_install_units",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--lib",
+      "host_install::",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "seconds": 140.0848091999942,
+    "sourceUnchanged": true,
+    "totals": [
+      [
+        "139",
+        "0",
+        "1"
+      ]
+    ],
+    "deletedNewArtifacts": []
+  },
+  {
+    "name": "codex_host_cli",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "codex_host_cli",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "seconds": 4.35389739999664,
+    "sourceUnchanged": true,
+    "totals": [
+      [
+        "3",
+        "0",
+        "0"
+      ]
+    ],
+    "deletedNewArtifacts": [
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\codex_host_cli-30e493c532153888.exe",
+        "sha256": "23b5504eb0f36144cc7352fd48fef9dd7fc71e6a048a4e1b2b48c3d8d1da8eb2"
+      },
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\codex_host_cli-30e493c532153888.pdb",
+        "sha256": "062355f54167b03275408dce0b9f1eb838b5d973e07ef61151498b977980c2e3"
+      }
+    ]
+  },
+  {
+    "name": "clippy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exitCode": 0,
+    "seconds": 112.78687759998138,
+    "sourceUnchanged": true,
+    "totals": [],
+    "deletedNewArtifacts": []
+  },
+  {
+    "name": "typecheck",
+    "command": [
+      "npm.cmd",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "seconds": 5.360880199994426,
+    "sourceUnchanged": true,
+    "totals": [],
+    "deletedNewArtifacts": []
+  },
+  {
+    "name": "retained",
+    "command": [
+      "npm.cmd",
+      "test"
+    ],
+    "exitCode": 0,
+    "seconds": 63.86256269997102,
+    "sourceUnchanged": true,
+    "totals": [],
+    "deletedNewArtifacts": []
+  }
+]

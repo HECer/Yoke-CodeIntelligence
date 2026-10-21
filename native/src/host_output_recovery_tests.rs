@@ -133,6 +133,25 @@ fn selection_for_count(root: &Path, count: usize, d: &Deadline) -> Result<Select
     let roots = (0..count)
         .map(|index| fixture_target(&root, index))
         .collect::<Vec<_>>();
+    match fs::read(root.join("json-profile")) {
+        Ok(marker) => {
+            let client: JsonMcpClient = serde_json::from_slice(&marker)?;
+            return Selection::json_mcp(
+                "actual-output-interruption",
+                &roots,
+                &root.join("native.exe"),
+                &root.join("policy.json"),
+                &root.join("state"),
+                JsonMcpSource {
+                    root: &root.join("source"),
+                    client,
+                },
+                d,
+            );
+        }
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+        Err(error) => return Err(error).context("Cannot read owned JSON fixture profile marker"),
+    }
     match fs::read(root.join("codex-profile")) {
         Ok(marker) => {
             ensure!(
@@ -2296,5 +2315,126 @@ fn codex_pending_recovery_refuses_a_replaced_source_directory_without_state_chan
             && fs::read(fixture.target()?)? == target_before,
         "Failed stale Codex recovery mutated state"
     );
+    Ok(())
+}
+
+fn new_json_fixture(client: JsonMcpClient) -> Result<Interrupted> {
+    let source = "{\r\n\"human\":\"retained \u{1f30d}\",\r\n\"mcpServers\":{\"human\":{\"command\":\"unrelated\"}}\r\n}\r\n".as_bytes();
+    let mut fixture = new_fixture(source, 1)?;
+    let root = fixture
+        .fixture
+        .as_ref()
+        .context("Owned fixture missing")?
+        .path()
+        .canonicalize()?;
+    fs::create_dir(root.join("source"))?;
+    fs::write(root.join("json-profile"), serde_json::to_vec(&client)?)?;
+    fixture.selection = selection_for_count(&root, 1, &Deadline::new(30000))?;
+    fs::rename(
+        fixture_target(&root, 0).join("AGENTS.md"),
+        fixture.target()?,
+    )?;
+    fixture.plan = plan_install(&fixture.selection, 1000, &Deadline::new(30000))?;
+    Ok(fixture)
+}
+
+const JSON_CLIENTS: [JsonMcpClient; 3] = [
+    JsonMcpClient::Cursor,
+    JsonMcpClient::ClaudeCodeExplicit,
+    JsonMcpClient::ClaudeDesktop,
+];
+
+#[test]
+fn json_actual_partial_process_exit_resumes_each_profile_without_changing_human_values()
+-> Result<()> {
+    for client in JSON_CLIENTS {
+        let mut fixture = new_json_fixture(client)?;
+        interrupt_worker(&mut fixture, "partial", Termination::Exit, false)?;
+        let receipt = fixture.recover(RecoveryMode::Resume)?;
+        ensure!(
+            receipt.profile == fixture.selection.profile_id() && receipt.status == "installed",
+            "JSON recovery receipt mismatch"
+        );
+        let bytes = fs::read(fixture.target()?)?;
+        let value: serde_json::Value = serde_json::from_slice(&bytes)?;
+        ensure!(
+            value["human"] == "retained \u{1f30d}"
+                && value["mcpServers"]["human"]["command"] == "unrelated",
+            "JSON recovery changed human values"
+        );
+        ensure!(
+            value["mcpServers"]["yoke_actual-output-interruption"]["args"][2] == "serve-session",
+            "JSON recovery lost managed launch"
+        );
+        let remove = plan_uninstall(&fixture.selection, 1003, &Deadline::new(30000))?;
+        apply(
+            &fixture.selection,
+            &WriteAuthority::new(&fixture.selection),
+            &remove,
+            1004,
+            &Deadline::new(30000),
+        )?;
+        ensure!(
+            fs::read(fixture.target()?)? == fixture.source,
+            "Recovered JSON uninstall changed original bytes"
+        );
+        absent(&fixture.target()?.with_file_name("AGENTS.md"))?;
+    }
+    Ok(())
+}
+
+#[test]
+fn json_actual_prepared_kill_rolls_back_each_profile_to_the_same_original_object() -> Result<()> {
+    for client in JSON_CLIENTS {
+        let mut fixture = new_json_fixture(client)?;
+        let before = io::read_file(&fixture.target()?, MAX_FILE, false, &Deadline::new(10000))?
+            .context("Original missing")?
+            .identity;
+        interrupt_worker(&mut fixture, "prepared", Termination::Kill, false)?;
+        let receipt = fixture.recover(RecoveryMode::Rollback)?;
+        ensure!(
+            receipt.profile == fixture.selection.profile_id() && receipt.status == "rolled_back",
+            "JSON rollback receipt mismatch"
+        );
+        ensure!(
+            fs::read(fixture.target()?)? == fixture.source
+                && io::read_file(&fixture.target()?, MAX_FILE, false, &Deadline::new(10000))?
+                    .context("Original missing")?
+                    .identity
+                    == before,
+            "JSON rollback replaced original object or bytes"
+        );
+        absent(&fixture.after()?)?;
+    }
+    Ok(())
+}
+
+#[test]
+fn json_pending_recovery_refuses_replaced_source_bindings_for_each_profile_without_writes()
+-> Result<()> {
+    for client in JSON_CLIENTS {
+        let mut fixture = new_json_fixture(client)?;
+        interrupt_worker(&mut fixture, "prepared", Termination::Exit, false)?;
+        let root = fixture
+            .fixture
+            .as_ref()
+            .context("Owned fixture missing")?
+            .path();
+        let original = root.join("source");
+        fs::rename(&original, root.join("moved-source"))?;
+        fs::create_dir(&original)?;
+        let before = state_manifest(&fixture.selection)?;
+        let target_before = fs::read(fixture.target()?)?;
+        ensure!(
+            fixture.recover(RecoveryMode::Resume).is_err()
+                && fixture.recover(RecoveryMode::Rollback).is_err(),
+            "Stale source root was accepted during JSON recovery"
+        );
+        ensure!(
+            state_manifest(&fixture.selection)? == before
+                && fs::read(fixture.target()?)? == target_before,
+            "Refused JSON recovery mutated state or target"
+        );
+    }
     Ok(())
 }

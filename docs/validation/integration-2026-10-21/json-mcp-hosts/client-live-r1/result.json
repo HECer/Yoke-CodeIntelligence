@@ -1,0 +1,30 @@
+{
+  "fixtureRoot": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-claude-mcp-5omfh37v",
+  "cliSha256": "39241a19acd6fcd7bd47acb8d1a9bf467ddc88af6e4335791ba49149f7ac2da8",
+  "clientSha256": "f6bc9de38f507c36c9a3bb0085a59a27e32156e2208252bf1707c4e3ef309114",
+  "clientVersion": "2.1.306",
+  "modelTurnRequested": false,
+  "accountLoginRequested": false,
+  "userConfigurationSelected": false,
+  "errorType": "AttributeError",
+  "error": "module 'subprocess' has no attribute 'CREATE_SUSPENDED'",
+  "completed": false,
+  "commands": [
+    {
+      "name": "install-plan",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--timeout",
+        "60000",
+        "host-install",
+        "plan",
+        "--selection",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-claude-mcp-5omfh37v\\selection.json"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": false,
+      "activeAfterCleanup": 0,
+      "seconds": 0.001
+    }
+  ]
+}

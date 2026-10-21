@@ -31,7 +31,10 @@ fn generic_serialization_and_installation_identity_retain_the_released_shape() {
         executable_path,
         policy_path,
         ..
-    } = codex.bindings.adapter.as_ref().unwrap();
+    } = codex.bindings.adapter.as_ref().unwrap()
+    else {
+        panic!("Expected the legacy Codex binding")
+    };
     let generic = Selection::new(
         "owned-fixture",
         &[root],
@@ -83,7 +86,10 @@ fn codex_plan_binds_exact_launch_data_without_source_state_or_default_authority(
         executable_path,
         policy_path,
         ..
-    } = selection.bindings.adapter.as_ref().unwrap();
+    } = selection.bindings.adapter.as_ref().unwrap()
+    else {
+        panic!("Expected the legacy Codex binding")
+    };
     assert_eq!(server["command"].as_str(), Some(executable_path.as_str()));
     assert_eq!(server["cwd"].as_str(), Some(source_path.as_str()));
     let args = server["args"]

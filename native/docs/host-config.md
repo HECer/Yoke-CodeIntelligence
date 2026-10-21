@@ -67,3 +67,16 @@ meaning. An appendix beginning with its own LF/CRLF remains removable, and an
 update retains the owned separator. TOML documents are limited to 16,384 lines.
 Table editing is a generic
 capability and does not certify any branded client's TOML schema.
+
+## Strict JSON MCP entries
+
+`json_mcp_patch` is a separate versioned format for a named `mcpServers` member.
+It admits strict unique-key JSON with an optional BOM, creates absent containers
+or documents, and records exact owned entry and created-shell boundaries.
+Ownership is scoped to the decoded member path, so identical bytes in an unrelated
+nested value do not conflict. Removal preserves foreign members and whitespace,
+removing only its own entry and a required comma. Created shells disappear only
+while their exact owned wrapping bytes remain unchanged. Modified entries and
+unowned existing names refuse. Serialized ownership/patches never grant writes.
+See the [JSON host contract](../../docs/native-json-hosts.md) for bounds, physical
+bindings, Windows recovery, client evidence and remaining runtime qualifications.

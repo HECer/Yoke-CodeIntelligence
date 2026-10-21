@@ -3,12 +3,16 @@ use crate::capture::Deadline;
 use crate::model::hash;
 use anyhow::{Result, ensure};
 use serde::{Deserialize, Serialize};
+#[path = "host_config_mcp.rs"]
+mod mcp;
+pub use mcp::json_mcp_patch;
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum Format {
     AgentsMarkdown,
     JsoncNamedEntry,
+    JsonMcpNamedEntryV1,
     TomlTable,
 }
 
@@ -285,7 +289,8 @@ pub fn apply_patch(input: &[u8], patch: &Patch, deadline: &Deadline) -> Result<V
             "Host configuration owned fragment is empty"
         );
         ensure!(
-            occurrences(&output, &owned.bytes).len() == 1,
+            owned.format == Format::JsonMcpNamedEntryV1
+                || occurrences(&output, &owned.bytes).len() == 1,
             "Host configuration output owned fragment differs"
         );
         match owned.format {
@@ -299,6 +304,7 @@ pub fn apply_patch(input: &[u8], patch: &Patch, deadline: &Deadline) -> Result<V
             Format::JsoncNamedEntry => {
                 checked_jsonc_owned(&output, owned, deadline)?;
             }
+            Format::JsonMcpNamedEntryV1 => mcp::checked_owned(&output, owned, deadline)?,
             Format::TomlTable => {
                 checked_toml_owned(&output, owned, deadline)?;
             }

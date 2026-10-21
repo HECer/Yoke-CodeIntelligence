@@ -72,6 +72,9 @@ rows and evidence through separate host approval, pinned TLS/OS credentials,
 immutable revisions and read-only recovery of unknown writes. Offline plans
 grant no authority; live publication currently supports Windows.
 
+Explicit [managed JSON MCP profiles](docs/native-json-hosts.md) select Cursor or
+Claude configuration, with exact ownership and guarded Windows recovery.
+
 An explicit [managed Codex MCP profile](docs/native-codex-host.md) installs one
 reviewed, receipt-owned TOML entry with physical source/launch bindings and
 guarded recovery. The original generic AGENTS profile keeps its identities.

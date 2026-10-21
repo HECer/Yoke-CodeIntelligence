@@ -1,0 +1,162 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+error[E0599]: no method named `context` found for enum `std::option::Option<T>` in the current scope
+   --> native\src\host_config_mcp.rs:69:10
+    |
+ 67 | /     node.object
+ 68 | |         .as_ref()
+ 69 | |         .context("Managed MCP parent must be an object")
+    | |_________-^^^^^^^
+    |
+   ::: C:\Users\Lomi\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\anyhow-1.0.104\src\lib.rs:618:8
+    |
+618 |       fn context<C>(self, context: C) -> Result<T, Error>
+    |          ------- the method is available for `std::option::Option<&host_config::JsonObject>` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: trait `Context` which provides `context` is implemented but not in scope; perhaps you want to import it
+    |
+  3 + use anyhow::Context;
+    |
+help: there is a method `with_context` with a similar name
+    |
+ 69 |         .with_context("Managed MCP parent must be an object")
+    |          +++++
+
+error[E0599]: no method named `context` found for enum `std::option::Option<T>` in the current scope
+   --> native\src\host_config_mcp.rs:77:37
+    |
+ 77 |     let parent = mcp_member(&root)?.context("Managed MCP parent disappeared")?;
+    |                                     ^^^^^^^
+    |
+   ::: C:\Users\Lomi\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\anyhow-1.0.104\src\lib.rs:618:8
+    |
+618 |     fn context<C>(self, context: C) -> Result<T, Error>
+    |        ------- the method is available for `std::option::Option<&host_config::JsonMember>` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: trait `Context` which provides `context` is implemented but not in scope; perhaps you want to import it
+    |
+  3 + use anyhow::Context;
+    |
+help: there is a method `with_context` with a similar name
+    |
+ 77 |     let parent = mcp_member(&root)?.with_context("Managed MCP parent disappeared")?;
+    |                                     +++++
+
+error[E0599]: no method named `context` found for enum `std::option::Option<T>` in the current scope
+   --> native\src\host_config_mcp.rs:82:10
+    |
+ 78 |       let member = object(&parent.value)?
+    |  __________________-
+ 79 | |         .members
+ 80 | |         .iter()
+ 81 | |         .find(|m| m.key == meta.key)
+ 82 | |         .context("Managed MCP entry disappeared")?;
+    | |_________-^^^^^^^
+    |
+   ::: C:\Users\Lomi\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\anyhow-1.0.104\src\lib.rs:618:8
+    |
+618 |       fn context<C>(self, context: C) -> Result<T, Error>
+    |          ------- the method is available for `std::option::Option<&host_config::JsonMember>` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: trait `Context` which provides `context` is implemented but not in scope; perhaps you want to import it
+    |
+  3 + use anyhow::Context;
+    |
+help: there is a method `with_context` with a similar name
+    |
+ 82 |         .with_context("Managed MCP entry disappeared")?;
+    |          +++++
+
+error[E0599]: no method named `context` found for enum `std::option::Option<T>` in the current scope
+   --> native\src\host_config_mcp.rs:157:30
+    |
+157 |         let bytes = authored.context("Managed MCP installation body required")?;
+    |                              ^^^^^^^
+    |
+   ::: C:\Users\Lomi\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\anyhow-1.0.104\src\lib.rs:618:8
+    |
+618 |     fn context<C>(self, context: C) -> Result<T, Error>
+    |        ------- the method is available for `std::option::Option<Vec<u8>>` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: trait `Context` which provides `context` is implemented but not in scope; perhaps you want to import it
+    |
+  3 + use anyhow::Context;
+    |
+help: there is a method `with_context` with a similar name
+    |
+157 |         let bytes = authored.with_context("Managed MCP installation body required")?;
+    |                              +++++
+
+error[E0599]: no method named `context` found for enum `std::option::Option<T>` in the current scope
+   --> native\src\host_config_mcp.rs:183:29
+    |
+183 |         let parent = parent.context("Managed MCP parent disappeared")?;
+    |                             ^^^^^^^
+    |
+   ::: C:\Users\Lomi\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\anyhow-1.0.104\src\lib.rs:618:8
+    |
+618 |     fn context<C>(self, context: C) -> Result<T, Error>
+    |        ------- the method is available for `std::option::Option<&host_config::JsonMember>` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: trait `Context` which provides `context` is implemented but not in scope; perhaps you want to import it
+    |
+  3 + use anyhow::Context;
+    |
+help: there is a method `with_context` with a similar name
+    |
+183 |         let parent = parent.with_context("Managed MCP parent disappeared")?;
+    |                             +++++
+
+error[E0599]: no method named `context` found for enum `std::option::Option<T>` in the current scope
+   --> native\src\host_config_mcp.rs:189:14
+    |
+185 |           let index = members
+    |  _____________________-
+186 | |             .members
+187 | |             .iter()
+188 | |             .position(|m| m.key == name)
+189 | |             .context("Managed MCP entry disappeared")?;
+    | |_____________-^^^^^^^
+    |
+   ::: C:\Users\Lomi\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\anyhow-1.0.104\src\lib.rs:618:8
+    |
+618 |       fn context<C>(self, context: C) -> Result<T, Error>
+    |          ------- the method is available for `std::option::Option<usize>` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: trait `Context` which provides `context` is implemented but not in scope; perhaps you want to import it
+    |
+  3 + use anyhow::Context;
+    |
+help: there is a method `with_context` with a similar name
+    |
+189 |             .with_context("Managed MCP entry disappeared")?;
+    |              +++++
+
+error[E0599]: no method named `context` found for enum `std::option::Option<T>` in the current scope
+   --> native\src\host_config_mcp.rs:226:26
+    |
+226 |     let bytes = authored.context("Managed MCP installation body required")?;
+    |                          ^^^^^^^
+    |
+   ::: C:\Users\Lomi\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\anyhow-1.0.104\src\lib.rs:618:8
+    |
+618 |     fn context<C>(self, context: C) -> Result<T, Error>
+    |        ------- the method is available for `std::option::Option<Vec<u8>>` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: trait `Context` which provides `context` is implemented but not in scope; perhaps you want to import it
+    |
+  3 + use anyhow::Context;
+    |
+help: there is a method `with_context` with a similar name
+    |
+226 |     let bytes = authored.with_context("Managed MCP installation body required")?;
+    |                          +++++
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `yoke-code-intelligence` (lib) due to 7 previous errors
