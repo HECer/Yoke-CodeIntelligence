@@ -11,6 +11,8 @@ use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 
 const LOCATIONS: [&str; 3] = [".github/CODEOWNERS", "CODEOWNERS", "docs/CODEOWNERS"];
+#[path = "git_owner_changes.rs"]
+pub mod changes;
 #[cfg(test)]
 #[path = "git_owners_tests.rs"]
 mod tests;
@@ -128,6 +130,59 @@ struct Source {
     record: Value,
     rules: Vec<Rule>,
     unsupported: bool,
+}
+
+struct Evaluation {
+    matching: Vec<usize>,
+    winner: Option<usize>,
+    status: &'static str,
+}
+fn evaluate(
+    source: &Source,
+    path: &str,
+    used: &mut Used,
+    limits: &Limits,
+    d: &Deadline,
+) -> Result<Evaluation> {
+    let mut matching = Vec::new();
+    for (i, rule) in source.rules.iter().enumerate() {
+        check(d)?;
+        let Some(matcher) = &rule.matcher else {
+            continue;
+        };
+        let cost = rule
+            .pattern_bytes
+            .max(1)
+            .checked_mul(path.len().max(1))
+            .ok_or_else(|| anyhow::anyhow!("git_owners_capacity_exceeded"))?;
+        charge(&mut used.match_work, cost, limits.max_match_work)?;
+        if matcher.is_match(path) {
+            charge(&mut used.matches, 1, limits.max_matches)?;
+            matching.push(i);
+        }
+    }
+    let winner = if source.unsupported {
+        None
+    } else {
+        matching.last().copied()
+    };
+    let labels = winner.map(|i| &source.rules[i].record["ownerLabels"]);
+    let status = if source.record["sourcePath"].is_null() {
+        "no_captured_rules"
+    } else if source.unsupported {
+        "unsupported_rules_present"
+    } else if labels.is_some_and(|v| v.as_array().is_some_and(Vec::is_empty)) {
+        "explicit_empty_owner_list"
+    } else if winner.is_some() {
+        "authored_owner_candidates"
+    } else {
+        "no_matching_supported_rule"
+    };
+    Ok(Evaluation {
+        matching,
+        winner,
+        status,
+    })
 }
 
 // Finite, independently owned path-pattern policy, not GitHub implementation code.
@@ -376,40 +431,12 @@ pub fn derive_with_options(
                 let source = &sources[source_index];
                 let path_text = text(path, "path")?;
                 input(path["snapshotId"] == snapshots[source_index].id)?;
-                let mut matching = Vec::new();
-                for (i, rule) in source.rules.iter().enumerate() {
-                    check(d)?;
-                    let Some(matcher) = &rule.matcher else {
-                        continue;
-                    };
-                    let cost = rule
-                        .pattern_bytes
-                        .max(1)
-                        .checked_mul(path_text.len().max(1))
-                        .ok_or_else(|| anyhow::anyhow!("git_owners_capacity_exceeded"))?;
-                    charge(&mut used.match_work, cost, o.limits.max_match_work)?;
-                    if matcher.is_match(path_text) {
-                        charge(&mut used.matches, 1, o.limits.max_matches)?;
-                        matching.push(i);
-                    }
-                }
-                let winner = if source.unsupported {
-                    None
-                } else {
-                    matching.last().copied()
-                };
+                let Evaluation {
+                    matching,
+                    winner,
+                    status,
+                } = evaluate(source, path_text, &mut used, &o.limits, d)?;
                 let labels = winner.map(|i| &source.rules[i].record["ownerLabels"]);
-                let status = if source.record["sourcePath"].is_null() {
-                    "no_captured_rules"
-                } else if source.unsupported {
-                    "unsupported_rules_present"
-                } else if labels.is_some_and(|v| v.as_array().is_some_and(Vec::is_empty)) {
-                    "explicit_empty_owner_list"
-                } else if winner.is_some() {
-                    "authored_owner_candidates"
-                } else {
-                    "no_matching_supported_rule"
-                };
                 let winning = winner.map(|i| {
                     let mut r = source.rules[i].record.clone();
                     r["sourceOrdinal"] = json!(source_index);

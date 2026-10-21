@@ -18,6 +18,7 @@ mod git_affected_cli;
 mod git_areas_cli;
 mod git_conflicts_cli;
 mod git_impact_cli;
+mod git_owner_changes_cli;
 mod git_owners_cli;
 mod github_app_cli;
 mod github_app_digest_cli;
@@ -2438,6 +2439,7 @@ fn run_document(
 }
 #[derive(Subcommand)]
 enum GitOperation {
+    OwnerChanges(Box<git_owner_changes_cli::Arguments>),
     Owners(Box<git_owners_cli::Arguments>),
     Areas(Box<git_areas_cli::Arguments>),
     Conflicts(Box<git_conflicts_cli::Arguments>),
@@ -2496,6 +2498,7 @@ fn selected_git(path: Option<PathBuf>, trusted: bool) -> Result<yoke::git_workfl
 }
 fn run_git(mut engine: Engine, operation: GitOperation, deadline: &Deadline) -> Result<bool> {
     match operation {
+        GitOperation::OwnerChanges(_) => bail!("Git owner changes host dispatch error"),
         GitOperation::Areas(_) => bail!("Git area host dispatch error"),
         GitOperation::Owners(_) => bail!("Git owners host dispatch error"),
         GitOperation::Conflicts(_) => bail!("Git conflict host dispatch error"),
@@ -3202,6 +3205,22 @@ fn run(cli: Cli) -> Result<bool> {
             view_comparison_cli::INPUT
         );
         return view_comparison_cli::run(args, &cli.root, cli.timeout, cli.max_bytes);
+    }
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::Git(git) = extension.as_ref()
+        && let GitOperation::OwnerChanges(args) = &git.operation
+    {
+        ensure!(
+            cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.analyzer_epoch.is_none()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && !cli.allow_writes,
+            "git_owner_changes_input_invalid"
+        );
+        return args.run(&cli.root, cli.timeout, cli.max_bytes);
     }
     if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::Git(git) = extension.as_ref()
