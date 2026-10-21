@@ -104,8 +104,10 @@ function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,asser
    for(const candidate of types){
     tick();if(!ts.isClassDeclaration(candidate.node))continue;
     const type=checker.getTypeOfSymbolAtLocation(candidate.symbol,expression);if(!checker.isTypeAssignableTo(type,receiver))continue;
+    const signatures=checker.getSignaturesOfType(type,ts.SignatureKind.Construct);
+    if(signatures.length)edge('possibleConstructValue',from,candidate.id,call,{resolvedTarget:to,candidateOwner:candidate.id,basis:'compiler_constructor_type_assignability',invocationKind,conditional:false});
     const boundTargets=new Set();
-    for(const candidateSignature of checker.getSignaturesOfType(type,ts.SignatureKind.Construct)){
+    for(const candidateSignature of signatures){
      tick();const declaration=candidateSignature.declaration;
      if(declaration&&!captured(declaration)){unknown('candidate_constructor_outside_capture',candidate.node);continue;}
      const symbol=declaration&&ts.isConstructorDeclaration(declaration)&&declaration.parent.name?checker.getSymbolAtLocation(declaration.parent.name)?.members?.get(ts.InternalSymbolName.Constructor):undefined;

@@ -70,6 +70,15 @@ do not create invented alternative overload selections. The original resolved
 signature and candidate owner remain separate. Private/abstract constructors and
 incompatible constructor types must satisfy the checker's actual assignability.
 
+`possibleConstructValue` independently targets each compatible candidate class
+value, even when its constructor body is inherited from another class. Incoming
+class seeds follow this role as well as the distinct body role. Consequently a
+class-only field change remains connected to a dynamic constructor caller without
+pretending that the inherited body belongs to the derived class. Repeated sites
+and different candidate owners sharing one body keep separate proofs. This is
+candidate impact, not proof of initializer execution or a general field-effects
+analysis; unsupported field/accessor/implicit execution observations remain open.
+
 `possibleDispatch` separately compares both captured non-generic class instance
 types and captured class constructor types with the static method receiver type.
 The basis distinguishes `compiler_type_assignability` from

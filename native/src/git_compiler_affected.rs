@@ -140,6 +140,7 @@ fn finish(
                         "calls"
                             | "possibleDispatch"
                             | "possibleConstruct"
+                            | "possibleConstructValue"
                             | "constructResult"
                             | "signatureImplementation"
                     )

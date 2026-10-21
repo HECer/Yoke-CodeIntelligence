@@ -315,7 +315,11 @@ pub(crate) fn observe(
             ensure!(
                 matches!(
                     edge.relation.as_str(),
-                    "calls" | "possibleDispatch" | "possibleConstruct" | "constructResult"
+                    "calls"
+                        | "possibleDispatch"
+                        | "possibleConstruct"
+                        | "possibleConstructValue"
+                        | "constructResult"
                 ) || edge.invocation_kind.is_none(),
                 "Invocation kind on a non-invocation relation"
             );
@@ -443,6 +447,16 @@ pub(crate) fn observe(
                         && paired(edge),
                     "Invalid compiler possible constructor"
                 ),
+                "possibleConstructValue" => ensure!(
+                    to.kind == "ClassDeclaration"
+                        && edge.candidate_owner == Some(edge.target)
+                        && edge.owner.is_none()
+                        && edge.basis.as_deref() == Some("compiler_constructor_type_assignability")
+                        && edge.invocation_kind.as_deref() == Some("new")
+                        && edge.conditional == Some(false)
+                        && paired(edge),
+                    "Invalid compiler constructor value candidate"
+                ),
                 _ => anyhow::bail!("Unknown compiler hierarchy relation"),
             }
             match edge.relation.as_str() {
@@ -458,7 +472,11 @@ pub(crate) fn observe(
                         "Compiler member binding owner/proof mismatch"
                     );
                 }
-                "calls" | "possibleDispatch" | "possibleConstruct" | "constructResult" => ensure!(
+                "calls"
+                | "possibleDispatch"
+                | "possibleConstruct"
+                | "possibleConstructValue"
+                | "constructResult" => ensure!(
                     contains(&from.declaration, &edge.proof),
                     "Compiler call proof outside its caller"
                 ),

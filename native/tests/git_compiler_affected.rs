@@ -699,6 +699,69 @@ fn imported_constructor_aliases_and_union_result_types_keep_original_declaration
     assert_eq!(state(&f.engine), before);
 }
 #[test]
+fn class_only_changes_reach_dynamic_constructor_callers_when_the_body_is_inherited() {
+    let source = concat!(
+        "\u{feff}// π 😀\r\nexport class Base { protected brand=1; constructor(){void 'BASE_CTOR';} }\r\n",
+        "export class Derived extends Base { field='OLD'; }\r\n",
+        "export class Other { private other=1; constructor(){} }\r\n",
+        "export function selected(C:typeof Base){new C();new C();}\r\n",
+        "export function literal(){return new Derived();}\r\n",
+        "export function unrelated(C:typeof Other){return new C();}\r\n"
+    );
+    let f = configured(source, &source.replace("'OLD'", "'NEW'"));
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let derived = node_id(c, "Derived", "field='NEW'");
+    let selected = node_id(c, "selected", "new C();new C()");
+    let literal = node_id(c, "literal", "new Derived()");
+    let unrelated = node_id(c, "unrelated", "typeof Other");
+    let row = r["originalChangedSymbols"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .enumerate()
+        .find(|(_, v)| v["side"] == "head" && v["kind"] == "class" && v["name"] == "Derived")
+        .unwrap()
+        .0;
+    let values = edges(c, "possibleConstructValue", &selected, &derived);
+    assert_eq!(values.len(), 2);
+    assert_ne!(values[0]["id"], values[1]["id"]);
+    assert_ne!(
+        values[0]["proof"]["startByte"],
+        values[1]["proof"]["startByte"]
+    );
+    assert!(values.iter().all(|e| e["candidateOwner"] == derived
+        && e["basis"] == "compiler_constructor_type_assignability"
+        && e["invocationKind"] == "new"));
+    let body = node_id(c, "constructor", "'BASE_CTOR'");
+    assert!(
+        edges(c, "possibleConstruct", &selected, &body)
+            .iter()
+            .any(|e| e["candidateOwner"] == derived)
+    );
+    for caller in [&selected, &literal] {
+        assert!(
+            r["states"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|s| s["changedRow"] == row && s["side"] == "head" && s["nodeId"] == *caller)
+        );
+    }
+    assert!(
+        !r["states"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|s| s["changedRow"] == row && s["side"] == "head" && s["nodeId"] == unrelated)
+    );
+    assert_eq!(edges(c, "constructResult", &literal, &derived).len(), 1);
+    assert!(edges(c, "possibleConstructValue", &literal, &derived).is_empty());
+    assert_eq!(r["runtimeDispatchEstablished"], false);
+    assert_eq!(state(&f.engine), before);
+}
+#[test]
 fn trust_transaction_source_and_output_bounds_fail_without_writing_state() {
     let f = configured(SOURCE, &SOURCE.replace("DERIVED_BASE", "DERIVED_HEAD"));
     let before = state(&f.engine);

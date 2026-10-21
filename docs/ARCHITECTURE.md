@@ -7,8 +7,10 @@ before trusted host compiler execution and revalidates original pins afterward.
 Independent snapshot/project contexts retain actual checker declarations, exact
 UTF-8 quotes, constructor/tag/overload bindings and type-based instance/constructor
 targets. Construct-result classes stay separate from constructor bodies and values.
-Possible targets pair with exact original invocation roles/proofs. Native checks
-endpoints, owners, source ranges and capacities; original graphs/reports remain
+Possible targets pair with exact original invocation roles/proofs. A separate
+constructor-value edge targets each candidate class, so shared
+inherited bodies do not hide class-only changes from incoming traversal.
+Native checks endpoints, owners, source ranges and capacities; original graphs/reports remain
 unchanged. Host/module/worker hashes, library/configuration pins and visible
 coverage stay separate from independent compiler correctness or execution proof.
 See [the contract](../native/docs/git-compiler-affected.md).
