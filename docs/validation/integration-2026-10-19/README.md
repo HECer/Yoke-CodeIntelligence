@@ -1,5 +1,8 @@
 # Integration development evidence, 2026-10-19 local
 
+Caller JSDoc ownership and common template binders have [separate evidence](function-body-caller-docs/README.md):
+117 scoped integration passes and sixteen units; counts overlap and full STATUS/Windows acceptance remains open.
+
 Argument callable contexts and once-only evaluation have [separate evidence](function-body-argument-contexts/README.md):
 source signatures, fixed collection and direct scalar bindings;116 scoped
 integration passes and fourteen units. Counts overlap; full STATUS/Windows
