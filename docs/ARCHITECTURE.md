@@ -2,6 +2,15 @@
 
 ## Native Rust ownership
 
+The explicit source-bearing offline Explorer reuses canonical Store/snapshot/
+graph/captured-path/source-hash/UTF-8/range admission. It admits the complete
+source byte set before blob reads and bounds serialization, escaping and the
+final output. Borrowed source bindings retain original bytes without JSON Value
+copies. A separate presentation adds Code/Context/Outline and exact quotes while
+the old metadata-only and document template stays byte-identical. Source text
+never becomes markup or authority; the browser performs no network/project
+execution or freshness check. See [the contract](../native/docs/explorer.md).
+
 Classic compiler-selected body expansion preserves predicate/assertion caller
 flow through an inert original signature and fixed relay of the computed result.
 Native derives explicit source targets, restricts generated references to ordinary

@@ -1,0 +1,72 @@
+{
+  "sourceCommit": "0b6b7c66a71f9b609e64a2ea9dd9c28a3087ee8a",
+  "sourceInputs": 1004,
+  "codeFiles": {
+    "native/src/export.rs": "cb2cef33617dd6cef981742233c31bbc8c9a70eb5c56b86c884bbc50715389fd",
+    "native/src/graph_extensions.rs": "3af74dfe1484fba6ac79e891116fc92148f6523a10409fc3088770cf45c0be5f",
+    "native/src/main.rs": "3efd716f81394d08301194a8ae15b6cd9cc693ae4ade81cfe87838f004df0130",
+    "native/src/explorer_source.html": "bfccbed7015f38c8704b0b85c2951473b580a307ed051939b4ce018d360d69ca",
+    "native/tests/explorer_sources.rs": "519bce5e11831be5803ddb0d6f8fadb2ff6108582fbd596b7667a2343cbc38e3"
+  },
+  "nativeCliSha256": "a7fe04bc710457ab3b2c6c40ff6b8a8d7edbe57e161fea0449c31d5b5dba14f1",
+  "tools": [
+    {
+      "path": "C:\\Program Files\\nodejs\\node.exe",
+      "bytes": 93580104,
+      "sha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32"
+    },
+    {
+      "path": "C:\\Python314\\python.exe",
+      "bytes": 106208,
+      "sha256": "4942b86a6597e5aee0128daa00050ed79bc21f6e709a78eb19cbfeb0c2f39ac9"
+    },
+    {
+      "path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      "bytes": 4522648,
+      "sha256": "10d6ee85be41b8b87be6c99a4c4c60c017416a35669f660b5c748b6103a1ec50"
+    },
+    {
+      "path": "C:\\Users\\Lomi\\.rustup\\toolchains\\1.94.1-x86_64-pc-windows-msvc\\bin\\rustc.exe",
+      "bytes": 111104,
+      "sha256": "21256c9767416cbc70120e7987449c6cc5a66e3e9f843d05392ee4fd5e617261"
+    },
+    {
+      "path": "C:\\Users\\Lomi\\.rustup\\toolchains\\1.94.1-x86_64-pc-windows-msvc\\bin\\cargo.exe",
+      "bytes": 30737408,
+      "sha256": "43226f7efc5ea12b88c9156da97f8954b9af582673baadb3fb1a3ebec5d97348"
+    }
+  ],
+  "rustTests": 15,
+  "newRustTests": 5,
+  "typescriptTests": {
+    "passed": 260,
+    "skipped": 3
+  },
+  "allTargetClippyPassed": true,
+  "finalSourceOnlyDeltaFromClippyAndWholeScopedRegression": [
+    "native/src/explorer_source.html: CSS code-panel maximum height only"
+  ],
+  "finalDeltaCheckedBy": [
+    "actual rebuilt native CLI",
+    "new source export five tests",
+    "fmt",
+    "JavaScript syntax",
+    "twelve real Chrome images",
+    "exact byte selection and quote",
+    "desktop/mobile selected-range visibility"
+  ],
+  "legacyHtmlByteExact": "c3b4e6bbf9b63ce55a35e5cb2dfaf16237d64723e4aeb0f5051f0ef424a4f4e0",
+  "visualImagesInspected": 12,
+  "originalCanonicalGraphUnchanged": true,
+  "rawMembers": 173,
+  "rawBytes": 5597964,
+  "rawZipBytes": 4447247,
+  "liveRebuildImplemented": false,
+  "fullWindowsAcceptance": false,
+  "fullStatusAcceptance": false,
+  "wholeNativeBaselineRerun": false,
+  "systemSettingsChanged": false,
+  "modelRequested": false,
+  "analyzedProjectCodeExecuted": false,
+  "googleLiveValidated": false
+}

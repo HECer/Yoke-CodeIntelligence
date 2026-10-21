@@ -6575,7 +6575,7 @@
     },
     "EP005": {
       "evidenceBasis": "Explicit behavior reconciliation plus implementation/test references in listed groups; not matching names alone.",
-      "remainingReview": "Pan/zoom/drag/hulls exist. Full code/context/outline tabs, verb chips and live rebuild/reload remain review_required."
+      "remainingReview": "Explicit source-bearing Code/Context/Outline tabs and verb chips now have scoped Windows browser evidence. Separate authorized live rebuild/reload, broader UI interactions and upstream equivalence remain review_required."
     },
     "EP006": {
       "remainingReview": "Own connect/claim/me/repos/learnings/activity/team client and hosted lifecycle/service remain review_required; local sessions/collections are not the hosted service."
@@ -9358,14 +9358,15 @@
     },
     {
       "boundary": "The old simple-select/search-only description is stale. Canvas and source embedding limits remain explicit. This is not a complete Serena dashboard, live rebuild/reload product or certification of every upstream UI interaction.",
-      "current": "Offline force/radial layouts, zoom/pan/drag, keyboard controls, paged symbols/parallel incident observations, relation filters, neighbor focus, checked community hulls and canonical/document graph downloads exist.",
+      "current": "Offline force/radial layouts, zoom/pan/drag, keyboard controls, paged symbols/parallel incident observations, relation filters, neighbor focus, checked community hulls and canonical/document graph downloads exist. Explicit html-source additionally embeds checked immutable files with Code/Context/Outline tabs, byte-range quotes, keyboard tabs, source/outline pages and synchronized verb chips.",
       "docs": [
         "native/docs/explorer.md"
       ],
       "id": "offline_explorer_interactions",
       "implementation": [
         "native/src/explorer.html",
-        "native/src/export.rs"
+        "native/src/export.rs",
+        "native/src/explorer_source.html"
       ],
       "inventoryRefs": [
         "trail:Offline viewer",
@@ -9375,7 +9376,8 @@
       "tests": [
         "native/tests/explorer_export.rs",
         "native/tests/explorer_runtime.rs",
-        "native/tests/document_explorer.rs"
+        "native/tests/document_explorer.rs",
+        "native/tests/explorer_sources.rs"
       ]
     },
     {
@@ -10197,7 +10199,7 @@
       "inventoryRefs": [
         "trail:Offline viewer"
       ],
-      "remainingBoundary": "Code/context/outline tabs, verb chips and live rebuild/reload remain beyond completed offline interactions."
+      "remainingBoundary": "Separate explicitly authorized live rebuild/reload, wider UI interactions/accessibility/browser/platform qualification and upstream equivalence remain open. Source-bearing offline Code/Context/Outline and verb chips have scoped evidence."
     },
     {
       "id": "remaining_backend_runtime_acceptance",
@@ -11653,5 +11655,18 @@
     "sourceManifest": "docs/validation/parity-windows-2026-10-17-wave12/evidence/mixed-view-windows-20261017-r1/source-freeze.json",
     "sourceManifestSha256": "67505463621444b62fdb792fb56cec5ea54f8c3a1bfac51ed84329abe320c81a",
     "status": "accepted_windows_development_checkpoint"
+  },
+  "sourceExplorerScopedAcceptance": {
+    "evidence": "docs/validation/integration-2026-10-21/explorer-source/README.md",
+    "finalVisualImagesInspected": 12,
+    "fullContractCertification": false,
+    "liveRebuild": false,
+    "newRustPassed": 5,
+    "realVisualRounds": 3,
+    "rustPassed": 15,
+    "sourceCommit": "0b6b7c66a71f9b609e64a2ea9dd9c28a3087ee8a",
+    "typeScriptExistingSkips": 3,
+    "typeScriptPassed": 260,
+    "wholeNativeRerun": false
   }
 }

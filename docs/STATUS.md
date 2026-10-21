@@ -2,6 +2,25 @@
 
 ## Current integration work
 
+The explicit `html-source` export now embeds checked immutable captured files
+with Code/Context/Outline tabs, paged source/outline, exact observation quotes,
+keyboard tabs and relationship verb chips. It preserves original directed and
+parallel observations, uncertainty, coverage and omissions; source stays inert.
+Complete source and escaped output have independent hard byte bounds. The default
+metadata-only and document exports retain their original template and actual
+legacy HTML bytes. See the [contract](../native/docs/explorer.md#explicit-captured-source-export)
+and [indexed evidence](validation/integration-2026-10-21/explorer-source/README.md).
+
+Five new plus ten existing scoped Rust tests pass, with format/all-target Clippy,
+typecheck and TypeScript260/3 existing skips. After the final CSS-only adjustment,
+the rebuilt native CLI repeats the five new cases and passes twelve actual
+Chrome156 captures, all visually inspected, with exact Unicode byte highlights,
+quote/download/graph preservation, keyboard tabs and visible desktop/mobile
+selection. Three real visual rounds retain their intermediate limitations.
+Live rebuild/reload, broader UI/upstream/platform/hosted and full STATUS/R1-R9
+acceptance remain open. The complete 98ffa78 suite below predates this addition;
+its ten original OS1314 prerequisites and all ignores remain unchanged.
+
 The complete native default run at `98ffa78` attempts all 320 registered
 groups, including the new community, owner-change, Claude hook and predicate
 code: **2,991 passed, 10 failed and 53 explicitly ignored**.
@@ -14,9 +33,9 @@ fixture, ignore or system setting is changed. See the
 This is a complete attempted default suite. Ten file-symlink prerequisites and
 full Windows/R1-R9/hosted/upstream/main/release acceptance remain open. The older
 bcf442b baseline and individual scoped counts below remain separately labeled.
-The supplemental real-browser audit confirms the current explorer's header-only
-source panel and missing Code/Context/Outline tabs, verb chips and live workflow.
-It preserves legacy scope and does not certify those unavailable features.
+The historical supplemental audit confirms the legacy metadata-only explorer's
+header-only panel. The separate source-bearing mode above supplies the new tabs
+and chips; live rebuild/reload remains open.
 
 The optional TypeScript5.8.3 classic body route now preserves explicit/inferred
 predicate and assertion caller flow with an inert original signature and fixed
