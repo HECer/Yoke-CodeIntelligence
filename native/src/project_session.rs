@@ -85,6 +85,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
     #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub agent_interface: Option<crate::session_steering::AgentInterface>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub startup_project: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub steering: Option<crate::session_steering::HostSteering>,
@@ -107,6 +109,7 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            agent_interface: None,
             startup_project: None,
             steering: None,
             inline_compiler: None,
@@ -992,6 +995,17 @@ impl Session {
         } else {
             fingerprint
         };
+        let fingerprint = if let Some(selected) = crate::session_steering::agent_interface(&host) {
+            identity(&(
+                fingerprint,
+                "host_agent_interface_v1",
+                host.agent_interface,
+                selected,
+                host.startup_project.as_deref().unwrap_or("default"),
+            ))
+        } else {
+            fingerprint
+        };
         let fingerprint = if let Some(project) = &host.startup_project {
             identity(&(fingerprint, "host_startup_project_v1", project))
         } else {
@@ -1155,12 +1169,49 @@ impl Session {
         self.steering()
             .is_ok_and(|s| s.is_none_or(|s| s.allows(name)))
     }
-    pub(crate) fn check_fixed_tool_state(&self, deadline: &Deadline) -> Result<()> {
-        if self
-            .host
-            .steering
-            .as_ref()
-            .is_some_and(|s| s.has_fixed_tools())
+    pub fn agent_interface(&self) -> Option<crate::session_steering::AgentInterface> {
+        crate::session_steering::agent_interface(&self.host).map(|(value, _)| value)
+    }
+    pub fn serena_tool_allowed(&self, name: &str) -> bool {
+        use crate::session_steering::AgentInterface;
+        match self.agent_interface() {
+            None => self.tool_allowed(name),
+            Some(AgentInterface::Tools) => name != "serena_repl" && self.tool_allowed(name),
+            Some(AgentInterface::Repl) => {
+                crate::compatibility::repl_control_tool(name)
+                    && !(name == "activate_project"
+                        && crate::session_steering::single_project_startup(&self.host).is_some())
+            }
+        }
+    }
+    pub(crate) fn require_serena_tool(&self, name: &str, deadline: &Deadline) -> Result<()> {
+        use crate::session_steering::AgentInterface;
+        match self.agent_interface() {
+            None => self.require_tool(name, deadline),
+            Some(AgentInterface::Tools) => {
+                ensure!(
+                    name != "serena_repl",
+                    "Tool unavailable in selected agent interface"
+                );
+                self.require_tool(name, deadline)
+            }
+            Some(AgentInterface::Repl) => {
+                self.check_tool_state(deadline)?;
+                ensure!(
+                    self.serena_tool_allowed(name),
+                    "Tool unavailable in selected agent interface"
+                );
+                Ok(())
+            }
+        }
+    }
+    pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
+        if self.agent_interface().is_some()
+            || self
+                .host
+                .steering
+                .as_ref()
+                .is_some_and(|s| s.has_fixed_tools())
         {
             self.check_current_state(
                 deadline,
@@ -1170,7 +1221,7 @@ impl Session {
         Ok(())
     }
     pub(crate) fn require_tool(&self, name: &str, deadline: &Deadline) -> Result<()> {
-        self.check_fixed_tool_state(deadline)?;
+        self.check_tool_state(deadline)?;
         ensure!(self.tool_allowed(name), "Tool excluded by session steering");
         Ok(())
     }
@@ -1189,11 +1240,12 @@ impl Session {
     }
     pub(crate) fn check_repl_state(&self, deadline: &Deadline) -> Result<()> {
         deadline.check()?;
-        if self
-            .host
-            .steering
-            .as_ref()
-            .is_some_and(|s| s.has_api_exclusions() || s.has_memory_patterns())
+        if self.agent_interface().is_some()
+            || self
+                .host
+                .steering
+                .as_ref()
+                .is_some_and(|s| s.has_api_exclusions() || s.has_memory_patterns())
         {
             self.check_current_state(
                 deadline,
@@ -1365,7 +1417,7 @@ impl Session {
         Ok(())
     }
     fn project_engine(&mut self, name: &str, deadline: &Deadline) -> Result<&mut Engine> {
-        self.check_fixed_tool_state(deadline)?;
+        self.check_tool_state(deadline)?;
         ensure!(
             self.engine.capture_epoch == self.capture_epoch,
             "Session source analyzer differs from its pinned host policy"
@@ -1485,7 +1537,7 @@ impl Session {
     }
     pub fn invoke(&mut self, operation: &str, args: &Value, deadline: &Deadline) -> Result<Value> {
         deadline.check()?;
-        self.check_fixed_tool_state(deadline)?;
+        self.check_tool_state(deadline)?;
         if operation.starts_with("collections.") {
             return self.collection_invoke(operation, args, None, deadline);
         }

@@ -433,16 +433,24 @@ impl Backend<'_> {
     fn list_changes(&self) -> bool {
         self.session().is_some_and(|s| s.steering_enabled())
     }
+    fn tool_allowed(&self, name: &str) -> bool {
+        match self {
+            Self::Serena(session, _) => session.serena_tool_allowed(name),
+            _ => self
+                .session()
+                .is_none_or(|session| session.tool_allowed(name)),
+        }
+    }
     fn tools(&self) -> Value {
         let mut tools = self.catalog();
-        if let Some(session) = self.session() {
+        if self.session().is_some() {
             tools
                 .as_array_mut()
                 .expect("Owned tool catalog")
                 .retain(|t| {
                     t["name"]
                         .as_str()
-                        .is_some_and(|name| session.tool_allowed(name))
+                        .is_some_and(|name| self.tool_allowed(name))
                 });
         }
         tools
@@ -473,10 +481,7 @@ impl Backend<'_> {
         definitions
     }
     fn call(&mut self, name: &str, args: Value) -> Result<Value> {
-        if self
-            .session()
-            .is_some_and(|session| !session.tool_allowed(name))
-        {
+        if !self.tool_allowed(name) {
             return Ok(
                 json!({"status":"error","data":{},"error":{"message":"Tool excluded by session steering"}}),
             );
@@ -931,8 +936,7 @@ fn serve_backend_state(
         let method = message["method"].as_str().unwrap();
         if matches!(method, "initialize" | "tools/list" | "tools/call")
             && let Some(session) = backend.session()
-            && let Err(reason) =
-                session.check_fixed_tool_state(&crate::capture::Deadline::new(120000))
+            && let Err(reason) = session.check_tool_state(&crate::capture::Deadline::new(120000))
         {
             send(error(id, -32001, &reason.to_string()))?;
             continue;

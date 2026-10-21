@@ -9,6 +9,17 @@ fn contracts() -> Value {
 pub fn serena_tools() -> Value {
     Value::Array(contracts()["tools"].as_array().expect("Built-in tools").iter().map(|row| json!({"name":row["name"],"description":row["description"],"inputSchema":row["inputSchema"]})).collect())
 }
+pub(crate) fn repl_control_tool(name: &str) -> bool {
+    matches!(
+        name,
+        "activate_project"
+            | "remove_project"
+            | "query_project"
+            | "serena_repl"
+            | "initial_instructions"
+            | "serena_info"
+    )
+}
 fn validate(value: &Value, schema: &Value) -> Result<()> {
     if let Some(alternatives) = schema["anyOf"].as_array() {
         ensure!(
@@ -94,7 +105,7 @@ pub fn invoke_serena(
     deadline: &Deadline,
 ) -> Result<Value> {
     deadline.check()?;
-    session.require_tool(name, deadline)?;
+    session.require_serena_tool(name, deadline)?;
     let inventory = contracts();
     let row = inventory["tools"]
         .as_array()
@@ -199,7 +210,7 @@ pub fn invoke_serena_with_repl(
     deadline: &Deadline,
 ) -> Result<Value> {
     deadline.check()?;
-    session.require_tool(name, deadline)?;
+    session.require_serena_tool(name, deadline)?;
     let inventory = contracts();
     let row = inventory["tools"]
         .as_array()
