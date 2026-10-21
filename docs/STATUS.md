@@ -2,6 +2,29 @@
 
 ## Current integration work
 
+The explicit `git compiler-affected` read query now uses a host-trusted immutable
+TypeScript 5.8.3 program for separate override, contract, resolved-call, overload
+body and type-based possible-instance-target observations. Exact original UTF-8
+proofs, parallel call sites, side/project identities, source-containment seed
+reasons and coverage limits remain visible. Original reports/graphs and default
+compiler analysis bytes stay unchanged. No analyzed module/model/Git executes or
+new artifact/record is published. See the
+[contract](../native/docs/git-compiler-affected.md) and
+[indexed evidence](validation/integration-2026-10-21/git-compiler-affected/README.md).
+
+Nine new and 135 existing regression functions pass (144 distinct scoped Rust
+functions). The first broad phase passes 143 then stops at one new Clippy warning;
+the equivalent inequality is corrected without suppression. Final coverage-only
+changes repeat nine new/seven project functions, all-target Clippy, format, native
+build, typecheck and npm 260/3 existing skips on 1013 unchanged inputs. An actual
+isolated CLI repeats exact bytes, retains parallel proofs, passes the exact
+JSON-plus-LF envelope, refuses one byte less/no trust and preserves every owned
+source/Git/Store byte; process Jobs end empty. Actual legacy compiler stdout and
+artifact identity stay exact. Constructors/tagged/static-target enumeration and
+generic candidate instantiations remain explicit limitations, with original
+capture omissions retained. Full R5/R1-R9, Windows/upstream/hosted/main/release
+remain open; the complete 98ffa78 baseline predates this query and both Explorers.
+
 The separate `explorer` command now serves a private authenticated loopback
 source view. `--allow-rebuild` independently grants manual capture; request data
 cannot widen the fixed root/options or grant permission. Reload reads cached
