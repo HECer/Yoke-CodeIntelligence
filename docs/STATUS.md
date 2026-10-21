@@ -2,6 +2,28 @@
 
 ## Current integration work
 
+Generic method targets now use actual source-witnessed compiler instance types.
+Per-context witnesses retain class identity, original UTF-8 anchors and actual
+type arguments/flags; union branches and complete intersections stay distinct.
+Alias/merged-interface/JSDoc/phantom behavior follows the checker. Explicit any
+and symbolic arguments remain visible; unobserved families never receive guessed
+wildcards. Native checks witness source/owner/indices/budgets and exact original
+invocation pairing. Existing declared/constructor facts and graphs stay separate.
+
+The current guard passes 68 Rust functions (17 query, 51 project/Git), all-target
+Clippy, format, build, typecheck and npm 260/3 existing skips on 1013 exact listed
+repository inputs. The actual CLI repeats across fresh workers, retains parallel
+typed proofs and rejects incompatible arguments. The old 7ed9 provider runs on the
+SAME checked captured sources with passed diagnostics and 0 generic targets;
+the new query adds witnessed targets. Exact LF-envelope/refusals, old affected/
+compiler bytes, original inherited-constructor facts, owned source/Git/Store
+bytes and empty Jobs pass. See [the contract](../native/docs/git-compiler-affected.md)
+and [indexed evidence](validation/integration-2026-10-21/git-compiler-generic-instances/README.md).
+Earlier counts retain their own source checkpoints. Unobserved instantiations,
+wider members/accessors/fields/implicit effects and full R5/R1-R9/Windows/upstream/
+main/release acceptance remain open; the whole-native 98ffa78 baseline stays
+historical with unchanged ten original symlink prerequisites.
+
 Constructor candidate classes now have a separate `possibleConstructValue`
 relation in addition to their real constructor-body bindings. A field-only
 Derived change therefore reaches a dynamic constructor caller even when the body
