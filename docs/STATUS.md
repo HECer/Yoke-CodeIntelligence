@@ -2,6 +2,24 @@
 
 ## Current integration work
 
+An optional [source-category analysis policy](../native/docs/source-category-policy.md)
+now supplies explicit resolution/category mappings, relation projection weights,
+ambiguity-only scaling, source-aware hub filters and explained runtime-family/
+source-kind surprise scores. Unmapped categories remain visible. Original graph
+observations, directions, parallel evidence and source bindings stay unchanged.
+The default policy serializes exactly as before; both the existing fixed golden
+and an actual pre/post CLI control preserve report/Markdown artifacts and raw JSON.
+Policy-specific canonical and selected-View producers bind the exact configuration;
+replaying altered stored policy metadata refuses.
+
+The scoped run passes 55 Rust tests across seven targets, including five new
+policy tests, plus format, all-target Clippy, retained typecheck and TypeScript
+260/3 existing skips. Failed development lint phases remain separate; the final
+fixture-only lint correction has an exact input comparison and passing recheck.
+Native Leiden/splitting/reattachment differences and wider upstream analysis
+qualification remain open; no identical upstream partition/ranking is claimed.
+See [source-category evidence](validation/integration-2026-10-21/source-category-policy/README.md).
+
 The complete native baseline at `6951ff9` attempted all 310 registered groups:
 2,904 passed, ten failed and 53 remained ignored. All ten runtime failures occur
 while creating Windows symlink fixtures (OS1314). `digest_history_jobs` additionally

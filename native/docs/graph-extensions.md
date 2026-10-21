@@ -1,5 +1,11 @@
 # Native derived graph reports
 
+An optional [source-category policy](source-category-policy.md) adds explicitly
+mapped categories, ambiguity-only weighting, display filters and explained
+runtime-family/source-kind surprise ranking. Omission retains the original
+default options, producer and report/Markdown identities. Its declared
+classifications never replace original resolution strings or source evidence.
+
 `graph_extensions::analyze(&Store, &Snapshot, &Graph, &AnalysisOptions, &Deadline)` produces a deterministic source-bound JSON report and escaped Markdown report. `compare` compares two persisted snapshots from the same workspace. These APIs never execute source, start a provider, change the canonical graph, or infer complete runtime/compiler behavior.
 
 The validator checks exact persisted snapshot and graph identities, unique IDs, endpoint membership, evidence references, source path policy and every captured source blob. Reads stream in 64 KiB chunks with one shared deadline, declared-size/type/link checks, SHA-256 verification and UTF-8 validation. Entity ranges are exact half-open byte ranges; entity end lines refer to the last included byte. Existing native evidence producers use either an inclusive last-byte or an exclusive-end line convention, so evidence end lines must match one of those two source-derived boundaries. Reported byte ranges and hashes are unambiguous. A persisted graph with incorrect line anchors is rejected even if the caller presents that same stored graph.

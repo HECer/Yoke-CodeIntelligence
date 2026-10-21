@@ -2,6 +2,15 @@
 
 ## Native Rust ownership
 
+Optional source-category graph analysis uses an explicit bounded mapping from
+original resolution strings to declared report categories. Relation weights,
+ambiguity scaling and node display filters belong to that derived policy;
+original directed/parallel observations and source bindings remain authoritative.
+Runtime-family/source-kind surprise components have explicit reasons. Policy
+reports and checked View registrations use separate producers and exact replay;
+the absent-policy branch preserves released options/artifact identities. See
+[the policy contract](../native/docs/source-category-policy.md).
+
 Classic function-body inlining uses independent original-byte statement frames
 through the optional `inlineCompiler` profile. Arguments evaluate before separate
 parameter/body scopes; checked defaults, rest/patterns and labelled returns keep

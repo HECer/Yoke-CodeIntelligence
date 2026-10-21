@@ -15,10 +15,15 @@ use std::{
     fs,
     io::Read,
 };
+#[path = "graph_analysis_policy.rs"]
+mod policy;
+pub use policy::{Category as AnalysisCategory, SourceCategoryPolicy};
 
 pub const REPORT_KIND: &str = "native_graph_report_v1";
 pub const VIEW_REPORT_KIND: &str = "native_graph_view_report_v1";
 const VIEW_REPORT_PRODUCER: &str = "yoke-graph-view-report-1";
+const CATEGORY_PRODUCER: &str = "yoke-source-category-report-1";
+const CATEGORY_VIEW_PRODUCER: &str = "yoke-source-category-view-report-1";
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -43,6 +48,8 @@ pub struct AnalysisOptions {
     pub max_community_size: usize,
     #[serde(default)]
     pub previous_snapshot_id: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_category_policy: Option<SourceCategoryPolicy>,
 }
 fn default_limit() -> usize {
     10
@@ -72,6 +79,7 @@ impl Default for AnalysisOptions {
             seed: 42,
             max_community_size: 0,
             previous_snapshot_id: None,
+            source_category_policy: None,
         }
     }
 }
@@ -83,6 +91,9 @@ const MAX_EDGES: usize = 50000;
 const LIMITATIONS: &str = "Partial structural graph: not runtime or compiler proof. Rankings and suggested questions are heuristics, not probabilities or independently confirmed facts. Source snapshots and parallel directed observations remain unchanged.";
 
 pub(crate) fn validate_options(options: &AnalysisOptions) -> Result<()> {
+    if let Some(policy) = &options.source_category_policy {
+        policy.validate()?;
+    }
     ensure!(
         (1..=100).contains(&options.hub_limit)
             && (1..=100).contains(&options.surprise_limit)
@@ -356,6 +367,15 @@ struct Derived {
     excluded: BTreeSet<String>,
     quality: Option<f64>,
 }
+fn edge_weight(edge: &Observation, options: &AnalysisOptions) -> f64 {
+    if let Some(policy) = &options.source_category_policy {
+        policy.weight(edge, options.uncertain_weight)
+    } else if edge.resolution == "syntactic" {
+        1.0
+    } else {
+        options.uncertain_weight
+    }
+}
 fn derive(graph: &Graph, options: &AnalysisOptions, deadline: &Deadline) -> Result<Derived> {
     let keys: BTreeMap<_, _> = graph.entities.iter().map(|e| (e.key.as_str(), e)).collect();
     let mut stable_by_id = BTreeMap::new();
@@ -389,11 +409,7 @@ fn derive(graph: &Graph, options: &AnalysisOptions, deadline: &Deadline) -> Resu
             let b = index[target.as_str()];
             *degree.get_mut(&edge.source).unwrap() += 1;
             *degree.get_mut(target).unwrap() += 1;
-            let weight = if edge.resolution == "syntactic" {
-                1.0
-            } else {
-                options.uncertain_weight
-            };
+            let weight = edge_weight(edge, options);
             if weight > 0.0 {
                 adjacency[a].push((b, weight));
                 if a != b {
@@ -408,7 +424,14 @@ fn derive(graph: &Graph, options: &AnalysisOptions, deadline: &Deadline) -> Resu
     {
         let mut counts: Vec<_> = degree.values().copied().collect();
         counts.sort();
-        let threshold = counts[((counts.len() - 1) as f64 * percentile / 100.0).floor() as usize];
+        let position = if options.source_category_policy.is_some() {
+            ((counts.len() as f64 * percentile / 100.0).floor() as usize)
+                .saturating_sub(1)
+                .min(counts.len() - 1)
+        } else {
+            ((counts.len() - 1) as f64 * percentile / 100.0).floor() as usize
+        };
+        let threshold = counts[position];
         excluded.extend(
             degree
                 .iter()
@@ -429,11 +452,7 @@ fn derive(graph: &Graph, options: &AnalysisOptions, deadline: &Deadline) -> Resu
         if let Some(target) = &edge.target {
             let a = index[edge.source.as_str()];
             let b = index[target.as_str()];
-            let weight = if edge.resolution == "syntactic" {
-                1.0
-            } else {
-                options.uncertain_weight
-            };
+            let weight = edge_weight(edge, options);
             if weight > 0.0
                 && let (Some(a), Some(b)) = (compact.get(&a), compact.get(&b))
             {
@@ -695,12 +714,53 @@ fn build_report(
     previous: Option<&(Graph, Value)>,
     deadline: &Deadline,
 ) -> Result<Value> {
+    let mut report = build_report_inner(snapshot, graph, options, previous, deadline)?;
+    if let Some(policy) = &options.source_category_policy {
+        report["producer"] = json!(CATEGORY_PRODUCER);
+        report["analysisPolicy"] = json!({"kind":"native_source_categories_v1","configuration":policy,
+            "classifications":"declared_projection_categories_not_source_or_execution_attestation",
+            "originalResolutionPreserved":true,"baseWeights":"host_selected_relation_weights_default_one"});
+        report["clustering"]["uncertainWeightAppliesTo"] = json!("policy_ambiguous_only");
+        report["clustering"]["hubPercentilePolicy"] =
+            json!("floor_count_times_percentile_minus_one_clamped");
+        let mut unmapped = BTreeMap::<String, usize>::new();
+        for edge in &graph.observations {
+            deadline.check()?;
+            if policy.category(edge) == AnalysisCategory::Unmapped {
+                *unmapped.entry(edge.resolution.clone()).or_default() += 1;
+            }
+        }
+        report["audit"]["unmappedPolicyResolutions"] = json!(unmapped);
+    }
+    Ok(report)
+}
+fn view_producer(options: &AnalysisOptions) -> &'static str {
+    if options.source_category_policy.is_some() {
+        CATEGORY_VIEW_PRODUCER
+    } else {
+        VIEW_REPORT_PRODUCER
+    }
+}
+fn build_report_inner(
+    snapshot: &Snapshot,
+    graph: &Graph,
+    options: &AnalysisOptions,
+    previous: Option<&(Graph, Value)>,
+    deadline: &Deadline,
+) -> Result<Value> {
     let mut derived = derive(graph, options, deadline)?;
     let nodes: BTreeMap<_, _> = graph.entities.iter().map(|e| (e.id.as_str(), e)).collect();
     let mut ranked: Vec<_> = graph
         .entities
         .iter()
-        .filter(|e| e.kind != "file" && !derived.excluded.contains(&e.id))
+        .filter(|e| {
+            e.kind != "file"
+                && !derived.excluded.contains(&e.id)
+                && options
+                    .source_category_policy
+                    .as_ref()
+                    .is_none_or(|p| p.eligible(e, derived.degree[&e.id]))
+        })
         .collect();
     ranked.sort_by(|a, b| {
         derived.degree[&b.id]
@@ -714,6 +774,19 @@ fn build_report(
     let mut surprises = Vec::new();
     let mut unresolved = Vec::new();
     let mut inferred = Vec::new();
+    let multi_source = graph
+        .entities
+        .iter()
+        .filter(|e| {
+            options
+                .source_category_policy
+                .as_ref()
+                .is_none_or(|p| p.eligible(e, derived.degree[&e.id]))
+        })
+        .map(|e| e.path.as_str())
+        .collect::<BTreeSet<_>>()
+        .len()
+        > 1;
     for edge in &graph.observations {
         deadline.check()?;
         *by_resolution.entry(edge.resolution.clone()).or_default() += 1;
@@ -721,19 +794,58 @@ fn build_report(
         let source = nodes[edge.source.as_str()];
         if let Some(target) = &edge.target {
             let target = nodes[target.as_str()];
-            if edge.relation != "contains"
-                && (source.path != target.path
-                    || derived.membership[&source.id] != derived.membership[&target.id])
-            {
+            let separate = derived.membership[&source.id] != derived.membership[&target.id];
+            let candidate = if let Some(policy) = &options.source_category_policy {
+                !SourceCategoryPolicy::structural_relation(&edge.relation)
+                    && policy.eligible(source, derived.degree[&source.id])
+                    && policy.eligible(target, derived.degree[&target.id])
+                    && if multi_source {
+                        source.path != target.path
+                    } else {
+                        separate
+                    }
+            } else {
+                edge.relation != "contains" && (source.path != target.path || separate)
+            };
+            if candidate {
                 let reason = if source.path != target.path {
                     "cross_file_candidate"
                 } else {
                     "cross_community_candidate"
                 };
-                surprises.push(json!({"observationId":edge.id,"source":edge.source,"target":edge.target,"relation":edge.relation,"resolution":edge.resolution,"reason":reason,"rankingScore":if source.language!=target.language{3}else if edge.resolution!="syntactic"{2}else{1},"evidenceIds":edge.evidence_ids,"anchor":anchor(snapshot,source)}));
+                let mut row = json!({"observationId":edge.id,"source":edge.source,"target":edge.target,"relation":edge.relation,"resolution":edge.resolution,"reason":reason,"rankingScore":if source.language!=target.language{3}else if edge.resolution!="syntactic"{2}else{1},"evidenceIds":edge.evidence_ids,"anchor":anchor(snapshot,source)});
+                if let Some(policy) = &options.source_category_policy {
+                    let (score, reasons) = policy.score(
+                        edge,
+                        source,
+                        target,
+                        separate,
+                        derived.degree[&source.id],
+                        derived.degree[&target.id],
+                    );
+                    row["rankingScore"] = json!(score);
+                    row["rankingReasons"] = json!(reasons);
+                    row["policyCategory"] = json!(policy.category(edge));
+                }
+                surprises.push(row);
             }
-            if edge.resolution != "syntactic" {
-                inferred.push(json!({"kind":"candidate","question":format!("What source or compiler evidence confirms {} → {} ({})?",source.qualified_name,target.qualified_name,edge.relation),"observationId":edge.id,"anchor":anchor(snapshot,source)}));
+            let needs_confirmation = options.source_category_policy.as_ref().map_or(
+                edge.resolution != "syntactic",
+                |p| {
+                    matches!(
+                        p.category(edge),
+                        AnalysisCategory::Inferred | AnalysisCategory::Ambiguous
+                    )
+                },
+            );
+            if needs_confirmation {
+                let mut row = json!({"kind":"candidate","question":format!("What source or compiler evidence confirms {} → {} ({})?",source.qualified_name,target.qualified_name,edge.relation),"observationId":edge.id,"anchor":anchor(snapshot,source)});
+                if let Some(policy) = &options.source_category_policy {
+                    row["policyCategory"] = json!(policy.category(edge));
+                    row["lowConfidence"] =
+                        json!(policy.category(edge) == AnalysisCategory::Ambiguous);
+                }
+                inferred.push(row);
             }
         } else {
             unresolved.push(json!({"kind":"unresolved","question":format!("Where is {} resolved for {}?",edge.target_label,source.qualified_name),"observationId":edge.id,"anchor":anchor(snapshot,source)}));
@@ -979,7 +1091,7 @@ pub fn prepare_view_report(
     let canonical = store.graph(&view.snapshot_id)?;
     let mut report = build_report(&snapshot, &graph, options, None, deadline)?;
     view_report_anchors(&mut report, view, deadline)?;
-    report["producer"] = json!(VIEW_REPORT_PRODUCER);
+    report["producer"] = json!(view_producer(options));
     report["graphViewId"] = json!(view.id);
     report["viewArtifactId"] = json!(view.artifact_id);
     report["baseGraphHash"] = json!(view.base_graph_hash);
@@ -1013,7 +1125,7 @@ pub fn prepare_view_report(
     );
     let record = ViewReportRecord {
         schema_version: 1,
-        producer: VIEW_REPORT_PRODUCER.into(),
+        producer: view_producer(options).into(),
         graph_view_id: view.id.clone(),
         view_artifact_id: view.artifact_id.clone(),
         snapshot_id: view.snapshot_id.clone(),
@@ -1063,7 +1175,7 @@ pub fn validate_view_report_record(
     ensure!(
         serde_json::to_value(&record)? == *value
             && record.schema_version == 1
-            && record.producer == VIEW_REPORT_PRODUCER
+            && record.producer == view_producer(&record.options)
             && record.artifact_id == id
             && record.workspace_id == store.workspace_id,
         "Invalid selected report registration"
