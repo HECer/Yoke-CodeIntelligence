@@ -1,5 +1,9 @@
 # Captured per-path owner candidates
 
+The separate [owner-changes query](git-owner-changes.md) also compares unchanged
+captured files when rule edits alter their authored candidates. This existing
+impact-path query and its v1 options/result identities stay unchanged.
+
 ```sh
 yoke --root /existing/workspace --max-bytes 4000000 git owners REPORT_ID
 ```

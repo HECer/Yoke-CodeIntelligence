@@ -61,6 +61,9 @@ snapshot, analyzer, trust and write overrides refuse before Store initialization
 | `maxMatchWork` (pattern-byte × path-byte charges) | 32,000,000 |
 | `maxOutputBytes` | 8,000,000 |
 
+The shared rule parser also retains its existing per-file 1,000,000-byte,
+per-line 4,096-byte, pattern 1,024-byte, token 256-byte and 50-token-per-rule bounds.
+
 Both manifest, file, source-byte and rule-byte reservations precede new CAS reads.
 The parent's separately bounded replay has already occurred. All paths and all
 supported matches are evaluated even when unchanged rows are omitted. Quotas
@@ -73,6 +76,10 @@ policy remain in force. A missing or corrupted captured source refuses.
 Windows scoped evidence currently covers six new integrations plus 65 existing
 Git regressions, formatting and all-target Clippy. Actual CLI controls preserve
 the old owner result bytes, repeat the new result, enforce the exact newline
-budget and leave every owned source/Store/Git file unchanged. Primary integration
-and required retained TypeScript checks remain pending. Full R5, parser/upstream,
+budget and leave every owned source/Store/Git file unchanged. All 993 validated
+inputs match the integrated primary checkout byte-exactly.
+Primary Cargo freshly builds its library and CLI; formatting, typecheck and
+TypeScript260/3 existing skips pass. The independent actual primary CLI also
+passes, with the complete new stdout exact across both binaries. Full R5,
+parser/upstream,
 platform, runtime/review truth and the complete current native suite remain open.

@@ -30,6 +30,15 @@ bind the selected options; no split or final maximum-size guarantee is invented.
 Absent community options preserve both older report families. See the
 [community contract](../native/docs/community-policy.md).
 
+Captured owner changes separately compare the full saved base/head path union,
+including unchanged file bodies, through the checked impact/area transaction and
+shared finite rule evaluator. Exact original source/token evidence and the parent
+remain unchanged. Candidate changes and winning-line evidence changes differ from
+source-body changes; missing rules stay indeterminate. New body/match/output
+bounds admit complete results without writes, Git, network or model execution.
+This grants no identity, permission or actual review authority. See the
+[owner-change contract](../native/docs/git-owner-changes.md).
+
 Classic function-body inlining uses independent original-byte statement frames
 through the optional `inlineCompiler` profile. Arguments evaluate before separate
 parameter/body scopes; checked defaults, rest/patterns and labelled returns keep

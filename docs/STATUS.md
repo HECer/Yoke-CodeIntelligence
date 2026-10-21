@@ -2,6 +2,25 @@
 
 ## Current integration work
 
+The separate [captured owner-change query](../native/docs/git-owner-changes.md)
+now reports authored candidate changes for unchanged files when only CODEOWNERS
+changes. It compares the full saved path union, verifies captured bodies, and
+retains original parent, rules, duplicate tokens and Unicode/CRLF byte evidence.
+Missing/unsupported rules stay indeterminate; candidate changes, moved winning
+evidence, added/removed paths and source hashes remain distinct. It grants no
+authenticated ownership, permission or actual review authority. The old owners
+query preserves exact raw result identities.
+
+Six new integration functions and 65 existing Git regressions pass (71 Rust
+cases), with format/all-target Clippy. All 993 validated inputs match primary
+byte-exactly; its library/CLI freshly build and format/typecheck/TypeScript260/3
+existing skips pass. Both actual binaries preserve old owner bytes, repeat the
+same new result, enforce exact newline budgets and leave every owned source,
+Store and Git file unchanged. No Git/network/model or analyzed-source execution
+occurs in these query controls. See the [indexed evidence](validation/integration-2026-10-21/captured-owner-changes/README.md).
+The new mode has no complete native-suite or full R5/R1-R9/upstream/hosted/
+platform/main/release acceptance; the earlier complete baseline stays separate.
+
 An optional [community projection policy](../native/docs/community-policy.md)
 now adds unique-neighbor hub degree/voting, stranded-node holdout and bounded
 oversized/sparse split passes. Canonical and selected-View producers pin this
