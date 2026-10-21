@@ -36,6 +36,11 @@ separate host permission; modes and remote tool arguments cannot grant it.
 Global application notes use a separately selected host store. These notes are
 distinct from the coding agent's central AgentMemory service.
 
+The notesPolicy pattern fields in the example retain their original glob
+semantics. Optional [layered memory regex policies](session-steering.md#named-memory-regex-policies)
+add separate read-only/ignored expressions for canonical project/global names.
+They restrict every session-backed named-note path and never grant source or execution rights.
+
 For root-based read queries, a registered project's exact host-selected spelling
 also selects its canonical root. This includes a host-selected Windows short
 path. These aliases belong to the current invocation: session records do not

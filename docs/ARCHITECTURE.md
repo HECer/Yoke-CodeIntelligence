@@ -24,6 +24,14 @@ in the central session operations. Resume checks the fixed project and host
 binding; other contexts retain their current saved project. No source setting
 can select a project or grant authority.
 
+Optional named-memory regex policies accumulate through the same host layers
+while the original glob policy remains unchanged. Bounded compiled sets restrict
+listing, reads and all mutations through the shared note rules. Canonical global
+names preserve namespace distinctions. Validation precedes session publication
+or mode CAS; selected-note calls and registered-policy REPL cells recheck exact
+persisted state. Default serialized identities and immutable authored revisions
+remain intact.
+
 The explicit Git compiler-affected query releases the checked report read view
 before trusted host compiler execution and revalidates original pins afterward.
 Independent snapshot/project contexts retain actual checker declarations, exact

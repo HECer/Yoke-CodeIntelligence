@@ -184,3 +184,51 @@ configuration and existing activation semantics retain their original bytes.
 The primary --root remains the session-state owner; startupProject chooses the
 active registered project for session-backed operations. The independent native
 eight-tool profile retains its existing primary-Engine contract.
+
+## Named-memory regex policies
+
+Every host steering layer and custom context/mode definition accepts optional
+readOnlyMemoryPatterns and ignoredMemoryPatterns arrays. They accumulate in
+layer order with identical patterns deduplicated across layers. These are Rust
+regular expressions, not globs. The existing notesPolicy.readOnlyPatterns and
+ignoredPatterns keep their original glob semantics; both sets of restrictions
+apply. Neither form can turn a non-writable host note policy into a writable one.
+The [pinned public settings template](https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/resources/serena_config.template.yml)
+supplies the functional reference; no application implementation is copied.
+
+New regexes match the canonical logical memory name: project names have no
+prefix, global notes match global/name. For example, ^keep[0-9]$ applies to
+project keep1, while ^global/keep[0-9]$ applies to its global counterpart.
+Unicode names and patterns remain exact. Matching uses ordinary regex search;
+anchors are explicit. An empty expression intentionally matches every name.
+Unsupported lookaround/backreferences, invalid expressions, duplicate entries
+within a layer and NUL strings refuse rather than fall back to literal/glob mode.
+
+Ignored notes are absent from lists and cannot be read or mutated. Read-only
+notes remain readable with readOnly metadata, while write/edit/delete and both
+rename endpoints refuse. Rename reference updates preserve hidden and read-only
+revisions; hidden names are not exposed in the result. Original note heads,
+immutable revisions, source snapshots and anchors are not migrated or rewritten.
+The native Store remains separate from central AgentMemory and source files.
+
+Limits are 100 patterns per category, 4096 UTF-8 bytes per expression and 32768
+combined pattern bytes for a layer or effective policy, within the existing
+256 KiB host steering bound. Each compiled set has 1 MB expression/DFA-cache
+limits. Complete merged policies validate before session creation, resume or
+mode/project publication. Tool catalogs use bounded metadata without repeatedly
+compiling regexes for every tool. Note operations compile the effective sets
+before entering their existing transaction; ordinary source/write/host gates
+remain independent.
+
+A registered memory policy checks the exact persisted state before direct note
+operations and before REPL cells/callbacks. Same-cell mode changes immediately
+affect cached memory functions. A denied callback preserves the worker namespace;
+an external stale-session error retains the existing worker-close behavior and
+requires a resumed session plus a new explicitly authorized worker. Rejected
+cells do not execute. Empty fields are omitted, preserving prior serialized
+bindings, schemas and real legacy results.
+
+This is a bounded native regex contract. Python-regex equivalence, automatic YAML
+loading, arbitrary upstream file access and all remaining settings are separate
+requirements. Repository data never selects this policy or grants authority. Independent host
+CLI use and same-account database access remain outside session steering.

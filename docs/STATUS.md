@@ -2,6 +2,31 @@
 
 ## Current integration work
 
+Host-owned readOnlyMemoryPatterns and ignoredMemoryPatterns now apply bounded
+regular expressions to named application notes through all six steering layers.
+Canonical global/name matching stays distinct from project names; the original
+notesPolicy glob fields retain their exact semantics and serialization. Listing,
+read/write/edit/delete/rename, reference updates and real cached Python callbacks
+share the effective rules. Invalid/oversized and combined mode policies refuse
+before publication/CAS; external stale state closes the owned worker before its
+cell runs. Restrictions grant no source, note-write or execution authority.
+
+At source e3c65663, 166 distinct Rust functions pass across 26 scoped targets
+(9 new functions, 3 existing ignores) on 1020 unchanged input hashes. Only a redundant return binding changed in the new test helper after the first
+full Rust guard: its 9 functions pass again. The other 25 targets supply 157
+functions on 1019 identical relevant inputs; the separate test file is excluded
+with exact before/after hashes. Current 1020-input integrity,
+all-target Clippy -Dwarnings, fmt/build/typecheck and npm 260/3 existing skips pass.
+Actual published-CLI RED and the SAME original source/profile/notes/session GREEN
+qualify filtering, read-only admission, real MCP, old note/revision/anchor/head
+values and exact original raw output/full logical Store controls. See
+[the contract](../native/docs/session-steering.md) and
+[indexed evidence](validation/integration-2026-10-22/session-memory-patterns/README.md).
+Rust regex syntax, explicit host settings and native named-note storage are the
+bounded contract; Python regex/file-discovery equivalence, other settings and
+full 353/R1-R9/Windows/main/release acceptance remain open. Original ten OS1314
+fixtures and all system settings remain unchanged.
+
 An explicit host startupProject now selects a registered project (or default)
 before initial modes, instructions or MCP catalogs are resolved. In ide,
 claude-code and grok contexts, activation is hidden/refused and removing the
