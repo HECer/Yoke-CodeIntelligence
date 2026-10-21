@@ -2,6 +2,27 @@
 
 ## Current integration work
 
+Constructor candidate classes now have a separate `possibleConstructValue`
+relation in addition to their real constructor-body bindings. A field-only
+Derived change therefore reaches a dynamic constructor caller even when the body
+is inherited from Base. Exact paired invocation proof, original owner/target
+identity and parallel sites remain distinct; this is candidate impact and does
+not establish initializer execution or general field-effects completeness.
+
+The current guard passes 64 Rust functions (13 query, 51 project/Git), all-target
+Clippy, format, native build, typecheck and npm 260/3 existing skips on 1013 exact
+listed repository inputs. An actual old-CLI RED exposes the missing caller path.
+GREEN reads the same original report/Store: all original rows, seeds, graphs,
+bindings, context IDs, nodes and prior relation facts/multiplicity remain equal;
+the new class-value proof connects the original class seed to the caller. Repeated
+actual stdout and all owned source/Git/Store bytes remain exact, and process Jobs
+end empty. Existing invocation/legacy compiler byte and envelope controls pass.
+See [the contract](../native/docs/git-compiler-affected.md) and
+[indexed evidence](validation/integration-2026-10-21/git-compiler-constructor-values/README.md).
+Earlier counts below remain their own source checkpoints. Wider fields/accessors/
+implicit effects, generic instances and full R5/R1-R9/Windows/upstream/main/release
+acceptance remain open; the whole-native 98ffa78 baseline stays historical.
+
 The explicit compiler/Git query now retains new/super/tagged invocation kinds,
 constructor overload-to-body bindings and separate static construct-result class
 roles. Inherited constructor declarations, implicit source-less signatures and
