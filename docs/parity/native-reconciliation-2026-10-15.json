@@ -10208,7 +10208,7 @@
         "serenaConfigurationEntries",
         "serenaConfigurationMembers"
       ],
-      "remainingBoundary": "Dashboard unavailable. Native host-owned context/mode/API/memory steering, explicit startup projects and fixed tool bases qualify bounded configuration behavior. Wider regex syntax, upstream file selection/YAML/Jinja, interface and optional tool/API inclusion, remaining project keys and complete9-mode/16-context equivalence require individual review. Defensive Windows image admission and all18 unchanged HTTP tests pass normal Cargo; no general Windows or transient Git-listing cause is established.",
+      "remainingBoundary": "Dashboard unavailable. Native host-owned context/mode/API/memory steering, explicit startup projects, fixed tool bases and fixed-startup tools/repl interface selection qualify bounded configuration behavior. Wider regex syntax, upstream file selection/YAML/Jinja, optional tool/API inclusion and optional defaults, remaining project keys and complete9-mode/16-context equivalence require individual review. No general Windows or transient Git-listing cause is established.",
       "nativeSteeringCheckpoint": {
         "sourceCommit": "51772d7a57835e97fed056287382e9daabd3c38e",
         "index": "docs/validation/integration-2026-10-21/session-steering/index.json",
@@ -10272,6 +10272,21 @@
         "identicalInputFunctionsReused": 62,
         "sameOriginalCliMcpRawSchemasAndLogicalStoreExact": true,
         "staleCatalogExplicitError": true,
+        "fullParityCertified": false
+      },
+      "nativeAgentInterfaceCheckpoint": {
+        "sourceCommit": "0cbeb5d158dfbb342627d2715b56ffacf2ffd635",
+        "index": "docs/validation/integration-2026-10-22/session-agent-interface/index.json",
+        "frozenInputs": 1022,
+        "distinctRustFunctionsPassed": 211,
+        "existingIgnored": 3,
+        "newFunctions": 8,
+        "identicalInputFunctionsReused": 62,
+        "sameOriginalCliMcpRawSchemasAndLogicalStoreExact": true,
+        "explicitToolsSchemas": 52,
+        "explicitReplControlSchemas": 6,
+        "defaultSchemas": 53,
+        "noPythonSelectionOrTrustGrant": true,
         "fullParityCertified": false
       }
     },

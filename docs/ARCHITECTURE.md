@@ -38,6 +38,13 @@ check current persisted state under registered fixed policies. Stale discovery
 returns an explicit error. Original query-family aliases share selection and
 exclusion identity; API selection and host execution/write gates stay separate.
 
+Explicit agent-interface selection is fixed from host/global/CLI/startup-project
+settings. Later project or mode changes retain it. Serena tool discovery and
+direct compatibility calls share the selected view; REPL controls bypass tool
+steering while retaining startup, current-state, runtime and API gates. No runtime
+is selected or trusted by the interface setting; absent settings retain all 53
+preceding native definitions and serialized binding bytes.
+
 The explicit Git compiler-affected query releases the checked report read view
 before trusted host compiler execution and revalidates original pins afterward.
 Independent snapshot/project contexts retain actual checker declarations, exact

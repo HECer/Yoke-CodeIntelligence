@@ -279,3 +279,47 @@ unsupported fields refuse instead of being accepted without an effect.
 
 Empty fields are omitted so preceding serialized profiles, fingerprints,
 configuration, schemas and actual raw CLI/MCP results stay byte-identical.
+
+## Fixed startup agent interface
+
+HostProfile.agentInterface and global/CLI/project/projectLocal steering layers
+accept exactly tools or repl (lowercase native JSON). Absent or null values keep
+the preceding behavior and omit all new serialized fields. Context and mode
+definitions reject agentInterface, because it cannot change during a session.
+Resolution is host.agentInterface, global, CLI, startup project, startup
+project-local; the last non-null value wins. The selected startup project is
+host.startupProject, or default. Later activation, mode changes and resume retain
+that startup selection. configuration.steering exposes agentInterface,
+agentInterfaceSource and agentInterfaceProject only when explicitly selected.
+Changed host selection refuses an existing host-bound session.
+
+With tools, the original 52 non-serena_repl definitions are candidates under the
+existing fixed/excluded tool rules and context/startup restrictions. With repl,
+the six original no-facade control definitions are candidates: activate_project,
+remove_project, query_project, serena_repl, initial_instructions and serena_info.
+Fixed/excluded tool lists do not filter this REPL view. Startup activation
+restrictions and every operation's original arguments and permission checks
+remain effective. serena_info retains its topic-based native information
+contract; it is not a promise of complete upstream information equivalence.
+
+The setting selects no executable, starts no worker and grants no trust. Calling
+serena_repl still requires its original host-owned session_id and a separately
+configured/trusted Python runtime. Without one it returns an explicit error.
+excludedApis remains independent and is enforced on real cached callbacks; tool
+steering does not become API authority. Python is a trusted host interpreter,
+not an operating-system sandbox. Source application permissions, immutable
+plans, approval/stale/recovery guards and explicit execution gates remain intact.
+
+Opted interface sessions check their exact current persisted record before
+catalog admission, direct adapters, source operations and Python cells. External
+changes require resume; a stale worker closes before its cell executes. Other
+session profiles keep their original catalogs, and independent native eight-tool profile is
+unaffected. No-setting sessions retain all 53 preceding mixed definitions,
+fingerprints, raw CLI/MCP output and complete logical Store SQL.
+
+The fixed-startup/interface distinction follows the pinned public
+[configuration guide](https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/docs/02-usage/050_configuration.md)
+and [settings template](https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/resources/serena_config.template.yml).
+This is an explicit native JSON contract. Optional tool/API inclusion and default
+subsets, upstream YAML/Jinja loading and all project/client settings remain open;
+unknown fields refuse. No upstream application code or prompt was copied.

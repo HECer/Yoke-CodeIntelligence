@@ -1,5 +1,27 @@
 # Remaining implementation and acceptance
 
+Optional host agentInterface now fixes tools or repl at session startup. Global,
+CLI and startup project/project-local settings resolve with exact provenance;
+later activation or mode changes retain that selection. The tools view filters
+the original 52 non-REPL schemas normally. The REPL view exposes the original six
+no-facade controls, independent of tool steering, while retaining fixed-startup
+admission and separately enforced API, source and trusted-runtime permissions.
+Without a selection, the preceding mixed 53-schema interface remains exact.
+
+At source 0cbeb5d1, 211 distinct Rust functions pass across 34 scoped targets
+(8 new functions, 3 existing ignores) on 1022 unchanged input hashes. Eight
+focused targets supply 62 functions without rerun on identical inputs;
+26 other targets, all-target Clippy -Dwarnings, fmt/build/typecheck and npm 260/3
+existing skips pass. Actual published-CLI RED and the SAME original CLI/MCP
+fixture GREEN retain legacy raw output/full SQL and qualify exact 52/6 subsets,
+real explicitly trusted Python/source reads, API exclusion, missing runtime and
+untrusted refusal, invalid inputs and old host-binding refusal. Old records and
+source/Git bytes remain exact. See [the contract](../native/docs/session-steering.md)
+and [indexed evidence](validation/integration-2026-10-22/session-agent-interface/README.md).
+Optional inclusion/default equivalence, wider configuration/client/R1-R9/353/
+Windows/main/release acceptance remain open. Ten OS1314 fixtures and all system
+settings remain unchanged; this is a finite native interface checkpoint.
+
 Optional host fixedTools now selects a nonempty MCP tool base through the six
 steering layers, with exact fixedToolsSource provenance and cumulative exclusions.
 Same-layer exclusion conflicts and unknown/duplicate selectors refuse. Original
