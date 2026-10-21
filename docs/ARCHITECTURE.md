@@ -22,6 +22,12 @@ accesses pair exact original slot/proof/modes and actual class/type witnesses;
 syntactic optional reads and logical conditional writes remain separate. Native
 checks source containment and pairings without inferring returned function values
 or runtime property state.
+An independently derived incoming walk can additionally step outward through
+exact override/implementation bindings at zero incoming distance. Separate
+contract proofs retain direction/parallel source evidence and distinguish an
+unchanged supertype from an original seed. Distance relaxation preserves shorter
+contract paths without discarding longer original proofs; this is conservative
+source-contract impact and never invents a generic instance or invocation.
 See [the contract](../native/docs/git-compiler-affected.md).
 
 The separate live Explorer owns a fixed host Engine/capture selection and cached

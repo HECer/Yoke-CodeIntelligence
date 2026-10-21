@@ -114,6 +114,7 @@ fn finish(
 ) -> Result<Value> {
     let mut states = vec![];
     let mut proofs = vec![];
+    let mut contract_expansions = vec![];
     let mut seed_mappings = vec![];
     let mut unmapped = vec![];
     let mut visits = 0usize;
@@ -129,6 +130,7 @@ fn finish(
                 .as_array()
                 .context("Compiler nodes absent")?;
             let mut incoming = BTreeMap::<&str, Vec<&Value>>::new();
+            let mut contracts = BTreeMap::<&str, Vec<&Value>>::new();
             for edge in context["relations"]
                 .as_array()
                 .context("Compiler relations absent")?
@@ -157,6 +159,19 @@ fn finish(
                         .or_default()
                         .push(edge);
                 }
+                if matches!(
+                    edge["relation"].as_str(),
+                    Some("overrides" | "implementsMember")
+                ) {
+                    contracts
+                        .entry(
+                            edge["source"]
+                                .as_str()
+                                .context("Compiler contract source missing")?,
+                        )
+                        .or_default()
+                        .push(edge);
+                }
             }
             for (row_index, row) in changed
                 .iter()
@@ -170,7 +185,8 @@ fn finish(
                     .find(|e| row["id"] == e.id)
                     .context("Original changed symbol outside graph")?;
                 let mut queue = VecDeque::new();
-                let mut seen = BTreeSet::new();
+                let mut original_seeds = BTreeSet::new();
+                let mut distances = BTreeMap::new();
                 for node in nodes {
                     deadline.check()?;
                     visits = visits
@@ -202,7 +218,8 @@ fn finish(
                     let id = node["id"]
                         .as_str()
                         .context("Compiler node identity absent")?;
-                    if seen.insert(id) {
+                    if original_seeds.insert(id) {
+                        distances.insert(id, 0usize);
                         queue.push_back((id, 0usize));
                         seed_mappings.push(json!({"changedRow":row_index,"side":side,"contextId":context["contextId"],"nodeId":id,"basis":if exact{"exact_native_declaration_binding"}else{"original_source_contains_compiler_declaration"}}));
                     }
@@ -212,14 +229,42 @@ fn finish(
                 }
                 while let Some((node, distance)) = queue.pop_front() {
                     deadline.check()?;
+                    // A later zero-cost contract step can improve an enqueued
+                    // incoming path. Discard its older queue entry, not the proof.
+                    if distances.get(node) != Some(&distance) {
+                        continue;
+                    }
                     ensure!(
                         states.len() < options.max_states,
                         "Compiler-affected state capacity exceeded"
                     );
                     let edges = incoming.get(node).map(Vec::as_slice).unwrap_or(&[]);
-                    states.push(json!({"changedRow":row_index,"side":side,"snapshotId":snapshot.id,"contextId":context["contextId"],"nodeId":node,"distance":distance,"boundary":distance==options.max_depth,"unexaminedIncoming":if distance==options.max_depth{edges.len()}else{0}}));
+                    let bindings = contracts.get(node).map(Vec::as_slice).unwrap_or(&[]);
+                    states.push(json!({"changedRow":row_index,"side":side,"snapshotId":snapshot.id,"contextId":context["contextId"],"nodeId":node,"distance":distance,"originalSeed":original_seeds.contains(node),"boundary":distance==options.max_depth,"unexaminedIncoming":if distance==options.max_depth{edges.len()}else{0},"unexaminedContractBindings":if distance==options.max_depth{bindings.len()}else{0}}));
                     if distance == options.max_depth {
                         continue;
+                    }
+                    for binding in bindings {
+                        deadline.check()?;
+                        visits = visits
+                            .checked_add(1)
+                            .context("Compiler walk visit overflow")?;
+                        ensure!(
+                            visits <= options.max_pair_visits
+                                && proofs.len() + contract_expansions.len() < options.max_relations,
+                            "Compiler-affected contract proof capacity exceeded"
+                        );
+                        let target = binding["target"]
+                            .as_str()
+                            .context("Compiler contract target missing")?;
+                        contract_expansions.push(json!({"changedRow":row_index,"side":side,"contextId":context["contextId"],"relationId":binding["id"],"sourceNodeId":node,"targetNodeId":target,"distance":distance,"direction":"outgoing_compiler_binding","basis":"compiler_override_contract_dependency","runtimeDispatchEstablished":false}));
+                        if distances
+                            .get(target)
+                            .is_none_or(|previous| distance < *previous)
+                        {
+                            distances.insert(target, distance);
+                            queue.push_front((target, distance));
+                        }
                     }
                     for edge in edges {
                         deadline.check()?;
@@ -228,14 +273,18 @@ fn finish(
                             .context("Compiler walk visit overflow")?;
                         ensure!(
                             visits <= options.max_pair_visits
-                                && proofs.len() < options.max_relations,
+                                && proofs.len() + contract_expansions.len() < options.max_relations,
                             "Compiler-affected incoming proof capacity exceeded"
                         );
                         proofs.push(json!({"changedRow":row_index,"side":side,"contextId":context["contextId"],"relationId":edge["id"],"sourceNodeId":edge["source"],"targetNodeId":node,"distance":distance+1}));
                         let source = edge["source"]
                             .as_str()
                             .context("Compiler source endpoint missing")?;
-                        if seen.insert(source) {
+                        if distances
+                            .get(source)
+                            .is_none_or(|previous| distance + 1 < *previous)
+                        {
+                            distances.insert(source, distance + 1);
                             queue.push_back((source, distance + 1));
                         }
                     }
@@ -243,7 +292,7 @@ fn finish(
             }
         }
     }
-    let mut result = json!({"schema":"git_compiler_affected_v1","reportArtifactId":report,"workspaceId":base.0.workspace_id,"hostCompilerProfile":profile,"compiler": "5.8.3","options":options,"originalChangedSymbols":changed,"base":before,"head":after,"seedMappings":seed_mappings,"unmappedOriginals":unmapped,"states":states,"incomingProofs":proofs,"edgeVisits":visits,"compilerBindingEstablished":true,"runtimeDispatchEstablished":false,"complete":false,"limitations":["Incoming walks use actual compiler call bindings and distinct type-assignable possible targets, not observed execution.","Source containment seed mappings are original-byte ownership, not an additional semantic identity claim.","Captured classes and selected configured contexts are not a closed-world runtime or exhaustive dispatch enumeration.","The original captured_hierarchy_v1 report and canonical source graphs remain unchanged."]});
+    let mut result = json!({"schema":"git_compiler_affected_v1","reportArtifactId":report,"workspaceId":base.0.workspace_id,"hostCompilerProfile":profile,"compiler": "5.8.3","options":options,"originalChangedSymbols":changed,"base":before,"head":after,"seedMappings":seed_mappings,"unmappedOriginals":unmapped,"states":states,"incomingProofs":proofs,"contractExpansions":contract_expansions,"edgeVisits":visits,"compilerBindingEstablished":true,"runtimeDispatchEstablished":false,"complete":false,"limitations":["Incoming walks use actual compiler call bindings and distinct type-assignable possible targets, not observed execution.","Zero-distance override/implementation steps preserve exact compiler contract dependencies; they are not actual dispatch, compatible generic instantiations or changed supertype declarations.","Source containment seed mappings are original-byte ownership, not an additional semantic identity claim.","Captured classes and selected configured contexts are not a closed-world runtime or exhaustive dispatch enumeration.","The original captured_hierarchy_v1 report and canonical source graphs remain unchanged."]});
     result["workerHash"] = json!(crate::model::hash(crate::projects::worker_source()));
     result["resultId"] = json!(identity(&("git_compiler_affected_v1", &result)));
     let bytes = serde_json::to_vec(&result)?;

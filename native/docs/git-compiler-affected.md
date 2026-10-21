@@ -163,6 +163,33 @@ reachability or a closed-world execution guarantee. Class expressions, unsupport
 receiver types, wider property/accessor effects, unobserved generic instantiations,
 implicit execution phases and external bodies retain visible limitations.
 
+Separate `contractExpansions` follow original checker-bound `overrides` and
+`implementsMember` relations in their outgoing direction. These source contract
+associations cost zero incoming steps; they retain the original relation ID,
+source/target, context, changed row and distance. They can connect callers bound
+to a supertype signature even when a generic overriding class has no observed
+instance. No generic type arguments, compatible instance or dispatch are inferred.
+Parallel clauses/overload bindings remain separate. This addresses the pinned
+[supertype-member impact contract](https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/affected.py)
+through independent source-checked native observations.
+
+An expanded supertype is an unchanged stepping stone, not an original changed
+declaration. States explicitly retain `originalSeed`; `seedMappings` is unchanged.
+A zero/one-cost traversal relaxes an already queued distance when a later
+contract step gives a shorter route. Each state has its minimal incoming-step
+distance; original parallel proofs can retain longer alternative paths. Contract
+associations also remain separate from fixed class/super/private call bindings:
+they are conservative source-contract impact, never a new invocation/dispatch
+claim. They can associate consumers of a shared signature without proving that
+the consumer executes the changed override.
+
+Depth zero emits original seeds only, with no incoming or contract traversal.
+Boundary states separately count `unexaminedIncoming` and
+`unexaminedContractBindings`. Contract and incoming proof rows share the one
+`maxRelations` bound and visit budget; all states/output/deadline bounds still
+apply. Unsupported property overrides, receiver/heritage-only effects and broader
+generic/runtime completeness remain explicit limitations.
+
 Original changed declarations seed the incoming walk by exact native declaration
 binding or explicitly labeled original-source containment. Containment is byte
 ownership, not semantic equivalence. Incoming traversal follows calls, possible

@@ -83,6 +83,354 @@ fn edges<'a>(c: &'a Value, relation: &str, from: &str, to: &str) -> Vec<&'a Valu
         .filter(|e| e["relation"] == relation && e["source"] == from && e["target"] == to)
         .collect()
 }
+fn changed_method_row(r: &Value, c: &Value, method: &str) -> usize {
+    let node = c["nodes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| n["id"] == method)
+        .unwrap();
+    let rows: Vec<_> = r["originalChangedSymbols"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .enumerate()
+        .filter(|(_, row)| {
+            row["side"] == "head"
+                && row["kind"] == "method"
+                && node["baseEntityIds"]
+                    .as_array()
+                    .unwrap()
+                    .contains(&row["id"])
+        })
+        .map(|(index, _)| index)
+        .collect();
+    assert_eq!(rows.len(), 1, "Exact changed method binding is required");
+    rows[0]
+}
+
+#[test]
+fn unobserved_generic_overrides_retain_source_contract_callers_without_invented_instances() {
+    let calls = (0..20)
+        .map(|n| format!("x.run('p{n}');"))
+        .collect::<String>();
+    let source = format!(
+        "\u{feff}// π 😀 e\u{301}\r\nexport class Base{{run(v:string):string{{return 'BASE_BODY'+v;}}}}\r\nexport class Generic<T> extends Base{{value!:T;override run(v:string):string{{return 'GENERIC_OLD'+v;}}}}\r\nfunction caller(x:Base){{{calls}}}\r\n"
+    );
+    let f = configured(&source, &source.replace("GENERIC_OLD", "GENERIC_HEAD"));
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let derived = node_id(c, "run", "GENERIC_HEAD");
+    let base = node_id(c, "run", "BASE_BODY");
+    let owner = node_id(c, "Generic", "GENERIC_HEAD");
+    let caller = node_id(c, "caller", "p19");
+    let row = changed_method_row(&r, c, &derived);
+    assert!(
+        c["instances"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|i| i["owner"] != owner)
+    );
+    assert!(edges(c, "possibleDispatch", &caller, &derived).is_empty());
+    assert!(edges(c, "possiblePropertyAccess", &caller, &derived).is_empty());
+    let binding = edges(c, "overrides", &derived, &base);
+    assert_eq!(binding.len(), 1);
+    let expansion: Vec<_> = r["contractExpansions"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|p| p["changedRow"] == row && p["contextId"] == c["contextId"])
+        .collect();
+    assert_eq!(expansion.len(), 1);
+    assert_eq!(expansion[0]["relationId"], binding[0]["id"]);
+    assert_eq!(expansion[0]["sourceNodeId"], derived);
+    assert_eq!(expansion[0]["targetNodeId"], base);
+    assert_eq!(expansion[0]["direction"], "outgoing_compiler_binding");
+    assert_eq!(expansion[0]["distance"], 0);
+    assert_eq!(expansion[0]["runtimeDispatchEstablished"], false);
+    assert!(
+        r["states"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|s| s["changedRow"] == row
+                && s["nodeId"] == base
+                && s["distance"] == 0
+                && s["originalSeed"] == false)
+    );
+    assert!(
+        r["states"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|s| s["changedRow"] == row && s["nodeId"] == caller && s["distance"] == 1)
+    );
+    let call_ids: Vec<_> = edges(c, "calls", &caller, &base)
+        .iter()
+        .map(|e| e["id"].clone())
+        .collect();
+    assert_eq!(call_ids.len(), 20);
+    assert_eq!(
+        r["incomingProofs"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|p| p["changedRow"] == row && call_ids.contains(&p["relationId"]))
+            .count(),
+        20
+    );
+    let capacity = r["incomingProofs"].as_array().unwrap().len()
+        + r["contractExpansions"].as_array().unwrap().len()
+        - 1;
+    assert!(capacity >= r["incomingProofs"].as_array().unwrap().len());
+    for side in ["base", "head"] {
+        for context in r[side]["contexts"].as_array().unwrap() {
+            assert!(
+                context["relations"].as_array().unwrap().len() <= capacity
+                    && context["unavailable"].as_array().unwrap().len() <= capacity
+            );
+        }
+    }
+    assert!(
+        run(
+            &f,
+            &Options {
+                max_relations: capacity,
+                ..Default::default()
+            }
+        )
+        .unwrap_err()
+        .to_string()
+        .contains("capacity")
+    );
+    assert_eq!(state(&f.engine), before);
+}
+
+#[test]
+fn zero_distance_contract_steps_improve_enqueued_paths_and_keep_alternative_proofs_and_boundaries()
+{
+    let source = "export class Base{run():string{return Child.step();}}\nexport class Child<T> extends Base{value!:T;static step(){return 'STEP_OLD';}override run(){return 'OVERRIDE_OLD';}}\nfunction caller(x:Base){return x.run();}\n";
+    let f = configured(source, &source.replace("_OLD", "_HEAD"));
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let owner = node_id(c, "Child", "OVERRIDE_HEAD");
+    let base = node_id(c, "run", "Child.step");
+    let step = node_id(c, "step", "STEP_HEAD");
+    let caller = node_id(c, "caller", "x.run");
+    let entity = c["nodes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| n["id"] == owner)
+        .unwrap();
+    let row = r["originalChangedSymbols"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .position(|p| {
+            p["side"] == "head"
+                && p["kind"] == "class"
+                && entity["baseEntityIds"]
+                    .as_array()
+                    .unwrap()
+                    .contains(&p["id"])
+        })
+        .unwrap();
+    let base_states: Vec<_> = r["states"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|s| s["changedRow"] == row && s["nodeId"] == base)
+        .collect();
+    assert_eq!(
+        base_states.len(),
+        1,
+        "The superseded queue entry cannot emit a duplicate state"
+    );
+    assert_eq!(base_states[0]["distance"], 0);
+    assert_eq!(base_states[0]["originalSeed"], false);
+    assert!(
+        r["states"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|s| s["changedRow"] == row && s["nodeId"] == caller && s["distance"] == 1)
+    );
+    let earlier = edges(c, "calls", &base, &step);
+    assert_eq!(earlier.len(), 1);
+    assert!(
+        r["incomingProofs"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|p| p["changedRow"] == row
+                && p["relationId"] == earlier[0]["id"]
+                && p["distance"] == 1),
+        "The longer original proof remains even when the state gets a shorter contract path"
+    );
+    let zero = run(
+        &f,
+        &Options {
+            max_depth: 0,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+    assert!(zero["contractExpansions"].as_array().unwrap().is_empty());
+    assert!(zero["incomingProofs"].as_array().unwrap().is_empty());
+    assert!(
+        zero["states"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|s| s["originalSeed"] == true)
+    );
+    assert!(
+        zero["states"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|s| s["unexaminedContractBindings"].as_u64().unwrap() > 0)
+    );
+    let one = run(
+        &f,
+        &Options {
+            max_depth: 1,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+    assert!(
+        one["states"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|s| s["changedRow"] == row
+                && s["nodeId"] == caller
+                && s["distance"] == 1
+                && s["boundary"] == true)
+    );
+}
+
+#[test]
+fn overload_diamond_contracts_and_fixed_static_private_bindings_keep_distinct_original_roles() {
+    let source = concat!(
+        "export interface Root{run(v:string):string;run(v:number):number;}interface Left extends Root{}interface Right extends Root{}\n",
+        "class Generic<T> implements Left,Right{value!:T;run(v:string):string;run(v:number):number;run(v:string|number){const marker='GENERIC_OLD';return v;}}\n",
+        "function caller(x:Root){x.run('a');x.run(1);}\n",
+        "class StaticBase{static run(){return 'BASE';}#secret(){return 'PRIVATE_BASE';}read(){return this.#secret();}}\n",
+        "class StaticChild extends StaticBase{static override run(){return 'STATIC_OLD';}#secret(){return 'PRIVATE_OLD';}override read(){return this.#secret();}}\n",
+        "function fixed(){return StaticBase.run();}\n"
+    );
+    let f = configured(source, &source.replace("_OLD", "_HEAD"));
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let implementation = node_id(c, "run", "GENERIC_HEAD");
+    let row = changed_method_row(&r, c, &implementation);
+    let expansions: Vec<_> = r["contractExpansions"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|p| p["changedRow"] == row && p["sourceNodeId"] == implementation)
+        .collect();
+    assert_eq!(
+        expansions.len(),
+        4,
+        "Both original clauses and both overload declarations remain parallel proofs"
+    );
+    let ids: std::collections::BTreeSet<_> = expansions
+        .iter()
+        .map(|p| p["relationId"].as_str().unwrap())
+        .collect();
+    assert_eq!(ids.len(), 4);
+    for p in expansions {
+        let original = c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|e| e["id"] == p["relationId"])
+            .unwrap();
+        assert_eq!(original["relation"], "implementsMember");
+        assert_eq!(original["source"], p["sourceNodeId"]);
+        assert_eq!(original["target"], p["targetNodeId"]);
+        assert!(original["proof"]["text"] == "Left" || original["proof"]["text"] == "Right");
+    }
+    let fixed = node_id(c, "fixed", "StaticBase.run");
+    let base = node_id(c, "run", "'BASE'");
+    let derived = node_id(c, "run", "STATIC_HEAD");
+    assert_eq!(edges(c, "calls", &fixed, &base).len(), 1);
+    assert!(edges(c, "calls", &fixed, &derived).is_empty());
+    assert!(edges(c, "possibleDispatch", &fixed, &derived).is_empty());
+    for p in r["contractExpansions"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|p| p["contextId"] == c["contextId"])
+    {
+        let node = c["nodes"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == p["sourceNodeId"])
+            .unwrap();
+        assert!(!node["name"].as_str().unwrap().starts_with('#'));
+        assert_eq!(p["runtimeDispatchEstablished"], false);
+    }
+}
+
+#[test]
+fn compiler_contract_expansion_proofs_and_states_remain_context_and_side_scoped() {
+    let source = "export interface Root{run(v:string):string;}class Generic<T> implements Root{value!:T;run(v:string){return 'OLD'+v;}}function caller(x:Root){return x.run('a');}\n";
+    let head = source.replace("'OLD'", "'HEAD'");
+    let strict =
+        json!({"compilerOptions":{"strict":true,"target":"ES2022","noEmit":true},"files":[P]})
+            .to_string();
+    let loose=json!({"compilerOptions":{"strict":false,"target":"ES2022","noEmit":true},"files":[format!("../{P}")]}).to_string();
+    let f = Fixture::new(
+        &[
+            (P, source),
+            ("tsconfig.json", &strict),
+            ("loose/tsconfig.json", &loose),
+        ],
+        &[
+            (P, &head),
+            ("tsconfig.json", &strict),
+            ("loose/tsconfig.json", &loose),
+        ],
+    );
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let mut all_ids = std::collections::BTreeSet::new();
+    for side in ["base", "head"] {
+        assert_eq!(r[side]["contexts"].as_array().unwrap().len(), 2);
+        for c in r[side]["contexts"].as_array().unwrap() {
+            let ids: std::collections::BTreeSet<_> = c["nodes"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|n| n["id"].as_str().unwrap())
+                .collect();
+            assert!(all_ids.is_disjoint(&ids));
+            all_ids.extend(ids.iter().copied());
+            let expansions: Vec<_> = r["contractExpansions"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter(|p| p["side"] == side && p["contextId"] == c["contextId"])
+                .collect();
+            assert!(!expansions.is_empty());
+            for p in expansions {
+                assert!(
+                    ids.contains(p["sourceNodeId"].as_str().unwrap())
+                        && ids.contains(p["targetNodeId"].as_str().unwrap())
+                );
+            }
+        }
+    }
+    assert_eq!(state(&f.engine), before);
+}
 fn instance_witnesses<'a>(
     c: &'a Value,
     owner: &str,
