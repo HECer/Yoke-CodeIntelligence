@@ -2,6 +2,27 @@
 
 ## Current integration work
 
+The optional [Claude SessionStart settings](../native/docs/claude-session-hooks.md)
+profile now owns one external JSON file through the guarded installer. It does
+not adopt existing files or edit foreign hook arrays. Literal executable/args,
+original physical bindings and current unchanged receipts govern the bounded
+read-only callback. Hook input never grants authority or selects transcripts;
+the advisory explicitly marks snapshot freshness as not checked. No source Store,
+model, Git, permission decision or initial user message is created.
+
+The scoped guard passes206 Rust cases/1 explicit child-worker ignore, including
+six new integrations and three new actual process-interruption functions. Format,
+all-target Clippy, fresh primary library/CLI build, typecheck and TypeScript260/3
+existing skips pass; every validated input matches primary byte-exactly. Both
+actual Claude2.1.306 init-only fixtures receive the native context and observe a
+static refusal with no context after a policy change. Parent exit0 alone is not
+accepted. Callback source/settings/journal bytes remain unchanged, process jobs
+end empty and zero provider requests are observed; no login/conversation occurs.
+See the [exact evidence](validation/integration-2026-10-21/claude-session-hooks/README.md).
+Interactive/model context use, other versions/runtimes, statuslines and complete
+R6/R1-R9/platform/upstream/hosted/main/release acceptance remain open. The full
+bcf442b native baseline predates this addition and remains separately labeled.
+
 The separate [captured owner-change query](../native/docs/git-owner-changes.md)
 now reports authored candidate changes for unchanged files when only CODEOWNERS
 changes. It compares the full saved path union, verifies captured bodies, and

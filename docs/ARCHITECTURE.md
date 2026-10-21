@@ -2,6 +2,15 @@
 
 ## Native Rust ownership
 
+The optional Claude SessionStart adapter owns an entire external settings file,
+leaving foreign hook arrays alone. Literal native argv carries the original
+physical bindings. A bounded unique-key stdin callback checks the current
+installed receipt and source/policy/executable identities before emitting only
+advisory source-scope metadata, with freshness explicitly not checked. No Store,
+transcript read, model, permission decision or initial user message is created.
+Existing guarded apply/recovery and old profile identities remain intact. See
+the [hook contract](../native/docs/claude-session-hooks.md).
+
 Explicit JSON MCP clients share guarded host installation through closed typed
 adapter bindings and distinct profile identities. Scoped strict-JSON ownership
 tracks exact server member bytes and created shells; configuration remains

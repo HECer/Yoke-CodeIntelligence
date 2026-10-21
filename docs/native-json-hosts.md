@@ -1,5 +1,8 @@
 # Managed JSON MCP clients (native 0.5.0 development)
 
+The separate [Claude SessionStart settings](../native/docs/claude-session-hooks.md)
+profile owns an entire external hook file; it does not modify these MCP entries.
+
 The explicit JSON MCP profiles manage one named stdio server under `mcpServers`.
 They use the guarded Windows installation, receipts and recovery described in
 [host installation](../native/docs/host-install.md). Selection and planning do

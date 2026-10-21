@@ -50,8 +50,14 @@ against a hostile client/host.
 
 Claude Code 2.1.306 supports literal exec-form hooks and the conversation-free
 `--init-only` path in an isolated owned fixture. See the official
-[hook reference](https://code.claude.com/docs/en/hooks). Actual managed native
-callback validation is recorded separately; client parsing alone is not callback
-delivery or context consumption by a model. Interactive/model behavior, other
+[hook reference](https://code.claude.com/docs/en/hooks). Both actual managed native callback fixtures now pass: client debug evidence
+records the received context and, after a policy change, a static hook refusal
+with no context. Source/settings/journal bytes stay unchanged during callbacks,
+all process jobs end empty and no provider request is observed. Parent exit0 alone
+is not an acceptance criterion. The scoped Rust guard passes206 cases/1 explicit
+child-worker ignore; format/all-target Clippy, fresh primary build, typecheck and
+TypeScript260/3 existing skips pass. See the
+[indexed evidence](../../docs/validation/integration-2026-10-21/claude-session-hooks/README.md).
+This does not establish context consumption by a model. Interactive/model behavior, other
 client versions, statuslines, Linux/macOS and full R6 acceptance remain separate
 gates. No login or paid model call is needed for the init-only fixture.

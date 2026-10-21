@@ -1,0 +1,351 @@
+{
+  "sourceCommit": "4b852d18a42c1ba51d06ecf00053e1be8d798802",
+  "newIntegrationTotals": {
+    "passed": 6,
+    "failed": 0,
+    "ignored": 0
+  },
+  "hostRegressionTotals": {
+    "passed": 200,
+    "failed": 0,
+    "ignored": 1
+  },
+  "distinctRustCases": 206,
+  "newRustCasesIncluded": 9,
+  "frozenAuxiliaryInputs": 999,
+  "allPrimaryInputsByteExact": true,
+  "sourceBaselineCopiedInputs": 994,
+  "primaryBuildArtifacts": [
+    {
+      "target": "yoke",
+      "kind": [
+        "lib"
+      ],
+      "srcPath": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\native\\src\\lib.rs",
+      "packageId": "path+file:///C:/Users/Lomi/Documents/NN-Developed/Yoke-CodeIntelligence/native#yoke-code-intelligence@0.5.0",
+      "fresh": false
+    },
+    {
+      "target": "yoke",
+      "kind": [
+        "bin"
+      ],
+      "srcPath": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\native\\src\\main.rs",
+      "packageId": "path+file:///C:/Users/Lomi/Documents/NN-Developed/Yoke-CodeIntelligence/native#yoke-code-intelligence@0.5.0",
+      "fresh": false
+    }
+  ],
+  "primaryFmtBuildTypecheckPassed": true,
+  "auxiliaryFmtAllTargetClippyPassed": true,
+  "retainedPassed": 260,
+  "retainedSkipped": 3,
+  "primaryActualCli": {
+    "fixtureRoot": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-pa0ys8wz",
+    "clientSha256": "f6bc9de38f507c36c9a3bb0085a59a27e32156e2208252bf1707c4e3ef309114",
+    "cliSha256": "c5fa22cc3499cb837ca62f6917eb3f89d65b351d6f81a14ad623d065c20e83f0",
+    "modelTurnRequested": false,
+    "accountLoginRequested": false,
+    "userConfigurationSelected": false,
+    "analyzedSourceExecuted": false,
+    "osNetworkIsolationAttested": false,
+    "nativeContextObservedInActualClient": true,
+    "hookRefusalObservedInSuccessRun": false,
+    "ownedSourceUnchanged": true,
+    "hostStateUnchangedDuringCallback": true,
+    "managedSettingsUnchanged": true,
+    "stalePolicyHookRefusalObservedInActualClient": true,
+    "stalePolicyContextNotEmitted": true,
+    "staleClientParentExitCode": 0,
+    "completed": true,
+    "uninstalledOnlyOwnedSettings": true,
+    "noSourceStoreCreated": true,
+    "commands": [
+      {
+        "name": "install-plan",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--timeout",
+          "60000",
+          "host-install",
+          "plan",
+          "--selection",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-pa0ys8wz\\selection.json"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 9136,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 2.129
+      },
+      {
+        "name": "install-apply",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--timeout",
+          "60000",
+          "host-install",
+          "apply",
+          "--selection",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-pa0ys8wz\\selection.json",
+          "--plan",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-pa0ys8wz\\plan.json",
+          "--allow-host-writes"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 30788,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 1.513
+      },
+      {
+        "name": "actual-init-only",
+        "command": [
+          "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\tools\\claude-2.1.306-win32-x64\\claude.exe",
+          "--setting-sources",
+          "",
+          "--settings",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-pa0ys8wz\\client-settings\\yoke-claude-hooks.json",
+          "--strict-mcp-config",
+          "--mcp-config",
+          "{\"mcpServers\":{}}",
+          "--debug-file",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r6-session-hooks\\primary-cli-r1\\actual-client.debug.log",
+          "--init-only"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 31244,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 1.703
+      },
+      {
+        "name": "actual-stale-init-only",
+        "command": [
+          "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\tools\\claude-2.1.306-win32-x64\\claude.exe",
+          "--setting-sources",
+          "",
+          "--settings",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-pa0ys8wz\\client-settings\\yoke-claude-hooks.json",
+          "--strict-mcp-config",
+          "--mcp-config",
+          "{\"mcpServers\":{}}",
+          "--debug-file",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r6-session-hooks\\primary-cli-r1\\stale-client.debug.log",
+          "--init-only"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 9776,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 0.589
+      },
+      {
+        "name": "uninstall-plan",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--timeout",
+          "60000",
+          "host-install",
+          "uninstall-plan",
+          "--selection",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-pa0ys8wz\\selection.json"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 29872,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 1.09
+      },
+      {
+        "name": "uninstall-apply",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--timeout",
+          "60000",
+          "host-install",
+          "apply",
+          "--selection",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-pa0ys8wz\\selection.json",
+          "--plan",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-pa0ys8wz\\remove.json",
+          "--allow-host-writes"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 21100,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 1.668
+      }
+    ],
+    "providerRequests": []
+  },
+  "secondaryActualCli": {
+    "fixtureRoot": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-rpnck5ow",
+    "clientSha256": "f6bc9de38f507c36c9a3bb0085a59a27e32156e2208252bf1707c4e3ef309114",
+    "cliSha256": "a8c63226ca636f9cc5e602c24c542fe2d87d915ada7b2745dd4534d03a985343",
+    "modelTurnRequested": false,
+    "accountLoginRequested": false,
+    "userConfigurationSelected": false,
+    "analyzedSourceExecuted": false,
+    "osNetworkIsolationAttested": false,
+    "nativeContextObservedInActualClient": true,
+    "hookRefusalObservedInSuccessRun": false,
+    "ownedSourceUnchanged": true,
+    "hostStateUnchangedDuringCallback": true,
+    "managedSettingsUnchanged": true,
+    "stalePolicyHookRefusalObservedInActualClient": true,
+    "stalePolicyContextNotEmitted": true,
+    "staleClientParentExitCode": 0,
+    "completed": true,
+    "uninstalledOnlyOwnedSettings": true,
+    "noSourceStoreCreated": true,
+    "commands": [
+      {
+        "name": "install-plan",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--timeout",
+          "60000",
+          "host-install",
+          "plan",
+          "--selection",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-rpnck5ow\\selection.json"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 27212,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 0.877
+      },
+      {
+        "name": "install-apply",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--timeout",
+          "60000",
+          "host-install",
+          "apply",
+          "--selection",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-rpnck5ow\\selection.json",
+          "--plan",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-rpnck5ow\\plan.json",
+          "--allow-host-writes"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 30376,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 1.455
+      },
+      {
+        "name": "actual-init-only",
+        "command": [
+          "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\tools\\claude-2.1.306-win32-x64\\claude.exe",
+          "--setting-sources",
+          "",
+          "--settings",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-rpnck5ow\\client-settings\\yoke-claude-hooks.json",
+          "--strict-mcp-config",
+          "--mcp-config",
+          "{\"mcpServers\":{}}",
+          "--debug-file",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r6-session-hooks\\secondary-cli-r1\\actual-client.debug.log",
+          "--init-only"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 18700,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 1.736
+      },
+      {
+        "name": "actual-stale-init-only",
+        "command": [
+          "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\tools\\claude-2.1.306-win32-x64\\claude.exe",
+          "--setting-sources",
+          "",
+          "--settings",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-rpnck5ow\\client-settings\\yoke-claude-hooks.json",
+          "--strict-mcp-config",
+          "--mcp-config",
+          "{\"mcpServers\":{}}",
+          "--debug-file",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r6-session-hooks\\secondary-cli-r1\\stale-client.debug.log",
+          "--init-only"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 31876,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 0.615
+      },
+      {
+        "name": "uninstall-plan",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--timeout",
+          "60000",
+          "host-install",
+          "uninstall-plan",
+          "--selection",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-rpnck5ow\\selection.json"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 13860,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 0.944
+      },
+      {
+        "name": "uninstall-apply",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--timeout",
+          "60000",
+          "host-install",
+          "apply",
+          "--selection",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-rpnck5ow\\selection.json",
+          "--plan",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-native-hooks-rpnck5ow\\remove.json",
+          "--allow-host-writes"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 32052,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 1.465
+      }
+    ],
+    "providerRequests": []
+  },
+  "rustTestsRepeatedInPrimary": false,
+  "fullCurrentNativeSuiteExecuted": false,
+  "fullR6Certified": false,
+  "fullWindowsCertified": false,
+  "fullStatusCertified": false
+}
