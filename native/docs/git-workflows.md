@@ -51,7 +51,7 @@ quotations and deleted/added-path similarity, use the separate
 
 The separate [`git compiler-affected`](git-compiler-affected.md) command adds
 explicit host-trusted TypeScript observations over the same checked historical
-sides. Resolved calls, overrides and finite type-based possible dispatch are
+sides. Resolved calls/constructors/tags, overrides and finite type-based targets are
 separate from captured structural candidates and actual execution.
 
 New workflows honor the typed host `Engine.capture_epoch` selection for both the

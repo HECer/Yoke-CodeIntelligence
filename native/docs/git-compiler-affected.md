@@ -47,24 +47,56 @@ overrides stay distinct from instance overrides. Source overload signatures
 retain separate `signatureImplementation` links to their actual function/method
 bodies. This is trusted compiler evidence, not independent compiler attestation.
 
-`calls` binds a call expression to its resolved captured signature declaration.
-For eligible instance method receivers, `possibleDispatch` separately enumerates
-captured non-generic class instance types assignable to that static receiver
-type. The candidate class, original resolved target, type-assignability basis,
-conditional flag and original call quote remain in each proof. Structural
-compatibility can admit a class without an explicit implements clause; identical
-spelling with an incompatible type does not suffice. This finite type-based
-candidate relation does not establish runtime reachability or execution.
-`super` and private calls retain their direct binding. Static possible-target
-enumeration, generic class instantiations, unsupported receiver types, class
-expressions, non-method members, constructors and tagged-template invocation
-remain explicit coverage limitations. A literal `Base.staticMethod()` is not
-invented as a runtime call to `Derived.staticMethod()`.
+`calls` retains the checker-resolved captured signature declaration. Its explicit
+`invocationKind` distinguishes `call`, `new`, `super` and `taggedTemplate`.
+Overloaded functions/methods and constructors retain source-signature-to-body
+links; constructor bodies are bound through the actual class constructor symbol
+and their original class ownership is checked. All proof quotes use the original
+invocation bytes, including tagged literals, Unicode and conditional calls.
+
+`constructResult` separately binds a new-expression's static result type to its
+captured class declarations. A union can retain more than one result class.
+This is not the identity of the actual runtime constructor value. In particular,
+`new Derived()` can resolve a constructor declared in Base while its result type
+is Derived. An implicit constructor has no declaration span: the result class
+and explicit missing-signature coverage remain, without inventing a `calls` edge.
+
+For a dynamically selected constructor value, `possibleConstruct` enumerates
+captured class constructor types assignable to the static receiver type. It binds
+their actual captured constructor implementation body when available, including
+inherited bodies; otherwise its target is the candidate class value with explicit
+missing-body/declaration coverage. Candidate overloads sharing one implementation
+do not create invented alternative overload selections. The original resolved
+signature and candidate owner remain separate. Private/abstract constructors and
+incompatible constructor types must satisfy the checker's actual assignability.
+
+`possibleDispatch` separately compares both captured non-generic class instance
+types and captured class constructor types with the static method receiver type.
+The basis distinguishes `compiler_type_assignability` from
+`compiler_constructor_type_assignability`. A structural interface can therefore
+be implemented by an instance method or by a method on a constructor value;
+matching spelling alone never suffices. Generic constructor values support
+static-member checks, while generic instance instantiations remain unavailable.
+Actual method bodies, original resolved signature, candidate class, conditional
+flag and original call/tag quote stay in every proof. Each possible relation
+must pair with the exact original resolved invocation's source, target, range,
+kind and conditional flag. Constructor facts without a source signature require
+the explicit matching missing-signature coverage entry.
+
+Direct checker-bound class references (including imported aliases, qualified
+names and erased parentheses/type assertions) retain direct invocation bindings;
+the query does not turn `Base.staticMethod()` into a call to Derived. Variables,
+parameters and expressions have finite type-based candidate enumeration. `super`
+and private method calls retain their direct bindings. These are static compiler
+observations and conservative type-compatible candidates, not data-flow/runtime
+reachability or a closed-world execution guarantee. Class expressions, unsupported
+receiver types, property/accessor effects, generic instance instantiations,
+implicit execution phases and external bodies retain visible limitations.
 
 Original changed declarations seed the incoming walk by exact native declaration
 binding or explicitly labeled original-source containment. Containment is byte
 ownership, not semantic equivalence. Incoming traversal follows calls, possible
-dispatch and overload-implementation links. It preserves every parallel proof,
+method/constructor targets, construct-result classes and overload-body links. It preserves every parallel proof,
 including repeated call sites, while avoiding repeated states for one seed.
 Sides, project contexts and changed rows remain separate. Every source range is
 checked against original captured UTF-8 bytes; live disk is not a replacement.
@@ -91,7 +123,7 @@ SQL or host-path diagnostics. Library callers receive contextual errors.
 
 `compilerBindingEstablished: true` records real trusted compiler observations.
 `runtimeDispatchEstablished` and `complete` remain false. Config-only effects,
-implicit execution, arbitrary dynamic receivers, other languages/configurations,
+implicit execution phases, arbitrary dynamic receivers, other languages/configurations,
 broader ownership/report semantics, remote freshness and upstream/full R5
 equivalence remain open. Original candidate reports retain their own uncertainty.
 No identity, review, merge, execution or write authority is granted.

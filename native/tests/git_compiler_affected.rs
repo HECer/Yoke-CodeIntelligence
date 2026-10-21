@@ -294,7 +294,7 @@ fn computed_names_bind_through_the_checker_while_private_slots_never_become_over
     );
 }
 #[test]
-fn unsupported_invocations_and_original_capture_limits_remain_visible() {
+fn invocation_bindings_and_original_capture_limits_remain_visible() {
     let source = concat!(
         "class Base { static go() { return 'OLD'; } }\n",
         "class Derived extends Base { static override go() { return 'DERIVED'; } }\n",
@@ -324,18 +324,17 @@ fn unsupported_invocations_and_original_capture_limits_remain_visible() {
     let r = run(&f, &Default::default()).unwrap();
     let c = context(&r);
     let coverage = c["unavailable"].as_array().unwrap();
-    for (reason, text) in [
-        ("construct_signature_not_enumerated", "new C()"),
-        ("tagged_template_signature_not_enumerated", "tag`literal`"),
-        ("static_possible_dispatch_not_enumerated", "Base.go()"),
-        ("static_possible_dispatch_not_enumerated", "C.go()"),
-    ] {
-        assert!(
-            coverage
-                .iter()
-                .any(|u| u["reason"] == reason && u["anchor"]["text"] == text)
-        );
-    }
+    assert!(coverage.iter().any(|u| u["reason"]
+        == "construct_signature_has_no_source_declaration"
+        && u["anchor"]["text"] == "new C()"));
+    assert!(coverage.iter().all(|u| !matches!(
+        u["reason"].as_str(),
+        Some(
+            "construct_signature_not_enumerated"
+                | "tagged_template_signature_not_enumerated"
+                | "static_possible_dispatch_not_enumerated"
+        )
+    )));
     let base = node_id(c, "go", "'NEW'");
     let direct = node_id(c, "direct", "Base.go()");
     let selected = node_id(c, "selected", "C.go()");
@@ -347,7 +346,20 @@ fn unsupported_invocations_and_original_capture_limits_remain_visible() {
             .unwrap()
             .iter()
             .filter(|e| e["relation"] == "possibleDispatch")
-            .all(|e| e["source"] != direct && e["source"] != selected)
+            .all(|e| e["source"] != direct)
+    );
+    let derived = node_id(c, "go", "'DERIVED'");
+    let possible = edges(c, "possibleDispatch", &selected, &derived);
+    assert_eq!(possible.len(), 1);
+    assert_eq!(
+        possible[0]["basis"],
+        "compiler_constructor_type_assignability"
+    );
+    let tagged = node_id(c, "tagged", "tag`literal`");
+    let tag = node_id(c, "tag", "return parts[0]");
+    assert_eq!(
+        edges(c, "calls", &tagged, &tag)[0]["invocationKind"],
+        "taggedTemplate"
     );
     let snapshot = f
         .engine
@@ -368,6 +380,321 @@ fn unsupported_invocations_and_original_capture_limits_remain_visible() {
             .as_array()
             .unwrap()
             .is_empty()
+    );
+    assert_eq!(state(&f.engine), before);
+}
+#[test]
+fn constructor_signatures_bodies_result_types_and_implicit_construction_keep_separate_roles() {
+    let source = concat!(
+        "\u{feff}// π 😀 e\u{301}\r\n",
+        "class Base { protected brand = true; value:string; constructor(v:string); constructor(v:number); constructor(v:string|number) { this.value = 'BASE_CTOR_OLD'+String(v); } }\r\n",
+        "class Derived extends Base {}\r\n",
+        "class Own extends Base { constructor(v:string|number) { super(String(v)); this.value += 'OWN_CTOR_OLD'; } }\r\n",
+        "class Implicit {}\r\n",
+        "class Wrong { constructor(v:number) {} }\r\n",
+        "class PrivateCtor extends Base { private constructor(v:string|number) { super(String(v)); } }\r\n",
+        "abstract class AbstractCtor extends Base {}\r\n",
+        "function direct() { new Derived('d'); new Own('o'); new Implicit(); }\r\n",
+        "function selected(C:typeof Base) { new C('a'); new C('b'); }\r\n"
+    );
+    let f = configured(source, &source.replace("CTOR_OLD", "CTOR_HEAD"));
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let base_body = node_id(c, "constructor", "BASE_CTOR_HEAD");
+    let base_class = node_id(c, "Base", "BASE_CTOR_HEAD");
+    let own_body = node_id(c, "constructor", "OWN_CTOR_HEAD");
+    let derived = node_id(c, "Derived", "extends Base");
+    let own = node_id(c, "Own", "OWN_CTOR_HEAD");
+    let implicit = node_id(c, "Implicit", "class Implicit");
+    let direct = node_id(c, "direct", "new Derived");
+    let selected = node_id(c, "selected", "new C('a')");
+    let relations = c["relations"].as_array().unwrap();
+    assert_eq!(
+        relations
+            .iter()
+            .filter(|e| e["relation"] == "signatureImplementation" && e["target"] == base_body)
+            .count(),
+        2
+    );
+    let inherited: Vec<_> = relations
+        .iter()
+        .filter(|e| e["relation"] == "calls" && e["proof"]["text"] == "new Derived('d')")
+        .collect();
+    assert_eq!(inherited.len(), 1);
+    assert_eq!(inherited[0]["invocationKind"], "new");
+    assert_ne!(
+        inherited[0]["target"], derived,
+        "Inherited constructor declaration is not the constructed result class"
+    );
+    assert!(relations.iter().any(|e| e["relation"] == "constructResult"
+        && e["source"] == direct
+        && e["target"] == derived
+        && e["resolvedTarget"] == inherited[0]["target"]));
+    assert_eq!(edges(c, "calls", &direct, &own_body).len(), 1);
+    assert!(relations.iter().any(|e| e["relation"] == "calls"
+        && e["source"] == own_body
+        && e["invocationKind"] == "super"
+        && e["proof"]["text"] == "super(String(v))"));
+    assert_eq!(edges(c, "constructResult", &direct, &implicit).len(), 1);
+    assert!(
+        relations
+            .iter()
+            .filter(|e| e["proof"]["text"] == "new Implicit()")
+            .all(|e| e["relation"] != "calls")
+    );
+    assert!(
+        c["unavailable"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(
+                |u| u["reason"] == "construct_signature_has_no_source_declaration"
+                    && u["anchor"]["text"] == "new Implicit()"
+            )
+    );
+    let possible = edges(c, "possibleConstruct", &selected, &own_body);
+    assert_eq!(possible.len(), 2);
+    assert_ne!(possible[0]["id"], possible[1]["id"]);
+    let base_candidates = edges(c, "possibleConstruct", &selected, &base_body);
+    assert_eq!(
+        base_candidates.len(),
+        4,
+        "Two original calls retain Base and Derived owners even when both share one inherited constructor body"
+    );
+    for owner in [&base_class, &derived] {
+        let owned: Vec<_> = base_candidates
+            .iter()
+            .filter(|e| e["candidateOwner"] == *owner)
+            .collect();
+        assert_eq!(
+            owned.len(),
+            2,
+            "One body per candidate owner and original call, without multiplying overload signatures"
+        );
+        for quote in ["new C('a')", "new C('b')"] {
+            assert_eq!(
+                owned.iter().filter(|e| e["proof"]["text"] == quote).count(),
+                1
+            );
+        }
+    }
+    assert!(possible.iter().all(|e| e["candidateOwner"] == own
+        && e["basis"] == "compiler_constructor_type_assignability"
+        && e["invocationKind"] == "new"));
+    let forbidden: Vec<_> = c["nodes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|n| {
+            matches!(
+                n["name"].as_str(),
+                Some("Wrong" | "PrivateCtor" | "AbstractCtor")
+            )
+        })
+        .map(|n| n["id"].clone())
+        .collect();
+    assert!(
+        relations
+            .iter()
+            .filter(|e| e["relation"] == "possibleConstruct")
+            .all(|e| !forbidden.contains(&e["candidateOwner"]))
+    );
+    assert!(
+        relations
+            .iter()
+            .filter(|e| e["relation"] == "possibleConstruct")
+            .all(|e| e["source"] != direct)
+    );
+    assert!(
+        r["incomingProofs"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|p| p["sourceNodeId"] == selected)
+    );
+    assert_eq!(state(&f.engine), before);
+}
+#[test]
+fn tagged_and_static_dispatch_use_both_receiver_sides_without_equating_literal_class_references() {
+    let source = concat!(
+        "interface Service { run(v:string):string; }\n",
+        "class Base { run(v:string){return 'INSTANCE_BASE'+v;} static run(v:string){return 'STATIC_BASE'+v;} tag(s:TemplateStringsArray){return s[0];} static tag(s:TemplateStringsArray){return s[0];} }\n",
+        "class Derived extends Base { override run(v:string){return 'INSTANCE_OLD'+v;} static override run(v:string){return 'STATIC_OLD'+v;} override tag(s:TemplateStringsArray){return 'TAG_OLD'+s[0];} static override tag(s:TemplateStringsArray){return 'STATIC_TAG_OLD'+s[0];} }\n",
+        "class StaticOnly { static run(v:string){return 'STATIC_ONLY'+v;} }\n",
+        "class WrongCtor { constructor(v:number){} static run(v:string){return 'WRONG_CTOR'+v;} }\n",
+        "class WrongType { static run(v:number){return String(v);} }\n",
+        "class Generic<T> { field?:T; static run(v:string){return 'GENERIC_STATIC'+v;} }\n",
+        "function selected(C:typeof Base){C.run('a');C.tag`static`; }\n",
+        "function literal(){Base.run('b');Base.tag`literal`; }\n",
+        "function structural(x:Service){return x.run('s');}\n",
+        "function instance(x:Base|undefined){x?.run('o');return x?.tag;}\n",
+        "function methodTag(x:Base){return x.tag`method`;}\n",
+        "function tag(s:TemplateStringsArray,...v:unknown[]):string; function tag(s:TemplateStringsArray,...v:unknown[]){return 'FREE_TAG_OLD'+s[0];}\n",
+        "function tagged(){return tag`π ${1}`;}\n"
+    );
+    let f = configured(source, &source.replace("_OLD", "_HEAD"));
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let selected = node_id(c, "selected", "C.run");
+    let literal = node_id(c, "literal", "Base.run");
+    assert_eq!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["source"] == literal && e["relation"] == "calls")
+            .count(),
+        2
+    );
+    let structural = node_id(c, "structural", "x.run");
+    let static_run = node_id(c, "run", "'STATIC_HEAD'");
+    let instance_run = node_id(c, "run", "'INSTANCE_HEAD'");
+    assert_eq!(
+        edges(c, "possibleDispatch", &selected, &static_run).len(),
+        1
+    );
+    assert_eq!(
+        edges(c, "possibleDispatch", &selected, &instance_run).len(),
+        0
+    );
+    assert!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["source"] == literal)
+            .all(|e| e["relation"] != "possibleDispatch")
+    );
+    for body in ["STATIC_ONLY", "WRONG_CTOR", "GENERIC_STATIC"] {
+        let target = node_id(c, "run", body);
+        let found = edges(c, "possibleDispatch", &structural, &target);
+        assert_eq!(found.len(), 1);
+        assert_eq!(found[0]["basis"], "compiler_constructor_type_assignability");
+    }
+    assert!(
+        edges(
+            c,
+            "possibleDispatch",
+            &selected,
+            &node_id(c, "run", "WRONG_CTOR")
+        )
+        .is_empty()
+    );
+    assert!(
+        edges(
+            c,
+            "possibleDispatch",
+            &structural,
+            &node_id(c, "run", "String(v)")
+        )
+        .is_empty()
+    );
+    let method_caller = node_id(c, "methodTag", "x.tag`method`");
+    let method_target = node_id(c, "tag", "'TAG_HEAD'");
+    assert_eq!(
+        edges(c, "possibleDispatch", &method_caller, &method_target)[0]["invocationKind"],
+        "taggedTemplate"
+    );
+    let static_target = node_id(c, "tag", "'STATIC_TAG_HEAD'");
+    assert_eq!(
+        edges(c, "possibleDispatch", &selected, &static_target)[0]["invocationKind"],
+        "taggedTemplate"
+    );
+    let optional = node_id(c, "instance", "x?.run");
+    assert_eq!(
+        edges(c, "possibleDispatch", &optional, &instance_run)[0]["conditional"],
+        true
+    );
+    let body = node_id(c, "tag", "'FREE_TAG_HEAD'");
+    let tagged = node_id(c, "tagged", "tag`π");
+    assert!(
+        r["states"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|s| s["nodeId"] == tagged)
+    );
+    assert!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|e| e["relation"] == "signatureImplementation" && e["target"] == body)
+    );
+    assert_eq!(state(&f.engine), before);
+}
+#[test]
+fn imported_constructor_aliases_and_union_result_types_keep_original_declaration_identity() {
+    let source = "import { A as Alias, B } from './types';\r\nfunction direct(){return new Alias('a');}\r\nfunction selected(C:typeof Alias|typeof B){return new C('u');}\r\nfunction staticSelected(C:typeof Alias|typeof B){return C.pick('p');}\r\nfunction staticDirect(){return Alias.pick('d');}\r\n";
+    let types = "export class A { private a=true; constructor(public value:string){ this.value+='A_OLD'; } static pick(v:string){return 'A_STATIC'+v;} }\r\nexport class B { private b=true; constructor(public value:string){ this.value+='B_OLD'; } static pick(v:string){return 'B_STATIC'+v;} }\r\nexport class Wrong { constructor(public value:number){} static pick(v:number){return v;} }\r\n";
+    let config=json!({"compilerOptions":{"strict":true,"target":"ES2022","module":"CommonJS","noEmit":true},"files":[P]}).to_string();
+    let head = types.replace("_OLD", "_HEAD");
+    let f = Fixture::new(
+        &[
+            (P, source),
+            ("src/types.ts", types),
+            ("tsconfig.json", &config),
+        ],
+        &[
+            (P, source),
+            ("src/types.ts", &head),
+            ("tsconfig.json", &config),
+        ],
+    );
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let a = node_id(c, "A", "A_HEAD");
+    let b = node_id(c, "B", "B_HEAD");
+    let selected = node_id(c, "selected", "new C('u')");
+    let direct = node_id(c, "direct", "new Alias");
+    assert_eq!(edges(c, "constructResult", &selected, &a).len(), 1);
+    assert_eq!(edges(c, "constructResult", &selected, &b).len(), 1);
+    assert_eq!(edges(c, "constructResult", &direct, &a).len(), 1);
+    assert!(edges(c, "constructResult", &direct, &b).is_empty());
+    let ac = node_id(c, "constructor", "A_HEAD");
+    let bc = node_id(c, "constructor", "B_HEAD");
+    assert_eq!(edges(c, "possibleConstruct", &selected, &ac).len(), 1);
+    assert_eq!(edges(c, "possibleConstruct", &selected, &bc).len(), 1);
+    assert!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["source"] == direct)
+            .all(|e| e["relation"] != "possibleConstruct")
+    );
+    let static_direct = node_id(c, "staticDirect", "Alias.pick");
+    assert_eq!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["source"] == static_direct && e["relation"] == "calls")
+            .count(),
+        1
+    );
+    assert!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["source"] == static_direct)
+            .all(|e| e["relation"] != "possibleDispatch")
+    );
+    let static_selected = node_id(c, "staticSelected", "C.pick");
+    let ast = node_id(c, "pick", "A_STATIC");
+    let bst = node_id(c, "pick", "B_STATIC");
+    assert!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|e| e["source"] == static_selected
+                && (e["target"] == ast || e["target"] == bst)
+                && e["relation"] == "possibleDispatch")
     );
     assert_eq!(state(&f.engine), before);
 }

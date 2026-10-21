@@ -84,8 +84,9 @@ An existing Git report also supports [captured-hierarchy affected details](docs/
 through the Rust library and `git affected`, with separate historical source
 bindings and structural candidate explanations.
 A separate explicit [`git compiler-affected`](docs/git-compiler-affected.md) query
-uses a trusted immutable TypeScript program for override/call bindings and finite
-type-based possible targets, preserving original reports and visible limitations.
+uses a trusted immutable TypeScript program for override/call/constructor/tag
+bindings and finite instance/constructor-value targets, preserving original reports
+and visible limitations.
 [Captured impact areas](docs/git-areas.md) additionally classify saved impact
 paths by explicitly selected stored concepts or exact directory spelling.
 They preserve all claims, visible ties and the original quoted parent.

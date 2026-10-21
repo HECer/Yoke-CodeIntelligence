@@ -57,7 +57,7 @@ read permissions and captured-path scopes; source files and index stay unchanged
 
 Explicit [compiler-bound Git impact](native/docs/git-compiler-affected.md) separately
 checks immutable TypeScript base/head programs with a host-trusted compiler.
-Resolved calls, override bindings and type-based possible dispatch retain their
+Resolved calls/constructors/tags, override bindings and type-based possible targets retain their
 original byte proofs and separate context identities; no execution is inferred.
 
 [Captured impact areas](native/docs/git-areas.md) add saved concept/file memberships

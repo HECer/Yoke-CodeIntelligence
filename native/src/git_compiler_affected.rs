@@ -136,7 +136,13 @@ fn finish(
                 deadline.check()?;
                 if matches!(
                     edge["relation"].as_str(),
-                    Some("calls" | "possibleDispatch" | "signatureImplementation")
+                    Some(
+                        "calls"
+                            | "possibleDispatch"
+                            | "possibleConstruct"
+                            | "constructResult"
+                            | "signatureImplementation"
+                    )
                 ) {
                     incoming
                         .entry(edge["target"].as_str().context("Compiler target missing")?)

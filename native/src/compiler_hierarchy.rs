@@ -91,6 +91,7 @@ struct Edge {
     candidate_owner: Option<usize>,
     basis: Option<String>,
     conditional: Option<bool>,
+    invocation_kind: Option<String>,
 }
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -236,6 +237,63 @@ pub(crate) fn observe(
                 .context("Compiler declaration file missing")?;
             nodes.push(json!({"id":node_id,"kind":node.kind,"name":node.name,"declaration":node.declaration,"selection":node.selection,"static":node.is_static,"hasBody":node.has_body,"contentHash":file.hash,"baseEntityIds":bindings}));
         }
+        let invocations: BTreeSet<_> = parsed
+            .relations
+            .iter()
+            .filter(|e| e.relation == "calls")
+            .map(|e| {
+                (
+                    e.source,
+                    e.target,
+                    e.proof.path.as_str(),
+                    e.proof.start_byte,
+                    e.proof.end_byte,
+                    e.invocation_kind.as_deref(),
+                    e.conditional,
+                )
+            })
+            .collect();
+        let unresolved_constructors: BTreeSet<_> = parsed
+            .unavailable
+            .iter()
+            .filter(|u| {
+                matches!(
+                    u.reason.as_str(),
+                    "construct_signature_has_no_source_declaration"
+                        | "call_target_not_captured_declaration"
+                )
+            })
+            .map(|u| {
+                (
+                    u.anchor.path.as_str(),
+                    u.anchor.start_byte,
+                    u.anchor.end_byte,
+                )
+            })
+            .collect();
+        let paired = |edge: &Edge| {
+            edge.resolved_target.map_or_else(
+                || {
+                    edge.invocation_kind.as_deref() == Some("new")
+                        && unresolved_constructors.contains(&(
+                            edge.proof.path.as_str(),
+                            edge.proof.start_byte,
+                            edge.proof.end_byte,
+                        ))
+                },
+                |target| {
+                    invocations.contains(&(
+                        edge.source,
+                        target,
+                        edge.proof.path.as_str(),
+                        edge.proof.start_byte,
+                        edge.proof.end_byte,
+                        edge.invocation_kind.as_deref(),
+                        edge.conditional,
+                    ))
+                },
+            )
+        };
         let mut relations = vec![];
         for (position, edge) in parsed.relations.iter().enumerate() {
             deadline.check()?;
@@ -254,6 +312,13 @@ pub(crate) fn observe(
             let no_dispatch = edge.resolved_target.is_none()
                 && edge.candidate_owner.is_none()
                 && edge.basis.is_none();
+            ensure!(
+                matches!(
+                    edge.relation.as_str(),
+                    "calls" | "possibleDispatch" | "possibleConstruct" | "constructResult"
+                ) || edge.invocation_kind.is_none(),
+                "Invocation kind on a non-invocation relation"
+            );
             match edge.relation.as_str() {
                 "extends" | "implements" => ensure!(
                     matches!(
@@ -271,14 +336,19 @@ pub(crate) fn observe(
                     matches!(
                         from.kind.as_str(),
                         "ClassDeclaration" | "InterfaceDeclaration"
-                    ) && method(to)
+                    ) && (method(to)
+                        || (to.kind == "Constructor" && from.kind == "ClassDeclaration"))
                         && edge.owner.is_none()
                         && no_dispatch
                         && edge.conditional.is_none()
                         && from.declaration.path == to.declaration.path
                         && from.declaration.start_byte <= to.declaration.start_byte
                         && to.declaration.end_byte <= from.declaration.end_byte
-                        && edge.proof == to.selection,
+                        && if to.kind == "Constructor" {
+                            edge.proof == to.declaration
+                        } else {
+                            edge.proof == to.selection
+                        },
                     "Invalid compiler member ownership"
                 ),
                 "overrides" | "implementsMember" => ensure!(
@@ -298,18 +368,31 @@ pub(crate) fn observe(
                         && to.has_body
                         && from.declaration.path == to.declaration.path
                         && from.kind == to.kind
-                        && edge.owner.is_none()
+                        && if from.kind == "Constructor" {
+                            edge.owner.is_some_and(|n| {
+                                parsed.nodes[n].kind == "ClassDeclaration"
+                                    && contains(&parsed.nodes[n].declaration, &from.declaration)
+                                    && contains(&parsed.nodes[n].declaration, &to.declaration)
+                            })
+                        } else {
+                            edge.owner.is_none()
+                        }
                         && no_dispatch
                         && edge.conditional.is_none(),
                     "Invalid compiler signature implementation"
                 ),
                 "calls" => ensure!(
-                    edge.owner.is_none() && no_dispatch && edge.conditional.is_some(),
+                    edge.owner.is_none()
+                        && no_dispatch
+                        && edge.conditional.is_some()
+                        && matches!(
+                            edge.invocation_kind.as_deref(),
+                            Some("call" | "new" | "super" | "taggedTemplate")
+                        ),
                     "Invalid compiler call binding"
                 ),
                 "possibleDispatch" => ensure!(
                     method(to)
-                        && !to.is_static
                         && to.has_body
                         && edge.owner.is_none()
                         && edge
@@ -318,9 +401,47 @@ pub(crate) fn observe(
                         && edge
                             .candidate_owner
                             .is_some_and(|n| parsed.nodes[n].kind == "ClassDeclaration")
-                        && edge.basis.as_deref() == Some("compiler_type_assignability")
-                        && edge.conditional.is_some(),
+                        && matches!(
+                            (to.is_static, edge.basis.as_deref()),
+                            (false, Some("compiler_type_assignability"))
+                                | (true, Some("compiler_constructor_type_assignability"))
+                        )
+                        && matches!(
+                            edge.invocation_kind.as_deref(),
+                            Some("call" | "taggedTemplate")
+                        )
+                        && edge.conditional.is_some()
+                        && paired(edge),
                     "Invalid compiler possible dispatch"
+                ),
+                "constructResult" => ensure!(
+                    to.kind == "ClassDeclaration"
+                        && edge.owner.is_none()
+                        && edge.candidate_owner.is_none()
+                        && edge.basis.as_deref() == Some("compiler_construct_result_type")
+                        && edge.invocation_kind.as_deref() == Some("new")
+                        && edge.conditional == Some(false)
+                        && paired(edge),
+                    "Invalid compiler construct result type"
+                ),
+                "possibleConstruct" => ensure!(
+                    matches!(
+                        to.kind.as_str(),
+                        "Constructor"
+                            | "ConstructSignature"
+                            | "ConstructorType"
+                            | "ClassDeclaration"
+                            | "FunctionDeclaration"
+                            | "FunctionExpression"
+                    ) && edge.owner.is_none()
+                        && edge
+                            .candidate_owner
+                            .is_some_and(|n| parsed.nodes[n].kind == "ClassDeclaration")
+                        && edge.basis.as_deref() == Some("compiler_constructor_type_assignability")
+                        && edge.invocation_kind.as_deref() == Some("new")
+                        && edge.conditional == Some(false)
+                        && paired(edge),
+                    "Invalid compiler possible constructor"
                 ),
                 _ => anyhow::bail!("Unknown compiler hierarchy relation"),
             }
@@ -337,7 +458,7 @@ pub(crate) fn observe(
                         "Compiler member binding owner/proof mismatch"
                     );
                 }
-                "calls" | "possibleDispatch" => ensure!(
+                "calls" | "possibleDispatch" | "possibleConstruct" | "constructResult" => ensure!(
                     contains(&from.declaration, &edge.proof),
                     "Compiler call proof outside its caller"
                 ),
@@ -382,6 +503,6 @@ pub(crate) fn observe(
         "Compiler hierarchy has no captured context"
     );
     Ok(
-        json!({"schema":"native_compiler_hierarchy_v1","snapshotId":snapshot.id,"graphHash":identity(graph),"sourceBindings":raw["sourceBindings"],"captureOmissions":snapshot.omissions,"captureConsistency":snapshot.capture_consistency,"compiler":raw["compiler"],"compilerHash":raw["compilerHash"],"inputHash":raw["inputHash"],"standardLibraryHashes":raw["standardLibraryHashes"],"compilerLimitations":raw["limitations"],"contexts":contexts,"compilerBindingEstablished":true,"runtimeDispatchEstablished":false,"complete":false,"limitations":["Trusted host compiler observations are not an independent compiler correctness attestation.","Possible dispatch enumerates captured non-generic class types assignable to the static receiver; it is not execution or a closed-world guarantee.","Unsupported and external declarations remain explicit coverage entries; baseline source graphs are unchanged."]}),
+        json!({"schema":"native_compiler_hierarchy_v1","snapshotId":snapshot.id,"graphHash":identity(graph),"sourceBindings":raw["sourceBindings"],"captureOmissions":snapshot.omissions,"captureConsistency":snapshot.capture_consistency,"compiler":raw["compiler"],"compilerHash":raw["compilerHash"],"inputHash":raw["inputHash"],"standardLibraryHashes":raw["standardLibraryHashes"],"compilerLimitations":raw["limitations"],"contexts":contexts,"compilerBindingEstablished":true,"runtimeDispatchEstablished":false,"complete":false,"limitations":["Trusted host compiler observations are not an independent compiler correctness attestation.","Possible dispatch compares captured non-generic instance types and captured constructor types with the static receiver; generic instance instantiations and closed-world/runtime proof remain unavailable.","Construct-result class bindings are static result types, not identities of the runtime constructor value. Unsupported and external declarations remain explicit coverage entries; baseline source graphs are unchanged."]}),
     )
 }
