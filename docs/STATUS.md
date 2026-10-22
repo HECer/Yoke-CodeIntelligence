@@ -2,6 +2,10 @@
 
 ## Current integration work
 
+Explicit local CPU ASR now has a native host CLI/library contract over registered immutable mono16kHz PCM16 WAV audio. A selected local faster-whisper1.2.1/tiny.en trial transcribes owned synthetic speech; original model timestamps remain distinct from qualified captured-sample envelopes. Host trust, pinned program/model files, bounded owned execution, immutable request/control journals, checked stored replay and typed retention are implemented. Default runtime/MCP calls acquire no ASR packages, models or inference privileges.
+
+Source dd462925 passes 622 scoped native functions with one preserved original media OS1314 failure and 7 existing ignores. All 573 library functions and six new integration functions pass. Clippy, build, typecheck, npm and 347 formatting roots pass; fmt-all retains Windows OS206. Fourteen native CLI refusal cases and actual stored replay preserve original SQL; a corrected read-only audit reuses the completed model attempt. See [ASR evidence](validation/integration-2026-10-23/native-asr/README.md) and [host contract](../native/docs/media-asr.md). General speech quality, other formats/languages and whole-Windows/hosted/full-parity acceptance remain open.
+
 A current contract review now maps all 73 historical unreconciled entries and
 the two historically unavailable dashboard entries to explicit native behavior
 and remaining limits. The original 353-entry inventory, ledger assessments and
@@ -16,7 +20,7 @@ the pinned sequences. Native guidance and finite exclusions/gates do not establi
 identical upstream prompts, Jinja behavior or branded client installations.
 Dashboard viewing, PostgreSQL/HTTP/arxiv/controlled Google acquisition, database
 publication, App history and selected host integrations are implemented within
-their dated contracts. ASR, the hosted cloud/team service, broader hooks/statusline,
+their dated contracts. Broader ASR quality/formats, the hosted cloud/team service, broader hooks/statusline,
 UI management and authenticated/live/quality acceptance remain open.
 
 A bounded Windows probe runs 300 owned benign Git starts and 2,406 successful
@@ -83,7 +87,7 @@ retains the detailed boundaries and original inventory assessments.
 | Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
 | Configuration/clients/UI | Broader YAML/Jinja/file discovery, restricted-default project extensions, prompt/edit hooks and statuslines, dashboard management and broader UI/accessibility acceptance. |
 | Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | ASR, authenticated Google export, remaining social/video/authenticated routes and broader database version/mixed-source qualification. No approved Google test document is available. |
+| External acquisition | Broader ASR quality/formats, authenticated Google export, remaining social/video/authenticated routes and broader database version/mixed-source qualification. No approved Google test document is available. |
 | App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
 | Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
 | Windows/release | Ten original OS1314 prerequisites, sporadic owned-member cleanup refusal, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |

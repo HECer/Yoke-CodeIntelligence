@@ -8618,6 +8618,15 @@
         "documentedNativeContract": "PostgreSQL, anonymous HTTP/arxiv/PDF, controlled Google export and historical live Neo4j/FalkorDB publication are implemented.",
         "remainingBoundary": "Authenticated Google live has no approved test document. ASR, authenticated/social/video routes, broader DB versions/RBAC/current live and full mixed-source quality remain open.",
         "newRuntimeCertification": false
+      },
+      "nativeLocalAsrDevelopment20261023": {
+        "sourceCommit": "dd462925450c77965418261cf46aca5cf9ea6859",
+        "evidence": "docs/validation/integration-2026-10-23/native-asr/index.json",
+        "contract": "native/docs/media-asr.md",
+        "boundedImplemented": "Explicit local CPU transcription over registered immutable PCM16 mono16k WAV, typed observation/sample envelopes, journaled one-attempt process and checked replay/retention.",
+        "actualTrial": "Owned synthetic English speech with local faster-whisper1.2.1/tiny.en CPU-int8.",
+        "remaining": "Broader formats/languages/model quality and other R7 authenticated/social/video/database/live/mixed-source acceptance remain open.",
+        "universalCertification": false
       }
     },
     {
