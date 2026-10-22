@@ -10208,7 +10208,7 @@
         "serenaConfigurationEntries",
         "serenaConfigurationMembers"
       ],
-      "remainingBoundary": "Dashboard unavailable. Native context/mode/API/memory steering, startup selection, fixed bases, explicit inclusions and optionalDefaults:serena_optional_v1 qualify bounded host JSON behavior. Optional flags use current dated public docs, not pinned4f optional metadata; broader backend/client/YAML/Jinja/file discovery, remaining project keys and full9-mode/16-context equivalence need review. No general Windows/transient Git-listing cause is established.",
+      "remainingBoundary": "Explicit read-only native session dashboard is available; configuration/memory editing, raw logs, tray, automatic browser opening, MCP shutdown and broader UI/accessibility acceptance remain open. Native context/mode/API/memory steering, startup selection, fixed bases, explicit inclusions and optionalDefaults:serena_optional_v1 qualify bounded host JSON behavior. Optional flags use current dated public docs, not pinned4f optional metadata; broader backend/client/YAML/Jinja/file discovery, remaining project keys and full9-mode/16-context equivalence need review. No general Windows/transient Git-listing cause is established.",
       "nativeSteeringCheckpoint": {
         "sourceCommit": "51772d7a57835e97fed056287382e9daabd3c38e",
         "index": "docs/validation/integration-2026-10-21/session-steering/index.json",
@@ -10614,6 +10614,139 @@
         "allFilesystemAliasesCertified": false,
         "all77RuntimeAcceptanceCertified": false,
         "fullParityCertified": false
+      },
+      "nativeReadOnlyDashboardCheckpoint": {
+        "sourceCommit": "1191feddc0db55efe0c6d24292e5f0747f5148c7",
+        "cliSha256": "b83fa60bdcb1030f7f129261796c05ed70df3b6e72e9c33cad6c5aa5117e0eac",
+        "frozenInputs": 1065,
+        "rust": {
+          "cargoTargets": {
+            "session_dashboard": {
+              "passed": 13,
+              "failed": 0,
+              "ignored": 0
+            },
+            "session_steering": {
+              "passed": 12,
+              "failed": 0,
+              "ignored": 0
+            },
+            "session_agent_interface": {
+              "passed": 8,
+              "failed": 0,
+              "ignored": 0
+            },
+            "session_config_cli": {
+              "passed": 5,
+              "failed": 0,
+              "ignored": 0
+            },
+            "native-lib": {
+              "passed": 569,
+              "failed": 0,
+              "ignored": 7
+            },
+            "project_session": {
+              "passed": 6,
+              "failed": 0,
+              "ignored": 0
+            },
+            "session_optional_defaults": {
+              "passed": 8,
+              "failed": 0,
+              "ignored": 0
+            },
+            "protocol_connection": {
+              "passed": 5,
+              "failed": 0,
+              "ignored": 0
+            },
+            "mcp_http": {
+              "passed": 18,
+              "failed": 0,
+              "ignored": 0
+            },
+            "mcp_http_cli": {
+              "passed": 3,
+              "failed": 0,
+              "ignored": 1
+            },
+            "mcp_http_review": {
+              "passed": 1,
+              "failed": 0,
+              "ignored": 0
+            },
+            "agent_repl": {
+              "passed": 22,
+              "failed": 0,
+              "ignored": 0
+            },
+            "agent_repl_lifecycle": {
+              "passed": 3,
+              "failed": 0,
+              "ignored": 0
+            },
+            "agent_repl_api_selection": {
+              "passed": 8,
+              "failed": 0,
+              "ignored": 0
+            },
+            "agent_facade_semantics": {
+              "passed": 4,
+              "failed": 0,
+              "ignored": 0
+            },
+            "session_mcp": {
+              "passed": 3,
+              "failed": 0,
+              "ignored": 0
+            },
+            "session_startup_project": {
+              "passed": 8,
+              "failed": 0,
+              "ignored": 0
+            },
+            "session_primary_read_only": {
+              "passed": 8,
+              "failed": 0,
+              "ignored": 0
+            },
+            "session_memory_patterns": {
+              "passed": 9,
+              "failed": 0,
+              "ignored": 0
+            },
+            "session_fixed_tools": {
+              "passed": 8,
+              "failed": 0,
+              "ignored": 0
+            },
+            "notes": {
+              "passed": 15,
+              "failed": 0,
+              "ignored": 0
+            }
+          },
+          "distinctPassed": 736,
+          "failed": 0,
+          "existingIgnored": 8,
+          "newDashboardFunctions": 13
+        },
+        "npm": {
+          "passed": 260,
+          "failed": 0,
+          "existingSkipped": 3
+        },
+        "formatTargetRoots": 346,
+        "cargoFormatAllWindowsOs206": true,
+        "allQualifiedJobsEmpty": true,
+        "originalTenSymlinkFixtureGitAndFrozenWorkingBytesUnchanged": true,
+        "fullStatusComplete": false,
+        "fullNativeCurrentHeadCertified": false,
+        "systemSettingsChanged": false,
+        "originalInventoryAssessmentsUnchanged": true,
+        "rawMembers": 514,
+        "index": "docs/validation/integration-2026-10-22/dashboard/index.json"
       }
     },
     {
