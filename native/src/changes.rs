@@ -357,6 +357,7 @@ fn prepare_inner(
     for edit in edits {
         crate::paths::normalized(edit.path())?;
         source_scope.check_host_write_scope(edit.path())?;
+        crate::source_exclusions::check_current_write_scope(store, edit.path(), deadline)?;
         grouped.entry(edit.path().into()).or_default().push(edit);
     }
     drop(source_scope);
@@ -782,6 +783,9 @@ pub fn apply(
         allow_writes,
         "Workspace writes require host --allow-writes permission"
     );
+    for file in &plan.files {
+        crate::source_exclusions::check_current_write_scope(store, &file.path, deadline)?;
+    }
     // Never format an already reviewed effect at application time. A newly
     // selected host convention may only admit its exact stored after-bytes.
     if let Some(ending) = store.source_line_ending {

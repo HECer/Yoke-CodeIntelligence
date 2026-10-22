@@ -17,6 +17,90 @@ fn apply(base: &HostProfile, target: Target, bytes: &[u8]) -> Result<Projection>
 }
 
 #[test]
+fn ignored_paths_yaml_adds_independent_groups_without_clearing_host_rules() {
+    let base = HostProfile {
+        source_exclusions: Some(
+            serde_json::from_value(json!({"global":[["private/**"]]})).unwrap(),
+        ),
+        ..Default::default()
+    };
+    let p = apply(
+        &base,
+        Target::Global,
+        b"ignored_paths:\r\n  - '!private/**'\r\n",
+    )
+    .unwrap();
+    let rules = p.profile().source_exclusions.as_ref().unwrap();
+    assert_eq!(rules.global.len(), 2);
+    let policy = rules.select("default", None).unwrap();
+    assert!(
+        crate::source_exclusions::Compiled::new(policy.as_ref(), &|| Ok(()))
+            .unwrap()
+            .excludes("private/owned.rs", &|| Ok(()))
+            .unwrap()
+    );
+    for text in [b"ignored_paths: null\n".as_slice(), b"ignored_paths: []\n"] {
+        assert_eq!(
+            apply(p.profile(), Target::Global, text)
+                .unwrap()
+                .profile_bytes(&deadline())
+                .unwrap(),
+            p.profile_bytes(&deadline()).unwrap()
+        );
+        assert_eq!(
+            apply(
+                &HostProfile::default(),
+                Target::Project {
+                    project: "default".into()
+                },
+                text
+            )
+            .unwrap()
+            .profile_bytes(&deadline())
+            .unwrap(),
+            serde_json::to_vec(&HostProfile::default()).unwrap()
+        );
+    }
+}
+
+#[test]
+fn ignored_paths_yaml_validates_roles_types_registration_patterns_and_bounds() {
+    for text in [
+        b"ignored_paths: text\n".as_slice(),
+        b"ignored_paths: true\n",
+        b"ignored_paths: [1]\n",
+        b"ignored_paths: ['[bad']\n",
+    ] {
+        assert!(apply(&HostProfile::default(), Target::Global, text).is_err());
+    }
+    assert!(
+        apply(
+            &HostProfile::default(),
+            Target::Context {
+                name: "custom".into()
+            },
+            b"ignored_paths: ['private/**']\n"
+        )
+        .is_err()
+    );
+    assert!(
+        apply(
+            &HostProfile::default(),
+            Target::Project {
+                project: "unregistered".into()
+            },
+            b"ignored_paths: ['private/**']\n"
+        )
+        .is_err()
+    );
+    let p = HostProfile {
+        source_exclusions: Some(serde_json::from_value(json!({"global":[vec!["a";129]]})).unwrap()),
+        ..Default::default()
+    };
+    assert!(apply(&p, Target::Global, b"{}\n").is_err());
+}
+
+#[test]
 fn line_ending_yaml_uses_global_project_local_precedence_independent_of_input_order() {
     let base = HostProfile::default();
     let global = Target::Global;

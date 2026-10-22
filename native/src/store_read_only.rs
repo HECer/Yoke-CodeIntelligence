@@ -134,6 +134,8 @@ impl Store {
             workspace_id,
             deadline: RefCell::new(Some(d.clone())),
             source_line_ending: None,
+            source_exclusion_selection: None,
+            current_source_exclusions: None,
             client_lock,
             admission_gate,
             client_valid: Cell::new(true),

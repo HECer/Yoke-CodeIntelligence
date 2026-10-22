@@ -244,6 +244,8 @@ fn catalog_language(extension: &str) -> Option<&'static str> {
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct CaptureOptions {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_exclusions: Option<crate::source_exclusions::Policy>,
     #[serde(default)]
     pub only_dirs: Vec<String>,
     #[serde(default)]
@@ -354,7 +356,15 @@ impl CaptureOptions {
                 "Duplicate normalized extension override"
             );
         }
+        let source_exclusions = self
+            .source_exclusions
+            .as_ref()
+            .map(crate::source_exclusions::Policy::canonical)
+            .transpose()?
+            .flatten();
+        crate::source_exclusions::Compiled::new(source_exclusions.as_ref(), &|| Ok(()))?;
         Ok(Self {
+            source_exclusions,
             only_dirs,
             include_dirs,
             language_overrides,
@@ -554,6 +564,8 @@ fn validate_manifest_options_with(
     historical: bool,
     check: &impl Fn() -> Result<()>,
 ) -> Result<()> {
+    let exclusions =
+        crate::source_exclusions::Compiled::new(options.source_exclusions.as_ref(), check)?;
     ensure!(
         snapshot.files.len() <= 100_000,
         "Capture manifest capacity exceeded"
@@ -591,7 +603,9 @@ fn validate_manifest_options_with(
             options.language_for(&file.path) == file.language
         };
         ensure!(
-            options.includes(&file.path) && language_matches,
+            options.includes(&file.path)
+                && !exclusions.excludes(&file.path, check)?
+                && language_matches,
             "Snapshot language or scope mismatch"
         );
     }
@@ -1167,6 +1181,47 @@ pub struct CapturedSourcePolicy {
     /// A dependency or foreign/legacy virtual source restriction, never a write grant.
     pub read_only: bool,
 }
+#[cfg(windows)]
+pub(crate) fn canonical_write_path(store: &Store, path: &str) -> Result<String> {
+    let root = store.dir.parent().context("Missing workspace root")?;
+    let mut existing = crate::paths::scoped(root, path)?;
+    let mut suffix = Vec::new();
+    loop {
+        store.check_deadline()?;
+        match fs::symlink_metadata(&existing) {
+            Ok(metadata) => {
+                ensure!(!is_link(&metadata), "Write alias reparse point refused");
+                break;
+            }
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+                suffix.push(
+                    existing
+                        .file_name()
+                        .context("Missing write ancestor")?
+                        .to_owned(),
+                );
+                ensure!(
+                    existing.pop() && existing.starts_with(root),
+                    "Write path escaped root"
+                );
+            }
+            Err(error) => return Err(error.into()),
+        }
+    }
+    let canonical_root = root.canonicalize()?;
+    let mut canonical = existing.canonicalize()?;
+    for component in suffix.into_iter().rev() {
+        canonical.push(component);
+    }
+    let relative = canonical
+        .strip_prefix(canonical_root)
+        .context("Write alias escaped workspace")?
+        .to_str()
+        .context("Non-UTF8 write alias")?
+        .replace('\\', "/");
+    normalized(&relative)?;
+    Ok(relative)
+}
 /// Reuse one verified immutable scope for streaming many sources. No source bytes
 /// are cached and request data cannot change its captured host configuration.
 pub struct CapturedSourceScope<'a> {
@@ -1176,8 +1231,15 @@ pub struct CapturedSourceScope<'a> {
     virtual_read_only: bool,
     prospective_native: bool,
     ignored: Option<BTreeSet<String>>,
+    exclusions: crate::source_exclusions::Compiled,
 }
 impl CapturedSourceScope<'_> {
+    fn includes(&self, path: &str) -> Result<bool> {
+        Ok(self.options.includes(path)
+            && !self
+                .exclusions
+                .excludes(path, &|| self.store.check_deadline())?)
+    }
     /// Filtering metadata from the original immutable native capture, not authority.
     pub fn ignored_at_capture(&self, path: &str) -> Result<bool> {
         self.file(path)?;
@@ -1192,52 +1254,16 @@ impl CapturedSourceScope<'_> {
         self.store.check_deadline()?;
         normalized(path)?;
         ensure!(
-            self.options.includes(path) && !read_path_kind(path, &self.options)?,
+            self.includes(path)? && !read_path_kind(path, &self.options)?,
             "Captured host scope is read-only or excludes this write path"
         );
         #[cfg(windows)]
         {
             // Resolve existing Windows directory aliases before admitting a future
             // path. This is a write restriction, never a captured read grant.
-            let root = self.store.dir.parent().context("Missing workspace root")?;
-            let mut existing = crate::paths::scoped(root, path)?;
-            let mut suffix = Vec::new();
-            loop {
-                self.store.check_deadline()?;
-                match fs::symlink_metadata(&existing) {
-                    Ok(metadata) => {
-                        ensure!(!is_link(&metadata), "Write alias reparse point refused");
-                        break;
-                    }
-                    Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
-                        suffix.push(
-                            existing
-                                .file_name()
-                                .context("Missing write ancestor")?
-                                .to_owned(),
-                        );
-                        ensure!(
-                            existing.pop() && existing.starts_with(root),
-                            "Write path escaped root"
-                        );
-                    }
-                    Err(error) => return Err(error.into()),
-                }
-            }
-            let canonical_root = root.canonicalize()?;
-            let mut canonical = existing.canonicalize()?;
-            for component in suffix.into_iter().rev() {
-                canonical.push(component);
-            }
-            let relative = canonical
-                .strip_prefix(canonical_root)
-                .context("Write alias escaped workspace")?
-                .to_str()
-                .context("Non-UTF8 write alias")?
-                .replace('\\', "/");
-            normalized(&relative)?;
+            let relative = canonical_write_path(self.store, path)?;
             ensure!(
-                self.options.includes(&relative) && !read_path_kind(&relative, &self.options)?,
+                self.includes(&relative)? && !read_path_kind(&relative, &self.options)?,
                 "Canonical host scope is read-only or excludes this write path"
             );
         }
@@ -1259,7 +1285,7 @@ impl CapturedSourceScope<'_> {
         );
         read_path_kind(path, &self.options)?;
         ensure!(
-            self.options.includes(path),
+            self.includes(path)?,
             "New read path outside captured host scope"
         );
         let mut components = path.split('/').peekable();
@@ -1331,7 +1357,7 @@ impl CapturedSourceScope<'_> {
         );
         let dependency = read_path_kind(path, &self.options)?;
         ensure!(
-            self.options.includes(path),
+            self.includes(path)?,
             "Source path outside captured host scope"
         );
         Ok(CapturedSourcePolicy {
@@ -1400,6 +1426,10 @@ pub(crate) fn source_scope_policy_at<'a>(
             "Invalid captured source membership"
         );
     }
+    let exclusions =
+        crate::source_exclusions::Compiled::new(options.source_exclusions.as_ref(), &|| {
+            store.check_deadline()
+        })?;
     Ok(CapturedSourceScope {
         store,
         options,
@@ -1407,6 +1437,7 @@ pub(crate) fn source_scope_policy_at<'a>(
         virtual_read_only: !native || snapshot.kind != "disk",
         prospective_native: native && matches!(snapshot.kind.as_str(), "disk" | "derived"),
         ignored: resolved.ignored,
+        exclusions,
     })
 }
 /// Separate signed foreign namespace: only federation's non-forgeable, current
@@ -1436,6 +1467,7 @@ pub(crate) fn federated_query_scope<'a>(
         // Receiver ignores were already checked for every file. Foreign source
         // carries no native ignored-at-capture inclusion metadata.
         ignored: None,
+        exclusions: crate::source_exclusions::Compiled::default(),
     })
 }
 pub fn source_path_policy(
@@ -1473,7 +1505,14 @@ pub fn language_for_snapshot(store: &Store, snapshot: &Snapshot, path: &str) -> 
         "Unsafe new capture path"
     );
     let options = options_for_snapshot(store, snapshot)?;
-    ensure!(options.includes(path), "New path outside capture scope");
+    let exclusions =
+        crate::source_exclusions::Compiled::new(options.source_exclusions.as_ref(), &|| {
+            store.check_deadline()
+        })?;
+    ensure!(
+        options.includes(path) && !exclusions.excludes(path, &|| store.check_deadline())?,
+        "New path outside capture scope"
+    );
     Ok(options.language_for(path))
 }
 pub fn capture_for_snapshot(
@@ -1541,6 +1580,10 @@ fn scan(
     deadline: &Deadline,
     options: &CaptureOptions,
 ) -> Result<(Vec<SourceFile>, Vec<Omission>, BTreeSet<String>)> {
+    let exclusions =
+        crate::source_exclusions::Compiled::new(options.source_exclusions.as_ref(), &|| {
+            deadline.check()
+        })?;
     let included_names = options.include_dirs.clone();
     let dependencies = options.read_only_dependency_dirs.clone();
     let walker = WalkBuilder::new(root)
@@ -1676,6 +1719,13 @@ fn scan(
             continue;
         }
         if !options.includes(&relative) {
+            continue;
+        }
+        if exclusions.excludes(&relative, &|| deadline.check())? {
+            omissions.push(Omission {
+                path: relative,
+                reason: "host-source-exclusion".into(),
+            });
             continue;
         }
         if captured.contains(&relative) {

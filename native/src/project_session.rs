@@ -84,6 +84,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
+    #[serde(default, skip_serializing_if = "crate::source_exclusions::unselected")]
+    pub source_exclusions: Option<crate::source_exclusions::HostExclusions>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub source_line_endings: Option<crate::source_line_endings::HostLineEndings>,
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
@@ -115,6 +117,7 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            source_exclusions: None,
             source_line_endings: None,
             primary_read_only: false,
             optional_defaults: None,
@@ -194,6 +197,7 @@ pub(crate) fn validate_retention_record(
 pub struct Session {
     pub engine: Engine,
     host_allow_writes: bool,
+    host_capture_options: Option<crate::capture::CaptureOptions>,
     capture_epoch: crate::analysis::AnalyzerEpoch,
     host: HostProfile,
     inline_compiler_binding: Option<String>,
@@ -808,6 +812,22 @@ impl Session {
         deadline: &Deadline,
     ) -> Result<Self> {
         engine.store.set_deadline(deadline)?;
+        if engine.capture_options.source_exclusions.is_some() {
+            engine.capture_options = engine.capture_options.validated()?;
+        }
+        if let Some(exclusions) = &host.source_exclusions {
+            exclusions.validate(&host, deadline)?;
+        }
+        if let Some(exclusions) = &mut host.source_exclusions {
+            exclusions.canonicalize();
+            if exclusions.empty() {
+                host.source_exclusions = None;
+            }
+        }
+        let host_capture_options = host
+            .source_exclusions
+            .as_ref()
+            .map(|_| engine.capture_options.clone());
         if let Some(endings) = &host.source_line_endings {
             endings.validate(&host)?;
         }
@@ -1089,6 +1109,22 @@ impl Session {
         // This restriction belongs only to the primary project. Registered
         // projects retain the separately captured host source-write grant.
         engine.allow_writes &= !host.primary_read_only;
+        let fingerprint = if let Some(exclusions) = &host.source_exclusions {
+            identity(&(
+                fingerprint,
+                "host_source_exclusions_v1",
+                exclusions,
+                cfg!(windows),
+            ))
+        } else {
+            fingerprint
+        };
+        if let Some(exclusions) = &host.source_exclusions {
+            engine.capture_options.source_exclusions =
+                exclusions.select("default", engine.capture_options.source_exclusions.as_ref())?;
+            engine.capture_options = engine.capture_options.validated()?;
+        }
+        engine.sync_source_exclusions(deadline)?;
         let owned_label = if let Some(id) = session_id {
             label(id)?;
             id.to_owned()
@@ -1206,6 +1242,7 @@ impl Session {
         Ok(Self {
             engine,
             host_allow_writes,
+            host_capture_options,
             capture_epoch,
             host,
             inline_compiler_binding,
@@ -1300,6 +1337,7 @@ impl Session {
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
         if self.host.primary_read_only
+            || !crate::source_exclusions::unselected(&self.host.source_exclusions)
             || self.host.source_line_endings.is_some()
             || self.host.optional_defaults.is_some()
             || self.agent_interface().is_some()
@@ -1539,7 +1577,17 @@ impl Session {
                 .source_line_endings
                 .as_ref()
                 .and_then(|p| p.select(name));
-            engine.capture_options = self.engine.capture_options.clone();
+            engine.capture_options = self
+                .host_capture_options
+                .as_ref()
+                .unwrap_or(&self.engine.capture_options)
+                .clone();
+            if let Some(exclusions) = &self.host.source_exclusions {
+                engine.capture_options.source_exclusions =
+                    exclusions.select(name, engine.capture_options.source_exclusions.as_ref())?;
+                engine.capture_options = engine.capture_options.validated()?;
+            }
+            engine.sync_source_exclusions(deadline)?;
             engine.capture_epoch = self.capture_epoch;
             engine.servers = self.engine.servers.clone();
             engine.server_configurations = self.engine.server_configurations.clone();
@@ -1654,6 +1702,10 @@ impl Session {
                 }
                 if self.host.primary_read_only {
                     value["primaryReadOnly"] = json!(true);
+                }
+                if let Some(exclusions) = &self.host.source_exclusions {
+                    value["sourceExclusions"] = serde_json::to_value(exclusions)?;
+                    value["sourceExclusionCaseInsensitive"] = json!(cfg!(windows));
                 }
                 if let Some(endings) = &self.host.source_line_endings {
                     value["sourceLineEndings"] = serde_json::to_value(endings)?;

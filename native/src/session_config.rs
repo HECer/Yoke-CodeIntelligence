@@ -56,13 +56,14 @@ fn label(value: &str) -> Result<()> {
     );
     Ok(())
 }
-type DecodedFields = (
-    Map<String, Value>,
-    Option<Value>,
-    Option<bool>,
-    Option<String>,
-    Option<Option<crate::source_line_endings::LineEnding>>,
-);
+struct DecodedFields {
+    fields: Map<String, Value>,
+    base_modes: Option<Value>,
+    read_only: Option<bool>,
+    declared: Option<String>,
+    line_ending: Option<Option<crate::source_line_endings::LineEnding>>,
+    ignored_paths: Option<Vec<String>>,
+}
 fn rename_fields(
     raw: Map<String, Value>,
     definition: bool,
@@ -74,8 +75,14 @@ fn rename_fields(
     let mut read_only = None;
     let mut declared = None;
     let mut line_ending = None;
+    let mut ignored_paths = None;
     for (key, value) in raw {
         let name = match key.as_str() {
+            "ignored_paths" if global || project => {
+                ignored_paths = serde_json::from_value(value)
+                    .map_err(|_| anyhow::anyhow!("session_config_ignored_paths_invalid"))?;
+                continue;
+            }
             "line_ending" if global || project => {
                 line_ending = Some(
                     serde_json::from_value(value)
@@ -130,7 +137,14 @@ fn rename_fields(
         }
         mapped.insert(name.into(), value);
     }
-    Ok((mapped, base, read_only, declared, line_ending))
+    Ok(DecodedFields {
+        fields: mapped,
+        base_modes: base,
+        read_only,
+        declared,
+        line_ending,
+        ignored_paths,
+    })
 }
 /// Project only explicitly supplied values. Files cannot supply registrations or grants.
 pub fn project(
@@ -171,7 +185,14 @@ pub fn project(
             Target::Project { .. } | Target::ProjectLocal { .. }
         );
         let definition = matches!(source.target, Target::Context { .. } | Target::Mode { .. });
-        let (fields, base_modes, read_only, declared, line_ending) = rename_fields(
+        let DecodedFields {
+            fields,
+            base_modes,
+            read_only,
+            declared,
+            line_ending,
+            ignored_paths,
+        } = rename_fields(
             yaml::decode(source.bytes, deadline)?,
             definition,
             matches!(source.target, Target::Global),
@@ -200,6 +221,27 @@ pub fn project(
         }
         if let Target::Context { name } | Target::Mode { name } = source.target {
             label(name)?;
+        }
+        if let Some(patterns) = ignored_paths
+            && !patterns.is_empty()
+        {
+            let policy = profile.source_exclusions.get_or_insert_default();
+            match source.target {
+                Target::Global => policy.global.push(patterns),
+                Target::Project { project } => policy
+                    .projects
+                    .entry(project.clone())
+                    .or_default()
+                    .project
+                    .push(patterns),
+                Target::ProjectLocal { project } => policy
+                    .projects
+                    .entry(project.clone())
+                    .or_default()
+                    .local
+                    .push(patterns),
+                _ => unreachable!(),
+            }
         }
         if let Some(ending) = line_ending
             && (ending.is_some() || profile.source_line_endings.is_some())
@@ -268,6 +310,9 @@ pub fn project(
     deadline.check()?;
     if let Some(endings) = &profile.source_line_endings {
         endings.validate(&profile)?;
+    }
+    if let Some(exclusions) = &profile.source_exclusions {
+        exclusions.validate(&profile, deadline)?;
     }
     session_steering::validate(&profile)
         .map_err(|_| anyhow::anyhow!("session_config_steering_invalid"))?;

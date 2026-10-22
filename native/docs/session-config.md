@@ -176,3 +176,58 @@ The public setting names and values were checked against the
 Only public configuration facts are used; no upstream implementation is copied.
 This checkpoint does not certify other project settings, upstream clients,
 non-Windows runtimes or full parity.
+
+## Source exclusion groups
+
+HostProfile.sourceExclusions selects additional source filters at startup:
+
+    {"global":[["private/**","!private/keep.rs"]],
+     "projects":{"default":{"project":[["generated/**"]],"local":[]}}}
+
+Each inner list is an ordered pattern group. A path excluded by any group stays
+excluded; a later group or project/local layer cannot reopen an earlier group's
+restriction. Within one group, later negations apply, but a child cannot reopen
+an excluded parent directory unless that parent is also reopened. Existing
+host capture scopes and hard exclusions still apply. Source files, byte offsets
+and Unicode path normalization forms are not rewritten.
+
+Explicit global/project/project_local YAML ignored_paths supplies one additional
+group. Null and empty lists add nothing and cannot clear base host restrictions.
+Context/mode selection cannot change source filters. Unknown registrations,
+incorrect types, malformed patterns and unsupported settings refuse. The native
+host syntax uses arrays of groups so original host constraints stay independent
+of imported configuration. Absent/null/entirely empty sourceExclusions preserves
+preceding serialization and session/capture/plan identities.
+
+New captures store the concrete gitignore_v1 groups and caseInsensitive flags
+in their existing immutable capture-option proof. Host-profile patterns choose
+case-insensitive matching on Windows and case-sensitive matching elsewhere;
+historical replay uses the captured flags. Matching uses ignore 0.4.33 without
+discovering or reading global Git configuration. Unlike permissive Git syntax,
+unclosed character classes are errors. Capture omissions identify files excluded
+by this policy. An explicitly selected empty corpus remains visible as that
+selection; excluded reads fail rather than returning empty complete source.
+
+The active policy admits at most 16 groups, 128 patterns, 512 UTF-8 bytes per
+pattern and 32768 combined pattern bytes. NUL and embedded line breaks refuse.
+Compilation and matching check the shared deadline; finite input limits do not
+make synchronous regex compilation a hard OS scheduling or memory sandbox.
+
+Current write/preparation restrictions also apply when an old snapshot or fully
+approved/verified plan is selected. Windows existing-directory aliases are
+checked through the same canonical path resolution as captured write scopes.
+Historical reads, checked plan replay, isolated copies and recovery retain their
+original selection and bytes. Named projects derive their settings from the
+original host capture scope; primary-only filters do not leak into independent
+secondary registrations.
+
+These are per-project analysis selections and additional write restrictions,
+not an OS access-control or source-retirement mechanism. Existing saved source
+remains accessible through separately authorized historical reads. Selecting a
+different host registration uses that registration's scope. Source filters
+cannot grant writes, runtime trust, network access, project registration or
+permission to bypass protected paths, ignored-source read-only rules, stale
+preconditions, approval, executed verification or recovery journals.
+
+Other project keys, including the Git-ignore toggle, workspace-folder overrides,
+runtime settings and activation commands, remain separate explicit boundaries.

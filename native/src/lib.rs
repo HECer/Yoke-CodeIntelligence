@@ -100,6 +100,7 @@ pub mod session_steering;
 pub mod skill_takeaways;
 pub mod source_acquisition;
 pub mod source_acquisition_http;
+pub mod source_exclusions;
 pub mod source_line_endings;
 pub mod store;
 pub mod test_map;
@@ -133,6 +134,22 @@ pub struct Engine {
     pub server_configurations: BTreeMap<String, lsp::HostConfiguration>,
 }
 impl Engine {
+    pub(crate) fn sync_source_exclusions(&mut self, deadline: &Deadline) -> Result<()> {
+        let policy = self
+            .capture_options
+            .source_exclusions
+            .as_ref()
+            .map(source_exclusions::Policy::canonical)
+            .transpose()?
+            .flatten();
+        if self.store.source_exclusion_selection == policy {
+            return Ok(());
+        }
+        let compiled = source_exclusions::Compiled::new(policy.as_ref(), &|| deadline.check())?;
+        self.store.current_source_exclusions = (!compiled.is_empty()).then_some(compiled);
+        self.store.source_exclusion_selection = policy;
+        Ok(())
+    }
     pub fn open(root: impl AsRef<Path>) -> Result<Self> {
         Self::open_with_timeout(root, std::time::Duration::from_secs(10))
     }
@@ -158,6 +175,7 @@ impl Engine {
         deadline: &Deadline,
         bounded_saved_graph: bool,
     ) -> Result<(Snapshot, Graph, usize, usize)> {
+        self.sync_source_exclusions(deadline)?;
         if bounded_saved_graph {
             retrieval_scopes::check_deadline(deadline)?;
         }
@@ -337,6 +355,7 @@ impl Engine {
         let result = (|| -> Result<Value> {
             self.store.set_deadline(&deadline)?;
             validate(tool, &args)?;
+            self.sync_source_exclusions(&deadline)?;
             if let Some(id) = args["graphViewId"].as_str() {
                 // A selected view supplies its own immutable snapshot. Never
                 // capture live source or start a provider while resolving it.

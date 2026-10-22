@@ -26,6 +26,8 @@ pub struct Store {
     deadline: RefCell<Option<crate::capture::Deadline>>,
     /// Invocation-owned policy; never reconstructed from stored source or plans.
     pub(crate) source_line_ending: Option<crate::source_line_endings::ResolvedLineEnding>,
+    pub(crate) source_exclusion_selection: Option<crate::source_exclusions::Policy>,
+    pub(crate) current_source_exclusions: Option<crate::source_exclusions::Compiled>,
     client_lock: fs::File,
     admission_gate: fs::File,
     client_valid: Cell<bool>,
@@ -245,6 +247,8 @@ impl Store {
             workspace_id,
             deadline: RefCell::new(None),
             source_line_ending: None,
+            source_exclusion_selection: None,
+            current_source_exclusions: None,
             client_lock,
             admission_gate,
             client_valid: Cell::new(true),
