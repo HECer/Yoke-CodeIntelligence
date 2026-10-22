@@ -10319,6 +10319,23 @@
         "realMethods42Included43Restored50": true,
         "documentationOptionalFlagsPinnedRevisionCertified": false,
         "fullParityCertified": false
+      },
+      "nativeYamlSteeringCheckpoint": {
+        "sourceCommit": "01af610948b07f35ad8e790b8e9495d4fd1829aa",
+        "index": "docs/validation/integration-2026-10-22/session-config-yaml/index.json",
+        "frozenInputs": 1033,
+        "distinctRustFunctionsPassed": 136,
+        "newFunctions": 12,
+        "newFunctionalFunctionsFirstAttempt": true,
+        "reusedFunctions": 132,
+        "reusedRelevantInputs": 1032,
+        "onlyExcludedStandaloneHelper": "native/tests/session_config_cli.rs",
+        "explicitSelectedYamlFilesValidated": true,
+        "sameOriginal53And37McpRawAndWholeSqlExact": true,
+        "automaticFileDiscoveryValidated": false,
+        "jinjaEvaluationImplemented": false,
+        "allProjectKeysCertified": false,
+        "fullParityCertified": false
       }
     },
     {

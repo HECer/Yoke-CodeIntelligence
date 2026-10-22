@@ -419,3 +419,10 @@ No selection starts/trusts an interpreter, grants source application rights,
 changes read-only/startup restrictions or bypasses approval/stale/recovery guards.
 The trusted Python process is not an OS sandbox. Full backend/client/YAML/Jinja
 and original 353-row inventory acceptance remain separate work.
+
+## Explicit YAML source files
+
+[The session-config importer](session-config.md) maps selected, hash-pinned YAML
+files onto these existing layers and preserves equivalent JSON host bindings.
+Automatic discovery, Jinja, activation commands and broader project/server/client
+settings remain separate work.

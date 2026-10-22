@@ -1,5 +1,49 @@
 # Remaining implementation and acceptance
 
+Explicit host-selected YAML files now project into a reviewable native session
+profile. Original byte hashes bind global/project/project-local/custom-context/
+mode inputs. Supported keys use existing layer semantics; named registered
+projects can only gain read-only restrictions. YAML cannot supply registrations,
+runtime trust, execution commands or permissions. Strict parsing refuses
+aliases/tags/merges/duplicate keys, multiple documents, unsupported settings/
+templates and exceeded budgets. Plan opens no Store; export creates a fresh file.
+
+At source 01af6109, 136 Rust functions pass across 17 scoped targets. The 12
+new functions pass first functional attempts. After two Clippy-only test-helper
+borrow fixes, four CLI functions pass again on 1033 current frozen inputs;
+132 functions from 16 targets are reused on 1032 identical common inputs,
+excluding only that standalone helper, with compiled dependency attestations.
+All-target Clippy -Dwarnings, fmt/build/typecheck and npm260/3 existing skips pass.
+Actual published-CLI RED establishes JSON 53/37-tool positives before the missing
+import. The SAME original fixture GREEN preserves full legacy/restricted CLI/MCP
+RAW and logical SQL; the YAML profile resumes the original restricted binding
+with exact replies. Source/Git/selected files stay exact. Existing output, pins,
+grants and exact/one-byte-short reply budgets are qualified.
+See [the contract](../native/docs/session-config.md) and
+[indexed evidence](validation/integration-2026-10-22/session-config-yaml/README.md).
+Automatic discovery, broader YAML/Jinja/project/client/backend and full R1-R9/
+353/Windows/main/release remain open. Original inventory assessments, OS1314
+fixtures and all system settings are unchanged.
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Explicit native Google HTTP export now transports a selected shortcut resource
 key in its private Drive header. A host-only token/private stdin pipe and all
 six CLI grants precede one fixed-endpoint HTTPS GET. Native image, original
@@ -24,25 +68,6 @@ No real token or Google document was accessed. Successful authenticated Google
 TLS/export remains unvalidated because no approved test document is available.
 Full R1-R9/353/Windows/main/release remains open. Original OS1314 fixtures and all
 system settings remain unchanged.
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 Explicit host optionalDefaults:serena_optional_v1 selects a versioned native
 projection of documented optional operations: 29 classical tools and 42 of the

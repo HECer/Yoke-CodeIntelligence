@@ -52,6 +52,14 @@ exact known methods. Ordered provenance and effective restrictions remain
 visible. Every registered inclusion policy requires current persisted state
 before catalogs, adapters and cells; host permissions remain independent.
 
+Explicit YAML session configuration projects hash-selected byte inputs into
+existing native host profiles without a Store, search, template engine or runtime.
+A strict bounded parser maps only declared steering data and restrictive named-
+project read-only changes. Registrations/runtime permissions remain host-owned.
+The separate CLI guards selected file/ancestor handles, rechecks input bytes and
+creates fresh profiles only. Equivalent JSON profiles retain session bindings;
+source receipts establish no execution authority or automatic reload.
+
 An explicit versioned optional-default selector filters only Serena tool views
 and seeds native REPL method restrictions before host layers. Other profile
 schemas and absent/null serialized bindings stay exact. Selected versions bind
