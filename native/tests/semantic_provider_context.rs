@@ -132,3 +132,100 @@ fn forged_source_context_is_rejected_before_any_overlay_publication() {
         .unwrap();
     assert_eq!(records, 0);
 }
+
+#[test]
+fn versioned_rust_json_omissions_preserve_legacy_overlay_bytes_and_exact_policy_sets() {
+    let root = tempfile::tempdir().unwrap();
+    fs::create_dir(root.path().join(".cargo")).unwrap();
+    fs::create_dir(root.path().join("nested")).unwrap();
+    for (path, bytes) in [
+        ("main.rs", "fn actual() {}\n"),
+        (".cargo/config.toml", "[build]\nrustc='owned-canary'\n"),
+        ("rust-project.json", "{\"crates\":[]}"),
+        ("nested/RuSt-PrOjEcT.JsOn", "{\"crates\":[]}"),
+    ] {
+        fs::write(root.path().join(path), bytes).unwrap();
+    }
+    let mut engine = Engine::open(root.path()).unwrap();
+    let deadline = Deadline::new(20000);
+    let (snapshot, graph, _, _) = engine.index(&deadline).unwrap();
+    let omission = |path: &str| {
+        let file = snapshot.files.iter().find(|f| f.path == path).unwrap();
+        json!({"path":path,"contentHash":file.hash,"reason":"workspace_execution_selector_omitted_from_private_provider_tree"})
+    };
+    for (legacy_policy, json_policy) in [
+        (
+            "passive_rust_source_selectors_and_inherited_cargo_config_excluded",
+            "passive_rust_json_project_selectors_excluded_v2",
+        ),
+        (
+            "contract_fixture_rust_selector_broker_only",
+            "contract_fixture_rust_json_project_selectors_excluded_v2",
+        ),
+    ] {
+        let legacy = json!({"snapshotId":snapshot.id,"operation":"incomingCalls","producer":"independent-versioned-context-fixture","serverProfileHash":"b".repeat(64),"items":[],"sourceExecutionAuthorized":false,"providerSourcePolicy":legacy_policy,"providerSourceOmissions":[omission(".cargo/config.toml")]});
+        let published =
+            semantic_enrichment::persist(&engine.store, &snapshot, &graph, &legacy, &deadline)
+                .unwrap();
+        let old_id = published["overlayId"].as_str().unwrap();
+        let old_value = semantic_enrichment::load(&engine.store, old_id, &deadline).unwrap();
+        let old_bytes = serde_json::to_vec(&old_value).unwrap();
+        let mut current = legacy.clone();
+        current["providerSourcePolicy"] = json!(json_policy);
+        current["providerSourceOmissions"] = json!([
+            omission(".cargo/config.toml"),
+            omission("nested/RuSt-PrOjEcT.JsOn"),
+            omission("rust-project.json")
+        ]);
+        let new_result =
+            semantic_enrichment::persist(&engine.store, &snapshot, &graph, &current, &deadline)
+                .unwrap();
+        assert_ne!(new_result["overlayId"], published["overlayId"]);
+        let loaded = semantic_enrichment::load(
+            &engine.store,
+            new_result["overlayId"].as_str().unwrap(),
+            &deadline,
+        )
+        .unwrap();
+        assert_eq!(loaded["providerContext"]["sourcePolicy"], json_policy);
+        assert_eq!(
+            loaded["providerContext"]["omissions"]
+                .as_array()
+                .unwrap()
+                .len(),
+            3
+        );
+        assert_eq!(
+            serde_json::to_vec(
+                &semantic_enrichment::load(&engine.store, old_id, &deadline).unwrap()
+            )
+            .unwrap(),
+            old_bytes
+        );
+        for defect in ["missing", "wrongHash", "legacySet", "permission"] {
+            let mut invalid = current.clone();
+            match defect {
+                "missing" => {
+                    invalid["providerSourceOmissions"]
+                        .as_array_mut()
+                        .unwrap()
+                        .pop();
+                }
+                "wrongHash" => {
+                    invalid["providerSourceOmissions"][1]["contentHash"] = json!("0".repeat(64))
+                }
+                "legacySet" => invalid["providerSourcePolicy"] = json!(legacy_policy),
+                _ => invalid["sourceExecutionAuthorized"] = json!(true),
+            }
+            assert!(
+                semantic_enrichment::persist(&engine.store, &snapshot, &graph, &invalid, &deadline)
+                    .is_err(),
+                "accepted {defect}"
+            );
+        }
+        assert_eq!(
+            fs::read_to_string(root.path().join("rust-project.json")).unwrap(),
+            "{\"crates\":[]}"
+        );
+    }
+}

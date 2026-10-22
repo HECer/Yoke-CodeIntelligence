@@ -441,7 +441,7 @@ pub(crate) fn stage_move_intent_at(
         "refactorIntentProfile":"own_v1","requestId":request_id,
         "serverProfileHash":profile_hash,"serverProfileBinding":profile["commandBinding"],
         "providerSourceOmissions":snapshot.files.iter().filter(|file| exclusions.contains(&file.path)).map(|file| json!({"path":file.path,"contentHash":file.hash,"reason":"workspace_execution_selector_omitted_from_private_provider_tree"})).collect::<Vec<_>>(),
-        "providerSourcePolicy":provider_source_policy(host.0, Some(host.1)),
+        "providerSourcePolicy":provider_source_policy(host.0, Some(host.1), snapshot),
         "sourceExecutionAuthorized":host.1.allow_source_execution,
         "stagedEditIndex":0,"commandsExecuted":false,"complete":false,
         "referenceCompleteness":"compiler_binding_and_exhaustive_reference_updates_unverified",

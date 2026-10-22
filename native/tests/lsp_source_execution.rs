@@ -16,6 +16,12 @@ fn passive_rust_omits_selectors_only_from_provider_copy_and_reports_original_has
         "[toolchain]\nchannel = \"unapproved-source-toolchain\"\n",
     )
     .unwrap();
+    fs::create_dir(root.path().join("nested")).unwrap();
+    let project = r#"{"crates":[{"root_module":"../uncaptured-owned-canary.rs","edition":"2021","deps":[]}]}"#;
+    for path in ["rust-project.json", "nested/RuSt-PrOjEcT.JsOn"] {
+        fs::write(root.path().join(path), project).unwrap();
+    }
+    fs::write(root.path().join("rust-project.json.backup"), project).unwrap();
     fs::write(root.path().join("main.rs"), "fn actual() {}\n").unwrap();
     let mut engine = Engine::open(root.path()).unwrap();
     let deadline = Deadline::new(20000);
@@ -52,9 +58,14 @@ fn passive_rust_omits_selectors_only_from_provider_copy_and_reports_original_has
         &deadline,
     )
     .unwrap();
+    assert_eq!(value["codeActionKinds"], json!([]), "{value}");
+    assert_eq!(
+        value["providerSourcePolicy"],
+        "contract_fixture_rust_json_project_selectors_excluded_v2"
+    );
     assert_eq!(
         value["providerSourceOmissions"].as_array().unwrap().len(),
-        2,
+        4,
         "{value}"
     );
     assert!(
@@ -69,7 +80,52 @@ fn passive_rust_omits_selectors_only_from_provider_copy_and_reports_original_has
         fs::read_to_string(root.path().join(".cargo/config.toml")).unwrap(),
         selector
     );
-    assert_eq!(snapshot.files.len(), 3);
+    for path in ["rust-project.json", "nested/RuSt-PrOjEcT.JsOn"] {
+        assert!(
+            value["providerSourceOmissions"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|item| item["path"] == path
+                    && item["contentHash"] == yoke::model::hash(project))
+        );
+        assert_eq!(fs::read_to_string(root.path().join(path)).unwrap(), project);
+    }
+    assert_eq!(snapshot.files.len(), 6);
+
+    // Explicit host execution authority keeps original selectors available.
+    let mut authorized = server.clone();
+    authorized.configuration.allow_source_execution = true;
+    authorized.server.args.push("authorized".into());
+    let authorized_value = lsp::run_at_configured(
+        &mut engine,
+        &authorized,
+        &snapshot,
+        &graph,
+        SemanticRequest {
+            path: "main.rs",
+            offset: 0,
+            operation: "capabilities",
+            new_name: None,
+        },
+        &json!({}),
+        &deadline,
+    )
+    .unwrap();
+    assert_eq!(authorized_value["sourceExecutionAuthorized"], true);
+    assert_eq!(
+        authorized_value["codeActionKinds"]
+            .as_array()
+            .unwrap()
+            .len(),
+        4
+    );
+    assert!(
+        authorized_value["providerSourceOmissions"]
+            .as_array()
+            .unwrap()
+            .is_empty()
+    );
 }
 
 #[test]

@@ -1994,7 +1994,7 @@ fn run_at_internal(
         host.1
             .is_some_and(|configuration| configuration.allow_source_execution)
     );
-    value["providerSourcePolicy"] = json!(provider_source_policy(host.0, host.1));
+    value["providerSourcePolicy"] = json!(provider_source_policy(host.0, host.1, snapshot));
     if let Some((id, _)) = &selected {
         qualify_selection(&mut value, id, path);
     }
@@ -2366,13 +2366,23 @@ fn passive_rust(server: &Server, configuration: Option<&HostConfiguration>) -> b
 fn provider_source_policy(
     server: &Server,
     configuration: Option<&HostConfiguration>,
+    snapshot: &Snapshot,
 ) -> &'static str {
     let Some(configuration) =
         configuration.filter(|configuration| !configuration.allow_source_execution)
     else {
         return "host_selected_provider_unattested_transitive_behavior";
     };
+    let has_json_project = snapshot.files.iter().any(|file| {
+        file.path
+            .rsplit('/')
+            .next()
+            .is_some_and(|name| name.eq_ignore_ascii_case("rust-project.json"))
+    });
     match configuration.passive_profile {
+        Some(PassiveProfile::RustAnalyzer) if has_json_project => {
+            "passive_rust_json_project_selectors_excluded_v2"
+        }
         Some(PassiveProfile::RustAnalyzer) => {
             "passive_rust_source_selectors_and_inherited_cargo_config_excluded"
         }
@@ -2381,6 +2391,9 @@ fn provider_source_policy(
         }
         Some(PassiveProfile::JediLanguageServer) => {
             "passive_jedi_project_import_paths_and_environment_overrides_disabled"
+        }
+        Some(PassiveProfile::ContractFixture) if server.language == "rust" && has_json_project => {
+            "contract_fixture_rust_json_project_selectors_excluded_v2"
         }
         Some(PassiveProfile::ContractFixture) if server.language == "rust" => {
             "contract_fixture_rust_selector_broker_only"
@@ -2405,6 +2418,14 @@ fn passive_source_exclusions(
         .collect()
 }
 pub(crate) fn is_rust_source_selector(path: &str) -> bool {
+    is_legacy_rust_source_selector(path)
+        || path
+            .rsplit('/')
+            .next()
+            .is_some_and(|name| name.eq_ignore_ascii_case("rust-project.json"))
+}
+// Archived policy strings retain their original exact omission semantics.
+pub(crate) fn is_legacy_rust_source_selector(path: &str) -> bool {
     let path = path.to_ascii_lowercase();
     matches!(
         path.rsplit('/').next(),

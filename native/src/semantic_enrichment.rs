@@ -149,6 +149,8 @@ pub(crate) fn validate_archived_provider_context(
             policy,
             "passive_rust_source_selectors_and_inherited_cargo_config_excluded"
                 | "contract_fixture_rust_selector_broker_only"
+                | "passive_rust_json_project_selectors_excluded_v2"
+                | "contract_fixture_rust_json_project_selectors_excluded_v2"
                 | "contract_fixture_protocol_only"
                 | "passive_typescript_automatic_typing_acquisition_and_local_plugins_disabled"
                 | "passive_jedi_project_import_paths_and_environment_overrides_disabled"
@@ -209,11 +211,22 @@ pub(crate) fn validate_archived_provider_context(
         policy,
         "passive_rust_source_selectors_and_inherited_cargo_config_excluded"
             | "contract_fixture_rust_selector_broker_only"
+            | "passive_rust_json_project_selectors_excluded_v2"
+            | "contract_fixture_rust_json_project_selectors_excluded_v2"
     ) {
+        let selector = if matches!(
+            policy,
+            "passive_rust_json_project_selectors_excluded_v2"
+                | "contract_fixture_rust_json_project_selectors_excluded_v2"
+        ) {
+            crate::lsp::is_rust_source_selector
+        } else {
+            crate::lsp::is_legacy_rust_source_selector
+        };
         let expected: std::collections::BTreeSet<_> = snapshot
             .files
             .iter()
-            .filter(|file| crate::lsp::is_rust_source_selector(&file.path))
+            .filter(|file| selector(&file.path))
             .map(|file| file.path.as_str())
             .collect();
         ensure!(

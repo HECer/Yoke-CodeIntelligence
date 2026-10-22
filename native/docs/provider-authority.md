@@ -16,7 +16,19 @@ configuration serialization. Historical absent permission is not an execution
 grant or evidence that a provider did not execute source.
 
 Rust's private provider tree omits captured `.cargo/config[.toml]`,
-`rust-toolchain[.toml]`, and Rust Analyzer execution configuration selectors.
+`rust-toolchain[.toml]`, Rust Analyzer execution configuration selectors, and
+`rust-project.json` at every captured directory depth (case-insensitive matching).
+JSON project descriptions can select source roots, sysroots and other build
+metadata; passive mode does not interpret or authorize their contents. They
+remain in immutable capture and are reported with original hashes in
+`providerSourceOmissions`. Similarly named ordinary data such as
+`rust-project.json.backup` stays available. Explicit host `allowSourceExecution`
+retains original selectors; it is a separate authority, never granted by source.
+See the [upstream JSON project format](https://rust-analyzer.github.io/book/non_cargo_based_projects.html).
+Captured JSON selectors select a versioned passive source-policy string. Archived
+original policy strings retain their original omission interpretation; loading
+old overlays neither rewrites them nor claims they excluded JSON selectors.
+Captures without JSON selectors keep preceding policy strings and identities.
 Original source, source hashes, snapshots, and structural graphs remain intact.
 The owned process uses a private Cargo home, offline Cargo, and empty compiler
 wrappers. Build-script execution, procedural macros, and check-on-save are disabled.
