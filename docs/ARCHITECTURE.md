@@ -58,6 +58,13 @@ from the restricted primary Engine, preserving independent secondary rights.
 Overlapping writable registrations refuse; query plan carriers use the existing
 editing gate. False/absent keeps old fingerprints and serialization exact.
 
+Host-selected symbol workspace folders bind a distinct structural symbol-index
+projection over the full immutable captured graph. The same selected folders
+become real private-tree LSP workspace folders with capability/callback support.
+Ignore observations remain filters rather than grants; full source/configuration
+reads and original graphs/IDs stay independent. Scope metadata identifies the
+base graph and selected roots without asserting reduced parsing costs.
+
 Host-selected symbol information budgets constrain only subsequent optional LSP
 hover requests. Concrete per-project millisecond selections bind session identity;
 zero preserves unlimited enrichment under the outer host deadline. Qualified

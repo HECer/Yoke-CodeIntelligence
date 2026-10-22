@@ -1,5 +1,71 @@
 # Remaining implementation and acceptance
 
+Host-selected symbolWorkspaceFolders and YAML ls_workspace_folders now define
+a separate structural symbol-index projection and real LSP workspace roots.
+Filtering precedes paging, root match thresholds, body search and descendants.
+Global/project/local selections resolve independently for registered projects;
+absent/null/empty policy preserves original wire bytes and session bindings.
+The full authorized captured source tree, root configuration, original graphs,
+source IDs, explicit graph views and guarded edit/recovery behavior remain intact.
+This does not claim avoided capture/parsing work or complete compiler indexing.
+
+At source 5c6812b6, 171 distinct Rust functions pass across 24 scoped
+targets with 2 existing ignores on 1047 frozen inputs, including 11 new
+functions. Genuine owned LSP initialization advertises workspace support,
+receives private selected folders and answers the subsequent server callback
+with the identical list. Root configuration remains available. Invalid callback
+parameters, missing/ignored/file-valued roots, paths, schema and aggregate
+budgets refuse. Explicitly captured ignored sources stay readable but cannot
+become index roots or symbols merely through that read grant. Independent
+projects, stale sessions and changed bindings retain their gates.
+
+The first preflight catches a new test-helper character/string type error.
+After correction, R1 passes 16 YAML library and six integration functions.
+A protocol review then adds the workspace capability/callback and adversaries;
+a separate ignore-proof review closes the explicit ignored-capture edge case.
+Those source changes receive new frozen checks: final reuses only R2/preflight4,
+never earlier successes on changed code. All-target Clippy -Dwarnings,
+build/typecheck, npm260/3 existing skips and all 340 formatting roots pass.
+Cargo fmt --all retains the Windows OS206 command-length limit.
+
+Actual old CLI RED/SAME-fixture GREEN keeps absent/null/empty configuration,
+53-tool MCP and full symbol-search RAW replies exact. A read-only in-memory
+database copy, minus only the two new session records, reconstructs full original
+logical SQL exactly; original stored values remain exact. Selected MCP finds only
+indexed source; other authorized source reads and
+original mixed-newline immutable plan preparation still work. Original source,
+Git, host and YAML bytes remain exact; equivalent YAML/JSON resumes one binding,
+and upgrades/downgrades refuse. The first GREEN harness stops because its
+expected Unicode path was encoded as ASCII ?. Recorded successful outputs are
+reviewed without rerunning that segment. Its first recovery harness accidentally
+shadows the Windows Job API binding with a row key and fails before starting the
+next command. The corrected recovery validates the same recorded outputs and
+SQL reconstruction, then completes the remaining real CLI checks. Both failed
+harnesses remain failed; product sources stay unchanged. See [the contract](../native/docs/session-config.md#fields-and-boundaries)
+and [indexed evidence](validation/integration-2026-10-22/symbol-workspace-folders/README.md).
+Eight project keys, broader configuration/backend/client, authenticated Google,
+full R1-R9/353/current whole-native/Windows/main/release acceptance remain open.
+Original inventory assessments, OS1314 fixtures and system settings are unchanged.
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Optional symbolInfoBudgets and selected YAML symbol_info_budget now resolve
 global/project/local soft limits for supplementary LSP hover information.
 Positive finite seconds round upward to native milliseconds; zero is unlimited.
@@ -37,25 +103,6 @@ and [indexed evidence](validation/integration-2026-10-22/symbol-info-budget/READ
 Nine project keys and broader configuration/backend/client, authenticated Google,
 full R1-R9/353/current whole-native/Windows/main/release acceptance remain open.
 Original inventory assessments, OS1314 fixtures and system settings are unchanged.
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 Explicit sourceExclusions and selected YAML ignored_paths now add bounded
 Gitignore-style negative rules per global/project/local host layer. Independent

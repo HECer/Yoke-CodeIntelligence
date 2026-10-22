@@ -446,3 +446,8 @@ Optional symbolInfoBudgets and YAML symbol_info_budget bind per-project soft
 limits for supplementary LSP hover requests. Zero is unlimited; explicit partial
 metadata, source/runtime gates and host deadlines retain their distinct roles.
 See [symbol information budgets](session-config.md#optional-symbol-information-budgets).
+
+Optional symbolWorkspaceFolders and selected YAML ls_workspace_folders bind
+independent per-project symbol-index projections and actual private-tree LSP
+workspace folders. Original source reads, graphs, write gates and absent-setting
+identities stay independent. See [workspace folders](session-config.md#fields-and-boundaries).
