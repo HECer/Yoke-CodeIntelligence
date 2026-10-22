@@ -1,5 +1,62 @@
 # Remaining implementation and acceptance
 
+Host-authorized languageServerSettings and pinned YAML ls_specific_settings
+now apply five generic settings to actual selected catalog registrations:
+initializationOptions, ls_path, ls_base_cmd, ls_args and ls_extra_args.
+Backend entries replace local > project > global; null inherits and an empty
+backend entry restores original host defaults. Initialization options merge only
+top-level keys; existing mandatory passive options remain enforced. Every project
+uses the original registry, preserving independent project defaults.
+
+The host separately authorizes trustedServerSettingsProjects. YAML cannot grant
+that authority, registration trust or source-execution rights. Changed launch
+commands/arguments additionally require the registered allowSourceExecution;
+TCP launch overrides refuse. Current passive checks run before process startup.
+Absent/null/empty policy maps and dormant grants retain default RAW/bindings.
+Changed policy/registry/grants bind sessions; stale clients refuse.
+
+At source 78a14774, 827 Rust functions pass across 37 scoped Cargo targets,
+including the complete library (564 passes), eight new integration functions and
+two new YAML functions. There are 13 existing ignores and one unchanged
+original OS1314 symlink-fixture failure. All ten original fixture Git blobs and
+prior frozen working bytes stay exact; no skips or system/privilege changes.
+All-target Clippy -Dwarnings, build, typecheck, npm 260 passed/3 existing skips and 344
+actual formatting roots pass on 1057 frozen inputs. Cargo fmt --all retains OS206.
+
+Actual old/new CLI same-fixture checks preserve default configuration/MCP53/symbol
+RAW and whole SQL before the new settings binding. A read-only memory backup
+reconstructs original SQL after removing only new session rows. Actual LSP options,
+YAML/JSON binding equivalence, upgrade/downgrade and grant revocation pass. New
+integration tests cover initialization, launch args, project changes, provider
+refresh, staged/owned refactoring, HTTP revocation and schema/budget boundaries.
+See [generic settings evidence](validation/integration-2026-10-22/server-settings/README.md)
+and [configuration contract](../native/docs/session-config.md#fields-and-boundaries).
+
+This qualifies the generic setting subset. Vendor-specific settings, core-
+dependency/JAR interpretation, installation/version options and 77-runtime review
+remain open. Six project settings retain partial/unimplemented scope, together
+with broader configuration/client work and original353/R1-R9/current Windows,
+authenticated Google/main/release acceptance. No full parity certificate is issued.
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Explicit gitIgnore and pinned YAML ignore_all_files_in_gitignore now select
 real source capture, symbol indexing and pattern-search defaults independently
 per registered project. False includes authorized Git-ignored sources; .ignore,
@@ -35,25 +92,6 @@ See [indexed Git-ignore evidence](validation/integration-2026-10-22/git-ignore-p
 and [the configuration contract](../native/docs/session-config.md#fields-and-boundaries).
 Six project settings, broader backend/configuration/client, authenticated Google
 and original353/R1-R9/current Windows/main/release acceptance remain open.
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 Ordered languageServers now selects actual current host-registered catalog
 backends per project. Local overrides project, then global; null inherits.

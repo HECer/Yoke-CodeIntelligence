@@ -10492,6 +10492,43 @@
           "activation_command_timeout"
         ],
         "fullParityCertified": false
+      },
+      "nativeGenericServerSettingsCheckpoint": {
+        "sourceCommit": "78a14774852dda99eddfbc4acc833405de56f9ac",
+        "index": "docs/validation/integration-2026-10-22/server-settings/index.json",
+        "frozenInputs": 1057,
+        "distinctRustFunctionsPassed": 827,
+        "cargoTargets": 37,
+        "completeNativeLibraryPassed": 564,
+        "knownOriginalOs1314Failures": 1,
+        "existingIgnored": 13,
+        "newFunctions": 10,
+        "genericKeys": [
+          "initializationOptions",
+          "ls_path",
+          "ls_base_cmd",
+          "ls_args",
+          "ls_extra_args"
+        ],
+        "separateHostProjectTrustRequired": true,
+        "runtimeAndSourceExecutionGrantsUnchanged": true,
+        "originalRegistryPerProject": true,
+        "actualLspLaunchInitializeStagedOwnedHttpRevocationValidated": true,
+        "legacyRawAndWholeSqlBeforeBindingExact": true,
+        "originalSqlReconstructedRemovingOnlyNewSessionRows": true,
+        "pinnedYamlJsonBindingEquivalent": true,
+        "actualFormatTargetRootsChecked": 344,
+        "cargoFormatAllOs206": true,
+        "vendorSpecificSettingsAndInstallVersionQualificationRemaining": true,
+        "remainingProjectSettings": [
+          "encoding",
+          "language_backend",
+          "ls_specific_settings",
+          "ls_additional_workspace_folders",
+          "activation_command",
+          "activation_command_timeout"
+        ],
+        "fullParityCertified": false
       }
     },
     {

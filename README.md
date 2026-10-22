@@ -30,6 +30,7 @@ Explicit per-project LF/CRLF/native settings format prepared source after-bytes
 before review and verification; saved plans and original captures stay immutable.
 Additive per-project source exclusions also bind captures and current workspace
 write scope while retaining exact historical evidence and recovery.
+Host-authorized generic language-server settings reach actual selected processes, while preserving runtime, source-execution and passive admission boundaries.
 Explicit Git-ignore analysis selection includes authorized ignored sources while preserving source provenance, read-only facts and current workspace write admission.
 Ordered per-project language-server selection uses only explicitly registered host backends, with declared-extension matching and an explicit first fallback.
 Workspace selections also guard direct and staged semantic transports and folder-root moves.

@@ -811,3 +811,5 @@ is invented. The same original-region dependency closure, provider/source
 admission and surviving-AST postcondition feed one ordinary guarded plan. See the
 [contract](../native/docs/propagated-delete.md#explicit-function-binding-policy)
 and [evidence](validation/integration-2026-10-19/function-bindings/index.json).
+
+Generic per-backend settings replace complete language entries across project layers, then overlay only top-level initialization keys on original host registrations. Explicit host project trust, unchanged runtime/source-execution grants, passive admission and selected-session/provider bindings remain separate. Each project derives from the original registry. Vendor dialect/install/runtime qualification remains open.
