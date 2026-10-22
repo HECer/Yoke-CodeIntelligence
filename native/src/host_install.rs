@@ -17,6 +17,12 @@ mod adapter;
 #[path = "host_install_claude_hooks.rs"]
 mod claude_hooks;
 pub use claude_hooks::session_start as claude_session_start;
+#[path = "host_install_source_hooks.rs"]
+mod source_hooks;
+pub use source_hooks::{
+    SourceHookLimits, SourceHookMode, SourceHookSource, SourceStatusShell,
+    source_hook as claude_source_hook,
+};
 #[path = "host_install_io.rs"]
 mod io;
 #[path = "host_install_recovery.rs"]
@@ -1039,7 +1045,9 @@ fn plan_for(
             .filter(|r| r.status == "installed")
             .map(|r| r.files.get(index).context("Host receipt target absent"))
             .transpose()?;
-        if adapter::profile(selection) == claude_hooks::PROFILE && previous.is_none() {
+        if [claude_hooks::PROFILE, source_hooks::PROFILE].contains(&adapter::profile(selection))
+            && previous.is_none()
+        {
             ensure!(
                 actual.is_none(),
                 "Existing Claude hook settings cannot be adopted"

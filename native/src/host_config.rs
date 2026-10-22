@@ -8,6 +8,7 @@ mod claude_hooks;
 #[path = "host_config_mcp.rs"]
 mod mcp;
 pub use claude_hooks::patch as claude_hook_settings_patch;
+pub use claude_hooks::patch_source as claude_source_hook_settings_patch;
 pub use mcp::json_mcp_patch;
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -17,6 +18,7 @@ pub enum Format {
     JsoncNamedEntry,
     JsonMcpNamedEntryV1,
     ClaudeHookSettingsV1,
+    ClaudeSourceHookSettingsV1,
     TomlTable,
 }
 
@@ -310,6 +312,9 @@ pub fn apply_patch(input: &[u8], patch: &Patch, deadline: &Deadline) -> Result<V
             }
             Format::JsonMcpNamedEntryV1 => mcp::checked_owned(&output, owned, deadline)?,
             Format::ClaudeHookSettingsV1 => claude_hooks::checked(&output, owned, deadline)?,
+            Format::ClaudeSourceHookSettingsV1 => {
+                claude_hooks::checked_source(&output, owned, deadline)?
+            }
             Format::TomlTable => {
                 checked_toml_owned(&output, owned, deadline)?;
             }

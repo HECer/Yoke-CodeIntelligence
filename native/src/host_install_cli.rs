@@ -83,6 +83,14 @@ struct SelectionFile {
     deny_unknown_fields
 )]
 enum AdapterSelection {
+    ClaudeSourceHooksV1 {
+        source_root: PathBuf,
+        view_id: String,
+        #[serde(default)]
+        limits: host_install::SourceHookLimits,
+        #[serde(default)]
+        status_shell: Option<PathBuf>,
+    },
     ClaudeSessionHooksV1 {
         source_root: PathBuf,
     },
@@ -195,6 +203,30 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
         yoke::json::decode(super::input_json(args.selection_path(), 128_000)?)?;
     deadline.check()?;
     let selection = match &file.adapter {
+        Some(AdapterSelection::ClaudeSourceHooksV1 {
+            source_root,
+            view_id,
+            limits,
+            status_shell,
+        }) => {
+            let selected = Selection::claude_source_hooks(
+                &file.installation,
+                &file.target_roots,
+                &file.executable,
+                &file.policy,
+                &file.state_root,
+                host_install::SourceHookSource {
+                    root: source_root,
+                    view_id,
+                    limits: limits.clone(),
+                },
+                &deadline,
+            )?;
+            match status_shell {
+                Some(path) => selected.with_source_status_shell(path, &deadline)?,
+                None => selected,
+            }
+        }
         Some(AdapterSelection::ClaudeSessionHooksV1 { source_root }) => {
             Selection::claude_session_hooks(
                 &file.installation,

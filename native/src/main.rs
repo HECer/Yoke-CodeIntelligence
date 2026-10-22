@@ -9,6 +9,7 @@ use std::{
 use yoke::{Engine, capture::Deadline};
 mod bedrock_cli;
 mod claude_session_start_cli;
+mod claude_source_hook_cli;
 mod digest_history_capture_cli;
 mod digest_history_job_cli;
 mod digest_inbox_cli;
@@ -99,6 +100,7 @@ enum ExtensionOperation {
     Decisions(Box<DecisionArguments>),
     HostInstall(Box<host_install_cli::Arguments>),
     ClaudeSessionStart(Box<claude_session_start_cli::Arguments>),
+    ClaudeSourceHook(Box<claude_source_hook_cli::Arguments>),
     MeaningArchive(Box<meaning_archive_cli::Arguments>),
     Meaning(Box<meaning_cli::Arguments>),
     MeaningIdentity(Box<meaning_identity_cli::Arguments>),
@@ -2012,6 +2014,7 @@ fn run_parity(
         ExtensionOperation::Skills(_) => bail!("Skill host dispatch error"),
         ExtensionOperation::HostInstall(_) => bail!("Host installation dispatch error"),
         ExtensionOperation::ClaudeSessionStart(_) => bail!("Claude hook dispatch error"),
+        ExtensionOperation::ClaudeSourceHook(_) => bail!("Claude source hook dispatch error"),
         ExtensionOperation::MeaningArchive(_) => bail!("Meaning archive host dispatch error"),
         ExtensionOperation::Meaning(_) => bail!("Meaning graph host dispatch error"),
         ExtensionOperation::MeaningIdentity(_) => bail!("Meaning identity host dispatch error"),
@@ -3489,7 +3492,10 @@ fn run(cli: Cli) -> Result<bool> {
         return meaning_archive_cli::run(args, &cli.root, cli.timeout, cli.max_bytes);
     }
     if let Operation::Extensions(extension) = &operation
-        && let ExtensionOperation::ClaudeSessionStart(args) = extension.as_ref()
+        && matches!(
+            extension.as_ref(),
+            ExtensionOperation::ClaudeSessionStart(_) | ExtensionOperation::ClaudeSourceHook(_)
+        )
     {
         ensure!(
             cli.root == std::path::Path::new(".")
@@ -3502,7 +3508,11 @@ fn run(cli: Cli) -> Result<bool> {
                 && cli.analyzer_epoch.is_none(),
             "Claude hook selects explicit host bindings; source/provider flags are unavailable"
         );
-        return args.run(cli.timeout, cli.max_bytes);
+        return match extension.as_ref() {
+            ExtensionOperation::ClaudeSessionStart(args) => args.run(cli.timeout, cli.max_bytes),
+            ExtensionOperation::ClaudeSourceHook(args) => args.run(cli.timeout, cli.max_bytes),
+            _ => unreachable!(),
+        };
     }
     if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::HostInstall(args) = extension.as_ref()

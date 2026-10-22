@@ -36,6 +36,16 @@ impl JsonMcpClient {
     deny_unknown_fields
 )]
 pub enum AdapterBinding {
+    ClaudeSourceHooksV1 {
+        source_root: DirectoryBinding,
+        source_path: String,
+        executable_path: String,
+        policy_path: String,
+        view_id: String,
+        limits: SourceHookLimits,
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        status_shell: Option<SourceStatusShell>,
+    },
     CodexMcpV1 {
         source_root: DirectoryBinding,
         source_path: String,
@@ -61,6 +71,7 @@ pub(super) fn profile(selection: &Selection) -> &'static str {
         None => PROFILE_ID,
         Some(AdapterBinding::CodexMcpV1 { .. }) => CODEX_PROFILE,
         Some(AdapterBinding::ClaudeSessionHooksV1 { .. }) => claude_hooks::PROFILE,
+        Some(AdapterBinding::ClaudeSourceHooksV1 { .. }) => source_hooks::PROFILE,
         Some(AdapterBinding::JsonMcpV1 { client, .. }) => client.profile(),
     }
 }
@@ -69,6 +80,7 @@ pub(super) fn filename(selection: &Selection) -> &'static str {
         None => "AGENTS.md",
         Some(AdapterBinding::CodexMcpV1 { .. }) => "config.toml",
         Some(AdapterBinding::ClaudeSessionHooksV1 { .. }) => claude_hooks::FILENAME,
+        Some(AdapterBinding::ClaudeSourceHooksV1 { .. }) => source_hooks::FILENAME,
         Some(AdapterBinding::JsonMcpV1 { client, .. }) => client.filename(),
     }
 }
@@ -185,6 +197,13 @@ pub(super) fn guard(
             executable_path,
             policy_path,
         }
+        | AdapterBinding::ClaudeSourceHooksV1 {
+            source_root,
+            source_path,
+            executable_path,
+            policy_path,
+            ..
+        }
         | AdapterBinding::ClaudeSessionHooksV1 {
             source_root,
             source_path,
@@ -241,6 +260,7 @@ pub(super) fn guard(
         );
         files.push(file);
     }
+    source_hooks::guard_status_shell(selection, files, d)?;
     Ok(())
 }
 fn server_name(selection: &Selection) -> String {
@@ -300,6 +320,18 @@ pub(super) fn patch(
     prior: Option<&OwnedFragment>,
     d: &Deadline,
 ) -> Result<Patch> {
+    if matches!(
+        selection.bindings.adapter,
+        Some(AdapterBinding::ClaudeSourceHooksV1 { .. })
+    ) {
+        let authored = source_hooks::body(selection)?;
+        return host_config::claude_source_hook_settings_patch(
+            bytes,
+            install.then_some(authored.as_slice()),
+            prior,
+            d,
+        );
+    }
     if matches!(
         selection.bindings.adapter,
         Some(AdapterBinding::ClaudeSessionHooksV1 { .. })
