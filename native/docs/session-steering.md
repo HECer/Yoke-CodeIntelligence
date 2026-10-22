@@ -456,3 +456,8 @@ Workspace selection also applies in common direct/staged LSP transport before
 passive-policy checks and profile hashing. Owned move intents and directory-move
 root admission use the same effective configuration, preserving old registrations
 and immutable evidence. See [route qualification](../../docs/validation/integration-2026-10-22/symbol-workspace-routes/README.md).
+
+Ordered language-server selections bind actual current trusted host registrations,
+not source-provided runtime configuration. Direct/staged/owned calls and lifecycle
+refresh share per-file first-supporting/first-fallback selection. Absent policies
+and dormant registrations preserve legacy bindings. See [qualification](../../docs/validation/integration-2026-10-22/server-selection/README.md).

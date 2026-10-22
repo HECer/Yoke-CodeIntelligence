@@ -1,5 +1,60 @@
 # Remaining implementation and acceptance
 
+Ordered languageServers now selects actual current host-registered catalog
+backends per project. Local overrides project, then global; null inherits.
+The first backend supporting the file extension wins, otherwise the first is
+the explicit fallback. Provider errors do not silently try another backend.
+CLI and HTTP host registrations remain separate from YAML/project policy,
+require explicit runtime authority and start nothing merely by registration.
+Direct/staged/owned LSP paths and lifecycle refresh share this selection;
+mixed-backend directory moves refuse before provider or plan publication.
+Changed registry/configuration/order binds a new session identity. Absent/null/
+empty policies and dormant registrations retain preceding default behavior.
+
+At source 60d9379b, 294 Rust functions pass across 39 scoped targets,
+with 5 existing ignores and one unchanged original OS1314 failure during
+symlink fixture creation. Ten new functions cover actual ordering/fallback,
+independent projects, stale bindings, schema/authority/budget adversaries,
+direct LSP, owned symbol move, lifecycle/cancellation, HTTP revocation and YAML.
+All ten original symlink fixture Git blobs and earlier frozen working bytes
+remain unchanged. No skips, system settings or privileges were changed.
+
+All-target Clippy -Dwarnings, native build, typecheck, npm260/3 existing skips
+and 342 actual format roots pass on 1051 frozen inputs. Cargo fmt --all retains
+Windows OS206; bounded direct rustfmt checks every root. Actual published CLI
+RED/SAME-fixture GREEN preserves absent/null/empty and dormant-registry config
+RAW and MCP53/real-hover RAW. Original whole SQL remains exact before new
+bindings; a read-only memory backup reconstructs it exactly after removing only
+four new session rows. Original stored values, source/Git/host/provider/fixture
+bytes stay exact. Actual selected CLI/MCP calls verify overlap order and fallback;
+legacy-only registration and changed session bindings refuse.
+The first RED harness failed on an incorrect response-envelope assertion;
+corrected RED2 records genuine old-CLI positives and new-schema refusals.
+See [indexed server-selection evidence](validation/integration-2026-10-22/server-selection/README.md)
+and [the configuration contract](../native/docs/session-config.md#fields-and-boundaries).
+Seven project settings, broader configuration/backend/client, authenticated
+Google and original R1-R9/353/current Windows/main/release acceptance stay open.
+Catalog extension matching does not certify any of the 77 runtime backends.
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Workspace selections now reach the common LSP transport before passive-policy
 validation, provider-profile hashing and process startup. Direct navigation,
 refactoring queries, staged edits, provider restart and owned symbol-move intents
@@ -32,25 +87,6 @@ and [the workspace contract](../native/docs/session-config.md#fields-and-boundar
 Eight project settings and the broader configuration/backend/client, authenticated
 Google, original R1-R9/353/current Windows/main/release acceptance remain open.
 No system setting, original inventory assessment or protected process changes.
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 Host-selected symbolWorkspaceFolders and YAML ls_workspace_folders now define
 a separate structural symbol-index projection and real LSP workspace roots.

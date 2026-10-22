@@ -58,6 +58,14 @@ from the restricted primary Engine, preserving independent secondary rights.
 Overlapping writable registrations refuse; query plan carriers use the existing
 editing gate. False/absent keeps old fingerprints and serialization exact.
 
+Optional ordered languageServers resolves only current trusted host backend
+registrations. File-extension selection and explicit first fallback are applied
+at common direct/staged LSP and owned-move entrypoints before passive admission
+and profile hashing. The declared ID also binds the provider profile. Independent
+project policies and complete registry configuration bind selected sessions;
+dormant registrations preserve unselected legacy identities. YAML grants no
+runtime registration or execution.
+
 Effective workspace configuration is derived at common LSP entrypoints before
 passive validation and profile hashing. Staged refactors, owned move intents and
 direct navigation share that selection; folder-move admission checks effective

@@ -10436,6 +10436,32 @@
         "actualCargoFormatTargetRootsChecked": 341,
         "cargoFormatAllOs206": true,
         "fullParityCertified": false
+      },
+      "nativeOrderedLanguageServersCheckpoint": {
+        "sourceCommit": "60d9379bba1beb85678cfab7773a7985b9630c4a",
+        "index": "docs/validation/integration-2026-10-22/server-selection/index.json",
+        "frozenInputs": 1051,
+        "distinctRustFunctionsPassed": 294,
+        "knownOriginalOs1314Failures": 1,
+        "existingIgnored": 5,
+        "newFunctions": 10,
+        "actualOrderedSelectionFallbackAndHostAuthorityValidated": true,
+        "directStagedOwnedLifecycleAndHttpPathsValidated": true,
+        "legacyAbsentNullEmptyAndDormantRegistrationsRawExact": true,
+        "originalLogicalSqlReconstructedWithOnlyFourNewSessionRowsRemovedInMemory": true,
+        "originalTenSymlinkFixtureGitAndFrozenWorkingBytesUnchanged": true,
+        "actualFormatTargetRootsChecked": 342,
+        "cargoFormatAllOs206": true,
+        "remainingProjectSettings": [
+          "encoding",
+          "language_backend",
+          "ignore_all_files_in_gitignore",
+          "ls_specific_settings",
+          "ls_additional_workspace_folders",
+          "activation_command",
+          "activation_command_timeout"
+        ],
+        "fullParityCertified": false
       }
     },
     {
