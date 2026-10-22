@@ -10560,6 +10560,33 @@
         ],
         "originalWindowsPrerequisitesStillOpen": true,
         "fullParityCertified": false
+      },
+      "nativeAdditionalSemanticFoldersCheckpoint": {
+        "sourceCommit": "6eece132b2bc69b71703aeb4eaab5f9807d7f721",
+        "index": "docs/validation/integration-2026-10-22/semantic-workspace/index.json",
+        "frozenInputs": 1061,
+        "distinctRustFunctionsPassed": 833,
+        "testGroups": 37,
+        "completeNativeLibraryPassed": 569,
+        "newFunctions": 10,
+        "knownOriginalOs1314Failures": 1,
+        "existingIgnored": 13,
+        "formatRoots": 345,
+        "sameImmutableCaptureOnly": true,
+        "primarySymbolIndexAndCaptureUnchanged": true,
+        "originalDefaultConfigurationMcp53AndLspDataRawExact": true,
+        "variableNativeEnvelopeFields": [
+          "requestId",
+          "metrics.durationMs"
+        ],
+        "variableFieldsIndependentlyProvenByOriginalBinaryRepeat": true,
+        "originalWholeSqlReconstructedRemovingOnlyNewSessionRows": true,
+        "actualInstalledRustAnalyzer": "rust-analyzer 1.94.1 (e408947b 2026-03-25)",
+        "actualInstalledRuntimeCrossFolderReferenceWithExactSourceBinding": true,
+        "sourceExecutionAuthorized": false,
+        "externalForeignRootsSupported": false,
+        "all77RuntimeAcceptanceCertified": false,
+        "fullParityCertified": false
       }
     },
     {

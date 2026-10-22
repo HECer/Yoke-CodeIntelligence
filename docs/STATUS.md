@@ -2,6 +2,62 @@
 
 ## Current integration work
 
+Optional additionalWorkspaceFolders and pinned YAML ls_additional_workspace_folders
+now add relative semantic roots from the same immutable captured source. Independent
+global/project/local selection leaves the primary native symbol index and capture
+policy unchanged. Null inherits; an explicit empty local/project list clears inherited
+extras. Absent/null/all-empty policies preserve default serialized identities.
+External, foreign-snapshot, protected, ignored-only and missing roots refuse before
+provider startup. Effective host roots are preserved and deduplicated within budgets.
+Common transport, staged/owned refactoring, refresh and folder-move admission use
+the same effective roots and current session binding. YAML grants no runtime trust.
+
+At source 6eece132, 833 Rust functions pass across 37 scoped test groups,
+including the full library (569 passes), eight new integration functions and two
+new YAML functions. Thirteen existing ignores and one unchanged original OS1314
+symlink prerequisite remain. All ten original fixtures keep exact Git and frozen
+working bytes. No test skips, system or privilege changes were introduced.
+All-target Clippy -Dwarnings, native build, typecheck, npm 260 passed/3 existing
+skips and 345 actual formatting roots pass on 1061 frozen inputs. Cargo fmt --all
+retains Windows OS206; this is not whole current Windows certification.
+
+Actual old/new CLI same-fixture checks preserve default configuration/MCP53 and
+native LSP data RAW, primary symbols and original SQL. Only Native requestId and
+metrics.durationMs vary; an original-binary repeat independently proves this and
+all other envelope fields plus the literal data JSON bytes are compared. New
+sessions can be removed from a read-only memory backup to reconstruct original
+SQL exactly. YAML/JSON bindings, stale upgrades/downgrades and source bytes pass.
+The installed rust-analyzer 1.94.1 also resolves an exact source-bound cross-folder
+reference in an owned one-crate project without source-execution authority or
+external dependencies. Manifestless and unusual outside-package attempts remain
+recorded failures; they do not certify broader semantic quality or all 77 runtimes.
+See [semantic workspace evidence](validation/integration-2026-10-22/semantic-workspace/README.md)
+and [configuration contract](../native/docs/session-config.md#fields-and-boundaries).
+
+The additional-folder setting remains partial for external/foreign sources.
+Vendor settings/install/version/runtime work, other project-setting extensions,
+broader configuration/client work, authenticated Google, original353/R1-R9/current
+Windows/main/release acceptance remain open. No full parity certificate is issued.
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Standard project YAML defaults now confirm existing native UTF-8/LSP behavior,
 no activation command, default integer timeout 180 and no additional workspace
 folders. These values add no inert HostProfile policy or runtime authority.
@@ -32,25 +88,6 @@ and [configuration contract](../native/docs/session-config.md#fields-and-boundar
 Six project settings retain partial/unimplemented extension scope. Vendor-specific
 server dialect/install/runtime work, broader configuration/client work, authenticated
 Google, original353/R1-R9/current Windows/main/release acceptance remain open.
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 Host-authorized languageServerSettings and pinned YAML ls_specific_settings
 now apply five generic settings to actual selected catalog registrations:
