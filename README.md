@@ -233,3 +233,5 @@ through native sessions and the existing facade, with exact source/effect checks
 and separate verification, approval, application and recovery.
 
 Explicit compiler-affected analysis also preserves property/accessor and callable-slot source contracts for unobserved generic classes, with separate reference/effect evidence and no invented runtime dispatch. See [compiler-affected](native/docs/git-compiler-affected.md).
+
+Captured named-class TypeScript constructor parameter properties also retain checked ownership and source-contract proofs; unsupported anonymous ownership stays explicitly partial.

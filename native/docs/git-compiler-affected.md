@@ -187,8 +187,8 @@ Depth zero emits original seeds only, with no incoming or contract traversal.
 Boundary states separately count `unexaminedIncoming` and
 `unexaminedContractBindings`. Contract and incoming proof rows share the one
 `maxRelations` bound and visit budget; all states/output/deadline bounds still
-apply. Constructor-parameter property contracts, receiver/heritage-only effects and
-broader generic/runtime completeness remain explicit limitations.
+apply. Anonymous/class-expression constructor-property owners, receiver/heritage-only
+effects and broader generic/runtime completeness remain explicit limitations.
 
 Original changed declarations seed the incoming walk by exact native declaration
 binding or explicitly labeled original-source containment. Containment is byte
@@ -232,4 +232,8 @@ No identity, review, merge, execution or write authority is granted.
 
 ## Property source contracts
 
-`overridesProperty` and `implementsProperty` bind actual checker-selected physical property/accessor/callable slots separately from method contracts. Original class/interface heritage and owner spans, static sides and getter/setter roles are checked; private slots and opposite accessors do not become bindings. Their `compiler_property_contract_dependency` expansions cost zero incoming steps and share existing bounds. Inherited interface clauses keep parallel original proofs. No generic witness, assignability, runtime dispatch or invocation follows from this source association. A writer can retain a structural property reference to a getter declaration while its separate `sets` effect still targets the setter. Source-containment mappings retain their literal-byte basis rather than claiming a native semantic identity. Property contracts without a captured class/interface heritage anchor report explicit missing coverage while preserving original partial observations. Constructor-parameter property contracts and broader implicit, receiver/heritage-only and exhaustive effects remain unavailable.
+`overridesProperty` and `implementsProperty` bind actual checker-selected physical property/accessor/callable slots separately from method contracts. Original class/interface heritage and owner spans, static sides and getter/setter roles are checked; private slots and opposite accessors do not become bindings. Their `compiler_property_contract_dependency` expansions cost zero incoming steps and share existing bounds. Inherited interface clauses keep parallel original proofs. No generic witness, assignability, runtime dispatch or invocation follows from this source association. A writer can retain a structural property reference to a getter declaration while its separate `sets` effect still targets the setter. Source-containment mappings retain their literal-byte basis rather than claiming a native semantic identity. Property contracts without a captured class/interface heritage anchor report explicit missing coverage while preserving original partial observations. Anonymous constructor-property ownership and broader implicit, receiver/heritage-only and exhaustive effects remain partial.
+
+## Constructor parameter property contracts
+
+The selected TypeScript checker identifies constructor parameter properties explicitly. Captured named classes expose class-to-constructor and class-to-property receipts; normalized parameter nodes carry `parameterProperty` and the exact constructor `parameterOwner`. Native validation checks source containment, constructor body and matching ownership receipts before accepting `overridesProperty` or `implementsProperty`. Ordinary parameters are never promoted to properties. Parallel interface clauses retain separate proofs; contracts use the existing zero-step `compiler_property_contract_dependency` traversal with no invented instantiation or dispatch. Unsupported anonymous/class-expression owners emit `parameter_property_contract_owner_not_captured` while preserving prior partial observations. Constructor parameter initializers and implicit/runtime effects are not executed or exhaustively followed.

@@ -1,5 +1,66 @@
 # Remaining implementation and acceptance
 
+Compiler source contracts now include actual TypeScript constructor parameter
+properties on captured named classes. Physical parameter-property flags, an in-body
+constructor owner and exact class/constructor/property ownership proofs are
+validated. Ordinary parameters remain distinct. Field-to-parameter,
+parameter-to-parameter and parallel interface bindings retain original source proofs
+without inventing a generic instance, invocation or runtime execution.
+
+A genuine counterexample fails 0/1 against byte-identical published c0ad70fb
+production, then passes after correction. Anonymous/class-expression owners remain
+explicitly partial: a real old/new CLI regression was caught and fixed, Both
+versions accept the valid input; the new report explicitly identifies missing
+constructor-property owner coverage. The additional relation is omitted without
+dropping existing property observations. Six forged
+flag/owner/body/ownership-receipt mutations are rejected.
+
+Source a1e6d407 passes 784 Rust functions across 17 scoped groups, including all 569
+library tests and 34 compiler-affected tests, with 9 existing ignores and zero
+failures in the final qualified groups. All-target Clippy with warnings denied,
+native build, typecheck, npm (260 passed, 3 existing skips) and 346 format roots
+pass on 1,065 frozen inputs. Focused R3 results are reused only under the identical
+source manifest. The completed library is likewise reused. One earlier broader
+attempt records an unchanged Windows member-list cleanup refusal (11 pass/1 fail);
+its one unchanged-source group repeat passes 12/12. The initial failure is retained,
+cleanup is not weakened, and its cause remains a separate open investigation. Cargo
+fmt --all retains Windows OS206; every actual formatting root is checked.
+
+Actual native Git/compiler-affected CLI checks use trusted TypeScript 5.8.3 over
+owned Unicode/CRLF snapshots, field/constructor-property contracts, parallel
+interface proofs and depth-zero behavior. The execution canary remains absent;
+source/Git and whole fixture SQL remain exact. Old/new default configuration, MCP53
+and literal LSP data remain exact apart from independently old-repeat-proven
+requestId/duration. The original SQL reconstructs exactly after removing only new
+dashboard session rows in read-only memory. All owned Jobs are empty.
+
+The ten original symlink fixtures remain byte-exact. Their Windows OS1314
+acceptance, broader anonymous/implicit/receiver/heritage effects, exhaustive
+compiler quality, all 77 runtimes and whole-native/main/release acceptance remain
+open. System settings and original 353 inventory assessments are unchanged. See
+[constructor-property
+evidence](validation/integration-2026-10-22/compiler-parameter-properties/README.md)
+and [compiler-affected contract](../native/docs/git-compiler-affected.md).
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, remaining dashboard management and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and broader database version/mixed-source qualification. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Actual compiler property/accessor and callable-slot source contracts now use
 separate overridesProperty/implementsProperty relations. Changed unobserved
 generic getters or callable fields can retain consumers bound to base/interface
@@ -26,7 +87,7 @@ results are reused only on the identical frozen manifest. All ten original
 symlink fixture Git/prior working bytes remain exact; their Windows acceptance
 is still open. No new skip, system/privilege or protected-linker change occurs.
 
-The actual native Git-workflow/compiler-affected CLI uses trusted TypeScript5.8.3
+The actual native Git-workflow/compiler-affected CLI uses trusted TypeScript 5.8.3
 over owned captured Unicode/CRLF sources, records the new getter and parallel
 callable-property bindings and confirms depth-zero behavior. Its source-execution
 canary remains absent; original source/Git and whole fixture SQL stay exact.
@@ -35,28 +96,9 @@ only requestId/duration are excluded after an independent old-binary repeat.
 Original fixture SQL is exact before a new optional dashboard binding and
 reconstructs exactly after removing only its new session rows in read-only
 memory. Existing dashboard host-exit cleanup remains checked. All owned Jobs
-are empty. This is scoped evidence, not current whole Windows/all77/full parity.
+are empty. This is scoped evidence, not current whole Windows/all 77/full parity.
 See [compiler property-contract evidence](validation/integration-2026-10-22/compiler-property-contracts/README.md)
 and [compiler-affected contract](../native/docs/git-compiler-affected.md).
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, remaining dashboard management and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and broader database version/mixed-source qualification. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 An explicit host dashboard setting now enables a private read-only native
 session view through open_dashboard, cfg.open_dashboard() or openDashboard.
@@ -94,7 +136,7 @@ failed activity, tool filtering and mode changes. The first visual round found
 long project names widening the 390px layout to718px; corrected CSS was rebuilt,
 retested and visually checked at1440px and390px without page overflow. Owned
 test/browser Jobs are empty. This is scoped acceptance, not full accessibility,
-all-browser, all77-runtime, original353/R1-R9 or current whole Windows certification.
+all-browser, all 77-runtime, original 353/R1-R9 or current whole Windows certification.
 See [dashboard evidence](validation/integration-2026-10-22/dashboard/README.md)
 and [dashboard contract](../native/docs/session-dashboard.md).
 
@@ -112,7 +154,7 @@ Host read-only, Planning mode and stale binding refuse; the actual provider
 rejects ../../escape as an invalid identifier (-32602). Source execution and
 provider commands remain unauthorized; no dependencies are supplied. This adds
 runtime/operation evidence without production changes or new Rust-suite counts.
-It does not certify other crates, compiler/reference completeness or all77
+It does not certify other crates, compiler/reference completeness or all 77
 backends. See [actual Rust rename evidence](validation/integration-2026-10-22/rust-rename-live/README.md).
 
 The database residual summary now distinguishes implemented connectors from
@@ -157,9 +199,9 @@ duration are excluded after an independent repeat of the original binary.
 See [Unicode workspace evidence](validation/integration-2026-10-22/unicode-workspace/README.md)
 and [configuration contract](../native/docs/session-config.md#fields-and-boundaries).
 
-This does not certify all filesystem alias rules, all77 runtimes or broader
+This does not certify all filesystem alias rules, all 77 runtimes or broader
 semantic quality. External/foreign roots, other project-setting extensions,
-original353/R1-R9, authenticated Google, current whole Windows, main/release and
+original 353/R1-R9, authenticated Google, current whole Windows, main/release and
 the other listed status work remain open.
 
 Passive Rust now omits captured rust-project.json selectors from its private
@@ -196,7 +238,7 @@ See [passive JSON-selector evidence](validation/integration-2026-10-22/rust-json
 and [provider authority](../native/docs/provider-authority.md).
 
 Broader all-77 runtime/vendor settings/install/version acceptance, remaining
-project-setting extensions, original353/R1-R9, authenticated Google, current whole
+project-setting extensions, original 353/R1-R9, authenticated Google, current whole
 Windows, main/release and other listed status work remain open.
 
 Optional additionalWorkspaceFolders and pinned YAML ls_additional_workspace_folders
@@ -233,7 +275,7 @@ and [configuration contract](../native/docs/session-config.md#fields-and-boundar
 
 The additional-folder setting remains partial for external/foreign sources.
 Vendor settings/install/version/runtime work, other project-setting extensions,
-broader configuration/client work, authenticated Google, original353/R1-R9/current
+broader configuration/client work, authenticated Google, original 353/R1-R9/current
 Windows/main/release acceptance remain open. No full parity certificate is issued.
 
 Standard project YAML defaults now confirm existing native UTF-8/LSP behavior,
@@ -265,7 +307,7 @@ and [configuration contract](../native/docs/session-config.md#fields-and-boundar
 
 Six project settings retain partial/unimplemented extension scope. Vendor-specific
 server dialect/install/runtime work, broader configuration/client work, authenticated
-Google, original353/R1-R9/current Windows/main/release acceptance remain open.
+Google, original 353/R1-R9/current Windows/main/release acceptance remain open.
 
 Host-authorized languageServerSettings and pinned YAML ls_specific_settings
 now apply five generic settings to actual selected catalog registrations:
@@ -302,7 +344,7 @@ and [configuration contract](../native/docs/session-config.md#fields-and-boundar
 This qualifies the generic setting subset. Vendor-specific settings, core-
 dependency/JAR interpretation, installation/version options and 77-runtime review
 remain open. Six project settings retain partial/unimplemented scope, together
-with broader configuration/client work and original353/R1-R9/current Windows,
+with broader configuration/client work and original 353/R1-R9/current Windows,
 authenticated Google/main/release acceptance. No full parity certificate is issued.
 
 Explicit gitIgnore and pinned YAML ignore_all_files_in_gitignore now select
@@ -339,7 +381,7 @@ whole SQL equality after capture growth, or a current whole-native certificate.
 See [indexed Git-ignore evidence](validation/integration-2026-10-22/git-ignore-policy/README.md)
 and [the configuration contract](../native/docs/session-config.md#fields-and-boundaries).
 Six project settings, broader backend/configuration/client, authenticated Google
-and original353/R1-R9/current Windows/main/release acceptance remain open.
+and original 353/R1-R9/current Windows/main/release acceptance remain open.
 
 Ordered languageServers now selects actual current host-registered catalog
 backends per project. Local overrides project, then global; null inherits.
