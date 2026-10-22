@@ -436,3 +436,8 @@ Explicit sourceLineEndings and selected YAML line_ending independently bind
 global/project/local source formatting before immutable plan publication. Missing
 settings retain legacy replies; source formatting never grants edit/apply/runtime
 authority. See [source line endings](session-config.md#source-line-endings).
+
+Explicit sourceExclusions and selected YAML ignored_paths add independent negative
+source rules without weakening earlier host exclusions or runtime/write gates.
+Captured rules replay independently; current workspace writes also check current
+selection. See [source exclusions](session-config.md#source-exclusion-groups).

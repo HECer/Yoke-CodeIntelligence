@@ -1,5 +1,61 @@
 # Remaining implementation and acceptance
 
+Explicit sourceExclusions and selected YAML ignored_paths now add bounded
+Gitignore-style negative rules per global/project/local host layer. Independent
+groups combine by exclusion; a later layer cannot reopen an earlier restriction.
+Concrete case semantics and ordered patterns bind immutable capture options.
+Current preparation and workspace application also check the current host scope,
+including plans based on older snapshots, before journals/source writes.
+Historical reads, checked replay, isolated verification copies and recovery keep
+their original evidence and bytes. Secondary projects derive from original host
+options, independently of primary-project rules. Empty/absent/null policies keep
+legacy identities. These are source selections, not OS access-control grants.
+
+At source 6b957ebc, 206 Rust functions pass across 25 scoped targets with
+4 existing ignores on 1039 frozen inputs; 12 functions are new. Initial
+Clippy finds two test-only default-field assignments, corrected to equivalent
+initializers. All-target Clippy -Dwarnings then passes. The first regression
+attempt fails linking capture_options (LNK1000/0xc0000006, nested 0xc000007f);
+a cleanup hash error initially masks that failure. A retry reports LNK1104 for
+the same output. Failed artifacts and protected processes are preserved.
+An explicit-package cargo rustc build under a fresh EXE filename runs the same
+unchanged capture_options tests successfully. No environment cause is certified.
+The first fresh-output command rejects the virtual manifest; its corrected
+package selection passes. A temporary launcher typo starts no Cargo and is fixed.
+No failed/partial result counts as a pass. Focused tests, Clippy and the genuine
+fresh-output test are reused only with identical source hashes and empty Jobs.
+Build/typecheck and npm260/3 skips pass. Cargo fmt --all hits Windows OS206;
+all 338 actual Cargo format target roots pass bounded rustfmt checks.
+Actual published-CLI RED/SAME-fixture GREEN preserves absent/null/empty CLI/MCP
+RAW, whole original SQL before additions and original records afterward.
+Old mixed-plan/historical bytes, source/Git/host/YAML and equivalent JSON/YAML
+session bindings remain exact. Owned executed verification, approved application
+and recovery are exercised in Rust, including current-scope refusal of an older
+fully approved/verified plan. See [the contract](../native/docs/session-config.md#source-exclusion-groups)
+and [indexed evidence](validation/integration-2026-10-22/source-exclusions/README.md).
+The ten remaining project keys, broader configuration/backend/client and full
+R1-R9/353/Windows/main/release acceptance remain open. Original inventory
+assessments, OS1314 fixtures and system settings are unchanged.
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Explicit sourceLineEndings now resolves global/project/local LF, CRLF or native
 source-write settings. Selected YAML line_ending maps to the same host slots.
 Original UTF-8 edits precede formatting; only edited after-files are converted.
@@ -33,25 +89,6 @@ and [indexed evidence](validation/integration-2026-10-22/source-line-endings/REA
 Original inventory assessments, OS1314 fixtures and system settings are unchanged.
 Broader configuration/backend/client and full R1-R9/353/Windows/main/release
 acceptance remain open.
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 Host primaryReadOnly now binds an explicit primary-project source restriction.
 Absent/false preserves prior profile bytes, fingerprints and replies. True blocks

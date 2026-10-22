@@ -58,6 +58,13 @@ from the restricted primary Engine, preserving independent secondary rights.
 Overlapping writable registrations refuse; query plan carriers use the existing
 editing gate. False/absent keeps old fingerprints and serialization exact.
 
+Explicit additive source exclusions bind ordered Gitignore-style groups and
+concrete case semantics into capture options. Replayed scopes validate every
+member; current host exclusions additionally constrain prepare/workspace apply.
+Historical evidence and recovery remain independent. Named engines derive
+from original host options, so primary-only filters do not leak to secondary
+projects. Missing rules preserve preceding serialized identities.
+
 Host-selected source line endings resolve separately for each registered project.
 The shared Store invocation context feeds every native plan producer; stored
 plans pin concrete LF/CRLF independently of current host policy. Formatting

@@ -28,6 +28,8 @@ Optional primary-project read-only policy blocks source changes while preserving
 independent secondary permissions and legacy bindings when absent/false.
 Explicit per-project LF/CRLF/native settings format prepared source after-bytes
 before review and verification; saved plans and original captures stay immutable.
+Additive per-project source exclusions also bind captures and current workspace
+write scope while retaining exact historical evidence and recovery.
 
 Explicit [Google Workspace capture](native/docs/google-workspace.md) selects
 hash-bound Docs/Sheets/Slides shortcuts with explicit host grants. A native HTTP

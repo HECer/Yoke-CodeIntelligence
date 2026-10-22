@@ -10368,6 +10368,25 @@
         "cargoFormatAllOs206": true,
         "actualCargoFormatTargetRootsChecked": 337,
         "fullParityCertified": false
+      },
+      "nativeSourceExclusionsCheckpoint": {
+        "sourceCommit": "6b957ebcb8c3bcc49aeb06cfe941e6b1f6b63450",
+        "index": "docs/validation/integration-2026-10-22/source-exclusions/index.json",
+        "frozenInputs": 1039,
+        "distinctRustFunctionsPassed": 206,
+        "existingIgnored": 4,
+        "newFunctions": 12,
+        "legacyAbsentNullEmptyRawAndBindingExact": true,
+        "additiveGlobalProjectLocalYamlValidated": true,
+        "immutableCapturedRulesAndConcreteCaseValidated": true,
+        "currentWorkspaceScopeOldPlanRefusalValidated": true,
+        "historicalReadReplayIsolationRecoveryExact": true,
+        "verifiedWorkspaceApplicationAndExactRecoveryValidated": true,
+        "freshOutputUnchangedCaptureOptionsTestsPassed": true,
+        "failedLinkArtifactsAndProtectedProcessesPreserved": true,
+        "cargoFormatAllOs206": true,
+        "actualCargoFormatTargetRootsChecked": 338,
+        "fullParityCertified": false
       }
     },
     {
