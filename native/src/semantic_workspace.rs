@@ -110,11 +110,7 @@ pub(crate) fn extend(
     let mut seen = BTreeSet::new();
     for value in primary.iter().chain(extra.iter()) {
         deadline.check()?;
-        let key = if cfg!(windows) {
-            value.to_lowercase()
-        } else {
-            value.clone()
-        };
+        let key = crate::symbol_workspace::folder_identity(value);
         if seen.insert(key) {
             roots.push(value.clone());
         }

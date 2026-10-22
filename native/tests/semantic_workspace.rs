@@ -104,6 +104,103 @@ fn frozen(engine: &mut Engine) -> Vec<u8> {
     serde_json::to_vec(&(snapshot, graph)).unwrap()
 }
 
+fn unicode_roots(root: &Path) -> [(&'static str, &'static str); 2] {
+    let values = [
+        (
+            "\u{130}",
+            "// \u{1f4a1} e\u{301}\r\nfn unicode_first() {}\r\n",
+        ),
+        (
+            "i\u{307}",
+            "// \u{1f9ed} e\u{301}\r\nfn unicode_second() {}\r\n",
+        ),
+    ];
+    assert_ne!(values[0].0, values[1].0);
+    assert_eq!(values[0].0.to_lowercase(), values[1].0.to_lowercase());
+    for (name, text) in values {
+        // Exclusive directory creation also rejects a real filesystem alias.
+        fs::create_dir(root.join(name)).unwrap();
+        fs::write(root.join(name).join("main.rs"), text).unwrap();
+    }
+    for (name, text) in values {
+        assert_eq!(
+            fs::read(root.join(name).join("main.rs")).unwrap(),
+            text.as_bytes()
+        );
+    }
+    values
+}
+
+#[test]
+fn distinct_unicode_roots_keep_both_source_bound_symbol_projections() {
+    let r = tempfile::tempdir().unwrap();
+    let root = root(r.path(), "source");
+    let log = r.path().join("log");
+    let values = unicode_roots(&root);
+    let roots = values.iter().map(|v| v.0.to_owned()).collect::<Vec<_>>();
+    assert_eq!(yoke::symbol_workspace::folders(&roots).unwrap(), roots);
+    if cfg!(windows) {
+        assert!(yoke::symbol_workspace::folders(&["app".into(), "APP".into()]).is_err());
+    }
+    let before = frozen(&mut engine(&root, &log));
+    let p = serde_json::from_value(json!({"symbolWorkspaceFolders":{"global":roots}})).unwrap();
+    let mut s = open(&root, &log, p, "unicode-symbols");
+    let found = symbols(&mut s);
+    assert_eq!(found["items"].as_array().unwrap().len(), 2, "{found}");
+    assert_eq!(found["symbolIndexScope"]["folders"], json!(roots));
+    for (folder, text) in values {
+        let path = format!("{folder}/main.rs");
+        let item = found["items"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|v| v["path"] == path)
+            .unwrap();
+        assert_eq!(item["contentHash"], yoke::model::hash(text));
+        let start = item["nameStartByte"].as_u64().unwrap() as usize;
+        let end = item["nameEndByte"].as_u64().unwrap() as usize;
+        assert_eq!(&text[start..end], item["name"].as_str().unwrap());
+        assert!(text[..start].contains('\u{301}'));
+    }
+    assert_eq!(frozen(&mut s.engine), before);
+    assert!(!log.exists());
+}
+
+#[test]
+fn distinct_unicode_primary_and_additional_roots_reach_provider_and_callback() {
+    let r = tempfile::tempdir().unwrap();
+    let root = root(r.path(), "source");
+    let log = r.path().join("log");
+    let values = unicode_roots(&root);
+    let before = frozen(&mut engine(&root, &log));
+    let p = serde_json::from_value(json!({"languageServers":{"global":["rust"]},"symbolWorkspaceFolders":{"global":[values[0].0]},"additionalWorkspaceFolders":{"global":[values[1].0]}})).unwrap();
+    let mut s = open(&root, &log, p, "unicode-context");
+    let value = s.engine.invoke("ci_find", json!({"languageServer":{"path":format!("{}/main.rs",values[0].0),"offset":values[0].1.find("unicode_first").unwrap(),"operation":"hover"}})).unwrap();
+    assert_eq!(value["status"], "ok", "{value}");
+    let metadata: Value = serde_json::from_str(
+        value["data"]["response"]["contents"]["value"]
+            .as_str()
+            .unwrap(),
+    )
+    .unwrap();
+    assert_eq!(metadata["folders"], json!([values[0].0, values[1].0]));
+    assert_eq!(metadata["callbackVerified"], true);
+    assert_eq!(value["data"]["contentHash"], yoke::model::hash(values[0].1));
+    let found = symbols(&mut s);
+    assert_eq!(found["items"].as_array().unwrap().len(), 1);
+    assert_eq!(
+        found["items"][0]["path"],
+        format!("{}/main.rs", values[0].0)
+    );
+    assert_eq!(frozen(&mut s.engine), before);
+    for (folder, text) in values {
+        assert_eq!(
+            fs::read(root.join(folder).join("main.rs")).unwrap(),
+            text.as_bytes()
+        );
+    }
+}
+
 #[test]
 fn absent_null_and_empty_additional_policies_keep_raw_bindings_source_and_graph() {
     let r = tempfile::tempdir().unwrap();

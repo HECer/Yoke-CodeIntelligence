@@ -144,6 +144,11 @@ Global/project/project-local YAML ls_workspace_folders uses the same policy.
 Local overrides project, then global; null inherits. Paths are relative to the
 registered project, with an optional leading ./, or the whole-root selector . .
 One to 32 unique, portable, unprotected folders are required. Empty lists refuse;
+Windows duplicate checks fold ASCII case only and preserve opaque Unicode names.
+Distinct names such as U+0130 and ASCII i followed by U+0307 remain separate in
+the primary symbol projection and the additional semantic-root union. Exact
+captured membership is still required; this comparison grants no filesystem
+authority and does not certify every filesystem's alias behavior.
 empty/null policy objects preserve preceding profile bytes and session bindings.
 Unregistered project selectors, outside paths, duplicates and unknown fields
 refuse. Missing, ignored-only and file-valued roots refuse against the selected

@@ -25,6 +25,15 @@ pub struct HostFolders {
     #[serde(skip_serializing_if = "BTreeMap::is_empty")]
     pub projects: BTreeMap<String, ProjectFolders>,
 }
+pub(crate) fn folder_identity(value: &str) -> String {
+    let mut key = value.to_owned();
+    if cfg!(windows) {
+        // Unicode lowercasing can expand a distinct filesystem name (U+0130
+        // becomes ASCII i plus U+0307). Keep opaque Unicode components exact.
+        key.make_ascii_lowercase();
+    }
+    key
+}
 pub fn folders(values: &[String]) -> Result<Vec<String>> {
     ensure!(
         !values.is_empty() && values.len() <= 32,
@@ -44,11 +53,7 @@ pub fn folders(values: &[String]) -> Result<Vec<String>> {
             } else {
                 crate::paths::normalized(value)?
             };
-            let key = if cfg!(windows) {
-                value.to_lowercase()
-            } else {
-                value.clone()
-            };
+            let key = folder_identity(&value);
             ensure!(seen.insert(key), "symbol_workspace_duplicate_folder");
             Ok(value)
         })
