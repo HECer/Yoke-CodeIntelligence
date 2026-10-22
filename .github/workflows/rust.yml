@@ -47,10 +47,10 @@ jobs:
       # Concurrency adversaries inside each test keep their original threads and assertions.
       - name: Test native Windows protected namespaces
         if: runner.os == 'Windows'
-        run: cargo test --workspace --locked --no-fail-fast -j 2 -- --test-threads=1
+        run: python scripts/run_native_tests.py --workspace --locked --no-fail-fast -j 2 -- --test-threads=1
       - name: Test native Unix targets
         if: runner.os != 'Windows'
-        run: cargo test --workspace --locked --no-fail-fast -j 2 -- --test-threads=2
+        run: python scripts/run_native_tests.py --workspace --locked --no-fail-fast -j 2 -- --test-threads=2
       - run: cargo test --locked --test live actual_rust_analyzer -- --ignored
       - run: cargo build --workspace --release --locked
       - uses: actions/upload-artifact@v4
