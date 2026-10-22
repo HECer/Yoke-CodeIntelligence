@@ -35,6 +35,7 @@ mod meaning_archive_cli;
 mod meaning_cli;
 mod meaning_identity_cli;
 mod meaning_projection_cli;
+mod media_asr_cli;
 mod mixed_meaning_cli;
 mod mixed_view_cli;
 mod neo4j_publish_cli;
@@ -1823,6 +1824,26 @@ struct HostRequest {
 }
 #[derive(Subcommand)]
 enum MediaOperation {
+    Transcribe {
+        asset: String,
+        #[arg(long)]
+        config: PathBuf,
+        #[arg(long)]
+        trust_worker: bool,
+    },
+    AsrStatus {
+        job: String,
+    },
+    AsrRead {
+        job: String,
+    },
+    AsrJobs {
+        asset: String,
+        #[arg(long, default_value_t = 0)]
+        offset: usize,
+        #[arg(long, default_value_t = 25)]
+        limit: usize,
+    },
     Inspect {
         path: String,
     },
@@ -4111,6 +4132,16 @@ fn run(cli: Cli) -> Result<bool> {
         (10..=600000).contains(&cli.timeout) && (1024..=4000000).contains(&cli.max_bytes),
         "Invalid timeout or output budget"
     );
+    if let Operation::Media { command } = &operation
+        && let Some(value) = media_asr_cli::execute(command, &cli.root, cli.timeout)?
+    {
+        ensure!(
+            serde_json::to_vec(&value)?.len() as u64 <= cli.max_bytes,
+            "ASR response exceeds output budget"
+        );
+        print(&value)?;
+        return Ok(true);
+    }
     if let Operation::Extensions(extension) = &mut operation
         && let ExtensionOperation::Decisions(args) = extension.as_mut()
     {
@@ -4770,6 +4801,10 @@ fn run(cli: Cli) -> Result<bool> {
         }
         Operation::Media { command } => {
             let data = match command {
+                MediaOperation::Transcribe { .. }
+                | MediaOperation::AsrStatus { .. }
+                | MediaOperation::AsrRead { .. }
+                | MediaOperation::AsrJobs { .. } => bail!("ASR dispatch admission missing"),
                 MediaOperation::Inspect { path } => yoke::media::inspect_with_worker(
                     &engine,
                     &path,

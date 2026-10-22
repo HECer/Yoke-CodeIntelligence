@@ -60,6 +60,7 @@ pub mod meaning_join;
 pub mod meaning_projection;
 pub mod meaning_view;
 pub mod media;
+pub mod media_asr;
 pub mod mixed_view;
 pub mod model;
 pub mod model_bedrock;

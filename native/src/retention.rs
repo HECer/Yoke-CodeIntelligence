@@ -831,6 +831,12 @@ fn validate_parity_records(store: &Store, deadline: &Deadline) -> Result<ParityD
                 // The complete authored revision/head graph is validated once
                 // by scan before any of these rows can be recognized.
             }
+            crate::media_asr::REQUEST | crate::media_asr::CONTROL => {
+                let roots = crate::media_asr::retained_roots(store, &id, deadline)?;
+                // Replayed model text and fingerprints never grant new roots.
+                identity_artifacts.extend(roots.iter().cloned());
+                artifacts.extend(roots);
+            }
             "native_model_batch_v1" => {
                 artifacts.extend(crate::provider_batches::validate_retained_batch(
                     store,
@@ -1318,6 +1324,13 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
             .push((format!("records:{kind}"), id.clone(), raw.clone()));
         if !known_kind(&kind) && !parity_records.contains(&(kind.clone(), id.clone())) {
             out.unknown.insert(kind.clone());
+        }
+        if kind == crate::media_asr::REQUEST || kind == crate::media_asr::CONTROL {
+            ensure!(
+                parity_records.contains(&(kind.clone(), id.clone())),
+                "Invalid ASR retained journal"
+            );
+            continue;
         }
         if kind == crate::meaning_identity::JOB_KIND {
             ensure!(

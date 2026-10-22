@@ -459,7 +459,7 @@ fn jpeg(bytes: &[u8], deadline: &Deadline) -> Result<Value> {
     }
     anyhow::bail!("JPEG end marker missing")
 }
-fn wav(bytes: &[u8], deadline: &Deadline) -> Result<Value> {
+pub(crate) fn wav(bytes: &[u8], deadline: &Deadline) -> Result<Value> {
     ensure!(
         bytes.starts_with(b"RIFF") && bytes.get(8..12) == Some(b"WAVE"),
         "Invalid RIFF/WAVE signature"
@@ -672,6 +672,16 @@ pub(crate) fn office_inspection_data(
         json!({"kind":"media_inspection","workspaceId":asset.workspace_id,"assetId":asset.id,"path":asset.path,"sourceHash":asset.source_hash,"blobId":asset.blob_id,"metadata":extracted["metadata"],"segments":extracted["segments"],"producer":PRODUCER,"captureConsistency":"stable_double_read","contentInterpretation":"native_openxml_text_and_cached_values","limitations":extracted["limitations"]}),
     )
 }
+pub(crate) fn technical_inspection_data(
+    asset: &Asset,
+    bytes: &[u8],
+    deadline: &Deadline,
+) -> Result<Value> {
+    let metadata = technical(&asset.path, bytes, deadline)?;
+    Ok(
+        json!({"kind":"media_inspection","workspaceId":asset.workspace_id,"assetId":asset.id,"path":asset.path,"sourceHash":asset.source_hash,"blobId":asset.blob_id,"metadata":metadata,"producer":PRODUCER,"captureConsistency":"stable_double_read","contentInterpretation":"not_performed","limitations":["Technical metadata is not OCR, speech recognition, visual interpretation or proof of a decodable media stream.","Native PDF text extraction requires the explicitly selected bounded native worker."]}),
+    )
+}
 pub fn inspect(engine: &Engine, path: &str, deadline: &Deadline) -> Result<Value> {
     let (asset, bytes) = capture(engine, path, deadline)?;
     let extension = Path::new(path)
@@ -688,10 +698,9 @@ pub fn inspect(engine: &Engine, path: &str, deadline: &Deadline) -> Result<Value
         result["contentInterpretation"] = data["contentInterpretation"].clone();
         return Ok(result);
     }
-    let metadata = technical(path, &bytes, deadline)?;
-    let data = json!({"kind":"media_inspection","workspaceId":asset.workspace_id,"assetId":asset.id,"path":asset.path,"sourceHash":asset.source_hash,"blobId":asset.blob_id,"metadata":metadata,"producer":PRODUCER,"captureConsistency":"stable_double_read","contentInterpretation":"not_performed","limitations":["Technical metadata is not OCR, speech recognition, visual interpretation or proof of a decodable media stream.","Native PDF text extraction requires the explicitly selected bounded native worker."]});
+    let data = technical_inspection_data(&asset, &bytes, deadline)?;
     let mut result = persist(engine, &asset, &bytes, &data, deadline)?;
-    result["metadata"] = metadata;
+    result["metadata"] = data["metadata"].clone();
     result["contentInterpretation"] = json!("not_performed");
     Ok(result)
 }
