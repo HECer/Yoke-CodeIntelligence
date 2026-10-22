@@ -43,6 +43,20 @@ and [dashboard contract](../native/docs/session-dashboard.md).
 Broader configuration/UI, authenticated Google (no approved test document),
 the ten original Windows prerequisites and other listed STATUS work remain open.
 
+Additional actual Windows runtime qualification at source d792a53c uses
+installed rust-analyzer 1.94.1 (e408947b 2026-03-25). Native MCP refactor.prepare/rename
+changes a declaration and cross-folder use across distinct U+0130/i+U+0307
+primary/additional roots in an owned single crate. Original source hashes and
+UTF-8 name offsets, both expected Unicode-name/CRLF after-blobs, all four base
+members and the derived manifest are exact. Original files stay unchanged;
+exactly one plan and no approval, application receipt or journal are created.
+Host read-only, Planning mode and stale binding refuse; the actual provider
+rejects ../../escape as an invalid identifier (-32602). Source execution and
+provider commands remain unauthorized; no dependencies are supplied. This adds
+runtime/operation evidence without production changes or new Rust-suite counts.
+It does not certify other crates, compiler/reference completeness or all77
+backends. See [actual Rust rename evidence](validation/integration-2026-10-22/rust-rename-live/README.md).
+
 ### Remaining scope
 
 Open work is summarized here. Later sections preserve results for their stated

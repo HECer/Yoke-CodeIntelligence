@@ -10789,6 +10789,32 @@
         "sourceExecutionAuthorized": false,
         "all77RuntimeAcceptanceCertified": false,
         "fullParityCertified": false
+      },
+      "nativeInstalledRustRenameCheckpoint": {
+        "sourceCommit": "d792a53ce6ddce878a39a0bfc0f239ed46bd03f3",
+        "cliSha256": "b83fa60bdcb1030f7f129261796c05ed70df3b6e72e9c33cad6c5aa5117e0eac",
+        "frozenInputs": 1065,
+        "rustAnalyzerVersion": "rust-analyzer 1.94.1 (e408947b 2026-03-25)",
+        "rustAnalyzerSha256": "8780a0a408169100c7b4df49ba2c9dcc4b40b48dd375e3985bd585f1a4fe0a57",
+        "positiveOperation": "Native MCP ci_session/refactor.prepare/rename",
+        "negativeCases": [
+          "Host primary read-only refusal",
+          "Planning-mode refusal",
+          "Stale host binding refusal before MCP initialization",
+          "Actual rust-analyzer invalid-identifier -32602 refusal"
+        ],
+        "newName": "local_renommé",
+        "sourceExecutionAuthorized": false,
+        "commandsExecuted": false,
+        "externalDependencies": 0,
+        "noApplyCalled": true,
+        "allOwnedJobsEmpty": true,
+        "productionCodeChanged": false,
+        "originalInventoryAssessmentsUnchanged": true,
+        "all77RuntimeAcceptanceCertified": false,
+        "fullStatusComplete": false,
+        "rawMembers": 25,
+        "index": "docs/validation/integration-2026-10-22/rust-rename-live/index.json"
       }
     },
     {
@@ -10870,7 +10896,33 @@
         "serena:tool:jet_brains_rename",
         "serena:tool:safe_delete_symbol"
       ],
-      "remainingBoundary": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic. Checked TypeScript/TSX/JavaScript/JSX declaration/export/ambient deletion and Rust/Python owning attribute/documentation/decorator deletion now keep original entity/evidence coordinates. Contextual method binding uses the nearest declared owner; nested functions stay functions. Multi-declarators, expression consumers, separate TS member decorators, otherwise empty required Python bodies and other-language attachment ownership remain outside these finite symbol-deletion contracts. Explicit captured_es_function_propagation_v1 now removes checked standalone target-call statements and newly unused private function dependencies in one bounded TS/JS ES module, including private cycles. Surviving reported/possible consumers and exported dependencies remain protected. Other expression consumers, module/declaration/language/file shapes, general propagation, future consumer changes and exhaustive compiler/IDE guarantees remain outside this finite policy."
+      "remainingBoundary": "Finite captured text directory moves retain their separately evidenced standard-LSP folder/resource contract. Default captured-file usage checks now support .ts/.js ES modules of at most eight named functions, using exact provider definition/reference bindings and conservative captured graph/path/name candidates before one guarded deletion plan. Unknown consumers remain explicit and remainingUsagesMayBreak stays true. Other file/declaration/language shapes, propagation, other symbol-parent declarations/languages, broader inline/rename/provider intents, exhaustive reference/IDE guarantees, binary or multiple-provider trees and host-scope/cross-filesystem migration remain open. Existing own_v1 attachment bundles, legacy plan identities and mandatory host permission/approval/verification/stale/recovery gates remain intact; multi-plan publication is not atomic. Checked TypeScript/TSX/JavaScript/JSX declaration/export/ambient deletion and Rust/Python owning attribute/documentation/decorator deletion now keep original entity/evidence coordinates. Contextual method binding uses the nearest declared owner; nested functions stay functions. Multi-declarators, expression consumers, separate TS member decorators, otherwise empty required Python bodies and other-language attachment ownership remain outside these finite symbol-deletion contracts. Explicit captured_es_function_propagation_v1 now removes checked standalone target-call statements and newly unused private function dependencies in one bounded TS/JS ES module, including private cycles. Surviving reported/possible consumers and exported dependencies remain protected. Other expression consumers, module/declaration/language/file shapes, general propagation, future consumer changes and exhaustive compiler/IDE guarantees remain outside this finite policy.",
+      "nativeInstalledRustRenameCheckpoint": {
+        "sourceCommit": "d792a53ce6ddce878a39a0bfc0f239ed46bd03f3",
+        "cliSha256": "b83fa60bdcb1030f7f129261796c05ed70df3b6e72e9c33cad6c5aa5117e0eac",
+        "frozenInputs": 1065,
+        "rustAnalyzerVersion": "rust-analyzer 1.94.1 (e408947b 2026-03-25)",
+        "rustAnalyzerSha256": "8780a0a408169100c7b4df49ba2c9dcc4b40b48dd375e3985bd585f1a4fe0a57",
+        "positiveOperation": "Native MCP ci_session/refactor.prepare/rename",
+        "negativeCases": [
+          "Host primary read-only refusal",
+          "Planning-mode refusal",
+          "Stale host binding refusal before MCP initialization",
+          "Actual rust-analyzer invalid-identifier -32602 refusal"
+        ],
+        "newName": "local_renommé",
+        "sourceExecutionAuthorized": false,
+        "commandsExecuted": false,
+        "externalDependencies": 0,
+        "noApplyCalled": true,
+        "allOwnedJobsEmpty": true,
+        "productionCodeChanged": false,
+        "originalInventoryAssessmentsUnchanged": true,
+        "all77RuntimeAcceptanceCertified": false,
+        "fullStatusComplete": false,
+        "rawMembers": 25,
+        "index": "docs/validation/integration-2026-10-22/rust-rename-live/index.json"
+      }
     },
     {
       "id": "managed_install_hook_lifecycle",
