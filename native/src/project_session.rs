@@ -85,6 +85,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
     #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub optional_defaults: Option<crate::session_steering::OptionalDefaults>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub agent_interface: Option<crate::session_steering::AgentInterface>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub startup_project: Option<String>,
@@ -109,6 +111,7 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            optional_defaults: None,
             agent_interface: None,
             startup_project: None,
             steering: None,
@@ -1006,6 +1009,17 @@ impl Session {
         } else {
             fingerprint
         };
+        let fingerprint = if let Some(defaults) = host.optional_defaults {
+            identity(&(
+                fingerprint,
+                "host_optional_defaults_v1",
+                defaults,
+                crate::session_steering::OPTIONAL_TOOLS,
+                crate::session_steering::OPTIONAL_APIS,
+            ))
+        } else {
+            fingerprint
+        };
         let fingerprint = if let Some(project) = &host.startup_project {
             identity(&(fingerprint, "host_startup_project_v1", project))
         } else {
@@ -1172,11 +1186,32 @@ impl Session {
     pub fn agent_interface(&self) -> Option<crate::session_steering::AgentInterface> {
         crate::session_steering::agent_interface(&self.host).map(|(value, _)| value)
     }
+    fn optional_tool_allowed(&self, name: &str) -> bool {
+        self.host.optional_defaults.is_none()
+            || self
+                .steering()
+                .is_ok_and(|s| s.is_some_and(|s| s.optional_tool_allowed(name)))
+    }
+    fn require_optional_tool(&self, name: &str) -> Result<()> {
+        if self.host.optional_defaults.is_some() {
+            ensure!(
+                self.steering()?
+                    .context("Selected optional defaults unavailable")?
+                    .optional_tool_allowed(name),
+                "Optional tool must be explicitly included under selected defaults"
+            );
+        }
+        Ok(())
+    }
     pub fn serena_tool_allowed(&self, name: &str) -> bool {
         use crate::session_steering::AgentInterface;
         match self.agent_interface() {
-            None => self.tool_allowed(name),
-            Some(AgentInterface::Tools) => name != "serena_repl" && self.tool_allowed(name),
+            None => self.tool_allowed(name) && self.optional_tool_allowed(name),
+            Some(AgentInterface::Tools) => {
+                (name != "serena_repl" || self.host.optional_defaults.is_some())
+                    && self.tool_allowed(name)
+                    && self.optional_tool_allowed(name)
+            }
             Some(AgentInterface::Repl) => {
                 crate::compatibility::repl_control_tool(name)
                     && !(name == "activate_project"
@@ -1187,13 +1222,17 @@ impl Session {
     pub(crate) fn require_serena_tool(&self, name: &str, deadline: &Deadline) -> Result<()> {
         use crate::session_steering::AgentInterface;
         match self.agent_interface() {
-            None => self.require_tool(name, deadline),
+            None => {
+                self.require_tool(name, deadline)?;
+                self.require_optional_tool(name)
+            }
             Some(AgentInterface::Tools) => {
                 ensure!(
-                    name != "serena_repl",
+                    name != "serena_repl" || self.host.optional_defaults.is_some(),
                     "Tool unavailable in selected agent interface"
                 );
-                self.require_tool(name, deadline)
+                self.require_tool(name, deadline)?;
+                self.require_optional_tool(name)
             }
             Some(AgentInterface::Repl) => {
                 self.check_tool_state(deadline)?;
@@ -1206,7 +1245,8 @@ impl Session {
         }
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
-        if self.agent_interface().is_some()
+        if self.host.optional_defaults.is_some()
+            || self.agent_interface().is_some()
             || self
                 .host
                 .steering
@@ -1240,7 +1280,8 @@ impl Session {
     }
     pub(crate) fn check_repl_state(&self, deadline: &Deadline) -> Result<()> {
         deadline.check()?;
-        if self.agent_interface().is_some()
+        if self.host.optional_defaults.is_some()
+            || self.agent_interface().is_some()
             || self.host.steering.as_ref().is_some_and(|s| {
                 s.has_api_exclusions() || s.has_memory_patterns() || s.has_inclusions()
             })
