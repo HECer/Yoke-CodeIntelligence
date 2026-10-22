@@ -47,6 +47,10 @@ impl Projection {
             value["languageServerRegistrationsValidated"] = json!(false);
             value["languageServerRegistrationsFromYaml"] = json!(false);
         }
+        if self.profile.additional_workspace_folders.is_some() {
+            value["additionalWorkspaceFoldersValidated"] = json!(false);
+            value["additionalWorkspaceAuthority"] = json!("existing_captured_source_only");
+        }
         value
     }
 }
@@ -62,6 +66,7 @@ fn label(value: &str) -> Result<()> {
     Ok(())
 }
 struct DecodedFields {
+    additional_folders: Option<Option<Vec<String>>>,
     native_defaults: Map<String, Value>,
     server_settings: Option<Option<crate::server_settings::Entries>>,
     language_servers: Option<Option<Vec<String>>>,
@@ -82,6 +87,7 @@ fn rename_fields(
     project: bool,
 ) -> Result<DecodedFields> {
     let mut mapped = Map::new();
+    let mut additional_folders = None;
     let mut native_defaults = Map::new();
     let mut server_settings = None;
     let mut language_servers = None;
@@ -132,11 +138,17 @@ fn rename_fields(
                 continue;
             }
             "ls_additional_workspace_folders" if global || project => {
-                ensure!(
-                    value.is_null() || value.as_array().is_some_and(Vec::is_empty),
-                    "session_config_additional_workspace_folders_unavailable"
-                );
-                native_defaults.insert(key, value);
+                let values: Option<Vec<String>> =
+                    serde_json::from_value(value.clone()).map_err(|_| {
+                        anyhow::anyhow!("session_config_additional_workspace_folders_unavailable")
+                    })?;
+                let values = values
+                    .map(|v| crate::semantic_workspace::folders(&v))
+                    .transpose()?;
+                if values.as_ref().is_none_or(Vec::is_empty) {
+                    native_defaults.insert(key, value);
+                }
+                additional_folders = Some(values);
                 continue;
             }
             "ls_specific_settings" if global || project => {
@@ -245,6 +257,7 @@ fn rename_fields(
         mapped.insert(name.into(), value);
     }
     Ok(DecodedFields {
+        additional_folders,
         native_defaults,
         server_settings,
         language_servers,
@@ -299,6 +312,7 @@ pub fn project(
         );
         let definition = matches!(source.target, Target::Context { .. } | Target::Mode { .. });
         let DecodedFields {
+            additional_folders,
             native_defaults,
             server_settings,
             language_servers,
@@ -340,6 +354,23 @@ pub fn project(
         }
         if let Target::Context { name } | Target::Mode { name } = source.target {
             label(name)?;
+        }
+        if let Some(folders) = additional_folders
+            && (folders.is_some() || profile.additional_workspace_folders.is_some())
+        {
+            let policy = profile.additional_workspace_folders.get_or_insert_default();
+            match source.target {
+                Target::Global => policy.global = folders,
+                Target::Project { project } => {
+                    policy.projects.entry(project.clone()).or_default().project = folders
+                }
+                Target::ProjectLocal { project } => {
+                    policy.projects.entry(project.clone()).or_default().local = folders
+                }
+                _ => unreachable!(),
+            }
+            // Keep empty layer overrides until all explicit files have been
+            // applied. A later global file must not erase an earlier clear.
         }
         if let Some(entries) = server_settings
             && (entries.is_some() || profile.language_server_settings.is_some())
@@ -530,11 +561,20 @@ pub fn project(
         let mut receipt = json!({"target":source.target,"originalBytes":source.bytes.len(),"originalSha256":source.expected_sha256,"declaredProjectName":declared,"declaredProjectNameIsRegistration":false});
         if !native_defaults.is_empty() {
             receipt["nativeEquivalentDefaults"] = Value::Object(native_defaults);
-            receipt["nativeDefaultCapabilities"] = json!({"sourceEncodings":["utf-8"],"activationCommands":false,"languageBackends":["LSP"],"additionalWorkspaceFolders":false});
+            receipt["nativeDefaultCapabilities"] = json!({"sourceEncodings":["utf-8"],"activationCommands":false,"languageBackends":["LSP"],"additionalWorkspaceFolders":true,"additionalWorkspaceFolderScope":"captured_relative_only"});
         }
         receipts.push(receipt);
     }
     deadline.check()?;
+    if let Some(folders) = &profile.additional_workspace_folders {
+        folders.validate(&profile)?;
+    }
+    if let Some(folders) = &mut profile.additional_workspace_folders {
+        folders.canonicalize()?;
+        if folders.empty() {
+            profile.additional_workspace_folders = None;
+        }
+    }
     if let Some(settings) = &profile.language_server_settings {
         settings.validate(&profile)?;
     }

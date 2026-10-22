@@ -436,8 +436,8 @@ activation_command, null/default 180 activation_command_timeout, null/LSP
 language_backend and null/empty ls_additional_workspace_folders. Source receipts
 conditionally identify these nativeEquivalentDefaults and nativeDefaultCapabilities.
 Other source encodings, active activation commands, non-default activation
-timeouts, JetBrains and nonempty additional folders return named unavailable
-errors. This is compatibility with inactive/default values, not implementation
+timeouts and JetBrains return named unavailable errors. Captured-relative
+additional folders are supported separately below; external folders remain unavailable. This is compatibility with inactive/default values, not implementation
 of the unavailable extensions. No transcoding, automatic project execution or
 extra source/workspace authority occurs. Empty activation strings also refuse.
 
@@ -447,3 +447,33 @@ retain their existing validated behavior. Files without these new default keys
 retain the preceding receipt and exported-profile bytes. Default-bearing files
 export the same profile as their reduced equivalent: existing source hash pins,
 runtime registrations, project identity, stale checks and grants remain required.
+
+HostProfile.additionalWorkspaceFolders selects additional semantic context from
+already captured relative folders, separately from symbolWorkspaceFolders.
+Global/project/local vectors resolve local > project > global; null inherits,
+while [] selects no extras. Empty policies preserve preceding profile and session
+bytes. Canonicalization retains empty overrides until every explicit YAML file
+has been applied, so file order cannot discard a project/local clear.
+
+Pinned YAML ls_additional_workspace_folders maps this policy. Storeless plans
+report that the folders have not yet been validated against frozen source. Native
+source receipts now advertise captured-relative additional-folder capability and
+its explicit scope. Absolute, external and foreign-snapshot roots remain unavailable.
+
+The common LSP configuration path appends these folders to actual selected primary
+or registered host workspace roots before passive admission, provider hashing
+and startup. Without either primary or registered roots it retains the captured
+project root. Ordered duplicate roots are removed; at most 32 combined roots are
+allowed. Every root must be canonical and present in immutable nonignored captured
+source (or explicit Git-ignore analysis inclusion). Missing, ignored-only, hard-
+excluded, empty uncaptured and out-of-scope folders refuse before provider startup.
+Original runtime/source-execution trust, source exclusions and passive omissions
+remain enforced. Root relocation refusal uses this same combined configuration.
+
+Extra semantic roots do not change capture or the native symbol-index selection.
+They enable checked provider observations in already captured packages outside a
+selected symbol projection. Replies retain exact source hashes and byte ranges;
+provider observations still do not establish exhaustive references or execution.
+Direct/staged/owned/lifecycle routes share the selection. Projects resolve separately;
+complete policy changes bind sessions and stale clients refuse. Neither YAML nor
+MCP requests can register another project or grant an external source path.

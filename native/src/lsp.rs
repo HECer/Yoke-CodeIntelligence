@@ -1979,6 +1979,14 @@ fn run_at_internal(
         engine, host, snapshot, graph, request, options, staged, directory, deadline,
     )?;
     value["serverProfileHash"] = json!(profile_hash);
+    if let Some(extra) = engine
+        .additional_workspace_folders
+        .as_ref()
+        .filter(|v| !v.is_empty())
+    {
+        value["additionalWorkspaceFolders"] = json!(extra);
+        value["additionalWorkspaceScope"] = json!({"scope":"same_captured_source","symbolIndexPolicyUnchanged":true,"sourceCaptureWidened":false});
+    }
     value["serverProfileBinding"] = profile["commandBinding"].clone();
     let omissions = passive_source_exclusions(host.0, host.1, snapshot);
     value["providerSourceOmissions"] = json!(snapshot.files.iter().filter(|file|omissions.contains(&file.path)).map(|file|json!({"path":file.path,"contentHash":file.hash,"reason":"workspace_execution_selector_omitted_from_private_provider_tree"})).collect::<Vec<_>>());
@@ -2020,6 +2028,7 @@ pub(crate) fn effective_host_configuration(
         crate::symbol_workspace::validate_snapshot(roots, snapshot, &scope, deadline)?;
         configuration.get_or_insert_default().workspace_folders = roots.clone();
     }
+    crate::semantic_workspace::extend(engine, snapshot, &mut configuration, deadline)?;
     Ok(configuration)
 }
 fn validate_passive_host(

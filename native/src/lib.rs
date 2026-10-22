@@ -95,6 +95,7 @@ mod retrieval_scopes;
 pub mod runtime;
 pub mod semantic_enrichment;
 pub mod semantic_refactor;
+pub mod semantic_workspace;
 pub mod server_catalog;
 pub mod server_selection;
 pub mod server_settings;
@@ -132,6 +133,7 @@ pub struct Engine {
     pub(crate) selected_backends: Option<Vec<String>>,
     pub(crate) backend_registry_sealed: bool,
     pub(crate) symbol_workspace_folders: Option<Vec<String>>,
+    pub(crate) additional_workspace_folders: Option<Vec<String>>,
     pub root: PathBuf,
     pub store: Store,
     pub allow_writes: bool,
@@ -172,6 +174,7 @@ impl Engine {
             selected_backends: None,
             backend_registry_sealed: false,
             symbol_workspace_folders: None,
+            additional_workspace_folders: None,
             root,
             store,
             allow_writes: false,

@@ -17,6 +17,175 @@ fn apply(base: &HostProfile, target: Target, bytes: &[u8]) -> Result<Projection>
 }
 
 #[test]
+fn captured_additional_workspace_layers_preserve_empty_clears_in_every_file_order() {
+    let targets = [
+        Target::Global,
+        Target::Project {
+            project: "default".into(),
+        },
+        Target::ProjectLocal {
+            project: "default".into(),
+        },
+    ];
+    let docs: [&[u8]; 3] = [
+        b"ls_additional_workspace_folders: [./shared]\n",
+        b"ls_additional_workspace_folders: []\n",
+        b"ls_additional_workspace_folders: null\n",
+    ];
+    let hashes = docs.map(model::hash);
+    let mut expected = None;
+    for order in [
+        [0, 1, 2],
+        [0, 2, 1],
+        [1, 0, 2],
+        [1, 2, 0],
+        [2, 0, 1],
+        [2, 1, 0],
+    ] {
+        let sources = order.map(|index| Source {
+            target: &targets[index],
+            expected_sha256: &hashes[index],
+            bytes: docs[index],
+        });
+        let projection = project(&HostProfile::default(), &sources, &deadline()).unwrap();
+        let profile = projection.profile();
+        assert_eq!(
+            profile
+                .additional_workspace_folders
+                .as_ref()
+                .unwrap()
+                .select("default"),
+            Some(&[] as &[String])
+        );
+        assert_eq!(
+            profile
+                .additional_workspace_folders
+                .as_ref()
+                .unwrap()
+                .global,
+            Some(vec!["shared".into()])
+        );
+        assert_eq!(
+            projection.plan()["additionalWorkspaceFoldersValidated"],
+            false
+        );
+        assert_eq!(
+            projection.plan()["additionalWorkspaceAuthority"],
+            "existing_captured_source_only"
+        );
+        let bytes = projection.profile_bytes(&deadline()).unwrap();
+        if let Some(expected) = &expected {
+            assert_eq!(&bytes, expected);
+        } else {
+            expected = Some(bytes);
+        }
+    }
+    let global = apply(
+        &HostProfile::default(),
+        Target::Global,
+        b"ls_additional_workspace_folders: [shared]\n",
+    )
+    .unwrap();
+    let project = apply(
+        global.profile(),
+        Target::Project {
+            project: "default".into(),
+        },
+        b"ls_additional_workspace_folders: [other]\n",
+    )
+    .unwrap();
+    let local = apply(
+        project.profile(),
+        Target::ProjectLocal {
+            project: "default".into(),
+        },
+        b"ls_additional_workspace_folders: null\n",
+    )
+    .unwrap();
+    assert_eq!(
+        local
+            .profile()
+            .additional_workspace_folders
+            .as_ref()
+            .unwrap()
+            .select("default"),
+        Some(["other".to_owned()].as_slice())
+    );
+}
+
+#[test]
+fn captured_additional_workspace_yaml_defaults_types_authority_and_bounds_are_explicit() {
+    let base = HostProfile::default();
+    let original = serde_json::to_vec(&base).unwrap();
+    for yaml in [
+        b"ls_additional_workspace_folders: []\n".as_slice(),
+        b"ls_additional_workspace_folders: null\n",
+    ] {
+        let projected = apply(&base, Target::Global, yaml).unwrap();
+        assert_eq!(projected.profile_bytes(&deadline()).unwrap(), original);
+        assert_eq!(
+            projected.plan()["sources"][0]["nativeDefaultCapabilities"]["additionalWorkspaceFolders"],
+            true
+        );
+        assert_eq!(
+            projected.plan()["sources"][0]["nativeDefaultCapabilities"]["additionalWorkspaceFolderScope"],
+            "captured_relative_only"
+        );
+    }
+    assert!(
+        apply(
+            &base,
+            Target::Global,
+            b"ls_additional_workspace_folders: [.]\n"
+        )
+        .is_ok()
+    );
+    for yaml in [
+        b"ls_additional_workspace_folders: [../sibling]\n".as_slice(),
+        b"ls_additional_workspace_folders: [/outside]\n",
+        b"ls_additional_workspace_folders: [C:/outside]\n",
+        b"ls_additional_workspace_folders: [shared, ./shared]\n",
+        b"ls_additional_workspace_folders: [false]\n",
+        b"ls_additional_workspace_folders: shared\n",
+        b"ls_additional_workspace_folders: {root: shared}\n",
+    ] {
+        assert!(apply(&base, Target::Global, yaml).is_err());
+    }
+    let huge = format!(
+        "ls_additional_workspace_folders: [{}]\n",
+        vec!["shared"; 33].join(",")
+    );
+    assert!(apply(&base, Target::Global, huge.as_bytes()).is_err());
+    assert!(
+        apply(
+            &base,
+            Target::Project {
+                project: "unregistered".into()
+            },
+            b"ls_additional_workspace_folders: [shared]\n"
+        )
+        .is_err()
+    );
+    for target in [
+        Target::Context {
+            name: "owned".into(),
+        },
+        Target::Mode {
+            name: "owned".into(),
+        },
+    ] {
+        assert!(
+            apply(
+                &base,
+                target,
+                b"ls_additional_workspace_folders: [shared]\n"
+            )
+            .is_err()
+        );
+    }
+}
+
+#[test]
 fn standard_default_project_data_confirms_native_defaults_without_new_host_policy() {
     let full = include_bytes!("../tests/fixtures/native-project-defaults.yml");
     let omitted = [
@@ -52,7 +221,7 @@ fn standard_default_project_data_confirms_native_defaults_without_new_host_polic
     );
     assert_eq!(
         plan["sources"][0]["nativeDefaultCapabilities"],
-        json!({"sourceEncodings":["utf-8"],"activationCommands":false,"languageBackends":["LSP"],"additionalWorkspaceFolders":false})
+        json!({"sourceEncodings":["utf-8"],"activationCommands":false,"languageBackends":["LSP"],"additionalWorkspaceFolders":true,"additionalWorkspaceFolderScope":"captured_relative_only"})
     );
     assert!(
         before.plan()["sources"][0]
@@ -178,8 +347,6 @@ fn nonnative_active_defaults_invalid_types_and_scope_refuse_without_echoing_sour
             vec![
                 json!(["../sibling"]),
                 json!(["C:/external"]),
-                json!(["."]),
-                json!([canary]),
                 json!(false),
                 json!("[]"),
                 json!({}),

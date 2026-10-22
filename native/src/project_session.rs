@@ -84,6 +84,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
+    #[serde(default, skip_serializing_if = "crate::semantic_workspace::unselected")]
+    pub additional_workspace_folders: Option<crate::semantic_workspace::HostFolders>,
     #[serde(default, skip_serializing_if = "crate::server_settings::unselected")]
     pub language_server_settings: Option<crate::server_settings::HostSettings>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
@@ -130,6 +132,7 @@ impl Default for HostProfile {
     fn default() -> Self {
         Self {
             language_servers: None,
+            additional_workspace_folders: None,
             language_server_settings: None,
             trusted_server_settings_projects: Vec::new(),
             git_ignore: None,
@@ -854,6 +857,15 @@ impl Session {
         deadline: &Deadline,
     ) -> Result<Self> {
         engine.store.set_deadline(deadline)?;
+        if let Some(folders) = &host.additional_workspace_folders {
+            folders.validate(&host)?;
+        }
+        if let Some(folders) = &mut host.additional_workspace_folders {
+            folders.canonicalize()?;
+            if folders.empty() {
+                host.additional_workspace_folders = None;
+            }
+        }
         if let Some(settings) = &host.language_server_settings {
             settings.validate(&host)?;
             host.trusted_server_settings_projects.sort();
@@ -1266,6 +1278,16 @@ impl Session {
         } else {
             fingerprint
         };
+        let fingerprint = if let Some(folders) = &host.additional_workspace_folders {
+            engine.additional_workspace_folders = folders.select("default").map(<[String]>::to_vec);
+            identity(&(
+                fingerprint,
+                "host_additional_captured_workspace_folders_v1",
+                folders,
+            ))
+        } else {
+            fingerprint
+        };
         engine.backend_registry_sealed = true;
         let owned_label = if let Some(id) = session_id {
             label(id)?;
@@ -1480,6 +1502,7 @@ impl Session {
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
         if self.host.git_ignore.is_some()
+            || self.host.additional_workspace_folders.is_some()
             || self.host.language_server_settings.is_some()
             || self.host.language_servers.is_some()
             || self.host.symbol_workspace_folders.is_some()
@@ -1770,6 +1793,12 @@ impl Session {
                 .as_ref()
                 .and_then(|p| p.select(name))
                 .map(<[String]>::to_vec);
+            engine.additional_workspace_folders = self
+                .host
+                .additional_workspace_folders
+                .as_ref()
+                .and_then(|p| p.select(name))
+                .map(<[String]>::to_vec);
             engine.servers = self.engine.servers.clone();
             engine.backend_servers = self.engine.backend_servers.clone();
             if let Some(settings) = &self.host.language_server_settings {
@@ -1907,6 +1936,13 @@ impl Session {
                                 .include_git_ignored
                         )
                     );
+                }
+                if let Some(folders) = &self.host.additional_workspace_folders {
+                    value["additionalWorkspaceFolders"] = serde_json::to_value(folders)?;
+                    value["additionalWorkspaceFoldersResolved"] =
+                        json!(folders.select(&self.state.active_project));
+                    value["additionalWorkspaceScope"] =
+                        json!("same_captured_source_without_symbol_index_expansion");
                 }
                 if let Some(settings) = &self.host.language_server_settings {
                     value["languageServerSettings"] = serde_json::to_value(settings)?;
