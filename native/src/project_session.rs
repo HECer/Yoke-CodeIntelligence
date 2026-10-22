@@ -84,6 +84,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_line_endings: Option<crate::source_line_endings::HostLineEndings>,
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub primary_read_only: bool,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -113,6 +115,7 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            source_line_endings: None,
             primary_read_only: false,
             optional_defaults: None,
             agent_interface: None,
@@ -805,6 +808,9 @@ impl Session {
         deadline: &Deadline,
     ) -> Result<Self> {
         engine.store.set_deadline(deadline)?;
+        if let Some(endings) = &host.source_line_endings {
+            endings.validate(&host)?;
+        }
         if !crate::session_steering::enabled(&host) {
             modes(&host.modes)?;
         }
@@ -1056,6 +1062,25 @@ impl Session {
             )),
         };
         let host_allow_writes = engine.allow_writes;
+        let fingerprint = if let Some(endings) = &host.source_line_endings {
+            identity(&(
+                fingerprint,
+                "host_source_line_endings_v1",
+                endings,
+                endings.select("default"),
+                endings
+                    .projects
+                    .keys()
+                    .map(|name| (name, endings.select(name)))
+                    .collect::<BTreeMap<_, _>>(),
+            ))
+        } else {
+            fingerprint
+        };
+        engine.store.source_line_ending = host
+            .source_line_endings
+            .as_ref()
+            .and_then(|p| p.select("default"));
         let fingerprint = if host.primary_read_only {
             identity(&(fingerprint, "host_primary_read_only_v1"))
         } else {
@@ -1275,6 +1300,7 @@ impl Session {
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
         if self.host.primary_read_only
+            || self.host.source_line_endings.is_some()
             || self.host.optional_defaults.is_some()
             || self.agent_interface().is_some()
             || self
@@ -1508,6 +1534,11 @@ impl Session {
             let mut engine = Engine::open_with_timeout(&project.root, deadline.remaining())?;
             engine.allow_writes =
                 self.host_allow_writes && !project.read_only && !project.query_only;
+            engine.store.source_line_ending = self
+                .host
+                .source_line_endings
+                .as_ref()
+                .and_then(|p| p.select(name));
             engine.capture_options = self.engine.capture_options.clone();
             engine.capture_epoch = self.capture_epoch;
             engine.servers = self.engine.servers.clone();
@@ -1623,6 +1654,10 @@ impl Session {
                 }
                 if self.host.primary_read_only {
                     value["primaryReadOnly"] = json!(true);
+                }
+                if let Some(endings) = &self.host.source_line_endings {
+                    value["sourceLineEndings"] = serde_json::to_value(endings)?;
+                    value["sourceLineEnding"] = json!(endings.select(&self.state.active_project));
                 }
                 if let Some(project) = &self.host.startup_project {
                     value["startupProject"] = json!(project);

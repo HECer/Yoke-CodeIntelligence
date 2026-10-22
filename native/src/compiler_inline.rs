@@ -612,9 +612,10 @@ pub fn prepare(
         &json!({"edits":edits}),
         d,
     )?;
-    Ok(
+    Ok(crate::source_line_endings::qualify_provider_result(
+        &plan,
         json!({"snapshotId":snapshot.id,"actions":[{"kind":effect.action_kind,"usable":true,"plan":plan}],"provider":"host_selected_typescript_compiler","compiler":"5.8.3","compilerHash":report["compilerHash"],"hostBinding":binding,"standardLibraryHashes":report["standardLibraryHashes"],"compilerContextId":effect.context_id,"compilerConfig":effect.config,"intent":intent,"sourceBindings":report["sourceBindings"],"sourceHash":hash,"effectDigest":identity(&report["inline"]),"beforeDiagnostics":effect.before_diagnostics,"afterDiagnostics":effect.after_diagnostics,"limitations":report["limitations"],"equivalent":"independent_compiler_variable_inline","complete":false,"commandsExecuted":false,"sourceExecuted":false,"sourceTreeWritten":false,"verificationRequired":true}),
-    )
+    ))
 }
 
 #[allow(clippy::too_many_arguments)]

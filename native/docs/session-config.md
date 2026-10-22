@@ -121,3 +121,58 @@ Selected project/project_local YAML read_only for project default now OR-tighten
 primaryReadOnly. False cannot clear a true base or earlier restriction. Named
 project behavior remains restrictive. YAML still cannot supply registrations,
 runtime trust, source-write rights or automatic execution.
+
+## Source line endings
+
+HostProfile.sourceLineEndings explicitly selects source-write formatting:
+
+    {"global":"crlf","projects":{"default":{"project":"lf","local":null}}}
+
+The closed object supports global and projects; each project object supports
+project and local. Selectors must be default or an existing host registration.
+Values are lf, crlf or native. Missing/null values inherit local to project to
+global. Native resolves to CRLF on Windows and LF elsewhere. The host session
+binding includes selected values and resolved platform results. Changed settings
+require a separate session label; they cannot silently change a saved binding.
+Absent/null sourceLineEndings retains preceding profile bytes and fingerprints.
+
+Explicit global/project/project_local YAML line_ending projects to the matching
+slot. A null clears that selected slot and inherits the remaining settings.
+Input order does not change layer precedence. Context/mode line_ending, invalid
+types, unknown values and unregistered project selectors refuse. YAML bytes and
+configuration output are never reformatted.
+
+The central plan producer first applies edits at original UTF-8 byte offsets,
+then converts CRLF, lone CR and LF in each selected after-file. It does not add a
+final newline or change other Unicode/BOM bytes. Only files named by edits are
+formatted; other captured files and original snapshots remain exact. This is
+explicit textual formatting, including literal newline characters in strings;
+it is not a semantic-equivalence guarantee.
+
+Expansion must fit the existing four-million-byte file budget before conversion
+and publication. Deadlines, path scope, expected hashes, test-file approval and
+all existing limits still apply. The resulting hashes, source graph and diff
+describe formatted bytes. Selected plans record concrete sourceLineEnding lf or
+crlf under a distinct versioned identity. Checked replay validates that declared
+convention against actual immutable after-bytes. No native value is saved in a
+plan and no current host setting is needed to replay it.
+
+Approval and executed verification authorize the exact stored result. Applying
+a saved plan never reformats it. A workspace application whose after-bytes
+conflict with the current selected convention refuses before journal/source
+writes; prepare, review and verify a new plan. Historical isolated copies and
+recovery preserve exact planned/original bytes, independently of current format
+settings. Already completed idempotent receipts retain existing semantics.
+
+Provider effects/diagnostics remain evidence for the provider effect before this
+separate host formatting step. Formatted compiler results identify that scope
+and require verification of the resulting plan. Captured source is not executed
+by formatting. Named notes, configuration and application state are outside this
+source policy. Mode/tool/API/write/runtime gates remain independent; a setting
+does not grant editing, source application or process execution.
+
+The public setting names and values were checked against the
+[pinned project template](https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/resources/project.template.yml).
+Only public configuration facts are used; no upstream implementation is copied.
+This checkpoint does not certify other project settings, upstream clients,
+non-Windows runtimes or full parity.

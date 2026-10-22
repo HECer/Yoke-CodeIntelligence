@@ -100,6 +100,7 @@ pub mod session_steering;
 pub mod skill_takeaways;
 pub mod source_acquisition;
 pub mod source_acquisition_http;
+pub mod source_line_endings;
 pub mod store;
 pub mod test_map;
 pub mod trail_adapter;

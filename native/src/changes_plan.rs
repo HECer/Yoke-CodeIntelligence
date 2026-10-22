@@ -22,7 +22,7 @@ const MAX_SNAPSHOT_BYTES: usize = 32_000_000;
 const MAX_SOURCE_BYTES: usize = 128_000_000;
 
 pub(super) fn plan_identity(plan: &Plan) -> String {
-    if let Some(directory) = &plan.directory_move {
+    let original = if let Some(directory) = &plan.directory_move {
         identity(&(
             "directory-move-v1",
             &plan.base_snapshot_id,
@@ -38,6 +38,11 @@ pub(super) fn plan_identity(plan: &Plan) -> String {
             &plan.files,
             plan.created_at,
         ))
+    };
+    if let Some(ending) = plan.source_line_ending {
+        identity(&(original, "source-line-ending-v1", ending))
+    } else {
+        original
     }
 }
 
@@ -256,6 +261,9 @@ fn review(
                 };
                 pair[i] = text;
             }
+        }
+        if let Some(ending) = plan.source_line_ending {
+            ensure!(ending.canonical(pair[1].as_bytes(), d)?, INVALID);
         }
         let addition = TextDiff::from_lines(pair[0].as_ref(), pair[1].as_ref())
             .unified_diff()

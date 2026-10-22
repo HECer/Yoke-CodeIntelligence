@@ -61,6 +61,7 @@ type DecodedFields = (
     Option<Value>,
     Option<bool>,
     Option<String>,
+    Option<Option<crate::source_line_endings::LineEnding>>,
 );
 fn rename_fields(
     raw: Map<String, Value>,
@@ -72,8 +73,16 @@ fn rename_fields(
     let mut base = None;
     let mut read_only = None;
     let mut declared = None;
+    let mut line_ending = None;
     for (key, value) in raw {
         let name = match key.as_str() {
+            "line_ending" if global || project => {
+                line_ending = Some(
+                    serde_json::from_value(value)
+                        .map_err(|_| anyhow::anyhow!("session_config_line_ending_invalid"))?,
+                );
+                continue;
+            }
             "excluded_tools" => "excludedTools",
             "included_optional_tools" => "includedOptionalTools",
             "fixed_tools" => "fixedTools",
@@ -121,7 +130,7 @@ fn rename_fields(
         }
         mapped.insert(name.into(), value);
     }
-    Ok((mapped, base, read_only, declared))
+    Ok((mapped, base, read_only, declared, line_ending))
 }
 /// Project only explicitly supplied values. Files cannot supply registrations or grants.
 pub fn project(
@@ -162,7 +171,7 @@ pub fn project(
             Target::Project { .. } | Target::ProjectLocal { .. }
         );
         let definition = matches!(source.target, Target::Context { .. } | Target::Mode { .. });
-        let (fields, base_modes, read_only, declared) = rename_fields(
+        let (fields, base_modes, read_only, declared, line_ending) = rename_fields(
             yaml::decode(source.bytes, deadline)?,
             definition,
             matches!(source.target, Target::Global),
@@ -191,6 +200,24 @@ pub fn project(
         }
         if let Target::Context { name } | Target::Mode { name } = source.target {
             label(name)?;
+        }
+        if let Some(ending) = line_ending
+            && (ending.is_some() || profile.source_line_endings.is_some())
+        {
+            let policy = profile.source_line_endings.get_or_insert_default();
+            match source.target {
+                Target::Global => policy.global = ending,
+                Target::Project { project } => {
+                    policy.projects.entry(project.clone()).or_default().project = ending
+                }
+                Target::ProjectLocal { project } => {
+                    policy.projects.entry(project.clone()).or_default().local = ending
+                }
+                _ => unreachable!(),
+            }
+            if policy.empty() {
+                profile.source_line_endings = None;
+            }
         }
         let has_fields = !fields.is_empty();
         let has_base = base_modes.is_some();
@@ -239,6 +266,9 @@ pub fn project(
         receipts.push(json!({"target":source.target,"originalBytes":source.bytes.len(),"originalSha256":source.expected_sha256,"declaredProjectName":declared,"declaredProjectNameIsRegistration":false}));
     }
     deadline.check()?;
+    if let Some(endings) = &profile.source_line_endings {
+        endings.validate(&profile)?;
+    }
     session_steering::validate(&profile)
         .map_err(|_| anyhow::anyhow!("session_config_steering_invalid"))?;
     let projection = Projection {

@@ -24,6 +24,8 @@ pub struct Store {
     pub db: Connection,
     pub workspace_id: String,
     deadline: RefCell<Option<crate::capture::Deadline>>,
+    /// Invocation-owned policy; never reconstructed from stored source or plans.
+    pub(crate) source_line_ending: Option<crate::source_line_endings::ResolvedLineEnding>,
     client_lock: fs::File,
     admission_gate: fs::File,
     client_valid: Cell<bool>,
@@ -242,6 +244,7 @@ impl Store {
             db,
             workspace_id,
             deadline: RefCell::new(None),
+            source_line_ending: None,
             client_lock,
             admission_gate,
             client_valid: Cell::new(true),

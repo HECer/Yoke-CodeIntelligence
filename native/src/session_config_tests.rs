@@ -17,6 +17,111 @@ fn apply(base: &HostProfile, target: Target, bytes: &[u8]) -> Result<Projection>
 }
 
 #[test]
+fn line_ending_yaml_uses_global_project_local_precedence_independent_of_input_order() {
+    let base = HostProfile::default();
+    let global = Target::Global;
+    let project_target = Target::Project {
+        project: "default".into(),
+    };
+    let local = Target::ProjectLocal {
+        project: "default".into(),
+    };
+    let data = [
+        (&local, b"line_ending: native\r\n".as_slice()),
+        (&global, b"line_ending: crlf\n".as_slice()),
+        (&project_target, b"line_ending: lf\n".as_slice()),
+    ];
+    let hashes: Vec<_> = data.iter().map(|(_, b)| model::hash(b)).collect();
+    let sources: Vec<_> = data
+        .iter()
+        .zip(&hashes)
+        .map(|((target, bytes), hash)| Source {
+            target,
+            expected_sha256: hash,
+            bytes,
+        })
+        .collect();
+    let result = project(&base, &sources, &deadline()).unwrap();
+    let policy = result.profile().source_line_endings.as_ref().unwrap();
+    assert_eq!(
+        policy.select("default"),
+        Some(crate::source_line_endings::LineEnding::Native.resolve())
+    );
+    assert_eq!(
+        policy.select("other"),
+        Some(crate::source_line_endings::ResolvedLineEnding::Crlf)
+    );
+    assert!(!result.plan()["sourceBytesRewritten"].as_bool().unwrap());
+    let result = apply(
+        result.profile(),
+        Target::ProjectLocal {
+            project: "default".into(),
+        },
+        b"line_ending:\n",
+    )
+    .unwrap();
+    assert_eq!(
+        result
+            .profile()
+            .source_line_endings
+            .as_ref()
+            .unwrap()
+            .select("default"),
+        Some(crate::source_line_endings::ResolvedLineEnding::Lf)
+    );
+}
+
+#[test]
+fn line_ending_yaml_rejects_bad_values_wrong_layers_and_unknown_project_without_grants() {
+    for text in [
+        b"line_ending: LF\n".as_slice(),
+        b"line_ending: false\n",
+        b"line_ending: 1\n",
+        b"line_ending: [lf]\n",
+        b"line_ending: {global: lf}\n",
+    ] {
+        assert!(apply(&HostProfile::default(), Target::Global, text).is_err());
+    }
+    assert!(
+        apply(
+            &HostProfile::default(),
+            Target::Mode {
+                name: "custom".into()
+            },
+            b"line_ending: lf\n"
+        )
+        .is_err()
+    );
+    assert!(
+        apply(
+            &HostProfile::default(),
+            Target::Project {
+                project: "unregistered".into()
+            },
+            b"line_ending: lf\n"
+        )
+        .is_err()
+    );
+    for target in [
+        Target::Global,
+        Target::Project {
+            project: "default".into(),
+        },
+        Target::ProjectLocal {
+            project: "default".into(),
+        },
+    ] {
+        assert_eq!(
+            apply(&HostProfile::default(), target, b"line_ending: null\r\n")
+                .unwrap()
+                .profile_bytes(&deadline())
+                .unwrap(),
+            serde_json::to_vec(&HostProfile::default()).unwrap()
+        );
+    }
+}
+
+#[test]
 fn absent_and_empty_global_data_preserve_the_exact_existing_host_serialization() {
     let base = HostProfile::default();
     let original = serde_json::to_vec(&base).unwrap();

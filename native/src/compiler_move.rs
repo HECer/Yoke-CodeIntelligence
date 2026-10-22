@@ -553,5 +553,7 @@ pub fn prepare(
         result["sourceRepairs"] = serde_json::to_value(&effect.repairs)?;
         result["editComposition"] = json!(effect.composition);
     }
-    Ok(result)
+    Ok(crate::source_line_endings::qualify_provider_result(
+        &plan, result,
+    ))
 }

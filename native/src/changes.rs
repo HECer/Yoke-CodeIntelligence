@@ -125,6 +125,8 @@ pub struct Plan {
     pub warnings: Vec<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub directory_move: Option<DirectoryMove>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_line_ending: Option<crate::source_line_endings::ResolvedLineEnding>,
 }
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -435,6 +437,10 @@ fn prepare_inner(
                 Some(result)
             }
         };
+        let after = match (after, store.source_line_ending) {
+            (Some(text), Some(ending)) => Some(ending.normalize(text, deadline)?),
+            (after, _) => after,
+        };
         ensure!(
             after
                 .as_ref()
@@ -514,6 +520,7 @@ fn prepare_inner(
         diff,
         warnings,
         directory_move: directory_move.cloned(),
+        source_line_ending: store.source_line_ending,
     };
     plan.id = checked_plan::plan_identity(&plan);
     let id = plan.id.clone();
@@ -775,6 +782,18 @@ pub fn apply(
         allow_writes,
         "Workspace writes require host --allow-writes permission"
     );
+    // Never format an already reviewed effect at application time. A newly
+    // selected host convention may only admit its exact stored after-bytes.
+    if let Some(ending) = store.source_line_ending {
+        for file in &plan.files {
+            if let Some(hash) = &file.after_hash {
+                ensure!(
+                    ending.canonical(&store.read_blob(hash)?, deadline)?,
+                    "changes_plan_line_ending_mismatch; prepare and review a new plan"
+                );
+            }
+        }
+    }
     let approval: Approval = store
         .get_record("approval", id)
         .context("Exact plan has not been approved by the host")?;
