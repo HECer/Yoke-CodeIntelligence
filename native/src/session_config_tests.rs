@@ -17,6 +17,223 @@ fn apply(base: &HostProfile, target: Target, bytes: &[u8]) -> Result<Projection>
 }
 
 #[test]
+fn standard_default_project_data_confirms_native_defaults_without_new_host_policy() {
+    let full = include_bytes!("../tests/fixtures/native-project-defaults.yml");
+    let omitted = [
+        "encoding:",
+        "activation_command:",
+        "activation_command_timeout:",
+        "language_backend:",
+        "ls_additional_workspace_folders:",
+        "added_modes:",
+    ];
+    let reduced = std::str::from_utf8(full)
+        .unwrap()
+        .split_inclusive('\n')
+        .filter(|line| !omitted.iter().any(|prefix| line.starts_with(prefix)))
+        .collect::<String>();
+    let target = Target::Project {
+        project: "default".into(),
+    };
+    let before = apply(&HostProfile::default(), target.clone(), reduced.as_bytes()).unwrap();
+    let actual = apply(&HostProfile::default(), target, full).unwrap();
+    assert_eq!(
+        actual.profile_bytes(&deadline()).unwrap(),
+        before.profile_bytes(&deadline()).unwrap()
+    );
+    let plan = actual.plan();
+    assert_eq!(plan["complete"], false);
+    assert_eq!(plan["activationCommandsExecuted"], false);
+    assert_eq!(plan["runtimeTrustFromYaml"], false);
+    assert_eq!(plan["sources"][0]["originalSha256"], model::hash(full));
+    assert_eq!(
+        plan["sources"][0]["nativeEquivalentDefaults"],
+        json!({"encoding":"utf-8","activation_command":null,"activation_command_timeout":180,"language_backend":null,"ls_additional_workspace_folders":[]})
+    );
+    assert_eq!(
+        plan["sources"][0]["nativeDefaultCapabilities"],
+        json!({"sourceEncodings":["utf-8"],"activationCommands":false,"languageBackends":["LSP"],"additionalWorkspaceFolders":false})
+    );
+    assert!(
+        before.plan()["sources"][0]
+            .get("nativeEquivalentDefaults")
+            .is_none()
+    );
+}
+
+#[test]
+fn equivalent_native_defaults_keep_existing_profiles_and_null_additions_inherit_modes() {
+    let original = HostProfile::default();
+    let bytes = serde_json::to_vec(&original).unwrap();
+    for target in [
+        Target::Global,
+        Target::Project {
+            project: "default".into(),
+        },
+        Target::ProjectLocal {
+            project: "default".into(),
+        },
+    ] {
+        for encoding in ["utf-8", "UTF-8", "utf8", "UTF8"] {
+            let yaml = format!(
+                "encoding: {encoding}\nactivation_command: null\nactivation_command_timeout: 180\nlanguage_backend: LSP\nls_additional_workspace_folders: []\n"
+            );
+            let projected = apply(&original, target.clone(), yaml.as_bytes()).unwrap();
+            assert_eq!(serde_json::to_vec(projected.profile()).unwrap(), bytes);
+            assert_eq!(
+                projected.plan()["sources"][0]["nativeDefaultCapabilities"]["activationCommands"],
+                false
+            );
+        }
+        let p=apply(&original,target.clone(),b"encoding: null\nactivation_command: null\nactivation_command_timeout: null\nlanguage_backend: null\nls_additional_workspace_folders: null\n").unwrap();
+        assert_eq!(serde_json::to_vec(p.profile()).unwrap(), bytes);
+    }
+    let global = apply(
+        &original,
+        Target::Global,
+        b"added_modes: [query-projects]\n",
+    )
+    .unwrap();
+    let project = apply(
+        global.profile(),
+        Target::Project {
+            project: "default".into(),
+        },
+        b"added_modes: null\n",
+    )
+    .unwrap();
+    let empty = apply(
+        global.profile(),
+        Target::Project {
+            project: "default".into(),
+        },
+        b"added_modes: []\n",
+    )
+    .unwrap();
+    assert_eq!(
+        project.profile_bytes(&deadline()).unwrap(),
+        empty.profile_bytes(&deadline()).unwrap()
+    );
+    assert!(
+        session_steering::resolve(project.profile(), "default", None)
+            .unwrap()
+            .modes
+            .contains(&"query-projects".into())
+    );
+}
+
+#[test]
+fn nonnative_active_defaults_invalid_types_and_scope_refuse_without_echoing_source_values() {
+    let canary = "owned_private_canary_\u{1f4a1}_e\u{301}";
+    for (key, values, code) in [
+        (
+            "encoding",
+            vec![
+                json!("utf-16"),
+                json!("latin1"),
+                json!(false),
+                json!(2),
+                json!([]),
+                json!({}),
+                json!(canary),
+            ],
+            "source_encoding_unavailable",
+        ),
+        (
+            "activation_command",
+            vec![
+                json!(""),
+                json!(false),
+                json!(0),
+                json!([]),
+                json!(format!("echo {canary}")),
+            ],
+            "activation_command_unavailable",
+        ),
+        (
+            "activation_command_timeout",
+            vec![
+                json!(0),
+                json!(-1),
+                json!(179),
+                json!(181),
+                json!(false),
+                json!("180"),
+            ],
+            "activation_timeout_unavailable",
+        ),
+        (
+            "language_backend",
+            vec![
+                json!("JetBrains"),
+                json!(canary),
+                json!(false),
+                json!([]),
+                json!({}),
+            ],
+            "language_backend_unavailable",
+        ),
+        (
+            "ls_additional_workspace_folders",
+            vec![
+                json!(["../sibling"]),
+                json!(["C:/external"]),
+                json!(["."]),
+                json!([canary]),
+                json!(false),
+                json!("[]"),
+                json!({}),
+            ],
+            "additional_workspace_folders_unavailable",
+        ),
+    ] {
+        for value in values {
+            let yaml = format!("{key}: {}\n", serde_json::to_string(&value).unwrap());
+            let error = apply(
+                &HostProfile::default(),
+                Target::Project {
+                    project: "default".into(),
+                },
+                yaml.as_bytes(),
+            )
+            .err()
+            .unwrap();
+            let error = format!("{error:#}");
+            assert!(error.contains(code), "{error}");
+            assert!(!error.contains(canary));
+        }
+        for target in [
+            Target::Context {
+                name: "owned".into(),
+            },
+            Target::Mode {
+                name: "owned".into(),
+            },
+        ] {
+            assert!(
+                apply(
+                    &HostProfile::default(),
+                    target,
+                    format!("{key}: null\n").as_bytes()
+                )
+                .is_err()
+            );
+        }
+    }
+    for yaml in [
+        b"added_modes: false\n".as_slice(),
+        b"activation_command_timeout: 1e100\n",
+        b"activation_command_timeout: 180.0\n",
+        b"added_modes: query-projects\n",
+        b"added_modes: [false]\n",
+        b"activation_command: null\nactivation_command_timeout: 179\n",
+        b"encoding: utf-8\nactivation_command: echo-owned\n",
+    ] {
+        assert!(apply(&HostProfile::default(), Target::Global, yaml).is_err());
+    }
+}
+
+#[test]
 fn generic_server_settings_yaml_layers_replace_backend_entries_without_creating_trust() {
     let base = HostProfile {
         language_servers: Some(

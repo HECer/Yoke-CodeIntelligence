@@ -62,6 +62,7 @@ fn label(value: &str) -> Result<()> {
     Ok(())
 }
 struct DecodedFields {
+    native_defaults: Map<String, Value>,
     server_settings: Option<Option<crate::server_settings::Entries>>,
     language_servers: Option<Option<Vec<String>>>,
     git_ignore: Option<Option<bool>>,
@@ -81,6 +82,7 @@ fn rename_fields(
     project: bool,
 ) -> Result<DecodedFields> {
     let mut mapped = Map::new();
+    let mut native_defaults = Map::new();
     let mut server_settings = None;
     let mut language_servers = None;
     let mut git_ignore = None;
@@ -93,6 +95,50 @@ fn rename_fields(
     let mut workspace_folders = None;
     for (key, value) in raw {
         let name = match key.as_str() {
+            "encoding" if global || project => {
+                ensure!(
+                    value.is_null()
+                        || value
+                            .as_str()
+                            .is_some_and(|v| v.eq_ignore_ascii_case("utf-8")
+                                || v.eq_ignore_ascii_case("utf8")),
+                    "session_config_source_encoding_unavailable"
+                );
+                native_defaults.insert(key, value);
+                continue;
+            }
+            "activation_command" if global || project => {
+                ensure!(
+                    value.is_null(),
+                    "session_config_activation_command_unavailable"
+                );
+                native_defaults.insert(key, value);
+                continue;
+            }
+            "activation_command_timeout" if global || project => {
+                ensure!(
+                    value.is_null() || value.as_u64() == Some(180),
+                    "session_config_activation_timeout_unavailable"
+                );
+                native_defaults.insert(key, value);
+                continue;
+            }
+            "language_backend" if global || project => {
+                ensure!(
+                    value.is_null() || value.as_str() == Some("LSP"),
+                    "session_config_language_backend_unavailable"
+                );
+                native_defaults.insert(key, value);
+                continue;
+            }
+            "ls_additional_workspace_folders" if global || project => {
+                ensure!(
+                    value.is_null() || value.as_array().is_some_and(Vec::is_empty),
+                    "session_config_additional_workspace_folders_unavailable"
+                );
+                native_defaults.insert(key, value);
+                continue;
+            }
             "ls_specific_settings" if global || project => {
                 let entries: Option<crate::server_settings::Entries> =
                     serde_json::from_value(value)
@@ -153,7 +199,13 @@ fn rename_fields(
             "read_only_memory_patterns" => "readOnlyMemoryPatterns",
             "ignored_memory_patterns" => "ignoredMemoryPatterns",
             "default_modes" if !definition => "defaultModes",
-            "added_modes" if !definition => "addedModes",
+            "added_modes" if !definition => {
+                mapped.insert(
+                    "addedModes".into(),
+                    if value.is_null() { json!([]) } else { value },
+                );
+                continue;
+            }
             "agent_interface" if !definition => "agentInterface",
             "initial_prompt" if project => "instructions",
             "prompt" if definition => "instructions",
@@ -193,6 +245,7 @@ fn rename_fields(
         mapped.insert(name.into(), value);
     }
     Ok(DecodedFields {
+        native_defaults,
         server_settings,
         language_servers,
         git_ignore,
@@ -246,6 +299,7 @@ pub fn project(
         );
         let definition = matches!(source.target, Target::Context { .. } | Target::Mode { .. });
         let DecodedFields {
+            native_defaults,
             server_settings,
             language_servers,
             git_ignore,
@@ -473,7 +527,12 @@ pub fn project(
                 _ => unreachable!(),
             }
         }
-        receipts.push(json!({"target":source.target,"originalBytes":source.bytes.len(),"originalSha256":source.expected_sha256,"declaredProjectName":declared,"declaredProjectNameIsRegistration":false}));
+        let mut receipt = json!({"target":source.target,"originalBytes":source.bytes.len(),"originalSha256":source.expected_sha256,"declaredProjectName":declared,"declaredProjectNameIsRegistration":false});
+        if !native_defaults.is_empty() {
+            receipt["nativeEquivalentDefaults"] = Value::Object(native_defaults);
+            receipt["nativeDefaultCapabilities"] = json!({"sourceEncodings":["utf-8"],"activationCommands":false,"languageBackends":["LSP"],"additionalWorkspaceFolders":false});
+        }
+        receipts.push(receipt);
     }
     deadline.check()?;
     if let Some(settings) = &profile.language_server_settings {

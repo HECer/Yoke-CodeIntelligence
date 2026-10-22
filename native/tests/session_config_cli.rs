@@ -87,6 +87,97 @@ fn mcp(cwd: &Path, source: &Path, host: &Path) -> Vec<u8> {
 }
 
 #[test]
+fn actual_standard_native_defaults_export_same_profile_and_report_unavailable_extensions() {
+    let root = tempfile::tempdir().unwrap();
+    let full = root.path().join("full.yml");
+    let raw = include_bytes!("fixtures/native-project-defaults.yml");
+    fs::write(&full, raw).unwrap();
+    let omitted = [
+        "encoding:",
+        "activation_command:",
+        "activation_command_timeout:",
+        "language_backend:",
+        "ls_additional_workspace_folders:",
+        "added_modes:",
+    ];
+    let reduced = root.path().join("reduced.yml");
+    let text = std::str::from_utf8(raw)
+        .unwrap()
+        .split_inclusive('\n')
+        .filter(|line| !omitted.iter().any(|prefix| line.starts_with(prefix)))
+        .collect::<String>();
+    fs::write(&reduced, text).unwrap();
+    let selection_full = root.path().join("full-selection.json");
+    let path = select(
+        root.path(),
+        vec![selected(
+            &full,
+            json!({"kind":"project","project":"default"}),
+        )],
+    );
+    fs::copy(path, &selection_full).unwrap();
+    let selection_reduced = select(
+        root.path(),
+        vec![selected(
+            &reduced,
+            json!({"kind":"project","project":"default"}),
+        )],
+    );
+    let plan = invoke(root.path(), &config_args("plan", &selection_full));
+    assert!(
+        plan.status.success(),
+        "{}",
+        String::from_utf8_lossy(&plan.stderr)
+    );
+    let value: Value = serde_json::from_slice(&plan.stdout).unwrap();
+    assert_eq!(value["complete"], false);
+    assert_eq!(value["sourceExecuted"], false);
+    assert_eq!(
+        value["sources"][0]["nativeEquivalentDefaults"]["encoding"],
+        "utf-8"
+    );
+    assert_eq!(
+        value["sources"][0]["nativeDefaultCapabilities"]["activationCommands"],
+        false
+    );
+    assert_eq!(
+        value["sources"][0]["originalSha256"],
+        yoke::model::hash(raw)
+    );
+    let a = root.path().join("a.json");
+    let b = root.path().join("b.json");
+    for (selection, output) in [(&selection_full, &a), (&selection_reduced, &b)] {
+        let mut args = config_args("export", selection);
+        args.extend(["--output", output.to_str().unwrap(), "--allow-output"]);
+        let result = invoke(root.path(), &args);
+        assert!(
+            result.status.success(),
+            "{}",
+            String::from_utf8_lossy(&result.stderr)
+        );
+    }
+    assert_eq!(fs::read(&a).unwrap(), fs::read(&b).unwrap());
+    assert_eq!(fs::read(&full).unwrap(), raw);
+    assert!(!root.path().join(".yoke").exists());
+    fs::write(&full, b"activation_command: owned_private_canary\n").unwrap();
+    select(
+        root.path(),
+        vec![selected(
+            &full,
+            json!({"kind":"project","project":"default"}),
+        )],
+    );
+    let result = invoke(root.path(), &config_args("plan", &selection_reduced));
+    assert!(!result.status.success() && result.stdout.is_empty());
+    let error = String::from_utf8_lossy(&result.stderr);
+    assert!(
+        error.contains("session_config_activation_command_unavailable")
+            && !error.contains("owned_private_canary")
+    );
+    assert!(!root.path().join(".yoke").exists());
+}
+
+#[test]
 fn actual_yaml_plan_and_create_only_profile_match_existing_json_session_and_mcp() {
     let root = tempfile::tempdir().unwrap();
     let source = root.path().join("source");

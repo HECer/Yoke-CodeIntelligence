@@ -429,3 +429,21 @@ Settings use existing profile limits plus 101 projects, 100 backends per map,
 bytes, 32 value levels and 4096 initialization nodes. Relative/UNC/device/alternate
 stream command aliases and conflicting forms refuse. These checks certify the
 bounded generic configuration contract, not any of the 77 backend runtimes.
+
+The standard project defaults can confirm existing native behavior without
+adding a new HostProfile policy: encoding null/utf-8/UTF-8/utf8/UTF8, an unset
+activation_command, null/default 180 activation_command_timeout, null/LSP
+language_backend and null/empty ls_additional_workspace_folders. Source receipts
+conditionally identify these nativeEquivalentDefaults and nativeDefaultCapabilities.
+Other source encodings, active activation commands, non-default activation
+timeouts, JetBrains and nonempty additional folders return named unavailable
+errors. This is compatibility with inactive/default values, not implementation
+of the unavailable extensions. No transcoding, automatic project execution or
+extra source/workspace authority occurs. Empty activation strings also refuse.
+
+Public added_modes:null means no added modes from that layer, retaining lower
+layer additions; it is equivalent to an empty added_modes list. Nonempty lists
+retain their existing validated behavior. Files without these new default keys
+retain the preceding receipt and exported-profile bytes. Default-bearing files
+export the same profile as their reduced equivalent: existing source hash pins,
+runtime registrations, project identity, stale checks and grants remain required.
