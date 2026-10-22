@@ -10603,7 +10603,33 @@
         "serenaLanguageServerIds",
         "serenaUpstreamBoundaries"
       ],
-      "remainingBoundary": "All77 backend IDs remain per-runtime review_required. Historical scoped Rust/TypeScript/Jedi gates do not certify every backend/version/operation."
+      "remainingBoundary": "All77 backend IDs remain per-runtime review_required. Historical scoped Rust/TypeScript/Jedi gates do not certify every backend/version/operation.",
+      "nativePassiveRustJsonSelectorsCheckpoint": {
+        "sourceCommit": "2721b39dc198eab679b28f6b2bd5533e157e01a4",
+        "index": "docs/validation/integration-2026-10-22/rust-json-selector/index.json",
+        "frozenInputs": 1061,
+        "distinctRustFunctionsPassed": 694,
+        "testGroups": 18,
+        "completeNativeLibraryPassed": 569,
+        "newFunctions": 1,
+        "expandedExistingFunctions": 1,
+        "existingIgnored": 10,
+        "failedInScopedRun": 0,
+        "originalTenFixtureGitAndWorkingBytesUnchanged": true,
+        "currentWholeWindowsAcceptanceRemaining": true,
+        "sourceCaptureBytesUnchanged": true,
+        "privateProviderTreeOnly": true,
+        "caseInsensitiveAtAllDepths": true,
+        "legacyPolicyInterpretationAndOverlayBytesPreserved": true,
+        "defaultConfigurationMcp53AndLspDataRawExact": true,
+        "wholeStoreBeforeAfterExact": true,
+        "actualInstalledRustAnalyzer": "rust-analyzer 1.94.1 (e408947b 2026-03-25)",
+        "jsonSelectorOmittedAndOriginalHashReported": true,
+        "crossFolderReferenceSourceBound": true,
+        "sourceExecutionAuthorized": false,
+        "all77RuntimeAcceptanceCertified": false,
+        "fullParityCertified": false
+      }
     },
     {
       "id": "remaining_model_provider_contracts",

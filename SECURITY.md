@@ -79,3 +79,5 @@ Optional Docker verification requires a pinned, preinstalled image; no pull/netw
 Retention uses an exclusive-client check, transaction and quarantine. Current/pinned/editor/recovery/audit dependencies are roots. Backup before enabling automatic maintenance on valuable projects. Unsaved buffers and signed exports may contain source material; keep their local state/exports and cryptographic keys private. Obvious-secret detection is not an exhaustive DLP system.
 
 These controls and adversarial tests were reviewed internally during implementation. **No independent security audit or certification is claimed.**
+
+Passive Rust also omits captured rust-project.json selectors only from its private provider tree and reports original path/hash receipts. Versioned omission-policy semantics preserve archived evidence without claiming old policies covered JSON selectors. Explicit source-execution authority remains separate; ordinary similarly named data and immutable source bytes are preserved. See [provider authority](native/docs/provider-authority.md).

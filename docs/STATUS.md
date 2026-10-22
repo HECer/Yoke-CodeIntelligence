@@ -2,6 +2,62 @@
 
 ## Current integration work
 
+Passive Rust now omits captured rust-project.json selectors from its private
+provider copy at every directory depth, with case-insensitive filename matching.
+Original bytes, capture, graph and source hashes remain unchanged; omission
+receipts identify exact original paths/hashes. Ordinary similarly named files
+remain available, and explicit host source-execution authority retains selectors.
+New JSON-aware source-policy strings bind new provider evidence. Original policy
+strings retain their original exact omission meaning for archived overlays;
+old evidence is not rewritten or upgraded. Captures without JSON selectors retain
+preceding policy strings and default results.
+
+At source 2721b39d, 694 Rust functions pass across 18 scoped groups,
+including the full library (569 passes). 10 existing ignores and zero failed
+functions occur in this scope. One expanded provider-copy test and one new
+versioned-overlay function cover actual file delivery, host authorization,
+hash/order/set refusals and immutable prior results. All ten original symlink
+fixture Git and frozen working bytes remain exact; their Windows prerequisite
+acceptance remains open. No fixture skips, privileges or system settings change.
+All-target Clippy -Dwarnings, native build, typecheck, npm 260 passed/3 existing
+skips and 345 actual format roots pass on 1061 frozen inputs. Cargo fmt --all
+retains OS206. This is not whole current Windows certification.
+
+The causal test fails against unchanged published provider code because the actual
+fixture sees both JSON selectors. Current code passes. Actual old/new CLI default
+configuration/MCP53 and literal LSP data JSON remain exact in the same owned
+fixture; whole SQL before/after is unchanged. Only Native requestId/duration are
+excluded after independently repeating the old binary. The installed rust-analyzer
+1.94.1 still resolves an exact cross-folder reference when an owned JSON selector
+points outside captured source: that selector is omitted and hash-reported with no
+source-execution grant or external dependencies. This is one controlled
+runtime case, not a general runtime-effect or semantic-quality certificate.
+See [passive JSON-selector evidence](validation/integration-2026-10-22/rust-json-selector/README.md)
+and [provider authority](../native/docs/provider-authority.md).
+
+Broader all-77 runtime/vendor settings/install/version acceptance, remaining
+project-setting extensions, original353/R1-R9, authenticated Google, current whole
+Windows, main/release and other listed status work remain open.
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Optional additionalWorkspaceFolders and pinned YAML ls_additional_workspace_folders
 now add relative semantic roots from the same immutable captured source. Independent
 global/project/local selection leaves the primary native symbol index and capture
@@ -38,25 +94,6 @@ The additional-folder setting remains partial for external/foreign sources.
 Vendor settings/install/version/runtime work, other project-setting extensions,
 broader configuration/client work, authenticated Google, original353/R1-R9/current
 Windows/main/release acceptance remain open. No full parity certificate is issued.
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 Standard project YAML defaults now confirm existing native UTF-8/LSP behavior,
 no activation command, default integer timeout 180 and no additional workspace

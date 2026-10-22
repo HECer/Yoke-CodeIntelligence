@@ -817,3 +817,5 @@ Generic per-backend settings replace complete language entries across project la
 Equivalent native project defaults are compatibility confirmations, not new host policy or grants. Pinned-source receipts distinguish UTF-8/LSP/default-only acceptance from unavailable transcoding, activation and additional-workspace extensions. Null mode additions preserve lower layers; source bytes, session binding and runtime trust remain unchanged.
 
 Additional semantic folders are an independent per-project host policy over existing immutable captured source. Their common transport union preserves effective host roots without widening the primary symbol index or capture options. Current policy and effective provider roots bind direct, staged, owned and refreshed operations; external/foreign roots remain unavailable.
+
+Passive Rust JSON project selectors are omitted only from private provider copies. JSON-aware source-policy strings identify the expanded exact omission set; archived original strings keep their original selector semantics, preserving immutable old overlay bytes. Source captures and host execution authority remain separate.

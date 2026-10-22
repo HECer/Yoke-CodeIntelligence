@@ -31,6 +31,7 @@ before review and verification; saved plans and original captures stay immutable
 Additive per-project source exclusions also bind captures and current workspace
 write scope while retaining exact historical evidence and recovery.
 Standard native-equivalent project defaults now project without new authority, with explicit limitations for unavailable extensions.
+Passive Rust isolates JSON project selectors in private provider copies, with exact omission receipts and versioned evidence that preserves old overlays.
 Additional semantic workspace folders reuse captured source without widening the primary symbol index or capture scope; external/foreign roots remain unavailable.
 Host-authorized generic language-server settings reach actual selected processes, while preserving runtime, source-execution and passive admission boundaries.
 Explicit Git-ignore analysis selection includes authorized ignored sources while preserving source provenance, read-only facts and current workspace write admission.
