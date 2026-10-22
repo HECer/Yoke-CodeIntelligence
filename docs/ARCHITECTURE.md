@@ -52,6 +52,12 @@ exact known methods. Ordered provenance and effective restrictions remain
 visible. Every registered inclusion policy requires current persisted state
 before catalogs, adapters and cells; host permissions remain independent.
 
+An explicit versioned optional-default selector filters only Serena tool views
+and seeds native REPL method restrictions before host layers. Other profile
+schemas and absent/null serialized bindings stay exact. Selected versions bind
+the actual optional-name arrays into the host fingerprint; cached callbacks
+and stale-state checks share current policy. No runtime trust is derived.
+
 The explicit Git compiler-affected query releases the checked report read view
 before trusted host compiler execution and revalidates original pins afterward.
 Independent snapshot/project contexts retain actual checker declarations, exact

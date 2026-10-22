@@ -293,7 +293,7 @@ that startup selection. configuration.steering exposes agentInterface,
 agentInterfaceSource and agentInterfaceProject only when explicitly selected.
 Changed host selection refuses an existing host-bound session.
 
-With tools, the original 52 non-serena_repl definitions are candidates under the
+Without optionalDefaults, tools uses the original 52 non-serena_repl candidates under the
 existing fixed/excluded tool rules and context/startup restrictions. With repl,
 the six original no-facade control definitions are candidates: activate_project,
 remove_project, query_project, serena_repl, initial_instructions and serena_info.
@@ -370,3 +370,52 @@ These are documented native layer rules and explicit inclusion semantics.
 Optional default subsets and complete upstream YAML/configuration/client
 selection equivalence remain open; this checkpoint does not silently change the
 preceding defaults or certify the original 353-row inventory.
+
+## Versioned optional defaults
+
+HostProfile.optionalDefaults accepts exactly serena_optional_v1, or absent/null
+for the preceding native behavior. This host-only startup selection is immutable
+for a session and rejects unknown/case-confusable/type values and nested context,
+mode or project-layer attempts. Its selected version and actual optional arrays
+are bound into the host fingerprint. Existing sessions require a matching host
+binding; upgrade or downgrade requires a new session. Source snapshots retain
+their original independent source/analysis identities.
+
+The dated native projection uses the public
+[Tools and APIs documentation](https://oraios.github.io/serena/01-about/035_tools.html)
+from 2026-10-22, HTML SHA256
+8988989c30bf33ecce4bfab1d8e982e8413950428f8af421293624288a558b59.
+All 53 tool names match the original contract. Of those, 24 are marked optional,
+leaving 29 classical defaults. Eight methods of the original native 50 are
+optional: edit.delete_lines/insert_at_line/replace_lines, all three ext methods,
+and lsp.get_diagnostics_for_symbol/restart_language_server. They leave 42 native
+default methods. Current documentation's 14 additional ide methods are outside
+this projection. This is current published flag metadata, not a certification
+of optional flags at the original pinned revision or every backend.
+
+The versioned optional tool filter applies only to Serena discovery and direct
+compatibility dispatch. Other session profiles retain their original schemas;
+the independent native eight-tool profile is unchanged. Normal tool exclusions
+still apply. An explicit fixed base replaces the optional default base; layered
+includedOptionalTools can enable optional entries. Later exclusions can narrow
+them again. A migrated classic/tools session can explicitly include serena_repl,
+which remains subject to a separately configured/trusted host Python runtime.
+Without the migration selection, preceding tools still excludes serena_repl.
+
+The explicit REPL interface retains its six original controls, independently of
+optional tool filtering and fixed/excluded/included tool settings. Optional API
+methods begin excluded before global/project/project-local/context/mode/CLI
+selection. Existing includedApis can restore methods or entire groups; later
+exclusions can remove them again. Per-cell discovery and every callback enforce
+the current selection, including callables cached under an earlier unrestricted
+session. A registered selected default policy requires exact current persisted
+state before catalogs, adapters and cells; external changes require resume.
+
+configuration.steering.optionalDefaults exposes the selected version and
+excludedApis exposes effective API restrictions. Missing or null selection omits
+new fields and preserves preceding profile bytes, fingerprints, all 53 mixed/
+52 tools/six REPL schemas and 50-method discovery. Nothing silently migrates.
+No selection starts/trusts an interpreter, grants source application rights,
+changes read-only/startup restrictions or bypasses approval/stale/recovery guards.
+The trusted Python process is not an OS sandbox. Full backend/client/YAML/Jinja
+and original 353-row inventory acceptance remain separate work.
