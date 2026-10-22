@@ -11,6 +11,11 @@ pub use shortcut::{Kind, Metadata, Shortcut};
 #[path = "google_workspace_capture.rs"]
 mod acquisition;
 pub use acquisition::{CaptureSpec, ClientSpec, Permissions, capture};
+#[path = "google_workspace_http.rs"]
+mod native_http;
+pub use native_http::{
+    HostAccessToken, HttpPermissions, HttpSpec, capture_http, plan_http, read_private_token_stdin,
+};
 
 const KIND: &str = "native_google_workspace_export_v1";
 const MAX_BODY_BYTES: usize = 10_000_000;

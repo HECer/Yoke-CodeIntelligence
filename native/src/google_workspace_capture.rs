@@ -62,7 +62,7 @@ fn host_path(path: &Path) -> Result<()> {
     }
     Ok(())
 }
-fn directory(path: &Path) -> Result<PathBuf> {
+pub(super) fn directory(path: &Path) -> Result<PathBuf> {
     host_path(path)?;
     for ancestor in path.ancestors() {
         let metadata = fs::symlink_metadata(ancestor)?;
@@ -106,7 +106,14 @@ fn open_regular(path: &Path, max: usize) -> Result<File> {
     Ok(file)
 }
 fn hash_program(path: &Path, deadline: &Deadline) -> Result<(File, String)> {
-    let mut file = open_regular(path, 200_000_000)?;
+    hash_program_bounded(path, 200_000_000, deadline)
+}
+pub(super) fn hash_program_bounded(
+    path: &Path,
+    max: usize,
+    deadline: &Deadline,
+) -> Result<(File, String)> {
+    let mut file = open_regular(path, max)?;
     let size = file.metadata()?.len();
     let mut digest = Sha256::new();
     let mut chunk = [0; 65_536];
@@ -120,10 +127,7 @@ fn hash_program(path: &Path, deadline: &Deadline) -> Result<(File, String)> {
         count = count
             .checked_add(n)
             .ok_or_else(|| anyhow::anyhow!("google_workspace_exporter_capacity_exceeded"))?;
-        ensure!(
-            count <= 200_000_000,
-            "google_workspace_exporter_capacity_exceeded"
-        );
+        ensure!(count <= max, "google_workspace_exporter_capacity_exceeded");
         digest.update(&chunk[..n]);
     }
     ensure!(
@@ -172,7 +176,7 @@ fn execute(command: Command, deadline: &Deadline) -> Result<process::CapturedOut
     );
     Ok(output)
 }
-fn archive_admission(
+pub(super) fn archive_admission(
     shortcut: &Shortcut,
     claim: &ExporterClaim,
     limits: &Limits,

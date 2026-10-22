@@ -16,6 +16,42 @@ pub struct Arguments {
 }
 #[derive(Subcommand)]
 enum Operation {
+    /// Preview one pinned native Drive request without reading a token or opening a socket.
+    GoogleHttpPlan {
+        #[arg(long)]
+        config: PathBuf,
+        #[arg(long)]
+        source_root: PathBuf,
+        #[arg(long)]
+        allow_shortcut_read: bool,
+        #[arg(long)]
+        trust_native_exporter: bool,
+        #[arg(long)]
+        limits: Option<PathBuf>,
+    },
+    /// Export through fixed native HTTPS; the token is accepted only on private stdin.
+    GoogleHttpCapture {
+        #[arg(long)]
+        config: PathBuf,
+        #[arg(long)]
+        source_root: PathBuf,
+        #[arg(long)]
+        output: PathBuf,
+        #[arg(long)]
+        allow_shortcut_read: bool,
+        #[arg(long)]
+        allow_network: bool,
+        #[arg(long)]
+        allow_private_credential: bool,
+        #[arg(long)]
+        trust_native_exporter: bool,
+        #[arg(long)]
+        access_token_stdin: bool,
+        #[arg(long)]
+        allow_output: bool,
+        #[arg(long)]
+        limits: Option<PathBuf>,
+    },
     /// Explicitly export one hash-selected Google Workspace shortcut with a trusted host client.
     GoogleCapture {
         #[arg(long)]
@@ -102,6 +138,42 @@ enum Operation {
         arxiv_metadata: bool,
     },
 }
+struct HttpInput {
+    root: PathBuf,
+    path: PathBuf,
+    shortcut: Vec<u8>,
+    spec: yoke::google_workspace::HttpSpec,
+    limits: yoke::google_workspace::Limits,
+}
+fn http_input(
+    config: &std::path::Path,
+    source_root: &std::path::Path,
+    limits: Option<&std::path::PathBuf>,
+    deadline: &Deadline,
+) -> Result<HttpInput> {
+    ensure!(
+        source_root.is_absolute(),
+        "google_workspace_absolute_source_root_required"
+    );
+    let raw = super::meaning_archive_cli::read_input(config, 131072, deadline)?;
+    let spec: yoke::google_workspace::HttpSpec =
+        yoke::json::parse(&raw, 131072).and_then(yoke::json::decode)?;
+    let limits = if let Some(path) = limits {
+        let raw = super::meaning_archive_cli::read_input(path, 16384, deadline)?;
+        yoke::json::parse(&raw, 16384).and_then(yoke::json::decode)?
+    } else {
+        yoke::google_workspace::Limits::default()
+    };
+    let path = yoke::paths::scoped(source_root, &spec.shortcut_path)?;
+    let shortcut = super::meaning_archive_cli::read_input(&path, 65536, deadline)?;
+    Ok(HttpInput {
+        root: std::fs::canonicalize(source_root)?,
+        path,
+        shortcut,
+        spec,
+        limits,
+    })
+}
 pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
     ensure!(
         (10..=600000).contains(&timeout) && (1024..=16_000_000).contains(&max_bytes),
@@ -111,6 +183,88 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
     let cap = max_bytes as usize - 1;
     let mut committed_reply = None;
     let value = match &args.operation {
+        Operation::GoogleHttpPlan {
+            config,
+            source_root,
+            allow_shortcut_read,
+            trust_native_exporter,
+            limits,
+        } => {
+            ensure!(
+                *allow_shortcut_read && *trust_native_exporter,
+                "google_workspace_http_host_permission_required"
+            );
+            let input = http_input(config, source_root, limits.as_ref(), &deadline)?;
+            yoke::google_workspace::plan_http(
+                &input.root,
+                &input.shortcut,
+                &input.spec,
+                &input.limits,
+                &deadline,
+            )?
+        }
+        Operation::GoogleHttpCapture {
+            config,
+            source_root,
+            output,
+            allow_shortcut_read,
+            allow_network,
+            allow_private_credential,
+            trust_native_exporter,
+            access_token_stdin,
+            allow_output,
+            limits,
+        } => {
+            ensure!(
+                *allow_shortcut_read
+                    && *allow_network
+                    && *allow_private_credential
+                    && *trust_native_exporter
+                    && *access_token_stdin
+                    && *allow_output,
+                "google_workspace_http_host_permission_required"
+            );
+            let input = http_input(config, source_root, limits.as_ref(), &deadline)?;
+            let _held = super::meaning_archive_cli::fresh_destination(output, &deadline)?;
+            // Admit source, executable, archive and reply before accepting private input.
+            yoke::google_workspace::plan_http(
+                &input.root,
+                &input.shortcut,
+                &input.spec,
+                &input.limits,
+                &deadline,
+            )?;
+            let shape = |id: &str, bytes: usize| json!({"kind":"native_google_workspace_http_capture_v1","sourceId":id,"bodySha256":id,"archiveHash":id,"archiveBytes":bytes,"output":output,"outputCreated":true,"captureClaimsAreAuthority":false,"googleIdentityVerified":false,"accountIdentityVerified":false,"exporterHashMatchedAtCapture":true,"shortcutMatchedBeforeAndAfter":true,"transport":"native_reqwest_http1_fixed_google","requests":1,"redirectsFollowed":0,"proxyUsed":false,"credentialInput":"private_stdin","credentialsStored":false,"resourceKeyInMetadata":false,"libraryInternalAllocationsBounded":false,"modelCalls":0,"sourceExecuted":false,"complete":false});
+            yoke::json::encode_bounded(&shape(&"f".repeat(64), usize::MAX), cap, &deadline)?;
+            let token = yoke::google_workspace::read_private_token_stdin(&deadline)?;
+            let source = yoke::google_workspace::capture_http(
+                &input.root,
+                &input.shortcut,
+                &input.spec,
+                &yoke::google_workspace::HttpPermissions {
+                    allow_network: *allow_network,
+                    allow_private_credential: *allow_private_credential,
+                    trust_native_exporter: *trust_native_exporter,
+                },
+                &token,
+                &input.limits,
+                &deadline,
+            )?;
+            ensure!(
+                super::meaning_archive_cli::read_input(&input.path, 65536, &deadline)?
+                    == input.shortcut,
+                "google_workspace_shortcut_changed_after_export"
+            );
+            let bytes = source.archive(&deadline)?;
+            let summary = source.summary();
+            let mut value = shape(summary["sourceId"].as_str().unwrap(), bytes.len());
+            value["bodySha256"] = summary["bodySha256"].clone();
+            value["archiveHash"] = json!(yoke::model::hash(&bytes));
+            let reply = yoke::json::encode_bounded(&value, cap, &deadline)?;
+            super::meaning_archive_cli::write_new(output, &bytes, &deadline)?;
+            committed_reply = Some(reply);
+            value
+        }
         Operation::GoogleCapture {
             config,
             source_root,
