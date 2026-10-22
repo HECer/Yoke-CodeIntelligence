@@ -10587,6 +10587,33 @@
         "externalForeignRootsSupported": false,
         "all77RuntimeAcceptanceCertified": false,
         "fullParityCertified": false
+      },
+      "nativeUnicodeWorkspaceIdentityCheckpoint": {
+        "sourceCommit": "383e3defa1a1a432b136d1b944b119e12590eca5",
+        "index": "docs/validation/integration-2026-10-22/unicode-workspace/index.json",
+        "frozenInputs": 1061,
+        "distinctRustFunctionsPassed": 697,
+        "testGroups": 17,
+        "completeNativeLibraryPassed": 569,
+        "newFunctions": 2,
+        "existingIgnored": 8,
+        "failedInScopedRun": 0,
+        "originalTenFixtureGitAndWorkingBytesUnchanged": true,
+        "currentWholeWindowsAcceptanceRemaining": true,
+        "asciiWindowsAliasesRetained": true,
+        "opaqueUnicodeRootsRemainDistinct": true,
+        "ownedWindowsDirectoryIdentityProbe": true,
+        "actualProviderInitializationAndWorkspaceCallbackBothRoots": true,
+        "symbolSourceHashesAndUtf8RangesExact": true,
+        "captureAndBaseGraphBytesUnchanged": true,
+        "defaultConfigurationMcp53AndLspDataRawExact": true,
+        "wholeStoreBeforeAfterExact": true,
+        "actualInstalledRustAnalyzer": "rust-analyzer 1.94.1 (e408947b 2026-03-25)",
+        "crossUnicodeRootReferenceSourceBound": true,
+        "sourceExecutionAuthorized": false,
+        "allFilesystemAliasesCertified": false,
+        "all77RuntimeAcceptanceCertified": false,
+        "fullParityCertified": false
       }
     },
     {

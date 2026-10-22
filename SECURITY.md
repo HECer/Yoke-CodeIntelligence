@@ -81,3 +81,5 @@ Retention uses an exclusive-client check, transaction and quarantine. Current/pi
 These controls and adversarial tests were reviewed internally during implementation. **No independent security audit or certification is claimed.**
 
 Passive Rust also omits captured rust-project.json selectors only from its private provider tree and reports original path/hash receipts. Versioned omission-policy semantics preserve archived evidence without claiming old policies covered JSON selectors. Explicit source-execution authority remains separate; ordinary similarly named data and immutable source bytes are preserved. See [provider authority](native/docs/provider-authority.md).
+
+Windows workspace-folder identity compares ASCII case conservatively and preserves opaque Unicode names. This avoids merging distinct captured directories through expanding Unicode lowercase mappings. Captured membership and source/write/runtime authority remain independent; this is not an all-filesystem alias certificate.

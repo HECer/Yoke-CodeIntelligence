@@ -1,5 +1,59 @@
 # Remaining implementation and acceptance
 
+Windows workspace-folder identities now fold ASCII case only while preserving
+opaque Unicode bytes. U+0130 and ASCII i plus U+0307 are real distinct owned
+Windows directories, but full Unicode lowercasing merged them. Primary symbol
+selection wrongly rejected them as duplicates, and the additional semantic-root
+union silently dropped one root. Both paths now share the same conservative
+identity helper. Known ASCII aliases still refuse or deduplicate; exact captured
+membership, protected-path checks, budgets and original source authority remain.
+
+At source 383e3def, 697 Rust functions pass across 17 scoped groups,
+including the full library (569 passes), ten semantic-workspace and nine primary
+symbol-workspace functions. Two new regression functions fail 0/2 against the
+unchanged published implementations, then pass after correction. 8 existing
+ignores and zero failed functions occur in the qualified scope. All ten original
+symlink fixture Git and prior frozen working bytes remain exact; their Windows
+prerequisite acceptance remains open. No system/privilege changes or new skips.
+All-target Clippy -Dwarnings, native build, typecheck, npm 260 passed/3 existing
+skips and 345 actual format roots pass on 1061 frozen inputs. Cargo fmt --all
+retains OS206. This is scoped evidence, not whole current Windows certification.
+
+Actual provider initialization and workspace callbacks retain both distinct roots.
+The symbol projection binds both original source hashes and exact UTF-8 byte
+ranges without changing capture or the base graph. An actual installed
+rust-analyzer1.94.1 also resolves an exact reference between these Unicode paths
+in an owned single crate without source-execution authority or external
+dependencies. Actual old/new default configuration/MCP53 and literal LSP data
+JSON remain exact; whole SQL before/after is unchanged. Only Native requestId and
+duration are excluded after an independent repeat of the original binary.
+See [Unicode workspace evidence](validation/integration-2026-10-22/unicode-workspace/README.md)
+and [configuration contract](../native/docs/session-config.md#fields-and-boundaries).
+
+This does not certify all filesystem alias rules, all77 runtimes or broader
+semantic quality. External/foreign roots, other project-setting extensions,
+original353/R1-R9, authenticated Google, current whole Windows, main/release and
+the other listed status work remain open.
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Passive Rust now omits captured rust-project.json selectors from its private
 provider copy at every directory depth, with case-insensitive filename matching.
 Original bytes, capture, graph and source hashes remain unchanged; omission
@@ -36,25 +90,6 @@ and [provider authority](../native/docs/provider-authority.md).
 Broader all-77 runtime/vendor settings/install/version acceptance, remaining
 project-setting extensions, original353/R1-R9, authenticated Google, current whole
 Windows, main/release and other listed status work remain open.
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 Optional additionalWorkspaceFolders and pinned YAML ls_additional_workspace_folders
 now add relative semantic roots from the same immutable captured source. Independent
