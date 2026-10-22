@@ -1211,7 +1211,7 @@ impl Session {
                 .host
                 .steering
                 .as_ref()
-                .is_some_and(|s| s.has_fixed_tools())
+                .is_some_and(|s| s.has_fixed_tools() || s.has_inclusions())
         {
             self.check_current_state(
                 deadline,
@@ -1241,11 +1241,9 @@ impl Session {
     pub(crate) fn check_repl_state(&self, deadline: &Deadline) -> Result<()> {
         deadline.check()?;
         if self.agent_interface().is_some()
-            || self
-                .host
-                .steering
-                .as_ref()
-                .is_some_and(|s| s.has_api_exclusions() || s.has_memory_patterns())
+            || self.host.steering.as_ref().is_some_and(|s| {
+                s.has_api_exclusions() || s.has_memory_patterns() || s.has_inclusions()
+            })
         {
             self.check_current_state(
                 deadline,

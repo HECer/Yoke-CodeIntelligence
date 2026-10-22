@@ -45,6 +45,10 @@ pub struct Definition {
     pub ignored_memory_patterns: Vec<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub fixed_tools: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub included_optional_tools: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub included_apis: Vec<String>,
 }
 #[derive(Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
@@ -63,6 +67,10 @@ pub struct Layer {
     pub ignored_memory_patterns: Vec<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub fixed_tools: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub included_optional_tools: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub included_apis: Vec<String>,
 }
 #[derive(Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
@@ -82,6 +90,21 @@ pub struct HostSteering {
     pub modes: BTreeMap<String, Definition>,
 }
 impl HostSteering {
+    pub fn has_inclusions(&self) -> bool {
+        std::iter::once(&self.global)
+            .chain(std::iter::once(&self.cli))
+            .chain(
+                self.projects
+                    .values()
+                    .flat_map(|p| [&p.project, &p.project_local]),
+            )
+            .any(|l| !l.included_optional_tools.is_empty() || !l.included_apis.is_empty())
+            || self
+                .contexts
+                .values()
+                .chain(self.modes.values())
+                .any(|d| !d.included_optional_tools.is_empty() || !d.included_apis.is_empty())
+    }
     pub fn has_fixed_tools(&self) -> bool {
         std::iter::once(&self.global)
             .chain(std::iter::once(&self.cli))
@@ -133,6 +156,13 @@ pub struct Fragment {
 }
 #[derive(Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
+pub struct Inclusion {
+    pub source: String,
+    pub tools: Vec<String>,
+    pub apis: Vec<String>,
+}
+#[derive(Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Resolved {
     pub version: &'static str,
     pub context: String,
@@ -158,6 +188,8 @@ pub struct Resolved {
     pub agent_interface_source: Option<&'static str>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub agent_interface_project: Option<String>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub inclusions: Vec<Inclusion>,
     pub fragments: Vec<Fragment>,
     pub authority: &'static str,
 }
@@ -319,6 +351,12 @@ pub(crate) fn validate(host: &HostProfile) -> Result<()> {
             );
             definition(&d.instructions, &d.excluded_tools, &known)?;
             fixed_selection(&d.fixed_tools, &d.excluded_tools, &known)?;
+            ensure!(
+                d.fixed_tools.is_empty() || d.included_optional_tools.is_empty(),
+                "Fixed tools cannot share a layer with included optional tools"
+            );
+            definition("", &d.included_optional_tools, &known)?;
+            api_selection(&d.included_apis)?;
             api_selection(&d.excluded_apis)?;
             crate::notes::memory_patterns(
                 &d.read_only_memory_patterns,
@@ -333,6 +371,12 @@ pub(crate) fn validate(host: &HostProfile) -> Result<()> {
             );
             definition(&d.instructions, &d.excluded_tools, &known)?;
             fixed_selection(&d.fixed_tools, &d.excluded_tools, &known)?;
+            ensure!(
+                d.fixed_tools.is_empty() || d.included_optional_tools.is_empty(),
+                "Fixed tools cannot share a layer with included optional tools"
+            );
+            definition("", &d.included_optional_tools, &known)?;
+            api_selection(&d.included_apis)?;
             api_selection(&d.excluded_apis)?;
             crate::notes::memory_patterns(
                 &d.read_only_memory_patterns,
@@ -375,6 +419,12 @@ fn validate_layer(host: &HostProfile, l: &Layer, known: &BTreeSet<String>) -> Re
     selection(host, &l.added_modes)?;
     definition(&l.instructions, &l.excluded_tools, known)?;
     fixed_selection(&l.fixed_tools, &l.excluded_tools, known)?;
+    ensure!(
+        l.fixed_tools.is_empty() || l.included_optional_tools.is_empty(),
+        "Fixed tools cannot share a layer with included optional tools"
+    );
+    definition("", &l.included_optional_tools, known)?;
+    api_selection(&l.included_apis)?;
     api_selection(&l.excluded_apis)?;
     crate::notes::memory_patterns(&l.read_only_memory_patterns, &l.ignored_memory_patterns)?;
     Ok(())
@@ -499,7 +549,48 @@ fn extend_unique(out: &mut Vec<String>, values: &[String]) {
         }
     }
 }
+fn same_tool(left: &str, right: &str) -> bool {
+    left == right
+        || crate::trail_adapter::steering_identity(left).is_some_and(|identity| {
+            crate::trail_adapter::steering_identity(right) == Some(identity)
+        })
+}
 impl Resolved {
+    fn include(&mut self, source: String, tools: &[String], apis: &[String]) {
+        if tools.is_empty() && apis.is_empty() {
+            return;
+        }
+        self.excluded_tools
+            .retain(|excluded| !tools.iter().any(|name| same_tool(name, excluded)));
+        if !self.fixed_tools.is_empty() {
+            extend_unique(&mut self.fixed_tools, tools);
+        }
+        if !apis.is_empty() {
+            // Expand only when an inclusion needs a group exception. Old exclusion-only
+            // selectors retain their exact serialization and resolution.
+            let contract = crate::agent_repl::facade_contract();
+            self.excluded_apis = contract["methods"]
+                .as_object()
+                .expect("Owned facade contract")
+                .keys()
+                .filter(|method| {
+                    !self.api_allowed(method)
+                        && !apis.iter().any(|name| {
+                            name == *method
+                                || method
+                                    .split_once('.')
+                                    .is_some_and(|(group, _)| group == name)
+                        })
+                })
+                .cloned()
+                .collect();
+        }
+        self.inclusions.push(Inclusion {
+            source,
+            tools: tools.to_vec(),
+            apis: apis.to_vec(),
+        });
+    }
     pub fn api_allowed(&self, method: &str) -> bool {
         !self.excluded_apis.contains(method)
             && !method
@@ -507,15 +598,15 @@ impl Resolved {
                 .is_some_and(|(group, _)| self.excluded_apis.contains(group))
     }
     pub fn allows(&self, name: &str) -> bool {
-        let identity = crate::trail_adapter::steering_identity(name);
-        let equivalent = |selected: &String| {
-            selected == name
-                || identity.is_some_and(|identity| {
-                    crate::trail_adapter::steering_identity(selected) == Some(identity)
-                })
-        };
-        !self.excluded_tools.iter().any(equivalent)
-            && (self.fixed_tools.is_empty() || self.fixed_tools.iter().any(equivalent))
+        !self
+            .excluded_tools
+            .iter()
+            .any(|selected| same_tool(selected, name))
+            && (self.fixed_tools.is_empty()
+                || self
+                    .fixed_tools
+                    .iter()
+                    .any(|selected| same_tool(selected, name)))
     }
     fn select_fixed(&mut self, source: String, tools: &[String]) {
         if !tools.is_empty() {
@@ -587,6 +678,7 @@ pub(crate) fn resolve(
         agent_interface_source: agent_interface(host).map(|(_, source)| source),
         agent_interface_project: agent_interface(host)
             .map(|_| host.startup_project.as_deref().unwrap_or("default").into()),
+        inclusions: Vec::new(),
         fragments: Vec::new(),
         authority: "advisory_instructions_and_tool_restrictions_only",
     };
@@ -601,6 +693,11 @@ pub(crate) fn resolve(
         extend_unique(&mut out.added_modes, &l.added_modes);
         out.add((*source).into(), &l.instructions, &l.excluded_tools);
         out.select_fixed((*source).into(), &l.fixed_tools);
+        out.include(
+            (*source).into(),
+            &l.included_optional_tools,
+            &l.included_apis,
+        );
     }
     extend_unique(&mut out.added_modes, &s.cli.added_modes);
     extend_unique(&mut out.modes, &out.added_modes);
@@ -626,6 +723,11 @@ pub(crate) fn resolve(
         &context.excluded_tools,
     );
     out.select_fixed(format!("context:{}", host.context), &context.fixed_tools);
+    out.include(
+        format!("context:{}", host.context),
+        &context.included_optional_tools,
+        &context.included_apis,
+    );
     for name in out.modes.clone() {
         let d = s
             .modes
@@ -640,11 +742,21 @@ pub(crate) fn resolve(
         extend_unique(&mut out.ignored_memory_patterns, &d.ignored_memory_patterns);
         out.add(format!("mode:{name}"), &d.instructions, &d.excluded_tools);
         out.select_fixed(format!("mode:{name}"), &d.fixed_tools);
+        out.include(
+            format!("mode:{name}"),
+            &d.included_optional_tools,
+            &d.included_apis,
+        );
     }
     out.add("cli".into(), &s.cli.instructions, &s.cli.excluded_tools);
     out.select_fixed("cli".into(), &s.cli.fixed_tools);
     out.excluded_apis
         .extend(s.cli.excluded_apis.iter().cloned());
+    out.include(
+        "cli".into(),
+        &s.cli.included_optional_tools,
+        &s.cli.included_apis,
+    );
     extend_unique(
         &mut out.read_only_memory_patterns,
         &s.cli.read_only_memory_patterns,
