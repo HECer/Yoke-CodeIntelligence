@@ -220,21 +220,67 @@ pub fn restart_registered(engine: &mut Engine, deadline: &Deadline) -> Result<Va
     use rusqlite::{OptionalExtension, params};
     deadline.check()?;
     ensure!(
-        !engine.servers.is_empty() && engine.servers.len() <= 100,
+        engine
+            .selected_backends
+            .as_ref()
+            .is_some_and(|ids| !ids.is_empty() && ids.len() <= 32)
+            || (!engine.servers.is_empty() && engine.servers.len() <= 100),
         "Restart requires bounded host-registered providers"
     );
     let (snapshot, graph, _, _) = engine.index(deadline)?;
-    let registrations: Vec<_> = engine.servers.clone().into_iter().collect();
+    let registrations: Vec<_> = if let Some(ids) = &engine.selected_backends {
+        ids.iter()
+            .map(|id| {
+                let provider = engine
+                    .backend_servers
+                    .get(id)
+                    .context("language_server_not_host_registered")?;
+                Ok((
+                    provider.server.language.clone(),
+                    provider.server.clone(),
+                    Some(provider.configuration.clone()),
+                    Some(id.clone()),
+                ))
+            })
+            .collect::<Result<Vec<_>>>()?
+    } else {
+        engine
+            .servers
+            .iter()
+            .map(|(language, server)| {
+                (
+                    language.clone(),
+                    server.clone(),
+                    engine.server_configurations.get(language).cloned(),
+                    None,
+                )
+            })
+            .collect()
+    };
     let mut providers = Vec::new();
     let mut absent = Vec::new();
-    for (language, server) in registrations {
+    for (language, server, configuration, backend_id) in registrations {
         deadline.check()?;
-        let Some(file) = snapshot
-            .files
-            .iter()
-            .find(|file| provider_language(&file.language) == provider_language(&language))
-        else {
-            absent.push(json!({"language":language,"reason":"no_captured_source"}));
+        let mut selected_file = None;
+        for file in &snapshot.files {
+            deadline.check()?;
+            let matches = if let Some(id) = &backend_id {
+                engine.selected_backend_id(&file.path)? == Some(id.as_str())
+            } else {
+                provider_language(&file.language) == provider_language(&language)
+            };
+            if matches {
+                selected_file = Some(file);
+                break;
+            }
+        }
+        let Some(file) = selected_file else {
+            let mut value = json!({"language":language,"reason":"no_captured_source"});
+            if let Some(id) = &backend_id {
+                value["backendId"] = json!(id);
+                value["reason"] = json!("no_captured_source_selected_for_backend");
+            }
+            absent.push(value);
             continue;
         };
         crate::capture::validate_language(&engine.store, &snapshot, &file.path)?;
@@ -244,7 +290,6 @@ pub fn restart_registered(engine: &mut Engine, deadline: &Deadline) -> Result<Va
             operation: "capabilities",
             new_name: None,
         };
-        let configuration = engine.server_configurations.get(&language).cloned();
         let tcp = configuration
             .as_ref()
             .is_some_and(|config| config.tcp_endpoint.is_some());
@@ -280,7 +325,7 @@ pub fn restart_registered(engine: &mut Engine, deadline: &Deadline) -> Result<Va
                     .is_some_and(crate::model::valid_id),
             "Provider health source/profile binding mismatch"
         );
-        providers.push(json!({
+        let mut provider = json!({
             "language":language,"path":file.path,"contentHash":file.hash,
             "serverProfileHash":health["serverProfileHash"],
             "providerSourceOmissions":health["providerSourceOmissions"],
@@ -289,7 +334,12 @@ pub fn restart_registered(engine: &mut Engine, deadline: &Deadline) -> Result<Va
             "codeActionKinds":health["codeActionKinds"],
             "transport":if tcp{"existing_tcp_endpoint"}else{"owned_stdio_process"},
             "initialized":true,"closed":true,"peerProcessRestarted":false,
-        }));
+        });
+        if let Some(id) = &backend_id {
+            provider["backendId"] = json!(id);
+            provider["backendSelection"] = health["backendSelection"].clone();
+        }
+        providers.push(provider);
     }
     ensure!(
         !providers.is_empty(),
@@ -1879,7 +1929,7 @@ pub(crate) fn stage_directory_move_at(
         .record()
         .files()
         .iter()
-        .find(|file| file.language == host.0.language)
+        .find(|file| engine.selected_backends.is_some() || file.language == host.0.language)
         .context("Directory move provider has no selected source file")?;
     let mut edits = Vec::new();
     let value = run_at_internal(
@@ -1912,12 +1962,19 @@ fn run_at_internal(
     directory: Option<&changes::SelectedDirectoryMove>,
     deadline: &Deadline,
 ) -> Result<Value> {
+    let selected = engine.selected_provider(request.path)?;
+    let host = selected
+        .as_ref()
+        .map(|(_, p)| (&p.server, Some(&p.configuration)))
+        .unwrap_or(host);
     ensure!(host.0.trust, "Language server trust is required");
     let configuration = effective_host_configuration(engine, snapshot, host.1, deadline)?;
     let host = (host.0, configuration.as_ref());
     validate_passive_host(host.0, host.1, deadline)?;
     let profile = server_profile(host.0, host.1, deadline)?;
-    let profile_hash = identity(&profile);
+    let profile_hash =
+        selected_profile_hash(&profile, selected.as_ref().map(|(id, _)| id.as_str()));
+    let path = request.path;
     let mut value = run_at_unprofiled(
         engine, host, snapshot, graph, request, options, staged, directory, deadline,
     )?;
@@ -1930,7 +1987,22 @@ fn run_at_internal(
             .is_some_and(|configuration| configuration.allow_source_execution)
     );
     value["providerSourcePolicy"] = json!(provider_source_policy(host.0, host.1));
+    if let Some((id, _)) = &selected {
+        qualify_selection(&mut value, id, path);
+    }
     Ok(value)
+}
+fn selected_profile_hash(profile: &Value, id: Option<&str>) -> String {
+    id.map_or_else(
+        || identity(profile),
+        |id| identity(&(profile, "host_catalog_backend_v1", id)),
+    )
+}
+fn qualify_selection(value: &mut Value, id: &str, path: &str) {
+    let matched =
+        crate::server_catalog::get(id).is_some_and(|entry| entry.supports_path(Path::new(path)));
+    value["selectedBackendId"] = json!(id);
+    value["backendSelection"] = json!({"policy":"first_supporting_file_then_first_fallback","matchedDeclaredExtension":matched,"fallback":!matched,"runtimeCertification":false});
 }
 /// All transport paths, including staged refactors, bind the same effective roots
 /// before passive-policy checks, provider-profile hashing or process startup.

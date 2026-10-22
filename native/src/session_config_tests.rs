@@ -17,6 +17,105 @@ fn apply(base: &HostProfile, target: Target, bytes: &[u8]) -> Result<Projection>
 }
 
 #[test]
+fn ordered_language_servers_project_without_creating_runtime_registrations_or_trust() {
+    let base = HostProfile::default();
+    let bytes = serde_json::to_vec(&base).unwrap();
+    assert_eq!(
+        apply(&base, Target::Global, b"language_servers: null\n")
+            .unwrap()
+            .profile_bytes(&deadline())
+            .unwrap(),
+        bytes
+    );
+    let global = apply(
+        &base,
+        Target::Global,
+        b"\xef\xbb\xbflanguage_servers: [typescript, angular]\r\n",
+    )
+    .unwrap();
+    let project = apply(
+        global.profile(),
+        Target::Project {
+            project: "default".into(),
+        },
+        b"language_servers: [rust]\n",
+    )
+    .unwrap();
+    let local = apply(
+        project.profile(),
+        Target::ProjectLocal {
+            project: "default".into(),
+        },
+        b"language_servers: [angular, typescript]\n",
+    )
+    .unwrap();
+    assert_eq!(
+        local
+            .profile()
+            .language_servers
+            .as_ref()
+            .unwrap()
+            .select("default")
+            .unwrap(),
+        &["angular", "typescript"]
+    );
+    let inherited = apply(
+        local.profile(),
+        Target::ProjectLocal {
+            project: "default".into(),
+        },
+        b"language_servers: null\n",
+    )
+    .unwrap();
+    assert_eq!(
+        inherited
+            .profile()
+            .language_servers
+            .as_ref()
+            .unwrap()
+            .select("default")
+            .unwrap(),
+        &["rust"]
+    );
+    assert_eq!(local.plan()["languageServerRegistrationsFromYaml"], false);
+    assert_eq!(local.plan()["languageServerRegistrationsValidated"], false);
+    assert_eq!(local.plan()["runtimeTrustFromYaml"], false);
+    assert_eq!(
+        global.plan()["sources"][0]["originalSha256"],
+        model::hash(b"\xef\xbb\xbflanguage_servers: [typescript, angular]\r\n")
+    );
+}
+
+#[test]
+fn ordered_server_yaml_refuses_bad_roles_types_ids_and_registration_payloads() {
+    let base = HostProfile::default();
+    for bytes in [
+        b"language_servers: []\n".as_slice(),
+        b"language_servers: [rust, rust]\n",
+        b"language_servers: [not_registered_in_catalog]\n",
+        b"language_servers: rust\n",
+        b"language_servers: [false]\n",
+        b"language_servers: [{command: node}]\n",
+        b"language_servers: [rust]\nservers: []\n",
+    ] {
+        assert!(apply(&base, Target::Global, bytes).is_err());
+    }
+    for target in [
+        Target::Context {
+            name: "custom".into(),
+        },
+        Target::Mode {
+            name: "custom".into(),
+        },
+        Target::Project {
+            project: "unknown".into(),
+        },
+    ] {
+        assert!(apply(&base, target, b"language_servers: [rust]\n").is_err());
+    }
+}
+
+#[test]
 fn symbol_workspace_yaml_resolves_pinned_layers_and_null_inheritance_without_source_grants() {
     let base = HostProfile::default();
     let bytes = serde_json::to_vec(&base).unwrap();

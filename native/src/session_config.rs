@@ -42,7 +42,12 @@ impl Projection {
         crate::json::encode_bounded(&self.profile, MAX_PROFILE_BYTES, deadline)
     }
     pub fn plan(&self) -> Value {
-        json!({"schema":"native_session_config_yaml_v1","hostProfile":self.profile,"sources":self.sources,"sourceBytesRewritten":false,"templatesEvaluated":false,"activationCommandsExecuted":false,"projectRegistrationsFromYaml":false,"runtimeTrustFromYaml":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"sourceExecuted":false,"complete":false})
+        let mut value = json!({"schema":"native_session_config_yaml_v1","hostProfile":self.profile,"sources":self.sources,"sourceBytesRewritten":false,"templatesEvaluated":false,"activationCommandsExecuted":false,"projectRegistrationsFromYaml":false,"runtimeTrustFromYaml":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"sourceExecuted":false,"complete":false});
+        if self.profile.language_servers.is_some() {
+            value["languageServerRegistrationsValidated"] = json!(false);
+            value["languageServerRegistrationsFromYaml"] = json!(false);
+        }
+        value
     }
 }
 fn label(value: &str) -> Result<()> {
@@ -57,6 +62,7 @@ fn label(value: &str) -> Result<()> {
     Ok(())
 }
 struct DecodedFields {
+    language_servers: Option<Option<Vec<String>>>,
     fields: Map<String, Value>,
     base_modes: Option<Value>,
     read_only: Option<bool>,
@@ -73,6 +79,7 @@ fn rename_fields(
     project: bool,
 ) -> Result<DecodedFields> {
     let mut mapped = Map::new();
+    let mut language_servers = None;
     let mut base = None;
     let mut read_only = None;
     let mut declared = None;
@@ -82,6 +89,15 @@ fn rename_fields(
     let mut workspace_folders = None;
     for (key, value) in raw {
         let name = match key.as_str() {
+            "language_servers" if global || project => {
+                let ids: Option<Vec<String>> = serde_json::from_value(value)
+                    .map_err(|_| anyhow::anyhow!("session_config_language_servers_invalid"))?;
+                if let Some(ids) = &ids {
+                    crate::server_selection::validate_ids(ids)?;
+                }
+                language_servers = Some(ids);
+                continue;
+            }
             "ls_workspace_folders" if global || project => {
                 let values: Option<Vec<String>> = serde_json::from_value(value)
                     .map_err(|_| anyhow::anyhow!("session_config_workspace_folders_invalid"))?;
@@ -156,6 +172,7 @@ fn rename_fields(
         mapped.insert(name.into(), value);
     }
     Ok(DecodedFields {
+        language_servers,
         fields: mapped,
         base_modes: base,
         read_only,
@@ -206,6 +223,7 @@ pub fn project(
         );
         let definition = matches!(source.target, Target::Context { .. } | Target::Mode { .. });
         let DecodedFields {
+            language_servers,
             fields,
             base_modes,
             read_only,
@@ -243,6 +261,29 @@ pub fn project(
         }
         if let Target::Context { name } | Target::Mode { name } = source.target {
             label(name)?;
+        }
+        if let Some(ids) = language_servers
+            && (ids.is_some() || profile.language_servers.is_some())
+        {
+            let selection = profile.language_servers.get_or_insert_default();
+            match source.target {
+                Target::Global => selection.global = ids,
+                Target::Project { project } => {
+                    selection
+                        .projects
+                        .entry(project.clone())
+                        .or_default()
+                        .project = ids
+                }
+                Target::ProjectLocal { project } => {
+                    selection.projects.entry(project.clone()).or_default().local = ids
+                }
+                _ => unreachable!(),
+            }
+            selection.canonicalize();
+            if selection.empty() {
+                profile.language_servers = None;
+            }
         }
         if let Some(folders) = workspace_folders
             && (folders.is_some() || profile.symbol_workspace_folders.is_some())
@@ -377,6 +418,9 @@ pub fn project(
     }
     if let Some(exclusions) = &profile.source_exclusions {
         exclusions.validate(&profile, deadline)?;
+    }
+    if let Some(selection) = &profile.language_servers {
+        selection.validate(&profile)?;
     }
     if let Some(folders) = &profile.symbol_workspace_folders {
         folders.validate(&profile)?;

@@ -84,6 +84,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
+    #[serde(default, skip_serializing_if = "crate::server_selection::unselected")]
+    pub language_servers: Option<crate::server_selection::HostSelection>,
     #[serde(default, skip_serializing_if = "crate::symbol_workspace::unselected")]
     pub symbol_workspace_folders: Option<crate::symbol_workspace::HostFolders>,
     #[serde(default, skip_serializing_if = "crate::symbol_info_budget::unselected")]
@@ -121,6 +123,7 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            language_servers: None,
             symbol_workspace_folders: None,
             symbol_info_budgets: None,
             source_exclusions: None,
@@ -818,6 +821,16 @@ impl Session {
         deadline: &Deadline,
     ) -> Result<Self> {
         engine.store.set_deadline(deadline)?;
+        if let Some(selection) = &host.language_servers {
+            selection.validate(&host)?;
+            selection.validate_registered(&engine.backend_servers)?;
+        }
+        if let Some(selection) = &mut host.language_servers {
+            selection.canonicalize();
+            if selection.empty() {
+                host.language_servers = None;
+            }
+        }
         if engine.capture_options.source_exclusions.is_some() {
             engine.capture_options = engine.capture_options.validated()?;
         }
@@ -1160,6 +1173,18 @@ impl Session {
         } else {
             fingerprint
         };
+        let fingerprint = if let Some(selection) = &host.language_servers {
+            engine.selected_backends = selection.select("default").map(<[String]>::to_vec);
+            identity(&(
+                fingerprint,
+                "host_language_servers_v1",
+                selection,
+                crate::server_selection::bindings(&engine.backend_servers)?,
+            ))
+        } else {
+            fingerprint
+        };
+        engine.backend_registry_sealed = true;
         let owned_label = if let Some(id) = session_id {
             label(id)?;
             id.to_owned()
@@ -1371,7 +1396,8 @@ impl Session {
         }
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
-        if self.host.symbol_workspace_folders.is_some()
+        if self.host.language_servers.is_some()
+            || self.host.symbol_workspace_folders.is_some()
             || self.host.symbol_info_budgets.is_some()
             || self.host.primary_read_only
             || !crate::source_exclusions::unselected(&self.host.source_exclusions)
@@ -1651,6 +1677,14 @@ impl Session {
                 .and_then(|p| p.select(name))
                 .map(<[String]>::to_vec);
             engine.servers = self.engine.servers.clone();
+            engine.backend_servers = self.engine.backend_servers.clone();
+            engine.backend_registry_sealed = true;
+            engine.selected_backends = self
+                .host
+                .language_servers
+                .as_ref()
+                .and_then(|s| s.select(name))
+                .map(<[String]>::to_vec);
             engine.server_configurations = self.engine.server_configurations.clone();
             self.others.insert(name.into(), engine);
         }
@@ -1763,6 +1797,13 @@ impl Session {
                 }
                 if self.host.primary_read_only {
                     value["primaryReadOnly"] = json!(true);
+                }
+                if let Some(selection) = &self.host.language_servers {
+                    value["languageServers"] = serde_json::to_value(selection)?;
+                    value["languageServersResolved"] =
+                        json!(selection.select(&self.state.active_project));
+                    value["registeredBackendIds"] =
+                        json!(self.engine.backend_servers.keys().collect::<Vec<_>>());
                 }
                 if let Some(folders) = &self.host.symbol_workspace_folders {
                     value["symbolWorkspaceFolders"] = serde_json::to_value(folders)?;

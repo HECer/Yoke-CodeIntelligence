@@ -39,6 +39,7 @@ pub struct Target {
     pub host: HostProfile,
     pub capture_options: CaptureOptions,
     pub servers: Vec<crate::lsp::ConfiguredServer>,
+    pub host_servers: Vec<crate::server_selection::HostServerSpec>,
     pub allow_writes: bool,
     pub agent_repl: Option<crate::agent_repl::ReplSpec>,
     /// Current principal's host-selected grants, grouped by registered collection.
@@ -53,6 +54,7 @@ impl Target {
             host,
             capture_options: CaptureOptions::default(),
             servers: Vec::new(),
+            host_servers: Vec::new(),
             allow_writes: false,
             agent_repl: None,
             collection_grants: BTreeMap::new(),
@@ -66,6 +68,10 @@ impl Target {
         for server in &self.servers {
             deadline.check()?;
             engine.register_configured_server(server.clone())?;
+        }
+        for spec in &self.host_servers {
+            deadline.check()?;
+            spec.clone().register(&mut engine, true)?;
         }
         // This independent random label is not the transport session secret.
         Session::open(
@@ -93,7 +99,9 @@ impl Principal {
         );
         target.root = target.root.canonicalize()?;
         ensure!(
-            target.root.is_dir() && target.servers.len() <= 64 && target.host.projects.len() <= 100,
+            target.root.is_dir()
+                && target.servers.len() + target.host_servers.len() <= 64
+                && target.host.projects.len() <= 100,
             "Invalid MCP host target or capacity"
         );
         ensure!(

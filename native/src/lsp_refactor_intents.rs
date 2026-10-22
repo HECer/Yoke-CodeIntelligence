@@ -334,6 +334,11 @@ pub(crate) fn stage_move_intent_at(
     deadline: &Deadline,
 ) -> Result<StagedSemantic> {
     deadline.check()?;
+    let selected = engine.selected_provider(intent.source_path())?;
+    let host = selected
+        .as_ref()
+        .map(|(_, p)| (&p.server, &p.configuration))
+        .unwrap_or(host);
     ensure!(
         host.1.refactor_intent_profile == Some(RefactorIntentProfile::OwnV1),
         "Owned refactor intents require explicit host refactorIntentProfile own_v1"
@@ -361,7 +366,8 @@ pub(crate) fn stage_move_intent_at(
         deadline,
     )?;
     let profile = server_profile(host.0, Some(host.1), deadline)?;
-    let profile_hash = identity(&profile);
+    let profile_hash =
+        selected_profile_hash(&profile, selected.as_ref().map(|(id, _)| id.as_str()));
     let base = json!({
         "workspaceId":snapshot.workspace_id,"snapshotId":snapshot.id,
         "manifestHash":identity(snapshot),"analyzerProducer":epoch.producer(),
@@ -430,17 +436,21 @@ pub(crate) fn stage_move_intent_at(
     let checked = check_workspace_edit(engine, snapshot, graph, tree.path(), edit, deadline)?;
     intent.validate_binding(snapshot, graph, deadline)?;
     deadline.check()?;
+    let mut value = json!({
+        "snapshotId":snapshot.id,"path":intent.source_path(),"operation":"moveSymbol",
+        "refactorIntentProfile":"own_v1","requestId":request_id,
+        "serverProfileHash":profile_hash,"serverProfileBinding":profile["commandBinding"],
+        "providerSourceOmissions":snapshot.files.iter().filter(|file| exclusions.contains(&file.path)).map(|file| json!({"path":file.path,"contentHash":file.hash,"reason":"workspace_execution_selector_omitted_from_private_provider_tree"})).collect::<Vec<_>>(),
+        "providerSourcePolicy":provider_source_policy(host.0, Some(host.1)),
+        "sourceExecutionAuthorized":host.1.allow_source_execution,
+        "stagedEditIndex":0,"commandsExecuted":false,"complete":false,
+        "referenceCompleteness":"compiler_binding_and_exhaustive_reference_updates_unverified",
+    });
+    if let Some((id, _)) = &selected {
+        qualify_selection(&mut value, id, intent.source_path());
+    }
     Ok(StagedSemantic {
-        value: json!({
-            "snapshotId":snapshot.id,"path":intent.source_path(),"operation":"moveSymbol",
-            "refactorIntentProfile":"own_v1","requestId":request_id,
-            "serverProfileHash":profile_hash,"serverProfileBinding":profile["commandBinding"],
-            "providerSourceOmissions":snapshot.files.iter().filter(|file| exclusions.contains(&file.path)).map(|file| json!({"path":file.path,"contentHash":file.hash,"reason":"workspace_execution_selector_omitted_from_private_provider_tree"})).collect::<Vec<_>>(),
-            "providerSourcePolicy":provider_source_policy(host.0, Some(host.1)),
-            "sourceExecutionAuthorized":host.1.allow_source_execution,
-            "stagedEditIndex":0,"commandsExecuted":false,"complete":false,
-            "referenceCompleteness":"compiler_binding_and_exhaustive_reference_updates_unverified",
-        }),
+        value,
         edits: vec![checked],
     })
 }

@@ -149,9 +149,8 @@ pub(super) fn prepare(
     );
     let (source, hash) = crate::query::source(&engine.store, snapshot, &path)?;
     let declarations = targets(graph, &file.language, &path, &source, d)?;
-    let server = engine
-        .servers
-        .get(&file.language)
+    let (server, _) = engine
+        .semantic_host(&file.path, &file.language)?
         .context("File usage proof requires a host-registered semantic provider")?;
     ensure!(
         server.trust,

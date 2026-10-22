@@ -2966,7 +2966,7 @@ struct HttpPrincipalFile {
     #[serde(default)]
     capture_options: yoke::capture::CaptureOptions,
     #[serde(default)]
-    servers: Vec<HttpServerFile>,
+    servers: Vec<yoke::server_selection::HostServerSpec>,
     #[serde(default)]
     allow_writes: bool,
     #[serde(default)]
@@ -3012,16 +3012,6 @@ impl HttpReplFile {
                 }),
         }
     }
-}
-#[derive(serde::Deserialize)]
-#[serde(rename_all = "camelCase", deny_unknown_fields)]
-struct HttpServerFile {
-    language: String,
-    command: String,
-    #[serde(default)]
-    args: Vec<String>,
-    #[serde(default)]
-    configuration: yoke::lsp::HostConfiguration,
 }
 fn http_default_profile() -> String {
     "session".into()
@@ -3110,19 +3100,7 @@ fn run_http(
             principal.host_profile,
         );
         target.capture_options = principal.capture_options;
-        target.servers = principal
-            .servers
-            .into_iter()
-            .map(|server| yoke::lsp::ConfiguredServer {
-                server: yoke::lsp::Server {
-                    language: server.language,
-                    command: server.command,
-                    args: server.args,
-                    trust: true,
-                },
-                configuration: server.configuration,
-            })
-            .collect();
+        target.host_servers = principal.servers;
         target.allow_writes = principal.allow_writes;
         target.collection_grants = principal.collection_grants;
         target.agent_repl = principal
@@ -4300,28 +4278,11 @@ fn run(cli: Cli) -> Result<bool> {
             cli.trust_servers,
             "Host language server configuration requires --trust-servers"
         );
-        #[derive(serde::Deserialize)]
-        #[serde(deny_unknown_fields)]
-        struct ConfiguredServer {
-            language: String,
-            command: String,
-            #[serde(default)]
-            args: Vec<String>,
-            #[serde(default)]
-            configuration: yoke::lsp::HostConfiguration,
-        }
-        let servers: Vec<ConfiguredServer> = yoke::json::decode(input_json(&config, 1_000_000)?)?;
+        let servers: Vec<yoke::server_selection::HostServerSpec> =
+            yoke::json::decode(input_json(&config, 1_000_000)?)?;
         ensure!(servers.len() <= 100, "Too many configured servers");
         for server in servers {
-            engine.register_configured_server(yoke::lsp::ConfiguredServer {
-                server: yoke::lsp::Server {
-                    command: server.command,
-                    args: server.args,
-                    language: server.language,
-                    trust: true,
-                },
-                configuration: server.configuration,
-            })?;
+            server.register(&mut engine, cli.trust_servers)?;
         }
     }
     engine.store.set_deadline(&deadline)?;

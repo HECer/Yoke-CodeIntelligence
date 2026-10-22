@@ -95,6 +95,7 @@ pub mod runtime;
 pub mod semantic_enrichment;
 pub mod semantic_refactor;
 pub mod server_catalog;
+pub mod server_selection;
 pub mod session_config;
 pub mod session_steering;
 pub mod skill_takeaways;
@@ -111,7 +112,7 @@ mod validation;
 pub mod verify;
 pub mod view_comparison;
 
-use anyhow::{Result, bail, ensure};
+use anyhow::{Context, Result, bail, ensure};
 use capture::Deadline;
 use model::{Graph, Snapshot, identity};
 use rayon::prelude::*;
@@ -125,6 +126,9 @@ use store::Store;
 pub use validation::validate;
 
 pub struct Engine {
+    pub(crate) backend_servers: BTreeMap<String, lsp::ConfiguredServer>,
+    pub(crate) selected_backends: Option<Vec<String>>,
+    pub(crate) backend_registry_sealed: bool,
     pub(crate) symbol_workspace_folders: Option<Vec<String>>,
     pub root: PathBuf,
     pub store: Store,
@@ -161,6 +165,9 @@ impl Engine {
         ensure!(root.is_dir(), "Workspace root must be a directory");
         let store = Store::open_with_timeout(&root, timeout)?;
         Ok(Self {
+            backend_servers: BTreeMap::new(),
+            selected_backends: None,
+            backend_registry_sealed: false,
             symbol_workspace_folders: None,
             root,
             store,
@@ -406,9 +413,26 @@ impl Engine {
             }
             if tool == "ci_status" && args["mode"].as_str().unwrap_or("status") == "status" {
                 sid = self.store.latest()?;
-                return Ok(
-                    json!({"version":env!("CARGO_PKG_VERSION"),"runtime":"rust","workspaceId":self.store.workspace_id,"latestSnapshotId":sid,"capabilities":{"structuralLanguages":analysis::LANGUAGES,"sourceSearch":true,"regexSearch":true,"directedGraph":true,"immutableSnapshots":true,"semanticRename":"host-selected-lsp-required","registeredSemanticLanguages":self.servers.keys().collect::<Vec<_>>(),"structuralDataflow":true,"hostWorkflows":["configured_compiler","test_map_collection","model_providers_and_ledger","python_debugger_repl","docker_verification","signed_tls_source_exchange","reviewed_history_retention"],"modelCalls":false,"upstreamApplicationsRequired":false,"workspaceWrites":self.allow_writes},"limitations":["Structural candidates and model inferences are not exhaustive compiler or runtime proofs.","Optional execution, models, credentials, network service and deletion require separate explicit host authority.","All-language-server certification and proprietary hosted features are outside the measured local workflow replacement."]}),
-                );
+                let registered_languages = if let Some(ids) = &self.selected_backends {
+                    ids.iter()
+                        .filter_map(|id| server_catalog::get(id))
+                        .flat_map(|entry| entry.languages.iter().copied())
+                        .collect::<std::collections::BTreeSet<_>>()
+                        .into_iter()
+                        .map(str::to_owned)
+                        .collect::<Vec<_>>()
+                } else {
+                    self.servers.keys().cloned().collect::<Vec<_>>()
+                };
+
+                let mut status = json!({"version":env!("CARGO_PKG_VERSION"),"runtime":"rust","workspaceId":self.store.workspace_id,"latestSnapshotId":sid,"capabilities":{"structuralLanguages":analysis::LANGUAGES,"sourceSearch":true,"regexSearch":true,"directedGraph":true,"immutableSnapshots":true,"semanticRename":"host-selected-lsp-required","registeredSemanticLanguages":registered_languages,"structuralDataflow":true,"hostWorkflows":["configured_compiler","test_map_collection","model_providers_and_ledger","python_debugger_repl","docker_verification","signed_tls_source_exchange","reviewed_history_retention"],"modelCalls":false,"upstreamApplicationsRequired":false,"workspaceWrites":self.allow_writes},"limitations":["Structural candidates and model inferences are not exhaustive compiler or runtime proofs.","Optional execution, models, credentials, network service and deletion require separate explicit host authority.","All-language-server certification and proprietary hosted features are outside the measured local workflow replacement."]});
+                if let Some(ids) = &self.selected_backends {
+                    status["capabilities"]["selectedLanguageServers"] = json!(ids);
+                    status["capabilities"]["backendSelectionPolicy"] =
+                        json!("first_declared_extension_match_then_first_fallback");
+                    status["capabilities"]["backendRuntimeCertification"] = json!(false);
+                }
+                return Ok(status);
             }
             if tool == "ci_change_apply" {
                 let receipt =
@@ -472,7 +496,7 @@ impl Engine {
                             )
                         })?;
                     capture::validate_language(&self.store, &snapshot, path)?;
-                    let server = self.semantic_server(&file.language).ok_or_else(|| {
+                    let server = self.semantic_server(&file.language, path)?.ok_or_else(|| {
                         anyhow::anyhow!(
                             "No host-authorized semantic server registered for this language"
                         )
@@ -599,7 +623,7 @@ impl Engine {
                                 anyhow::anyhow!("Rename source file absent from snapshot")
                             })?;
                         capture::validate_language(&self.store, &snapshot, &entity.path)?;
-                        let server = self.semantic_server(&file.language).ok_or_else(|| {
+                        let server = self.semantic_server(&file.language, &entity.path)?.ok_or_else(|| {
                             anyhow::anyhow!(
                                 "No host-authorized semantic server registered for this language"
                             )
@@ -772,6 +796,62 @@ impl Engine {
         self.servers.insert(server.language.clone(), server);
         Ok(())
     }
+    /// Dormant host capability. A project policy must separately select its ID.
+    pub fn register_backend(&mut self, id: &str, server: lsp::ConfiguredServer) -> Result<()> {
+        ensure!(
+            !self.backend_registry_sealed,
+            "Backend registrations are fixed for an open project session"
+        );
+        ensure!(
+            !self.backend_servers.contains_key(id),
+            "Duplicate host backend registration"
+        );
+        let server = server_selection::checked(id, server)?;
+        let mut next = self.backend_servers.clone();
+        next.insert(id.to_owned(), server);
+        server_selection::bindings(&next)?;
+        self.backend_servers = next;
+        Ok(())
+    }
+    pub(crate) fn selected_provider(
+        &self,
+        path: &str,
+    ) -> Result<Option<(String, lsp::ConfiguredServer)>> {
+        let Some(id) = self.selected_backend_id(path)? else {
+            return Ok(None);
+        };
+        let server = self
+            .backend_servers
+            .get(id)
+            .context("language_server_not_host_registered")?
+            .clone();
+        Ok(Some((id.to_owned(), server)))
+    }
+    pub(crate) fn selected_backend_id(&self, path: &str) -> Result<Option<&str>> {
+        let Some(ids) = &self.selected_backends else {
+            return Ok(None);
+        };
+        let id = server_selection::choose(ids, path)?;
+        ensure!(
+            self.backend_servers.contains_key(id),
+            "language_server_not_host_registered"
+        );
+        Ok(Some(id))
+    }
+    pub(crate) fn semantic_host(
+        &self,
+        path: &str,
+        language: &str,
+    ) -> Result<Option<(lsp::Server, Option<lsp::HostConfiguration>)>> {
+        if let Some((_, p)) = self.selected_provider(path)? {
+            return Ok(Some((p.server, Some(p.configuration))));
+        }
+        Ok(self
+            .servers
+            .get(language)
+            .cloned()
+            .map(|server| (server, self.server_configurations.get(language).cloned())))
+    }
     pub fn register_configured_server(&mut self, server: lsp::ConfiguredServer) -> Result<()> {
         let language = server.server.language.clone();
         self.register_server(server.server)?;
@@ -805,15 +885,19 @@ impl Engine {
             lsp::run_at_with_options(self, server, snapshot, graph, request, options, deadline)
         }
     }
-    fn semantic_server(&self, language: &str) -> Option<lsp::Server> {
-        self.servers
+    fn semantic_server(&self, language: &str, path: &str) -> Result<Option<lsp::Server>> {
+        if let Some((_, p)) = self.selected_provider(path)? {
+            return Ok(Some(p.server));
+        }
+        Ok(self
+            .servers
             .get(language)
             .or_else(|| match language {
                 "tsx" => self.servers.get("typescript"),
                 "jsx" => self.servers.get("javascript"),
                 _ => None,
             })
-            .cloned()
+            .cloned())
     }
 }
 fn update_metrics(value: &mut Value) -> Result<()> {

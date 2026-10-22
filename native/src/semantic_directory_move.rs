@@ -31,24 +31,50 @@ pub(super) fn prepare(
         .iter()
         .map(|file| file.language.clone())
         .collect();
-    let registered: Vec<_> = languages
-        .iter()
-        .filter(|language| engine.servers.contains_key(language.as_str()))
-        .collect();
-    ensure!(
-        registered.len() == 1,
-        "Directory move requires exactly one registered provider language; multi-provider repair is unavailable"
-    );
-    let language = registered[0];
-    let server = engine
-        .servers
-        .get(language)
-        .cloned()
-        .context("Directory move provider unavailable")?;
+    let (server, original_configuration) = if engine.selected_backends.is_some() {
+        let mut ids = BTreeSet::new();
+        for file in selected.record().files() {
+            deadline.check()?;
+            ids.insert(
+                engine
+                    .selected_backend_id(&file.path)?
+                    .context("Directory move provider unavailable")?
+                    .to_owned(),
+            );
+        }
+        ensure!(
+            ids.len() == 1,
+            "Directory move spans multiple selected backends; multi-provider repair is unavailable"
+        );
+        let file = selected
+            .record()
+            .files()
+            .first()
+            .context("Directory move source absent")?;
+        engine
+            .semantic_host(&file.path, &file.language)?
+            .context("Directory move provider unavailable")?
+    } else {
+        let registered: Vec<_> = languages
+            .iter()
+            .filter(|language| engine.servers.contains_key(language.as_str()))
+            .collect();
+        ensure!(
+            registered.len() == 1,
+            "Directory move requires exactly one registered provider language; multi-provider repair is unavailable"
+        );
+        let language = registered[0];
+        let server = engine
+            .servers
+            .get(language)
+            .cloned()
+            .context("Directory move provider unavailable")?;
+        (server, engine.server_configurations.get(language).cloned())
+    };
     let configuration = lsp::effective_host_configuration(
         engine,
         snapshot,
-        engine.server_configurations.get(language),
+        original_configuration.as_ref(),
         deadline,
     )?;
     if let Some(configuration) = &configuration {

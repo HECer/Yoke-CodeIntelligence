@@ -54,6 +54,45 @@ Original YAML bytes are never rewritten.
 
 ## Fields and boundaries
 
+HostProfile.languageServers selects ordered, already registered catalog backends:
+
+    {"global":["angular","typescript"],"projects":{"second":{"local":["rust"]}}}
+
+Global/project/project-local YAML language_servers projects the same policy.
+Local overrides project, then global; null inherits. Lists require one to 32
+unique current catalog IDs. Unknown IDs, unregistered projects and invalid types
+refuse; startup additionally requires every selected ID to be host-registered.
+Empty/null policy objects preserve preceding serialized profiles and bindings.
+The storeless YAML plan explicitly reports that runtime registrations have not
+been validated and that none came from YAML. Source bytes remain hash-pinned.
+
+The host supplies named registrations separately. Existing language/command/args/
+configuration server entries retain their preceding behavior. A backendId entry
+registers a dormant catalog provider, with a reviewed absolute executable or
+explicit existing numeric-loopback TCP endpoint. CLI registration still requires
+--trust-servers. HTTP principals use their trusted host server entries. No ID
+downloads, installs, starts or trusts an executable. Project YAML cannot supply
+registrations, commands, trust, initialization options or source-execution grants.
+
+For each requested file, the first selected backend with a matching declared
+catalog extension is used; otherwise the first backend is the explicit fallback.
+Actual capabilities are negotiated; extension matching does not certify a runtime
+or compiler. A selected provider failure remains an error rather than trying a
+different provider. Direct/staged/owned semantic calls share this selection before
+passive checks, profile hashing and startup. Selected replies identify the backend
+and fallback decision. Profile hashes also bind its declared backend ID.
+
+The host registry and complete project selection bind session identity. Named
+projects resolve independently; changed registrations/order/settings require a
+new binding, and stale sessions refuse. Registrations are sealed after opening
+a project session. Unselected dormant entries do not change legacy dispatch,
+serialized defaults or existing bindings. Lifecycle refresh probes only assigned
+selected backends and reports unassigned entries without claiming to restart
+external peers. A directory move spanning multiple selected backends refuses
+before provider startup or plan publication; multi-provider repair is separate.
+File reads, immutable graphs/source IDs, host runtime/source/write permissions,
+approval, verification and recovery retain their existing independent scopes.
+
 HostProfile.symbolWorkspaceFolders selects a separate structural symbol-index
 projection and actual LSP workspace roots. For example:
 

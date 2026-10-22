@@ -104,9 +104,12 @@ pub fn invoke(
         let mut seen = std::collections::BTreeSet::new();
         for file in &snapshot.files {
             deadline.check()?;
-            if filter.is_some_and(|language| language != file.language)
-                || !engine.servers.contains_key(&file.language)
-                || !seen.insert(file.language.clone())
+            if filter.is_some_and(|language| language != file.language) {
+                continue;
+            }
+            let selected_id = engine.selected_backend_id(&file.path)?;
+            if (selected_id.is_none() && !engine.servers.contains_key(&file.language))
+                || !seen.insert(selected_id.unwrap_or(&file.language).to_owned())
             {
                 continue;
             }
@@ -310,16 +313,11 @@ pub fn invoke(
             deadline,
         )?;
         let wire_intent = intent.wire_intent(deadline)?;
-        let server = engine
-            .servers
-            .get("rust")
-            .cloned()
+        let (server, configuration) = engine
+            .semantic_host(intent.source_path(), "rust")?
             .context("No host-registered semantic provider for captured Rust source")?;
-        let configuration = engine
-            .server_configurations
-            .get("rust")
-            .cloned()
-            .context("Symbol move requires an explicit owned host profile")?;
+        let configuration =
+            configuration.context("Symbol move requires an explicit owned host profile")?;
         let mut staged = lsp::stage_move_intent_at(
             engine,
             (&server, &configuration),
@@ -724,10 +722,8 @@ fn provider(
     deadline: &Deadline,
 ) -> Result<Value> {
     let language = crate::capture::validate_language(&engine.store, snapshot, &symbol.path)?;
-    let server = engine
-        .servers
-        .get(&language)
-        .cloned()
+    let (server, configuration) = engine
+        .semantic_host(&symbol.path, &language)?
         .context("No host-registered semantic provider for captured parent language")?;
     let request = lsp::SemanticRequest {
         path: &symbol.path,
@@ -742,7 +738,7 @@ fn provider(
         operation,
         new_name: None,
     };
-    if let Some(configuration) = engine.server_configurations.get(&language).cloned() {
+    if let Some(configuration) = configuration {
         lsp::run_at_configured(
             engine,
             &lsp::ConfiguredServer {
@@ -769,12 +765,9 @@ fn stage_provider(
     deadline: &Deadline,
 ) -> Result<lsp::StagedSemantic> {
     let language = crate::capture::validate_language(&engine.store, snapshot, &symbol.path)?;
-    let server = engine
-        .servers
-        .get(&language)
-        .cloned()
+    let (server, configuration) = engine
+        .semantic_host(&symbol.path, &language)?
         .context("No host-registered semantic provider for captured parent language")?;
-    let configuration = engine.server_configurations.get(&language).cloned();
     lsp::stage_at(
         engine,
         (&server, configuration.as_ref()),
