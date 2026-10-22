@@ -2,6 +2,49 @@
 
 ## Current integration work
 
+Explicit includedOptionalTools and includedApis now resolve through all six host
+steering layers. Within each layer inclusions follow exclusions; later layers
+may restrict again. Tool inclusions extend an earlier fixed base and use the
+original Trail/Graft operation identities. Individual API inclusions can make
+exceptions inside an excluded facade group. Ordered inclusion provenance is
+exposed with the effective restrictions. Fixed/incremental conflicts, invalid
+selectors and oversized settings refuse before publication. Empty fields retain
+the preceding bindings, raw results and 53/52/6 interface views.
+
+At source e0211bd6, 219 distinct Rust functions pass across 35 scoped targets
+(8 new functions, 3 existing ignores) on 1023 unchanged input hashes. Nine
+focused targets supply 70 functions without rerun on identical inputs;
+26 other targets, Clippy -Dwarnings, fmt/build/typecheck and npm 260/3 existing
+skips pass. The eight new functions pass on their first attempt. Actual published
+CLI RED and the SAME original source/profile/requests/session GREEN retain full
+legacy and restricted MCP/CLI raw output, schemas and logical SQL. Tool-only,
+API-only and combined inclusions work independently in real MCP/Python, while
+old bindings, invalid selectors and conflicts refuse. Old records/source/Git
+remain exact. See [the contract](../native/docs/session-steering.md) and
+[indexed evidence](validation/integration-2026-10-22/session-inclusions/README.md).
+Optional default subsets, full upstream configuration/client/R1-R9/353/Windows/
+main/release acceptance remain open. Ten OS1314 fixtures and all system settings
+remain unchanged; inclusion grants no runtime trust or source application right.
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Optional default subsets, YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Resource-key transport, authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Optional host agentInterface now fixes tools or repl at session startup. Global,
 CLI and startup project/project-local settings resolve with exact provenance;
 later activation or mode changes retain that selection. The tools view filters

@@ -323,3 +323,50 @@ and [settings template](https://github.com/oraios/serena/blob/4f2520efb128dd02e6
 This is an explicit native JSON contract. Optional tool/API inclusion and default
 subsets, upstream YAML/Jinja loading and all project/client settings remain open;
 unknown fields refuse. No upstream application code or prompt was copied.
+
+## Explicit tool and API inclusions
+
+Layer and custom context/mode definitions accept includedOptionalTools and
+includedApis. They are explicit host settings, not permissions inferred from
+analyzed files. Selectors use the existing exact known native tool entries,
+recognized original query aliases, and the 50 declared API methods/eight groups.
+Unknown, duplicate, wildcard, path, Unicode-confusable and oversized selectors
+refuse. A layer/definition cannot combine a nonempty fixedTools with nonempty
+includedOptionalTools or excludedTools. Existing empty fields remain omitted.
+
+Native resolution order is global, active project, project-local, fixed context,
+each active mode in order, then CLI. Each layer applies exclusions, its fixed
+base if any, then its inclusions. A tool inclusion removes matching earlier
+exclusions and extends an earlier fixed base; later exclusions can remove it
+again and a later fixed base replaces that base. Original Trail/Graft query
+identities apply across both prefixes and legacy aliases. Startup activation
+restrictions apply after these advisory settings and cannot be re-enabled.
+
+API selectors expand against the declared native methods. An individual method
+can be included inside an excluded group, without enabling its other methods.
+A later group/method exclusion can disable it again. Existing exclusion-only
+selectors keep their original serialization. configuration.steering.inclusions
+records applied steps in order with source, tools and apis. It is provenance;
+the final excludedTools/excludedApis/fixedTools and catalogs describe the effect
+of all later steps. fixedToolsSource retains the original fixed base's source.
+
+Real MCP discovery and dispatch share the effective tool selection. Python
+per-cell discovery and every current callback share the effective API selection,
+including cached references and changes activated by a cell. API/tool selection
+remain independent; an ordinary trusted tool adapter retains its separate
+origin. A registered inclusion in an unused mode still enables exact current
+persisted-state checks before catalogs, direct adapters and cells. An external
+parallel update requires resume and closes a stale worker before execution.
+
+Empty inclusions preserve preceding profile/fingerprint/raw bytes, the original
+53-schema mixed view, explicit 52-candidate tools view and six REPL controls.
+The explicit REPL view continues to ignore tool-list settings; API settings
+still apply. No inclusion selects/trusts Python, starts an interpreter, grants
+source application rights or bypasses read-only projects, approvals, immutable
+plans, stale/recovery guards or fixed-startup constraints. Python is not an OS
+sandbox. New fields require a new matching host-bound session.
+
+These are documented native layer rules and explicit inclusion semantics.
+Optional default subsets and complete upstream YAML/configuration/client
+selection equivalence remain open; this checkpoint does not silently change the
+preceding defaults or certify the original 353-row inventory.

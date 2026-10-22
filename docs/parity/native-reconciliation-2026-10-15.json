@@ -10208,7 +10208,7 @@
         "serenaConfigurationEntries",
         "serenaConfigurationMembers"
       ],
-      "remainingBoundary": "Dashboard unavailable. Native host-owned context/mode/API/memory steering, explicit startup projects, fixed tool bases and fixed-startup tools/repl interface selection qualify bounded configuration behavior. Wider regex syntax, upstream file selection/YAML/Jinja, optional tool/API inclusion and optional defaults, remaining project keys and complete9-mode/16-context equivalence require individual review. No general Windows or transient Git-listing cause is established.",
+      "remainingBoundary": "Dashboard unavailable. Native context/mode/API/memory steering, startup projects, fixed bases, fixed-startup interface selection and explicit tool/API inclusions qualify bounded configuration behavior. Optional default subsets, wider regex syntax, upstream YAML/Jinja/file discovery, remaining project keys and complete9-mode/16-context equivalence require individual review. No general Windows or transient Git-listing cause is established.",
       "nativeSteeringCheckpoint": {
         "sourceCommit": "51772d7a57835e97fed056287382e9daabd3c38e",
         "index": "docs/validation/integration-2026-10-21/session-steering/index.json",
@@ -10287,6 +10287,20 @@
         "explicitReplControlSchemas": 6,
         "defaultSchemas": 53,
         "noPythonSelectionOrTrustGrant": true,
+        "fullParityCertified": false
+      },
+      "nativeInclusionsCheckpoint": {
+        "sourceCommit": "e0211bd6251d21f56447d38d76e42ae795dc67fe",
+        "index": "docs/validation/integration-2026-10-22/session-inclusions/index.json",
+        "frozenInputs": 1023,
+        "distinctRustFunctionsPassed": 219,
+        "existingIgnored": 3,
+        "newFunctions": 8,
+        "identicalInputFunctionsReused": 70,
+        "sameOriginalLegacyAndRestrictedCliMcpRawAndLogicalSqlExact": true,
+        "realToolOnlyApiOnlyAndCombinedInclusionsIndependent": true,
+        "emptySettingsPreserve53Tools52AndRepl6": true,
+        "noExecutionTrustOrSourceApplicationGrant": true,
         "fullParityCertified": false
       }
     },

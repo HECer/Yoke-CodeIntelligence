@@ -45,6 +45,13 @@ steering while retaining startup, current-state, runtime and API gates. No runti
 is selected or trusted by the interface setting; absent settings retain all 53
 preceding native definitions and serialized binding bytes.
 
+Explicit host inclusions apply after exclusions within each layer and may be
+narrowed by later layers. Tool inclusions extend the current fixed base with
+original query-family identities; API inclusions expand group exceptions into
+exact known methods. Ordered provenance and effective restrictions remain
+visible. Every registered inclusion policy requires current persisted state
+before catalogs, adapters and cells; host permissions remain independent.
+
 The explicit Git compiler-affected query releases the checked report read view
 before trusted host compiler execution and revalidates original pins afterward.
 Independent snapshot/project contexts retain actual checker declarations, exact
