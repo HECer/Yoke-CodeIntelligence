@@ -1,0 +1,286 @@
+{
+  "sourceCommit": "cf222d7c59b146000ea46a7d300f27497b83b307",
+  "cliSha256": "26290c057fb347810e8f2780a19247210dec69a79c1600a75e9f74646445a5dd",
+  "frozenInputs": 1054,
+  "rust": {
+    "cargoTargets": {
+      "git_ignore_policy": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "native-lib": {
+        "passed": 562,
+        "failed": 0,
+        "ignored": 7
+      },
+      "agent_symbol_contracts": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_facade_semantics": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_facade_options": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl_api_selection": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl_lifecycle": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl": {
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_config_cli": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_steering": {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_agent_interface": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_optional_defaults": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "project_session": {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_mcp": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deadline_scope": {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      "protocol_connection": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      "lsp": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "lsp_source_execution": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 2
+      },
+      "lsp_dependency_scope": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_epoch_selection": {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      "query_parity": {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0
+      },
+      "symbol_info_budget": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "source_exclusions": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "lsp_lifecycle": {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      "semantic_refactor": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "refactor_intents": {
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0
+      },
+      "symbol_move_own_v1": {
+        "passed": 18,
+        "failed": 0,
+        "ignored": 0
+      },
+      "facade_directory_move": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "facade_file_move": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "facade_file_delete": {
+        "passed": 9,
+        "failed": 1,
+        "ignored": 0
+      },
+      "session_refactor": {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 2
+      },
+      "symbol_workspace_routes": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "symbol_workspace": {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      "server_catalog": {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      "mcp_http": {
+        "passed": 18,
+        "failed": 0,
+        "ignored": 0
+      },
+      "mcp_http_cli": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 1
+      },
+      "mcp_http_review": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      "semantic_provider_context": {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      "semantic_mcp": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "capture_policy": {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      "capture_epoch_selection": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "capture_changes": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      "capture_analyzer8_fixture": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 2
+      },
+      "ignored_capture_cli": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      "ignored_capture": {
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0
+      },
+      "federation_archive": {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      "federation_archive_receipts": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      "parity_retention": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "retention": {
+        "passed": 16,
+        "failed": 0,
+        "ignored": 0
+      },
+      "store_read_only": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "source_line_endings": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    "cargoDistinctPassed": 915,
+    "exactOriginalSourceOwnedOutputPassed": 8,
+    "distinctPassed": 923,
+    "failed": 1,
+    "knownOriginalOs1314Failures": 1,
+    "unexpectedFailed": 0,
+    "existingIgnored": 14,
+    "newFunctions": 11
+  },
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "formatTargetRoots": 343,
+  "cargoFormatAllWindowsOs206": true,
+  "allQualifiedJobsEmpty": true,
+  "originalTenSymlinkFixtureGitAndFrozenWorkingBytesUnchanged": true,
+  "fullStatusComplete": false,
+  "fullNativeCurrentHeadCertified": false,
+  "systemSettingsChanged": false,
+  "originalInventoryAssessmentsUnchanged": true,
+  "rawMembers": 824
+}

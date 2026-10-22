@@ -10462,6 +10462,36 @@
           "activation_command_timeout"
         ],
         "fullParityCertified": false
+      },
+      "nativeGitIgnoreAnalysisCheckpoint": {
+        "sourceCommit": "cf222d7c59b146000ea46a7d300f27497b83b307",
+        "index": "docs/validation/integration-2026-10-22/git-ignore-policy/index.json",
+        "frozenInputs": 1054,
+        "distinctRustFunctionsPassed": 923,
+        "cargoTargets": 51,
+        "exactOriginalSourceFunctionsUnderOwnedOutputName": 8,
+        "completeNativeLibraryPassed": 562,
+        "knownOriginalOs1314Failures": 1,
+        "existingIgnored": 14,
+        "newFunctions": 11,
+        "actualCaptureIndexPatternAndIndependentProjectsValidated": true,
+        "immutableOriginalPlanAndCurrentWriteAdmissionSeparated": true,
+        "capturedIgnoredSourcesRemainReadOnly": true,
+        "originalSourceTestsUnchangedAndProtectedLinkOutputUntouched": true,
+        "legacyAbsentNullEmptyRawAndPreselectionWholeSqlExact": true,
+        "originalImmutableValuesAndFtsMultiplicityExactAfterCaptureGrowth": true,
+        "pinnedYamlJsonBindingEquivalent": true,
+        "actualFormatTargetRootsChecked": 343,
+        "cargoFormatAllOs206": true,
+        "remainingProjectSettings": [
+          "encoding",
+          "language_backend",
+          "ls_specific_settings",
+          "ls_additional_workspace_folders",
+          "activation_command",
+          "activation_command_timeout"
+        ],
+        "fullParityCertified": false
       }
     },
     {

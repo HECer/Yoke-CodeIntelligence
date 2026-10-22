@@ -1,5 +1,60 @@
 # Remaining implementation and acceptance
 
+Explicit gitIgnore and pinned YAML ignore_all_files_in_gitignore now select
+real source capture, symbol indexing and pattern-search defaults independently
+per registered project. False includes authorized Git-ignored sources; .ignore,
+hard exclusions, secrets, links, source exclusions and budgets still apply.
+Original UTF-8 bytes/offsets and immutable observed-ignore facts remain bound.
+Included ignored sources stay read-only; current local ignore rules separately
+reject prospective workspace writes, including old plans, before a journal.
+Historical plan validation uses original captured policy, preserving saved bytes.
+Ordinary approved/verified edits and guarded recovery still work.
+Absent/null/empty policies retain preceding profiles/captures/bindings and configuration/symbol RAW. Public empty-glob pattern defaults are separately corrected to mean no restriction.
+
+At source cf222d7c, 923 distinct Rust functions pass: 915 in
+51 scoped Cargo targets plus eight unchanged original capture-option functions
+compiled under an owned output name. The complete library contributes 562 passes.
+There are 14 existing ignores and one unchanged original OS1314 failure
+during symlink fixture creation. All ten original fixture Git blobs and prior
+frozen working bytes remain exact. No skips, system or privilege changes occur.
+Eleven new functions cover real inclusion/indexing, project layering/stale state,
+source/authority/budget boundaries, original plan preservation/current write
+admission, ordinary apply/recovery, LSP, archive/retention and YAML. The public
+pattern-search default has a causal one-test RED followed by actual GREEN.
+
+All-target Clippy -Dwarnings, native build, typecheck, npm260/3 existing skips and
+343 format roots pass on 1054 frozen inputs; Cargo fmt --all retains OS206.
+Actual published CLI RED/SAME-fixture GREEN preserves absent/null/empty config
+and MCP53/symbol RAW, and whole original SQL before selected capture. New captures
+append source data; original snapshots/graphs/cache/records and old FTS row
+multiplicity remain exact. Source/Git/host/YAML/original-image bytes stay exact.
+Actual selected symbol/workspace/pattern queries, true filtering, YAML/JSON
+binding equivalence and upgrade/downgrade refusals pass. This does not claim
+whole SQL equality after capture growth, or a current whole-native certificate.
+See [indexed Git-ignore evidence](validation/integration-2026-10-22/git-ignore-policy/README.md)
+and [the configuration contract](../native/docs/session-config.md#fields-and-boundaries).
+Six project settings, broader backend/configuration/client, authenticated Google
+and original353/R1-R9/current Windows/main/release acceptance remain open.
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Ordered languageServers now selects actual current host-registered catalog
 backends per project. Local overrides project, then global; null inherits.
 The first backend supporting the file extension wins, otherwise the first is
@@ -35,25 +90,6 @@ and [the configuration contract](../native/docs/session-config.md#fields-and-bou
 Seven project settings, broader configuration/backend/client, authenticated
 Google and original R1-R9/353/current Windows/main/release acceptance stay open.
 Catalog extension matching does not certify any of the 77 runtime backends.
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 Workspace selections now reach the common LSP transport before passive-policy
 validation, provider-profile hashing and process startup. Direct navigation,

@@ -461,3 +461,8 @@ Ordered language-server selections bind actual current trusted host registration
 not source-provided runtime configuration. Direct/staged/owned calls and lifecycle
 refresh share per-file first-supporting/first-fallback selection. Absent policies
 and dormant registrations preserve legacy bindings. See [qualification](../../docs/validation/integration-2026-10-22/server-selection/README.md).
+
+Git-ignore analysis selection resolves separately per project and binds sessions.
+Immutable captured ignore facts remain read-only; current workspace write rules
+are enforced separately from saved-plan validation. Search defaults use the
+actual project selection. See [qualification](../../docs/validation/integration-2026-10-22/git-ignore-policy/README.md).

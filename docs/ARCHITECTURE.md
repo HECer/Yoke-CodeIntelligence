@@ -58,6 +58,13 @@ from the restricted primary Engine, preserving independent secondary rights.
 Overlapping writable registrations refuse; query plan carriers use the existing
 editing gate. False/absent keeps old fingerprints and serialization exact.
 
+Optional Git-ignore analysis inclusion carries immutable observed-ignore
+provenance through capture, derived/overlay and archive scopes. Included ignored
+sources remain read-only. Historical plan validation consults original captured
+policy; current invocation write restrictions run separately before prepare and
+workspace application. Public pattern-search defaults use the actual selected
+project engine, while explicit skipIgnored filters retain original ignore facts.
+
 Optional ordered languageServers resolves only current trusted host backend
 registrations. File-extension selection and explicit first fallback are applied
 at common direct/staged LSP and owned-move entrypoints before passive admission

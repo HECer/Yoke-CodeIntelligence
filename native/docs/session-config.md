@@ -59,8 +59,10 @@ HostProfile.gitIgnore selects whether Git-ignore rules filter project analysis:
     {"global":false,"projects":{"second":{"project":true,"local":null}}}
 
 Local overrides project, then global. Null inherits; absent/null/empty policy
-objects preserve old serialization, captures, bindings and answers. Explicit true
-uses existing filtering. Explicit false adds authorized Git-ignored source to real
+objects preserve old serialization, captures and bindings. Configuration and
+symbol-query wire bytes remain exact. The independent public search correction
+treats empty glob defaults as no restriction, so legitimate ordinary matches
+previously lost by that bug are now returned. Explicit true uses existing filtering. Explicit false adds authorized Git-ignored source to real
 capture and symbol search, including selected symbol workspace folders. Ordinary
 .ignore rules, hard exclusions, protected/secret/link rejection, host source
 exclusions and all capture/deadline budgets remain enforced. Original bytes and
