@@ -63,6 +63,7 @@ struct DecodedFields {
     declared: Option<String>,
     line_ending: Option<Option<crate::source_line_endings::LineEnding>>,
     ignored_paths: Option<Vec<String>>,
+    symbol_info_budget: Option<Option<u64>>,
 }
 fn rename_fields(
     raw: Map<String, Value>,
@@ -76,8 +77,13 @@ fn rename_fields(
     let mut declared = None;
     let mut line_ending = None;
     let mut ignored_paths = None;
+    let mut symbol_info_budget = None;
     for (key, value) in raw {
         let name = match key.as_str() {
+            "symbol_info_budget" if global || project => {
+                symbol_info_budget = Some(crate::symbol_info_budget::milliseconds(&value)?);
+                continue;
+            }
             "ignored_paths" if global || project => {
                 ignored_paths = serde_json::from_value(value)
                     .map_err(|_| anyhow::anyhow!("session_config_ignored_paths_invalid"))?;
@@ -144,6 +150,7 @@ fn rename_fields(
         declared,
         line_ending,
         ignored_paths,
+        symbol_info_budget,
     })
 }
 /// Project only explicitly supplied values. Files cannot supply registrations or grants.
@@ -192,6 +199,7 @@ pub fn project(
             declared,
             line_ending,
             ignored_paths,
+            symbol_info_budget,
         } = rename_fields(
             yaml::decode(source.bytes, deadline)?,
             definition,
@@ -221,6 +229,29 @@ pub fn project(
         }
         if let Target::Context { name } | Target::Mode { name } = source.target {
             label(name)?;
+        }
+        if let Some(milliseconds) = symbol_info_budget
+            && (milliseconds.is_some() || profile.symbol_info_budgets.is_some())
+        {
+            let policy = profile.symbol_info_budgets.get_or_insert_default();
+            match source.target {
+                Target::Global => policy.global_ms = milliseconds,
+                Target::Project { project } => {
+                    policy
+                        .projects
+                        .entry(project.clone())
+                        .or_default()
+                        .project_ms = milliseconds
+                }
+                Target::ProjectLocal { project } => {
+                    policy.projects.entry(project.clone()).or_default().local_ms = milliseconds
+                }
+                _ => unreachable!(),
+            }
+            policy.canonicalize();
+            if policy.empty() {
+                profile.symbol_info_budgets = None;
+            }
         }
         if let Some(patterns) = ignored_paths
             && !patterns.is_empty()
@@ -313,6 +344,9 @@ pub fn project(
     }
     if let Some(exclusions) = &profile.source_exclusions {
         exclusions.validate(&profile, deadline)?;
+    }
+    if let Some(budgets) = &profile.symbol_info_budgets {
+        budgets.validate(&profile)?;
     }
     session_steering::validate(&profile)
         .map_err(|_| anyhow::anyhow!("session_config_steering_invalid"))?;

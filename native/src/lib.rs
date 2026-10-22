@@ -103,6 +103,7 @@ pub mod source_acquisition_http;
 pub mod source_exclusions;
 pub mod source_line_endings;
 pub mod store;
+pub mod symbol_info_budget;
 pub mod test_map;
 pub mod trail_adapter;
 mod validation;

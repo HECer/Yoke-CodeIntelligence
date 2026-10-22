@@ -17,6 +17,152 @@ fn apply(base: &HostProfile, target: Target, bytes: &[u8]) -> Result<Projection>
 }
 
 #[test]
+fn symbol_information_seconds_resolve_global_project_local_and_explicit_null_inheritance() {
+    let base = HostProfile::default();
+    let original = serde_json::to_vec(&base).unwrap();
+    for bytes in [b"symbol_info_budget: null\n".as_slice(), b"{}\n"] {
+        assert_eq!(
+            apply(&base, Target::Global, bytes)
+                .unwrap()
+                .profile_bytes(&deadline())
+                .unwrap(),
+            original
+        );
+    }
+    let global = apply(
+        &base,
+        Target::Global,
+        b"\xef\xbb\xbfsymbol_info_budget: 1.125\r\n",
+    )
+    .unwrap();
+    assert_eq!(
+        global
+            .profile()
+            .symbol_info_budgets
+            .as_ref()
+            .unwrap()
+            .select("default"),
+        Some(1125)
+    );
+    let project = apply(
+        global.profile(),
+        Target::Project {
+            project: "default".into(),
+        },
+        b"symbol_info_budget: 0\n",
+    )
+    .unwrap();
+    assert_eq!(
+        project
+            .profile()
+            .symbol_info_budgets
+            .as_ref()
+            .unwrap()
+            .select("default"),
+        Some(0)
+    );
+    let local = apply(
+        project.profile(),
+        Target::ProjectLocal {
+            project: "default".into(),
+        },
+        b"symbol_info_budget: 0.00001\n",
+    )
+    .unwrap();
+    assert_eq!(
+        local
+            .profile()
+            .symbol_info_budgets
+            .as_ref()
+            .unwrap()
+            .select("default"),
+        Some(1)
+    );
+    let inherited = apply(
+        local.profile(),
+        Target::ProjectLocal {
+            project: "default".into(),
+        },
+        b"symbol_info_budget: null\n",
+    )
+    .unwrap();
+    assert_eq!(
+        inherited
+            .profile()
+            .symbol_info_budgets
+            .as_ref()
+            .unwrap()
+            .select("default"),
+        Some(0)
+    );
+    let inherited = apply(
+        inherited.profile(),
+        Target::Project {
+            project: "default".into(),
+        },
+        b"symbol_info_budget: null\n",
+    )
+    .unwrap();
+    assert_eq!(
+        inherited
+            .profile()
+            .symbol_info_budgets
+            .as_ref()
+            .unwrap()
+            .select("default"),
+        Some(1125)
+    );
+    let cleared = apply(
+        inherited.profile(),
+        Target::Global,
+        b"symbol_info_budget: null\n",
+    )
+    .unwrap();
+    assert_eq!(cleared.profile_bytes(&deadline()).unwrap(), original);
+}
+
+#[test]
+fn symbol_information_yaml_rejects_underflow_nonfinite_invalid_roles_and_other_float_settings() {
+    let base = HostProfile::default();
+    for bytes in [
+        b"symbol_info_budget: -0.01\n".as_slice(),
+        b"symbol_info_budget: .nan\n",
+        b"symbol_info_budget: .inf\n",
+        b"symbol_info_budget: 600.001\n",
+        b"symbol_info_budget: true\n",
+        b"symbol_info_budget: [1]\n",
+        b"symbol_info_budget: '1.5'\n",
+        b"symbol_info_budget: 1.0e-999\n",
+        b"symbol_info_budget: -1.0e-999\n",
+        b"symbol_info_budget: 1.0e999\n",
+        b"default_modes: 0.5\n",
+        b"symbol_info_budget: {nested: 0.5}\n",
+    ] {
+        assert!(apply(&base, Target::Global, bytes).is_err(), "{bytes:?}");
+    }
+    for target in [
+        Target::Context {
+            name: "owned".into(),
+        },
+        Target::Mode {
+            name: "owned".into(),
+        },
+        Target::Project {
+            project: "unregistered".into(),
+        },
+    ] {
+        assert!(apply(&base, target, b"symbol_info_budget: 0.5\n").is_err());
+    }
+    let valid = apply(&base, Target::Global, b"symbol_info_budget: 0.001\n").unwrap();
+    let expected: HostProfile =
+        serde_json::from_value(json!({"symbolInfoBudgets":{"globalMs":1}})).unwrap();
+    assert_eq!(
+        valid.profile_bytes(&deadline()).unwrap(),
+        serde_json::to_vec(&expected).unwrap()
+    );
+}
+
+#[test]
 fn ignored_paths_yaml_adds_independent_groups_without_clearing_host_rules() {
     let base = HostProfile {
         source_exclusions: Some(

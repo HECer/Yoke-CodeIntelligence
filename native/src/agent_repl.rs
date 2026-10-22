@@ -797,12 +797,12 @@ fn dispatch_repl(
     deadline: &Deadline,
 ) -> Result<Value> {
     session.check_repl_state(deadline)?;
-    if let Some((api, callback)) = repl_callback_identity(method) {
+    if let Some((api, _)) = repl_callback_identity(method) {
         session.require_repl_api(api)?;
         if api == "ext.project_context" {
             session.require_repl_api("ext.read_project_context")?;
         }
-        return dispatch(session, spec, callback, args, project, deadline);
+        return dispatch(session, spec, method, args, project, deadline);
     }
     if session.selected_repl_methods()?.is_some() {
         ensure!(
@@ -822,7 +822,6 @@ fn dispatch(
     project: Option<&str>,
     deadline: &Deadline,
 ) -> Result<Value> {
-    let method = repl_callback_identity(method).map_or(method, |(_, callback)| callback);
     let limit = args
         .get("max_answer_chars")
         .map(|value| {
@@ -851,6 +850,8 @@ fn dispatch_unbounded(
     project: Option<&str>,
     deadline: &Deadline,
 ) -> Result<Value> {
+    let lsp_declaration = method != "bridge.jb.find_declaration.at";
+    let method = repl_callback_identity(method).map_or(method, |(_, callback)| callback);
     deadline.check()?;
     if method == "bridge.declaration_source" {
         strict_facade("lsp.find_declaration", args)?;
@@ -975,8 +976,17 @@ fn dispatch_unbounded(
         }
         if args["includeInfo"] == true {
             let anchor = json!({"path":path,"snapshotId":args["snapshotId"],"contentHash":args["contentHash"],"nameStartByte":offset});
-            value["info"] =
-                semantic_from_symbol(session, &anchor, "hover", json!({}), project, deadline)?;
+            let mut budget =
+                session.symbol_information_budget(project, lsp_declaration, deadline)?;
+            attach_optional_symbol_info(
+                session,
+                &anchor,
+                &mut value,
+                &mut budget,
+                project,
+                deadline,
+            )?;
+            budget.qualify(&mut value);
         }
         value["declarationEngine"] = json!("independent_host_selected_lsp");
         return Ok(value);
@@ -1511,6 +1521,15 @@ fn dispatch_unbounded(
                 .clone();
             let mut selected = vec![];
             let mut unmapped = 0usize;
+            let mut info_budget = if args["include_info"] == true {
+                session.symbol_information_budget(
+                    project,
+                    method == "lsp.find_implementations",
+                    deadline,
+                )?
+            } else {
+                crate::symbol_info_budget::Retrieval::default()
+            };
             for mut location in locations {
                 deadline.check()?;
                 let metadata = location_symbol(
@@ -1526,11 +1545,11 @@ fn dispatch_unbounded(
                         continue;
                     }
                     if args["include_info"] == true {
-                        location["info"] = semantic_from_symbol(
+                        attach_optional_symbol_info(
                             session,
                             &metadata,
-                            "hover",
-                            json!({}),
+                            &mut location,
+                            &mut info_budget,
                             project,
                             deadline,
                         )?;
@@ -1544,11 +1563,11 @@ fn dispatch_unbounded(
                     );
                     if args["include_info"] == true {
                         let anchor = json!({"path":location["path"],"contentHash":location["contentHash"],"snapshotId":value["snapshotId"],"nameStartByte":location["startByte"]});
-                        location["info"] = semantic_from_symbol(
+                        attach_optional_symbol_info(
                             session,
                             &anchor,
-                            "hover",
-                            json!({}),
+                            &mut location,
+                            &mut info_budget,
                             project,
                             deadline,
                         )?;
@@ -1559,6 +1578,7 @@ fn dispatch_unbounded(
             }
             value["locations"] = json!(selected);
             value["unmappedSourceSymbols"] = json!(unmapped);
+            info_budget.qualify(&mut value);
             value["kindFilterSemantics"] =
                 json!("source_bound_implemented_symbol_native_kind_from_standard_lsp_symbolkind");
             Ok(value)
@@ -2031,6 +2051,25 @@ fn diagnostic_referencing_symbols(
     Ok(ranges)
 }
 
+fn attach_optional_symbol_info(
+    session: &mut Session,
+    anchor: &Value,
+    target: &mut Value,
+    budget: &mut crate::symbol_info_budget::Retrieval,
+    project: Option<&str>,
+    deadline: &Deadline,
+) -> Result<()> {
+    if !budget.permit(deadline)? {
+        target["infoOmitted"] = json!({"reason":"symbol_info_budget_elapsed"});
+        return Ok(());
+    }
+    let info = semantic_from_symbol(session, anchor, "hover", json!({}), project, deadline)?;
+    deadline.check()?;
+    target["info"] = info;
+    budget.received();
+    Ok(())
+}
+
 fn semantic_from_symbol(
     session: &mut Session,
     symbol: &Value,
@@ -2296,16 +2335,26 @@ fn find_symbols_facade(
     if body {
         attach_symbol_bodies(session, &mut value, project, deadline)?;
     } else if args["include_info"] == true {
+        let mut budget =
+            session.symbol_information_budget(project, method == "lsp.find_symbol", deadline)?;
         for item in value["items"]
             .as_array_mut()
             .context("Symbol items missing")?
         {
             deadline.check()?;
             if item["id"].as_str().is_some_and(|id| root_ids.contains(id)) {
-                item["info"] =
-                    semantic_from_symbol(session, item, "hover", json!({}), project, deadline)?;
+                let anchor = item.clone();
+                attach_optional_symbol_info(
+                    session,
+                    &anchor,
+                    item,
+                    &mut budget,
+                    project,
+                    deadline,
+                )?;
             }
         }
+        budget.qualify(&mut value);
     }
     value["rootMatchCount"] = json!(root_ids.len());
     value["matchLimitSemantics"] = json!("maximum_root_matches_before_descendant_expansion");

@@ -77,7 +77,7 @@ explicitly. This is a native steering projection, not full upstream YAML/Jinja o
 all 25 project-setting equivalence.
 
 The strict event parser rejects aliases, anchors, tags, merge/duplicate keys,
-complex/non-string keys, multiple documents, float/non-finite values, malformed
+complex/non-string keys, multiple documents, nonfinite values, floats outside symbol_info_budget, malformed
 UTF-8/NUL and invalid types. Limits are 268 files, 65536 bytes/file, 2000000 aggregate
 source bytes, 8192 parser events/file, depth 16 and 128000 serialized profile bytes.
 Selection JSON is at most 128000 bytes. Existing per-instruction/name/layer limits
@@ -231,3 +231,44 @@ preconditions, approval, executed verification or recovery journals.
 
 Other project keys, including the Git-ignore toggle, workspace-folder overrides,
 runtime settings and activation commands, remain separate explicit boundaries.
+
+## Optional symbol-information budgets
+
+HostProfile.symbolInfoBudgets selects a soft time limit for supplemental LSP
+hover information, independently for each registered project:
+
+    {"globalMs":10000,"projects":{"default":{"projectMs":1000,"localMs":null}}}
+
+Local overrides project, which overrides global. Null inherits the next slot.
+The native representation is integral milliseconds from 0 through 600000.
+Zero disables early stopping; the host request deadline/cancellation still applies.
+Absent/null/entirely empty policies preserve prior serialization, session bindings,
+source IDs and replies. Nonempty policies bind session identity and current state.
+Modes and project activation cannot rewrite a host-selected policy; activation
+uses that registered project's own overrides without leaking primary settings.
+
+Explicit global/project/project_local YAML symbol_info_budget accepts finite
+nonnegative seconds up to 600, including decimals. Positive values round upward
+to milliseconds; a positive value below floating-point representability refuses
+rather than becoming unlimited. Zero is unlimited and null clears its slot to
+inherit. Numeric strings, negative/nonfinite values, invalid roles and unknown
+registrations refuse. Other YAML floats remain unsupported.
+
+For lsp.find_symbol, lsp.find_implementations and the qualified persistent
+lsp.find_declaration bridge, the clock starts immediately before the first
+optional hover request. Each later hover checks elapsed time before starting.
+An in-flight request can exceed this soft budget; it remains bounded by the
+existing host timeout/cancellation and process lifecycle. No provider error or
+host cancellation is converted into a successful partial reply. Mandatory
+search results, source anchors, body requests and kind filtering remain intact.
+Body-bearing find_symbol still suppresses optional info as before.
+
+Selected responses identify budgetMs, retrieved/omitted counts and earlyStopped
+under symbolInfo. Omitted items carry infoOmitted with an explicit reason;
+symbolInfo.complete describes only the requested supplemental information.
+JB facade calls retain their preceding behavior and do not use this LSP policy.
+The setting grants no server, interpreter, source-write or network authority.
+
+The public setting name, zero/unlimited semantics and soft-stop behavior were
+checked against the [pinned global template](https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/resources/serena_config.template.yml).
+No upstream application code or prompt text is copied.

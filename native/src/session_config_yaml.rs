@@ -27,7 +27,7 @@ impl Reader<'_> {
             .map(|v| v.0)
             .map_err(|_| anyhow::anyhow!("session_config_yaml_invalid"))
     }
-    fn value(&mut self, event: Event, depth: usize) -> Result<Value> {
+    fn value(&mut self, event: Event, depth: usize, budget_seconds: bool) -> Result<Value> {
         ensure!(depth <= 16, "session_config_yaml_depth_exceeded");
         self.deadline.check()?;
         match event {
@@ -45,6 +45,26 @@ impl Reader<'_> {
                     Yaml::Integer(n) => json!(n),
                     Yaml::Boolean(b) => json!(b),
                     Yaml::Null => Value::Null,
+                    Yaml::Real(s) if budget_seconds => {
+                        let seconds =
+                            s.parse::<f64>()
+                                .ok()
+                                .filter(|s| s.is_finite())
+                                .ok_or_else(|| {
+                                    anyhow::anyhow!("session_config_symbol_info_budget_invalid")
+                                })?;
+                        ensure!(
+                            seconds != 0.0
+                                || !s
+                                    .split(['e', 'E'])
+                                    .next()
+                                    .unwrap_or("")
+                                    .bytes()
+                                    .any(|b| matches!(b, b'1'..=b'9')),
+                            "session_config_symbol_info_budget_underflow"
+                        );
+                        json!(seconds)
+                    }
                     _ => anyhow::bail!("session_config_yaml_scalar_unsupported"),
                 })
             }
@@ -59,7 +79,7 @@ impl Reader<'_> {
                     if event == Event::SequenceEnd {
                         break;
                     }
-                    values.push(self.value(event, depth + 1)?);
+                    values.push(self.value(event, depth + 1, false)?);
                 }
                 Ok(Value::Array(values))
             }
@@ -74,7 +94,7 @@ impl Reader<'_> {
                     if event == Event::MappingEnd {
                         break;
                     }
-                    let Value::String(key) = self.value(event, depth + 1)? else {
+                    let Value::String(key) = self.value(event, depth + 1, false)? else {
                         anyhow::bail!("session_config_yaml_string_key_required")
                     };
                     ensure!(
@@ -82,7 +102,8 @@ impl Reader<'_> {
                         "session_config_yaml_duplicate_or_merge_key"
                     );
                     let event = self.next()?;
-                    let value = self.value(event, depth + 1)?;
+                    let value =
+                        self.value(event, depth + 1, depth == 0 && key == "symbol_info_budget")?;
                     values.insert(key, value);
                 }
                 Ok(Value::Object(values))
@@ -115,7 +136,7 @@ pub(super) fn decode(bytes: &[u8], deadline: &Deadline) -> Result<Map<String, Va
     }
     ensure!(event == Event::DocumentStart, "session_config_yaml_invalid");
     let event = reader.next()?;
-    let value = reader.value(event, 0)?;
+    let value = reader.value(event, 0, false)?;
     ensure!(
         reader.next()? == Event::DocumentEnd && reader.next()? == Event::StreamEnd,
         "session_config_yaml_single_document_required"

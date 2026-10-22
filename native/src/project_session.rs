@@ -84,6 +84,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
+    #[serde(default, skip_serializing_if = "crate::symbol_info_budget::unselected")]
+    pub symbol_info_budgets: Option<crate::symbol_info_budget::HostBudgets>,
     #[serde(default, skip_serializing_if = "crate::source_exclusions::unselected")]
     pub source_exclusions: Option<crate::source_exclusions::HostExclusions>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -117,6 +119,7 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            symbol_info_budgets: None,
             source_exclusions: None,
             source_line_endings: None,
             primary_read_only: false,
@@ -815,6 +818,15 @@ impl Session {
         if engine.capture_options.source_exclusions.is_some() {
             engine.capture_options = engine.capture_options.validated()?;
         }
+        if let Some(budgets) = &host.symbol_info_budgets {
+            budgets.validate(&host)?;
+        }
+        if let Some(budgets) = &mut host.symbol_info_budgets {
+            budgets.canonicalize();
+            if budgets.empty() {
+                host.symbol_info_budgets = None;
+            }
+        }
         if let Some(exclusions) = &host.source_exclusions {
             exclusions.validate(&host, deadline)?;
         }
@@ -1125,6 +1137,11 @@ impl Session {
             engine.capture_options = engine.capture_options.validated()?;
         }
         engine.sync_source_exclusions(deadline)?;
+        let fingerprint = if let Some(budgets) = &host.symbol_info_budgets {
+            identity(&(fingerprint, "host_symbol_info_budgets_v1", budgets))
+        } else {
+            fingerprint
+        };
         let owned_label = if let Some(id) = session_id {
             label(id)?;
             id.to_owned()
@@ -1336,7 +1353,8 @@ impl Session {
         }
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
-        if self.host.primary_read_only
+        if self.host.symbol_info_budgets.is_some()
+            || self.host.primary_read_only
             || !crate::source_exclusions::unselected(&self.host.source_exclusions)
             || self.host.source_line_endings.is_some()
             || self.host.optional_defaults.is_some()
@@ -1353,6 +1371,24 @@ impl Session {
             )?;
         }
         Ok(())
+    }
+    pub(crate) fn symbol_information_budget(
+        &self,
+        project: Option<&str>,
+        lsp: bool,
+        deadline: &Deadline,
+    ) -> Result<crate::symbol_info_budget::Retrieval> {
+        self.check_tool_state(deadline)?;
+        let name = project.unwrap_or(&self.state.active_project);
+        let selected = if lsp {
+            self.host
+                .symbol_info_budgets
+                .as_ref()
+                .and_then(|p| p.select(name))
+        } else {
+            None
+        };
+        Ok(crate::symbol_info_budget::Retrieval::new(selected))
     }
     pub(crate) fn require_tool(&self, name: &str, deadline: &Deadline) -> Result<()> {
         self.check_tool_state(deadline)?;
@@ -1702,6 +1738,10 @@ impl Session {
                 }
                 if self.host.primary_read_only {
                     value["primaryReadOnly"] = json!(true);
+                }
+                if let Some(budgets) = &self.host.symbol_info_budgets {
+                    value["symbolInfoBudgets"] = serde_json::to_value(budgets)?;
+                    value["symbolInfoBudgetMs"] = json!(budgets.select(&self.state.active_project));
                 }
                 if let Some(exclusions) = &self.host.source_exclusions {
                     value["sourceExclusions"] = serde_json::to_value(exclusions)?;
