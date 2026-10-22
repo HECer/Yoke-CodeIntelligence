@@ -10420,6 +10420,22 @@
         "actualCargoFormatTargetRootsChecked": 340,
         "cargoFormatAllOs206": true,
         "fullParityCertified": false
+      },
+      "nativeSymbolWorkspaceRoutingCheckpoint": {
+        "sourceCommit": "1b49799413fb9d33656569dd67b75771c178966c",
+        "index": "docs/validation/integration-2026-10-22/symbol-workspace-routes/index.json",
+        "frozenInputs": 1048,
+        "distinctRustFunctionsPassed": 251,
+        "knownOriginalOs1314Failures": 1,
+        "existingIgnored": 4,
+        "newRouteFunctions": 4,
+        "actualDirectQueryStagedAndOwnedMovePathsValidated": true,
+        "workspaceRootRelocationRefusesBeforeProviderOrPlan": true,
+        "legacySelectedAndPlainRawHoverMcpSqlAndSourceBytesExact": true,
+        "originalTenSymlinkFixtureFilesByteIdenticalToParent": true,
+        "actualCargoFormatTargetRootsChecked": 341,
+        "cargoFormatAllOs206": true,
+        "fullParityCertified": false
       }
     },
     {

@@ -2,6 +2,58 @@
 
 ## Current integration work
 
+Workspace selections now reach the common LSP transport before passive-policy
+validation, provider-profile hashing and process startup. Direct navigation,
+refactoring queries, staged edits, provider restart and owned symbol-move intents
+share the effective configuration. Directory-move preparation checks those same
+roots and refuses relocating a selected workspace root or its ancestor.
+The source/index distinction, full private captured tree and existing runtime,
+write, verification, recovery and immutable-evidence boundaries remain intact.
+
+The post-publication audit of 49e9b56d found four bypassed paths. Four new actual
+tests fail against that source, then all four pass with centralized selection:
+direct configured transport, inspection registry, owned symbol move and folder
+root relocation denial. The preceding nine workspace and sixteen YAML functions
+also pass again. At source 1b497994, 251 functions pass across 32 scoped
+targets with 4 existing ignores and one unchanged original OS1314 failure.
+That failure occurs while creating the symlink fixture in facade_file_delete;
+it is neither skipped nor converted to a pass. All ten original fixture Git blobs
+and their earlier frozen working bytes remain unchanged. Full Windows acceptance
+remains open.
+
+All-target Clippy -Dwarnings, native build, typecheck, npm260/3 existing skips and
+341 actual formatting roots pass on 1048 frozen inputs. Cargo fmt --all retains
+Windows OS206; bounded direct rustfmt checks all roots. Actual published CLI RED/
+SAME-fixture GREEN preserves selected and unselected configuration RAW and
+53-tool MCP with real selected-root hover RAW. Whole logical SQL stays exactly
+unchanged before and after the comparison, together with source/Git/host/provider
+configuration/fixture bytes. The source-specific 171-function earlier checkpoint
+remains historical; these current results do not certify the whole native suite.
+See [indexed route evidence](validation/integration-2026-10-22/symbol-workspace-routes/README.md)
+and [the workspace contract](../native/docs/session-config.md#fields-and-boundaries).
+Eight project settings and the broader configuration/backend/client, authenticated
+Google, original R1-R9/353/current Windows/main/release acceptance remain open.
+No system setting, original inventory assessment or protected process changes.
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Host-selected symbolWorkspaceFolders and YAML ls_workspace_folders now define
 a separate structural symbol-index projection and real LSP workspace roots.
 Filtering precedes paging, root match thresholds, body search and descendants.
@@ -48,25 +100,6 @@ and [indexed evidence](validation/integration-2026-10-22/symbol-workspace-folder
 Eight project keys, broader configuration/backend/client, authenticated Google,
 full R1-R9/353/current whole-native/Windows/main/release acceptance remain open.
 Original inventory assessments, OS1314 fixtures and system settings are unchanged.
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 Optional symbolInfoBudgets and selected YAML symbol_info_budget now resolve
 global/project/local soft limits for supplementary LSP hover information.

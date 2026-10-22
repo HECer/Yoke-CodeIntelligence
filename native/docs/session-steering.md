@@ -451,3 +451,8 @@ Optional symbolWorkspaceFolders and selected YAML ls_workspace_folders bind
 independent per-project symbol-index projections and actual private-tree LSP
 workspace folders. Original source reads, graphs, write gates and absent-setting
 identities stay independent. See [workspace folders](session-config.md#fields-and-boundaries).
+
+Workspace selection also applies in common direct/staged LSP transport before
+passive-policy checks and profile hashing. Owned move intents and directory-move
+root admission use the same effective configuration, preserving old registrations
+and immutable evidence. See [route qualification](../../docs/validation/integration-2026-10-22/symbol-workspace-routes/README.md).

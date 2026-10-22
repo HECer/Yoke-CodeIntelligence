@@ -58,6 +58,12 @@ from the restricted primary Engine, preserving independent secondary rights.
 Overlapping writable registrations refuse; query plan carriers use the existing
 editing gate. False/absent keeps old fingerprints and serialization exact.
 
+Effective workspace configuration is derived at common LSP entrypoints before
+passive validation and profile hashing. Staged refactors, owned move intents and
+direct navigation share that selection; folder-move admission checks effective
+roots before provider startup or plan publication. Original host registrations
+and historical immutable evidence remain unchanged.
+
 Host-selected symbol workspace folders bind a distinct structural symbol-index
 projection over the full immutable captured graph. The same selected folders
 become real private-tree LSP workspace folders with capability/callback support.
