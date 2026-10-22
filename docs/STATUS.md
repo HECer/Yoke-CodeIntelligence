@@ -2,6 +2,56 @@
 
 ## Current integration work
 
+Standard project YAML defaults now confirm existing native UTF-8/LSP behavior,
+no activation command, default integer timeout 180 and no additional workspace
+folders. These values add no inert HostProfile policy or runtime authority.
+Pinned-source receipts identify accepted defaults and explicitly disclose the
+unavailable extensions. Non-UTF8, active commands, other timeouts, JetBrains and
+nonempty additional folders refuse with named unavailable errors. Public
+added_modes:null now retains inherited additions, equivalent to an empty list.
+
+At source 7104f358, 153 Rust functions pass across 20 scoped test groups:
+25 YAML/library-filter functions, five CLI functions and 18 integration targets.
+Four new functions cover complete owned standard-default data, equivalent profile
+bytes, type/scope/Unicode/path/budget refusals and actual CLI export. There are
+1 existing ignores and no failed function in this scoped run. This is not
+an unfiltered library or whole-native certificate. All ten original symlink test
+Git blobs and prior frozen working bytes remain exact; their Windows prerequisite
+acceptance remains open. No original symlink tests, system settings or privileges change.
+
+All-target Clippy -Dwarnings, build, typecheck, npm 260 passed/3 existing skips and 344
+actual format roots pass on 1058 frozen inputs. Cargo fmt --all retains OS206.
+The causal Rust default-file test fails 0/1 against the published parser, then
+passes with current source. Actual old reduced/new full CLI in the same fixture
+preserves exported profile bytes, original-session configuration/MCP53/symbol RAW,
+and whole SQL before and after. Old reduced plan RAW also remains exact. Source,
+Git, host, old-image and YAML bytes remain exact; no registered server starts.
+See [native default compatibility evidence](validation/integration-2026-10-22/project-defaults/README.md)
+and [configuration contract](../native/docs/session-config.md#fields-and-boundaries).
+
+Six project settings retain partial/unimplemented extension scope. Vendor-specific
+server dialect/install/runtime work, broader configuration/client work, authenticated
+Google, original353/R1-R9/current Windows/main/release acceptance remain open.
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Host-authorized languageServerSettings and pinned YAML ls_specific_settings
 now apply five generic settings to actual selected catalog registrations:
 initializationOptions, ls_path, ls_base_cmd, ls_args and ls_extra_args.
@@ -39,25 +89,6 @@ dependency/JAR interpretation, installation/version options and 77-runtime revie
 remain open. Six project settings retain partial/unimplemented scope, together
 with broader configuration/client work and original353/R1-R9/current Windows,
 authenticated Google/main/release acceptance. No full parity certificate is issued.
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 Explicit gitIgnore and pinned YAML ignore_all_files_in_gitignore now select
 real source capture, symbol indexing and pattern-search defaults independently

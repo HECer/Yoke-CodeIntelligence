@@ -10529,6 +10529,37 @@
           "activation_command_timeout"
         ],
         "fullParityCertified": false
+      },
+      "nativeStandardProjectDefaultsCheckpoint": {
+        "sourceCommit": "7104f358487c4b22a4036064f9d4a12fa7560d80",
+        "index": "docs/validation/integration-2026-10-22/project-defaults/index.json",
+        "frozenInputs": 1058,
+        "distinctRustFunctionsPassed": 153,
+        "scopedTestGroups": 20,
+        "yamlUnitFunctionsPassed": 25,
+        "cliFunctionsPassed": 5,
+        "unfilteredNativeLibraryRerun": false,
+        "unexpectedFailed": 0,
+        "existingIgnored": 1,
+        "newFunctions": 4,
+        "nativeDefaultsDoNotAddHostPolicyOrAuthority": true,
+        "unsupportedExtensionsExplicitlyUnavailable": true,
+        "addedModesNullInherits": true,
+        "causalRustRedParserMatchesPublishedParent": true,
+        "sameFixtureOldReducedNewFullProfileWireAndWholeSqlExact": true,
+        "defaultRegisteredServerNotStarted": true,
+        "actualFormatTargetRootsChecked": 344,
+        "cargoFormatAllOs206": true,
+        "remainingProjectSettings": [
+          "encoding",
+          "language_backend",
+          "ls_specific_settings",
+          "ls_additional_workspace_folders",
+          "activation_command",
+          "activation_command_timeout"
+        ],
+        "originalWindowsPrerequisitesStillOpen": true,
+        "fullParityCertified": false
       }
     },
     {

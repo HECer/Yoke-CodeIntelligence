@@ -468,3 +468,5 @@ are enforced separately from saved-plan validation. Search defaults use the
 actual project selection. See [qualification](../../docs/validation/integration-2026-10-22/git-ignore-policy/README.md).
 
 Generic server settings require separate host authorization for each project and preserve original runtime/source-execution rights. Project layers replace backend entries; initialization overlay is shallow. Current registries/settings/grants bind sessions and independent projects. See [qualification](../../docs/validation/integration-2026-10-22/server-settings/README.md).
+
+Standard native-equivalent YAML defaults preserve existing policy and bindings. Receipts disclose inactive/default-only compatibility and unavailable extensions; null added_modes retains lower-layer additions. See [qualification](../../docs/validation/integration-2026-10-22/project-defaults/README.md).

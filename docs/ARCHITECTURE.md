@@ -813,3 +813,5 @@ admission and surviving-AST postcondition feed one ordinary guarded plan. See th
 and [evidence](validation/integration-2026-10-19/function-bindings/index.json).
 
 Generic per-backend settings replace complete language entries across project layers, then overlay only top-level initialization keys on original host registrations. Explicit host project trust, unchanged runtime/source-execution grants, passive admission and selected-session/provider bindings remain separate. Each project derives from the original registry. Vendor dialect/install/runtime qualification remains open.
+
+Equivalent native project defaults are compatibility confirmations, not new host policy or grants. Pinned-source receipts distinguish UTF-8/LSP/default-only acceptance from unavailable transcoding, activation and additional-workspace extensions. Null mode additions preserve lower layers; source bytes, session binding and runtime trust remain unchanged.
