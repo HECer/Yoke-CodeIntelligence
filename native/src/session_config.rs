@@ -175,14 +175,18 @@ pub fn project(
                 "session_config_project_not_host_registered"
             );
             if let Some(read_only) = read_only {
-                let registered = profile
-                    .projects
-                    .iter_mut()
-                    .find(|p| p.name == *project)
-                    .ok_or_else(|| {
-                        anyhow::anyhow!("session_config_primary_read_only_unavailable")
-                    })?;
-                registered.read_only |= read_only;
+                if project == "default" {
+                    profile.primary_read_only |= read_only;
+                } else {
+                    let registered = profile
+                        .projects
+                        .iter_mut()
+                        .find(|p| p.name == *project)
+                        .ok_or_else(|| {
+                            anyhow::anyhow!("session_config_project_not_host_registered")
+                        })?;
+                    registered.read_only |= read_only;
+                }
             }
         }
         if let Target::Context { name } | Target::Mode { name } = source.target {

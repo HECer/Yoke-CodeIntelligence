@@ -100,7 +100,7 @@ fn all_explicit_source_roles_feed_existing_native_layer_precedence() {
 }
 
 #[test]
-fn yaml_read_only_only_tightens_a_pre_registered_named_project() {
+fn yaml_read_only_only_tightens_primary_or_registered_named_projects() {
     let mut base = HostProfile::default();
     base.projects.push(HostProject {
         name: "owned".into(),
@@ -154,7 +154,9 @@ fn yaml_read_only_only_tightens_a_pre_registered_named_project() {
             },
             b"read_only: true\n"
         )
-        .is_err()
+        .unwrap()
+        .profile()
+        .primary_read_only
     );
     assert!(
         apply(

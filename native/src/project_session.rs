@@ -84,6 +84,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub primary_read_only: bool,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub optional_defaults: Option<crate::session_steering::OptionalDefaults>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -111,6 +113,7 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            primary_read_only: false,
             optional_defaults: None,
             agent_interface: None,
             startup_project: None,
@@ -187,6 +190,7 @@ pub(crate) fn validate_retention_record(
 }
 pub struct Session {
     pub engine: Engine,
+    host_allow_writes: bool,
     capture_epoch: crate::analysis::AnalyzerEpoch,
     host: HostProfile,
     inline_compiler_binding: Option<String>,
@@ -203,6 +207,14 @@ pub struct Session {
 }
 fn project_root_key(path: &std::path::Path) -> Option<String> {
     Some(project_root_spelling(path.to_str()?, cfg!(windows)))
+}
+fn roots_overlap(a: &std::path::Path, b: &std::path::Path) -> bool {
+    match (project_root_key(a), project_root_key(b)) {
+        (Some(a), Some(b)) => {
+            a == b || a.starts_with(&format!("{b}/")) || b.starts_with(&format!("{a}/"))
+        }
+        _ => true,
+    }
 }
 fn project_root_spelling(value: &str, windows: bool) -> String {
     if !windows {
@@ -787,7 +799,7 @@ impl Session {
         self.host.global_notes_root.is_some()
     }
     pub fn open(
-        engine: Engine,
+        mut engine: Engine,
         mut host: HostProfile,
         session_id: Option<&str>,
         deadline: &Deadline,
@@ -826,6 +838,13 @@ impl Session {
             ensure!(
                 project.root.is_dir(),
                 "Registered project root must be a directory"
+            );
+            ensure!(
+                !host.primary_read_only
+                    || project.read_only
+                    || project.query_only
+                    || !roots_overlap(&project.root, &engine.root),
+                "Primary read-only project overlaps a writable registered project"
             );
             if let (Some(selected), Some(canonical)) = (selected, project_root_key(&project.root))
                 && selected != canonical
@@ -1036,6 +1055,15 @@ impl Session {
                 capture_epoch.producer(),
             )),
         };
+        let host_allow_writes = engine.allow_writes;
+        let fingerprint = if host.primary_read_only {
+            identity(&(fingerprint, "host_primary_read_only_v1"))
+        } else {
+            fingerprint
+        };
+        // This restriction belongs only to the primary project. Registered
+        // projects retain the separately captured host source-write grant.
+        engine.allow_writes &= !host.primary_read_only;
         let owned_label = if let Some(id) = session_id {
             label(id)?;
             id.to_owned()
@@ -1152,6 +1180,7 @@ impl Session {
         }
         Ok(Self {
             engine,
+            host_allow_writes,
             capture_epoch,
             host,
             inline_compiler_binding,
@@ -1245,7 +1274,8 @@ impl Session {
         }
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
-        if self.host.optional_defaults.is_some()
+        if self.host.primary_read_only
+            || self.host.optional_defaults.is_some()
             || self.agent_interface().is_some()
             || self
                 .host
@@ -1477,7 +1507,7 @@ impl Session {
         if !self.others.contains_key(name) {
             let mut engine = Engine::open_with_timeout(&project.root, deadline.remaining())?;
             engine.allow_writes =
-                self.engine.allow_writes && !project.read_only && !project.query_only;
+                self.host_allow_writes && !project.read_only && !project.query_only;
             engine.capture_options = self.engine.capture_options.clone();
             engine.capture_epoch = self.capture_epoch;
             engine.servers = self.engine.servers.clone();
@@ -1507,7 +1537,7 @@ impl Session {
             "Editing disabled by session modes"
         );
         ensure!(
-            self.state.active_project == "default"
+            (self.state.active_project == "default" && !self.host.primary_read_only)
                 || self
                     .host
                     .projects
@@ -1591,6 +1621,9 @@ impl Session {
                 if let Some(steering) = self.steering()? {
                     value["steering"] = serde_json::to_value(steering)?;
                 }
+                if self.host.primary_read_only {
+                    value["primaryReadOnly"] = json!(true);
+                }
                 if let Some(project) = &self.host.startup_project {
                     value["startupProject"] = json!(project);
                     value["projectActivationLocked"] = json!(
@@ -1604,7 +1637,7 @@ impl Session {
                 let mut items = vec![
                     json!({"name":"default","queryOnly":false,"readOnly":!self.engine.allow_writes}),
                 ];
-                items.extend(self.host.projects.iter().filter(|p|!self.state.removed_projects.contains(&p.name)).map(|p|json!({"name":p.name,"queryOnly":p.query_only,"readOnly":p.read_only || !self.engine.allow_writes})));
+                items.extend(self.host.projects.iter().filter(|p|!self.state.removed_projects.contains(&p.name)).map(|p|json!({"name":p.name,"queryOnly":p.query_only,"readOnly":p.read_only || !self.host_allow_writes})));
                 Ok(json!({"items":items}))
             }
             "activate" => {
@@ -1950,6 +1983,9 @@ impl Session {
     }
     fn call_active(&mut self, tool: &str, mut args: Value, deadline: &Deadline) -> Result<Value> {
         ensure!(args.is_object(), "Tool arguments must be object");
+        if plan_producing_query(tool, &args) {
+            self.require_edit_permission()?;
+        }
         args["timeoutMs"] = json!(deadline.remaining().as_millis().min(600000));
         let active = self.state.active_project.clone();
         self.project_engine(&active, deadline)?.invoke(tool, args)
