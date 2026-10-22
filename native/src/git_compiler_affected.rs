@@ -161,7 +161,12 @@ fn finish(
                 }
                 if matches!(
                     edge["relation"].as_str(),
-                    Some("overrides" | "implementsMember")
+                    Some(
+                        "overrides"
+                            | "implementsMember"
+                            | "overridesProperty"
+                            | "implementsProperty"
+                    )
                 ) {
                     contracts
                         .entry(
@@ -257,7 +262,15 @@ fn finish(
                         let target = binding["target"]
                             .as_str()
                             .context("Compiler contract target missing")?;
-                        contract_expansions.push(json!({"changedRow":row_index,"side":side,"contextId":context["contextId"],"relationId":binding["id"],"sourceNodeId":node,"targetNodeId":target,"distance":distance,"direction":"outgoing_compiler_binding","basis":"compiler_override_contract_dependency","runtimeDispatchEstablished":false}));
+                        let basis = if matches!(
+                            binding["relation"].as_str(),
+                            Some("overridesProperty" | "implementsProperty")
+                        ) {
+                            "compiler_property_contract_dependency"
+                        } else {
+                            "compiler_override_contract_dependency"
+                        };
+                        contract_expansions.push(json!({"changedRow":row_index,"side":side,"contextId":context["contextId"],"relationId":binding["id"],"sourceNodeId":node,"targetNodeId":target,"distance":distance,"direction":"outgoing_compiler_binding","basis":basis,"runtimeDispatchEstablished":false}));
                         if distances
                             .get(target)
                             .is_none_or(|previous| distance < *previous)

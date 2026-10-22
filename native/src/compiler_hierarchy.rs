@@ -396,6 +396,19 @@ pub(crate) fn observe(
             )
         };
         let mut relations = vec![];
+        let heritage_bindings: BTreeSet<_> = parsed
+            .relations
+            .iter()
+            .filter(|binding| matches!(binding.relation.as_str(), "extends" | "implements"))
+            .map(|binding| {
+                (
+                    binding.source,
+                    binding.proof.path.as_str(),
+                    binding.proof.start_byte,
+                    binding.proof.end_byte,
+                )
+            })
+            .collect();
         let property_bindings: BTreeSet<_> = parsed
             .relations
             .iter()
@@ -612,6 +625,35 @@ pub(crate) fn observe(
                         && no_dispatch
                         && edge.conditional.is_none(),
                     "Invalid compiler member binding"
+                ),
+                "overridesProperty" | "implementsProperty" => ensure!(
+                    property(from)
+                        && property(to)
+                        && from.kind != "Parameter"
+                        && to.kind != "Parameter"
+                        && !(method(from) && method(to))
+                        && !matches!(
+                            (from.kind.as_str(), to.kind.as_str()),
+                            ("GetAccessor", "SetAccessor") | ("SetAccessor", "GetAccessor")
+                        )
+                        && from.is_static == to.is_static
+                        && edge.owner.is_some_and(|n| {
+                            let owner = &parsed.nodes[n];
+                            matches!(
+                                owner.kind.as_str(),
+                                "ClassDeclaration" | "InterfaceDeclaration"
+                            ) && contains(&owner.declaration, &from.declaration)
+                                && contains(&owner.declaration, &edge.proof)
+                                && heritage_bindings.contains(&(
+                                    n,
+                                    edge.proof.path.as_str(),
+                                    edge.proof.start_byte,
+                                    edge.proof.end_byte,
+                                ))
+                        })
+                        && no_dispatch
+                        && edge.conditional.is_none(),
+                    "Invalid compiler property contract binding"
                 ),
                 "signatureImplementation" => ensure!(
                     !from.has_body

@@ -5,6 +5,8 @@ function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,root,
  const nodes=[],relations=[],unavailable=[],unavailableSeen=new Set(),byDecl=new Map(),types=[],calls=[],witnessNodes=new Set(),instances=[],instancesByOwner=new Map(),typesBySymbol=new Map();let ast=0,pairVisits=0,witnessBytes=0;
  const captured=node=>node&&source.has(slash(node.getSourceFile().fileName));
  const isMethod=node=>ts.isMethodDeclaration(node)||ts.isMethodSignature(node);
+ const contractSlot=node=>ts.isPropertyDeclaration(node)||ts.isPropertySignature(node)||ts.isGetAccessorDeclaration(node)||ts.isSetAccessorDeclaration(node);
+ const oppositeAccessor=(a,b)=>(ts.isGetAccessorDeclaration(a)&&ts.isSetAccessorDeclaration(b))||(ts.isSetAccessorDeclaration(a)&&ts.isGetAccessorDeclaration(b));
  const staticMember=node=>!!(ts.getCombinedModifierFlags(node)&ts.ModifierFlags.Static);
  const privateMember=node=>ts.isPrivateIdentifier(node.name)||!!(ts.getCombinedModifierFlags(node)&ts.ModifierFlags.Private);
  function tick(){assert(++pairVisits<=limits.maxPairVisits,'Hierarchy pair capacity');}
@@ -65,7 +67,7 @@ function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,root,
   for(const member of item.node.members){
    if(isMethod(member))edge('declaresMember',item.id,addNode(member),member.name);
    else if(ts.isConstructorDeclaration(member))edge('declaresMember',item.id,addNode(member),member);
-   else if(member.name)unknown('non_method_member_not_override_enumerated',member);
+   else if(member.name&&!contractSlot(member))unknown('non_method_member_not_override_enumerated',member);
   }
   for(const clause of item.node.heritageClauses||[])for(const heritage of clause.types){
    tick();const baseType=checker.getTypeAtLocation(heritage);let symbol=baseType.getSymbol()||baseType.aliasSymbol;
@@ -74,15 +76,18 @@ function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,root,
    if(!declarations.length)unknown('heritage_type_not_captured_declaration',heritage);
    const implementing=clause.token===ts.SyntaxKind.ImplementsKeyword;
    for(const base of declarations)edge(implementing?'implements':'extends',item.id,addNode(base),heritage);
+   const capturedHeritage=declarations.some(captured);
    for(const member of item.node.members){
-    if(!isMethod(member))continue;
+    if(!isMethod(member)&&!contractSlot(member))continue;
     if(privateMember(member)){unknown('private_member_not_override_enumerated',member);continue;}
     const own=checker.getSymbolAtLocation(member.name);if(!own)continue;
     const baseObject=staticMember(member)&&symbol?checker.getTypeOfSymbolAtLocation(symbol,heritage):baseType;
     const inherited=checker.getPropertyOfType(baseObject,own.getName());
     for(const target of inherited?.declarations||[]){
-     tick();if(!isMethod(target)||staticMember(target)!==staticMember(member)||privateMember(target))continue;
-     edge(implementing||ts.isInterfaceDeclaration(target.parent)?'implementsMember':'overrides',addNode(member),addNode(target),heritage,{owner:item.id});
+     tick();if((!isMethod(target)&&!contractSlot(target))||staticMember(target)!==staticMember(member)||privateMember(target)||oppositeAccessor(member,target))continue;
+     const propertyContract=!isMethod(member)||!isMethod(target),interfaceContract=implementing||ts.isInterfaceDeclaration(target.parent);
+     if(propertyContract&&!capturedHeritage){unknown('property_contract_heritage_not_captured',heritage);continue;}
+     edge(propertyContract?(interfaceContract?'implementsProperty':'overridesProperty'):(interfaceContract?'implementsMember':'overrides'),addNode(member),addNode(target),heritage,{owner:item.id});
     }
    }
   }

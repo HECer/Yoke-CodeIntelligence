@@ -110,6 +110,329 @@ fn changed_method_row(r: &Value, c: &Value, method: &str) -> usize {
 }
 
 #[test]
+fn generic_getter_override_retains_base_reader_without_invented_instances() {
+    let source = concat!(
+        "\u{feff}// owned \u{1f4a1} e\u{301}\r\n",
+        "export class Base {get value():string{return 'BASE_GET';} set value(v:string){void v;}}\r\n",
+        "export class Generic<T> extends Base {other!:T;override get value():string{return 'GENERIC_OLD';} override set value(v:string){void v;}}\r\n",
+        "function reader(x:Base){return x.value;}\r\n",
+        "function writer(x:Base){x.value='write';}\r\n"
+    );
+    let f = configured(source, &source.replace("GENERIC_OLD", "GENERIC_HEAD"));
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let getter = node_id(c, "value", "GENERIC_HEAD");
+    let base_getter = node_id(c, "value", "BASE_GET");
+    let owner = node_id(c, "Generic", "GENERIC_HEAD");
+    let reader = node_id(c, "reader", "x.value");
+    let writer = node_id(c, "writer", "x.value");
+    let declaration = c["nodes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| n["id"] == getter)
+        .unwrap();
+    let span = &declaration["declaration"];
+    let rows: Vec<_> = r["originalChangedSymbols"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .enumerate()
+        .filter(|(_, row)| {
+            row["side"] == "head"
+                && row["kind"] == "method"
+                && row["path"] == span["path"]
+                && row["startByte"] == span["startByte"]
+                && row["endByte"] == span["endByte"]
+                && row["contentHash"] == declaration["contentHash"]
+        })
+        .map(|(i, _)| i)
+        .collect();
+    assert_eq!(
+        rows.len(),
+        1,
+        "Exact original getter source range is required"
+    );
+    let row = rows[0];
+    assert!(
+        r["seedMappings"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|m| m["changedRow"] == row
+                && m["nodeId"] == getter
+                && m["basis"] == "original_source_contains_compiler_declaration")
+    );
+    assert!(
+        c["instances"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|i| i["owner"] != owner)
+    );
+    assert!(edges(c, "possibleGets", &reader, &getter).is_empty());
+    assert_eq!(edges(c, "gets", &reader, &base_getter).len(), 1);
+    let affected = |node: &str| {
+        r["states"].as_array().unwrap().iter().any(|s| {
+            s["changedRow"] == row
+                && s["contextId"] == c["contextId"]
+                && s["nodeId"] == node
+                && s["distance"] == 1
+        })
+    };
+    assert!(
+        affected(&reader),
+        "Changed getter must retain its base-slot reader as a source-contract consumer"
+    );
+    let generic_start = c["nodes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| n["id"] == owner)
+        .unwrap()["declaration"]["startByte"]
+        .as_u64()
+        .unwrap();
+    let base_setter = c["nodes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| {
+            n["kind"] == "SetAccessor"
+                && n["declaration"]["startByte"].as_u64().unwrap() < generic_start
+        })
+        .unwrap()["id"]
+        .as_str()
+        .unwrap();
+    assert!(edges(c, "overridesProperty", &getter, base_setter).is_empty());
+    let setter_effects = edges(c, "sets", &writer, base_setter);
+    assert_eq!(setter_effects.len(), 1);
+    assert!(
+        r["incomingProofs"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|p| p["changedRow"] == row && p["contextId"] == c["contextId"])
+            .all(|p| p["relationId"] != setter_effects[0]["id"])
+    );
+    let bindings = edges(c, "overridesProperty", &getter, &base_getter);
+    assert_eq!(bindings.len(), 1);
+    assert!(
+        r["contractExpansions"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|p| p["changedRow"] == row
+                && p["contextId"] == c["contextId"]
+                && p["relationId"] == bindings[0]["id"]
+                && p["basis"] == "compiler_property_contract_dependency"
+                && p["runtimeDispatchEstablished"] == false)
+    );
+    assert_eq!(state(&f.engine), before);
+}
+
+#[test]
+fn generic_callable_property_contracts_keep_parallel_interface_clauses_and_budgets() {
+    let calls = (0..20)
+        .map(|i| format!("x.run('p{i}');"))
+        .collect::<String>();
+    let source = format!(
+        "// owned \u{1f4a1} e\u{301}\r\ninterface Root{{run(v:string):string;}} interface Left extends Root{{}} interface Right extends Root{{}}\r\nexport class Generic<T> implements Left,Right{{other!:T;run=(v:string)=>'FIELD_OLD'+v;#run=(v:string)=>v;static run=(v:string)=>v;}}\r\nfunction caller(x:Root){{{calls}}}\r\n"
+    );
+    let f = configured(&source, &source.replace("FIELD_OLD", "FIELD_HEAD"));
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let field = node_id(c, "run", "FIELD_HEAD");
+    let signature = node_id(c, "run", "run(v:string):string;");
+    let owner = node_id(c, "Generic", "FIELD_HEAD");
+    let caller = node_id(c, "caller", "p19");
+    assert!(
+        c["instances"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|i| i["owner"] != owner)
+    );
+    assert!(edges(c, "possiblePropertyAccess", &caller, &field).is_empty());
+    let bindings = edges(c, "implementsProperty", &field, &signature);
+    assert_eq!(
+        bindings.len(),
+        2,
+        "Parallel heritage clauses retain separate proofs"
+    );
+    let mut clauses = bindings
+        .iter()
+        .map(|e| e["proof"]["text"].as_str().unwrap())
+        .collect::<Vec<_>>();
+    clauses.sort_unstable();
+    assert_eq!(clauses, ["Left", "Right"]);
+    let private = node_id(c, "#run", "(v:string)=>v");
+    assert!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(
+                |e| e["relation"] == "implementsProperty" || e["relation"] == "overridesProperty"
+            )
+            .all(|e| e["source"] != private && e["target"] != private)
+    );
+    let row = r["originalChangedSymbols"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .position(|row| row["side"] == "head" && row["kind"] == "class" && row["name"] == "Generic")
+        .unwrap();
+    assert!(
+        r["states"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|s| s["changedRow"] == row
+                && s["contextId"] == c["contextId"]
+                && s["nodeId"] == caller
+                && s["distance"] == 1)
+    );
+    let zero = run(
+        &f,
+        &Options {
+            max_depth: 0,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+    assert!(zero["contractExpansions"].as_array().unwrap().is_empty());
+    assert!(zero["incomingProofs"].as_array().unwrap().is_empty());
+    let capacity = r["contractExpansions"].as_array().unwrap().len()
+        + r["incomingProofs"].as_array().unwrap().len()
+        - 1;
+    assert!(
+        r["base"]["contexts"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .chain(r["head"]["contexts"].as_array().unwrap())
+            .all(
+                |context| context["relations"].as_array().unwrap().len() <= capacity
+                    && context["unavailable"].as_array().unwrap().len() <= capacity
+            )
+    );
+    assert!(
+        run(
+            &f,
+            &Options {
+                max_relations: capacity,
+                ..Default::default()
+            }
+        )
+        .unwrap_err()
+        .to_string()
+        .contains("capacity")
+    );
+    assert_eq!(state(&f.engine), before);
+}
+
+#[test]
+fn forged_property_contract_roles_owners_and_heritage_proofs_are_refused() {
+    let source = "class Base{get value():string{return 'BASE';}set value(v:string){void v;}}class Generic<T> extends Base{other!:T;override get value():string{return 'OLD';}override set value(v:string){void v;}}function read(x:Base){return x.value;}\n";
+    let f = configured(source, &source.replace("'OLD'", "'HEAD'"));
+    let before = state(&f.engine);
+    let clean = run(&f, &Default::default()).unwrap();
+    assert!(
+        context(&clean)["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|e| e["relation"] == "overridesProperty")
+    );
+    let host = tempfile::tempdir().unwrap();
+    let mut selected = spec();
+    let actual_path = selected.typescript.to_string_lossy();
+    let actual = actual_path.strip_prefix(r"\\?\").unwrap_or(&actual_path);
+    let module = host.path().join("owned-property-contract-compiler.cjs");
+    let prefix = format!(
+        "const ts=require({});Object.defineProperty(Object.prototype,'toJSON',{{configurable:true,value:function(){{const report=this;if(report.schema===1&&report.operation==='hierarchy'){{for(const c of report.contexts||[]){{const h=c.hierarchy;if(!h)continue;const e=h.relations.find(e=>e.relation==='overridesProperty'&&h.nodes[e.source].kind==='GetAccessor');if(!e)throw Error('Missing owned getter contract');",
+        serde_json::to_string(actual).unwrap()
+    );
+    let suffix = "}}return report;}});module.exports=ts;";
+    for (mutation, expected) in [
+        (
+            "e.target=h.nodes.findIndex(n=>n.kind==='SetAccessor');",
+            "Invalid compiler property contract binding",
+        ),
+        (
+            "e.owner=h.nodes.findIndex(n=>n.name==='read');",
+            "Invalid compiler property contract binding",
+        ),
+        (
+            "e.proof=h.nodes[e.source].selection;",
+            "Invalid compiler property contract binding",
+        ),
+        (
+            "h.nodes[e.target].static=true;",
+            "Invalid compiler property contract binding",
+        ),
+        (
+            "e.resolvedTarget=e.target;",
+            "Invalid compiler property contract binding",
+        ),
+        ("e.relation='overrides';", "Invalid compiler member binding"),
+    ] {
+        fs::write(&module, format!("{prefix}{mutation}{suffix}")).unwrap();
+        selected.typescript = module.clone();
+        let error = compiler_affected::derive(
+            &f.engine.store,
+            f.report["artifactId"].as_str().unwrap(),
+            &selected,
+            &Default::default(),
+            &Deadline::new(60000),
+        )
+        .unwrap_err()
+        .to_string();
+        assert!(
+            error.contains(expected),
+            "Expected {expected}, received {error}"
+        );
+        assert_eq!(state(&f.engine), before);
+    }
+}
+
+#[test]
+fn uncaptured_property_heritage_retains_partial_type_alias_observations() {
+    let source = "export type Slot={value:string};class Generic<T> implements Slot{other!:T;get value():string{return 'OLD';}set value(v:string){void v;}}function reader(x:Slot){return x.value;}\n";
+    let f = configured(source, &source.replace("'OLD'", "'HEAD'"));
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let reader = node_id(c, "reader", "x.value");
+    assert!(
+        c["unavailable"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|u| u["reason"] == "property_contract_heritage_not_captured"
+                && u["anchor"]["text"] == "Slot")
+    );
+    assert!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|e| e["source"] == reader && e["relation"] == "accessesProperty")
+    );
+    assert!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|e| e["relation"] != "implementsProperty" && e["relation"] != "overridesProperty")
+    );
+    assert_eq!(r["complete"], false);
+    assert_eq!(state(&f.engine), before);
+}
+
+#[test]
 fn unobserved_generic_overrides_retain_source_contract_callers_without_invented_instances() {
     let calls = (0..20)
         .map(|n| format!("x.run('p{n}');"))
