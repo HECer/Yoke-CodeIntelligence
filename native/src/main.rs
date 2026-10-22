@@ -39,6 +39,7 @@ mod mixed_meaning_cli;
 mod mixed_view_cli;
 mod neo4j_publish_cli;
 mod postgres_catalog_cli;
+mod session_config_cli;
 mod source_acquisition_cli;
 mod view_comparison_cli;
 struct PreparedModelProvider {
@@ -105,6 +106,7 @@ enum ExtensionOperation {
     Neo4jPublish(Box<neo4j_publish_cli::Arguments>),
     FalkorPublish(Box<falkor_publish_cli::Arguments>),
     SourceAcquisition(Box<source_acquisition_cli::Arguments>),
+    SessionConfig(Box<session_config_cli::Arguments>),
     MixedView(Box<mixed_view_cli::Arguments>),
     MixedMeaning(Box<mixed_meaning_cli::Arguments>),
     Feedback(Box<feedback_cli::Arguments>),
@@ -1999,6 +2001,7 @@ fn run_parity(
         ExtensionOperation::Neo4jPublish(_) => bail!("Neo4j publication host dispatch error"),
         ExtensionOperation::FalkorPublish(_) => bail!("FalkorDB publication host dispatch error"),
         ExtensionOperation::SourceAcquisition(_) => bail!("Source acquisition host dispatch error"),
+        ExtensionOperation::SessionConfig(_) => bail!("Session configuration host dispatch error"),
         ExtensionOperation::MixedView(_) => bail!("Mixed views host dispatch error"),
         ExtensionOperation::MixedMeaning(_) => bail!("Mixed meaning host dispatch error"),
         ExtensionOperation::Feedback(_) => bail!("Feedback host dispatch error"),
@@ -3369,6 +3372,22 @@ fn run(cli: Cli) -> Result<bool> {
             );
         }
         ensure!(options.is_none() && format.is_none(), git_impact_cli::INPUT);
+    }
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::SessionConfig(args) = extension.as_ref()
+    {
+        ensure!(
+            cli.root == std::path::Path::new(".")
+                && cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && !cli.allow_writes
+                && cli.analyzer_epoch.is_none(),
+            "Session configuration selects explicit host data"
+        );
+        return session_config_cli::run(args, cli.timeout, cli.max_bytes);
     }
     if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::SourceAcquisition(args) = extension.as_ref()

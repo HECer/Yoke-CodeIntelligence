@@ -128,7 +128,7 @@ impl Arguments {
     }
 }
 
-fn host_path(path: &Path) -> Result<()> {
+pub(super) fn host_path(path: &Path) -> Result<()> {
     let text = path.to_str().context("Host archive path must be Unicode")?;
     ensure!(
         path.is_absolute() && text.len() <= 4096 && !text.chars().any(char::is_control),
@@ -158,7 +158,7 @@ fn host_path(path: &Path) -> Result<()> {
     Ok(())
 }
 
-fn directory_guards(path: &Path, deadline: &Deadline) -> Result<Vec<File>> {
+pub(super) fn directory_guards(path: &Path, deadline: &Deadline) -> Result<Vec<File>> {
     host_path(path)?;
     let mut held = Vec::new();
     for ancestor in path.ancestors() {
