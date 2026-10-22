@@ -10872,7 +10872,7 @@
         "graphify:asr",
         "graphify:db_push"
       ],
-      "remainingBoundary": "Bounded selected PostgreSQL catalogs, anonymous HTTP text/raw-HTML/PDF, and dedicated shared-rate-coordinated arxiv.org received metadata/PDF now have actual Windows evidence. Received citation tags and matching base-ID labels do not establish paper/version/author/server truth, a browser DOM, semantic graph or canonical code snapshot. Google shortcut export, authenticated/social/video routes, article/semantic interpretation and Neo4j/FalkorDB upsert remain open, along with full upstream and non-Windows qualification. Local files and generated Cypher are not those remaining connectors.",
+      "remainingBoundary": "Selected PostgreSQL catalogs, anonymous HTTP text/raw-HTML/PDF and shared-rate-coordinated arxiv metadata/PDF have scoped evidence. Controlled trusted-gws and fixed native Google HTTP shortcut export are implemented; authenticated Google live acceptance remains open without an approved document. Reviewed native Neo4j QueryAPIv2/Cypher5 and FalkorDB module60002 publication are implemented with historical Windows live TLS, exact original row/direction/parallel-evidence, concurrent-CAS and no-resend recovery qualification. Other server versions/JVMs, production/RBAC, non-Windows, full mixed-source/upstream equivalence and current-binary live requalification remain open. Authenticated/social/video/article interpretation and semantic truth remain separate; received labels/bytes establish no external identity or compiler/execution authority.",
       "nativeGoogleHttpCheckpoint": {
         "sourceCommit": "e546114a7acb91270916eaf6813d50dee3d318c2",
         "index": "docs/validation/integration-2026-10-22/google-http-export/index.json",
@@ -10885,6 +10885,36 @@
         "approvedGoogleTestDocumentAvailable": false,
         "legacyArchiveReplayAndGwsRefusalRawExact": true,
         "fullParityCertified": false
+      },
+      "databaseStatusReconciliationCheckpoint": {
+        "sourceCommit": "3d5f39e66b8f0687a672415d6e2fcdfb8e46f2ca",
+        "frozenInputs": 1065,
+        "historicalArtifactsVerified": 1732,
+        "historicalIndices": [
+          {
+            "name": "neo4j-publish",
+            "index": "docs/validation/integration-2026-10-19/neo4j-publish/index.json",
+            "indexSha256": "8f890efc2d9238a16882c09f84708a1db549f6c28a90e435b152c90a41b01f1e",
+            "sourceCommit": "7ef75a2c8c88c4ea0951e6d9f562716dbfe4676a",
+            "runtimeCommit": "36f0ab2b51643b27c44cdbcfd2050bf1c1ea1bbb",
+            "indexedArtifactsVerified": 822
+          },
+          {
+            "name": "falkor-publish",
+            "index": "docs/validation/integration-2026-10-19/falkor-publish/index.json",
+            "indexSha256": "83e6b4f33532ccba51a97c3305720f5479efd27f5868429a83c5366c24925427",
+            "sourceCommit": "c15cf10dcccc293af3288868708d8f68e98a77bd",
+            "runtimeCommit": "9e583987a2654b3d1adc27abc59737cd07961b5e",
+            "indexedArtifactsVerified": 910
+          }
+        ],
+        "productionCodeChanged": false,
+        "currentDatabaseLiveRerun": false,
+        "newRustTestsRun": false,
+        "originalInventoryAssessmentsUnchanged": true,
+        "fullStatusComplete": false,
+        "rawMembers": 2,
+        "index": "docs/validation/integration-2026-10-22/status-db-reconciliation/index.json"
       }
     },
     {

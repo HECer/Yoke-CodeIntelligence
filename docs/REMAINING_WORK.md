@@ -57,6 +57,18 @@ runtime/operation evidence without production changes or new Rust-suite counts.
 It does not certify other crates, compiler/reference completeness or all77
 backends. See [actual Rust rename evidence](validation/integration-2026-10-22/rust-rename-live/README.md).
 
+The database residual summary now distinguishes implemented connectors from
+remaining qualification. Reviewed native Neo4j and FalkorDB publication already
+exists, with historical Windows TLS, exact evidence-row, concurrent-CAS and
+no-resend recovery cases in the indexed 2026-10-19 checkpoints. An integrity
+audit at source 3d5f39e6 verifies all 1732 indexed artifacts and historical source
+ancestry. It does not rerun database services or certify the current binary live.
+Other server versions/JVMs, production/RBAC, non-Windows and full mixed-source/
+upstream equivalence remain open. The controlled Google export implementations
+are also separate from authenticated Google live acceptance, which still lacks
+an approved test document. Original inventory assessments remain unchanged.
+See [database status reconciliation](validation/integration-2026-10-22/status-db-reconciliation/README.md).
+
 ### Remaining scope
 
 Open work is summarized here. Later sections preserve results for their stated
@@ -69,7 +81,7 @@ retains the detailed boundaries and original inventory assessments.
 | Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
 | Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, remaining dashboard management and broader UI/accessibility acceptance. |
 | Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and broader database version/mixed-source qualification. No approved Google test document is available. |
 | App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
 | Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
 | Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
