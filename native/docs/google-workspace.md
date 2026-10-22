@@ -8,9 +8,69 @@ endpoint, account configuration, permission, model, or output path.
 Capture, immutable archive and replay pass owned Windows unit/CLI/process
 contracts. The installed gws 0.22.5 executable has been checked with `--version`,
 root help, the public Drive export schema and an actual empty-state ADC-fallback
-refusal. An authenticated Google export has not yet been validated. A resource key in a
-shortcut currently returns `google_workspace_resource_key_transport_unavailable`.
-It is never silently discarded. This is not complete R7 acceptance.
+refusal. Authenticated Google export remains unvalidated. The native HTTP route supports
+resource keys under controlled wire/pipe contracts. The gws route still refuses
+resource keys explicitly. This is not complete R7 acceptance.
+
+## Native HTTP capture
+
+The host can select the independent native transport without a gws process or
+account-state directory. Its closed JSON configuration has exactly these keys:
+
+    {
+      "shortcutPath": "notes/design.gdoc",
+      "expectedShortcutSha256": "<original shortcut SHA-256>",
+      "expectedFileId": "<selected file ID>",
+      "address": "<host-selected literal Google IP>:443",
+      "expectedExporterSha256": "<this native executable SHA-256>"
+    }
+
+The native image must be a regular file of at most 512,000,000 bytes. Source
+paths reject reparse points. The local exporter claim native-drive-http-v1
+establishes no Google attestation. A local preview reads no token, opens no
+socket/Store and creates no output. Command and flags (shown wrapped):
+
+    yoke source-acquisition google-http-plan --config /absolute/http.json
+      --source-root /absolute/project --allow-shortcut-read --trust-native-exporter
+
+For capture, an explicitly authorized host supplies one access-token line on
+private stdin (1..2560 ASCII token bytes, optional LF/CRLF). Windows requires a
+pipe and bounds even an open writer by the shared deadline. No token argument,
+configuration field, environment lookup, OAuth refresh, login or credential
+discovery is supported. Keep private tokens out of source, logs and command
+history. Capture uses these flags with private stdin already connected:
+
+    yoke source-acquisition google-http-capture --config /absolute/http.json
+      --source-root /absolute/project --output /absolute/new-export.json
+      --allow-shortcut-read --allow-network --allow-private-credential
+      --trust-native-exporter --access-token-stdin --allow-output
+
+All six grants precede configuration input. Exact source/file/image pins,
+worst-case archive/reply capacities and a fresh output path are admitted before
+token input. Capture repeats source/image admission, then sends one empty-body
+GET to the fixed HTTPS www.googleapis.com Drive files.export endpoint with the
+selected MIME. The supplied literal address has port 443. No DNS lookup, proxy,
+redirect or retry occurs. Standard host public trust anchors enter a static TLS
+verifier; certificate/key-log environment overrides refuse. No online chain
+fetch or custom trust-root input is added. The private resource-key header
+contains only the selected file-ID/key pair. Neither key nor token enters URL,
+metadata or archive.
+
+Only status 200, the selected representation or application/octet-stream,
+identity encoding, bounded headers and bounded exact received bytes are admitted.
+A body containing the literal token or resource key refuses before publication.
+Private HTTP diagnostics become fixed errors. Source/image pins are rechecked;
+publication stays create-only and replay uses the unchanged v1 export archive.
+XLSX signature admission does not replace the separate bounded Office parser.
+Library-internal allocations and OS trust-store loading are not a hard memory/
+time sandbox. No hard quota or authenticated remote identity is claimed.
+
+Controlled loopback tests exercise the actual request/response path without
+Google credentials. An owned HTTPS attempt refuses a plaintext peer before HTTP
+secrets are sent. Successful authenticated Google TLS/export remains UNVALIDATED:
+no approved test document was available. Header and endpoint contracts follow
+Google's public [resource-key guide](https://developers.google.com/workspace/drive/api/guides/resource-keys)
+and [files.export reference](https://developers.google.com/workspace/drive/api/reference/rest/v3/files/export).
 
 ## Capture
 

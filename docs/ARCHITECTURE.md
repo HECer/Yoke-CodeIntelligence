@@ -324,8 +324,12 @@ permissions remain host-only. Private job cwd and fixed arguments exclude source
 The received export archive binds exact body bytes and safe declared metadata;
 offline replay establishes no Google/account/client attestation. Separate XLSX
 inspection keeps original container/XML source spaces and cached values without
-formula execution. Resource-key transport and authenticated live acceptance are
-still open. See [Google Workspace](../native/docs/google-workspace.md).
+formula execution. A separate native HTTP route sends an explicitly supplied
+private token and resource-key header to the fixed Google HTTPS endpoint with a
+literal host-selected address and exact native-image pin. No DNS/proxy/redirect/
+retry or ambient auth is used; source/archive/output admission precedes private
+input. Controlled wire/pipe contracts pass; authenticated Google live acceptance
+remains open. See [Google Workspace](../native/docs/google-workspace.md).
 
 `source_acquisition` preserves typed received HTTP bodies and exact range
 queries without a code SourceSnapshot or imported authority. Its host transport
