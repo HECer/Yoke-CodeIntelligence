@@ -136,6 +136,7 @@ impl Store {
             source_line_ending: None,
             source_exclusion_selection: None,
             current_source_exclusions: None,
+            current_git_ignored_read_only: false,
             client_lock,
             admission_gate,
             client_valid: Cell::new(true),

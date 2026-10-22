@@ -625,7 +625,7 @@ fn symbols_find_with_roots(
 ) -> Result<Value> {
     let mut filter = PathFilter::new(args)?;
     filter.symbol_roots = roots.map(<[String]>::to_vec);
-    filter.skip_ignored |= roots.is_some();
+    filter.skip_ignored |= roots.is_some() && !scope.index_uses_git_ignored();
     let kind = args["kind"].as_str().unwrap_or("symbol");
     let name = args["namePath"].as_str().filter(|name| !name.is_empty());
     let matcher = name

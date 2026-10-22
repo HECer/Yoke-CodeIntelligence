@@ -431,7 +431,8 @@ impl Backend<'_> {
         }
     }
     fn list_changes(&self) -> bool {
-        self.session().is_some_and(|s| s.steering_enabled())
+        self.session()
+            .is_some_and(|s| s.steering_enabled() || s.has_git_ignore_selection())
     }
     fn tool_allowed(&self, name: &str) -> bool {
         match self {
@@ -462,8 +463,8 @@ impl Backend<'_> {
         if let Self::Trail(_, prefix) = self {
             return crate::trail_adapter::tools(prefix);
         }
-        if matches!(self, Self::Serena(..)) {
-            return crate::compatibility::serena_tools();
+        if let Self::Serena(session, _) = self {
+            return crate::compatibility::serena_tools_for_session(session);
         }
         let mut definitions = tools();
         if matches!(self, Self::Session(..)) {

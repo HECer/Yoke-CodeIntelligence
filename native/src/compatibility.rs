@@ -9,6 +9,17 @@ fn contracts() -> Value {
 pub fn serena_tools() -> Value {
     Value::Array(contracts()["tools"].as_array().expect("Built-in tools").iter().map(|row| json!({"name":row["name"],"description":row["description"],"inputSchema":row["inputSchema"]})).collect())
 }
+pub(crate) fn serena_tools_for_session(session: &Session) -> Value {
+    let mut tools = serena_tools();
+    if let Some(default) = session.git_ignore_search_default() {
+        for tool in tools.as_array_mut().expect("Owned public tools") {
+            if tool["name"] == "search_for_pattern" {
+                tool["inputSchema"]["properties"]["skip_ignored_files"]["default"] = json!(default);
+            }
+        }
+    }
+    tools
+}
 pub(crate) fn repl_control_tool(name: &str) -> bool {
     matches!(
         name,
@@ -89,6 +100,24 @@ pub(crate) fn arguments(args: &Value, schema: &Value) -> Result<Value> {
     }
     Ok(normalized)
 }
+fn session_arguments(
+    session: &Session,
+    args: &Value,
+    schema: &Value,
+    method: &str,
+) -> Result<Value> {
+    let mut normalized = arguments(args, schema)?;
+    if method == "fs.search_for_pattern"
+        && session.has_git_ignore_selection()
+        && args.get("skip_ignored_files").is_none()
+    {
+        normalized
+            .as_object_mut()
+            .expect("Validated public arguments")
+            .remove("skip_ignored_files");
+    }
+    Ok(normalized)
+}
 fn owned_session(session: &mut Session, args: &Value, deadline: &Deadline) -> Result<()> {
     let configuration = session.invoke("configuration", &json!({}), deadline)?;
     ensure!(
@@ -113,7 +142,12 @@ pub fn invoke_serena(
         .iter()
         .find(|row| row["name"] == name)
         .context("Unknown public Serena tool")?;
-    let args = arguments(args, &row["inputSchema"])?;
+    let args = session_arguments(
+        session,
+        args,
+        &row["inputSchema"],
+        row["facadeMethod"].as_str().unwrap_or(""),
+    )?;
     match name {
         "activate_project" => {
             owned_session(session, &args, deadline)?;
@@ -176,7 +210,7 @@ pub fn invoke_serena(
                 ),
                 "External public query is not an immutable source read"
             );
-            let nested = arguments(&nested, &target["inputSchema"])?;
+            let nested = session_arguments(session, &nested, &target["inputSchema"], method)?;
             crate::agent_repl::invoke_facade(session, method, nested, Some(project), deadline)
         }
         "serena_repl" => {
@@ -218,7 +252,12 @@ pub fn invoke_serena_with_repl(
         .iter()
         .find(|row| row["name"] == name)
         .context("Unknown public Serena tool")?;
-    let args = arguments(args, &row["inputSchema"])?;
+    let args = session_arguments(
+        session,
+        args,
+        &row["inputSchema"],
+        row["facadeMethod"].as_str().unwrap_or(""),
+    )?;
     if name == "serena_repl" {
         owned_session(session, &args, deadline)?;
         let response = runtime.execute(

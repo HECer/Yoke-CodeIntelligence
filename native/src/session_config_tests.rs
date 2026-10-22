@@ -17,6 +17,113 @@ fn apply(base: &HostProfile, target: Target, bytes: &[u8]) -> Result<Projection>
 }
 
 #[test]
+fn git_ignore_policy_yaml_resolves_boolean_layers_and_null_without_authority() {
+    let base = HostProfile::default();
+    let original = serde_json::to_vec(&base).unwrap();
+    let global = apply(
+        &base,
+        Target::Global,
+        b"ignore_all_files_in_gitignore: false\r\n",
+    )
+    .unwrap();
+    assert_eq!(
+        global
+            .profile()
+            .git_ignore
+            .as_ref()
+            .unwrap()
+            .select("default"),
+        Some(false)
+    );
+    let project = apply(
+        global.profile(),
+        Target::Project {
+            project: "default".into(),
+        },
+        b"ignore_all_files_in_gitignore: true\n",
+    )
+    .unwrap();
+    let local = apply(
+        project.profile(),
+        Target::ProjectLocal {
+            project: "default".into(),
+        },
+        b"ignore_all_files_in_gitignore: false\n",
+    )
+    .unwrap();
+    assert_eq!(
+        local
+            .profile()
+            .git_ignore
+            .as_ref()
+            .unwrap()
+            .select("default"),
+        Some(false)
+    );
+    let inherited = apply(
+        local.profile(),
+        Target::ProjectLocal {
+            project: "default".into(),
+        },
+        b"ignore_all_files_in_gitignore: null\n",
+    )
+    .unwrap();
+    assert_eq!(
+        inherited
+            .profile()
+            .git_ignore
+            .as_ref()
+            .unwrap()
+            .select("default"),
+        Some(true)
+    );
+    let cleared = apply(
+        global.profile(),
+        Target::Global,
+        b"ignore_all_files_in_gitignore: null\n",
+    )
+    .unwrap();
+    assert!(cleared.profile().git_ignore.is_none());
+    assert_eq!(serde_json::to_vec(cleared.profile()).unwrap(), original);
+    assert_eq!(serde_json::to_vec(&base).unwrap(), original);
+    let plan = local.plan();
+    for key in [
+        "runtimeTrustFromYaml",
+        "projectRegistrationsFromYaml",
+        "activationCommandsExecuted",
+        "sourceExecuted",
+        "sourceBytesRewritten",
+    ] {
+        assert_eq!(plan[key], false);
+    }
+}
+#[test]
+fn git_ignore_policy_yaml_rejects_non_booleans_roles_and_unregistered_projects() {
+    let base = HostProfile::default();
+    for bytes in [
+        b"ignore_all_files_in_gitignore: 'false'\n".as_slice(),
+        b"ignore_all_files_in_gitignore: 0\n",
+        b"ignore_all_files_in_gitignore: []\n",
+        b"ignore_all_files_in_gitignore: {}\n",
+        b"ignore_all_files_in_gitignore: false\nignore_all_files_in_gitignore: true\n",
+    ] {
+        assert!(apply(&base, Target::Global, bytes).is_err());
+    }
+    for target in [
+        Target::Context {
+            name: "owned".into(),
+        },
+        Target::Mode {
+            name: "owned".into(),
+        },
+        Target::Project {
+            project: "missing".into(),
+        },
+    ] {
+        assert!(apply(&base, target, b"ignore_all_files_in_gitignore: false\n").is_err());
+    }
+}
+#[test]
 fn ordered_language_servers_project_without_creating_runtime_registrations_or_trust() {
     let base = HostProfile::default();
     let bytes = serde_json::to_vec(&base).unwrap();

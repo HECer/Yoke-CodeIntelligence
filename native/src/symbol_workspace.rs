@@ -132,7 +132,7 @@ pub(crate) fn validate_snapshot(
         for file in &snapshot.files {
             deadline.check()?;
             if contains(std::slice::from_ref(root), &file.path)
-                && !scope.ignored_at_capture(&file.path)?
+                && (scope.index_uses_git_ignored() || !scope.ignored_at_capture(&file.path)?)
             {
                 captured = true;
                 break;
@@ -153,7 +153,9 @@ pub(crate) fn qualify(
     let mut sources = 0usize;
     for file in &snapshot.files {
         deadline.check()?;
-        if contains(roots, &file.path) && !scope.ignored_at_capture(&file.path)? {
+        if contains(roots, &file.path)
+            && (scope.index_uses_git_ignored() || !scope.ignored_at_capture(&file.path)?)
+        {
             sources += 1;
         }
     }

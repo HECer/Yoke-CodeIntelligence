@@ -86,6 +86,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 pub struct HostProfile {
     #[serde(default, skip_serializing_if = "crate::server_selection::unselected")]
     pub language_servers: Option<crate::server_selection::HostSelection>,
+    #[serde(default, skip_serializing_if = "crate::git_ignore_policy::unselected")]
+    pub git_ignore: Option<crate::git_ignore_policy::HostPolicy>,
     #[serde(default, skip_serializing_if = "crate::symbol_workspace::unselected")]
     pub symbol_workspace_folders: Option<crate::symbol_workspace::HostFolders>,
     #[serde(default, skip_serializing_if = "crate::symbol_info_budget::unselected")]
@@ -124,6 +126,7 @@ impl Default for HostProfile {
     fn default() -> Self {
         Self {
             language_servers: None,
+            git_ignore: None,
             symbol_workspace_folders: None,
             symbol_info_budgets: None,
             source_exclusions: None,
@@ -811,6 +814,29 @@ impl Session {
         );
         Ok(())
     }
+    pub(crate) fn has_git_ignore_selection(&self) -> bool {
+        self.host.git_ignore.is_some()
+            || self
+                .host_capture_options
+                .as_ref()
+                .is_some_and(|options| options.include_git_ignored)
+            || self.engine.capture_options.include_git_ignored
+    }
+    pub(crate) fn git_ignore_search_default(&self) -> Option<bool> {
+        self.has_git_ignore_selection().then(|| {
+            self.host
+                .git_ignore
+                .as_ref()
+                .and_then(|policy| policy.select(&self.state.active_project))
+                .unwrap_or(
+                    !self
+                        .host_capture_options
+                        .as_ref()
+                        .unwrap_or(&self.engine.capture_options)
+                        .include_git_ignored,
+                )
+        })
+    }
     pub fn global_notes_available(&self) -> bool {
         self.host.global_notes_root.is_some()
     }
@@ -829,6 +855,15 @@ impl Session {
             selection.canonicalize();
             if selection.empty() {
                 host.language_servers = None;
+            }
+        }
+        if let Some(policy) = &host.git_ignore {
+            policy.validate(&host)?;
+        }
+        if let Some(policy) = &mut host.git_ignore {
+            policy.canonicalize();
+            if policy.empty() {
+                host.git_ignore = None;
             }
         }
         if engine.capture_options.source_exclusions.is_some() {
@@ -861,10 +896,8 @@ impl Session {
                 host.source_exclusions = None;
             }
         }
-        let host_capture_options = host
-            .source_exclusions
-            .as_ref()
-            .map(|_| engine.capture_options.clone());
+        let host_capture_options = (host.source_exclusions.is_some() || host.git_ignore.is_some())
+            .then(|| engine.capture_options.clone());
         if let Some(endings) = &host.source_line_endings {
             endings.validate(&host)?;
         }
@@ -1161,6 +1194,15 @@ impl Session {
                 exclusions.select("default", engine.capture_options.source_exclusions.as_ref())?;
             engine.capture_options = engine.capture_options.validated()?;
         }
+        let fingerprint = if let Some(policy) = &host.git_ignore {
+            if let Some(respect) = policy.select("default") {
+                engine.capture_options.include_git_ignored = !respect;
+            }
+            engine.capture_options = engine.capture_options.validated()?;
+            identity(&(fingerprint, "host_git_ignore_policy_v1", policy))
+        } else {
+            fingerprint
+        };
         engine.sync_source_exclusions(deadline)?;
         let fingerprint = if let Some(budgets) = &host.symbol_info_budgets {
             identity(&(fingerprint, "host_symbol_info_budgets_v1", budgets))
@@ -1396,7 +1438,8 @@ impl Session {
         }
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
-        if self.host.language_servers.is_some()
+        if self.host.git_ignore.is_some()
+            || self.host.language_servers.is_some()
             || self.host.symbol_workspace_folders.is_some()
             || self.host.symbol_info_budgets.is_some()
             || self.host.primary_read_only
@@ -1668,6 +1711,15 @@ impl Session {
                     exclusions.select(name, engine.capture_options.source_exclusions.as_ref())?;
                 engine.capture_options = engine.capture_options.validated()?;
             }
+            if let Some(respect) = self
+                .host
+                .git_ignore
+                .as_ref()
+                .and_then(|policy| policy.select(name))
+            {
+                engine.capture_options.include_git_ignored = !respect;
+                engine.capture_options = engine.capture_options.validated()?;
+            }
             engine.sync_source_exclusions(deadline)?;
             engine.capture_epoch = self.capture_epoch;
             engine.symbol_workspace_folders = self
@@ -1797,6 +1849,18 @@ impl Session {
                 }
                 if self.host.primary_read_only {
                     value["primaryReadOnly"] = json!(true);
+                }
+                if let Some(policy) = &self.host.git_ignore {
+                    value["gitIgnore"] = serde_json::to_value(policy)?;
+                    value["gitIgnoreResolved"] = json!(
+                        policy.select(&self.state.active_project).unwrap_or(
+                            !self
+                                .host_capture_options
+                                .as_ref()
+                                .unwrap_or(&self.engine.capture_options)
+                                .include_git_ignored
+                        )
+                    );
                 }
                 if let Some(selection) = &self.host.language_servers {
                     value["languageServers"] = serde_json::to_value(selection)?;

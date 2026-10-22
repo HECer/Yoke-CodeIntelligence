@@ -145,7 +145,7 @@ pub(super) fn validate(
             && record.workspace_id == snapshot.workspace_id
             && record.snapshot_hash == identity(snapshot)
             && record.options == record.options.validated()?
-            && !record.options.include_ignored_dirs.is_empty()
+            && record.options.ignored_capture()
             && record.options_hash == identity(&record.options)
             && record.proof_hash == proof_hash(record)
             && snapshot.id == snapshot_id(record, snapshot)
@@ -168,7 +168,7 @@ pub(super) fn validate(
                 && row.content_hash == file.hash
                 && crate::model::valid_id(&row.content_hash)
                 && previous.is_none_or(|prior: &str| prior < row.path.as_str())
-                && (!row.ignored_at_capture || record.options.ignored_prefix(&row.path)),
+                && (!row.ignored_at_capture || record.options.ignored_member_allowed(&row.path)),
             "Ignored member binding/order mismatch"
         );
         crate::paths::normalized_syntax(&row.path)?;
@@ -204,7 +204,7 @@ pub(super) fn retention(store: &Store, id: &str, value: &serde_json::Value) -> R
             && crate::analysis::AnalyzerEpoch::parse(&record.analyzer).is_ok()
             && record.policy == POLICY
             && record.options == record.options.validated()?
-            && !record.options.include_ignored_dirs.is_empty()
+            && record.options.ignored_capture()
             && record.options_hash == identity(&record.options)
             && record.proof_hash == proof_hash(&record)
             && crate::model::valid_id(&record.snapshot_hash),
@@ -218,7 +218,7 @@ pub(super) fn retention(store: &Store, id: &str, value: &serde_json::Value) -> R
             crate::model::valid_id(&row.content_hash)
                 && record.options.includes(&row.path)
                 && previous.is_none_or(|prior: &str| prior < row.path.as_str())
-                && (!row.ignored_at_capture || record.options.ignored_prefix(&row.path)),
+                && (!row.ignored_at_capture || record.options.ignored_member_allowed(&row.path)),
             "Ignored retention member mismatch"
         );
         previous = Some(row.path.as_str());
@@ -308,11 +308,20 @@ pub(super) fn transition(
     origin: &Snapshot,
     next: &Snapshot,
     options: &CaptureOptions,
+    ignored_members: Option<&BTreeSet<String>>,
     check: &impl Fn() -> Result<()>,
 ) -> Result<()> {
-    if options.include_ignored_dirs.is_empty() {
+    if !options.ignored_capture() {
         return Ok(());
     }
+    if options.include_git_ignored {
+        ensure!(ignored_members.is_some(), "Ignored capture members missing");
+    }
+    let immutable = |path: &str| {
+        options.ignored_prefix(path)
+            || (options.include_git_ignored
+                && ignored_members.is_some_and(|members| members.contains(path)))
+    };
     let next_files: std::collections::BTreeMap<_, _> = next
         .files
         .iter()
@@ -325,7 +334,7 @@ pub(super) fn transition(
         .collect();
     for file in &origin.files {
         check()?;
-        if options.ignored_prefix(&file.path) {
+        if immutable(&file.path) {
             ensure!(
                 next_files.get(file.path.as_str()).copied() == Some(file),
                 "Read-only ignored source changed or disappeared"
@@ -334,7 +343,7 @@ pub(super) fn transition(
     }
     for file in &next.files {
         check()?;
-        if options.ignored_prefix(&file.path) {
+        if immutable(&file.path) {
             ensure!(
                 old.get(file.path.as_str()).copied() == Some(file),
                 "Read-only ignored source was created or changed"

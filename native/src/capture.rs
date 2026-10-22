@@ -244,6 +244,8 @@ fn catalog_language(extension: &str) -> Option<&'static str> {
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct CaptureOptions {
+    #[serde(default, skip_serializing_if = "crate::git_ignore_policy::disabled")]
+    pub include_git_ignored: bool,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub source_exclusions: Option<crate::source_exclusions::Policy>,
     #[serde(default)]
@@ -280,6 +282,10 @@ impl CaptureOptions {
         let only_dirs = normalize_dirs(&self.only_dirs)?;
         let include_dirs = normalize_dirs(&self.include_dirs)?;
         let include_ignored_dirs = normalize_dirs(&self.include_ignored_dirs)?;
+        ensure!(
+            !self.include_git_ignored || include_ignored_dirs.is_empty(),
+            "git_ignore_policy_cannot_combine_read_only_ignored_directory_override"
+        );
         for directory in &include_ignored_dirs {
             normalized(directory)?;
             ensure!(
@@ -364,6 +370,7 @@ impl CaptureOptions {
             .flatten();
         crate::source_exclusions::Compiled::new(source_exclusions.as_ref(), &|| Ok(()))?;
         Ok(Self {
+            include_git_ignored: self.include_git_ignored,
             source_exclusions,
             only_dirs,
             include_dirs,
@@ -371,6 +378,12 @@ impl CaptureOptions {
             read_only_dependency_dirs,
             include_ignored_dirs,
         })
+    }
+    fn ignored_capture(&self) -> bool {
+        self.include_git_ignored || !self.include_ignored_dirs.is_empty()
+    }
+    fn ignored_member_allowed(&self, path: &str) -> bool {
+        self.include_git_ignored || self.ignored_prefix(path)
     }
     fn ignored_prefix(&self, path: &str) -> bool {
         self.include_ignored_dirs.iter().any(|directory| {
@@ -667,7 +680,7 @@ fn resolve_capture_scope_at(
         let record: CaptureOptionsRecord = store.get_record(OPTIONS_RECORD_KIND, &snapshot.id)?;
         let options = record.options.validated()?;
         ensure!(
-            options.include_ignored_dirs.is_empty(),
+            !options.ignored_capture(),
             "Ignored capture requires its explicit typed proof"
         );
         ensure!(
@@ -736,7 +749,9 @@ fn resolve_capture_scope_at(
         );
         let scope = resolve_capture_scope_at(store, &origin, depth + 1, current_analyzer)?;
         let (options, historical) = (scope.options, scope.historical);
-        ignored::transition(&origin, snapshot, &options, &|| store.check_deadline())?;
+        ignored::transition(&origin, snapshot, &options, scope.ignored.as_ref(), &|| {
+            store.check_deadline()
+        })?;
         ignored_members = scope.ignored;
         ensure!(
             record.options_hash == identity(&options),
@@ -775,7 +790,9 @@ fn resolve_capture_scope_at(
         );
         let scope = resolve_capture_scope_at(store, &base, depth + 1, current_analyzer)?;
         let options = scope.options;
-        ignored::transition(&base, snapshot, &options, &|| store.check_deadline())?;
+        ignored::transition(&base, snapshot, &options, scope.ignored.as_ref(), &|| {
+            store.check_deadline()
+        })?;
         ignored_members = scope.ignored;
         ensure!(
             record_exists(store, OPTIONS_RECORD_KIND, &base.id)?
@@ -1248,13 +1265,21 @@ impl CapturedSourceScope<'_> {
             .as_ref()
             .is_some_and(|paths| paths.contains(path)))
     }
+    pub(crate) fn index_uses_git_ignored(&self) -> bool {
+        self.options.include_git_ignored
+    }
     /// Host-only write restriction for existing or prospective paths; no read grant.
     /// Virtual snapshot provenance is handled separately by guarded edit callers.
     pub fn check_host_write_scope(&self, path: &str) -> Result<()> {
         self.store.check_deadline()?;
         normalized(path)?;
         ensure!(
-            self.includes(path)? && !read_path_kind(path, &self.options)?,
+            self.includes(path)?
+                && !read_path_kind(path, &self.options)?
+                && !self
+                    .ignored
+                    .as_ref()
+                    .is_some_and(|members| members.contains(path)),
             "Captured host scope is read-only or excludes this write path"
         );
         #[cfg(windows)]
@@ -1263,7 +1288,12 @@ impl CapturedSourceScope<'_> {
             // path. This is a write restriction, never a captured read grant.
             let relative = canonical_write_path(self.store, path)?;
             ensure!(
-                self.includes(&relative)? && !read_path_kind(&relative, &self.options)?,
+                self.includes(&relative)?
+                    && !read_path_kind(&relative, &self.options)?
+                    && !self
+                        .ignored
+                        .as_ref()
+                        .is_some_and(|members| members.contains(&relative)),
                 "Canonical host scope is read-only or excludes this write path"
             );
         }
@@ -1361,7 +1391,12 @@ impl CapturedSourceScope<'_> {
             "Source path outside captured host scope"
         );
         Ok(CapturedSourcePolicy {
-            read_only: dependency || self.virtual_read_only,
+            read_only: dependency
+                || self.virtual_read_only
+                || self
+                    .ignored
+                    .as_ref()
+                    .is_some_and(|members| members.contains(path)),
         })
     }
 }
@@ -1544,8 +1579,11 @@ pub fn inherit_options(store: &Store, origin: &Snapshot, derived: &Snapshot) -> 
         "Capture scope inheritance requires persisted exact manifests"
     );
     // Reserve one chain level before publishing the create-only proof.
-    let (options, historical) = capture_scope_at(store, origin, 1, crate::model::ANALYZER)?;
-    ignored::transition(origin, derived, &options, &|| store.check_deadline())?;
+    let scope = resolve_capture_scope_at(store, origin, 1, crate::model::ANALYZER)?;
+    let (options, historical) = (scope.options, scope.historical);
+    ignored::transition(origin, derived, &options, scope.ignored.as_ref(), &|| {
+        store.check_deadline()
+    })?;
     validate_manifest_options_at(store, derived, &options, historical)?;
     let record = DerivedCaptureOptionsRecord {
         snapshot_id: derived.id.clone(),
@@ -1610,6 +1648,34 @@ fn scan(
         })
         .build();
     let mut walks = vec![(false, walker)];
+    if options.include_git_ignored {
+        let included_names = options.include_dirs.clone();
+        let dependencies = options.read_only_dependency_dirs.clone();
+        let additional = WalkBuilder::new(root)
+            .hidden(false)
+            .follow_links(false)
+            .git_ignore(false)
+            .git_global(false)
+            .git_exclude(false)
+            .require_git(false)
+            .filter_entry(move |entry| {
+                !entry
+                    .path()
+                    .file_name()
+                    .and_then(|n| n.to_str())
+                    .is_some_and(|n| {
+                        matches!(
+                            n,
+                            ".git" | ".yoke" | ".code-intelligence" | ".venv" | "__pycache__"
+                        ) || matches!(n.to_ascii_lowercase().as_str(), "node_modules" | "target")
+                            && !dependencies.iter().any(|name| name.eq_ignore_ascii_case(n))
+                            || matches!(n, "build" | "dist" | "vendor")
+                                && !included_names.iter().any(|name| name == n)
+                    })
+            })
+            .build();
+        walks.push((true, additional));
+    }
     for directory in &options.include_ignored_dirs {
         deadline.check()?;
         let selected = crate::paths::scoped(root, directory)?;
@@ -1803,7 +1869,7 @@ fn capture_inner(
         let (files, omissions, ignored_paths) = scan(epoch, root, store, deadline, options)?;
         let second = scan(epoch, root, store, deadline, options)?;
         if files == second.0 && omissions == second.1 && ignored_paths == second.2 {
-            if !options.include_ignored_dirs.is_empty() {
+            if options.ignored_capture() {
                 return ignored::capture(
                     epoch,
                     store,
@@ -2207,7 +2273,7 @@ fn archived_native_options_at(
     if let Some(record) = record {
         let options = record.options.validated()?;
         ensure!(
-            options.include_ignored_dirs.is_empty(),
+            !options.ignored_capture(),
             "Archived ignored capture requires its typed proof"
         );
         ensure!(
@@ -2568,6 +2634,7 @@ fn archived_capture_options_at(
         identity(&archive.nodes[0].snapshot) == identity(snapshot),
         "Archived source/proof manifest mismatch"
     );
+    let mut ignored_members = None;
     let mut options = None;
     let mut historical = false;
     let mut visited = BTreeSet::new();
@@ -2593,7 +2660,9 @@ fn archived_capture_options_at(
                 let inherited = options
                     .as_ref()
                     .ok_or_else(|| anyhow::anyhow!("Archived Git origin scope missing"))?;
-                ignored::transition(origin, source, inherited, &|| deadline.check())?;
+                ignored::transition(origin, source, inherited, ignored_members.as_ref(), &|| {
+                    deadline.check()
+                })?;
                 crate::git_workflows::validate_archived_source(
                     source, record, origin, inherited, deadline,
                 )?;
@@ -2603,7 +2672,9 @@ fn archived_capture_options_at(
                     index + 1 == archive.nodes.len(),
                     "Archived ignored native proof is not terminal"
                 );
-                ignored::validate(record, source, reader, &|| deadline.check())?;
+                ignored_members = Some(ignored::validate(record, source, reader, &|| {
+                    deadline.check()
+                })?);
                 options = Some(record.options.clone());
                 historical = record.analyzer != reader;
             }
@@ -2625,7 +2696,9 @@ fn archived_capture_options_at(
                 let inherited = options
                     .as_ref()
                     .ok_or_else(|| anyhow::anyhow!("Archived derived options missing"))?;
-                ignored::transition(origin, source, inherited, &|| deadline.check())?;
+                ignored::transition(origin, source, inherited, ignored_members.as_ref(), &|| {
+                    deadline.check()
+                })?;
                 ensure!(
                     record.snapshot_id == source.id
                         && record.workspace_id == source.workspace_id
@@ -2648,6 +2721,7 @@ fn archived_capture_options_at(
                     options
                         .as_ref()
                         .ok_or_else(|| anyhow::anyhow!("Archived overlay options missing"))?,
+                    ignored_members.as_ref(),
                     &|| deadline.check(),
                 )?;
                 ensure!(
@@ -2856,3 +2930,7 @@ mod archive_scope_tests {
         );
     }
 }
+
+#[cfg(test)]
+#[path = "git_ignore_policy_tests.rs"]
+mod git_ignore_policy_tests;

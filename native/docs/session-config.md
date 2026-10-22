@@ -54,6 +54,45 @@ Original YAML bytes are never rewritten.
 
 ## Fields and boundaries
 
+HostProfile.gitIgnore selects whether Git-ignore rules filter project analysis:
+
+    {"global":false,"projects":{"second":{"project":true,"local":null}}}
+
+Local overrides project, then global. Null inherits; absent/null/empty policy
+objects preserve old serialization, captures, bindings and answers. Explicit true
+uses existing filtering. Explicit false adds authorized Git-ignored source to real
+capture and symbol search, including selected symbol workspace folders. Ordinary
+.ignore rules, hard exclusions, protected/secret/link rejection, host source
+exclusions and all capture/deadline budgets remain enforced. Original bytes and
+UTF-8 offsets remain authoritative. No source or ignore file is rewritten.
+
+Global/project/project_local YAML ignore_all_files_in_gitignore accepts a strict
+boolean or null. The explicit pinned YAML projection supplies this analysis
+selection only; it grants no project registration, write or runtime authority.
+Named projects resolve independently from the original host capture scope.
+Nonempty policy binds session identity and selected calls check current state.
+
+Ignored-at-capture facts remain bound to immutable typed source proofs. Included
+Git-ignored files stay read-only. Original ignored members cannot change in
+native derived/overlay/archive chains, even after other source changes. Current
+bounded local ignore rules also reject prospective ignored workspace writes,
+including plans prepared under older settings, before a journal is published.
+Ordinary authorized edits, isolated verification and guarded recovery remain
+separate. Pattern-search defaults follow the actual project analysis selection;
+explicit request skipIgnored filters still use original ignore facts. Public
+tool normalization preserves omission for this setting, including external
+project queries and persistent-runtime adapters. Empty public search glob
+defaults mean no glob restriction. Selected tool discovery exposes
+the actual project default; project changes use existing catalog notifications.
+
+The Rust host capture option includeGitIgnored is false/omitted by default and
+records this analysis choice in capture identity. It cannot be combined with the
+separate native read-only includeIgnoredDirs exception; that combination refuses
+explicitly, so a read-only inclusion cannot silently confer index membership.
+A worktree/external .git file or unsafe/oversized current ignore-policy file
+refuses workspace writes under this selection rather than weakening policy.
+This setting does not certify any runtime or bypass verification and approval.
+
 HostProfile.languageServers selects ordered, already registered catalog backends:
 
     {"global":["angular","typescript"],"projects":{"second":{"local":["rust"]}}}
@@ -300,7 +339,7 @@ cannot grant writes, runtime trust, network access, project registration or
 permission to bypass protected paths, ignored-source read-only rules, stale
 preconditions, approval, executed verification or recovery journals.
 
-Other project keys, including the Git-ignore toggle, workspace-folder overrides,
+Other project keys, including workspace-folder overrides,
 runtime settings and activation commands, remain separate explicit boundaries.
 
 ## Optional symbol-information budgets

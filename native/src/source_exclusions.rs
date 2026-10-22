@@ -221,6 +221,12 @@ pub(crate) fn check_current_write_scope(
     path: &str,
     d: &Deadline,
 ) -> Result<()> {
+    crate::git_ignore_policy::check_current_write(store, path)?;
+    #[cfg(windows)]
+    if store.current_git_ignored_read_only {
+        let canonical = crate::capture::canonical_write_path(store, path)?;
+        crate::git_ignore_policy::check_current_write(store, &canonical)?;
+    }
     let Some(policy) = &store.current_source_exclusions else {
         return Ok(());
     };

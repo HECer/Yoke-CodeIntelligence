@@ -63,6 +63,7 @@ fn label(value: &str) -> Result<()> {
 }
 struct DecodedFields {
     language_servers: Option<Option<Vec<String>>>,
+    git_ignore: Option<Option<bool>>,
     fields: Map<String, Value>,
     base_modes: Option<Value>,
     read_only: Option<bool>,
@@ -80,6 +81,7 @@ fn rename_fields(
 ) -> Result<DecodedFields> {
     let mut mapped = Map::new();
     let mut language_servers = None;
+    let mut git_ignore = None;
     let mut base = None;
     let mut read_only = None;
     let mut declared = None;
@@ -88,78 +90,84 @@ fn rename_fields(
     let mut symbol_info_budget = None;
     let mut workspace_folders = None;
     for (key, value) in raw {
-        let name = match key.as_str() {
-            "language_servers" if global || project => {
-                let ids: Option<Vec<String>> = serde_json::from_value(value)
-                    .map_err(|_| anyhow::anyhow!("session_config_language_servers_invalid"))?;
-                if let Some(ids) = &ids {
-                    crate::server_selection::validate_ids(ids)?;
+        let name =
+            match key.as_str() {
+                "ignore_all_files_in_gitignore" if global || project => {
+                    git_ignore = Some(serde_json::from_value(value).map_err(|_| {
+                        anyhow::anyhow!("session_config_git_ignore_boolean_required")
+                    })?);
+                    continue;
                 }
-                language_servers = Some(ids);
-                continue;
-            }
-            "ls_workspace_folders" if global || project => {
-                let values: Option<Vec<String>> = serde_json::from_value(value)
-                    .map_err(|_| anyhow::anyhow!("session_config_workspace_folders_invalid"))?;
-                workspace_folders = Some(
-                    values
-                        .map(|v| crate::symbol_workspace::folders(&v))
-                        .transpose()?,
-                );
-                continue;
-            }
-            "symbol_info_budget" if global || project => {
-                symbol_info_budget = Some(crate::symbol_info_budget::milliseconds(&value)?);
-                continue;
-            }
-            "ignored_paths" if global || project => {
-                ignored_paths = serde_json::from_value(value)
-                    .map_err(|_| anyhow::anyhow!("session_config_ignored_paths_invalid"))?;
-                continue;
-            }
-            "line_ending" if global || project => {
-                line_ending = Some(
-                    serde_json::from_value(value)
-                        .map_err(|_| anyhow::anyhow!("session_config_line_ending_invalid"))?,
-                );
-                continue;
-            }
-            "excluded_tools" => "excludedTools",
-            "included_optional_tools" => "includedOptionalTools",
-            "fixed_tools" => "fixedTools",
-            "excluded_apis" => "excludedApis",
-            "included_apis" => "includedApis",
-            "read_only_memory_patterns" => "readOnlyMemoryPatterns",
-            "ignored_memory_patterns" => "ignoredMemoryPatterns",
-            "default_modes" if !definition => "defaultModes",
-            "added_modes" if !definition => "addedModes",
-            "agent_interface" if !definition => "agentInterface",
-            "initial_prompt" if project => "instructions",
-            "prompt" if definition => "instructions",
-            "base_modes" if global => {
-                base = Some(value);
-                continue;
-            }
-            "read_only" if project => {
-                read_only =
-                    Some(value.as_bool().ok_or_else(|| {
+                "language_servers" if global || project => {
+                    let ids: Option<Vec<String>> = serde_json::from_value(value)
+                        .map_err(|_| anyhow::anyhow!("session_config_language_servers_invalid"))?;
+                    if let Some(ids) = &ids {
+                        crate::server_selection::validate_ids(ids)?;
+                    }
+                    language_servers = Some(ids);
+                    continue;
+                }
+                "ls_workspace_folders" if global || project => {
+                    let values: Option<Vec<String>> = serde_json::from_value(value)
+                        .map_err(|_| anyhow::anyhow!("session_config_workspace_folders_invalid"))?;
+                    workspace_folders = Some(
+                        values
+                            .map(|v| crate::symbol_workspace::folders(&v))
+                            .transpose()?,
+                    );
+                    continue;
+                }
+                "symbol_info_budget" if global || project => {
+                    symbol_info_budget = Some(crate::symbol_info_budget::milliseconds(&value)?);
+                    continue;
+                }
+                "ignored_paths" if global || project => {
+                    ignored_paths = serde_json::from_value(value)
+                        .map_err(|_| anyhow::anyhow!("session_config_ignored_paths_invalid"))?;
+                    continue;
+                }
+                "line_ending" if global || project => {
+                    line_ending = Some(
+                        serde_json::from_value(value)
+                            .map_err(|_| anyhow::anyhow!("session_config_line_ending_invalid"))?,
+                    );
+                    continue;
+                }
+                "excluded_tools" => "excludedTools",
+                "included_optional_tools" => "includedOptionalTools",
+                "fixed_tools" => "fixedTools",
+                "excluded_apis" => "excludedApis",
+                "included_apis" => "includedApis",
+                "read_only_memory_patterns" => "readOnlyMemoryPatterns",
+                "ignored_memory_patterns" => "ignoredMemoryPatterns",
+                "default_modes" if !definition => "defaultModes",
+                "added_modes" if !definition => "addedModes",
+                "agent_interface" if !definition => "agentInterface",
+                "initial_prompt" if project => "instructions",
+                "prompt" if definition => "instructions",
+                "base_modes" if global => {
+                    base = Some(value);
+                    continue;
+                }
+                "read_only" if project => {
+                    read_only = Some(value.as_bool().ok_or_else(|| {
                         anyhow::anyhow!("session_config_read_only_boolean_required")
                     })?);
-                continue;
-            }
-            "project_name" if project => {
-                let name = value
-                    .as_str()
-                    .ok_or_else(|| anyhow::anyhow!("session_config_project_name_invalid"))?;
-                ensure!(
-                    !name.is_empty() && name.len() <= 100 && !name.contains('\0'),
-                    "session_config_project_name_invalid"
-                );
-                declared = Some(name.to_owned());
-                continue;
-            }
-            _ => anyhow::bail!("session_config_setting_unsupported"),
-        };
+                    continue;
+                }
+                "project_name" if project => {
+                    let name = value
+                        .as_str()
+                        .ok_or_else(|| anyhow::anyhow!("session_config_project_name_invalid"))?;
+                    ensure!(
+                        !name.is_empty() && name.len() <= 100 && !name.contains('\0'),
+                        "session_config_project_name_invalid"
+                    );
+                    declared = Some(name.to_owned());
+                    continue;
+                }
+                _ => anyhow::bail!("session_config_setting_unsupported"),
+            };
         if name == "instructions" {
             let text = value
                 .as_str()
@@ -173,6 +181,7 @@ fn rename_fields(
     }
     Ok(DecodedFields {
         language_servers,
+        git_ignore,
         fields: mapped,
         base_modes: base,
         read_only,
@@ -224,6 +233,7 @@ pub fn project(
         let definition = matches!(source.target, Target::Context { .. } | Target::Mode { .. });
         let DecodedFields {
             language_servers,
+            git_ignore,
             fields,
             base_modes,
             read_only,
@@ -261,6 +271,25 @@ pub fn project(
         }
         if let Target::Context { name } | Target::Mode { name } = source.target {
             label(name)?;
+        }
+        if let Some(respect) = git_ignore
+            && (respect.is_some() || profile.git_ignore.is_some())
+        {
+            let policy = profile.git_ignore.get_or_insert_default();
+            match source.target {
+                Target::Global => policy.global = respect,
+                Target::Project { project } => {
+                    policy.projects.entry(project.clone()).or_default().project = respect
+                }
+                Target::ProjectLocal { project } => {
+                    policy.projects.entry(project.clone()).or_default().local = respect
+                }
+                _ => unreachable!(),
+            }
+            policy.canonicalize();
+            if policy.empty() {
+                profile.git_ignore = None;
+            }
         }
         if let Some(ids) = language_servers
             && (ids.is_some() || profile.language_servers.is_some())
@@ -413,6 +442,9 @@ pub fn project(
         receipts.push(json!({"target":source.target,"originalBytes":source.bytes.len(),"originalSha256":source.expected_sha256,"declaredProjectName":declared,"declaredProjectNameIsRegistration":false}));
     }
     deadline.check()?;
+    if let Some(policy) = &profile.git_ignore {
+        policy.validate(&profile)?;
+    }
     if let Some(endings) = &profile.source_line_endings {
         endings.validate(&profile)?;
     }

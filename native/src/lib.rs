@@ -27,6 +27,7 @@ pub mod federation_archive;
 pub mod federation_http;
 pub mod file_api;
 pub mod freshness;
+pub mod git_ignore_policy;
 pub mod git_workflows;
 pub mod github;
 pub mod github_app;
@@ -142,6 +143,7 @@ pub struct Engine {
 }
 impl Engine {
     pub(crate) fn sync_source_exclusions(&mut self, deadline: &Deadline) -> Result<()> {
+        self.store.current_git_ignored_read_only = self.capture_options.include_git_ignored;
         let policy = self
             .capture_options
             .source_exclusions

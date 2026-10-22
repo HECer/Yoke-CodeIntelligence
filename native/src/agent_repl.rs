@@ -1367,7 +1367,23 @@ fn dispatch_unbounded(
                 ("context_lines_before", "beforeContextLines"),
                 ("context_lines_after", "afterContextLines"),
             ] {
+                if matches!(from, "paths_include_glob" | "paths_exclude_glob")
+                    && args
+                        .get(from)
+                        .and_then(Value::as_str)
+                        .is_some_and(str::is_empty)
+                {
+                    continue;
+                }
                 move_field(args, &mut target, from, to);
+            }
+            if args.get("skip_ignored_files").is_none() && session.has_git_ignore_selection() {
+                target["skipIgnored"] = json!(
+                    !session
+                        .query_engine_at(project, deadline)?
+                        .capture_options
+                        .include_git_ignored
+                );
             }
             if args["restrict_search_to_code_files"] == true {
                 let engine = session.query_engine_at(project, deadline)?;
