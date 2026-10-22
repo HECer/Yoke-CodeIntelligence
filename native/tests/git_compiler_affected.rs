@@ -110,6 +110,241 @@ fn changed_method_row(r: &Value, c: &Value, method: &str) -> usize {
 }
 
 #[test]
+fn generic_field_override_retains_parameter_property_consumers_without_instances() {
+    let source = "\u{feff}// owned \u{1f4a1} e\u{301}\r\nexport class Base{constructor(public value:string){}}\r\nexport class Generic<T> extends Base{other!:T;override value='FIELD_OLD';}\r\nfunction reader(x:Base){return x.value;}\r\n";
+    let f = configured(source, &source.replace("FIELD_OLD", "FIELD_HEAD"));
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let field = node_id(c, "value", "FIELD_HEAD");
+    let parameter = node_id(c, "value", "public value:string");
+    let parameter_node = c["nodes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| n["id"] == parameter)
+        .unwrap();
+    assert_eq!(parameter_node["parameterProperty"], true);
+    let constructor = c["nodes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| n["id"] == parameter_node["parameterOwner"])
+        .unwrap();
+    assert_eq!(constructor["kind"], "Constructor");
+    assert_eq!(constructor["hasBody"], true);
+    let owner = node_id(c, "Generic", "FIELD_HEAD");
+    let reader = node_id(c, "reader", "x.value");
+    assert!(
+        c["instances"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|i| i["owner"] != owner)
+    );
+    assert!(edges(c, "possiblePropertyAccess", &reader, &field).is_empty());
+    assert_eq!(edges(c, "accessesProperty", &reader, &parameter).len(), 1);
+    let row = r["originalChangedSymbols"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .position(|row| row["side"] == "head" && row["kind"] == "class" && row["name"] == "Generic")
+        .unwrap();
+    assert!(
+        r["states"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|s| s["changedRow"] == row
+                && s["contextId"] == c["contextId"]
+                && s["nodeId"] == reader
+                && s["distance"] == 1),
+        "Changed field must retain its constructor parameter-property consumer"
+    );
+    assert_eq!(state(&f.engine), before);
+}
+
+#[test]
+fn anonymous_parameter_property_owners_preserve_partial_compiler_observations() {
+    let source = concat!(
+        "export function makeBase(){return class {constructor(public value:string){}};}\r\n",
+        "export class Base extends makeBase(){}\r\n",
+        "export class Generic<T> extends Base {other!:T;override value='FIELD_OLD';}\r\n",
+        "function reader(x:Base){return x.value;}\r\n"
+    );
+    let f = configured(source, &source.replace("FIELD_OLD", "FIELD_HEAD"));
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    assert_eq!(r["complete"], false);
+    assert!(
+        c["unavailable"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|u| { u["reason"] == "parameter_property_contract_owner_not_captured" })
+    );
+    let field = node_id(c, "value", "FIELD_HEAD");
+    assert!(
+        !c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|e| { e["source"] == field && e["relation"] == "overridesProperty" })
+    );
+    let reader = node_id(c, "reader", "x.value");
+    assert!(
+        c["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|e| { e["source"] == reader && e["relation"] == "accessesProperty" })
+    );
+    assert_eq!(state(&f.engine), before);
+}
+
+#[test]
+fn constructor_parameter_properties_keep_base_and_parallel_interface_contracts() {
+    let source = "\u{feff}// owned \u{1f4a1} e\u{301}\r\ninterface Slot{value:string;}interface Left extends Slot{}interface Right extends Slot{}\r\nexport class Base{constructor(public value:string){}}\r\nexport class Generic<T> extends Base implements Left,Right{other!:T;constructor(public override value:string='PARAM_OLD'){super(value);}}\r\nclass Plain{constructor(ordinary:string){void ordinary;}}\r\nfunction baseReader(x:Base){return x.value;}function interfaceReader(x:Slot){return x.value;}\r\n";
+    let f = configured(source, &source.replace("PARAM_OLD", "PARAM_HEAD"));
+    let before = state(&f.engine);
+    let r = run(&f, &Default::default()).unwrap();
+    let c = context(&r);
+    let parameter = node_id(c, "value", "PARAM_HEAD");
+    let base = node_id(c, "value", "public value:string");
+    let slot = node_id(c, "value", "value:string;");
+    let owner = node_id(c, "Generic", "PARAM_HEAD");
+    assert!(
+        c["instances"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|i| i["owner"] != owner)
+    );
+    assert_eq!(edges(c, "overridesProperty", &parameter, &base).len(), 1);
+    let parallel = edges(c, "implementsProperty", &parameter, &slot);
+    assert_eq!(parallel.len(), 2);
+    let mut clauses = parallel
+        .iter()
+        .map(|e| e["proof"]["text"].as_str().unwrap())
+        .collect::<Vec<_>>();
+    clauses.sort_unstable();
+    assert_eq!(clauses, ["Left", "Right"]);
+    let parameter_node = c["nodes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| n["id"] == parameter)
+        .unwrap();
+    assert_eq!(parameter_node["parameterProperty"], true);
+    assert!(
+        c["nodes"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|n| n["id"] == parameter_node["parameterOwner"]
+                && n["kind"] == "Constructor"
+                && n["hasBody"] == true)
+    );
+    assert_eq!(edges(c, "declaresProperty", &owner, &parameter).len(), 1);
+    assert!(
+        c["nodes"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|n| n["name"] != "ordinary" || n["parameterProperty"] != true)
+    );
+    let row = r["originalChangedSymbols"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .position(|row| row["side"] == "head" && row["kind"] == "class" && row["name"] == "Generic")
+        .unwrap();
+    for name in ["baseReader", "interfaceReader"] {
+        let caller = node_id(c, name, "x.value");
+        assert!(
+            r["states"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|s| s["changedRow"] == row
+                    && s["contextId"] == c["contextId"]
+                    && s["nodeId"] == caller
+                    && s["distance"] == 1)
+        );
+    }
+    assert_eq!(state(&f.engine), before);
+}
+
+#[test]
+fn forged_parameter_property_flags_constructor_owners_and_receipts_are_refused() {
+    let source = "export class Base{constructor(public value:string){}}export class Generic<T> extends Base{other!:T;override value='OLD';}function reader(x:Base){return x.value;}\n";
+    let f = configured(source, &source.replace("'OLD'", "'HEAD'"));
+    let before = state(&f.engine);
+    let clean = run(&f, &Default::default()).unwrap();
+    assert!(
+        context(&clean)["nodes"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|n| n["parameterProperty"] == true)
+    );
+    let host = tempfile::tempdir().unwrap();
+    let mut selected = spec();
+    let actual_path = selected.typescript.to_string_lossy();
+    let actual = actual_path.strip_prefix(r"\\?\").unwrap_or(&actual_path);
+    let module = host.path().join("owned-parameter-property-compiler.cjs");
+    let prefix = format!(
+        "const ts=require({});Object.defineProperty(Object.prototype,'toJSON',{{configurable:true,value:function(){{const report=this;if(report.schema===1&&report.operation==='hierarchy'){{for(const c of report.contexts||[]){{const h=c.hierarchy;if(!h)continue;const p=h.nodes.findIndex(n=>n.kind==='Parameter'&&n.parameterProperty===true);if(p<0)throw Error('Missing owned parameter property');const n=h.nodes[p];",
+        serde_json::to_string(actual).unwrap()
+    );
+    let suffix = "}}return report;}});module.exports=ts;";
+    for (mutation, expected) in [
+        (
+            "n.parameterProperty=false;",
+            "Invalid compiler constructor parameter-property metadata",
+        ),
+        (
+            "delete n.parameterOwner;",
+            "Invalid compiler constructor parameter-property metadata",
+        ),
+        (
+            "n.parameterOwner=h.nodes.findIndex(n=>n.name==='reader');",
+            "Invalid compiler constructor parameter-property metadata",
+        ),
+        (
+            "h.nodes[n.parameterOwner].hasBody=false;",
+            "Invalid compiler constructor parameter-property metadata",
+        ),
+        (
+            "h.relations=h.relations.filter(e=>e.relation!=='declaresProperty'||e.target!==p);",
+            "Invalid compiler property contract binding",
+        ),
+        (
+            "h.relations=h.relations.filter(e=>e.relation!=='declaresMember'||e.target!==n.parameterOwner);",
+            "Invalid compiler property ownership",
+        ),
+    ] {
+        fs::write(&module, format!("{prefix}{mutation}{suffix}")).unwrap();
+        selected.typescript = module.clone();
+        let error = compiler_affected::derive(
+            &f.engine.store,
+            f.report["artifactId"].as_str().unwrap(),
+            &selected,
+            &Default::default(),
+            &Deadline::new(60000),
+        )
+        .unwrap_err()
+        .to_string();
+        assert!(
+            error.contains(expected),
+            "Expected {expected}, received {error}"
+        );
+        assert_eq!(state(&f.engine), before);
+    }
+}
+
+#[test]
 fn generic_getter_override_retains_base_reader_without_invented_instances() {
     let source = concat!(
         "\u{feff}// owned \u{1f4a1} e\u{301}\r\n",

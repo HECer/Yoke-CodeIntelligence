@@ -5,11 +5,13 @@ function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,root,
  const nodes=[],relations=[],unavailable=[],unavailableSeen=new Set(),byDecl=new Map(),types=[],calls=[],witnessNodes=new Set(),instances=[],instancesByOwner=new Map(),typesBySymbol=new Map();let ast=0,pairVisits=0,witnessBytes=0;
  const captured=node=>node&&source.has(slash(node.getSourceFile().fileName));
  const isMethod=node=>ts.isMethodDeclaration(node)||ts.isMethodSignature(node);
- const contractSlot=node=>ts.isPropertyDeclaration(node)||ts.isPropertySignature(node)||ts.isGetAccessorDeclaration(node)||ts.isSetAccessorDeclaration(node);
+ const parameterProperty=node=>ts.isParameter(node)&&ts.isParameterPropertyDeclaration(node,node.parent);
+ const contractSlot=node=>ts.isPropertyDeclaration(node)||ts.isPropertySignature(node)||ts.isGetAccessorDeclaration(node)||ts.isSetAccessorDeclaration(node)||parameterProperty(node);
  const oppositeAccessor=(a,b)=>(ts.isGetAccessorDeclaration(a)&&ts.isSetAccessorDeclaration(b))||(ts.isSetAccessorDeclaration(a)&&ts.isGetAccessorDeclaration(b));
  const staticMember=node=>!!(ts.getCombinedModifierFlags(node)&ts.ModifierFlags.Static);
  const privateMember=node=>ts.isPrivateIdentifier(node.name)||!!(ts.getCombinedModifierFlags(node)&ts.ModifierFlags.Private);
  function tick(){assert(++pairVisits<=limits.maxPairVisits,'Hierarchy pair capacity');}
+ function* ownMembers(type){for(const member of type.members){yield member;if(ts.isConstructorDeclaration(member))for(const parameter of member.parameters){tick();if(parameterProperty(parameter))yield parameter;}}}
  function addNode(node){
   if(!captured(node))return null;
   if(byDecl.has(node))return byDecl.get(node);
@@ -17,7 +19,9 @@ function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,root,
   const sf=node.getSourceFile(),name=node.name||(ts.isConstructorDeclaration(node)?node.getChildren(node.getSourceFile()).find(token=>token.kind===ts.SyntaxKind.ConstructorKeyword):undefined);
   const declaration=span(sf,ts.isSourceFile(node)?0:node.getStart(sf),node.getEnd());
   const selection=name?span(sf,name.getStart(sf),name.getEnd()):span(sf,declaration.startByte===0?0:node.getStart(sf),declaration.startByte===0?0:node.getStart(sf));
-  const id=nodes.length;nodes.push({kind:ts.SyntaxKind[node.kind],name:name?name.getText(sf):ts.isSourceFile(node)?rel(sf.fileName):'(anonymous)',declaration,selection,static:staticMember(node),hasBody:!!node.body});byDecl.set(node,id);return id;
+  const isParameter=ts.isParameter(node),isProperty=parameterProperty(node),parameterOwner=isProperty?addNode(node.parent):undefined;
+  assert(nodes.length<limits.maxNodes,'Hierarchy node capacity');
+  const id=nodes.length;nodes.push({kind:ts.SyntaxKind[node.kind],name:name?name.getText(sf):ts.isSourceFile(node)?rel(sf.fileName):'(anonymous)',declaration,selection,static:staticMember(node),hasBody:!!node.body,...(isParameter?{parameterProperty:isProperty}:{}),...(isProperty?{parameterOwner}:{})});byDecl.set(node,id);return id;
  }
  function unknown(reason,node){const anchor=span(node.getSourceFile(),node.getStart(),node.getEnd()),key=JSON.stringify([reason,anchor.path,anchor.startByte,anchor.endByte]);if(unavailableSeen.has(key))return;assert(unavailable.length<limits.maxRelations,'Hierarchy coverage capacity');unavailableSeen.add(key);unavailable.push({reason,anchor});}
  function edge(relation,from,to,proof,extra={}){
@@ -63,6 +67,7 @@ function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,root,
   }
  }
  for(const item of types)if(item.generic&&ts.isClassDeclaration(item.node))unknown('unobserved_generic_instantiations_not_enumerated',item.node);
+ const capturedTypeNodes=new Set(types.map(item=>item.node));
  for(const item of types){
   for(const member of item.node.members){
    if(isMethod(member))edge('declaresMember',item.id,addNode(member),member.name);
@@ -77,7 +82,7 @@ function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,root,
    const implementing=clause.token===ts.SyntaxKind.ImplementsKeyword;
    for(const base of declarations)edge(implementing?'implements':'extends',item.id,addNode(base),heritage);
    const capturedHeritage=declarations.some(captured);
-   for(const member of item.node.members){
+   for(const member of ownMembers(item.node)){
     if(!isMethod(member)&&!contractSlot(member))continue;
     if(privateMember(member)){unknown('private_member_not_override_enumerated',member);continue;}
     const own=checker.getSymbolAtLocation(member.name);if(!own)continue;
@@ -87,6 +92,7 @@ function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,root,
      tick();if((!isMethod(target)&&!contractSlot(target))||staticMember(target)!==staticMember(member)||privateMember(target)||oppositeAccessor(member,target))continue;
      const propertyContract=!isMethod(member)||!isMethod(target),interfaceContract=implementing||ts.isInterfaceDeclaration(target.parent);
      if(propertyContract&&!capturedHeritage){unknown('property_contract_heritage_not_captured',heritage);continue;}
+     if(propertyContract&&parameterProperty(target)&&!capturedTypeNodes.has(target.parent.parent)){unknown('parameter_property_contract_owner_not_captured',target);continue;}
      edge(propertyContract?(interfaceContract?'implementsProperty':'overridesProperty'):(interfaceContract?'implementsMember':'overrides'),addNode(member),addNode(target),heritage,{owner:item.id});
     }
    }
@@ -172,6 +178,6 @@ function compilerHierarchy({input,ts,checker,program,span,source,slash,rel,root,
    }
   }
  }
- compilerProperties({ts,checker,program,source,slash,types,instancesByOwner,addNode,edge,unknown,tick,captured,staticMember,privateMember,fixedClassReference});
+ compilerProperties({ts,checker,program,source,slash,types,instancesByOwner,addNode,edge,unknown,tick,captured,staticMember,privateMember,fixedClassReference,ownMembers});
  return{schema:1,nodes,instances,relations,unavailable,pairVisits,astNodes:ast,complete:false,runtimeDispatchEstablished:false};
 }

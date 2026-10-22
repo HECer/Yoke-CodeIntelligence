@@ -1,5 +1,5 @@
 // Source-bound property slots and accessor effects, never runtime value inference.
-function compilerProperties({ts,checker,program,source,slash,types,instancesByOwner,addNode,edge,unknown,tick,captured,staticMember,privateMember,fixedClassReference}){
+function compilerProperties({ts,checker,program,source,slash,types,instancesByOwner,addNode,edge,unknown,tick,captured,staticMember,privateMember,fixedClassReference,ownMembers}){
  const property=node=>ts.isPropertyDeclaration(node)||ts.isPropertySignature(node)||ts.isGetAccessor(node)||ts.isSetAccessor(node)||ts.isMethodDeclaration(node)||ts.isMethodSignature(node)||(ts.isParameter(node)&&ts.isParameterPropertyDeclaration(node,node.parent));
  const unwrap=node=>{while(ts.isParenthesizedExpression(node)||ts.isNonNullExpression(node)||ts.isAsExpression(node)||ts.isTypeAssertionExpression(node)||ts.isSatisfiesExpression(node))node=node.expression;return node;};
  function byIdentity(type,name){for(const symbol of checker.getPropertiesOfType(type)){tick();if(symbol.escapedName===name)return symbol;}return undefined;}
@@ -32,7 +32,7 @@ function compilerProperties({ts,checker,program,source,slash,types,instancesByOw
   }
  }
  // Keep original hierarchy node/relation ordering intact; additional facts follow it.
- for(const item of types)for(const member of item.node.members){
+ for(const item of types)for(const member of ownMembers(item.node)){
   if(!property(member)||ts.isMethodDeclaration(member)||ts.isMethodSignature(member))continue;
   edge('declaresProperty',item.id,addNode(member),member.name);
   const callable=checker.getSignaturesOfType(checker.getTypeAtLocation(member.name),ts.SignatureKind.Call).length>0;

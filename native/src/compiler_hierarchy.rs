@@ -78,6 +78,10 @@ struct Node {
     #[serde(rename = "static")]
     is_static: bool,
     has_body: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    parameter_property: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    parameter_owner: Option<usize>,
 }
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -142,12 +146,9 @@ fn property(node: &Node) -> bool {
     method(node)
         || matches!(
             node.kind.as_str(),
-            "PropertyDeclaration"
-                | "PropertySignature"
-                | "GetAccessor"
-                | "SetAccessor"
-                | "Parameter"
+            "PropertyDeclaration" | "PropertySignature" | "GetAccessor" | "SetAccessor"
         )
+        || (node.kind == "Parameter" && node.parameter_property == Some(true))
 }
 fn contains(outer: &Span, inner: &Span) -> bool {
     outer.path == inner.path
@@ -231,12 +232,58 @@ pub(crate) fn observe(
                 && parsed.ast_nodes <= 500000,
             "Compiler hierarchy schema or capacity mismatch"
         );
-        let mut nodes = vec![];
+        let mut nodes: Vec<Value> = vec![];
         let mut positions = BTreeSet::new();
+        let constructor_members: BTreeSet<_> = parsed
+            .relations
+            .iter()
+            .filter(|edge| {
+                edge.relation == "declaresMember"
+                    && edge.source < parsed.nodes.len()
+                    && edge.target < parsed.nodes.len()
+                    && parsed.nodes[edge.source].kind == "ClassDeclaration"
+                    && parsed.nodes[edge.target].kind == "Constructor"
+            })
+            .map(|edge| (edge.source, edge.target))
+            .collect();
+        let declared_properties: BTreeSet<_> = parsed
+            .relations
+            .iter()
+            .filter(|edge| {
+                edge.relation == "declaresProperty"
+                    && edge.source < parsed.nodes.len()
+                    && edge.target < parsed.nodes.len()
+            })
+            .map(|edge| (edge.target, edge.source))
+            .collect();
+        let declared_property_slots: BTreeSet<_> =
+            declared_properties.iter().map(|(slot, _)| *slot).collect();
         for node in &parsed.nodes {
             deadline.check()?;
             node.declaration.check(&sources)?;
             node.selection.check(&sources)?;
+            ensure!(
+                if node.kind == "Parameter" {
+                    node.parameter_property.is_some()
+                        && if node.parameter_property == Some(true) {
+                            !node.is_static
+                                && node.parameter_owner.is_some_and(|owner| {
+                                    owner < nodes.len()
+                                        && parsed.nodes[owner].kind == "Constructor"
+                                        && parsed.nodes[owner].has_body
+                                        && contains(
+                                            &parsed.nodes[owner].declaration,
+                                            &node.declaration,
+                                        )
+                                })
+                        } else {
+                            node.parameter_owner.is_none()
+                        }
+                } else {
+                    node.parameter_property.is_none() && node.parameter_owner.is_none()
+                },
+                "Invalid compiler constructor parameter-property metadata"
+            );
             ensure!(
                 node.kind.len() <= 80
                     && node.name.len() <= 4096
@@ -271,7 +318,14 @@ pub(crate) fn observe(
                 .iter()
                 .find(|f| f.path == node.declaration.path)
                 .context("Compiler declaration file missing")?;
-            nodes.push(json!({"id":node_id,"kind":node.kind,"name":node.name,"declaration":node.declaration,"selection":node.selection,"static":node.is_static,"hasBody":node.has_body,"contentHash":file.hash,"baseEntityIds":bindings}));
+            let mut value = json!({"id":node_id,"kind":node.kind,"name":node.name,"declaration":node.declaration,"selection":node.selection,"static":node.is_static,"hasBody":node.has_body,"contentHash":file.hash,"baseEntityIds":bindings});
+            if let Some(property) = node.parameter_property {
+                value["parameterProperty"] = json!(property);
+            }
+            if let Some(owner) = node.parameter_owner {
+                value["parameterOwner"] = nodes[owner]["id"].clone();
+            }
+            nodes.push(value);
         }
         let mut instances = vec![];
         let mut witness_bytes = 0usize;
@@ -536,6 +590,10 @@ pub(crate) fn observe(
                         "ClassDeclaration" | "InterfaceDeclaration"
                     ) && property(to)
                         && !method(to)
+                        && (to.kind != "Parameter"
+                            || to.parameter_owner.is_some_and(
+                                |owner| constructor_members.contains(&(edge.source, owner))
+                            ))
                         && contains(&from.declaration, &to.declaration)
                         && edge.proof == to.selection
                         && edge.owner.is_none()
@@ -629,8 +687,12 @@ pub(crate) fn observe(
                 "overridesProperty" | "implementsProperty" => ensure!(
                     property(from)
                         && property(to)
-                        && from.kind != "Parameter"
-                        && to.kind != "Parameter"
+                        && (from.kind != "Parameter"
+                            || edge.owner.is_some_and(
+                                |owner| declared_properties.contains(&(edge.source, owner))
+                            ))
+                        && (to.kind != "Parameter"
+                            || declared_property_slots.contains(&edge.target))
                         && !(method(from) && method(to))
                         && !matches!(
                             (from.kind.as_str(), to.kind.as_str()),
