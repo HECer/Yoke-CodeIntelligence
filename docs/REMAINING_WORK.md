@@ -1,5 +1,62 @@
 # Remaining implementation and acceptance
 
+Optional symbolInfoBudgets and selected YAML symbol_info_budget now resolve
+global/project/local soft limits for supplementary LSP hover information.
+Positive finite seconds round upward to native milliseconds; zero is unlimited.
+After elapsed budget, subsequent optional requests stop with explicit per-item
+omissions and retrieved/omitted counters. Mandatory source search, anchors,
+body semantics, JB calls and host timeout/cancellation retain their boundaries.
+In-flight requests are not interrupted by this soft setting. Provider errors
+and host cancellation never become successful partial replies. Absent/null/empty
+selection preserves original serialized identities, replies and source IDs.
+
+At source da23e006, 119 Rust functions pass across 16 scoped targets with
+0 existing ignores on 1044 frozen inputs, including 11 new functions.
+Actual delayed owned LSP requests exercise early stopping, zero/unlimited,
+independent projects, exact Unicode/CRLF source bindings, provider errors,
+stale sessions and cancellation after a real hover starts. A persistent Python
+worker checks qualified declaration bridges. R1 has 16 library passes and 5/7
+integration passes; two new tests violate existing JB argument/pattern contracts.
+R2 corrects those inputs and reaches 6/7; its final expected tuple still contains
+the old JB hover string. The remaining expectation is corrected; protections
+stay intact. A module-order format finding is corrected before the current
+freeze. R3 passes the complete focused suite on current bytes. All-target
+Clippy -Dwarnings, build/typecheck, npm260/3 skips and all339 format roots pass;
+the combined Cargo format command retains the Windows OS206 limit.
+
+Published CLI RED/SAME-fixture GREEN keeps absent/null/empty configuration,
+53-tool MCP and actual hover RAW replies exact, together with full expanded
+legacy SQL before new bindings and original stored values afterward. Actual MCP
+also qualifies bounded partial and zero/unlimited hover requests. Original
+mixed-plan/source-read/preparation behavior, source/Git/host/YAML/fixture bytes
+and equivalent JSON/YAML session bindings remain intact. The original hover
+command succeeds, but its first harness reads the outer native envelope as the
+payload and fails; separate readback qualifies that exact recorded success,
+without rerunning or relabeling the failed harness. See [the contract](../native/docs/session-config.md#optional-symbol-information-budgets)
+and [indexed evidence](validation/integration-2026-10-22/symbol-info-budget/README.md).
+Nine project keys and broader configuration/backend/client, authenticated Google,
+full R1-R9/353/current whole-native/Windows/main/release acceptance remain open.
+Original inventory assessments, OS1314 fixtures and system settings are unchanged.
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Explicit sourceExclusions and selected YAML ignored_paths now add bounded
 Gitignore-style negative rules per global/project/local host layer. Independent
 groups combine by exclusion; a later layer cannot reopen an earlier restriction.
@@ -36,25 +93,6 @@ and [indexed evidence](validation/integration-2026-10-22/source-exclusions/READM
 The ten remaining project keys, broader configuration/backend/client and full
 R1-R9/353/Windows/main/release acceptance remain open. Original inventory
 assessments, OS1314 fixtures and system settings are unchanged.
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 Explicit sourceLineEndings now resolves global/project/local LF, CRLF or native
 source-write settings. Selected YAML line_ending maps to the same host slots.

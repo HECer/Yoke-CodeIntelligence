@@ -58,6 +58,13 @@ from the restricted primary Engine, preserving independent secondary rights.
 Overlapping writable registrations refuse; query plan carriers use the existing
 editing gate. False/absent keeps old fingerprints and serialization exact.
 
+Host-selected symbol information budgets constrain only subsequent optional LSP
+hover requests. Concrete per-project millisecond selections bind session identity;
+zero preserves unlimited enrichment under the outer host deadline. Qualified
+partial metadata identifies omissions without changing mandatory source evidence.
+Provider failures and cancellation remain errors; missing selection retains legacy
+wire and binding bytes. Private declaration bridges retain their LSP/JB origins.
+
 Explicit additive source exclusions bind ordered Gitignore-style groups and
 concrete case semantics into capture options. Replayed scopes validate every
 member; current host exclusions additionally constrain prepare/workspace apply.

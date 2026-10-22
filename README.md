@@ -30,6 +30,9 @@ Explicit per-project LF/CRLF/native settings format prepared source after-bytes
 before review and verification; saved plans and original captures stay immutable.
 Additive per-project source exclusions also bind captures and current workspace
 write scope while retaining exact historical evidence and recovery.
+Optional per-project symbol information budgets stop subsequent LSP hover
+requests with explicit partial metadata while preserving source results and host
+timeouts.
 
 Explicit [Google Workspace capture](native/docs/google-workspace.md) selects
 hash-bound Docs/Sheets/Slides shortcuts with explicit host grants. A native HTTP

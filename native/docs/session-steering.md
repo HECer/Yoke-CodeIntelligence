@@ -441,3 +441,8 @@ Explicit sourceExclusions and selected YAML ignored_paths add independent negati
 source rules without weakening earlier host exclusions or runtime/write gates.
 Captured rules replay independently; current workspace writes also check current
 selection. See [source exclusions](session-config.md#source-exclusion-groups).
+
+Optional symbolInfoBudgets and YAML symbol_info_budget bind per-project soft
+limits for supplementary LSP hover requests. Zero is unlimited; explicit partial
+metadata, source/runtime gates and host deadlines retain their distinct roles.
+See [symbol information budgets](session-config.md#optional-symbol-information-budgets).

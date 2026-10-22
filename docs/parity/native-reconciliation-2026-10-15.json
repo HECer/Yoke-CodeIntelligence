@@ -10387,6 +10387,22 @@
         "cargoFormatAllOs206": true,
         "actualCargoFormatTargetRootsChecked": 338,
         "fullParityCertified": false
+      },
+      "nativeSymbolInfoBudgetCheckpoint": {
+        "sourceCommit": "da23e006b37d62401a8dcc5da89ae2dfa98d3a88",
+        "index": "docs/validation/integration-2026-10-22/symbol-info-budget/index.json",
+        "frozenInputs": 1044,
+        "distinctRustFunctionsPassed": 119,
+        "existingIgnored": 0,
+        "newFunctions": 11,
+        "actualDelayedLspPartialAndZeroUnlimitedValidated": true,
+        "realStartedHoverCancellationAndProviderErrorsPreserved": true,
+        "independentProjectAndQualifiedDeclarationOriginsValidated": true,
+        "legacyAbsentNullEmptyRawMcpHoverSqlAndRecordValuesExact": true,
+        "yamlFractionalSecondsAndUnderflowRefusalValidated": true,
+        "actualCargoFormatTargetRootsChecked": 339,
+        "cargoFormatAllOs206": true,
+        "fullParityCertified": false
       }
     },
     {
