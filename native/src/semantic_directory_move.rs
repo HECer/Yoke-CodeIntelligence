@@ -45,7 +45,12 @@ pub(super) fn prepare(
         .get(language)
         .cloned()
         .context("Directory move provider unavailable")?;
-    let configuration = engine.server_configurations.get(language).cloned();
+    let configuration = lsp::effective_host_configuration(
+        engine,
+        snapshot,
+        engine.server_configurations.get(language),
+        deadline,
+    )?;
     if let Some(configuration) = &configuration {
         ensure!(
             !configuration

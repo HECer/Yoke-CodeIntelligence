@@ -788,13 +788,7 @@ impl Engine {
         options: &Value,
         deadline: &Deadline,
     ) -> Result<Value> {
-        let mut configuration = self.server_configurations.get(&server.language).cloned();
-        if let Some(roots) = &self.symbol_workspace_folders {
-            let scope = capture::source_scope_policy(&self.store, snapshot)?;
-            symbol_workspace::validate_snapshot(roots, snapshot, &scope, deadline)?;
-            configuration.get_or_insert_default().workspace_folders = roots.clone();
-        }
-        if let Some(configuration) = configuration {
+        if let Some(configuration) = self.server_configurations.get(&server.language).cloned() {
             lsp::run_at_configured(
                 self,
                 &lsp::ConfiguredServer {

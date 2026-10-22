@@ -339,6 +339,9 @@ pub(crate) fn stage_move_intent_at(
         "Owned refactor intents require explicit host refactorIntentProfile own_v1"
     );
     ensure!(host.0.trust, "Language server trust is required");
+    let configuration = effective_host_configuration(engine, snapshot, Some(host.1), deadline)?
+        .context("Owned refactor intent host configuration missing")?;
+    let host = (host.0, &configuration);
     validate_passive_host(host.0, Some(host.1), deadline)?;
     intent.validate_binding(snapshot, graph, deadline)?;
     engine.store.set_deadline(deadline)?;

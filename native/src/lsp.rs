@@ -1913,6 +1913,8 @@ fn run_at_internal(
     deadline: &Deadline,
 ) -> Result<Value> {
     ensure!(host.0.trust, "Language server trust is required");
+    let configuration = effective_host_configuration(engine, snapshot, host.1, deadline)?;
+    let host = (host.0, configuration.as_ref());
     validate_passive_host(host.0, host.1, deadline)?;
     let profile = server_profile(host.0, host.1, deadline)?;
     let profile_hash = identity(&profile);
@@ -1929,6 +1931,24 @@ fn run_at_internal(
     );
     value["providerSourcePolicy"] = json!(provider_source_policy(host.0, host.1));
     Ok(value)
+}
+/// All transport paths, including staged refactors, bind the same effective roots
+/// before passive-policy checks, provider-profile hashing or process startup.
+pub(crate) fn effective_host_configuration(
+    engine: &Engine,
+    snapshot: &Snapshot,
+    configuration: Option<&HostConfiguration>,
+    deadline: &Deadline,
+) -> Result<Option<HostConfiguration>> {
+    let mut configuration = configuration.cloned();
+    if let Some(roots) = &engine.symbol_workspace_folders {
+        deadline.check()?;
+        engine.store.set_deadline(deadline)?;
+        let scope = crate::capture::source_scope_policy(&engine.store, snapshot)?;
+        crate::symbol_workspace::validate_snapshot(roots, snapshot, &scope, deadline)?;
+        configuration.get_or_insert_default().workspace_folders = roots.clone();
+    }
+    Ok(configuration)
 }
 fn validate_passive_host(
     server: &Server,
