@@ -24,6 +24,8 @@ Use `target/release/yoke.exe` on Windows. Rust 1.94.1 or newer is required to bu
 Explicit [YAML session configuration](native/docs/session-config.md) projects
 hash-selected host steering files into reviewable create-only JSON profiles.
 Project registrations, runtime trust and execution rights remain host-owned.
+Optional primary-project read-only policy blocks source changes while preserving
+independent secondary permissions and legacy bindings when absent/false.
 
 Explicit [Google Workspace capture](native/docs/google-workspace.md) selects
 hash-bound Docs/Sheets/Slides shortcuts with explicit host grants. A native HTTP

@@ -426,3 +426,8 @@ and original 353-row inventory acceptance remain separate work.
 files onto these existing layers and preserves equivalent JSON host bindings.
 Automatic discovery, Jinja, activation commands and broader project/server/client
 settings remain separate work.
+
+An explicit host primaryReadOnly (or selected primary YAML read_only) additionally
+restricts source edit/refactor preparation and workspace application without
+changing absent/false host bindings. It is not a mode and cannot be cleared by
+mode/project switches. See [primary read-only policy](session-config.md#primary-project-read-only-policy).

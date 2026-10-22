@@ -52,6 +52,12 @@ exact known methods. Ordered provenance and effective restrictions remain
 visible. Every registered inclusion policy requires current persisted state
 before catalogs, adapters and cells; host permissions remain independent.
 
+An optional primary-project read-only host flag has an independent fingerprint
+wrapper and source gate. The original global write grant is captured separately
+from the restricted primary Engine, preserving independent secondary rights.
+Overlapping writable registrations refuse; query plan carriers use the existing
+editing gate. False/absent keeps old fingerprints and serialization exact.
+
 Explicit YAML session configuration projects hash-selected byte inputs into
 existing native host profiles without a Store, search, template engine or runtime.
 A strict bounded parser maps only declared steering data and restrictive named-

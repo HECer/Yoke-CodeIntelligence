@@ -1,5 +1,50 @@
 # Remaining implementation and acceptance
 
+Host primaryReadOnly now binds an explicit primary-project source restriction.
+Absent/false preserves prior profile bytes, fingerprints and replies. True blocks
+native/MCP/REPL edit/refactor preparation and workspace application, including an
+already approved/verified plan. Independent secondary projects retain the global
+host write grant; writable overlapping aliases/ancestors/descendants refuse.
+Selected primary YAML read_only only tightens that restriction. Semantic query
+plan carriers share the editing gate before server execution. Read access and
+independent note/host-runtime permissions remain separate.
+
+At source 4367539f, 155 Rust functions pass across 23 scoped targets with two
+existing ignores, on 1035 unchanged hashes. The initial new target has seven
+passes and one positive test blocked by its missing executed verification. That
+fixture now runs an explicit owned byte-check command; all eight pass, including
+real secondary approved/verified application and primary denial. No product or
+verification gate is weakened. All 23 targets are reused only on identical
+current inputs; Clippy -Dwarnings, fmt/build/typecheck and npm260/3 skips pass.
+Actual published-CLI RED/SAME-fixture GREEN preserve legacy absent/false CLI/MCP
+RAW and whole SQL before new bindings; original record values remain exact after
+new sessions. True controls deny edits, keep reads/secondary grants, survive mode/
+project switches and resume the same true binding from YAML. Upgrade/downgrade
+binding changes refuse. See [the contract](../native/docs/session-config.md) and
+[indexed evidence](validation/integration-2026-10-22/session-primary-readonly/README.md).
+Original primary source/Git/host/YAML bytes stay exact. Inventory assessments,
+OS1314 fixtures and system settings are unchanged. Broader configuration/client/
+backend, R1-R9/353/Windows/main/release acceptance remains open.
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Explicit host-selected YAML files now project into a reviewable native session
 profile. Original byte hashes bind global/project/project-local/custom-context/
 mode inputs. Supported keys use existing layer semantics; named registered
@@ -24,25 +69,6 @@ See [the contract](../native/docs/session-config.md) and
 Automatic discovery, broader YAML/Jinja/project/client/backend and full R1-R9/
 353/Windows/main/release remain open. Original inventory assessments, OS1314
 fixtures and all system settings are unchanged.
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 Explicit native Google HTTP export now transports a selected shortcut resource
 key in its private Drive header. A host-only token/private stdin pipe and all

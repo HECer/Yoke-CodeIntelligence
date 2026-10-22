@@ -10336,6 +10336,21 @@
         "jinjaEvaluationImplemented": false,
         "allProjectKeysCertified": false,
         "fullParityCertified": false
+      },
+      "nativePrimaryReadOnlyCheckpoint": {
+        "sourceCommit": "4367539fa1913be17b9741669c9113fe009f0d41",
+        "index": "docs/validation/integration-2026-10-22/session-primary-readonly/index.json",
+        "frozenInputs": 1035,
+        "distinctRustFunctionsPassed": 155,
+        "existingIgnored": 2,
+        "newFunctions": 8,
+        "legacyAbsentFalseRawAndBindingExact": true,
+        "primaryHostAndYamlRestrictionValidated": true,
+        "secondaryApprovedVerifiedWorkspaceApplicationValidated": true,
+        "primaryApprovedVerifiedWorkspaceApplicationDenied": true,
+        "overlappingWritableRootsRefused": true,
+        "realCachedPythonCallbackDenied": true,
+        "fullParityCertified": false
       }
     },
     {

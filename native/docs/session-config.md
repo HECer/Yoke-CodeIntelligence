@@ -64,11 +64,10 @@ definition; other layers remain intact. Empty global/project mappings leave the
 profile unchanged. Existing exclusion/inclusion/fixed conflicts and native
 name/regex validation apply after all selected files are decoded.
 
-Project read_only only tightens an explicitly registered named HostProject:
-false cannot clear an existing true restriction. read_only for primary default
-currently refuses with session_config_primary_read_only_unavailable. This importer
-does not pretend to add primary source-write policy. project_name remains an
-unverified display declaration in the receipt; it never renames/registers a project.
+Project read_only only tightens an existing restriction: named targets constrain
+registered HostProject values, while default constrains primaryReadOnly. False
+cannot clear a true base or earlier restriction. project_name remains an
+unverified display declaration and never renames/registers a project.
 
 Prompts preserve decoded Unicode/YAML block and folded-scalar semantics; receipts
 bind original BOM/CRLF bytes. Jinja expression/statement/comment syntax refuses.
@@ -94,3 +93,31 @@ and Jinja remain separate work.
 Public field names were checked against the
 [pinned configuration guide](https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/docs/02-usage/050_configuration.md).
 No upstream application code or prompt text is copied.
+
+## Primary-project read-only policy
+
+HostProfile.primaryReadOnly is a startup boolean. Absent or false retains preceding
+serialized profiles, host fingerprints, session bindings and replies. True binds
+an additional versioned fingerprint and exposes primaryReadOnly:true in current
+configuration. Switching modes/projects or passing tool arguments cannot clear it;
+changing the host selection requires a different session binding.
+
+True denies source edit/refactor preparation through native session, MCP and REPL
+callbacks. Semantic query carriers that prepare plans require the same editing
+permission before invoking a server. The primary Engine source-application grant
+is also clamped, so an already approved and verified workspace plan cannot apply.
+Source reads, immutable observations and independent note policies remain available.
+This application policy does not sandbox a separately trusted arbitrary Python
+or shell process or alter filesystem permissions.
+
+The original global host write grant is retained separately for other registered
+projects. An independent writable secondary can still prepare, approve, execute
+verification and apply a change when all existing gates pass; named read_only and
+query_only restrictions remain intact. Writable registrations that overlap the
+primary root, including canonical aliases, ancestors and descendants, refuse
+before session creation. Read-only/query-only overlapping registrations are allowed.
+
+Selected project/project_local YAML read_only for project default now OR-tightens
+primaryReadOnly. False cannot clear a true base or earlier restriction. Named
+project behavior remains restrictive. YAML still cannot supply registrations,
+runtime trust, source-write rights or automatic execution.
