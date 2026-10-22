@@ -655,7 +655,11 @@ impl Backend<'_> {
                                 session.require_edit_permission()?;
                             }
                             let deadline = crate::capture::Deadline::new(120000);
-                            session.active_engine_at(&deadline)?.invoke(name, args)
+                            if session.dashboard_enabled() {
+                                session.dashboard_native_call(name, args, &deadline)
+                            } else {
+                                session.active_engine_at(&deadline)?.invoke(name, args)
+                            }
                         }
                     })();
                 Ok(result.unwrap_or_else(|error|json!({"status":"error","data":{},"error":{"message":error.to_string()}})))

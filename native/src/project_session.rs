@@ -84,6 +84,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub dashboard: Option<crate::session_dashboard::Config>,
     #[serde(default, skip_serializing_if = "crate::semantic_workspace::unselected")]
     pub additional_workspace_folders: Option<crate::semantic_workspace::HostFolders>,
     #[serde(default, skip_serializing_if = "crate::server_settings::unselected")]
@@ -131,6 +133,7 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            dashboard: None,
             language_servers: None,
             additional_workspace_folders: None,
             language_server_settings: None,
@@ -216,6 +219,8 @@ pub(crate) fn validate_retention_record(
     Ok(())
 }
 pub struct Session {
+    dashboard: Option<crate::session_dashboard::Handle>,
+    dashboard_lifetime: Option<std::sync::Arc<std::sync::atomic::AtomicBool>>,
     host_backend_servers: Option<BTreeMap<String, crate::lsp::ConfiguredServer>>,
     pub engine: Engine,
     host_allow_writes: bool,
@@ -857,6 +862,9 @@ impl Session {
         deadline: &Deadline,
     ) -> Result<Self> {
         engine.store.set_deadline(deadline)?;
+        if let Some(config) = &host.dashboard {
+            config.validate()?;
+        }
         if let Some(folders) = &host.additional_workspace_folders {
             folders.validate(&host)?;
         }
@@ -1179,6 +1187,11 @@ impl Session {
         } else {
             fingerprint
         };
+        let fingerprint = if let Some(config) = &host.dashboard {
+            identity(&(fingerprint, "host_session_dashboard_v1", config))
+        } else {
+            fingerprint
+        };
         // Preserve every original V8 host fingerprint, including its existing
         // debugger and collection wrappers. Explicit V9 sessions pin their
         // source policy before selecting or creating persistent state.
@@ -1404,6 +1417,8 @@ impl Session {
             ensure!(inserted == 1, "Concurrent session creation; retry");
         }
         Ok(Self {
+            dashboard: None,
+            dashboard_lifetime: None,
             host_backend_servers,
             engine,
             host_allow_writes,
@@ -1501,7 +1516,8 @@ impl Session {
         }
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
-        if self.host.git_ignore.is_some()
+        if self.host.dashboard.is_some()
+            || self.host.git_ignore.is_some()
             || self.host.additional_workspace_folders.is_some()
             || self.host.language_server_settings.is_some()
             || self.host.language_servers.is_some()
@@ -1906,6 +1922,125 @@ impl Session {
         self.project_engine(&project, deadline)
     }
     pub fn invoke(&mut self, operation: &str, args: &Value, deadline: &Deadline) -> Result<Value> {
+        let activity = self
+            .dashboard
+            .as_ref()
+            .filter(|_| operation != "openDashboard")
+            .and_then(|handle| handle.begin(operation));
+        let result = self.invoke_inner(operation, args, deadline);
+        self.finish_dashboard_activity(activity, &result);
+        result
+    }
+    fn finish_dashboard_activity(
+        &self,
+        activity: Option<crate::session_dashboard::Activity>,
+        result: &Result<Value>,
+    ) {
+        if let Some(handle) = &self.dashboard {
+            let failed = result.is_err()
+                || result
+                    .as_ref()
+                    .is_ok_and(|v| v["status"] == "error" || v["isError"] == true);
+            handle.finish(
+                activity,
+                failed,
+                self.persisted.clone(),
+                self.dashboard_view(),
+            );
+        }
+    }
+    pub(crate) fn dashboard_native_call(
+        &mut self,
+        name: &str,
+        args: Value,
+        deadline: &Deadline,
+    ) -> Result<Value> {
+        let activity = self
+            .dashboard
+            .as_ref()
+            .and_then(|handle| handle.begin(name));
+        let result = self
+            .check_tool_state(deadline)
+            .and_then(|_| self.active_engine_at(deadline)?.invoke(name, args));
+        self.finish_dashboard_activity(activity, &result);
+        result
+    }
+    fn dashboard_view(&self) -> Result<Value> {
+        let mut tools = crate::compatibility::serena_tools_for_session(self)
+            .as_array()
+            .context("Owned public tool catalog")?
+            .iter()
+            .filter_map(|v| v["name"].as_str())
+            .filter(|name| self.serena_tool_allowed(name))
+            .map(str::to_owned)
+            .collect::<Vec<_>>();
+        tools.sort();
+        let projects = std::iter::once(json!({"name":"default","queryOnly":false,"readOnly":!self.host_allow_writes || self.host.primary_read_only}))
+            .chain(self.host.projects.iter().filter(|p| !self.state.removed_projects.contains(&p.name))
+                .map(|p| json!({"name":p.name,"queryOnly":p.query_only,"readOnly":p.read_only || !self.host_allow_writes})))
+            .collect::<Vec<_>>();
+        let value = json!({"product":"Code Intelligence","version":env!("CARGO_PKG_VERSION"),
+            "session":self.state.label,"activeProject":self.state.active_project,"context":self.state.context,
+            "modes":self.state.modes,"revision":self.state.revision,"projects":projects,
+            "publicTools":tools,"toolCatalogScope":"selected_public_compatibility_tools","agentInterface":self.agent_interface(),
+            "registeredBackends":self.engine.backend_servers.keys().collect::<Vec<_>>(),
+            "registeredLanguages":self.engine.servers.keys().collect::<Vec<_>>(),
+            "selectedBackends":self.host.language_servers.as_ref().and_then(|p| p.select(&self.state.active_project)),
+            "symbolWorkspaceFolders":self.host.symbol_workspace_folders.as_ref().and_then(|p| p.select(&self.state.active_project)),
+            "additionalWorkspaceFolders":self.host.additional_workspace_folders.as_ref().and_then(|p| p.select(&self.state.active_project)),
+            "executionAuthority":"independent_host_grants","sourceWrittenByDashboard":false});
+        ensure!(
+            serde_json::to_vec(&value)?.len() <= 400000,
+            "dashboard_view_capacity"
+        );
+        Ok(value)
+    }
+    pub(crate) fn dashboard_enabled(&self) -> bool {
+        self.host.dashboard.is_some()
+    }
+    pub(crate) fn bind_dashboard_lifetime(
+        &mut self,
+        closed: std::sync::Arc<std::sync::atomic::AtomicBool>,
+    ) {
+        self.dashboard = None;
+        self.dashboard_lifetime = Some(closed);
+    }
+    fn open_dashboard(&mut self, deadline: &Deadline) -> Result<Value> {
+        let config = self
+            .host
+            .dashboard
+            .as_ref()
+            .context("Dashboard unavailable: host opt-in required")?
+            .clone();
+        if self.dashboard.as_ref().is_some_and(|h| !h.alive()) {
+            self.dashboard = None;
+        }
+        if self.dashboard.is_none() {
+            self.dashboard = Some(crate::session_dashboard::Handle::start(
+                &config,
+                crate::session_dashboard::Binding {
+                    root: self.engine.root.clone(),
+                    workspace: self.engine.store.workspace_id.clone(),
+                    key: self.state.id.clone(),
+                    expected_state: self.persisted.clone(),
+                    closed: self.dashboard_lifetime.clone(),
+                },
+                self.dashboard_view()?,
+                deadline,
+            )?);
+        }
+        Ok(self
+            .dashboard
+            .as_ref()
+            .context("Dashboard unavailable")?
+            .result())
+    }
+    fn invoke_inner(
+        &mut self,
+        operation: &str,
+        args: &Value,
+        deadline: &Deadline,
+    ) -> Result<Value> {
         deadline.check()?;
         self.check_tool_state(deadline)?;
         if operation.starts_with("collections.") {
@@ -1916,9 +2051,16 @@ impl Session {
             "Session input budget exceeded"
         );
         match operation {
+            "openDashboard" => {
+                fields(args, &[])?;
+                self.open_dashboard(deadline)
+            }
             "configuration" => {
                 fields(args, &[])?;
                 let mut value = json!({"sessionId":self.state.label,"sessionKey":self.state.id,"activeProject":self.state.active_project,"context":self.state.context,"modes":self.state.modes,"revision":self.state.revision,"registeredProjects":self.host.projects.iter().filter(|p|!self.state.removed_projects.contains(&p.name)).map(|p|&p.name).collect::<Vec<_>>(),"executionAuthority":"explicit_host_configuration_only"});
+                if let Some(config) = &self.host.dashboard {
+                    value["dashboard"] = json!({"enabled":true,"scope":"read_only_native_session_and_structured_activity","browserOpening":"client_managed","lifetimeMs":config.lifetime_ms});
+                }
                 if let Some(steering) = self.steering()? {
                     value["steering"] = serde_json::to_value(steering)?;
                 }

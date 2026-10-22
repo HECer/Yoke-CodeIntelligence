@@ -973,10 +973,12 @@ fn actor(receiver: mpsc::Receiver<Job>, shared: Arc<Shared>, config: Arc<Config>
                         let operation_deadline = Deadline::new(600_000);
                         if job.initialize {
                             ensure!(!sessions.contains_key(&job.id), "Duplicate MCP session");
+                            let mut native_session = principal.target.open(&operation_deadline)?;
+                            native_session.bind_dashboard_lifetime(Arc::clone(&job.meta.closed));
                             sessions.insert(
                                 job.id.clone(),
                                 LocalSession {
-                                    session: principal.target.open(&operation_deadline)?,
+                                    session: native_session,
                                     state: ConnectionState::default(),
                                     meta: Arc::clone(&job.meta),
                                     runtime: principal

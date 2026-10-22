@@ -1269,6 +1269,13 @@ fn dispatch_unbounded(
     }
     match method {
         "cfg.get_current_config" => call(session, "configuration", json!({}), None, deadline),
+        "cfg.open_dashboard" => {
+            ensure!(
+                project.is_none(),
+                "External project queries have no dashboard authority"
+            );
+            call(session, "openDashboard", json!({}), None, deadline)
+        }
         "jb.debug_eval_info" => {
             ensure!(
                 project.is_none(),

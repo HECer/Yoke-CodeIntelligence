@@ -11,6 +11,15 @@ pub fn serena_tools() -> Value {
 }
 pub(crate) fn serena_tools_for_session(session: &Session) -> Value {
     let mut tools = serena_tools();
+    if session.dashboard_enabled() {
+        for tool in tools.as_array_mut().expect("Owned public tools") {
+            if tool["name"] == "open_dashboard" {
+                tool["description"] = json!(
+                    "Returns a private URL for the explicitly host-enabled read-only native session dashboard. The client opens the browser. Configuration editing, raw logs and MCP shutdown are unavailable."
+                );
+            }
+        }
+    }
     if let Some(default) = session.git_ignore_search_default() {
         for tool in tools.as_array_mut().expect("Owned public tools") {
             if tool["name"] == "search_for_pattern" {
