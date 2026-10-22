@@ -2,6 +2,64 @@
 
 ## Current integration work
 
+Actual compiler property/accessor and callable-slot source contracts now use
+separate overridesProperty/implementsProperty relations. Changed unobserved
+generic getters or callable fields can retain consumers bound to base/interface
+slots without inventing a generic instance or runtime dispatch. Getter/setter
+contracts stay separate, while structural property references and their actual
+access modes remain intact. Physical roles, static sides, private slots, exact
+source/owner/heritage anchors and shared proof/depth/budget limits are checked.
+
+The causal getter test fails 0/1 on byte-identical published326a production
+implementations after actual compiler/source-containment/no-instance admission.
+The correction passes, together with parallel interface-clause and adversarial
+role/owner/heritage/static/dispatch cases. Source contracts cost zero incoming
+steps and retain their original relation IDs/proofs and separate basis; they are
+not new invocation or observed-execution facts. Uncaptured/type-literal heritage and constructor-parameter property
+contracts, broader receiver/heritage-only/implicit effects and exhaustive semantic
+or runtime completeness remain open.
+
+At source 0ac3a2dc, 780 Rust functions pass across 17 scoped groups,
+including the full library569 and30 compiler-affected functions. 9 existing
+ignores and zero failures occur in this scope. All-target Clippy -Dwarnings,
+native build, typecheck, npm260 passed/3 existing skips and346 actual format roots
+pass on1065 frozen inputs. Cargo fmt --all retains Windows OS206. R2 focused
+results are reused only on the identical frozen manifest. All ten original
+symlink fixture Git/prior working bytes remain exact; their Windows acceptance
+is still open. No new skip, system/privilege or protected-linker change occurs.
+
+The actual native Git-workflow/compiler-affected CLI uses trusted TypeScript5.8.3
+over owned captured Unicode/CRLF sources, records the new getter and parallel
+callable-property bindings and confirms depth-zero behavior. Its source-execution
+canary remains absent; original source/Git and whole fixture SQL stay exact.
+Actual old/new default configuration/MCP53 and literal LSP data JSON remain exact;
+only requestId/duration are excluded after an independent old-binary repeat.
+Original fixture SQL is exact before a new optional dashboard binding and
+reconstructs exactly after removing only its new session rows in read-only
+memory. Existing dashboard host-exit cleanup remains checked. All owned Jobs
+are empty. This is scoped evidence, not current whole Windows/all77/full parity.
+See [compiler property-contract evidence](validation/integration-2026-10-22/compiler-property-contracts/README.md)
+and [compiler-affected contract](../native/docs/git-compiler-affected.md).
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, remaining dashboard management and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and broader database version/mixed-source qualification. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 An explicit host dashboard setting now enables a private read-only native
 session view through open_dashboard, cfg.open_dashboard() or openDashboard.
 It shows session/project/modes, selected public tools, language/workspace
@@ -70,25 +128,6 @@ upstream equivalence remain open. The controlled Google export implementations
 are also separate from authenticated Google live acceptance, which still lacks
 an approved test document. Original inventory assessments remain unchanged.
 See [database status reconciliation](validation/integration-2026-10-22/status-db-reconciliation/README.md).
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, remaining dashboard management and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and broader database version/mixed-source qualification. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 Windows workspace-folder identities now fold ASCII case only while preserving
 opaque Unicode bytes. U+0130 and ASCII i plus U+0307 are real distinct owned
