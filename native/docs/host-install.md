@@ -58,3 +58,9 @@ Cursor, Claude Code external configuration and Claude Desktop schemas using the
 same guarded machinery. Actual isolated Claude2.1.306 file health is finite
 client evidence; other runtime/hook/non-Windows qualification remains open. The
 generic profile alone makes no branded-client claim.
+
+The separate [source-hook profile](claude-source-hooks.md) now manages explicit
+Claude source prompt/post-edit/session callbacks and optional selected PowerShell
+status output. It retains the preceding session-only profile and all guarded
+ownership/recovery gates. Its captured View queries and finite client evidence
+do not qualify default capture, real-model quality or interactive status rendering.

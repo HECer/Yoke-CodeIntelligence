@@ -12699,5 +12699,28 @@
     "index": "docs/validation/integration-2026-10-22/current-status-audit/index.json",
     "fullContractCertification": false,
     "backendRuntimeIdsNotQualified": 77
+  },
+  "claudeSourceHooksScopedAcceptance20261023": {
+    "sourceCommit": "8966d8cad00b4ddcd9549d86b86a3564815107a0",
+    "evidence": "docs/validation/integration-2026-10-23/source-hooks/README.md",
+    "index": "docs/validation/integration-2026-10-23/source-hooks/index.json",
+    "profile": "claude-source-hooks-v1",
+    "preservedProfile": "claude-session-hooks-v1",
+    "nativePassed": 648,
+    "nativeExistingIgnored": 7,
+    "newIntegrationFunctions": 9,
+    "typescriptPassed": 260,
+    "typescriptExistingSkipped": 3,
+    "frozenInputs": 1075,
+    "formatRoots": 348,
+    "actualClientVersion": "2.1.306",
+    "actualClientPromptPostEditDispatch": true,
+    "modelResponsesAreOwnedProtocolFixtures": true,
+    "realModelInference": false,
+    "interactiveClientStatusQualified": false,
+    "original353InventoryLedgerAndSummaryUnchanged": true,
+    "fullR6Qualified": false,
+    "wholeNativeRerun": false,
+    "fullContractCertification": false
   }
 }

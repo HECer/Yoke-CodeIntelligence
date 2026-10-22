@@ -2,6 +2,29 @@
 
 ## Current integration work
 
+Receipt-owned Claude source hooks now provide bounded prompt source context,
+incoming dependency candidates after edits and optional selected PowerShell
+status output over one existing immutable source-only View. The distinct
+claude-source-hooks-v1 profile preserves the preceding SessionStart profile.
+Callbacks recheck physical bindings, exact installed ownership and stale
+preconditions; source freshness remains explicitly unchecked. No automatic
+capture, model inference or analyzed-code execution follows.
+
+Source 8966d8ca passes 648 scoped Rust functions, including all 573 library and
+nine new integration functions, with seven existing ignores and no failures.
+All-target Clippy with warnings denied, build, typecheck, npm 260 passed/3 existing
+skips and all 348 format roots pass on 1,075 frozen inputs. Cargo fmt-all retains
+Windows OS206. Actual isolated Claude 2.1.306 dispatches session/prompt/post-edit
+hooks; a controlled protocol fixture independently performs only its granted
+owned-file edit. A corrected offline audit of that same trace verifies three
+received 30-byte source contexts and parallel historical observations without new
+client/model calls. Original SQL and other protected bytes remain unchanged.
+Native refusal/stalled-stdin checks and actual old/new SessionStart plan/output
+comparison pass. All owned Jobs are empty. Interactive client status rendering,
+real model quality, broader hook/team behavior and whole-Windows/full-parity
+acceptance remain open. See [source-hook evidence](validation/integration-2026-10-23/source-hooks/README.md)
+and the [host contract](../native/docs/claude-source-hooks.md).
+
 Explicit local CPU ASR now has a native host CLI/library contract over registered immutable mono16kHz PCM16 WAV audio. A selected local faster-whisper1.2.1/tiny.en trial transcribes owned synthetic speech; original model timestamps remain distinct from qualified captured-sample envelopes. Host trust, pinned program/model files, bounded owned execution, immutable request/control journals, checked stored replay and typed retention are implemented. Default runtime/MCP calls acquire no ASR packages, models or inference privileges.
 
 Source dd462925 passes 622 scoped native functions with one preserved original media OS1314 failure and 7 existing ignores. All 573 library functions and six new integration functions pass. Clippy, build, typecheck, npm and 347 formatting roots pass; fmt-all retains Windows OS206. Fourteen native CLI refusal cases and actual stored replay preserve original SQL; a corrected read-only audit reuses the completed model attempt. See [ASR evidence](validation/integration-2026-10-23/native-asr/README.md) and [host contract](../native/docs/media-asr.md). General speech quality, other formats/languages and whole-Windows/hosted/full-parity acceptance remain open.
@@ -85,7 +108,7 @@ retains the detailed boundaries and original inventory assessments.
 | --- | --- |
 | Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
 | Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, restricted-default project extensions, prompt/edit hooks and statuslines, dashboard management and broader UI/accessibility acceptance. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, restricted-default project extensions, broader client hook/status behavior, dashboard management and broader UI/accessibility acceptance. |
 | Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
 | External acquisition | Broader ASR quality/formats, authenticated Google export, remaining social/video/authenticated routes and broader database version/mixed-source qualification. No approved Google test document is available. |
 | App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
