@@ -431,3 +431,8 @@ An explicit host primaryReadOnly (or selected primary YAML read_only) additional
 restricts source edit/refactor preparation and workspace application without
 changing absent/false host bindings. It is not a mode and cannot be cleared by
 mode/project switches. See [primary read-only policy](session-config.md#primary-project-read-only-policy).
+
+Explicit sourceLineEndings and selected YAML line_ending independently bind
+global/project/local source formatting before immutable plan publication. Missing
+settings retain legacy replies; source formatting never grants edit/apply/runtime
+authority. See [source line endings](session-config.md#source-line-endings).

@@ -58,6 +58,15 @@ from the restricted primary Engine, preserving independent secondary rights.
 Overlapping writable registrations refuse; query plan carriers use the existing
 editing gate. False/absent keeps old fingerprints and serialization exact.
 
+Host-selected source line endings resolve separately for each registered project.
+The shared Store invocation context feeds every native plan producer; stored
+plans pin concrete LF/CRLF independently of current host policy. Formatting
+follows original byte edits and precedes derived snapshots/diffs/approval.
+Checked replay validates declared after-bytes. Apply never normalizes reviewed
+bytes; incompatible current workspace policy refuses, while recovery and saved
+source copies retain exact bytes. Provider diagnostics remain scoped before
+formatting. Missing settings preserve legacy plan and session identities.
+
 Explicit YAML session configuration projects hash-selected byte inputs into
 existing native host profiles without a Store, search, template engine or runtime.
 A strict bounded parser maps only declared steering data and restrictive named-

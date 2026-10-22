@@ -2,6 +2,59 @@
 
 ## Current integration work
 
+Explicit sourceLineEndings now resolves global/project/local LF, CRLF or native
+source-write settings. Selected YAML line_ending maps to the same host slots.
+Original UTF-8 edits precede formatting; only edited after-files are converted.
+Concrete plan metadata, versioned identity, exact hashes/diffs and checked replay
+bind the result. Existing plans are never reformatted during application;
+conflicting current workspace settings refuse before journal/source writes.
+Isolated historical copies and recovery retain exact planned/original bytes.
+Provider diagnostics retain their pre-formatting scope and formatted results
+require verification. Notes/configuration and all source/runtime gates remain
+independent. Absent/null retains original host serialization and bindings.
+
+At source 159e5f53, 285 Rust functions pass across 28 scoped targets with
+4 existing ignores on 1037 frozen inputs, including 14 new functions.
+The first attempt finds a missing default in the read-only Store constructor;
+the next has 8/10 new integration passes and two incorrect error-envelope
+expectations. Corrected expectations pass all ten; no protection is weakened.
+After the 600-second compiler-body attempt ends with 13/17 partial passes and
+proven cleanup, Clippy finds one collapsible YAML condition. Its equivalent
+let-chain is corrected. All 28 targets rerun on the current bytes; body uses the
+previously established 1200-second outer budget. No failed/partial target is reused.
+Static checks are reused only on identical current inputs. All-target
+Clippy -Dwarnings, build/typecheck and npm260/3 skips pass. The combined Cargo
+format command hits Windows OS206; all 337 actual Cargo format target roots
+pass rustfmt checks in bounded argument batches. Real LSP/TypeScript, verified
+apply/recovery, conflicting old approved plans, Unicode/paths/budgets and YAML
+layer/null controls are qualified. Actual published CLI RED/SAME-fixture GREEN
+keep absent/null CLI/MCP raw replies, full legacy SQL before new bindings and
+all original records afterward. Original source/Git/host/YAML and mixed old-plan
+bytes remain exact. See [the contract](../native/docs/session-config.md#source-line-endings)
+and [indexed evidence](validation/integration-2026-10-22/source-line-endings/README.md).
+Original inventory assessments, OS1314 fixtures and system settings are unchanged.
+Broader configuration/backend/client and full R1-R9/353/Windows/main/release
+acceptance remain open.
+
+### Remaining scope
+
+Open work is summarized here. Later sections preserve results for their stated
+source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
+retains the detailed boundaries and original inventory assessments.
+
+| Area | Work and acceptance still required |
+| --- | --- |
+| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
+| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
+| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
+| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
+| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
+| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
+| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+
+### Earlier source checkpoints
+
 Host primaryReadOnly now binds an explicit primary-project source restriction.
 Absent/false preserves prior profile bytes, fingerprints and replies. True blocks
 native/MCP/REPL edit/refactor preparation and workspace application, including an
@@ -27,25 +80,6 @@ binding changes refuse. See [the contract](../native/docs/session-config.md) and
 Original primary source/Git/host/YAML bytes stay exact. Inventory assessments,
 OS1314 fixtures and system settings are unchanged. Broader configuration/client/
 backend, R1-R9/353/Windows/main/release acceptance remains open.
-
-### Remaining scope
-
-Open work is summarized here. Later sections preserve results for their stated
-source commits; the [residual register](parity/native-reconciliation-2026-10-15.json)
-retains the detailed boundaries and original inventory assessments.
-
-| Area | Work and acceptance still required |
-| --- | --- |
-| Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
-| Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, dashboard and broader UI/accessibility acceptance. |
-| Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and database upsert. No approved Google test document is available. |
-| App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
-| Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
-
-### Earlier source checkpoints
 
 Explicit host-selected YAML files now project into a reviewable native session
 profile. Original byte hashes bind global/project/project-local/custom-context/

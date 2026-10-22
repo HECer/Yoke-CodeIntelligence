@@ -26,6 +26,8 @@ hash-selected host steering files into reviewable create-only JSON profiles.
 Project registrations, runtime trust and execution rights remain host-owned.
 Optional primary-project read-only policy blocks source changes while preserving
 independent secondary permissions and legacy bindings when absent/false.
+Explicit per-project LF/CRLF/native settings format prepared source after-bytes
+before review and verification; saved plans and original captures stay immutable.
 
 Explicit [Google Workspace capture](native/docs/google-workspace.md) selects
 hash-bound Docs/Sheets/Slides shortcuts with explicit host grants. A native HTTP
