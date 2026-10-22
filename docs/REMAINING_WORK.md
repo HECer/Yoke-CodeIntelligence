@@ -1,5 +1,32 @@
 # Remaining implementation and acceptance
 
+A current contract review now maps all 73 historical unreconciled entries and
+the two historically unavailable dashboard entries to explicit native behavior
+and remaining limits. The original 353-entry inventory, ledger assessments and
+summary counts are preserved. This is source/contract reconciliation, not full
+pinned upstream or runtime certification; all 77 backend runtime IDs retain
+separate acceptance requirements.
+
+All 25 project keys have explicit handlers: 21 map to bounded native settings,
+while encoding, language_backend, activation_command and activation_command_timeout
+accept only restricted standard values. The nine mode and 16 context names match
+the pinned sequences. Native guidance and finite exclusions/gates do not establish
+identical upstream prompts, Jinja behavior or branded client installations.
+Dashboard viewing, PostgreSQL/HTTP/arxiv/controlled Google acquisition, database
+publication, App history and selected host integrations are implemented within
+their dated contracts. ASR, the hosted cloud/team service, broader hooks/statusline,
+UI management and authenticated/live/quality acceptance remain open.
+
+A bounded Windows probe runs 300 owned benign Git starts and 2,406 successful
+process-list snapshots. One snapshot reports assigned=2/listed=1 at capacity4096.
+This supports a possible membership race behind the earlier conservative cleanup
+refusal; the exact original-fixture cause remains unproven. All known root handles
+are signaled and nested/outer accounting is empty. No production cleanup check,
+process privilege, system setting or original OS1314 fixture changes.
+See the [75-entry current review](validation/integration-2026-10-22/current-status-audit/README.md)
+and its exact source/index pins. No product runtime test is newly claimed by this
+read-only mapping; the following source-pinned qualification remains separate.
+
 Compiler source contracts now include actual TypeScript constructor parameter
 properties on captured named classes. Physical parameter-property flags, an in-body
 constructor owner and exact class/constructor/property ownership proofs are
@@ -52,12 +79,12 @@ retains the detailed boundaries and original inventory assessments.
 | --- | --- |
 | Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
 | Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, remaining project settings, branded hooks, remaining dashboard management and broader UI/accessibility acceptance. |
+| Configuration/clients/UI | Broader YAML/Jinja/file discovery, restricted-default project extensions, prompt/edit hooks and statuslines, dashboard management and broader UI/accessibility acceptance. |
 | Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
-| External acquisition | Authenticated Google export, remaining social/video/authenticated routes and broader database version/mixed-source qualification. No approved Google test document is available. |
+| External acquisition | ASR, authenticated Google export, remaining social/video/authenticated routes and broader database version/mixed-source qualification. No approved Google test document is available. |
 | App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
 | Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+| Windows/release | Ten original OS1314 prerequisites, sporadic owned-member cleanup refusal, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
 
 ### Earlier source checkpoints
 
