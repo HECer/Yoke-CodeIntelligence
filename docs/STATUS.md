@@ -2,6 +2,17 @@
 
 ## Current integration work
 
+CI fixture follow-up at source d87dd7e2 introduces a process-local native
+test launcher. It removes only the three ambient TLS override variables for the
+controlled fixture baseline, retains every Cargo test/thread argument, preserves
+the caller environment and leaves the entire native subtree unchanged.
+Explicit override adversaries still refuse. On 1041 frozen inputs, 13 Google
+HTTP unit and four CLI tests pass with synthetic ambient overrides, plus 19
+Python tests, focused Clippy, typecheck, npm260/3 existing skips and 338 format
+roots. The reported Ubuntu failure and complete local evidence are indexed in
+[the CI follow-up](validation/integration-2026-10-22/native-test-tls-environment/README.md).
+Remote CI requalification remains pending; full acceptance is still open.
+
 Explicit sourceExclusions and selected YAML ignored_paths now add bounded
 Gitignore-style negative rules per global/project/local host layer. Independent
 groups combine by exclusion; a later layer cannot reopen an earlier restriction.
