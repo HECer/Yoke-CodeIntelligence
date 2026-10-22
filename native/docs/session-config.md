@@ -113,7 +113,8 @@ registers a dormant catalog provider, with a reviewed absolute executable or
 explicit existing numeric-loopback TCP endpoint. CLI registration still requires
 --trust-servers. HTTP principals use their trusted host server entries. No ID
 downloads, installs, starts or trusts an executable. Project YAML cannot supply
-registrations, commands, trust, initialization options or source-execution grants.
+registrations, trust or source-execution grants. Explicitly authorized generic
+server settings are described below.
 
 For each requested file, the first selected backend with a matching declared
 catalog extension is used; otherwise the first backend is the explicit fallback.
@@ -384,3 +385,47 @@ The setting grants no server, interpreter, source-write or network authority.
 The public setting name, zero/unlimited semantics and soft-stop behavior were
 checked against the [pinned global template](https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/resources/serena_config.template.yml).
 No upstream application code or prompt text is copied.
+
+HostProfile.languageServerSettings supplies generic settings for named catalog
+backends, using global and projects.<name>.project/local maps. Each map has
+backend IDs as keys and closed setting objects (or null) as values. Per backend,
+local replaces project, then global; null inherits. An empty backend object
+shadows the lower entry, retaining the registered host defaults. Empty/null
+policy maps preserve preceding serialization, wire replies and session bindings.
+
+The host must separately list every affected project in
+trustedServerSettingsProjects and select languageServers for it. Neither this
+host-only grant nor runtime/source-execution trust can be supplied by YAML.
+Without the grant, effective settings refuse rather than silently disappearing.
+The storeless YAML projector accepts ls_specific_settings with identical backend
+maps in global, project and project-local files; registrations remain unvalidated
+until opening a real session. The profile grant may be present but dormant without
+changing legacy replies or bindings.
+
+Supported generic keys are initializationOptions (object), ls_path (absolute
+executable), ls_base_cmd (absolute executable followed by prefix arguments),
+ls_args (replacement registered arguments) and ls_extra_args (always appended).
+ls_path and ls_base_cmd conflict. Without ls_args, registered arguments remain
+after any explicit base-command prefix. This native command model concerns an
+already registered executable; vendor core-dependency/JAR/download/install/version
+interpretation and other vendor-specific aliases remain unsupported and refuse.
+There is no automatic installation or evaluation of a command string.
+
+initializationOptions merges only top-level keys over the original registered
+object; nested objects and explicit null values replace their prior key exactly.
+Existing mandatory passive transport options still apply after this overlay.
+Effective command/argument changes additionally require the registered host's
+allowSourceExecution. Source-execution/passive profiles, TCP endpoint, settings,
+workspace grants and runtime trust remain the original host values. The common
+LSP admission rechecks effective options before process startup; project trust
+alone does not enable Rust build scripts, plugins or other source execution.
+Each project derives its provider from the original registry, never from another
+project's overlaid provider. Registry, policy and host grant bind selected sessions;
+changed policy and stale clients refuse. Direct query, staged/owned refactoring
+and provider refresh use the actual selected registrations and provider hashes.
+
+Settings use existing profile limits plus 101 projects, 100 backends per map,
+128 arguments/64000 argument bytes, 4096 bytes per argument, 64000 initialization
+bytes, 32 value levels and 4096 initialization nodes. Relative/UNC/device/alternate
+stream command aliases and conflicting forms refuse. These checks certify the
+bounded generic configuration contract, not any of the 77 backend runtimes.

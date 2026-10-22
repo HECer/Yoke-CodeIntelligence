@@ -84,6 +84,10 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
+    #[serde(default, skip_serializing_if = "crate::server_settings::unselected")]
+    pub language_server_settings: Option<crate::server_settings::HostSettings>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub trusted_server_settings_projects: Vec<String>,
     #[serde(default, skip_serializing_if = "crate::server_selection::unselected")]
     pub language_servers: Option<crate::server_selection::HostSelection>,
     #[serde(default, skip_serializing_if = "crate::git_ignore_policy::unselected")]
@@ -126,6 +130,8 @@ impl Default for HostProfile {
     fn default() -> Self {
         Self {
             language_servers: None,
+            language_server_settings: None,
+            trusted_server_settings_projects: Vec::new(),
             git_ignore: None,
             symbol_workspace_folders: None,
             symbol_info_budgets: None,
@@ -207,6 +213,7 @@ pub(crate) fn validate_retention_record(
     Ok(())
 }
 pub struct Session {
+    host_backend_servers: Option<BTreeMap<String, crate::lsp::ConfiguredServer>>,
     pub engine: Engine,
     host_allow_writes: bool,
     host_capture_options: Option<crate::capture::CaptureOptions>,
@@ -847,6 +854,26 @@ impl Session {
         deadline: &Deadline,
     ) -> Result<Self> {
         engine.store.set_deadline(deadline)?;
+        if let Some(settings) = &host.language_server_settings {
+            settings.validate(&host)?;
+            host.trusted_server_settings_projects.sort();
+        }
+        if let Some(settings) = &mut host.language_server_settings {
+            settings.canonicalize();
+            if settings.empty() {
+                host.language_server_settings = None;
+            }
+        }
+        let host_backend_servers = if let Some(settings) = &host.language_server_settings {
+            for name in
+                std::iter::once("default").chain(host.projects.iter().map(|p| p.name.as_str()))
+            {
+                settings.apply(name, &engine.backend_servers)?;
+            }
+            Some(engine.backend_servers.clone())
+        } else {
+            None
+        };
         if let Some(selection) = &host.language_servers {
             selection.validate(&host)?;
             selection.validate_registered(&engine.backend_servers)?;
@@ -1226,6 +1253,19 @@ impl Session {
         } else {
             fingerprint
         };
+        let fingerprint = if let Some(settings) = &host.language_server_settings {
+            let original = host_backend_servers.as_ref().unwrap();
+            engine.backend_servers = settings.apply("default", original)?;
+            identity(&(
+                fingerprint,
+                "host_language_server_settings_v1",
+                settings,
+                &host.trusted_server_settings_projects,
+                crate::server_selection::bindings(original)?,
+            ))
+        } else {
+            fingerprint
+        };
         engine.backend_registry_sealed = true;
         let owned_label = if let Some(id) = session_id {
             label(id)?;
@@ -1342,6 +1382,7 @@ impl Session {
             ensure!(inserted == 1, "Concurrent session creation; retry");
         }
         Ok(Self {
+            host_backend_servers,
             engine,
             host_allow_writes,
             host_capture_options,
@@ -1439,6 +1480,7 @@ impl Session {
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
         if self.host.git_ignore.is_some()
+            || self.host.language_server_settings.is_some()
             || self.host.language_servers.is_some()
             || self.host.symbol_workspace_folders.is_some()
             || self.host.symbol_info_budgets.is_some()
@@ -1730,6 +1772,10 @@ impl Session {
                 .map(<[String]>::to_vec);
             engine.servers = self.engine.servers.clone();
             engine.backend_servers = self.engine.backend_servers.clone();
+            if let Some(settings) = &self.host.language_server_settings {
+                engine.backend_servers =
+                    settings.apply(name, self.host_backend_servers.as_ref().unwrap())?;
+            }
             engine.backend_registry_sealed = true;
             engine.selected_backends = self
                 .host
@@ -1861,6 +1907,13 @@ impl Session {
                                 .include_git_ignored
                         )
                     );
+                }
+                if let Some(settings) = &self.host.language_server_settings {
+                    value["languageServerSettings"] = serde_json::to_value(settings)?;
+                    value["languageServerSettingsResolved"] =
+                        serde_json::to_value(settings.resolve(&self.state.active_project))?;
+                    value["trustedServerSettingsProjects"] =
+                        json!(self.host.trusted_server_settings_projects);
                 }
                 if let Some(selection) = &self.host.language_servers {
                     value["languageServers"] = serde_json::to_value(selection)?;

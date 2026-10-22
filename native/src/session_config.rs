@@ -62,6 +62,7 @@ fn label(value: &str) -> Result<()> {
     Ok(())
 }
 struct DecodedFields {
+    server_settings: Option<Option<crate::server_settings::Entries>>,
     language_servers: Option<Option<Vec<String>>>,
     git_ignore: Option<Option<bool>>,
     fields: Map<String, Value>,
@@ -80,6 +81,7 @@ fn rename_fields(
     project: bool,
 ) -> Result<DecodedFields> {
     let mut mapped = Map::new();
+    let mut server_settings = None;
     let mut language_servers = None;
     let mut git_ignore = None;
     let mut base = None;
@@ -90,84 +92,95 @@ fn rename_fields(
     let mut symbol_info_budget = None;
     let mut workspace_folders = None;
     for (key, value) in raw {
-        let name =
-            match key.as_str() {
-                "ignore_all_files_in_gitignore" if global || project => {
-                    git_ignore = Some(serde_json::from_value(value).map_err(|_| {
+        let name = match key.as_str() {
+            "ls_specific_settings" if global || project => {
+                let entries: Option<crate::server_settings::Entries> =
+                    serde_json::from_value(value)
+                        .map_err(|_| anyhow::anyhow!("session_config_server_settings_invalid"))?;
+                if let Some(entries) = &entries {
+                    crate::server_settings::validate_entries(entries)?;
+                }
+                server_settings = Some(entries);
+                continue;
+            }
+            "ignore_all_files_in_gitignore" if global || project => {
+                git_ignore =
+                    Some(serde_json::from_value(value).map_err(|_| {
                         anyhow::anyhow!("session_config_git_ignore_boolean_required")
                     })?);
-                    continue;
+                continue;
+            }
+            "language_servers" if global || project => {
+                let ids: Option<Vec<String>> = serde_json::from_value(value)
+                    .map_err(|_| anyhow::anyhow!("session_config_language_servers_invalid"))?;
+                if let Some(ids) = &ids {
+                    crate::server_selection::validate_ids(ids)?;
                 }
-                "language_servers" if global || project => {
-                    let ids: Option<Vec<String>> = serde_json::from_value(value)
-                        .map_err(|_| anyhow::anyhow!("session_config_language_servers_invalid"))?;
-                    if let Some(ids) = &ids {
-                        crate::server_selection::validate_ids(ids)?;
-                    }
-                    language_servers = Some(ids);
-                    continue;
-                }
-                "ls_workspace_folders" if global || project => {
-                    let values: Option<Vec<String>> = serde_json::from_value(value)
-                        .map_err(|_| anyhow::anyhow!("session_config_workspace_folders_invalid"))?;
-                    workspace_folders = Some(
-                        values
-                            .map(|v| crate::symbol_workspace::folders(&v))
-                            .transpose()?,
-                    );
-                    continue;
-                }
-                "symbol_info_budget" if global || project => {
-                    symbol_info_budget = Some(crate::symbol_info_budget::milliseconds(&value)?);
-                    continue;
-                }
-                "ignored_paths" if global || project => {
-                    ignored_paths = serde_json::from_value(value)
-                        .map_err(|_| anyhow::anyhow!("session_config_ignored_paths_invalid"))?;
-                    continue;
-                }
-                "line_ending" if global || project => {
-                    line_ending = Some(
-                        serde_json::from_value(value)
-                            .map_err(|_| anyhow::anyhow!("session_config_line_ending_invalid"))?,
-                    );
-                    continue;
-                }
-                "excluded_tools" => "excludedTools",
-                "included_optional_tools" => "includedOptionalTools",
-                "fixed_tools" => "fixedTools",
-                "excluded_apis" => "excludedApis",
-                "included_apis" => "includedApis",
-                "read_only_memory_patterns" => "readOnlyMemoryPatterns",
-                "ignored_memory_patterns" => "ignoredMemoryPatterns",
-                "default_modes" if !definition => "defaultModes",
-                "added_modes" if !definition => "addedModes",
-                "agent_interface" if !definition => "agentInterface",
-                "initial_prompt" if project => "instructions",
-                "prompt" if definition => "instructions",
-                "base_modes" if global => {
-                    base = Some(value);
-                    continue;
-                }
-                "read_only" if project => {
-                    read_only = Some(value.as_bool().ok_or_else(|| {
+                language_servers = Some(ids);
+                continue;
+            }
+            "ls_workspace_folders" if global || project => {
+                let values: Option<Vec<String>> = serde_json::from_value(value)
+                    .map_err(|_| anyhow::anyhow!("session_config_workspace_folders_invalid"))?;
+                workspace_folders = Some(
+                    values
+                        .map(|v| crate::symbol_workspace::folders(&v))
+                        .transpose()?,
+                );
+                continue;
+            }
+            "symbol_info_budget" if global || project => {
+                symbol_info_budget = Some(crate::symbol_info_budget::milliseconds(&value)?);
+                continue;
+            }
+            "ignored_paths" if global || project => {
+                ignored_paths = serde_json::from_value(value)
+                    .map_err(|_| anyhow::anyhow!("session_config_ignored_paths_invalid"))?;
+                continue;
+            }
+            "line_ending" if global || project => {
+                line_ending = Some(
+                    serde_json::from_value(value)
+                        .map_err(|_| anyhow::anyhow!("session_config_line_ending_invalid"))?,
+                );
+                continue;
+            }
+            "excluded_tools" => "excludedTools",
+            "included_optional_tools" => "includedOptionalTools",
+            "fixed_tools" => "fixedTools",
+            "excluded_apis" => "excludedApis",
+            "included_apis" => "includedApis",
+            "read_only_memory_patterns" => "readOnlyMemoryPatterns",
+            "ignored_memory_patterns" => "ignoredMemoryPatterns",
+            "default_modes" if !definition => "defaultModes",
+            "added_modes" if !definition => "addedModes",
+            "agent_interface" if !definition => "agentInterface",
+            "initial_prompt" if project => "instructions",
+            "prompt" if definition => "instructions",
+            "base_modes" if global => {
+                base = Some(value);
+                continue;
+            }
+            "read_only" if project => {
+                read_only =
+                    Some(value.as_bool().ok_or_else(|| {
                         anyhow::anyhow!("session_config_read_only_boolean_required")
                     })?);
-                    continue;
-                }
-                "project_name" if project => {
-                    let name = value
-                        .as_str()
-                        .ok_or_else(|| anyhow::anyhow!("session_config_project_name_invalid"))?;
-                    ensure!(
-                        !name.is_empty() && name.len() <= 100 && !name.contains('\0'),
-                        "session_config_project_name_invalid"
-                    );
-                    declared = Some(name.to_owned());
-                    continue;
-                }
-                _ => anyhow::bail!("session_config_setting_unsupported"),
-            };
+                continue;
+            }
+            "project_name" if project => {
+                let name = value
+                    .as_str()
+                    .ok_or_else(|| anyhow::anyhow!("session_config_project_name_invalid"))?;
+                ensure!(
+                    !name.is_empty() && name.len() <= 100 && !name.contains('\0'),
+                    "session_config_project_name_invalid"
+                );
+                declared = Some(name.to_owned());
+                continue;
+            }
+            _ => anyhow::bail!("session_config_setting_unsupported"),
+        };
         if name == "instructions" {
             let text = value
                 .as_str()
@@ -180,6 +193,7 @@ fn rename_fields(
         mapped.insert(name.into(), value);
     }
     Ok(DecodedFields {
+        server_settings,
         language_servers,
         git_ignore,
         fields: mapped,
@@ -232,6 +246,7 @@ pub fn project(
         );
         let definition = matches!(source.target, Target::Context { .. } | Target::Mode { .. });
         let DecodedFields {
+            server_settings,
             language_servers,
             git_ignore,
             fields,
@@ -271,6 +286,25 @@ pub fn project(
         }
         if let Target::Context { name } | Target::Mode { name } = source.target {
             label(name)?;
+        }
+        if let Some(entries) = server_settings
+            && (entries.is_some() || profile.language_server_settings.is_some())
+        {
+            let policy = profile.language_server_settings.get_or_insert_default();
+            match source.target {
+                Target::Global => policy.global = entries,
+                Target::Project { project } => {
+                    policy.projects.entry(project.clone()).or_default().project = entries
+                }
+                Target::ProjectLocal { project } => {
+                    policy.projects.entry(project.clone()).or_default().local = entries
+                }
+                _ => unreachable!(),
+            }
+            policy.canonicalize();
+            if policy.empty() {
+                profile.language_server_settings = None;
+            }
         }
         if let Some(respect) = git_ignore
             && (respect.is_some() || profile.git_ignore.is_some())
@@ -442,6 +476,9 @@ pub fn project(
         receipts.push(json!({"target":source.target,"originalBytes":source.bytes.len(),"originalSha256":source.expected_sha256,"declaredProjectName":declared,"declaredProjectNameIsRegistration":false}));
     }
     deadline.check()?;
+    if let Some(settings) = &profile.language_server_settings {
+        settings.validate(&profile)?;
+    }
     if let Some(policy) = &profile.git_ignore {
         policy.validate(&profile)?;
     }

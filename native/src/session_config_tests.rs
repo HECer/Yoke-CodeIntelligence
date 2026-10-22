@@ -17,6 +17,122 @@ fn apply(base: &HostProfile, target: Target, bytes: &[u8]) -> Result<Projection>
 }
 
 #[test]
+fn generic_server_settings_yaml_layers_replace_backend_entries_without_creating_trust() {
+    let base = HostProfile {
+        language_servers: Some(
+            serde_json::from_value(json!({"global":["rust","typescript"]})).unwrap(),
+        ),
+        trusted_server_settings_projects: vec!["default".into()],
+        ..Default::default()
+    };
+    let global=apply(&base,Target::Global,b"\xef\xbb\xbfls_specific_settings:\r\n  rust:\r\n    initializationOptions: {nested: {global: 1}}\r\n  typescript:\r\n    initializationOptions: {tag: retained}\r\n").unwrap();
+    let project = apply(
+        global.profile(),
+        Target::Project {
+            project: "default".into(),
+        },
+        b"ls_specific_settings:\n  rust:\n    initializationOptions: {nested: {project: 2}}\n",
+    )
+    .unwrap();
+    let local = apply(
+        project.profile(),
+        Target::ProjectLocal {
+            project: "default".into(),
+        },
+        b"ls_specific_settings: {rust: null}\n",
+    )
+    .unwrap();
+    let resolved = local
+        .profile()
+        .language_server_settings
+        .as_ref()
+        .unwrap()
+        .resolve("default");
+    assert_eq!(
+        resolved["rust"].initialization_options.as_ref().unwrap()["nested"],
+        json!({"project":2})
+    );
+    assert_eq!(
+        resolved["typescript"]
+            .initialization_options
+            .as_ref()
+            .unwrap()["tag"],
+        "retained"
+    );
+    let empty = apply(
+        local.profile(),
+        Target::ProjectLocal {
+            project: "default".into(),
+        },
+        b"ls_specific_settings: {rust: {}}\n",
+    )
+    .unwrap();
+    assert!(
+        empty
+            .profile()
+            .language_server_settings
+            .as_ref()
+            .unwrap()
+            .resolve("default")["rust"]
+            .initialization_options
+            .is_none()
+    );
+    assert_eq!(empty.plan()["runtimeTrustFromYaml"], false);
+    assert_eq!(
+        empty.profile().trusted_server_settings_projects,
+        base.trusted_server_settings_projects
+    );
+    let bytes = serde_json::to_vec(&HostProfile::default()).unwrap();
+    for yaml in [
+        b"ls_specific_settings: null\n".as_slice(),
+        b"ls_specific_settings: {}\n",
+        b"ls_specific_settings: {rust: null}\n",
+    ] {
+        assert_eq!(
+            serde_json::to_vec(
+                apply(&HostProfile::default(), Target::Global, yaml)
+                    .unwrap()
+                    .profile()
+            )
+            .unwrap(),
+            bytes
+        );
+    }
+}
+
+#[test]
+fn server_settings_yaml_cannot_grant_projects_runtime_or_unknown_vendor_options() {
+    for yaml in [
+        b"ls_specific_settings: {rust: {initializationOptions: {feature: true}}}\n".as_slice(),
+        b"trusted_server_settings_projects: [default]\n",
+        b"ls_specific_settings: {rust: {allowSourceExecution: true}}\n",
+        b"ls_specific_settings: {rust: {rust_analyzer_version: latest}}\n",
+        b"ls_specific_settings: {rust: {ls_args: nope}}\n",
+        b"ls_specific_settings: {rust: {ls_base_cmd: []}}\n",
+    ] {
+        assert!(apply(&HostProfile::default(), Target::Global, yaml).is_err());
+    }
+    let base = HostProfile {
+        language_servers: Some(serde_json::from_value(json!({"global":["rust"]})).unwrap()),
+        trusted_server_settings_projects: vec!["default".into()],
+        ..Default::default()
+    };
+    for target in [
+        Target::Context {
+            name: "owned".into(),
+        },
+        Target::Mode {
+            name: "owned".into(),
+        },
+        Target::Project {
+            project: "missing".into(),
+        },
+    ] {
+        assert!(apply(&base, target, b"ls_specific_settings: {rust: {}}\n").is_err());
+    }
+}
+
+#[test]
 fn git_ignore_policy_yaml_resolves_boolean_layers_and_null_without_authority() {
     let base = HostProfile::default();
     let original = serde_json::to_vec(&base).unwrap();
