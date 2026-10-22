@@ -17,6 +17,108 @@ fn apply(base: &HostProfile, target: Target, bytes: &[u8]) -> Result<Projection>
 }
 
 #[test]
+fn symbol_workspace_yaml_resolves_pinned_layers_and_null_inheritance_without_source_grants() {
+    let base = HostProfile::default();
+    let bytes = serde_json::to_vec(&base).unwrap();
+    assert_eq!(
+        apply(&base, Target::Global, b"ls_workspace_folders: null\n")
+            .unwrap()
+            .profile_bytes(&deadline())
+            .unwrap(),
+        bytes
+    );
+    let global = apply(
+        &base,
+        Target::Global,
+        b"\xef\xbb\xbfls_workspace_folders: [./src]\r\n",
+    )
+    .unwrap();
+    let project = apply(
+        global.profile(),
+        Target::Project {
+            project: "default".into(),
+        },
+        "ls_workspace_folders: [é]\n".as_bytes(),
+    )
+    .unwrap();
+    let local = apply(
+        project.profile(),
+        Target::ProjectLocal {
+            project: "default".into(),
+        },
+        b"ls_workspace_folders: ['.']\n",
+    )
+    .unwrap();
+    assert_eq!(
+        local
+            .profile()
+            .symbol_workspace_folders
+            .as_ref()
+            .unwrap()
+            .select("default")
+            .unwrap(),
+        &["."]
+    );
+    let cleared = apply(
+        local.profile(),
+        Target::ProjectLocal {
+            project: "default".into(),
+        },
+        b"ls_workspace_folders: null\n",
+    )
+    .unwrap();
+    assert_eq!(
+        cleared
+            .profile()
+            .symbol_workspace_folders
+            .as_ref()
+            .unwrap()
+            .select("default")
+            .unwrap(),
+        &["é"]
+    );
+    let expected: HostProfile = serde_json::from_value(json!({"symbolWorkspaceFolders":{"global":["src"],"projects":{"default":{"project":["é"]}}}})).unwrap();
+    assert_eq!(
+        cleared.profile_bytes(&deadline()).unwrap(),
+        serde_json::to_vec(&expected).unwrap()
+    );
+    assert_eq!(
+        global.plan()["sources"][0]["originalSha256"],
+        model::hash(b"\xef\xbb\xbfls_workspace_folders: [./src]\r\n")
+    );
+    assert_eq!(global.plan()["runtimeTrustFromYaml"], false);
+}
+
+#[test]
+fn symbol_workspace_yaml_refuses_bad_roles_types_paths_aliases_and_unknown_registrations() {
+    let base = HostProfile::default();
+    for bytes in [
+        b"ls_workspace_folders: []\n".as_slice(),
+        b"ls_workspace_folders: src\n",
+        b"ls_workspace_folders: [../outside]\n",
+        b"ls_workspace_folders: [.env]\n",
+        b"ls_workspace_folders: [src, ./src]\n",
+        b"ls_workspace_folders: [false]\n",
+        b"ls_workspace_folders: [*alias]\n",
+    ] {
+        assert!(apply(&base, Target::Global, bytes).is_err());
+    }
+    for target in [
+        Target::Context {
+            name: "custom".into(),
+        },
+        Target::Mode {
+            name: "custom".into(),
+        },
+        Target::Project {
+            project: "unknown".into(),
+        },
+    ] {
+        assert!(apply(&base, target, b"ls_workspace_folders: [src]\n").is_err());
+    }
+}
+
+#[test]
 fn symbol_information_seconds_resolve_global_project_local_and_explicit_null_inheritance() {
     let base = HostProfile::default();
     let original = serde_json::to_vec(&base).unwrap();

@@ -446,6 +446,7 @@ struct Session {
     diagnostic_bytes: usize,
     quiescent: bool,
     settings: Value,
+    workspace_folders: Option<Value>,
     _cargo_home: Option<tempfile::TempDir>,
 }
 impl Session {
@@ -605,6 +606,7 @@ impl Session {
             diagnostic_bytes: 0,
             quiescent: false,
             settings: Value::Null,
+            workspace_folders: None,
             _cargo_home: None,
         })
     }
@@ -650,6 +652,16 @@ impl Session {
         if message.get("method").is_some() && message.get("id").is_some() {
             let result = match message["method"].as_str().unwrap_or("") {
                 "window/workDoneProgress/create" => Some(Value::Null),
+                "workspace/workspaceFolders" if self.workspace_folders.is_some() => {
+                    ensure!(
+                        message["params"].is_null()
+                            || message["params"]
+                                .as_object()
+                                .is_some_and(serde_json::Map::is_empty),
+                        "Invalid workspace folders callback parameters"
+                    );
+                    self.workspace_folders.clone()
+                }
                 "workspace/configuration" => {
                     let items = message["params"]["items"]
                         .as_array()
@@ -2461,6 +2473,8 @@ fn initialize_provider_at(
                 folders.push(json!({"uri":uri(&folder)?,"name":"captured-project"}));
             }
             initialize["workspaceFolders"] = json!(folders);
+            initialize["capabilities"]["workspace"]["workspaceFolders"] = json!(true);
+            session.workspace_folders = Some(initialize["workspaceFolders"].clone());
         }
     }
     if configuration.is_some_and(|config| {

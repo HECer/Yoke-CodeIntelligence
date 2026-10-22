@@ -104,6 +104,7 @@ pub mod source_exclusions;
 pub mod source_line_endings;
 pub mod store;
 pub mod symbol_info_budget;
+pub mod symbol_workspace;
 pub mod test_map;
 pub mod trail_adapter;
 mod validation;
@@ -124,6 +125,7 @@ use store::Store;
 pub use validation::validate;
 
 pub struct Engine {
+    pub(crate) symbol_workspace_folders: Option<Vec<String>>,
     pub root: PathBuf,
     pub store: Store,
     pub allow_writes: bool,
@@ -159,6 +161,7 @@ impl Engine {
         ensure!(root.is_dir(), "Workspace root must be a directory");
         let store = Store::open_with_timeout(&root, timeout)?;
         Ok(Self {
+            symbol_workspace_folders: None,
             root,
             store,
             allow_writes: false,
@@ -534,6 +537,19 @@ impl Engine {
                         )
                     }
                 }
+                "ci_find"
+                    if args["kind"].as_str().unwrap_or("symbol") == "symbol"
+                        && self.symbol_workspace_folders.is_some() =>
+                {
+                    query_features::symbols_find_selected(
+                        &self.store,
+                        &snapshot,
+                        &graph,
+                        &args,
+                        self.symbol_workspace_folders.as_deref().unwrap(),
+                        &deadline,
+                    )
+                }
                 "ci_find" => query::find(&self.store, &snapshot, &graph, &args, &deadline),
                 "ci_read" => query::read(&self.store, &snapshot, &graph, &args),
                 "ci_trace" => query::trace(&graph, &args, &deadline),
@@ -772,7 +788,13 @@ impl Engine {
         options: &Value,
         deadline: &Deadline,
     ) -> Result<Value> {
-        if let Some(configuration) = self.server_configurations.get(&server.language).cloned() {
+        let mut configuration = self.server_configurations.get(&server.language).cloned();
+        if let Some(roots) = &self.symbol_workspace_folders {
+            let scope = capture::source_scope_policy(&self.store, snapshot)?;
+            symbol_workspace::validate_snapshot(roots, snapshot, &scope, deadline)?;
+            configuration.get_or_insert_default().workspace_folders = roots.clone();
+        }
+        if let Some(configuration) = configuration {
             lsp::run_at_configured(
                 self,
                 &lsp::ConfiguredServer {

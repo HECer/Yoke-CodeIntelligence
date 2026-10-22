@@ -54,6 +54,38 @@ Original YAML bytes are never rewritten.
 
 ## Fields and boundaries
 
+HostProfile.symbolWorkspaceFolders selects a separate structural symbol-index
+projection and actual LSP workspace roots. For example:
+
+    {"global":["src"],"projects":{"second":{"project":["packages"],"local":["é"]}}}
+
+Global/project/project-local YAML ls_workspace_folders uses the same policy.
+Local overrides project, then global; null inherits. Paths are relative to the
+registered project, with an optional leading ./, or the whole-root selector . .
+One to 32 unique, portable, unprotected folders are required. Empty lists refuse;
+empty/null policy objects preserve preceding profile bytes and session bindings.
+Unregistered project selectors, outside paths, duplicates and unknown fields
+refuse. Missing, ignored-only and file-valued roots refuse against the selected
+immutable snapshot before a symbol query or provider launch.
+
+Filtering precedes symbol paging, root match limits, body search and descendants.
+Replies identify the selected symbolIndexScope, original snapshot and base graph
+hash; captured sources and the original graph/IDs remain unchanged. This is a
+selected index projection over the complete captured graph: parsing/capture of
+other sources still occurs. No reduced indexing cost or complete compiler index
+is asserted. Ordinary file listing/reading/search, explicit graph views, traces,
+references and source-write permissions retain their independent scopes.
+
+Semantic calls send the selected folders as real workspaceFolders inside the
+owned immutable provider tree. The full captured tree, including root project
+configuration, remains available there. Explicit direct semantic requests may
+target other authorized captured files; selecting folders grants no source,
+runtime or execution authority. Existing passive-profile and source-execution
+checks still apply. Named projects resolve independently; activation cannot
+borrow primary selections. Policy changes invalidate the existing session
+binding, and stale sessions refuse before queries/providers. Additional external
+workspace folders remain separate work.
+
 All roles support excluded_tools, included_optional_tools, fixed_tools,
 excluded_apis, included_apis, read_only_memory_patterns and ignored_memory_patterns.
 Global/project/project-local also support agent_interface, default_modes and

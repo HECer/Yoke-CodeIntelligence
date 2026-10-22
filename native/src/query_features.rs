@@ -212,6 +212,7 @@ pub struct PathFilter {
     exclude: Option<Regex>,
     legacy: String,
     skip_ignored: bool,
+    symbol_roots: Option<Vec<String>>,
 }
 impl PathFilter {
     pub fn new(args: &Value) -> Result<Self> {
@@ -234,20 +235,25 @@ impl PathFilter {
                 .as_str()
                 .map(|path| glob(path, false))
                 .transpose()?,
+            symbol_roots: None,
             legacy: args["path"].as_str().unwrap_or("").into(),
             skip_ignored: args["skipIgnored"] == true,
         })
     }
     pub fn matches(&self, path: &str) -> bool {
-        self.relative.as_ref().is_none_or(|relative| {
-            path == relative
-                || path
-                    .strip_prefix(relative)
-                    .is_some_and(|suffix| suffix.starts_with('/'))
-        }) && self
-            .include
+        self.symbol_roots
             .as_ref()
-            .is_none_or(|include| include.is_match(path))
+            .is_none_or(|roots| crate::symbol_workspace::contains(roots, path))
+            && self.relative.as_ref().is_none_or(|relative| {
+                path == relative
+                    || path
+                        .strip_prefix(relative)
+                        .is_some_and(|suffix| suffix.starts_with('/'))
+            })
+            && self
+                .include
+                .as_ref()
+                .is_none_or(|include| include.is_match(path))
             && self
                 .exclude
                 .as_ref()
@@ -590,7 +596,36 @@ pub(crate) fn symbols_find_in_scope(
     scope: &crate::capture::CapturedSourceScope<'_>,
     deadline: &Deadline,
 ) -> Result<Value> {
-    let filter = PathFilter::new(args)?;
+    symbols_find_with_roots(store, snapshot, graph, args, scope, None, deadline)
+}
+pub(crate) fn symbols_find_selected(
+    store: &Store,
+    snapshot: &Snapshot,
+    graph: &Graph,
+    args: &Value,
+    roots: &[String],
+    deadline: &Deadline,
+) -> Result<Value> {
+    source_scope(store, snapshot, graph, deadline)?;
+    let scope = crate::capture::source_scope_policy(store, snapshot)?;
+    crate::symbol_workspace::validate_snapshot(roots, snapshot, &scope, deadline)?;
+    let mut value =
+        symbols_find_with_roots(store, snapshot, graph, args, &scope, Some(roots), deadline)?;
+    crate::symbol_workspace::qualify(&mut value, roots, snapshot, graph, &scope, deadline)?;
+    Ok(value)
+}
+fn symbols_find_with_roots(
+    store: &Store,
+    snapshot: &Snapshot,
+    graph: &Graph,
+    args: &Value,
+    scope: &crate::capture::CapturedSourceScope<'_>,
+    roots: Option<&[String]>,
+    deadline: &Deadline,
+) -> Result<Value> {
+    let mut filter = PathFilter::new(args)?;
+    filter.symbol_roots = roots.map(<[String]>::to_vec);
+    filter.skip_ignored |= roots.is_some();
     let kind = args["kind"].as_str().unwrap_or("symbol");
     let name = args["namePath"].as_str().filter(|name| !name.is_empty());
     let matcher = name

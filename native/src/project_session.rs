@@ -84,6 +84,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
+    #[serde(default, skip_serializing_if = "crate::symbol_workspace::unselected")]
+    pub symbol_workspace_folders: Option<crate::symbol_workspace::HostFolders>,
     #[serde(default, skip_serializing_if = "crate::symbol_info_budget::unselected")]
     pub symbol_info_budgets: Option<crate::symbol_info_budget::HostBudgets>,
     #[serde(default, skip_serializing_if = "crate::source_exclusions::unselected")]
@@ -119,6 +121,7 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            symbol_workspace_folders: None,
             symbol_info_budgets: None,
             source_exclusions: None,
             source_line_endings: None,
@@ -818,6 +821,15 @@ impl Session {
         if engine.capture_options.source_exclusions.is_some() {
             engine.capture_options = engine.capture_options.validated()?;
         }
+        if let Some(folders) = &host.symbol_workspace_folders {
+            folders.validate(&host)?;
+        }
+        if let Some(folders) = &mut host.symbol_workspace_folders {
+            folders.canonicalize()?;
+            if folders.empty() {
+                host.symbol_workspace_folders = None;
+            }
+        }
         if let Some(budgets) = &host.symbol_info_budgets {
             budgets.validate(&host)?;
         }
@@ -1142,6 +1154,12 @@ impl Session {
         } else {
             fingerprint
         };
+        let fingerprint = if let Some(folders) = &host.symbol_workspace_folders {
+            engine.symbol_workspace_folders = folders.select("default").map(<[String]>::to_vec);
+            identity(&(fingerprint, "host_symbol_workspace_folders_v1", folders))
+        } else {
+            fingerprint
+        };
         let owned_label = if let Some(id) = session_id {
             label(id)?;
             id.to_owned()
@@ -1353,7 +1371,8 @@ impl Session {
         }
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
-        if self.host.symbol_info_budgets.is_some()
+        if self.host.symbol_workspace_folders.is_some()
+            || self.host.symbol_info_budgets.is_some()
             || self.host.primary_read_only
             || !crate::source_exclusions::unselected(&self.host.source_exclusions)
             || self.host.source_line_endings.is_some()
@@ -1625,6 +1644,12 @@ impl Session {
             }
             engine.sync_source_exclusions(deadline)?;
             engine.capture_epoch = self.capture_epoch;
+            engine.symbol_workspace_folders = self
+                .host
+                .symbol_workspace_folders
+                .as_ref()
+                .and_then(|p| p.select(name))
+                .map(<[String]>::to_vec);
             engine.servers = self.engine.servers.clone();
             engine.server_configurations = self.engine.server_configurations.clone();
             self.others.insert(name.into(), engine);
@@ -1738,6 +1763,11 @@ impl Session {
                 }
                 if self.host.primary_read_only {
                     value["primaryReadOnly"] = json!(true);
+                }
+                if let Some(folders) = &self.host.symbol_workspace_folders {
+                    value["symbolWorkspaceFolders"] = serde_json::to_value(folders)?;
+                    value["symbolWorkspaceFoldersResolved"] =
+                        json!(folders.select(&self.state.active_project));
                 }
                 if let Some(budgets) = &self.host.symbol_info_budgets {
                     value["symbolInfoBudgets"] = serde_json::to_value(budgets)?;

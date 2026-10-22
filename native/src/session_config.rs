@@ -64,6 +64,7 @@ struct DecodedFields {
     line_ending: Option<Option<crate::source_line_endings::LineEnding>>,
     ignored_paths: Option<Vec<String>>,
     symbol_info_budget: Option<Option<u64>>,
+    workspace_folders: Option<Option<Vec<String>>>,
 }
 fn rename_fields(
     raw: Map<String, Value>,
@@ -78,8 +79,19 @@ fn rename_fields(
     let mut line_ending = None;
     let mut ignored_paths = None;
     let mut symbol_info_budget = None;
+    let mut workspace_folders = None;
     for (key, value) in raw {
         let name = match key.as_str() {
+            "ls_workspace_folders" if global || project => {
+                let values: Option<Vec<String>> = serde_json::from_value(value)
+                    .map_err(|_| anyhow::anyhow!("session_config_workspace_folders_invalid"))?;
+                workspace_folders = Some(
+                    values
+                        .map(|v| crate::symbol_workspace::folders(&v))
+                        .transpose()?,
+                );
+                continue;
+            }
             "symbol_info_budget" if global || project => {
                 symbol_info_budget = Some(crate::symbol_info_budget::milliseconds(&value)?);
                 continue;
@@ -151,6 +163,7 @@ fn rename_fields(
         line_ending,
         ignored_paths,
         symbol_info_budget,
+        workspace_folders,
     })
 }
 /// Project only explicitly supplied values. Files cannot supply registrations or grants.
@@ -200,6 +213,7 @@ pub fn project(
             line_ending,
             ignored_paths,
             symbol_info_budget,
+            workspace_folders,
         } = rename_fields(
             yaml::decode(source.bytes, deadline)?,
             definition,
@@ -229,6 +243,25 @@ pub fn project(
         }
         if let Target::Context { name } | Target::Mode { name } = source.target {
             label(name)?;
+        }
+        if let Some(folders) = workspace_folders
+            && (folders.is_some() || profile.symbol_workspace_folders.is_some())
+        {
+            let policy = profile.symbol_workspace_folders.get_or_insert_default();
+            match source.target {
+                Target::Global => policy.global = folders,
+                Target::Project { project } => {
+                    policy.projects.entry(project.clone()).or_default().project = folders
+                }
+                Target::ProjectLocal { project } => {
+                    policy.projects.entry(project.clone()).or_default().local = folders
+                }
+                _ => unreachable!(),
+            }
+            policy.canonicalize()?;
+            if policy.empty() {
+                profile.symbol_workspace_folders = None;
+            }
         }
         if let Some(milliseconds) = symbol_info_budget
             && (milliseconds.is_some() || profile.symbol_info_budgets.is_some())
@@ -344,6 +377,9 @@ pub fn project(
     }
     if let Some(exclusions) = &profile.source_exclusions {
         exclusions.validate(&profile, deadline)?;
+    }
+    if let Some(folders) = &profile.symbol_workspace_folders {
+        folders.validate(&profile)?;
     }
     if let Some(budgets) = &profile.symbol_info_budgets {
         budgets.validate(&profile)?;
