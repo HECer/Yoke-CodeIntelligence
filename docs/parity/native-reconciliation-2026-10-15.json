@@ -12763,5 +12763,27 @@
     "original353InventoryLedgerAndSummaryUnchanged": true,
     "wholeNativeRerun": false,
     "fullContractCertification": false
+  },
+  "gitRepositoryScopedCaptureAcceptance20261023": {
+    "sourceCommit": "0749cd687bc8000c9c9cf007c47e8b4e7069b30e",
+    "evidence": "docs/validation/integration-2026-10-23/git-repository-scope/README.md",
+    "policy": "exact-host-git-working-files-v1",
+    "nativePassed": 746,
+    "nativeExistingIgnored": 9,
+    "newLibraryFunctions": 3,
+    "newIntegrationFunctions": 16,
+    "typescriptPassed": 260,
+    "typescriptExistingSkipped": 3,
+    "frozenInputs": 1086,
+    "formatRoots": 352,
+    "actualOwnedLiveProcessCalls": 27,
+    "workingSourceAndIndexObservationsDistinct": true,
+    "fixedSavedScopeRecheckWithoutGit": true,
+    "shadowRechecksPublishNoNewProof": true,
+    "workspaceApplyAndExactRecoveryWithoutGitAdmin": true,
+    "automaticPreferenceReuse": false,
+    "original353InventoryLedgerAndSummaryUnchanged": true,
+    "wholeNativeRerun": false,
+    "fullContractCertification": false
   }
 }

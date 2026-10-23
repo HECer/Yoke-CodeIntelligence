@@ -54,3 +54,7 @@ registrations. Those remain separate work and acceptance requirements.
 Windows qualification and actual Git/worktree/junction evidence are recorded in
 the [dated report](../../docs/validation/integration-2026-10-23/repository-discovery/README.md).
 Unix-only symlink coverage is present in the test source but was not run here.
+
+Explicit Git-index-bound working-source capture is available through the separate
+[repository-scope operation](git-repository-scope.md). Marker discovery itself
+continues to grant no capture or activation authority.

@@ -2,6 +2,31 @@
 
 ## Current integration work
 
+Explicit host Git repository scopes now distinguish index-pinned gitlinks from
+untracked nested-clone candidates with separate follow choices. An optional capture
+binds original metadata, physical names, exact working files and read-only crossed
+roots into immutable source evidence. Fresh index/physical rechecks precede
+publication; fixed saved-scope source checks need no live Git and publish no new
+proof. Native state is excluded from index enumeration, preserving repeat IDs.
+
+Source 0749cd68 passes 746 Rust functions across 24 scoped groups,
+including all 577 library functions (three new) and 16 new integration functions,
+with nine existing ignores and zero failures. All-target Clippy with warnings
+denied, build, typecheck, npm 260 passed/3 existing skips and 352 format roots
+pass on 1,086 frozen inputs; fmt-all retains Windows OS206. Actual live CLI uses
+27 owned process calls for real local submodule/nested scopes, exact legacy data,
+old-reader refusal, current/captured child restrictions, explicit host verification,
+approved parent workspace application and exact recovery with Git admin unavailable.
+All owned Jobs are empty; source/Git bytes are restored. The earlier passing gate
+missed saved-scope recapture: a genuine 0/1 counterexample and actual prototype
+apply refusal remain preserved, followed by corrected source and successful reuse
+of the same approved/verified plan. Compile-test and controller attempts remain
+auditable. No system/privilege/original-fixture changes occur.
+See [repository-scope evidence](validation/integration-2026-10-23/git-repository-scope/README.md)
+and the [host contract](../native/docs/git-repository-scope.md). Automatic preference
+reuse/default client adoption, wider repository formats/quality and whole-Windows/
+main/release acceptance remain open. Original inventory assessments are unchanged.
+
 Bounded host-only repository discovery now lists nested `.git` directory/file
 markers and their nearest marked ancestor under one explicit absolute search
 root. Exact candidate selection remains metadata. Marker redirects, source and
