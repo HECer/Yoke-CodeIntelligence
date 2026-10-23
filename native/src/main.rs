@@ -3236,10 +3236,32 @@ fn run_http(
             )?;
             ensure!(
                 (250..=30_000).contains(&host.request_timeout_ms)
-                    && principal.capture_options.repository_scope.is_none()
-                    && principal.collection_grants.is_empty(),
+                    && principal.capture_options.repository_scope.is_none(),
                 "Invalid HTTP Git project scope or request deadline"
             );
+            ensure!(
+                principal.collection_grants.is_empty() || principal.profile == "session",
+                "Collection grants require the Session profile"
+            );
+            ensure!(
+                principal.collection_grants.len() <= 100,
+                "Collection policy capacity exceeded"
+            );
+            for (name, grants) in &principal.collection_grants {
+                let collection = principal
+                    .host_profile
+                    .collections
+                    .iter()
+                    .find(|collection| &collection.name == name)
+                    .context("Collection grant policy is not host-registered")?;
+                ensure!(
+                    collection.receiver_project.is_some() && grants.len() <= 100,
+                    "Collection grant policy requires a registered receiver and bounded grants"
+                );
+                for id in grants.keys() {
+                    yoke::graph_collections::validate_registration_name(id)?;
+                }
+            }
         }
         if let Some(selection) = &principal.git_repository_capture {
             selection.admit(args.allow_git_index_read, args.trust_git)?;

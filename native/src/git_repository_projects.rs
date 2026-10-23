@@ -26,8 +26,8 @@ impl Hosts {
     /// Admit the complete name selection before resolving any registered root.
     pub fn validate_selectors(host: &HostProfile, selected: &BTreeSet<String>) -> Result<()> {
         ensure!(
-            host.projects.len() <= 100 && host.collections.is_empty(),
-            "Git project hosts require bounded projects without collections"
+            host.projects.len() <= 100 && host.collections.len() <= 100,
+            "Git project hosts require bounded projects and collections"
         );
         let mut expected = BTreeSet::from(["default".to_owned()]);
         for project in &host.projects {
@@ -43,6 +43,32 @@ impl Hosts {
             *selected == expected,
             "Git project hosts require exactly default and every registered project"
         );
+        let mut collections = BTreeSet::new();
+        for collection in &host.collections {
+            crate::graph_collections::validate_registration_name(&collection.name)?;
+            ensure!(
+                collections.insert(&collection.name) && collection.registry_root.is_absolute(),
+                "Invalid Git host collection registration"
+            );
+            ensure!(
+                collection.allowed_members.len() <= 100,
+                "Collection member capacity exceeded"
+            );
+            let mut members = BTreeSet::new();
+            for member in &collection.allowed_members {
+                crate::graph_collections::validate_registration_name(member)?;
+                ensure!(
+                    members.insert(member),
+                    "Duplicate allowed collection member"
+                );
+            }
+            if let Some(receiver) = &collection.receiver_project {
+                ensure!(
+                    expected.contains(receiver),
+                    "Collection receiver project is not registered"
+                );
+            }
+        }
         Ok(())
     }
     pub fn new(

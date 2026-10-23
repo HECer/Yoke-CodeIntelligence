@@ -146,9 +146,8 @@ impl Principal {
         );
         if let Some(projects) = &target.git_repository_projects {
             ensure!(
-                target.capture_options.repository_scope.is_none()
-                    && target.collection_grants.is_empty(),
-                "Git project hosts cannot import capture scope or collection grants"
+                target.capture_options.repository_scope.is_none(),
+                "Git project hosts cannot import capture scope"
             );
             projects.validate(&target.host, &target.root, &Deadline::new(30_000))?;
         }

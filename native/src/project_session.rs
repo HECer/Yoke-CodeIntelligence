@@ -312,6 +312,7 @@ impl Session {
         deadline: &Deadline,
     ) -> Result<Value> {
         deadline.check()?;
+        self.check_registered_git_state(deadline)?;
         ensure!(
             operation.starts_with("collections."),
             "Collection operation required"
@@ -401,7 +402,31 @@ impl Session {
             "Collection receiver store is unavailable"
         );
         let mut receiver = Engine::open_with_timeout(&root, deadline.remaining())?;
-        receiver.capture_options = self.engine.capture_options.validated()?;
+        receiver.capture_options = if self.git_repository_projects.is_some() {
+            // Imported archive authorization is independent of local Git membership.
+            // Select this receiver's host policy without capturing its local source.
+            let mut options = self
+                .host_capture_options
+                .as_ref()
+                .unwrap_or(&self.engine.capture_options)
+                .clone();
+            options.repository_scope = None;
+            if let Some(exclusions) = &self.host.source_exclusions {
+                options.source_exclusions =
+                    exclusions.select(receiver_name, options.source_exclusions.as_ref())?;
+            }
+            if let Some(respect) = self
+                .host
+                .git_ignore
+                .as_ref()
+                .and_then(|policy| policy.select(receiver_name))
+            {
+                options.include_git_ignored = !respect;
+            }
+            options.validated()?
+        } else {
+            self.engine.capture_options.validated()?
+        };
         let cap = CollectionInvocationAccess::new(name, receiver_name, &receiver, grants)?;
         self.invoke_collection_with_access(operation, args, &cap, deadline)
     }
@@ -424,6 +449,7 @@ impl Session {
     ) -> Result<Value> {
         use crate::graph_collections::Registry;
         deadline.check()?;
+        self.check_registered_git_state(deadline)?;
         // This counter admits JSON before allocation, including calls entering
         // through the invocation-only capability instead of ordinary invoke.
         struct Count<'a> {
