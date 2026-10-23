@@ -91,3 +91,7 @@ The independently implemented observable distinction was checked against pinned
 and [build-choice state](https://raw.githubusercontent.com/trailhq/Trail-Code/3f10899e2fcee1fc990e8c11f27085016d79d0de/src/util/state.ts).
 The implementation and bounded host authority differ; source-name agreement is
 not full behavioral, ranking, runtime or performance equivalence.
+
+Explicit `--capture --serve` starts a fixed-root native MCP host with the selected
+Git policy retained for subsequent indexing. See the [host contract](git-repository-host.md).
+This opt-in does not change ordinary serve/index, session/multiproject or HTTP defaults.

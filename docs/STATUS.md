@@ -2,6 +2,28 @@
 
 ## Current integration work
 
+Explicit `git repository-scope --capture --serve` now starts a fixed-root native
+MCP host after initial trusted capture. An invocation-owned, non-deserializable
+driver retains root/program/limits/preference binding for subsequent normal and
+bounded retrieval indexing. Native tool calls recheck current host preferences;
+stale changes refuse until restart. Current exact selection/read-only child policy
+also guards older writable snapshots. Client JSON grants no authority. Ordinary
+index/serve/catalog defaults stay exact; no source-write grant follows.
+
+Source c42f5067 passes 760 Rust functions across 26 scoped groups,
+including all 578 library functions (one new) and five new integration functions,
+with nine existing ignores and zero failures. All-target Clippy with warnings
+denied, build, typecheck, npm 260 passed/3 existing skips and 354 format roots pass
+on 1,091 frozen inputs; fmt-all retains Windows OS206. Actual native protocol
+indexing and pinned Claude 2.1.306 health run through 14 owned parent process calls;
+worker children inherit the assigned Job. Old/new warm default data/catalogs,
+original snapshot/graph/control rows and all source/Git bytes stay exact. All owned
+Jobs end empty. No model turn, automatic analyzed-code execution, original fixture
+or system/privilege changes occur. See [host evidence](validation/integration-2026-10-23/git-repository-host/README.md)
+and the [host contract](../native/docs/git-repository-host.md). Broader client/facade,
+session/multiproject/HTTP adoption, formats/quality and whole Windows/main/release
+acceptance remain open. Original inventory assessments are unchanged.
+
 Explicit host Git traversal preferences now persist submodule/nested follow choices
 for subsequent explicitly trusted repository captures. Root/workspace-bound CAS
 updates require exact expected IDs and host-write permission; clear/recreate gets
