@@ -16,6 +16,9 @@ use std::{
 #[path = "capture_directory_identity.rs"]
 pub(crate) mod directory_identity;
 pub use directory_identity::IgnoredDirectoryIdentity;
+#[path = "capture_repository_scope.rs"]
+pub(crate) mod repository_scope;
+pub use repository_scope::RepositoryScope;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub(crate) enum DeadlineFailure {
@@ -263,6 +266,8 @@ pub struct CaptureOptions {
     pub include_ignored_dirs: Vec<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub ignored_directory_identity: Option<IgnoredDirectoryIdentity>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub repository_scope: Option<RepositoryScope>,
 }
 impl CaptureOptions {
     pub fn validated(&self) -> Result<Self> {
@@ -284,6 +289,15 @@ impl CaptureOptions {
             out.dedup();
             Ok(out)
         };
+        if let Some(scope) = &self.repository_scope {
+            scope.validated()?;
+            ensure!(
+                !self.include_git_ignored
+                    && self.include_ignored_dirs.is_empty()
+                    && self.ignored_directory_identity.is_none(),
+                "Repository capture cannot combine ignored-source overrides"
+            );
+        }
         let only_dirs = normalize_dirs(&self.only_dirs)?;
         let include_dirs = normalize_dirs(&self.include_dirs)?;
         let include_ignored_dirs = normalize_dirs(&self.include_ignored_dirs)?;
@@ -388,6 +402,7 @@ impl CaptureOptions {
             read_only_dependency_dirs,
             include_ignored_dirs,
             ignored_directory_identity: self.ignored_directory_identity,
+            repository_scope: self.repository_scope.clone(),
         })
     }
     fn ignored_capture(&self) -> bool {
@@ -423,7 +438,11 @@ impl CaptureOptions {
                     .strip_prefix(dir)
                     .is_some_and(|tail| tail.starts_with('/'))
         };
-        self.only_dirs.is_empty() || self.only_dirs.iter().any(matches)
+        (self.only_dirs.is_empty() || self.only_dirs.iter().any(matches))
+            && self
+                .repository_scope
+                .as_ref()
+                .is_none_or(|scope| scope.includes(path))
     }
     pub fn language_for(&self, path: &str) -> String {
         self.language_for_at(
@@ -445,7 +464,11 @@ impl CaptureOptions {
 }
 fn read_path_kind(path: &str, options: &CaptureOptions) -> Result<bool> {
     crate::paths::normalized_syntax(path)?;
-    let mut read_only = options.ignored_prefix(path);
+    let mut read_only = options.ignored_prefix(path)
+        || options
+            .repository_scope
+            .as_ref()
+            .is_some_and(|scope| scope.read_only(path));
     for component in path.split('/') {
         if protected(component) {
             let dependency = component.to_ascii_lowercase();
@@ -495,7 +518,19 @@ pub fn capture_with_options_at(
     options: &CaptureOptions,
     deadline: &Deadline,
 ) -> Result<Snapshot> {
-    capture_inner(epoch, root, store, &options.validated()?, deadline)
+    ensure!(
+        options.repository_scope.is_none(),
+        "Repository capture requires explicit host Git inspection"
+    );
+    capture_inner(
+        epoch,
+        root,
+        store,
+        &options.validated()?,
+        deadline,
+        None,
+        true,
+    )
 }
 pub const DERIVED_OPTIONS_RECORD_KIND: &str = "native_capture_scope_derived_v1";
 pub(crate) fn validate_retention_record(
@@ -1578,13 +1613,15 @@ pub fn capture_for_snapshot(
     deadline: &Deadline,
 ) -> Result<Snapshot> {
     let epoch = capture_epoch_for_snapshot_with_deadline(store, snapshot, deadline)?;
-    capture_with_options_at(
-        epoch,
-        root,
-        store,
-        &options_for_snapshot(store, snapshot)?,
-        deadline,
-    )
+    let options = options_for_snapshot(store, snapshot)?;
+    if options.repository_scope.is_some() {
+        // This already checked immutable selection is reused only for a
+        // source staleness observation. It neither refreshes Git nor publishes
+        // a new source proof/graph or grants a broader current host selection.
+        capture_inner(epoch, root, store, &options, deadline, None, false)
+    } else {
+        capture_with_options_at(epoch, root, store, &options, deadline)
+    }
 }
 /// Called by guarded host workflows after publishing the derived manifest.
 /// This only carries capture scope; it never grants permission to write source.
@@ -1668,7 +1705,44 @@ fn scan(
                 })
         })
         .build();
+    let mut selected_omissions = Vec::new();
     let mut walks = vec![(false, walker)];
+    if let Some(scope) = &options.repository_scope {
+        walks.clear();
+        for path in &scope.files {
+            deadline.check()?;
+            let selected = crate::paths::scoped(root, path)?;
+            match fs::symlink_metadata(&selected) {
+                Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+                    selected_omissions.push(Omission {
+                        path: path.clone(),
+                        reason: "repository-captured-file-missing".into(),
+                    });
+                    continue;
+                }
+                Err(error) => return Err(error.into()),
+                Ok(metadata) if !metadata.is_file() || is_link(&metadata) => {
+                    selected_omissions.push(Omission {
+                        path: path.clone(),
+                        reason: "repository-captured-file-not-regular".into(),
+                    });
+                    continue;
+                }
+                Ok(_) => {}
+            }
+            let walk = WalkBuilder::new(selected)
+                .hidden(false)
+                .follow_links(false)
+                .ignore(false)
+                .git_ignore(false)
+                .git_global(false)
+                .git_exclude(false)
+                .require_git(false)
+                .parents(false)
+                .build();
+            walks.push((false, walk));
+        }
+    }
     if options.include_git_ignored {
         let included_names = options.include_dirs.clone();
         let dependencies = options.read_only_dependency_dirs.clone();
@@ -1749,7 +1823,13 @@ fn scan(
         walks.push((true, walk));
     }
     let mut files = Vec::new();
-    let mut omissions = Vec::new();
+    let mut omissions = options
+        .repository_scope
+        .as_ref()
+        .map(RepositoryScope::omissions)
+        .transpose()?
+        .unwrap_or_default();
+    omissions.extend(selected_omissions);
     let mut total = 0usize;
     let mut captured = BTreeSet::new();
     let mut ignored_paths = BTreeSet::new();
@@ -1762,7 +1842,7 @@ fn scan(
             "Capture omission capacity exceeded"
         );
         let (entry, selected) = entry?;
-        if entry.depth() == 0 && !selected {
+        if entry.depth() == 0 && !selected && options.repository_scope.is_none() {
             continue;
         }
         let relative = entry
@@ -1879,12 +1959,36 @@ fn scan(
 pub fn capture(root: &Path, store: &Store, deadline: &Deadline) -> Result<Snapshot> {
     capture_with_options(root, store, &CaptureOptions::default(), deadline)
 }
+pub(crate) fn capture_repository_options_at(
+    epoch: crate::analysis::AnalyzerEpoch,
+    root: &Path,
+    store: &Store,
+    options: &CaptureOptions,
+    deadline: &Deadline,
+    recheck: &dyn Fn() -> Result<()>,
+) -> Result<Snapshot> {
+    ensure!(
+        options.repository_scope.is_some() && store.db.is_autocommit(),
+        "Repository capture requires owned host inspection outside a transaction"
+    );
+    capture_inner(
+        epoch,
+        root,
+        store,
+        &options.validated()?,
+        deadline,
+        Some(recheck),
+        true,
+    )
+}
 fn capture_inner(
     epoch: crate::analysis::AnalyzerEpoch,
     root: &Path,
     store: &Store,
     options: &CaptureOptions,
     deadline: &Deadline,
+    recheck: Option<&dyn Fn() -> Result<()>>,
+    publish_options: bool,
 ) -> Result<Snapshot> {
     for _ in 0..3 {
         let selected = directory_identity::resolve_options(root, store, options, deadline)?;
@@ -1899,6 +2003,9 @@ fn capture_inner(
         }
         let options = effective;
         if files == second.0 && omissions == second.1 && ignored_paths == second.2 {
+            if let Some(recheck) = recheck {
+                recheck()?;
+            }
             if options.ignored_capture() {
                 return ignored::capture(
                     epoch,
@@ -1927,19 +2034,22 @@ fn capture_inner(
                     &omissions,
                     &options_hash,
                 ));
-                let record = CaptureOptionsRecord {
-                    snapshot_id: id.clone(),
-                    workspace_id: store.workspace_id.clone(),
-                    analyzer: epoch.producer().into(),
-                    options_hash,
-                    options: options.clone(),
-                };
-                let raw = serde_json::to_string(&record)?;
-                store.db.execute("INSERT INTO records(kind,id,value) VALUES(?1,?2,?3) ON CONFLICT(kind,id) DO NOTHING",rusqlite::params![OPTIONS_RECORD_KIND,id,raw])?;
-                ensure!(
-                    store.get_record::<CaptureOptionsRecord>(OPTIONS_RECORD_KIND, &id)? == record,
-                    "Immutable capture option collision"
-                );
+                if publish_options {
+                    let record = CaptureOptionsRecord {
+                        snapshot_id: id.clone(),
+                        workspace_id: store.workspace_id.clone(),
+                        analyzer: epoch.producer().into(),
+                        options_hash,
+                        options: options.clone(),
+                    };
+                    let raw = serde_json::to_string(&record)?;
+                    store.db.execute("INSERT INTO records(kind,id,value) VALUES(?1,?2,?3) ON CONFLICT(kind,id) DO NOTHING",rusqlite::params![OPTIONS_RECORD_KIND,id,raw])?;
+                    ensure!(
+                        store.get_record::<CaptureOptionsRecord>(OPTIONS_RECORD_KIND, &id)?
+                            == record,
+                        "Immutable capture option collision"
+                    );
+                }
             }
             return Ok(Snapshot {
                 id,

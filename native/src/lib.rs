@@ -160,6 +160,12 @@ impl Engine {
             .transpose()?;
         self.store.current_git_ignored_read_only = self.capture_options.include_git_ignored;
         self.store.current_physical_ignored_dirs = physical_ignored_dirs;
+        self.store.current_repository_scope = self
+            .capture_options
+            .repository_scope
+            .as_ref()
+            .map(capture::repository_scope::WritePolicy::from_scope)
+            .transpose()?;
         let policy = self
             .capture_options
             .source_exclusions
