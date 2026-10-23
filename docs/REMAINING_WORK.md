@@ -1,5 +1,27 @@
 # Remaining implementation and acceptance
 
+Explicit host Git traversal preferences now persist submodule/nested follow choices
+for subsequent explicitly trusted repository captures. Root/workspace-bound CAS
+updates require exact expected IDs and host-write permission; clear/recreate gets
+a fresh identity. Invocation overrides retain saved state. Current bindings are
+rechecked before source proof publication. Saved choices grant no Git trust or
+source/write authority; ordinary index and metadata-only scope stay unchanged.
+
+Source 7a31b97f passes 754 Rust functions across 25 scoped groups,
+including all 577 library functions and eight new preference integration functions,
+with nine existing ignores and zero failures. Clippy all-targets with warnings
+denied, build, typecheck, npm 260 passed/3 existing skips and 353 format roots pass
+on 1,089 frozen inputs; fmt-all retains Windows OS206. Actual CLI uses
+29 owned process calls for save/show/update/stale refusal/clear/recreate,
+invocation overrides and exact old/new default data and capture identities.
+Original source/Git bytes and preceding snapshot/graph/control rows stay exact;
+all owned Jobs are empty. Initial six-test qualification passes; one unused import
+is removed before the final eight-test gate. Original fixtures and system settings
+are unchanged. See [preference evidence](validation/integration-2026-10-23/git-repository-preferences/README.md)
+and the [host contract](../native/docs/git-repository-preferences.md). Default/client
+adoption, broader selectors/formats/quality and whole Windows/main/release acceptance
+remain open. Original inventory assessments are unchanged.
+
 Explicit host Git repository scopes now distinguish index-pinned gitlinks from
 untracked nested-clone candidates with separate follow choices. An optional capture
 binds original metadata, physical names, exact working files and read-only crossed

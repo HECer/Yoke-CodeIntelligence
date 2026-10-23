@@ -80,9 +80,11 @@ Absent/null repositoryScope keeps preceding configuration bytes, snapshot IDs an
 default behavior. Generic capture configuration cannot create a fresh Git-selected
 capture; use the explicit trusted operation. Existing snapshot query/plan paths
 can consume the checked saved selection. Older binaries explicitly reject the
-new field while retaining access to preceding captures. No automatic preference
-reuse, default/client adoption or whole-upstream/whole-Windows certification is
-claimed. Call the explicit operation again with the desired follow choices.
+new field while retaining access to preceding captures. Optional root/workspace-bound
+[host traversal preferences](git-repository-preferences.md) can supply follow choices
+to another explicitly trusted capture. Metadata-only discovery and ordinary index
+remain unchanged; default/client adoption and whole-upstream/whole-Windows
+certification remain open.
 
 The independently implemented observable distinction was checked against pinned
 [Trail walking](https://raw.githubusercontent.com/trailhq/Trail-Code/3f10899e2fcee1fc990e8c11f27085016d79d0de/src/ingest/fs.ts)
