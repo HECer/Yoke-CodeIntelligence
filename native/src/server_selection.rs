@@ -189,6 +189,7 @@ pub(crate) fn checked(id: &str, server: lsp::ConfiguredServer) -> Result<lsp::Co
         passive_profile: server.configuration.passive_profile,
         initialization_options: server.configuration.initialization_options,
         settings: server.configuration.settings,
+        resource_settings: server.configuration.resource_settings,
         workspace_folders: server.configuration.workspace_folders,
         language_ids: server.configuration.language_ids,
         open_languages: server.configuration.open_languages,

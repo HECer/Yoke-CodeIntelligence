@@ -33,6 +33,8 @@ pub struct HostRegistration {
     #[serde(default)]
     pub settings: Value,
     #[serde(default)]
+    pub resource_settings: Option<BTreeMap<String, serde_json::Map<String, Value>>>,
+    #[serde(default)]
     pub workspace_folders: Vec<String>,
     #[serde(default)]
     pub language_ids: BTreeMap<String, String>,
@@ -772,7 +774,7 @@ impl HostRegistration {
         } else {
             self.open_languages.clone()
         };
-        Ok(crate::lsp::ConfiguredServer {
+        let configured = crate::lsp::ConfiguredServer {
             server: crate::lsp::Server {
                 command,
                 args: self.args.clone(),
@@ -786,10 +788,13 @@ impl HostRegistration {
                 tcp_endpoint: self.tcp_endpoint,
                 initialization_options: self.initialization_options.clone(),
                 settings: self.settings.clone(),
+                resource_settings: self.resource_settings.clone(),
                 workspace_folders: self.workspace_folders.clone(),
                 language_ids: self.language_ids.clone(),
                 open_languages,
             },
-        })
+        };
+        crate::lsp::effective_resource_settings(&configured.configuration)?;
+        Ok(configured)
     }
 }

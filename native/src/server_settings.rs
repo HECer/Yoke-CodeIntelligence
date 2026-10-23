@@ -19,6 +19,8 @@ pub struct Settings {
     pub initialization_options: Option<Map<String, Value>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub settings: Option<Map<String, Value>>,
+    #[serde(rename = "resourceSettings", skip_serializing_if = "Option::is_none")]
+    pub resource_settings: Option<BTreeMap<String, Map<String, Value>>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ls_path: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -80,7 +82,7 @@ fn command(value: &str) -> Result<()> {
     Ok(())
 }
 impl Settings {
-    fn validate(&self) -> Result<()> {
+    pub(crate) fn validate(&self) -> Result<()> {
         ensure!(
             self.ls_path.is_none() || self.ls_base_cmd.is_none(),
             "server_settings_command_forms_conflict"
@@ -131,6 +133,9 @@ impl Settings {
                 serde_json::to_vec(options)?.len() <= 64000,
                 "{capacity_error}"
             );
+        }
+        if let Some(resources) = &self.resource_settings {
+            lsp::validate_resource_entries(resources)?;
         }
         Ok(())
     }
@@ -209,6 +214,19 @@ impl Settings {
             .validate()?;
             result.configuration.settings = Value::Object(merged);
         }
+        if let Some(resources) = &self.resource_settings {
+            let merged = result
+                .configuration
+                .resource_settings
+                .get_or_insert_default();
+            for (path, settings) in resources {
+                merged
+                    .entry(path.clone())
+                    .or_default()
+                    .extend(settings.clone());
+            }
+        }
+        lsp::effective_resource_settings(&result.configuration)?;
         // Runtime/source-execution/passive authority is copied unchanged. The
         // common LSP admission still checks the effective settings before spawn.
         Ok(result)

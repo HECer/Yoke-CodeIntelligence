@@ -25,6 +25,11 @@ use url::Url;
 #[path = "lsp_refactor_intents.rs"]
 mod refactor_intents;
 pub(crate) use refactor_intents::stage_move_intent_at;
+#[path = "lsp_resource_settings.rs"]
+mod resource_settings;
+pub(crate) use resource_settings::{
+    effective as effective_resource_settings, validate_entries as validate_resource_entries,
+};
 
 fn receive_cooperatively<T>(channel: &Receiver<T>, deadline: &Deadline) -> Result<T> {
     loop {
@@ -63,6 +68,8 @@ pub struct HostConfiguration {
     pub initialization_options: Value,
     #[serde(default)]
     pub settings: Value,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub resource_settings: Option<BTreeMap<String, serde_json::Map<String, Value>>>,
     #[serde(default)]
     pub workspace_folders: Vec<String>,
     #[serde(default)]
@@ -496,6 +503,7 @@ struct Session {
     diagnostic_bytes: usize,
     quiescent: bool,
     settings: Value,
+    resource_settings: Option<resource_settings::Binding>,
     workspace_folders: Option<Value>,
     _cargo_home: Option<tempfile::TempDir>,
 }
@@ -656,6 +664,7 @@ impl Session {
             diagnostic_bytes: 0,
             quiescent: false,
             settings: Value::Null,
+            resource_settings: None,
             workspace_folders: None,
             _cargo_home: None,
         })
@@ -724,7 +733,16 @@ impl Session {
                     let mut bytes =
                         1024usize.saturating_add(serde_json::to_vec(&message["id"])?.len());
                     for item in items {
-                        let mut value = &self.settings;
+                        ensure!(
+                            item.is_object(),
+                            "Configuration callback item must be an object"
+                        );
+                        let mut value = match &self.resource_settings {
+                            Some(binding) => {
+                                binding.select(item.get("scopeUri"), &self.settings)?
+                            }
+                            None => &self.settings,
+                        };
                         if let Some(section) = item.get("section") {
                             let section = section
                                 .as_str()
@@ -2049,6 +2067,10 @@ fn validate_passive_host(
     ] {
         bounded_host_json(value, 64000, deadline)?;
     }
+    let mut resources = resource_settings::effective(configuration)?;
+    for value in resources.iter().flat_map(|values| values.values()) {
+        bounded_host_json(value, 64000, deadline)?;
+    }
     if configuration.allow_source_execution {
         return Ok(());
     }
@@ -2076,7 +2098,10 @@ fn validate_passive_host(
     for root in [
         &configuration.initialization_options,
         &configuration.settings,
-    ] {
+    ]
+    .into_iter()
+    .chain(resources.iter().flat_map(|values| values.values()))
+    {
         if profile == PassiveProfile::TypescriptLanguageServer {
             ensure!(
                 root.get("plugins")
@@ -2111,54 +2136,66 @@ fn validate_passive_host(
         if !passive_rust(server, Some(configuration)) {
             continue;
         }
-        let value = root.get("rust-analyzer").unwrap_or(root);
-        ensure!(
-            value.get("linkedProjects").is_none_or(
-                |projects| projects.is_null() || projects.as_array().is_some_and(Vec::is_empty)
-            ) && value["workspace"]["discoverConfig"]["command"].is_null(),
-            "Passive Rust linked/discovered project redirects require source-bound private mappings"
-        );
-        ensure!(
-            value["cargo"]["buildScripts"]["enable"] != true
-                && value["procMacro"]["enable"] != true
-                && value["checkOnSave"] != true,
-            "Rust execution settings require explicit host allowSourceExecution"
-        );
-        for selector in [
-            &value["cargo"]["extraArgs"],
-            &value["cargo"]["buildScripts"]["overrideCommand"],
-            &value["check"]["overrideCommand"],
-            &value["check"]["extraArgs"],
-        ] {
+        for value in std::iter::once(root).chain(root.get("rust-analyzer")) {
             ensure!(
-                selector.is_null() || selector.as_array().is_some_and(Vec::is_empty),
-                "Rust tool arguments/commands require explicit host allowSourceExecution"
+                value
+                    .get("linkedProjects")
+                    .is_none_or(|projects| projects.is_null()
+                        || projects.as_array().is_some_and(Vec::is_empty))
+                    && value["workspace"]["discoverConfig"]["command"].is_null(),
+                "Passive Rust linked/discovered project redirects require source-bound private mappings"
             );
+            ensure!(
+                value["cargo"]["buildScripts"]["enable"] != true
+                    && value["procMacro"]["enable"] != true
+                    && value["checkOnSave"] != true,
+                "Rust execution settings require explicit host allowSourceExecution"
+            );
+            for selector in [
+                &value["cargo"]["extraArgs"],
+                &value["cargo"]["buildScripts"]["overrideCommand"],
+                &value["check"]["overrideCommand"],
+                &value["check"]["extraArgs"],
+            ] {
+                ensure!(
+                    selector.is_null() || selector.as_array().is_some_and(Vec::is_empty),
+                    "Rust tool arguments/commands require explicit host allowSourceExecution"
+                );
+            }
+            for key in [
+                "PATH",
+                "RUSTUP_HOME",
+                "RUSTFLAGS",
+                "CARGO_ENCODED_RUSTFLAGS",
+                "RUSTC_BOOTSTRAP",
+                "CARGO_TARGET_DIR",
+                "LD_PRELOAD",
+                "LD_LIBRARY_PATH",
+                "DYLD_INSERT_LIBRARIES",
+                "DYLD_LIBRARY_PATH",
+                "CARGO_HOME",
+                "RUSTC",
+                "RUSTC_WRAPPER",
+                "RUSTC_WORKSPACE_WRAPPER",
+                "CARGO_BUILD_RUSTC",
+                "CARGO_BUILD_RUSTC_WRAPPER",
+                "CARGO_BUILD_RUSTC_WORKSPACE_WRAPPER",
+                "RUSTUP_TOOLCHAIN",
+            ] {
+                ensure!(
+                    value["cargo"]["extraEnv"]
+                        .as_object()
+                        .is_none_or(|environment| environment
+                            .keys()
+                            .all(|name| !name.eq_ignore_ascii_case(key))),
+                    "Rust compiler override requires explicit host allowSourceExecution"
+                );
+            }
         }
-        for key in [
-            "PATH",
-            "RUSTUP_HOME",
-            "RUSTFLAGS",
-            "CARGO_ENCODED_RUSTFLAGS",
-            "RUSTC_BOOTSTRAP",
-            "CARGO_TARGET_DIR",
-            "LD_PRELOAD",
-            "LD_LIBRARY_PATH",
-            "DYLD_INSERT_LIBRARIES",
-            "DYLD_LIBRARY_PATH",
-            "CARGO_HOME",
-            "RUSTC",
-            "RUSTC_WRAPPER",
-            "RUSTC_WORKSPACE_WRAPPER",
-            "CARGO_BUILD_RUSTC",
-            "CARGO_BUILD_RUSTC_WRAPPER",
-            "CARGO_BUILD_RUSTC_WORKSPACE_WRAPPER",
-            "RUSTUP_TOOLCHAIN",
-        ] {
-            ensure!(
-                value["cargo"]["extraEnv"].get(key).is_none(),
-                "Rust compiler override requires explicit host allowSourceExecution"
-            );
+    }
+    if passive_rust(server, Some(configuration)) {
+        for value in resources.iter_mut().flat_map(|values| values.values_mut()) {
+            resource_settings::enforce_passive_rust(value)?;
         }
     }
     Ok(())
@@ -2541,6 +2578,20 @@ fn initialize_provider_at(
         "Passive provider selector omission capacity or target invalid"
     );
     let passive_rust = passive_rust(server, configuration);
+    let mut resources = configuration
+        .map(resource_settings::effective)
+        .transpose()?
+        .flatten();
+    if passive_rust {
+        for value in resources.iter_mut().flat_map(|values| values.values_mut()) {
+            resource_settings::enforce_passive_rust(value)?;
+        }
+    }
+    let resource_binding = resources
+        .map(|settings| {
+            resource_settings::Binding::new(tree.path(), snapshot, &exclusions, settings, deadline)
+        })
+        .transpose()?;
     if passive_rust {
         validate_passive_manifest_sources(engine, snapshot, deadline)?;
     }
@@ -2559,6 +2610,7 @@ fn initialize_provider_at(
         Session::spawn_scoped(server, tree.path(), passive_rust, deadline)?
     };
     let root_uri = uri(tree.path())?;
+    session.resource_settings = resource_binding;
     let document_uri = uri(&tree.path().join(path))?;
     let mut initialize = json!({"processId":std::process::id(),"rootUri":root_uri,"rootPath":tree.path().display().to_string(),"workspaceFolders":[{"uri":root_uri,"name":"immutable-snapshot"}],"capabilities":{"general":{"positionEncodings":["utf-16"]},"window":{"workDoneProgress":true},"experimental":{"serverStatusNotification":true},"workspace":{"configuration":true,"applyEdit":false,"workspaceEdit":{"documentChanges":true,"resourceOperations":["create","rename","delete"]}},"textDocument":{"rename":{"prepareSupport":true},"definition":{"linkSupport":true},"declaration":{"linkSupport":true},"typeDefinition":{"linkSupport":true},"implementation":{"linkSupport":true},"references":{},"documentSymbol":{"hierarchicalDocumentSymbolSupport":true},"callHierarchy":{},"typeHierarchy":{},"completion":{"completionItem":{"snippetSupport":false,"insertReplaceSupport":true}},"signatureHelp":{},"diagnostic":{},"publishDiagnostics":{"versionSupport":true},"codeAction":{"codeActionLiteralSupport":{"codeActionKind":{"valueSet":["quickfix","refactor","source"]}}}}},"initializationOptions":{"cargo":{"buildScripts":{"enable":false},"extraEnv":{"CARGO_NET_OFFLINE":"true"}},"procMacro":{"enable":false},"checkOnSave":false}});
     initialize["capabilities"]["workspace"]["fileOperations"] =

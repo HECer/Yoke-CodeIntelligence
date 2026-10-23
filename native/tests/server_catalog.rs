@@ -13,6 +13,7 @@ fn registration() -> HostRegistration {
         passive_profile: None,
         initialization_options: json!({"cargo":{"buildScripts":{"enable":false}}}),
         settings: json!({}),
+        resource_settings: None,
         workspace_folders: vec![".".into()],
         language_ids: BTreeMap::new(),
         open_languages: vec!["rust".into()],
