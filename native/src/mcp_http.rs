@@ -39,6 +39,7 @@ pub struct Target {
     pub host: HostProfile,
     pub capture_options: CaptureOptions,
     pub git_repository_capture: Option<crate::git_workflows::repository_host::Host>,
+    pub git_repository_projects: Option<crate::git_workflows::repository_projects::Hosts>,
     pub servers: Vec<crate::lsp::ConfiguredServer>,
     pub host_servers: Vec<crate::server_selection::HostServerSpec>,
     pub allow_writes: bool,
@@ -55,6 +56,7 @@ impl Target {
             host,
             capture_options: CaptureOptions::default(),
             git_repository_capture: None,
+            git_repository_projects: None,
             servers: Vec::new(),
             host_servers: Vec::new(),
             allow_writes: false,
@@ -64,11 +66,14 @@ impl Target {
     }
     fn open(&self, deadline: &Deadline, capture_source: bool) -> Result<Session> {
         deadline.check()?;
-        let prepared = self
-            .git_repository_capture
-            .clone()
-            .map(|driver| driver.prepare(deadline))
-            .transpose()?;
+        let driver = if let Some(driver) = &self.git_repository_capture {
+            Some(driver.clone())
+        } else if let Some(projects) = &self.git_repository_projects {
+            Some(projects.primary()?.clone())
+        } else {
+            None
+        };
+        let prepared = driver.map(|driver| driver.prepare(deadline)).transpose()?;
         let mut engine = Engine::open_with_timeout(&self.root, deadline.remaining())?;
         engine.allow_writes = self.allow_writes;
         engine.capture_options = self.capture_options.validated()?;
@@ -84,14 +89,22 @@ impl Target {
             spec.clone().register(&mut engine, true)?;
         }
         // This independent random label is not the transport session secret.
-        let mut session = Session::open(
-            engine,
-            self.host.clone(),
-            Some(&format!("http-{}", random_id()?)),
-            deadline,
-        )?;
-        if capture_source && self.git_repository_capture.is_some() {
-            session.active_engine_at(deadline)?.index(deadline)?;
+        let label = format!("http-{}", random_id()?);
+        let mut session = if let Some(projects) = &self.git_repository_projects {
+            Session::open_with_git_projects(
+                engine,
+                self.host.clone(),
+                Some(&label),
+                projects.clone(),
+                deadline,
+            )?
+        } else {
+            Session::open(engine, self.host.clone(), Some(&label), deadline)?
+        };
+        if capture_source
+            && (self.git_repository_capture.is_some() || self.git_repository_projects.is_some())
+        {
+            session.index_initial_git_source(deadline)?;
         }
         Ok(session)
     }
@@ -127,6 +140,18 @@ impl Principal {
             "Host write authority requires editing mode"
         );
         target.capture_options = target.capture_options.validated()?;
+        ensure!(
+            target.git_repository_capture.is_none() || target.git_repository_projects.is_none(),
+            "Select either a fixed Git host or registered Git project hosts"
+        );
+        if let Some(projects) = &target.git_repository_projects {
+            ensure!(
+                target.capture_options.repository_scope.is_none()
+                    && target.collection_grants.is_empty(),
+                "Git project hosts cannot import capture scope or collection grants"
+            );
+            projects.validate(&target.host, &target.root, &Deadline::new(30_000))?;
+        }
         if let Some(driver) = &target.git_repository_capture {
             ensure!(
                 driver.root() == target.root

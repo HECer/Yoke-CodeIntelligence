@@ -219,6 +219,7 @@ pub(crate) fn validate_retention_record(
     Ok(())
 }
 pub struct Session {
+    git_repository_projects: Option<crate::git_workflows::repository_projects::Hosts>,
     dashboard: Option<crate::session_dashboard::Handle>,
     dashboard_lifetime: Option<std::sync::Arc<std::sync::atomic::AtomicBool>>,
     host_backend_servers: Option<BTreeMap<String, crate::lsp::ConfiguredServer>>,
@@ -242,7 +243,7 @@ pub struct Session {
 fn project_root_key(path: &std::path::Path) -> Option<String> {
     Some(project_root_spelling(path.to_str()?, cfg!(windows)))
 }
-fn roots_overlap(a: &std::path::Path, b: &std::path::Path) -> bool {
+pub(crate) fn roots_overlap(a: &std::path::Path, b: &std::path::Path) -> bool {
     match (project_root_key(a), project_root_key(b)) {
         (Some(a), Some(b)) => {
             a == b || a.starts_with(&format!("{b}/")) || b.starts_with(&format!("{a}/"))
@@ -269,7 +270,7 @@ fn project_root_spelling(value: &str, windows: bool) -> String {
     value
 }
 
-fn label(s: &str) -> Result<()> {
+pub(crate) fn label(s: &str) -> Result<()> {
     ensure!(
         !s.is_empty()
             && s.len() <= 100
@@ -856,13 +857,43 @@ impl Session {
         self.host.global_notes_root.is_some()
     }
     pub fn open(
-        mut engine: Engine,
-        mut host: HostProfile,
+        engine: Engine,
+        host: HostProfile,
         session_id: Option<&str>,
         deadline: &Deadline,
     ) -> Result<Self> {
+        Self::open_inner(engine, host, session_id, None, deadline)
+    }
+    /// Explicit typed Git authorities for every already registered project.
+    pub fn open_with_git_projects(
+        engine: Engine,
+        host: HostProfile,
+        session_id: Option<&str>,
+        projects: crate::git_workflows::repository_projects::Hosts,
+        deadline: &Deadline,
+    ) -> Result<Self> {
+        Self::open_inner(engine, host, session_id, Some(projects), deadline)
+    }
+    fn open_inner(
+        mut engine: Engine,
+        mut host: HostProfile,
+        session_id: Option<&str>,
+        git_repository_projects: Option<crate::git_workflows::repository_projects::Hosts>,
+        deadline: &Deadline,
+    ) -> Result<Self> {
         engine.store.set_deadline(deadline)?;
-        if engine.git_repository_host.is_some() {
+        if let Some(projects) = &git_repository_projects {
+            projects.validate(&host, &engine.root, deadline)?;
+            ensure!(
+                engine
+                    .git_repository_host
+                    .as_ref()
+                    .map(|driver| driver.binding())
+                    .transpose()?
+                    == Some(projects.primary()?.binding()?),
+                "Session primary Git driver does not match project hosts"
+            );
+        } else if engine.git_repository_host.is_some() {
             ensure!(
                 host.projects.is_empty() && host.collections.is_empty(),
                 "Git repository host requires a fixed-root session without registered projects or collections"
@@ -1095,6 +1126,15 @@ impl Session {
                 fingerprint,
                 "host_git_repository_capture_v1",
                 driver.binding()?,
+            ))
+        } else {
+            fingerprint
+        };
+        let fingerprint = if let Some(projects) = &git_repository_projects {
+            identity(&(
+                fingerprint,
+                "host_git_registered_projects_v1",
+                projects.binding()?,
             ))
         } else {
             fingerprint
@@ -1437,6 +1477,7 @@ impl Session {
             ensure!(inserted == 1, "Concurrent session creation; retry");
         }
         Ok(Self {
+            git_repository_projects,
             dashboard: None,
             dashboard_lifetime: None,
             host_backend_servers,
@@ -1536,10 +1577,14 @@ impl Session {
         }
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
+        if let Some(projects) = &self.git_repository_projects {
+            projects.check_current(deadline)?;
+        }
         if let Some(driver) = &self.engine.git_repository_host {
             driver.check(&self.engine.store, deadline)?;
         }
-        if self.engine.git_repository_host.is_some()
+        if self.git_repository_projects.is_some()
+            || self.engine.git_repository_host.is_some()
             || self.host.dashboard.is_some()
             || self.host.git_ignore.is_some()
             || self.host.additional_workspace_folders.is_some()
@@ -1562,6 +1607,12 @@ impl Session {
                 deadline,
                 "Session state changed concurrently; resume before using selected tools",
             )?;
+        }
+        Ok(())
+    }
+    pub(crate) fn check_registered_git_state(&self, deadline: &Deadline) -> Result<()> {
+        if self.git_repository_projects.is_some() {
+            self.check_tool_state(deadline)?;
         }
         Ok(())
     }
@@ -1798,6 +1849,14 @@ impl Session {
             .find(|p| p.name == name)
             .context("Project is not host-registered")?;
         if !self.others.contains_key(name) {
+            // A secondary root has its own fresh metadata and budget before cold state.
+            let prepared_git = self
+                .git_repository_projects
+                .as_ref()
+                .and_then(|projects| projects.project(name))
+                .cloned()
+                .map(|driver| driver.prepare(deadline))
+                .transpose()?;
             let mut engine = Engine::open_with_timeout(&project.root, deadline.remaining())?;
             engine.allow_writes =
                 self.host_allow_writes && !project.read_only && !project.query_only;
@@ -1811,6 +1870,9 @@ impl Session {
                 .as_ref()
                 .unwrap_or(&self.engine.capture_options)
                 .clone();
+            if self.git_repository_projects.is_some() {
+                engine.capture_options.repository_scope = None;
+            }
             if let Some(exclusions) = &self.host.source_exclusions {
                 engine.capture_options.source_exclusions =
                     exclusions.select(name, engine.capture_options.source_exclusions.as_ref())?;
@@ -1824,6 +1886,9 @@ impl Session {
             {
                 engine.capture_options.include_git_ignored = !respect;
                 engine.capture_options = engine.capture_options.validated()?;
+            }
+            if let Some(driver) = prepared_git {
+                driver.attach_prepared(&mut engine, deadline)?;
             }
             engine.sync_source_exclusions(deadline)?;
             engine.capture_epoch = self.capture_epoch;
@@ -1853,6 +1918,9 @@ impl Session {
                 .and_then(|s| s.select(name))
                 .map(<[String]>::to_vec);
             engine.server_configurations = self.engine.server_configurations.clone();
+            if self.git_repository_projects.is_some() {
+                engine.index(deadline)?;
+            }
             self.others.insert(name.into(), engine);
         }
         let engine = self
@@ -1893,6 +1961,16 @@ impl Session {
     pub fn active_engine_at(&mut self, deadline: &Deadline) -> Result<&mut Engine> {
         let active = self.state.active_project.clone();
         self.project_engine(&active, deadline)
+    }
+    pub(crate) fn index_initial_git_source(&mut self, deadline: &Deadline) -> Result<()> {
+        let active = self.state.active_project.clone();
+        if self.git_repository_projects.is_some() && active != "default" {
+            // Opening a secondary engine already performs its first policy-bound capture.
+            self.project_engine(&active, deadline)?;
+        } else {
+            self.active_engine_at(deadline)?.index(deadline)?;
+        }
+        Ok(())
     }
     /// Resolve a registered project for crate-owned immutable query adapters.
     /// Callers must reject plan-producing operations before using this engine.

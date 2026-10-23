@@ -338,6 +338,9 @@ impl ConnectionState {
         bytes: &[u8],
     ) -> Result<Option<Value>> {
         self.bind(profile, false)?;
+        if profile == Profile::Native {
+            session.check_registered_git_state(&crate::capture::Deadline::new(120000))?;
+        }
         let mut backend = match profile {
             Profile::Native => Backend::Native(&mut session.engine),
             Profile::Session => Backend::Session(session, None),

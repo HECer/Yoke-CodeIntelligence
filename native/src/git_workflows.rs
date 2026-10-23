@@ -35,6 +35,8 @@ pub mod owners;
 pub mod repository_host;
 #[path = "git_repository_preferences.rs"]
 pub mod repository_preferences;
+#[path = "git_repository_projects.rs"]
+pub mod repository_projects;
 #[path = "git_repository_scope.rs"]
 pub mod repository_scope;
 pub use history_read::Options as HistoryOptions;

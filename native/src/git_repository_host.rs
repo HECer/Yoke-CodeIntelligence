@@ -72,6 +72,9 @@ impl Host {
     pub(crate) fn root(&self) -> &Path {
         &self.root
     }
+    pub(crate) fn check_current(&self, d: &Deadline) -> Result<()> {
+        self.preference.check_current(d)
+    }
     /// Only metadata is acquired before a transport applies its full source policy.
     pub(crate) fn prepare(mut self, d: &Deadline) -> Result<Self> {
         self.preference.check_current(d)?;

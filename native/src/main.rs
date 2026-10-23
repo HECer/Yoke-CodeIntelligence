@@ -3008,6 +3008,9 @@ struct HttpPrincipalFile {
     #[serde(default)]
     git_repository_capture: Option<git_repository_http_cli::Selection>,
     #[serde(default)]
+    git_repository_projects:
+        Option<std::collections::BTreeMap<String, git_repository_http_cli::Selection>>,
+    #[serde(default)]
     servers: Vec<yoke::server_selection::HostServerSpec>,
     #[serde(default)]
     allow_writes: bool,
@@ -3109,6 +3112,25 @@ fn run_http(
             "MCP source writes require --allow-writes"
         );
         principal.capture_options.clone().validated()?;
+        ensure!(
+            principal.git_repository_capture.is_none()
+                || principal.git_repository_projects.is_none(),
+            "Select either a fixed Git host or registered Git project hosts"
+        );
+        if let Some(projects) = &principal.git_repository_projects {
+            git_repository_http_cli::admit_projects(
+                projects,
+                &principal.host_profile,
+                args.allow_git_index_read,
+                args.trust_git,
+            )?;
+            ensure!(
+                (250..=30_000).contains(&host.request_timeout_ms)
+                    && principal.capture_options.repository_scope.is_none()
+                    && principal.collection_grants.is_empty(),
+                "Invalid HTTP Git project scope or request deadline"
+            );
+        }
         if let Some(selection) = &principal.git_repository_capture {
             selection.admit(args.allow_git_index_read, args.trust_git)?;
             ensure!(
@@ -3143,20 +3165,35 @@ fn run_http(
         .principals
         .iter()
         .map(|principal| -> Result<_> {
-            principal
-                .git_repository_capture
-                .as_ref()
-                .map(|selection| -> Result<_> {
-                    let selected_root = principal.root.as_deref().unwrap_or(root).canonicalize()?;
-                    let driver = selection.prepare(
-                        &selected_root,
-                        args.allow_git_index_read,
-                        args.trust_git,
-                        &Deadline::new(host.request_timeout_ms),
-                    )?;
-                    Ok((selected_root, driver))
-                })
-                .transpose()
+            if principal.git_repository_capture.is_none()
+                && principal.git_repository_projects.is_none()
+            {
+                return Ok(None);
+            }
+            let selected_root = principal.root.as_deref().unwrap_or(root).canonicalize()?;
+            let deadline = Deadline::new(host.request_timeout_ms);
+            if let Some(selection) = &principal.git_repository_capture {
+                let driver = selection.prepare(
+                    &selected_root,
+                    args.allow_git_index_read,
+                    args.trust_git,
+                    &deadline,
+                )?;
+                Ok(Some((selected_root, Some(driver), None)))
+            } else {
+                let projects = git_repository_http_cli::prepare_projects(
+                    &selected_root,
+                    &principal.host_profile,
+                    principal
+                        .git_repository_projects
+                        .as_ref()
+                        .context("Git project selection missing")?,
+                    args.allow_git_index_read,
+                    args.trust_git,
+                    &deadline,
+                )?;
+                Ok(Some((selected_root, None, Some(projects))))
+            }
         })
         .collect::<Result<Vec<_>>>()?;
     let tls = host
@@ -3176,9 +3213,10 @@ fn run_http(
             principal.host_profile,
         );
         target.capture_options = principal.capture_options;
-        if let Some((selected_root, driver)) = git_selection {
+        if let Some((selected_root, driver, projects)) = git_selection {
             target.root = selected_root;
-            target.git_repository_capture = Some(driver);
+            target.git_repository_capture = driver;
+            target.git_repository_projects = projects;
         }
         target.host_servers = principal.servers;
         target.allow_writes = principal.allow_writes;
