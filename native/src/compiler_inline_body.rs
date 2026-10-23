@@ -238,11 +238,16 @@ fn statement_for(call: Node<'_>) -> Result<Node<'_>> {
             },
         );
     }
+    let complete_value = match parent.kind() {
+        "if_statement" => parent.child_by_field_name("condition"),
+        "switch_statement" => parent.child_by_field_name("value"),
+        "expression_statement" | "return_statement" | "throw_statement" => {
+            children(parent).first().copied()
+        }
+        _ => None,
+    };
     ensure!(
-        matches!(parent.kind(), "expression_statement" | "return_statement")
-            && children(parent)
-                .first()
-                .is_some_and(|n| n.id() == value.id()),
+        complete_value.is_some_and(|n| n.id() == value.id()),
         "Function-body expression context needs sequencing"
     );
     Ok(parent)
@@ -692,7 +697,11 @@ pub(super) fn render(
     let mut out = Rendered::default();
     let wrap = matches!(
         statement.kind(),
-        "return_statement" | "expression_statement"
+        "return_statement"
+            | "expression_statement"
+            | "throw_statement"
+            | "if_statement"
+            | "switch_statement"
     );
     if wrap {
         out.generated(&format!("{{{line}"))?;
@@ -872,6 +881,33 @@ pub(super) fn render(
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn statement_heads_require_the_exact_once_only_original_ast_field() {
+        let d = Deadline::new(10_000);
+        for (statement, expected) in [
+            ("if(((helper()))){}else{}", Some("if_statement")),
+            (
+                "switch(((helper()))){default:break;}",
+                Some("switch_statement"),
+            ),
+            ("throw ((helper()));", Some("throw_statement")),
+            ("if(flag&&helper()){}", None),
+            ("switch(1+helper()){}", None),
+            ("throw other(helper());", None),
+            ("while(helper()){}", None),
+            ("do{}while(helper());", None),
+            ("for(;helper();){}", None),
+            ("for(const x of helper()){}", None),
+            ("switch(flag){case helper():break;}", None),
+        ] {
+            let source = format!("function run(){{{statement}}}");
+            let tree = parse("typescript", &source, &d).unwrap();
+            let start = source.find("helper()").unwrap();
+            let call = node_at(&tree, start, start + "helper()".len(), &d).unwrap();
+            let actual = statement_for(call);
+            assert_eq!(actual.as_ref().ok().map(|n| n.kind()), expected, "{source}");
+        }
+    }
     #[test]
     fn anonymous_return_barriers_follow_expression_wrappers_and_preserve_never_call_flow() {
         let d = Deadline::new(10_000);

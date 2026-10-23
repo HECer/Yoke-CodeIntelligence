@@ -1435,3 +1435,83 @@ fn body_cli_plans_require_independent_verification_approval_and_foreign_preservi
         );
     }
 }
+
+#[test]
+fn once_only_statement_heads_keep_control_effects_finally_and_unicode_bytes() {
+    for source in [
+        "const events:string[]=[];function helper(n:number){events.push('body:'+n);try{return n>0;}finally{events.push('finally');}}export function run(){outer:for(const n of [0,1,2])if((helper((events.push('arg:'+n),n)))){events.push('yes');continue outer;}else events.push('no');return events;}export const observed=run(); // café 🦀\n",
+        "const events:string[]=[];function helper(n:number){events.push('body:'+n);return n*2;}function key(){events.push('case');return 2;}export function run(){outer:for(const n of [0,1,2])switch((helper((events.push('arg:'+n),n)))){case key():events.push('two');continue outer;case 0:events.push('zero');break;default:events.push('other');}return events;}export const observed=run();\n",
+        "const events:string[]=[];function helper(n:number){try{events.push('body');return 'value:'+n;}finally{events.push('body-finally');}}export function run(){try{throw ((helper((events.push('arg'),3))));}catch(error){events.push(String(error));}finally{events.push('caller-finally');}return events;}export const observed=run();\n",
+        "const events:string[]=[];function helper():never{events.push('body');throw 'inner';}export function run(){try{throw helper();}catch(error){events.push(String(error));}return events;}export const observed=run();\n",
+    ] {
+        for newline in ["\n", "\r\n"] {
+            let source = source.replace('\n', newline);
+            let (root, mut engine) = fixture(&source, "ts");
+            let r =
+                yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+                    .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+            let after = planned(&engine, &r, "ts");
+            assert!(!after.contains("function helper"), "{after}");
+            same_execution(&source, &after);
+            assert_eq!(
+                fs::read(root.path().join("main.ts")).unwrap(),
+                source.as_bytes()
+            );
+        }
+    }
+}
+#[test]
+fn direct_if_heads_keep_explicit_and_inferred_predicate_flow() {
+    for annotation in [":value is string", ""] {
+        let source = format!(
+            "function helper(value:unknown){annotation}{{return typeof value==='string';}}export function run(input:unknown){{if((helper(input)))return input.length;else return 0;}}export const observed=[run('owned'),run(3)];\n"
+        );
+        let (root, mut engine) = fixture(&source, "ts");
+        let r = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+            .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        let after = planned(&engine, &r, "ts");
+        same_execution(&source, &after);
+        assert_eq!(
+            fs::read(root.path().join("main.ts")).unwrap(),
+            source.as_bytes()
+        );
+    }
+}
+#[test]
+fn statement_heads_keep_javascript_jsdoc_and_unbraced_else_ownership() {
+    let source = "/** @param {number} n */\nfunction helper(n){return n>0;}\n/** @param {number} n */\nexport function run(n){if(n<0)return 'negative';else if(helper(n))return 'positive';else return 'zero';}\nexport const observed=[run(-1),run(0),run(2)];\n";
+    let (root, mut engine) = fixture(source, "js");
+    let r = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "js"), &d())
+        .unwrap_or_else(|e| panic!("{e:#}"));
+    same_execution(source, &planned(&engine, &r, "js"));
+    assert_eq!(
+        fs::read(root.path().join("main.js")).unwrap(),
+        source.as_bytes()
+    );
+}
+#[test]
+fn repeated_conditional_and_overlapping_statement_heads_refuse_without_publication() {
+    for consumer in [
+        "while(helper())break;",
+        "do{}while(helper());",
+        "for(;helper();)break;",
+        "if(true&&helper()){}",
+        "switch(1+Number(helper())){}",
+        "throw String(helper());",
+        "if(helper()){if(helper())return true;}return false;",
+    ] {
+        let source =
+            format!("function helper(){{return true;}}export function run(){{{consumer}}}\n");
+        let (root, mut engine) = fixture(&source, "ts");
+        assert!(
+            yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+                .is_err(),
+            "{source}"
+        );
+        unpublished(&engine);
+        assert_eq!(
+            fs::read(root.path().join("main.ts")).unwrap(),
+            source.as_bytes()
+        );
+    }
+}
