@@ -7783,7 +7783,7 @@
           "guardNativeInputs": 807,
           "changedFile": "native/src/compiler_inline_body.rs",
           "changedRegion": "cfg(test) only: two original UTF-8 comment literals and exact original comment-array formatting (including optional trailing comma)",
-          "restoredLiteral": "/* caf\u00e9 */",
+          "restoredLiteral": "/* café */",
           "restoredOccurrences": 2,
           "exactExpectedTextChecked": true,
           "productionPrefixUnchanged": true,
@@ -10875,7 +10875,7 @@
           "Stale host binding refusal before MCP initialization",
           "Actual rust-analyzer invalid-identifier -32602 refusal"
         ],
-        "newName": "local_renomm\u00e9",
+        "newName": "local_renommé",
         "sourceExecutionAuthorized": false,
         "commandsExecuted": false,
         "externalDependencies": 0,
@@ -11273,7 +11273,7 @@
           "Stale host binding refusal before MCP initialization",
           "Actual rust-analyzer invalid-identifier -32602 refusal"
         ],
-        "newName": "local_renomm\u00e9",
+        "newName": "local_renommé",
         "sourceExecutionAuthorized": false,
         "commandsExecuted": false,
         "externalDependencies": 0,
@@ -14464,6 +14464,41 @@
     "original353AndRuntime77NotRecertified": true,
     "remaining": [
       "Automatically derived runtime/tool variables, default/upstream prompt catalogs, Python-Jinja conformance and external clients/layouts/extensions",
+      "Original 353 identities, R1-R9 and 77 unknown runtime requirements",
+      "Current whole Windows, Unix, hosted CI, canonical VSIX, Google, main and release acceptance"
+    ]
+  },
+  "nativeLiveSessionPrompts20261023": {
+    "sourceCommit": "dd0d2cf768fb6207dd006f9c9e2b57e9763115b7",
+    "evidence": "docs/validation/integration-2026-10-23/runtime-prompts/checkpoint.json",
+    "qualifiedScope": "Explicit live session catalog variables, bounded protocol-3 rendering and deferred pinned YAML projection",
+    "rustTotals": {
+      "passed": 939,
+      "failed": 0,
+      "existingIgnored": 10,
+      "filtered": 0
+    },
+    "wholeGroups": 50,
+    "addedFunctionsIncluded": 15,
+    "sourceInputs": 1122,
+    "sourceInputsUnchanged": true,
+    "completeFormatRoots": 365,
+    "allTargetClippy": true,
+    "pythonPassed": 47,
+    "npm": {
+      "passed": 260,
+      "existingSkipped": 3
+    },
+    "actualCompatibilityCliParents": 12,
+    "actualHttpRequests": 8,
+    "actualPersistentPythonCells": 2,
+    "oldDefaultEagerRawMcpSqlSourceExact": true,
+    "allJobsEmpty": true,
+    "sourceByteSpansAvailable": false,
+    "fullStatusComplete": false,
+    "original353AndRuntime77NotRecertified": true,
+    "remaining": [
+      "Default/upstream prompts, embed_memory, full Python-Jinja, clients/layouts/extensions",
       "Original 353 identities, R1-R9 and 77 unknown runtime requirements",
       "Current whole Windows, Unix, hosted CI, canonical VSIX, Google, main and release acceptance"
     ]

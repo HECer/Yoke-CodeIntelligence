@@ -1,5 +1,10 @@
 # Explicit pinned prompt catalogs
 
+The separately granted [live Session route](session-prompt-runtime.md) can now
+use these explicit pinned catalogs with three derived current catalog variables.
+Eager plan/export and named rendering below retain their literal semantics and
+protocols. Default/upstream catalogs remain unavailable.
+
 The native host can select YAML prompt catalogs, render a named prompt, or use
 catalog names in the existing context/mode prompt and project/local initial_prompt
 projection. No directories, default prompt texts or runtime variables are selected

@@ -1,5 +1,10 @@
 # Explicit YAML session configuration
 
+The separately authorized [live prompt route](session-prompt-runtime.md) adds
+--defer-template-evaluation for explicit plan/export/discovery. Deferred profiles
+retain decoded template scalars and original source receipts; startup still
+requires --allow-session-templates. Eager behavior below stays literal.
+
 The session-config command projects explicitly selected global, project,
 project-local, custom-context and custom-mode YAML data into the existing native
 HostProfile. No files are discovered automatically. The host supplies its base

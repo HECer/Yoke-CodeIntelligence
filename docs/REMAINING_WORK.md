@@ -1,5 +1,33 @@
 # Remaining implementation and acceptance
 
+Explicit live session prompts now derive available_tools, available_markers and
+tool_names from the same selected catalogs published by each actual transport.
+Separate --allow-session-templates host authority enables bounded protocol-3
+rendering for MCP initialization and initialInstructions, including mode/project
+changes. Deferred YAML export/discovery retains original template scalars and
+still requires independent startup authority. Literal/default/eager paths retain
+their previous bytes. No upstream prompt/application code, default model call,
+filesystem loader or analyzed-source execution is added.
+
+Qualified code dd0d2cf7 passes 939 Rust functions in 50 whole groups, zero
+failures, 10 existing ignores and no filtered functions. All 590 library and
+15 added functions are already included. All-target Clippy, complete 365-root
+format, build, Python 47, typecheck and npm 260/3 existing skips pass on 1122 exact
+frozen inputs. Whole-group/Clippy reuse requires identical input hashes and is
+counted once. Twelve actual compatibility CLI parents preserve raw old/default/
+eager/MCP replies, exported profiles and nonempty SQL/source rows. Eight actual
+HTTP requests verify mode/catalog hashes, guarded catalogs, 401 state preservation
+and clean session closure; two persistent Python cells verify the live Serena
+profile and a mode change. Temporary synthetic credentials are removed; existing
+credentials and system/privilege settings are untouched. All owned Jobs end empty.
+The initial link/scratch and HTTP-fixture failures remain in the evidence.
+See [live prompt evidence](validation/integration-2026-10-23/runtime-prompts/README.md)
+and [native contract](../native/docs/session-prompt-runtime.md).
+Default/upstream prompts, embed_memory, full Python-Jinja/client/layout/extension
+quality, original 353/R1-R9/77-runtime/current whole Windows/Unix/hosted/canonical
+VSIX/Google/main/release acceptance remain open. Earlier sections record their
+historical source-specific scope; this checkpoint does not close broad parity.
+
 Explicit host-selected YAML prompt catalogs now support original-byte pins,
 flat prompt_templates discovery, named rendering and create-only UTF-8 output.
 Collision policy defaults to refusal; explicit last_wins retains every source and

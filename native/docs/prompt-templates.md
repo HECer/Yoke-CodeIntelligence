@@ -1,5 +1,11 @@
 # Explicit native prompt templates
 
+The separately granted [live Session route](session-prompt-runtime.md) now
+derives available_tools, available_markers and tool_names. Deferred YAML exports
+retain decoded scalars for that route. Eager evaluation below keeps literal
+exports and protocol-1/2 compatibility. embed_memory and full Python-Jinja
+equivalence remain unavailable.
+
 Optional session-config plan, export and discover can render decoded prompt
 scalars before producing the ordinary host profile. Select templateContext in
 host selection JSON and pass --allow-template-evaluation in addition to the

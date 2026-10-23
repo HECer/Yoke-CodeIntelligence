@@ -23,6 +23,16 @@ process with the same host-account privileges.
 
 ## Explicit prompt template rendering
 
+The separate live Session route requires --allow-session-templates and typed
+nonserializable renderer authority. JSON cannot grant callbacks or replace the
+three host-derived live catalog variables. Protocol 3 binds current session
+state/revision, selected/full catalogs and category metadata; state and source
+guards are checked around rendering. Deferred exports carry data only and need
+independent startup permission. Failed initialization publishes no partial
+guidance or initialized state. Library trusted callbacks own their own resource
+guarantees; the shipped fixed native callback retains the guards below.
+See [the live Session contract](native/docs/session-prompt-runtime.md).
+
 Optional pinned YAML catalogs use guarded host-only reads, actual held file
 identity checks, strict prompt-only schemas and shared policy/catalog source
 budgets. Explicit collision handling preserves shadowed definitions and validates
@@ -39,7 +49,7 @@ prompt scalars over host-selected JSON data and catalog strings. Its linked
 native worker registers no filesystem loader, environment/Python/application
 objects, command, network or model interfaces. YAML policy fields are validated
 as original data before rendering; rendered text grants no registration,
-runtime trust or write authority. Exported profiles remain literal.
+runtime trust or write authority. Eager exported profiles remain literal.
 
 The parent imposes an OS memory ceiling before execution; the worker independently
 self-limits before input, including direct helper calls. Windows uses committed

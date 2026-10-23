@@ -2,20 +2,29 @@
 
 ## Native Rust ownership
 
+Explicit live Session templates use a nonserializable trusted-host renderer,
+separately granted by --allow-session-templates in the shipped CLI. Current
+transport catalogs supply three reserved variables; per-fragment protocol-3
+receipts bind session revision, config and actual catalog/marker hashes. Deferred
+YAML projection preserves original scalars and exports data only. Eager exports
+remain literal; absent selection keeps prior identities and serialized bytes.
+See [live prompt semantics](../native/docs/session-prompt-runtime.md).
+
 Host-selected pinned YAML catalogs resolve separately from session policy.
 Every original declaration and raw source hash survives explicit last_wins;
 unknown/duplicate schemas, aliases, unsafe files, stale pins and budgets refuse.
 Named rendering and policy projection share the bounded native worker, with a
 pure data protocol 2 only for the new catalog/named route. Existing literal and
 inline protocol-1 bytes remain exact. Discovery returns guarded replayable pins;
-exports remain literal profiles, and named text output is create-only.
+eager exports remain literal profiles, and named text output is create-only.
 See [prompt catalog semantics](../native/docs/prompt-catalogs.md).
 
 An explicitly authorized host configuration stage can first render decoded
 prompt scalars using a fixed native MiniJinja worker. Source receipts bind
 original YAML, decoded prompt, canonical selected data and rendered UTF-8.
 YAML authority fields remain parsed original data; exported session profiles
-remain literal and are never dynamically reevaluated. Parent/self OS memory,
+remain literal unless the distinct deferred/live route is explicitly selected.
+Parent/self OS memory,
 fuel/output/recursion and inherited deadline guards constrain the worker; no
 filesystem/environment objects or external application callbacks are registered.
 See [the prompt contract](../native/docs/prompt-templates.md).

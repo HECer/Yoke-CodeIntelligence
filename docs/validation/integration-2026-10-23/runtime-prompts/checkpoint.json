@@ -1,0 +1,410 @@
+{
+  "complete": true,
+  "scope": "owned Windows live prompt runtime qualification; broad parity/release remains incomplete",
+  "sourceCommitBeforeFeature": "5da7f7453b5c39946efb6617f4f52fe5cf8d423f",
+  "groups": {
+    "existing-session_config_prompt_catalogs": [
+      16,
+      0,
+      0,
+      0
+    ],
+    "existing-session_config_templates": [
+      13,
+      0,
+      0,
+      0
+    ],
+    "new-runtime-contracts": [
+      11,
+      0,
+      0,
+      0
+    ],
+    "test-session_config_cli": [
+      5,
+      0,
+      0,
+      0
+    ],
+    "test-session_config_discovery": [
+      12,
+      0,
+      0,
+      0
+    ],
+    "test-session_optional_defaults": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-session_primary_read_only": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-session_steering": [
+      12,
+      0,
+      0,
+      0
+    ],
+    "library-all": [
+      590,
+      0,
+      7,
+      0
+    ],
+    "main-all": [
+      4,
+      0,
+      0,
+      0
+    ],
+    "test-agent_repl": [
+      22,
+      0,
+      0,
+      0
+    ],
+    "test-agent_repl_api_selection": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-agent_repl_lifecycle": [
+      3,
+      0,
+      0,
+      0
+    ],
+    "test-compatibility": [
+      6,
+      0,
+      0,
+      0
+    ],
+    "test-compatibility_review": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "test-editor_http": [
+      10,
+      0,
+      0,
+      0
+    ],
+    "test-graphify_adapter": [
+      7,
+      0,
+      0,
+      0
+    ],
+    "test-graphify_cli": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "test-graphify_selected_queries": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-host_mcp_config": [
+      4,
+      0,
+      0,
+      0
+    ],
+    "test-lsp_resource_settings": [
+      10,
+      0,
+      0,
+      0
+    ],
+    "test-mcp_collection_grants": [
+      2,
+      0,
+      0,
+      0
+    ],
+    "test-mcp_collection_grants_review": [
+      3,
+      0,
+      0,
+      0
+    ],
+    "test-mcp_http": [
+      18,
+      0,
+      0,
+      0
+    ],
+    "test-mcp_http_cli": [
+      3,
+      0,
+      1,
+      0
+    ],
+    "test-mcp_http_review": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "test-project_session": [
+      6,
+      0,
+      0,
+      0
+    ],
+    "test-semantic_mcp": [
+      7,
+      0,
+      0,
+      0
+    ],
+    "test-server_catalog": [
+      2,
+      0,
+      0,
+      0
+    ],
+    "test-server_selection": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-server_settings": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-server_workspace_settings": [
+      7,
+      0,
+      0,
+      0
+    ],
+    "test-session_agent_interface": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-session_collections": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-session_collections_admission": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "test-session_dashboard": [
+      13,
+      0,
+      0,
+      0
+    ],
+    "test-session_epoch_selection": [
+      6,
+      0,
+      0,
+      0
+    ],
+    "test-session_inclusions": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-session_mcp": [
+      3,
+      0,
+      0,
+      0
+    ],
+    "test-session_memory_patterns": [
+      9,
+      0,
+      0,
+      0
+    ],
+    "test-session_refactor": [
+      9,
+      0,
+      2,
+      0
+    ],
+    "test-session_review": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "test-session_root_aliases": [
+      3,
+      0,
+      0,
+      0
+    ],
+    "test-session_startup_project": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-source_exclusions": [
+      7,
+      0,
+      0,
+      0
+    ],
+    "test-source_line_endings": [
+      10,
+      0,
+      0,
+      0
+    ],
+    "test-trail_adapter": [
+      4,
+      0,
+      0,
+      0
+    ],
+    "test-trail_bodies": [
+      5,
+      0,
+      0,
+      0
+    ],
+    "test-trail_review": [
+      4,
+      0,
+      0,
+      0
+    ],
+    "fixed-tools-fresh": [
+      8,
+      0,
+      0,
+      0
+    ]
+  },
+  "groupOrigins": {
+    "existing-session_config_prompt_catalogs": "runtime-prompts-20261023-5da7f745-green2\\existing-session_config_prompt_catalogs.stdout",
+    "existing-session_config_templates": "runtime-prompts-20261023-5da7f745-green2\\existing-session_config_templates.stdout",
+    "new-runtime-contracts": "runtime-prompts-20261023-5da7f745-green2\\new-runtime-contracts.stdout",
+    "test-session_config_cli": "runtime-prompts-20261023-5da7f745-qualified1\\test-session_config_cli.stdout",
+    "test-session_config_discovery": "runtime-prompts-20261023-5da7f745-qualified1\\test-session_config_discovery.stdout",
+    "test-session_optional_defaults": "runtime-prompts-20261023-5da7f745-qualified1\\test-session_optional_defaults.stdout",
+    "test-session_primary_read_only": "runtime-prompts-20261023-5da7f745-qualified1\\test-session_primary_read_only.stdout",
+    "test-session_steering": "runtime-prompts-20261023-5da7f745-qualified1\\test-session_steering.stdout",
+    "library-all": "runtime-prompts-20261023-5da7f745-qualified2\\library-all.stdout",
+    "main-all": "runtime-prompts-20261023-5da7f745-qualified2\\main-all.stdout",
+    "test-agent_repl": "runtime-prompts-20261023-5da7f745-qualified2\\test-agent_repl.stdout",
+    "test-agent_repl_api_selection": "runtime-prompts-20261023-5da7f745-qualified2\\test-agent_repl_api_selection.stdout",
+    "test-agent_repl_lifecycle": "runtime-prompts-20261023-5da7f745-qualified2\\test-agent_repl_lifecycle.stdout",
+    "test-compatibility": "runtime-prompts-20261023-5da7f745-qualified2\\test-compatibility.stdout",
+    "test-compatibility_review": "runtime-prompts-20261023-5da7f745-qualified2\\test-compatibility_review.stdout",
+    "test-editor_http": "runtime-prompts-20261023-5da7f745-qualified2\\test-editor_http.stdout",
+    "test-graphify_adapter": "runtime-prompts-20261023-5da7f745-qualified2\\test-graphify_adapter.stdout",
+    "test-graphify_cli": "runtime-prompts-20261023-5da7f745-qualified2\\test-graphify_cli.stdout",
+    "test-graphify_selected_queries": "runtime-prompts-20261023-5da7f745-qualified2\\test-graphify_selected_queries.stdout",
+    "test-host_mcp_config": "runtime-prompts-20261023-5da7f745-qualified2\\test-host_mcp_config.stdout",
+    "test-lsp_resource_settings": "runtime-prompts-20261023-5da7f745-qualified2\\test-lsp_resource_settings.stdout",
+    "test-mcp_collection_grants": "runtime-prompts-20261023-5da7f745-qualified2\\test-mcp_collection_grants.stdout",
+    "test-mcp_collection_grants_review": "runtime-prompts-20261023-5da7f745-qualified2\\test-mcp_collection_grants_review.stdout",
+    "test-mcp_http": "runtime-prompts-20261023-5da7f745-qualified2\\test-mcp_http.stdout",
+    "test-mcp_http_cli": "runtime-prompts-20261023-5da7f745-qualified2\\test-mcp_http_cli.stdout",
+    "test-mcp_http_review": "runtime-prompts-20261023-5da7f745-qualified2\\test-mcp_http_review.stdout",
+    "test-project_session": "runtime-prompts-20261023-5da7f745-qualified2\\test-project_session.stdout",
+    "test-semantic_mcp": "runtime-prompts-20261023-5da7f745-qualified2\\test-semantic_mcp.stdout",
+    "test-server_catalog": "runtime-prompts-20261023-5da7f745-qualified2\\test-server_catalog.stdout",
+    "test-server_selection": "runtime-prompts-20261023-5da7f745-qualified2\\test-server_selection.stdout",
+    "test-server_settings": "runtime-prompts-20261023-5da7f745-qualified2\\test-server_settings.stdout",
+    "test-server_workspace_settings": "runtime-prompts-20261023-5da7f745-qualified2\\test-server_workspace_settings.stdout",
+    "test-session_agent_interface": "runtime-prompts-20261023-5da7f745-qualified2\\test-session_agent_interface.stdout",
+    "test-session_collections": "runtime-prompts-20261023-5da7f745-qualified2\\test-session_collections.stdout",
+    "test-session_collections_admission": "runtime-prompts-20261023-5da7f745-qualified2\\test-session_collections_admission.stdout",
+    "test-session_dashboard": "runtime-prompts-20261023-5da7f745-qualified2\\test-session_dashboard.stdout",
+    "test-session_epoch_selection": "runtime-prompts-20261023-5da7f745-qualified2\\test-session_epoch_selection.stdout",
+    "test-session_inclusions": "runtime-prompts-20261023-5da7f745-qualified2\\test-session_inclusions.stdout",
+    "test-session_mcp": "runtime-prompts-20261023-5da7f745-qualified2\\test-session_mcp.stdout",
+    "test-session_memory_patterns": "runtime-prompts-20261023-5da7f745-qualified2\\test-session_memory_patterns.stdout",
+    "test-session_refactor": "runtime-prompts-20261023-5da7f745-qualified2\\test-session_refactor.stdout",
+    "test-session_review": "runtime-prompts-20261023-5da7f745-qualified2\\test-session_review.stdout",
+    "test-session_root_aliases": "runtime-prompts-20261023-5da7f745-qualified2\\test-session_root_aliases.stdout",
+    "test-session_startup_project": "runtime-prompts-20261023-5da7f745-qualified2\\test-session_startup_project.stdout",
+    "test-source_exclusions": "runtime-prompts-20261023-5da7f745-qualified2\\test-source_exclusions.stdout",
+    "test-source_line_endings": "runtime-prompts-20261023-5da7f745-qualified2\\test-source_line_endings.stdout",
+    "test-trail_adapter": "runtime-prompts-20261023-5da7f745-qualified2\\test-trail_adapter.stdout",
+    "test-trail_bodies": "runtime-prompts-20261023-5da7f745-qualified2\\test-trail_bodies.stdout",
+    "test-trail_review": "runtime-prompts-20261023-5da7f745-qualified2\\test-trail_review.stdout",
+    "fixed-tools-fresh": "runtime-prompts-20261023-5da7f745-qualified3\\fixed-tools-fresh.stdout"
+  },
+  "wholeGroups": 50,
+  "rustPassed": 939,
+  "rustFailed": 0,
+  "existingRustIgnored": 10,
+  "rustFiltered": 0,
+  "newFunctionsAlreadyIncluded": 15,
+  "libraryFunctionsAlreadyIncluded": 590,
+  "sourceInputs": 1122,
+  "sourceInputsExactBeforeDocumentation": true,
+  "cliSha256": "2723f6915c91cbe767a82dfa7c6ea6edb62182d41babf43964635d2ced61408a",
+  "sourceFiles": {
+    "native/src/lib.rs": "5f6d2d1b9d1a01427b446f0cbf0fa49f71ac76d0988a0471bf3c6391def869cf",
+    "native/src/main.rs": "00155411490d799e76781dc17053e586099652dcffeff783be7ddd56208ad5d6",
+    "native/src/mcp_http.rs": "16a883648eeeb532c47d6452cbe0243cde06bcb82c1a0de2a306825780e7ca1e",
+    "native/src/project_session.rs": "6d069f4a26fd6ee12ef3cc716b29b3f5e990aadc276fdf577742b9a325f5519b",
+    "native/src/protocol.rs": "4d4dd94d38391d705b40acf0889482114b13f4ba9ddfaccc0589bc6cc511b5b4",
+    "native/src/session_config.rs": "078620ccb1b04b057d93b2309a1d954eac990e9a0f5ef9862b1f41ff6c6c5d56",
+    "native/src/session_config_cli.rs": "079c74efe26ad594505d7796bbf17e19d8a4b25a6054812275a9ae80b92657d3",
+    "native/src/session_config_discovery_cli.rs": "3b5289705a2f8e5e8cf0bfef8d83d080676a87fb4f8d6432475cd9dc98d6a653",
+    "native/src/session_config_prompt_catalog_cli.rs": "477db6d68ee4a7d3ef3c3038874d21fdadf593a6e7ec3bba430528de1d1a541d",
+    "native/src/session_config_template_cli.rs": "43f12e6ff918f9c197725f285524e0d8dbe1f194fcc34bad0599ce4966ac94ab",
+    "native/src/session_prompt.rs": "564f8b8b3f070464edb8f383b8fe58d53288aaae484f128ca4ff9a74edd3a3b6",
+    "native/src/session_prompt_catalog.rs": "1dc410cd0ac6ecfc8f4c672c9218f5c3128055243d2570c5cb84a5c43288f191",
+    "native/src/session_prompt_markers.json": "b49e461fbfa87cda494fc0605da02511c9d47de34a7fab1d14a0342fc3356fe9",
+    "native/tests/session_prompt_runtime.rs": "8a9ac023f7a1c15a889155469e8b5721c00ed64e25ee1152a7c86aa0f7ed40b9"
+  },
+  "allTargetClippyExactSourceReusedGreen2": true,
+  "formatBuildPythonTypecheckNpmPassed": true,
+  "actualCompatibilityCliParents": 12,
+  "actualHttpRequests": 8,
+  "actualPersistentPythonCells": 2,
+  "rawZip": {
+    "members": 454,
+    "bytes": 2089994,
+    "sha256": "e1b91b5f00ee8d45766fdf62cf17e8f46392832ced3bad91976c3ee599fd2ed9"
+  },
+  "failedPhasesPreserved": [
+    "green1: two equivalent range-pattern Clippy warnings, fixed then all 40 integration functions and Clippy rerun",
+    "qualified1: startupProject link LNK1104; owned TMP absent after failure; no test execution for that group; source unchanged and all Jobs empty",
+    "qualified2: 49 whole groups passed, then cargo rustc refused the virtual workspace manifest before compilation; qualified3 selects native/Cargo.toml and retains all exact-source passes",
+    "http1: correct 401 but fixture incorrectly assumed no startup state; actual native host admission creates state before listener; http2 compares exact state before/after unauthenticated request"
+  ],
+  "systemOrPrivilegeSettingsChanged": false,
+  "protectedDefaultArtifactsContentAccessed": false,
+  "staleReleaseUsed": false,
+  "existingCredentialsAccessed": false,
+  "temporarySyntheticCredentialsRemoved": true,
+  "modelCalls": 0,
+  "analyzedSourceExecuted": false,
+  "broadComplete": false,
+  "sourceCommit": "dd0d2cf768fb6207dd006f9c9e2b57e9763115b7"
+}

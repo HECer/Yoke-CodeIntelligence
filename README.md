@@ -23,6 +23,10 @@ Use `target/release/yoke.exe` on Windows. Rust 1.94.1 or newer is required to bu
 
 An explicitly enabled [native session dashboard](native/docs/session-dashboard.md) shows private read-only session status, selected tools and bounded structured activity. Configuration/memory editing and raw logs remain unavailable.
 
+Separately granted [live session prompt templates](native/docs/session-prompt-runtime.md)
+derive actual current catalog variables and support deferred YAML projection.
+Default guidance stays literal and no model or analyzed source runs.
+
 Explicit [YAML session configuration](native/docs/session-config.md) projects
 hash-selected host steering files into reviewable create-only JSON profiles.
 Project registrations, runtime trust and execution rights remain host-owned.

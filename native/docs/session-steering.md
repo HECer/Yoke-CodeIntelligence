@@ -1,5 +1,10 @@
 # Host-owned session steering
 
+The opt-in [live prompt runtime](session-prompt-runtime.md) renders effective
+fragments against the actual current transport catalog. It requires a separate
+host grant and renderer capability; default steering below remains literal.
+Mode/project changes affect the next authorized rendering.
+
 Session contexts now influence native instructions and MCP tool selection. The
 independently authored presets use the 16 pinned context names. `desktop-app`
 retains the complete catalog; `claude-code`, `ide` and `grok` omit the duplicate
