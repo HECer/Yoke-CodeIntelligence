@@ -1665,6 +1665,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "minijinja"
+version = "3.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "90086695417a271bc96e6cb50618555614ca48fa3bb0d9aa96e3468b0f84431e"
+dependencies = [
+ "serde",
+ "unicase",
+ "unicode-ident",
+]
+
+[[package]]
 name = "miniz_oxide"
 version = "0.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3857,6 +3868,7 @@ dependencies = [
  "leiden-rs",
  "libc",
  "lopdf",
+ "minijinja",
  "process-wrap",
  "pulldown-cmark",
  "quick-xml",

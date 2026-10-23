@@ -30,6 +30,13 @@ pub struct Source<'a> {
     pub expected_sha256: &'a str,
     pub bytes: &'a [u8],
 }
+/// Explicit trusted-host rendering hook. The default projection never calls it.
+/// Rendered text grants no authority and still passes native steering validation.
+pub struct RenderedPrompt {
+    pub text: String,
+    pub evidence: Value,
+}
+pub type PromptRenderer<'a> = dyn FnMut(&str, &Deadline) -> Result<RenderedPrompt> + 'a;
 pub struct Projection {
     profile: HostProfile,
     sources: Vec<Value>,
@@ -42,7 +49,7 @@ impl Projection {
         crate::json::encode_bounded(&self.profile, MAX_PROFILE_BYTES, deadline)
     }
     pub fn plan(&self) -> Value {
-        let mut value = json!({"schema":"native_session_config_yaml_v1","hostProfile":self.profile,"sources":self.sources,"sourceBytesRewritten":false,"templatesEvaluated":false,"activationCommandsExecuted":false,"projectRegistrationsFromYaml":false,"runtimeTrustFromYaml":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"sourceExecuted":false,"complete":false});
+        let mut value = json!({"schema":"native_session_config_yaml_v1","hostProfile":self.profile,"sources":self.sources,"sourceBytesRewritten":false,"templatesEvaluated":self.sources.iter().any(|s| s.get("promptRendering").is_some()),"activationCommandsExecuted":false,"projectRegistrationsFromYaml":false,"runtimeTrustFromYaml":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"sourceExecuted":false,"complete":false});
         if self.profile.language_servers.is_some() {
             value["languageServerRegistrationsValidated"] = json!(false);
             value["languageServerRegistrationsFromYaml"] = json!(false);
@@ -85,6 +92,7 @@ fn rename_fields(
     definition: bool,
     global: bool,
     project: bool,
+    prompt_rendered: bool,
 ) -> Result<DecodedFields> {
     let mut mapped = Map::new();
     let mut additional_folders = None;
@@ -250,7 +258,7 @@ fn rename_fields(
                 .as_str()
                 .ok_or_else(|| anyhow::anyhow!("session_config_prompt_string_required"))?;
             ensure!(
-                !["{{", "{%", "{#"].iter().any(|s| text.contains(s)),
+                prompt_rendered || !["{{", "{%", "{#"].iter().any(|s| text.contains(s)),
                 "session_config_template_evaluation_unavailable"
             );
         }
@@ -277,6 +285,24 @@ pub fn project(
     base: &HostProfile,
     sources: &[Source<'_>],
     deadline: &Deadline,
+) -> Result<Projection> {
+    project_inner(base, sources, deadline, None)
+}
+/// The caller owns renderer authorization, execution limits and external evidence.
+/// Only decoded prompt scalar values reach it; all YAML policy fields remain data.
+pub fn project_with_prompt_renderer(
+    base: &HostProfile,
+    sources: &[Source<'_>],
+    deadline: &Deadline,
+    renderer: &mut PromptRenderer<'_>,
+) -> Result<Projection> {
+    project_inner(base, sources, deadline, Some(renderer))
+}
+fn project_inner(
+    base: &HostProfile,
+    sources: &[Source<'_>],
+    deadline: &Deadline,
+    mut renderer: Option<&mut PromptRenderer<'_>>,
 ) -> Result<Projection> {
     deadline.check()?;
     ensure!(
@@ -311,6 +337,54 @@ pub fn project(
             Target::Project { .. } | Target::ProjectLocal { .. }
         );
         let definition = matches!(source.target, Target::Context { .. } | Target::Mode { .. });
+        let mut raw = yaml::decode(source.bytes, deadline)?;
+        if renderer.is_some() {
+            // Reject unsupported settings before starting any host renderer.
+            rename_fields(
+                raw.clone(),
+                definition,
+                matches!(source.target, Target::Global),
+                is_project,
+                true,
+            )?;
+            match source.target {
+                Target::Project { project } | Target::ProjectLocal { project } => {
+                    label(project)?;
+                    ensure!(
+                        project == "default" || profile.projects.iter().any(|p| p.name == *project),
+                        "session_config_project_not_host_registered"
+                    );
+                }
+                Target::Context { name } | Target::Mode { name } => label(name)?,
+                Target::Global => {}
+            }
+        }
+        let mut prompt_rendering = None;
+        let prompt_key = if definition {
+            Some("prompt")
+        } else if is_project {
+            Some("initial_prompt")
+        } else {
+            None
+        };
+        if let Some(renderer) = renderer.as_mut()
+            && let Some(key) = prompt_key
+            && let Some(value) = raw.get(key)
+        {
+            let original = value
+                .as_str()
+                .ok_or_else(|| anyhow::anyhow!("session_config_prompt_string_required"))?;
+            let rendered = renderer(original, deadline)?;
+            ensure!(
+                rendered.text.len() <= 8192 && !rendered.text.contains('\0'),
+                "session_config_rendered_prompt_invalid"
+            );
+            crate::json::encode_bounded(&rendered.evidence, 8192, deadline)?;
+            prompt_rendering = Some(
+                json!({"originalPromptSha256":model::hash(original),"renderedPromptSha256":model::hash(&rendered.text),"hostRendererEvidence":rendered.evidence}),
+            );
+            raw.insert(key.into(), json!(rendered.text));
+        }
         let DecodedFields {
             additional_folders,
             native_defaults,
@@ -326,10 +400,11 @@ pub fn project(
             symbol_info_budget,
             workspace_folders,
         } = rename_fields(
-            yaml::decode(source.bytes, deadline)?,
+            raw,
             definition,
             matches!(source.target, Target::Global),
             is_project,
+            prompt_rendering.is_some(),
         )?;
         if let Target::Project { project } | Target::ProjectLocal { project } = source.target {
             label(project)?;
@@ -559,6 +634,9 @@ pub fn project(
             }
         }
         let mut receipt = json!({"target":source.target,"originalBytes":source.bytes.len(),"originalSha256":source.expected_sha256,"declaredProjectName":declared,"declaredProjectNameIsRegistration":false});
+        if let Some(rendering) = prompt_rendering {
+            receipt["promptRendering"] = rendering;
+        }
         if !native_defaults.is_empty() {
             receipt["nativeEquivalentDefaults"] = Value::Object(native_defaults);
             receipt["nativeDefaultCapabilities"] = json!({"sourceEncodings":["utf-8"],"activationCommands":false,"languageBackends":["LSP"],"additionalWorkspaceFolders":true,"additionalWorkspaceFolderScope":"captured_relative_only"});
@@ -608,3 +686,7 @@ pub fn project(
 #[cfg(test)]
 #[path = "session_config_tests.rs"]
 mod tests;
+
+#[cfg(test)]
+#[path = "session_config_template_tests.rs"]
+mod template_tests;

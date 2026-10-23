@@ -21,6 +21,8 @@ const MAX_ENTRIES: usize = 1024;
 struct DiscoverySelection {
     host_profile: yoke::project_session::HostProfile,
     #[serde(default)]
+    template_context: Option<super::templates::TemplateContext>,
+    #[serde(default)]
     files: Vec<Candidate>,
     #[serde(default)]
     directories: Vec<DirectorySelection>,
@@ -118,7 +120,15 @@ fn admit(
     candidates.push(value);
     Ok(())
 }
+#[cfg(test)]
 pub(super) fn prepare(path: &Path, deadline: &Deadline) -> Result<Prepared> {
+    prepare_with_template_permission(path, deadline, false)
+}
+pub(super) fn prepare_with_template_permission(
+    path: &Path,
+    deadline: &Deadline,
+    allow_templates: bool,
+) -> Result<Prepared> {
     let selected = super::read(path, 128000, deadline)?;
     let input: DiscoverySelection = yoke::json::parse(&selected.bytes, 128000)
         .and_then(yoke::json::decode)
@@ -135,6 +145,7 @@ pub(super) fn prepare(path: &Path, deadline: &Deadline) -> Result<Prepared> {
         input.files.len() <= session_config::MAX_FILES,
         "session_config_file_capacity_exceeded"
     );
+    super::templates::admit(input.template_context.as_ref(), allow_templates, deadline)?;
     let mut candidates = Vec::new();
     let mut seen = BTreeSet::new();
     for candidate in input.files {
@@ -200,6 +211,7 @@ pub(super) fn prepare(path: &Path, deadline: &Deadline) -> Result<Prepared> {
     let selection = Selection {
         host_profile: input.host_profile,
         files,
+        template_context: input.template_context,
     };
     let sources: Vec<_> = selection
         .files
@@ -211,8 +223,13 @@ pub(super) fn prepare(path: &Path, deadline: &Deadline) -> Result<Prepared> {
             bytes: &data.bytes,
         })
         .collect();
-    let projection = session_config::project(&selection.host_profile, &sources, deadline)?;
-    let value = json!({"schema":"native_session_config_discovery_v1","selection":selection,"projection":projection.plan(),"directories":receipts,"discoveryComplete":true,"sourceBytesRewritten":false,"templatesEvaluated":false,"sourceExecuted":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"complete":false});
+    let projection = super::templates::project(
+        &selection.host_profile,
+        &sources,
+        selection.template_context.as_ref(),
+        deadline,
+    )?;
+    let value = json!({"schema":"native_session_config_discovery_v1","selection":selection,"projection":projection.plan(),"directories":receipts,"discoveryComplete":true,"sourceBytesRewritten":false,"templatesEvaluated":projection.plan()["templatesEvaluated"],"sourceExecuted":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"complete":false});
     loaded.push(selected);
     Ok(Prepared {
         value,

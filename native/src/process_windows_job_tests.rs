@@ -316,3 +316,30 @@ fn member_query_refusal_reports_bounded_win32_snapshot_counters() {
     }
     assert!(message.len() < 800, "Diagnostics must remain bounded");
 }
+
+#[test]
+fn memory_limited_owned_job_keeps_default_flags_and_sets_actual_committed_ceiling() {
+    for memory in [None, Some(64 * 1024 * 1024)] {
+        let job = OwnedJob::with_memory_limit(memory).unwrap();
+        let mut limits = ExtendedLimits::default();
+        assert_ne!(
+            unsafe {
+                QueryInformationJobObject(
+                    job.job.as_raw_handle(),
+                    9,
+                    std::ptr::from_mut(&mut limits).cast(),
+                    std::mem::size_of::<ExtendedLimits>() as u32,
+                    std::ptr::null_mut(),
+                )
+            },
+            0
+        );
+        assert_eq!(
+            limits.basic.flags,
+            0x2000 | if memory.is_some() { 0x200 } else { 0 }
+        );
+        assert_eq!(limits.job_memory, memory.unwrap_or(0));
+        assert_eq!(limits.process_memory, 0);
+    }
+    assert!(OwnedJob::with_memory_limit(Some(0)).is_err());
+}

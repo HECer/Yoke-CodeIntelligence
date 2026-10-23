@@ -68,10 +68,30 @@ pub struct CapturedOutput {
 }
 
 pub fn run_capture(
+    command: Command,
+    input: &[u8],
+    deadline: &crate::capture::Deadline,
+    limits: CaptureLimits,
+) -> Result<CapturedOutput> {
+    capture(command, input, deadline, limits, None)
+}
+/// Bound committed memory on Windows Jobs, or address space on Unix, before execution.
+/// An unavailable OS limit fails spawn rather than running without the limit.
+pub fn run_capture_with_memory_limit(
+    command: Command,
+    input: &[u8],
+    deadline: &crate::capture::Deadline,
+    limits: CaptureLimits,
+    memory_bytes: usize,
+) -> Result<CapturedOutput> {
+    capture(command, input, deadline, limits, Some(memory_bytes))
+}
+fn capture(
     mut command: Command,
     input: &[u8],
     deadline: &crate::capture::Deadline,
     limits: CaptureLimits,
+    memory_bytes: Option<usize>,
 ) -> Result<CapturedOutput> {
     deadline.check()?;
     ensure!(
@@ -135,7 +155,8 @@ pub fn run_capture(
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped());
-    let mut child = ManagedChild::spawn(command).context("Host executable unavailable")?;
+    let mut child = ManagedChild::spawn_limited(command, memory_bytes)
+        .context("Host executable unavailable")?;
     let (Some(mut stdin), Some(stdout), Some(stderr)) = (
         child.stdin().take(),
         child.stdout().take(),
@@ -277,6 +298,69 @@ pub fn run_capture(
     })
 }
 
+/// One-way self-limit for a dedicated owned worker, before reading its input.
+/// On Unix the hard address-space ceiling cannot subsequently be raised.
+pub struct CurrentMemoryLimit {
+    #[cfg(windows)]
+    _job: std::os::windows::io::OwnedHandle,
+}
+pub fn limit_current_memory(memory_bytes: usize) -> Result<CurrentMemoryLimit> {
+    ensure!(
+        (32 * 1024 * 1024..=2 * 1024 * 1024 * 1024).contains(&memory_bytes),
+        "Invalid owned memory limit"
+    );
+    #[cfg(windows)]
+    {
+        Ok(CurrentMemoryLimit {
+            _job: windows_job::limit_current_memory(memory_bytes)?,
+        })
+    }
+    #[cfg(unix)]
+    {
+        let limit = libc::rlimit {
+            rlim_cur: memory_bytes as libc::rlim_t,
+            rlim_max: memory_bytes as libc::rlim_t,
+        };
+        ensure!(
+            unsafe { libc::setrlimit(libc::RLIMIT_AS, &limit) } == 0,
+            "Owned memory limit unavailable"
+        );
+        Ok(CurrentMemoryLimit {})
+    }
+    #[cfg(not(any(windows, unix)))]
+    {
+        anyhow::bail!("Owned memory limit unavailable on this platform")
+    }
+}
+
+/// Observe an actual current OS memory ceiling. Missing enforcement is not success.
+pub fn current_memory_limit() -> Result<Option<usize>> {
+    #[cfg(windows)]
+    {
+        Ok(windows_job::current_memory_limit()?)
+    }
+    #[cfg(unix)]
+    {
+        let mut limit = libc::rlimit {
+            rlim_cur: 0,
+            rlim_max: 0,
+        };
+        // SAFETY: limit is a writable rlimit; getrlimit has no child effects.
+        ensure!(
+            unsafe { libc::getrlimit(libc::RLIMIT_AS, &mut limit) } == 0,
+            "Owned memory limit observation unavailable"
+        );
+        let ceiling = limit.rlim_cur.min(limit.rlim_max);
+        Ok((ceiling != libc::RLIM_INFINITY)
+            .then(|| usize::try_from(ceiling))
+            .transpose()?)
+    }
+    #[cfg(not(any(windows, unix)))]
+    {
+        anyhow::bail!("Owned memory limit observation unavailable on this platform")
+    }
+}
+
 pub struct ManagedChild {
     inner: Box<dyn StdChildWrapper>,
     drop_wait: bool,
@@ -285,10 +369,40 @@ pub struct ManagedChild {
 }
 impl ManagedChild {
     pub fn spawn(command: Command) -> Result<Self> {
+        Self::spawn_limited(command, None)
+    }
+    fn spawn_limited(command: Command, memory_bytes: Option<usize>) -> Result<Self> {
+        #[cfg(unix)]
+        let mut command = command;
+        if let Some(bytes) = memory_bytes {
+            ensure!(
+                (32 * 1024 * 1024..=2 * 1024 * 1024 * 1024).contains(&bytes),
+                "Invalid owned memory limit"
+            );
+            #[cfg(unix)]
+            {
+                use std::os::unix::process::CommandExt;
+                // Only an async-signal-safe system call is made between fork and exec.
+                unsafe {
+                    command.pre_exec(move || {
+                        let limit = libc::rlimit {
+                            rlim_cur: bytes as libc::rlim_t,
+                            rlim_max: bytes as libc::rlim_t,
+                        };
+                        if libc::setrlimit(libc::RLIMIT_AS, &limit) != 0 {
+                            return Err(std::io::Error::last_os_error());
+                        }
+                        Ok(())
+                    });
+                }
+            }
+            #[cfg(not(any(unix, windows)))]
+            anyhow::bail!("Owned memory limit unavailable on this platform");
+        }
         let mut wrapper = StdCommandWrap::from(command);
         #[cfg(windows)]
         let job = {
-            let job = windows_job::OwnedJob::new()?;
+            let job = windows_job::OwnedJob::with_memory_limit(memory_bytes)?;
             // JobObject replaces Command's creation flags. Preserve this flag
             // through the wrapper that it explicitly consults before spawn.
             let mut flags = process_wrap::std::CreationFlags(Default::default());

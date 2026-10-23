@@ -14,6 +14,8 @@ use yoke::{
 };
 #[path = "session_config_discovery_cli.rs"]
 mod discovery;
+#[path = "session_config_template_cli.rs"]
+mod templates;
 #[derive(Args)]
 pub struct Arguments {
     #[command(subcommand)]
@@ -21,6 +23,8 @@ pub struct Arguments {
 }
 #[derive(Subcommand)]
 enum Operation {
+    #[command(hide = true)]
+    RenderWorker,
     Discover {
         #[arg(long)]
         selection: PathBuf,
@@ -28,6 +32,8 @@ enum Operation {
         allow_configuration_read: bool,
         #[arg(long)]
         allow_policy_projection: bool,
+        #[arg(long)]
+        allow_template_evaluation: bool,
     },
     Plan {
         #[arg(long)]
@@ -36,6 +42,8 @@ enum Operation {
         allow_configuration_read: bool,
         #[arg(long)]
         allow_policy_projection: bool,
+        #[arg(long)]
+        allow_template_evaluation: bool,
     },
     Export {
         #[arg(long)]
@@ -47,6 +55,8 @@ enum Operation {
         #[arg(long)]
         allow_policy_projection: bool,
         #[arg(long)]
+        allow_template_evaluation: bool,
+        #[arg(long)]
         allow_output: bool,
     },
 }
@@ -55,6 +65,8 @@ enum Operation {
 struct Selection {
     host_profile: yoke::project_session::HostProfile,
     files: Vec<FileSelection>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    template_context: Option<templates::TemplateContext>,
 }
 #[derive(Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
@@ -169,7 +181,11 @@ fn read(path: &Path, cap: usize, deadline: &Deadline) -> Result<Loaded> {
         _held: held,
     })
 }
-fn prepare(path: &Path, deadline: &Deadline) -> Result<(session_config::Projection, Vec<Loaded>)> {
+fn prepare(
+    path: &Path,
+    deadline: &Deadline,
+    allow_templates: bool,
+) -> Result<(session_config::Projection, Vec<Loaded>)> {
     let selected = read(path, 128000, deadline)?;
     let selection: Selection =
         yoke::json::parse(&selected.bytes, 128000).and_then(yoke::json::decode)?;
@@ -177,6 +193,11 @@ fn prepare(path: &Path, deadline: &Deadline) -> Result<(session_config::Projecti
         selection.files.len() <= session_config::MAX_FILES,
         "session_config_file_capacity_exceeded"
     );
+    templates::admit(
+        selection.template_context.as_ref(),
+        allow_templates,
+        deadline,
+    )?;
     let mut loaded = Vec::new();
     let mut total = 0usize;
     for selected in &selection.files {
@@ -200,7 +221,12 @@ fn prepare(path: &Path, deadline: &Deadline) -> Result<(session_config::Projecti
             bytes: &loaded.bytes,
         })
         .collect();
-    let projection = session_config::project(&selection.host_profile, &sources, deadline)?;
+    let projection = templates::project(
+        &selection.host_profile,
+        &sources,
+        selection.template_context.as_ref(),
+        deadline,
+    )?;
     loaded.push(selected);
     Ok((projection, loaded))
 }
@@ -220,17 +246,23 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
     );
     let deadline = Deadline::new(timeout);
     let cap = max_bytes as usize - 1;
-    let reply = match &args.operation {
+    match &args.operation {
+        Operation::RenderWorker => templates::worker(&deadline, cap),
         Operation::Discover {
             selection,
             allow_configuration_read,
             allow_policy_projection,
+            allow_template_evaluation,
         } => {
             ensure!(
                 *allow_configuration_read && *allow_policy_projection,
                 "session_config_host_permission_required"
             );
-            let prepared = discovery::prepare(selection, &deadline)?;
+            let prepared = discovery::prepare_with_template_permission(
+                selection,
+                &deadline,
+                *allow_template_evaluation,
+            )?;
             let reply = yoke::json::encode_bounded(&prepared.value, cap, &deadline)?;
             prepared.recheck(&deadline)?;
             // Keep source and directory guards through delivery, as export does.
@@ -238,28 +270,34 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
             stdout.write_all(&reply)?;
             stdout.write_all(b"\n")?;
             stdout.flush()?;
-            return Ok(true);
+            Ok(true)
         }
         Operation::Plan {
             selection,
             allow_configuration_read,
             allow_policy_projection,
+            allow_template_evaluation,
         } => {
             ensure!(
                 *allow_configuration_read && *allow_policy_projection,
                 "session_config_host_permission_required"
             );
-            let (projection, held) = prepare(selection, &deadline)?;
+            let (projection, held) = prepare(selection, &deadline, *allow_template_evaluation)?;
             let value = projection.plan();
             let reply = yoke::json::encode_bounded(&value, cap, &deadline)?;
             recheck(&held, &deadline)?;
-            reply
+            let mut stdout = std::io::stdout().lock();
+            stdout.write_all(&reply)?;
+            stdout.write_all(b"\n")?;
+            stdout.flush()?;
+            Ok(true)
         }
         Operation::Export {
             selection,
             output,
             allow_configuration_read,
             allow_policy_projection,
+            allow_template_evaluation,
             allow_output,
         } => {
             ensure!(
@@ -267,9 +305,9 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
                 "session_config_host_permission_required"
             );
             let output_guard = super::meaning_archive_cli::fresh_destination(output, &deadline)?;
-            let (projection, held) = prepare(selection, &deadline)?;
+            let (projection, held) = prepare(selection, &deadline, *allow_template_evaluation)?;
             let profile = projection.profile_bytes(&deadline)?;
-            let shape = |hash: &str, bytes: usize| json!({"schema":"native_session_config_export_v1","profileSha256":hash,"profileBytes":bytes,"output":output,"sources":projection.plan()["sources"],"outputCreated":true,"sourceBytesRewritten":false,"templatesEvaluated":false,"sourceExecuted":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"complete":false});
+            let shape = |hash: &str, bytes: usize| json!({"schema":"native_session_config_export_v1","profileSha256":hash,"profileBytes":bytes,"output":output,"sources":projection.plan()["sources"],"outputCreated":true,"sourceBytesRewritten":false,"templatesEvaluated":projection.plan()["templatesEvaluated"],"sourceExecuted":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"complete":false});
             yoke::json::encode_bounded(&shape(&"f".repeat(64), usize::MAX), cap, &deadline)?;
             let hash = yoke::model::hash(&profile);
             let value = shape(&hash, profile.len());
@@ -286,12 +324,7 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
             {
                 anyhow::bail!("session_config_profile_committed_delivery_failed:{hash}");
             }
-            return Ok(true);
+            Ok(true)
         }
-    };
-    let mut stdout = std::io::stdout().lock();
-    stdout.write_all(&reply)?;
-    stdout.write_all(b"\n")?;
-    stdout.flush()?;
-    Ok(true)
+    }
 }

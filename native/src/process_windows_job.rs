@@ -17,6 +17,7 @@ use std::{
 type Handle = *mut c_void;
 #[link(name = "kernel32")]
 unsafe extern "system" {
+    fn GetCurrentProcess() -> Handle;
     fn CreateJobObjectW(attributes: *mut c_void, name: *const u16) -> Handle;
     fn SetInformationJobObject(job: Handle, class: i32, info: *const c_void, size: u32) -> i32;
     fn QueryInformationJobObject(
@@ -77,6 +78,59 @@ struct ProcessIds {
     ids: [usize; MAX_MEMBERS],
 }
 
+pub(super) fn limit_current_memory(bytes: usize) -> io::Result<OwnedHandle> {
+    let raw = unsafe { CreateJobObjectW(std::ptr::null_mut(), std::ptr::null()) };
+    if raw.is_null() {
+        return Err(io::Error::last_os_error());
+    }
+    // This self-limit has no KILL_ON_JOB_CLOSE: dropping its query handle must
+    // not terminate the worker before stdout flush. Kernel association retains
+    // the limit until the process exits.
+    let job = unsafe { OwnedHandle::from_raw_handle(raw) };
+    let limits = ExtendedLimits {
+        basic: BasicLimits {
+            flags: 0x200,
+            ..Default::default()
+        },
+        job_memory: bytes,
+        ..Default::default()
+    };
+    if unsafe {
+        SetInformationJobObject(
+            job.as_raw_handle(),
+            9,
+            std::ptr::from_ref(&limits).cast(),
+            std::mem::size_of::<ExtendedLimits>() as u32,
+        )
+    } == 0
+    {
+        return Err(io::Error::last_os_error());
+    }
+    if unsafe { AssignProcessToJobObject(job.as_raw_handle(), GetCurrentProcess()) } == 0 {
+        return Err(io::Error::last_os_error());
+    }
+    Ok(job)
+}
+
+pub(super) fn current_memory_limit() -> io::Result<Option<usize>> {
+    let mut limits = ExtendedLimits::default();
+    // NULL selects the job associated with this process; an unassigned process
+    // cannot turn an absent limit into a successful observation.
+    if unsafe {
+        QueryInformationJobObject(
+            std::ptr::null_mut(),
+            9,
+            std::ptr::from_mut(&mut limits).cast(),
+            std::mem::size_of::<ExtendedLimits>() as u32,
+            std::ptr::null_mut(),
+        )
+    } == 0
+    {
+        return Err(io::Error::last_os_error());
+    }
+    Ok((limits.basic.flags & 0x200 != 0 && limits.job_memory != 0).then_some(limits.job_memory))
+}
+
 #[derive(Debug)]
 pub(super) struct OwnedJob {
     job: OwnedHandle,
@@ -84,7 +138,19 @@ pub(super) struct OwnedJob {
     attached: AtomicBool,
 }
 impl OwnedJob {
+    #[cfg(test)]
     pub(super) fn new() -> io::Result<Arc<Self>> {
+        Self::with_memory_limit(None)
+    }
+    pub(super) fn with_memory_limit(memory_bytes: Option<usize>) -> io::Result<Arc<Self>> {
+        if memory_bytes
+            .is_some_and(|bytes| !(32 * 1024 * 1024..=2 * 1024 * 1024 * 1024).contains(&bytes))
+        {
+            return Err(io::Error::new(
+                io::ErrorKind::InvalidInput,
+                "Invalid owned memory limit",
+            ));
+        }
         // No name or inheritable security attributes: only this owner can close
         // the last job handle. Parent job resource limits remain in force.
         let handle = unsafe { CreateJobObjectW(std::ptr::null_mut(), std::ptr::null()) };
@@ -95,9 +161,10 @@ impl OwnedJob {
         let job = unsafe { OwnedHandle::from_raw_handle(handle) };
         let limits = ExtendedLimits {
             basic: BasicLimits {
-                flags: 0x2000,
+                flags: 0x2000 | if memory_bytes.is_some() { 0x200 } else { 0 },
                 ..Default::default()
-            }, // KILL_ON_JOB_CLOSE
+            }, // KILL_ON_JOB_CLOSE and optional whole-job committed-memory limit
+            job_memory: memory_bytes.unwrap_or(0),
             ..Default::default()
         };
         if unsafe {
