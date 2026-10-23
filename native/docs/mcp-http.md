@@ -113,3 +113,9 @@ It requires complete host names, independent Git flags and disjoint fixed roots;
 secondary metadata/source policy and write/query-only boundaries remain separate.
 See [registered Git projects](git-repository-projects.md). Existing ordinary and
 single-root targets retain their preceding behavior.
+
+Git project sets can additionally use existing registered collections and current
+Session-profile per-principal grants. Native archive reads need no live Git or
+unused receiver; foreign access uses its registered existing receiver and current
+import policy without local Git membership or a primary repository-scope copy.
+The fixed single-driver mode retains its refusal. See [Git collections](git-repository-collections.md).

@@ -26,8 +26,9 @@ primary root is the principal root or the CLI root. Each map value uses the
 [fixed-root HTTP selection](git-repository-http.md): optional absolute Git
 `program`, follow overrides and bounded `limits`. Names must be exactly
 `default` plus every registered project; at most 100 secondary registrations
-are allowed. Missing/unknown names, duplicate registrations, overlapping roots,
-collections, collection grants and imported repository scopes refuse. Single
+are allowed. Missing/unknown names, duplicate registrations, overlapping roots
+and imported repository scopes refuse. Existing collections and current HTTP
+receiver grants use the separate [collection contract](git-repository-collections.md). Single
 and project-set selection cannot be combined.
 
 Run the existing service with independent `--trust-service`,
@@ -84,6 +85,6 @@ without model turns or account login. The ordinary registered-session path is
 compared against the preceding executable with exact saved records and stable
 source payloads. This does not certify all clients or full upstream behavior.
 The existing fixed-root stdio CLI remains fixed-root; the [stdio session selection](git-repository-stdio.md) additionally selects
-registered project sets. Collections, broader formats/quality and whole
+registered project sets. Broader formats/quality and whole
 Windows/main/release acceptance remain open. See the [transport](mcp-http.md) and
 [profile binding](git-repository-profiles.md) contracts.

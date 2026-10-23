@@ -59,5 +59,6 @@ correcting a bound host policy may require a new label. No silent migration foll
 Qualification uses actual CLI/stdin/stdout source calls across all five profiles,
 old/new ordinary registered-session payload/row comparisons, private pinned Claude
 2.1.306 stdio health and a separately selected Python callback trial. No model turn
-or analyzed-code execution is requested. Collections, broader client/format/quality
+or analyzed-code execution is requested. Registered [collections](git-repository-collections.md)
+retain separate registry and import authority. Broader client/format/quality
 and current whole Windows/main/release acceptance remain open.

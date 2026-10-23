@@ -1,5 +1,31 @@
 # Remaining implementation and acceptance
 
+Explicit Git project sets now support existing registered collections through
+native/stdin/stdout and authenticated HTTP Session hosts. Native/view registration
+uses the selected project's full captured scope and independent registry CAS/
+permission gates. Immutable native archive reads do not run Git or open original/
+unused receiver source. Foreign archive calls retain current per-principal import
+grants and registered existing receiver policy, with local repository scope
+removed from that receiver's option projection. Git flags grant no registry,
+import, runtime or source-write authority; fixed single-driver refusal remains.
+
+Source 6477c3a1 passes 809 Rust functions in 38 scoped groups,
+including all 578 library and six new collection integration functions, with
+8 existing ignores and one unchanged Windows OS1314 symlink setup failure. Clippy all-targets with warnings denied,
+build, typecheck, npm 260 passed/3 existing skips and 359 format roots pass on
+1,098 frozen inputs; fmt-all retains Windows OS206. Real signed-source TCP tests
+cover current/absent/narrowed grants, invalidated sessions and no local receiver
+capture. Owned CLI validation registers scoped source and reads it after Git/
+original working source is unavailable, preserving archive and source/Git bytes.
+All five stdio catalogs and ordinary payload/rows stay exact; private pinned-client
+health and separate explicit Python callbacks pass, with all owned Jobs empty.
+The initial new-test assertion used the wrong import storage table; only that
+test changes. See [evidence](validation/integration-2026-10-23/git-repository-collections/README.md)
+and [contract](../native/docs/git-repository-collections.md). Broader client/format/
+quality and current whole Windows/main/release remain open. Original inventory
+assessments, fixtures and system settings are unchanged; no default model/runtime
+or analyzed-code execution is introduced.
+
 Explicit `serve-session --git-projects` now selects a separate host Git driver
 for every existing registration, with independent index-read/Git trust flags.
 Complete names, disjoint roots and source/runtime permissions retain the shared
