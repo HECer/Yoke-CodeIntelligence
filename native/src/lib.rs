@@ -148,7 +148,17 @@ pub struct Engine {
 }
 impl Engine {
     pub(crate) fn sync_source_exclusions(&mut self, deadline: &Deadline) -> Result<()> {
+        let physical_ignored_dirs = self
+            .capture_options
+            .ignored_directory_identity
+            .map(|_| {
+                self.capture_options
+                    .validated()
+                    .map(|options| options.include_ignored_dirs)
+            })
+            .transpose()?;
         self.store.current_git_ignored_read_only = self.capture_options.include_git_ignored;
+        self.store.current_physical_ignored_dirs = physical_ignored_dirs;
         let policy = self
             .capture_options
             .source_exclusions

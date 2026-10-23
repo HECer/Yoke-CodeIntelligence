@@ -221,6 +221,7 @@ pub(crate) fn check_current_write_scope(
     path: &str,
     d: &Deadline,
 ) -> Result<()> {
+    crate::capture::directory_identity::check_current_write(store, path, d)?;
     crate::git_ignore_policy::check_current_write(store, path)?;
     #[cfg(windows)]
     if store.current_git_ignored_read_only {

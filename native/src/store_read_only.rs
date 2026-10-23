@@ -137,6 +137,7 @@ impl Store {
             source_exclusion_selection: None,
             current_source_exclusions: None,
             current_git_ignored_read_only: false,
+            current_physical_ignored_dirs: None,
             client_lock,
             admission_gate,
             client_valid: Cell::new(true),

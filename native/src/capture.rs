@@ -13,6 +13,9 @@ use std::{
     path::Path,
     time::{Duration, Instant},
 };
+#[path = "capture_directory_identity.rs"]
+pub(crate) mod directory_identity;
+pub use directory_identity::IgnoredDirectoryIdentity;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub(crate) enum DeadlineFailure {
@@ -258,6 +261,8 @@ pub struct CaptureOptions {
     pub read_only_dependency_dirs: Vec<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub include_ignored_dirs: Vec<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ignored_directory_identity: Option<IgnoredDirectoryIdentity>,
 }
 impl CaptureOptions {
     pub fn validated(&self) -> Result<Self> {
@@ -282,6 +287,11 @@ impl CaptureOptions {
         let only_dirs = normalize_dirs(&self.only_dirs)?;
         let include_dirs = normalize_dirs(&self.include_dirs)?;
         let include_ignored_dirs = normalize_dirs(&self.include_ignored_dirs)?;
+        ensure!(
+            self.ignored_directory_identity.is_none()
+                || (!include_ignored_dirs.is_empty() && !self.include_git_ignored),
+            "Ignored directory identity requires explicit directory selectors"
+        );
         ensure!(
             !self.include_git_ignored || include_ignored_dirs.is_empty(),
             "git_ignore_policy_cannot_combine_read_only_ignored_directory_override"
@@ -377,6 +387,7 @@ impl CaptureOptions {
             language_overrides,
             read_only_dependency_dirs,
             include_ignored_dirs,
+            ignored_directory_identity: self.ignored_directory_identity,
         })
     }
     fn ignored_capture(&self) -> bool {
@@ -386,6 +397,9 @@ impl CaptureOptions {
         self.include_git_ignored || self.ignored_prefix(path)
     }
     fn ignored_prefix(&self, path: &str) -> bool {
+        if self.ignored_directory_identity.is_some() {
+            return directory_identity::physical_prefix(&self.include_ignored_dirs, path);
+        }
         self.include_ignored_dirs.iter().any(|directory| {
             let mut actual = path.split('/');
             directory.split('/').all(|expected| {
@@ -1297,6 +1311,13 @@ impl CapturedSourceScope<'_> {
                 "Canonical host scope is read-only or excludes this write path"
             );
         }
+        if self.options.ignored_directory_identity.is_some() {
+            directory_identity::check_captured_write(
+                self.store,
+                &self.options.include_ignored_dirs,
+                path,
+            )?;
+        }
         Ok(())
     }
     /// Prospective metadata only: no origin membership, filesystem or blob grant.
@@ -1866,8 +1887,17 @@ fn capture_inner(
     deadline: &Deadline,
 ) -> Result<Snapshot> {
     for _ in 0..3 {
-        let (files, omissions, ignored_paths) = scan(epoch, root, store, deadline, options)?;
-        let second = scan(epoch, root, store, deadline, options)?;
+        let selected = directory_identity::resolve_options(root, store, options, deadline)?;
+        let effective = selected.as_ref();
+        let (files, omissions, ignored_paths) = scan(epoch, root, store, deadline, effective)?;
+        let second = scan(epoch, root, store, deadline, effective)?;
+        if options.ignored_directory_identity.is_some()
+            && effective
+                != directory_identity::resolve_options(root, store, options, deadline)?.as_ref()
+        {
+            continue;
+        }
+        let options = effective;
         if files == second.0 && omissions == second.1 && ignored_paths == second.2 {
             if options.ignored_capture() {
                 return ignored::capture(
