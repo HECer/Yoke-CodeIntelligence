@@ -41,6 +41,7 @@ mod mixed_meaning_cli;
 mod mixed_view_cli;
 mod neo4j_publish_cli;
 mod postgres_catalog_cli;
+mod repository_discovery_cli;
 mod session_config_cli;
 mod source_acquisition_cli;
 mod view_comparison_cli;
@@ -83,6 +84,7 @@ struct Cli {
 #[derive(Subcommand)]
 enum ExtensionOperation {
     ServerCatalog,
+    Repositories(Box<repository_discovery_cli::Arguments>),
     Session {
         #[arg(long)]
         id: Option<String>,
@@ -2003,6 +2005,7 @@ fn run_parity(
     deadline: &Deadline,
 ) -> Result<bool> {
     match operation {
+        ExtensionOperation::Repositories(_) => bail!("Repository discovery dispatch error"),
         ExtensionOperation::Collections(_) => bail!("Collection host dispatch error"),
         ExtensionOperation::ModelsHttp(_)
         | ExtensionOperation::ModelHttpWorker(_)
@@ -3374,6 +3377,21 @@ fn run(cli: Cli) -> Result<bool> {
             );
         }
         ensure!(options.is_none() && format.is_none(), git_impact_cli::INPUT);
+    }
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::Repositories(args) = extension.as_ref()
+    {
+        ensure!(
+            cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && !cli.allow_writes
+                && cli.analyzer_epoch.is_none(),
+            "Repository discovery selects host metadata; source/provider/write flags are unavailable"
+        );
+        return args.run(&cli.root, cli.timeout, cli.max_bytes);
     }
     if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::SessionConfig(args) = extension.as_ref()
