@@ -1,5 +1,9 @@
 # Explicit live session prompt templates
 
+The separately selected [authored-memory helper](prompt-memories.md) adds
+memoryEmbeddings and protocol 4. It loads only admitted existing note revisions
+and sends inert snapshots to the worker; protocols 1/2/3 stay unchanged.
+
 A host may independently enable `promptTemplates` on a Session profile. At each
 MCP initialization or `initialInstructions` call the native renderer derives the
 current transport's actual selected tool catalog, then renders the selected
@@ -135,7 +139,7 @@ loader, application object, network, command or model interface. These are
 resource/interpreter boundaries, not an OS filesystem/network sandbox or
 protection from another equal-account process.
 
-Default/upstream prompt catalogs, embed_memory, exact Python-Jinja conformance,
+Default/upstream prompt catalogs and exact Python-Jinja conformance,
 external layouts/extensions/clients and broad parity remain open. Windows-owned
 qualification does not certify Unix, current whole Windows, hosted CI, canonical
 VSIX, Google live capture, main integration or release. See the

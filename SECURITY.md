@@ -23,6 +23,17 @@ process with the same host-account privileges.
 
 ## Explicit prompt template rendering
 
+The optional memory helper can read only explicitly selected application note
+names from current project or host-registered existing global stores. Mode,
+tool/API, ignored policy and name admission precede payload access. SQLite
+allocation bounds precede stored JSON parsing; immutable revisions and Session
+state are rechecked before delivery. Protocol 4 receives inert snapshots only,
+never a Store/file/application callback. Bodies remain untrusted authored claims
+and are not reevaluated. Unavailable selected notes carry explicit partial
+warnings; policy, integrity and stale failures refuse. No central AgentMemory,
+default memory lookup or model authority is introduced.
+See [memory boundaries](native/docs/prompt-memories.md).
+
 The separate live Session route requires --allow-session-templates and typed
 nonserializable renderer authority. JSON cannot grant callbacks or replace the
 three host-derived live catalog variables. Protocol 3 binds current session

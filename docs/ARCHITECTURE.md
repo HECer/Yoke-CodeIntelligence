@@ -2,6 +2,14 @@
 
 ## Native Rust ownership
 
+Explicit memoryEmbeddings selections resolve existing authored application note
+revisions after current mode/tool/API/ignored-policy admission. Read-only Stores
+and bounded SQL precede a pure protocol-4 embed_memory function over inert data.
+Before-delivery revision/Session checks refuse stale responses; selected missing
+notes carry partial warnings. Original note anchors stay unverified for current
+source, and bodies never become templates or grants. None preserves old bindings.
+See [authored prompt memory](../native/docs/prompt-memories.md).
+
 Explicit live Session templates use a nonserializable trusted-host renderer,
 separately granted by --allow-session-templates in the shipped CLI. Current
 transport catalogs supply three reserved variables; per-fragment protocol-3

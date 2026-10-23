@@ -1,5 +1,10 @@
 # Host-owned session steering
 
+Explicit [prompt memory embeddings](prompt-memories.md) reuse effective memory
+visibility, no-memories, raw read_memory tool and mem.read_memory API policies.
+Read-only notes stay readable. Disabled or excluded reads refuse live rendering;
+missing selected notes are explicit partial observations.
+
 The opt-in [live prompt runtime](session-prompt-runtime.md) renders effective
 fragments against the actual current transport catalog. It requires a separate
 host grant and renderer capability; default steering below remains literal.

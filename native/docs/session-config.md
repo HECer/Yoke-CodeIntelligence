@@ -1,5 +1,10 @@
 # Explicit YAML session configuration
 
+Deferred policy/discovery selections may additionally carry an explicit
+[memoryEmbeddings list](prompt-memories.md). Projection preserves names as data
+and never opens note stores. The live startup grant and current memory policies
+remain independent; eager projection refuses this deferred-only selection.
+
 The separately authorized [live prompt route](session-prompt-runtime.md) adds
 --defer-template-evaluation for explicit plan/export/discovery. Deferred profiles
 retain decoded template scalars and original source receipts; startup still

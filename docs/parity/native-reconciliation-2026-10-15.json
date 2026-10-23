@@ -14502,5 +14502,42 @@
       "Original 353 identities, R1-R9 and 77 unknown runtime requirements",
       "Current whole Windows, Unix, hosted CI, canonical VSIX, Google, main and release acceptance"
     ]
+  },
+  "nativePromptMemoryEmbedding20261023": {
+    "sourceCommit": "caeecb8e3922e5434f955c49a33b54ec2709ffef",
+    "evidence": "docs/validation/integration-2026-10-23/prompt-memories/checkpoint.json",
+    "qualifiedScope": "Host-selected authored note embedding, bounded inert protocol4 and deferred pinned policy selection",
+    "rustTotals": {
+      "passed": 969,
+      "failed": 0,
+      "existingIgnored": 10,
+      "filtered": 0
+    },
+    "wholeGroups": 53,
+    "addedFunctionsIncluded": 13,
+    "sourceInputs": 1126,
+    "sourceInputsUnchanged": true,
+    "completeFormatRoots": 366,
+    "allTargetClippy": true,
+    "pythonPassed": 47,
+    "npm": {
+      "passed": 260,
+      "existingSkipped": 3
+    },
+    "actualCompatibilityCliParents": 16,
+    "precedingLiteralEagerAndLiveProtocol3RawMcpSqlSourceExact": true,
+    "actualHttpRequests": 8,
+    "actualPersistentPythonCells": 2,
+    "allJobsEmpty": true,
+    "authoredClaimsAreSourceFacts": false,
+    "anchorCurrentnessRevalidated": false,
+    "unavailableSelectedNotesHavePartialDiagnostics": true,
+    "fullStatusComplete": false,
+    "original353AndRuntime77NotRecertified": true,
+    "remaining": [
+      "Default/upstream prompts, automatic note selection, additional Python-Jinja calling/conformance, clients/layouts/extensions",
+      "Original 353 identities, R1-R9 and 77 unknown runtime requirements",
+      "Current whole Windows, Unix, hosted CI, canonical VSIX, Google, main and release acceptance"
+    ]
   }
 }

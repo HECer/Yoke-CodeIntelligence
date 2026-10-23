@@ -1,5 +1,36 @@
 # Remaining implementation and acceptance
 
+Explicit live prompts now support embed_memory(name) over a host-selected set
+of existing authored application notes. Active-project/global namespace, mode,
+tool/API and ignored-memory policies precede payload access. Existing-only
+read-only stores, bounded SQLite reads, immutable revisions and before-delivery
+state/head rechecks preserve authority and provenance. The separate protocol-4
+function receives only resolved inert data. Missing/deleted selected notes have
+explicit partial warnings; policy/integrity/selection failures refuse. Default
+bindings and protocols 1/2/3 remain byte-identical. No source capture by the helper,
+default model call, automatic memory lookup or analyzed-source execution is added.
+
+Qualified code caeecb8e passes 969 Rust functions in 53 unique whole groups,
+zero failures, 10 existing ignores and no filtered functions. All 592 library,
+six binary and 13 added functions are included. All-target Clippy, 366-root format,
+locked build, Python 47, typecheck and npm 260/3 existing skips pass on 1126 exact
+frozen inputs. Only four integration groups and Clippy reuse identical green3
+inputs, counted once. Sixteen actual old/new CLI parents preserve literal/eager
+and preceding live-protocol-3 raw MCP bindings, original nonempty SQL and sources.
+Eight actual HTTP requests and two persistent Python cells exercise real note
+embedding, inert note text, mode/catalog changes and clean closure. One new
+synthetic credential is removed; no existing credentials or system settings are
+accessed/changed. All reviewed owned Jobs end empty. The pre-test disk stop and
+two corrected new-fixture assertions remain archived; no original tests/ignores,
+internal deadlines or Cargo profiles change. Only exact passed artifacts and
+verified evidence copies receive file-only lossless compression; no deletion.
+See [authored-memory evidence](validation/integration-2026-10-23/prompt-memories/README.md)
+and [native contract](../native/docs/prompt-memories.md).
+Default/upstream catalogs, automatic note selection, additional Python-Jinja
+calling/conformance, clients/layouts/extensions/quality, original 353/R1-R9/77
+runtime/current whole Windows/Unix/hosted/canonical VSIX/Google/main/release
+acceptance remain open. Earlier entries retain their historical source scopes.
+
 Explicit live session prompts now derive available_tools, available_markers and
 tool_names from the same selected catalogs published by each actual transport.
 Separate --allow-session-templates host authority enables bounded protocol-3

@@ -23,6 +23,10 @@ Use `target/release/yoke.exe` on Windows. Rust 1.94.1 or newer is required to bu
 
 An explicitly enabled [native session dashboard](native/docs/session-dashboard.md) shows private read-only session status, selected tools and bounded structured activity. Configuration/memory editing and raw logs remain unavailable.
 
+Explicit [authored-memory embeddings](native/docs/prompt-memories.md) add selected
+application-note revisions to live prompts with current policies and honest
+missing-note diagnostics. Default memory lookup remains disabled.
+
 Separately granted [live session prompt templates](native/docs/session-prompt-runtime.md)
 derive actual current catalog variables and support deferred YAML projection.
 Default guidance stays literal and no model or analyzed source runs.
