@@ -27,8 +27,9 @@ def controlled_environment():
 def check_runner_policy(environment):
     import tomllib
 
-    if environment.get("CARGO_BUILD_TARGET") or any(
-        name.upper().startswith("CARGO_TARGET_") and name.upper().endswith("_RUNNER")
+    if any(
+        name.upper() == "CARGO_BUILD_TARGET"
+        or name.upper().startswith("CARGO_TARGET_") and name.upper().endswith("_RUNNER")
         for name in environment
     ):
         raise ValueError("Existing target or runner environment")
@@ -60,9 +61,9 @@ def check_runner_policy(environment):
             or not isinstance(build, dict)
             or not isinstance(configured_environment, dict)
             or "target" in build
-            or "CARGO_BUILD_TARGET" in configured_environment
             or any(
-                name.upper().startswith("CARGO_TARGET_") and name.upper().endswith("_RUNNER")
+                name.upper() == "CARGO_BUILD_TARGET"
+                or name.upper().startswith("CARGO_TARGET_") and name.upper().endswith("_RUNNER")
                 for name in configured_environment
             )
             or any(isinstance(target, dict) and "runner" in target for target in targets.values())

@@ -130,6 +130,8 @@ class NativeExecutableBoundary(unittest.TestCase):
                 '[target.x86_64-pc-windows-msvc]\nrunner=["owned-sandbox"]\n',
                 '[env]\nCARGO_TARGET_X86_64_PC_WINDOWS_MSVC_RUNNER="owned-sandbox"\n',
                 '[env]\nCARGO_BUILD_TARGET="owned-host"\n',
+                '[env]\ncargo_build_target="owned-host"\n',
+                '[env]\ncargo_target_owned_host_runner="owned-sandbox"\n',
                 'include="owned-policy.toml"\n',
                 'owned="' + 'x' * 65_536 + '"\n',
             ]:
@@ -142,8 +144,10 @@ class NativeExecutableBoundary(unittest.TestCase):
                 with mock.patch.object(RUNNER.subprocess, "run") as child:
                     self.assertEqual(RUNNER.main(["--controlled-test-runner", *arguments]), 2)
                     child.assert_not_called()
-            with mock.patch.dict(os.environ, {"CARGO_TARGET_OWNED_HOST_RUNNER": "owned-sandbox"}):
-                with mock.patch.object(RUNNER.subprocess, "run") as child:
+            for name in ["CARGO_TARGET_OWNED_HOST_RUNNER", "cargo_build_target"]:
+                with mock.patch.dict(os.environ, {name: "owned-sandbox"}), mock.patch.object(
+                    RUNNER.subprocess, "run"
+                ) as child:
                     self.assertEqual(RUNNER.main(["--controlled-test-runner", "--lib"]), 2)
                     child.assert_not_called()
 
