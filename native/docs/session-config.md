@@ -52,6 +52,68 @@ fingerprint and resume the same session binding. Changing YAML does nothing unti
 explicit reimport; changed policies retain ordinary stale-session refusal.
 Original YAML bytes are never rewritten.
 
+## Explicit directory discovery and first pinning
+
+The separate host-only discover operation can first select source files by path
+and enumerate custom context/mode directories. It never searches default host,
+project or home locations. Both configuration-read and policy-projection grants
+precede opening its selection. Run, with command wrapping as above:
+
+    yoke session-config discover --selection /absolute/discovery.json
+      --allow-configuration-read --allow-policy-projection
+
+Example discovery selection:
+
+    {
+      "hostProfile": {"context": "desktop-app", "steering": {}},
+      "files": [
+        {"path": "C:/host/global.yml", "target": {"kind": "global"}}
+      ],
+      "directories": [
+        {"path": "C:/host/contexts", "kind": "contexts"},
+        {"path": "C:/host/modes", "kind": "modes"}
+      ]
+    }
+
+files and directories default to empty arrays, but at least one selector is
+required. Explicit file targets use the existing global/project/project_local/
+context/mode shapes. A provided file sha256 must match; an omitted/null pin is
+computed only by this explicitly granted discovery operation. Existing plan and
+export still require every original byte pin and never discover additional files.
+
+Each directory is flat and matches .yml/.yaml suffixes with ASCII case
+insensitivity. Its exact filename stem selects the existing native context/mode
+name. Existing ASCII/100-byte label and built-in-name restrictions apply; an
+unsupported name fails rather than being skipped or normalized. Unicode roots
+and paths preserve their exact spellings. Explicit files retain input order;
+directories retain input order and sort their filenames exactly. Duplicate
+targets, including .yml/.yaml aliases or repeated roots, refuse without choosing
+a winner. Nested directories and other file formats are not traversed.
+
+The reply contains selection, a ready ordinary hash-pinned selection, and
+projection, the actual existing YAML policy projection. Pass that selection
+object to the unchanged plan/export commands for replay. Directory receipts
+retain path/kind, selected YAML names, inspected entry count and name-list hash.
+An existing empty selected directory is an observed empty selection; an absent
+or unsafe directory is an error. discoveryComplete describes the exact selected
+flat YAML scope. The separate broad complete field stays false.
+
+At most 32 directories, 1,024 entries per directory scan (including non-YAML
+entries), and 268 total selected files are admitted. All candidate counts and
+target uniqueness checks precede YAML payload reads. The existing 64-KiB/file,
+2,000,000-byte aggregate source and 128,000-byte profile limits still apply;
+the discovery selection itself is capped at 128,000 bytes. Ordinary host-path,
+ancestor, reparse/link, single-link and source-byte checks are reused. Selected
+YAML membership and all input bytes are rechecked before output; source and
+directory handles remain held through stdout delivery. These checks do not
+establish a general atomic filesystem snapshot or OS sandbox.
+
+Discovery writes no profile/Store/source, runs no template, activation command,
+provider, model or network request, and grants no project/runtime/source/write
+authority. Strict native YAML schema and all existing project/backend grants
+remain. This does not add Jinja evaluation or certify arbitrary external layouts.
+See ../../docs/validation/integration-2026-10-23/config-discovery/README.md.
+
 ## Fields and boundaries
 
 HostProfile.gitIgnore selects whether Git-ignore rules filter project analysis:

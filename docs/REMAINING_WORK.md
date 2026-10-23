@@ -1,5 +1,32 @@
 # Remaining implementation and acceptance
 
+Explicit host-only session-config discover now reads selected YAML files and
+flat custom context/mode directories, returning a ready hash-pinned selection
+and the existing policy projection. Names/order, byte hashes, guarded inputs,
+complete candidate admission, before-output membership/source rechecks and
+held-through-delivery handles remain explicit. Existing plan/export pins,
+schemas, permissions and session identities stay unchanged. No default lookup,
+Store, source rewrite, template/command/provider/model or network call is added.
+
+Qualified code 09898097 passes 125 Rust functions in 17 whole groups, zero
+failures/ignores/filtered functions, including two new namespace/source freshness
+unit tests and twelve new end-to-end discovery tests. All-target Clippy,
+complete 362-root formatting, build, Python 47, typecheck and npm 260 with three
+existing skips pass on 1,112 exact source/control inputs. The core library is
+unchanged and is not rerun or added to these scoped totals.
+
+Ten actual CLI parents prove deterministic discovery, identical old/new pinned
+plans and exported profiles, unchanged raw MCP/session replies and complete
+original nonempty snapshot/graph/record rows. Original CRLF/BOM/Unicode source
+bytes remain exact. The unchanged actual Code 1.143.1 host test passes all four
+assertions on the new explicit native runtime; all owned Jobs end empty. The
+new write-lock fixture first records Rust's Uncategorized classification, then
+requires actual Windows error 32 and unchanged data/recheck without loosening
+any source guard. See [discovery evidence](validation/integration-2026-10-23/config-discovery/README.md)
+and [configuration contract](../native/docs/session-config.md#explicit-directory-discovery-and-first-pinning).
+Broader layouts/Jinja/extensions/client/quality, original 353/R1-R9/77-runtime,
+Windows/hosted/canonical VSIX, Google/main/release acceptance remain open.
+
 Windows owned-Job list refusals now report bounded numeric query/count/error,
 after-list accounting and retained-root observations. A real terminate-only
 Windows Job alias reproduces the missing-diagnostic regression. Original typed
@@ -531,7 +558,7 @@ retains the detailed boundaries and original inventory assessments.
 | --- | --- |
 | Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
 | Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Broader YAML/Jinja/file discovery, restricted-default project extensions, broader client hook/status behavior, dashboard management and broader UI/accessibility acceptance. |
+| Configuration/clients/UI | Additional YAML layouts, Jinja, restricted-default project extensions, broader client hook/status behavior, dashboard management and broader UI/accessibility acceptance. |
 | Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
 | External acquisition | Broader ASR quality/formats, authenticated Google export, remaining social/video/authenticated routes and broader database version/mixed-source qualification. No approved Google test document is available. |
 | App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
