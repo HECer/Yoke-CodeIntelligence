@@ -7783,7 +7783,7 @@
           "guardNativeInputs": 807,
           "changedFile": "native/src/compiler_inline_body.rs",
           "changedRegion": "cfg(test) only: two original UTF-8 comment literals and exact original comment-array formatting (including optional trailing comma)",
-          "restoredLiteral": "/* café */",
+          "restoredLiteral": "/* caf\u00e9 */",
           "restoredOccurrences": 2,
           "exactExpectedTextChecked": true,
           "productionPrefixUnchanged": true,
@@ -10875,7 +10875,7 @@
           "Stale host binding refusal before MCP initialization",
           "Actual rust-analyzer invalid-identifier -32602 refusal"
         ],
-        "newName": "local_renommé",
+        "newName": "local_renomm\u00e9",
         "sourceExecutionAuthorized": false,
         "commandsExecuted": false,
         "externalDependencies": 0,
@@ -11273,7 +11273,7 @@
           "Stale host binding refusal before MCP initialization",
           "Actual rust-analyzer invalid-identifier -32602 refusal"
         ],
-        "newName": "local_renommé",
+        "newName": "local_renomm\u00e9",
         "sourceExecutionAuthorized": false,
         "commandsExecuted": false,
         "externalDependencies": 0,
@@ -14260,5 +14260,27 @@
     "wholeNativeRerun": false,
     "all77RuntimeAcceptanceCertified": false,
     "fullContractCertification": false
+  },
+  "nativeFormattingGateAcceptance20261023": {
+    "qualifiedCodeCommit": "ced3f2d2867bb7c3eb973217f46855246a33adfe",
+    "evidence": "docs/validation/integration-2026-10-23/native-formatting/README.md",
+    "frozenInputs": 1106,
+    "completeFormatRoots": 361,
+    "canonicalVerboseRootsExactlyEqual": true,
+    "windowsCompleteFormattingGatePassed": true,
+    "originalCargoAggregateOs206Retained": true,
+    "aggregateCommandUtf16Units": 33872,
+    "unixCargoFormattingGateUnchanged": true,
+    "pythonPassed": 47,
+    "typecheckPassed": true,
+    "typescriptPassed": 260,
+    "typescriptExistingSkipped": 3,
+    "allJobsEmpty": true,
+    "nativeProductAndOriginalTestsUnchanged": true,
+    "nativeTestRerun": false,
+    "hostedAcceptance": false,
+    "canonicalVsixAccepted": false,
+    "releaseAccepted": false,
+    "fullStatusComplete": false
   }
 }

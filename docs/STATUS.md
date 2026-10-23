@@ -1,5 +1,22 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+The complete Windows native formatting gate now passes all 361 Cargo target
+roots without an oversized process command. The helper uses offline locked
+metadata, per-target editions and recursive local path dependencies, with ordinary
+rustfmt module/configuration behavior and explicit nonzero failures. The original
+aggregate command still reproduces OS206; Unix CI keeps the canonical Cargo gate.
+
+Qualified code ced3f2d2 passes Python 47, typecheck and npm 260 with 3 existing
+skips on 1,106 unchanged source/control inputs. Canonical verbose roots,
+independent metadata and the helper's full list agree exactly. Actual fixture
+checks preserve source and never execute the build-script canary. All owned
+Jobs end empty. Rust production, original tests/profiles and the current native
+executable stay unchanged; no native suite is rerun for this tooling-only change.
+See [format evidence](validation/integration-2026-10-23/native-formatting/README.md)
+and [contributor command](../native/docs/native-formatting.md).
+Canonical VSIX/release, current whole-native/Windows/hosted and broader
+STATUS/353/R1-R9/77-runtime/client/quality/Google/main acceptance remain open.
+
 ## Current integration work
 
 Explicit LSP resourceSettings now selects shallow workspace-setting overlays
