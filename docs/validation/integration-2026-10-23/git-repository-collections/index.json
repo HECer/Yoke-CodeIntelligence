@@ -2,7 +2,7 @@
   "sourceCommit": "6477c3a15d7bcc0a59aace817ede2b467e95fcfe",
   "evidence": "docs/validation/integration-2026-10-23/git-repository-collections/README.md",
   "nativePassed": 809,
-  "nativeFailed": 0,
+  "nativeFailed": 1,
   "nativeExistingIgnored": 8,
   "nativeGroups": 38,
   "newIntegrationFunctions": 6,
@@ -1534,5 +1534,8 @@
     "Owned fixture homes, compiled artifacts and private client state/output remain local",
     "No personal configuration, credentials or unrelated repositories collected"
   ],
-  "initialFinalAuditPhaseLocalBooleanCorrected": true
+  "initialFinalAuditPhaseLocalBooleanCorrected": true,
+  "unchangedWindowsOs1314Failures": [
+    "graph_collections::collection_sqlite_sidecars_cannot_write_through_links"
+  ]
 }

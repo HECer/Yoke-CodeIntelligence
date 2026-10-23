@@ -51,3 +51,7 @@ are deep-equal with one additive checkpoint. No original OS1314 fixture, system/
 Developer Mode/privilege/execution policy or protected failed artifact changes.
 Broader client/format/quality/current whole Windows/main/release acceptance stays
 open; no product test is claimed after documentation changes.
+
+The first published JSON checkpoint/index incorrectly retained nativeFailed:0;
+a metadata-only follow-up corrects both to 1 and names the unchanged OS1314 case.
+Raw group totals, source binaries and test results are unchanged.

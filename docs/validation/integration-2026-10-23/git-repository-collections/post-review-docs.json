@@ -36,5 +36,16 @@
   "newContract": "native/docs/git-repository-collections.md",
   "newProductTestsClaimedAfterDocumentation": false,
   "originalInventoryLedgerAndSummaryUnchanged": true,
-  "originalHttpContractBytePrefixPreserved": true
+  "originalHttpContractBytePrefixPreserved": true,
+  "publishedCountMetadataCorrection": {
+    "priorDocsCommit": "70a3a2cbdbeb8db4f97079aeccc49e5ce96b286b",
+    "nativeFailedBefore": 0,
+    "nativeFailedAfter": 1,
+    "unchangedWindowsOs1314Failures": [
+      "graph_collections::collection_sqlite_sidecars_cannot_write_through_links"
+    ],
+    "productionAndRawEvidenceUnchanged": true,
+    "productTestsRepeated": false,
+    "originalLedgerAndSummaryDeepEqual": true
+  }
 }
