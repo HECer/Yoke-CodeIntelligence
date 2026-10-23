@@ -130,8 +130,39 @@ setter form `__proto__: alias`; a static binding match cannot disguise that
 semantic change. An explicit owned regression fixture checks actual property
 and prototype behavior. Preparation itself still executes no analyzed source.
 
+## Literal import attributes
+
+Original `with { ... }` clauses now survive compiler omissions and recovered
+shorthand-only dependencies. Named/default/namespace imports retain original
+literal and comment bytes, including Unicode and CRLF, before independently
+selected host after-formatting. The separate `importAttributes` repair names its
+original and current import spans; Rust reconstructs the insertion from original
+source. Missing-import repairs use the same original suffix. Neither route can
+supply arbitrary new attribute text.
+
+Native admission independently parses original/result linkage statements and
+compares token fingerprints for each compiler-bound imported/reexported target.
+A changed/dropped clause, invented request or ambiguous original policies for
+one target refuses the whole plan. Whitespace may be formatted; literal tokens
+and comments remain bound. Standalone side-effect imports retain their existing
+exact comparison. Absent attributes keep preceding fields and identity rules;
+fresh plan IDs still incorporate their ordinary creation timestamp.
+
+Bounds are 65,536 bytes, 256 literal string pairs and 4,096 syntax visits per
+clause; aggregate signature text is at most 4 MB and named binding checks at most
+200,000. Comments inside the object are supported. Other parsed clause shapes,
+ambiguous policies and unqualified consumer/attribute forms refuse visibly.
+Existing source/AST/edit/output/deadline limits still apply. The new checks add
+no runtime, filesystem, network, model, approval or write authority.
+
+Attribute contents are host-specific; [TypeScript's documentation](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-3.html#import-attributes)
+describes their loader boundary. Preserving source requests and static bindings
+does not certify actual loader interpretation, module evaluation order or runtime
+equivalence. Results retain `complete:false` and independent verification,
+approval, source freshness, application and conditional recovery gates.
+
 These remain finite compiler repairs, not an exhaustive bug workaround. Sibling
-declaration bundles, unsupported import attributes, broader export/import/context
+declaration bundles, other attribute forms, broader export/import/context
 and destination/language shapes, module evaluation order, runtime equivalence
 and full acceptance remain unqualified. The own_v1 LSP contract retains its
 separate finite scope.

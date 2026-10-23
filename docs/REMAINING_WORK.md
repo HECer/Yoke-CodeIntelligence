@@ -1,5 +1,27 @@
 # Remaining implementation and acceptance
 
+Immutable compiler moves now retain literal import attributes from captured
+source. Source-only repairs restore compiler omissions and shorthand-only import
+dependencies. Native syntax and bound-target checks reject changed, dropped,
+invented or ambiguous attribute requests before plan publication. Original source
+bytes, host gates and guarded application/recovery remain authoritative.
+
+Qualified code 2240fadd passes 651 Rust functions in five whole groups,
+with zero failures, seven existing ignores and no filtered tests. Seven added
+functions are included. Clippy, 367-root formatting, locked build, typecheck and
+npm 260/3 existing skips pass on 1129 frozen inputs. Three integration groups
+reuse identical product/test inputs after a correction to one new cfg(test)
+fixture; all 594 library and six CLI functions rerun. Actual old/new legacy move
+effects, admission of all saved plan IDs and a current CLI reproduction with
+independent copied-result tsc pass. Fresh plan IDs retain their existing clock
+dependence; raw IDs are not claimed equal. The initial disk stop and corrected
+new-fixture assertions remain archived. No original test, ignore, Cargo profile
+or system setting changes. All owned Jobs end empty.
+See [attribute evidence](validation/integration-2026-10-24/compiler-move-attributes/README.md)
+and the [native contract](../native/docs/compiler-move.md#literal-import-attributes).
+Broader attribute/consumer/loader semantics, R1-R9, the original 353 inventory,
+77 backend runtime qualifications and remaining full acceptance stay open.
+
 Explicit live prompts now support embed_memory(name) over a host-selected set
 of existing authored application notes. Active-project/global namespace, mode,
 tool/API and ignored-memory policies precede payload access. Existing-only

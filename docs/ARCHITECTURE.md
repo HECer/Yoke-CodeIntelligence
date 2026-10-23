@@ -2,6 +2,11 @@
 
 ## Native Rust ownership
 
+Compiler moves restore omitted import attributes from captured source and
+independently bind original/result literal tokens to static import targets.
+Ambiguous or altered requests refuse; host loader behavior remains unverified.
+See [the move contract](../native/docs/compiler-move.md#literal-import-attributes).
+
 Explicit memoryEmbeddings selections resolve existing authored application note
 revisions after current mode/tool/API/ignored-policy admission. Read-only Stores
 and bounded SQL precede a pure protocol-4 embed_memory function over inert data.

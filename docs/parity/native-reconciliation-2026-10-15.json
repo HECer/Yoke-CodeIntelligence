@@ -14539,5 +14539,27 @@
       "Original 353 identities, R1-R9 and 77 unknown runtime requirements",
       "Current whole Windows, Unix, hosted CI, canonical VSIX, Google, main and release acceptance"
     ]
+  },
+  "nativeCompilerMoveImportAttributes20261024": {
+    "qualifiedProductCommit": "2240fadd29dbfb361f706dfc5a97be510e6cf3bb",
+    "evidence": "docs/validation/integration-2026-10-24/compiler-move-attributes/README.md",
+    "nativeContract": "native/docs/compiler-move.md#literal-import-attributes",
+    "rust": {
+      "passed": 651,
+      "failed": 0,
+      "ignored": 7,
+      "filtered": 0,
+      "uniqueWholeGroups": 5,
+      "addedFunctionsAlreadyIncluded": 7
+    },
+    "frozenInputs": 1129,
+    "currentCliSha256": "1fe4251c52772407084f93c961317dacd8fe5c89e54039d3753c27c00032f447",
+    "sourceOnlyOriginalAttributeRestoration": true,
+    "nativeBoundTargetTokenCheck": true,
+    "absentAttributeEffectsExactAndExistingSavedPlansAdmitted": true,
+    "freshPlanIdentityRemainsClockDependent": true,
+    "runtimeLoaderInterpretationValidated": false,
+    "originalLedgerAndAssessmentsChanged": false,
+    "fullStatusComplete": false
   }
 }
