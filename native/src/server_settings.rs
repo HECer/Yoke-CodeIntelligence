@@ -18,6 +18,8 @@ pub struct Settings {
     )]
     pub initialization_options: Option<Map<String, Value>>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    pub settings: Option<Map<String, Value>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub ls_path: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ls_base_cmd: Option<Vec<String>>,
@@ -96,14 +98,23 @@ impl Settings {
         for values in [&self.ls_args, &self.ls_extra_args].into_iter().flatten() {
             strings(values)?;
         }
-        if let Some(options) = &self.initialization_options {
+        for (options, structure_error, capacity_error) in [
+            (
+                &self.initialization_options,
+                "server_settings_initialization_structure_capacity",
+                "server_settings_initialization_capacity",
+            ),
+            (
+                &self.settings,
+                "server_settings_workspace_structure_capacity",
+                "server_settings_workspace_capacity",
+            ),
+        ] {
+            let Some(options) = options else { continue };
             let mut pending: Vec<_> = options.values().map(|v| (v, 1usize)).collect();
             let mut nodes = options.len();
             while let Some((value, depth)) = pending.pop() {
-                ensure!(
-                    depth <= 32 && nodes <= 4096,
-                    "server_settings_initialization_structure_capacity"
-                );
+                ensure!(depth <= 32 && nodes <= 4096, "{structure_error}");
                 match value {
                     Value::Object(values) => {
                         nodes += values.len();
@@ -118,7 +129,7 @@ impl Settings {
             }
             ensure!(
                 serde_json::to_vec(options)?.len() <= 64000,
-                "server_settings_initialization_capacity"
+                "{capacity_error}"
             );
         }
         Ok(())
@@ -175,6 +186,28 @@ impl Settings {
                 "server_settings_initialization_capacity"
             );
             result.configuration.initialization_options = Value::Object(merged);
+        }
+        if let Some(settings) = &self.settings {
+            ensure!(
+                result.configuration.settings.is_null()
+                    || result.configuration.settings.is_object(),
+                "server_settings_original_workspace_object_required"
+            );
+            let mut merged = result
+                .configuration
+                .settings
+                .as_object()
+                .cloned()
+                .unwrap_or_default();
+            merged.extend(settings.clone());
+            // Validate the combined object too: two individually bounded maps
+            // must not bypass the effective workspace configuration limits.
+            Self {
+                settings: Some(merged.clone()),
+                ..Default::default()
+            }
+            .validate()?;
+            result.configuration.settings = Value::Object(merged);
         }
         // Runtime/source-execution/passive authority is copied unchanged. The
         // common LSP admission still checks the effective settings before spawn.
