@@ -103,6 +103,7 @@ pub mod server_selection;
 pub mod server_settings;
 pub mod session_config;
 pub mod session_dashboard;
+pub mod session_prompt;
 pub mod session_steering;
 pub mod skill_takeaways;
 pub mod source_acquisition;

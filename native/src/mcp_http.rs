@@ -124,6 +124,18 @@ impl Principal {
             token.len() == 32,
             "MCP host credential must contain 32 bytes"
         );
+        match (&target.host.prompt_templates, &target.host.prompt_runtime) {
+            (Some(config), Some(runtime)) => {
+                ensure!(
+                    target.profile != Profile::Native,
+                    "session_prompt_session_profile_required"
+                );
+                runtime.check(config, &Deadline::new(30000))?;
+            }
+            (Some(_), None) => anyhow::bail!("session_prompt_host_permission_required"),
+            (None, Some(_)) => anyhow::bail!("session_prompt_selection_required"),
+            (None, None) => {}
+        }
         target.root = target.root.canonicalize()?;
         ensure!(
             target.root.is_dir()

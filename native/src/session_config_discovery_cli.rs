@@ -23,6 +23,8 @@ struct DiscoverySelection {
     #[serde(default)]
     template_context: Option<super::templates::TemplateContext>,
     #[serde(default)]
+    system_prompt: Option<String>,
+    #[serde(default)]
     files: Vec<Candidate>,
     #[serde(default)]
     catalogs: Vec<CatalogCandidate>,
@@ -148,10 +150,19 @@ fn admit(
 pub(super) fn prepare(path: &Path, deadline: &Deadline) -> Result<Prepared> {
     prepare_with_template_permission(path, deadline, false)
 }
+#[cfg(test)]
 pub(super) fn prepare_with_template_permission(
     path: &Path,
     deadline: &Deadline,
     allow_templates: bool,
+) -> Result<Prepared> {
+    prepare_with_template_mode(path, deadline, allow_templates, false)
+}
+pub(super) fn prepare_with_template_mode(
+    path: &Path,
+    deadline: &Deadline,
+    allow_templates: bool,
+    defer_templates: bool,
 ) -> Result<Prepared> {
     let selected = super::read(path, 128000, deadline)?;
     let mut input: DiscoverySelection = yoke::json::parse(&selected.bytes, 128000)
@@ -188,6 +199,13 @@ pub(super) fn prepare_with_template_permission(
         input.template_context = Some(super::templates::TemplateContext::default());
     }
     super::templates::admit(input.template_context.as_ref(), allow_templates, deadline)?;
+    let deferred = super::templates::deferred_context(
+        input.template_context.as_ref(),
+        input.system_prompt.as_deref(),
+        defer_templates,
+        allow_templates,
+        deadline,
+    )?;
     let mut catalog_candidates = Vec::new();
     if let Some(context) = &input.template_context {
         for file in &context.catalogs {
@@ -306,6 +324,7 @@ pub(super) fn prepare_with_template_permission(
         host_profile: input.host_profile,
         files,
         template_context: input.template_context,
+        system_prompt: input.system_prompt,
     };
     if catalog_selectors
         || selection
@@ -331,10 +350,19 @@ pub(super) fn prepare_with_template_permission(
         .as_ref()
         .map(|c| super::templates::prepare_loaded_context(c, total, deadline, Some(catalog_loaded)))
         .transpose()?;
+    let deferred = deferred.map(|mut config| {
+        config.context = selection
+            .template_context
+            .as_ref()
+            .expect("Admitted template context")
+            .clone();
+        config
+    });
     let projection = super::templates::project(
         &selection.host_profile,
         &sources,
         context.as_ref(),
+        deferred.as_ref(),
         deadline,
     )?;
     let value = json!({"schema":"native_session_config_discovery_v1","selection":selection,"projection":super::templates::plan(&projection,context.as_ref()),"directories":receipts,"discoveryComplete":true,"sourceBytesRewritten":false,"templatesEvaluated":projection.plan()["templatesEvaluated"],"sourceExecuted":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"complete":false});

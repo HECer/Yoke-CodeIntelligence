@@ -1,0 +1,180 @@
+{
+  "upstreamRevision": "4f2520efb128dd02e66a2302095bdbbb26ddd5a0",
+  "interfaceMetadataOnly": true,
+  "tools": {
+    "activate_project": [
+      "ToolMarkerDoesNotRequireActiveProject"
+    ],
+    "create_text_file": [
+      "ToolMarkerCanEdit"
+    ],
+    "delete_lines": [
+      "ToolMarkerCanEdit",
+      "ToolMarkerOptional"
+    ],
+    "delete_memory": [
+      "ToolMarkerCanEdit"
+    ],
+    "edit_memory": [
+      "ToolMarkerCanEdit"
+    ],
+    "execute_shell_command": [
+      "ToolMarkerCanEdit"
+    ],
+    "find_declaration": [
+      "ToolMarkerSymbolicRead"
+    ],
+    "find_file": [],
+    "find_implementations": [
+      "ToolMarkerSymbolicRead"
+    ],
+    "find_referencing_symbols": [
+      "ToolMarkerSymbolicRead"
+    ],
+    "find_symbol": [
+      "ToolMarkerSymbolicRead"
+    ],
+    "get_current_config": [],
+    "get_diagnostics_for_file": [
+      "ToolMarkerSymbolicRead"
+    ],
+    "get_diagnostics_for_symbol": [
+      "ToolMarkerOptional",
+      "ToolMarkerSymbolicRead"
+    ],
+    "get_symbols_overview": [
+      "ToolMarkerSymbolicRead"
+    ],
+    "initial_instructions": [
+      "ToolMarkerDoesNotRequireActiveProject"
+    ],
+    "insert_after_symbol": [
+      "ToolMarkerCanEdit"
+    ],
+    "insert_at_line": [
+      "ToolMarkerCanEdit",
+      "ToolMarkerOptional"
+    ],
+    "insert_before_symbol": [
+      "ToolMarkerCanEdit"
+    ],
+    "jet_brains_debug": [
+      "ToolMarkerOptional"
+    ],
+    "jet_brains_find_declaration": [
+      "ToolMarkerOptional",
+      "ToolMarkerSymbolicRead"
+    ],
+    "jet_brains_find_implementations": [
+      "ToolMarkerOptional",
+      "ToolMarkerSymbolicRead"
+    ],
+    "jet_brains_find_referencing_symbols": [
+      "ToolMarkerOptional",
+      "ToolMarkerSymbolicRead"
+    ],
+    "jet_brains_find_symbol": [
+      "ToolMarkerOptional",
+      "ToolMarkerSymbolicRead"
+    ],
+    "jet_brains_get_symbols_overview": [
+      "ToolMarkerOptional",
+      "ToolMarkerSymbolicRead"
+    ],
+    "jet_brains_inline_symbol": [
+      "ToolMarkerCanEdit",
+      "ToolMarkerOptional",
+      "ToolMarkerSymbolicEdit"
+    ],
+    "jet_brains_list_inspections": [
+      "ToolMarkerOptional",
+      "ToolMarkerSymbolicRead"
+    ],
+    "jet_brains_move": [
+      "ToolMarkerCanEdit",
+      "ToolMarkerOptional",
+      "ToolMarkerSymbolicEdit"
+    ],
+    "jet_brains_rename": [
+      "ToolMarkerCanEdit",
+      "ToolMarkerOptional",
+      "ToolMarkerSymbolicEdit"
+    ],
+    "jet_brains_run_inspections": [
+      "ToolMarkerOptional",
+      "ToolMarkerSymbolicRead"
+    ],
+    "jet_brains_safe_delete": [
+      "ToolMarkerCanEdit",
+      "ToolMarkerOptional",
+      "ToolMarkerSymbolicEdit"
+    ],
+    "jet_brains_type_hierarchy": [
+      "ToolMarkerOptional",
+      "ToolMarkerSymbolicRead"
+    ],
+    "list_dir": [],
+    "list_memories": [],
+    "list_queryable_projects": [
+      "ToolMarkerDoesNotRequireActiveProject",
+      "ToolMarkerOptional"
+    ],
+    "onboarding": [
+      "ToolMarkerCanEdit"
+    ],
+    "open_dashboard": [
+      "ToolMarkerDoesNotRequireActiveProject",
+      "ToolMarkerOptional"
+    ],
+    "query_project": [
+      "ToolMarkerDoesNotRequireActiveProject",
+      "ToolMarkerOptional"
+    ],
+    "read_file": [],
+    "read_memory": [],
+    "remove_project": [
+      "ToolMarkerDoesNotRequireActiveProject",
+      "ToolMarkerOptional"
+    ],
+    "rename_memory": [
+      "ToolMarkerCanEdit"
+    ],
+    "rename_symbol": [
+      "ToolMarkerCanEdit",
+      "ToolMarkerSymbolicEdit"
+    ],
+    "replace_content": [
+      "ToolMarkerCanEdit"
+    ],
+    "replace_in_files": [
+      "ToolMarkerCanEdit"
+    ],
+    "replace_lines": [
+      "ToolMarkerCanEdit",
+      "ToolMarkerOptional"
+    ],
+    "replace_symbol_body": [
+      "ToolMarkerCanEdit"
+    ],
+    "restart_language_server": [
+      "ToolMarkerOptional"
+    ],
+    "safe_delete_symbol": [
+      "ToolMarkerCanEdit",
+      "ToolMarkerSymbolicEdit"
+    ],
+    "search_for_pattern": [],
+    "serena_info": [
+      "ToolMarkerDoesNotRequireActiveProject",
+      "ToolMarkerOptional"
+    ],
+    "serena_repl": [
+      "ToolMarkerBeta",
+      "ToolMarkerCanEdit",
+      "ToolMarkerOptional"
+    ],
+    "write_memory": [
+      "ToolMarkerCanEdit"
+    ]
+  }
+}

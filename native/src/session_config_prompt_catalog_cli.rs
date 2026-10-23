@@ -1,72 +1,19 @@
 //! Guarded host catalog resolution, preserving every original declaration.
 use super::super::{Loaded, loaded_identity, read};
-use super::{MAX_CONTEXT, ResolvedContext};
+use super::ResolvedContext;
 use anyhow::{Result, ensure};
-use serde::{Deserialize, Serialize};
-use serde_json::{Map, Value, json};
-use std::{
-    collections::{BTreeMap, BTreeSet},
-    path::PathBuf,
+use serde_json::{Value, json};
+use std::collections::{BTreeMap, BTreeSet};
+pub(in crate::session_config_cli) use yoke::session_prompt::{
+    CatalogFile, CollisionPolicy, TemplateContext,
 };
 use yoke::{capture::Deadline, session_config};
-#[derive(Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "snake_case")]
-pub(in crate::session_config_cli) enum CollisionPolicy {
-    #[default]
-    Error,
-    LastWins,
-}
-impl CollisionPolicy {
-    fn is_error(&self) -> bool {
-        *self == Self::Error
+pub(super) fn validate_context(context: &TemplateContext, d: &Deadline) -> Result<()> {
+    context.validate_data(d)?;
+    for file in &context.catalogs {
+        super::super::super::meaning_archive_cli::host_path(&file.path)?;
     }
-}
-#[derive(Clone, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub(in crate::session_config_cli) struct CatalogFile {
-    pub(in crate::session_config_cli) path: PathBuf,
-    pub(in crate::session_config_cli) sha256: String,
-}
-#[derive(Clone, Default, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase", deny_unknown_fields)]
-pub(in crate::session_config_cli) struct TemplateContext {
-    #[serde(default)]
-    pub(super) variables: Map<String, Value>,
-    #[serde(default)]
-    pub(super) templates: BTreeMap<String, String>,
-    #[serde(default, skip_serializing_if = "Vec::is_empty")]
-    pub(in crate::session_config_cli) catalogs: Vec<CatalogFile>,
-    #[serde(default, skip_serializing_if = "CollisionPolicy::is_error")]
-    collision_policy: CollisionPolicy,
-}
-impl TemplateContext {
-    pub(in crate::session_config_cli) fn validate(&self, d: &Deadline) -> Result<()> {
-        yoke::json::encode_bounded(self, MAX_CONTEXT, d)?;
-        ensure!(
-            self.templates.len() <= 32,
-            "session_config_template_catalog_capacity"
-        );
-        ensure!(
-            self.catalogs.len() <= session_config::MAX_CATALOG_FILES,
-            "session_config_catalog_file_capacity"
-        );
-        for (name, text) in &self.templates {
-            ensure!(
-                session_config::prompt_name(name).is_ok()
-                    && text.len() <= session_config::MAX_FILE_BYTES
-                    && !text.contains('\0'),
-                "session_config_template_catalog_invalid"
-            );
-        }
-        for file in &self.catalogs {
-            ensure!(
-                yoke::model::valid_id(&file.sha256),
-                "session_config_catalog_source_changed"
-            );
-            super::super::super::meaning_archive_cli::host_path(&file.path)?;
-        }
-        Ok(())
-    }
+    Ok(())
 }
 pub(in crate::session_config_cli) struct PreparedContext {
     pub(super) data: ResolvedContext,
@@ -75,6 +22,17 @@ pub(in crate::session_config_cli) struct PreparedContext {
     loaded: Vec<Loaded>,
 }
 impl PreparedContext {
+    pub(super) fn runtime(data: ResolvedContext, metadata: Option<Value>) -> Self {
+        Self {
+            data,
+            schema: 3,
+            metadata,
+            loaded: Vec::new(),
+        }
+    }
+    pub(super) fn recheck(&self, d: &Deadline) -> Result<()> {
+        super::super::recheck(&self.loaded, d)
+    }
     pub(in crate::session_config_cli) fn metadata(&self) -> Option<&Value> {
         self.metadata.as_ref()
     }
@@ -142,7 +100,7 @@ pub(in crate::session_config_cli) fn prepare_loaded(
     d: &Deadline,
     preloaded: Option<Vec<Loaded>>,
 ) -> Result<PreparedContext> {
-    context.validate(d)?;
+    validate_context(context, d)?;
     ensure!(
         policy_bytes <= session_config::MAX_TOTAL_BYTES,
         "session_config_source_capacity_exceeded"

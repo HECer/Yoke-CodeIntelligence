@@ -73,6 +73,9 @@ struct Cli {
     max_bytes: u64,
     #[arg(long, global = true)]
     allow_writes: bool,
+    /// Evaluate explicitly selected host prompts in session responses.
+    #[arg(long, global = true)]
+    allow_session_templates: bool,
     #[arg(long, global = true)]
     language_server_config: Option<PathBuf>,
     #[arg(long, global = true)]
@@ -2273,21 +2276,27 @@ struct AgentReplArguments {
 }
 fn session_host_profile(
     host_profile: Option<&std::path::Path>,
+    allow_templates: bool,
+    deadline: &Deadline,
 ) -> Result<yoke::project_session::HostProfile> {
-    Ok(host_profile
+    let mut host = host_profile
         .map(|path| -> Result<yoke::project_session::HostProfile> {
             yoke::json::decode(input_json(path, 128000)?)
         })
         .transpose()?
-        .unwrap_or_default())
+        .unwrap_or_default();
+    session_config_cli::bind_prompt_runtime(&mut host, allow_templates, deadline)?;
+    Ok(host)
 }
+
 fn open_session(
     engine: Engine,
     id: Option<String>,
     host_profile: Option<PathBuf>,
+    allow_session_templates: bool,
     deadline: &Deadline,
 ) -> Result<yoke::project_session::Session> {
-    let host = session_host_profile(host_profile.as_deref())?;
+    let host = session_host_profile(host_profile.as_deref(), allow_session_templates, deadline)?;
     yoke::project_session::Session::open(engine, host, id.as_deref(), deadline)
 }
 fn run_session(
@@ -2295,6 +2304,7 @@ fn run_session(
     id: Option<String>,
     host_profile: Option<PathBuf>,
     requests: PathBuf,
+    allow_session_templates: bool,
     deadline: &Deadline,
 ) -> Result<bool> {
     #[derive(serde::Deserialize)]
@@ -2305,7 +2315,7 @@ fn run_session(
     }
     let requests: Vec<Request> = yoke::json::decode(input_json(&requests, 4_000_000)?)?;
     ensure!(requests.len() <= 1000, "Too many session requests");
-    let mut session = open_session(engine, id, host_profile, deadline)?;
+    let mut session = open_session(engine, id, host_profile, allow_session_templates, deadline)?;
     let mut results = Vec::new();
     let mut bytes = 0usize;
     for request in requests {
@@ -2355,6 +2365,7 @@ fn prepare_git_session(
     server: &ServeSessionArguments,
     capture_config: Option<&std::path::Path>,
     include_ignored_dirs: &[String],
+    allow_session_templates: bool,
     deadline: &Deadline,
 ) -> Result<Option<PreparedGitSession>> {
     let Some(selection) = &server.git_projects else {
@@ -2393,7 +2404,11 @@ fn prepare_git_session(
                 }),
         })?;
     }
-    let host = session_host_profile(server.host_profile.as_deref())?;
+    let host = session_host_profile(
+        server.host_profile.as_deref(),
+        allow_session_templates,
+        deadline,
+    )?;
     let selections: std::collections::BTreeMap<String, git_repository_http_cli::Selection> =
         yoke::json::decode(input_json(selection, 1_000_000)?)?;
     git_repository_http_cli::admit_projects(
@@ -2791,6 +2806,7 @@ fn run_extension(
     mut engine: Engine,
     prepared_http: Option<PreparedModelProvider>,
     prepared_git: Option<PreparedGitSession>,
+    allow_session_templates: bool,
     operation: ExtensionOperation,
     arguments: &Value,
     deadline: &Deadline,
@@ -2907,7 +2923,14 @@ fn run_extension(
             arguments.get("snapshotId").is_none(),
             "Session operations select their own source snapshots"
         );
-        return run_session(engine, id, host_profile, requests, deadline);
+        return run_session(
+            engine,
+            id,
+            host_profile,
+            requests,
+            allow_session_templates,
+            deadline,
+        );
     }
     if let ExtensionOperation::ServeSession(server) = operation {
         ensure!(
@@ -2949,7 +2972,7 @@ fn run_extension(
             session.index_initial_git_source(deadline)?;
             session
         } else {
-            open_session(engine, id, host_profile, deadline)?
+            open_session(engine, id, host_profile, allow_session_templates, deadline)?
         };
         if let Some(python) = python {
             let spec = yoke::agent_repl::ReplSpec {
@@ -3016,7 +3039,9 @@ fn run_extension(
                 arguments: shell_argument,
             }),
         };
-        let mut session = open_session(engine, id, host_profile, deadline)?;
+        let mut session =
+            open_session(engine, id, host_profile, allow_session_templates, deadline)?;
+        session.select_prompt_profile(yoke::session_prompt::Profile::Serena);
         let mut repl = yoke::agent_repl::AgentRepl::spawn(spec, deadline)?;
         let mut results = Vec::new();
         let mut bytes = 0usize;
@@ -3188,6 +3213,7 @@ fn run_http(
     args: &HttpServeArguments,
     trust_servers: bool,
     allow_writes: bool,
+    allow_session_templates: bool,
 ) -> Result<bool> {
     ensure!(
         args.trust_service,
@@ -3197,7 +3223,7 @@ fn run_http(
         args.duration_ms <= 86_400_000,
         "Service duration exceeds one day; use zero for foreground operation"
     );
-    let host: HttpHostFile = yoke::json::decode(input_json(&args.config, 1_000_000)?)?;
+    let mut host: HttpHostFile = yoke::json::decode(input_json(&args.config, 1_000_000)?)?;
     ensure!(
         !host.principals.is_empty() && host.principals.len() <= 100,
         "MCP service requires bounded host principals"
@@ -3206,6 +3232,18 @@ fn run_http(
     // credentials or opening source state for any principal.
     for principal in &host.principals {
         http_profile(&principal.profile)?;
+        ensure!(
+            principal.host_profile.prompt_templates.is_none() || allow_session_templates,
+            "session_prompt_host_permission_required"
+        );
+        ensure!(
+            principal.host_profile.prompt_templates.is_none() || principal.profile != "native",
+            "session_prompt_session_profile_required"
+        );
+        if let Some(config) = &principal.host_profile.prompt_templates {
+            config.validate(&Deadline::new(host.request_timeout_ms))?;
+        }
+
         ensure!(
             principal
                 .root
@@ -3292,6 +3330,13 @@ fn run_http(
             );
             yoke::agent_repl::AgentRepl::validate_spec(&runtime.approved_spec())?;
         }
+    }
+    for principal in &mut host.principals {
+        session_config_cli::bind_prompt_runtime(
+            &mut principal.host_profile,
+            allow_session_templates,
+            &Deadline::new(host.request_timeout_ms),
+        )?;
     }
     let git_selections = host
         .principals
@@ -3449,6 +3494,12 @@ fn validate_existing_batch_schema(db: &rusqlite::Connection, deadline: &Deadline
 }
 fn run(cli: Cli) -> Result<bool> {
     let mut operation: Operation = cli.command.into();
+    ensure!(
+        !cli.allow_session_templates
+            || matches!(&operation,Operation::Extensions(ext) if matches!(ext.as_ref(),ExtensionOperation::Session{..}|ExtensionOperation::ServeSession(_)|ExtensionOperation::ServeHttp(_)|ExtensionOperation::AgentRepl(_))),
+        "session_prompt_host_route_required"
+    );
+
     if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::Graph {
             command: GraphOperation::CompareViews(args),
@@ -4274,7 +4325,13 @@ fn run(cli: Cli) -> Result<bool> {
                 && cli.language_server_config.is_none(),
             "HTTP targets select snapshots, capture options and servers through their host configuration"
         );
-        return run_http(&cli.root, args, cli.trust_servers, cli.allow_writes);
+        return run_http(
+            &cli.root,
+            args,
+            cli.trust_servers,
+            cli.allow_writes,
+            cli.allow_session_templates,
+        );
     }
     if let Operation::Credentials { ref command } = operation {
         let value = match command {
@@ -4587,6 +4644,7 @@ fn run(cli: Cli) -> Result<bool> {
             server,
             cli.capture_config.as_deref(),
             &cli.include_ignored_dir,
+            cli.allow_session_templates,
             &deadline,
         )?
     } else {
@@ -4638,6 +4696,7 @@ fn run(cli: Cli) -> Result<bool> {
             engine,
             prepared_http,
             prepared_git,
+            cli.allow_session_templates,
             *operation,
             &arguments,
             &deadline,

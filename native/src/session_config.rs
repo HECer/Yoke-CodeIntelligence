@@ -56,6 +56,12 @@ impl Projection {
     }
     pub fn plan(&self) -> Value {
         let mut value = json!({"schema":"native_session_config_yaml_v1","hostProfile":self.profile,"sources":self.sources,"sourceBytesRewritten":false,"templatesEvaluated":self.sources.iter().any(|s| s.get("promptRendering").is_some()),"activationCommandsExecuted":false,"projectRegistrationsFromYaml":false,"runtimeTrustFromYaml":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"sourceExecuted":false,"complete":false});
+        if let Some(config) = &self.profile.prompt_templates {
+            value["templatesDeferred"] = json!(true);
+            value["sessionTemplateAuthorizationRequired"] = json!(true);
+            value["sessionPromptSelectionSha256"] =
+                json!(config.fingerprint().expect("Validated explicit selection"));
+        }
         if self.profile.language_servers.is_some() {
             value["languageServerRegistrationsValidated"] = json!(false);
             value["languageServerRegistrationsFromYaml"] = json!(false);
@@ -292,7 +298,7 @@ pub fn project(
     sources: &[Source<'_>],
     deadline: &Deadline,
 ) -> Result<Projection> {
-    project_inner(base, sources, deadline, None)
+    project_inner(base, sources, deadline, None, false)
 }
 /// The caller owns renderer authorization, execution limits and external evidence.
 /// Only decoded prompt scalar values reach it; all YAML policy fields remain data.
@@ -302,13 +308,28 @@ pub fn project_with_prompt_renderer(
     deadline: &Deadline,
     renderer: &mut PromptRenderer<'_>,
 ) -> Result<Projection> {
-    project_inner(base, sources, deadline, Some(renderer))
+    project_inner(base, sources, deadline, Some(renderer), false)
+}
+/// Preserve decoded prompt source for explicitly authorized later session rendering.
+/// This produces data only and carries no renderer authority into the profile.
+pub fn project_for_session_templates(
+    base: &HostProfile,
+    sources: &[Source<'_>],
+    config: &crate::session_prompt::Config,
+    deadline: &Deadline,
+) -> Result<Projection> {
+    config.validate(deadline)?;
+    let mut selected = base.clone();
+    selected.prompt_templates = Some(config.clone());
+    selected.prompt_runtime = None;
+    project_inner(&selected, sources, deadline, None, true)
 }
 fn project_inner(
     base: &HostProfile,
     sources: &[Source<'_>],
     deadline: &Deadline,
     mut renderer: Option<&mut PromptRenderer<'_>>,
+    defer: bool,
 ) -> Result<Projection> {
     deadline.check()?;
     ensure!(
@@ -344,7 +365,7 @@ fn project_inner(
         );
         let definition = matches!(source.target, Target::Context { .. } | Target::Mode { .. });
         let mut raw = yaml::decode(source.bytes, deadline)?;
-        if renderer.is_some() {
+        if renderer.is_some() || defer {
             // Reject unsupported settings before starting any host renderer.
             rename_fields(
                 raw.clone(),
@@ -410,7 +431,7 @@ fn project_inner(
             definition,
             matches!(source.target, Target::Global),
             is_project,
-            prompt_rendering.is_some(),
+            prompt_rendering.is_some() || defer,
         )?;
         if let Target::Project { project } | Target::ProjectLocal { project } = source.target {
             label(project)?;
@@ -640,6 +661,16 @@ fn project_inner(
             }
         }
         let mut receipt = json!({"target":source.target,"originalBytes":source.bytes.len(),"originalSha256":source.expected_sha256,"declaredProjectName":declared,"declaredProjectNameIsRegistration":false});
+        if defer && let Some(key) = prompt_key {
+            let original = yaml::decode(source.bytes, deadline)?
+                .get(key)
+                .and_then(Value::as_str)
+                .map(str::to_owned);
+            if let Some(original) = original {
+                receipt["promptDeferred"] = json!({"originalPromptSha256":model::hash(&original),"decodedPromptBytes":original.len(),"sourceByteSpansAvailable":false,"sessionRuntimeEvaluationRequired":true,"sessionPromptSelectionSha256":profile.prompt_templates.as_ref().expect("Explicit deferred selection").fingerprint()?});
+            }
+        }
+
         if let Some(rendering) = prompt_rendering {
             receipt["promptRendering"] = rendering;
         }

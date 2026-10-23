@@ -48,6 +48,8 @@ enum Operation {
         allow_policy_projection: bool,
         #[arg(long)]
         allow_template_evaluation: bool,
+        #[arg(long)]
+        defer_template_evaluation: bool,
     },
     Plan {
         #[arg(long)]
@@ -58,6 +60,8 @@ enum Operation {
         allow_policy_projection: bool,
         #[arg(long)]
         allow_template_evaluation: bool,
+        #[arg(long)]
+        defer_template_evaluation: bool,
     },
     Export {
         #[arg(long)]
@@ -71,6 +75,8 @@ enum Operation {
         #[arg(long)]
         allow_template_evaluation: bool,
         #[arg(long)]
+        defer_template_evaluation: bool,
+        #[arg(long)]
         allow_output: bool,
     },
 }
@@ -81,6 +87,8 @@ struct Selection {
     files: Vec<FileSelection>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     template_context: Option<templates::TemplateContext>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    system_prompt: Option<String>,
 }
 #[derive(Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
@@ -249,6 +257,7 @@ fn prepare(
     path: &Path,
     deadline: &Deadline,
     allow_templates: bool,
+    defer_templates: bool,
 ) -> Result<(
     session_config::Projection,
     Vec<Loaded>,
@@ -263,6 +272,13 @@ fn prepare(
     );
     templates::admit(
         selection.template_context.as_ref(),
+        allow_templates,
+        deadline,
+    )?;
+    let deferred = templates::deferred_context(
+        selection.template_context.as_ref(),
+        selection.system_prompt.as_deref(),
+        defer_templates,
         allow_templates,
         deadline,
     )?;
@@ -298,6 +314,7 @@ fn prepare(
         &selection.host_profile,
         &sources,
         context.as_ref(),
+        deferred.as_ref(),
         deadline,
     )?;
     let metadata = context
@@ -318,6 +335,13 @@ fn recheck(loaded: &[Loaded], deadline: &Deadline) -> Result<()> {
         );
     }
     Ok(())
+}
+pub(crate) fn bind_prompt_runtime(
+    host: &mut yoke::project_session::HostProfile,
+    allowed: bool,
+    d: &Deadline,
+) -> Result<()> {
+    templates::bind_runtime(host, allowed, d)
 }
 pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
     ensure!(
@@ -386,15 +410,17 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
             allow_configuration_read,
             allow_policy_projection,
             allow_template_evaluation,
+            defer_template_evaluation,
         } => {
             ensure!(
                 *allow_configuration_read && *allow_policy_projection,
                 "session_config_host_permission_required"
             );
-            let prepared = discovery::prepare_with_template_permission(
+            let prepared = discovery::prepare_with_template_mode(
                 selection,
                 &deadline,
                 *allow_template_evaluation,
+                *defer_template_evaluation,
             )?;
             let reply = yoke::json::encode_bounded(&prepared.value, cap, &deadline)?;
             prepared.recheck(&deadline)?;
@@ -410,13 +436,18 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
             allow_configuration_read,
             allow_policy_projection,
             allow_template_evaluation,
+            defer_template_evaluation,
         } => {
             ensure!(
                 *allow_configuration_read && *allow_policy_projection,
                 "session_config_host_permission_required"
             );
-            let (projection, held, metadata) =
-                prepare(selection, &deadline, *allow_template_evaluation)?;
+            let (projection, held, metadata) = prepare(
+                selection,
+                &deadline,
+                *allow_template_evaluation,
+                *defer_template_evaluation,
+            )?;
             let mut value = projection.plan();
             if let Some(metadata) = metadata {
                 value["promptCatalogResolution"] = metadata;
@@ -435,6 +466,7 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
             allow_configuration_read,
             allow_policy_projection,
             allow_template_evaluation,
+            defer_template_evaluation,
             allow_output,
         } => {
             ensure!(
@@ -442,13 +474,21 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
                 "session_config_host_permission_required"
             );
             let output_guard = super::meaning_archive_cli::fresh_destination(output, &deadline)?;
-            let (projection, held, metadata) =
-                prepare(selection, &deadline, *allow_template_evaluation)?;
+            let (projection, held, metadata) = prepare(
+                selection,
+                &deadline,
+                *allow_template_evaluation,
+                *defer_template_evaluation,
+            )?;
             let profile = projection.profile_bytes(&deadline)?;
             let shape = |hash: &str, bytes: usize| {
                 let mut value = json!({"schema":"native_session_config_export_v1","profileSha256":hash,"profileBytes":bytes,"output":output,"sources":projection.plan()["sources"],"outputCreated":true,"sourceBytesRewritten":false,"templatesEvaluated":projection.plan()["templatesEvaluated"],"sourceExecuted":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"complete":false});
                 if let Some(metadata) = &metadata {
                     value["promptCatalogResolution"] = metadata.clone();
+                }
+                if projection.profile().prompt_templates.is_some() {
+                    value["templatesDeferred"] = json!(true);
+                    value["sessionTemplateAuthorizationRequired"] = json!(true);
                 }
                 value
             };

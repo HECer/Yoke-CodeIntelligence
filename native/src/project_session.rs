@@ -85,6 +85,10 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
     #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub prompt_templates: Option<crate::session_prompt::Config>,
+    #[serde(skip)]
+    pub prompt_runtime: Option<crate::session_prompt::Runtime>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub dashboard: Option<crate::session_dashboard::Config>,
     #[serde(default, skip_serializing_if = "crate::semantic_workspace::unselected")]
     pub additional_workspace_folders: Option<crate::semantic_workspace::HostFolders>,
@@ -133,6 +137,8 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            prompt_templates: None,
+            prompt_runtime: None,
             dashboard: None,
             language_servers: None,
             additional_workspace_folders: None,
@@ -219,6 +225,7 @@ pub(crate) fn validate_retention_record(
     Ok(())
 }
 pub struct Session {
+    prompt_profile: crate::session_prompt::Profile,
     git_repository_projects: Option<crate::git_workflows::repository_projects::Hosts>,
     dashboard: Option<crate::session_dashboard::Handle>,
     dashboard_lifetime: Option<std::sync::Arc<std::sync::atomic::AtomicBool>>,
@@ -907,6 +914,12 @@ impl Session {
         git_repository_projects: Option<crate::git_workflows::repository_projects::Hosts>,
         deadline: &Deadline,
     ) -> Result<Self> {
+        match (&host.prompt_templates, &host.prompt_runtime) {
+            (None, None) => {}
+            (Some(config), Some(runtime)) => runtime.check(config, deadline)?,
+            (Some(_), None) => anyhow::bail!("session_prompt_host_permission_required"),
+            (None, Some(_)) => anyhow::bail!("session_prompt_selection_required"),
+        }
         engine.store.set_deadline(deadline)?;
         if let Some(projects) = &git_repository_projects {
             projects.validate(&host, &engine.root, deadline)?;
@@ -1246,6 +1259,15 @@ impl Session {
         } else {
             fingerprint
         };
+        let fingerprint = if let Some(config) = &host.prompt_templates {
+            identity(&(
+                fingerprint,
+                crate::session_prompt::VERSION,
+                config.fingerprint()?,
+            ))
+        } else {
+            fingerprint
+        };
         let fingerprint = if let Some(selected) = crate::session_steering::agent_interface(&host) {
             identity(&(
                 fingerprint,
@@ -1518,6 +1540,7 @@ impl Session {
             state,
             persisted: raw.unwrap_or(serialized),
             others: BTreeMap::new(),
+            prompt_profile: crate::session_prompt::Profile::Native,
             global_notes: None,
             debug_adapters: BTreeMap::new(),
             process_cleanup_unproven: false,
@@ -1611,6 +1634,7 @@ impl Session {
         }
         if self.git_repository_projects.is_some()
             || self.engine.git_repository_host.is_some()
+            || self.host.prompt_templates.is_some()
             || self.host.dashboard.is_some()
             || self.host.git_ignore.is_some()
             || self.host.additional_workspace_folders.is_some()
@@ -1722,6 +1746,14 @@ impl Session {
                 .collect(),
         ))
     }
+    pub(crate) fn prompt_profile(&self) -> crate::session_prompt::Profile {
+        self.prompt_profile
+    }
+    pub fn select_prompt_profile(&mut self, profile: crate::session_prompt::Profile) {
+        self.prompt_profile = profile;
+    }
+    /// Raw literal steering composition. Host-authorized dynamic response paths
+    /// use the fallible runtime renderer and the actual transport tool catalog.
     pub fn instructions(&self) -> String {
         self.steering()
             .expect("Validated immutable session steering")
@@ -1729,6 +1761,78 @@ impl Session {
                 || crate::session_steering::LEGACY_INSTRUCTIONS.into(),
                 |s| s.instructions(),
             )
+    }
+    pub(crate) fn prompt_templates_enabled(&self) -> bool {
+        self.host.prompt_templates.is_some()
+    }
+    pub fn prompt_instructions(
+        &self,
+        deadline: &Deadline,
+    ) -> Result<crate::session_prompt::Instructions> {
+        use crate::session_prompt::{Instructions, RenderInput};
+        let Some(config) = &self.host.prompt_templates else {
+            return Ok(Instructions {
+                text: self.instructions(),
+                evidence: None,
+            });
+        };
+        self.check_tool_state(deadline)?;
+        let runtime = self
+            .host
+            .prompt_runtime
+            .as_ref()
+            .context("session_prompt_host_permission_required")?;
+        runtime.check(config, deadline)?;
+        let profile = self.prompt_profile();
+        let full = crate::protocol::session_full_catalog(self, profile);
+        let selected = crate::protocol::session_tools(self, profile);
+        let context = crate::session_prompt::resolve_catalog(profile, &full, &selected, deadline)?;
+        let binding = json!({"schema":crate::session_prompt::VERSION,"sessionId":self.state.id,"sessionStateSha256":crate::model::hash(&self.persisted),"revision":self.state.revision,"activeProject":self.state.active_project,"context":self.state.context,"modes":self.state.modes,"selectionSha256":config.fingerprint()?,"catalog":context.evidence});
+        let mut receipts = Vec::new();
+        let mut text = crate::session_steering::LEGACY_INSTRUCTIONS.to_owned();
+        if let Some(name) = &config.system_prompt {
+            let rendered = runtime.render(
+                config,
+                &RenderInput {
+                    prompt: String::new(),
+                    template_name: Some(name.clone()),
+                    source: "system_prompt".into(),
+                    variables: context.variables.clone(),
+                    binding: binding.clone(),
+                },
+                deadline,
+            )?;
+            text = rendered.text;
+            receipts.push(json!({"source":"system_prompt","rendering":rendered.evidence}));
+        }
+        if let Some(steering) = self.steering()? {
+            for fragment in steering.fragments {
+                let rendered = runtime.render(
+                    config,
+                    &RenderInput {
+                        prompt: fragment.text,
+                        template_name: None,
+                        source: fragment.source.clone(),
+                        variables: context.variables.clone(),
+                        binding: binding.clone(),
+                    },
+                    deadline,
+                )?;
+                text.push_str(&format!(
+                    "\n\n[host steering: {}]\n{}",
+                    fragment.source, rendered.text
+                ));
+                ensure!(text.len() <= 131072, "session_prompt_instructions_capacity");
+                receipts.push(json!({"source":fragment.source,"rendering":rendered.evidence}));
+            }
+        }
+        self.check_tool_state(deadline)?;
+        Ok(Instructions {
+            text,
+            evidence: Some(
+                json!({"schema":crate::session_prompt::VERSION,"binding":binding,"fragments":receipts,"sourceBytesRewritten":false,"complete":false}),
+            ),
+        })
     }
     fn resolve_next_modes(&self, next: &mut State) -> Result<()> {
         if self.steering_enabled() {
@@ -2360,9 +2464,12 @@ impl Session {
             }
             "initialInstructions" => {
                 fields(args, &[])?;
-                Ok(
-                    json!({"context":self.state.context,"modes":self.state.modes,"instructions":self.instructions()}),
-                )
+                let rendered = self.prompt_instructions(deadline)?;
+                let mut value = json!({"context":self.state.context,"modes":self.state.modes,"instructions":rendered.text});
+                if let Some(evidence) = rendered.evidence {
+                    value["promptRendering"] = evidence;
+                }
+                Ok(value)
             }
             "queryProject" => {
                 fields(args, &["project", "tool", "arguments"])?;
