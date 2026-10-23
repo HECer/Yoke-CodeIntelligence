@@ -1,5 +1,27 @@
 # Remaining implementation and acceptance
 
+Explicit authenticated MCP HTTP now adopts per-principal fixed-root host Git
+capture for all six existing profiles. Separate CLI flags authorize Git index
+reads and trusted execution; host-file selection cannot grant them. Metadata
+preflight preserves existing host/session validation without source publication.
+Authenticated initialization applies the full source policy before capture;
+initial/final metadata share the original byte budget. Current preferences,
+fixed roots, independent permissions and existing transport controls remain bound.
+
+Source 2674a2f5 passes 777 Rust functions across 30 scoped groups,
+including all 578 library and seven new HTTP integration functions, with 8
+existing ignores and zero failures. All-target Clippy with warnings denied, build,
+typecheck, npm 260 passed/3 existing skips and 356 format roots pass on 1,094
+frozen inputs; fmt-all retains Windows OS206. Actual TCP validates all six catalogs
+against preceding captured names, source/exclusion/read-only-child proof and
+12 pinned Claude 2.1.306 HTTP health calls. Source/Git bytes stay exact; all owned
+Jobs end empty. Initial prototype/fixture failures are preserved and corrected.
+See [evidence](validation/integration-2026-10-23/git-repository-http/README.md)
+and [contract](../native/docs/git-repository-http.md). Multiple registered projects
+within a Git target, broader client/format/quality and whole Windows/main/release
+remain open. Original inventory assessments, fixtures and system settings are
+unchanged. No model turn or automatic analyzed-code execution is introduced.
+
 Explicit fixed-root Git MCP hosting now selects native/session/Serena/Trail/Graft/
 Graphify profiles through `--profile`. Existing catalogs and independent source/
 runtime permissions remain intact. Versioned host binding covers root, selected

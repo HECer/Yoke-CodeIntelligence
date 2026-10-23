@@ -99,3 +99,10 @@ Python PID exit, including a child-process descendant under the Windows job.
 These checks do not turn Python into a sandbox or guarantee hard preemption of
 arbitrary native calls. Windows TCP and TLS are the tested runtime scope; Linux
 and macOS remain deferred.
+
+Explicit per-principal fixed-root Git capture is additionally available through
+`Target.git_repository_capture` or host-file `gitRepositoryCapture`, under separate
+`--allow-git-index-read` and `--trust-git` admission. Configuration preflight
+publishes no source; authenticated initialization applies full host source policy
+before capture. See [the Git HTTP contract](git-repository-http.md) for selection,
+shared metadata budgets, preference lifetime and fixed-root limitations.

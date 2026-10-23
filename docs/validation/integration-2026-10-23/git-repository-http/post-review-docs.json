@@ -1,0 +1,36 @@
+{
+  "sourceCommit": "2674a2f53763a5869a57264eb8e700fea78859ea",
+  "productionFilesUnchangedAfterQualification": true,
+  "changedFrozenInputs": {
+    "docs/REMAINING_WORK.md": {
+      "before": "df12db93e030b622e2bd142ddaa3eb133d8bf2cc1d0da7b476bb69a4f2f8a38d",
+      "after": "86e455a9afb7816f4291898499571aad73124fc5c369cb92f40330e5c3a96d35"
+    },
+    "docs/STATUS.md": {
+      "before": "9f25392f22bd467aebc004f3ce8e0b6f270b943659278e44db1514219cd9f692",
+      "after": "e816987f7500f3e9239c8d95207f80dbe2aa37311d9a857970bdf93b140ae793"
+    },
+    "docs/parity/native-reconciliation-2026-10-15.json": {
+      "before": "7bd9a0fb7bcf838faff5cccad8c03704dcf70664656fd5df58718de7ec17250f",
+      "after": "0b51b1f4f0b15bd3031f70e717312f4c9ab40ffd9bab86abf7927a5e9e7ec80e"
+    },
+    "native/docs/mcp-http.md": {
+      "before": "e0e6d70899bbb04fe838027d6e2bdf5caa2e4b516e2a6067b5e16521ba84dfea",
+      "after": "602895c82febcaabea886484d7c0cf70e1d9cb5ec486068610bed86255e1ccdd"
+    }
+  },
+  "updatedExistingContracts": {
+    "native/docs/mcp-http.md": {
+      "before": "e0e6d70899bbb04fe838027d6e2bdf5caa2e4b516e2a6067b5e16521ba84dfea",
+      "after": "602895c82febcaabea886484d7c0cf70e1d9cb5ec486068610bed86255e1ccdd"
+    },
+    "native/docs/git-repository-profiles.md": {
+      "before": "81a6cd55240af1d2900aeaee451b088d32799449e0e063f9a4deca4e2b00e0b2",
+      "after": "e9e794b6234c672e2651402e9c282dae7a39fd29bb32313f222b084458f32425"
+    }
+  },
+  "newContract": "native/docs/git-repository-http.md",
+  "newProductTestsClaimedAfterDocumentation": false,
+  "originalInventoryLedgerAndSummaryUnchanged": true,
+  "documentationAuditCorrection": "The first documentation audit assumed three frozen document changes; mcp-http.md is also a frozen contract. The corrected four-document allowlist passes; no product source or test is rerun."
+}

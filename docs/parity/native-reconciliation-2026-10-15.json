@@ -12855,5 +12855,26 @@
     "original353InventoryLedgerAndSummaryUnchanged": true,
     "wholeNativeRerun": false,
     "fullContractCertification": false
+  },
+  "gitRepositoryFixedHttpHostAcceptance20261023": {
+    "sourceCommit": "2674a2f53763a5869a57264eb8e700fea78859ea",
+    "evidence": "docs/validation/integration-2026-10-23/git-repository-http/README.md",
+    "nativePassed": 777,
+    "nativeFailed": 0,
+    "nativeExistingIgnored": 8,
+    "nativeGroups": 30,
+    "newIntegrationFunctions": 7,
+    "typescriptPassed": 260,
+    "typescriptExistingSkipped": 3,
+    "frozenInputs": 1094,
+    "formatRoots": 356,
+    "explicitPerPrincipalFixedRootGitHttp": true,
+    "allSixProfileCatalogNamesExact": true,
+    "actualPinnedClaudeHttpHealthCalls": 12,
+    "sourceCaptureAfterAuthenticationAndFullPolicy": true,
+    "multiProjectGitTarget": false,
+    "original353InventoryLedgerAndSummaryUnchanged": true,
+    "wholeNativeRerun": false,
+    "fullContractCertification": false
   }
 }

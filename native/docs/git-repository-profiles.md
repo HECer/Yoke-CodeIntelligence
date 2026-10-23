@@ -44,8 +44,10 @@ started or authorized by profile selection.
 This remains a fixed-root host. Registered projects and collections are rejected
 before resolving their foreign roots when this driver is present. Model requests
 cannot activate unregistered roots. Ordinary sessions without the driver retain
-their existing registered-project/collection behavior. HTTP, multiple projects,
-further client behaviors and full upstream/Windows/release acceptance remain open.
+their existing registered-project/collection behavior. Explicit authenticated
+[HTTP targets](git-repository-http.md) reuse the same driver per fixed principal.
+Multiple registered projects within one Git target, further client behaviors and
+full upstream/Windows/release acceptance remain open.
 
 Actual native protocol calls qualify all five added profiles and their source
 baseline; pinned Claude 2.1.306 connects to the Serena profile in owned private
