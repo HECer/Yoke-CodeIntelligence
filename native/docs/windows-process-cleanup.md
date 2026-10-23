@@ -48,18 +48,20 @@ module is normalized from CRLF to LF with its diagnostic edits. Original
 fixture literals, assertions, ignores, deadlines and profiles remain intact.
 
 Current qualification passes 697 Rust functions in 11 whole groups with 8 existing
-ignores, all-target Clippy, format checks for all 361 rootsting, Python 47, typecheck and
+ignores, all-target Clippy, format checks for all 361 roots, Python 47, typecheck and
 npm 260 with 3 existing skips. Actual CLI/default-row and explicit VS Code 1.143.1 host
 checks also pass. Source/Job/hash evidence is linked below.
 
-A previous benign Git probe observed assigned2/listed1 with capacity4096, but
+A previous benign Git probe observed assigned 2/listed 1 with capacity 4,096, but
 does not prove the cause of the historical Git fixture failure. That underlying
 intermittent refusal remains open; this change adds diagnosis and no retry,
 larger list, extended deadline or weaker completion condition.
 
-Separately, the fully buffered run_capture success path currently leaves cleanup
-to Drop, which discards its Result. A real-error propagation regression and
-repair are pending. CapturedOutput.output_complete describes stream transfer;
-it must not be treated as proof of every descendant exit. This checkpoint does
-not repair that path or establish an OS/provider sandbox or whole-Windows pass.
+On Windows, the existing run_capture loop checks cleanup when the root exits,
+propagates failure with ?, and sets group_cleaned only on success, before its
+completed-stream success break. The earlier claim that this Windows success
+path relies only on Drop was incorrect. The exact unchanged source is recorded
+in the correction evidence. Drop remains a best-effort fallback, and this
+Windows control-flow proof does not certify Unix behavior or an OS/provider
+sandbox or whole-Windows pass.
 See ../../docs/validation/integration-2026-10-23/owned-member-diagnostics/README.md.

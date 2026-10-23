@@ -1016,5 +1016,12 @@
   "successfulCaptureCleanupPropagationFixed": false,
   "historicalGitFixtureCauseProven": false,
   "wholeCurrentWindowsOrHostedAcceptance": false,
-  "fullStatusComplete": false
+  "fullStatusComplete": false,
+  "windowsCaptureConcernCorrection": {
+    "evidence": "capture-claim-correction.json",
+    "originalConcernIncorrectForWindows": true,
+    "checkedWindowsCleanupAlreadyPresentAt8fee": true,
+    "noProductFixIntroducedOrRequired": true,
+    "priorFixedFalseFieldsNotEvidenceOfMissingWindowsCheck": true
+  }
 }

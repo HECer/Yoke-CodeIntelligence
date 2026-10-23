@@ -76,10 +76,16 @@ reproduction of the original analyzed Git fixture and does not prove every
 descendant object signaled. No natural recurrence occurs in the current groups.
 The underlying intermittent refusal remains unresolved.
 
-A separate source review identifies the fully buffered run_capture success path
-leaving cleanup to Drop, which discards its Result. Its real-error regression and
-repair are pending in a separate action; this checkpoint does not claim a fix.
-No current whole-Windows/hosted, all 77-runtime, broader R1-R9/quality/Google,
+Correction after source 3806f709: the initial Windows capture concern was wrong.
+The complete unchanged run_capture loop already calls cleanup_checked with ?
+when the root exits and only then sets group_cleaned, before any completed-stream
+success break. This was present at source 8fee30c7 as well. Drop is a best-effort
+fallback, not the only Windows success cleanup. No Windows behavior fix is
+needed or introduced. See [exact source proof](capture-claim-correction.json).
+The archived successfulCaptureCleanupPropagationFixed:false fields record that
+this checkpoint introduced no such repair; they must not be interpreted as a
+verified missing Windows check. Unix behavior is outside this Windows proof.
+No current whole-Windows/hosted, all 77 runtimes, broader R1-R9/quality/Google,
 canonical bundled VSIX, main or release acceptance is inferred.
 
 ## Evidence and documentation

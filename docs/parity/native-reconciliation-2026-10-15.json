@@ -14332,5 +14332,17 @@
     "canonicalVsixAccepted": false,
     "releaseAccepted": false,
     "fullStatusComplete": false
+  },
+  "nativeWindowsCaptureConcernCorrection20261023": {
+    "sourceCommit": "3806f7099abab7e188cedf609dd40747ee68469e",
+    "evidence": "docs/validation/integration-2026-10-23/owned-member-diagnostics/capture-claim-correction.json",
+    "originalWindowsConcernIncorrect": true,
+    "existingCheckedCleanupBeforeCompletedCaptureSuccess": true,
+    "sameCodeAt8feeAnd3806": true,
+    "productionOrTestSourceChanged": false,
+    "newTestsRun": false,
+    "unixBehaviorCertified": false,
+    "historicalMembershipRaceCauseProven": false,
+    "fullStatusComplete": false
   }
 }

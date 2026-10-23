@@ -20,10 +20,14 @@ See [diagnostic evidence](validation/integration-2026-10-23/owned-member-diagnos
 and [cleanup contract](../native/docs/windows-process-cleanup.md).
 
 The historical sporadic list-refusal cause remains open; no natural recurrence
-is observed in this qualification. A separately identified fully buffered
-capture path discards cleanup errors in Drop and awaits its own real regression
-and repair. Broader STATUS/353/R1-R9/77-runtime/Windows/hosted/canonical VSIX/
-quality/Google/main/release acceptance remains open.
+is observed in this qualification. A follow-up review corrects the initial
+Windows capture concern: the existing group_cleaned block already propagates
+checked cleanup failures before any successful completed-stream exit. No
+Windows capture fix is required. Drop is only a best-effort fallback; this
+Windows proof does not certify Unix behavior. See the exact
+[source correction](validation/integration-2026-10-23/owned-member-diagnostics/capture-claim-correction.json).
+Broader STATUS/353/R1-R9/77-runtime/Windows/hosted/canonical VSIX/quality/Google/
+main/release acceptance remains open.
 
 The current native runtime passes both unchanged explicit rust-analyzer live
 gates on actual Windows rust-analyzer 1.94.1: definition/references/rename and
@@ -532,7 +536,7 @@ retains the detailed boundaries and original inventory assessments.
 | External acquisition | Broader ASR quality/formats, authenticated Google export, remaining social/video/authenticated routes and broader database version/mixed-source qualification. No approved Google test document is available. |
 | App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
 | Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, sporadic owned-member cleanup refusal and successful-capture cleanup-error propagation, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+| Windows/release | Ten original OS1314 prerequisites, sporadic owned-member cleanup refusal, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
 
 ### Earlier source checkpoints
 
