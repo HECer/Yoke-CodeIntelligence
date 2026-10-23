@@ -46,8 +46,10 @@ before resolving their foreign roots when this driver is present. Model requests
 cannot activate unregistered roots. Ordinary sessions without the driver retain
 their existing registered-project/collection behavior. Explicit authenticated
 [HTTP targets](git-repository-http.md) reuse the same driver per fixed principal.
-Multiple registered projects within one Git target, further client behaviors and
-full upstream/Windows/release acceptance remain open.
+Explicit [registered-project sets](git-repository-projects.md), including
+[stdio session selection](git-repository-stdio.md), use independent fixed roots.
+Collections, further client behavior and full upstream/Windows/release
+acceptance remain open.
 
 Actual native protocol calls qualify all five added profiles and their source
 baseline; pinned Claude 2.1.306 connects to the Serena profile in owned private

@@ -12900,5 +12900,29 @@
     "collectionsWithGitProjectSet": false,
     "wholeNativeRerun": false,
     "fullContractCertification": false
+  },
+  "gitRepositoryStdioProjectHostAcceptance20261023": {
+    "sourceCommit": "2c8b29380c2809f4abeab6d1e7bdd7025fb3991b",
+    "evidence": "docs/validation/integration-2026-10-23/git-repository-stdio/README.md",
+    "nativePassed": 891,
+    "nativeFailed": 0,
+    "nativeExistingIgnored": 8,
+    "nativeGroups": 44,
+    "newIntegrationFunctions": 7,
+    "typescriptPassed": 260,
+    "typescriptExistingSkipped": 3,
+    "frozenInputs": 1097,
+    "formatRoots": 358,
+    "explicitStdioGitProjectSelection": true,
+    "allFiveActualStdioSourceProfiles": true,
+    "allFiveProfileCatalogsExact": true,
+    "actualPinnedClaudeStdioHealthCalls": 2,
+    "explicitPythonRuntimeAndSourceCallbackQualified": true,
+    "defaultRuntimeStarted": false,
+    "ordinaryRegisteredSessionStablePayloadAndRecordsExact": true,
+    "ignoredSourceOverridesSupported": false,
+    "original353InventoryLedgerAndSummaryUnchanged": true,
+    "wholeNativeRerun": false,
+    "fullContractCertification": false
   }
 }

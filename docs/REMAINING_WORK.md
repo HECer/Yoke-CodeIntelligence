@@ -1,5 +1,30 @@
 # Remaining implementation and acceptance
 
+Explicit `serve-session --git-projects` now selects a separate host Git driver
+for every existing registration, with independent index-read/Git trust flags.
+Complete names, disjoint roots and source/runtime permissions retain the shared
+project-set contract. Primary metadata precedes cold state; global capture,
+analyzer and explicit LSP settings plus full host source policy precede first
+capture and MCP output. Startup may capture only secondary source. Named resume
+preserves changing file membership and refuses changed policy/preference lifetime.
+Ordinary and HTTP defaults remain compatible; ignored-source overrides still
+refuse explicitly under the existing Git-scope restriction.
+
+Source 2c8b2938 passes 891 Rust functions in 44 scoped groups,
+including all 578 library and seven new stdio integration functions, with 8
+existing ignores and zero failures. Clippy all-targets with warnings denied,
+build, typecheck, npm 260 passed/3 existing skips and 358 format roots pass on
+1,097 frozen inputs; fmt-all retains Windows OS206. Actual source calls qualify
+all five stdio catalogs, ordinary registered-session payloads/records stay exact,
+and pinned Claude 2.1.306 connects through private stdio configuration. A separate
+explicit Python trial confirms startup project/source callbacks without enabling
+a default runtime. Source/Git bytes stay exact and all owned Jobs end empty. See
+[evidence](validation/integration-2026-10-23/git-repository-stdio/README.md) and
+[contract](../native/docs/git-repository-stdio.md). Collections, broader client/
+format/quality and whole Windows/main/release remain open. Original inventory
+assessments, fixtures and system settings are unchanged; no model turn or
+automatic analyzed-code execution occurs.
+
 Explicit MCP HTTP now supports a separately authorized Git host for every
 registered project through `gitRepositoryProjects`. Complete default/registered
 names and disjoint canonical roots are required. Each root retains its own

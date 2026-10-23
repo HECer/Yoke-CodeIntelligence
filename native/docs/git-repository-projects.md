@@ -83,7 +83,7 @@ cold failure. Pinned Claude 2.1.306 connection health uses private owned setting
 without model turns or account login. The ordinary registered-session path is
 compared against the preceding executable with exact saved records and stable
 source payloads. This does not certify all clients or full upstream behavior.
-The existing fixed-root stdio CLI remains fixed-root; additional stdio selection,
-collections, broader formats/quality and whole Windows/main/release acceptance
-remain open. See the [transport](mcp-http.md) and
+The existing fixed-root stdio CLI remains fixed-root; the [stdio session selection](git-repository-stdio.md) additionally selects
+registered project sets. Collections, broader formats/quality and whole
+Windows/main/release acceptance remain open. See the [transport](mcp-http.md) and
 [profile binding](git-repository-profiles.md) contracts.
