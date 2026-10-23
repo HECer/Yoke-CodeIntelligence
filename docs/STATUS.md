@@ -2,6 +2,28 @@
 
 ## Current integration work
 
+Explicit project/backend LSP workspace settings now project through the trusted
+host and pinned YAML settings selection. Each shallow overlay starts from the
+original registered workspace object; absent/null preserves prior bindings and
+wire data. Existing project/runtime grants, passive checks and current HTTP
+revocation remain independent. Direct queries, staged actions and configuration
+callbacks use the same selected provider; no default source execution is added.
+
+Source 61a1313f passes 777 Rust functions in 31 scoped groups,
+including all 578 library and seven new integration functions, with 13
+existing ignores and zero failures. Clippy all-targets with warnings denied,
+locked build, typecheck, npm 260 passed/3 existing skips and 360 format roots pass
+on 1,100 frozen inputs; fmt-all retains Windows OS206. Actual push/pull, staged
+and authenticated HTTP/revocation tests pass. Owned old/new CLI trials retain
+ordinary absent/null wire/rows, original source and existing stored records;
+selected JSON and pinned YAML retain one exact session binding. All Jobs end
+empty. A new YAML fixture's missing host-grant assumption is corrected without
+changing product bytes. See [evidence](validation/integration-2026-10-23/server-workspace-settings/README.md)
+and [contract](../native/docs/server-workspace-settings.md). Broader vendor/
+resource settings, all 77 runtime reviews and current whole Windows/main/release
+acceptance remain open. Original inventory, OS1314 fixtures and system settings
+stay unchanged; fixture protocol evidence is distinct from vendor certification.
+
 Explicit Git project sets now support existing registered collections through
 native/stdin/stdout and authenticated HTTP Session hosts. Native/view registration
 uses the selected project's full captured scope and independent registry CAS/

@@ -408,7 +408,8 @@ maps in global, project and project-local files; registrations remain unvalidate
 until opening a real session. The profile grant may be present but dormant without
 changing legacy replies or bindings.
 
-Supported generic keys are initializationOptions (object), ls_path (absolute
+Supported generic keys are initializationOptions (object), settings (workspace
+object), ls_path (absolute
 executable), ls_base_cmd (absolute executable followed by prefix arguments),
 ls_args (replacement registered arguments) and ls_extra_args (always appended).
 ls_path and ls_base_cmd conflict. Without ls_args, registered arguments remain
@@ -417,12 +418,13 @@ already registered executable; vendor core-dependency/JAR/download/install/versi
 interpretation and other vendor-specific aliases remain unsupported and refuse.
 There is no automatic installation or evaluation of a command string.
 
-initializationOptions merges only top-level keys over the original registered
-object; nested objects and explicit null values replace their prior key exactly.
+initializationOptions and optional workspace settings each merge only top-level
+keys over their own original registered object; nested objects and explicit null
+values replace their prior key exactly.
 Existing mandatory passive transport options still apply after this overlay.
 Effective command/argument changes additionally require the registered host's
-allowSourceExecution. Source-execution/passive profiles, TCP endpoint, settings,
-workspace grants and runtime trust remain the original host values. The common
+allowSourceExecution. Source-execution/passive profiles, TCP endpoint, workspace grants
+and runtime trust remain the original host values. The common
 LSP admission rechecks effective options before process startup; project trust
 alone does not enable Rust build scripts, plugins or other source execution.
 Each project derives its provider from the original registry, never from another
@@ -431,8 +433,8 @@ changed policy and stale clients refuse. Direct query, staged/owned refactoring
 and provider refresh use the actual selected registrations and provider hashes.
 
 Settings use existing profile limits plus 101 projects, 100 backends per map,
-128 arguments/64000 argument bytes, 4096 bytes per argument, 64000 initialization
-bytes, 32 value levels and 4096 initialization nodes. Relative/UNC/device/alternate
+128 arguments/64000 argument bytes, 4096 bytes per argument, 64000 serialized bytes per initialization/workspace object,
+32 value levels and 4096 value nodes. The merged workspace object is checked too. Relative/UNC/device/alternate
 stream command aliases and conflicting forms refuse. These checks certify the
 bounded generic configuration contract, not any of the 77 backend runtimes.
 
@@ -483,3 +485,7 @@ provider observations still do not establish exhaustive references or execution.
 Direct/staged/owned/lifecycle routes share the selection. Projects resolve separately;
 complete policy changes bind sessions and stale clients refuse. Neither YAML nor
 MCP requests can register another project or grant an external source path.
+
+The optional workspace object follows the existing LSP push/pull transport. See
+[project-selected workspace settings](server-workspace-settings.md) for exact
+precedence, passive checks and the bounded protocol/live qualification.
