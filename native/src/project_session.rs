@@ -1962,7 +1962,11 @@ impl Session {
         let active = self.state.active_project.clone();
         self.project_engine(&active, deadline)
     }
-    pub(crate) fn index_initial_git_source(&mut self, deadline: &Deadline) -> Result<()> {
+    pub fn index_initial_git_source(&mut self, deadline: &Deadline) -> Result<()> {
+        ensure!(
+            self.engine.git_repository_host.is_some(),
+            "Session has no host Git driver"
+        );
         let active = self.state.active_project.clone();
         if self.git_repository_projects.is_some() && active != "default" {
             // Opening a secondary engine already performs its first policy-bound capture.

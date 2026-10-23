@@ -2271,18 +2271,23 @@ struct AgentReplArguments {
     #[arg(long)]
     shell_argument: Vec<String>,
 }
+fn session_host_profile(
+    host_profile: Option<&std::path::Path>,
+) -> Result<yoke::project_session::HostProfile> {
+    Ok(host_profile
+        .map(|path| -> Result<yoke::project_session::HostProfile> {
+            yoke::json::decode(input_json(path, 128000)?)
+        })
+        .transpose()?
+        .unwrap_or_default())
+}
 fn open_session(
     engine: Engine,
     id: Option<String>,
     host_profile: Option<PathBuf>,
     deadline: &Deadline,
 ) -> Result<yoke::project_session::Session> {
-    let host = host_profile
-        .map(|path| -> Result<yoke::project_session::HostProfile> {
-            yoke::json::decode(input_json(&path, 128000)?)
-        })
-        .transpose()?
-        .unwrap_or_default();
+    let host = session_host_profile(host_profile.as_deref())?;
     yoke::project_session::Session::open(engine, host, id.as_deref(), deadline)
 }
 fn run_session(
@@ -2321,6 +2326,12 @@ struct ServeSessionArguments {
     id: Option<String>,
     #[arg(long)]
     host_profile: Option<PathBuf>,
+    #[arg(long)]
+    git_projects: Option<PathBuf>,
+    #[arg(long)]
+    allow_git_index_read: bool,
+    #[arg(long)]
+    trust_git: bool,
     #[arg(long,default_value="native",value_parser=["native","serena","trail","graft","graphify"])]
     profile: String,
     #[arg(long)]
@@ -2333,6 +2344,91 @@ struct ServeSessionArguments {
     shell_command: Option<PathBuf>,
     #[arg(long)]
     shell_argument: Vec<String>,
+}
+struct PreparedGitSession {
+    host: yoke::project_session::HostProfile,
+    projects: yoke::git_workflows::repository_projects::Hosts,
+    capture_options: yoke::capture::CaptureOptions,
+}
+fn prepare_git_session(
+    root: &std::path::Path,
+    server: &ServeSessionArguments,
+    capture_config: Option<&std::path::Path>,
+    include_ignored_dirs: &[String],
+    deadline: &Deadline,
+) -> Result<Option<PreparedGitSession>> {
+    let Some(selection) = &server.git_projects else {
+        ensure!(
+            !server.allow_git_index_read && !server.trust_git,
+            "Git permissions require --git-projects"
+        );
+        return Ok(None);
+    };
+    ensure!(
+        server.python.is_some()
+            || (!server.trust_python
+                && server.shell_command.is_none()
+                && server.shell_argument.is_empty()),
+        "Python runtime options require an explicit Python executable"
+    );
+    ensure!(
+        server.python.is_none() || server.profile == "serena",
+        "Persistent Python is available only in the Serena profile"
+    );
+    ensure!(
+        server.shell_command.is_some() || server.shell_argument.is_empty(),
+        "Shell arguments require an explicit shell command"
+    );
+    if let Some(python) = &server.python {
+        yoke::agent_repl::AgentRepl::validate_spec(&yoke::agent_repl::ReplSpec {
+            python: python.clone(),
+            trust_python: server.trust_python,
+            max_output_bytes: server.max_output_bytes,
+            shell: server
+                .shell_command
+                .as_ref()
+                .map(|command| yoke::agent_repl::HostShell {
+                    command: command.clone(),
+                    arguments: server.shell_argument.clone(),
+                }),
+        })?;
+    }
+    let host = session_host_profile(server.host_profile.as_deref())?;
+    let selections: std::collections::BTreeMap<String, git_repository_http_cli::Selection> =
+        yoke::json::decode(input_json(selection, 1_000_000)?)?;
+    git_repository_http_cli::admit_projects(
+        &selections,
+        &host,
+        server.allow_git_index_read,
+        server.trust_git,
+    )?;
+    let mut capture_options = capture_config
+        .map(|path| -> Result<yoke::capture::CaptureOptions> {
+            yoke::json::decode(input_json(path, 64_000)?)
+        })
+        .transpose()?
+        .unwrap_or_default();
+    capture_options
+        .include_ignored_dirs
+        .extend_from_slice(include_ignored_dirs);
+    let capture_options = capture_options.validated()?;
+    ensure!(
+        capture_options.repository_scope.is_none(),
+        "Git project sessions cannot import repository scopes"
+    );
+    let projects = git_repository_http_cli::prepare_projects(
+        root,
+        &host,
+        &selections,
+        server.allow_git_index_read,
+        server.trust_git,
+        deadline,
+    )?;
+    Ok(Some(PreparedGitSession {
+        host,
+        projects,
+        capture_options,
+    }))
 }
 #[derive(clap::Args)]
 struct GitArguments {
@@ -2694,6 +2790,7 @@ fn invoke_model_operation(
 fn run_extension(
     mut engine: Engine,
     prepared_http: Option<PreparedModelProvider>,
+    prepared_git: Option<PreparedGitSession>,
     operation: ExtensionOperation,
     arguments: &Value,
     deadline: &Deadline,
@@ -2826,6 +2923,7 @@ fn run_extension(
             max_output_bytes,
             shell_command,
             shell_argument,
+            ..
         } = *server;
         ensure!(
             python.is_some()
@@ -2840,7 +2938,19 @@ fn run_extension(
             shell_command.is_some() || shell_argument.is_empty(),
             "Shell arguments require an explicit shell command"
         );
-        let mut session = open_session(engine, id, host_profile, deadline)?;
+        let mut session = if let Some(prepared) = prepared_git {
+            let mut session = yoke::project_session::Session::open_with_git_projects(
+                engine,
+                prepared.host,
+                id.as_deref(),
+                prepared.projects,
+                deadline,
+            )?;
+            session.index_initial_git_source(deadline)?;
+            session
+        } else {
+            open_session(engine, id, host_profile, deadline)?
+        };
         if let Some(python) = python {
             let spec = yoke::agent_repl::ReplSpec {
                 python,
@@ -4437,18 +4547,47 @@ fn run(cli: Cli) -> Result<bool> {
         _ => None,
     };
     let deadline = Deadline::new(cli.timeout);
-    let mut engine = Engine::open_with_timeout(&cli.root, deadline.remaining())?;
+    let prepared_git = if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::ServeSession(server) = extension.as_ref()
+    {
+        ensure!(
+            server.git_projects.is_none() || cli.snapshot.is_none(),
+            "Git project sessions select their own source snapshots"
+        );
+        ensure!(
+            server.git_projects.is_none()
+                || cli.language_server_config.is_none()
+                || cli.trust_servers,
+            "Host language server configuration requires --trust-servers"
+        );
+        prepare_git_session(
+            &cli.root,
+            server,
+            cli.capture_config.as_deref(),
+            &cli.include_ignored_dir,
+            &deadline,
+        )?
+    } else {
+        None
+    };
+    let mut engine = if let Some(prepared) = &prepared_git {
+        prepared.projects.open_primary(&deadline)?
+    } else {
+        Engine::open_with_timeout(&cli.root, deadline.remaining())?
+    };
     engine.allow_writes = cli.allow_writes;
     if let Some(epoch) = cli.analyzer_epoch {
         engine.capture_epoch =
             yoke::analysis::AnalyzerEpoch::parse(&format!("yoke-tree-sitter-{epoch}"))?;
     }
-    if let Some(config) = cli.capture_config {
+    if let Some(prepared) = &prepared_git {
+        engine.capture_options = prepared.capture_options.clone();
+    } else if let Some(config) = cli.capture_config {
         let options: yoke::capture::CaptureOptions =
             yoke::json::decode(input_json(&config, 64000)?)?;
         engine.capture_options = options.validated()?;
     }
-    if !cli.include_ignored_dir.is_empty() {
+    if prepared_git.is_none() && !cli.include_ignored_dir.is_empty() {
         engine
             .capture_options
             .include_ignored_dirs
@@ -4473,7 +4612,14 @@ fn run(cli: Cli) -> Result<bool> {
         arguments["snapshotId"] = json!(snapshot);
     }
     if let Operation::Extensions(operation) = operation {
-        return run_extension(engine, prepared_http, *operation, &arguments, &deadline);
+        return run_extension(
+            engine,
+            prepared_http,
+            prepared_git,
+            *operation,
+            &arguments,
+            &deadline,
+        );
     }
     let tool = match operation {
         Operation::Extensions(_) => bail!("Internal extension dispatch error"),

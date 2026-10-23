@@ -14,6 +14,15 @@ pub struct Hosts {
     hosts: BTreeMap<String, Host>,
 }
 impl Hosts {
+    /// Prepare primary metadata before creating state; the caller then applies
+    /// capture/server policy and opens the matching Session before source capture.
+    pub fn open_primary(&self, d: &Deadline) -> Result<crate::Engine> {
+        self.check_current(d)?;
+        let prepared = self.primary()?.clone().prepare(d)?;
+        let mut engine = crate::Engine::open_with_timeout(&self.root, d.remaining())?;
+        prepared.attach_prepared(&mut engine, d)?;
+        Ok(engine)
+    }
     /// Admit the complete name selection before resolving any registered root.
     pub fn validate_selectors(host: &HostProfile, selected: &BTreeSet<String>) -> Result<()> {
         ensure!(

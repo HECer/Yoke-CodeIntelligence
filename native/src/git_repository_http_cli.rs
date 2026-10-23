@@ -68,7 +68,7 @@ impl Selection {
     pub fn admit(&self, allow_index_read: bool, trust_git: bool) -> Result<()> {
         ensure!(
             allow_index_read && trust_git,
-            "HTTP Git capture requires --allow-git-index-read and --trust-git"
+            "Git capture requires --allow-git-index-read and --trust-git"
         );
         self.limits.validate()?;
         if let Some(program) = &self.program {
