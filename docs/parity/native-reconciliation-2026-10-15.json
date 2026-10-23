@@ -14282,5 +14282,27 @@
     "canonicalVsixAccepted": false,
     "releaseAccepted": false,
     "fullStatusComplete": false
+  },
+  "nativeRustAnalyzerLiveAcceptance20261023": {
+    "sourceCommit": "41d66b04accd89277ca2ae13a6247f82c0ce286c",
+    "nativeCodeCommit": "666656bae3c4e5a0abb9918d943505098266e455",
+    "evidence": "docs/validation/integration-2026-10-23/rust-analyzer-live/README.md",
+    "frozenInputs": 1109,
+    "providerVersion": "rust-analyzer 1.94.1 (e408947b 2026-03-25)",
+    "providerSha256": "8780a0a408169100c7b4df49ba2c9dcc4b40b48dd375e3985bd585f1a4fe0a57",
+    "passed": 2,
+    "failed": 0,
+    "ignored": 0,
+    "filteredOut": 2,
+    "originalIgnoredTestsExplicitlySelected": true,
+    "nativeTestFixtureIgnoreDeadlineProfileUnchanged": true,
+    "sourceAndNativeCliAndProviderUnchanged": true,
+    "allJobsEmpty": true,
+    "countsNonadditive": true,
+    "all77RuntimeCertification": false,
+    "wholeNativeOrHostedAcceptance": false,
+    "canonicalVsixAccepted": false,
+    "releaseAccepted": false,
+    "fullStatusComplete": false
   }
 }

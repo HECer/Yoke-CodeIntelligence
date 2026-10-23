@@ -284,7 +284,7 @@ Maintenance refuses while another native Store is open. Its default 24-hour age 
 ## Verification and measurements
 
 ```sh
-cargo fmt --all --check
+python scripts/native_fmt.py --check
 cargo clippy --workspace --all-targets --locked -- -D warnings
 cargo test --workspace --locked
 cargo test --test live actual_rust_analyzer_definition_references_and_rename -- --ignored
@@ -299,6 +299,8 @@ python scripts/package-native.py --skip-build --fetch-missing-licenses
 npm run typecheck
 npm test
 ```
+
+The [complete formatting check](docs/native-formatting.md) uses short commands for every Cargo target on Windows. Unix CI retains the canonical Cargo formatting command.
 
 Node and Python are development-test prerequisites for deliberately labeled protocol fixtures and process lifecycle regressions; the default Rust executable does not invoke them. Explicit live tests fail when their real tools are unavailable. Hosted CI definitions are not evidence that hosted CI ran. The synthetic microbenchmark does not establish whole-agent savings or relative upstream performance.
 

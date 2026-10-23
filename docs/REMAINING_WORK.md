@@ -1,5 +1,20 @@
 # Remaining implementation and acceptance
 
+The current native runtime passes both unchanged explicit rust-analyzer live
+gates on actual Windows rust-analyzer 1.94.1: definition/references/rename and
+MCP references bound to the immutable historical snapshot with exact byte/hash
+proofs. These are two selected originally ignored gates, zero failures and two
+other live gates filtered out, separate from default/scoped suite totals.
+
+At source 41d66b04/native code 666656ba, all 1,109 monitored source/control
+inputs, the selected provider and the existing native CLI stay exact; owned
+Jobs end empty. Tests use private home/temp and the existing passive profile
+without authorizing source execution. No original test, ignore, deadline,
+profile or system setting changes. See [actual backend evidence](validation/integration-2026-10-23/rust-analyzer-live/README.md).
+This finite navigation check does not certify resource/vendor settings, all
+77 runtimes, transitive provider effects, current whole-Windows/hosted,
+canonical VSIX, broader STATUS/R1-R9, main or release acceptance.
+
 The complete Windows native formatting gate now passes all 361 Cargo target
 roots without an oversized process command. The helper uses offline locked
 metadata, per-target editions and recursive local path dependencies, with ordinary
