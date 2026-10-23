@@ -14432,5 +14432,40 @@
     "npmExistingSkipped": 3,
     "evidence": "docs/validation/integration-2026-10-23/prompt-templates/README.md",
     "remaining": "Broader prompt catalogs and upstream-specific dynamic variables/helpers/Jinja conformance; arbitrary layouts/extensions/clients/quality; original353/73unreconciled/77runtime/R1-R9/current wholeWindows/hosted/canonicalVSIX/Google/main/release"
+  },
+  "nativePromptCatalogs20261023": {
+    "sourceCommit": "cb901cec65ca267cea1f39825d13fd465e1e553a",
+    "evidence": "docs/validation/integration-2026-10-23/prompt-catalogs/checkpoint.json",
+    "qualifiedScope": "Explicit hash-pinned host YAML catalogs, retained declaration provenance, named bounded rendering and replayable flat catalog discovery",
+    "rustTotals": {
+      "passed": 742,
+      "failed": 0,
+      "existingIgnored": 7,
+      "filtered": 0
+    },
+    "wholeGroups": 20,
+    "addedFunctionsIncluded": 20,
+    "sourceInputs": 1118,
+    "sourceInputsUnchanged": true,
+    "completeFormatRoots": 364,
+    "allTargetClippy": true,
+    "pythonPassed": 47,
+    "npm": {
+      "passed": 260,
+      "existingSkipped": 3
+    },
+    "actualCliParentsOutsideRustTotals": 13,
+    "oldLiteralAndInlineRawRepliesExact": true,
+    "literalExportedProfileAndRawMcpAndOriginalSqlSourceExact": true,
+    "largeRequestBytes": 300169,
+    "allJobsEmpty": true,
+    "sourceByteSpansAvailable": false,
+    "fullStatusComplete": false,
+    "original353AndRuntime77NotRecertified": true,
+    "remaining": [
+      "Automatically derived runtime/tool variables, default/upstream prompt catalogs, Python-Jinja conformance and external clients/layouts/extensions",
+      "Original 353 identities, R1-R9 and 77 unknown runtime requirements",
+      "Current whole Windows, Unix, hosted CI, canonical VSIX, Google, main and release acceptance"
+    ]
   }
 }

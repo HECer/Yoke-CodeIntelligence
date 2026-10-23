@@ -1,5 +1,30 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+Explicit host-selected YAML prompt catalogs now support original-byte pins,
+flat prompt_templates discovery, named rendering and create-only UTF-8 output.
+Collision policy defaults to refusal; explicit last_wins retains every source and
+shadowed declaration with replacement links. Raw file identities, combined source
+budgets and before-delivery guards remain enforced. No default lookup, derived
+runtime variables, model/network call or analyzed-source execution is added.
+
+Qualified code cb901cec passes 742 Rust functions in 20 whole groups, zero failures,
+seven existing ignores and no filtered functions. All 586 library functions and
+20 added functions are already included. All-target Clippy, complete 364-root
+formatting, build, Python 47, typecheck and npm 260/3 existing skips pass on 1118
+exact frozen inputs. Previously passed whole groups and Clippy are reused only
+with those exact inputs, without double counting. Twelve actual CLI parents prove
+old literal and inline raw replies, catalog-exported profiles, raw MCP/session
+replies and original nonempty SQL/source rows remain exact. One additional actual
+named-render call binds a 300169-byte protocol-2 request over 300106 resolved data
+bytes, beyond the retained old inline limits. All owned Jobs end empty. The initial
+disk stop happened before tests; five already qualified CLI copies and completed
+distinct-target PDBs were losslessly compressed with exact hashes and no deletion.
+See [prompt-catalog evidence](validation/integration-2026-10-23/prompt-catalogs/README.md)
+and [native contract](../native/docs/prompt-catalogs.md).
+Derived runtime/tool variables, default/upstream catalogs, broader Jinja/client/
+layout/extension quality, original 353/R1-R9/77-runtime/current whole Windows/Unix/
+hosted/canonical VSIX/Google/main/release acceptance remain open.
+
 Explicit host-selected prompt templates now render context/mode prompt and
 project/local initial_prompt scalars through a separate native worker. The new
 templateContext and --allow-template-evaluation grant preserve default literal

@@ -1,0 +1,46 @@
+{
+  "qualifiedSourceCommit": "cb901cec65ca267cea1f39825d13fd465e1e553a",
+  "qualifiedInputCount": 1118,
+  "onlyPostQualificationFrozenInputChangesAreSixDocumentationFiles": true,
+  "changes": [
+    {
+      "path": "SECURITY.md",
+      "qualifiedSha256": "e1fdd806bf2c01291fa312733c3c6eb06b433f1286d88b1de27df15b4d6f9451",
+      "postReviewSha256": "db180e5f23b2ceccd10ef605f4a6db14d0488ce4265798b588a21790d3f6a50c"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "qualifiedSha256": "ad9fca6260f0e66bfe8da30853e6415bdf55a73e4ec2eff1f5944e7ecf016bb0",
+      "postReviewSha256": "6c80f72aa971802909f97b3c00afc8d7b446fde78e653832046c1f96156acc9b"
+    },
+    {
+      "path": "docs/REMAINING_WORK.md",
+      "qualifiedSha256": "3b0dc003dc749e90aaeec50b45348ef7ff65462dad1dfc227c43bbd45561ed43",
+      "postReviewSha256": "7d0b9e730e2d68af1249f3abd8b24ae35d79d400bdefae20b245893f49356475"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "qualifiedSha256": "0a6111c5e1e17f119a3977106739038111b1d9b0a3002957f04af406bdde6a8f",
+      "postReviewSha256": "867eefec135650399b7742b4024b4dc1c80f7a5c1fadb0d9d0e525c7dee5ff76"
+    },
+    {
+      "path": "docs/parity/native-reconciliation-2026-10-15.json",
+      "qualifiedSha256": "5dc5f81af2ea7692fcbccea67deb17e7b71caac7480b76cd251be72dd5f77853",
+      "postReviewSha256": "7fe0b7f79c4fcb367e09d9b336608c70fdc8f1bad778b87ef34e59cca7dbc7ff"
+    },
+    {
+      "path": "native/docs/session-config.md",
+      "qualifiedSha256": "a6d83e8eb14c0f12cdb65796dfa29ff778ad45a8bfebd0980c2d1861fbb6a144",
+      "postReviewSha256": "4abab6b8b51c1f92be028d4e81dc9dffa36196c67a2a7f4024c5f61f504ddb68"
+    }
+  ],
+  "allOtherQualifiedInputsExact": true,
+  "allPriorReconciliationFieldsAndValuesPreserved": true,
+  "additionalExistingContractOutsideFrozenInputManifest": {
+    "path": "native/docs/prompt-templates.md",
+    "originalGitSourceCommit": "cb901cec65ca267cea1f39825d13fd465e1e553a",
+    "originalSha256": "706ed285c0d111878616d24a29dbdfdab8be7f5426ec3f43900707a20f16962e",
+    "postReviewSha256": "a3935bd4e695a33d9242dcb3e4e56dc0490b8300d1324b092c70ca21261f4012"
+  },
+  "initialReviewAssertionCorrected": "Expected seven frozen documentation files; actual frozen manifest contains six. The separately changed existing prompt-templates contract is recorded here. No product/test changes or reruns."
+}

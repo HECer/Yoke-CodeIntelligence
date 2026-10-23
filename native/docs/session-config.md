@@ -558,3 +558,20 @@ MCP requests can register another project or grant an external source path.
 The optional workspace object follows the existing LSP push/pull transport. See
 [project-selected workspace settings](server-workspace-settings.md) for exact
 precedence, passive checks and the bounded protocol/live qualification.
+
+## Pinned prompt catalogs and named output
+
+An explicit templateContext.catalogs list selects strict prompts mappings from
+original-byte-pinned YAML files. collisionPolicy defaults to error; last_wins
+retains every declaration and replacement origin. Existing read/projection and
+separate template grants apply. Discovery additionally accepts catalogs with
+optional first pins and directories with kind: prompt_templates; these explicit
+selectors can create an empty context when the template grant is present. No
+default search is added. Discovery selections must fit the ordinary replay cap.
+
+session-config render-prompt instead reads the context object itself and renders
+--name under configuration-read/template grants. Optional --output/--allow-output
+creates plain UTF-8 at a fresh destination. Neither form grants runtime, policy
+or source execution rights. Catalog sources and policy sources share the 2MB raw
+budget; named/catalog protocol 2 retains the same bounded engine and memory guard.
+See [catalog schema, order, receipts and exact limits](prompt-catalogs.md).

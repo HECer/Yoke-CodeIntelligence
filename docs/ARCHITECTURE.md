@@ -2,6 +2,15 @@
 
 ## Native Rust ownership
 
+Host-selected pinned YAML catalogs resolve separately from session policy.
+Every original declaration and raw source hash survives explicit last_wins;
+unknown/duplicate schemas, aliases, unsafe files, stale pins and budgets refuse.
+Named rendering and policy projection share the bounded native worker, with a
+pure data protocol 2 only for the new catalog/named route. Existing literal and
+inline protocol-1 bytes remain exact. Discovery returns guarded replayable pins;
+exports remain literal profiles, and named text output is create-only.
+See [prompt catalog semantics](../native/docs/prompt-catalogs.md).
+
 An explicitly authorized host configuration stage can first render decoded
 prompt scalars using a fixed native MiniJinja worker. Source receipts bind
 original YAML, decoded prompt, canonical selected data and rendered UTF-8.

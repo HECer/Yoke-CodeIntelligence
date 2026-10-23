@@ -50,9 +50,10 @@ autoescaping is disabled because the output is instruction text, not rendered HT
 Original source bytes remain hash-bound, including BOM/CRLF/Unicode. Receipts bind
 the decoded original prompt, rendered UTF-8 and canonical selected context separately.
 
-The context is at most 128000 serialized bytes within the existing 128000-byte
-selection. It contains at most 32 named templates, each at most 65536 bytes; bounded
-relative catalog names are opaque identifiers, not file paths. Every render has
+For the preceding inline protocol 1 route, the context is at most 128000
+serialized bytes within the existing 128000-byte selection. Its inline templates
+mapping contains at most 32 names, each at most 65536 bytes; bounded relative
+catalog names are opaque identifiers, not file paths. Every render has
 100000 fuel, recursion 64, at most 8192 output bytes and a parent-controlled 10s
 capture intersected with the caller's deadline and cancellation. The request is
 at most 256000 bytes. The normal parent sets a 256MiB OS memory ceiling before
@@ -82,7 +83,13 @@ The external prompt-in-YAML surface is documented in the
 [pinned configuration guide](https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/docs/02-usage/050_configuration.md#custom-prompts).
 No upstream application code or default prompt text is copied.
 
-Arbitrary prompt_templates directory/catalog overrides, automatically derived
+Automatically selected/default prompt catalogs, automatically derived
 runtime/tool variables, upstream-specific helper filters, exact Python-Jinja
 conformance, broader clients and full upstream/R1-R9 acceptance remain separate.
 The result keeps complete=false and confers no execution/write authority.
+
+Explicit pinned YAML catalogs, flat host-selected prompt_templates discovery,
+collision provenance and named create-only text output are now supported by the
+[separate catalog contract](prompt-catalogs.md). Their pure-data protocol 2 extends
+only resolved catalog/named budgets. The preceding inline protocol 1 and all of its
+original limits, raw replies and default literal behavior remain unchanged.

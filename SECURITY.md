@@ -23,6 +23,17 @@ process with the same host-account privileges.
 
 ## Explicit prompt template rendering
 
+Optional pinned YAML catalogs use guarded host-only reads, actual held file
+identity checks, strict prompt-only schemas and shared policy/catalog source
+budgets. Explicit collision handling preserves shadowed definitions and validates
+their pins. Discovery admits all candidates before payload access and rechecks
+membership/source before delivery. Named rendering adds no policy authority;
+create-only text output requires its own grant and preflights reply capacity.
+Protocol 2 carries only resolved inert data, never catalog paths or file loaders.
+The old inline protocol and its narrower limits remain enforced. Exact raw-byte
+source hashes and decoded-prompt hashes are distinct; raw YAML spans are explicitly
+unavailable. See [the bounded catalog contract](native/docs/prompt-catalogs.md).
+
 The separately granted session-config template route interprets only decoded
 prompt scalars over host-selected JSON data and catalog strings. Its linked
 native worker registers no filesystem loader, environment/Python/application
