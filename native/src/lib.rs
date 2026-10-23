@@ -132,6 +132,7 @@ use store::Store;
 pub use validation::validate;
 
 pub struct Engine {
+    pub(crate) git_repository_host: Option<git_workflows::repository_host::Host>,
     pub(crate) backend_servers: BTreeMap<String, lsp::ConfiguredServer>,
     pub(crate) selected_backends: Option<Vec<String>>,
     pub(crate) backend_registry_sealed: bool,
@@ -149,6 +150,9 @@ pub struct Engine {
 }
 impl Engine {
     pub(crate) fn sync_source_exclusions(&mut self, deadline: &Deadline) -> Result<()> {
+        if let Some(host) = &self.git_repository_host {
+            host.check(&self.store, deadline)?;
+        }
         let physical_ignored_dirs = self
             .capture_options
             .ignored_directory_identity
@@ -189,6 +193,7 @@ impl Engine {
         ensure!(root.is_dir(), "Workspace root must be a directory");
         let store = Store::open_with_timeout(&root, timeout)?;
         Ok(Self {
+            git_repository_host: None,
             backend_servers: BTreeMap::new(),
             selected_backends: None,
             backend_registry_sealed: false,
@@ -211,6 +216,9 @@ impl Engine {
         deadline: &Deadline,
         bounded_saved_graph: bool,
     ) -> Result<(Snapshot, Graph, usize, usize)> {
+        if let Some(host) = self.git_repository_host.clone() {
+            return host.index(self, deadline, bounded_saved_graph);
+        }
         self.sync_source_exclusions(deadline)?;
         if bounded_saved_graph {
             retrieval_scopes::check_deadline(deadline)?;

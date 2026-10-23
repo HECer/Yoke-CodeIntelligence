@@ -44,7 +44,7 @@ impl Limits {
     }
 }
 /// Rust/CLI host inputs. A serialized report cannot construct these grants.
-#[derive(Default)]
+#[derive(Clone, Default)]
 pub struct Options {
     pub allow_index_read: bool,
     pub follow_submodules: bool,
@@ -808,6 +808,22 @@ fn capture_selected(
     selected: crate::capture::RepositoryScope,
     preference: Option<&super::repository_preferences::Resolved>,
 ) -> Result<(crate::model::Snapshot, crate::model::Graph, usize, usize)> {
+    let snapshot =
+        capture_selected_source(engine, git, options, d, remaining, selected, preference)?;
+    let result = engine.analyze_snapshot_at(engine.capture_epoch, snapshot, d)?;
+    engine.store.db.execute("INSERT INTO meta(key,value) VALUES(?1,?2) ON CONFLICT(key) DO UPDATE SET value=excluded.value",rusqlite::params![crate::freshness::BASELINE_KEY,result.0.id])?;
+    d.check()?;
+    Ok(result)
+}
+fn capture_selected_source(
+    engine: &mut crate::Engine,
+    git: &HostGit,
+    options: &Options,
+    d: &Deadline,
+    remaining: &std::cell::Cell<usize>,
+    selected: crate::capture::RepositoryScope,
+    preference: Option<&super::repository_preferences::Resolved>,
+) -> Result<crate::model::Snapshot> {
     if let Some(preference) = preference {
         preference.check(&engine.store, d)?;
     }
@@ -838,7 +854,42 @@ fn capture_selected(
         d,
         &recheck,
     )?;
-    let result = engine.analyze_snapshot_at(engine.capture_epoch, snapshot, d)?;
+    Ok(snapshot)
+}
+
+pub(super) fn capture_host(
+    engine: &mut crate::Engine,
+    git: &HostGit,
+    options: &Options,
+    preference: &super::repository_preferences::Resolved,
+    d: &Deadline,
+    bounded_saved_graph: bool,
+) -> Result<(crate::model::Snapshot, crate::model::Graph, usize, usize)> {
+    ensure!(
+        engine.store.db.is_autocommit(),
+        "repository_capture_requires_owned_transaction"
+    );
+    preference.check(&engine.store, d)?;
+    let remaining = std::cell::Cell::new(options.limits.max_index_bytes);
+    let observation = inspect_budgeted(&engine.root, git, options, d, &remaining)?;
+    let selected = crate::capture::RepositoryScope::physical(&engine.root, &observation, d)?;
+    let snapshot = capture_selected_source(
+        engine,
+        git,
+        options,
+        d,
+        &remaining,
+        selected.clone(),
+        Some(preference),
+    )?;
+    let result = engine.analyze_snapshot_with_graph_policy(
+        engine.capture_epoch,
+        snapshot,
+        d,
+        bounded_saved_graph,
+    )?;
+    engine.capture_options.repository_scope = Some(selected);
+    engine.sync_source_exclusions(d)?;
     engine.store.db.execute("INSERT INTO meta(key,value) VALUES(?1,?2) ON CONFLICT(key) DO UPDATE SET value=excluded.value",rusqlite::params![crate::freshness::BASELINE_KEY,result.0.id])?;
     d.check()?;
     Ok(result)

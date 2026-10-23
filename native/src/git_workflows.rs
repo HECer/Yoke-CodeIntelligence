@@ -31,6 +31,8 @@ pub mod conflicts;
 pub(crate) mod history_read;
 #[path = "git_owners.rs"]
 pub mod owners;
+#[path = "git_repository_host.rs"]
+pub mod repository_host;
 #[path = "git_repository_preferences.rs"]
 pub mod repository_preferences;
 #[path = "git_repository_scope.rs"]

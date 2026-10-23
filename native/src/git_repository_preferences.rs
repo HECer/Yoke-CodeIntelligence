@@ -269,12 +269,16 @@ pub fn clear(
 }
 
 /// Invocation-owned read binding. It carries no program or execution permission.
+#[derive(Clone)]
 pub struct Resolved {
     root: PathBuf,
     expected: Option<Selection>,
     pub choice: Choice,
 }
 impl Resolved {
+    pub(super) fn root(&self) -> &Path {
+        &self.root
+    }
     pub fn current(
         root: &Path,
         submodules: Option<bool>,

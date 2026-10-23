@@ -14,6 +14,9 @@ pub struct Arguments {
     /// Explicitly capture the selected working files; crossed repositories stay read-only.
     #[arg(long)]
     capture: bool,
+    /// Serve fixed-root native MCP after explicit capture; index retains this host policy.
+    #[arg(long, requires = "capture")]
+    serve: bool,
     #[arg(long)]
     max_scope_bytes: Option<usize>,
     #[arg(long)]
@@ -95,6 +98,18 @@ impl Arguments {
                 },
                 &d,
             )?;
+            if self.serve {
+                let host = yoke::git_workflows::repository_host::Host::new(
+                    root, git, options, preference, &d,
+                )?;
+                let mut engine = host.open(&d)?;
+                yoke::protocol::serve(
+                    &mut engine,
+                    std::io::stdin().lock(),
+                    std::io::stdout().lock(),
+                )?;
+                return Ok(true);
+            }
             let (snapshot, graph, parsed, reused) =
                 repository_scope::capture_root_resolved(root, &git, &options, &preference, &d)?;
             let mut result = serde_json::json!({"producer":"yoke-git-repository-capture-1","snapshotId":snapshot.id,"files":snapshot.files.len(),"entities":graph.entities.len(),"observations":graph.observations.len(),"parsedFiles":parsed,"reusedFiles":reused,"crossedRepositoryPolicy":"read-only","projectSourceWritten":false,"defaultCaptureChanged":false});
