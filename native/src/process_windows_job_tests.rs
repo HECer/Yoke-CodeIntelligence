@@ -271,3 +271,48 @@ fn member_waits_do_not_terminate_a_parallel_unrelated_process() {
         "Synchronization-only member handles cannot authorize unrelated termination"
     );
 }
+
+#[test]
+fn member_query_refusal_reports_bounded_win32_snapshot_counters() {
+    let original = OwnedJob::new().unwrap();
+    let mut limited = std::ptr::null_mut();
+    assert_ne!(
+        unsafe {
+            DuplicateHandle(
+                GetCurrentProcess(),
+                original.job.as_raw_handle(),
+                GetCurrentProcess(),
+                &mut limited,
+                0x8,
+                0,
+                0,
+            )
+        },
+        0
+    );
+    let job = OwnedJob {
+        job: unsafe { OwnedHandle::from_raw_handle(limited) },
+        root: OnceLock::new(),
+        attached: AtomicBool::new(false),
+    };
+    let error = job
+        .member_handles(Instant::now() + Duration::from_secs(2))
+        .unwrap_err();
+    assert!(super::super::cleanup_unproven(&error));
+    let message = error.to_string();
+    assert!(message.starts_with(
+        "Owned process cleanup could not be proven: Owned member list unavailable or over capacity"
+    ));
+    for expected in [
+        "assigned: 0",
+        "listed: 0",
+        "capacity: 4096",
+        "query_error: Some(5)",
+        "returned_bytes:",
+        "accounting_after_list: Err(Some(5))",
+        "root_exited_after_list: Err(None)",
+    ] {
+        assert!(message.contains(expected), "Missing {expected}: {message}");
+    }
+    assert!(message.len() < 800, "Diagnostics must remain bounded");
+}

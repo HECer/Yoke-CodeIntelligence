@@ -69,6 +69,14 @@ struct Accounting {
     terminated_processes: u32,
 }
 
+const MAX_MEMBERS: usize = 4096;
+#[repr(C)]
+struct ProcessIds {
+    assigned: u32,
+    listed: u32,
+    ids: [usize; MAX_MEMBERS],
+}
+
 #[derive(Debug)]
 pub(super) struct OwnedJob {
     job: OwnedHandle,
@@ -142,7 +150,7 @@ impl OwnedJob {
             _ => Err(io::Error::last_os_error()),
         }
     }
-    fn empty(&self) -> io::Result<bool> {
+    fn accounting(&self) -> io::Result<Accounting> {
         let mut info = Accounting::default();
         // SAFETY: info has the Win32 accounting layout and exact buffer size.
         if unsafe {
@@ -157,16 +165,39 @@ impl OwnedJob {
         {
             return Err(io::Error::last_os_error());
         }
-        Ok(info.active_processes == 0)
+        Ok(info)
+    }
+    fn empty(&self) -> io::Result<bool> {
+        Ok(self.accounting()?.active_processes == 0)
+    }
+    fn member_list_refusal(
+        &self,
+        detail: &str,
+        info: &ProcessIds,
+        returned_bytes: u32,
+        query_succeeded: bool,
+        query_error: Option<i32>,
+    ) -> CleanupUnproven {
+        // These bounded numeric observations follow the list query. They are
+        // not atomic with that query and never turn an incomplete list into
+        // proof. Failed-query buffer fields are only initialized/partial data.
+        let accounting_after_list = self
+            .accounting()
+            .map(|info| {
+                (
+                    info.total_processes,
+                    info.active_processes,
+                    info.terminated_processes,
+                )
+            })
+            .map_err(|error| error.raw_os_error());
+        let root_exited_after_list = self.root_exited().map_err(|error| error.raw_os_error());
+        CleanupUnproven::new(format!(
+            "{detail}; memberSnapshot {{ query_succeeded: {query_succeeded}, assigned: {}, listed: {}, capacity: {MAX_MEMBERS}, returned_bytes: {returned_bytes}, query_error: {query_error:?}, accounting_after_list: {accounting_after_list:?}, root_exited_after_list: {root_exited_after_list:?} }}",
+            info.assigned, info.listed
+        ))
     }
     fn member_handles(&self, end: Instant) -> Result<Vec<OwnedHandle>> {
-        const MAX_MEMBERS: usize = 4096;
-        #[repr(C)]
-        struct ProcessIds {
-            assigned: u32,
-            listed: u32,
-            ids: [usize; MAX_MEMBERS],
-        }
         anyhow::ensure!(
             Instant::now() < end,
             CleanupUnproven::new("Owned member snapshot exceeded cleanup budget")
@@ -176,6 +207,7 @@ impl OwnedJob {
             listed: 0,
             ids: [0; MAX_MEMBERS],
         };
+        let mut returned_bytes = 0;
         // The OS list includes nested child jobs. Fixed storage bounds both the
         // protocol and synchronization handles; an incomplete list is not proof.
         if unsafe {
@@ -184,17 +216,31 @@ impl OwnedJob {
                 3,
                 std::ptr::from_mut(&mut info).cast(),
                 std::mem::size_of::<ProcessIds>() as u32,
-                std::ptr::null_mut(),
+                &mut returned_bytes,
             )
         } == 0
         {
-            return Err(
-                CleanupUnproven::new("Owned member list unavailable or over capacity").into(),
-            );
+            // GetLastError must be captured before the diagnostic queries.
+            let query_error = io::Error::last_os_error().raw_os_error();
+            return Err(self
+                .member_list_refusal(
+                    "Owned member list unavailable or over capacity",
+                    &info,
+                    returned_bytes,
+                    false,
+                    query_error,
+                )
+                .into());
         }
         anyhow::ensure!(
             info.assigned == info.listed && info.listed as usize <= MAX_MEMBERS,
-            CleanupUnproven::new("Owned member list incomplete or over capacity")
+            self.member_list_refusal(
+                "Owned member list incomplete or over capacity",
+                &info,
+                returned_bytes,
+                true,
+                None,
+            )
         );
         let mut handles = Vec::with_capacity(info.listed as usize);
         for id in &info.ids[..info.listed as usize] {
