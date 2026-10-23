@@ -11,6 +11,8 @@ use std::{collections::BTreeMap, path::PathBuf, sync::Arc};
 #[path = "session_prompt_catalog.rs"]
 mod catalog;
 pub(crate) use catalog::resolve as resolve_catalog;
+#[path = "session_prompt_memory.rs"]
+pub mod memory;
 pub struct Instructions {
     pub text: String,
     pub evidence: Option<Value>,
@@ -94,6 +96,8 @@ pub struct Config {
     pub context: TemplateContext,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub system_prompt: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub memory_embeddings: Option<Vec<String>>,
 }
 impl Config {
     pub fn validate(&self, d: &Deadline) -> Result<()> {
@@ -108,14 +112,26 @@ impl Config {
         if let Some(name) = &self.system_prompt {
             session_config::prompt_name(name)?;
         }
+        if let Some(names) = &self.memory_embeddings {
+            memory::selection(names)?;
+            ensure!(
+                !self.context.variables.contains_key("embed_memory"),
+                "session_prompt_reserved_memory_function"
+            );
+        }
         Ok(())
     }
     pub fn fingerprint(&self) -> Result<String> {
-        Ok(model::hash(serde_json::to_vec(&(
+        let original = model::hash(serde_json::to_vec(&(
             VERSION,
             model::hash(include_bytes!("session_prompt_markers.json")),
             self,
-        ))?))
+        ))?);
+        Ok(if self.memory_embeddings.is_some() {
+            model::hash(serde_json::to_vec(&(original, memory::VERSION))?)
+        } else {
+            original
+        })
     }
 }
 /// Values derived by the current transport/session, never copied from prompt data.
@@ -125,6 +141,7 @@ pub struct RenderInput {
     pub source: String,
     pub variables: Map<String, Value>,
     pub binding: Value,
+    pub memories: Option<Arc<memory::Snapshot>>,
 }
 pub type Renderer = dyn Fn(&RenderInput, &Deadline) -> Result<RenderedPrompt> + Send + Sync;
 /// Non-serializable explicit trusted-host authority. The callback owns its limits
@@ -168,6 +185,17 @@ impl Runtime {
         );
         crate::json::encode_bounded(&input.variables, MAX_CONTEXT, d)?;
         crate::json::encode_bounded(&input.binding, MAX_CONTEXT, d)?;
+        match (&config.memory_embeddings, &input.memories) {
+            (Some(names), Some(snapshot)) => {
+                snapshot.check_selection(names, d)?;
+                ensure!(
+                    input.binding["memorySnapshotSha256"] == snapshot.hash()?,
+                    "session_prompt_memory_binding_changed"
+                );
+            }
+            (None, None) => {}
+            _ => anyhow::bail!("session_prompt_memory_selection_changed"),
+        }
         let result = (self.render)(input, d)?;
         d.check()?;
         ensure!(

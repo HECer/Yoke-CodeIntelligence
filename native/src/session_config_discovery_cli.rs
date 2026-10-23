@@ -25,6 +25,8 @@ struct DiscoverySelection {
     #[serde(default)]
     system_prompt: Option<String>,
     #[serde(default)]
+    memory_embeddings: Option<Vec<String>>,
+    #[serde(default)]
     files: Vec<Candidate>,
     #[serde(default)]
     catalogs: Vec<CatalogCandidate>,
@@ -202,6 +204,7 @@ pub(super) fn prepare_with_template_mode(
     let deferred = super::templates::deferred_context(
         input.template_context.as_ref(),
         input.system_prompt.as_deref(),
+        input.memory_embeddings.as_ref(),
         defer_templates,
         allow_templates,
         deadline,
@@ -325,6 +328,7 @@ pub(super) fn prepare_with_template_mode(
         files,
         template_context: input.template_context,
         system_prompt: input.system_prompt,
+        memory_embeddings: input.memory_embeddings,
     };
     if catalog_selectors
         || selection

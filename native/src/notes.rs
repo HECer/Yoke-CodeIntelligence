@@ -193,6 +193,81 @@ fn content(s: &str) -> Result<()> {
     ensure!(!paths::obvious_secret(s), "Obvious secret content refused");
     Ok(())
 }
+pub(crate) fn prompt_content(text: &str) -> Result<()> {
+    content(text)
+}
+
+pub(crate) fn prompt_selection(raw: &str) -> Result<(Scope, String)> {
+    ensure!(raw.len() <= 507, "session_prompt_memory_name_capacity");
+    let (scope, selected) = raw
+        .strip_prefix("global/")
+        .map_or((Scope::Project, raw), |name| (Scope::Global, name));
+    Ok((scope, name(&json!({"name": selected}), "name", scope)?))
+}
+
+pub(crate) fn admit_prompt(
+    selected: &str,
+    policy: &Policy,
+    patterns: Option<&MemoryPatterns>,
+) -> Result<(Scope, String)> {
+    let (scope, name) = prompt_selection(selected)?;
+    Rules::new(policy, scope, patterns)?.visible(&name)?;
+    Ok((scope, name))
+}
+
+/// Existing immutable revision read. No source capture or current-anchor claim.
+pub(crate) fn read_prompt(
+    store: &Store,
+    selected: &str,
+    policy: &Policy,
+    patterns: Option<&MemoryPatterns>,
+    d: &Deadline,
+) -> Result<crate::session_prompt::memory::Entry> {
+    use crate::session_prompt::memory::{Anchor as EvidenceAnchor, Entry, Revision};
+    let (scope, name) = admit_prompt(selected, policy, patterns)?;
+    store.set_deadline(d)?;
+    // Enforce allocation admission inside SQLite, before receiving stored JSON.
+    let limit = rusqlite::limits::Limit::SQLITE_LIMIT_LENGTH;
+    let previous = store.db.set_limit(limit, MAX_REVISION_BYTES as i32)?;
+    if previous < MAX_REVISION_BYTES as i32 {
+        store.db.set_limit(limit, previous)?;
+    }
+    let note = (|| -> Result<Option<Note>> {
+        let tx = Transaction::new_unchecked(&store.db, TransactionBehavior::Deferred)?;
+        let note = load(&tx, store, scope, &name)?.filter(|note| !note.deleted);
+        d.check()?;
+        tx.commit()?;
+        Ok(note)
+    })();
+    store.db.set_limit(limit, previous)?;
+    let note = note?;
+    let Some(note) = note else {
+        return Ok(Entry::Unavailable);
+    };
+    let revision = Revision {
+        revision_id: note.id,
+        scope: note.scope,
+        storage_workspace_id: note.storage_workspace_id,
+        source_workspace_id: note.source_workspace_id,
+        snapshot_id: note.snapshot_id,
+        content_sha256: crate::model::hash(&note.content),
+        anchors: note
+            .anchors
+            .into_iter()
+            .map(|a| EvidenceAnchor {
+                path: a.path,
+                content_hash: a.content_hash,
+                snapshot_id: a.snapshot_id,
+                source_workspace_id: a.source_workspace_id,
+            })
+            .collect(),
+        trust: note.trust,
+    };
+    Ok(Entry::Available {
+        content: note.content,
+        revision,
+    })
+}
 fn key(s: &Store, scope: Scope, n: &str) -> String {
     identity(&(HEAD_KIND, &s.workspace_id, scope, n))
 }

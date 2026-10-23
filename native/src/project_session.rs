@@ -247,6 +247,8 @@ pub struct Session {
     debug_adapters: BTreeMap<String, crate::debug_adapter::DebugAdapter>,
     process_cleanup_unproven: bool,
 }
+#[path = "session_prompt_session.rs"]
+mod prompt_memory;
 fn project_root_key(path: &std::path::Path) -> Option<String> {
     Some(project_root_spelling(path.to_str()?, cfg!(windows)))
 }
@@ -1787,7 +1789,12 @@ impl Session {
         let full = crate::protocol::session_full_catalog(self, profile);
         let selected = crate::protocol::session_tools(self, profile);
         let context = crate::session_prompt::resolve_catalog(profile, &full, &selected, deadline)?;
-        let binding = json!({"schema":crate::session_prompt::VERSION,"sessionId":self.state.id,"sessionStateSha256":crate::model::hash(&self.persisted),"revision":self.state.revision,"activeProject":self.state.active_project,"context":self.state.context,"modes":self.state.modes,"selectionSha256":config.fingerprint()?,"catalog":context.evidence});
+        let memories = self.prompt_memories(config, deadline)?;
+        let mut binding = json!({"schema":crate::session_prompt::VERSION,"sessionId":self.state.id,"sessionStateSha256":crate::model::hash(&self.persisted),"revision":self.state.revision,"activeProject":self.state.active_project,"context":self.state.context,"modes":self.state.modes,"selectionSha256":config.fingerprint()?,"catalog":context.evidence});
+        if let Some(snapshot) = &memories {
+            binding["memorySnapshotSha256"] = json!(snapshot.hash()?);
+            binding["memorySnapshot"] = snapshot.receipts();
+        }
         let mut receipts = Vec::new();
         let mut text = crate::session_steering::LEGACY_INSTRUCTIONS.to_owned();
         if let Some(name) = &config.system_prompt {
@@ -1799,6 +1806,7 @@ impl Session {
                     source: "system_prompt".into(),
                     variables: context.variables.clone(),
                     binding: binding.clone(),
+                    memories: memories.clone(),
                 },
                 deadline,
             )?;
@@ -1815,6 +1823,7 @@ impl Session {
                         source: fragment.source.clone(),
                         variables: context.variables.clone(),
                         binding: binding.clone(),
+                        memories: memories.clone(),
                     },
                     deadline,
                 )?;
@@ -1827,11 +1836,27 @@ impl Session {
             }
         }
         self.check_tool_state(deadline)?;
+        if let Some(before) = &memories {
+            let after = self
+                .prompt_memories(config, deadline)?
+                .context("session_prompt_memory_selection_changed")?;
+            ensure!(
+                before.hash()? == after.hash()?,
+                "session_prompt_memory_changed_during_render"
+            );
+        }
+        let mut evidence = json!({"schema":crate::session_prompt::VERSION,"binding":binding,"fragments":receipts,"sourceBytesRewritten":false,"complete":false});
+        if memories.is_some() {
+            evidence["memoryEmbeddingsPartial"] =
+                json!(
+                    evidence["fragments"].as_array().unwrap().iter().any(
+                        |fragment| fragment["rendering"]["memoryEmbeddings"]["partial"] == true
+                    )
+                );
+        }
         Ok(Instructions {
             text,
-            evidence: Some(
-                json!({"schema":crate::session_prompt::VERSION,"binding":binding,"fragments":receipts,"sourceBytesRewritten":false,"complete":false}),
-            ),
+            evidence: Some(evidence),
         })
     }
     fn resolve_next_modes(&self, next: &mut State) -> Result<()> {

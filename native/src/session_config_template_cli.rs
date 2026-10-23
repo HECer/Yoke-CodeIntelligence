@@ -20,6 +20,8 @@ const MAX_OUTPUT: usize = 8192;
 const ENGINE: &str = "minijinja-3.0.3";
 #[path = "session_config_prompt_catalog_cli.rs"]
 mod catalogs;
+#[path = "session_config_memory_cli.rs"]
+mod memory_function;
 pub(super) use catalogs::{
     CatalogFile, PreparedContext, TemplateContext, prepare as prepare_context,
     prepare_loaded as prepare_loaded_context,
@@ -36,7 +38,7 @@ struct ResolvedContext {
 impl ResolvedContext {
     fn validate(&self, schema: u8, d: &Deadline) -> Result<()> {
         ensure!(
-            matches!(schema, 1..=3),
+            matches!(schema, 1..=4),
             "session_config_template_request_invalid"
         );
         if schema == 1 {
@@ -95,6 +97,7 @@ pub(super) fn admit(context: Option<&TemplateContext>, allowed: bool, d: &Deadli
 pub(super) fn deferred_context(
     context: Option<&TemplateContext>,
     system_prompt: Option<&str>,
+    memory_embeddings: Option<&Vec<String>>,
     defer: bool,
     allowed: bool,
     d: &Deadline,
@@ -107,6 +110,10 @@ pub(super) fn deferred_context(
         !defer || allowed,
         "session_config_template_permission_required"
     );
+    ensure!(
+        memory_embeddings.is_none() || defer,
+        "session_config_memory_requires_deferred_templates"
+    );
     if !defer {
         return Ok(None);
     }
@@ -115,6 +122,7 @@ pub(super) fn deferred_context(
     let config = yoke::session_prompt::Config {
         context: context.clone(),
         system_prompt: system_prompt.map(str::to_owned),
+        memory_embeddings: memory_embeddings.cloned(),
     };
     config.validate(d)?;
     Ok(Some(config))
@@ -145,7 +153,7 @@ pub(super) fn project(
         None => session_config::project(base, sources, d),
         Some(context) => {
             session_config::project_with_prompt_renderer(base, sources, d, &mut |text, d| {
-                render(context, text, None, None, d)
+                render(context, text, None, None, None, d)
             })
         }
     }
@@ -160,6 +168,8 @@ struct Request {
     template_name: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     runtime_binding: Option<Value>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    memory_context: Option<yoke::session_prompt::memory::Snapshot>,
 }
 pub(super) fn render_named(
     context: &PreparedContext,
@@ -172,16 +182,19 @@ pub(super) fn render_named(
         .templates
         .get(name)
         .ok_or_else(|| anyhow::anyhow!("session_config_prompt_name_unavailable"))?;
-    render(context, text, Some(name), None, d)
+    render(context, text, Some(name), None, None, d)
 }
 fn render(
     context: &PreparedContext,
     text: &str,
     name: Option<&str>,
     binding: Option<&Value>,
+    memories: Option<&yoke::session_prompt::memory::Snapshot>,
     d: &Deadline,
 ) -> Result<RenderedPrompt> {
-    let schema = if binding.is_some() {
+    let schema = if memories.is_some() {
+        4
+    } else if binding.is_some() {
         3
     } else if name.is_some() {
         2
@@ -199,6 +212,7 @@ fn render(
         prompt: text.into(),
         template_name: name.map(str::to_owned),
         runtime_binding: binding.cloned(),
+        memory_context: memories.cloned(),
     };
     let request_cap = if schema == 1 {
         MAX_REQUEST
@@ -266,6 +280,17 @@ fn render(
         reply.get("runtimeBindingSha256").and_then(Value::as_str) == binding_hash.as_deref(),
         "session_config_template_worker_binding_invalid"
     );
+    if let Some(snapshot) = memories {
+        ensure!(
+            reply["memoryEmbeddings"]["snapshotSha256"] == snapshot.hash()?,
+            "session_prompt_memory_worker_binding_invalid"
+        );
+    } else {
+        ensure!(
+            reply.get("memoryEmbeddings").is_none(),
+            "session_prompt_memory_worker_binding_invalid"
+        );
+    }
     let rendered = reply["rendered"]
         .as_str()
         .ok_or_else(|| anyhow::anyhow!("session_config_template_worker_output_invalid"))?;
@@ -278,6 +303,11 @@ fn render(
     let mut evidence = json!({"schema":reply_schema,"engine":ENGINE,"requestSha256":reply["requestSha256"],"contextSha256":reply["contextSha256"],"memoryCeilingBytes":MEMORY,"memoryLimitKind":reply["memoryLimitKind"],"fuel":FUEL,"recursionLimit":64,"outputByteLimit":MAX_OUTPUT,"filesystemLoader":false,"environmentAccess":false,"modelCalls":0,"analyzedSourceExecuted":false,"templateWorkerExecuted":true});
     if let Some(hash) = binding_hash {
         evidence["runtimeBindingSha256"] = json!(hash);
+    }
+    if memories.is_some() {
+        evidence["memoryEmbeddings"] = reply["memoryEmbeddings"].clone();
+        evidence["originalPromptSha256"] = reply["originalPromptSha256"].clone();
+        evidence["renderedSha256"] = reply["renderedSha256"].clone();
     }
     if let Some(hash) = context.resolution_hash()? {
         evidence["promptCatalogResolutionSha256"] = json!(hash);
@@ -295,6 +325,7 @@ fn reply_schema(schema: u8) -> &'static str {
         1 => "native_session_prompt_jinja_v1",
         2 => "native_session_prompt_jinja_v2",
         3 => "native_session_prompt_jinja_v3",
+        4 => "native_session_prompt_jinja_v4",
         _ => unreachable!("Validated own worker schema"),
     }
 }
@@ -349,6 +380,7 @@ pub(super) fn bind_runtime(
                 text,
                 input.template_name.as_deref(),
                 Some(&binding),
+                input.memories.as_deref(),
                 d,
             )?;
             prepared.recheck(d)?;
@@ -429,9 +461,10 @@ fn worker_inner(deadline: &Deadline, cap: usize) -> Result<bool> {
         .read_to_end(&mut input)?;
     let frame = yoke::json::parse(&input, MAX_CATALOG_REQUEST)?;
     let runtime_binding_present = frame.get("runtimeBinding").is_some();
+    let memory_context_present = frame.get("memoryContext").is_some();
     let request: Request = yoke::json::decode(frame)?;
     ensure!(
-        matches!(request.schema, 1..=3)
+        matches!(request.schema, 1..=4)
             && input.len()
                 <= if request.schema == 1 {
                     MAX_REQUEST
@@ -454,10 +487,11 @@ fn worker_inner(deadline: &Deadline, cap: usize) -> Result<bool> {
         "session_config_template_entry_binding_invalid"
     );
     ensure!(
-        runtime_binding_present == (request.schema == 3),
+        runtime_binding_present == (request.schema >= 3)
+            && memory_context_present == (request.schema == 4),
         "session_config_template_runtime_protocol_invalid"
     );
-    if request.schema == 3 {
+    if request.schema >= 3 {
         let binding = request
             .runtime_binding
             .as_ref()
@@ -465,7 +499,23 @@ fn worker_inner(deadline: &Deadline, cap: usize) -> Result<bool> {
             .ok_or_else(|| anyhow::anyhow!("session_config_template_runtime_binding_invalid"))?;
         yoke::json::encode_bounded(binding, MAX_CONTEXT, deadline)?;
     }
+    if request.schema == 4 {
+        let snapshot = request
+            .memory_context
+            .as_ref()
+            .ok_or_else(|| anyhow::anyhow!("session_prompt_memory_protocol_invalid"))?;
+        snapshot.validate(deadline)?;
+        ensure!(
+            request.runtime_binding.as_ref().unwrap()["memorySnapshotSha256"] == snapshot.hash()?,
+            "session_prompt_memory_binding_changed"
+        );
+    }
     let mut env = minijinja::Environment::new();
+    let memory_usage = request
+        .memory_context
+        .as_ref()
+        .map(|snapshot| memory_function::install(&mut env, snapshot, deadline))
+        .transpose()?;
     env.set_auto_escape_callback(|_| minijinja::AutoEscape::None);
     env.set_undefined_behavior(minijinja::UndefinedBehavior::Strict);
     env.set_fuel(Some(FUEL));
@@ -517,6 +567,9 @@ fn worker_inner(deadline: &Deadline, cap: usize) -> Result<bool> {
     let mut value = json!({"schema":reply_schema,"engine":ENGINE,"requestSha256":yoke::model::hash(&input),"contextSha256":request.context.hash()?,"originalPromptSha256":yoke::model::hash(&request.prompt),"renderedSha256":yoke::model::hash(&rendered),"rendered":rendered,"memoryCeilingBytes":MEMORY,"memoryLimitKind":kind});
     if let Some(binding) = &request.runtime_binding {
         value["runtimeBindingSha256"] = json!(yoke::model::hash(serde_json::to_vec(binding)?));
+    }
+    if let Some(usage) = memory_usage {
+        value["memoryEmbeddings"] = usage.evidence()?;
     }
     if let Some(name) = request.template_name {
         value["entryTemplate"] = json!(name);

@@ -89,6 +89,8 @@ struct Selection {
     template_context: Option<templates::TemplateContext>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     system_prompt: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    memory_embeddings: Option<Vec<String>>,
 }
 #[derive(Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
@@ -278,6 +280,7 @@ fn prepare(
     let deferred = templates::deferred_context(
         selection.template_context.as_ref(),
         selection.system_prompt.as_deref(),
+        selection.memory_embeddings.as_ref(),
         defer_templates,
         allow_templates,
         deadline,
