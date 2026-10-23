@@ -9,8 +9,14 @@ use anyhow::{Result, ensure};
 use serde::{Deserialize, Serialize};
 use serde_json::{Map, Value, json};
 use std::collections::BTreeSet;
+#[path = "session_config_catalog.rs"]
+mod catalog;
 #[path = "session_config_yaml.rs"]
 mod yaml;
+pub use catalog::{
+    MAX_CATALOG_FILES, MAX_EFFECTIVE_PROMPTS, MAX_PROMPT_DECLARATIONS, decode_prompt_catalog,
+    prompt_name,
+};
 pub const MAX_FILES: usize = 268;
 pub const MAX_FILE_BYTES: usize = 65536;
 pub const MAX_TOTAL_BYTES: usize = 2_000_000;

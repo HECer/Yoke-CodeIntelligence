@@ -25,6 +25,20 @@ pub struct Arguments {
 enum Operation {
     #[command(hide = true)]
     RenderWorker,
+    RenderPrompt {
+        #[arg(long)]
+        context: PathBuf,
+        #[arg(long)]
+        name: String,
+        #[arg(long)]
+        allow_configuration_read: bool,
+        #[arg(long)]
+        allow_template_evaluation: bool,
+        #[arg(long)]
+        output: Option<PathBuf>,
+        #[arg(long)]
+        allow_output: bool,
+    },
     Discover {
         #[arg(long)]
         selection: PathBuf,
@@ -119,6 +133,56 @@ fn single_link(file: &File) -> Result<bool> {
 fn single_link(_file: &File) -> Result<bool> {
     anyhow::bail!("session_config_file_identity_unavailable")
 }
+fn loaded_identity(loaded: &Loaded) -> Result<(u64, u64)> {
+    let file = loaded
+        ._held
+        .last()
+        .ok_or_else(|| anyhow::anyhow!("session_config_file_identity_unavailable"))?;
+    #[cfg(windows)]
+    {
+        use std::{ffi::c_void, os::windows::io::AsRawHandle};
+        #[repr(C)]
+        struct Info {
+            attributes: u32,
+            times: [u32; 6],
+            volume: u32,
+            size: [u32; 2],
+            links: u32,
+            index: [u32; 2],
+        }
+        #[link(name = "kernel32")]
+        unsafe extern "system" {
+            fn GetFileInformationByHandle(file: *mut c_void, info: *mut Info) -> i32;
+        }
+        let mut info = Info {
+            attributes: 0,
+            times: [0; 6],
+            volume: 0,
+            size: [0; 2],
+            links: 0,
+            index: [0; 2],
+        };
+        ensure!(
+            unsafe { GetFileInformationByHandle(file.as_raw_handle(), &mut info) } != 0,
+            "session_config_file_identity_unavailable"
+        );
+        Ok((
+            u64::from(info.volume),
+            (u64::from(info.index[0]) << 32) | u64::from(info.index[1]),
+        ))
+    }
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::MetadataExt;
+        let meta = file.metadata()?;
+        Ok((meta.dev(), meta.ino()))
+    }
+    #[cfg(not(any(windows, unix)))]
+    {
+        let _ = file;
+        anyhow::bail!("session_config_file_identity_unavailable")
+    }
+}
 fn read(path: &Path, cap: usize, deadline: &Deadline) -> Result<Loaded> {
     deadline.check()?;
     super::meaning_archive_cli::host_path(path)?;
@@ -185,7 +249,11 @@ fn prepare(
     path: &Path,
     deadline: &Deadline,
     allow_templates: bool,
-) -> Result<(session_config::Projection, Vec<Loaded>)> {
+) -> Result<(
+    session_config::Projection,
+    Vec<Loaded>,
+    Option<serde_json::Value>,
+)> {
     let selected = read(path, 128000, deadline)?;
     let selection: Selection =
         yoke::json::parse(&selected.bytes, 128000).and_then(yoke::json::decode)?;
@@ -221,14 +289,26 @@ fn prepare(
             bytes: &loaded.bytes,
         })
         .collect();
+    let context = selection
+        .template_context
+        .as_ref()
+        .map(|c| templates::prepare_context(c, total, deadline))
+        .transpose()?;
     let projection = templates::project(
         &selection.host_profile,
         &sources,
-        selection.template_context.as_ref(),
+        context.as_ref(),
         deadline,
     )?;
+    let metadata = context
+        .as_ref()
+        .and_then(templates::PreparedContext::metadata)
+        .cloned();
+    if let Some(context) = context {
+        loaded.extend(context.into_loaded());
+    }
     loaded.push(selected);
-    Ok((projection, loaded))
+    Ok((projection, loaded, metadata))
 }
 fn recheck(loaded: &[Loaded], deadline: &Deadline) -> Result<()> {
     for original in loaded {
@@ -248,6 +328,59 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
     let cap = max_bytes as usize - 1;
     match &args.operation {
         Operation::RenderWorker => templates::worker(&deadline, cap),
+        Operation::RenderPrompt {
+            context,
+            name,
+            allow_configuration_read,
+            allow_template_evaluation,
+            output,
+            allow_output,
+        } => {
+            ensure!(
+                *allow_configuration_read && *allow_template_evaluation,
+                "session_config_host_permission_required"
+            );
+            ensure!(
+                output.is_none() || *allow_output,
+                "session_config_host_permission_required"
+            );
+            ensure!(
+                !*allow_output || output.is_some(),
+                "session_config_prompt_output_required"
+            );
+            let guard = output
+                .as_ref()
+                .map(|p| super::meaning_archive_cli::fresh_destination(p, &deadline))
+                .transpose()?;
+            let selected = read(context, 128000, &deadline)?;
+            let context: templates::TemplateContext =
+                yoke::json::parse(&selected.bytes, 128000).and_then(yoke::json::decode)?;
+            let prepared = templates::prepare_context(&context, 0, &deadline)?;
+            let rendered = templates::render_named(&prepared, name, &deadline)?;
+            let hash = yoke::model::hash(&rendered.text);
+            let value = json!({"schema":"native_named_prompt_render_v1","name":name,"contextSourceSha256":yoke::model::hash(&selected.bytes),"renderedSha256":hash,"renderedBytes":rendered.text.len(),"rendered":rendered.text,"evidence":rendered.evidence,"promptCatalogResolution":prepared.metadata(),"output":output,"outputCreated":output.is_some(),"sourceBytesRewritten":false,"sourceExecuted":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"complete":false});
+            let reply = yoke::json::encode_bounded(&value, cap, &deadline)?;
+            let mut held = prepared.into_loaded();
+            held.push(selected);
+            recheck(&held, &deadline)?;
+            if let Some(output) = output {
+                super::meaning_archive_cli::write_new(output, rendered.text.as_bytes(), &deadline)?;
+            }
+            drop(guard);
+            let mut stdout = std::io::stdout().lock();
+            if stdout
+                .write_all(&reply)
+                .and_then(|_| stdout.write_all(b"\n"))
+                .and_then(|_| stdout.flush())
+                .is_err()
+            {
+                if output.is_some() {
+                    anyhow::bail!("session_config_prompt_committed_delivery_failed:{hash}");
+                }
+                anyhow::bail!("session_config_prompt_delivery_failed");
+            }
+            Ok(true)
+        }
         Operation::Discover {
             selection,
             allow_configuration_read,
@@ -282,8 +415,12 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
                 *allow_configuration_read && *allow_policy_projection,
                 "session_config_host_permission_required"
             );
-            let (projection, held) = prepare(selection, &deadline, *allow_template_evaluation)?;
-            let value = projection.plan();
+            let (projection, held, metadata) =
+                prepare(selection, &deadline, *allow_template_evaluation)?;
+            let mut value = projection.plan();
+            if let Some(metadata) = metadata {
+                value["promptCatalogResolution"] = metadata;
+            }
             let reply = yoke::json::encode_bounded(&value, cap, &deadline)?;
             recheck(&held, &deadline)?;
             let mut stdout = std::io::stdout().lock();
@@ -305,9 +442,16 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
                 "session_config_host_permission_required"
             );
             let output_guard = super::meaning_archive_cli::fresh_destination(output, &deadline)?;
-            let (projection, held) = prepare(selection, &deadline, *allow_template_evaluation)?;
+            let (projection, held, metadata) =
+                prepare(selection, &deadline, *allow_template_evaluation)?;
             let profile = projection.profile_bytes(&deadline)?;
-            let shape = |hash: &str, bytes: usize| json!({"schema":"native_session_config_export_v1","profileSha256":hash,"profileBytes":bytes,"output":output,"sources":projection.plan()["sources"],"outputCreated":true,"sourceBytesRewritten":false,"templatesEvaluated":projection.plan()["templatesEvaluated"],"sourceExecuted":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"complete":false});
+            let shape = |hash: &str, bytes: usize| {
+                let mut value = json!({"schema":"native_session_config_export_v1","profileSha256":hash,"profileBytes":bytes,"output":output,"sources":projection.plan()["sources"],"outputCreated":true,"sourceBytesRewritten":false,"templatesEvaluated":projection.plan()["templatesEvaluated"],"sourceExecuted":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"complete":false});
+                if let Some(metadata) = &metadata {
+                    value["promptCatalogResolution"] = metadata.clone();
+                }
+                value
+            };
             yoke::json::encode_bounded(&shape(&"f".repeat(64), usize::MAX), cap, &deadline)?;
             let hash = yoke::model::hash(&profile);
             let value = shape(&hash, profile.len());
