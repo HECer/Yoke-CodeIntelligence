@@ -1,5 +1,40 @@
 # Remaining implementation and acceptance
 
+The current integrated native default suite at 89a277f8 now has a
+complete attempted inventory: all 358 Cargo-confirmed library, CLI, integration
+and doctest groups, with 3,376 passed, 10 failed and 53 existing
+ignored cases. All three examples compile without execution. All 1,100 frozen
+source/control inputs and the primary CLI stay exact. Original test/ignore/
+internal deadline/profile values remain unchanged; no function filters are used.
+The final consolidated failures match unchanged original Windows OS1314
+symlink-setup fixtures, before their safety assertions. An initial attempt also
+records 145 prerequisite failures from a missing private test-PATH entry for the
+already installed PowerShell 7.6.7. After checking its Microsoft signature,
+version and SHA256, only the child PATH is corrected. All four affected whole
+harnesses pass their unfiltered retests; original failed attempts remain archived.
+
+The original 26 groups are retained after correcting a Cargo workspace-selector
+error before compiler startup. A disk-headroom pause retains the next 27 groups;
+those completed groups remain in the inventory. The later environment correction
+retains 144 other groups and repeats only the four prerequisite-failed whole
+harnesses. Two protected old failed output paths
+remain metadata-only and unchanged; their normal test harnesses compile/run at
+separate new suffixes. Verified successful outputs and linked library artifacts
+use lossless file-only LZX optimization where needed; every selected logical size/
+SHA256 remains exact and nothing is deleted. A fixture audit separately proves
+unchanged Git blobs and prior frozen working bytes, disclosing nine existing
+CRLF/LF checkout differences without rewriting source.
+
+All-target Clippy, 360 individual format roots, typecheck, npm 260 passed/3
+existing skips and Python packaging/test-runner 19 passed
+complete; fmt-all retains Windows OS206. Tools are measured during the trial and
+rechecked after it, with no claim of a before-first-group tool hash snapshot.
+See [complete current-source evidence](validation/integration-2026-10-23/native-baseline-current/README.md).
+This is a complete default-suite attempt; Windows symlink prerequisites, broader
+R1-R9/353/77-runtime/client/format/quality and main/release acceptance stay open.
+No privilege, Developer Mode, system setting, original fixture or source code is
+changed for this acceptance. No CI result, main merge or release is inferred.
+
 Explicit project/backend LSP workspace settings now project through the trusted
 host and pinned YAML settings selection. Each shallow overlay starts from the
 original registered workspace object; absent/null preserves prior bindings and

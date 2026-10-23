@@ -12971,5 +12971,1222 @@
     "wholeNativeRerun": false,
     "all77RuntimeAcceptanceCertified": false,
     "fullContractCertification": false
+  },
+  "nativeFullWindowsDefaultAttempt20261023": {
+    "complete": true,
+    "sourceCommit": "89a277f88248f9aec7becfe992a38af99d81e51f",
+    "registeredGroups": 358,
+    "completedGroups": 358,
+    "totals": {
+      "passed": 3376,
+      "failed": 10,
+      "ignored": 53
+    },
+    "frozenInputs": 1100,
+    "sourceInputsUnchanged": true,
+    "allJobsEmpty": true,
+    "allJobsEmptyScope": "all 358 completed normal harness parents and completed final gate commands",
+    "interruptedOptionalStorageCleanupUnmeasured": true,
+    "interruptedPhaseRecoveredCompletedGroups": 191,
+    "formatRoots": 360,
+    "allOriginalFixtureGitBlobsAndFrozenWorkingBytesSeparatelyExact": true,
+    "protectedDefaultOutputsMetadataUnchanged": true,
+    "allOriginalDefaultTestsAndIgnoresUnchanged": true,
+    "fullNativeDefaultSuiteAttempted": true,
+    "failedCases": [
+      {
+        "group": "adversarial",
+        "test": "sqlite_sidecar_links_cannot_rewrite_files_outside_state",
+        "originalOs1314Fixture": true,
+        "actualOs1314": true
+      },
+      {
+        "group": "facade_file_delete",
+        "test": "source_symlink_cannot_redirect_a_forced_file_deletion",
+        "originalOs1314Fixture": true,
+        "actualOs1314": true
+      },
+      {
+        "group": "federation",
+        "test": "receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority",
+        "originalOs1314Fixture": true,
+        "actualOs1314": true
+      },
+      {
+        "group": "feedback_cli",
+        "test": "windows_host_aliases_cannot_read_protected_files_or_alternate_streams",
+        "originalOs1314Fixture": true,
+        "actualOs1314": true
+      },
+      {
+        "group": "git_affected_cli",
+        "test": "affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success",
+        "originalOs1314Fixture": true,
+        "actualOs1314": true
+      },
+      {
+        "group": "git_impact_details_cli",
+        "test": "windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive",
+        "originalOs1314Fixture": true,
+        "actualOs1314": true
+      },
+      {
+        "group": "graph_collections",
+        "test": "collection_sqlite_sidecars_cannot_write_through_links",
+        "originalOs1314Fixture": true,
+        "actualOs1314": true
+      },
+      {
+        "group": "maintenance",
+        "test": "blob_links_are_refused_and_external_targets_are_preserved",
+        "originalOs1314Fixture": true,
+        "actualOs1314": true
+      },
+      {
+        "group": "meaning_archive_cli",
+        "test": "existing_output_file_directory_and_hardlink_are_never_overwritten",
+        "originalOs1314Fixture": true,
+        "actualOs1314": true
+      },
+      {
+        "group": "media",
+        "test": "media_cannot_bypass_source_scope_links_ignore_or_protected_paths",
+        "originalOs1314Fixture": true,
+        "actualOs1314": true
+      }
+    ],
+    "examples": {
+      "neo4j_owned_probe": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\examples\\neo4j_owned_probe.exe",
+        "bytes": 101068288,
+        "sha256": "be6bcae693bbc3b306325eed869c30b61d6b55e99e9b7b441ae153962af02139",
+        "exampleCodeExecuted": false
+      },
+      "falkor_owned_probe": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\examples\\falkor_owned_probe.exe",
+        "bytes": 101306368,
+        "sha256": "f0d22247e8af6a88a30b3f227aedee65426509f702434b86a8ba01ad5e1003dd",
+        "exampleCodeExecuted": false
+      },
+      "benchmark": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\examples\\benchmark.exe",
+        "bytes": 109573632,
+        "sha256": "c1df04082e0e75898b38094971682c771e770361b6d64dab3c86b98519d4388b",
+        "exampleCodeExecuted": false
+      }
+    },
+    "pythonTestsPassed": 19,
+    "typescriptPassed": 260,
+    "typescriptExistingSkipped": 3,
+    "cliSha256": "8d66415f2af983ff2d8639f6dc50324f3b5d6722631401454897e52c90f7925e",
+    "tools": {
+      "rustc": {
+        "path": "C:\\Users\\Lomi\\.rustup\\toolchains\\1.94.1-x86_64-pc-windows-msvc\\bin\\rustc.exe",
+        "sha256": "21256c9767416cbc70120e7987449c6cc5a66e3e9f843d05392ee4fd5e617261",
+        "unchangedSinceDuringTrialMeasurement": true
+      },
+      "cargoActual": {
+        "path": "C:\\Users\\Lomi\\.rustup\\toolchains\\1.94.1-x86_64-pc-windows-msvc\\bin\\cargo.exe",
+        "sha256": "43226f7efc5ea12b88c9156da97f8954b9af582673baadb3fb1a3ebec5d97348",
+        "unchangedSinceDuringTrialMeasurement": true
+      },
+      "cargoProxy": {
+        "path": "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "sha256": "6f4bef66261261fcb43131be8720bab817d403a09edec7455c371974b90bdb7e",
+        "unchangedSinceDuringTrialMeasurement": true
+      },
+      "rustupProxy": {
+        "path": "C:\\Users\\Lomi\\.cargo\\bin\\rustup.exe",
+        "sha256": "6f4bef66261261fcb43131be8720bab817d403a09edec7455c371974b90bdb7e",
+        "unchangedSinceDuringTrialMeasurement": true
+      },
+      "node": {
+        "path": "C:\\Program Files\\nodejs\\node.exe",
+        "sha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+        "unchangedSinceDuringTrialMeasurement": true
+      },
+      "python": {
+        "path": "C:\\Python314\\python.exe",
+        "sha256": "4942b86a6597e5aee0128daa00050ed79bc21f6e709a78eb19cbfeb0c2f39ac9",
+        "unchangedSinceDuringTrialMeasurement": true
+      },
+      "git": {
+        "path": "C:\\Program Files\\Git\\cmd\\git.exe",
+        "sha256": "78211c7ed73988da93a6d8a33d47ec6187f464d7ea2a9a00c182bbd7a1ecf30f",
+        "unchangedSinceDuringTrialMeasurement": true
+      },
+      "cmd": {
+        "path": "C:\\WINDOWS\\System32\\cmd.exe",
+        "sha256": "badf4752413cb0cbdc03fb95820ca167f0cdc63b597ccdb5ef43111180e088b0",
+        "unchangedSinceDuringTrialMeasurement": true
+      },
+      "compact": {
+        "path": "C:\\WINDOWS\\System32\\compact.exe",
+        "sha256": "04f5b0422b81a976d16edba00853462d877ea40673eb38d258a44ab98d548597",
+        "unchangedSinceDuringTrialMeasurement": true
+      }
+    },
+    "toolHashMeasurementBeganAfterCompletedGroups": 40,
+    "toolHashesNotClaimedBeforeFirstGroup": true,
+    "normalHarnessOutputRelocationOnly": [
+      "capture_options",
+      "session_fixed_tools"
+    ],
+    "retainedCompletedGroupsAcrossResumes": [
+      26,
+      53,
+      144
+    ],
+    "failedPrerequisiteGroupsRetestedUnfiltered": 4,
+    "supersededPrerequisiteFailedTests": 145,
+    "supersededPrerequisiteFailures": [
+      {
+        "group": "github_app_auth",
+        "test": "windows::downloaded_pkcs1_and_host_pkcs8_are_accepted_without_trailing_der",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_auth",
+        "test": "windows::identity_suspension_and_missing_permissions_stop_before_token_creation",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_auth",
+        "test": "windows::inherited_cancellation_interrupts_a_stalled_response_and_keeps_its_cause",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_auth",
+        "test": "windows::positive_request_aggregate_and_output_limits_are_enforced",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_auth",
+        "test": "windows::redirect_duplicates_raw_capacity_and_errors_never_publish_remote_secrets",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_auth",
+        "test": "windows::repository_proof_requires_exact_total_id_and_name",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_auth",
+        "test": "windows::rs256_authorization_binds_identity_restricted_repository_and_opaque_token",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_auth",
+        "test": "windows::synchronously_created_client_refuses_later_async_use_without_panicking",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_auth",
+        "test": "windows::token_lifetime_is_rechecked_after_the_last_repository_reply",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_auth",
+        "test": "windows::token_response_refuses_broadened_wrong_expired_and_header_unsafe_credentials",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_auth",
+        "test": "windows::zero_budgets_and_cancelled_deadline_refuse_before_io",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_history_bridge",
+        "test": "a_disk_snapshot_or_an_unrelated_worker_record_cannot_become_history_authority",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_history_bridge",
+        "test": "a_future_initial_history_revision_cannot_create_a_binding_or_native_job",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_history_bridge",
+        "test": "authenticated_original_plan_and_native_job_must_survive_every_retry",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_history_bridge",
+        "test": "changed_queue_blocks_acquisition_but_allows_historical_pause_and_status",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_history_bridge",
+        "test": "checked_completion_creates_one_signed_job_and_offline_status_uses_read_only_store",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_history_bridge",
+        "test": "deleting_the_signed_binding_never_adopts_a_preexisting_generic_job",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_history_bridge",
+        "test": "driver_denials_precede_http_and_cannot_create_worker_completions_or_history",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_history_bridge",
+        "test": "permissions_output_and_sql_failure_cannot_leave_half_an_app_job",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_history_bridge",
+        "test": "resumable_batches_use_exact_revisions_and_never_update_checkout_or_latest",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_history_bridge",
+        "test": "retention_validates_typed_bindings_and_rejects_foreign_source_substitution",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_history_bridge",
+        "test": "signing_key_rotation_preserves_original_binding_and_current_grants_still_apply",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_history_bridge",
+        "test": "worker_execution_drives_resumable_history_without_repeating_http_or_adopting_revision",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "app_reinstallation_updates_the_same_owned_comment_without_another_post",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "approved_publication_commits_intent_before_one_post_and_exact_retry_is_historical",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "authenticated_impossible_intent_at_unselected_checkpoint_is_rejected_by_queue_factory",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "cancellation_at_publication_terminal_commit_is_reported_with_durable_historical_success",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "cancellation_at_recovery_commit_is_reported_and_status_exposes_durable_reconciliation",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "cancellation_at_unchanged_commit_reports_cancellation_after_atomic_observation",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "exact_published_retry_after_reinstallation_uses_current_repository_grant_without_http",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "exact_unknown_retry_after_reinstallation_uses_current_repository_grant_without_http",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "first_publication_refuses_a_host_clock_older_than_its_signed_completion_before_auth",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "identical_body_is_observed_without_a_redundant_remote_patch",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "invalid_post_responses_preserve_one_unknown_intent_without_resending",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "lost_changed_body_patch_is_never_resent_and_recovery_confirms_the_same_owned_id",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "lost_post_response_leaves_one_unknown_intent_and_never_blindly_resends",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "numeric_comment_url_for_another_repository_is_refused_without_a_patch",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "official_numeric_repository_comment_url_is_accepted_after_create",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "official_numeric_repository_comment_url_is_accepted_for_owned_get_and_patch",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::adding_an_app_revision_respects_the_global_hard_bound_before_committing",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::expiry_and_clock_regression_during_source_replay_are_checked_before_html_release",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::expiry_is_read_only_and_removal_invalidates_old_approval_until_a_fresh_preview",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::http::native_get_serves_exact_approved_html_with_complete_headers_and_no_queue_write_consent",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::http::native_healthz_reports_only_listener_liveness_without_page_or_source_details",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::http::native_html_wire_budget_refuses_without_partial_html_or_state_changes",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::http::native_key_rotation_revokes_old_url_while_prior_key_only_authenticates_history",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::http::native_missing_wrong_bearer_and_expired_pages_have_identical_404_packets",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::http::native_page_listener_shutdown_joins_a_stalled_owned_connection",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::http::native_page_route_refuses_wrong_authority_encoded_paths_extra_queries_and_methods",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::http::native_page_serving_requires_its_own_consent_and_page_read_permission",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::http::native_page_tls_checks_sni_and_host_before_releasing_approved_html",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::http::native_read_rechecks_repository_grant_and_cannot_release_stored_html_after_revocation",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::invalid_page_mac_is_rejected_but_an_invalid_bearer_never_reads_the_corrupt_row",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::links::page_link_factory_authenticates_the_mac_even_when_all_page_fields_are_intact",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::links::page_link_factory_binds_the_actual_stored_page_and_original_source_without_writes",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::links::page_link_factory_derives_current_key_url_without_changing_historical_page",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::links::page_link_factory_rechecks_current_grant_and_original_cas_bytes",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::links::page_link_factory_rechecks_expiry_and_clock_regression_after_real_source_replay",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::links::page_link_factory_refuses_caller_transaction_and_obeys_output_budget_without_mutation",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::links::page_link_factory_refuses_missing_consent_wrong_version_and_expiry",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::links::page_link_factory_refuses_removal_of_an_unexpired_previously_readable_page",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::page_clocks_reject_in_process_regression_and_a_fresh_clock_below_the_persisted_floor",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::page_writes_require_separate_permissions_and_exact_approval_without_mutation",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::preview_names_the_conditional_bearer_read_capability_without_granting_a_write",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::publication_links::approved_linked_post_is_exact_and_history_survives_page_removal_and_key_rotation",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::publication_links::authenticated_link_cannot_claim_a_genuine_checkpoint_before_its_job_was_selected",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::publication_links::authenticated_linked_intent_must_be_inside_the_captured_page_lifetime",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::publication_links::linked_and_plain_contracts_for_one_completion_have_independent_historical_render_bindings",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::publication_links::linked_preview_rejects_a_genuine_stored_page_from_another_completed_pr",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::publication_links::linked_preview_requires_distinct_consent_exact_version_and_an_unexpired_page",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::publication_links::linked_preview_uses_the_exact_native_page_and_preserves_plain_v1_contract",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::publication_links::lost_linked_post_is_recovered_without_a_live_page_or_page_link_authority",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::publication_links::page_expiry_during_owned_preflight_prevents_any_comment_send_or_journal_intent",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::publication_links::successful_post_reply_closes_from_captured_link_when_the_page_disappears_during_send",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::publication_links::unrelated_pr_arrival_before_preview_keeps_a_genuine_page_for_the_same_selected_completion",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::publication_links::unrelated_pr_arrival_during_post_keeps_the_captured_link_and_closes_the_selected_job",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::reads_authenticate_before_replay_and_recheck_current_grant_and_captured_bytes",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::replacement_refreshes_only_after_fresh_approval_and_eviction_keeps_stale_plans_dead",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::retention_recognizes_pages_and_keeps_only_the_original_completed_source_roots",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::retention_rejects_resealed_orphan_completion_and_safe_html_with_a_forged_graph_label",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::storage_preserves_caller_transactions_sql_policy_and_refuses_weak_durability",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::stored_exact_page_survives_reopen_and_exact_retry_does_not_refresh_expiry",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "page_lifecycle::unchanged_foreign_revision_whitespace_counts_toward_exact_store_byte_admission",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "preview_body_and_complete_stdout_limits_refuse_without_artifacts",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "preview_displays_hostile_filename_as_inert_code_without_source_quotes",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "preview_exact_body_and_stdout_budgets_include_the_final_newline",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "preview_rechecks_current_grant_and_authenticated_completion_body",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "preview_rechecks_selected_source_bytes_and_restores_sql_policy",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "preview_refuses_caller_write_transaction_and_preserves_its_ownership",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "preview_refuses_claim_id_and_current_revision_mismatch",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "preview_replays_completed_source_without_network_or_logical_writes",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "preview_requires_selected_job_but_can_bind_explicit_reselection_at_new_revision",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "proposal_identity_independently_binds_source_job_scope_revision_and_exact_body",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "protected_pages::preview_admits_exact_html_and_stdout_limits_and_refuses_graph_truncation",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "protected_pages::preview_cannot_promote_a_claim_stale_selection_or_a_reinstalled_old_job",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "protected_pages::preview_rechecks_captured_bytes_and_preserves_a_refused_caller_transaction",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "protected_pages::preview_replays_exact_source_into_an_inert_graph_without_persistence_or_http",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "publication_create_target_rejects_raw_extra_fields_even_with_original_id_and_mac",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "publication_exact_approval_and_budgets_precede_authentication_or_journal_writes",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "publication_journal_owner_prevents_windows_lock_file_rename_during_send",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "publication_permissions_precede_history_and_any_authorization_request",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "publication_refuses_disabled_sqlite_journal_before_authorization_or_intent",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "publication_refuses_disabled_sqlite_sync_before_authorization_or_intent",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "publication_reserves_terminal_capacity_for_prior_unknown_prs",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "publication_status_and_recovery_preserve_a_refused_caller_transaction",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "publication_status_observes_unknown_without_write_or_network_authority",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "publication_waits_for_owned_lock_contention_until_the_inherited_deadline",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "reconciled_recovery_refuses_a_changed_comment_id_before_http",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "recovery_cannot_clear_an_intent_while_its_live_publisher_still_owns_the_send",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "recovery_confirms_old_unknown_after_new_selection_then_new_head_patches_same_comment",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "recovery_journal_and_network_permissions_precede_history_or_http",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "recovery_refuses_another_apps_comment_and_preserves_unknown_intent",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "recovery_uses_current_repository_grant_after_app_reinstallation",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "recovery_works_with_pull_request_read_only_and_no_publication_consent",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "retention_recognizes_publication_history_and_keeps_only_typed_source_roots",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "retention_refuses_resealed_orphan_completion_and_body_not_derived_from_the_report",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "source_lost_during_provider_preflight_refuses_before_intent_or_post",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_publication",
+        "test": "unchanged_observation_uses_only_its_five_scoped_get_requests",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "a_client_created_outside_tokio_cannot_run_a_worker_inside_it",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "a_deleted_source_blob_at_final_observation_is_named_unavailable",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "closed_completion_binding_corruption_refuses_retention_even_with_valid_fixture_mac",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "completed_job_is_terminal_and_a_fresh_claim_cannot_erase_its_completion",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "completed_request_retry_is_historical_after_expiry_and_changed_source_cannot_rebind_it",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "exact_historical_report_obeys_the_current_report_byte_budget_without_http",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "execution_permissions_and_zero_budgets_precede_sql_and_http",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "execution_restores_the_callers_actual_limits_and_deadline_handler",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "final_completion_writer_conflict_is_causal_bounded_and_restores_sql_policy",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "final_source_seals_detect_changes_to_graph_and_absent_scope_rows",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "historical_result_checks_source_again_but_status_remains_historical",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "lease_expiry_and_new_queue_revision_during_http_prevent_completion",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "lease_expiry_observed_during_source_preparation_refuses_before_token_minting",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "local_source_binding_on_a_blob_mismatch_is_not_a_checked_remote_blob_match",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "mid_body_file_cancellation_preserves_the_cause_closes_http_and_leaves_no_completion",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "native_run_binds_exact_crlf_utf8_source_and_finishes_without_intermediate_artifacts",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "provider_count_fork_draft_coverage_links_and_token_reflections_refuse",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "provider_head_change_at_the_final_metadata_read_cannot_complete_work",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "pull_request_read_permission_alone_can_finish_existing_source_analysis",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "racing_identical_run_keeps_one_completion_and_reports_the_attempts_real_requests",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "removed_files_use_only_an_explicit_base_and_label_the_base_commit",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "report_and_output_refusals_leave_no_completion",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "retention_preserves_typed_completion_roots_without_walking_inert_report_ids",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "run_refuses_a_caller_transaction_before_any_http_and_preserves_it",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "source_seals_allow_graph_rows_larger_than_the_worker_record_limit",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "typed_pagination_covers_all_files_and_reserves_the_final_observation",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      },
+      {
+        "group": "github_app_worker_run",
+        "test": "unknown_explicit_snapshot_refuses_without_capture_or_http",
+        "beforeTestAssertions": true,
+        "privatePathFixedWithoutSourceChanges": true,
+        "wholeHarnessRetestPassed": true
+      }
+    ],
+    "privatePowerShell": {
+      "program": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\tools\\powershell-7.6.7-win-x64\\pwsh.exe",
+      "sha256": "fa2c8bb1e35cdd62ad15cd06a1d8f2c5961e9725a9bfa1e7cfd2c322f49e9619",
+      "version": "7.6.7",
+      "signatureStatus": "Valid",
+      "signer": "Microsoft Corporation",
+      "scope": "private child PATH only",
+      "systemSettingsChanged": false,
+      "initialPrerequisiteFailedTests": 145,
+      "wholeHarnessRetries": [
+        "github_app_auth",
+        "github_app_history_bridge",
+        "github_app_publication",
+        "github_app_worker_run"
+      ]
+    },
+    "initialPrerequisiteMetadataValidJsonLf": true,
+    "finalPowerShellSignature": {
+      "Status": "Valid",
+      "Subject": "CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+    },
+    "compressionNonzeroExitAttempts": 0,
+    "cumulativeCompressionEvidencePhase": "native-full-current-20261023-89a277f8-run12",
+    "finalPrerequisiteMetadataValidJsonLf": true,
+    "noArtifactDeletion": true,
+    "preservedSuccessfulCliCopiesOptimized": 4,
+    "losslessCompressionCount": 1258,
+    "fullWindowsAccepted": false,
+    "fullUpstreamOrStatusCertified": false,
+    "evidence": "docs/validation/integration-2026-10-23/native-baseline-current/README.md",
+    "fullStatusComplete": false,
+    "original353InventoryLedgerAndSummaryUnchanged": true
   }
 }
