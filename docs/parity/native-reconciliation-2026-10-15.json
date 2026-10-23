@@ -14374,5 +14374,34 @@
     "canonicalVsixAccepted": false,
     "wholeWindowsOrHostedAcceptance": false,
     "fullStatusComplete": false
+  },
+  "nativeInlineStatementHeads20261023": {
+    "sourceCommit": "e01920adcf05b0a4fb3f6ff519179748400800f2",
+    "status": "scoped-validated-full-parity-open",
+    "complete": false,
+    "rust": {
+      "passed": 630,
+      "failed": 0,
+      "ignored": 7,
+      "filtered": 0
+    },
+    "wholeGroups": 5,
+    "newFunctionsIncluded": 5,
+    "frozenInputs": 1112,
+    "currentNativeCliSha256": "57610cc05ed2ba2c3689cbf09e549dc2360bb960bec261fdf72e4fbc642d1db0",
+    "actualCliScenarios": 3,
+    "ownedParentProcesses": 27,
+    "allJobsEmpty": true,
+    "sourceExecutedDuringPreparation": false,
+    "ownedLiteralRuntimeOraclesExecuted": true,
+    "originalTestBytesRetained": true,
+    "clippyAllTargetsWarningsDenied": true,
+    "formatRoots": 362,
+    "pythonPassed": 47,
+    "typecheckPassed": true,
+    "npmPassed": 260,
+    "npmExistingSkipped": 3,
+    "evidence": "docs/validation/integration-2026-10-23/inline-statement-heads/README.md",
+    "remaining": "Loop/short-circuit/nested expression sequencing, JSDoc/generic/this/wider predicate forms, broader R1-R9/353/77-runtime/current whole Windows/client/quality/hosted/canonical VSIX/Google/main/release"
   }
 }

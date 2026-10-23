@@ -1,8 +1,15 @@
 # Predicate and assertion body contexts
 
 The explicit host-selected TypeScript 5.8.3 classic body route additionally
-handles predicate and assertion signatures in its existing initializer, return
-and expression-statement contexts. This is the native body-expansion action,
+handles predicate and assertion signatures in its admitted initializer, return,
+expression-statement and direct complete-call if/switch/throw head contexts.
+Direct if conditions retain the same checked relay for caller narrowing; no
+argument effects are repeated. The original AST field and full replacement are
+independently reconstructed. Loop tests and compound/short-circuit/nested
+conditions remain outside this finite scope. See the
+[statement-head qualification](../../docs/validation/integration-2026-10-23/inline-statement-heads/README.md).
+
+This is the native body-expansion action,
 not a claim about a TypeScript built-in refactor or every upstream inline form.
 The original compiler registration, source capture, verification, approval,
 write eligibility and conditional recovery gates remain mandatory.

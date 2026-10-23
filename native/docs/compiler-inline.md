@@ -19,9 +19,17 @@ from original source. It does not claim to be a TypeScript built-in refactor.
 One owning strict ES module can select a nonasync function declaration without a
 TypeScript type-parameter list and complete direct calls in that captured file.
 A call must occupy one whole
-single-declarator lexical initializer, return expression or expression statement.
-Return/expression statements receive a block so unbraced branches retain their
-control scope. Exported definitions require `keepDefinition=true`; captured
+single-declarator lexical initializer, return expression, expression statement,
+throw expression, if condition or switch discriminant. Parentheses are retained.
+Non-declaration statements receive a block so unbraced branches retain their
+control scope. Direct if/switch/throw heads evaluate the selected call once before
+the original statement. The worker and independent Rust reconstruction require
+the exact original AST field; original branches, cases, labels and comments remain
+source copies. Loop tests, compound/short-circuit/nested expression contexts and
+overlapping statement frames remain unavailable. See the
+[statement-head qualification](../../docs/validation/integration-2026-10-23/inline-statement-heads/README.md).
+
+Exported definitions require `keepDefinition=true`; captured
 consumers outside the file, recursive references and noncall/write consumers refuse.
 
 Every argument, including extra arguments, is evaluated once before any parameter

@@ -1,5 +1,27 @@
 # Remaining implementation and acceptance
 
+Direct complete-call `if`, `switch` and `throw` heads now support explicit
+classic function-body inlining. Independent Rust original-AST field admission
+and full source reconstruction retain one evaluation, original branch/case/label
+and finally behavior. Loop conditions, compound/short-circuit/nested expressions and
+overlapping frames still refuse. Captures, permissions, static observations,
+verification, approval and recovery stay mandatory; result complete=false.
+
+Qualified code e01920ad passes 630 Rust functions in five whole groups, zero
+failures, seven existing ignores and no filtered functions, including all 581
+library functions. Five added functions are already included. All-target Clippy,
+complete 362-root formatting, build, Python 47, typecheck and npm 260/3 existing
+skips pass on 1112 exact frozen inputs. Three actual new-context CLI scenarios
+pass 27 owned process calls: unverified/unapproved refusal, independent tsc,
+approved apply, equal owned-literal runtime observations, foreign-preserving
+recovery and exact restoration. Original body test bytes are retained intact.
+All owned Jobs end empty. Failing fixture/sequencing phases remain disclosed.
+See [statement-head evidence](validation/integration-2026-10-23/inline-statement-heads/README.md)
+and [body contract](../native/docs/compiler-inline.md#classic-function-body-statements).
+Broader expression/invocation/predicate forms, original 353/R1-R9/77-runtime,
+current whole Windows/client/quality/hosted/canonical VSIX/Google/main/release
+acceptance remain open.
+
 Explicit host-only session-config discover now reads selected YAML files and
 flat custom context/mode directories, returning a ready hash-pinned selection
 and the existing policy projection. Names/order, byte hashes, guarded inputs,
@@ -1371,7 +1393,7 @@ original inventory references and historical checkpoint evidence.
 
 | Area | Implemented contracts | Remaining work |
 | --- | --- | --- |
-| R1: semantic edits | Guarded native/provider planning, declaration ownership, directory/file usage, TS/JS propagation/session routing and actual host-selected immutable TS5.8.3 function-binding inlining, finite classic function-body statement expansion with checked var hoisting, explicit/inferred TypeScript predicate and assertion flow and dense argument typing and moves into existing captured ES modules with checked direct reexport/local-alias repairs, captured omitted imports and source dependency exports, compiler-bound consumers and independent source/effect/apply/recovery checks. | Further return/parameter/annotation contexts, JSDoc/generic/this and wider predicate-target forms, diagnostic combinations and wider body/expression/invocation forms, unsupported import attributes and sibling declaration bundles, remaining reexport/import shapes, broader moves/declaration/file/language/context shapes, dynamic or outside-file consumers and wider runtime/upstream acceptance. The compiler variable-inline action and existing LSP own_v1 move contract retain distinct finite scopes. |
+| R1: semantic edits | Guarded native/provider planning, declaration ownership, directory/file usage, TS/JS propagation/session routing and actual host-selected immutable TS5.8.3 function-binding inlining, finite classic function-body statement expansion including direct complete-call if/switch/throw heads with checked var hoisting, explicit/inferred TypeScript predicate and assertion flow and dense argument typing and moves into existing captured ES modules with checked direct reexport/local-alias repairs, captured omitted imports and source dependency exports, compiler-bound consumers and independent source/effect/apply/recovery checks. | Further return/parameter/annotation contexts, JSDoc/generic/this and wider predicate-target forms, diagnostic combinations and wider body/expression/invocation forms, unsupported import attributes and sibling declaration bundles, remaining reexport/import shapes, broader moves/declaration/file/language/context shapes, dynamic or outside-file consumers and wider runtime/upstream acceptance. The compiler variable-inline action and existing LSP own_v1 move contract retain distinct finite scopes. |
 | R2: meaning and identity | Checked native graphs/joins, portable projections and mixed preparation/build/query/composition. A separate native MinHash/Jaro candidate policy, durable explicit model adjudication, source-replayed positive-clique quotient and frozen node/degree/trace queries preserve every original observation. | Other source/history/workspace identity, wider normalization/survivor rules, interpretation/outcome surfaces and live semantic-quality/upstream acceptance. Existing mixed aliases and host links keep their original namespace/authority boundaries; model equivalence remains unverified. |
 | R3: historical analytics | Explicit checked pair-of-Views comparison with complete parent pins, immutable source/receipt replay and directed observations; optional source-category mappings, relation projection weights, ambiguity-only scaling, explicit hub filters and explained runtime-family/source-kind surprise ranking, with separate policy producers, exact legacy report preservation and checked canonical/View retention replay; explicit neighbor-majority-v1 unique-neighbor hub holdout/voting and two bounded split stages with stable source ordering. | Broader partition/library differences, upstream analytics equivalence and acceptance remain open. A bare previousSnapshotId remains insufficient to select two Views; that refusal is an intentional precondition. |
 | R4: mixed documents | Native/Office XML/decoded/PDF spaces, fixed input preparation, checked claims, explicit provider jobs, checked graph queries and independently checked cross-workspace/history composition. | Broader mixed analytics, external semantic-provider qualification and exhaustive interpretation remain open. CLI composition currently selects one explicit Store; library callers may supply separately checked parents from different workspaces. |

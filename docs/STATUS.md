@@ -1,5 +1,27 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+Direct complete-call `if`, `switch` and `throw` heads now support explicit
+classic function-body inlining. Independent Rust original-AST field admission
+and full source reconstruction retain one evaluation, original branch/case/label
+and finally behavior. Loop conditions, compound/short-circuit/nested expressions and
+overlapping frames still refuse. Captures, permissions, static observations,
+verification, approval and recovery stay mandatory; result complete=false.
+
+Qualified code e01920ad passes 630 Rust functions in five whole groups, zero
+failures, seven existing ignores and no filtered functions, including all 581
+library functions. Five added functions are already included. All-target Clippy,
+complete 362-root formatting, build, Python 47, typecheck and npm 260/3 existing
+skips pass on 1112 exact frozen inputs. Three actual new-context CLI scenarios
+pass 27 owned process calls: unverified/unapproved refusal, independent tsc,
+approved apply, equal owned-literal runtime observations, foreign-preserving
+recovery and exact restoration. Original body test bytes are retained intact.
+All owned Jobs end empty. Failing fixture/sequencing phases remain disclosed.
+See [statement-head evidence](validation/integration-2026-10-23/inline-statement-heads/README.md)
+and [body contract](../native/docs/compiler-inline.md#classic-function-body-statements).
+Broader expression/invocation/predicate forms, original 353/R1-R9/77-runtime,
+current whole Windows/client/quality/hosted/canonical VSIX/Google/main/release
+acceptance remain open.
+
 Explicit host-only session-config discover now reads selected YAML files and
 flat custom context/mode directories, returning a ready hash-pinned selection
 and the existing policy projection. Names/order, byte hashes, guarded inputs,
