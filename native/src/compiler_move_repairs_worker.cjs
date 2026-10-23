@@ -74,7 +74,7 @@ function repairCompilerMove(env,service,program,selected,compilerEdits,makeServi
   const candidates=[stem,stem+'.js',stem+'.mjs',stem+'.cjs',base],host={fileExists:env.fileExists,readFile:env.read,directoryExists:env.directoryExists,getDirectories:env.getDirectories,realpath:p=>slash(path.resolve(p))};
   const name=candidates.find(candidate=>{const resolved=ts.resolveModuleName(candidate,destination,currentProgram.getCompilerOptions(),host).resolvedModule;return resolved&&slash(path.resolve(resolved.resolvedFileName))===modulePath;});assert(name!==undefined,'Move missing-import destination module specifier unavailable');return JSON.stringify(name);
  };
- const origins=[];for(const node of selected.getSourceFile().statements)if(ts.isImportDeclaration(node)&&!node.attributes)for(const [name]of importNames(node))origins.push({node,name,symbol:checker.getSymbolAtLocation(name)});
+ const origins=[];for(const node of selected.getSourceFile().statements)if(ts.isImportDeclaration(node))for(const [name]of importNames(node))origins.push({node,name,symbol:checker.getSymbolAtLocation(name)});
  for(let round=0;round<256;round++){
   const currentService=makeService();let next;
   try{
@@ -90,7 +90,7 @@ function repairCompilerMove(env,service,program,selected,compilerEdits,makeServi
     if(ts.isImportSpecifier(parent))binding='{'+(parent.propertyName?parent.getText().slice(0,origin.name.getStart()-parent.getStart())+newName:parent.getText()+' as '+newName)+'}';
     else if(ts.isNamespaceImport(parent))binding=parent.getText().slice(0,origin.name.getStart()-parent.getStart())+newName;
     else {assert(ts.isImportClause(parent),'Move missing-import original binding shape');binding=newName;}
-    const line=sf.text.includes('\r\n')?'\r\n':'\n',text=line+'import '+(origin.node.importClause.isTypeOnly?'type ':'')+binding+' from '+moduleText+';'+line,insertion=span(sf,moved.end,moved.end),references=indices.map(i=>currentIdentifiers[i]);
+    const line=sf.text.includes('\r\n')?'\r\n':'\n',text=line+'import '+(origin.node.importClause.isTypeOnly?'type ':'')+binding+' from '+moduleText+(origin.node.attributes?' '+origin.node.attributes.getText():'')+';'+line,insertion=span(sf,moved.end,moved.end),references=indices.map(i=>currentIdentifiers[i]);
     const changes=[{...insertion,text},...references.map(n=>({...span(sf,n.getStart(sf),n.end),text:ts.isShorthandPropertyAssignment(n.parent)?shorthand(n.text,newName):newName}))];
     next={repair:{kind:'missingImport',originalImport:span(origin.node.getSourceFile(),origin.node.getStart(),origin.node.end),originalName,insertion,originalReferences:indices.map(i=>span(oldIdentifiers[i].getSourceFile(),oldIdentifiers[i].getStart(),oldIdentifiers[i].end)),currentReferences:references.map(n=>span(sf,n.getStart(sf),n.end)),newName,moduleText},changes};break;
    }
@@ -112,6 +112,29 @@ function repairCompilerMove(env,service,program,selected,compilerEdits,makeServi
    }
   }finally{currentService.dispose();}
   if(!next)break;applyRepair(next.repair,next.changes);assert(round<255,'Move source-dependency repair capacity');
+ }
+ // Restore attributes omitted by the compiler. Final native binding/syntax
+ // admission independently checks the original attribute policy for every target.
+ const attributeOrigins=[];
+ for(const node of selected.getSourceFile().statements)if(ts.isImportDeclaration(node)&&node.attributes)
+  for(const [name]of importNames(node))attributeOrigins.push({node,key:symbolKey(checker,checker.getSymbolAtLocation(name))});
+ for(let round=0;round<256;round++){
+  const currentService=makeService();let next;
+  try{
+   const currentProgram=currentService.getProgram(),c=currentProgram.getTypeChecker(),sf=currentProgram.getSourceFile(destination);
+   for(const node of sf.statements){
+    tick();if(!ts.isImportDeclaration(node)||node.attributes)continue;
+    const names=importNames(node);if(!names.length)continue;
+    const candidates=names.map(([name])=>attributeOrigins.filter(o=>o.key&&o.key===symbolKey(c,c.getSymbolAtLocation(name))));
+    if(!candidates.some(a=>a.length))continue;
+    assert(candidates.every(a=>a.length),'Move cannot merge attributed and unattributed import requests');
+    const suffixes=new Set(candidates.flat().map(o=>o.node.attributes.getText()));
+    assert(suffixes.size===1,'Move ambiguous original import attributes');
+    const origin=candidates[0][0].node;
+    next={repair:{kind:'importAttributes',originalImport:span(origin.getSourceFile(),origin.getStart(),origin.end),currentImport:span(sf,node.getStart(sf),node.end)},changes:[{...span(sf,node.moduleSpecifier.end,node.moduleSpecifier.end),text:' '+origin.attributes.getText()}]};break;
+   }
+  }finally{currentService.dispose();}
+  if(!next)break;applyRepair(next.repair,next.changes);assert(round<255,'Move attribute repair capacity');
  }
  if(!repairs.length)return{repairs,edits:compilerEdits};const edits=[];
  for(const p of [...tables.keys()].sort((a,b)=>Buffer.compare(Buffer.from(a),Buffer.from(b)))){let cursor=0,pending='';const emit=end=>{if(cursor!==end||pending){if(raw(p).subarray(cursor,end).toString('utf8')!==pending)edits.push({path:p,startByte:cursor,endByte:end,text:pending});}pending='';};for(const part of table(p)){if(part.text!==undefined){pending+=part.text;continue;}assert(part.start>=cursor,'Move original pieces reordered');emit(part.start);cursor=part.end;}emit(raw(p).length);}

@@ -31,6 +31,10 @@ pub(super) enum Repair {
         current_references: Vec<Span>,
         new_name: String,
     },
+    ImportAttributes {
+        original_import: Span,
+        current_import: Span,
+    },
     MissingImport {
         original_import: Span,
         original_name: Span,
@@ -400,12 +404,14 @@ impl ContextForRepair<'_> {
                 && import.parent().is_some_and(|p| p.kind() == "program"),
             "Move missing-import origin must be a top-level import"
         );
+        let attributes = super::attributes::suffix(import, &self.before[&original_import.path], d)?;
         let mut cursor = import.walk();
         ensure!(
-            import
-                .named_children(&mut cursor)
-                .all(|n| matches!(n.kind(), "import_clause" | "string" | "comment")),
-            "Move missing-import attributes or unsupported syntax"
+            import.named_children(&mut cursor).all(|n| matches!(
+                n.kind(),
+                "import_clause" | "string" | "comment" | "import_attribute"
+            )),
+            "Move missing-import unsupported syntax"
         );
         let name = exact(&original_tree, original_name, d)?;
         ensure!(
@@ -508,7 +514,7 @@ impl ContextForRepair<'_> {
             start_byte: insertion.start_byte,
             end_byte: insertion.end_byte,
             text: format!(
-                "{line}import {}{binding_text} from {module_text};{line}",
+                "{line}import {}{binding_text} from {module_text}{attributes};{line}",
                 if type_only { "type " } else { "" }
             ),
         });
@@ -649,6 +655,47 @@ impl ContextForRepair<'_> {
     }
     fn changes(&self, repair: &Repair, d: &Deadline) -> Result<Vec<TextEdit>> {
         match repair {
+            Repair::ImportAttributes {
+                original_import,
+                current_import,
+            } => {
+                ensure!(
+                    current_import.path == self.destination,
+                    "Move attribute repair destination mismatch"
+                );
+                let original_tree = self.tree(original_import, true, d)?;
+                let current_tree = self.tree(current_import, false, d)?;
+                let original = exact(&original_tree, original_import, d)?;
+                let current = exact(&current_tree, current_import, d)?;
+                ensure!(
+                    original.kind() == "import_statement"
+                        && current.kind() == "import_statement"
+                        && original.parent().is_some_and(|n| n.kind() == "program")
+                        && current.parent().is_some_and(|n| n.kind() == "program"),
+                    "Move attribute repair must own top-level imports"
+                );
+                let suffix =
+                    super::attributes::suffix(original, &self.before[&original_import.path], d)?;
+                ensure!(
+                    !suffix.is_empty()
+                        && super::attributes::suffix(
+                            current,
+                            &self.current[&current_import.path],
+                            d
+                        )?
+                        .is_empty(),
+                    "Move attribute repair only restores omitted original attributes"
+                );
+                let source = current
+                    .child_by_field_name("source")
+                    .context("Move attribute module absent")?;
+                Ok(vec![TextEdit {
+                    path: current_import.path.clone(),
+                    start_byte: source.end_byte(),
+                    end_byte: source.end_byte(),
+                    text: suffix,
+                }])
+            }
             Repair::SourceDependency { .. } => self.dependency_import(repair, d),
             Repair::MissingImport { .. } => self.missing_import(repair, d),
             Repair::Reexport {

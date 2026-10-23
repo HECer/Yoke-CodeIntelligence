@@ -668,6 +668,62 @@ pub(super) fn check(
             added_exports.push(json!({"path":path,"name":name,"reason":if allowed_selected{"moved_declaration"}else{"source_bound_free_dependency"}}));
         }
     }
+    // Attribute requests are host-specific and absent from compiler binding identities.
+    // Derive them independently from original/result syntax. Ambiguous original
+    // requests for one bound target refuse rather than choosing a new load policy.
+    let mut attribute_policies: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
+    let mut attribute_bytes = 0usize;
+    let mut attribute_bindings = 0usize;
+    for (after_side, modules, contents) in [(false, &bmods, before), (true, &amods, after)] {
+        for (path, module) in modules {
+            let language = &snapshot
+                .files
+                .iter()
+                .find(|f| f.path == **path)
+                .context("Move attribute source absent")?
+                .language;
+            for import in &module.imports {
+                d.check()?;
+                let attributes = super::attributes::signature(language, import, contents, d)?;
+                attribute_bytes = attribute_bytes
+                    .saturating_add(attributes.iter().map(String::len).sum::<usize>());
+                ensure!(
+                    attribute_bytes <= 4_000_000,
+                    "Move aggregate import attribute capacity"
+                );
+                let attribute_id = if attributes.is_empty() {
+                    String::new()
+                } else {
+                    identity(&attributes)
+                };
+                for name in &import.names {
+                    attribute_bindings += 1;
+                    ensure!(
+                        attribute_bindings <= 200_000,
+                        "Move aggregate attribute binding capacity"
+                    );
+                    let targets = checker.ids(&name.resolution, &name.targets, after_side, d)?;
+                    let key = identity(&(&import.kind, &targets));
+                    if after_side {
+                        match attribute_policies.get(&key) {
+                            Some(original) => ensure!(
+                                original.len() == 1 && original.contains(&attribute_id),
+                                "Move changes or ambiguously merges original import attributes"
+                            ),
+                            None => {
+                                ensure!(attributes.is_empty(), "Move invents import attributes")
+                            }
+                        }
+                    } else {
+                        attribute_policies
+                            .entry(key)
+                            .or_default()
+                            .insert(attribute_id.clone());
+                    }
+                }
+            }
+        }
+    }
     // Import rewrites may preserve an old binding or serve an actual post-move
     // consumer. New unused imports and uncaptured modules cannot hide side effects.
     for (path, module) in &amods {

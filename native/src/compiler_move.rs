@@ -12,6 +12,8 @@ use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 #[path = "compiler_move_ast.rs"]
 mod ast;
+#[path = "compiler_move_attributes.rs"]
+mod attributes;
 #[path = "compiler_move_bindings.rs"]
 mod bindings;
 #[path = "compiler_move_repairs.rs"]
