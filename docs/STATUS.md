@@ -2,6 +2,36 @@
 
 ## Current integration work
 
+Explicit LSP resourceSettings now selects shallow workspace-setting overlays
+for exact captured files, through trusted host registration, project/backend
+settings and pinned YAML. Requests retain item order and section projection;
+unavailable scopes explicitly return null. Original project/runtime/source/write
+grants remain separate, with snapshot membership, effective capacity and passive
+policy checked before provider startup. Both direct and rust-analyzer-namespaced
+settings are checked, including ASCII-case variants of blocked compiler env keys.
+Absent/null options retain original bindings and valid wire behavior.
+
+Qualified code 666656ba passes 788 native functions in 32 scoped groups,
+zero failures/13 existing ignores, including all 579 library and ten new resource
+integration functions. Final gates track 1,104 source/control inputs; the library
+result is reused under unchanged own inputs after one unrelated integration
+assertion spelling change, independently reconstructed by SHA256. All-target
+Clippy, 361 individual format roots, build, typecheck, Python 35 and npm
+260 passed/3 existing skips pass; fmt-all retains Windows OS206.
+
+Actual CLI comparisons preserve default/absent/null wire replies and complete
+original SQL rows; selected file scopes and staged actions pass. A controlled
+mixed-namespace counterexample first reaches the owned fixture and then refuses
+before provider startup after the fix; no wrapper or analyzed source executes.
+The current explicit native runtime also passes the unchanged actual host test
+on VS Code 1.143.1, including all four source/permission assertions. All Jobs end
+empty. Disk-limited compilation and failed audit/lint attempts remain explicit;
+exact-file lossless optimization preserves bytes and deletes nothing.
+See [resource evidence](validation/integration-2026-10-23/lsp-resource-settings/README.md)
+and [contract](../native/docs/lsp-resource-settings.md).
+Canonical bundled VSIX/release, current whole-native/Windows/hosted and broader
+STATUS/353/R1-R9/77-runtime/client/format/quality/Google/main acceptance remain open.
+
 Native VSIX packaging now admits the bounded ZIP directory and every entry's
 metadata before reading manifest or executable payloads. Duplicate/ASCII-case
 aliases, unsafe portable paths, links/special/encrypted entries, file-parent

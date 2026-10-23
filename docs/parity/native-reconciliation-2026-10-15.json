@@ -14233,5 +14233,32 @@
     "releaseAccepted": false,
     "fullStatusComplete": false,
     "sourceProfileOrSystemChanges": false
+  },
+  "nativeLspResourceSettingsAcceptance20261023": {
+    "qualifiedCodeCommit": "666656bae3c4e5a0abb9918d943505098266e455",
+    "evidence": "docs/validation/integration-2026-10-23/lsp-resource-settings/README.md",
+    "frozenInputs": 1104,
+    "nativePassed": 788,
+    "nativeFailed": 0,
+    "nativeExistingIgnored": 13,
+    "nativeGroups": 32,
+    "libraryPassed": 579,
+    "newIntegrationPassed": 10,
+    "allTargetClippyWarningsDenied": true,
+    "formatRoots": 361,
+    "fmtAllWindowsOs206Retained": true,
+    "pythonPassed": 35,
+    "typescriptPassed": 260,
+    "typescriptExistingSkipped": 3,
+    "actualDefaultWireAndSqlExact": true,
+    "actualMixedNamespaceDenialBeforeProvider": true,
+    "actualExplicitCodeHostVersion": "1.143.1",
+    "actualExplicitCodeHostPassed": true,
+    "allJobsEmpty": true,
+    "canonicalVsixAccepted": false,
+    "releaseAccepted": false,
+    "wholeNativeRerun": false,
+    "all77RuntimeAcceptanceCertified": false,
+    "fullContractCertification": false
   }
 }

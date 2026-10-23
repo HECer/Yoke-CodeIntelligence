@@ -25,7 +25,8 @@ The existing LSP transport sends the selected data in
 `workspace/didChangeConfiguration` and answers `workspace/configuration` callbacks
 from that provider's settings. Direct queries, staged refactor actions and provider
 refresh use the same selected registrations. This adds project/backend selection;
-it does not add per-resource configuration resolution or dynamic configuration
+it also supports explicit captured-file configuration via
+[resourceSettings](lsp-resource-settings.md). It does not add dynamic configuration
 editing in a running session. The official
 [notification contract](https://github.com/microsoft/language-server-protocol/blob/gh-pages/_specifications/lsp/3.17/workspace/didChangeConfiguration.md)
 and [configuration callback contract](https://github.com/microsoft/language-server-protocol/blob/gh-pages/_specifications/lsp/3.17/workspace/configuration.md)
@@ -43,6 +44,6 @@ YAML host trust and real authenticated TCP/revocation. Actual CLI trials compare
 the preceding/current binaries on the same owned source and Store, and check YAML/
 JSON binding equivalence. Fixture protocol evidence is distinct from real vendor
 runtime/version certification. No model or analyzed project code executes.
-Broader vendor aliases, per-resource settings, all 77 runtime/operation reviews,
+Broader vendor aliases/resource scopes, all 77 runtime/operation reviews,
 other clients/platforms and current whole Windows/main/release acceptance remain
 open. See [session configuration](session-config.md).
