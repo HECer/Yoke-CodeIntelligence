@@ -12826,5 +12826,34 @@
     "original353InventoryLedgerAndSummaryUnchanged": true,
     "wholeNativeRerun": false,
     "fullContractCertification": false
+  },
+  "gitRepositoryFixedProfileHostAcceptance20261023": {
+    "sourceCommit": "037f082a2290d484ae544bad35733c1e776aa9e8",
+    "evidence": "docs/validation/integration-2026-10-23/git-repository-profiles/README.md",
+    "nativePassed": 859,
+    "nativeExistingIgnored": 9,
+    "nativeGroups": 42,
+    "newIntegrationFunctions": 5,
+    "typescriptPassed": 260,
+    "typescriptExistingSkipped": 3,
+    "frozenInputs": 1092,
+    "formatRoots": 355,
+    "actualOwnedParentProcessCalls": 25,
+    "explicitFixedRootProfiles": [
+      "native",
+      "session",
+      "serena",
+      "trail",
+      "graft",
+      "graphify"
+    ],
+    "stableSessionHostBinding": true,
+    "dynamicSourceMembershipDoesNotInvalidateSession": true,
+    "ordinarySessionStableEnvelopeAndRecordExact": true,
+    "independentCorrelationByteTokenMetricValidation": true,
+    "httpAndMultiProjectAdoption": false,
+    "original353InventoryLedgerAndSummaryUnchanged": true,
+    "wholeNativeRerun": false,
+    "fullContractCertification": false
   }
 }

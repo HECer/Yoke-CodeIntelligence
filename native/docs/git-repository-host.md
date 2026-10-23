@@ -46,9 +46,12 @@ requires actual current Git observations and refuses when Git administration is
 unavailable. Original snapshots remain immutable. Cooperative preconditions and
 double scans are not OS-atomic isolation against hostile same-account mutation.
 
-The qualified scope is one fixed root and the native stdio profile. An actual
-native protocol client performs indexing, and pinned Claude 2.1.306 connects to a
-separately owned configuration without a model turn. Session/multiproject/HTTP,
-other facade/client adoption, broader formats/quality and whole Windows/upstream
+The absent profile remains the native eight-tool stdio view. Explicit
+`--profile session|serena|trail|graft|graphify` additionally selects existing
+session-backed adapters over the same fixed root. Stable host/session bindings
+and their boundaries are specified in the [profile contract](git-repository-profiles.md).
+Actual native protocol calls and pinned Claude 2.1.306 connection health use
+separately owned configuration without a model turn. HTTP, multiple projects,
+broader client behavior/formats/quality and full Windows/upstream/release
 certification remain separate work. See [capture](git-repository-scope.md) and
 [host preferences](git-repository-preferences.md).

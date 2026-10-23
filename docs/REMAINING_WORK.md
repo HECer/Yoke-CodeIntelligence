@@ -1,5 +1,34 @@
 # Remaining implementation and acceptance
 
+Explicit fixed-root Git MCP hosting now selects native/session/Serena/Trail/Graft/
+Graphify profiles through `--profile`. Existing catalogs and independent source/
+runtime permissions remain intact. Versioned host binding covers root, selected
+Git program, options/limits and preference lifetime; session identity excludes
+dynamic repository membership only with that driver. New files permit unchanged
+session resume; changed policy/program or concurrent state/preferences refuse.
+Registered projects/collections refuse before foreign-root resolution. Ordinary
+sessions retain preceding fingerprints and registered-project behavior.
+
+Source 037f082a passes 859 Rust functions across 42 scoped groups,
+including all 578 library and five new profile integration functions, with
+9 existing ignores and zero test failures. All-target Clippy with warnings denied,
+build, typecheck, npm 260 passed/3 existing skips and 355 format roots pass on
+1,092 frozen inputs; fmt-all retains Windows OS206. Actual live validation uses
+25 owned parent calls: all five added profiles retain source baseline/catalogs,
+old ordinary session data/records stay exact, source/Git bytes and original rows
+are preserved, and pinned Claude 2.1.306 connects to Serena without a model turn.
+The broad run retains a disk-exhausted linker failure; the unchanged remaining
+targets finish with a separate output suffix and lossless successful-artifact
+compression, without deleting files or repeating 802 passed tests.
+Variable request IDs/metrics are independently checked; eight captured native
+envelopes and SQL equality are separately audited without further client calls.
+Initial alias-fixture and overstrict request-ID-comparison failures remain
+preserved; corrections change no product input. All owned Jobs end empty. See
+[profile evidence](validation/integration-2026-10-23/git-repository-profiles/README.md)
+and [contract](../native/docs/git-repository-profiles.md). HTTP/multiproject,
+broader client/format/quality and whole Windows/main/release remain open. Original
+inventory assessments, fixtures and system settings are unchanged.
+
 Explicit `git repository-scope --capture --serve` now starts a fixed-root native
 MCP host after initial trusted capture. An invocation-owned, non-deserializable
 driver retains root/program/limits/preference binding for subsequent normal and
