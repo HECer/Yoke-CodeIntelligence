@@ -16,13 +16,13 @@
     },
     "native/docs/mcp-http.md": {
       "before": "e0e6d70899bbb04fe838027d6e2bdf5caa2e4b516e2a6067b5e16521ba84dfea",
-      "after": "602895c82febcaabea886484d7c0cf70e1d9cb5ec486068610bed86255e1ccdd"
+      "after": "9acfd9f07a4e2116864aa544f84e358b10282f4a8ed4f1122a73b2467af7cd8f"
     }
   },
   "updatedExistingContracts": {
     "native/docs/mcp-http.md": {
       "before": "e0e6d70899bbb04fe838027d6e2bdf5caa2e4b516e2a6067b5e16521ba84dfea",
-      "after": "602895c82febcaabea886484d7c0cf70e1d9cb5ec486068610bed86255e1ccdd"
+      "after": "9acfd9f07a4e2116864aa544f84e358b10282f4a8ed4f1122a73b2467af7cd8f"
     },
     "native/docs/git-repository-profiles.md": {
       "before": "81a6cd55240af1d2900aeaee451b088d32799449e0e063f9a4deca4e2b00e0b2",
@@ -32,5 +32,6 @@
   "newContract": "native/docs/git-repository-http.md",
   "newProductTestsClaimedAfterDocumentation": false,
   "originalInventoryLedgerAndSummaryUnchanged": true,
-  "documentationAuditCorrection": "The first documentation audit assumed three frozen document changes; mcp-http.md is also a frozen contract. The corrected four-document allowlist passes; no product source or test is rerun."
+  "documentationAuditCorrection": "The first documentation audit assumed three frozen document changes; mcp-http.md is also a frozen contract. The corrected four-document allowlist passes; no product source or test is rerun.",
+  "existingMcpHttpContractOriginalBytePrefixAndCrlfPreserved": true
 }
