@@ -63,3 +63,9 @@ Qualification uses actual owned TCP requests and pinned Claude 2.1.306 HTTP
 connection health in private configuration, without model turns or account login.
 Multiple registered projects/collections within a Git target, wider client
 behavior/formats/quality and whole Windows/main/release acceptance remain open.
+
+A separate explicit [registered-project set](git-repository-projects.md) now
+provides one independent driver per existing registration. It uses
+`gitRepositoryProjects`; the single `gitRepositoryCapture` selection retains the
+fixed-root restrictions above. Collections and further stdio selection remain
+separate work.

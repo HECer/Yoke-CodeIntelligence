@@ -106,3 +106,10 @@ Explicit per-principal fixed-root Git capture is additionally available through
 publishes no source; authenticated initialization applies full host source policy
 before capture. See [the Git HTTP contract](git-repository-http.md) for selection,
 shared metadata budgets, preference lifetime and fixed-root limitations.
+
+A separate explicit `gitRepositoryProjects` host selection additionally attaches
+one Git driver to every registered project through `Target.git_repository_projects`.
+It requires complete host names, independent Git flags and disjoint fixed roots;
+secondary metadata/source policy and write/query-only boundaries remain separate.
+See [registered Git projects](git-repository-projects.md). Existing ordinary and
+single-root targets retain their preceding behavior.

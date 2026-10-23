@@ -1,5 +1,30 @@
 # Remaining implementation and acceptance
 
+Explicit MCP HTTP now supports a separately authorized Git host for every
+registered project through `gitRepositoryProjects`. Complete default/registered
+names and disjoint canonical roots are required. Each root retains its own
+program, limits/follow/preference binding, source exclusions and independent
+write/read-only/query-only rights. Secondary metadata precedes its cold Store;
+full per-project policy precedes first capture. Primary dynamic repository scope
+is never copied into secondary engines. Inactive preference changes and stale
+session state refuse further operations. Ordinary and fixed-root bindings stay
+compatible; client JSON grants no new authority.
+
+Source a1709786 passes 851 Rust functions in 40 scoped groups,
+including all 578 library and eleven new project integration functions, with
+8 existing ignores and zero failures. Clippy all-targets with warnings denied,
+build, typecheck, npm 260 passed/3 existing skips and 357 format roots pass on
+1,096 frozen inputs; fmt-all retains Windows OS206. Actual source calls qualify
+all six HTTP profiles, unchanged catalogs and twelve pinned Claude 2.1.306 health
+calls. Ordinary registered-session payloads/records match the preceding binary;
+source/Git bytes stay exact and all fourteen live parent Jobs end empty.
+Initial compile/type and envelope-assertion failures are retained; product bytes
+are unchanged across those attempts. See [evidence](validation/integration-2026-10-23/git-repository-projects/README.md)
+and [contract](../native/docs/git-repository-projects.md). Further stdio project-set
+selection, collections, broader formats/quality and whole Windows/main/release
+remain open. Original inventory assessments, fixtures and system settings are
+unchanged; no model turn or automatic analyzed-code execution is introduced.
+
 Explicit authenticated MCP HTTP now adopts per-principal fixed-root host Git
 capture for all six existing profiles. Separate CLI flags authorize Git index
 reads and trusted execution; host-file selection cannot grant them. Metadata

@@ -1,0 +1,37 @@
+{
+  "sourceCommit": "a1709786de7b705f5a28fbde989eec7062de4596",
+  "productionFilesUnchangedAfterQualification": true,
+  "changedFrozenInputs": {
+    "docs/REMAINING_WORK.md": {
+      "before": "86e455a9afb7816f4291898499571aad73124fc5c369cb92f40330e5c3a96d35",
+      "after": "f399dd36ac85bce0bb71fecf65c638766960985c65c5b09fb48160c75547c976"
+    },
+    "docs/STATUS.md": {
+      "before": "e816987f7500f3e9239c8d95207f80dbe2aa37311d9a857970bdf93b140ae793",
+      "after": "230b1caec965f8973cdbe70bf61e52a514df1d2a2c92a41ab539becaef39d0e5"
+    },
+    "docs/parity/native-reconciliation-2026-10-15.json": {
+      "before": "0b51b1f4f0b15bd3031f70e717312f4c9ab40ffd9bab86abf7927a5e9e7ec80e",
+      "after": "5e1da693fb48304ffbb44d3a9be61adc9b1609fb215e1fc6eedc3aaa0a1fa62c"
+    },
+    "native/docs/mcp-http.md": {
+      "before": "9acfd9f07a4e2116864aa544f84e358b10282f4a8ed4f1122a73b2467af7cd8f",
+      "after": "d17e62186def9b0bea16c24a05ae36fc3d9b731ffecaf2ab7dfb87796b060d45"
+    }
+  },
+  "updatedExistingContracts": {
+    "native/docs/mcp-http.md": {
+      "before": "9acfd9f07a4e2116864aa544f84e358b10282f4a8ed4f1122a73b2467af7cd8f",
+      "after": "d17e62186def9b0bea16c24a05ae36fc3d9b731ffecaf2ab7dfb87796b060d45",
+      "originalBytePrefixPreserved": true
+    },
+    "native/docs/git-repository-http.md": {
+      "before": "c6d540a6accd42d427f85c1fbc949e46caf2b59e2fda1a4b76892ca97d6cda7a",
+      "after": "e2d4be4da3d8ddbca9e09152a805e162598ac574ca8bdbb1900c30b66f980416",
+      "originalBytePrefixPreserved": true
+    }
+  },
+  "newContract": "native/docs/git-repository-projects.md",
+  "newProductTestsClaimedAfterDocumentation": false,
+  "originalInventoryLedgerAndSummaryUnchanged": true
+}
