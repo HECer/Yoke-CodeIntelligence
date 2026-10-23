@@ -1,5 +1,30 @@
 # Remaining implementation and acceptance
 
+Windows owned-Job list refusals now report bounded numeric query/count/error,
+after-list accounting and retained-root observations. A real terminate-only
+Windows Job alias reproduces the missing-diagnostic regression. Original typed
+refusal, list equality/capacity, termination requests, member synchronization
+and deadlines remain; observations are explicitly non-atomic and confer no
+completion proof or new permissions.
+
+Qualified code dfa068c7 passes 697 Rust functions in 11 whole groups, zero failures
+and 8 existing ignores, including all 580 library functions. All-target Clippy,
+format checks for all 361 roots, build, Python 47, typecheck and npm 260 with 3 existing skips
+pass on 1,109 unchanged frozen inputs. Actual seven-parent CLI comparisons retain
+ordinary absent/null replies, original SQL/source and selected/staged behavior;
+the current explicit native Code 1.143.1 host passes all four assertions. All
+owned Jobs end empty. Existing Job test Git bytes remain an exact prefix;
+production/test checkout line-ending normalization is disclosed. Only exact
+passed artifact files receive byte/hash-preserving lossless optimization.
+See [diagnostic evidence](validation/integration-2026-10-23/owned-member-diagnostics/README.md)
+and [cleanup contract](../native/docs/windows-process-cleanup.md).
+
+The historical sporadic list-refusal cause remains open; no natural recurrence
+is observed in this qualification. A separately identified fully buffered
+capture path discards cleanup errors in Drop and awaits its own real regression
+and repair. Broader STATUS/353/R1-R9/77-runtime/Windows/hosted/canonical VSIX/
+quality/Google/main/release acceptance remains open.
+
 The current native runtime passes both unchanged explicit rust-analyzer live
 gates on actual Windows rust-analyzer 1.94.1: definition/references/rename and
 MCP references bound to the immutable historical snapshot with exact byte/hash
@@ -507,7 +532,7 @@ retains the detailed boundaries and original inventory assessments.
 | External acquisition | Broader ASR quality/formats, authenticated Google export, remaining social/video/authenticated routes and broader database version/mixed-source qualification. No approved Google test document is available. |
 | App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
 | Semantics/quality | Broader corroboration/outcome learning, independent correctness/cost campaigns and measured model/provider quality. |
-| Windows/release | Ten original OS1314 prerequisites, sporadic owned-member cleanup refusal, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
+| Windows/release | Ten original OS1314 prerequisites, sporadic owned-member cleanup refusal and successful-capture cleanup-error propagation, current-head whole-native/hosted and extension-host acceptance, main/release/package remote verification. |
 
 ### Earlier source checkpoints
 
