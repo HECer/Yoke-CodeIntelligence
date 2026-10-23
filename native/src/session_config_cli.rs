@@ -1,7 +1,7 @@
 //! Explicit selected host configuration input and create-only profile output.
 use anyhow::{Result, ensure};
 use clap::{Args, Subcommand};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use serde_json::json;
 use std::{
     fs::{self, File, OpenOptions},
@@ -12,6 +12,8 @@ use yoke::{
     capture::Deadline,
     session_config::{self, Source, Target},
 };
+#[path = "session_config_discovery_cli.rs"]
+mod discovery;
 #[derive(Args)]
 pub struct Arguments {
     #[command(subcommand)]
@@ -19,6 +21,14 @@ pub struct Arguments {
 }
 #[derive(Subcommand)]
 enum Operation {
+    Discover {
+        #[arg(long)]
+        selection: PathBuf,
+        #[arg(long)]
+        allow_configuration_read: bool,
+        #[arg(long)]
+        allow_policy_projection: bool,
+    },
     Plan {
         #[arg(long)]
         selection: PathBuf,
@@ -40,13 +50,13 @@ enum Operation {
         allow_output: bool,
     },
 }
-#[derive(Deserialize)]
+#[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct Selection {
     host_profile: yoke::project_session::HostProfile,
     files: Vec<FileSelection>,
 }
-#[derive(Deserialize)]
+#[derive(Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 struct FileSelection {
     path: PathBuf,
@@ -211,6 +221,25 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
     let deadline = Deadline::new(timeout);
     let cap = max_bytes as usize - 1;
     let reply = match &args.operation {
+        Operation::Discover {
+            selection,
+            allow_configuration_read,
+            allow_policy_projection,
+        } => {
+            ensure!(
+                *allow_configuration_read && *allow_policy_projection,
+                "session_config_host_permission_required"
+            );
+            let prepared = discovery::prepare(selection, &deadline)?;
+            let reply = yoke::json::encode_bounded(&prepared.value, cap, &deadline)?;
+            prepared.recheck(&deadline)?;
+            // Keep source and directory guards through delivery, as export does.
+            let mut stdout = std::io::stdout().lock();
+            stdout.write_all(&reply)?;
+            stdout.write_all(b"\n")?;
+            stdout.flush()?;
+            return Ok(true);
+        }
         Operation::Plan {
             selection,
             allow_configuration_read,
