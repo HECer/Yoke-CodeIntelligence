@@ -12745,5 +12745,23 @@
     "original353InventoryLedgerAndSummaryUnchanged": true,
     "wholeNativeRerun": false,
     "fullContractCertification": false
+  },
+  "repositoryMarkerDiscoveryScopedAcceptance20261023": {
+    "sourceCommit": "7cad977573625138314394f63f29e4a5b1a5fa9e",
+    "evidence": "docs/validation/integration-2026-10-23/repository-discovery/README.md",
+    "producer": "yoke-repository-marker-discovery-1",
+    "nativePassed": 620,
+    "nativeExistingIgnored": 7,
+    "newIntegrationFunctions": 10,
+    "typescriptPassed": 260,
+    "typescriptExistingSkipped": 3,
+    "frozenInputs": 1082,
+    "formatRoots": 351,
+    "actualOwnedProcessCalls": 27,
+    "automaticRegistration": false,
+    "persistedNestedCaptureLifecycleImplemented": false,
+    "original353InventoryLedgerAndSummaryUnchanged": true,
+    "wholeNativeRerun": false,
+    "fullContractCertification": false
   }
 }

@@ -2,6 +2,28 @@
 
 ## Current integration work
 
+Bounded host-only repository discovery now lists nested `.git` directory/file
+markers and their nearest marked ancestor under one explicit absolute search
+root. Exact candidate selection remains metadata. Marker redirects, source and
+configuration are not read; no Git execution, Store initialization, registration
+or activation follows. Protected trees, links/reparse points and depth omissions
+remain explicit; exhausted finite budgets refuse before output.
+
+Source 7cad9775 passes 620 Rust functions across seven scoped groups,
+including all 574 library and ten new integration functions, with seven existing
+ignores and zero failures. All-target Clippy with warnings denied, build, typecheck,
+npm 260 passed/3 existing skips and 351 format roots pass on 1,082 frozen inputs;
+fmt-all retains Windows OS206. Actual Git/worktree/nested-repository and junction
+fixtures use 27 owned process calls; the final discovery/refusal checks preserve
+all fixture bytes and directories. Default warm index data stays exact; original
+variable byte/token metrics are independently checked. Initial Unicode-controller
+and overstrict-metric comparison failures are retained and audited without hiding
+them or repeating the completed compatibility calls. All owned Jobs are empty.
+See [discovery evidence](validation/integration-2026-10-23/repository-discovery/README.md)
+and the [host contract](../native/docs/repository-discovery.md). Persisted nested
+capture boundaries/lifecycle, broader selectors and full Windows/main/release
+acceptance remain open. Original fixtures and system settings are unchanged.
+
 Explicit Windows ignored-directory capture now supports the versioned
 `ignoredDirectoryIdentity: windows-physical-v1` selection. Existing regular
 directories resolve to physical names before capture; recorded names replay
