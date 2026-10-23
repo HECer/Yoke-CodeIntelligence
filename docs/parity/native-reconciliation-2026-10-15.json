@@ -14216,5 +14216,22 @@
     "combinedVsixAccepted": false,
     "releaseAccepted": false,
     "fullStatusComplete": false
+  },
+  "nativeVsixArchiveAdmission20261023": {
+    "qualifiedCodeCommit": "3c08fa3ffe669c4f642bf82972bea50d65b0706f",
+    "evidence": "docs/validation/integration-2026-10-23/vsix-archive-admission/README.md",
+    "frozenInputs": 1100,
+    "pythonPassed": 35,
+    "typecheckPassed": true,
+    "npmPassed": 260,
+    "npmExistingSkipped": 3,
+    "allJobsEmpty": true,
+    "originalThreePackagingTestsAstExact": true,
+    "nativeEntryBytesUnchanged": 128000000,
+    "actualCliSyntheticOnlyMembers": 299,
+    "canonicalVsixAccepted": false,
+    "releaseAccepted": false,
+    "fullStatusComplete": false,
+    "sourceProfileOrSystemChanges": false
   }
 }

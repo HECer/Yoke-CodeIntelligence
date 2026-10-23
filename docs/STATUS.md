@@ -2,6 +2,25 @@
 
 ## Current integration work
 
+Native VSIX packaging now admits the bounded ZIP directory and every entry's
+metadata before reading manifest or executable payloads. Duplicate/ASCII-case
+aliases, unsafe portable paths, links/special/encrypted entries, file-parent
+conflicts and exceeded metadata/payload limits refuse before output creation.
+The original 128,000,000-byte entry cap, output preservation and current release
+checksum precondition remain. Qualified source 3c08fa3f passes Python 35,
+typecheck and npm 260 with 3 existing skips on 1,100 unchanged frozen inputs.
+All completed Jobs are empty; Rust and extension product sources are unchanged.
+
+An actual packager CLI trial reopens all 299 entries of a combined archive and
+compares exact current production source bytes. Its native payload is explicitly
+synthetic and never executed or delivered; this is packaging-contract evidence,
+not a canonical executable VSIX or release acceptance. A separate old published
+packager trial fails the same final adversarial tests while retaining all three
+original positive tests. See [archive admission evidence](validation/integration-2026-10-23/vsix-archive-admission/README.md)
+and [packaging contract](../native/docs/vsix-packaging.md).
+Canonical Windows VSIX/release, hosted checks and the broader STATUS/353/77-runtime
+and other acceptance requirements remain open.
+
 The CI helper now explicitly cleans ambient TLS overrides at the compiled
 Cargo test executable boundary. Existing runner/target policy is refused;
 production TLS refusal and original native tests/ignores/deadlines/profiles stay
