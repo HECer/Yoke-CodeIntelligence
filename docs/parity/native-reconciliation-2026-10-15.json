@@ -12722,5 +12722,28 @@
     "fullR6Qualified": false,
     "wholeNativeRerun": false,
     "fullContractCertification": false
+  },
+  "windowsPhysicalIgnoredDirectoryScopedAcceptance20261023": {
+    "sourceCommit": "55c1ab70dcfa6b73e68011a3be1c1ab1151dfb4f",
+    "evidence": "docs/validation/integration-2026-10-23/ignored-directory-identity/README.md",
+    "policy": "windows-physical-v1",
+    "nativePassed": 703,
+    "nativeExistingIgnored": 9,
+    "newIntegrationFunctions": 15,
+    "newLibraryFunctions": 1,
+    "typescriptPassed": 260,
+    "typescriptExistingSkipped": 3,
+    "frozenInputs": 1078,
+    "formatRoots": 349,
+    "actualOwnedProcessCalls": 23,
+    "unchangedOldCaptureIdsAndRows": true,
+    "explicitVerifiedWorkspaceApplyAndRecovery": true,
+    "sourceEolNormalizationAlreadyQualified": [
+      "native/src/capture.rs",
+      "native/src/store_read_only.rs"
+    ],
+    "original353InventoryLedgerAndSummaryUnchanged": true,
+    "wholeNativeRerun": false,
+    "fullContractCertification": false
   }
 }

@@ -51,3 +51,66 @@ Windows validation includes real DOS8.3 alias denial, source-free filtered reads
 with a deliberately corrupt ignored blob, unchanged released identities, strict
 proof negatives, guarded plans, editor buffers, retention and offline archives.
 Linux and macOS runtime certification remain deferred.
+
+## Explicit Windows physical directory identity
+
+A new, independently selected host capture policy binds ignored-directory names
+through their actual Windows filesystem spelling:
+
+```json
+{
+  "includeIgnoredDirs": ["ß"],
+  "ignoredDirectoryIdentity": "windows-physical-v1"
+}
+```
+
+Pass this host-owned JSON through `--capture-config` when indexing. The policy
+requires explicitly selected existing regular directories inside the bound
+workspace. Native code resolves physical names before scanning, repeats that
+resolution around the two source scans, and refuses unstable selection. Syntax,
+protected paths, links/reparse points and all existing source budgets remain in
+force. An unavailable directory is an error, not an empty successful selection.
+
+This keeps physically distinct NTFS names such as `ß` and `SS` separate, while
+actual Unicode case aliases such as `é`/`É` and DOS8.3 aliases select the same
+physical directory. These are measured Windows cases, not an all-filesystem
+alias certificate. Physical resolution cannot turn an alias of a protected path
+into a read grant. Junction selectors are refused. No system setting, privilege,
+Developer Mode or automatic project-code execution is added.
+
+The effective captured options contain resolved directory names. The original
+host selection remains unchanged. Effective options, original source members and
+observed ignore outcomes bind the new snapshot/proof identity. Source bytes,
+Unicode/CRLF byte anchors, directions and parallel observations remain intact.
+Stored physical names compare literally, so their interpretation does not depend
+on the reader's platform case-folding tables. Source/graph/archive replay uses
+stored metadata without resolving the original directory again.
+
+Current host restrictions independently check proposed writes against resolved
+selected prefixes and the candidate's actual directory path. Captured physical
+prefixes are also rechecked for write admission, including when the current host
+configuration omits the policy. A case-only directory rename or a DOS alias cannot
+grant access through the other spelling. Stale plans cannot bypass current
+restrictions; original plan and capture bytes remain unchanged. Approval,
+verification, workspace permission and recovery gates remain separate.
+
+Full checked-plan validation calls the live write-admission policy. For this new
+physical mode it therefore still requires the selected directories to be
+available; broad offline saved-plan portability is not established. Immutable
+source/graph and copied collection queries remain separate and replay offline.
+The live resolver/write checks are Windows-only; unsupported platforms refuse
+explicitly. Stored physical-policy source evidence retains literal replay.
+
+Omitting `ignoredDirectoryIdentity`, or selecting null, preserves existing wire,
+capture and replay semantics. In particular, the historical Windows expanding
+Unicode-uppercase comparison is retained for those older policies; it must not
+be silently reinterpreted. The published CLI counterexample selecting `ß` and
+incorrectly restricting an unrelated `SS` sibling is retained in the dated
+validation. New physical captures use distinct options/proof hashes. Older
+binaries reject the new policy explicitly. The unpublished intermediate
+`literal-ascii-v1` experiment is not accepted as the final policy: actual
+same-physical Unicode alias tests disproved it before publication.
+
+See the [Windows identity checkpoint](../../docs/validation/integration-2026-10-23/ignored-directory-identity/README.md)
+for complete frozen-source checks, retained counterexamples and actual native
+CLI byte/SQL, verified workspace application and journal recovery evidence.

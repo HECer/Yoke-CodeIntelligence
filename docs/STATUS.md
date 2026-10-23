@@ -2,6 +2,28 @@
 
 ## Current integration work
 
+Explicit Windows ignored-directory capture now supports the versioned
+`ignoredDirectoryIdentity: windows-physical-v1` selection. Existing regular
+directories resolve to physical names before capture; recorded names replay
+literally. Distinct NTFS `ß`/`SS` names remain separate, while actual `é`/`É` and
+DOS8.3 aliases share the correct scope. Captured and current write checks preserve
+readonly boundaries through aliases and case-only renames. Missing/protected/
+reparse selections refuse; legacy absent/null wire and replay remain unchanged.
+
+Source 55c1ab70 passes 703 Rust functions across 19 scoped groups, including all 574
+library and 15 new integration functions, with nine existing ignores and zero
+failures. Clippy-all-targets with warnings denied, build, typecheck, npm 260 passed/
+3 existing skips and 349 format roots pass on 1,078 frozen inputs; fmt-all retains
+Windows OS206. Twenty-three owned process calls verify unchanged old capture IDs/
+rows, physical aliases, stale-plan refusal, explicit host byte verification,
+approved workspace application, exact journal recovery and junction rejection.
+All owned Jobs are empty. Initial published/WIP counterexamples and failed tests
+remain preserved. No system/privilege/original-fixture changes occur. See the
+[identity evidence](validation/integration-2026-10-23/ignored-directory-identity/README.md)
+and [capture contract](../native/docs/ignored-source-capture.md#explicit-windows-physical-directory-identity).
+Broader discovery/nested-repository lifecycle, full filesystem/platform coverage
+and whole-Windows/main/release acceptance remain open.
+
 Receipt-owned Claude source hooks now provide bounded prompt source context,
 incoming dependency candidates after edits and optional selected PowerShell
 status output over one existing immutable source-only View. The distinct
