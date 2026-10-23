@@ -12930,7 +12930,9 @@
     "evidence": "docs/validation/integration-2026-10-23/git-repository-collections/README.md",
     "nativePassed": 809,
     "nativeFailed": 1,
-    "unchangedWindowsOs1314Failures": ["graph_collections::collection_sqlite_sidecars_cannot_write_through_links"],
+    "unchangedWindowsOs1314Failures": [
+      "graph_collections::collection_sqlite_sidecars_cannot_write_through_links"
+    ],
     "nativeExistingIgnored": 8,
     "nativeGroups": 38,
     "newIntegrationFunctions": 6,
@@ -14188,5 +14190,31 @@
     "evidence": "docs/validation/integration-2026-10-23/native-baseline-current/README.md",
     "fullStatusComplete": false,
     "original353InventoryLedgerAndSummaryUnchanged": true
+  },
+  "controlledCargoTestTls20261023": {
+    "qualifiedCodeCommit": "c2f872d01440cb187a18f9699a0f367f7f173114",
+    "testedBaseCommit": "2095792b5a74ed2a6a86533a91bfa445ae9e2eca",
+    "evidence": "docs/validation/integration-2026-10-23/ci-tls-boundary/README.md",
+    "frozenInputs": 1100,
+    "pythonPassed": 24,
+    "typescriptPassed": 260,
+    "typescriptExistingSkipped": 3,
+    "typecheckPassed": true,
+    "nativeCliPassed": 4,
+    "nativeLibraryPassed": 578,
+    "nativeLibraryExistingIgnored": 7,
+    "nativeCountsOverlapPriorBaseline": true,
+    "productionRustTypescriptExtensionUnchanged": true,
+    "nativeTestFixtureIgnoreDeadlineProfileUnchanged": true,
+    "explicitCodeHost": {
+      "version": "1.143.1",
+      "passed": true,
+      "sourceCommit": "2095792b5a74ed2a6a86533a91bfa445ae9e2eca",
+      "bundledRuntime": false
+    },
+    "currentHostedFixAccepted": false,
+    "combinedVsixAccepted": false,
+    "releaseAccepted": false,
+    "fullStatusComplete": false
   }
 }

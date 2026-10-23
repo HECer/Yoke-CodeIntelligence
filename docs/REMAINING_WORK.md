@@ -1,5 +1,23 @@
 # Remaining implementation and acceptance
 
+The CI helper now explicitly cleans ambient TLS overrides at the compiled
+Cargo test executable boundary. Existing runner/target policy is refused;
+production TLS refusal and original native tests/ignores/deadlines/profiles stay
+unchanged. Qualified code c2f872d0 passes Python 24, typecheck and npm 260 with
+3 existing skips on 1,100 frozen inputs. The original Google HTTP CLI passes
+all four tests; the original library passes 578 with 7 existing ignores. These
+scoped counts overlap the historical full baseline. Hosted acceptance is pending.
+
+The unchanged actual extension-host test also passes on official VS Code 1.143.1
+with the explicit native runtime at source 2095792b. All four source/permission
+assertions pass. Canonical combined VSIX remains open: the debug executable
+exceeds the unchanged package entry budget, and the normal release build is
+deliberately stopped on critical disk headroom. No release artifact is accepted.
+See [CI and current host evidence](validation/integration-2026-10-23/ci-tls-boundary/README.md).
+No system setting, privilege, Developer Mode or artifact deletion is used.
+Broader STATUS/353/R1-R9/77-runtime, Windows prerequisites, approved Google
+export, client/format/quality, canonical VSIX, main and release remain open.
+
 The current integrated native default suite at 89a277f8 now has a
 complete attempted inventory: all 358 Cargo-confirmed library, CLI, integration
 and doctest groups, with 3,376 passed, 10 failed and 53 existing
