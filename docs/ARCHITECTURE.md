@@ -2,6 +2,15 @@
 
 ## Native Rust ownership
 
+An explicitly authorized host configuration stage can first render decoded
+prompt scalars using a fixed native MiniJinja worker. Source receipts bind
+original YAML, decoded prompt, canonical selected data and rendered UTF-8.
+YAML authority fields remain parsed original data; exported session profiles
+remain literal and are never dynamically reevaluated. Parent/self OS memory,
+fuel/output/recursion and inherited deadline guards constrain the worker; no
+filesystem/environment objects or external application callbacks are registered.
+See [the prompt contract](../native/docs/prompt-templates.md).
+
 Optional host-owned session steering resolves bounded global/project/local
 defaults and CLI selection with persistent base/added modes. Literal context and
 mode guidance never evaluates templates or grants authority. MCP catalogs and

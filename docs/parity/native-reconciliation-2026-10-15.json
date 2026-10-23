@@ -14403,5 +14403,34 @@
     "npmExistingSkipped": 3,
     "evidence": "docs/validation/integration-2026-10-23/inline-statement-heads/README.md",
     "remaining": "Loop/short-circuit/nested expression sequencing, JSDoc/generic/this/wider predicate forms, broader R1-R9/353/77-runtime/current whole Windows/client/quality/hosted/canonical VSIX/Google/main/release"
+  },
+  "nativePromptTemplateRendering20261023": {
+    "sourceCommit": "e0c9ff6e29ba515e652768090947a996d4de27de",
+    "status": "scoped-validated-full-parity-open",
+    "complete": false,
+    "engine": "minijinja-3.0.3",
+    "license": "Apache-2.0",
+    "rust": {
+      "passed": 722,
+      "failed": 0,
+      "existingIgnored": 7,
+      "filtered": 0
+    },
+    "wholeGroups": 19,
+    "newFunctionsIncluded": 16,
+    "frozenInputs": 1115,
+    "currentNativeCliSha256": "d06d1c80a4e178cb0bdb3793503d1d1ea6944ba6689d066ffa90180c1607c6ca",
+    "actualCliCompatibilityParents": 10,
+    "additionalFinalAllocationWorkerCalls": 4,
+    "actualOneGiBIndentAllocatorFailureObserved": true,
+    "allJobsEmpty": true,
+    "clippyAllTargetsWarningsDenied": true,
+    "formatRoots": 363,
+    "pythonPassed": 47,
+    "typecheckPassed": true,
+    "npmPassed": 260,
+    "npmExistingSkipped": 3,
+    "evidence": "docs/validation/integration-2026-10-23/prompt-templates/README.md",
+    "remaining": "Broader prompt catalogs and upstream-specific dynamic variables/helpers/Jinja conformance; arbitrary layouts/extensions/clients/quality; original353/73unreconciled/77runtime/R1-R9/current wholeWindows/hosted/canonicalVSIX/Google/main/release"
   }
 }

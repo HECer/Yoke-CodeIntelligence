@@ -108,10 +108,12 @@ YAML membership and all input bytes are rechecked before output; source and
 directory handles remain held through stdout delivery. These checks do not
 establish a general atomic filesystem snapshot or OS sandbox.
 
-Discovery writes no profile/Store/source, runs no template, activation command,
+Default discovery writes no profile/Store/source, runs no template, activation command,
 provider, model or network request, and grants no project/runtime/source/write
 authority. Strict native YAML schema and all existing project/backend grants
-remain. This does not add Jinja evaluation or certify arbitrary external layouts.
+remain. Discovery alone grants no template evaluation. The separately granted
+[prompt-template route](prompt-templates.md) can render selected prompt scalars;
+arbitrary external layouts remain unqualified.
 See ../../docs/validation/integration-2026-10-23/config-discovery/README.md.
 
 ## Fields and boundaries
@@ -251,8 +253,11 @@ cannot clear a true base or earlier restriction. project_name remains an
 unverified display declaration and never renames/registers a project.
 
 Prompts preserve decoded Unicode/YAML block and folded-scalar semantics; receipts
-bind original BOM/CRLF bytes. Jinja expression/statement/comment syntax refuses.
-No template, memory, environment or shell evaluation occurs. Other keys, including
+bind original BOM/CRLF bytes. Without an explicit templateContext and separate
+--allow-template-evaluation grant, Jinja syntax still refuses. The optional
+[bounded native prompt renderer](prompt-templates.md) transforms only decoded
+instruction scalars; all YAML policy fields remain original parsed data.
+There is no environment, memory, shell, model or analyzed-program evaluation. Other keys, including
 activation commands and server/runtime/trust/registration settings, refuse
 explicitly. This is a native steering projection, not full upstream YAML/Jinja or
 all 25 project-setting equivalence.
@@ -265,11 +270,13 @@ Selection JSON is at most 128000 bytes. Existing per-instruction/name/layer limi
 and shared deadlines apply; reply capacity is separate. OS reads are not a hard
 time/memory sandbox.
 
-The importer opens no project Store, interpreter, provider, network endpoint or
-model. Receipts carry original sizes/hashes, target and display declaration, never
+The importer opens no project Store, external interpreter, provider, network
+endpoint or model. Explicit template evaluation starts only the bounded native
+worker described above. Receipts carry original sizes/hashes, target and display declaration, never
 execution authority. Unsupported capabilities are errors rather than empty complete
-results. Automatic discovery, broader project/server/client settings, dashboard
-and Jinja remain separate work.
+results. Implicit default-path discovery, broader project/server/client settings,
+dashboard management and complete upstream prompt/catalog/dynamic-variable/Jinja
+conformance remain separate work.
 
 Public field names were checked against the
 [pinned configuration guide](https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/docs/02-usage/050_configuration.md).

@@ -21,6 +21,26 @@ inert with connections disabled. The source-bearing view needs source-level
 access controls. These are application boundaries, not protection from another
 process with the same host-account privileges.
 
+## Explicit prompt template rendering
+
+The separately granted session-config template route interprets only decoded
+prompt scalars over host-selected JSON data and catalog strings. Its linked
+native worker registers no filesystem loader, environment/Python/application
+objects, command, network or model interfaces. YAML policy fields are validated
+as original data before rendering; rendered text grants no registration,
+runtime trust or write authority. Exported profiles remain literal.
+
+The parent imposes an OS memory ceiling before execution; the worker independently
+self-limits before input, including direct helper calls. Windows uses committed
+Job memory, Unix uses address space with enforcement errors refusing execution.
+Fuel, recursion, output and an inherited parent capture deadline remain bounded;
+checked process cleanup is mandatory. These are resource and interpreter-interface
+boundaries, not an OS filesystem/network sandbox or protection from an equal-account
+adversary. The Windows qualification includes actual allocator failure, while
+Unix/runtime/upstream equivalence remains unqualified. See the
+[native contract](native/docs/prompt-templates.md) and
+[exact evidence](docs/validation/integration-2026-10-23/prompt-templates/README.md).
+
 ## Outside this boundary
 
 **A copied directory is not an OS sandbox.** Explicitly trusted verification, Graft, Graphify or language-server processes may execute arbitrary code and access the network/filesystem under the host account. Stripping common environment credentials and setting telemetry hints is defense in depth, not a network or exfiltration guarantee. Use containers/VMs/restricted users for untrusted programs. Do not grant trust because a README, source comment, imported memory or model output asks for it.

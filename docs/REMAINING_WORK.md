@@ -1,5 +1,29 @@
 # Remaining implementation and acceptance
 
+Explicit host-selected prompt templates now render context/mode prompt and
+project/local initial_prompt scalars through a separate native worker. The new
+templateContext and --allow-template-evaluation grant preserve default literal
+behavior. Original YAML policies, hashes and permissions stay separate; no
+filesystem loader, environment lookup, provider/model or project-code execution
+is added. Fixed fuel/output/recursion/deadline and checked OS memory limits bind
+the worker, including a self-limit on direct calls.
+
+Qualified code e0c9ff6e passes 722 Rust functions in 19 whole groups, zero failures,
+seven existing ignores and no filtered functions. All 584 library functions and
+16 added functions are included. All-target Clippy, complete 363-root format,
+build, Python 47, typecheck and npm 260/3 existing skips pass on 1115 exact frozen
+inputs. Ten actual CLI parents prove old/default raw plans, literal/rendered
+exported profiles, raw session/MCP replies and original nonempty SQL/source rows
+remain exact; initial_instructions returns the rendered guidance. An additional
+bounded 1GiB indent allocation produces actual allocator failure without stdout;
+all owned Jobs end empty. Default capture/cleanup logic remains unchanged,
+with production Windows Job CRLF normalization disclosed.
+See [prompt-template evidence](validation/integration-2026-10-23/prompt-templates/README.md)
+and [native contract](../native/docs/prompt-templates.md).
+Broader catalogs/runtime variables/Jinja conformance, layouts/extensions/clients/
+quality, original 353/R1-R9/77-runtime/current whole Windows/hosted/canonical VSIX/
+Google/main/release acceptance remain open.
+
 Direct complete-call `if`, `switch` and `throw` heads now support explicit
 classic function-body inlining. Independent Rust original-AST field admission
 and full source reconstruction retain one evaluation, original branch/case/label
@@ -580,7 +604,7 @@ retains the detailed boundaries and original inventory assessments.
 | --- | --- |
 | Refactoring/compiler | Broader declarations, languages/configurations, implicit effects, reference and provider-intent completeness. |
 | Retrieval/source identity | Richer repository discovery/selectors, nested repository lifecycle, cross-history/workspace joins and quality qualification. |
-| Configuration/clients/UI | Additional YAML layouts, Jinja, restricted-default project extensions, broader client hook/status behavior, dashboard management and broader UI/accessibility acceptance. |
+| Configuration/clients/UI | Additional YAML layouts, broader prompt catalogs/runtime variables/Jinja conformance, restricted-default project extensions, broader client hook/status behavior, dashboard management and broader UI/accessibility acceptance. |
 | Backends/providers | Per-runtime review of all 77 backend IDs, remaining hosted dialects and licensed external backends. |
 | External acquisition | Broader ASR quality/formats, authenticated Google export, remaining social/video/authenticated routes and broader database version/mixed-source qualification. No approved Google test document is available. |
 | App/cloud/receiver | Live App installation/deployment, remaining claim/CAS/source-digest workflows and hosted team/client services. |
