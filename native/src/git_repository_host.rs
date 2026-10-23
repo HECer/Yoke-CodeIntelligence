@@ -10,7 +10,7 @@ use crate::{
     model::{Graph, Snapshot},
     store::Store,
 };
-use anyhow::{Result, ensure};
+use anyhow::{Context, Result, ensure};
 use std::path::{Path, PathBuf};
 
 #[derive(Clone)]
@@ -66,6 +66,28 @@ impl Host {
             "repository_host_root_changed"
         );
         self.preference.check(store, d)
+    }
+    /// Stable host policy only; observed source membership is separate evidence.
+    pub(crate) fn binding(&self) -> Result<String> {
+        let program = self
+            .git
+            .executable
+            .to_str()
+            .context("repository_host_program_encoding_invalid")?;
+        ensure!(
+            program.len() <= 16_384,
+            "repository_host_program_capacity_exceeded"
+        );
+        Ok(crate::model::identity(&(
+            "host_git_repository_capture_v1",
+            &self.root,
+            program,
+            self.options.allow_index_read,
+            self.options.follow_submodules,
+            self.options.follow_nested_repositories,
+            &self.options.limits,
+            self.preference.selection().map(|s| &s.id),
+        )))
     }
     pub(crate) fn index(
         &self,

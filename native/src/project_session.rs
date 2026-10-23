@@ -862,6 +862,12 @@ impl Session {
         deadline: &Deadline,
     ) -> Result<Self> {
         engine.store.set_deadline(deadline)?;
+        if engine.git_repository_host.is_some() {
+            ensure!(
+                host.projects.is_empty() && host.collections.is_empty(),
+                "Git repository host requires a fixed-root session without registered projects or collections"
+            );
+        }
         if let Some(config) = &host.dashboard {
             config.validate()?;
         }
@@ -1058,6 +1064,10 @@ impl Session {
             *root = root.canonicalize()?;
             ensure!(root.is_dir(), "Global note root must be a directory");
         }
+        let mut fingerprint_capture_options = engine.capture_options.clone();
+        if engine.git_repository_host.is_some() {
+            fingerprint_capture_options.repository_scope = None;
+        }
         let fingerprint = identity(&(
             &engine.store.workspace_id,
             host.projects
@@ -1071,7 +1081,7 @@ impl Session {
             &host.notes_policy.ignored_patterns,
             host.notes_policy.writable,
             engine.allow_writes,
-            &engine.capture_options,
+            &fingerprint_capture_options,
             engine
                 .servers
                 .iter()
@@ -1079,6 +1089,16 @@ impl Session {
                 .collect::<Vec<_>>(),
             &engine.server_configurations,
         ));
+        let fingerprint = if let Some(driver) = &engine.git_repository_host {
+            driver.check(&engine.store, deadline)?;
+            identity(&(
+                fingerprint,
+                "host_git_repository_capture_v1",
+                driver.binding()?,
+            ))
+        } else {
+            fingerprint
+        };
         ensure!(
             host.debug_profiles.len() <= 20,
             "Debugger profile capacity exceeded"
@@ -1516,7 +1536,11 @@ impl Session {
         }
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
-        if self.host.dashboard.is_some()
+        if let Some(driver) = &self.engine.git_repository_host {
+            driver.check(&self.engine.store, deadline)?;
+        }
+        if self.engine.git_repository_host.is_some()
+            || self.host.dashboard.is_some()
             || self.host.git_ignore.is_some()
             || self.host.additional_workspace_folders.is_some()
             || self.host.language_server_settings.is_some()

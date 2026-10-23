@@ -17,6 +17,8 @@ pub struct Arguments {
     /// Serve fixed-root native MCP after explicit capture; index retains this host policy.
     #[arg(long, requires = "capture")]
     serve: bool,
+    #[arg(long, requires="serve", value_parser=["native","session","serena","trail","graft","graphify"])]
+    profile: Option<String>,
     #[arg(long)]
     max_scope_bytes: Option<usize>,
     #[arg(long)]
@@ -103,11 +105,45 @@ impl Arguments {
                     root, git, options, preference, &d,
                 )?;
                 let mut engine = host.open(&d)?;
-                yoke::protocol::serve(
-                    &mut engine,
-                    std::io::stdin().lock(),
-                    std::io::stdout().lock(),
-                )?;
+                match self.profile.as_deref().unwrap_or("native") {
+                    "native" => yoke::protocol::serve(
+                        &mut engine,
+                        std::io::stdin().lock(),
+                        std::io::stdout().lock(),
+                    )?,
+                    profile => {
+                        let mut session = yoke::project_session::Session::open(
+                            engine,
+                            yoke::project_session::HostProfile::default(),
+                            None,
+                            &d,
+                        )?;
+                        match profile {
+                            "session" => yoke::protocol::serve_session(
+                                &mut session,
+                                std::io::stdin().lock(),
+                                std::io::stdout().lock(),
+                            )?,
+                            "serena" => yoke::protocol::serve_serena(
+                                &mut session,
+                                std::io::stdin().lock(),
+                                std::io::stdout().lock(),
+                            )?,
+                            "graphify" => yoke::protocol::serve_graphify(
+                                &mut session,
+                                std::io::stdin().lock(),
+                                std::io::stdout().lock(),
+                            )?,
+                            "trail" | "graft" => yoke::protocol::serve_trail(
+                                &mut session,
+                                profile,
+                                std::io::stdin().lock(),
+                                std::io::stdout().lock(),
+                            )?,
+                            _ => anyhow::bail!("repository_host_profile_invalid"),
+                        }
+                    }
+                }
                 return Ok(true);
             }
             let (snapshot, graph, parsed, reused) =
