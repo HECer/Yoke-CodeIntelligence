@@ -41,7 +41,12 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - run: npm ci
       - run: python -m unittest discover -s scripts/tests -v
-      - run: cargo fmt --all --check
+      - name: Check all native format roots on Windows
+        if: runner.os == 'Windows'
+        run: python scripts/native_fmt.py --check
+      - name: Check native formatting on Unix
+        if: runner.os != 'Windows'
+        run: cargo fmt --all --check
       - run: cargo clippy --workspace --all-targets --locked --keep-going -j 2 -- -D warnings
       # Independent Windows fixtures share ancestors protected against write/delete opens.
       # Concurrency adversaries inside each test keep their original threads and assertions.
