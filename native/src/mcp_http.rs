@@ -38,6 +38,7 @@ pub struct Target {
     pub profile: Profile,
     pub host: HostProfile,
     pub capture_options: CaptureOptions,
+    pub git_repository_capture: Option<crate::git_workflows::repository_host::Host>,
     pub servers: Vec<crate::lsp::ConfiguredServer>,
     pub host_servers: Vec<crate::server_selection::HostServerSpec>,
     pub allow_writes: bool,
@@ -53,6 +54,7 @@ impl Target {
             profile,
             host,
             capture_options: CaptureOptions::default(),
+            git_repository_capture: None,
             servers: Vec::new(),
             host_servers: Vec::new(),
             allow_writes: false,
@@ -60,11 +62,19 @@ impl Target {
             collection_grants: BTreeMap::new(),
         }
     }
-    fn open(&self, deadline: &Deadline) -> Result<Session> {
+    fn open(&self, deadline: &Deadline, capture_source: bool) -> Result<Session> {
         deadline.check()?;
+        let prepared = self
+            .git_repository_capture
+            .clone()
+            .map(|driver| driver.prepare(deadline))
+            .transpose()?;
         let mut engine = Engine::open_with_timeout(&self.root, deadline.remaining())?;
         engine.allow_writes = self.allow_writes;
         engine.capture_options = self.capture_options.validated()?;
+        if let Some(prepared) = prepared {
+            prepared.attach_prepared(&mut engine, deadline)?;
+        }
         for server in &self.servers {
             deadline.check()?;
             engine.register_configured_server(server.clone())?;
@@ -74,12 +84,16 @@ impl Target {
             spec.clone().register(&mut engine, true)?;
         }
         // This independent random label is not the transport session secret.
-        Session::open(
+        let mut session = Session::open(
             engine,
             self.host.clone(),
             Some(&format!("http-{}", random_id()?)),
             deadline,
-        )
+        )?;
+        if capture_source && self.git_repository_capture.is_some() {
+            session.active_engine_at(deadline)?.index(deadline)?;
+        }
+        Ok(session)
     }
 }
 
@@ -113,6 +127,17 @@ impl Principal {
             "Host write authority requires editing mode"
         );
         target.capture_options = target.capture_options.validated()?;
+        if let Some(driver) = &target.git_repository_capture {
+            ensure!(
+                driver.root() == target.root
+                    && target.capture_options.repository_scope.is_none()
+                    && target.host.projects.is_empty()
+                    && target.host.collections.is_empty()
+                    && target.collection_grants.is_empty(),
+                "Git HTTP target requires one matching root and no registered projects, collections or imported capture scope"
+            );
+            driver.binding()?;
+        }
         ensure!(
             target.collection_grants.is_empty() || target.profile == Profile::Session,
             "Collection grants require the Session profile"
@@ -145,7 +170,7 @@ impl Principal {
             crate::agent_repl::AgentRepl::validate_spec(spec)?;
         }
         // Validate source/session host authority before a listener can be opened.
-        drop(target.open(&Deadline::new(30_000))?);
+        drop(target.open(&Deadline::new(30_000), false)?);
         Ok(Self {
             id: id.into(),
             token_hash: Sha256::digest(token.as_slice()).into(),
@@ -973,7 +998,8 @@ fn actor(receiver: mpsc::Receiver<Job>, shared: Arc<Shared>, config: Arc<Config>
                         let operation_deadline = Deadline::new(600_000);
                         if job.initialize {
                             ensure!(!sessions.contains_key(&job.id), "Duplicate MCP session");
-                            let mut native_session = principal.target.open(&operation_deadline)?;
+                            let mut native_session =
+                                principal.target.open(&operation_deadline, true)?;
                             native_session.bind_dashboard_lifetime(Arc::clone(&job.meta.closed));
                             sessions.insert(
                                 job.id.clone(),

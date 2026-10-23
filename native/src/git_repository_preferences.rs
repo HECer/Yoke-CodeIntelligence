@@ -276,6 +276,13 @@ pub struct Resolved {
     pub choice: Choice,
 }
 impl Resolved {
+    pub(super) fn check_current(&self, d: &Deadline) -> Result<()> {
+        ensure!(
+            show(&self.root, d)? == self.expected,
+            "repository_selection_stale"
+        );
+        Ok(())
+    }
     pub(super) fn root(&self) -> &Path {
         &self.root
     }

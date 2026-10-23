@@ -19,6 +19,7 @@ pub struct Host {
     git: HostGit,
     options: Options,
     preference: Resolved,
+    prepared: Option<repository_scope::Prepared>,
 }
 impl Host {
     /// This is trusted Rust host input, not a serialized permission grant.
@@ -43,6 +44,7 @@ impl Host {
             git,
             options,
             preference,
+            prepared: None,
         })
     }
     /// Metadata/physical preflight precedes creation of cold application state.
@@ -66,6 +68,32 @@ impl Host {
             "repository_host_root_changed"
         );
         self.preference.check(store, d)
+    }
+    pub(crate) fn root(&self) -> &Path {
+        &self.root
+    }
+    /// Only metadata is acquired before a transport applies its full source policy.
+    pub(crate) fn prepare(mut self, d: &Deadline) -> Result<Self> {
+        self.preference.check_current(d)?;
+        self.prepared = Some(repository_scope::prepare_host(
+            &self.root,
+            &self.git,
+            &self.options,
+            d,
+        )?);
+        Ok(self)
+    }
+    pub(crate) fn attach_prepared(self, engine: &mut Engine, d: &Deadline) -> Result<()> {
+        ensure!(
+            self.prepared.is_some()
+                && engine.git_repository_host.is_none()
+                && engine.capture_options.repository_scope.is_none()
+                && engine.root == self.root,
+            "repository_host_deferred_binding_invalid"
+        );
+        self.check(&engine.store, d)?;
+        engine.git_repository_host = Some(self);
+        Ok(())
     }
     /// Stable host policy only; observed source membership is separate evidence.
     pub(crate) fn binding(&self) -> Result<String> {
@@ -97,14 +125,19 @@ impl Host {
     ) -> Result<(Snapshot, Graph, usize, usize)> {
         ensure!(engine.root == self.root, "repository_host_root_changed");
         self.check(&engine.store, d)?;
-        repository_scope::capture_host(
+        let result = repository_scope::capture_host(
             engine,
             &self.git,
             &self.options,
             &self.preference,
             d,
             bounded_saved_graph,
-        )
+            self.prepared.clone(),
+        )?;
+        if let Some(driver) = &mut engine.git_repository_host {
+            driver.prepared = None;
+        }
+        Ok(result)
     }
 }
 impl Engine {

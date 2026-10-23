@@ -857,6 +857,25 @@ fn capture_selected_source(
     Ok(snapshot)
 }
 
+#[derive(Clone)]
+pub(super) struct Prepared {
+    selected: crate::capture::RepositoryScope,
+    remaining: usize,
+}
+pub(super) fn prepare_host(
+    root: &Path,
+    git: &HostGit,
+    options: &Options,
+    d: &Deadline,
+) -> Result<Prepared> {
+    let remaining = std::cell::Cell::new(options.limits.max_index_bytes);
+    let observation = inspect_budgeted(root, git, options, d, &remaining)?;
+    let selected = crate::capture::RepositoryScope::physical(root, &observation, d)?;
+    Ok(Prepared {
+        selected,
+        remaining: remaining.get(),
+    })
+}
 pub(super) fn capture_host(
     engine: &mut crate::Engine,
     git: &HostGit,
@@ -864,15 +883,20 @@ pub(super) fn capture_host(
     preference: &super::repository_preferences::Resolved,
     d: &Deadline,
     bounded_saved_graph: bool,
+    prepared: Option<Prepared>,
 ) -> Result<(crate::model::Snapshot, crate::model::Graph, usize, usize)> {
     ensure!(
         engine.store.db.is_autocommit(),
         "repository_capture_requires_owned_transaction"
     );
     preference.check(&engine.store, d)?;
-    let remaining = std::cell::Cell::new(options.limits.max_index_bytes);
-    let observation = inspect_budgeted(&engine.root, git, options, d, &remaining)?;
-    let selected = crate::capture::RepositoryScope::physical(&engine.root, &observation, d)?;
+    let prepared = if let Some(prepared) = prepared {
+        prepared
+    } else {
+        prepare_host(&engine.root, git, options, d)?
+    };
+    let remaining = std::cell::Cell::new(prepared.remaining);
+    let selected = prepared.selected;
     let snapshot = capture_selected_source(
         engine,
         git,

@@ -23,6 +23,7 @@ mod git_conflicts_cli;
 mod git_impact_cli;
 mod git_owner_changes_cli;
 mod git_owners_cli;
+mod git_repository_http_cli;
 mod git_repository_preferences_cli;
 mod git_repository_scope_cli;
 mod github_app_cli;
@@ -2940,6 +2941,10 @@ struct HttpServeArguments {
     #[arg(long)]
     trust_service: bool,
     #[arg(long)]
+    allow_git_index_read: bool,
+    #[arg(long)]
+    trust_git: bool,
+    #[arg(long)]
     allow_remote_bind: bool,
     #[arg(long)]
     trust_python: bool,
@@ -3000,6 +3005,8 @@ struct HttpPrincipalFile {
     host_profile: yoke::project_session::HostProfile,
     #[serde(default)]
     capture_options: yoke::capture::CaptureOptions,
+    #[serde(default)]
+    git_repository_capture: Option<git_repository_http_cli::Selection>,
     #[serde(default)]
     servers: Vec<yoke::server_selection::HostServerSpec>,
     #[serde(default)]
@@ -3102,6 +3109,20 @@ fn run_http(
             "MCP source writes require --allow-writes"
         );
         principal.capture_options.clone().validated()?;
+        if let Some(selection) = &principal.git_repository_capture {
+            selection.admit(args.allow_git_index_read, args.trust_git)?;
+            ensure!(
+                (250..=30_000).contains(&host.request_timeout_ms),
+                "Invalid HTTP Git request deadline"
+            );
+            ensure!(
+                principal.capture_options.repository_scope.is_none()
+                    && principal.host_profile.projects.is_empty()
+                    && principal.host_profile.collections.is_empty()
+                    && principal.collection_grants.is_empty(),
+                "Git HTTP capture requires a fixed root without imported capture scopes, registered projects or collections"
+            );
+        }
         if let Some(runtime) = &principal.agent_repl {
             ensure!(
                 principal.profile == "serena",
@@ -3118,6 +3139,26 @@ fn run_http(
             yoke::agent_repl::AgentRepl::validate_spec(&runtime.approved_spec())?;
         }
     }
+    let git_selections = host
+        .principals
+        .iter()
+        .map(|principal| -> Result<_> {
+            principal
+                .git_repository_capture
+                .as_ref()
+                .map(|selection| -> Result<_> {
+                    let selected_root = principal.root.as_deref().unwrap_or(root).canonicalize()?;
+                    let driver = selection.prepare(
+                        &selected_root,
+                        args.allow_git_index_read,
+                        args.trust_git,
+                        &Deadline::new(host.request_timeout_ms),
+                    )?;
+                    Ok((selected_root, driver))
+                })
+                .transpose()
+        })
+        .collect::<Result<Vec<_>>>()?;
     let tls = host
         .tls_credential_name
         .as_deref()
@@ -3128,13 +3169,17 @@ fn run_http(
             private_key: identity.private_key,
         });
     let mut principals = vec![];
-    for principal in host.principals {
+    for (principal, git_selection) in host.principals.into_iter().zip(git_selections) {
         let mut target = yoke::mcp_http::Target::new(
             principal.root.unwrap_or_else(|| root.to_owned()),
             http_profile(&principal.profile)?,
             principal.host_profile,
         );
         target.capture_options = principal.capture_options;
+        if let Some((selected_root, driver)) = git_selection {
+            target.root = selected_root;
+            target.git_repository_capture = Some(driver);
+        }
         target.host_servers = principal.servers;
         target.allow_writes = principal.allow_writes;
         target.collection_grants = principal.collection_grants;
