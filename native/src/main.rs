@@ -23,6 +23,7 @@ mod git_conflicts_cli;
 mod git_impact_cli;
 mod git_owner_changes_cli;
 mod git_owners_cli;
+mod git_repository_preferences_cli;
 mod git_repository_scope_cli;
 mod github_app_cli;
 mod github_app_digest_cli;
@@ -2497,6 +2498,7 @@ fn run_document(
 }
 #[derive(Subcommand)]
 enum GitOperation {
+    RepositoryPreferences(Box<git_repository_preferences_cli::Arguments>),
     RepositoryScope(Box<git_repository_scope_cli::Arguments>),
     CompilerAffected(Box<git_compiler_affected_cli::Arguments>),
     OwnerChanges(Box<git_owner_changes_cli::Arguments>),
@@ -2563,6 +2565,9 @@ fn run_git(mut engine: Engine, operation: GitOperation, deadline: &Deadline) -> 
         GitOperation::Owners(_) => bail!("Git owners host dispatch error"),
         GitOperation::Conflicts(_) => bail!("Git conflict host dispatch error"),
         GitOperation::RepositoryScope(_) => bail!("Repository scope host dispatch error"),
+        GitOperation::RepositoryPreferences(_) => {
+            bail!("Repository preferences host dispatch error")
+        }
         GitOperation::Analyze {
             options,
             git,
@@ -3291,6 +3296,22 @@ fn run(cli: Cli) -> Result<bool> {
                 && !cli.trust_servers
                 && !cli.allow_writes,
             "git_areas_input_invalid"
+        );
+        return args.run(&cli.root, cli.timeout, cli.max_bytes);
+    }
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::Git(git) = extension.as_ref()
+        && let GitOperation::RepositoryPreferences(args) = &git.operation
+    {
+        ensure!(
+            cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.analyzer_epoch.is_none()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && !cli.allow_writes,
+            "Repository preferences select host control state; source/provider/write flags are unavailable"
         );
         return args.run(&cli.root, cli.timeout, cli.max_bytes);
     }

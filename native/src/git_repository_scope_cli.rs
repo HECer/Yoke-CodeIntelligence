@@ -22,10 +22,14 @@ pub struct Arguments {
     trust_git: bool,
     #[arg(long)]
     git: Option<PathBuf>,
-    #[arg(long)]
+    #[arg(long, conflicts_with = "no_follow_submodules")]
     follow_submodules: bool,
     #[arg(long)]
+    no_follow_submodules: bool,
+    #[arg(long, conflicts_with = "no_follow_nested_repositories")]
     follow_nested_repositories: bool,
+    #[arg(long)]
+    no_follow_nested_repositories: bool,
     #[arg(long, default_value_t = 64)]
     max_repositories: usize,
     #[arg(long, default_value_t = 20000)]
@@ -73,11 +77,31 @@ impl Arguments {
             limits,
         };
         let mut bytes = if self.capture {
+            let preference = yoke::git_workflows::repository_preferences::Resolved::current(
+                root,
+                if self.follow_submodules {
+                    Some(true)
+                } else if self.no_follow_submodules {
+                    Some(false)
+                } else {
+                    None
+                },
+                if self.follow_nested_repositories {
+                    Some(true)
+                } else if self.no_follow_nested_repositories {
+                    Some(false)
+                } else {
+                    None
+                },
+                &d,
+            )?;
             let (snapshot, graph, parsed, reused) =
-                repository_scope::capture_root(root, &git, &options, &d)?;
-            serde_json::to_vec(
-                &serde_json::json!({"producer":"yoke-git-repository-capture-1","snapshotId":snapshot.id,"files":snapshot.files.len(),"entities":graph.entities.len(),"observations":graph.observations.len(),"parsedFiles":parsed,"reusedFiles":reused,"crossedRepositoryPolicy":"read-only","projectSourceWritten":false,"defaultCaptureChanged":false}),
-            )?
+                repository_scope::capture_root_resolved(root, &git, &options, &preference, &d)?;
+            let mut result = serde_json::json!({"producer":"yoke-git-repository-capture-1","snapshotId":snapshot.id,"files":snapshot.files.len(),"entities":graph.entities.len(),"observations":graph.observations.len(),"parsedFiles":parsed,"reusedFiles":reused,"crossedRepositoryPolicy":"read-only","projectSourceWritten":false,"defaultCaptureChanged":false});
+            if let Some(selected) = preference.selection() {
+                result["hostSelection"] = serde_json::json!({"id":selected.id,"revision":selected.revision,"effectiveChoice":preference.choice});
+            }
+            serde_json::to_vec(&result)?
         } else {
             repository_scope::inspect(root, &git, &options, &d)?
                 .canonical_bytes()

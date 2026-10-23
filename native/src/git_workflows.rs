@@ -31,6 +31,8 @@ pub mod conflicts;
 pub(crate) mod history_read;
 #[path = "git_owners.rs"]
 pub mod owners;
+#[path = "git_repository_preferences.rs"]
+pub mod repository_preferences;
 #[path = "git_repository_scope.rs"]
 pub mod repository_scope;
 pub use history_read::Options as HistoryOptions;

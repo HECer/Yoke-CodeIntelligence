@@ -446,7 +446,7 @@ pub(crate) fn capture_parts(
         data.root,
     ))
 }
-fn root_guard(root: &Path, d: &Deadline) -> Result<PathBuf> {
+pub(super) fn root_guard(root: &Path, d: &Deadline) -> Result<PathBuf> {
     d.check()?;
     ensure!(
         root.is_absolute()
@@ -757,7 +757,7 @@ pub fn capture(
     let remaining = std::cell::Cell::new(options.limits.max_index_bytes);
     let observation = inspect_budgeted(&engine.root, git, options, d, &remaining)?;
     let selected = crate::capture::RepositoryScope::physical(&engine.root, &observation, d)?;
-    capture_selected(engine, git, options, d, &remaining, selected)
+    capture_selected(engine, git, options, d, &remaining, selected, None)
 }
 /// Preflight all current metadata and physical selections before creating state.
 pub fn capture_root(
@@ -770,7 +770,34 @@ pub fn capture_root(
     let observation = inspect_budgeted(root, git, options, d, &remaining)?;
     let selected = crate::capture::RepositoryScope::physical(root, &observation, d)?;
     let mut engine = crate::Engine::open_with_timeout(root, d.remaining())?;
-    capture_selected(&mut engine, git, options, d, &remaining, selected)
+    capture_selected(&mut engine, git, options, d, &remaining, selected, None)
+}
+pub fn capture_root_resolved(
+    root: &Path,
+    git: &HostGit,
+    options: &Options,
+    preference: &super::repository_preferences::Resolved,
+    d: &Deadline,
+) -> Result<(crate::model::Snapshot, crate::model::Graph, usize, usize)> {
+    let effective = Options {
+        allow_index_read: options.allow_index_read,
+        follow_submodules: preference.choice.follow_submodules,
+        follow_nested_repositories: preference.choice.follow_nested_repositories,
+        limits: options.limits.clone(),
+    };
+    let remaining = std::cell::Cell::new(effective.limits.max_index_bytes);
+    let observation = inspect_budgeted(root, git, &effective, d, &remaining)?;
+    let selected = crate::capture::RepositoryScope::physical(root, &observation, d)?;
+    let mut engine = crate::Engine::open_with_timeout(root, d.remaining())?;
+    capture_selected(
+        &mut engine,
+        git,
+        &effective,
+        d,
+        &remaining,
+        selected,
+        Some(preference),
+    )
 }
 fn capture_selected(
     engine: &mut crate::Engine,
@@ -779,18 +806,28 @@ fn capture_selected(
     d: &Deadline,
     remaining: &std::cell::Cell<usize>,
     selected: crate::capture::RepositoryScope,
+    preference: Option<&super::repository_preferences::Resolved>,
 ) -> Result<(crate::model::Snapshot, crate::model::Graph, usize, usize)> {
+    if let Some(preference) = preference {
+        preference.check(&engine.store, d)?;
+    }
     engine.sync_source_exclusions(d)?;
     engine.store.set_deadline(d)?;
     let mut effective = engine.capture_options.clone();
     effective.repository_scope = Some(selected.clone());
     let recheck = || -> Result<()> {
+        if let Some(preference) = preference {
+            preference.check(&engine.store, d)?;
+        }
         let current = inspect_budgeted(&engine.root, git, options, d, remaining)?;
         let current = crate::capture::RepositoryScope::physical(&engine.root, &current, d)?;
         ensure!(
             current == selected,
             "repository_capture_index_or_membership_changed"
         );
+        if let Some(preference) = preference {
+            preference.check(&engine.store, d)?;
+        }
         Ok(())
     };
     let snapshot = crate::capture::capture_repository_options_at(
