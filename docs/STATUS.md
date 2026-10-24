@@ -1,5 +1,21 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Bounded runtime cleanup and Unicode fixture correction: acceptance pending (2026-10-24)
+
+The native runtime owner now consumes its process through the existing bounded
+checked lifecycle instead of an unbounded raw wait. Actual cleanup errors and
+missing receipts remain explicit, including after operation/deadline refusal.
+Unix ESRCH still requires a real owned-root exit status; other signal failures
+refuse. Five native regressions are added (three Windows/five Unix), not yet run.
+
+The source-exclusion test now keeps NFC/NFD names in separate subdirectories so
+APFS cannot overwrite its first fixture. A new create-only alias test asserts
+actual on-disk names, immutable bytes and literal exclusion on either filesystem
+behavior. Native compilation/execution remains pending.87 Python tests,368-root
+format plus final changed-file checks, typecheck/npm260/0/3 existing skips pass.
+Memory-limit, other filesystem/timing/platform/live/VSIX and full STATUS gates
+remain open. [Evidence](validation/integration-2026-10-24/runtime-cleanup-unicode/README.md).
+
 ## Windows CI temporary spelling: partial correction, confirmation pending (2026-10-24)
 
 At source84e11866 all eight Linux shards pass in push run40101366598;

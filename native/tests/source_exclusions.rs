@@ -304,7 +304,13 @@ fn primary_project_filters_do_not_leak_into_independent_secondary_host_scope() {
 #[test]
 fn unicode_exclusions_preserve_original_paths_and_resealed_false_membership_refuses() {
     let r = root();
-    for name in ["caf\u{e9}.rs", "cafe\u{301}.rs"] {
+    // APFS aliases NFC/NFD names even on case-sensitive volumes. Separate
+    // directories keep both exact spellings representable without overwriting
+    // the first fixture before the source exclusion policy is exercised.
+    for directory in ["nfc", "nfd"] {
+        fs::create_dir(r.path().join("src").join(directory)).unwrap();
+    }
+    for name in ["nfc/caf\u{e9}.rs", "nfd/cafe\u{301}.rs"] {
         fs::write(
             r.path().join("src").join(name),
             "// \u{1f4a1}\r\nfn unicode() {}\r\n",
@@ -313,7 +319,7 @@ fn unicode_exclusions_preserve_original_paths_and_resealed_false_membership_refu
     }
     let mut s = open(
         r.path(),
-        profile(json!({"sourceExclusions":{"global":[["src/caf\u{e9}.rs"]]}})),
+        profile(json!({"sourceExclusions":{"global":[["src/**/caf\u{e9}.rs"]]}})),
         "unicode",
     );
     let (snapshot, _, _, _) = s.engine.index(&d()).unwrap();
@@ -321,9 +327,14 @@ fn unicode_exclusions_preserve_original_paths_and_resealed_false_membership_refu
         snapshot
             .files
             .iter()
-            .any(|f| f.path == "src/cafe\u{301}.rs")
+            .any(|f| f.path == "src/nfd/cafe\u{301}.rs")
     );
-    assert!(!snapshot.files.iter().any(|f| f.path == "src/caf\u{e9}.rs"));
+    assert!(
+        !snapshot
+            .files
+            .iter()
+            .any(|f| f.path == "src/nfc/caf\u{e9}.rs")
+    );
     let mut options = capture::options_for_snapshot(&s.engine.store, &snapshot).unwrap();
     options.source_exclusions = Some(Policy::GitignoreV1 {
         groups: vec![Group {
@@ -353,15 +364,64 @@ fn unicode_exclusions_preserve_original_paths_and_resealed_false_membership_refu
         .record(capture::OPTIONS_RECORD_KIND, &forged.id, &record)
         .unwrap();
     assert!(capture::source_scope_policy(&s.engine.store, &forged).is_err());
-    let raw = fs::read(r.path().join("src/cafe\u{301}.rs")).unwrap();
+    let raw = fs::read(r.path().join("src/nfd/cafe\u{301}.rs")).unwrap();
     assert_eq!(
         hash(raw),
         snapshot
             .files
             .iter()
-            .find(|f| f.path == "src/cafe\u{301}.rs")
+            .find(|f| f.path == "src/nfd/cafe\u{301}.rs")
             .unwrap()
             .hash
+    );
+}
+
+#[test]
+fn unicode_alias_creation_never_overwrites_a_fixture_or_invents_captured_membership() {
+    use std::io::Write;
+    let r = tempfile::tempdir().unwrap();
+    let nfc = "caf\u{e9}.rs";
+    let nfd = "cafe\u{301}.rs";
+    let original = b"fn composed() {}\n";
+    let separate = b"fn decomposed() {}\n";
+    fs::write(r.path().join(nfc), original).unwrap();
+    let distinct = match fs::OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .open(r.path().join(nfd))
+    {
+        Ok(mut file) => {
+            file.write_all(separate).unwrap();
+            true
+        }
+        Err(error) if error.kind() == std::io::ErrorKind::AlreadyExists => false,
+        Err(error) => panic!("Owned Unicode fixture creation failed: {error}"),
+    };
+    assert_eq!(fs::read(r.path().join(nfc)).unwrap(), original);
+    let mut s = open(
+        r.path(),
+        profile(json!({"sourceExclusions":{"global":[[nfd]]}})),
+        "observed-unicode-membership",
+    );
+    let (snapshot, _, _, _) = s.engine.index(&d()).unwrap();
+    assert_eq!(snapshot.files.len(), 1);
+    assert_eq!(snapshot.files[0].path, nfc);
+    assert_eq!(snapshot.files[0].hash, hash(original));
+    assert_eq!(
+        snapshot
+            .omissions
+            .iter()
+            .any(|o| o.path == nfd && o.reason == "host-source-exclusion"),
+        distinct
+    );
+    assert_eq!(fs::read(r.path().join(nfc)).unwrap(), original);
+    assert_eq!(
+        fs::read(r.path().join(nfd)).unwrap(),
+        if distinct {
+            separate.as_slice()
+        } else {
+            original.as_slice()
+        }
     );
 }
 

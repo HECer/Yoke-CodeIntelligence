@@ -84,7 +84,7 @@ pub struct Session<'a> {
     writer: mpsc::SyncSender<(u64, Vec<u8>)>,
     events: mpsc::Receiver<Event>,
     cancel: Arc<AtomicBool>,
-    stopped: mpsc::Receiver<bool>,
+    stopped: mpsc::Receiver<Result<()>>,
     output_limit: usize,
     output_bytes: usize,
     _directory: tempfile::TempDir,
@@ -216,7 +216,7 @@ impl<'a> Session<'a> {
         // The process owner never crosses a thread boundary: process-wrap's child
         // wrapper is not Send. This thread also enforces an idle session deadline.
         thread::spawn(move || {
-            let result = (|| -> Result<bool> {
+            let result = (|| -> Result<()> {
                 let mut child =
                     ManagedChild::spawn(command).context("Python runtime unavailable")?;
                 let pipes = (
@@ -231,34 +231,32 @@ impl<'a> Session<'a> {
                         .context("Runtime stderr unavailable")?,
                 );
                 if startup.send(Ok(pipes)).is_err() {
-                    return Ok(false);
+                    child.terminate_checked(Duration::from_secs(2))?;
+                    return Ok(());
                 }
-                loop {
+                let observation = loop {
                     if owner_cancel.load(Ordering::SeqCst) || owner_deadline.check().is_err() {
-                        break;
+                        break Ok(());
                     }
-                    if child.inner_mut().try_wait()?.is_some() {
-                        let _ = owner_events.try_send(Event::Exited);
-                        break;
+                    match child.inner_mut().try_wait() {
+                        Ok(Some(_)) => {
+                            let _ = owner_events.try_send(Event::Exited);
+                            break Ok(());
+                        }
+                        Ok(None) => {}
+                        Err(error) => break Err(error),
                     }
                     thread::sleep(owner_deadline.remaining().min(Duration::from_millis(10)));
-                }
-                let killed = child.start_kill();
-                if let Err(error) = killed {
-                    #[cfg(unix)]
-                    if error.raw_os_error() == Some(3) {
-                        return Ok(true);
-                    }
-                    return Err(error.into());
-                }
-                child.inner_mut().wait()?;
-                Ok(true)
+                };
+                child.terminate_checked(Duration::from_secs(2))?;
+                observation?;
+                Ok(())
             })();
             if let Err(error) = &result {
                 let _ = startup.try_send(Err(error.to_string()));
                 let _ = owner_events.try_send(Event::Failure(error.to_string()));
             }
-            let _ = stopped_tx.send(result.unwrap_or(false));
+            let _ = stopped_tx.send(result);
         });
         let (mut stdin, mut stdout, mut stderr) = match started.recv_timeout(deadline.remaining()) {
             Ok(Ok(pipes)) => pipes,
@@ -360,8 +358,7 @@ impl<'a> Session<'a> {
         };
         let result = session.exchange(initial, 0);
         if let Err(error) = result {
-            session.stop();
-            return Err(error);
+            return Err(session.refuse_after_stop(error));
         }
         session.state = result?;
         Ok(session)
@@ -369,12 +366,22 @@ impl<'a> Session<'a> {
     pub fn state(&self) -> &Value {
         &self.state
     }
-    fn stop(&mut self) -> bool {
+    fn stop(&mut self) -> Result<()> {
         self.active = false;
         self.cancel.store(true, Ordering::SeqCst);
         self.stopped
             .recv_timeout(Duration::from_secs(2))
-            .unwrap_or(false)
+            .map_err(|_| {
+                crate::process::CleanupUnproven::new("Runtime owner cleanup receipt unavailable")
+            })?
+    }
+    fn refuse_after_stop(&mut self, error: anyhow::Error) -> anyhow::Error {
+        if self.active
+            && let Err(cleanup) = self.stop()
+        {
+            return cleanup.context(error);
+        }
+        error
     }
     fn validate(&self, request: &Request) -> Result<()> {
         let frames = self.state["frames"].as_array().map_or(0, Vec::len);
@@ -436,8 +443,7 @@ impl<'a> Session<'a> {
     pub fn request(&mut self, request: Request) -> Result<Value> {
         ensure!(self.active, "Runtime session is closed");
         if let Err(error) = self.deadline.check() {
-            self.stop();
-            return Err(error);
+            return Err(self.refuse_after_stop(error));
         }
         self.validate(&request)?;
         self.sequence = self
@@ -458,10 +464,7 @@ impl<'a> Session<'a> {
                 self.state = value.clone();
                 Ok(value)
             }
-            Err(error) => {
-                self.stop();
-                Err(error)
-            }
+            Err(error) => Err(self.refuse_after_stop(error)),
         }
     }
     fn exchange(&mut self, value: Value, id: u64) -> Result<Value> {
@@ -593,10 +596,8 @@ impl<'a> Session<'a> {
             "Runtime result exceeded capacity"
         );
         if terminal {
-            ensure!(
-                self.stop(),
-                "Runtime process group cleanup was not confirmed"
-            );
+            self.stop()
+                .context("Runtime process group cleanup was not confirmed")?;
         }
         Ok(result)
     }
@@ -660,7 +661,7 @@ fn code(text: &str) -> Result<()> {
 impl Drop for Session<'_> {
     fn drop(&mut self) {
         if self.active {
-            self.stop();
+            let _ = self.stop();
         }
     }
 }

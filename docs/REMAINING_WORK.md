@@ -1,5 +1,17 @@
 # Remaining implementation and acceptance
 
+## Checked runtime cleanup and representable Unicode fixtures await hosted tests
+
+The [new native checkpoint](validation/integration-2026-10-24/runtime-cleanup-unicode/README.md)
+reuses bounded checked process cleanup, retains actual cleanup uncertainty and
+requires owned-root status after Unix ESRCH. Five native lifecycle regressions
+are added (three Windows/five Unix). NFC/NFD exclusion fixtures no longer
+overwrite APFS aliases; a create-only alias test retains actual membership and
+byte assertions on both filesystem behaviors. These native tests are not run
+locally.87 Python tests, formatting, typecheck/npm pass with their own scopes.
+Actual native/platform, memory-limit, remaining filesystem/timing, history live,
+current VSIX and whole STATUS acceptance remain pending.
+
 ## Windows temporary spelling correction awaits actual hosted confirmation
 
 The [CI-only correction](validation/integration-2026-10-24/windows-ci-temp/README.md)

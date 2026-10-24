@@ -17,6 +17,10 @@ use std::{
 #[path = "process_windows_job.rs"]
 mod windows_job;
 
+#[cfg(test)]
+#[path = "process_cleanup_tests.rs"]
+mod cleanup_tests;
+
 #[derive(Debug)]
 pub(crate) struct CleanupUnproven(String);
 impl CleanupUnproven {
@@ -450,9 +454,23 @@ impl ManagedChild {
         }
         #[cfg(not(windows))]
         {
-            self.inner
-                .start_kill()
-                .map_err(|_| CleanupUnproven::new("Owned process termination request failed"))?;
+            if let Err(error) = self.inner.start_kill() {
+                // A naturally exited/reaped leader can already have no group.
+                // ESRCH alone is not an exit receipt: the raw owned child must
+                // still report an actual status below. Other signal failures
+                // never become successful cleanup.
+                #[cfg(unix)]
+                let absent = error.raw_os_error() == Some(libc::ESRCH);
+                #[cfg(not(unix))]
+                let absent = false;
+                ensure!(
+                    absent,
+                    CleanupUnproven::new(format!(
+                        "Owned process termination request failed (os error {:?})",
+                        error.raw_os_error()
+                    ))
+                );
+            }
             ensure!(
                 !budget.is_zero() && budget <= Duration::from_secs(2),
                 CleanupUnproven::new("Invalid owned process cleanup budget")
