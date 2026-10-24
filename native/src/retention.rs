@@ -1497,6 +1497,11 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
                 out.unknown.insert("artifact:unknown-shape".into());
             }
         }
+        let value = if kind == "journal" {
+            crate::changes::journal_retention_projection(&value)?
+        } else {
+            value
+        };
         references(&value, &mut out.references, deadline)?;
         references(&value, &mut out.all_references, deadline)?;
     }

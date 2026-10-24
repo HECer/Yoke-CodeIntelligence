@@ -16,7 +16,7 @@ pub(super) struct Runtime {
     pub(super) access: Access,
     plans: BTreeMap<String, Prepared>,
     pub(super) workspace_plans: BTreeMap<String, super::dashboard_project_documents::Prepared>,
-    maximum: usize,
+    pub(super) maximum: usize,
 }
 impl Runtime {
     pub(super) fn capture(
@@ -141,7 +141,11 @@ impl Runtime {
             DocumentRequest::Inspect { .. } => {
                 anyhow::bail!("Workspace approval inspection requires a project document")
             }
-            DocumentRequest::Pending { .. } => {
+            DocumentRequest::Pending { cursor, .. } => {
+                ensure!(
+                    cursor.is_none(),
+                    "Global document recovery does not use workspace cursors"
+                );
                 self.writable(id)?;
                 let owner = self.access.owner_binding(id, d)?;
                 if owner

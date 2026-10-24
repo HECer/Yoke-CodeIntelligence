@@ -36,12 +36,12 @@ fn reviewed_value(prepared: &Prepared, store: &Store) -> Result<Value> {
     value["baseSnapshotId"] = json!(prepared.workspace.base_snapshot_id);
     value["resultSnapshotId"] = json!(prepared.workspace.result_snapshot_id);
     value["workspaceGates"] = gates(store, &prepared.workspace);
-    value["workspaceRecovery"] = json!("original_host_cli");
+    value["workspaceRecovery"] = json!("reviewed_dashboard_rollback");
     Ok(value)
 }
 
 impl Session {
-    fn project_document_permission(&self, id: &str, d: &Deadline) -> Result<()> {
+    pub(super) fn project_document_permission(&self, id: &str, d: &Deadline) -> Result<()> {
         self.require_edit_permission()?;
         ensure!(
             self.host_allow_writes,
@@ -59,6 +59,33 @@ impl Session {
             "Writable active project document selection required"
         );
         self.require_tool("ci_session", d)
+    }
+    pub(super) fn project_document_binding(
+        &mut self,
+        id: &str,
+        d: &Deadline,
+    ) -> Result<crate::changes::DocumentBinding> {
+        self.project_document_permission(id, d)?;
+        let project = self.state.active_project.clone();
+        let engine = self.active_engine_at(d)?;
+        let root = engine.root.clone();
+        let workspace_id = engine.store.workspace_id.clone();
+        let access = &self
+            .dashboard_documents
+            .as_ref()
+            .context("Dashboard documents unavailable")?
+            .access;
+        let binding = crate::changes::DocumentBinding {
+            schema_version: 1,
+            access_binding: access.binding().to_owned(),
+            document_id: id.to_owned(),
+            path: access.project_path(id, &project, &root, d)?,
+            max_document_bytes: self.dashboard_documents.as_ref().unwrap().maximum,
+            project,
+            workspace_id,
+        };
+        binding.validate(&self.active_engine_at(d)?.store)?;
+        Ok(binding)
     }
 
     fn execute_project_document(
@@ -207,19 +234,20 @@ impl Session {
                 let key = format!("dashboard-{}", plan_id);
                 *attempt = Some(json!({"workspacePlanId":prepared.workspace.id,
                     "possibleJournalId":crate::model::identity(&(&prepared.workspace.id,&key)),
-                    "workflow":"original_native_host_recovery",
+                    "workflow":"inspect_dashboard_workspace_recovery_or_native_host",
                     "journalCreationConfirmed":false}));
                 // Never approve, synthesize verification or use the global-file
                 // writer here. The native writer rechecks all original gates,
                 // current full base snapshot, WriterLock and durable journals.
-                let result = self.call_active(
-                    "ci_change_apply",
-                    json!({
-                        "planId":prepared.workspace.id,"idempotencyKey":key,
-                        "mode":"workspace","maxBytes":4_000_000
-                    }),
-                    d,
-                )?;
+                let binding = self.project_document_binding(id, d)?;
+                let args = json!({
+                    "planId":prepared.workspace.id,"idempotencyKey":key,
+                    "mode":"workspace","maxBytes":4_000_000,
+                    "timeoutMs":d.remaining().as_millis().min(600000)
+                });
+                let result = self
+                    .active_engine_at(d)?
+                    .invoke_document_apply(args, binding)?;
                 ensure!(
                     result["status"] == "ok" && result["data"]["receipt"]["status"] == "applied",
                     "Workspace outcome unconfirmed; inspect native recovery journal"
@@ -232,17 +260,12 @@ impl Session {
                     .remove(plan_id);
                 Ok(
                     json!({"receipt":receipt,"workspacePlanId":prepared.workspace.id,
-                    "workspaceRecovery":"original_host_cli","fileChanged":true,
+                    "workspaceRecovery":"reviewed_dashboard_rollback","fileChanged":true,
                     "metadataChanged":true,"sourceWritten":true}),
                 )
             }
-            DocumentRequest::Pending { .. } => Ok(json!({
-                "workspaceRecoveryRequiresHost":true,"recoveryAvailableInDashboard":false,
-                "workflow":"native_workspace_host_recovery","complete":false,
-                "fileChanged":false,"metadataChanged":false,"sourceWritten":false
-            })),
-            DocumentRequest::Recover { .. } => {
-                anyhow::bail!("Project recovery requires the original native host recovery command")
+            DocumentRequest::Pending { .. } | DocumentRequest::Recover { .. } => {
+                self.project_document_recovery(request, action, d, attempt)
             }
             DocumentRequest::Read { .. } => {
                 unreachable!("Reads retain the selected-document route")
@@ -277,7 +300,7 @@ impl Session {
                 let mut reply = Reply::fault(
                     422,
                     if attempt.is_some() {
-                        "workspace_outcome_unconfirmed_use_native_recovery"
+                        "workspace_outcome_unconfirmed_inspect_recovery"
                     } else {
                         "workspace_document_or_host_gates_unavailable"
                     },
@@ -433,9 +456,9 @@ mod tests {
                 .is_none()
         );
         let pending = call(&mut s, json!({"kind":"pending","documentId":"settings"}));
-        assert_eq!(pending.value["data"]["recoveryAvailableInDashboard"], false);
-        assert_eq!(pending.value["data"]["complete"], false);
-        assert!(pending.value["data"].get("journals").is_none());
+        assert_eq!(pending.value["data"]["workspaceRecoveryAvailable"], true);
+        assert_eq!(pending.value["data"]["complete"], true);
+        assert_eq!(pending.value["data"]["journals"], json!([]));
     }
 
     #[test]
@@ -727,5 +750,111 @@ mod tests {
             fs::read(secondary.join("settings-π.json")).unwrap(),
             p["content"].as_str().unwrap().as_bytes()
         );
+    }
+
+    #[test]
+    fn selected_project_recovery_survives_a_new_owner_and_restores_exact_original_bytes() {
+        let (root, mut s) = fixture(true, true);
+        let original = fs::read(root.path().join("settings-π.json")).unwrap();
+        let p = plan(&mut s);
+        let id = p["workspacePlanId"].as_str().unwrap();
+        s.engine.approve(id, false).unwrap();
+        verify_host(&mut s, id);
+        let applied = call(
+            &mut s,
+            json!({"kind":"apply","documentId":"settings","planId":p["id"]}),
+        );
+        assert_eq!(applied.status, 200, "{}", applied.value);
+        let profile = serde_json::to_value(&s.host).unwrap();
+        drop(s);
+        let mut s = reopen(root.path(), profile);
+        let page = call(&mut s, json!({"kind":"pending","documentId":"settings"}));
+        assert_eq!(page.status, 200, "{}", page.value);
+        let journal = &page.value["data"]["journals"][0];
+        assert_eq!(
+            journal["beforeContent"].as_str().unwrap().as_bytes(),
+            original
+        );
+        assert_eq!(journal["allowedDirections"], json!(["rollback"]));
+        let recovery = json!({"kind":"recover","documentId":"settings","journalId":journal["journalId"],"expectedEvent":journal["eventId"],"direction":"rollback"});
+        let restored = call(&mut s, recovery.clone());
+        assert_eq!(restored.status, 200, "{}", restored.value);
+        assert_eq!(restored.value["sourceWritten"], true);
+        assert_eq!(
+            fs::read(root.path().join("settings-π.json")).unwrap(),
+            original
+        );
+        let stale = call(&mut s, recovery);
+        assert_eq!(stale.status, 422);
+        assert_eq!(stale.value["notApplied"], true);
+        let page = call(&mut s, json!({"kind":"pending","documentId":"settings"}));
+        assert_eq!(page.value["data"]["journals"][0]["phase"], "rolled_back");
+        assert_eq!(
+            page.value["data"]["journals"][0]["allowedDirections"],
+            json!([])
+        );
+    }
+
+    #[test]
+    fn selected_project_recovery_refuses_resume_foreign_bytes_and_stale_event_reviews() {
+        let (root, mut s) = fixture(true, true);
+        let p = plan(&mut s);
+        let id = p["workspacePlanId"].as_str().unwrap();
+        s.engine.approve(id, false).unwrap();
+        verify_host(&mut s, id);
+        assert_eq!(
+            call(
+                &mut s,
+                json!({"kind":"apply","documentId":"settings","planId":p["id"]})
+            )
+            .status,
+            200
+        );
+        let page = call(&mut s, json!({"kind":"pending","documentId":"settings"}));
+        let journal = &page.value["data"]["journals"][0];
+        for (direction, event) in [
+            ("resume", journal["eventId"].clone()),
+            ("rollback", json!("b".repeat(64))),
+        ] {
+            let refused = call(
+                &mut s,
+                json!({"kind":"recover","documentId":"settings","journalId":journal["journalId"],"expectedEvent":event,"direction":direction}),
+            );
+            assert_eq!(refused.status, 422);
+            assert_eq!(refused.value["notApplied"], true);
+        }
+        fs::write(root.path().join("settings-π.json"), b"foreign edited bytes").unwrap();
+        let refused = call(
+            &mut s,
+            json!({"kind":"recover","documentId":"settings","journalId":journal["journalId"],"expectedEvent":journal["eventId"],"direction":"rollback"}),
+        );
+        assert_eq!(refused.status, 422);
+        assert_eq!(refused.value["notApplied"], true);
+        assert_eq!(
+            fs::read(root.path().join("settings-π.json")).unwrap(),
+            b"foreign edited bytes"
+        );
+    }
+
+    #[test]
+    fn older_unbound_native_journals_are_reported_without_empty_complete_recovery() {
+        let (_root, mut s) = fixture(true, true);
+        let p = plan(&mut s);
+        let id = p["workspacePlanId"].as_str().unwrap();
+        s.engine.approve(id, false).unwrap();
+        verify_host(&mut s, id);
+        let native=s.engine.invoke("ci_change_apply",json!({"planId":id,"mode":"workspace","idempotencyKey":"older-native-host","maxBytes":1000000})).unwrap();
+        assert_eq!(native["status"], "ok");
+        let page = call(&mut s, json!({"kind":"pending","documentId":"settings"}));
+        assert_eq!(page.status, 200);
+        assert_eq!(page.value["data"]["journals"], json!([]));
+        assert_eq!(page.value["data"]["complete"], false);
+        assert_eq!(page.value["data"]["unboundEntriesRequireHost"], 1);
+        let refused = call(
+            &mut s,
+            json!({"kind":"recover","documentId":"settings","journalId":native["data"]["receipt"]["id"],"expectedEvent":"c".repeat(64),"direction":"rollback"}),
+        );
+        assert_eq!(refused.status, 422);
+        assert_eq!(refused.value["notApplied"], true);
     }
 }

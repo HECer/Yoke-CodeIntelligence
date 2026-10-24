@@ -13,12 +13,19 @@ use similar::TextDiff;
 use std::{
     collections::BTreeMap,
     fs,
-    io::Write,
+    io::{Read, Write},
     path::Path,
     time::{SystemTime, UNIX_EPOCH},
 };
 #[path = "changes_plan.rs"]
 mod checked_plan;
+#[path = "changes_dashboard.rs"]
+mod dashboard;
+pub(crate) use dashboard::DocumentBinding;
+pub(crate) use dashboard::{
+    ReviewedDocumentJournal, document_journal_page,
+    retention_projection as journal_retention_projection, review_document_journal,
+};
 #[path = "changes_directory.rs"]
 mod directory;
 #[path = "changes_symbol_delete.rs"]
@@ -163,7 +170,7 @@ fn recovery_failure(store: &Store, receipt: &mut Receipt, error: anyhow::Error) 
     receipt.status = "recovery_required".into();
     // The durable intent remains authoritative even when the shared deadline or
     // database contention prevents an emergency update after a source write.
-    let emergency_persisted = store.record("journal", &receipt.id, receipt).is_ok();
+    let emergency_persisted = dashboard::record_journal(store, receipt, None).is_ok();
     RecoveryRequired {
         journal_id: receipt.id.clone(),
         reason: error.to_string(),
@@ -723,6 +730,31 @@ pub fn apply(
     allow_writes: bool,
     deadline: &Deadline,
 ) -> Result<Receipt> {
+    apply_inner(store, root, args, allow_writes, None, deadline)
+}
+pub(crate) fn apply_document(
+    store: &Store,
+    root: &Path,
+    args: &Value,
+    allow_writes: bool,
+    binding: &DocumentBinding,
+    deadline: &Deadline,
+) -> Result<Receipt> {
+    ensure!(
+        allow_writes,
+        "Dashboard project writes require host permission"
+    );
+    binding.validate(store)?;
+    apply_inner(store, root, args, allow_writes, Some(binding), deadline)
+}
+fn apply_inner(
+    store: &Store,
+    root: &Path,
+    args: &Value,
+    allow_writes: bool,
+    binding: Option<&DocumentBinding>,
+    deadline: &Deadline,
+) -> Result<Receipt> {
     let id = args["planId"]
         .as_str()
         .ok_or_else(|| anyhow::anyhow!("planId required"))?;
@@ -743,6 +775,15 @@ pub fn apply(
         "Invalid apply mode"
     );
     let receipt_id = identity(&(id, key));
+    if let Some(binding) = binding {
+        ensure!(
+            mode == "workspace",
+            "Dashboard document application requires workspace mode"
+        );
+        let plan = load_checked_plan(store, id, deadline)?;
+        binding.check_plan(store, &plan)?;
+        dashboard::check_saved_binding(store, &receipt_id, binding)?;
+    }
     if let Ok(previous) = store.get_record::<Receipt>("receipt", &receipt_id) {
         ensure!(
             previous.mode == mode,
@@ -831,7 +872,7 @@ pub fn apply(
     if let Some(directory) = &plan.directory_move {
         directory.check_before(root, deadline)?;
     }
-    store.record("journal", &receipt_id, &receipt)?;
+    dashboard::record_journal(store, &receipt, binding)?;
     let result = (|| -> Result<()> {
         if let Some(directory) = &plan.directory_move {
             directory.rename(root, deadline)?;
@@ -851,13 +892,13 @@ pub fn apply(
                 write_file(store, root, file, true)?;
             }
             receipt.applied_paths.push(file.path.clone());
-            store.record("journal", &receipt_id, &receipt)?;
+            dashboard::record_journal(store, &receipt, binding)?;
         }
         if let Some(directory) = &plan.directory_move {
             directory.check_after(root, &store.snapshot(&plan.result_snapshot_id)?, deadline)?;
         }
         receipt.status = "applied".into();
-        store.record("journal", &receipt_id, &receipt)?;
+        dashboard::record_journal(store, &receipt, binding)?;
         store.record("receipt", &receipt_id, &receipt)?;
         Ok(())
     })();
@@ -867,15 +908,115 @@ pub fn apply(
     Ok(receipt)
 }
 pub fn recover(store: &Store, root: &Path, journal: &str, allow_writes: bool) -> Result<Receipt> {
+    let mut started = false;
+    recover_inner(
+        store,
+        root,
+        journal,
+        allow_writes,
+        None,
+        &Deadline::new(30_000),
+        &mut started,
+    )
+    .map(|(receipt, _)| receipt)
+}
+pub(crate) fn recover_document(
+    store: &Store,
+    root: &Path,
+    review: &ReviewedDocumentJournal,
+    allow_writes: bool,
+    deadline: &Deadline,
+    started: &mut bool,
+) -> Result<(Receipt, bool)> {
+    let bound = store.inherited_deadline(deadline)?;
+    bound.check()?;
+    let prior = store.replace_deadline(Some(bound.clone()));
+    let result = recover_inner(
+        store,
+        root,
+        &review.receipt().id,
+        allow_writes,
+        Some(review),
+        &bound,
+        started,
+    );
+    store.replace_deadline(prior);
+    result
+}
+fn recovery_matches(
+    root: &Path,
+    file: &PlannedFile,
+    after: bool,
+    maximum: Option<usize>,
+) -> Result<bool> {
+    let Some(maximum) = maximum else {
+        return matches_file(root, file, after);
+    };
+    let expected = if after {
+        &file.after_hash
+    } else {
+        &file.before_hash
+    };
+    let path = scoped(root, &file.path)?;
+    let input = match fs::File::open(path) {
+        Ok(file) => file,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(expected.is_none()),
+        Err(error) => return Err(error.into()),
+    };
+    ensure!(
+        input.metadata()?.len() <= maximum as u64,
+        "Selected recovery file capacity exceeded"
+    );
+    let mut bytes = Vec::new();
+    input.take(maximum as u64 + 1).read_to_end(&mut bytes)?;
+    ensure!(
+        bytes.len() <= maximum,
+        "Selected recovery file grew beyond capacity"
+    );
+    Ok(expected
+        .as_ref()
+        .is_some_and(|hash| crate::model::hash(&bytes) == *hash))
+}
+fn recover_inner(
+    store: &Store,
+    root: &Path,
+    journal: &str,
+    allow_writes: bool,
+    review: Option<&ReviewedDocumentJournal>,
+    deadline: &Deadline,
+    started: &mut bool,
+) -> Result<(Receipt, bool)> {
     ensure!(allow_writes, "Recovery requires host write permission");
+    deadline.check()?;
     let _lock = lock(store)?;
-    let mut receipt: Receipt = store.get_record("journal", journal)?;
-    let plan = load_checked_plan(store, &receipt.plan_id, &Deadline::new(30_000))?;
+    let (mut receipt, plan) = if let Some(review) = review {
+        let fresh = dashboard::review_document_journal(store, journal, review.binding(), deadline)?;
+        ensure!(
+            fresh.event_id() == review.event_id()
+                && serde_json::to_value(fresh.plan())? == serde_json::to_value(review.plan())?,
+            "Workspace recovery review is stale"
+        );
+        for file in &fresh.plan().files {
+            crate::source_exclusions::check_current_write_scope(store, &file.path, deadline)?;
+            let maximum = Some(review.binding().max_document_bytes);
+            ensure!(
+                recovery_matches(root, file, false, maximum)?
+                    || recovery_matches(root, file, true, maximum)?,
+                "Foreign selected-file changes preserved"
+            );
+        }
+        (fresh.receipt().clone(), fresh.plan().clone())
+    } else {
+        let receipt: Receipt = store.get_record("journal", journal)?;
+        let plan = load_checked_plan(store, &receipt.plan_id, &Deadline::new(30_000))?;
+        (receipt, plan)
+    };
     ensure!(
         receipt.status != "rolled_back",
         "Journal already rolled back"
     );
     let mut conflicts = Vec::new();
+    let mut source_written = false;
     if let Some(directory) = &plan.directory_move {
         let deadline = store.inherited_deadline(&Deadline::new(30_000))?;
         if let Err(error) = directory.recover(store, root, &plan, &deadline) {
@@ -886,6 +1027,7 @@ pub fn recover(store: &Store, root: &Path, journal: &str, allow_writes: bool) ->
     }
     // Check all planned files, including a write that preceded its journal update.
     for file in plan.files.iter().rev() {
+        deadline.check()?;
         if plan
             .directory_move
             .as_ref()
@@ -893,11 +1035,14 @@ pub fn recover(store: &Store, root: &Path, journal: &str, allow_writes: bool) ->
         {
             continue;
         }
-        if matches_file(root, file, false)? {
+        let maximum = review.map(|r| r.binding().max_document_bytes);
+        if recovery_matches(root, file, false, maximum)? {
             continue;
         }
-        if matches_file(root, file, true)? {
+        if recovery_matches(root, file, true, maximum)? {
+            *started = true;
             write_file(store, root, file, false)?;
+            source_written = true;
         } else {
             conflicts.push(file.path.clone());
         }
@@ -908,13 +1053,15 @@ pub fn recover(store: &Store, root: &Path, journal: &str, allow_writes: bool) ->
         "recovery_required"
     }
     .into();
-    store.record("journal", journal, &receipt)?;
+    deadline.check()?;
+    *started = true;
+    dashboard::record_journal(store, &receipt, None)?;
     store.record("receipt", journal, &receipt)?;
     ensure!(
         conflicts.is_empty(),
         "Foreign edits preserved; manual recovery required for {conflicts:?}"
     );
-    Ok(receipt)
+    Ok((receipt, source_written))
 }
 pub fn verify_syntax(store: &Store, plan: &Plan) -> Result<Value> {
     let checked = load_checked_plan(store, &plan.id, &Deadline::new(30_000))?;

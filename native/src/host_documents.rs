@@ -321,8 +321,16 @@ impl Access {
             held.path == *bound_path && held.identity == *bound_identity,
             "Project document Engine root changed"
         );
-        let snapshot = self.read(id, deadline)?;
-        let relative = Path::new(&snapshot.path).strip_prefix(bound_path)?;
+        let _guards = self.hold_bindings(id, deadline)?;
+        let selected = &self.documents[id];
+        let target = selected.parent_path.join(
+            selected
+                .spec
+                .path
+                .file_name()
+                .context("Project document leaf required")?,
+        );
+        let relative = target.strip_prefix(bound_path)?;
         ensure!(
             relative
                 .components()

@@ -62,6 +62,33 @@ fn pin_and_every_source_bound_workflow_record_protect_history() {
     }
 }
 #[test]
+fn dashboard_journal_provenance_does_not_retain_source_but_native_fields_still_do() {
+    for native_reference in [false, true] {
+        let (_dir, engine, old, current) = history();
+        let mut row =
+            json!({"dashboardDocument":{"accessBinding":old,"path":old,"documentId":old}});
+        if native_reference {
+            row["snapshotId"] = json!(old);
+        }
+        engine
+            .store
+            .record("journal", "owned-provenance-fixture", &row)
+            .unwrap();
+        let report =
+            retention::plan(&engine.store, &Policy::default(), &Deadline::new(10_000)).unwrap();
+        assert_eq!(
+            report["snapshotIds"],
+            if native_reference {
+                json!([])
+            } else {
+                json!([old])
+            }
+        );
+        assert!(engine.store.snapshot(&current).is_ok());
+        assert!(engine.store.snapshot(&old).is_ok());
+    }
+}
+#[test]
 fn unknown_record_blocks_retirement_even_without_explicit_hash_fields() {
     let (_dir, engine, _, _) = history();
     engine

@@ -204,6 +204,8 @@ pub(crate) enum DocumentRequest {
     },
     Pending {
         document_id: String,
+        #[serde(default)]
+        cursor: Option<String>,
     },
     Recover {
         document_id: String,
@@ -219,7 +221,7 @@ impl DocumentRequest {
             | Self::Plan { document_id, .. }
             | Self::Apply { document_id, .. }
             | Self::Inspect { document_id, .. }
-            | Self::Pending { document_id }
+            | Self::Pending { document_id, .. }
             | Self::Recover { document_id, .. } => document_id,
         }
     }
@@ -236,6 +238,12 @@ impl DocumentRequest {
             ),
             Self::Apply { plan_id, .. } | Self::Inspect { plan_id, .. } => {
                 ensure!(valid_id(plan_id), "dashboard_document_plan_id_invalid")
+            }
+            Self::Pending { cursor, .. } => {
+                ensure!(
+                    cursor.as_deref().is_none_or(valid_id),
+                    "dashboard_document_cursor_invalid"
+                )
             }
             Self::Recover {
                 journal_id,

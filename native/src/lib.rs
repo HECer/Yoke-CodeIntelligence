@@ -371,6 +371,23 @@ impl Engine {
         Ok((snapshot, graph))
     }
     pub fn invoke(&mut self, tool: &str, args: Value) -> Result<Value> {
+        self.invoke_bound(tool, args, None)
+    }
+    /// Trusted Session route only; a serialized request cannot install this
+    /// provenance context or bypass ordinary validation/write admission.
+    pub(crate) fn invoke_document_apply(
+        &mut self,
+        args: Value,
+        binding: changes::DocumentBinding,
+    ) -> Result<Value> {
+        self.invoke_bound("ci_change_apply", args, Some(binding))
+    }
+    fn invoke_bound(
+        &mut self,
+        tool: &str,
+        args: Value,
+        document: Option<changes::DocumentBinding>,
+    ) -> Result<Value> {
         let started = Instant::now();
         let deadline = Deadline::new(
             args["timeoutMs"]
@@ -469,8 +486,18 @@ impl Engine {
                 return Ok(status);
             }
             if tool == "ci_change_apply" {
-                let receipt =
-                    changes::apply(&self.store, &self.root, &args, self.allow_writes, &deadline)?;
+                let receipt = if let Some(binding) = &document {
+                    changes::apply_document(
+                        &self.store,
+                        &self.root,
+                        &args,
+                        self.allow_writes,
+                        binding,
+                        &deadline,
+                    )?
+                } else {
+                    changes::apply(&self.store, &self.root, &args, self.allow_writes, &deadline)?
+                };
                 sid = Some(receipt.snapshot_id.clone());
                 return Ok(json!({"receipt":receipt}));
             }
