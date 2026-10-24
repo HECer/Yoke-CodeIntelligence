@@ -18,9 +18,12 @@ const MAX_PLAN: usize = 512_000;
 mod journal;
 pub use journal::{
     Approval, BindingMigrationApproval, BindingMigrationAuthority, BindingMigrationPlan,
-    BindingMigrationReceipt, BindingMigrationReview, JournalView, Receipt, RecoveryApproval,
-    RecoveryDirection, WriteAuthority, apply_binding_migration, inspect_binding_migration,
-    plan_binding_migration, recover_binding_migration,
+    BindingMigrationReceipt, BindingMigrationReview, HistoryArchiveAccess, HistoryArchiveApproval,
+    HistoryArchivePlan, HistoryArchiveRecord, HistoryArchiveReview, JournalView, Receipt,
+    RecoveryApproval, RecoveryDirection, WriteAuthority, apply_binding_migration,
+    apply_history_archive, inspect_binding_migration, inspect_history_archive,
+    plan_binding_migration, plan_history_archive, read_history_archive_record,
+    recover_binding_migration, recover_history_archive,
 };
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]

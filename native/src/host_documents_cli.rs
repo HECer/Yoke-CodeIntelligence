@@ -10,8 +10,8 @@ use std::{
 use yoke::{
     capture::Deadline,
     host_install::documents::{
-        self, Access, BindingMigrationAuthority, BindingMigrationPlan, Config, ProjectRoot,
-        RecoveryDirection, WriteAuthority,
+        self, Access, BindingMigrationAuthority, BindingMigrationPlan, Config,
+        HistoryArchiveAccess, HistoryArchivePlan, ProjectRoot, RecoveryDirection, WriteAuthority,
     },
 };
 
@@ -21,11 +21,58 @@ pub struct Arguments {
     from_selection: PathBuf,
     #[arg(long)]
     to_selection: PathBuf,
+    #[arg(long, default_value_t = 512)]
+    history_record_budget: usize,
     #[command(subcommand)]
     operation: Operation,
 }
 #[derive(Subcommand)]
 enum Operation {
+    #[command(name = "history-read")]
+    HistoryRead {
+        #[arg(long)]
+        plan: PathBuf,
+        #[arg(long)]
+        archive_root: PathBuf,
+        #[arg(long)]
+        record: String,
+    },
+    #[command(name = "history-plan")]
+    HistoryPlan {
+        #[arg(long)]
+        migration: PathBuf,
+        #[arg(long)]
+        archive_root: PathBuf,
+    },
+    #[command(name = "history-inspect")]
+    HistoryInspect {
+        #[arg(long)]
+        plan: PathBuf,
+        #[arg(long)]
+        archive_root: PathBuf,
+    },
+    #[command(name = "history-apply")]
+    HistoryApply {
+        #[arg(long)]
+        plan: PathBuf,
+        #[arg(long)]
+        archive_root: PathBuf,
+        #[arg(long)]
+        allow_host_writes: bool,
+    },
+    #[command(name = "history-recover")]
+    HistoryRecover {
+        #[arg(long)]
+        plan: PathBuf,
+        #[arg(long)]
+        archive_root: PathBuf,
+        #[arg(long)]
+        expected_event: String,
+        #[arg(long, value_enum)]
+        direction: Direction,
+        #[arg(long)]
+        allow_host_writes: bool,
+    },
     #[command(name = "binding-plan")]
     Plan {
         #[arg(long)]
@@ -81,14 +128,30 @@ impl Arguments {
         }
         | Operation::Recover {
             allow_host_writes, ..
+        }
+        | Operation::HistoryApply {
+            allow_host_writes, ..
+        }
+        | Operation::HistoryRecover {
+            allow_host_writes, ..
         } = &self.operation
         {
             ensure!(
                 *allow_host_writes,
-                "Host binding migration requires --allow-host-writes"
+                "{} requires --allow-host-writes",
+                if matches!(
+                    self.operation,
+                    Operation::HistoryApply { .. } | Operation::HistoryRecover { .. }
+                ) {
+                    "Host history archival"
+                } else {
+                    "Host binding migration"
+                }
             );
         }
-        if let Operation::Recover { expected_event, .. } = &self.operation {
+        if let Operation::Recover { expected_event, .. }
+        | Operation::HistoryRecover { expected_event, .. } = &self.operation
+        {
             ensure!(
                 yoke::model::valid_id(expected_event),
                 "Explicit migration event review required"
@@ -161,6 +224,81 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<()> {
     let from = access(&args.from_selection, &d)?;
     let to = access(&args.to_selection, &d)?;
     match &args.operation {
+        Operation::HistoryPlan {
+            migration,
+            archive_root,
+        } => {
+            let migration: BindingMigrationPlan = read(migration, 32000, &d)?;
+            let a = WriteAuthority::new(&from)?;
+            let b = WriteAuthority::new(&to)?;
+            let access =
+                HistoryArchiveAccess::new(&from, &to, &migration, archive_root, &a, &b, &d)?
+                    .with_record_budget(args.history_record_budget)?;
+            print(
+                &documents::plan_history_archive(&from, &to, &access, &migration, &d)?,
+                maximum,
+                &d,
+            )
+        }
+        Operation::HistoryInspect { plan, archive_root }
+        | Operation::HistoryRead {
+            plan, archive_root, ..
+        }
+        | Operation::HistoryApply {
+            plan, archive_root, ..
+        }
+        | Operation::HistoryRecover {
+            plan, archive_root, ..
+        } => {
+            let plan: HistoryArchivePlan = read(plan, 512000, &d)?;
+            let a = WriteAuthority::new(&from)?;
+            let b = WriteAuthority::new(&to)?;
+            let access =
+                HistoryArchiveAccess::new(&from, &to, &plan.migration, archive_root, &a, &b, &d)?
+                    .with_record_budget(args.history_record_budget)?;
+            let result = match &args.operation {
+                Operation::HistoryRead { record, .. } => {
+                    return print(
+                        &documents::read_history_archive_record(
+                            &from, &to, &access, &plan, record, &d,
+                        )?,
+                        maximum,
+                        &d,
+                    );
+                }
+                Operation::HistoryInspect { .. } => {
+                    documents::inspect_history_archive(&from, &to, &access, &plan, &d)
+                }
+                Operation::HistoryApply { .. } => {
+                    let approved = access.approve(&from, &to, &plan, &d)?;
+                    documents::apply_history_archive(&from, &to, &access, &approved, &plan, &d)
+                }
+                Operation::HistoryRecover {
+                    expected_event,
+                    direction,
+                    ..
+                } => documents::recover_history_archive(
+                    &from,
+                    &to,
+                    &access,
+                    &plan,
+                    expected_event,
+                    match direction {
+                        Direction::Resume => RecoveryDirection::Resume,
+                        Direction::Rollback => RecoveryDirection::Rollback,
+                    },
+                    &d,
+                ),
+                _ => unreachable!(),
+            };
+            let receipt = result.with_context(|| format!("History archive {} did not confirm completion; preserve the archive and original journals and inspect before retrying", plan.id))?;
+            print(&receipt, maximum, &d).with_context(|| {
+                format!(
+                    "History archive {} completed; output delivery failed",
+                    plan.id
+                )
+            })
+        }
         Operation::Plan {
             from_document,
             to_document,
@@ -258,6 +396,46 @@ mod tests {
             let parsed = Cli::try_parse_from(input).unwrap();
             let error = run(&parsed.args, 10000, 64000).unwrap_err();
             assert!(error.to_string().contains("--allow-host-writes"));
+        }
+    }
+    #[test]
+    fn history_mutation_permission_precedes_missing_selection_plan_and_archive_paths() {
+        let event = "a".repeat(64);
+        for operation in [
+            vec![
+                "history-apply",
+                "--plan",
+                "missing-plan.json",
+                "--archive-root",
+                "missing-archive",
+            ],
+            vec![
+                "history-recover",
+                "--plan",
+                "missing-plan.json",
+                "--archive-root",
+                "missing-archive",
+                "--expected-event",
+                &event,
+                "--direction",
+                "resume",
+            ],
+        ] {
+            let mut input = vec![
+                "owned",
+                "--from-selection",
+                "missing-old.json",
+                "--to-selection",
+                "missing-new.json",
+            ];
+            input.extend(operation);
+            let parsed = Cli::try_parse_from(input).unwrap();
+            assert!(
+                run(&parsed.args, 10000, 64000)
+                    .unwrap_err()
+                    .to_string()
+                    .contains("Host history archival requires --allow-host-writes")
+            );
         }
     }
 }

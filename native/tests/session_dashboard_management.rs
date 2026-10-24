@@ -1374,3 +1374,72 @@ fn absent_or_null_raw_log_grant_preserves_serialized_management_defaults() {
         .is_err()
     );
 }
+
+#[cfg(windows)]
+#[test]
+fn pending_host_history_is_explicitly_incomplete_and_never_an_empty_complete_recovery_list() {
+    let (temp, mut session, path) = document_session(true);
+    let (address, token) = start(&mut session);
+    let (_, loaded) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"read","documentId":"host"}),
+    );
+    let (_, planned) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"plan","documentId":"host","expectedRevision":loaded["data"]["document"]["revision"],"content":"owned saved configuration\r\n"}),
+    );
+    let (status, reply) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"apply","documentId":"host","planId":planned["data"]["plan"]["id"]}),
+    );
+    assert_eq!(status, 200, "{reply}");
+    let owner = fs::read_dir(temp.path())
+        .unwrap()
+        .map(|e| e.unwrap().path())
+        .find(|p| {
+            p.file_name()
+                .unwrap()
+                .to_string_lossy()
+                .starts_with(".yoke-doc-owner-")
+        })
+        .unwrap();
+    let owner_name = owner.file_name().unwrap().to_str().unwrap();
+    let target = owner_name
+        .strip_prefix(".yoke-doc-owner-")
+        .unwrap()
+        .strip_suffix(".json")
+        .unwrap();
+    let marker = temp
+        .path()
+        .join(format!(".yoke-doc-history-{target}.pending.json"));
+    fs::write(&marker, b"foreign pending marker must be preserved").unwrap();
+    let original = fs::read(&path).unwrap();
+    let (status, pending) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"pending","documentId":"host"}),
+    );
+    assert_eq!(status, 200, "{pending}");
+    assert_eq!(pending["data"]["blockedByHistoryArchive"], true);
+    assert_eq!(pending["data"]["complete"], false);
+    assert_eq!(pending["data"]["journals"], json!([]));
+    let (status, _) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"apply","documentId":"host","planId":planned["data"]["plan"]["id"]}),
+    );
+    assert_eq!(status, 422);
+    assert_eq!(fs::read(path).unwrap(), original);
+    assert_eq!(
+        fs::read(marker).unwrap(),
+        b"foreign pending marker must be preserved"
+    );
+}

@@ -147,6 +147,10 @@ impl Runtime {
                     "Global document recovery does not use workspace cursors"
                 );
                 self.writable(id)?;
+                if self.access.history_archive_blocked(id, d)? {
+                    return Ok(json!({"journals":[],"blockedByHistoryArchive":true,
+                        "complete":false,"fileChanged":false,"metadataChanged":false,"sourceWritten":false}));
+                }
                 if self.access.binding_migration_blocked(id, d)? {
                     return Ok(json!({"journals":[],"blockedByBindingMigration":true,
                         "complete":false,"fileChanged":false,"metadataChanged":false,"sourceWritten":false}));

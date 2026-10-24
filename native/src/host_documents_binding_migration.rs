@@ -1,5 +1,12 @@
 //! Explicit dual-authority migration of restrictive metadata, never file content.
 use super::*;
+#[path = "host_documents_history_archive.rs"]
+mod history_archive;
+pub use history_archive::{
+    HistoryArchiveAccess, HistoryArchiveApproval, HistoryArchivePlan, HistoryArchiveRecord,
+    HistoryArchiveReview, apply_history_archive, inspect_history_archive, plan_history_archive,
+    read_history_archive_record, recover_history_archive,
+};
 
 const MAX_MIGRATION: usize = 32_000;
 const MAX_MIGRATION_EVENTS: u32 = 16;
@@ -20,7 +27,11 @@ pub(super) fn require_no_pending(selected: &BoundDocument, d: &Deadline) -> Resu
         !exists(&marker_path(selected)?, d)?,
         "Host document binding migration is pending; use its explicit host recovery workflow"
     );
+    history_archive::require_no_pending(selected, d)?;
     Ok(())
+}
+pub(super) fn history_pending(selected: &BoundDocument, d: &Deadline) -> Result<bool> {
+    history_archive::pending(selected, d)
 }
 pub(super) fn pending_metadata_present(selected: &BoundDocument, d: &Deadline) -> Result<bool> {
     exists(&marker_path(selected)?, d)

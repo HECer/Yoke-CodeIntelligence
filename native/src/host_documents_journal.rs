@@ -5,8 +5,11 @@ use super::*;
 mod binding_migration;
 pub use binding_migration::{
     BindingMigrationApproval, BindingMigrationAuthority, BindingMigrationPlan,
-    BindingMigrationReceipt, BindingMigrationReview, apply_binding_migration,
-    inspect_binding_migration, plan_binding_migration, recover_binding_migration,
+    BindingMigrationReceipt, BindingMigrationReview, HistoryArchiveAccess, HistoryArchiveApproval,
+    HistoryArchivePlan, HistoryArchiveRecord, HistoryArchiveReview, apply_binding_migration,
+    apply_history_archive, inspect_binding_migration, inspect_history_archive,
+    plan_binding_migration, plan_history_archive, read_history_archive_record,
+    recover_binding_migration, recover_history_archive,
 };
 
 const MAX_EVENTS: u32 = 32;
@@ -730,6 +733,14 @@ impl WriteAuthority {
     }
 }
 impl Access {
+    pub fn history_archive_blocked(&self, document_id: &str, d: &Deadline) -> Result<bool> {
+        let _guards = self.hold_bindings(document_id, d)?;
+        let selected = self
+            .documents
+            .get(document_id)
+            .context("Host document not selected")?;
+        binding_migration::history_pending(selected, d)
+    }
     /// Presence is a blocker, not proof that a serialized record grants rights.
     pub fn binding_migration_blocked(&self, document_id: &str, d: &Deadline) -> Result<bool> {
         let _guards = self.hold_bindings(document_id, d)?;
