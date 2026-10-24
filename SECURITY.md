@@ -153,3 +153,13 @@ does not change authored configuration bytes, reload profiles or revoke prior
 independent read grants. Exact recorded recovery stays host-only. Keep selections
 and journals private. These application controls do not isolate from a hostile
 process with the same host filesystem rights; no independent audit is claimed.
+
+
+Global document proposals bind the current owner generation independently of
+file and Session revision. Both approval and publication under the journal lock
+reject stale epochs after a return migration, including generationless ordinary
+proposals against migrated owners. New generation-bearing recovery journals
+check that epoch too. Legacy generationless journals retain explicit original
+event-reviewed recovery to avoid stranding interrupted writes; this exception
+does not authorize ordinary proposal approval. Serialized epochs grant no rights.
+See [generation evidence](docs/validation/integration-2026-10-24/dashboard-document-generations/README.md).

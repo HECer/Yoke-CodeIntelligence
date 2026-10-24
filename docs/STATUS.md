@@ -1,5 +1,56 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Global document proposal generations: current scoped acceptance (2026-10-24)
+
+Product `5c4dee9a4e6f23366be4c474fb9844e7be654d5d` is pushed and all three product blobs independently
+verified on GitHub. An actual old-CLI counterexample showed that an ordinary
+cached proposal could write after migration out and back, even with unchanged
+configuration bytes and Session state. The earlier migration acceptance did not
+cover that ordinary-proposal path; its broader old-review statement is superseded.
+
+New global proposals bind optional `ownerGeneration`, checked during approval
+and again under the original journal lock before publication. A return to the
+same selection cannot revive either a generationless or generation-bearing
+ordinary proposal. New generation-bearing recovery journals also bind that
+epoch. Explicit event-reviewed recovery of existing generationless journals
+remains supported; that compatibility path cannot approve an ordinary proposal.
+Absent fields preserve original serialized bytes/IDs. Project plans stay unchanged.
+
+Final scope: **810 native passed /0 failed /7 existing ignored /0 filtered**,
+thirteen unique whole groups: library678, management22, dashboard13, notes15,
+HTTP18, protocol5, steering12, selection8, settings8, project6, retention17,
+capture-changes1, main7. One byte-identical same-source library continuation is
+counted once after a downstream disk stop; no different-source group is reused.
+All1153 inputs remain exact. All-target Clippy-Dwarnings,368 format roots,
+typecheck and npm260/3 existing skips pass. Qualified current CLI SHA-256:
+`457abc343041e3cc79c173a4e0bcaefcd62e67a1b63956abb41f9b3f66a86a51`.
+
+The prior locally qualified debug CLI built from published source reproduces
+the stale write with HTTP200; it is not a published release binary. The same
+actual API worker with the corrected CLI runs native, Serena and persistent
+Python Sessions: both stale proposal forms return HTTP422, preserving exact
+file/owner/journal bytes; explicit new reviews save. Python45 stays live and
+owned process exit precedes Job cleanup. Real browser UI handlers also retain
+and lock the old draft, require explicit reload, save a newly reviewed proposal
+with the current generation in its actual journal, and end the owning Session
+before stdin EOF. The first browser run completes the file proofs but exceeds
+its300-second deadline before shutdown; it is incomplete, preserved, and excluded
+from the complete74.38-second repeat. All Jobs finish empty and the owned tab closes.
+
+Two native snapshots time out. Inspected1280/390 images are static captured-
+native-DOM rerenders, not native screenshots. Initial keyboard/click automation
+sequencing failures remain preserved; this scope claims UI handler/state checks,
+not another keyboard or accessibility certificate. Lossless resource recovery
+keeps the500MB stop,1.2GB admission, profiles and original tests unchanged.
+Protected hardlinked outputs are skipped; no deletion or system-setting change.
+[Evidence](validation/integration-2026-10-24/dashboard-document-generations/README.md).
+
+History archival still has only a work-in-progress contract and bounded journal
+byte validators; no archive CLI, removal or acceptance is claimed. Standalone
+owner deletion, remaining STATUS/Windows/Unix/upstream/Google/current VSIX,
+main and release qualification remain open. Earlier353/73/77 and ten OS1314
+prerequisites are unchanged. The overall task remains active.
+
 ## Dashboard keyboard access: scoped acceptance (2026-10-24)
 
 Product `480fb00d3ba2866cb0b0a63fb8f3e7f2361d8737` is pushed and its exact HTML blob independently
@@ -21,7 +72,7 @@ source total for this HTML change. Original Windows prerequisites, broader
 dashboard/STATUS, main and release acceptance remain open. See
 [keyboard evidence](validation/integration-2026-10-24/dashboard-keyboard/README.md).
 
-## Explicit global write-binding migration: current scoped acceptance (2026-10-24)
+## Earlier explicit global write-binding migration: scoped acceptance (2026-10-24)
 
 Product `5bd0eadd88508b889520072ad53bc1b70ba58174` is pushed and all eight product blobs independently fetched
 from GitHub. A host can now review and migrate the write binding of one exact
@@ -30,8 +81,9 @@ selection/root sets, current document and owner identity/security, exact bytes
 and closed journal histories are checked. Metadata stays in the original held
 owner file, so no absent/unbound interval admits another selection. A durable
 pending marker blocks ordinary writes and recovery until explicit host recovery.
-Fresh generations retire the preceding write selection and prevent old reviews
-from reviving when returning to it. Never-migrated format1 bytes stay unchanged;
+Fresh generations retire the preceding write selection. Ordinary cached
+proposal revival after returning was not covered here and is corrected in the
+current generation scope above. Never-migrated format1 bytes stay unchanged;
 older builds refuse migrated format2. This does not edit configuration bytes,
 reload profiles, migrate project files or grant rights from serialized data.
 

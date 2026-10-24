@@ -986,3 +986,16 @@ by migration. Old reads remain governed by the old independent read selection.
 The [805-pass scope](validation/integration-2026-10-24/dashboard-binding-migration/README.md)
 includes real CLI/stdIO/HTTP/native-browser workflows. Standalone owner deletion,
 history cleanup and broader dashboard/release acceptance remain separate.
+
+### Global proposal generation binding
+
+Global document Plan carries optional `ownerGeneration`, separately from source
+revision and Session state. Approval and write-lock publication recheck the
+admitted current owner epoch, preventing an ordinary cached proposal from
+reviving after migration out and back. New generation-bearing journals enforce
+the epoch during recovery too; existing generationless journals retain original
+explicit event-reviewed recovery. That compatibility route never admits ordinary
+proposal approval. Project/absent-field serialized identities remain unchanged.
+Canonical bounded journal header/event admission now also works on exact byte
+records without filesystem fallback; no archive mutation workflow exists yet.
+See [810-pass generation scope](validation/integration-2026-10-24/dashboard-document-generations/README.md).

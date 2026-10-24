@@ -229,3 +229,12 @@ independently authorized save.
 records13 dashboard tests, lint/format/typecheck/npm checks, actual native keyboard
 interaction and inspected desktop/mobile rerenders. Screen-reader products,
 all-browser/touch behavior and full accessibility certification remain open.
+
+The later [proposal-generation acceptance](../../docs/validation/integration-2026-10-24/dashboard-document-generations/README.md)
+corrects ordinary cached global proposals reviving after an out/back migration.
+810 native passes on1153 exact inputs, three actual API variants and real browser
+UI checks retain stale drafts, refuse their saves and require new explicit
+review. The current journal records its owner generation. Existing generationless
+recovery remains explicit. Inspected pixels are captured-DOM rerenders; the first
+browser run's deadline and snapshot timeouts are preserved. History archival
+remains [under implementation](session-dashboard-history-archive.md).

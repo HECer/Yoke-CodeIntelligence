@@ -155,3 +155,22 @@ check and confirmation, and preserves drafts on refusal. [Project-journal recove
 bounded exact-selection inspection and confirmed conditional rollback. Project
 journals accept only `rollback`; other native/older unbound journals retain the
 original host workflow. Empty pages never claim complete workspace recovery.
+
+## Proposal owner generations
+
+Current global proposals capture optional `ownerGeneration` from the admitted
+physical owner record. Ordinary approval and application compare it with the
+current generation, including under the original journal lock before binding
+or publication. Migrating away and back requires a fresh explicit review even
+if source bytes, selection and Session hash return unchanged. A generationless
+proposal cannot approve against a migrated generation. Project plans have no
+global owner generation. Missing fields preserve preceding serialization/IDs.
+
+Recovery of a new generation-bearing journal checks the same epoch. Existing
+generationless journals retain explicit current-event-reviewed recovery under
+their original owner/root/source-role checks; this cannot approve an ordinary
+proposal. Migration refuses unfinished journals. No serialized field grants
+permission, and existing read grants remain independent. The browser conservatively
+reports an unconfirmed failed save, keeps a copyable read-only draft and requires
+explicit reload before retrying. The backend proof checks exact unchanged bytes.
+See [generation acceptance](../../docs/validation/integration-2026-10-24/dashboard-document-generations/README.md).

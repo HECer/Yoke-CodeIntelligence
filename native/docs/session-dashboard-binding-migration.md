@@ -66,7 +66,9 @@ An empty or partial record therefore remains occupied and fails closed.
 
 Successful migrations add a new generation to the owner format. Older binaries
 that do not understand the format must refuse it. A later return to an earlier
-selection still receives a distinct generation, so an old review cannot revive.
+selection still receives a distinct generation. The later proposal-generation
+fix binds ordinary cached proposals to that generation; the original migration
+acceptance alone did not cover their revival path.
 Freshly created, never-migrated bindings retain their existing serialization.
 The existing format is schema1; migrated schema2 includes the fresh generation.
 Migration retires the old write selection. Independent read grants remain.
@@ -102,3 +104,13 @@ This scope implements per-target migration and retirement of the preceding write
 selection. Standalone owner deletion, journal-history removal, broader journal
 UI, automatic cleanup and full platform/release acceptance remain open. No
 default model call, project execution or system privilege change is introduced.
+
+## Cached proposals across a return migration
+
+The [current generation acceptance](../../docs/validation/integration-2026-10-24/dashboard-document-generations/README.md)
+records an actual counterexample against the preceding CLI and corrected native,
+Serena, persistent Python and browser checks. Global proposals now bind the
+owner generation separately from file/Session revision and recheck it under the
+write lock. Fresh explicit review is required after returning to a selection.
+Old generationless journal recovery stays explicit and separate from ordinary
+proposal approval. Never-migrated/project/absent-field serialization stays exact.

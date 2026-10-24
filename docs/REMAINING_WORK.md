@@ -2,6 +2,20 @@
 
 ## Current dashboard management scope (2026-10-24)
 
+The [current proposal-generation correction](validation/integration-2026-10-24/dashboard-document-generations/README.md)
+closes ordinary cached global reviews reviving after a return migration. Both
+approval and locked publication bind the current owner epoch; explicit legacy
+generationless journal recovery stays separate.810 native passes/0 failures/7
+existing ignores across13 unique whole groups,1153 exact inputs, lint/format/
+typecheck/npm pass. The library continuation is same-source, counted once. An
+actual old-CLI counterexample, three corrected API variants and native browser
+UI save/refusal/own-exit proofs are retained. This supersedes the earlier ordinary
+proposal-revocation statement, while preserving the historical805 scope below.
+History archival has only a WIP contract and pure bounded byte validators; its
+CLI/removal/recovery and live acceptance remain open. No current VSIX/release
+binary has been admitted; the previous staged source is historical.
+
+
 [Current scoped acceptance](validation/integration-2026-10-24/dashboard-binding-migration/README.md)
 adds explicit host-only per-target migration of global write bindings. Both
 complete selections and independent authorities, current physical/security/byte
