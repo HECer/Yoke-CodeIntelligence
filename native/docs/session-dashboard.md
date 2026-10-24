@@ -35,7 +35,14 @@ An additional `management.languageServers` host allowlist enables project-local
 provider selection and restoration of host defaults. Backend order remains
 significant; an empty legacy selection disables semantic providers explicitly.
 Registration alone grants no activation, and selection starts no process.
-See the [selection contract and partial acceptance](session-dashboard-language-servers.md).
+See the [selection contract and scoped acceptance](session-dashboard-language-servers.md).
+
+A separate `management.documents` selection adds explicit UTF-8 file reads and
+reviewed global host-file writes with durable conditional recovery. Project
+files remain read only. The Windows guarded backend permanently binds each written
+target to its original selection/journal; migration and retirement are unavailable.
+Saving bytes does not reload the running configuration. See the
+[file contract](session-dashboard-documents.md).
 
 The CLI `serve-session` host installs the owner-thread driver when management is
 explicitly selected. Its native/Serena profiles expose opening operations.
@@ -79,9 +86,9 @@ record arguments, results, source bytes, command lines or error messages. Unknow
 operation text is replaced by a fixed label. This is not a raw log viewer or a
 count of every public protocol request. Evicted activity rows are disclosed.
 
-Configuration-file editing with durable conditional
-recovery, raw log access, tray integration, automatic browser opening and MCP
-shutdown remain unavailable in this build. Their absence is disclosed rather than
+Project-file writes through existing approval/verification gates, binding migration,
+raw log access, tray integration, automatic browser opening and MCP shutdown remain
+unavailable in this build. Their absence is disclosed rather than
 as empty successful results. Source-write approval and host execution grants are
 not changed through management. Existing guarded edit/approval/verification and
 recovery workflows retain their independent authority.
@@ -117,6 +124,7 @@ Host bounds (camelCase) are:
 | `management.sessionControls` | `true` when opted in | boolean |
 | `management.memories` | `true` when opted in | boolean; write policy remains separate |
 | `management.operationTimeoutMs` | `30000` | `100`–`60000` |
+| `management.documents` | absent/null | closed explicit selection; Windows guarded backend |
 
 The listener starts only on the explicit open operation. Repeated opens reuse the
 live instance; an expired instance is replaced with a fresh capability. Dropping
@@ -149,3 +157,11 @@ This independent native view and management slice address part of the public das
 the [public guide](https://oraios.github.io/serena/02-usage/060_dashboard.html)
 also describes broader management and raw-log features not implemented here.
 It is not a parity or cross-platform runtime certificate.
+
+The later [selected-document/language acceptance](../../docs/validation/integration-2026-10-24/dashboard-documents/README.md)
+records 733 scoped native passes and current CLI stdio/HTTP/native-browser flows.
+Nine byte-identical integration groups are reused once after a controller cwd
+failure before library execution. Native snapshot capture timed out: pixel
+artifacts distinguish synthetic fixtures and static captured-native-DOM rerenders.
+File actions currently use the fixed `other_operation` activity label, while
+arguments/results remain excluded. Full dashboard/platform certification is open.

@@ -1,5 +1,11 @@
 # Dashboard language selection: partial acceptance
 
+This is the historical disk-limited checkpoint. The later
+[selected-document/language acceptance](../dashboard-documents/README.md)
+qualifies the current CLI, expanded groups, stdio/HTTP and actual native-browser
+selection. The original checkpoint values below remain historical evidence.
+
+
 Code Intelligence native 0.5.0, source product
 `4d353f0a9c0e31da3e0888b7990f84be8d06dce3`. All eight product GitHub blobs
 were independently fetched and matched the staged source. The integration PR

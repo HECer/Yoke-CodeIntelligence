@@ -1,9 +1,11 @@
 # Dashboard language-server selection
 
-This Code Intelligence 0.5.0 source checkpoint has partial acceptance. The final
-library, all-target lint/format and TypeScript checks pass. The new CLI build
-stopped at the existing 500MB disk guard; final CLI/native-browser and expanded
-integration acceptance remain pending. See the [evidence](../../docs/validation/integration-2026-10-24/dashboard-languages/README.md).
+The later Code Intelligence 0.5.0 [733-pass scoped acceptance](../../docs/validation/integration-2026-10-24/dashboard-documents/README.md)
+qualifies current CLI stdio/HTTP and actual native-browser provider order,
+explicit disable, reset and stale-draft handling. It supersedes the earlier
+[disk-limited checkpoint](../../docs/validation/integration-2026-10-24/dashboard-languages/README.md)
+for this scope. Owned fixture dispatch does not certify external backend versions
+or universal semantic quality.
 
 The host independently opts into selection from already trusted registrations:
 
@@ -62,5 +64,6 @@ pinned to its original project and Session revision; later session changes lock
 it until explicit Refresh session. Confirmation retains the original binding.
 Display strings use text nodes, and desktop/mobile rendering is separately
 identified as synthetic visual acceptance. Broader accessibility, raw logs,
-configuration-file recovery, owned shutdown and full dashboard/STATUS acceptance
-remain open.
+project configuration writes, binding migration, owned shutdown and full
+dashboard/STATUS acceptance remain open. Selected global file recovery is
+[separately implemented](session-dashboard-documents.md).

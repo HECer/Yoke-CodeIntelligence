@@ -2,29 +2,28 @@
 
 ## Current dashboard management scope (2026-10-24)
 
-Registered language/backend selection is now implemented under an independent
-host allowlist, with project-local persisted overrides and stale-state/registry
-guards. Its [acceptance remains partial](validation/integration-2026-10-24/dashboard-languages/README.md):
-the new CLI build hit the 500MB disk guard, so the expanded matrix and new native
-stdio/HTTP/browser acceptance still need to finish. The older 13-function run
-precedes final capability/activity/UI refinements; do not promote it to a
-final-source result. The full dashboard action remains active.
+[Current scoped acceptance](validation/integration-2026-10-24/dashboard-documents/README.md)
+completes the earlier language CLI/stdio/HTTP/native-browser acceptance and adds
+selected global configuration-file editing with reviewed proposals and durable
+conditional recovery. Selected project files can be read. Final scope has 733
+native passes in eleven whole groups, zero failures, seven existing ignores and
+1138 unchanged inputs; lint/format/typecheck/npm and current CLI live checks pass.
+Synthetic pixels and captured-native-DOM rerenders are distinguished from actual
+native screenshots. This does not upgrade original353/73/77-runtime or whole
+Windows/platform/upstream certificates.
 
-[Scoped native acceptance](validation/integration-2026-10-24/dashboard-management/README.md)
-now covers explicit host management for current-session project/mode controls and
-project named-memory CRUD. The non-Send Session stays on its owning host thread,
-revision/absence checks prevent overwrites, and operation/lifetime/revocation
-bounds survive idle input. Real Session/Serena/Python stdio, two independent
-MCP-HTTP sessions and the actual native browser are checked. The 677-pass matrix
-is scoped; original353/73/77-runtime and whole Windows/platform claims remain.
+The full dashboard action remains active. Complete project configuration writes
+through the original workspace permission, exact approval and executed-verification
+gates; automatic document write-binding migration/retirement; meaningful document
+activity labels (currently the fixed `other_operation` fallback); explicit private
+raw logs; and shutdown restricted to the owning MCP resource. Global file writes
+must retain their separate host selection, physical/security preconditions and
+pinned journal namespace. A configuration file edit must not reload or execute it.
 
-Complete selection acceptance and the remaining management action: explicitly host-selected global and
-project configuration documents with hash CAS and durable conditional recovery,
-explicit private raw logs, and shutdown restricted to the owning MCP resource.
-Dormant backend registration alone must not become selection/execution authority.
-Tray, automatic browser opening and broader keyboard/touch/accessibility and
-all-browser acceptance remain open. The current implementation does not replace
-those requirements with a notes-only scope, and the full action is not done.
+Tray, automatic opening and broader keyboard/touch/accessibility/all-browser
+acceptance remain open. The existing project/mode/memory management foundation is
+[separately qualified](validation/integration-2026-10-24/dashboard-management/README.md).
+Neither this file nor the new acceptance marks the full dashboard or STATUS done.
 
 ## Captured import attributes
 

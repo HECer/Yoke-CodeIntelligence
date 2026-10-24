@@ -1,6 +1,48 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
-## Dashboard language selection: implementation with partial acceptance (2026-10-24)
+## Selected global documents and language selection: scoped acceptance (2026-10-24)
+
+Product `5e094c6dded5c0ab2965f5bfc74d42ff25ad886d` is pushed to the integration
+branch; all twelve product blobs are independently verified on GitHub. Explicit
+host selections now read global/active-project UTF-8 files and edit independently
+writable global files through reviewed proposals, physical/security revisions,
+atomic journals and conditional resume/rollback. Original write authority is
+permanently bound beside each written global target; selection/journal changes
+cannot silently bypass it. Project writes and automatic migration remain unavailable.
+The selected-document backend is Windows only. Running configuration is not reloaded.
+
+Final scoped acceptance on 1138 unchanged inputs has **733 native passes, zero
+failures, seven existing ignores and zero filtered functions** in eleven whole
+groups, including all 623 library and 19 dashboard-management functions. Nine
+integration groups (104 passes) are reused exactly once after a controller cwd
+mistake prevented the subsequent library command from starting. The corrected
+qualifier rechecks their exact inputs/artifact hashes and runs library, CLI tests
+and build. All-target Clippy with warnings denied, all 368 format roots, typecheck
+and npm260/3 existing skips pass. Current CLI SHA is
+`b18eff3d4e2f088656ae636190ff22309a657a99212514a8898ab4c49f662579`.
+
+Actual CLI acceptance covers three stdio variants, Python state 41 through 44,
+two independent HTTP Sessions, file CAS and actor-local proposals, deliberately
+shared global file visibility, project read-only gates and provider selection/
+disable/reset. The actual browser checks file review/confirmation/save with
+BOM/CRLF, stale drafts and provider order/disable/reset. Actual mobile DOM bounds
+are checked; inspected pixels are labeled synthetic fixtures or static rerenders
+of captured native DOM, because snapshot automation timed out. They are not native
+browser screenshots. All owned Jobs finish empty and the fresh synthetic
+credential is removed. No system/privilege change or manual deletion is introduced.
+
+[File contract](../native/docs/session-dashboard-documents.md),
+[selection contract](../native/docs/session-dashboard-language-servers.md) and
+[scoped evidence](validation/integration-2026-10-24/dashboard-documents/README.md).
+The earlier language CLI disk stop below is historical and superseded for this
+scope. The full dashboard/STATUS action remains active: project writes through
+original approval/verification gates, binding migration/retirement, meaningful
+file-operation activity labels, explicit private raw logs, owned MCP shutdown,
+tray/automatic opening and broader accessibility/STATUS/R1-R9 remain open.
+Original353/73/77-runtime, ten Windows symlink prerequisites and full platform/
+upstream/release certificates stay unchanged. Main and release remain open.
+
+## Historical dashboard language partial checkpoint (2026-10-24)
 
 Product `4d353f0a9c0e31da3e0888b7990f84be8d06dce3` adds explicit host-granted
 language-server selection to the private dashboard. All eight product blobs are
