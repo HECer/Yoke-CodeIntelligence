@@ -85,6 +85,17 @@ destructive operations are explicit. Unchanged content is not rewritten, uniform
 CRLF survives edits, and mixed line endings display read only with the native-API
 alternative disclosed. Names and content render as inert text.
 
+Before a management request enters the mailbox, the client prepares two bounded
+timeout representations under the original operation deadline. Atomic ticket
+state alone selects either `notApplied: true` for work that could not start or
+`notApplied: false` for an unconfirmed outcome. These prepared refusals remain
+available for the existing nonblocking timeout-response attempt if the waiting
+thread resumes after expiry; no new operation deadline or serialization of a
+normal result is allowed. Expiry during preparation submits nothing and returns
+only a fixed refusal with a null request ID. A status code or similarly shaped
+JSON cannot create this internal delivery proof. Socket delivery itself can
+still fail; clients must retain drafts and refresh uncertain saved state.
+
 The result contains a private IPv4-loopback URL with a short-lived capability
 in its fragment. The client opens that URL; `browserOpened` is false and
 `browserOpening` is `client_managed`. The native process does not launch a browser

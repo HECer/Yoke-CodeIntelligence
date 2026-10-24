@@ -1,5 +1,17 @@
 # Remaining implementation and acceptance
 
+## Dashboard timeout delivery awaits native confirmation
+
+The [transport correction](validation/integration-2026-10-24/dashboard-timeout-delivery/README.md)
+prepares bounded timeout data before enqueueing, with classification selected
+only by the original atomic state transition. Expiry during preparation submits
+nothing. Normal success and JSON-shaped faults cannot use that internal proof.
+Existing operation budgets, permissions and actual HTTP assertions remain.
+Two new native tests and extensions to two existing tests are unexecuted locally.
+368 format roots, Python103/0/0, typecheck and npm260/0/3 existing skips pass.
+Actual native typing/HTTP/platform/browser/current VSIX and full STATUS
+acceptance remain open.
+
 ## HTTP backpressure fixture awaits native execution
 
 The [test-only correction](validation/integration-2026-10-24/editor-backpressure/README.md)

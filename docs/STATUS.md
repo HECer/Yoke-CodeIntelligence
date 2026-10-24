@@ -1,5 +1,19 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Dashboard timeout result transport: native confirmation pending (2026-10-24)
+
+Management now prepares two bounded refusal representations before queueing,
+preserving the atomic distinction between never-started and unconfirmed work
+when the waiting thread resumes after expiry. Normal results still require the
+original deadline; prepared refusals use only the existing nonblocking408 write
+attempt. Expiry during preparation queues nothing and returns a fixed null-ID
+refusal. Two new native tests and extended existing queued/running tests await
+execution. The original100-ms HTTP test, permissions and operation limits remain.
+This closes a source-level result-loss path; actual macOS/native/HTTP/browser/
+current VSIX/full STATUS confirmation remains open.368 format roots,
+Python103/0/0, typecheck and npm260/0/3 existing skips pass with their separate scopes.
+[Evidence](validation/integration-2026-10-24/dashboard-timeout-delivery/README.md).
+
 ## HTTP backpressure fixture: native confirmation pending (2026-10-24)
 
 The library socket test now sends a4-MiB response after actual WouldBlock, so a

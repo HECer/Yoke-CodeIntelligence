@@ -255,9 +255,9 @@ impl Handle {
                                         response_deadline=Deadline::from_duration(time);
                                         let request=crate::json::parse(&body,128000).and_then(crate::json::decode::<management::Request>).map_err(|_|Failure(400,"Invalid management request"))?;
                                         let client=management.as_ref().ok_or(Failure(405,"Dashboard management unavailable"))?;
-                                        let mut reply=client.call(request,response_deadline.clone(),worker_stop.clone(),closed.clone());
-                                        completion=reply.completion.take();
-                                        let bytes=crate::json::encode_bounded(&reply.value,4_000_000,&response_deadline).map_err(|_|Failure(408,"Management outcome unconfirmed; refresh before retrying"))?;
+                                        let mut delivery=client.call(request,response_deadline.clone(),worker_stop.clone(),closed.clone());
+                                        completion=delivery.reply.completion.take();
+                                        let (reply,bytes)=delivery.encode(&response_deadline).map_err(|_|Failure(408,"Management outcome unconfirmed; refresh before retrying"))?;
                                         management_status=reply.status;
                                         Ok((bytes,"application/json; charset=utf-8"))
                                     }

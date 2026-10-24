@@ -347,6 +347,43 @@ impl Reply {
     }
 }
 
+/// Only the mailbox owner selects these pre-admitted timeout bytes. A normal
+/// result still has to serialize under the original operation deadline.
+#[derive(Debug)]
+pub(crate) struct CallReply {
+    pub(crate) reply: Reply,
+    timeout_bytes: Option<Vec<u8>>,
+}
+impl CallReply {
+    fn normal(reply: Reply) -> Self {
+        Self {
+            reply,
+            timeout_bytes: None,
+        }
+    }
+    fn expired_before_queue() -> Self {
+        // If preparation itself expires, nothing was submitted. This fixed
+        // refusal needs no input serialization or renewed operation budget.
+        Self {
+            reply: Reply::fault(408, "expired_before_execution", None, true),
+            timeout_bytes: Some(br#"{"error":"expired_before_execution","id":null,"notApplied":true,"schema":"native_dashboard_management_v1"}"#.to_vec()),
+        }
+    }
+    pub(crate) fn encode(self, deadline: &Deadline) -> Result<(Reply, Vec<u8>)> {
+        let bytes = match self.timeout_bytes {
+            Some(bytes) => {
+                ensure!(
+                    self.reply.status == 408 && bytes.len() <= 512,
+                    "dashboard_timeout_delivery_invalid"
+                );
+                bytes
+            }
+            None => crate::json::encode_bounded(&self.reply.value, 4_000_000, deadline)?,
+        };
+        Ok((self.reply, bytes))
+    }
+}
+
 /// Installed only by a trusted owning transport driver, never from JSON.
 #[derive(Clone, Copy, Debug)]
 pub(crate) enum ShutdownScope {
@@ -472,11 +509,28 @@ impl Client {
         deadline: Deadline,
         access_closed: Arc<AtomicBool>,
         transport_closed: Option<Arc<AtomicBool>>,
-    ) -> Reply {
+    ) -> CallReply {
         let id = request.id.clone();
         if request.validate().is_err() {
-            return Reply::fault(400, "invalid_request", Some(&id), true);
+            return CallReply::normal(Reply::fault(400, "invalid_request", Some(&id), true));
         }
+        let expired = Reply::fault(408, "expired_before_execution", Some(&id), true);
+        let unconfirmed = Reply::fault(
+            408,
+            "outcome_unconfirmed_refresh_before_retry",
+            Some(&id),
+            false,
+        );
+        // Admit both bounded fault representations before enqueueing or waiting.
+        // After expiry, only the atomic ticket state may choose one of them.
+        let prepared =
+            crate::json::encode_bounded(&expired.value, 512, &deadline).and_then(|bytes| {
+                crate::json::encode_bounded(&unconfirmed.value, 512, &deadline)
+                    .map(|other| (bytes, other))
+            });
+        let Ok((expired_bytes, unconfirmed_bytes)) = prepared else {
+            return CallReply::expired_before_queue();
+        };
         let (reply, receiver) = mpsc::sync_channel(1);
         let state = Arc::new(AtomicU8::new(0));
         let cancel = Arc::new(AtomicBool::new(false));
@@ -490,7 +544,7 @@ impl Client {
             reply,
         };
         if self.sender.try_send(pending).is_err() {
-            return Reply::fault(503, "host_busy", Some(&id), true);
+            return CallReply::normal(Reply::fault(503, "host_busy", Some(&id), true));
         }
         loop {
             let remaining = deadline
@@ -506,26 +560,32 @@ impl Client {
                     .compare_exchange(0, 2, Ordering::AcqRel, Ordering::Acquire)
                     .is_ok();
                 cancel.store(true, Ordering::Release);
-                return Reply::fault(
-                    408,
-                    if not_applied {
-                        "expired_before_execution"
-                    } else {
-                        "outcome_unconfirmed_refresh_before_retry"
-                    },
-                    Some(&id),
-                    not_applied,
-                );
+                return if not_applied {
+                    CallReply {
+                        reply: expired,
+                        timeout_bytes: Some(expired_bytes),
+                    }
+                } else {
+                    CallReply {
+                        reply: unconfirmed,
+                        timeout_bytes: Some(unconfirmed_bytes),
+                    }
+                };
             }
             match receiver.recv_timeout(remaining.min(Duration::from_millis(10))) {
-                Ok(reply) => return reply,
+                Ok(reply) => return CallReply::normal(reply),
                 Err(mpsc::RecvTimeoutError::Timeout) => {}
                 Err(mpsc::RecvTimeoutError::Disconnected) => {
                     let not_applied = state
                         .compare_exchange(0, 2, Ordering::AcqRel, Ordering::Acquire)
                         .is_ok();
                     cancel.store(true, Ordering::Release);
-                    return Reply::fault(503, "host_unavailable", Some(&id), not_applied);
+                    return CallReply::normal(Reply::fault(
+                        503,
+                        "host_unavailable",
+                        Some(&id),
+                        not_applied,
+                    ));
                 }
             }
         }
@@ -660,9 +720,11 @@ mod tests {
                 None,
             )
         });
-        let reply = thread.join().unwrap();
+        let delivery = thread.join().unwrap();
+        let (reply, bytes) = delivery.encode(&Deadline::new(0)).unwrap();
         assert_eq!(reply.status, 408);
         assert_eq!(reply.value["notApplied"], true);
+        assert_eq!(crate::json::parse(&bytes, 512).unwrap(), reply.value);
         let pending = queue.next().unwrap();
         assert!(!pending.begin());
     }
@@ -687,9 +749,41 @@ mod tests {
             std::thread::yield_now();
         };
         assert!(pending.begin());
-        let reply = thread.join().unwrap();
+        let delivery = thread.join().unwrap();
+        let (reply, bytes) = delivery.encode(&Deadline::new(0)).unwrap();
         assert_eq!(reply.value["notApplied"], false);
+        assert_eq!(crate::json::parse(&bytes, 512).unwrap(), reply.value);
         assert!(pending.cancel.load(Ordering::Acquire));
+    }
+    #[test]
+    fn expiry_before_timeout_preparation_never_enqueues_and_delivers_only_fixed_refusal() {
+        let queue = Mailbox::new();
+        let delivery = queue.client.call(
+            request(),
+            Deadline::new(0),
+            Arc::new(AtomicBool::new(false)),
+            None,
+        );
+        assert!(queue.next().is_none());
+        let (reply, bytes) = delivery.encode(&Deadline::new(0)).unwrap();
+        assert_eq!(reply.status, 408);
+        assert_eq!(reply.value["notApplied"], true);
+        assert_eq!(reply.value["id"], Value::Null);
+        assert_eq!(crate::json::parse(&bytes, 512).unwrap(), reply.value);
+    }
+    #[test]
+    fn expired_normal_or_json_shaped_fault_results_cannot_use_prepared_timeout_delivery() {
+        for reply in [
+            Reply {
+                status: 200,
+                value: json!({"data":"must not be promoted after expiry"}),
+                completion: None,
+            },
+            Reply::fault(408, "expired_before_execution", Some(&"a".repeat(64)), true),
+        ] {
+            // Matching JSON/status cannot mint the mailbox's timeout proof.
+            assert!(CallReply::normal(reply).encode(&Deadline::new(0)).is_err());
+        }
     }
     #[test]
     fn management_envelope_and_actions_reject_unknown_authority_and_wrong_revisions() {
