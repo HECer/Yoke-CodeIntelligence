@@ -21,6 +21,7 @@ use subtle::ConstantTimeEq;
 #[path = "session_dashboard_management.rs"]
 pub(crate) mod management;
 pub use management::Config as ManagementConfig;
+pub use management::LanguageGrant;
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
@@ -300,6 +301,9 @@ impl Handle {
         if let Some(config) = &self.management {
             value["scope"] = json!("private_native_session_management");
             value["capabilities"]["sessionControls"] = json!(config.session_controls);
+            if config.language_servers.is_some() {
+                value["capabilities"]["languageSelection"] = json!(config.session_controls);
+            }
             value["capabilities"]["memoryEditing"] = json!(
                 config.memories
                     && self.state.try_lock().is_ok_and(|state| {
@@ -582,6 +586,9 @@ fn snapshot(
         "capabilities":{"rawLogs":false,"configurationEditing":false,"memoryEditing":false,"mcpShutdown":false},"complete":false});
     if let Some(config) = managed {
         data["capabilities"]["sessionControls"] = config["sessionControls"].clone();
+        if config["languageSelection"].is_object() {
+            data["capabilities"]["languageSelection"] = config["sessionControls"].clone();
+        }
         data["capabilities"]["memoryEditing"] = serde_json::json!(
             config["memories"] == true
                 && config["memoryWritesGranted"] == true

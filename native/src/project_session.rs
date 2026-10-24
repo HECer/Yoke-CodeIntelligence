@@ -182,6 +182,9 @@ struct State {
     modes: Vec<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     mode_override: Option<Vec<String>>,
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    language_server_overrides:
+        BTreeMap<String, crate::session_dashboard::management::LanguageSelection>,
     onboarded_projects: BTreeSet<String>,
     removed_projects: BTreeSet<String>,
     revision: u64,
@@ -210,6 +213,7 @@ pub(crate) fn validate_retention_record(
     if let Some(modes) = &state.mode_override {
         crate::session_steering::retained_modes(modes, true)?;
     }
+    dashboard_languages::validate_retained(&state.language_server_overrides)?;
     for name in state
         .onboarded_projects
         .iter()
@@ -231,6 +235,7 @@ pub struct Session {
     dashboard_management: Option<crate::session_dashboard::management::Mailbox>,
     dashboard_lifetime: Option<std::sync::Arc<std::sync::atomic::AtomicBool>>,
     host_backend_servers: Option<BTreeMap<String, crate::lsp::ConfiguredServer>>,
+    dashboard_language_registry: Option<dashboard_languages::Registry>,
     pub engine: Engine,
     host_allow_writes: bool,
     host_capture_options: Option<crate::capture::CaptureOptions>,
@@ -248,6 +253,8 @@ pub struct Session {
     debug_adapters: BTreeMap<String, crate::debug_adapter::DebugAdapter>,
     process_cleanup_unproven: bool,
 }
+#[path = "session_dashboard_languages.rs"]
+mod dashboard_languages;
 #[path = "session_dashboard_session.rs"]
 mod dashboard_management;
 #[path = "session_prompt_session.rs"]
@@ -946,6 +953,7 @@ impl Session {
         if let Some(config) = &host.dashboard {
             config.validate()?;
         }
+        let dashboard_language_registry = dashboard_languages::Registry::capture(&host, &engine)?;
         if let Some(folders) = &host.additional_workspace_folders {
             folders.validate(&host)?;
         }
@@ -1404,6 +1412,15 @@ impl Session {
         } else {
             fingerprint
         };
+        let fingerprint = if let Some(registry) = &dashboard_language_registry {
+            identity(&(
+                fingerprint,
+                "dashboard_language_registry_v1",
+                registry.binding()?,
+            ))
+        } else {
+            fingerprint
+        };
         let fingerprint = if let Some(folders) = &host.additional_workspace_folders {
             engine.additional_workspace_folders = folders.select("default").map(<[String]>::to_vec);
             identity(&(
@@ -1491,6 +1508,7 @@ impl Session {
                     host.modes.clone()
                 },
                 mode_override: None,
+                language_server_overrides: BTreeMap::new(),
                 onboarded_projects: BTreeSet::new(),
                 removed_projects: BTreeSet::new(),
                 revision: 0,
@@ -1521,6 +1539,15 @@ impl Session {
                     .any(|p| p.name == state.active_project && !p.query_only),
             "Query-only project cannot be activated"
         );
+        dashboard_languages::validate_overrides(&host, &state.language_server_overrides)?;
+        if let Some(registry) = &dashboard_language_registry {
+            registry.apply(
+                &mut engine,
+                &host,
+                "default",
+                state.language_server_overrides.get("default"),
+            )?;
+        }
         let serialized = serde_json::to_string(&state)?;
         if raw.is_none() {
             let inserted = engine.store.db.execute(
@@ -1535,6 +1562,7 @@ impl Session {
             dashboard_management: None,
             dashboard_lifetime: None,
             host_backend_servers,
+            dashboard_language_registry,
             engine,
             host_allow_writes,
             host_capture_options,
@@ -1632,6 +1660,23 @@ impl Session {
         }
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
+        if let Some(registry) = &self.dashboard_language_registry {
+            registry.check(
+                &self.engine,
+                &self.host,
+                "default",
+                self.state.language_server_overrides.get("default"),
+            )?;
+            for (name, engine) in &self.others {
+                deadline.check()?;
+                registry.check(
+                    engine,
+                    &self.host,
+                    name,
+                    self.state.language_server_overrides.get(name),
+                )?;
+            }
+        }
         if let Some(projects) = &self.git_repository_projects {
             projects.check_current(deadline)?;
         }
@@ -2077,6 +2122,14 @@ impl Session {
                 .and_then(|s| s.select(name))
                 .map(<[String]>::to_vec);
             engine.server_configurations = self.engine.server_configurations.clone();
+            if let Some(registry) = &self.dashboard_language_registry {
+                registry.apply(
+                    &mut engine,
+                    &self.host,
+                    name,
+                    self.state.language_server_overrides.get(name),
+                )?;
+            }
             if self.git_repository_projects.is_some() {
                 engine.index(deadline)?;
             }
@@ -2257,6 +2310,10 @@ impl Session {
         if let Some(management) = self.dashboard_management_view() {
             value["management"] = management;
         }
+        if let Some(selection) = self.dashboard_language_view() {
+            value["selectedBackends"] = selection["selectedBackends"].clone();
+            value["selectedLegacyLanguages"] = selection["selectedLegacyLanguages"].clone();
+        }
         ensure!(
             serde_json::to_vec(&value)?.len() <= 400000,
             "dashboard_view_capacity"
@@ -2377,6 +2434,9 @@ impl Session {
                         json!(selection.select(&self.state.active_project));
                     value["registeredBackendIds"] =
                         json!(self.engine.backend_servers.keys().collect::<Vec<_>>());
+                }
+                if let Some(selection) = self.dashboard_language_view() {
+                    value["dashboardLanguageSelection"] = selection;
                 }
                 if let Some(folders) = &self.host.symbol_workspace_folders {
                     value["symbolWorkspaceFolders"] = serde_json::to_value(folders)?;

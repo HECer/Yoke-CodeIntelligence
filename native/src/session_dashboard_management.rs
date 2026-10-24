@@ -16,6 +16,8 @@ pub struct Config {
     pub session_controls: bool,
     pub memories: bool,
     pub operation_timeout_ms: u64,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub language_servers: Option<LanguageGrant>,
 }
 impl Default for Config {
     fn default() -> Self {
@@ -23,6 +25,7 @@ impl Default for Config {
             session_controls: true,
             memories: true,
             operation_timeout_ms: 30_000,
+            language_servers: None,
         }
     }
 }
@@ -32,7 +35,66 @@ impl Config {
             (100..=60_000).contains(&self.operation_timeout_ms),
             "dashboard_management_timeout_capacity"
         );
+        if let Some(grant) = &self.language_servers {
+            grant.validate()?;
+        }
         Ok(())
+    }
+}
+
+/// Independent host authority to select already trusted registrations. Dormant
+/// registration alone never grants dashboard activation of a backend.
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields, default)]
+pub struct LanguageGrant {
+    pub backend_ids: Vec<String>,
+    pub legacy_languages: Vec<String>,
+}
+fn distinct(values: &[String], maximum: usize) -> Result<()> {
+    ensure!(values.len() <= maximum, "dashboard_language_capacity");
+    let mut seen = std::collections::BTreeSet::new();
+    for value in values {
+        ensure!(
+            !value.is_empty() && value.len() <= 100 && seen.insert(value),
+            "dashboard_language_duplicate_or_invalid"
+        );
+    }
+    Ok(())
+}
+impl LanguageGrant {
+    pub(crate) fn validate(&self) -> Result<()> {
+        distinct(&self.backend_ids, 32)?;
+        distinct(&self.legacy_languages, 100)?;
+        if !self.backend_ids.is_empty() {
+            crate::server_selection::validate_ids(&self.backend_ids)?;
+        }
+        Ok(())
+    }
+    pub(crate) fn permits(&self, selection: &LanguageSelection) -> Result<()> {
+        selection.validate()?;
+        let (values, allowed) = match selection {
+            LanguageSelection::Backends { ids } => (ids, &self.backend_ids),
+            LanguageSelection::Legacy { languages } => (languages, &self.legacy_languages),
+        };
+        ensure!(
+            values.iter().all(|id| allowed.contains(id)),
+            "dashboard_language_not_granted"
+        );
+        Ok(())
+    }
+}
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(tag = "kind", rename_all = "camelCase", deny_unknown_fields)]
+pub(crate) enum LanguageSelection {
+    Backends { ids: Vec<String> },
+    Legacy { languages: Vec<String> },
+}
+impl LanguageSelection {
+    pub(crate) fn validate(&self) -> Result<()> {
+        match self {
+            Self::Backends { ids } => crate::server_selection::validate_ids(ids),
+            Self::Legacy { languages } => distinct(languages, 100),
+        }
     }
 }
 
@@ -84,6 +146,10 @@ pub(crate) enum Action {
     ActivateProject {
         project: String,
     },
+    SelectLanguageServers {
+        selection: LanguageSelection,
+    },
+    ResetLanguageServers,
 }
 impl Request {
     pub(crate) fn validate(&self) -> Result<()> {
@@ -113,6 +179,7 @@ impl Request {
                 project_name(new_name)?;
             }
             Action::ActivateProject { project } => crate::project_session::label(project)?,
+            Action::SelectLanguageServers { selection } => selection.validate()?,
             Action::ListMemories { topic } if !topic.is_empty() => {
                 crate::paths::normalized(topic)?;
             }

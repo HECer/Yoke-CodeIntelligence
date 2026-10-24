@@ -40,7 +40,7 @@ impl Session {
         }
         Some(
             json!({"enabled":self.dashboard_management.is_some(),"sessionControls":config.session_controls,
-            "memories":config.memories,"configurationFiles":false,"languageSelection":false,"rawLogs":false,"shutdown":false,
+            "memories":config.memories,"configurationFiles":false,"languageSelection":self.dashboard_language_view().unwrap_or(json!(false)),"rawLogs":false,"shutdown":false,
             "operationTimeoutMs":config.operation_timeout_ms,"sessionStateSha256":crate::model::hash(&self.persisted),
             "modeChoices":choices,"modeResetAvailable":self.steering_enabled(),"memoryWritesGranted":self.host.notes_policy.writable,
             "noMemoriesMode":self.state.modes.iter().any(|m|m=="no-memories")}),
@@ -197,10 +197,34 @@ impl Session {
                 None,
                 true,
             ),
+            Action::SelectLanguageServers { selection } => (
+                "dashboard.languages",
+                serde_json::to_value(selection)?,
+                "ci_session",
+                None,
+                true,
+            ),
+            Action::ResetLanguageServers => (
+                "dashboard.languages.reset",
+                Value::Null,
+                "ci_session",
+                None,
+                true,
+            ),
         };
         let memory = operation.starts_with("notes.");
         if (memory && (!config.memories || (write && !self.host.notes_policy.writable)))
             || (!memory && !config.session_controls)
+            || (operation.starts_with("dashboard.languages")
+                && config
+                    .language_servers
+                    .as_ref()
+                    .is_none_or(|grant| match &request.action {
+                        Action::SelectLanguageServers { selection } => {
+                            grant.permits(selection).is_err()
+                        }
+                        _ => false,
+                    }))
             || self.require_tool(tool, deadline).is_err()
             || api.is_some_and(|api| self.require_repl_api(api).is_err())
         {
@@ -211,9 +235,30 @@ impl Session {
                 true,
             ));
         }
-        let result = self.invoke(operation, &args, deadline);
+        let activity = if operation.starts_with("dashboard.languages") {
+            self.dashboard
+                .as_ref()
+                .and_then(|handle| handle.begin(operation))
+        } else {
+            None
+        };
+        let result = match &request.action {
+            Action::SelectLanguageServers { selection } => {
+                self.dashboard_select_languages(Some(selection.clone()), deadline)
+            }
+            Action::ResetLanguageServers => self.dashboard_select_languages(None, deadline),
+            _ => self.invoke(operation, &args, deadline),
+        };
+        if operation.starts_with("dashboard.languages") {
+            self.finish_dashboard_activity(activity, &result);
+        }
         let reply = match result {
             Ok(mut data) => {
+                let metadata_changed = if operation.starts_with("dashboard.languages") {
+                    data["changed"] == true
+                } else {
+                    write
+                };
                 if self.check_tool_state(deadline).is_err()
                     || crate::session_dashboard::check_binding(
                         &self.engine.root,
@@ -237,7 +282,7 @@ impl Session {
                 Reply {
                     status: 200,
                     value: json!({"schema":"native_dashboard_management_v1","id":request.id,
-                    "outcome":"completed","metadataChanged":write,"sourceWritten":false,
+                    "outcome":"completed","metadataChanged":metadata_changed,"sourceWritten":false,
                     "sessionStateSha256":crate::model::hash(&self.persisted),"revision":self.state.revision,"data":data}),
                 }
             }

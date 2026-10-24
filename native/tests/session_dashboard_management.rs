@@ -92,6 +92,367 @@ fn call(s: &mut Session, address: SocketAddr, token: &str, action: Value) -> (u1
     }
     client.join().unwrap()
 }
+fn language_engine(root: &std::path::Path, log: &std::path::Path) -> Engine {
+    let node = std::process::Command::new("node")
+        .args(["-p", "process.execPath"])
+        .output()
+        .unwrap();
+    assert!(node.status.success());
+    let command = String::from_utf8(node.stdout).unwrap().trim().to_owned();
+    let mut engine = Engine::open(root).unwrap();
+    for id in ["rust", "typescript", "angular"] {
+        let configured = yoke::lsp::ConfiguredServer {
+            server: yoke::lsp::Server {
+                language: yoke::server_catalog::get(id).unwrap().languages[0].into(),
+                command: command.clone(),
+                args: vec![
+                    std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+                        .join("tests/fixtures/server-selection-lsp.mjs")
+                        .display()
+                        .to_string(),
+                    log.display().to_string(),
+                    id.into(),
+                    "0".into(),
+                ],
+                trust: true,
+            },
+            configuration: yoke::lsp::HostConfiguration {
+                passive_profile: Some(yoke::lsp::PassiveProfile::ContractFixture),
+                ..Default::default()
+            },
+        };
+        if id == "rust" {
+            engine
+                .register_configured_server(configured.clone())
+                .unwrap();
+        }
+        engine.register_backend(id, configured).unwrap();
+    }
+    engine
+}
+fn language_host(grant: Value) -> HostProfile {
+    serde_json::from_value(
+        json!({"dashboard":{"management":{"languageServers":grant}},"steering":{}}),
+    )
+    .unwrap()
+}
+fn language_hover(s: &mut Session, path: &str) -> Value {
+    s.active_engine()
+        .unwrap()
+        .invoke(
+            "ci_find",
+            json!({"languageServer":{"path":path,"offset":0,"operation":"hover"}}),
+        )
+        .unwrap()
+}
+#[test]
+fn dashboard_cannot_activate_dormant_backend_without_separate_grant() {
+    let root = tempfile::tempdir().unwrap();
+    fs::write(root.path().join("main.rs"), "fn example() {}\n").unwrap();
+    let log = root.path().join("owned-log");
+    let mut session = Session::open(
+        language_engine(root.path(), &log),
+        language_host(Value::Null),
+        Some("no-grant"),
+        &d(),
+    )
+    .unwrap();
+    let (address, token) = start(&mut session);
+    let before = session.invoke("configuration", &json!({}), &d()).unwrap();
+    assert_eq!(
+        view(address, &token)["view"]["management"]["languageSelection"],
+        false
+    );
+    for action in [
+        json!({"kind":"selectLanguageServers","selection":{"kind":"backends","ids":["typescript"]}}),
+        json!({"kind":"resetLanguageServers"}),
+    ] {
+        let (status, result) = call(&mut session, address, &token, action);
+        assert_eq!(status, 403, "{result}");
+        assert_eq!(result["notApplied"], true);
+    }
+    assert_eq!(
+        before,
+        session.invoke("configuration", &json!({}), &d()).unwrap()
+    );
+    assert!(!log.exists());
+}
+#[test]
+fn dashboard_language_grant_and_request_are_closed_bounded_and_host_registered() {
+    let root = tempfile::tempdir().unwrap();
+    let log = root.path().join("owned-log");
+    for grant in [
+        json!({"backendIds":["rust","rust"]}),
+        json!({"backendIds":["unknown"]}),
+        json!({"backendIds":["typescript_vts"]}),
+        json!({"legacyLanguages":["missing"]}),
+        json!({"legacyLanguages":["rust","rust"]}),
+        json!({"backendIds":vec!["rust";33]}),
+    ] {
+        assert!(
+            Session::open(
+                language_engine(root.path(), &log),
+                language_host(grant),
+                Some("invalid"),
+                &d()
+            )
+            .is_err()
+        );
+    }
+    assert!(
+        serde_json::from_value::<HostProfile>(
+            json!({"dashboard":{"management":{"languageServers":{"command":"untrusted"}}}})
+        )
+        .is_err()
+    );
+    let host = language_host(json!({"backendIds":["typescript"],"legacyLanguages":["rust"]}));
+    let mut session = Session::open(
+        language_engine(root.path(), &log),
+        host,
+        Some("closed"),
+        &d(),
+    )
+    .unwrap();
+    let (address, token) = start(&mut session);
+    for selection in [
+        json!({"kind":"backends","ids":[]}),
+        json!({"kind":"backends","ids":["typescript","typescript"]}),
+        json!({"kind":"backends","ids":["typescript"],"command":"injected"}),
+        json!({"kind":"legacy","languages":vec!["rust";101]}),
+    ] {
+        let bytes = wire(
+            address,
+            &token,
+            request(
+                &view(address, &token),
+                json!({"kind":"selectLanguageServers","selection":selection}),
+            ),
+        );
+        assert_eq!(raw(address, bytes).0, 400);
+    }
+    for selection in [
+        json!({"kind":"backends","ids":["angular"]}),
+        json!({"kind":"legacy","languages":["typescript"]}),
+    ] {
+        assert_eq!(
+            call(
+                &mut session,
+                address,
+                &token,
+                json!({"kind":"selectLanguageServers","selection":selection})
+            )
+            .0,
+            403
+        );
+    }
+    assert!(!log.exists());
+}
+#[test]
+fn dashboard_ordered_selection_uses_real_provider_and_disable_never_returns_empty_success() {
+    let root = tempfile::tempdir().unwrap();
+    let original = b"export function visible() {}\r\n";
+    fs::write(root.path().join("entry.ts"), original).unwrap();
+    fs::write(root.path().join("main.rs"), "fn example() {}\n").unwrap();
+    let log = root.path().join("owned-log");
+    let host =
+        language_host(json!({"backendIds":["angular","typescript"],"legacyLanguages":["rust"]}));
+    let mut session = Session::open(
+        language_engine(root.path(), &log),
+        host,
+        Some("ordered"),
+        &d(),
+    )
+    .unwrap();
+    let (address, token) = start(&mut session);
+    for ids in [
+        json!(["angular", "typescript"]),
+        json!(["typescript", "angular"]),
+    ] {
+        let (status, result) = call(
+            &mut session,
+            address,
+            &token,
+            json!({"kind":"selectLanguageServers","selection":{"kind":"backends","ids":ids}}),
+        );
+        assert_eq!(status, 200, "{result}");
+        assert_eq!(result["sourceWritten"], false);
+        assert_eq!(view(address, &token)["view"]["selectedBackends"], ids);
+        let hover = language_hover(&mut session, "entry.ts");
+        assert_eq!(hover["status"], "ok", "{hover}");
+        assert_eq!(hover["data"]["selectedBackendId"], ids[0]);
+    }
+    assert_eq!(
+        call(
+            &mut session,
+            address,
+            &token,
+            json!({"kind":"selectLanguageServers","selection":{"kind":"legacy","languages":[]}})
+        )
+        .0,
+        200
+    );
+    let hover = language_hover(&mut session, "main.rs");
+    assert_eq!(hover["status"], "error", "{hover}");
+    assert!(session.active_engine().unwrap().servers.is_empty());
+    assert_eq!(
+        call(
+            &mut session,
+            address,
+            &token,
+            json!({"kind":"resetLanguageServers"})
+        )
+        .0,
+        200
+    );
+    assert!(
+        session
+            .active_engine()
+            .unwrap()
+            .servers
+            .contains_key("rust")
+    );
+    assert_eq!(fs::read(root.path().join("entry.ts")).unwrap(), original);
+}
+#[test]
+fn dashboard_language_overrides_are_project_local_persistent_and_stale_requests_refuse() {
+    let root = tempfile::tempdir().unwrap();
+    let second = tempfile::tempdir().unwrap();
+    for path in [root.path(), second.path()] {
+        fs::write(path.join("main.rs"), "// π\r\nfn example() {}\r\n").unwrap();
+    }
+    let log = root.path().join("owned-log");
+    let mut host = language_host(json!({"backendIds":["typescript"],"legacyLanguages":["rust"]}));
+    host.projects.push(yoke::project_session::HostProject {
+        name: "second".into(),
+        root: second.path().into(),
+        read_only: true,
+        query_only: false,
+    });
+    let mut session = Session::open(
+        language_engine(root.path(), &log),
+        host.clone(),
+        Some("projects"),
+        &d(),
+    )
+    .unwrap();
+    let (address, token) = start(&mut session);
+    let old = view(address, &token);
+    assert_eq!(
+        call(
+            &mut session,
+            address,
+            &token,
+            json!({"kind":"selectLanguageServers","selection":{"kind":"legacy","languages":[]}})
+        )
+        .0,
+        200
+    );
+    let stale = wire(
+        address,
+        &token,
+        request(&old, json!({"kind":"resetLanguageServers"})),
+    );
+    let client = thread::spawn(move || raw(address, stale));
+    while !client.is_finished() {
+        session.poll_dashboard_management(&d()).unwrap();
+        thread::sleep(Duration::from_millis(1));
+    }
+    assert_eq!(client.join().unwrap().0, 409);
+    assert_eq!(
+        call(
+            &mut session,
+            address,
+            &token,
+            json!({"kind":"activateProject","project":"second"})
+        )
+        .0,
+        200
+    );
+    assert!(
+        session
+            .active_engine()
+            .unwrap()
+            .servers
+            .contains_key("rust")
+    );
+    assert_eq!(call(&mut session,address,&token,json!({"kind":"selectLanguageServers","selection":{"kind":"backends","ids":["typescript"]}})).0,200);
+    assert_eq!(
+        call(
+            &mut session,
+            address,
+            &token,
+            json!({"kind":"activateProject","project":"default"})
+        )
+        .0,
+        200
+    );
+    assert!(session.active_engine().unwrap().servers.is_empty());
+    drop(session);
+    let mut resumed = Session::open(
+        language_engine(root.path(), &log),
+        host,
+        Some("projects"),
+        &d(),
+    )
+    .unwrap();
+    assert!(resumed.active_engine().unwrap().servers.is_empty());
+    resumed
+        .invoke("activate", &json!({"project":"second"}), &d())
+        .unwrap();
+    assert_eq!(
+        resumed.invoke("configuration", &json!({}), &d()).unwrap()["dashboardLanguageSelection"]["selectedBackends"],
+        json!(["typescript"])
+    );
+    assert!(!log.exists());
+    for path in [root.path(), second.path()] {
+        assert_eq!(
+            fs::read(path.join("main.rs")).unwrap(),
+            "// π\r\nfn example() {}\r\n".as_bytes()
+        );
+    }
+}
+#[test]
+fn dashboard_language_registry_mutation_is_not_accepted_as_an_old_host_grant() {
+    let root = tempfile::tempdir().unwrap();
+    let log = root.path().join("owned-log");
+    let host = language_host(json!({"legacyLanguages":["rust"]}));
+    let mut session = Session::open(
+        language_engine(root.path(), &log),
+        host.clone(),
+        Some("pinned"),
+        &d(),
+    )
+    .unwrap();
+    let (address, token) = start(&mut session);
+    session
+        .engine
+        .servers
+        .get_mut("rust")
+        .unwrap()
+        .args
+        .push("changed".into());
+    assert_eq!(
+        call(
+            &mut session,
+            address,
+            &token,
+            json!({"kind":"resetLanguageServers"})
+        )
+        .0,
+        409
+    );
+    assert!(session.invoke("configuration", &json!({}), &d()).is_err());
+    drop(session);
+    let mut changed = language_engine(root.path(), &log);
+    changed
+        .servers
+        .get_mut("rust")
+        .unwrap()
+        .args
+        .push("changed".into());
+    assert!(Session::open(changed, host, Some("pinned"), &d()).is_err());
+    assert!(!log.exists());
+}
 #[test]
 fn live_memory_create_read_write_rename_delete_and_head_cas_preserve_source_bytes() {
     let (root, mut session) = session(3000);
