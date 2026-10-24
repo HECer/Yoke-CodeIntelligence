@@ -531,6 +531,7 @@ mod tests {
     use super::*;
     use serde_json::json;
 
+    #[cfg(windows)]
     fn d() -> Deadline {
         Deadline::new(10_000)
     }

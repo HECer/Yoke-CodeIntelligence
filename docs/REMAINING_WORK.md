@@ -1,5 +1,13 @@
 # Remaining implementation and acceptance
 
+## Unix CI helper fix awaits hosted confirmation
+
+Both Unix Clippy jobs at head `d90a4e35` reject a Windows-only test deadline
+helper without its platform condition. The one-line correction retains all
+tests and warning gates. Local format/typecheck/npm pass; native builds remain
+stopped below the disk reserve. See [evidence](validation/integration-2026-10-24/unix-document-test-helper/README.md).
+This does not complete platform or Windows host-history acceptance.
+
 ## Hosted host-history acceptance is configured, not yet complete
 
 The [new CI gate](validation/integration-2026-10-24/dashboard-history-ci/README.md)

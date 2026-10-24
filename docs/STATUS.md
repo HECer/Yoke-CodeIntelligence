@@ -1,5 +1,15 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Unix CI test-helper correction: hosted confirmation pending (2026-10-24)
+
+Rust CI for head `d90a4e35` stops on both Ubuntu and macOS because the document
+test deadline helper is compiled without its callers' Windows condition. The
+correction adds that condition to the helper only. No test, runtime behavior,
+warning policy or workflow limit changes. Local format/typecheck and npm260/3
+existing skips pass; native checks remain resource-gated. Hosted confirmation,
+Windows history live acceptance and full STATUS remain open.
+[Scoped evidence](validation/integration-2026-10-24/unix-document-test-helper/README.md).
+
 ## Host-history CI acceptance gate: configured, result pending (2026-10-24)
 
 Product `9c32ef68afef7adaf21586ff586b11f0001748e0` adds an owned live acceptance
