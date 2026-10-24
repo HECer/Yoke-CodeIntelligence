@@ -66,6 +66,9 @@ fn run(
         "Persistent runtime requires its host-selected Serena profile"
     );
     session.enable_dashboard_management(&Deadline::new(120_000))?;
+    session.bind_dashboard_shutdown(
+        crate::session_dashboard::management::ShutdownScope::StdioConnection,
+    )?;
     let result = (|| -> Result<()> {
         // Bind before the first idle poll, not only after the first tool call.
         session.select_prompt_profile(match profile {
@@ -78,7 +81,14 @@ fn run(
         let mut initialized = false;
         let mut frame = Frame::default();
         let mut chunk = [0_u8; CHUNK];
-        loop {
+        'connection: loop {
+            if session.dashboard_shutdown_pending() {
+                if session.dashboard_shutdown_ready() {
+                    break;
+                }
+                std::thread::sleep(Duration::from_millis(10));
+                continue;
+            }
             let available = input.available(&mut chunk)?;
             if available == Some(0) {
                 frame.finish()?;
@@ -91,6 +101,9 @@ fn run(
                 )?;
                 output.write_all(b"\n")?;
                 output.flush()?;
+            }
+            if session.dashboard_shutdown_pending() {
+                continue;
             }
             let Some(count) = available else {
                 std::thread::sleep(Duration::from_millis(10));
@@ -147,6 +160,9 @@ fn run(
                     )?;
                     output.write_all(b"\n")?;
                     output.flush()?;
+                }
+                if session.dashboard_shutdown_pending() {
+                    continue 'connection;
                 }
             }
         }

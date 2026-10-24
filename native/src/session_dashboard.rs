@@ -150,6 +150,7 @@ fn event_name(operation: &str) -> &'static str {
         "dashboard.documents.pending" => "dashboard.documents.pending",
         "dashboard.documents.recover" => "dashboard.documents.recover",
         "dashboard.logs.read" => "dashboard.logs.read",
+        "dashboard.shutdown" => "dashboard.shutdown",
         _ => "other_operation",
     }
 }
@@ -232,6 +233,7 @@ impl Handle {
                             );
                             let mut response_deadline=request_deadline.clone();
                             let mut management_status=200;
+                            let mut completion=None;
                             let outcome = request(
                                 &mut stream,
                                 &worker_host,
@@ -252,7 +254,8 @@ impl Handle {
                                         response_deadline=Deadline::from_duration(time);
                                         let request=crate::json::parse(&body,128000).and_then(crate::json::decode::<management::Request>).map_err(|_|Failure(400,"Invalid management request"))?;
                                         let client=management.as_ref().ok_or(Failure(405,"Dashboard management unavailable"))?;
-                                        let reply=client.call(request,response_deadline.clone(),worker_stop.clone(),closed.clone());
+                                        let mut reply=client.call(request,response_deadline.clone(),worker_stop.clone(),closed.clone());
+                                        completion=reply.completion.take();
                                         let bytes=crate::json::encode_bounded(&reply.value,4_000_000,&response_deadline).map_err(|_|Failure(408,"Management outcome unconfirmed; refresh before retrying"))?;
                                         management_status=reply.status;
                                         Ok((bytes,"application/json; charset=utf-8"))
@@ -274,6 +277,7 @@ impl Handle {
                                 ),
                             };
                             let _ = respond(&mut stream, status, &bytes, media, &response_deadline);
+                            if let Some(completion)=completion { completion.finish(); }
                         }
                         Err(e) if e.kind() == std::io::ErrorKind::WouldBlock => {
                             std::thread::sleep(Duration::from_millis(10))
@@ -310,6 +314,9 @@ impl Handle {
             value["scope"] = json!("private_native_session_management");
             value["capabilities"]["sessionControls"] = json!(config.session_controls);
             value["capabilities"]["rawLogs"] = json!(config.raw_logs.is_some());
+            if let Ok(state) = self.state.try_lock() {
+                shutdown_capabilities(&mut value, &state.value["management"]["shutdown"]);
+            }
             if config.language_servers.is_some() {
                 value["capabilities"]["languageSelection"] = json!(config.session_controls);
             }
@@ -605,6 +612,7 @@ fn snapshot(
         }
         document_capabilities(&mut data, &config["configurationFiles"]);
         data["capabilities"]["rawLogs"] = json!(config["rawLogs"].is_object());
+        shutdown_capabilities(&mut data, &config["shutdown"]);
         data["capabilities"]["memoryEditing"] = serde_json::json!(
             config["memories"] == true
                 && config["memoryWritesGranted"] == true
@@ -613,6 +621,13 @@ fn snapshot(
     }
     crate::json::encode_bounded(&data, 1_000_000, d)
         .map_err(|_| Failure(413, "Dashboard response budget exceeded"))
+}
+fn shutdown_capabilities(value: &mut Value, shutdown: &Value) {
+    if shutdown.is_object() {
+        value["capabilities"]["mcpShutdown"] = json!(true);
+        value["capabilities"]["shutdownScope"] = shutdown["scope"].clone();
+        value["capabilities"]["serviceShutdown"] = json!(false);
+    }
 }
 fn document_capabilities(value: &mut Value, documents: &Value) {
     if let Some(choices) = documents["choices"].as_array() {

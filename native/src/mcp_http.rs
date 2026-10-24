@@ -1040,6 +1040,11 @@ fn actor(receiver: mpsc::Receiver<Job>, shared: Arc<Shared>, config: Arc<Config>
             if bounded.is_ok_and(|changed| changed) {
                 local.state.dashboard_catalog_changed();
             }
+            if local.session.dashboard_shutdown_ready() {
+                // The owning dashboard has attempted its reply (or delivery
+                // was abandoned). Only this actor Session is revoked.
+                local.meta.closed.store(true, Ordering::SeqCst);
+            }
             if local.session.cleanup_unproven() {
                 shared.cleanup_failed.store(true, Ordering::SeqCst);
                 local.meta.closed.store(true, Ordering::SeqCst);
@@ -1064,6 +1069,12 @@ fn actor(receiver: mpsc::Receiver<Job>, shared: Arc<Shared>, config: Arc<Config>
                     && !job.meta.closed.load(Ordering::SeqCst),
                 "MCP session authority changed"
             );
+            if sessions
+                .get(&job.id)
+                .is_some_and(|local| local.session.dashboard_shutdown_pending())
+            {
+                return Ok(Reply::fault(Fault(409, "Owning MCP session is closing")));
+            }
             Deadline::run_bounded(&job.deadline, Arc::clone(&shared.stop), || {
                 Deadline::run_bounded(&job.meta.lifetime, Arc::clone(&job.meta.closed), || {
                     Deadline::run_bounded(&job.deadline, Arc::clone(&job.cancel), || {
@@ -1075,6 +1086,9 @@ fn actor(receiver: mpsc::Receiver<Job>, shared: Arc<Shared>, config: Arc<Config>
                             let mut native_session =
                                 principal.target.open(&operation_deadline, true)?;
                             native_session.bind_dashboard_lifetime(Arc::clone(&job.meta.closed));
+                            native_session.bind_dashboard_shutdown(
+                                crate::session_dashboard::management::ShutdownScope::HttpSession,
+                            )?;
                             if native_session.dashboard_management_requested() {
                                 native_session.enable_dashboard_management(&operation_deadline)?;
                             }

@@ -8,6 +8,7 @@ impl Session {
         // requests observe closure, and cannot be applied by a later driver.
         self.dashboard = None;
         self.dashboard_management = None;
+        self.dashboard_shutdown = None;
         if let Some(documents) = &mut self.dashboard_documents {
             documents.clear_plans();
         }
@@ -43,7 +44,7 @@ impl Session {
         }
         Some(
             json!({"enabled":self.dashboard_management.is_some(),"sessionControls":config.session_controls,
-            "memories":config.memories,"configurationFiles":self.dashboard_documents_view().unwrap_or(json!(false)),"languageSelection":self.dashboard_language_view().unwrap_or(json!(false)),"rawLogs":self.dashboard_logs_view().unwrap_or(json!(false)),"shutdown":false,
+            "memories":config.memories,"configurationFiles":self.dashboard_documents_view().unwrap_or(json!(false)),"languageSelection":self.dashboard_language_view().unwrap_or(json!(false)),"rawLogs":self.dashboard_logs_view().unwrap_or(json!(false)),"shutdown":self.dashboard_shutdown_view().unwrap_or(json!(false)),
             "operationTimeoutMs":config.operation_timeout_ms,"sessionStateSha256":crate::model::hash(&self.persisted),
             "modeChoices":choices,"modeResetAvailable":self.steering_enabled(),"memoryWritesGranted":self.host.notes_policy.writable,
             "noMemoriesMode":self.state.modes.iter().any(|m|m=="no-memories")}),
@@ -125,7 +126,16 @@ impl Session {
             .and_then(|c| c.management.as_ref())
             .context("Dashboard management unavailable")?
             .clone();
+        if self.dashboard_shutdown_pending() {
+            return Ok(Reply::fault(
+                409,
+                "owning_session_closing",
+                Some(&request.id),
+                true,
+            ));
+        }
         let (operation, args, tool, api, write) = match &request.action {
+            Action::Shutdown {} => return self.dashboard_shutdown_action(request, deadline),
             Action::ReadLog { log_id, max_bytes } => {
                 return self.dashboard_log_action(request, log_id, *max_bytes, deadline);
             }
@@ -290,6 +300,7 @@ impl Session {
                 }
                 Reply {
                     status: 200,
+                    completion: None,
                     value: json!({"schema":"native_dashboard_management_v1","id":request.id,
                     "outcome":"completed","metadataChanged":metadata_changed,"sourceWritten":false,
                     "sessionStateSha256":crate::model::hash(&self.persisted),"revision":self.state.revision,"data":data}),
@@ -317,5 +328,105 @@ impl Session {
             },
         };
         Ok(reply)
+    }
+}
+
+#[cfg(test)]
+mod shutdown_tests {
+    use super::*;
+    use crate::session_dashboard::management::ShutdownScope;
+    fn fixture(granted: bool, denied: bool) -> (tempfile::TempDir, Session) {
+        let root = tempfile::tempdir().unwrap();
+        std::fs::write(root.path().join("main.rs"), b"fn untouched() {}\r\n").unwrap();
+        let mut host = json!({"dashboard":{"management":{"shutdown":granted,"sessionControls":false,"memories":false}},"steering":{}});
+        if denied {
+            host["steering"]["global"] = json!({"excludedTools":["ci_session"]});
+        }
+        let mut session = Session::open(
+            Engine::open(root.path()).unwrap(),
+            serde_json::from_value(host).unwrap(),
+            Some("owned-shutdown"),
+            &Deadline::new(20_000),
+        )
+        .unwrap();
+        session
+            .enable_dashboard_management(&Deadline::new(20_000))
+            .unwrap();
+        (root, session)
+    }
+    fn request(session: &Session) -> Request {
+        crate::json::decode(json!({"id":"a".repeat(64),"sessionStateSha256":crate::model::hash(&session.persisted),"project":session.state.active_project,"action":{"kind":"shutdown"}})).unwrap()
+    }
+    #[test]
+    fn host_grant_alone_never_installs_a_shutdown_target_or_bypasses_current_policy() {
+        for (grant, bind, denied) in [
+            (false, true, false),
+            (true, false, false),
+            (true, true, true),
+        ] {
+            let (_root, mut session) = fixture(grant, denied);
+            if bind {
+                session
+                    .bind_dashboard_shutdown(ShutdownScope::HttpSession)
+                    .unwrap();
+            }
+            let request = request(&session);
+            let result = session
+                .dashboard_action(&request, &Deadline::new(2000))
+                .unwrap();
+            assert_eq!(result.status, 403);
+            assert_eq!(result.value["notApplied"], true);
+            assert!(!session.dashboard_shutdown_pending());
+            assert!(!session.dashboard_shutdown_ready());
+        }
+    }
+    #[test]
+    fn stale_or_expired_shutdown_does_not_stop_then_acceptance_quiesces_without_changing_source() {
+        let (root, mut session) = fixture(true, false);
+        let (_other_root, mut other) = fixture(true, false);
+        session
+            .bind_dashboard_shutdown(ShutdownScope::HttpSession)
+            .unwrap();
+        other
+            .bind_dashboard_shutdown(ShutdownScope::StdioConnection)
+            .unwrap();
+        let before = session.persisted.clone();
+        let mut request = request(&session);
+        request.session_state_sha256 = "b".repeat(64);
+        let stale = session
+            .dashboard_action(&request, &Deadline::new(2000))
+            .unwrap();
+        assert_eq!(stale.status, 409);
+        assert!(!session.dashboard_shutdown_pending());
+        request.session_state_sha256 = crate::model::hash(&session.persisted);
+        assert!(
+            session
+                .dashboard_action(&request, &Deadline::new(0))
+                .is_err()
+        );
+        assert!(!session.dashboard_shutdown_pending());
+        let mut accepted = session
+            .dashboard_action(&request, &Deadline::new(2000))
+            .unwrap();
+        assert_eq!(accepted.status, 200);
+        assert_eq!(accepted.value["data"]["scope"], "owning_http_mcp_session");
+        assert_eq!(accepted.value["data"]["serviceShutdown"], false);
+        assert_eq!(accepted.value["data"]["processExitConfirmed"], false);
+        assert!(session.dashboard_shutdown_pending() && !session.dashboard_shutdown_ready());
+        assert_eq!(
+            session
+                .dashboard_action(&request, &Deadline::new(2000))
+                .unwrap()
+                .status,
+            409
+        );
+        assert_eq!(session.persisted, before);
+        accepted.completion.take().unwrap().finish();
+        assert!(session.dashboard_shutdown_ready());
+        assert!(!other.dashboard_shutdown_pending());
+        assert_eq!(
+            std::fs::read(root.path().join("main.rs")).unwrap(),
+            b"fn untouched() {}\r\n"
+        );
     }
 }

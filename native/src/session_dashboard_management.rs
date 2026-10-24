@@ -22,6 +22,11 @@ pub struct Config {
     pub documents: Option<crate::host_install::documents::Config>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub raw_logs: Option<crate::host_install::logs::Config>,
+    #[serde(skip_serializing_if = "is_false")]
+    pub shutdown: bool,
+}
+fn is_false(value: &bool) -> bool {
+    !value
 }
 impl Default for Config {
     fn default() -> Self {
@@ -32,6 +37,7 @@ impl Default for Config {
             language_servers: None,
             documents: None,
             raw_logs: None,
+            shutdown: false,
         }
     }
 }
@@ -126,6 +132,7 @@ pub(crate) struct Request {
     deny_unknown_fields
 )]
 pub(crate) enum Action {
+    Shutdown {},
     ReadLog {
         log_id: String,
         #[serde(default)]
@@ -310,6 +317,7 @@ impl Request {
 pub(crate) struct Reply {
     pub status: u16,
     pub value: Value,
+    pub completion: Option<ResponseCompletion>,
 }
 impl Reply {
     pub(crate) fn fault(
@@ -321,6 +329,79 @@ impl Reply {
         Self {
             status,
             value: json!({"schema":"native_dashboard_management_v1","id":id,"error":code,"notApplied":not_applied}),
+            completion: None,
+        }
+    }
+}
+
+/// Installed only by a trusted owning transport driver, never from JSON.
+#[derive(Clone, Copy, Debug)]
+pub(crate) enum ShutdownScope {
+    StdioConnection,
+    HttpSession,
+}
+impl ShutdownScope {
+    pub(crate) fn name(self) -> &'static str {
+        match self {
+            Self::StdioConnection => "owning_stdio_mcp_connection",
+            Self::HttpSession => "owning_http_mcp_session",
+        }
+    }
+}
+#[derive(Clone, Debug)]
+pub(crate) struct ShutdownSignal {
+    stage: Arc<AtomicU8>,
+    pub scope: ShutdownScope,
+}
+impl ShutdownSignal {
+    pub(crate) fn new(scope: ShutdownScope) -> Self {
+        Self {
+            stage: Arc::new(AtomicU8::new(0)),
+            scope,
+        }
+    }
+    pub(crate) fn requested(&self) -> bool {
+        self.stage.load(Ordering::Acquire) != 0
+    }
+    pub(crate) fn ready(&self) -> bool {
+        self.stage.load(Ordering::Acquire) >= 2
+    }
+    pub(crate) fn request(&self, deadline: &Deadline) -> Result<ResponseCompletion> {
+        deadline.check()?;
+        ensure!(
+            self.stage
+                .compare_exchange(0, 1, Ordering::AcqRel, Ordering::Acquire)
+                .is_ok(),
+            "Dashboard shutdown already requested"
+        );
+        Ok(ResponseCompletion {
+            stage: self.stage.clone(),
+            attempted: false,
+        })
+    }
+}
+/// Sending a Reply is not an HTTP response attempt. The listener retains this
+/// until its bounded write returns; abandoned delivery separately releases the
+/// owner so a failed client cannot keep an accepted shutdown pending forever.
+#[derive(Debug)]
+pub(crate) struct ResponseCompletion {
+    stage: Arc<AtomicU8>,
+    attempted: bool,
+}
+impl ResponseCompletion {
+    pub(crate) fn finish(mut self) {
+        self.attempted = true;
+        let _ = self
+            .stage
+            .compare_exchange(1, 2, Ordering::AcqRel, Ordering::Acquire);
+    }
+}
+impl Drop for ResponseCompletion {
+    fn drop(&mut self) {
+        if !self.attempted {
+            let _ = self
+                .stage
+                .compare_exchange(1, 3, Ordering::AcqRel, Ordering::Acquire);
         }
     }
 }
@@ -442,6 +523,45 @@ impl Client {
 mod tests {
     use super::*;
     #[test]
+    fn shutdown_signal_waits_for_response_attempt_and_cannot_target_another_owner() {
+        let signal = ShutdownSignal::new(ShutdownScope::StdioConnection);
+        let other = ShutdownSignal::new(ShutdownScope::HttpSession);
+        assert!(signal.request(&Deadline::new(0)).is_err());
+        assert!(!signal.requested() && !signal.ready());
+        let completion = signal.request(&Deadline::new(1000)).unwrap();
+        assert!(signal.requested() && !signal.ready());
+        assert!(signal.request(&Deadline::new(1000)).is_err());
+        assert!(!other.requested() && !other.ready());
+        completion.finish();
+        assert!(signal.ready());
+        assert_eq!(signal.stage.load(Ordering::Acquire), 2);
+        assert!(!other.ready());
+    }
+    #[test]
+    fn abandoned_shutdown_delivery_unblocks_only_its_already_accepted_owner() {
+        let signal = ShutdownSignal::new(ShutdownScope::HttpSession);
+        let completion = signal.request(&Deadline::new(1000)).unwrap();
+        assert!(!signal.ready());
+        drop(completion);
+        assert!(signal.ready());
+        assert_eq!(signal.stage.load(Ordering::Acquire), 3);
+        assert_eq!(signal.scope.name(), "owning_http_mcp_session");
+    }
+    #[test]
+    fn absent_and_false_shutdown_grants_preserve_existing_serialization() {
+        let absent: Config = serde_json::from_value(json!({})).unwrap();
+        let disabled: Config = serde_json::from_value(json!({"shutdown":false})).unwrap();
+        assert_eq!(absent, disabled);
+        assert!(
+            serde_json::to_value(absent)
+                .unwrap()
+                .get("shutdown")
+                .is_none()
+        );
+        assert!(serde_json::from_value::<Config>(json!({"shutdown":null})).is_err());
+        assert!(serde_json::from_value::<Config>(json!({"shutdown":{"scope":"service"}})).is_err());
+    }
+    #[test]
     fn raw_log_request_rejects_paths_commands_offsets_and_excessive_budgets() {
         let base = json!({"id":"a".repeat(64),"sessionStateSha256":"b".repeat(64),"project":"default","action":{"kind":"readLog","logId":"session-log","maxBytes":8}});
         crate::json::decode::<Request>(base.clone())
@@ -474,7 +594,7 @@ mod tests {
     }
     #[test]
     fn argumentless_management_actions_reject_all_unknown_authority_fields() {
-        for kind in ["resetModes", "resetLanguageServers"] {
+        for kind in ["resetModes", "resetLanguageServers", "shutdown"] {
             let base = json!({"kind":kind});
             serde_json::from_value::<Action>(base.clone()).unwrap();
             for field in ["command", "scope", "project", "service"] {

@@ -108,6 +108,7 @@ impl Session {
         }
         Ok(Reply {
             status: 200,
+            completion: None,
             value: json!({"schema":"native_dashboard_management_v1","id":request.id,"outcome":"completed",
             "metadataChanged":false,"fileChanged":false,"sourceWritten":false,"sessionStateSha256":crate::model::hash(&self.persisted),"revision":self.state.revision,"data":data}),
         })

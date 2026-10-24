@@ -235,6 +235,7 @@ pub struct Session {
     dashboard_management: Option<crate::session_dashboard::management::Mailbox>,
     dashboard_documents: Option<dashboard_documents::Runtime>,
     dashboard_logs: Option<dashboard_logs::Runtime>,
+    dashboard_shutdown: Option<crate::session_dashboard::management::ShutdownSignal>,
     dashboard_lifetime: Option<std::sync::Arc<std::sync::atomic::AtomicBool>>,
     host_backend_servers: Option<BTreeMap<String, crate::lsp::ConfiguredServer>>,
     dashboard_language_registry: Option<dashboard_languages::Registry>,
@@ -263,6 +264,8 @@ mod dashboard_languages;
 mod dashboard_logs;
 #[path = "session_dashboard_session.rs"]
 mod dashboard_management;
+#[path = "session_dashboard_shutdown.rs"]
+mod dashboard_shutdown;
 #[path = "session_prompt_session.rs"]
 mod prompt_memory;
 fn project_root_key(path: &std::path::Path) -> Option<String> {
@@ -1584,6 +1587,7 @@ impl Session {
             dashboard_management: None,
             dashboard_documents,
             dashboard_logs,
+            dashboard_shutdown: None,
             dashboard_lifetime: None,
             host_backend_servers,
             dashboard_language_registry,
