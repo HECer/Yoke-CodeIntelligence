@@ -1,5 +1,20 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Unix memory API diagnostic: observations pending (2026-10-24)
+
+A fixed owned C fixture now measures Unix CI memory API behavior separately
+from native acceptance. It retains the256-MiB hard/soft ceiling, attempts large
+untouched reservations only after exact limit readback, and preserves API/shell
+refusals. Child-only macOS allocator variants measure possible startup effects;
+they change no product or host settings. JSON/logs are uploaded separately;
+neither a header nor diagnostic completion certifies native enforcement.
+101 Python tests pass, including14 diagnostic cases (nonadditive), with warnings
+treated as errors. Typecheck and npm260/0/3 existing skips pass; native Rust
+sources are unchanged. Actual
+Unix fixture compilation/observations, current native matrix and complete
+STATUS acceptance remain open.
+[Evidence](validation/integration-2026-10-24/unix-memory-diagnostic/README.md).
+
 ## Status-hook binary stdin correction: native confirmation pending (2026-10-24)
 
 At4ea583e1 the Windows shell/source-boundary test now passes; the status callback

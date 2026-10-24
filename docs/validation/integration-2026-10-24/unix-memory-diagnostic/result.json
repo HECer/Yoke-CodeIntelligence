@@ -1,0 +1,97 @@
+{
+  "baseline": "7ffb89c7244d5b750f890f48022ae2d932bd9a9c",
+  "wholePython": {
+    "passed": 101,
+    "failed": 0,
+    "skipped": 0,
+    "warningsAreErrors": true
+  },
+  "includedDiagnosticTestsNonadditive": 14,
+  "firstPythonAttempt": {
+    "testsAttempted": 101,
+    "failed": 2,
+    "skipped": 1,
+    "reason": "Installed Cargo absent from process PATH; fixed only process environment"
+  },
+  "typecheckExit": 0,
+  "npmExit": 0,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "nativeRustSourcesExactToBaseline": true,
+  "localCCompilationOrUnixDiagnosticExecution": false,
+  "nativeYokeImageReadOrExecutedLocally": false,
+  "nativeCiAcceptanceVerified": false,
+  "unixMemoryEnforcementQualified": false,
+  "hostedDiagnosticObservationsAvailable": false,
+  "fullStatusComplete": false,
+  "originalMemoryLimitBytes": 268435456,
+  "localFullNativeBuildAdmissionBytes": 1200000000,
+  "freeBytesObserved": 1102917632,
+  "sources": [
+    {
+      "path": ".github/workflows/rust.yml",
+      "bytes": 6384,
+      "sha256": "961ce14c2173bc9460e5c350d3c47fd920c30552bdf4656093cd379a5911be91",
+      "gitBlobSha": "3c361f4dcff252c526671f40e8f75403f8c97eb4"
+    },
+    {
+      "path": "scripts/host_memory_probe.py",
+      "bytes": 11093,
+      "sha256": "5594dda7fec9a199e7765d0aa6e4b16104612865d138a414f19129cf163fc3bf",
+      "gitBlobSha": "6c37aec39dae9032f54c1f73460d4fc3bccda8c7"
+    },
+    {
+      "path": "scripts/fixtures/host-memory-probe.c",
+      "bytes": 4157,
+      "sha256": "297ca269080447ddfd42d6070aac178e370db0331aac8acf687a5a6140500fd1",
+      "gitBlobSha": "29cd03331ccd61d96e79db0ce65d707158721811"
+    },
+    {
+      "path": "scripts/tests/test_host_memory_probe.py",
+      "bytes": 8932,
+      "sha256": "0aa0d92d12a5980b40b12803bb22613a357f7ea28dd18cff94f2b48f234cb6c1",
+      "gitBlobSha": "51a21aec175dafe3532452e0d0b4cf185aaa78ca"
+    }
+  ],
+  "logs": [
+    {
+      "path": "python-all.txt",
+      "sha256": "2ba90f432942ee169813e64a8f79e5cca2edc9e36c00638e96bfeadc3cef613e",
+      "originalSha256": "6c56b72a644c1fe85ad35ab8116aa8eda450e6a75251135e6fd65ecdcdc1f770",
+      "originalEncoding": "utf-16",
+      "bytes": 19658,
+      "newlineNormalizedCaptureSha256": "58e1d86cddb4e73f1b07629687dfdc0dafadcc8d5517567291985951a9c47af2",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "python-path-refusal.txt",
+      "sha256": "4cce0fcc424c510f3e1c3e6efc97efb2dbb551201a8a6d84840b5acd2ad7bd44",
+      "originalSha256": "660a9f63d4c7d036083bc6290fe0527d68f04717bce4f36609879308d9466f8d",
+      "originalEncoding": "utf-16",
+      "bytes": 21413,
+      "newlineNormalizedCaptureSha256": "24c09c93485a98321930ed8b8365917962ee410088eaa6b5ead669e10f230e0e",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "typecheck.txt",
+      "sha256": "4fd63b87a323e363c41a3cfa881a32ccf515c6a4386233f41c05b2bf51e47fc7",
+      "originalSha256": "524dc6eaf55766a67854472072fa2e8ce627983491e21aeb61aaab0ea3fd40f7",
+      "originalEncoding": "utf-16",
+      "bytes": 437,
+      "newlineNormalizedCaptureSha256": "57ac46ac142ae09d181d8e6243c3489e274864b28e11d891f60b028e014fefa0",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "npm-test.txt",
+      "sha256": "053606f65d1dc6543407196fdf186ccc90a521785428919f6951b363d7c6a71b",
+      "originalSha256": "af85551c6dd2bf0ac2be49c6446455aaebe1ced0f6f8e6e2d723623dcb0fff61",
+      "originalEncoding": "utf-16",
+      "bytes": 25384,
+      "newlineNormalizedCaptureSha256": "04f539ff7ce1b6a1c95abdc0c4a4deb926adc47093981a419774f3f79bbc728c",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    }
+  ]
+}

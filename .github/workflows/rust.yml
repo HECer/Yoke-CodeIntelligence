@@ -48,6 +48,16 @@ jobs:
       - run: npm ci
       - run: python -m unittest discover -s scripts/tests -v
         if: matrix.shard == 0
+      - name: Observe Unix memory APIs without native acceptance claims
+        if: matrix.shard == 0 && runner.os != 'Windows'
+        run: python scripts/host_memory_probe.py
+      - name: Preserve Unix memory API diagnostics (JSON and logs only)
+        if: always() && matrix.shard == 0 && runner.os != 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-memory-diagnostic-${{ matrix.os }}
+          path: validation/ci-host-memory
+          if-no-files-found: warn
       - name: Check all native format roots on Windows
         if: matrix.shard == 0 && runner.os == 'Windows'
         run: python scripts/native_fmt.py --check

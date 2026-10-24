@@ -1,5 +1,18 @@
 # Remaining implementation and acceptance
 
+## Unix memory diagnosis awaits actual runner observations
+
+The [CI-only diagnostic](validation/integration-2026-10-24/unix-memory-diagnostic/README.md)
+keeps the original256-MiB ceiling and distinguishes actual limit installation,
+allocation results and API/shell refusal. It never certifies native acceptance.
+101 local Python tests pass (14 diagnostic cases included), typecheck and
+npm260/0/3 existing skips pass;
+no C compilation or native Yoke image read/execution occurs locally. Actual
+Linux/macOS observations and native enforcement qualification remain open.
+No unprivileged replacement ceiling is established; do not weaken the limit or
+reinterpret a complete diagnostic as a passing native gate. Other Windows,
+history/live/current VSIX and full STATUS requirements remain open.
+
 ## Exact status stdin transport awaits actual native confirmation
 
 The [stdin correction](validation/integration-2026-10-24/status-stdin-handles/README.md)
