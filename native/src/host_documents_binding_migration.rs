@@ -949,6 +949,186 @@ mod tests {
         }
     }
     #[test]
+    fn a_document_proposal_cannot_revive_after_returning_to_its_old_selection() {
+        let f = Fixture::new();
+        let loaded = f.from.read("old", &d()).unwrap();
+        let stale = f
+            .from
+            .plan("old", &loaded.revision, "stale reviewed proposal\r\n", &d())
+            .unwrap();
+        let old_approval = f.a.approve(&f.from, &stale, &d()).unwrap();
+        f.apply(&f.plan()).unwrap();
+        let back = plan_binding_migration(&f.to, &f.from, "new", "old", &d()).unwrap();
+        let authority =
+            BindingMigrationAuthority::new(&f.to, &f.from, "new", "old", &f.b, &f.a).unwrap();
+        let approval = authority.approve(&f.to, &f.from, &back, &d()).unwrap();
+        apply_binding_migration(&f.to, &f.from, &authority, &approval, &back, &d()).unwrap();
+        assert_eq!(fs::read(&f.target).unwrap(), ORIGINAL);
+        let result = f.from.apply(&f.a, &old_approval, &stale, &d());
+        assert!(
+            result.is_err(),
+            "A stale document proposal revived after binding migration and wrote {:?}",
+            fs::read(&f.target).unwrap()
+        );
+        assert!(f.a.approve(&f.from, &stale, &d()).is_err());
+        assert_eq!(fs::read(&f.target).unwrap(), ORIGINAL);
+        let loaded = f.from.read("old", &d()).unwrap();
+        let fresh = f
+            .from
+            .plan("old", &loaded.revision, "fresh reviewed proposal\r\n", &d())
+            .unwrap();
+        let approved = f.a.approve(&f.from, &fresh, &d()).unwrap();
+        f.from.apply(&f.a, &approved, &fresh, &d()).unwrap();
+        assert_eq!(fs::read(&f.target).unwrap(), b"fresh reviewed proposal\r\n");
+    }
+    #[test]
+    fn a_generation_bound_document_proposal_cannot_revive_on_a_later_return() {
+        let f = Fixture::new();
+        f.apply(&f.plan()).unwrap();
+        let loaded = f.to.read("new", &d()).unwrap();
+        let stale =
+            f.to.plan("new", &loaded.revision, "stale second epoch", &d())
+                .unwrap();
+        assert!(stale.owner_generation.is_some());
+        let approved = f.b.approve(&f.to, &stale, &d()).unwrap();
+        let back = plan_binding_migration(&f.to, &f.from, "new", "old", &d()).unwrap();
+        let authority =
+            BindingMigrationAuthority::new(&f.to, &f.from, "new", "old", &f.b, &f.a).unwrap();
+        let approval = authority.approve(&f.to, &f.from, &back, &d()).unwrap();
+        apply_binding_migration(&f.to, &f.from, &authority, &approval, &back, &d()).unwrap();
+        f.apply(&f.plan()).unwrap();
+        assert!(f.to.apply(&f.b, &approved, &stale, &d()).is_err());
+        assert!(f.b.approve(&f.to, &stale, &d()).is_err());
+        assert_eq!(fs::read(&f.target).unwrap(), ORIGINAL);
+        let loaded = f.to.read("new", &d()).unwrap();
+        let fresh =
+            f.to.plan("new", &loaded.revision, "new epoch approval", &d())
+                .unwrap();
+        assert_ne!(fresh.owner_generation, stale.owner_generation);
+        let approved = f.b.approve(&f.to, &fresh, &d()).unwrap();
+        f.to.apply(&f.b, &approved, &fresh, &d()).unwrap();
+        assert_eq!(fs::read(&f.target).unwrap(), b"new epoch approval");
+    }
+    #[test]
+    fn legacy_generationless_journals_keep_explicit_recovery_but_not_proposal_approval() {
+        let f = Fixture::new();
+        f.apply(&f.plan()).unwrap();
+        let loaded = f.to.read("new", &d()).unwrap();
+        let proposed =
+            f.to.plan(
+                "new",
+                &loaded.revision,
+                "legacy explicit recovery\r\n",
+                &d(),
+            )
+            .unwrap();
+        assert!(proposed.owner_generation.is_some());
+        let mut encoded = serde_json::to_value(&proposed).unwrap();
+        encoded.as_object_mut().unwrap().remove("ownerGeneration");
+        let mut legacy: Plan = serde_json::from_value(encoded).unwrap();
+        legacy.id.clear();
+        legacy.id = identity(&("dashboard_host_document_plan_v1", &legacy));
+        assert!(legacy.owner_generation.is_none());
+        assert!(
+            serde_json::to_value(&legacy)
+                .unwrap()
+                .get("ownerGeneration")
+                .is_none()
+        );
+        let genesis = super::super::initial(&f.to, &legacy);
+        let header = Header {
+            schema_version: 1,
+            plan: legacy.clone(),
+            initial: genesis.clone(),
+        };
+        let root = state(&f.to, true, &d()).unwrap();
+        let name = stem(&f.to, &legacy.id).unwrap();
+        write_record(
+            &root.root.path,
+            &plan_path(&root.root.path, &name),
+            &serde_json::to_vec(&header).unwrap(),
+            &d(),
+        )
+        .unwrap();
+        drop(root);
+        assert!(f.b.approve(&f.to, &legacy, &d()).is_err());
+        let approval =
+            f.b.approve_recovery_at(
+                &f.to,
+                &legacy.id,
+                &genesis.id,
+                RecoveryDirection::Resume,
+                &d(),
+            )
+            .unwrap();
+        let receipt = f.to.recover(&f.b, &approval, &d()).unwrap();
+        assert_eq!(receipt.outcome, "committed");
+        assert_eq!(
+            fs::read(&f.target).unwrap(),
+            b"legacy explicit recovery\r\n"
+        );
+        let journal = f.to.inspect_journal(&legacy.id, &d()).unwrap();
+        assert!(!journal.pending && journal.plan.owner_generation.is_none());
+    }
+    #[test]
+    fn generation_bound_recovery_refuses_changed_owner_metadata_and_preserves_the_journal() {
+        let f = Fixture::new();
+        f.apply(&f.plan()).unwrap();
+        let loaded = f.to.read("new", &d()).unwrap();
+        let plan =
+            f.to.plan(
+                "new",
+                &loaded.revision,
+                "must not recover a stale generation",
+                &d(),
+            )
+            .unwrap();
+        assert!(plan.owner_generation.is_some());
+        let genesis = super::super::initial(&f.to, &plan);
+        let header = Header {
+            schema_version: 1,
+            plan: plan.clone(),
+            initial: genesis.clone(),
+        };
+        let root = state(&f.to, true, &d()).unwrap();
+        let name = stem(&f.to, &plan.id).unwrap();
+        let path = plan_path(&root.root.path, &name);
+        let bytes = serde_json::to_vec(&header).unwrap();
+        write_record(&root.root.path, &path, &bytes, &d()).unwrap();
+        drop(root);
+        let approval =
+            f.b.approve_recovery_at(
+                &f.to,
+                &plan.id,
+                &genesis.id,
+                RecoveryDirection::Resume,
+                &d(),
+            )
+            .unwrap();
+        let mut foreign = read_owner(&f.to.documents["new"], &d()).unwrap().unwrap();
+        foreign.generation = Some(hash(b"owned foreign generation fixture"));
+        foreign.id = owner_id(&foreign);
+        let metadata = serde_json::to_vec(&foreign).unwrap();
+        fs::write(f.owner_path(), &metadata).unwrap();
+        assert!(f.to.recover(&f.b, &approval, &d()).is_err());
+        assert!(
+            f.b.approve_recovery_at(
+                &f.to,
+                &plan.id,
+                &genesis.id,
+                RecoveryDirection::Resume,
+                &d()
+            )
+            .is_err()
+        );
+        assert_eq!(fs::read(&path).unwrap(), bytes);
+        assert_eq!(fs::read(f.owner_path()).unwrap(), metadata);
+        assert_eq!(fs::read(&f.target).unwrap(), ORIGINAL);
+        let inspected = f.to.inspect_journal(&plan.id, &d()).unwrap();
+        assert!(inspected.pending);
+        assert_eq!(inspected.event_id, genesis.id);
+    }
+    #[test]
     fn partial_owned_metadata_recovers_in_either_direction_without_changing_source() {
         for count in [0, 7] {
             for direction in [RecoveryDirection::Resume, RecoveryDirection::Rollback] {

@@ -99,6 +99,8 @@ pub struct Plan {
     pub before_identity: String,
     pub before_hash: String,
     pub before_security_hash: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub owner_generation: Option<String>,
     pub after_hash: String,
     pub content: String,
     pub nonce: String,
@@ -363,6 +365,7 @@ impl Access {
                 .all(|id| valid_id(id))
                 && !plan.before_identity.is_empty()
                 && plan.before_identity.len() <= 128
+                && plan.owner_generation.as_deref().is_none_or(valid_id)
                 && plan.content.len() <= self.max_bytes
                 && hash(plan.content.as_bytes()) == plan.after_hash,
             "Host document plan binding or content invalid"
@@ -377,9 +380,15 @@ impl Access {
             identity(&("dashboard_host_document_plan_v1", &copy)) == plan.id,
             "Host document plan identity invalid"
         );
-        self.documents
+        let selected = self
+            .documents
             .get(&plan.document_id)
-            .context("Host document is not selected")
+            .context("Host document is not selected")?;
+        ensure!(
+            selected.source_project.is_none() || plan.owner_generation.is_none(),
+            "Project document plans cannot carry a global owner generation"
+        );
+        Ok(selected)
     }
     pub fn journal_binding(&self) -> Option<(&Path, &str)> {
         self.journal
@@ -499,6 +508,7 @@ impl Access {
             before_identity: file.identity.clone(),
             before_hash: file.hash.clone(),
             before_security_hash: security_hash,
+            owner_generation: journal::owner_generation(selected, deadline)?,
             after_hash: hash(content.as_bytes()),
             content: content.to_owned(),
             nonce: hash(entropy),

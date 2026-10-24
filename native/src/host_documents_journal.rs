@@ -178,6 +178,29 @@ fn require_owner(access: &Access, selected: &BoundDocument, d: &Deadline) -> Res
     );
     Ok(())
 }
+pub(super) fn owner_generation(selected: &BoundDocument, d: &Deadline) -> Result<Option<String>> {
+    if selected.source_project.is_some() {
+        return Ok(None);
+    }
+    Ok(read_owner(selected, d)?.and_then(|owner| owner.generation))
+}
+fn require_proposal_generation(access: &Access, plan: &Plan, d: &Deadline) -> Result<()> {
+    let selected = access.check_plan(plan, d)?;
+    ensure!(
+        owner_generation(selected, d)? == plan.owner_generation,
+        "Stale host document owner generation; review a fresh proposal"
+    );
+    Ok(())
+}
+fn require_recovery_generation(access: &Access, plan: &Plan, d: &Deadline) -> Result<()> {
+    // Legacy journals have no generation witness. Their existing explicit
+    // event-reviewed recovery remains available under the original owner/root
+    // and source-role checks. This exception never admits an ordinary proposal.
+    if plan.owner_generation.is_some() {
+        require_proposal_generation(access, plan, d)?;
+    }
+    Ok(())
+}
 fn bind_owner(access: &Access, selected: &BoundDocument, d: &Deadline) -> Result<()> {
     binding_migration::require_no_pending(selected, d)?;
     if read_owner(selected, d)?.is_some() {
@@ -433,16 +456,26 @@ fn canonical<T: serde::de::DeserializeOwned + Serialize>(
 ) -> Result<T> {
     let file =
         io::read_file(path, cap, false, d)?.context("Host document journal record absent")?;
-    let value: T = serde_json::from_slice(&file.bytes)?;
+    canonical_bytes(&file.bytes, cap, d)
+}
+fn canonical_bytes<T: serde::de::DeserializeOwned + Serialize>(
+    bytes: &[u8],
+    cap: usize,
+    d: &Deadline,
+) -> Result<T> {
+    d.check()?;
     ensure!(
-        serde_json::to_vec(&value)? == file.bytes,
+        bytes.len() <= cap,
+        "Host document journal record capacity exceeded"
+    );
+    let value: T = serde_json::from_slice(bytes)?;
+    ensure!(
+        serde_json::to_vec(&value)? == bytes,
         "Noncanonical host document journal record"
     );
     Ok(value)
 }
-fn load(access: &Access, root: &Path, id: &str, d: &Deadline) -> Result<Loaded> {
-    let name = stem(access, id)?;
-    let header: Header = canonical(&plan_path(root, &name), MAX_PLAN, d)?;
+fn admit_header(access: &Access, id: &str, header: Header, d: &Deadline) -> Result<(Plan, Event)> {
     let plan = header.plan;
     access.check_plan(&plan, d)?;
     let genesis = initial(access, &plan);
@@ -453,13 +486,19 @@ fn load(access: &Access, root: &Path, id: &str, d: &Deadline) -> Result<Loaded> 
             && serde_json::to_vec(&header.initial)? == serde_json::to_vec(&genesis)?,
         "Host document journal header differs"
     );
-    let directory = io::open_metadata_directory(root, d)?;
-    let prefix = format!("{name}.e");
-    let mut paths = directory
-        .names(MAX_ENTRIES, d)?
-        .into_iter()
-        .filter(|n| n.starts_with(&prefix))
-        .collect::<Vec<_>>();
+    Ok((plan, genesis))
+}
+fn admit_events(
+    access: &Access,
+    root: &Path,
+    id: &str,
+    checked: (Plan, Event),
+    mut paths: Vec<String>,
+    mut read_event: impl FnMut(&Path) -> Result<Event>,
+    d: &Deadline,
+) -> Result<Loaded> {
+    let (plan, genesis) = checked;
+    let name = stem(access, id)?;
     paths.sort();
     ensure!(
         paths.len() < MAX_EVENTS as usize,
@@ -472,7 +511,8 @@ fn load(access: &Access, root: &Path, id: &str, d: &Deadline) -> Result<Loaded> 
             root.join(&path) == event_path(root, &name, sequence),
             "Host document journal event gap or foreign name"
         );
-        let event: Event = canonical(&root.join(path), MAX_EVENT, d)?;
+        d.check()?;
+        let event = read_event(&root.join(path))?;
         ensure!(
             event.schema_version == 1
                 && event.id == event_id(&event)
@@ -510,6 +550,27 @@ fn load(access: &Access, root: &Path, id: &str, d: &Deadline) -> Result<Loaded> 
         last = event;
     }
     Ok(Loaded { plan, event: last })
+}
+fn load(access: &Access, root: &Path, id: &str, d: &Deadline) -> Result<Loaded> {
+    let name = stem(access, id)?;
+    let header: Header = canonical(&plan_path(root, &name), MAX_PLAN, d)?;
+    let checked = admit_header(access, id, header, d)?;
+    let directory = io::open_metadata_directory(root, d)?;
+    let prefix = format!("{name}.e");
+    let paths = directory
+        .names(MAX_ENTRIES, d)?
+        .into_iter()
+        .filter(|n| n.starts_with(&prefix))
+        .collect::<Vec<_>>();
+    admit_events(
+        access,
+        root,
+        id,
+        checked,
+        paths,
+        |path| canonical(path, MAX_EVENT, d),
+        d,
+    )
 }
 fn pending_document(access: &Access, root: &Path, document: &str, d: &Deadline) -> Result<bool> {
     let directory = io::open_metadata_directory(root, d)?;
@@ -628,6 +689,7 @@ impl WriteAuthority {
     /// a plan, a flag or a confirmation string cannot construct this capability.
     pub fn approve(&self, access: &Access, plan: &Plan, d: &Deadline) -> Result<Approval> {
         self.check(access, plan, d)?;
+        require_proposal_generation(access, plan, d)?;
         let (selected, file) = access.current(&plan.document_id, d)?;
         original(access, plan, selected, &file, d)?;
         Ok(Approval {
@@ -646,6 +708,7 @@ impl WriteAuthority {
         let guard = state(access, false, d)?;
         let loaded = load(access, &guard.root.path, id, d)?;
         self.check(access, &loaded.plan, d)?;
+        require_recovery_generation(access, &loaded.plan, d)?;
         ensure!(
             loaded.event.direction.is_none_or(|mode| mode == direction),
             "Host document recovery direction is already fixed"
@@ -725,6 +788,7 @@ impl Access {
         d: &Deadline,
     ) -> Result<Receipt> {
         authority.check(self, plan, d)?;
+        require_proposal_generation(self, plan, d)?;
         let _bindings = self.hold_bindings(&plan.document_id, d)?;
         ensure!(
             approval.binding == self.binding
@@ -755,6 +819,7 @@ impl Access {
             !pending_document(self, &guard.root.path, &plan.document_id, d)?,
             "Pending host document journal requires explicit recovery"
         );
+        require_proposal_generation(self, plan, d)?;
         bind_owner(self, selected, d)?;
         checkpoint("owner_bound")?;
         let mut event = initial(self, plan);
@@ -1229,6 +1294,7 @@ impl Access {
         let guard = state(self, true, d)?;
         let mut loaded = load(self, &guard.root.path, &approval.plan_id, d)?;
         authority.check(self, &loaded.plan, d)?;
+        require_recovery_generation(self, &loaded.plan, d)?;
         ensure!(
             loaded.event.id == approval.event_id,
             "Stale host document recovery approval"
@@ -1330,6 +1396,100 @@ mod tests {
             fs::read(f.source.join("main.rs")).unwrap(),
             b"fn untouched() {}\r\n"
         );
+    }
+    #[test]
+    fn captured_records_admit_the_original_chain_without_filesystem_fallback() {
+        let f = fixture();
+        f.access
+            .apply(&f.authority, &f.approval, &f.plan, &d())
+            .unwrap();
+        let name = stem(&f.access, &f.plan.id).unwrap();
+        let records = fs::read_dir(&f.journal)
+            .unwrap()
+            .map(|entry| entry.unwrap().path())
+            .filter(|path| {
+                path.file_name()
+                    .unwrap()
+                    .to_str()
+                    .unwrap()
+                    .starts_with(&name)
+            })
+            .map(|path| {
+                (
+                    path.file_name().unwrap().to_str().unwrap().to_owned(),
+                    fs::read(path).unwrap(),
+                )
+            })
+            .collect::<BTreeMap<_, _>>();
+        let header = &records[&format!("{name}.plan.json")];
+        let paths = records
+            .keys()
+            .filter(|path| path.starts_with(&format!("{name}.e")))
+            .cloned()
+            .collect::<Vec<_>>();
+        let virtual_root = f._temp.path().join("never-created-archive-view");
+        assert!(!virtual_root.exists());
+        let replay = |paths: Vec<String>, changed: Option<(&str, Vec<u8>)>| {
+            let checked = admit_header(
+                &f.access,
+                &f.plan.id,
+                canonical_bytes(header, MAX_PLAN, &d())?,
+                &d(),
+            )?;
+            admit_events(
+                &f.access,
+                &virtual_root,
+                &f.plan.id,
+                checked,
+                paths,
+                |path| {
+                    let key = path.file_name().unwrap().to_str().unwrap();
+                    let bytes = changed
+                        .as_ref()
+                        .filter(|(name, _)| *name == key)
+                        .map(|(_, bytes)| bytes.as_slice())
+                        .unwrap_or(&records[key]);
+                    canonical_bytes(bytes, MAX_EVENT, &d())
+                },
+                &d(),
+            )
+        };
+        let actual = load(&f.access, &f.journal, &f.plan.id, &d()).unwrap();
+        let captured = replay(paths.clone(), None).unwrap();
+        assert_eq!(
+            serde_json::to_vec(&captured.plan).unwrap(),
+            header_plan_bytes(header)
+        );
+        assert_eq!(captured.event.id, actual.event.id);
+        assert_eq!(captured.event.id, event_id(&captured.event));
+        assert!(matches!(captured.event.phase, Phase::Committed));
+        assert!(replay(paths[1..].to_vec(), None).is_err());
+        let mut forged: Event = canonical_bytes(&records[&paths[0]], MAX_EVENT, &d()).unwrap();
+        forged.previous = Some("f".repeat(64));
+        forged.id = event_id(&forged);
+        assert!(
+            replay(
+                paths.clone(),
+                Some((&paths[0], serde_json::to_vec(&forged).unwrap()))
+            )
+            .is_err()
+        );
+        assert!(replay(vec![paths[0].clone(); MAX_EVENTS as usize], None).is_err());
+        assert!(canonical_bytes::<Header>(header, header.len() - 1, &d()).is_err());
+        let mut spaced = header.clone();
+        spaced.push(b'\n');
+        assert!(canonical_bytes::<Header>(&spaced, MAX_PLAN, &d()).is_err());
+        assert!(!virtual_root.exists());
+        assert_eq!(fs::read(&f.target).unwrap(), PROPOSED.as_bytes());
+        verify_source(&f);
+    }
+    fn header_plan_bytes(header: &[u8]) -> Vec<u8> {
+        serde_json::to_vec(
+            &canonical_bytes::<Header>(header, MAX_PLAN, &d())
+                .unwrap()
+                .plan,
+        )
+        .unwrap()
     }
     #[test]
     fn explicit_host_approval_commits_exact_bytes_and_keeps_source_and_security() {
