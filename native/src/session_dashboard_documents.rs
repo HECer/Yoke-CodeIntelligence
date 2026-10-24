@@ -13,8 +13,9 @@ struct Prepared {
     expires: Instant,
 }
 pub(super) struct Runtime {
-    access: Access,
+    pub(super) access: Access,
     plans: BTreeMap<String, Prepared>,
+    pub(super) workspace_plans: BTreeMap<String, super::dashboard_project_documents::Prepared>,
     maximum: usize,
 }
 impl Runtime {
@@ -42,6 +43,7 @@ impl Runtime {
         Ok(Some(Self {
             access: Access::open(config, &roots, d)?,
             plans: BTreeMap::new(),
+            workspace_plans: BTreeMap::new(),
             maximum: config.max_document_bytes,
         }))
     }
@@ -50,6 +52,15 @@ impl Runtime {
     }
     pub(super) fn clear_plans(&mut self) {
         self.plans.clear();
+        self.workspace_plans.clear();
+    }
+    pub(super) fn prune_plans(&mut self) {
+        let now = Instant::now();
+        self.plans.retain(|_, p| p.expires > now);
+        self.workspace_plans.retain(|_, p| p.expires > now);
+    }
+    pub(super) fn proposal_count(&self) -> usize {
+        self.plans.len() + self.workspace_plans.len()
     }
     fn permitted(&self, id: &str, project: &str) -> Result<()> {
         let selection = self.access.selection(id)?;
@@ -78,7 +89,7 @@ impl Runtime {
     ) -> Result<Value> {
         let id = action.document_id();
         self.permitted(id, &envelope.project)?;
-        self.plans.retain(|_, p| p.expires > Instant::now());
+        self.prune_plans();
         match action {
             DocumentRequest::Read { .. } => Ok(json!({"document":self.access.read(id,d)?})),
             DocumentRequest::Plan {
@@ -90,7 +101,7 @@ impl Runtime {
                 let plan = self.access.plan(id, expected_revision, content, d)?;
                 self.plans.retain(|_, p| p.plan.document_id != id);
                 ensure!(
-                    self.plans.len() < 16,
+                    self.proposal_count() < 16,
                     "Dashboard reviewed proposal capacity exceeded"
                 );
                 let value = json!({"plan":plan,"expiresAfterMs":600000,"fileChanged":false,"metadataChanged":false});
@@ -126,6 +137,9 @@ impl Runtime {
                 Ok(
                     json!({"receipt":receipt,"fileChanged":receipt.file_changed,"metadataChanged":receipt.metadata_changed}),
                 )
+            }
+            DocumentRequest::Inspect { .. } => {
+                anyhow::bail!("Workspace approval inspection requires a project document")
             }
             DocumentRequest::Pending { .. } => {
                 self.writable(id)?;
@@ -179,9 +193,13 @@ impl Session {
     }
     pub(super) fn dashboard_documents_view(&self) -> Option<Value> {
         let documents = self.dashboard_documents.as_ref()?;
-        let choices=documents.access.selections().filter(|s|matches!(&s.scope,Scope::Global {}) || matches!(&s.scope,Scope::Project {project} if *project==self.state.active_project)).map(|s|json!({"id":s.id,"label":s.label,"scope":s.scope,"writable":s.writable && matches!(s.scope,Scope::Global {}) && documents.access.journal_binding().is_some(),"projectWriteApprovalRequired":matches!(s.scope,Scope::Project {..})})).collect::<Vec<_>>();
+        let project_writes = self.host_allow_writes && self.require_edit_permission().is_ok();
+        let choices=documents.access.selections().filter(|s|matches!(&s.scope,Scope::Global {}) || matches!(&s.scope,Scope::Project {project} if *project==self.state.active_project)).map(|s|json!({"id":s.id,"label":s.label,"scope":s.scope,"writable":s.writable && if matches!(s.scope,Scope::Global {}) { documents.access.journal_binding().is_some() } else { project_writes },"projectWriteApprovalRequired":matches!(s.scope,Scope::Project {..})})).collect::<Vec<_>>();
+        let project_writes = choices
+            .iter()
+            .any(|c| c["scope"]["kind"] == "project" && c["writable"] == true);
         Some(
-            json!({"choices":choices,"maxDocumentBytes":documents.maximum,"appliesTo":"selected_file_bytes_only","reloadsRunningConfiguration":false,"projectWrites":false,"sourceWritten":false}),
+            json!({"choices":choices,"maxDocumentBytes":documents.maximum,"appliesTo":"selected_file_bytes_only","reloadsRunningConfiguration":false,"projectWrites":project_writes,"sourceWritten":false}),
         )
     }
     pub(super) fn dashboard_document_action(
@@ -204,10 +222,20 @@ impl Session {
                 true,
             ));
         }
+        let project = self.dashboard_documents.as_ref().is_some_and(|runtime| {
+            runtime
+                .access
+                .selection(action.document_id())
+                .is_ok_and(|s| matches!(s.scope, Scope::Project { .. }))
+        });
+        if project && !matches!(action, DocumentRequest::Read { .. }) {
+            return self.dashboard_project_document_action(request, action, d);
+        }
         let operation = match action {
             DocumentRequest::Read { .. } => "dashboard.documents.read",
             DocumentRequest::Plan { .. } => "dashboard.documents.plan",
             DocumentRequest::Apply { .. } => "dashboard.documents.apply",
+            DocumentRequest::Inspect { .. } => "dashboard.documents.inspect",
             DocumentRequest::Pending { .. } => "dashboard.documents.pending",
             DocumentRequest::Recover { .. } => "dashboard.documents.recover",
         };

@@ -147,6 +147,7 @@ fn event_name(operation: &str) -> &'static str {
         "dashboard.documents.read" => "dashboard.documents.read",
         "dashboard.documents.plan" => "dashboard.documents.plan",
         "dashboard.documents.apply" => "dashboard.documents.apply",
+        "dashboard.documents.inspect" => "dashboard.documents.inspect",
         "dashboard.documents.pending" => "dashboard.documents.pending",
         "dashboard.documents.recover" => "dashboard.documents.recover",
         "dashboard.logs.read" => "dashboard.logs.read",
@@ -634,7 +635,11 @@ fn document_capabilities(value: &mut Value, documents: &Value) {
         value["capabilities"]["configurationReading"] = json!(true);
         value["capabilities"]["configurationEditing"] =
             json!(choices.iter().any(|c| c["writable"] == true));
-        value["capabilities"]["projectConfigurationEditing"] = json!(false);
+        value["capabilities"]["projectConfigurationEditing"] = json!(
+            choices
+                .iter()
+                .any(|c| c["scope"]["kind"] == "project" && c["writable"] == true)
+        );
     }
 }
 fn respond(

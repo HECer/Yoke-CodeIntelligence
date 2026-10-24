@@ -198,6 +198,10 @@ pub(crate) enum DocumentRequest {
         document_id: String,
         plan_id: String,
     },
+    Inspect {
+        document_id: String,
+        plan_id: String,
+    },
     Pending {
         document_id: String,
     },
@@ -214,6 +218,7 @@ impl DocumentRequest {
             Self::Read { document_id }
             | Self::Plan { document_id, .. }
             | Self::Apply { document_id, .. }
+            | Self::Inspect { document_id, .. }
             | Self::Pending { document_id }
             | Self::Recover { document_id, .. } => document_id,
         }
@@ -229,7 +234,7 @@ impl DocumentRequest {
                 valid_id(expected_revision) && content.len() <= 64000,
                 "dashboard_document_proposal_capacity_or_revision"
             ),
-            Self::Apply { plan_id, .. } => {
+            Self::Apply { plan_id, .. } | Self::Inspect { plan_id, .. } => {
                 ensure!(valid_id(plan_id), "dashboard_document_plan_id_invalid")
             }
             Self::Recover {

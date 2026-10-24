@@ -264,6 +264,8 @@ mod dashboard_languages;
 mod dashboard_logs;
 #[path = "session_dashboard_session.rs"]
 mod dashboard_management;
+#[path = "session_dashboard_project_documents.rs"]
+mod dashboard_project_documents;
 #[path = "session_dashboard_shutdown.rs"]
 mod dashboard_shutdown;
 #[path = "session_prompt_session.rs"]

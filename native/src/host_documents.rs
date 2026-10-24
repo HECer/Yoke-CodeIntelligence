@@ -297,6 +297,43 @@ impl Access {
             .map(|d| &d.spec)
             .context("Host document is not selected")
     }
+    /// Derive a selected project's source-relative path from trusted, physically
+    /// checked roots. Requests never supply a path or choose an Engine root.
+    pub(crate) fn project_path(
+        &self,
+        id: &str,
+        project: &str,
+        root: &Path,
+        deadline: &Deadline,
+    ) -> Result<String> {
+        let selected = self.selection(id)?;
+        ensure!(
+            matches!(&selected.scope, Scope::Project { project: name } if name == project),
+            "Project document selection differs"
+        );
+        let (_, bound_path, bound_identity) = self
+            .project_roots
+            .iter()
+            .find(|(name, _, _)| name == project)
+            .context("Project document root unavailable")?;
+        let held = io::guarded_directory(root, deadline)?;
+        ensure!(
+            held.path == *bound_path && held.identity == *bound_identity,
+            "Project document Engine root changed"
+        );
+        let snapshot = self.read(id, deadline)?;
+        let relative = Path::new(&snapshot.path).strip_prefix(bound_path)?;
+        ensure!(
+            relative
+                .components()
+                .all(|c| matches!(c, std::path::Component::Normal(_))),
+            "Project document relative path invalid"
+        );
+        Ok(relative
+            .to_str()
+            .context("Project document path must be Unicode")?
+            .replace('\\', "/"))
+    }
     fn check_plan(&self, plan: &Plan, deadline: &Deadline) -> Result<&BoundDocument> {
         deadline.check()?;
         ensure!(
