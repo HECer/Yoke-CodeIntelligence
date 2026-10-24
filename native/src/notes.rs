@@ -182,7 +182,7 @@ fn name(a: &Value, k: &str, scope: Scope) -> Result<String> {
     );
     Ok(normal)
 }
-fn content(s: &str) -> Result<()> {
+pub(crate) fn content(s: &str) -> Result<()> {
     ensure!(
         s.len() <= MAX_CONTENT_BYTES
             && !s
@@ -663,7 +663,13 @@ pub(crate) fn invoke_with_patterns(
     let allowed: &[&str] = match operation {
         "list" => &["topic"],
         "read" => &["name"],
-        "write" => &["name", "content", "paths", "expectedRevision"],
+        "write" => &[
+            "name",
+            "content",
+            "paths",
+            "expectedRevision",
+            "expectedAbsent",
+        ],
         "edit" => &[
             "name",
             "needle",
@@ -714,6 +720,16 @@ pub(crate) fn invoke_with_patterns(
             let text = args["content"].as_str().context("Note content required")?;
             content(text)?;
             let prior = load(&tx, store, scope, &n)?;
+            if let Some(absent) = args.get("expectedAbsent") {
+                ensure!(
+                    absent == true && args.get("expectedRevision").is_none(),
+                    "Select expected absence or a revision"
+                );
+                ensure!(
+                    prior.as_ref().is_none_or(|note| note.deleted),
+                    "Named note already exists"
+                );
+            }
             expected(args, prior.as_ref())?;
             let notes = all(&tx, store, scope, deadline)?;
             ensure!(

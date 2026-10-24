@@ -1,4 +1,4 @@
-//! Explicit host opt-in for a bounded, read-only native session dashboard.
+//! Bounded native session dashboard with separate host opt-in for management.
 //! Private capabilities and call arguments/results never enter activity records.
 use crate::{capture::Deadline, model::valid_id, paths, store::Store};
 use anyhow::{Result, ensure};
@@ -18,6 +18,10 @@ use std::{
 };
 use subtle::ConstantTimeEq;
 
+#[path = "session_dashboard_management.rs"]
+pub(crate) mod management;
+pub use management::Config as ManagementConfig;
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct Config {
@@ -26,6 +30,8 @@ pub struct Config {
     pub lifetime_ms: u64,
     pub max_requests: usize,
     pub activity_capacity: usize,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub management: Option<ManagementConfig>,
 }
 impl Default for Config {
     fn default() -> Self {
@@ -35,6 +41,7 @@ impl Default for Config {
             lifetime_ms: 3_600_000,
             max_requests: 10000,
             activity_capacity: 200,
+            management: None,
         }
     }
 }
@@ -56,6 +63,9 @@ impl Config {
             (1..=1000).contains(&self.activity_capacity),
             "dashboard_activity_capacity"
         );
+        if let Some(management) = &self.management {
+            management.validate()?;
+        }
         Ok(())
     }
 }
@@ -78,6 +88,7 @@ pub(crate) struct Handle {
     worker: Option<JoinHandle<()>>,
     capacity: usize,
     started: Instant,
+    management: Option<ManagementConfig>,
 }
 pub(crate) struct Activity {
     id: u64,
@@ -89,6 +100,7 @@ pub(crate) struct Binding {
     pub key: String,
     pub expected_state: String,
     pub closed: Option<Arc<AtomicBool>>,
+    pub management: Option<management::Client>,
 }
 fn now_ms() -> u64 {
     SystemTime::now()
@@ -145,6 +157,7 @@ impl Handle {
             key,
             expected_state,
             closed,
+            management,
         } = binding;
         config.validate()?;
         deadline.check()?;
@@ -178,6 +191,7 @@ impl Handle {
         let (worker_state, worker_stop, worker_alive) =
             (state.clone(), stop.clone(), alive.clone());
         let capacity = config.activity_capacity;
+        let management_config = config.management.clone();
         let (worker_host, worker_token, config) = (host.clone(), token.clone(), config.clone());
         let worker = std::thread::Builder::new()
             .name("native-session-dashboard".into())
@@ -195,31 +209,45 @@ impl Handle {
                             if !peer.ip().is_loopback() {
                                 continue;
                             }
-                            let request_deadline = Deadline::new(config.request_timeout_ms);
+                            // Winsock inherits the listener's nonblocking mode.
+                            // Each accepted request instead uses its original
+                            // bounded read/write deadlines, including split input.
+                            if stream.set_nonblocking(false).is_err() {
+                                continue;
+                            }
+                            let request_deadline = Deadline::from_duration(
+                                Duration::from_millis(config.request_timeout_ms).min(
+                                    Duration::from_millis(config.lifetime_ms)
+                                        .saturating_sub(start.elapsed()),
+                                ),
+                            );
+                            let mut response_deadline=request_deadline.clone();
+                            let mut management_status=200;
                             let outcome = request(
                                 &mut stream,
                                 &worker_host,
                                 &worker_token,
                                 &request_deadline,
+                                management.is_some(),
                             )
-                            .and_then(|private| {
+                            .and_then(|route| {
                                 if closed.as_ref().is_some_and(|v| v.load(Ordering::SeqCst)) {
                                     return Err(Failure(410, "Dashboard access revoked"));
                                 }
-                                if private {
-                                    snapshot(
-                                        &root,
-                                        &workspace,
-                                        &key,
-                                        &worker_state,
-                                        &request_deadline,
-                                    )
-                                    .map(|data| (data, "application/json; charset=utf-8"))
-                                } else {
-                                    Ok((
-                                        include_bytes!("session_dashboard.html").to_vec(),
-                                        "text/html; charset=utf-8",
-                                    ))
+                                match route {
+                                    Route::State => snapshot(&root,&workspace,&key,&worker_state,&request_deadline).map(|data|(data,"application/json; charset=utf-8")),
+                                    Route::Bootstrap => Ok((include_bytes!("session_dashboard.html").to_vec(),"text/html; charset=utf-8")),
+                                    Route::Manage(body) => {
+                                        let selected=config.management.as_ref().ok_or(Failure(405,"Dashboard management unavailable"))?;
+                                        let time=Duration::from_millis(selected.operation_timeout_ms).min(Duration::from_millis(config.lifetime_ms).saturating_sub(start.elapsed()));
+                                        response_deadline=Deadline::from_duration(time);
+                                        let request=crate::json::parse(&body,128000).and_then(crate::json::decode::<management::Request>).map_err(|_|Failure(400,"Invalid management request"))?;
+                                        let client=management.as_ref().ok_or(Failure(405,"Dashboard management unavailable"))?;
+                                        let reply=client.call(request,response_deadline.clone(),worker_stop.clone(),closed.clone());
+                                        let bytes=crate::json::encode_bounded(&reply.value,4_000_000,&response_deadline).map_err(|_|Failure(408,"Management outcome unconfirmed; refresh before retrying"))?;
+                                        management_status=reply.status;
+                                        Ok((bytes,"application/json; charset=utf-8"))
+                                    }
                                 }
                             });
                             let outcome =
@@ -229,14 +257,14 @@ impl Handle {
                                     outcome
                                 };
                             let (status, bytes, media) = match outcome {
-                                Ok((bytes, media)) => (200, bytes, media),
+                                Ok((bytes, media)) => (management_status, bytes, media),
                                 Err(Failure(status, message)) => (
                                     status,
                                     message.as_bytes().to_vec(),
                                     "text/plain; charset=utf-8",
                                 ),
                             };
-                            let _ = respond(&mut stream, status, &bytes, media, &request_deadline);
+                            let _ = respond(&mut stream, status, &bytes, media, &response_deadline);
                         }
                         Err(e) if e.kind() == std::io::ErrorKind::WouldBlock => {
                             std::thread::sleep(Duration::from_millis(10))
@@ -255,6 +283,7 @@ impl Handle {
             worker: Some(worker),
             capacity,
             started: Instant::now(),
+            management: management_config,
         };
         deadline.check()?;
         Ok(handle)
@@ -263,11 +292,23 @@ impl Handle {
         self.alive.load(Ordering::Acquire)
     }
     pub(crate) fn result(&self) -> Value {
-        json!({"url":format!("http://{}/#{}",self.host,self.token),"browserOpened":false,
+        let mut value = json!({"url":format!("http://{}/#{}",self.host,self.token),"browserOpened":false,
             "browserOpening":"client_managed","access":"private_ipv4_loopback_capability",
             "scope":"read_only_native_session_and_structured_activity","ageMs":self.age_ms(),"complete":false,
             "capabilities":{"sessionOverview":true,"selectedTools":true,"structuredActivity":true,
-                "rawLogs":false,"configurationEditing":false,"memoryEditing":false,"mcpShutdown":false}})
+                "rawLogs":false,"configurationEditing":false,"memoryEditing":false,"mcpShutdown":false}});
+        if let Some(config) = &self.management {
+            value["scope"] = json!("private_native_session_management");
+            value["capabilities"]["sessionControls"] = json!(config.session_controls);
+            value["capabilities"]["memoryEditing"] = json!(
+                config.memories
+                    && self.state.try_lock().is_ok_and(|state| {
+                        state.value["management"]["memoryWritesGranted"] == true
+                            && state.value["management"]["noMemoriesMode"] != true
+                    })
+            );
+        }
+        value
     }
     pub(crate) fn begin(&self, operation: &str) -> Option<Activity> {
         if !self.alive() {
@@ -326,7 +367,12 @@ impl Drop for Handle {
         }
     }
 }
-struct Failure(u16, &'static str);
+pub(crate) struct Failure(u16, &'static str);
+enum Route {
+    Bootstrap,
+    State,
+    Manage(Vec<u8>),
+}
 type HttpResult<T> = std::result::Result<T, Failure>;
 fn remaining(d: &Deadline) -> HttpResult<Duration> {
     d.check()
@@ -338,7 +384,13 @@ fn remaining(d: &Deadline) -> HttpResult<Duration> {
         Ok(left)
     }
 }
-fn request(stream: &mut TcpStream, host: &str, token: &str, d: &Deadline) -> HttpResult<bool> {
+fn request(
+    stream: &mut TcpStream,
+    host: &str,
+    token: &str,
+    d: &Deadline,
+    can_manage: bool,
+) -> HttpResult<Route> {
     let mut bytes = Vec::with_capacity(1024);
     while !bytes.ends_with(b"\r\n\r\n") {
         if bytes.len() >= 16384 {
@@ -399,6 +451,43 @@ fn request(stream: &mut TcpStream, host: &str, token: &str, d: &Deadline) -> Htt
     if headers.contains_key("transfer-encoding") || headers.contains_key("expect") {
         return Err(Failure(400, "Unsupported HTTP framing"));
     }
+    if can_manage && p.method == Some("POST") && p.path == Some("/api/manage") {
+        if headers.get("origin").copied() != Some(format!("http://{host}").as_str()) {
+            return Err(Failure(403, "Management Origin required"));
+        }
+        if !matches!(
+            headers.get("content-type").copied(),
+            Some("application/json" | "application/json; charset=utf-8")
+        ) {
+            return Err(Failure(415, "JSON management body required"));
+        }
+        let raw = headers
+            .get("content-length")
+            .copied()
+            .ok_or(Failure(411, "Content-Length required"))?;
+        let length = raw
+            .parse::<usize>()
+            .map_err(|_| Failure(400, "Invalid body length"))?;
+        if length == 0 || length > 128000 || raw != length.to_string() {
+            return Err(Failure(413, "Management body capacity"));
+        }
+        let mut body = vec![0; length];
+        let mut offset = 0;
+        while offset < length {
+            stream
+                .set_read_timeout(Some(remaining(d)?))
+                .map_err(|_| Failure(400, "HTTP read unavailable"))?;
+            let count = stream
+                .read(&mut body[offset..])
+                .map_err(|_| Failure(408, "Request deadline exceeded"))?;
+            if count == 0 {
+                return Err(Failure(400, "Truncated management body"));
+            }
+            offset += count;
+        }
+        no_pipeline(stream, d)?;
+        return Ok(Route::Manage(body));
+    }
     if let Some(length) = headers.get("content-length")
         && (length.is_empty()
             || !length.bytes().all(|b| b.is_ascii_digit())
@@ -412,6 +501,14 @@ fn request(stream: &mut TcpStream, host: &str, token: &str, d: &Deadline) -> Htt
     if !matches!(p.path, Some("/" | "/api/state")) {
         return Err(Failure(404, "Endpoint unavailable"));
     }
+    no_pipeline(stream, d)?;
+    Ok(if private {
+        Route::State
+    } else {
+        Route::Bootstrap
+    })
+}
+fn no_pipeline(stream: &mut TcpStream, d: &Deadline) -> HttpResult<()> {
     stream
         .set_nonblocking(true)
         .map_err(|_| Failure(400, "HTTP read unavailable"))?;
@@ -423,15 +520,16 @@ fn request(stream: &mut TcpStream, host: &str, token: &str, d: &Deadline) -> Htt
         return Err(Failure(400, "HTTP pipelining refused"));
     }
     remaining(d)?;
-    Ok(private)
+    Ok(())
 }
-fn snapshot(
+
+pub(crate) fn check_binding(
     root: &Path,
     workspace: &str,
     key: &str,
-    state: &Mutex<View>,
+    expected_state: &str,
     d: &Deadline,
-) -> HttpResult<Vec<u8>> {
+) -> HttpResult<()> {
     for ancestor in root.ancestors() {
         let metadata = std::fs::symlink_metadata(ancestor)
             .map_err(|_| Failure(409, "Session source unavailable"))?;
@@ -440,17 +538,6 @@ fn snapshot(
         }
         remaining(d)?;
     }
-    let (expected_state, view, activity, statistics) = {
-        let s = state
-            .try_lock()
-            .map_err(|_| Failure(503, "Dashboard view unavailable"))?;
-        (
-            s.expected_state.clone(),
-            s.value.clone(),
-            s.activity.clone(),
-            json!({"completed":s.completed,"failed":s.failed,"running":s.running,"droppedRows":s.dropped}),
-        )
-    };
     let store = Store::open_existing_read_only(root, d)
         .map_err(|_| Failure(409, "Session state unavailable"))?;
     if store.workspace_id != workspace {
@@ -467,10 +554,40 @@ fn snapshot(
     if !current {
         return Err(Failure(409, "Session changed; resume the host session"));
     }
-    let data = json!({"schema":"native_session_dashboard_v1","view":view,"activity":activity,
+    Ok(())
+}
+fn snapshot(
+    root: &Path,
+    workspace: &str,
+    key: &str,
+    state: &Mutex<View>,
+    d: &Deadline,
+) -> HttpResult<Vec<u8>> {
+    let (expected_state, view, activity, statistics) = {
+        let s = state
+            .try_lock()
+            .map_err(|_| Failure(503, "Dashboard view unavailable"))?;
+        (
+            s.expected_state.clone(),
+            s.value.clone(),
+            s.activity.clone(),
+            json!({"completed":s.completed,"failed":s.failed,"running":s.running,"droppedRows":s.dropped}),
+        )
+    };
+    check_binding(root, workspace, key, &expected_state, d)?;
+    let managed = view.get("management").cloned();
+    let mut data = json!({"schema":"native_session_dashboard_v1","view":view,"activity":activity,
         "statistics":statistics,
         "activityScope":"native_session_operations_since_dashboard_opened","argumentsRecorded":false,"resultsRecorded":false,
         "capabilities":{"rawLogs":false,"configurationEditing":false,"memoryEditing":false,"mcpShutdown":false},"complete":false});
+    if let Some(config) = managed {
+        data["capabilities"]["sessionControls"] = config["sessionControls"].clone();
+        data["capabilities"]["memoryEditing"] = serde_json::json!(
+            config["memories"] == true
+                && config["memoryWritesGranted"] == true
+                && config["noMemoriesMode"] != true
+        );
+    }
     crate::json::encode_bounded(&data, 1_000_000, d)
         .map_err(|_| Failure(413, "Dashboard response budget exceeded"))
 }

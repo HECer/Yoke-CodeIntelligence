@@ -3,6 +3,10 @@ use anyhow::{Result, ensure};
 use serde_json::{Value, json};
 use std::io::{BufRead, Write};
 
+#[path = "protocol_managed_stdio.rs"]
+mod managed_stdio;
+pub use managed_stdio::serve_managed_stdio;
+
 fn string() -> Value {
     json!({"type":"string"})
 }
@@ -297,6 +301,11 @@ pub type CollectionGrants = std::collections::BTreeMap<
     std::collections::BTreeMap<String, crate::federation::ImportGrant>,
 >;
 impl ConnectionState {
+    pub(crate) fn dashboard_catalog_changed(&mut self) {
+        if self.initialized {
+            self.tools_changed = true;
+        }
+    }
     pub fn take_notifications(&mut self) -> Vec<Value> {
         take_tools_changed(&mut self.tools_changed)
     }

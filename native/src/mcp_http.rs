@@ -179,6 +179,15 @@ impl Principal {
             "Collection grants require the Session profile"
         );
         ensure!(
+            target
+                .host
+                .dashboard
+                .as_ref()
+                .is_none_or(|c| c.management.is_none())
+                || target.profile != Profile::Native,
+            "Dashboard management requires a Session-backed profile"
+        );
+        ensure!(
             target.collection_grants.len() <= 100,
             "Collection policy capacity exceeded"
         );
@@ -1007,6 +1016,35 @@ fn actor(receiver: mpsc::Receiver<Job>, shared: Arc<Shared>, config: Arc<Config>
         for id in closed {
             close_local(&mut sessions, &id, &shared);
         }
+        for local in sessions.values_mut() {
+            if local.meta.closed.load(Ordering::SeqCst) {
+                continue;
+            }
+            let Ok(policy) = shared.policy.read() else {
+                continue;
+            };
+            if policy
+                .principals
+                .get(&local.meta.principal)
+                .is_none_or(|p| p.generation != local.meta.generation)
+            {
+                continue;
+            }
+            let bounded = Deadline::run_bounded(&local.meta.lifetime, shared.stop.clone(), || {
+                Deadline::run_bounded(&local.meta.lifetime, local.meta.closed.clone(), || {
+                    local
+                        .session
+                        .poll_dashboard_management(&Deadline::new(600_000))
+                })
+            });
+            if bounded.is_ok_and(|changed| changed) {
+                local.state.dashboard_catalog_changed();
+            }
+            if local.session.cleanup_unproven() {
+                shared.cleanup_failed.store(true, Ordering::SeqCst);
+                local.meta.closed.store(true, Ordering::SeqCst);
+            }
+        }
         let job = match receiver.recv_timeout(Duration::from_millis(25)) {
             Ok(job) => job,
             Err(mpsc::RecvTimeoutError::Timeout) => continue,
@@ -1037,6 +1075,9 @@ fn actor(receiver: mpsc::Receiver<Job>, shared: Arc<Shared>, config: Arc<Config>
                             let mut native_session =
                                 principal.target.open(&operation_deadline, true)?;
                             native_session.bind_dashboard_lifetime(Arc::clone(&job.meta.closed));
+                            if native_session.dashboard_management_requested() {
+                                native_session.enable_dashboard_management(&operation_deadline)?;
+                            }
                             sessions.insert(
                                 job.id.clone(),
                                 LocalSession {

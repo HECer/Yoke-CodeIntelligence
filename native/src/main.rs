@@ -2985,14 +2985,32 @@ fn run_extension(
                 }),
             };
             let mut runtime = yoke::agent_repl::AgentRepl::spawn(spec, deadline)?;
-            let result = yoke::protocol::serve_serena_with_repl(
-                &mut session,
-                &mut runtime,
-                io::stdin().lock(),
-                io::stdout().lock(),
-            );
+            let result = if session.dashboard_management_requested() {
+                yoke::protocol::serve_managed_stdio(
+                    &mut session,
+                    Some(&mut runtime),
+                    yoke::protocol::Profile::Serena,
+                    io::stdout().lock(),
+                )
+            } else {
+                yoke::protocol::serve_serena_with_repl(
+                    &mut session,
+                    &mut runtime,
+                    io::stdin().lock(),
+                    io::stdout().lock(),
+                )
+            };
             runtime.close()?;
             result?;
+        } else if session.dashboard_management_requested() {
+            let selected = match profile.as_str() {
+                "serena" => yoke::protocol::Profile::Serena,
+                "graphify" => yoke::protocol::Profile::Graphify,
+                "trail" => yoke::protocol::Profile::Trail,
+                "graft" => yoke::protocol::Profile::Graft,
+                _ => yoke::protocol::Profile::Session,
+            };
+            yoke::protocol::serve_managed_stdio(&mut session, None, selected, io::stdout().lock())?;
         } else if profile == "serena" {
             yoke::protocol::serve_serena(&mut session, io::stdin().lock(), io::stdout().lock())?;
         } else if profile == "graphify" {

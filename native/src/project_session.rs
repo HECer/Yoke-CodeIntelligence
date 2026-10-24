@@ -228,6 +228,7 @@ pub struct Session {
     prompt_profile: crate::session_prompt::Profile,
     git_repository_projects: Option<crate::git_workflows::repository_projects::Hosts>,
     dashboard: Option<crate::session_dashboard::Handle>,
+    dashboard_management: Option<crate::session_dashboard::management::Mailbox>,
     dashboard_lifetime: Option<std::sync::Arc<std::sync::atomic::AtomicBool>>,
     host_backend_servers: Option<BTreeMap<String, crate::lsp::ConfiguredServer>>,
     pub engine: Engine,
@@ -247,6 +248,8 @@ pub struct Session {
     debug_adapters: BTreeMap<String, crate::debug_adapter::DebugAdapter>,
     process_cleanup_unproven: bool,
 }
+#[path = "session_dashboard_session.rs"]
+mod dashboard_management;
 #[path = "session_prompt_session.rs"]
 mod prompt_memory;
 fn project_root_key(path: &std::path::Path) -> Option<String> {
@@ -1529,6 +1532,7 @@ impl Session {
         Ok(Self {
             git_repository_projects,
             dashboard: None,
+            dashboard_management: None,
             dashboard_lifetime: None,
             host_backend_servers,
             engine,
@@ -2240,7 +2244,7 @@ impl Session {
             .chain(self.host.projects.iter().filter(|p| !self.state.removed_projects.contains(&p.name))
                 .map(|p| json!({"name":p.name,"queryOnly":p.query_only,"readOnly":p.read_only || !self.host_allow_writes})))
             .collect::<Vec<_>>();
-        let value = json!({"product":"Code Intelligence","version":env!("CARGO_PKG_VERSION"),
+        let mut value = json!({"product":"Code Intelligence","version":env!("CARGO_PKG_VERSION"),
             "session":self.state.label,"activeProject":self.state.active_project,"context":self.state.context,
             "modes":self.state.modes,"revision":self.state.revision,"projects":projects,
             "publicTools":tools,"toolCatalogScope":"selected_public_compatibility_tools","agentInterface":self.agent_interface(),
@@ -2250,6 +2254,9 @@ impl Session {
             "symbolWorkspaceFolders":self.host.symbol_workspace_folders.as_ref().and_then(|p| p.select(&self.state.active_project)),
             "additionalWorkspaceFolders":self.host.additional_workspace_folders.as_ref().and_then(|p| p.select(&self.state.active_project)),
             "executionAuthority":"independent_host_grants","sourceWrittenByDashboard":false});
+        if let Some(management) = self.dashboard_management_view() {
+            value["management"] = management;
+        }
         ensure!(
             serde_json::to_vec(&value)?.len() <= 400000,
             "dashboard_view_capacity"
@@ -2273,6 +2280,10 @@ impl Session {
             .as_ref()
             .context("Dashboard unavailable: host opt-in required")?
             .clone();
+        ensure!(
+            config.management.is_none() || self.dashboard_management.is_some(),
+            "Dashboard management requires an active host-thread driver"
+        );
         if self.dashboard.as_ref().is_some_and(|h| !h.alive()) {
             self.dashboard = None;
         }
@@ -2285,6 +2296,7 @@ impl Session {
                     key: self.state.id.clone(),
                     expected_state: self.persisted.clone(),
                     closed: self.dashboard_lifetime.clone(),
+                    management: self.dashboard_management.as_ref().map(|m| m.client.clone()),
                 },
                 self.dashboard_view()?,
                 deadline,
@@ -2321,6 +2333,11 @@ impl Session {
                 let mut value = json!({"sessionId":self.state.label,"sessionKey":self.state.id,"activeProject":self.state.active_project,"context":self.state.context,"modes":self.state.modes,"revision":self.state.revision,"registeredProjects":self.host.projects.iter().filter(|p|!self.state.removed_projects.contains(&p.name)).map(|p|&p.name).collect::<Vec<_>>(),"executionAuthority":"explicit_host_configuration_only"});
                 if let Some(config) = &self.host.dashboard {
                     value["dashboard"] = json!({"enabled":true,"scope":"read_only_native_session_and_structured_activity","browserOpening":"client_managed","lifetimeMs":config.lifetime_ms});
+                    if config.management.is_some() {
+                        value["dashboard"]["scope"] = json!("private_native_session_management");
+                        value["dashboard"]["managementDriverReady"] =
+                            json!(self.dashboard_management.is_some());
+                    }
                 }
                 if let Some(steering) = self.steering()? {
                     value["steering"] = serde_json::to_value(steering)?;

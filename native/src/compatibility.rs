@@ -14,9 +14,15 @@ pub(crate) fn serena_tools_for_session(session: &Session) -> Value {
     if session.dashboard_enabled() {
         for tool in tools.as_array_mut().expect("Owned public tools") {
             if tool["name"] == "open_dashboard" {
-                tool["description"] = json!(
-                    "Returns a private URL for the explicitly host-enabled read-only native session dashboard. The client opens the browser. Configuration editing, raw logs and MCP shutdown are unavailable."
-                );
+                tool["description"] = if session.dashboard_management_requested() {
+                    json!(
+                        "Returns a private URL for the explicitly host-enabled native session management dashboard. Its owning host must install the management driver. Session controls and project memories retain independent host permissions. Configuration files, language selection, raw logs and MCP shutdown are unavailable. The client opens the browser."
+                    )
+                } else {
+                    json!(
+                        "Returns a private URL for the explicitly host-enabled read-only native session dashboard. The client opens the browser. Configuration editing, raw logs and MCP shutdown are unavailable."
+                    )
+                };
             }
         }
     }
