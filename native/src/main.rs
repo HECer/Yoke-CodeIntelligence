@@ -34,6 +34,7 @@ mod github_app_pages_cli;
 mod github_app_publication_cli;
 mod github_app_worker_cli;
 mod github_discussions_cli;
+mod host_documents_cli;
 mod host_install_cli;
 mod meaning_archive_cli;
 mod meaning_cli;
@@ -107,6 +108,7 @@ enum ExtensionOperation {
     Skills(Box<SkillArguments>),
     Decisions(Box<DecisionArguments>),
     HostInstall(Box<host_install_cli::Arguments>),
+    HostDocuments(Box<host_documents_cli::Arguments>),
     ClaudeSessionStart(Box<claude_session_start_cli::Arguments>),
     ClaudeSourceHook(Box<claude_source_hook_cli::Arguments>),
     MeaningArchive(Box<meaning_archive_cli::Arguments>),
@@ -2022,6 +2024,7 @@ fn run_parity(
         }
         ExtensionOperation::Skills(_) => bail!("Skill host dispatch error"),
         ExtensionOperation::HostInstall(_) => bail!("Host installation dispatch error"),
+        ExtensionOperation::HostDocuments(_) => bail!("Host document migration dispatch error"),
         ExtensionOperation::ClaudeSessionStart(_) => bail!("Claude hook dispatch error"),
         ExtensionOperation::ClaudeSourceHook(_) => bail!("Claude source hook dispatch error"),
         ExtensionOperation::MeaningArchive(_) => bail!("Meaning archive host dispatch error"),
@@ -3855,6 +3858,24 @@ fn run(cli: Cli) -> Result<bool> {
             ExtensionOperation::ClaudeSourceHook(args) => args.run(cli.timeout, cli.max_bytes),
             _ => unreachable!(),
         };
+    }
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::HostDocuments(args) = extension.as_ref()
+    {
+        args.preflight_permission()?;
+        ensure!(
+            cli.root == std::path::Path::new(".")
+                && cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && !cli.allow_writes
+                && !cli.allow_session_templates
+                && cli.analyzer_epoch.is_none(),
+            "Host migration selects explicit host files and roots; source/provider flags are unavailable"
+        );
+        return host_documents_cli::run(args, cli.timeout, cli.max_bytes).map(|()| true);
     }
     if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::HostInstall(args) = extension.as_ref()

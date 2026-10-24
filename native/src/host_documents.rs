@@ -17,7 +17,10 @@ const MAX_PLAN: usize = 512_000;
 #[path = "host_documents_journal.rs"]
 mod journal;
 pub use journal::{
-    Approval, JournalView, Receipt, RecoveryApproval, RecoveryDirection, WriteAuthority,
+    Approval, BindingMigrationApproval, BindingMigrationAuthority, BindingMigrationPlan,
+    BindingMigrationReceipt, BindingMigrationReview, JournalView, Receipt, RecoveryApproval,
+    RecoveryDirection, WriteAuthority, apply_binding_migration, inspect_binding_migration,
+    plan_binding_migration, recover_binding_migration,
 };
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]

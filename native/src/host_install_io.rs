@@ -405,6 +405,59 @@ pub(super) fn read_file(
     }
 }
 
+/// Only fixed owner-binding metadata may use an in-place rewrite. Keeping the
+/// original file present avoids an unbound interval during a reviewed migration.
+/// The caller must separately hold both host authorities and durable recovery
+/// intent; this physical primitive itself never grants either authority.
+pub(super) struct DocumentOwnerMetadata {
+    pub(super) file: HeldFile,
+}
+fn document_owner_name(path: &Path) -> Result<()> {
+    let name = path.file_name().and_then(|name| name.to_str());
+    anyhow::ensure!(
+        name.and_then(|name| name.strip_prefix(".yoke-doc-owner-"))
+            .and_then(|name| name.strip_suffix(".json"))
+            .is_some_and(crate::model::valid_id),
+        "Only a fixed host document owner binding may be rewritten"
+    );
+    Ok(())
+}
+pub(super) fn open_document_owner_metadata(
+    path: &Path,
+    d: &Deadline,
+) -> Result<DocumentOwnerMetadata> {
+    document_owner_name(path)?;
+    #[cfg(windows)]
+    return windows::read_checked_file_access(path, 2048, false, None, true, d)?
+        .map(|file| DocumentOwnerMetadata { file })
+        .ok_or_else(|| anyhow::anyhow!("Original host document owner binding is absent"));
+    #[cfg(not(windows))]
+    {
+        d.check()?;
+        anyhow::bail!("Guarded host document owner migration is Windows-only")
+    }
+}
+impl DocumentOwnerMetadata {
+    pub(super) fn rewrite(&mut self, bytes: &[u8], d: &Deadline) -> Result<()> {
+        document_owner_name(&self.file.path)?;
+        anyhow::ensure!(
+            !bytes.is_empty() && bytes.len() <= 2048,
+            "Host document owner metadata capacity exceeded"
+        );
+        #[cfg(windows)]
+        return windows::rewrite_document_owner(&mut self.file, bytes, d);
+        #[cfg(not(windows))]
+        {
+            d.check()?;
+            anyhow::bail!("Guarded host document owner migration is Windows-only")
+        }
+    }
+}
+#[cfg(all(test, windows))]
+pub(super) fn set_document_owner_write_stop(count: Option<usize>) {
+    windows::set_owner_write_stop(count);
+}
+
 /// Inspect identity before reading bytes from a backup or prepared-output name.
 /// The caller supplies only identities already bound to its durable operation.
 pub(super) fn read_owned_file(
@@ -1263,6 +1316,16 @@ mod windows {
         identities: Option<&[&str]>,
         d: &Deadline,
     ) -> Result<Option<HeldFile>> {
+        read_checked_file_access(path, max_bytes, delete_access, identities, false, d)
+    }
+    pub(super) fn read_checked_file_access(
+        path: &Path,
+        max_bytes: usize,
+        delete_access: bool,
+        identities: Option<&[&str]>,
+        writable: bool,
+        d: &Deadline,
+    ) -> Result<Option<HeldFile>> {
         d.check()?;
         let (parent, path) = parent_and_path(path, d)?;
         #[cfg(test)]
@@ -1273,7 +1336,9 @@ mod windows {
             OpenRequest {
                 kind: EntryKind::File,
                 disposition: Disposition::Open,
-                access: GENERIC_READ | if delete_access { DELETE } else { 0 },
+                access: GENERIC_READ
+                    | if delete_access { DELETE } else { 0 }
+                    | if writable { GENERIC_WRITE } else { 0 },
                 share: SHARE_READ,
             },
             d,
@@ -1288,7 +1353,7 @@ mod windows {
             "Owned host file identity mismatch before content admission"
         );
         ensure!(
-            !delete_access || info.attributes & ATTRIBUTE_READONLY == 0,
+            !(delete_access || writable) || info.attributes & ATTRIBUTE_READONLY == 0,
             "Readonly host target mutation refused"
         );
         let length = u64::from(info.size_high) << 32 | u64::from(info.size_low);
@@ -1307,9 +1372,57 @@ mod windows {
             _handle: handle,
             _parent: parent,
             _delete_access: delete_access,
-            _writable: false,
+            _writable: writable,
             _executable_binding: false,
         }))
+    }
+
+    #[cfg(test)]
+    std::thread_local! {
+        static OWNER_WRITE_STOP: std::cell::Cell<Option<usize>> = const { std::cell::Cell::new(None) };
+    }
+    #[cfg(test)]
+    pub(super) fn set_owner_write_stop(count: Option<usize>) {
+        OWNER_WRITE_STOP.with(|slot| slot.set(count));
+    }
+    pub(super) fn rewrite_document_owner(
+        file: &mut HeldFile,
+        replacement: &[u8],
+        d: &Deadline,
+    ) -> Result<()> {
+        super::document_owner_name(&file.path)?;
+        ensure!(
+            file._writable && !file._delete_access && !file._executable_binding,
+            "Dedicated writable owner metadata handle required"
+        );
+        validate_current(file, d)?;
+        let security_before = security_fingerprint(file, d)?;
+        let mut handle = &file._handle;
+        handle.seek(SeekFrom::Start(0))?;
+        d.check()?;
+        handle.set_len(0)?;
+        #[cfg(test)]
+        let count = OWNER_WRITE_STOP
+            .with(|slot| slot.take())
+            .unwrap_or(replacement.len());
+        #[cfg(not(test))]
+        let count = replacement.len();
+        handle.write_all(&replacement[..count.min(replacement.len())])?;
+        handle.sync_all()?;
+        ensure!(
+            count >= replacement.len(),
+            "Owned interruption during owner metadata rewrite; explicit recovery required"
+        );
+        d.check()?;
+        file.bytes = replacement.to_vec();
+        file.byte_length = replacement.len();
+        file.hash = crate::model::hash(replacement);
+        validate_current(file, d)?;
+        ensure!(
+            security_fingerprint(file, d)? == security_before,
+            "Owner binding security changed during metadata rewrite"
+        );
+        Ok(())
     }
 
     pub(super) fn read_executable_binding(
@@ -2285,6 +2398,91 @@ mod windows {
 #[cfg(all(test, windows))]
 mod tests {
     use super::*;
+    #[test]
+    fn document_owner_rewrite_keeps_identity_security_and_an_occupied_name() -> Result<()> {
+        let root = tempfile::tempdir()?;
+        let path = root
+            .path()
+            .join(format!(".yoke-doc-owner-{}.json", "a".repeat(64)));
+        fs::write(&path, b"{\"old\":1}")?;
+        let d = Deadline::new(10_000);
+        let before = read_file(&path, 2048, false, &d)?.unwrap();
+        let identity = before.identity.clone();
+        let security = security_fingerprint(&before, &d)?;
+        assert!(open_document_owner_metadata(&path, &d).is_err());
+        drop(before);
+        let mut held = open_document_owner_metadata(&path, &d)?;
+        assert!(fs::rename(&path, root.path().join("must-not-move")).is_err());
+        assert!(read_file(&path, 2048, false, &d).is_err());
+        held.rewrite(b"{\"new\":2}", &d)?;
+        assert_eq!(held.file.identity, identity);
+        assert_eq!(security_fingerprint(&held.file, &d)?, security);
+        drop(held);
+        assert_eq!(fs::read(&path)?, b"{\"new\":2}");
+        let reopened = read_file(&path, 2048, false, &d)?.unwrap();
+        assert_eq!(reopened.identity, identity);
+        assert_eq!(security_fingerprint(&reopened, &d)?, security);
+        Ok(())
+    }
+    #[test]
+    fn document_owner_partial_rewrite_never_removes_or_substitutes_the_file() -> Result<()> {
+        for count in [0, 5] {
+            let root = tempfile::tempdir()?;
+            let path = root
+                .path()
+                .join(format!(".yoke-doc-owner-{}.json", "b".repeat(64)));
+            let original = b"{\"original\":true}";
+            let replacement = b"{\"replacement\":true}";
+            fs::write(&path, original)?;
+            let d = Deadline::new(10_000);
+            let mut held = open_document_owner_metadata(&path, &d)?;
+            let identity = held.file.identity.clone();
+            windows::set_owner_write_stop(Some(count));
+            assert!(held.rewrite(replacement, &d).is_err());
+            assert!(path.is_file());
+            assert!(fs::rename(&path, root.path().join("must-not-move")).is_err());
+            drop(held);
+            assert_eq!(fs::read(&path)?, &replacement[..count]);
+            let mut reopened = open_document_owner_metadata(&path, &d)?;
+            assert_eq!(reopened.file.identity, identity);
+            // This is only an owned IO fixture. The higher-level migration
+            // must independently admit recorded prefixes and both authorities.
+            reopened.rewrite(original, &d)?;
+            drop(reopened);
+            assert_eq!(fs::read(&path)?, original);
+        }
+        Ok(())
+    }
+    #[test]
+    fn document_owner_primitive_refuses_other_names_missing_links_and_budgets() -> Result<()> {
+        let root = tempfile::tempdir()?;
+        let d = Deadline::new(10_000);
+        for name in [
+            "settings.json".to_owned(),
+            format!(".yoke-doc-owner-{}.json", "π".repeat(64)),
+        ] {
+            let path = root.path().join(name);
+            fs::write(&path, b"untouched")?;
+            assert!(open_document_owner_metadata(&path, &d).is_err());
+            assert_eq!(fs::read(&path)?, b"untouched");
+        }
+        let path = root
+            .path()
+            .join(format!(".yoke-doc-owner-{}.json", "c".repeat(64)));
+        assert!(open_document_owner_metadata(&path, &d).is_err());
+        assert!(!path.exists());
+        fs::write(&path, b"owned metadata")?;
+        let alias = root.path().join("owned-link");
+        fs::hard_link(&path, &alias)?;
+        assert!(open_document_owner_metadata(&path, &d).is_err());
+        fs::remove_file(&alias)?;
+        let mut held = open_document_owner_metadata(&path, &d)?;
+        assert!(held.rewrite(&[], &d).is_err());
+        assert!(held.rewrite(&vec![b'x'; 2049], &d).is_err());
+        drop(held);
+        assert_eq!(fs::read(&path)?, b"owned metadata");
+        Ok(())
+    }
     #[test]
     fn log_window_accepts_active_writer_without_relaxing_document_guard() -> Result<()> {
         use std::io::Write;

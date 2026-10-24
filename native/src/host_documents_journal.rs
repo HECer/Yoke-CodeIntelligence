@@ -1,6 +1,13 @@
 //! Conditional host-document publication and explicit, direction-preserving recovery.
 //! These capabilities are constructed by the host, never deserialized from data.
 use super::*;
+#[path = "host_documents_binding_migration.rs"]
+mod binding_migration;
+pub use binding_migration::{
+    BindingMigrationApproval, BindingMigrationAuthority, BindingMigrationPlan,
+    BindingMigrationReceipt, BindingMigrationReview, apply_binding_migration,
+    inspect_binding_migration, plan_binding_migration, recover_binding_migration,
+};
 
 const MAX_EVENTS: u32 = 32;
 const MAX_EVENT: usize = 8192;
@@ -94,6 +101,8 @@ struct OwnerBinding {
     target: String,
     access_binding: String,
     journal_identity: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    generation: Option<String>,
 }
 fn target_key(selected: &BoundDocument) -> Result<String> {
     let mut leaf = selected
@@ -134,6 +143,7 @@ fn expected_owner(access: &Access, selected: &BoundDocument) -> Result<OwnerBind
             .context("Host document journal root required")?
             .1
             .clone(),
+        generation: None,
     };
     owner.id = owner_id(&owner);
     Ok(owner)
@@ -146,7 +156,9 @@ fn read_owner(selected: &BoundDocument, d: &Deadline) -> Result<Option<OwnerBind
     let owner: OwnerBinding = serde_json::from_slice(&file.bytes)?;
     ensure!(
         serde_json::to_vec(&owner)? == file.bytes
-            && owner.schema_version == 1
+            && ((owner.schema_version == 1 && owner.generation.is_none())
+                || (owner.schema_version == 2
+                    && owner.generation.as_deref().is_some_and(valid_id)))
             && owner.id == owner_id(&owner)
             && owner.target == target_key(selected)?
             && valid_id(&owner.access_binding)
@@ -157,15 +169,17 @@ fn read_owner(selected: &BoundDocument, d: &Deadline) -> Result<Option<OwnerBind
     Ok(Some(owner))
 }
 fn require_owner(access: &Access, selected: &BoundDocument, d: &Deadline) -> Result<()> {
+    binding_migration::require_no_pending(selected, d)?;
     let owner = read_owner(selected, d)?
         .context("Host document owner binding absent; recovery requires its original authority")?;
     ensure!(
-        serde_json::to_vec(&owner)? == serde_json::to_vec(&expected_owner(access, selected)?)?,
+        binding_migration::matches_selection(&owner, &expected_owner(access, selected)?),
         "Host document belongs to a different write selection; restore its original authority and journal root"
     );
     Ok(())
 }
 fn bind_owner(access: &Access, selected: &BoundDocument, d: &Deadline) -> Result<()> {
+    binding_migration::require_no_pending(selected, d)?;
     if read_owner(selected, d)?.is_some() {
         return require_owner(access, selected, d);
     }
@@ -653,6 +667,15 @@ impl WriteAuthority {
     }
 }
 impl Access {
+    /// Presence is a blocker, not proof that a serialized record grants rights.
+    pub fn binding_migration_blocked(&self, document_id: &str, d: &Deadline) -> Result<bool> {
+        let _guards = self.hold_bindings(document_id, d)?;
+        let selected = self
+            .documents
+            .get(document_id)
+            .context("Host document not selected")?;
+        binding_migration::pending_metadata_present(selected, d)
+    }
     /// The opaque identity of the original host selection. This is restrictive
     /// metadata only; it cannot authorize a path, journal relocation or writes.
     pub fn owner_binding(&self, document_id: &str, d: &Deadline) -> Result<Option<String>> {
@@ -661,10 +684,12 @@ impl Access {
             .documents
             .get(document_id)
             .context("Host document not selected")?;
+        binding_migration::require_no_pending(selected, d)?;
         Ok(read_owner(selected, d)?.map(|owner| owner.access_binding))
     }
     pub fn pending_journals(&self, document_id: &str, d: &Deadline) -> Result<Vec<JournalView>> {
         self.selection(document_id)?;
+        self.owner_binding(document_id, d)?;
         let guard = state(self, false, d)?;
         let directory = io::open_metadata_directory(&guard.root.path, d)?;
         let prefix = format!("yoke-doc-{}-", self.binding);
