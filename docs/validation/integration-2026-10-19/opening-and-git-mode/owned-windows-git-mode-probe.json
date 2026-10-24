@@ -1,0 +1,102 @@
+{
+  "scope": "Actual owned Windows Git commands with filemode=true explicitly selected to expose index/filesystem mode disagreement. This does not emulate or certify macOS.",
+  "ownedDirectory": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\git-mode-fixture-is3_lxpd",
+  "records": [
+    {
+      "args": [
+        "init",
+        "-q"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "add",
+        "--all"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "commit",
+        "-q",
+        "-m",
+        "first"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "stdout": "c0f4689e8e246614c3ab0298cc610d28ebd0477b\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "add",
+        "--all"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "update-index",
+        "--chmod=+x",
+        "--",
+        "café.rs"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "commit",
+        "-q",
+        "-m",
+        "second"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "-c",
+        "core.filemode=true",
+        "diff",
+        "--raw",
+        "--",
+        "café.rs"
+      ],
+      "exitCode": 0,
+      "stdout": ":100755 100644 35e7bec 0000000 M\t\"caf\\303\\251.rs\"\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "-c",
+        "core.filemode=true",
+        "checkout",
+        "-q",
+        "--detach",
+        "c0f4689e8e246614c3ab0298cc610d28ebd0477b"
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "error: Your local changes to the following files would be overwritten by checkout:\n\tcafé.rs\nPlease commit your changes or stash them before you switch branches.\nAborting\n"
+    }
+  ],
+  "checkoutRefused": true
+}

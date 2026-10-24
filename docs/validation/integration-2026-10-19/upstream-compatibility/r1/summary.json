@@ -1,0 +1,44 @@
+{
+  "allChecksPassed": true,
+  "sourceUnchanged": true,
+  "copiedInputsVerified": 165,
+  "unchangedNativeInputs": 510,
+  "checks": [
+    {
+      "gate": "typescript-typecheck",
+      "command": [
+        "npm.cmd",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2.145,
+      "recordedAt": "2026-10-19T01:55:01.303831+00:00"
+    },
+    {
+      "gate": "typescript-tests",
+      "command": [
+        "npm.cmd",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 56.98,
+      "recordedAt": "2026-10-19T01:55:58.283976+00:00"
+    },
+    {
+      "gate": "actual-installed-upstreams",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-name-pattern",
+        "^LIVE installed (graft|graphify) pinned structural extraction$",
+        "test/live/upstreams.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2.585,
+      "recordedAt": "2026-10-19T01:56:01.216313+00:00"
+    }
+  ],
+  "scope": "Two real selected installed upstream gates; no Serena gate, model enrichment, host hook installation or full upstream parity certification"
+}

@@ -1,0 +1,170 @@
+use anyhow::{Result, ensure};
+use clap::Args;
+use std::{
+    io::Write,
+    path::{Path, PathBuf},
+};
+use yoke::{
+    capture::Deadline,
+    git_workflows::repository_scope::{self, Limits, Options},
+};
+
+#[derive(Args)]
+pub struct Arguments {
+    /// Explicitly capture the selected working files; crossed repositories stay read-only.
+    #[arg(long)]
+    capture: bool,
+    /// Serve fixed-root native MCP after explicit capture; index retains this host policy.
+    #[arg(long, requires = "capture")]
+    serve: bool,
+    #[arg(long, requires="serve", value_parser=["native","session","serena","trail","graft","graphify"])]
+    profile: Option<String>,
+    #[arg(long)]
+    max_scope_bytes: Option<usize>,
+    #[arg(long)]
+    allow_index_read: bool,
+    #[arg(long)]
+    trust_git: bool,
+    #[arg(long)]
+    git: Option<PathBuf>,
+    #[arg(long, conflicts_with = "no_follow_submodules")]
+    follow_submodules: bool,
+    #[arg(long)]
+    no_follow_submodules: bool,
+    #[arg(long, conflicts_with = "no_follow_nested_repositories")]
+    follow_nested_repositories: bool,
+    #[arg(long)]
+    no_follow_nested_repositories: bool,
+    #[arg(long, default_value_t = 64)]
+    max_repositories: usize,
+    #[arg(long, default_value_t = 20000)]
+    max_entries: usize,
+    #[arg(long, default_value_t = 8000000)]
+    max_index_bytes: usize,
+    #[arg(long, default_value_t = 16)]
+    max_depth: usize,
+}
+impl Arguments {
+    pub fn run(&self, root: &Path, timeout: u64, max_bytes: u64) -> Result<bool> {
+        ensure!(
+            self.allow_index_read && self.trust_git,
+            "repository_scope_index_permission_required"
+        );
+        ensure!(
+            (1..=600000).contains(&timeout) && max_bytes <= 4_000_000,
+            "repository_scope_invalid_limits"
+        );
+        ensure!(
+            self.capture || self.max_scope_bytes.is_none(),
+            "repository_scope_invalid_limits"
+        );
+        if self.capture {
+            ensure!(max_bytes >= 2048, "repository_scope_capacity_exceeded");
+        }
+        let limits = Limits {
+            max_repositories: self.max_repositories,
+            max_entries: self.max_entries,
+            max_index_bytes: self.max_index_bytes,
+            max_depth: self.max_depth,
+            max_output_bytes: if self.capture {
+                self.max_scope_bytes.unwrap_or(1_000_000)
+            } else {
+                max_bytes as usize
+            },
+        };
+        limits.validate()?;
+        let git = crate::selected_git(self.git.clone(), self.trust_git)?;
+        let d = Deadline::new(timeout);
+        let options = Options {
+            allow_index_read: true,
+            follow_submodules: self.follow_submodules,
+            follow_nested_repositories: self.follow_nested_repositories,
+            limits,
+        };
+        let mut bytes = if self.capture {
+            let preference = yoke::git_workflows::repository_preferences::Resolved::current(
+                root,
+                if self.follow_submodules {
+                    Some(true)
+                } else if self.no_follow_submodules {
+                    Some(false)
+                } else {
+                    None
+                },
+                if self.follow_nested_repositories {
+                    Some(true)
+                } else if self.no_follow_nested_repositories {
+                    Some(false)
+                } else {
+                    None
+                },
+                &d,
+            )?;
+            if self.serve {
+                let host = yoke::git_workflows::repository_host::Host::new(
+                    root, git, options, preference, &d,
+                )?;
+                let mut engine = host.open(&d)?;
+                match self.profile.as_deref().unwrap_or("native") {
+                    "native" => yoke::protocol::serve(
+                        &mut engine,
+                        std::io::stdin().lock(),
+                        std::io::stdout().lock(),
+                    )?,
+                    profile => {
+                        let mut session = yoke::project_session::Session::open(
+                            engine,
+                            yoke::project_session::HostProfile::default(),
+                            None,
+                            &d,
+                        )?;
+                        match profile {
+                            "session" => yoke::protocol::serve_session(
+                                &mut session,
+                                std::io::stdin().lock(),
+                                std::io::stdout().lock(),
+                            )?,
+                            "serena" => yoke::protocol::serve_serena(
+                                &mut session,
+                                std::io::stdin().lock(),
+                                std::io::stdout().lock(),
+                            )?,
+                            "graphify" => yoke::protocol::serve_graphify(
+                                &mut session,
+                                std::io::stdin().lock(),
+                                std::io::stdout().lock(),
+                            )?,
+                            "trail" | "graft" => yoke::protocol::serve_trail(
+                                &mut session,
+                                profile,
+                                std::io::stdin().lock(),
+                                std::io::stdout().lock(),
+                            )?,
+                            _ => anyhow::bail!("repository_host_profile_invalid"),
+                        }
+                    }
+                }
+                return Ok(true);
+            }
+            let (snapshot, graph, parsed, reused) =
+                repository_scope::capture_root_resolved(root, &git, &options, &preference, &d)?;
+            let mut result = serde_json::json!({"producer":"yoke-git-repository-capture-1","snapshotId":snapshot.id,"files":snapshot.files.len(),"entities":graph.entities.len(),"observations":graph.observations.len(),"parsedFiles":parsed,"reusedFiles":reused,"crossedRepositoryPolicy":"read-only","projectSourceWritten":false,"defaultCaptureChanged":false});
+            if let Some(selected) = preference.selection() {
+                result["hostSelection"] = serde_json::json!({"id":selected.id,"revision":selected.revision,"effectiveChoice":preference.choice});
+            }
+            serde_json::to_vec(&result)?
+        } else {
+            repository_scope::inspect(root, &git, &options, &d)?
+                .canonical_bytes()
+                .to_vec()
+        };
+        bytes.push(b'\n');
+        ensure!(
+            bytes.len() <= max_bytes as usize,
+            "repository_scope_capacity_exceeded"
+        );
+        d.check()?;
+        std::io::stdout().lock().write_all(&bytes)?;
+        Ok(true)
+    }
+}

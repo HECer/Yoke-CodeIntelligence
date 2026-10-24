@@ -113,7 +113,7 @@ export class Verifier {
                 try {
                     const output = config.sandbox ? await runSandboxed(config.command, config.args, sandbox, config.sandbox, jobDeadline) : await runProcess(config.command, config.args, { cwd: sandbox, deadline: jobDeadline, maxBytes: 1000000, env: { HOME: join(sandbox, '.ci-home'), USERPROFILE: join(sandbox, '.ci-home') } });
                     const logId = this.workspace.store.artifact(target.id, { profile, ...output });
-                    const counts = /^# tests (\d+)$/m.exec(output.stdout);
+                    const counts = /^(?:#|ℹ)\s*tests\s+(\d+)\s*$/m.exec(output.stdout);
                     report.jobs.push({ profile, executed: true, exitCode: output.exitCode, status: output.exitCode === 0 ? 'passed' : 'failed', testCount: counts ? Number(counts[1]) : null, durationMs: output.durationMs, logArtifactId: logId, outputTruncated: output.truncated, stdout: redact(output.stdout.slice(-4000)), stderr: redact(output.stderr.slice(-2000)), networkIsolation: config.sandbox ? 'docker_network_none' : 'not_enforced_trusted_process_only' });
                     if (output.exitCode !== 0)
                         report.status = 'failed';

@@ -1,0 +1,20 @@
+    Finished `test` profile [unoptimized] target(s) in 1.07s
+     Running tests\graph_review_adversarial.rs (target\debug\deps\graph_review_adversarial-69abd8cc0880666f.exe)
+
+running 5 tests
+test review_json_pointer_can_address_array_child_keys ... ok
+test review_launcher_option_values_are_not_persisted_as_packages ... ok
+test review_cargo_ordinary_ancestor_does_not_shadow_workspace ... ok
+test review_tree_export_script_is_valid_javascript ... ok
+test review_yaml_mcp_config_preserves_server_contract ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.46s
+
+     Running tests\graph_root_review.rs (target\debug\deps\graph_root_review-63fbcb7ba6cc9403.exe)
+
+running 2 tests
+test artifact_resource_page_respects_byte_budget_after_json_control_escaping ... ok
+test trail_exact_file_selector_can_trace_more_than_two_hundred_declarations ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.35s
+

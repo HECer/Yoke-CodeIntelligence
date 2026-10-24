@@ -1,0 +1,26 @@
+{
+  "checkedAtUtc": "2026-10-16T06:01:52.404031+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "2",
+    "--test",
+    "facade_file_rename",
+    "--",
+    "--test-threads=4",
+    "--nocapture"
+  ],
+  "exitCode": 0,
+  "seconds": 15.656,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-linker-recovery-20261016-0602",
+  "logSha256": "59d7136ef17f09a82d2e6e12dde8c5fdd41da6b3db320952729d3ac76fab01c5",
+  "groups": 1,
+  "passed": 9,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

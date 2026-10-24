@@ -1,0 +1,69 @@
+{
+  "sourceCommit": "d792a53ce6ddce878a39a0bfc0f239ed46bd03f3",
+  "cliSha256": "b83fa60bdcb1030f7f129261796c05ed70df3b6e72e9c33cad6c5aa5117e0eac",
+  "frozenInputs": 1065,
+  "rustAnalyzerVersion": "rust-analyzer 1.94.1 (e408947b 2026-03-25)",
+  "rustAnalyzerSha256": "8780a0a408169100c7b4df49ba2c9dcc4b40b48dd375e3985bd585f1a4fe0a57",
+  "positiveOperation": "Native MCP ci_session/refactor.prepare/rename",
+  "negativeCases": [
+    "Host primary read-only refusal",
+    "Planning-mode refusal",
+    "Stale host binding refusal before MCP initialization",
+    "Actual rust-analyzer invalid-identifier -32602 refusal"
+  ],
+  "newName": "local_renomm\u00e9",
+  "manifestAudit": {
+    "complete": true,
+    "pureReadOnlyAudit": true,
+    "originalAndDerivedManifestMembers": [
+      {
+        "path": "app/Cargo.toml",
+        "baseHash": "5ae94b56b0d611d2035bed147595403bda2126128c149fd02fd47cc3f5bd850e",
+        "derivedHash": "5ae94b56b0d611d2035bed147595403bda2126128c149fd02fd47cc3f5bd850e",
+        "originalBytes": 82,
+        "changed": false
+      },
+      {
+        "path": "app/src/i\u0307/mod.rs",
+        "baseHash": "465d21ee9f97907b1c709546621cb4f54fffb41bc02fa76f372e401c40378221",
+        "derivedHash": "3fa824cadffe52f1e6fa946059d3911a728d996e32e73e7ddf22b72edf26e040",
+        "originalBytes": 69,
+        "changed": true
+      },
+      {
+        "path": "app/src/lib.rs",
+        "baseHash": "b593c059d2dd2b114aeb5e340c5220e0a795875265a12e36ca72c29bac493594",
+        "derivedHash": "b593c059d2dd2b114aeb5e340c5220e0a795875265a12e36ca72c29bac493594",
+        "originalBytes": 72,
+        "changed": false
+      },
+      {
+        "path": "app/src/\u0130/mod.rs",
+        "baseHash": "46969a5fd93c183e1ef6390b63ad1a72da4821b018c24dc881eb553a0be0e104",
+        "derivedHash": "24bceacd4cd4481e3217e60f8eb8d3fb2a06fb15c95024f929e7893c46051c15",
+        "originalBytes": 48,
+        "changed": true
+      }
+    ],
+    "allFourOriginalFilesStillByteExact": true,
+    "onlyTwoExpectedDerivedMembersChanged": true,
+    "derivedBlobsExact": true,
+    "noAdditionalSourceFiles": true,
+    "baseAndDerivedSameWorkspace": true,
+    "planCount": 1,
+    "approvalJournalReceiptCount": 0,
+    "sourceInputsUnchanged": true,
+    "frozenInputs": 1065,
+    "cliSha256": "b83fa60bdcb1030f7f129261796c05ed70df3b6e72e9c33cad6c5aa5117e0eac"
+  },
+  "sourceExecutionAuthorized": false,
+  "commandsExecuted": false,
+  "externalDependencies": 0,
+  "noApplyCalled": true,
+  "allOwnedJobsEmpty": true,
+  "productionCodeChanged": false,
+  "originalInventoryAssessmentsUnchanged": true,
+  "all77RuntimeAcceptanceCertified": false,
+  "fullStatusComplete": false,
+  "rawMembers": 25
+}

@@ -1,0 +1,32 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+    Finished `test` profile [unoptimized] target(s) in 0.58s
+     Running tests\providers.rs (target\debug\deps\providers-4a75185b5a986379.exe)
+
+running 11 tests
+test corpus_excerpts_stop_at_exact_utf8_boundaries_and_report_omissions ... ok
+test embeddings_and_query_search_use_versioned_source_bound_collections ... ok
+test invalid_requests_and_missing_capabilities_fail_before_model_attempts ... ok
+test media_descriptions_bind_captured_bytes_without_source_writes ... ok
+test complete_bound_failed_replies_still_account_for_reported_costs ... ok
+test query_vector_dimension_must_match_indexed_corpus_before_settlement ... ok
+test summaries_use_immutable_utf8_source_and_remain_inferences ... ok
+test successful_unknown_billing_and_known_overrun_keep_budget_conservative ... ok
+test reranking_and_vectors_reject_invalid_exact_candidates ... ok
+test unavailable_timeout_and_output_cap_keep_unknown_reservations ... ok
+test host_trust_and_exact_reply_binding_fail_closed ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.21s
+
+     Running tests\publication.rs (target\debug\deps\publication-48dca67002c9b393.exe)
+
+running 1 test
+test first_publication_time_is_durable_and_never_refreshed_by_republication ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+

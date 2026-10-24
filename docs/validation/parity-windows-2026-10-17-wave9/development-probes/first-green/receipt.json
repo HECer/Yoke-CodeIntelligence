@@ -1,0 +1,30 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "--offline",
+    "-j",
+    "1",
+    "--test",
+    "view_comparison_cli",
+    "--",
+    "--test-threads=1"
+  ],
+  "exitCode": 101,
+  "seconds": 34.953,
+  "sourceBefore": {
+    "native/src/main.rs": "ef9cec8412d0cf6473bb19e657f5b0c1d08029ea125304b119f006470b6a78d0",
+    "native/src/view_comparison_cli.rs": "f134784bf510cea5fef7165dec8d7d3f0e198d4565765f24b060b057a66a3f27",
+    "native/tests/view_comparison_cli.rs": "519154995bd15e67dd75b80aa40fb2c6f64894af65f4d915ebdc44506511e294"
+  },
+  "sourceAfter": {
+    "native/src/main.rs": "ef9cec8412d0cf6473bb19e657f5b0c1d08029ea125304b119f006470b6a78d0",
+    "native/src/view_comparison_cli.rs": "f134784bf510cea5fef7165dec8d7d3f0e198d4565765f24b060b057a66a3f27",
+    "native/tests/view_comparison_cli.rs": "519154995bd15e67dd75b80aa40fb2c6f64894af65f4d915ebdc44506511e294"
+  },
+  "sourceUnchanged": true,
+  "logSha256": "7f0d6dd0ee08ffe3bd3d5d74c1914623b2acee09887155e42a5f1d9c42d0e6d8",
+  "interpretation": "Scoped development probe only; nonadditive and not whole-project acceptance."
+}

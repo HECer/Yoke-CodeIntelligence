@@ -1,0 +1,1000 @@
+{
+  "sourceCommit": "aa3cdbfb8217fc24b119f2e0754489663da77701",
+  "secondaryUnitTotals": {
+    "passed": 6,
+    "failed": 0,
+    "ignored": 0
+  },
+  "secondaryIntegrationTotals": {
+    "passed": 97,
+    "failed": 0,
+    "ignored": 0
+  },
+  "primaryRecheckTotals": {
+    "passed": 12,
+    "failed": 0,
+    "ignored": 0
+  },
+  "countsOverlapNotAdditive": true,
+  "formatAndAllTargetClippyPassedInBothCheckouts": true,
+  "primaryTypecheckPassed": true,
+  "retainedPassed": 260,
+  "retainedSkipped": 3,
+  "actualPrimaryCli": {
+    "cliSha256": "84acd7a916ab541cf1db03807cc11477d20dce355eff6553467ef5333ef90b3d",
+    "legacyAndCategoryV1RawStdoutExact": true,
+    "newCommunityRepeatedRawStdoutExact": true,
+    "originalGraphAndSourceEvidenceExact": true,
+    "savedRootRetentionPlansPassed": true,
+    "sourceUnchanged": true,
+    "analyzedSourceExecuted": false,
+    "sourceFiles": {
+      "src/core.rs": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+      "src/consumer.rs": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+      "web/client.ts": "121ba93f828bc4a5fe0dd30671a5baec00bf5ce1607e1e3e08e90648811fb349",
+      "docs/design.md": "b2eee646d8fd28f03af0ca9e01e983aa298dbc8984d55a0238cc5226daf437f3"
+    },
+    "commands": [
+      {
+        "name": "legacy",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--snapshot",
+          "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "graph",
+          "analyze"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "category",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--snapshot",
+          "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "graph",
+          "analyze",
+          "--options",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r3-source-categories\\legacy-after-r1\\options.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "community",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--snapshot",
+          "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "graph",
+          "analyze",
+          "--options",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r3-community-policy\\primary-cli-r1\\community-options.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "community-repeat",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--snapshot",
+          "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "graph",
+          "analyze",
+          "--options",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r3-community-policy\\primary-cli-r1\\community-options.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "community-category",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--snapshot",
+          "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "graph",
+          "analyze",
+          "--options",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r3-community-policy\\primary-cli-r1\\community-category-options.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "community-category-repeat",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--snapshot",
+          "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "graph",
+          "analyze",
+          "--options",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r3-community-policy\\primary-cli-r1\\community-category-options.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "retention-plan",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "retention",
+          "plan",
+          "--minimum-age-ms",
+          "0"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "retention-purge-plan",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "retention",
+          "purge-plan",
+          "--minimum-age-ms",
+          "0"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "reportIdentities": [
+      {
+        "producer": "yoke-graph-report-v1",
+        "artifactId": "e3d059b15611c3627b3bf0e4e1553791e11d44d0de8d7e6d2f5f8546947b5040",
+        "markdownArtifactId": "2db70ac329553729c94dc637feece5f6ba5b2444a7c45e1a6f59c86974eb834a"
+      },
+      {
+        "producer": "yoke-source-category-report-1",
+        "artifactId": "8abfaf99d19592f1dfa262a07d49d97cb9b314d25751c8b36d7c452bd6b0257b",
+        "markdownArtifactId": "1fe0a987a295cbc75568138fb173b58539a30465a6498e500b7844a430754207"
+      },
+      {
+        "producer": "yoke-community-policy-report-1",
+        "artifactId": "ec7f06df705e6829f2ed31f34aa4fb00db387c63928b0e717e087495d2bbbc46",
+        "markdownArtifactId": "a5636230819da429cf634ffaa80d2683d6047a38d24c821749f74c645f3df63a"
+      },
+      {
+        "producer": "yoke-community-policy-report-1",
+        "artifactId": "ea9db12261d717489e5554350d05e0681ce631b945457f90dd4754a1a57032b5",
+        "markdownArtifactId": "c3b486122bb8df84b0468dc45708d94403636c702dc3f65b2687b6fd355f2ea7"
+      }
+    ],
+    "fullStatusCertified": false
+  },
+  "secondaryActualCli": {
+    "cliSha256": "96eaac6c2400e5feb751257806766751e340d4c37be358255a07eebfb91c55bb",
+    "legacyAndCategoryV1RawStdoutExact": true,
+    "newCommunityRepeatedRawStdoutExact": true,
+    "originalGraphAndSourceEvidenceExact": true,
+    "savedRootRetentionPlansPassed": true,
+    "sourceUnchanged": true,
+    "analyzedSourceExecuted": false,
+    "sourceFiles": {
+      "src/core.rs": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+      "src/consumer.rs": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+      "web/client.ts": "121ba93f828bc4a5fe0dd30671a5baec00bf5ce1607e1e3e08e90648811fb349",
+      "docs/design.md": "b2eee646d8fd28f03af0ca9e01e983aa298dbc8984d55a0238cc5226daf437f3"
+    },
+    "commands": [
+      {
+        "name": "legacy",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--snapshot",
+          "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "graph",
+          "analyze"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "category",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--snapshot",
+          "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "graph",
+          "analyze",
+          "--options",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r3-source-categories\\legacy-after-r1\\options.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "community",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--snapshot",
+          "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "graph",
+          "analyze",
+          "--options",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r3-community-policy\\secondary-cli-r1\\community-options.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "community-repeat",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--snapshot",
+          "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "graph",
+          "analyze",
+          "--options",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r3-community-policy\\secondary-cli-r1\\community-options.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "community-category",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--snapshot",
+          "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "graph",
+          "analyze",
+          "--options",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r3-community-policy\\secondary-cli-r1\\community-category-options.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "community-category-repeat",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--snapshot",
+          "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "graph",
+          "analyze",
+          "--options",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r3-community-policy\\secondary-cli-r1\\community-category-options.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "retention-plan",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "retention",
+          "plan",
+          "--minimum-age-ms",
+          "0"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "retention-purge-plan",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+          "--timeout",
+          "30000",
+          "--max-bytes",
+          "1000000",
+          "retention",
+          "purge-plan",
+          "--minimum-age-ms",
+          "0"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "reportIdentities": [
+      {
+        "producer": "yoke-graph-report-v1",
+        "artifactId": "e3d059b15611c3627b3bf0e4e1553791e11d44d0de8d7e6d2f5f8546947b5040",
+        "markdownArtifactId": "2db70ac329553729c94dc637feece5f6ba5b2444a7c45e1a6f59c86974eb834a"
+      },
+      {
+        "producer": "yoke-source-category-report-1",
+        "artifactId": "8abfaf99d19592f1dfa262a07d49d97cb9b314d25751c8b36d7c452bd6b0257b",
+        "markdownArtifactId": "1fe0a987a295cbc75568138fb173b58539a30465a6498e500b7844a430754207"
+      },
+      {
+        "producer": "yoke-community-policy-report-1",
+        "artifactId": "ec7f06df705e6829f2ed31f34aa4fb00db387c63928b0e717e087495d2bbbc46",
+        "markdownArtifactId": "a5636230819da429cf634ffaa80d2683d6047a38d24c821749f74c645f3df63a"
+      },
+      {
+        "producer": "yoke-community-policy-report-1",
+        "artifactId": "ea9db12261d717489e5554350d05e0681ce631b945457f90dd4754a1a57032b5",
+        "markdownArtifactId": "c3b486122bb8df84b0468dc45708d94403636c702dc3f65b2687b6fd355f2ea7"
+      }
+    ],
+    "fullStatusCertified": false
+  },
+  "crossCheckout": {
+    "sharedInputs": 931,
+    "intentionalChanges": [
+      "native/src/graph_extensions.rs",
+      "native/src/retention.rs"
+    ],
+    "lineEndingOnlyCount": 95,
+    "workersAndFixturesByteExact": true,
+    "differences": [
+      {
+        "path": "native/docs/digest-history-acquisition.md",
+        "lineEndingOnly": true,
+        "primarySha256": "10fb6492bf9948669b0b7c526d8a6763e3037741f6f5d1e93b91376d65bedc1c",
+        "secondarySha256": "f5a096beb38d52e085278fbed69c6dec93ecdf2a17abfaa1e4b6f230b5d09228"
+      },
+      {
+        "path": "native/docs/digest-history-jobs.md",
+        "lineEndingOnly": true,
+        "primarySha256": "2e671557c5991e723542022e9fda646f4435ed22dda90ddddb1250c9a74bbd72",
+        "secondarySha256": "5a3d17b12d2f495e7263cbf78332199b33a9e335dcad4fd1351fd3ab54206e3b"
+      },
+      {
+        "path": "native/docs/digest-history-mapping.md",
+        "lineEndingOnly": true,
+        "primarySha256": "c632e0181d5c8c52a7e67e169e03eeafcf5ee17d8ab4c846eeed2342ed6c5e1f",
+        "secondarySha256": "8edf46497fb2939c17971804b971ceb389888c7e89b6cc1ac15b7cc9afb4343a"
+      },
+      {
+        "path": "native/docs/digest-service.md",
+        "lineEndingOnly": true,
+        "primarySha256": "97714f2d42e52c6ddbd6288f88ef1dab421eb2af3d198e691aeb6191d079ffc5",
+        "secondarySha256": "d294e4cea47cd87a04054dc111b86e9973c798e42aabb5d7eb3dc81d938fb22c"
+      },
+      {
+        "path": "native/docs/git-areas.md",
+        "lineEndingOnly": true,
+        "primarySha256": "d80a2f65ea7f868b35691eb384c1eb01e3ea7fed9d826314679e58cb5216399d",
+        "secondarySha256": "cfaf7bbd617db69afb94af7321ba8193d73446e07cb405a2b25cadea00644553"
+      },
+      {
+        "path": "native/docs/git-conflicts.md",
+        "lineEndingOnly": true,
+        "primarySha256": "9a1d9ba39128e0ec08dcfe1b5eb955e71236865dedfc366199ff5956f0d06003",
+        "secondarySha256": "874b4df6cc398f81ab60a61933a9712572dbcab4a204a62f77a063426c9bc1cd"
+      },
+      {
+        "path": "native/docs/github-discussions.md",
+        "lineEndingOnly": true,
+        "primarySha256": "f411769f1e71b7d9e4ed2facdb343a7ea19f733fc18a48272efa39ab0a409933",
+        "secondarySha256": "ec3e788b8a642ceac1b3d8ecb7a5fa454eca6b46e62cd1d1355d2a1f1fd5177d"
+      },
+      {
+        "path": "native/docs/google-workspace.md",
+        "lineEndingOnly": true,
+        "primarySha256": "3560f90e90ebb3529feb65cc58706a53cf8514be51149f1eebe2cc5dbc9bbe61",
+        "secondarySha256": "a37663940032c1338497edf96c1c8665c3fec3aef83bad3d76e9326a10ea0faf"
+      },
+      {
+        "path": "native/docs/graph-extensions.md",
+        "lineEndingOnly": true,
+        "primarySha256": "4c4fe3714e16d2db7e0c31e0f41748b8ebfa72aeb5c255f99a26b1553028c162",
+        "secondarySha256": "1d52eb03ca89ad9d4afa05229180d7d6e9b6f6c55ceb2bd39c09e89d6a9b25dc"
+      },
+      {
+        "path": "native/docs/host-config.md",
+        "lineEndingOnly": true,
+        "primarySha256": "a88bd92aec7c5dafbaa3354e6d93c8501f50e7f63538f80831776080541a971c",
+        "secondarySha256": "bb16f871f7aa1377444999ec4ba7eacd47aa3bfdf0265edd7816ff339097a758"
+      },
+      {
+        "path": "native/docs/host-install.md",
+        "lineEndingOnly": true,
+        "primarySha256": "8734fa78a7561935462b6090f8d51cbefc683856beb8771f3f22a884c7e5cf3a",
+        "secondarySha256": "724a3c9109beaab2b6da1b174a7ef62477f8decaf7689326bd140d476749d4af"
+      },
+      {
+        "path": "native/docs/source-category-policy.md",
+        "lineEndingOnly": true,
+        "primarySha256": "dd8fa3d23ad9dbf7c48114ca4c26f2bf27afd766bdc236c3aa33fefb699558c4",
+        "secondarySha256": "1198c6447c4cb05a1e2bf574e777c96366ae2c6985836f67b2cfa4d58a69ce41"
+      },
+      {
+        "path": "native/docs/sqlite-deadlines.md",
+        "lineEndingOnly": true,
+        "primarySha256": "47ceaf942bda6ab82d86c7e7ed17df6f90495f121dded8bb3cc18c038c945647",
+        "secondarySha256": "8858d6d6cc8332ae85b4b3606bff615e54d202c4da7b43128965cd3c13b7fc04"
+      },
+      {
+        "path": "native/docs/windows-parity-2026-10-15.md",
+        "lineEndingOnly": true,
+        "primarySha256": "950f19a7772d5dc3fa4be13b34be490e55b6a3d04364875b742e2491f88a8375",
+        "secondarySha256": "8fab5b9ca8cae2e81d890c631a5add3e5d4f647e21610ffb64256ce3dec5bbb8"
+      },
+      {
+        "path": "native/src/capture.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "8a5a971abe4d694a914d3682330f351fe19fd68090708fcba1ea1121f93aa92e",
+        "secondarySha256": "cc843f5aeac00989d9925f67b55deb3d5473338b400292713f2800793eafe5fe"
+      },
+      {
+        "path": "native/src/debug_adapter.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "406a15822fa0b6ce9bf21b2e80df10638c73f1c4e5253346300d483a557d2d33",
+        "secondarySha256": "022786066458a2644210c51e0722402735863811fd7628fa512b3590290ab552"
+      },
+      {
+        "path": "native/src/digest_history_capture_cli.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "fbe0194addda444a3a1760635e7394c9a04e05d6935969109d598d66844ebcc4",
+        "secondarySha256": "fdb9a5ff18e98b93a076fe0330edea07db9802c8dd53fb34ac55a574fa4f5717"
+      },
+      {
+        "path": "native/src/digest_history_job_cli.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "dda8166a30382942a3efeb469b5618a976611c9c33d8b9c5415e7ab428eaa0c4",
+        "secondarySha256": "44c4c52ab8d5593c66c924b47b1adb4e478f5314ac34ca416fae5680e6168458"
+      },
+      {
+        "path": "native/src/digest_receiver_cli.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "85ce0b911d7aec35081fa1901fb2610adc41a2aa3b1275e449effa0b792c351b",
+        "secondarySha256": "5bb6392bd7fe733cdc296b6ae9c1fc5b7e953af39c03f7225ed8554d58d9e247"
+      },
+      {
+        "path": "native/src/git_areas_cli.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "71f839e2d7861556b62b710deb6379baf54ae4147fa0d33b2f6a0d589d561771",
+        "secondarySha256": "0bfce34822c0ef6d2942ab97257ae2d62816e8c16335cc433432bf2449c7977a"
+      },
+      {
+        "path": "native/src/git_conflicts_cli.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "829613eef6f7ce6573bcc75ef99b7eea49c60f962676b7b020a27a252322aaee",
+        "secondarySha256": "f35f46e8329540d155b3fea1fac2d6a5333f39f862edc5f18d4a8b18e76f752c"
+      },
+      {
+        "path": "native/src/git_history_cursor.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "68a589119f5023695a0e24ae51fe266a0730e1a1fc387aad6c1b088da55490df",
+        "secondarySha256": "f7acad3ba4c9b88cf117fb4d2a8df10ce447ac308eb3de4fae299e92cce4b1b8"
+      },
+      {
+        "path": "native/src/git_history_read.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "f82cb6d36373a25f4b9ce8de3838bb59d21737c9575bd390e3b5140991eb16e8",
+        "secondarySha256": "ccf9504b0373cb255237b7941161998ae31a095cbde5297be6c5265a29029296"
+      },
+      {
+        "path": "native/src/git_history_read_tests.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "b31b9fe654c8908d34b1200fc11e04073e8bf23f9b43197de7aaf7116a5701a9",
+        "secondarySha256": "11b6b0d521df7ac2e6766f60cee50a40e9132e97c6394c8b25f9bcb4ccc03757"
+      },
+      {
+        "path": "native/src/git_source_lineage.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "fe6f95076ae6d054cf102fc4076e64beb2771f73d07a50c1929f13274353abf4",
+        "secondarySha256": "4056152089056c0d8bf519c03ded1534643a706094c9325474f828ee41feea28"
+      },
+      {
+        "path": "native/src/git_source_read.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "80ed203133bcd0947e4765b8d5be418a4efa888c6cc3638c110b211d776e9cbc",
+        "secondarySha256": "f7487bdb8fc7274fec111c06091ab78377ded0f275c321b123a501687cf0008f"
+      },
+      {
+        "path": "native/src/github.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "a1f6857fd40805dfefa105db77a660addd16af8d5e7ec9ec94055503256d3677",
+        "secondarySha256": "c15df5ac9441ef91c0cf89f1fbbeef94e59c6f0b7ea5e548d7348347b1245727"
+      },
+      {
+        "path": "native/src/github_app_digest.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "87a4dedd76ec5992acde3d9db88038aade1ee97b8afb7d5b3306163d0c6ac2eb",
+        "secondarySha256": "ec87026c235be671d155803c98260598c44127b387d41a2976b1d477271cb73a"
+      },
+      {
+        "path": "native/src/github_app_digest_cli.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "3a188d3d165ee1dd0b7b6e35b0f26efbd664652a6121ffaffbed560d75bb66d0",
+        "secondarySha256": "08bfd8126a36b8517cadb4afddf68e593cea4ea151076e8514d3b346f010c756"
+      },
+      {
+        "path": "native/src/github_app_digest_discussions.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "2fd695dfc9b75ede1c0ab91743fd37b4b5f18149970da46c70108674f916f12b",
+        "secondarySha256": "f78285d114e47eca55dff80c5fa321d32a76b0431a1f8bd5b2c1b9dc65b79e14"
+      },
+      {
+        "path": "native/src/github_app_digest_mapping.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "0ffa08e2c35de88e279d86a38255537d0d24f9badea0c75ba1030e8259ccd4b4",
+        "secondarySha256": "320b84a697ece948026903782ef96ab1908053d58751a1add46834294fbdc680"
+      },
+      {
+        "path": "native/src/github_app_digest_query.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "b5c4eb3dfcd06f87700dbd97cb19eff6e67308fb985a2ef01332d3e199b49f01",
+        "secondarySha256": "d7a3f3d03b248b71d35d58dd97602e1688893cb046c2e2f14159c38bb5d3c51e"
+      },
+      {
+        "path": "native/src/github_app_digest_query_client.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "6d6085da2ee0d81ec8b7a2732c1e090e1e2d55346c9607a1607d320c4fd18605",
+        "secondarySha256": "749aebf885655d28a4ae1c910929b959918ee71fde0450787bc8c8f4c4cbd436"
+      },
+      {
+        "path": "native/src/github_app_digest_receiver_http.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "002788e28ba497033d45b2dcbcef3993845b1ca222b66a98e757f45e48ee39cd",
+        "secondarySha256": "cac40d9852c9c44f7365d8493fb04c72bf2467382b4855e658413c301b685739"
+      },
+      {
+        "path": "native/src/github_app_digest_receiver_store.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "7c4b33d48ba2c920346b2cfc17146f8fa7afa2faf7adc7a3c6040eb96cb85da0",
+        "secondarySha256": "830be12d9c494b0bc243ac93303a1fca2be6f6a303dde7caeafc439bb6444118"
+      },
+      {
+        "path": "native/src/github_app_digest_rust.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "2716f02b3c4ad43ab0317a472ffeca46037ceceb27e8381814a727f3f3565ec2",
+        "secondarySha256": "2ecb265d3aa1e8fac1eb061cd1d56138f599d94975cb4b8954ef89d1ecbeb154"
+      },
+      {
+        "path": "native/src/github_app_digest_service.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "6f1923f98a16a3ac3263f7c05727492093bf01185cfbf3d03af4113ebc66026a",
+        "secondarySha256": "9d0be6575cc3604202da446f8c97ec399003e9caf76b52fdd3d98edd54d72e5b"
+      },
+      {
+        "path": "native/src/github_app_digest_service_state.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "d7272cb6a41fe23e5983e42abdf595e7ad658787ccae1c2cea06e3e4cb2b819a",
+        "secondarySha256": "6c3decd13d65ce71db04b669d1f1ccd3048c3d4f4aa239d6686346ada1e24acc"
+      },
+      {
+        "path": "native/src/github_app_digest_source.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "61883bd5a58dc5cbb3ba4f86e7d9cd0c08303de44fa483a163ee04a916e2d6c1",
+        "secondarySha256": "3b68da24f2e8210b01c8f800a80558b488df653afb27ee89af44dbe1af55be70"
+      },
+      {
+        "path": "native/src/github_app_ingress_socket.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "c9a4fa1b24c0ebb4e06e3127d4eef687614262e68880d89fa46658263d47118c",
+        "secondarySha256": "7d801c408826da9bb227d7cb471bf2e6d46e092f940fb19cd24a0a0728c32093"
+      },
+      {
+        "path": "native/src/github_discussions.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "2e460f69f9952cbec9cc89ccb76f55cfe669c6e42d802af933172700e4ed5d42",
+        "secondarySha256": "4856e247b7596e7f9ac91878146d6278d3a11d71bd1744ba11b57b0a3c3cacfa"
+      },
+      {
+        "path": "native/src/github_discussions_cli.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "a788c4fee32bdf90e2b0c2c097039574070e39eb5516c86175076c89d05abfa5",
+        "secondarySha256": "b751a11419a02e625a9b62dae02d86d5597e956402bc0b4471def2071c0c1d19"
+      },
+      {
+        "path": "native/src/google_workspace.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "0efe7d4c1d2ddb3f2d9865823a239d2d747828736af0a4016f79abda06721bac",
+        "secondarySha256": "615636ab5bd75b0af8e5b1ac270dd5ca6c707e11103670d60d1ed3652200f818"
+      },
+      {
+        "path": "native/src/google_workspace_capture.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "fca65fbe7c3d8dde41a14306eb3913dd02f8445202d2a6e8c0981cf9a3dda7c8",
+        "secondarySha256": "3950b116ede3b461e0494dde8ed1e4fe71620e6096edd55e49f2825a39c6cf3e"
+      },
+      {
+        "path": "native/src/google_workspace_shortcut.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "7dcfe627975458c156ef15471195e929922d53c34df557658330fc94b7f7bb63",
+        "secondarySha256": "9bbf882950a3ed0c3d505872b1ab1ac62c61834c968f3cf0ee735da95f3b4ba8"
+      },
+      {
+        "path": "native/src/google_workspace_tests.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "3d210059e41660b22a3ce7c1d31e936672ed203aa4cf2126b74cae42e7bfb00d",
+        "secondarySha256": "9c0b11d29e016217ab6eabbcde138765cf47cac8203c907080179950430fd403"
+      },
+      {
+        "path": "native/src/graph_analysis_policy.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "9fa395b3e174c15016a909732e95580e0ad47fd14d3bbc6502076386d0e107e3",
+        "secondarySha256": "db035caf8678fa260204282387674524933c9c9d36160a0b61dc9569c28afdd3"
+      },
+      {
+        "path": "native/src/graph_collection_read_tests.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "adb6809d53c538fa9c891ccfa4f6182a8116d41fa173b1f17a595ef8e42a23ce",
+        "secondarySha256": "1e18d9e275aa09320f9c1d59b9105d88676741f586282e5913b5be4a4bb06adc"
+      },
+      {
+        "path": "native/src/graph_collections.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "29de9e8b3def60e15b9a7f48011a8bdd55c325478d01ed57d9ad8305f7a335c7",
+        "secondarySha256": "4824bc88d37a4c213812b145c5c991594eebe0473d7411b32ce368dfc22c46e6"
+      },
+      {
+        "path": "native/src/graph_extensions.rs",
+        "lineEndingOnly": false,
+        "primarySha256": "17c252b108dac364481808724a3c09c97eef3d642599d68d2682eee2c5be17e0",
+        "secondarySha256": "f8cb61be4a1c9a7326846e8c5c34f8f3015303e203051102e41055c70d9d770d"
+      },
+      {
+        "path": "native/src/graph_view_comparison_input.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "7cfc461b7278a5a7234101fbbbf2c2e5b6779715c33672234eaec789ef4080d7",
+        "secondarySha256": "423b8d3c569778822bc3a86b85cb1d426461252598fca216fef2fd9eadbc0118"
+      },
+      {
+        "path": "native/src/host_config.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "061b729f1c799f8bcbb5bac780188ff75692af08447fc74a9c30238e53415a44",
+        "secondarySha256": "ec710272401afac2568aef7f9bf40b2189ead5d11edf2abe6e83fbea3cb87868"
+      },
+      {
+        "path": "native/src/host_config_mcp.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "38957834c61a2b46e585b664a11886f984df6c955849a8ea1a1f2c0ec88f4ab4",
+        "secondarySha256": "3dec89cba282199f85c6de78715366bb10a231e8b4ce9fc010a737eeb45e8b00"
+      },
+      {
+        "path": "native/src/host_install.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "c8fb4e08a1054e6c1cb0292c715c37afdd2f2b69e6c3efa1f6e27d67297d2ada",
+        "secondarySha256": "cb2b925035bc2421892a1ba99c62c329d01a16d7380407c0ed7bef96e37bb3b3"
+      },
+      {
+        "path": "native/src/host_install_adapter.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "010ed22f997a850fd3dd89bfc39185ccfdb26e4b95f4b64725884da9e1ae5d7d",
+        "secondarySha256": "cd1f3f51a666c1d5f3f060110aac490fbdca72cc33cdae7ff708cdf30d234a32"
+      },
+      {
+        "path": "native/src/host_install_adapter_tests.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "9d60a812fae8785899e0c8f7393b1c75dd9f4dcfd2685336365ecc0de919608f",
+        "secondarySha256": "a70793b0969e9d80aed9641692e2533c8355aa16f250f7135805f9dbfea7f784"
+      },
+      {
+        "path": "native/src/host_install_cli.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "800ec5865570ccffe3bc565e616a5ef4990d944f1f37e45bd5f9ac2e9b3415cf",
+        "secondarySha256": "29312cb7f9be818bf7caf38d727e0e0ea00420ca06ab00aa706c70678c3a3137"
+      },
+      {
+        "path": "native/src/host_install_io.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "d0d59a2559c5fdbaefc6845725549e2ca5a5acd1b7a9c353c343c243ee36fa45",
+        "secondarySha256": "d31f814facf569f92f87d745b207705c065a80b9845ec39347b8a54e197730ae"
+      },
+      {
+        "path": "native/src/host_output_recovery_tests.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "f9237c70690ff3ddfff9c66223b107de17f663ff294bcd873179f1964d1eb925",
+        "secondarySha256": "84911c265af611f7e973373d3732e55d91590af5e8e4f79e149b49b0d8de7f41"
+      },
+      {
+        "path": "native/src/lib.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "4badf0e8214803ae403b695316f60113b89ebe1f59be762d264aee39403134e7",
+        "secondarySha256": "a421ab297b758f46aa580b7d9e292c10ae4129d92a251c7fb20af9277c2e3c83"
+      },
+      {
+        "path": "native/src/mcp_http.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "bbe2fee7c13cbc944b1b6c6a9d6cc83b23c4fda50317659b98a486439f236bb8",
+        "secondarySha256": "53ad6bf29088b9d35d378caafe81bf95e4ac2e96a4367a0b19d01371595c7572"
+      },
+      {
+        "path": "native/src/retention.rs",
+        "lineEndingOnly": false,
+        "primarySha256": "9348f9a863c07aa8fd4d76fe8e65fd599662f2ef7bb79e83f9aafe421b7ac7a1",
+        "secondarySha256": "18f696125415b63394a486d7833018459573836ea9845c348be72965fd445794"
+      },
+      {
+        "path": "native/src/source_acquisition_cli.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "d5fa05a89fe5f86f1bf92f661ebe4867890e756b422bcd5716bc48984c46bbfb",
+        "secondarySha256": "98e37209f82a8e3da94971d3cbabbcafade98c454ebfad6b15c3a676af3714c3"
+      },
+      {
+        "path": "native/src/store.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "09073d097a8a1dcea06a66e9d317c2236af425be551eba8c356272e6802a00df",
+        "secondarySha256": "f892e7fafcaafff5745158db0c13f89527b5b5528515f4647a1b44ea6691fd49"
+      },
+      {
+        "path": "native/src/store_busy.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "d2dc2a2dfd17d8707d07bc385c5a081ecbca0578adddc28a96bf88015a7a5f14",
+        "secondarySha256": "d705da06e10cb700067fb1cbe9b7ea6928dfb2ba586a794b2f48c902f99a533d"
+      },
+      {
+        "path": "native/src/test_map.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "57774e8164ab6289935e29088b44037c1286e1723266cf8c069e7122c92f1c0c",
+        "secondarySha256": "a7837f5bbd0b44740f08006b33be9347035414988e338ec3edf5516d8cb902c4"
+      },
+      {
+        "path": "native/tests/agent_repl.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "a9d0d9bbc27638dcb52e54a68a69a3a7cc0da51dd8f07a9185d634f2eb7006a3",
+        "secondarySha256": "65d3b41ed23685af55c68645294f5453cfbd7cfe4f1624af688d5d6bac4be988"
+      },
+      {
+        "path": "native/tests/collection_registry_access.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "cafec5b8307268f6259c73c12563dd974a6f1fdf6efe42ac36a209db8c8fb91c",
+        "secondarySha256": "83f986428aef89d01d67f96985e31bac2516f176405e8875b7ce2412bfb93f17"
+      },
+      {
+        "path": "native/tests/collections_cli.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "094af6f097d8de0bbf93854711a86297633061641af23ddfa039735bb258d312",
+        "secondarySha256": "ed96ea43bb9d4753261d248afb41b866d3149c40635b5e0586ef98773cbc38af"
+      },
+      {
+        "path": "native/tests/collections_cli_review.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "739d569b980498a4068b607796cfe06b4ddb8db410764f4bc35ec06dec64671b",
+        "secondarySha256": "2b22044f60d6090b454b2fdb074bd2972ea9eb6568d7af744c52c9721a992e5b"
+      },
+      {
+        "path": "native/tests/digest_history_acquisition.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "8fe281ed1a311a4ede005ea08986e5f077409a4ce0dc75274896c44d43bb9202",
+        "secondarySha256": "22795bc9ababf84945808ce8acc430ccff487229192b40c63ae5fcf38531b389"
+      },
+      {
+        "path": "native/tests/digest_history_jobs.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "c70f28f42cd1097568e86ef0c1674d42cac4ef56c44fc8adffd9734b8418e9ad",
+        "secondarySha256": "dee13cd2cee92d3ec9cad429557cff60a52ca8661266807d7cc919fbabda4114"
+      },
+      {
+        "path": "native/tests/git_areas.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "e15450b78cc13c0b4e8b92b0b52e76f1ad32e61f7ff39fb14dbb925457552bca",
+        "secondarySha256": "f677b6106e3dae96721a26dc4dcfc3afd41479c10b0c72ae614eb6d0843af481"
+      },
+      {
+        "path": "native/tests/github_app_digest_handoff.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "ea083879d1d670fe3994ff046f5547a2f460677553be6455836dd210c651a362",
+        "secondarySha256": "380d66ade43f8f96e88a344e4c26eb8e78b223214bc13174c7c803884a988ca4"
+      },
+      {
+        "path": "native/tests/github_app_digest_mapping.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "fb7f9492824f39b01690ad668d7597b42da76f80d61c02c9a6ee29f459da8f1f",
+        "secondarySha256": "1de84485a360e51b64afe5f7cc746ff1e9d8898f7181a9927ca3a5f9dac0ce1c"
+      },
+      {
+        "path": "native/tests/github_app_worker_run.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "001d3a738f446971b312532131dd2203051fa2bb0455c00690a1d451614e9eb0",
+        "secondarySha256": "4618f9206a0a2e29f3a3cb87fe230dd88de51b8d59ddb8a4105cb3edd27f20ae"
+      },
+      {
+        "path": "native/tests/github_discussions.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "2be6dbfe73c20a0f6eb30bf8bf6aafdd4323bc013c110b1687b92f6b111d5b5f",
+        "secondarySha256": "52eba853b6a04f003d5d0ec078b880d74d32d51c5861cdac81d8d000961ca5d0"
+      },
+      {
+        "path": "native/tests/google_workspace_cli.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "83b8d93c624e39e8a0402915503ea19efb1257273e8a240e63f83eac320777f6",
+        "secondarySha256": "cd63d50d72745e3f79239ed3e8c6f5ae17a0cfc6a969801bd1a8d4c6b158d9b1"
+      },
+      {
+        "path": "native/tests/google_workspace_process.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "42dcd809d22997cf26cd4a10cddbf9d60bee42c37cab7302a293adf6ebadb6cc",
+        "secondarySha256": "e7c9d5d98e4d9c14cafee6373b245102ec000830ed6528673f12f08067e7aa81"
+      },
+      {
+        "path": "native/tests/graph_analysis_policy.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "c1fa094eff24d6a6c063cab2795dc8bc5fd483e07c374fc6b87d3e894cd7d99f",
+        "secondarySha256": "e5fc32db7f8ebeae34f272de6997e4f25d10b9c2d5e28766f5dd37b47ecb46db"
+      },
+      {
+        "path": "native/tests/host_mcp_config.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "b6be7ef590857c347acf5d8ac06405cdce59bc2ba288524b4314e186c4df4a39",
+        "secondarySha256": "e79a91517a4db3510053eba5867470844411ea541d968709eb584caea169b124"
+      },
+      {
+        "path": "native/tests/json_float_roundtrip.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "175fcb39f83e9d788c76e5d98c39b65ef1d387988d4735e7d007547442b51433",
+        "secondarySha256": "f6a27e1c42f1fb8c946c4cd2b0ae430d8e2294e2f531729b57d65518df65b90d"
+      },
+      {
+        "path": "native/tests/json_host_profiles.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "0f038c965a8a015694e6dbb69837b1f5af1bdd8bc94261bdeb3919c35636dc10",
+        "secondarySha256": "47a2d5165e1823bb96740d7e27309aa7571477950f9a5bae62f0411cd1458104"
+      },
+      {
+        "path": "native/tests/live.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "2f98ff40346b68bcebce5c0621a4c56d48359e76c8e028c3e8f4970bc8716b93",
+        "secondarySha256": "8abc649dc3ae08a58462e306ff4bb99574fe24cbb8183b82106821545406a522"
+      },
+      {
+        "path": "native/tests/mcp_http.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "a25ae94287dfe784682a5172f5fdedfb06d1e31b8891cf38364c47a02be956f4",
+        "secondarySha256": "90ae591e844868e6b0625772fed89e1be18f5e39451d8181f3a3716006ac50e0"
+      },
+      {
+        "path": "native/tests/meaning_archive_cli.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "bb0b4639a1ecde3d3516f88b562f088b8502aa3ae419182227d774ad61a486af",
+        "secondarySha256": "b42bbdd13f8fbe3e138fae7d800825cb0526f99392faa1583ee66daf77732203"
+      },
+      {
+        "path": "native/tests/meaning_collection_archives.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "2bfbc5aedc05ab4ce143b31f35cad0e78b12c6eb5e0fab1f174d6a479006aad2",
+        "secondarySha256": "896285342a3f3d0886b50fd785002e365fec6878fff682d9162f77c5801b59c3"
+      },
+      {
+        "path": "native/tests/process.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "af00183386c01e9c1d3015d612c8b1386209bdbd5508252c983481a0409084b6",
+        "secondarySha256": "d771821017e1677cdf4c49b9bda57c12c367520eb8b376442088e327432d8fde"
+      },
+      {
+        "path": "native/tests/registry_replay_review.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "e00bda7fbfc205f7f123764055b1a277f8af7cecd2105e2466e4c72a5c82d3b8",
+        "secondarySha256": "494c0d309c9edee76bbe85a7042ef0b9e3e13e6fd93c9f653968988b06759749"
+      },
+      {
+        "path": "native/tests/session_collections.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "bbc78ffdeaec550df827ac8191c2ead4941c5c87d64a1115d1054f18d10d9166",
+        "secondarySha256": "97f9e75dd5ea167927fc807015c297d1ce9bc26ab034fb9a07be559614818c9e"
+      },
+      {
+        "path": "native/tests/session_root_aliases.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "4a4399b139944e9289f87307516125a59bdb765e22f17c141f44556b2228816e",
+        "secondarySha256": "cb4ebe30f72c90f5b1f819428b6d209c4a54ddfe4c1b7322a7eb10fa0bb78b75"
+      },
+      {
+        "path": "native/tests/store_cancellation.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "3bf39408e3c6ceb2512f32de21eaf06602af4ce194a197347f86be1feb0cccfc",
+        "secondarySha256": "af0793b018c1817b93a0d97f2a6bccd6969ac7c9d1aaa72644ca754f47bc8ccd"
+      },
+      {
+        "path": "native/tests/store_open_deadline.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "cdd9fca38ed87cf765a571964b658067ee8da983c7db48efabd46fe07602fe2d",
+        "secondarySha256": "3e2be0a565d31236e77562c153b51603db02de4a5fa3ae2b130c51132b6fcd5a"
+      },
+      {
+        "path": "native/tests/store_read_only.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "a689bc1f630ddf2e9437c675b8804cd7aa7428b724d8270590661a103c44a3bb",
+        "secondarySha256": "46c9532db51824bb8d692fbcd786382c6f9eede09453a3f36ddbec4523de07a2"
+      },
+      {
+        "path": "native/tests/support/github_app_digest_history_cli.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "ea0c19edcba5fd24a052aa1b7b3902e907e0d0ca12eb1b79651334fa21cd9554",
+        "secondarySha256": "57c8833e49e10d0bb7f7623ca4022bc142dc1bfd1dc883d51d8e30e70752d163"
+      },
+      {
+        "path": "native/tests/support/registry_coordination.rs",
+        "lineEndingOnly": true,
+        "primarySha256": "859b5259b308f61b8af41f36bf2d0a0eee4444953c38615d87b5ae7bbc5414ee",
+        "secondarySha256": "e84636be735b419ca149311ce312e8547a9bab29663bf5f11795de9761dd12dd"
+      },
+      {
+        "path": "test/bridge-cache.test.mjs",
+        "lineEndingOnly": true,
+        "primarySha256": "8ac555006b02cdcc7a404fbd25e61655e15a14fd38b440f0be900c317b40ef7b",
+        "secondarySha256": "4d6cc9b1045f85f392f1a2a8994aa65b1e5da667a4d9b6cd54d274fdbf81c76c"
+      }
+    ],
+    "primaryNativeRecheckRequiredAfterIntegration": true
+  },
+  "baselineSourceCommit": "bcf442b32a6dd03bcd3c6c8e8794eaf3fd929079",
+  "baselineTotals": {
+    "passed": 2951,
+    "failed": 10,
+    "ignored": 53
+  },
+  "newModeWholeNativeSuiteExecuted": false,
+  "newModeUpstreamParityCertified": false,
+  "fullWindowsCertified": false,
+  "fullStatusCertified": false,
+  "runtimeSourceUnchangedDuringChecks": true
+}

@@ -1,0 +1,18 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.00s
+     Running tests\core.rs (target\debug\deps\core-7a5fad0c4c025ad0.exe)
+bounded_results_keep_artifacts_and_reject_authority_fields: test
+context_and_graph_analytics_are_source_bound: test
+directed_graph_preserves_parallel_calls_and_exact_unicode_anchors: test
+immutable_capture_excludes_secrets_and_reuses_content_cache: test
+prepared_edits_are_isolated_and_reject_stale_hashes: test
+source_paths_and_utf8_boundaries_fail_closed: test
+
+6 tests, 0 benchmarks
+     Running tests\credentials.rs (target\debug\deps\credentials-e5a8ba326d82852f.exe)
+credential_names_cannot_escape_the_federation_namespace: test
+ordinary_names_resolve_only_to_the_federation_namespace: test
+windows_gate::windows_concurrent_generation_keeps_one_key: test
+windows_gate::windows_credential_roundtrip_refuses_overwrite: test
+
+4 tests, 0 benchmarks

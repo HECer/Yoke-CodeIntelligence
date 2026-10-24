@@ -1,0 +1,66 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 14.33s
+     Running tests\document_explorer.rs (target\debug\deps\document_explorer-a7092da022199d9a.exe)
+
+running 1 test
+test checked_document_explorer_preserves_spaces_inert_text_and_original_canonical_graph ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+     Running tests\document_graph.rs (target\debug\deps\document_graph-6c07e61ec8f7294c.exe)
+
+running 6 tests
+test document_query_types_utf8_ranges_and_seed_capacity_are_strict ... ok
+test document_records_and_exact_binary_xml_text_artifacts_are_retention_roots ... ok
+test archives_reject_future_schema_corrupt_objects_and_human_destination_overwrite ... ok
+test docx_search_read_trace_and_archive_preserve_distinct_exact_coordinates ... ok
+test resealed_registered_graph_cannot_invent_labels_from_the_original_container ... ok
+test xlsx_shared_strings_bind_both_reference_and_value_xml_with_cached_formula_metadata ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.40s
+
+     Running tests\document_graph_review.rs (target\debug\deps\document_graph_review-3a585efaf29f2975.exe)
+
+running 2 tests
+test document_trace_admits_serialized_output_before_large_allocation ... ok
+test rejected_document_metadata_is_admitted_before_identity_serialization ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.46s
+
+     Running tests\editor.rs (target\debug\deps\editor-42dab2ae0cfcc0b0.exe)
+
+running 6 tests
+test editor_cannot_restore_omitted_ignored_protected_or_secret_source ... ok
+test editor_buffers_are_versioned_source_bound_and_never_write_saved_files ... ok
+test editor_capture_refuses_foreign_disk_changes_and_accepts_a_real_saved_buffer ... ok
+test ancestor_ignore_policies_also_protect_unsaved_new_files ... ok
+test nested_ignore_policies_are_scoped_and_git_excludes_cannot_be_bypassed ... ok
+test effective_ignore_whitelists_apply_equally_to_saved_and_unsaved_new_paths ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.46s
+
+     Running tests\editor_http.rs (target\debug\deps\editor_http-1c473e0ebe3f9924.exe)
+
+running 10 tests
+test host_origin_and_auth_are_checked_before_waiting_for_declared_body ... ok
+test framing_rejects_duplicate_lengths_transfer_encoding_and_invalid_payloads ... ok
+test excessive_headers_and_unknown_operation_fields_are_rejected ... ok
+test pipelining_and_duplicate_authorization_cannot_dispatch_editor_operations ... ok
+test real_editor_requests_read_unsaved_source_without_workspace_write_authority ... ok
+test slow_header_bytes_cannot_reset_the_connection_deadline ... ok
+test slow_body_chunks_share_the_header_deadline ... ok
+test stale_buffer_and_close_versions_cannot_replace_newer_editor_source ... ok
+test nonreading_client_does_not_block_the_next_authenticated_request ... ok
+test maximally_escaped_valid_buffer_fits_the_transport_without_relaxing_source_limit ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.97s
+
+     Running tests\engine_epoch_review.rs (target\debug\deps\engine_epoch_review-48b61e0554397a59.exe)
+
+running 3 tests
+test default_engine_refuses_missing_graph_with_unproven_capture_epoch ... ok
+test existing_graph_fastpath_rejects_a_different_manifest_under_the_same_id ... ok
+test default_engine_reanalysis_uses_exact_proven_epoch_instead_of_active_epoch ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.55s
+

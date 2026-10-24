@@ -1,0 +1,163 @@
+[
+  {
+    "phase": "debug-r1",
+    "resultPath": "runs/debug-r1/result.json",
+    "allChecksPassed": false,
+    "inputs": 755,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "debug-r2",
+    "resultPath": "runs/debug-r2/result.json",
+    "allChecksPassed": true,
+    "inputs": 755,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "feature-cli-r1",
+    "resultPath": "runs/feature-cli-r1/result.json",
+    "allChecksPassed": false,
+    "inputs": 757,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "feature-driver-r1",
+    "resultPath": "runs/feature-driver-r1/result.json",
+    "allChecksPassed": false,
+    "inputs": 757,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "feature-driver-r2",
+    "resultPath": "runs/feature-driver-r2/result.json",
+    "allChecksPassed": true,
+    "inputs": 757,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "feature-driver-r3",
+    "resultPath": "runs/feature-driver-r3/result.json",
+    "allChecksPassed": true,
+    "inputs": 757,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "feature-r1",
+    "resultPath": "runs/feature-r1/result.json",
+    "allChecksPassed": false,
+    "inputs": 755,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "feature-r2",
+    "resultPath": "runs/feature-r2/result.json",
+    "allChecksPassed": false,
+    "inputs": 755,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "feature-r3",
+    "resultPath": "runs/feature-r3/result.json",
+    "allChecksPassed": true,
+    "inputs": 755,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "fence-r1",
+    "resultPath": "runs/fence-r1/result.json",
+    "allChecksPassed": false,
+    "inputs": 758,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "final-r1",
+    "resultPath": "runs/final-r1/result.json",
+    "allChecksPassed": false,
+    "inputs": 758,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "final-r2",
+    "resultPath": "runs/final-r2/result.json",
+    "allChecksPassed": false,
+    "inputs": 758,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "live-cli-r1",
+    "resultPath": "runs/live-cli-r1/result.json",
+    "allChecksPassed": false,
+    "inputs": 757,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "live-cli-r2",
+    "resultPath": "runs/live-cli-r2/result.json",
+    "allChecksPassed": true,
+    "inputs": 757,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "live-cli-r3",
+    "resultPath": "runs/live-cli-r3/result.json",
+    "allChecksPassed": true,
+    "inputs": 758,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "native-final-r3",
+    "resultPath": "runs/native-final-r3/result.json",
+    "allChecksPassed": false,
+    "inputs": 758,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "native-final-r5",
+    "resultPath": "runs/native-final-r5/result.json",
+    "allChecksPassed": true,
+    "inputs": 758,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "native-job-output-r4",
+    "resultPath": "runs/native-job-output-r4/result.json",
+    "allChecksPassed": true,
+    "inputs": 758,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "native-job-output-r6",
+    "resultPath": "runs/native-job-output-r6/result.json",
+    "allChecksPassed": true,
+    "inputs": 758,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "prerequisites-r1",
+    "resultPath": "runs/prerequisites-r1/result.json",
+    "allChecksPassed": false,
+    "inputs": 753,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "prerequisites-r2",
+    "resultPath": "runs/prerequisites-r2/result.json",
+    "allChecksPassed": true,
+    "inputs": 753,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "retained-r1",
+    "resultPath": "runs/retained-r1/result.json",
+    "allChecksPassed": true,
+    "inputs": 759,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  },
+  {
+    "phase": "retained-r2",
+    "resultPath": "runs/retained-r2/result.json",
+    "allChecksPassed": true,
+    "inputs": 759,
+    "scope": "Exact recorded commands; completed-result totals exclude any target that aborted before its summary."
+  }
+]

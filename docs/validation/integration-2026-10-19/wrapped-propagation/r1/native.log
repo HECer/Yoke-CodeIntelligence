@@ -1,0 +1,52 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 16s
+     Running tests\propagated_delete_contract.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\propagated_delete_contract-e5e3858a7938ce91.exe)
+
+running 27 tests
+test actual_owned_byte_verification_permission_approval_stale_and_recovery_gates_remain ... ok
+test argument_dependencies_become_unused_without_sweeping_unrelated_unused_functions ... ok
+test bom_and_utf16_provider_positions_preserve_multibyte_bytes_before_the_removed_call ... ok
+test captured_byte_quota_counts_physical_duplicate_cas_members ... ok
+test captured_file_quota_admits2000_and_refuses2001_before_provider_start ... ok
+test declaration_quota_admits_sixteen_and_refuses_seventeen_before_provider_start ... ok
+test duplicate_provider_observations_and_nested_target_calls_emit_one_physical_statement_edit ... ok
+test exported_and_captured_external_dependencies_keep_their_own_dependencies ... ok
+test facade_propagation_preserves_both_epochs_force_flags_and_original_byte_anchors ... ok
+test missing_edit_or_provider_authority_and_invalid_selectors_refuse_before_provider_start ... ok
+test missing_empty_omitted_truncated_foreign_and_malformed_proofs_do_not_publish ... ok
+test private_cycles_are_pruned_together_and_surviving_consumers_keep_the_cycle ... ok
+test reported_non_reference_tokens_cannot_seed_deletion_of_an_unrelated_unused_function ... ok
+test selected_module_byte_quota_is_exact_and_checked_before_provider_start ... ok
+test source_changes_during_provider_work_are_preserved_and_refused_before_publication ... ok
+test stalled_provider_cannot_publish_after_the_original_deadline ... ok
+test unreported_identifier_and_literal_target_candidates_cannot_be_disguised_as_no_uses ... ok
+test unsupported_module_shapes_refuse_before_provider_start ... ok
+test usage_statement_quota_admits128_and_refuses129_without_publication ... ok
+test value_return_constructor_and_other_expression_consumers_refuse_without_a_plan ... ok
+test wrapped_policy_bounds_wrapper_depth_without_clipping_the_whole_usage ... ok
+test wrapped_policy_deduplicates_nested_calls_and_keeps_surviving_dependencies ... ok
+test wrapped_policy_is_opt_in_and_explicit_v1_keeps_the_original_plan ... FAILED
+test wrapped_policy_refuses_value_consumers_optional_calls_and_unowned_statement_slots ... ok
+test wrapped_policy_rejects_invalid_native_selectors_before_starting_a_provider ... ok
+test wrapped_policy_removes_only_complete_parenthesized_await_and_void_statements ... ok
+test wrapped_policy_requires_the_same_complete_bound_provider_proofs ... ok
+
+failures:
+
+---- wrapped_policy_is_opt_in_and_explicit_v1_keeps_the_original_plan stdout ----
+
+thread 'wrapped_policy_is_opt_in_and_explicit_v1_keeps_the_original_plan' (25732) panicked at native\tests\propagated_delete_contract.rs:158:5:
+assertion `left == right` failed
+  left: Object {"baseSnapshotId": String("88ff5123c4a35255a335d64b31a6005a48f7cbf5d0960f42c86f4707a5954869"), "createdAt": Number(1792467328), "diff": String("--- module.ts\n+++ module.ts\n@@ -1,5 +1,5 @@\n // owned café 🦀\r\n-function leaf() { return 1; }\r\n-function dependency() { return leaf(); }\r\n-export function removeMe() { return dependency(); }\r\n-export function keep() { removeMe(); return 2; }\r\n+\r\n+\r\n+\r\n+export function keep() {  return 2; }\r\n"), "expiresAt": Number(1792553728), "files": Array [Object {"afterHash": String("dd9f23defbcf517e55cc436a7d11e9cbd68a500adc7d34f0bb2d65da36e79aa1"), "beforeHash": String("3540d09c3b4848fd17e7c3a55144f42d1a9f15982e1f98a2a6240e29b2ce6df0"), "mode": Number(420), "path": String("module.ts")}], "id": String("2178303a5ca389f2250257879892be22ff6be1144677f6ac2a56c7c246199c74"), "resultSnapshotId": String("b19f7a19b46c1553b4987b9fced1e7efb2f84fad5d44c9b67165b1e8b1d8adad"), "warnings": Array [], "workspaceId": String("64f788207720d2b60b590e3e97b74c3b3a3bbf6f7fbf12068a76cca59836ddde")}
+ right: Object {"baseSnapshotId": String("88ff5123c4a35255a335d64b31a6005a48f7cbf5d0960f42c86f4707a5954869"), "createdAt": Number(1792467330), "diff": String("--- module.ts\n+++ module.ts\n@@ -1,5 +1,5 @@\n // owned café 🦀\r\n-function leaf() { return 1; }\r\n-function dependency() { return leaf(); }\r\n-export function removeMe() { return dependency(); }\r\n-export function keep() { removeMe(); return 2; }\r\n+\r\n+\r\n+\r\n+export function keep() {  return 2; }\r\n"), "expiresAt": Number(1792553730), "files": Array [Object {"afterHash": String("dd9f23defbcf517e55cc436a7d11e9cbd68a500adc7d34f0bb2d65da36e79aa1"), "beforeHash": String("3540d09c3b4848fd17e7c3a55144f42d1a9f15982e1f98a2a6240e29b2ce6df0"), "mode": Number(420), "path": String("module.ts")}], "id": String("27463f3e79e46177eced8ab90048aff252483ca26f335473ca8cd243c7587783"), "resultSnapshotId": String("b19f7a19b46c1553b4987b9fced1e7efb2f84fad5d44c9b67165b1e8b1d8adad"), "warnings": Array [], "workspaceId": String("64f788207720d2b60b590e3e97b74c3b3a3bbf6f7fbf12068a76cca59836ddde")}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    wrapped_policy_is_opt_in_and_explicit_v1_keeps_the_original_plan
+
+test result: FAILED. 26 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 78.42s
+
+error: test failed, to rerun pass `--test propagated_delete_contract`
+error: 1 target failed:
+    `--test propagated_delete_contract`

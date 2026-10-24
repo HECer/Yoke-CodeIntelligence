@@ -1,0 +1,2302 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "PROPOSED ignored output DTO/schema, requires root decisions in OUTPUT-CONTRACT.md; no implementation or runtime qualification.",
+  "$defs": {
+    "RedactedAnchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshotId",
+        "path",
+        "contentHash",
+        "startByte",
+        "endByte",
+        "startLine",
+        "endLine",
+        "anchor",
+        "textOmitted"
+      ],
+      "properties": {
+        "snapshotId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "path": {
+          "type": "string"
+        },
+        "contentHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "startByte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "endByte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "startLine": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "endLine": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "anchor": {
+          "enum": [
+            "exact",
+            "file",
+            "unique_literal_occurrence",
+            "exact_authored_link",
+            "exact_authored_citation",
+            "descriptor_line",
+            "call_range",
+            "symbol_selection",
+            "source_range"
+          ]
+        },
+        "textOmitted": {
+          "const": true
+        },
+        "trust": {
+          "type": "string"
+        },
+        "producer": {
+          "type": "string"
+        }
+      }
+    },
+    "RedactedEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "originalEvidenceId",
+        "originalRowDigest",
+        "digestMethod",
+        "snapshotId",
+        "path",
+        "contentHash",
+        "startByte",
+        "endByte",
+        "startLine",
+        "endLine",
+        "anchor",
+        "textOmitted"
+      ],
+      "properties": {
+        "originalEvidenceId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "originalRowDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "digestMethod": {
+          "const": "sha256_canonical_original_json_v1"
+        },
+        "snapshotId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "path": {
+          "type": "string"
+        },
+        "contentHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "startByte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "endByte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "startLine": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "endLine": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "anchor": {
+          "enum": [
+            "exact",
+            "file",
+            "unique_literal_occurrence",
+            "exact_authored_link",
+            "exact_authored_citation",
+            "descriptor_line",
+            "call_range",
+            "symbol_selection",
+            "source_range"
+          ]
+        },
+        "textOmitted": {
+          "const": true
+        },
+        "trust": {
+          "type": "string"
+        },
+        "producer": {
+          "type": "string"
+        }
+      }
+    },
+    "RedactedNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "side",
+        "originalNodeId",
+        "originalRowDigest",
+        "digestMethod",
+        "workspaceId",
+        "snapshotId",
+        "graphViewId",
+        "path",
+        "name",
+        "kind",
+        "origin",
+        "producer",
+        "sourceBindings",
+        "representativeAnchor",
+        "textOmitted"
+      ],
+      "properties": {
+        "side": {
+          "enum": [
+            "before",
+            "after"
+          ]
+        },
+        "originalNodeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "originalRowDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "digestMethod": {
+          "const": "sha256_canonical_original_json_v1"
+        },
+        "workspaceId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "snapshotId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "graphViewId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "path": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "origin": {
+          "type": "string"
+        },
+        "producer": {
+          "type": "string"
+        },
+        "sourceBindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RedactedAnchor"
+          }
+        },
+        "representativeAnchor": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/RedactedAnchor"
+            }
+          ]
+        },
+        "textOmitted": {
+          "const": true
+        },
+        "qualifiedName": {
+          "type": "string"
+        },
+        "signatureDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "trust": {
+          "type": "string"
+        },
+        "providerAttestation": {
+          "type": "string"
+        }
+      }
+    },
+    "RedactedObservationOccurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "side",
+        "originalObservationId",
+        "originalRowDigest",
+        "digestMethod",
+        "snapshotId",
+        "sourceId",
+        "targetId",
+        "targetLabel",
+        "relation",
+        "resolution",
+        "origin",
+        "producer",
+        "evidenceIds",
+        "evidence",
+        "textOmitted"
+      ],
+      "properties": {
+        "side": {
+          "enum": [
+            "before",
+            "after"
+          ]
+        },
+        "originalObservationId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "originalRowDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "digestMethod": {
+          "const": "sha256_canonical_original_json_v1"
+        },
+        "snapshotId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sourceId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "targetId": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          ]
+        },
+        "targetLabel": {
+          "type": "string"
+        },
+        "relation": {
+          "type": "string"
+        },
+        "resolution": {
+          "type": "string"
+        },
+        "origin": {
+          "type": "string"
+        },
+        "producer": {
+          "type": "string"
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RedactedEvidence"
+          }
+        },
+        "textOmitted": {
+          "const": true
+        },
+        "trust": {
+          "type": "string"
+        },
+        "providerAttestation": {
+          "type": "string"
+        },
+        "sourceBindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RedactedAnchor"
+          }
+        }
+      }
+    },
+    "DeclaredFileContinuityOption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "beforePath",
+        "beforeHash",
+        "afterPath",
+        "afterHash"
+      ],
+      "properties": {
+        "beforePath": {
+          "type": "string"
+        },
+        "beforeHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "afterPath": {
+          "type": "string"
+        },
+        "afterHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ComparisonOptions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maxResultRows",
+        "maxOutputBytes",
+        "maxInputBytes",
+        "maxSourceBytes",
+        "declaredFileContinuity"
+      ],
+      "properties": {
+        "maxResultRows": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxOutputBytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxInputBytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxSourceBytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "declaredFileContinuity": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DeclaredFileContinuityOption"
+          }
+        }
+      }
+    },
+    "DeclaredFileContinuity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "beforePath",
+        "beforeHash",
+        "afterPath",
+        "afterHash",
+        "workspaceId",
+        "beforeSnapshotId",
+        "afterSnapshotId",
+        "beforeGraphViewId",
+        "afterGraphViewId",
+        "provenance",
+        "verifiedIdentity"
+      ],
+      "properties": {
+        "beforePath": {
+          "type": "string"
+        },
+        "beforeHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "afterPath": {
+          "type": "string"
+        },
+        "afterHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "workspaceId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "beforeSnapshotId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "afterSnapshotId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "beforeGraphViewId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "afterGraphViewId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "provenance": {
+          "const": "host_declared_file_continuity_not_proven_rename"
+        },
+        "verifiedIdentity": {
+          "const": false
+        }
+      }
+    },
+    "Omission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "reason"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "LanguageCoverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "count"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "Coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "originalRowDigest",
+        "digestMethod",
+        "indexedFiles",
+        "sourceFiles",
+        "unresolved",
+        "omissions",
+        "exhaustive",
+        "semantic",
+        "languages"
+      ],
+      "properties": {
+        "originalRowDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "digestMethod": {
+          "const": "sha256_canonical_original_json_v1"
+        },
+        "indexedFiles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sourceFiles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unresolved": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "omissions": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "exhaustive": {
+          "type": "boolean"
+        },
+        "semantic": {
+          "type": "boolean"
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LanguageCoverage"
+          }
+        }
+      }
+    },
+    "OverlaySelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "overlayId",
+        "producer",
+        "origin",
+        "providerAttestation",
+        "serverProfileHash",
+        "originalRowDigest",
+        "digestMethod"
+      ],
+      "properties": {
+        "artifactId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "overlayId": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          ]
+        },
+        "producer": {
+          "type": "string"
+        },
+        "origin": {
+          "type": "string"
+        },
+        "providerAttestation": {
+          "type": "string"
+        },
+        "serverProfileHash": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          ]
+        },
+        "originalRowDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "digestMethod": {
+          "const": "sha256_canonical_original_json_v1"
+        },
+        "schemaVersion": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "MeaningSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "graphId",
+        "jobId",
+        "artifactId"
+      ],
+      "properties": {
+        "graphId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "artifactId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ComparisonSide": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workspaceId",
+        "snapshotId",
+        "graphViewId",
+        "viewArtifactId",
+        "baseGraphHash",
+        "sourceProjectionHash",
+        "comparisonPolicyHash",
+        "analyzerEpoch",
+        "snapshotKind",
+        "captureConsistency",
+        "overlays",
+        "meaningSelections",
+        "coverage",
+        "omissions"
+      ],
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "snapshotId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "graphViewId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "viewArtifactId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "baseGraphHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sourceProjectionHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "comparisonPolicyHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "analyzerEpoch": {
+          "type": "string"
+        },
+        "snapshotKind": {
+          "type": "string"
+        },
+        "captureConsistency": {
+          "type": "string"
+        },
+        "overlays": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OverlaySelection"
+          }
+        },
+        "meaningSelections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MeaningSelection"
+          }
+        },
+        "coverage": {
+          "$ref": "#/$defs/Coverage"
+        },
+        "omissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Omission"
+          }
+        },
+        "meaningCapturePolicyHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "NodeChange": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "changeKind",
+            "semanticKey",
+            "correspondenceId",
+            "before",
+            "after",
+            "identityBasis",
+            "verifiedIdentity"
+          ],
+          "properties": {
+            "changeKind": {
+              "const": "added"
+            },
+            "semanticKey": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "correspondenceId": {
+              "type": "null"
+            },
+            "before": {
+              "type": "null"
+            },
+            "after": {
+              "$ref": "#/$defs/RedactedNode"
+            },
+            "identityBasis": {
+              "enum": [
+                "unique_structural_label_candidate",
+                "host_declared_file_continuity_not_proven_rename",
+                "selected_candidate_only_not_complete_deletion"
+              ]
+            },
+            "verifiedIdentity": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "changeKind",
+            "semanticKey",
+            "correspondenceId",
+            "before",
+            "after",
+            "identityBasis",
+            "verifiedIdentity"
+          ],
+          "properties": {
+            "changeKind": {
+              "const": "removed"
+            },
+            "semanticKey": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "correspondenceId": {
+              "type": "null"
+            },
+            "before": {
+              "$ref": "#/$defs/RedactedNode"
+            },
+            "after": {
+              "type": "null"
+            },
+            "identityBasis": {
+              "enum": [
+                "unique_structural_label_candidate",
+                "host_declared_file_continuity_not_proven_rename",
+                "selected_candidate_only_not_complete_deletion"
+              ]
+            },
+            "verifiedIdentity": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "changeKind",
+            "semanticKey",
+            "correspondenceId",
+            "before",
+            "after",
+            "identityBasis",
+            "verifiedIdentity"
+          ],
+          "properties": {
+            "changeKind": {
+              "enum": [
+                "content_changed",
+                "range_relocated",
+                "content_and_range_changed",
+                "metadata_changed",
+                "unchanged"
+              ]
+            },
+            "semanticKey": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "correspondenceId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "before": {
+              "$ref": "#/$defs/RedactedNode"
+            },
+            "after": {
+              "$ref": "#/$defs/RedactedNode"
+            },
+            "identityBasis": {
+              "enum": [
+                "unique_structural_label_candidate",
+                "host_declared_file_continuity_not_proven_rename",
+                "selected_candidate_only_not_complete_deletion"
+              ]
+            },
+            "verifiedIdentity": {
+              "const": false
+            }
+          }
+        }
+      ]
+    },
+    "AmbiguousNodes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "semanticKey",
+        "beforeCount",
+        "afterCount",
+        "beforeRows",
+        "afterRows",
+        "identityBasis",
+        "verifiedIdentity"
+      ],
+      "properties": {
+        "semanticKey": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "beforeCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "afterCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "beforeRows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RedactedNode"
+          }
+        },
+        "afterRows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RedactedNode"
+          }
+        },
+        "identityBasis": {
+          "const": "ambiguous_structural_label_candidates"
+        },
+        "verifiedIdentity": {
+          "const": false
+        }
+      }
+    },
+    "ObservationChange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "semanticKey",
+        "sourceCorrespondenceId",
+        "targetCorrespondenceId",
+        "relation",
+        "resolution",
+        "origin",
+        "producer",
+        "beforeCount",
+        "afterCount",
+        "delta",
+        "beforeRows",
+        "afterRows",
+        "occurrenceIdentity"
+      ],
+      "properties": {
+        "semanticKey": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sourceCorrespondenceId": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          ]
+        },
+        "targetCorrespondenceId": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          ]
+        },
+        "relation": {
+          "type": "string"
+        },
+        "resolution": {
+          "type": "string"
+        },
+        "origin": {
+          "type": "string"
+        },
+        "producer": {
+          "type": "string"
+        },
+        "beforeCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "afterCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "delta": {
+          "type": "integer"
+        },
+        "beforeRows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RedactedObservationOccurrence"
+          }
+        },
+        "afterRows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RedactedObservationOccurrence"
+          }
+        },
+        "occurrenceIdentity": {
+          "const": "not_inferred"
+        }
+      }
+    },
+    "AmbiguousObservations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "semanticKey",
+        "sourceCorrespondenceId",
+        "targetCorrespondenceId",
+        "relation",
+        "resolution",
+        "origin",
+        "producer",
+        "beforeCount",
+        "afterCount",
+        "delta",
+        "beforeRows",
+        "afterRows",
+        "occurrenceIdentity",
+        "identityBasis",
+        "verifiedIdentity"
+      ],
+      "properties": {
+        "semanticKey": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sourceCorrespondenceId": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          ]
+        },
+        "targetCorrespondenceId": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          ]
+        },
+        "relation": {
+          "type": "string"
+        },
+        "resolution": {
+          "type": "string"
+        },
+        "origin": {
+          "type": "string"
+        },
+        "producer": {
+          "type": "string"
+        },
+        "beforeCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "afterCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "delta": {
+          "type": "integer"
+        },
+        "beforeRows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RedactedObservationOccurrence"
+          }
+        },
+        "afterRows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RedactedObservationOccurrence"
+          }
+        },
+        "occurrenceIdentity": {
+          "const": "not_inferred"
+        },
+        "identityBasis": {
+          "const": "ambiguous_structural_label_candidates"
+        },
+        "verifiedIdentity": {
+          "const": false
+        }
+      }
+    },
+    "SourceTotals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "beforeCalls",
+        "afterCalls",
+        "beforeSelfLoops",
+        "afterSelfLoops"
+      ],
+      "properties": {
+        "beforeCalls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "afterCalls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "beforeSelfLoops": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "afterSelfLoops": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "SourceComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "nodeChanges",
+        "ambiguousNodes",
+        "observationChanges",
+        "ambiguousObservations",
+        "totals"
+      ],
+      "properties": {
+        "nodeChanges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NodeChange"
+          }
+        },
+        "ambiguousNodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AmbiguousNodes"
+          }
+        },
+        "observationChanges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ObservationChange"
+          }
+        },
+        "ambiguousObservations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AmbiguousObservations"
+          }
+        },
+        "totals": {
+          "$ref": "#/$defs/SourceTotals"
+        }
+      }
+    },
+    "MeaningEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "originalEvidenceId",
+        "baseEvidenceId",
+        "originalRowDigest",
+        "digestMethod",
+        "sourceId",
+        "snapshotId",
+        "path",
+        "contentHash",
+        "startByte",
+        "endByte",
+        "startLine",
+        "endLine",
+        "precision",
+        "bindingDerivation",
+        "textOmitted"
+      ],
+      "properties": {
+        "originalEvidenceId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "baseEvidenceId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "originalRowDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "digestMethod": {
+          "const": "sha256_canonical_original_json_v1"
+        },
+        "sourceId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "snapshotId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "path": {
+          "type": "string"
+        },
+        "contentHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "startByte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "endByte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "startLine": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "endLine": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "precision": {
+          "const": "captured_utf8_quote_range"
+        },
+        "bindingDerivation": {
+          "const": "checked_meaning_evidence_quote_range_not_declaration"
+        },
+        "textOmitted": {
+          "const": true
+        }
+      }
+    },
+    "Participant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "concept"
+      ],
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "concept": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "MeaningClaim": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "side",
+            "originalClaimId",
+            "materializedClaimId",
+            "originalRowDigest",
+            "digestMethod",
+            "workspaceId",
+            "snapshotId",
+            "graphViewId",
+            "graphId",
+            "jobId",
+            "selectionIndex",
+            "packetIndex",
+            "evidenceIds",
+            "evidence",
+            "resolution",
+            "providerAttestation",
+            "textOmitted",
+            "kind"
+          ],
+          "properties": {
+            "side": {
+              "enum": [
+                "before",
+                "after"
+              ]
+            },
+            "originalClaimId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "materializedClaimId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "originalRowDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "digestMethod": {
+              "const": "sha256_canonical_original_json_v1"
+            },
+            "workspaceId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "snapshotId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "graphViewId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "graphId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "jobId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "selectionIndex": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "packetIndex": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "evidenceIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MeaningEvidence"
+              }
+            },
+            "resolution": {
+              "const": "inferred_concept"
+            },
+            "providerAttestation": {
+              "const": "unverified"
+            },
+            "textOmitted": {
+              "const": true
+            },
+            "kind": {
+              "const": "concept"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "side",
+            "originalClaimId",
+            "materializedClaimId",
+            "originalRowDigest",
+            "digestMethod",
+            "workspaceId",
+            "snapshotId",
+            "graphViewId",
+            "graphId",
+            "jobId",
+            "selectionIndex",
+            "packetIndex",
+            "evidenceIds",
+            "evidence",
+            "resolution",
+            "providerAttestation",
+            "textOmitted",
+            "kind",
+            "sourceId",
+            "targetId",
+            "relation"
+          ],
+          "properties": {
+            "side": {
+              "enum": [
+                "before",
+                "after"
+              ]
+            },
+            "originalClaimId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "materializedClaimId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "originalRowDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "digestMethod": {
+              "const": "sha256_canonical_original_json_v1"
+            },
+            "workspaceId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "snapshotId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "graphViewId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "graphId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "jobId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "selectionIndex": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "packetIndex": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "evidenceIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MeaningEvidence"
+              }
+            },
+            "resolution": {
+              "const": "inferred_concept"
+            },
+            "providerAttestation": {
+              "const": "unverified"
+            },
+            "textOmitted": {
+              "const": true
+            },
+            "kind": {
+              "const": "relation"
+            },
+            "sourceId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "targetId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "relation": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "side",
+            "originalClaimId",
+            "materializedClaimId",
+            "originalRowDigest",
+            "digestMethod",
+            "workspaceId",
+            "snapshotId",
+            "graphViewId",
+            "graphId",
+            "jobId",
+            "selectionIndex",
+            "packetIndex",
+            "evidenceIds",
+            "evidence",
+            "resolution",
+            "providerAttestation",
+            "textOmitted",
+            "kind",
+            "relation",
+            "participants"
+          ],
+          "properties": {
+            "side": {
+              "enum": [
+                "before",
+                "after"
+              ]
+            },
+            "originalClaimId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "materializedClaimId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "originalRowDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "digestMethod": {
+              "const": "sha256_canonical_original_json_v1"
+            },
+            "workspaceId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "snapshotId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "graphViewId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "graphId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "jobId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "selectionIndex": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "packetIndex": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "evidenceIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MeaningEvidence"
+              }
+            },
+            "resolution": {
+              "const": "inferred_concept"
+            },
+            "providerAttestation": {
+              "const": "unverified"
+            },
+            "textOmitted": {
+              "const": true
+            },
+            "kind": {
+              "const": "hyperedge"
+            },
+            "relation": {
+              "type": "string"
+            },
+            "participants": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Participant"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ClaimChange": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "changeKind",
+            "before",
+            "after",
+            "identityBasis",
+            "verifiedIdentity"
+          ],
+          "properties": {
+            "changeKind": {
+              "const": "added"
+            },
+            "before": {
+              "type": "null"
+            },
+            "after": {
+              "$ref": "#/$defs/MeaningClaim"
+            },
+            "identityBasis": {
+              "const": "selected_claim_identity_absent"
+            },
+            "verifiedIdentity": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "changeKind",
+            "before",
+            "after",
+            "identityBasis",
+            "verifiedIdentity"
+          ],
+          "properties": {
+            "changeKind": {
+              "const": "removed"
+            },
+            "before": {
+              "$ref": "#/$defs/MeaningClaim"
+            },
+            "after": {
+              "type": "null"
+            },
+            "identityBasis": {
+              "const": "selected_claim_identity_absent"
+            },
+            "verifiedIdentity": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "changeKind",
+            "before",
+            "after",
+            "identityBasis",
+            "verifiedIdentity"
+          ],
+          "properties": {
+            "changeKind": {
+              "const": "shared"
+            },
+            "before": {
+              "$ref": "#/$defs/MeaningClaim"
+            },
+            "after": {
+              "$ref": "#/$defs/MeaningClaim"
+            },
+            "identityBasis": {
+              "const": "exact_selected_claim_id"
+            },
+            "verifiedIdentity": {
+              "const": false
+            }
+          }
+        }
+      ]
+    },
+    "Usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "inputTokens",
+        "outputTokens",
+        "cachedInputTokens"
+      ],
+      "properties": {
+        "inputTokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "outputTokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cachedInputTokens": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "UnitBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "originalRowDigest",
+        "digestMethod",
+        "sourceId",
+        "path",
+        "contentHash",
+        "startByte",
+        "endByte",
+        "textOmitted"
+      ],
+      "properties": {
+        "originalRowDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "digestMethod": {
+          "const": "sha256_canonical_original_json_v1"
+        },
+        "sourceId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "path": {
+          "type": "string"
+        },
+        "contentHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "startByte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "endByte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "textOmitted": {
+          "const": true
+        }
+      }
+    },
+    "UnitCoverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceId",
+        "outcome"
+      ],
+      "properties": {
+        "sourceId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "outcome": {
+          "enum": [
+            "claims",
+            "no_claims"
+          ]
+        }
+      }
+    },
+    "Receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "side",
+        "originalRowDigest",
+        "digestMethod",
+        "selectionIndex",
+        "packetIndex",
+        "graphId",
+        "jobId",
+        "snapshotId",
+        "originalSnapshotId",
+        "originalJobId",
+        "responseArtifactId",
+        "attemptId",
+        "requestId",
+        "model",
+        "modelVersion",
+        "currency",
+        "providerReportedCostMicros",
+        "providerReportedUsage",
+        "rebound",
+        "bindingValidation",
+        "sourceBindings",
+        "coverage",
+        "textOmitted"
+      ],
+      "properties": {
+        "side": {
+          "enum": [
+            "before",
+            "after"
+          ]
+        },
+        "originalRowDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "digestMethod": {
+          "const": "sha256_canonical_original_json_v1"
+        },
+        "selectionIndex": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "packetIndex": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "graphId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "snapshotId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "originalSnapshotId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "originalJobId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "responseArtifactId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "attemptId": {
+          "type": "string"
+        },
+        "requestId": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "modelVersion": {
+          "type": "string"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "providerReportedCostMicros": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "integer",
+              "minimum": 0
+            }
+          ]
+        },
+        "providerReportedUsage": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Usage"
+            }
+          ]
+        },
+        "rebound": {
+          "type": "boolean"
+        },
+        "bindingValidation": {
+          "type": "string"
+        },
+        "sourceBindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/UnitBinding"
+          }
+        },
+        "coverage": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/UnitCoverage"
+          }
+        },
+        "textOmitted": {
+          "const": true
+        }
+      }
+    },
+    "ReceiptReuse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "originalJobId",
+        "responseArtifactId",
+        "attemptId",
+        "requestId",
+        "beforeRows",
+        "afterRows",
+        "provenance"
+      ],
+      "properties": {
+        "originalJobId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "responseArtifactId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "attemptId": {
+          "type": "string"
+        },
+        "requestId": {
+          "type": "string"
+        },
+        "beforeRows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Receipt"
+          }
+        },
+        "afterRows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Receipt"
+          }
+        },
+        "provenance": {
+          "const": "original_receipt_reuse_not_claim_identity"
+        }
+      }
+    },
+    "MeaningProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "beforeUnknownCostPackets",
+        "afterUnknownCostPackets",
+        "beforeUnknownUsagePackets",
+        "afterUnknownUsagePackets",
+        "beforeRows",
+        "afterRows"
+      ],
+      "properties": {
+        "beforeUnknownCostPackets": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "afterUnknownCostPackets": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "beforeUnknownUsagePackets": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "afterUnknownUsagePackets": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "beforeRows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Receipt"
+          }
+        },
+        "afterRows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Receipt"
+          }
+        }
+      }
+    },
+    "MeaningComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "beforePresent",
+        "afterPresent",
+        "sharedClaimIds",
+        "addedClaimIds",
+        "removedClaimIds",
+        "claimChanges",
+        "receiptReuse",
+        "provenance",
+        "resolution",
+        "providerAttestation"
+      ],
+      "properties": {
+        "beforePresent": {
+          "type": "boolean"
+        },
+        "afterPresent": {
+          "type": "boolean"
+        },
+        "sharedClaimIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "addedClaimIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "removedClaimIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "claimChanges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ClaimChange"
+          }
+        },
+        "receiptReuse": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReceiptReuse"
+          }
+        },
+        "provenance": {
+          "$ref": "#/$defs/MeaningProvenance"
+        },
+        "resolution": {
+          "const": "inferred_concept"
+        },
+        "providerAttestation": {
+          "const": "unverified"
+        }
+      }
+    },
+    "SelectionChange": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "changeKind",
+            "stratum",
+            "before",
+            "after"
+          ],
+          "properties": {
+            "changeKind": {
+              "const": "added"
+            },
+            "stratum": {
+              "const": "source_overlay"
+            },
+            "before": {
+              "type": "null"
+            },
+            "after": {
+              "$ref": "#/$defs/OverlaySelection"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "changeKind",
+            "stratum",
+            "before",
+            "after"
+          ],
+          "properties": {
+            "changeKind": {
+              "const": "removed"
+            },
+            "stratum": {
+              "const": "source_overlay"
+            },
+            "before": {
+              "$ref": "#/$defs/OverlaySelection"
+            },
+            "after": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "changeKind",
+            "stratum",
+            "before",
+            "after"
+          ],
+          "properties": {
+            "changeKind": {
+              "const": "added"
+            },
+            "stratum": {
+              "const": "meaning_selection"
+            },
+            "before": {
+              "type": "null"
+            },
+            "after": {
+              "$ref": "#/$defs/MeaningSelection"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "changeKind",
+            "stratum",
+            "before",
+            "after"
+          ],
+          "properties": {
+            "changeKind": {
+              "const": "removed"
+            },
+            "stratum": {
+              "const": "meaning_selection"
+            },
+            "before": {
+              "$ref": "#/$defs/MeaningSelection"
+            },
+            "after": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "CoverageChange": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "changeKind",
+            "beforeCoverage",
+            "afterCoverage"
+          ],
+          "properties": {
+            "changeKind": {
+              "const": "coverage"
+            },
+            "beforeCoverage": {
+              "$ref": "#/$defs/Coverage"
+            },
+            "afterCoverage": {
+              "$ref": "#/$defs/Coverage"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "changeKind",
+            "beforeOmissions",
+            "afterOmissions"
+          ],
+          "properties": {
+            "changeKind": {
+              "const": "omissions"
+            },
+            "beforeOmissions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Omission"
+              }
+            },
+            "afterOmissions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Omission"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "changeKind",
+            "beforePresent",
+            "afterPresent"
+          ],
+          "properties": {
+            "changeKind": {
+              "const": "meaning_presence"
+            },
+            "beforePresent": {
+              "type": "boolean"
+            },
+            "afterPresent": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "producer",
+    "comparisonId",
+    "options",
+    "before",
+    "after",
+    "selectionChanges",
+    "declaredFileContinuity",
+    "renameProofAvailable",
+    "source",
+    "meaning",
+    "coverageChanges",
+    "rowBudget",
+    "complete",
+    "limitations"
+  ],
+  "properties": {
+    "producer": {
+      "const": "yoke-view-comparison-1"
+    },
+    "comparisonId": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "options": {
+      "$ref": "#/$defs/ComparisonOptions"
+    },
+    "before": {
+      "$ref": "#/$defs/ComparisonSide"
+    },
+    "after": {
+      "$ref": "#/$defs/ComparisonSide"
+    },
+    "selectionChanges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SelectionChange"
+      }
+    },
+    "declaredFileContinuity": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/DeclaredFileContinuity"
+      }
+    },
+    "renameProofAvailable": {
+      "const": false
+    },
+    "source": {
+      "$ref": "#/$defs/SourceComparison"
+    },
+    "meaning": {
+      "$ref": "#/$defs/MeaningComparison"
+    },
+    "coverageChanges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CoverageChange"
+      }
+    },
+    "rowBudget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "used",
+        "limit"
+      ],
+      "properties": {
+        "used": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "complete": {
+      "const": false
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "selected_inputs_not_complete_history",
+          "structural_candidates_not_verified_identity",
+          "source_precision_preserved",
+          "inferred_meaning_unverified"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "qualifiedCodeCommit": "c2f872d01440cb187a18f9699a0f367f7f173114",
+  "productionFilesUnchangedAfterQualification": true,
+  "changedFrozenInputs": {
+    "docs/REMAINING_WORK.md": {
+      "before": "043c9a4793cd4ed1ca57c04fbeb0bef328714e6efb05320a152aae739ec3f5be",
+      "after": "d99bed6a70266c708c840d6f2c9349241d9fd528a9364649341c8bd1f644e6e2"
+    },
+    "docs/STATUS.md": {
+      "before": "d43457b2faa6fb85219133f3b67867ea2ca10ac3d4d31a132306172e03139e22",
+      "after": "7dd1011e4806e30eed46cd5d0d0d7d88a156ba2b401031bad5e8d27d4d01a18a"
+    },
+    "docs/parity/native-reconciliation-2026-10-15.json": {
+      "before": "88d6e13a9af9301e215248ebb141ac4a0ef5ec0631e17be7f6865a01b9f21748",
+      "after": "eb5b24366bc83b42ab15f1c4f7cf7563c98b1a985900dc29aae7ccf7d35d3826"
+    }
+  },
+  "newProductTestsClaimedAfterDocumentation": false,
+  "originalInventoryLedgerAndSummaryUnchanged": true,
+  "reconciliationExactlyOneAdditiveKey": "controlledCargoTestTls20261023",
+  "nativeCountersMatchCompletedOriginalStdout": true,
+  "archiveEveryMemberLengthAndSha256Reopened": true
+}

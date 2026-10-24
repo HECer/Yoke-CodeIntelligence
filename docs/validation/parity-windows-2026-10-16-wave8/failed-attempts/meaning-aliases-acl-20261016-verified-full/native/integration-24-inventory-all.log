@@ -1,0 +1,21 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 15.26s
+     Running tests\editor_http.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\editor_http-1c473e0ebe3f9924.exe)
+excessive_headers_and_unknown_operation_fields_are_rejected: test
+framing_rejects_duplicate_lengths_transfer_encoding_and_invalid_payloads: test
+host_origin_and_auth_are_checked_before_waiting_for_declared_body: test
+maximally_escaped_valid_buffer_fits_the_transport_without_relaxing_source_limit: test
+nonreading_client_does_not_block_the_next_authenticated_request: test
+pipelining_and_duplicate_authorization_cannot_dispatch_editor_operations: test
+real_editor_requests_read_unsaved_source_without_workspace_write_authority: test
+slow_body_chunks_share_the_header_deadline: test
+slow_header_bytes_cannot_reset_the_connection_deadline: test
+stale_buffer_and_close_versions_cannot_replace_newer_editor_source: test
+
+10 tests, 0 benchmarks
+     Running tests\engine_epoch_review.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\engine_epoch_review-48b61e0554397a59.exe)
+default_engine_reanalysis_uses_exact_proven_epoch_instead_of_active_epoch: test
+default_engine_refuses_missing_graph_with_unproven_capture_epoch: test
+existing_graph_fastpath_rejects_a_different_manifest_under_the_same_id: test
+
+3 tests, 0 benchmarks

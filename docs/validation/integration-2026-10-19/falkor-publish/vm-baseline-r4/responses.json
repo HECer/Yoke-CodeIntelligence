@@ -1,0 +1,120 @@
+{
+  "modules": [
+    [
+      "name",
+      "graph",
+      "ver",
+      60002,
+      "path",
+      "/var/lib/falkordb/bin/falkordb.so",
+      "args",
+      []
+    ],
+    [
+      "name",
+      "vectorset",
+      "ver",
+      1,
+      "path",
+      "",
+      "args",
+      []
+    ]
+  ],
+  "unicode-parameter": [
+    [
+      "value"
+    ],
+    [
+      [
+        "quoted 💡 ' \" \\ \r\n"
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 5.525696 milliseconds",
+      "Graph version: 0"
+    ]
+  ],
+  "parallel-create": [
+    [
+      "count(r)",
+      "count(s)"
+    ],
+    [
+      [
+        1,
+        1
+      ]
+    ],
+    [
+      "Labels added: 1",
+      "Nodes created: 2",
+      "Properties set: 4",
+      "Relationships created: 2",
+      "Cached execution: 0",
+      "Query internal execution time: 62.259100 milliseconds",
+      "Graph version: 1"
+    ]
+  ],
+  "parallel-read": [
+    [
+      "a.id",
+      "r.id",
+      "b.id"
+    ],
+    [
+      [
+        "a",
+        "one",
+        "b"
+      ],
+      [
+        "a",
+        "two",
+        "b"
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 18.511183 milliseconds",
+      "Graph version: 1"
+    ]
+  ],
+  "foreach-support": [
+    [
+      "1"
+    ],
+    [
+      [
+        1
+      ]
+    ],
+    [
+      "Labels added: 1",
+      "Nodes created: 2",
+      "Properties set: 2",
+      "Cached execution: 0",
+      "Query internal execution time: 10.137102 milliseconds",
+      "Graph version: 2"
+    ]
+  ],
+  "subquery-support": [
+    [
+      "n"
+    ],
+    [
+      [
+        1
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 3.907166 milliseconds",
+      "Graph version: 2"
+    ]
+  ],
+  "division-error": {
+    "error": "Division by zero"
+  }
+}

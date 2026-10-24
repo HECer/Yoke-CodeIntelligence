@@ -1,0 +1,86 @@
+[
+  {
+    "sourceRevision": "c11511ee821d16741b4082e59ecd2bf671462270",
+    "platform": "Windows",
+    "shard": 0,
+    "archiveBytes": 94657,
+    "archiveSha256": "a69e4a2e9ebccd8fed0c8407b73fc0e36517a17baee3d7bdda5be6f1d5fe7971",
+    "archiveDigestReverified": true,
+    "group": {
+      "group": "yoke-code-intelligence:test:editor_http:test",
+      "exitCode": 101,
+      "logs": [
+        {
+          "name": "0010.stdout",
+          "bytes": 1590,
+          "sha256": "b6c877d96e24349c79dc7f7191f86ea6f79b9fc15f34774c4dbe0717f9ce9f29"
+        },
+        {
+          "name": "0010.stderr",
+          "bytes": 470,
+          "sha256": "68127c604e6b7f800160c8eb3451aa02d5821e68ec53cb62df43175d737a1059"
+        }
+      ]
+    },
+    "selectedSource": "native/tests/editor_http.rs",
+    "priorSourceExactRawOrWindowsCrLf": true,
+    "failureExcerpt": "---- slow_body_chunks_share_the_header_deadline stdout ----\n\nthread 'slow_body_chunks_share_the_header_deadline' (1296) panicked at native\\tests\\editor_http.rs:66:14:\nEditor service must announce its loopback endpoint: Timeout\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n---- slow_header_bytes_cannot_reset_the_connection_deadline stdout ----\n\nthread 'slow_header_bytes_cannot_reset_the_connection_deadline' (6188) panicked at native\\tests\\editor_http.rs:66:14:\nEditor service must announce its loopback endpoint: Timeout\n\n",
+    "runtimeCauseMeasured": false
+  },
+  {
+    "sourceRevision": "84e1186621eb2ac984609bb05549e9a3b93d759b",
+    "platform": "macOS",
+    "shard": 2,
+    "archiveBytes": 117655,
+    "archiveSha256": "25845080395219c1f5881731b846fb74296cb2e1b0c351a69fdf88d9c68913de",
+    "archiveDigestReverified": true,
+    "group": {
+      "group": "yoke-code-intelligence:lib:yoke:test",
+      "exitCode": 101,
+      "logs": [
+        {
+          "name": "0002.stdout",
+          "bytes": 52513,
+          "sha256": "520afda0bd6e99c419502730d2c9c15913a93cb1f8efa71707732db877ca9985"
+        },
+        {
+          "name": "0002.stderr",
+          "bytes": 448,
+          "sha256": "82be239506607b05ad5477fa773ec6242ec63a15f654a24463a69c2b218024ff"
+        }
+      ]
+    },
+    "selectedSource": "native/src/git_history_read_tests.rs",
+    "priorSourceExactRawOrWindowsCrLf": true,
+    "failureExcerpt": "---- git_workflows::history_read::tests::object_information_and_contents_share_the_original_deadline stdout ----\n\nthread 'git_workflows::history_read::tests::object_information_and_contents_share_the_original_deadline' (56598) panicked at native/src/git_history_read_tests.rs:186:5:\nassertion `left == right` failed\n  left: (1, 0)\n right: (1, 1)\n\n",
+    "runtimeCauseMeasured": false
+  },
+  {
+    "sourceRevision": "84e1186621eb2ac984609bb05549e9a3b93d759b",
+    "platform": "macOS",
+    "shard": 0,
+    "archiveBytes": 98479,
+    "archiveSha256": "7783e2a8a7bfc56cd23986f4392f26d665489f35721b1ad8be59f9f0d9e95da0",
+    "archiveDigestReverified": true,
+    "group": {
+      "group": "yoke-code-intelligence:test:github_app_ingress:test",
+      "exitCode": 101,
+      "logs": [
+        {
+          "name": "0016.stdout",
+          "bytes": 2145,
+          "sha256": "010f036c040021cd9dc0b83d397d010a065787f71acd911b87bae247bc00a3e0"
+        },
+        {
+          "name": "0016.stderr",
+          "bytes": 508,
+          "sha256": "7f9e6366dfc1369ffadc976ed25576484101fceadfb46c4cd4725bc93cfec509"
+        }
+      ]
+    },
+    "selectedSource": "native/tests/github_app_ingress.rs",
+    "priorSourceExactRawOrWindowsCrLf": true,
+    "failureExcerpt": "---- absolute_request_deadline_stops_a_peer_which_keeps_sending_partial_headers stdout ----\n\nthread 'absolute_request_deadline_stops_a_peer_which_keeps_sending_partial_headers' (65420) panicked at native/tests/github_app_ingress.rs:619:5:\nassertion failed: sent.load(Ordering::SeqCst) >= 2\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n",
+    "runtimeCauseMeasured": false
+  }
+]

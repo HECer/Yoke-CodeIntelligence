@@ -1,0 +1,64 @@
+warning: method `content_hash` is never used
+  --> native\src\refactor_contract.rs:22:19
+   |
+18 | impl CheckedFileBinding {
+   | ----------------------- method in this implementation
+...
+22 |     pub(crate) fn content_hash(&self) -> &str {
+   |                   ^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `range` and `name_range` are never used
+  --> native\src\refactor_contract.rs:44:19
+   |
+40 | impl CheckedSymbolBinding {
+   | ------------------------- methods in this implementation
+...
+44 |     pub(crate) fn range(&self) -> Range<usize> {
+   |                   ^^^^^
+...
+47 |     pub(crate) fn name_range(&self) -> Range<usize> {
+   |                   ^^^^^^^^^^
+
+warning: field `insertion_byte` is never read
+  --> native\src\refactor_contract.rs:62:9
+   |
+60 |     FileTopLevel {
+   |     ------------ field in this variant
+61 |         file: CheckedFileBinding,
+62 |         insertion_byte: usize,
+   |         ^^^^^^^^^^^^^^
+   |
+   = note: `CheckedMoveDestination` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: method `insertion_byte` is never used
+  --> native\src\refactor_contract.rs:77:19
+   |
+70 | impl CheckedMoveDestination {
+   | --------------------------- method in this implementation
+...
+77 |     pub(crate) fn insertion_byte(&self) -> usize {
+   |                   ^^^^^^^^^^^^^^
+
+warning: methods `source` and `destination` are never used
+   --> native\src\refactor_contract.rs:274:19
+    |
+106 | impl CheckedMoveIntent {
+    | ---------------------- methods in this implementation
+...
+274 |     pub(crate) fn source(&self) -> &CheckedSymbolBinding {
+    |                   ^^^^^^
+...
+277 |     pub(crate) fn destination(&self) -> &CheckedMoveDestination {
+    |                   ^^^^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib test) generated 5 warnings
+    Finished `test` profile [unoptimized] target(s) in 0.54s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 1 test
+test meaning_build::archive_preparation_order_tests::archive_scope_preflight_covers_every_manifest_before_any_cas_read ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 154 filtered out; finished in 0.81s
+

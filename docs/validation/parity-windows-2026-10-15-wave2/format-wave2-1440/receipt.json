@@ -1,0 +1,30 @@
+{
+  "checkedAtUtc": "2026-10-15T14:40:19.680674+00:00",
+  "phase": "format",
+  "sourceFiles": 694,
+  "sourceChanges": [],
+  "results": [
+    {
+      "label": "format",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 2.984,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "groups": 0,
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    }
+  ],
+  "passed": 0,
+  "failed": 0,
+  "ignored": 0,
+  "accepted": true,
+  "tempRoot": "C:\\Users\\Public\\Yoke-Test-Scratch\\format-wave2-1440"
+}

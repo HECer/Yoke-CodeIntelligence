@@ -1,0 +1,113 @@
+<style>
+main{grid-template-columns:260px minmax(300px,1fr) minmax(390px,38%)}
+.sourceTabs{display:flex;gap:6px;position:sticky;top:-16px;background:#10171d;padding:12px 0;z-index:2;border-bottom:1px solid var(--line)}
+.sourceTabs button[aria-selected=true],.relationChip[aria-pressed=true]{background:#294c50;border-color:var(--accent);color:#b5ffe9}
+#relationChips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.relationChip{font-size:12px;padding:5px 9px}
+.sourceBinding{font-size:11px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}.sourceLines{position:relative;max-height:clamp(180px,calc(100vh - 590px),460px);font:12px/1.65 ui-monospace,monospace;border:1px solid var(--line);border-radius:6px;overflow:auto;padding:8px 0;background:#15212a}
+.sourceLine{display:flex;min-width:0}.lineNumber{flex:none;min-width:48px;text-align:right;padding-right:12px;color:#8ca5b2;user-select:none}.lineText{white-space:pre-wrap;overflow-wrap:anywhere;min-width:0;padding-right:10px}.sourceLines mark{color:#dbfff2;background:#31564e;border-radius:2px}
+.outlineItem{display:block;width:100%;text-align:left;margin:6px 0;overflow-wrap:anywhere}.outlineItem[aria-current=true]{border-color:var(--accent)}
+.outlineItem>span,.outlineItem>small{display:block}.outlineItem>small{font-size:11px;margin-top:5px}
+.sourceNotice{font-size:12px;padding:10px;border-left:3px solid #73e1c5;background:#172a30}
+@media(max-width:1100px){main{grid-template-columns:250px 1fr}#detail{grid-column:1/-1}}
+@media(max-width:650px){main{display:block}.sourceTabs{top:0}.sourceLines{font-size:11px}.lineNumber{min-width:38px}}
+</style>
+<script>
+'use strict';
+const sourcePayload=JSON.parse(document.getElementById('sources').textContent);
+if(documentMode||sourcePayload.schema!=='yoke-source-explorer-v1'||sourcePayload.snapshotId!==data.snapshotId)throw new Error('Source explorer binding mismatch');
+const sourceFiles=new Map(sourcePayload.files.map(file=>[file.binding.path,file]));
+const sourceIndexes=new Map(),SOURCE_PAGE_LINES=120,OUTLINE_PAGE_SIZE=80;
+let sourceTab='code',sourcePage=0,outlinePage=0,sourceFocus=null;
+const metadataDetail=renderDetail,metadataSelect=select;
+const sourceDecode=bytes=>new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(bytes);
+function sourceIndex(path){
+  if(!sourceIndexes.has(path)){
+    const file=sourceFiles.get(path);if(!file)throw new Error('Captured source unavailable');
+    const bytes=new TextEncoder().encode(file.text),starts=[0];
+    if(bytes.length!==file.binding.size)throw new Error('Captured source size mismatch');
+    for(let i=0;i<bytes.length;i++)if(bytes[i]===10)starts.push(i+1);
+    sourceIndexes.clear();sourceIndexes.set(path,{...file,bytes,starts});
+  }
+  return sourceIndexes.get(path);
+}
+select=function(id){
+  if(id!==selected){sourceFocus=null;outlinePage=0;const entity=byId.get(id);sourcePage=Math.floor(Math.max(0,(entity?.startLine||1)-1)/SOURCE_PAGE_LINES);}
+  metadataSelect(id);
+};
+function sourceTabs(){
+  const tabs=el('div',undefined,'sourceTabs');tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','Captured source views');
+  for(const [key,label] of [['code','Code'],['context','Context'],['outline','Outline']]){
+    const button=el('button',label);button.id='source-tab-'+key;button.setAttribute('role','tab');button.setAttribute('aria-selected',String(sourceTab===key));button.setAttribute('aria-controls','source-panel');button.tabIndex=sourceTab===key?0:-1;
+    button.addEventListener('click',()=>{sourceTab=key;renderDetail();$('source-tab-'+key).focus();});
+    button.addEventListener('keydown',event=>{const keys=['code','context','outline'];let index=keys.indexOf(key);if(event.key==='ArrowRight')index=(index+1)%3;else if(event.key==='ArrowLeft')index=(index+2)%3;else if(event.key==='Home')index=0;else if(event.key==='End')index=2;else return;event.preventDefault();sourceTab=keys[index];renderDetail();$('source-tab-'+sourceTab).focus();});
+    tabs.append(button);
+  }
+  return tabs;
+}
+function sourcePager(panel,current,total,change,label){
+  const pager=el('div',undefined,'pager'),previous=el('button','Previous'),next=el('button','Next');previous.setAttribute('aria-label','Previous '+label+' page');next.setAttribute('aria-label','Next '+label+' page');previous.disabled=current===0;next.disabled=current+1>=total;previous.addEventListener('click',()=>change(current-1));next.addEventListener('click',()=>change(current+1));pager.append(previous,el('span',(current+1)+' / '+total),next);panel.append(pager);
+}
+function codePanel(panel,entity){
+  const focus=sourceFocus||entity,file=sourceIndex(focus.path),binding=file.binding;
+  panel.append(el('h3',sourceFocus?'Exact observation quote':'Captured file'),el('p',binding.path),el('p','Snapshot '+sourcePayload.snapshotId+'\nContent SHA-256 '+binding.hash+'\n'+binding.size+' UTF-8 bytes · '+binding.language,'sourceBinding'),el('p','Selected UTF-8 bytes '+focus.startByte+'–'+focus.endByte+' · lines '+focus.startLine+'–'+focus.endLine,'tag'));
+  if(sourceFocus){const back=el('button','Back to declaration');back.addEventListener('click',()=>{sourceFocus=null;sourcePage=Math.floor((entity.startLine-1)/SOURCE_PAGE_LINES);renderDetail();});panel.append(back);}
+  const total=Math.max(1,Math.ceil(file.starts.length/SOURCE_PAGE_LINES));sourcePage=Math.max(0,Math.min(sourcePage,total-1));
+  sourcePager(panel,sourcePage,total,value=>{sourcePage=value;renderDetail();},'source');
+  const lines=el('div',undefined,'sourceLines');lines.id='source-code';lines.setAttribute('aria-label','Captured source text');
+  for(let line=sourcePage*SOURCE_PAGE_LINES;line<Math.min(file.starts.length,(sourcePage+1)*SOURCE_PAGE_LINES);line++){
+    const start=file.starts[line],end=file.starts[line+1]??file.bytes.length;
+    const row=el('div',undefined,'sourceLine'),number=el('span',line+1,'lineNumber'),text=el('span',undefined,'lineText');
+    number.setAttribute('aria-hidden','true');row.dataset.line=String(line+1);row.dataset.startByte=String(start);row.dataset.endByte=String(end);
+    const a=Math.max(start,focus.startByte),b=Math.min(end,focus.endByte);
+    if(a<b){text.append(document.createTextNode(sourceDecode(file.bytes.subarray(start,a))),el('mark',sourceDecode(file.bytes.subarray(a,b))),document.createTextNode(sourceDecode(file.bytes.subarray(b,end))));}
+    else text.textContent=sourceDecode(file.bytes.subarray(start,end));
+    if(start===end)text.append(document.createTextNode(' '));row.append(number,text);lines.append(row);
+  }
+  panel.append(lines,el('p','Immutable captured UTF-8. Highlight uses the original byte range. Current disk freshness is not checked.','muted'));
+  const highlighted=lines.querySelector('mark');if(highlighted)requestAnimationFrame(()=>{if(lines.isConnected)lines.scrollTop=Math.max(0,highlighted.closest('.sourceLine').offsetTop-60);});
+}
+function outlinePanel(panel,entity){
+  const entries=data.entities.filter(item=>item.path===entity.path).sort((a,b)=>a.startByte-b.startByte||b.endByte-a.endByte||a.key.localeCompare(b.key));
+  const total=Math.max(1,Math.ceil(entries.length/OUTLINE_PAGE_SIZE));outlinePage=Math.max(0,Math.min(outlinePage,total-1));
+  panel.append(el('h3','Captured file outline'),el('p',entity.path),el('p',entries.length+' captured declarations · original parent keys and byte ranges. This is the saved analyzer outline; omissions are not inferred away.','muted'));
+  sourcePager(panel,outlinePage,total,value=>{outlinePage=value;renderDetail();},'outline');
+  for(const item of entries.slice(outlinePage*OUTLINE_PAGE_SIZE,(outlinePage+1)*OUTLINE_PAGE_SIZE)){
+    const button=el('button',undefined,'outlineItem');button.setAttribute('aria-current',String(item.id===entity.id));button.append(el('span',item.name),el('small',item.kind+' · lines '+item.startLine+'–'+item.endLine+' · UTF-8 '+item.startByte+'–'+item.endByte));
+    if(item.parentKey)button.append(el('small','Parent '+item.parentKey));button.addEventListener('click',()=>{sourceTab='code';reveal(item.id);});panel.append(button);
+  }
+}
+renderDetail=function(){
+  const entity=byId.get(selected);if(!entity)return;
+  let panel;
+  if(sourceTab==='context'){
+    metadataDetail();panel=$('detail');
+    for(const quote of panel.querySelectorAll('.evidence')){
+      const id=quote.textContent.split('\nEvidence ').at(-1),evidence=evidenceById.get(id);if(!evidence)continue;
+      const button=el('button','Read exact quote');button.addEventListener('click',()=>{sourceFocus=evidence;sourcePage=Math.floor((evidence.startLine-1)/SOURCE_PAGE_LINES);sourceTab='code';renderDetail();});quote.append(button);
+    }
+    for(const small of panel.querySelectorAll('small'))if(small.textContent==='Header metadata only; full source bytes are not embedded.')small.textContent='Original declaration header. The Code tab contains the complete captured file.';
+    panel.append(el('p','Capture omissions: '+sourcePayload.omissions.length+'. Relationships retain their original direction, parallel observation IDs, resolution and evidence.','sourceNotice'));
+    const coverage=el('details');coverage.append(el('summary','Original analyzer coverage'),el('pre',JSON.stringify(sourcePayload.coverage,null,2)));panel.append(coverage);
+    if(sourcePayload.omissions.length){const details=el('details');details.append(el('summary','Capture omissions'));for(const omission of sourcePayload.omissions)details.append(el('p',omission.path+' · '+omission.reason));panel.append(details);}
+  }else{
+    panel=$('detail');panel.replaceChildren(el('h2',entity.name),el('p',entity.qualifiedName),el('p',entity.kind+' · '+entity.language,'tag'));
+  }
+  const tabs=sourceTabs();panel.insertBefore(tabs,panel.firstChild);
+  const body=el('div');body.id='source-panel';body.setAttribute('role','tabpanel');body.setAttribute('aria-labelledby','source-tab-'+sourceTab);
+  // Context keeps the legacy evidence renderer and pager; move its nodes into
+  // the same labelled panel without converting captured strings to markup.
+  while(tabs.nextSibling)body.append(tabs.nextSibling);panel.append(body);
+  if(sourceTab==='code')codePanel(body,entity);else if(sourceTab==='outline')outlinePanel(body,entity);
+};
+const chips=el('div');chips.id='relationChips';chips.setAttribute('role','group');chips.setAttribute('aria-label','Relationship verbs');
+function updateRelationChips(){for(const button of chips.children)button.setAttribute('aria-pressed',String(button.dataset.relation===$('relation').value));}
+for(const [value,label] of [['','All relations'],...[...relationNodes.keys()].sort().map(value=>[value,value])]){
+  const button=el('button',label,'relationChip');button.dataset.relation=value;button.addEventListener('click',()=>{$('relation').value=value;$('relation').dispatchEvent(new Event('change',{bubbles:true}));updateRelationChips();});chips.append(button);
+}
+document.querySelector('.stage').insertBefore(chips,canvas);$('relation').addEventListener('change',updateRelationChips);updateRelationChips();
+const metadataRefresh=refresh;refresh=function(...args){metadataRefresh(...args);updateRelationChips();};
+document.querySelector('header .tag').textContent='SOURCE + CODE';
+document.querySelector('#detail p').textContent='Select a symbol to read its immutable captured file, source-bound context and file outline.';
+document.querySelector('#detail .muted').textContent='Captured source bytes are embedded in this explicit export. Current disk freshness is not checked.';
+const explanation=document.querySelector('.stage details');explanation.append(el('p','This explicit source-bearing export embeds captured files. Code and quotes use UTF-8 byte ranges; Context preserves uncertain and unresolved observations. The export stays offline and never reloads or executes project source.'));
+</script>

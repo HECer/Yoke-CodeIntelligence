@@ -1,0 +1,12 @@
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native\tests\monorepo_pre_feature_envelope.rs:203:
+         response["result"]["isError"].as_bool() == Some(true),
+         "Expected causal compatibility_envelope output rejection; metadata={summary}"
+     );
+-    assert!(body["status"].as_str() == Some("error"), "metadata={summary}");
++    assert!(
++        body["status"].as_str() == Some("error"),
++        "metadata={summary}"
++    );
+     assert!(
+         body["error"]["message"].as_str()
+             == Some("Manifest-balanced retrieval output_capacity: compatibility_envelope"),

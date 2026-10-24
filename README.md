@@ -2,11 +2,168 @@
 
 **Local, evidence-first code intelligence for coding agents.**
 
-[Deutsch](README.de.md) · [Quick start](docs/QUICKSTART.md) · [Advanced 0.3 features](docs/ADVANCED.md) · [Status](docs/STATUS.md) · [Validation](docs/validation/report.json)
+[Deutsch](README.de.md) · [Rust core](native/README.md) · [Rust workflows](native/docs/workflows.md) · [Quick start](docs/QUICKSTART.md) · [Status](docs/STATUS.md)
 
-Independent TypeScript core combining immutable source snapshots, compiler navigation, directed multiedges, source-bound retrieval, controlled change plans and verification. Optional adapters connect Graft, Graphify, Serena and external language servers without treating every upstream claim or inferred edge as established program truth.
+Independent Rust 0.5 implementation combining immutable source snapshots, configured compiler navigation, directed graphs, source-bound retrieval, controlled changes, test selection and execution. Rust also owns model-provider accounting, a persistent Python debugger, signed TLS source exchange, history retirement and Docker verification. The default works without Graft, Serena, Graphify, Node, Python, a model or an API key. Optional compiler, runtime and model operations use explicitly selected host tools. The [replacement matrix](docs/RUST_REPLACEMENT.md) records behavioral evidence and limits.
 
-## Run
+## Native Rust start
+
+```sh
+cargo build --workspace --release --locked -j 2
+./target/release/yoke --root /absolute/project index
+./target/release/yoke --root /absolute/project context invoice
+./target/release/yoke --root /absolute/project export --format html
+./target/release/yoke --root /absolute/project explorer
+./target/release/yoke --root /absolute/project serve
+```
+
+Use `target/release/yoke.exe` on Windows. Rust 1.94.1 or newer is required to build. The executable links programming-language grammars, SQLite FTS5, graph algorithms including real Leiden, an independent LSP client and guarded changes with durable recovery. The HTML graph inspector works offline. Explicit `export --format html-source` additionally embeds checked captured files with Code/Context/Outline tabs and exact source quotes; [source export limits](native/docs/explorer.md#explicit-captured-source-export) and source access controls apply. The separate authenticated local `explorer` command supports saved-view reload; `--allow-rebuild` grants manual capture through [the live workflow](native/docs/explorer.md#authenticated-local-live-workflow). Standard MCP tool names are shared, but advanced optional arguments and snapshot stores are distinct. [Native instructions](native/README.md) cover trusted semantic servers, context plans, verification, portable packaging and remaining limits. Actual Windows checks are recorded in [native validation](docs/validation/native-workflows.json).
+
+[Selected graph queries](native/docs/selected-graph-queries.md) and [graph analytics](native/docs/graph-extensions.md) preserve the original source evidence. Explicit [meaning extraction](native/docs/meaning-cli.md) adds concepts, directed relationships and ordered hyperedges with quoted source support, immutable receipts and a cost ledger. Loading, querying and inspecting those graphs never starts a provider. [Refactoring intent checks](native/docs/semantic-refactor-intents.md) and [lossless host configuration patches](native/docs/host-config.md) describe their supported inputs and boundaries.
+
+An explicitly enabled [native session dashboard](native/docs/session-dashboard.md) shows private session status, selected tools and bounded structured activity. Separate host opt-ins add project/mode controls, project-memory editing, [project-local language selection](native/docs/session-dashboard-language-servers.md) and [selected configuration documents](native/docs/session-dashboard-documents.md) with reviewed global-file writes. [Private raw-log windows](native/docs/session-dashboard-raw-logs.md) now require an independent host selection and explicit reads; exact bytes remain distinct from a concurrent text preview. A separate host grant and trusted driver enable [ending only the owning MCP Session](native/docs/session-dashboard-shutdown.md). [Selected project-file writes](native/docs/session-dashboard-project-files.md) now prepare native workspace plans and retain separate host approval, executed verification and original writer/recovery gates. The [760-pass scoped acceptance](docs/validation/integration-2026-10-24/dashboard-project-files/README.md) includes actual stdio/HTTP/browser saves and retained drafts. [Selected project-file journal recovery](native/docs/session-dashboard-project-recovery.md) now adds bounded before/after inspection and explicitly confirmed conditional rollback through the original native journal and WriterLock. The [788-pass scoped acceptance](docs/validation/integration-2026-10-24/dashboard-project-recovery/README.md) includes real stdio/HTTP/browser rollback and stale-review refusal. [Explicit host binding migration](native/docs/session-dashboard-binding-migration.md) now reviews both selections and retires the old write binding of one global file through durable metadata recovery. The [805-pass scoped acceptance](docs/validation/integration-2026-10-24/dashboard-binding-migration/README.md) includes actual CLI, HTTP and native-browser checks. The later [810-pass proposal-generation scope](docs/validation/integration-2026-10-24/dashboard-document-generations/README.md) fixes cached proposals reviving after migration out and back; a fresh review is required. Standalone binding deletion, journal-history cleanup, broader recovery/dashboard and release certification remain open.
+
+Explicit [authored-memory embeddings](native/docs/prompt-memories.md) add selected
+application-note revisions to live prompts with current policies and honest
+missing-note diagnostics. Default memory lookup remains disabled.
+
+Separately granted [live session prompt templates](native/docs/session-prompt-runtime.md)
+derive actual current catalog variables and support deferred YAML projection.
+Default guidance stays literal and no model or analyzed source runs.
+
+Explicit [YAML session configuration](native/docs/session-config.md) projects
+hash-selected host steering files into reviewable create-only JSON profiles.
+Project registrations, runtime trust and execution rights remain host-owned.
+Optional primary-project read-only policy blocks source changes while preserving
+independent secondary permissions and legacy bindings when absent/false.
+Explicit per-project LF/CRLF/native settings format prepared source after-bytes
+before review and verification; saved plans and original captures stay immutable.
+Additive per-project source exclusions also bind captures and current workspace
+write scope while retaining exact historical evidence and recovery.
+Standard native-equivalent project defaults now project without new authority, with explicit limitations for unavailable extensions.
+Passive Rust isolates JSON project selectors in private provider copies, with exact omission receipts and versioned evidence that preserves old overlays.
+Windows workspace selections preserve distinct Unicode root names while retaining ASCII alias checks and exact captured membership.
+Additional semantic workspace folders reuse captured source without widening the primary symbol index or capture scope; external/foreign roots remain unavailable.
+Host-authorized generic language-server settings reach actual selected processes, while preserving runtime, source-execution and passive admission boundaries.
+Explicit Git-ignore analysis selection includes authorized ignored sources while preserving source provenance, read-only facts and current workspace write admission.
+Ordered per-project language-server selection uses only explicitly registered host backends, with declared-extension matching and an explicit first fallback.
+Workspace selections also guard direct and staged semantic transports and folder-root moves.
+Per-project symbol workspace folders select a separate source-bound symbol index
+and actual private language-server roots while retaining full authorized source reads.
+Optional per-project symbol information budgets stop subsequent LSP hover
+requests with explicit partial metadata while preserving source results and host
+timeouts.
+
+Explicit [Google Workspace capture](native/docs/google-workspace.md) selects
+hash-bound Docs/Sheets/Slides shortcuts with explicit host grants. A native HTTP
+route supports private resource-key headers and private stdin token input; the
+trusted gws path retains its execution/account-state boundary. Immutable exports
+replay offline; XLSX inspection never evaluates formulas. Authenticated Google
+live export qualification remains open.
+
+Explicit [closed-PR discussion captures](native/docs/github-discussions.md) add
+bounded host-authorized GitHub observations to offline captured-source digests.
+The optional handoff preview excludes discussion and implementation bodies.
+An explicit [digest service workflow](native/docs/digest-service.md) adds exact
+payload approval, a durable send journal and read-only outcome recovery for the
+independently owned receiver contract. The explicit
+[native receiver](native/docs/digest-receiver.md) adds authenticated TCP/TLS intake
+and immutable receipts. Separately authorized [received metadata queries](native/docs/digest-query.md)
+preserve receipt-qualified rows and directed relationships without conferring
+source authority. Separate [local declaration verification](native/docs/received-source-verification.md)
+and [source-bound interpretation](native/docs/received-source-interpretation.md)
+bind selected independent local captures and explicitly built native Meaning
+graphs without default provider execution. Public production deployment, broader
+reasoning/model quality and wider upstream service equivalence remain open.
+
+Explicit [history acquisition](native/docs/digest-history-acquisition.md) selects,
+captures and maps a bounded historical batch under the verified head's scope.
+Snapshot/graph/FTS/scope/receipt publication commits atomically after replay and
+output admission. Explicit [persistent local history jobs](native/docs/digest-history-jobs.md)
+continue across batches and process restarts under current grants and exact
+revisions. The explicit [App history driver](native/docs/app-history-integration.md)
+binds worker completion to signed original plans and exact queue/native revisions.
+Configured production/background deployment remains open.
+
+Explicit [Git conflict triage](native/docs/git-conflicts.md) observes the selected
+worktree's actual unmerged index. Exact stage-source pages use independent host
+read permissions and captured-path scopes; source files and index stay unchanged.
+
+Explicit [compiler-bound Git impact](native/docs/git-compiler-affected.md) separately
+checks immutable TypeScript base/head programs with a host-trusted compiler.
+Resolved calls/constructors/tags, override bindings and type-based possible targets retain their
+original byte proofs and separate context identities; no execution is inferred.
+
+[Captured impact areas](native/docs/git-areas.md) add saved concept/file memberships
+and exact directory fallback to a replayed Git report. Original quotes and
+parallel observations remain intact; tied labels stay visibly ambiguous.
+
+[Captured directory moves](native/docs/directory-moves.md) retain complete text
+trees, empty directories and physical identities through configured folder
+repair, reviewed plans, copied verification and conditional recovery.
+
+[Captured file usage checks](native/docs/file-usage.md) add bounded default
+deletion planning for TypeScript/JavaScript function modules with exact
+provider bindings, conservative captured usages and visible unknown consumers.
+
+Explicit reviewed [Neo4j](docs/native-neo4j-publish.md) and
+[FalkorDB](docs/native-falkor-publish.md) publication preserve saved native graph
+rows and evidence through separate host approval, pinned TLS/OS credentials,
+immutable revisions and read-only recovery of unknown writes. Offline plans
+grant no authority; live publication currently supports Windows.
+
+Explicit [managed JSON MCP profiles](docs/native-json-hosts.md) select Cursor or
+Claude configuration, with exact ownership and guarded Windows recovery.
+
+An explicit [managed Codex MCP profile](docs/native-codex-host.md) installs one
+reviewed, receipt-owned TOML entry with physical source/launch bindings and
+guarded recovery. The original generic AGENTS profile keeps its identities.
+Actual Codex0.163 MCP-client reads have owned Windows evidence.
+
+Explicit [saved-plan feedback](native/docs/outcome-feedback.md#authored-outcomes-for-saved-change-plans)
+records source-bound authored historical outcomes and exposes transparent
+ranking. Planned result bytes and labels grant no application or execution authority.
+
+Separate [Meaning claim outcomes](native/docs/meaning-outcome-feedback.md) retain
+packet-qualified concepts, directed relations and hyperedges, original receipts
+and exact source evidence. Authored labels and historical scores establish no
+semantic truth, independent corroboration or observed execution.
+
+Explicit [semantic transcript candidates](native/docs/semantic-transcript-candidates.md)
+make one host-authorized model attempt over selected original imported UTF-8
+bytes. Durable source/response/accounting replay supports provider-free review;
+candidates create no outcome events and remain unverified interpretations.
+
+Explicit [semantic identity](native/docs/meaning-identity.md) compares checked
+native Meaning claims and asks a separately authorized host model to adjudicate
+candidates. Positive cliques produce a lossless quotient with provider-free
+queries; original claims, directed observations, role slots and receipts remain.
+
+An explicit native [Python empty-suite deletion policy](native/docs/semantic-refactor-intents.md#explicit-native-python-empty-body-deletion)
+can prepare a checked `pass` replacement while preserving the strict default
+and ordinary approval, verification and source-recovery gates.
+
+Explicit native [TS/JS sibling preservation](native/docs/symbol-deletion.md)
+can delete one checked function-valued declarator and its AST comma while
+keeping unrelated declarations and the strict default intact.
+
+Checked [class-method decorator ownership](native/docs/symbol-deletion.md)
+extends native and provider-finalized deletion while preserving neighboring
+decorators, immutable anchors and independent application gates.
+
+Explicit native [wrapped-call propagation](native/docs/propagated-delete.md)
+can remove standalone parenthesized, `await` and `void` calls while checking
+surviving syntax, original source proofs and guarded application.
+
+Native [session refactoring](native/docs/agent-sessions.md#native-semantic-planning)
+prepares existing semantic plans through the session CLI and MCP interface, with
+mode, project and current-session checks and separate application authority.
+
+Explicit [function binding propagation](native/docs/propagated-delete.md#explicit-function-binding-policy)
+adds single const/let/var arrow and anonymous-function bindings while retaining
+original entity/evidence ranges, mandatory provider proofs and guarded plans.
+
+## TypeScript advanced runtime
 
 Requires **Node.js 22.16+**. Python/Go and additional optional providers are installed separately. Node SQLite is experimental on the tested Node version. No model or API key is required by native indexing.
 
@@ -34,11 +191,11 @@ The separately supplied runtime ZIP includes compiled code and the pinned TypeSc
 
 ![Explorer — actual UI with labeled fixture responses](docs/screenshots/explorer.png)
 
-The screenshot is a frontend fixture test, not evidence of a successful real browser-to-backend test. Managed Chromium blocked localhost navigation; real HTTP authorization and query paths are tested independently.
+The historical screenshot uses labeled frontend fixture responses. The native Rust offline export has separately been opened in the actual collaborative browser and exercised with real captured source, Unicode anchors, a mobile viewport and hostile embedded text.
 
 ## Agent interface
 
-`node dist/cli.js serve --root /project` exposes **ci_status, ci_find, ci_read, ci_trace, ci_context, ci_change_prepare, ci_change_apply, ci_verify**. Read exact source before edits. Responses bind a snapshot and distinguish omissions, uncertain relationships and failures. Native tools do not get implicit provider/network/key permissions. Advanced privileges remain explicit host-side CLI/library operations; see [API](docs/API.md).
+`yoke --root /project serve` exposes **ci_status, ci_find, ci_read, ci_trace, ci_context, ci_change_prepare, ci_change_apply, ci_verify**. Read exact source before edits. Responses bind a snapshot and distinguish omissions, uncertain relationships and failures. Native tools do not get implicit provider/network/key permissions. Advanced privileges remain explicit host-side CLI/library operations; see [native workflows](native/docs/workflows.md). The retained `node dist/cli.js serve --root /project` runtime has its own [API](docs/API.md) and state.
 
 ## Checks
 
@@ -56,8 +213,33 @@ Optional live gates **fail** when prerequisites are absent; they do not fall bac
 
 ## Evidence boundaries
 
-No feature-for-feature parity with every upstream/commercial product, exhaustive multi-language semantics, formal safety proof, independent audit or measured whole-agent token savings is claimed. Graft/Graphify/Serena live installation, neural model/Leiden/Docker execution, real VS Code host, Windows/macOS/hosted CI and the full paired-agent comparison remain externally unverified here. Clean online npm install failed on DNS; the tested pinned compiler/runtime was restored offline. [STATUS.md](docs/STATUS.md) states each limitation instead of reporting missing capabilities as successful empty results.
+The advanced local workflows now have independently owned Rust CLI/library paths. [Native workflows](native/docs/workflows.md) documents their explicit permissions and configuration. Feature-for-feature parity with every upstream or commercial product, all-language-server certification, hosted Linux/macOS execution and whole-agent savings require separate evidence. Actual Windows compiler, debugger, Docker, credential-store and TLS tests are distinguished from labeled protocol fixtures in [STATUS.md](docs/STATUS.md). The retained TypeScript 0.3 implementation and its earlier reports remain available.
 
 ## License
 
 Own implementation: MIT. TypeScript runtime notices retained. Optional upstream applications, model weights and media libraries have their own licenses and are **not** bundled. No GPL Serena application code, paid JetBrains plugin or hosted service is included. External commands in copied trees retain process privileges unless a separately validated host/container sandbox is used.
+
+Explicit [mixed-source input preparation](native/docs/mixed-views.md) exports
+checked frozen code, Office text/XML and permitted PDF page excerpts with their
+original provenance and bounded ordered context groups. It performs no model
+call; mixed semantic execution and cross-source graph relationships remain open.
+
+[Mixed interpretation claim checks](native/docs/mixed-meaning-claims.md) retain
+host-submitted directed/parallel/role-bearing observations and reread exact typed
+source support. The result preserves unverified interpretation status and
+original source provenance without a provider call or persisted graph.
+
+Explicit [mixed-source meaning builds](native/docs/mixed-meaning-provider.md)
+add trusted host-provider execution, durable accounting/response artifacts and
+source-bound replay. Status/jobs start no provider; unknown sends retain their
+reservation and never retry automatically. Interpretations remain unverified.
+
+Explicit [immutable compiler inlining](native/docs/compiler-inline.md) adds
+host-selected TypeScript 5.8.3 function-binding and finite classic function-body
+inline plans for TS/TSX/JS/JSX
+through native sessions and the existing facade, with exact source/effect checks
+and separate verification, approval, application and recovery.
+
+Explicit compiler-affected analysis also preserves property/accessor and callable-slot source contracts for unobserved generic classes, with separate reference/effect evidence and no invented runtime dispatch. See [compiler-affected](native/docs/git-compiler-affected.md).
+
+Captured named-class TypeScript constructor parameter properties also retain checked ownership and source-contract proofs; unsupported anonymous ownership stays explicitly partial.

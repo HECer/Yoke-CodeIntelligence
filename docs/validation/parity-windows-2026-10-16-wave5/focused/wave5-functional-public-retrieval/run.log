@@ -1,0 +1,24 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 11s
+     Running tests\monorepo_retrieval.rs (target\debug\deps\monorepo_retrieval-1854e2c8b48665bf.exe)
+
+running 7 tests
+test balanced_unicode_normalization_preserves_actual_crlf_utf8_body_coordinates ... ok
+test actual_parallel_calls_propagate_into_seedless_packages_and_weight_zero_skips_graph_work ... ok
+test balanced_ownership_and_bodies_use_the_historic_capture_after_live_marker_and_source_change ... ok
+test explicit_balanced_keeps_zero_and_one_query_scope_as_valid_degenerate_results ... ok
+test same_31_source_corpus_has_literal_global_control_and_one_head_per_package ... ok
+test actual_nested_declarations_charge_overlap_under_the_independent_32m_document_budget ... ok
+test real_32m_source_admission_is_protected_before_ranking_and_releases_unused_marker_reserve ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.40s
+
+     Running tests\monorepo_scopes.rs (target\debug\deps\monorepo_scopes-cd55843ab8feea0c.exe)
+
+running 3 tests
+test malformed_captured_manifest_is_explicit_policy_error_without_source_contents ... ok
+test public_scope_summaries_keep_one_share_per_physical_root_and_excluded_items ... ok
+test public_partition_and_anchors_use_captured_bytes_after_live_tree_changes ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.61s
+

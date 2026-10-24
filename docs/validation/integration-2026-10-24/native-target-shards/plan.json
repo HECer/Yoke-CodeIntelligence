@@ -1,0 +1,3713 @@
+{
+  "scope": "Actual current Cargo metadata only; no compilation or native Yoke execution",
+  "groups": [
+    {
+      "id": "yoke-code-intelligence:bin:yoke:test",
+      "package": "yoke-code-intelligence",
+      "kind": "bin",
+      "name": "yoke",
+      "mode": "test",
+      "source": "native/src/main.rs",
+      "weight": 203045
+    },
+    {
+      "id": "yoke-code-intelligence:example:benchmark:build",
+      "package": "yoke-code-intelligence",
+      "kind": "example",
+      "name": "benchmark",
+      "mode": "build",
+      "source": "native/examples/benchmark.rs",
+      "weight": 2355
+    },
+    {
+      "id": "yoke-code-intelligence:example:falkor_owned_probe:build",
+      "package": "yoke-code-intelligence",
+      "kind": "example",
+      "name": "falkor_owned_probe",
+      "mode": "build",
+      "source": "native/examples/falkor_owned_probe.rs",
+      "weight": 1957
+    },
+    {
+      "id": "yoke-code-intelligence:example:neo4j_owned_probe:build",
+      "package": "yoke-code-intelligence",
+      "kind": "example",
+      "name": "neo4j_owned_probe",
+      "mode": "build",
+      "source": "native/examples/neo4j_owned_probe.rs",
+      "weight": 1919
+    },
+    {
+      "id": "yoke-code-intelligence:lib:yoke:doc",
+      "package": "yoke-code-intelligence",
+      "kind": "lib",
+      "name": "yoke",
+      "mode": "doc",
+      "source": "native/src/lib.rs",
+      "weight": 41005
+    },
+    {
+      "id": "yoke-code-intelligence:lib:yoke:test",
+      "package": "yoke-code-intelligence",
+      "kind": "lib",
+      "name": "yoke",
+      "mode": "test",
+      "source": "native/src/lib.rs",
+      "weight": 41005
+    },
+    {
+      "id": "yoke-code-intelligence:test:adversarial:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "adversarial",
+      "mode": "test",
+      "source": "native/tests/adversarial.rs",
+      "weight": 11556
+    },
+    {
+      "id": "yoke-code-intelligence:test:agent_dependency_options:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "agent_dependency_options",
+      "mode": "test",
+      "source": "native/tests/agent_dependency_options.rs",
+      "weight": 3551
+    },
+    {
+      "id": "yoke-code-intelligence:test:agent_diagnostic_boundaries:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "agent_diagnostic_boundaries",
+      "mode": "test",
+      "source": "native/tests/agent_diagnostic_boundaries.rs",
+      "weight": 3564
+    },
+    {
+      "id": "yoke-code-intelligence:test:agent_documentation:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "agent_documentation",
+      "mode": "test",
+      "source": "native/tests/agent_documentation.rs",
+      "weight": 1632
+    },
+    {
+      "id": "yoke-code-intelligence:test:agent_facade_options:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "agent_facade_options",
+      "mode": "test",
+      "source": "native/tests/agent_facade_options.rs",
+      "weight": 5416
+    },
+    {
+      "id": "yoke-code-intelligence:test:agent_facade_semantics:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "agent_facade_semantics",
+      "mode": "test",
+      "source": "native/tests/agent_facade_semantics.rs",
+      "weight": 6112
+    },
+    {
+      "id": "yoke-code-intelligence:test:agent_file_options:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "agent_file_options",
+      "mode": "test",
+      "source": "native/tests/agent_file_options.rs",
+      "weight": 6385
+    },
+    {
+      "id": "yoke-code-intelligence:test:agent_memory_namespaces:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "agent_memory_namespaces",
+      "mode": "test",
+      "source": "native/tests/agent_memory_namespaces.rs",
+      "weight": 4562
+    },
+    {
+      "id": "yoke-code-intelligence:test:agent_repl:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "agent_repl",
+      "mode": "test",
+      "source": "native/tests/agent_repl.rs",
+      "weight": 32794
+    },
+    {
+      "id": "yoke-code-intelligence:test:agent_repl_api_selection:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "agent_repl_api_selection",
+      "mode": "test",
+      "source": "native/tests/agent_repl_api_selection.rs",
+      "weight": 14656
+    },
+    {
+      "id": "yoke-code-intelligence:test:agent_repl_lifecycle:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "agent_repl_lifecycle",
+      "mode": "test",
+      "source": "native/tests/agent_repl_lifecycle.rs",
+      "weight": 6338
+    },
+    {
+      "id": "yoke-code-intelligence:test:agent_symbol_contracts:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "agent_symbol_contracts",
+      "mode": "test",
+      "source": "native/tests/agent_symbol_contracts.rs",
+      "weight": 10504
+    },
+    {
+      "id": "yoke-code-intelligence:test:analyzer_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "analyzer_cli",
+      "mode": "test",
+      "source": "native/tests/analyzer_cli.rs",
+      "weight": 5332
+    },
+    {
+      "id": "yoke-code-intelligence:test:analyzer_epochs:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "analyzer_epochs",
+      "mode": "test",
+      "source": "native/tests/analyzer_epochs.rs",
+      "weight": 15868
+    },
+    {
+      "id": "yoke-code-intelligence:test:artifact_page_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "artifact_page_review",
+      "mode": "test",
+      "source": "native/tests/artifact_page_review.rs",
+      "weight": 3397
+    },
+    {
+      "id": "yoke-code-intelligence:test:artifacts:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "artifacts",
+      "mode": "test",
+      "source": "native/tests/artifacts.rs",
+      "weight": 6048
+    },
+    {
+      "id": "yoke-code-intelligence:test:arxiv_source:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "arxiv_source",
+      "mode": "test",
+      "source": "native/tests/arxiv_source.rs",
+      "weight": 6460
+    },
+    {
+      "id": "yoke-code-intelligence:test:arxiv_source_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "arxiv_source_cli",
+      "mode": "test",
+      "source": "native/tests/arxiv_source_cli.rs",
+      "weight": 7055
+    },
+    {
+      "id": "yoke-code-intelligence:test:arxiv_source_http:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "arxiv_source_http",
+      "mode": "test",
+      "source": "native/tests/arxiv_source_http.rs",
+      "weight": 7834
+    },
+    {
+      "id": "yoke-code-intelligence:test:blob_bounds:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "blob_bounds",
+      "mode": "test",
+      "source": "native/tests/blob_bounds.rs",
+      "weight": 2430
+    },
+    {
+      "id": "yoke-code-intelligence:test:capture_analyzer8_fixture:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "capture_analyzer8_fixture",
+      "mode": "test",
+      "source": "native/tests/capture_analyzer8_fixture.rs",
+      "weight": 9563
+    },
+    {
+      "id": "yoke-code-intelligence:test:capture_changes:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "capture_changes",
+      "mode": "test",
+      "source": "native/tests/capture_changes.rs",
+      "weight": 2269
+    },
+    {
+      "id": "yoke-code-intelligence:test:capture_epoch_selection:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "capture_epoch_selection",
+      "mode": "test",
+      "source": "native/tests/capture_epoch_selection.rs",
+      "weight": 10936
+    },
+    {
+      "id": "yoke-code-intelligence:test:capture_options:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "capture_options",
+      "mode": "test",
+      "source": "native/tests/capture_options.rs",
+      "weight": 9461
+    },
+    {
+      "id": "yoke-code-intelligence:test:capture_policy:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "capture_policy",
+      "mode": "test",
+      "source": "native/tests/capture_policy.rs",
+      "weight": 17924
+    },
+    {
+      "id": "yoke-code-intelligence:test:claude_session_hooks:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "claude_session_hooks",
+      "mode": "test",
+      "source": "native/tests/claude_session_hooks.rs",
+      "weight": 13422
+    },
+    {
+      "id": "yoke-code-intelligence:test:claude_source_hooks:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "claude_source_hooks",
+      "mode": "test",
+      "source": "native/tests/claude_source_hooks.rs",
+      "weight": 19070
+    },
+    {
+      "id": "yoke-code-intelligence:test:client_lock:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "client_lock",
+      "mode": "test",
+      "source": "native/tests/client_lock.rs",
+      "weight": 1870
+    },
+    {
+      "id": "yoke-code-intelligence:test:codex_host_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "codex_host_cli",
+      "mode": "test",
+      "source": "native/tests/codex_host_cli.rs",
+      "weight": 6325
+    },
+    {
+      "id": "yoke-code-intelligence:test:collection_registry_access:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "collection_registry_access",
+      "mode": "test",
+      "source": "native/tests/collection_registry_access.rs",
+      "weight": 13076
+    },
+    {
+      "id": "yoke-code-intelligence:test:collections_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "collections_cli",
+      "mode": "test",
+      "source": "native/tests/collections_cli.rs",
+      "weight": 11248
+    },
+    {
+      "id": "yoke-code-intelligence:test:collections_cli_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "collections_cli_review",
+      "mode": "test",
+      "source": "native/tests/collections_cli_review.rs",
+      "weight": 1962
+    },
+    {
+      "id": "yoke-code-intelligence:test:community_analysis_policy:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "community_analysis_policy",
+      "mode": "test",
+      "source": "native/tests/community_analysis_policy.rs",
+      "weight": 13913
+    },
+    {
+      "id": "yoke-code-intelligence:test:compatibility:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "compatibility",
+      "mode": "test",
+      "source": "native/tests/compatibility.rs",
+      "weight": 8708
+    },
+    {
+      "id": "yoke-code-intelligence:test:compatibility_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "compatibility_review",
+      "mode": "test",
+      "source": "native/tests/compatibility_review.rs",
+      "weight": 1902
+    },
+    {
+      "id": "yoke-code-intelligence:test:compiler_inline:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "compiler_inline",
+      "mode": "test",
+      "source": "native/tests/compiler_inline.rs",
+      "weight": 24532
+    },
+    {
+      "id": "yoke-code-intelligence:test:compiler_inline_body:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "compiler_inline_body",
+      "mode": "test",
+      "source": "native/tests/compiler_inline_body.rs",
+      "weight": 73742
+    },
+    {
+      "id": "yoke-code-intelligence:test:compiler_inline_predicates:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "compiler_inline_predicates",
+      "mode": "test",
+      "source": "native/tests/compiler_inline_predicates.rs",
+      "weight": 13948
+    },
+    {
+      "id": "yoke-code-intelligence:test:compiler_move:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "compiler_move",
+      "mode": "test",
+      "source": "native/tests/compiler_move.rs",
+      "weight": 46139
+    },
+    {
+      "id": "yoke-code-intelligence:test:compiler_move_attributes:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "compiler_move_attributes",
+      "mode": "test",
+      "source": "native/tests/compiler_move_attributes.rs",
+      "weight": 10517
+    },
+    {
+      "id": "yoke-code-intelligence:test:config_graph:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "config_graph",
+      "mode": "test",
+      "source": "native/tests/config_graph.rs",
+      "weight": 8407
+    },
+    {
+      "id": "yoke-code-intelligence:test:container:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "container",
+      "mode": "test",
+      "source": "native/tests/container.rs",
+      "weight": 14128
+    },
+    {
+      "id": "yoke-code-intelligence:test:contracts:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "contracts",
+      "mode": "test",
+      "source": "native/tests/contracts.rs",
+      "weight": 12804
+    },
+    {
+      "id": "yoke-code-intelligence:test:core:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "core",
+      "mode": "test",
+      "source": "native/tests/core.rs",
+      "weight": 7127
+    },
+    {
+      "id": "yoke-code-intelligence:test:credentials:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "credentials",
+      "mode": "test",
+      "source": "native/tests/credentials.rs",
+      "weight": 6706
+    },
+    {
+      "id": "yoke-code-intelligence:test:dataflow:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "dataflow",
+      "mode": "test",
+      "source": "native/tests/dataflow.rs",
+      "weight": 4470
+    },
+    {
+      "id": "yoke-code-intelligence:test:deadline_scope:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "deadline_scope",
+      "mode": "test",
+      "source": "native/tests/deadline_scope.rs",
+      "weight": 1801
+    },
+    {
+      "id": "yoke-code-intelligence:test:deadlines:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "deadlines",
+      "mode": "test",
+      "source": "native/tests/deadlines.rs",
+      "weight": 1575
+    },
+    {
+      "id": "yoke-code-intelligence:test:debug_adapter:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "debug_adapter",
+      "mode": "test",
+      "source": "native/tests/debug_adapter.rs",
+      "weight": 15206
+    },
+    {
+      "id": "yoke-code-intelligence:test:decision_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "decision_cli",
+      "mode": "test",
+      "source": "native/tests/decision_cli.rs",
+      "weight": 12242
+    },
+    {
+      "id": "yoke-code-intelligence:test:decision_records:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "decision_records",
+      "mode": "test",
+      "source": "native/tests/decision_records.rs",
+      "weight": 23463
+    },
+    {
+      "id": "yoke-code-intelligence:test:decision_records_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "decision_records_review",
+      "mode": "test",
+      "source": "native/tests/decision_records_review.rs",
+      "weight": 9388
+    },
+    {
+      "id": "yoke-code-intelligence:test:decision_retention:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "decision_retention",
+      "mode": "test",
+      "source": "native/tests/decision_retention.rs",
+      "weight": 3127
+    },
+    {
+      "id": "yoke-code-intelligence:test:declaration_attachment_ranges:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "declaration_attachment_ranges",
+      "mode": "test",
+      "source": "native/tests/declaration_attachment_ranges.rs",
+      "weight": 7125
+    },
+    {
+      "id": "yoke-code-intelligence:test:declaration_attachments_live:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "declaration_attachments_live",
+      "mode": "test",
+      "source": "native/tests/declaration_attachments_live.rs",
+      "weight": 4310
+    },
+    {
+      "id": "yoke-code-intelligence:test:dependency_queries:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "dependency_queries",
+      "mode": "test",
+      "source": "native/tests/dependency_queries.rs",
+      "weight": 1922
+    },
+    {
+      "id": "yoke-code-intelligence:test:derived_graph_mixed_budget:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "derived_graph_mixed_budget",
+      "mode": "test",
+      "source": "native/tests/derived_graph_mixed_budget.rs",
+      "weight": 9471
+    },
+    {
+      "id": "yoke-code-intelligence:test:derived_graph_preparation:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "derived_graph_preparation",
+      "mode": "test",
+      "source": "native/tests/derived_graph_preparation.rs",
+      "weight": 12170
+    },
+    {
+      "id": "yoke-code-intelligence:test:digest_history_acquisition:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "digest_history_acquisition",
+      "mode": "test",
+      "source": "native/tests/digest_history_acquisition.rs",
+      "weight": 19963
+    },
+    {
+      "id": "yoke-code-intelligence:test:digest_history_jobs:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "digest_history_jobs",
+      "mode": "test",
+      "source": "native/tests/digest_history_jobs.rs",
+      "weight": 26621
+    },
+    {
+      "id": "yoke-code-intelligence:test:digest_receiver:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "digest_receiver",
+      "mode": "test",
+      "source": "native/tests/digest_receiver.rs",
+      "weight": 57893
+    },
+    {
+      "id": "yoke-code-intelligence:test:directory_move_live:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "directory_move_live",
+      "mode": "test",
+      "source": "native/tests/directory_move_live.rs",
+      "weight": 4395
+    },
+    {
+      "id": "yoke-code-intelligence:test:document_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "document_cli",
+      "mode": "test",
+      "source": "native/tests/document_cli.rs",
+      "weight": 4336
+    },
+    {
+      "id": "yoke-code-intelligence:test:document_explorer:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "document_explorer",
+      "mode": "test",
+      "source": "native/tests/document_explorer.rs",
+      "weight": 5503
+    },
+    {
+      "id": "yoke-code-intelligence:test:document_graph:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "document_graph",
+      "mode": "test",
+      "source": "native/tests/document_graph.rs",
+      "weight": 14296
+    },
+    {
+      "id": "yoke-code-intelligence:test:document_graph_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "document_graph_review",
+      "mode": "test",
+      "source": "native/tests/document_graph_review.rs",
+      "weight": 8000
+    },
+    {
+      "id": "yoke-code-intelligence:test:editor:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "editor",
+      "mode": "test",
+      "source": "native/tests/editor.rs",
+      "weight": 8816
+    },
+    {
+      "id": "yoke-code-intelligence:test:editor_http:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "editor_http",
+      "mode": "test",
+      "source": "native/tests/editor_http.rs",
+      "weight": 18285
+    },
+    {
+      "id": "yoke-code-intelligence:test:engine_epoch_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "engine_epoch_review",
+      "mode": "test",
+      "source": "native/tests/engine_epoch_review.rs",
+      "weight": 5075
+    },
+    {
+      "id": "yoke-code-intelligence:test:epoch_cache_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "epoch_cache_review",
+      "mode": "test",
+      "source": "native/tests/epoch_cache_review.rs",
+      "weight": 1361
+    },
+    {
+      "id": "yoke-code-intelligence:test:epoch_producers:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "epoch_producers",
+      "mode": "test",
+      "source": "native/tests/epoch_producers.rs",
+      "weight": 3295
+    },
+    {
+      "id": "yoke-code-intelligence:test:explorer_export:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "explorer_export",
+      "mode": "test",
+      "source": "native/tests/explorer_export.rs",
+      "weight": 8333
+    },
+    {
+      "id": "yoke-code-intelligence:test:explorer_http:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "explorer_http",
+      "mode": "test",
+      "source": "native/tests/explorer_http.rs",
+      "weight": 13469
+    },
+    {
+      "id": "yoke-code-intelligence:test:explorer_runtime:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "explorer_runtime",
+      "mode": "test",
+      "source": "native/tests/explorer_runtime.rs",
+      "weight": 3725
+    },
+    {
+      "id": "yoke-code-intelligence:test:explorer_sources:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "explorer_sources",
+      "mode": "test",
+      "source": "native/tests/explorer_sources.rs",
+      "weight": 8137
+    },
+    {
+      "id": "yoke-code-intelligence:test:export:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "export",
+      "mode": "test",
+      "source": "native/tests/export.rs",
+      "weight": 1250
+    },
+    {
+      "id": "yoke-code-intelligence:test:facade_directory_move:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "facade_directory_move",
+      "mode": "test",
+      "source": "native/tests/facade_directory_move.rs",
+      "weight": 15701
+    },
+    {
+      "id": "yoke-code-intelligence:test:facade_file_delete:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "facade_file_delete",
+      "mode": "test",
+      "source": "native/tests/facade_file_delete.rs",
+      "weight": 17836
+    },
+    {
+      "id": "yoke-code-intelligence:test:facade_file_move:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "facade_file_move",
+      "mode": "test",
+      "source": "native/tests/facade_file_move.rs",
+      "weight": 13713
+    },
+    {
+      "id": "yoke-code-intelligence:test:facade_file_rename:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "facade_file_rename",
+      "mode": "test",
+      "source": "native/tests/facade_file_rename.rs",
+      "weight": 17547
+    },
+    {
+      "id": "yoke-code-intelligence:test:facade_file_usage:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "facade_file_usage",
+      "mode": "test",
+      "source": "native/tests/facade_file_usage.rs",
+      "weight": 15594
+    },
+    {
+      "id": "yoke-code-intelligence:test:falkor_publish:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "falkor_publish",
+      "mode": "test",
+      "source": "native/tests/falkor_publish.rs",
+      "weight": 5903
+    },
+    {
+      "id": "yoke-code-intelligence:test:falkor_publish_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "falkor_publish_cli",
+      "mode": "test",
+      "source": "native/tests/falkor_publish_cli.rs",
+      "weight": 11407
+    },
+    {
+      "id": "yoke-code-intelligence:test:falkor_wire:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "falkor_wire",
+      "mode": "test",
+      "source": "native/tests/falkor_wire.rs",
+      "weight": 4838
+    },
+    {
+      "id": "yoke-code-intelligence:test:federated_collections:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "federated_collections",
+      "mode": "test",
+      "source": "native/tests/federated_collections.rs",
+      "weight": 9983
+    },
+    {
+      "id": "yoke-code-intelligence:test:federation:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "federation",
+      "mode": "test",
+      "source": "native/tests/federation.rs",
+      "weight": 25616
+    },
+    {
+      "id": "yoke-code-intelligence:test:federation_archive:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "federation_archive",
+      "mode": "test",
+      "source": "native/tests/federation_archive.rs",
+      "weight": 13679
+    },
+    {
+      "id": "yoke-code-intelligence:test:federation_archive_receipts:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "federation_archive_receipts",
+      "mode": "test",
+      "source": "native/tests/federation_archive_receipts.rs",
+      "weight": 5569
+    },
+    {
+      "id": "yoke-code-intelligence:test:federation_epoch_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "federation_epoch_review",
+      "mode": "test",
+      "source": "native/tests/federation_epoch_review.rs",
+      "weight": 4735
+    },
+    {
+      "id": "yoke-code-intelligence:test:federation_epochs:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "federation_epochs",
+      "mode": "test",
+      "source": "native/tests/federation_epochs.rs",
+      "weight": 12460
+    },
+    {
+      "id": "yoke-code-intelligence:test:federation_http:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "federation_http",
+      "mode": "test",
+      "source": "native/tests/federation_http.rs",
+      "weight": 35655
+    },
+    {
+      "id": "yoke-code-intelligence:test:federation_receipt_bounds:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "federation_receipt_bounds",
+      "mode": "test",
+      "source": "native/tests/federation_receipt_bounds.rs",
+      "weight": 6558
+    },
+    {
+      "id": "yoke-code-intelligence:test:feedback_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "feedback_cli",
+      "mode": "test",
+      "source": "native/tests/feedback_cli.rs",
+      "weight": 39437
+    },
+    {
+      "id": "yoke-code-intelligence:test:file_api:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "file_api",
+      "mode": "test",
+      "source": "native/tests/file_api.rs",
+      "weight": 3544
+    },
+    {
+      "id": "yoke-code-intelligence:test:file_usage_live:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "file_usage_live",
+      "mode": "test",
+      "source": "native/tests/file_usage_live.rs",
+      "weight": 5588
+    },
+    {
+      "id": "yoke-code-intelligence:test:freshness:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "freshness",
+      "mode": "test",
+      "source": "native/tests/freshness.rs",
+      "weight": 2849
+    },
+    {
+      "id": "yoke-code-intelligence:test:freshness_epoch:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "freshness_epoch",
+      "mode": "test",
+      "source": "native/tests/freshness_epoch.rs",
+      "weight": 1888
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_affected_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_affected_cli",
+      "mode": "test",
+      "source": "native/tests/git_affected_cli.rs",
+      "weight": 18278
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_affected_details:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_affected_details",
+      "mode": "test",
+      "source": "native/tests/git_affected_details.rs",
+      "weight": 41282
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_affected_qualification:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_affected_qualification",
+      "mode": "test",
+      "source": "native/tests/git_affected_qualification.rs",
+      "weight": 7399
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_areas:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_areas",
+      "mode": "test",
+      "source": "native/tests/git_areas.rs",
+      "weight": 21575
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_cli",
+      "mode": "test",
+      "source": "native/tests/git_cli.rs",
+      "weight": 2507
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_compiler_affected:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_compiler_affected",
+      "mode": "test",
+      "source": "native/tests/git_compiler_affected.rs",
+      "weight": 94430
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_conflicts:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_conflicts",
+      "mode": "test",
+      "source": "native/tests/git_conflicts.rs",
+      "weight": 33059
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_epoch_selection:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_epoch_selection",
+      "mode": "test",
+      "source": "native/tests/git_epoch_selection.rs",
+      "weight": 8170
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_epochs:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_epochs",
+      "mode": "test",
+      "source": "native/tests/git_epochs.rs",
+      "weight": 17292
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_ignore_policy:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_ignore_policy",
+      "mode": "test",
+      "source": "native/tests/git_ignore_policy.rs",
+      "weight": 19135
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_impact_details:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_impact_details",
+      "mode": "test",
+      "source": "native/tests/git_impact_details.rs",
+      "weight": 30805
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_impact_details_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_impact_details_cli",
+      "mode": "test",
+      "source": "native/tests/git_impact_details_cli.rs",
+      "weight": 39812
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_impact_details_no_git:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_impact_details_no_git",
+      "mode": "test",
+      "source": "native/tests/git_impact_details_no_git.rs",
+      "weight": 2574
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_impact_details_qualification:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_impact_details_qualification",
+      "mode": "test",
+      "source": "native/tests/git_impact_details_qualification.rs",
+      "weight": 4459
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_impact_details_sqlite_limits:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_impact_details_sqlite_limits",
+      "mode": "test",
+      "source": "native/tests/git_impact_details_sqlite_limits.rs",
+      "weight": 2652
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_owner_changes:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_owner_changes",
+      "mode": "test",
+      "source": "native/tests/git_owner_changes.rs",
+      "weight": 12722
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_owners:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_owners",
+      "mode": "test",
+      "source": "native/tests/git_owners.rs",
+      "weight": 14725
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_repository_collections:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_repository_collections",
+      "mode": "test",
+      "source": "native/tests/git_repository_collections.rs",
+      "weight": 22265
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_repository_host:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_repository_host",
+      "mode": "test",
+      "source": "native/tests/git_repository_host.rs",
+      "weight": 10446
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_repository_http:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_repository_http",
+      "mode": "test",
+      "source": "native/tests/git_repository_http.rs",
+      "weight": 18090
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_repository_preferences:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_repository_preferences",
+      "mode": "test",
+      "source": "native/tests/git_repository_preferences.rs",
+      "weight": 15367
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_repository_profiles:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_repository_profiles",
+      "mode": "test",
+      "source": "native/tests/git_repository_profiles.rs",
+      "weight": 13041
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_repository_projects:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_repository_projects",
+      "mode": "test",
+      "source": "native/tests/git_repository_projects.rs",
+      "weight": 27690
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_repository_scope:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_repository_scope",
+      "mode": "test",
+      "source": "native/tests/git_repository_scope.rs",
+      "weight": 31401
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_repository_stdio:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_repository_stdio",
+      "mode": "test",
+      "source": "native/tests/git_repository_stdio.rs",
+      "weight": 17296
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_review",
+      "mode": "test",
+      "source": "native/tests/git_review.rs",
+      "weight": 13278
+    },
+    {
+      "id": "yoke-code-intelligence:test:git_workflows:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "git_workflows",
+      "mode": "test",
+      "source": "native/tests/git_workflows.rs",
+      "weight": 26021
+    },
+    {
+      "id": "yoke-code-intelligence:test:github:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github",
+      "mode": "test",
+      "source": "native/tests/github.rs",
+      "weight": 23160
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app",
+      "mode": "test",
+      "source": "native/tests/github_app.rs",
+      "weight": 26794
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_auth:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_auth",
+      "mode": "test",
+      "source": "native/tests/github_app_auth.rs",
+      "weight": 26350
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_auth_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_auth_cli",
+      "mode": "test",
+      "source": "native/tests/github_app_auth_cli.rs",
+      "weight": 3815
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_cli",
+      "mode": "test",
+      "source": "native/tests/github_app_cli.rs",
+      "weight": 2311
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_digest:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_digest",
+      "mode": "test",
+      "source": "native/tests/github_app_digest.rs",
+      "weight": 30738
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_digest_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_digest_cli",
+      "mode": "test",
+      "source": "native/tests/github_app_digest_cli.rs",
+      "weight": 18755
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_digest_handoff:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_digest_handoff",
+      "mode": "test",
+      "source": "native/tests/github_app_digest_handoff.rs",
+      "weight": 37043
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_digest_mapping:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_digest_mapping",
+      "mode": "test",
+      "source": "native/tests/github_app_digest_mapping.rs",
+      "weight": 30103
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_history_bridge:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_history_bridge",
+      "mode": "test",
+      "source": "native/tests/github_app_history_bridge.rs",
+      "weight": 22599
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_history_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_history_cli",
+      "mode": "test",
+      "source": "native/tests/github_app_history_cli.rs",
+      "weight": 6144
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_ingress:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_ingress",
+      "mode": "test",
+      "source": "native/tests/github_app_ingress.rs",
+      "weight": 26858
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_ingress_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_ingress_cli",
+      "mode": "test",
+      "source": "native/tests/github_app_ingress_cli.rs",
+      "weight": 3701
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_pages_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_pages_cli",
+      "mode": "test",
+      "source": "native/tests/github_app_pages_cli.rs",
+      "weight": 7579
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_publication:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_publication",
+      "mode": "test",
+      "source": "native/tests/github_app_publication.rs",
+      "weight": 124719
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_publication_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_publication_cli",
+      "mode": "test",
+      "source": "native/tests/github_app_publication_cli.rs",
+      "weight": 19586
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_worker:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_worker",
+      "mode": "test",
+      "source": "native/tests/github_app_worker.rs",
+      "weight": 33834
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_worker_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_worker_cli",
+      "mode": "test",
+      "source": "native/tests/github_app_worker_cli.rs",
+      "weight": 4426
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_app_worker_run:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_app_worker_run",
+      "mode": "test",
+      "source": "native/tests/github_app_worker_run.rs",
+      "weight": 52197
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_discussions:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_discussions",
+      "mode": "test",
+      "source": "native/tests/github_discussions.rs",
+      "weight": 26756
+    },
+    {
+      "id": "yoke-code-intelligence:test:github_live:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "github_live",
+      "mode": "test",
+      "source": "native/tests/github_live.rs",
+      "weight": 1901
+    },
+    {
+      "id": "yoke-code-intelligence:test:google_workspace_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "google_workspace_cli",
+      "mode": "test",
+      "source": "native/tests/google_workspace_cli.rs",
+      "weight": 6740
+    },
+    {
+      "id": "yoke-code-intelligence:test:google_workspace_http_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "google_workspace_http_cli",
+      "mode": "test",
+      "source": "native/tests/google_workspace_http_cli.rs",
+      "weight": 8183
+    },
+    {
+      "id": "yoke-code-intelligence:test:google_workspace_process:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "google_workspace_process",
+      "mode": "test",
+      "source": "native/tests/google_workspace_process.rs",
+      "weight": 12894
+    },
+    {
+      "id": "yoke-code-intelligence:test:graph:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "graph",
+      "mode": "test",
+      "source": "native/tests/graph.rs",
+      "weight": 1731
+    },
+    {
+      "id": "yoke-code-intelligence:test:graph_analysis_policy:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "graph_analysis_policy",
+      "mode": "test",
+      "source": "native/tests/graph_analysis_policy.rs",
+      "weight": 17083
+    },
+    {
+      "id": "yoke-code-intelligence:test:graph_archive_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "graph_archive_review",
+      "mode": "test",
+      "source": "native/tests/graph_archive_review.rs",
+      "weight": 4410
+    },
+    {
+      "id": "yoke-code-intelligence:test:graph_collections:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "graph_collections",
+      "mode": "test",
+      "source": "native/tests/graph_collections.rs",
+      "weight": 31599
+    },
+    {
+      "id": "yoke-code-intelligence:test:graph_exports:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "graph_exports",
+      "mode": "test",
+      "source": "native/tests/graph_exports.rs",
+      "weight": 11300
+    },
+    {
+      "id": "yoke-code-intelligence:test:graph_extensions:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "graph_extensions",
+      "mode": "test",
+      "source": "native/tests/graph_extensions.rs",
+      "weight": 13626
+    },
+    {
+      "id": "yoke-code-intelligence:test:graph_review_adversarial:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "graph_review_adversarial",
+      "mode": "test",
+      "source": "native/tests/graph_review_adversarial.rs",
+      "weight": 4671
+    },
+    {
+      "id": "yoke-code-intelligence:test:graph_root_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "graph_root_review",
+      "mode": "test",
+      "source": "native/tests/graph_root_review.rs",
+      "weight": 2173
+    },
+    {
+      "id": "yoke-code-intelligence:test:graph_view:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "graph_view",
+      "mode": "test",
+      "source": "native/tests/graph_view.rs",
+      "weight": 20202
+    },
+    {
+      "id": "yoke-code-intelligence:test:graphify_adapter:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "graphify_adapter",
+      "mode": "test",
+      "source": "native/tests/graphify_adapter.rs",
+      "weight": 7750
+    },
+    {
+      "id": "yoke-code-intelligence:test:graphify_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "graphify_cli",
+      "mode": "test",
+      "source": "native/tests/graphify_cli.rs",
+      "weight": 2109
+    },
+    {
+      "id": "yoke-code-intelligence:test:graphify_selected_queries:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "graphify_selected_queries",
+      "mode": "test",
+      "source": "native/tests/graphify_selected_queries.rs",
+      "weight": 14856
+    },
+    {
+      "id": "yoke-code-intelligence:test:historical_publication:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "historical_publication",
+      "mode": "test",
+      "source": "native/tests/historical_publication.rs",
+      "weight": 1682
+    },
+    {
+      "id": "yoke-code-intelligence:test:historical_receipt_fixture_qualification:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "historical_receipt_fixture_qualification",
+      "mode": "test",
+      "source": "native/tests/historical_receipt_fixture_qualification.rs",
+      "weight": 6643
+    },
+    {
+      "id": "yoke-code-intelligence:test:historical_view_adversarial:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "historical_view_adversarial",
+      "mode": "test",
+      "source": "native/tests/historical_view_adversarial.rs",
+      "weight": 12092
+    },
+    {
+      "id": "yoke-code-intelligence:test:historical_view_boundaries:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "historical_view_boundaries",
+      "mode": "test",
+      "source": "native/tests/historical_view_boundaries.rs",
+      "weight": 19474
+    },
+    {
+      "id": "yoke-code-intelligence:test:historical_view_budget_options:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "historical_view_budget_options",
+      "mode": "test",
+      "source": "native/tests/historical_view_budget_options.rs",
+      "weight": 3484
+    },
+    {
+      "id": "yoke-code-intelligence:test:historical_view_comparison:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "historical_view_comparison",
+      "mode": "test",
+      "source": "native/tests/historical_view_comparison.rs",
+      "weight": 38537
+    },
+    {
+      "id": "yoke-code-intelligence:test:historical_view_fixture_qualification:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "historical_view_fixture_qualification",
+      "mode": "test",
+      "source": "native/tests/historical_view_fixture_qualification.rs",
+      "weight": 9137
+    },
+    {
+      "id": "yoke-code-intelligence:test:historical_view_receipts:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "historical_view_receipts",
+      "mode": "test",
+      "source": "native/tests/historical_view_receipts.rs",
+      "weight": 14801
+    },
+    {
+      "id": "yoke-code-intelligence:test:historical_view_semantics:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "historical_view_semantics",
+      "mode": "test",
+      "source": "native/tests/historical_view_semantics.rs",
+      "weight": 49844
+    },
+    {
+      "id": "yoke-code-intelligence:test:host_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "host_cli",
+      "mode": "test",
+      "source": "native/tests/host_cli.rs",
+      "weight": 5966
+    },
+    {
+      "id": "yoke-code-intelligence:test:host_config:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "host_config",
+      "mode": "test",
+      "source": "native/tests/host_config.rs",
+      "weight": 20912
+    },
+    {
+      "id": "yoke-code-intelligence:test:host_credentials:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "host_credentials",
+      "mode": "test",
+      "source": "native/tests/host_credentials.rs",
+      "weight": 7163
+    },
+    {
+      "id": "yoke-code-intelligence:test:host_install:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "host_install",
+      "mode": "test",
+      "source": "native/tests/host_install.rs",
+      "weight": 13576
+    },
+    {
+      "id": "yoke-code-intelligence:test:host_install_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "host_install_cli",
+      "mode": "test",
+      "source": "native/tests/host_install_cli.rs",
+      "weight": 24557
+    },
+    {
+      "id": "yoke-code-intelligence:test:host_mcp_config:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "host_mcp_config",
+      "mode": "test",
+      "source": "native/tests/host_mcp_config.rs",
+      "weight": 6003
+    },
+    {
+      "id": "yoke-code-intelligence:test:host_output_disposition:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "host_output_disposition",
+      "mode": "test",
+      "source": "native/tests/host_output_disposition.rs",
+      "weight": 24472
+    },
+    {
+      "id": "yoke-code-intelligence:test:hybrid_retrieval:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "hybrid_retrieval",
+      "mode": "test",
+      "source": "native/tests/hybrid_retrieval.rs",
+      "weight": 3769
+    },
+    {
+      "id": "yoke-code-intelligence:test:ignored_capture:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "ignored_capture",
+      "mode": "test",
+      "source": "native/tests/ignored_capture.rs",
+      "weight": 21788
+    },
+    {
+      "id": "yoke-code-intelligence:test:ignored_capture_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "ignored_capture_cli",
+      "mode": "test",
+      "source": "native/tests/ignored_capture_cli.rs",
+      "weight": 1747
+    },
+    {
+      "id": "yoke-code-intelligence:test:ignored_directory_identity:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "ignored_directory_identity",
+      "mode": "test",
+      "source": "native/tests/ignored_directory_identity.rs",
+      "weight": 23465
+    },
+    {
+      "id": "yoke-code-intelligence:test:ignored_facades:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "ignored_facades",
+      "mode": "test",
+      "source": "native/tests/ignored_facades.rs",
+      "weight": 19660
+    },
+    {
+      "id": "yoke-code-intelligence:test:json_float_roundtrip:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "json_float_roundtrip",
+      "mode": "test",
+      "source": "native/tests/json_float_roundtrip.rs",
+      "weight": 2045
+    },
+    {
+      "id": "yoke-code-intelligence:test:json_host_profiles:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "json_host_profiles",
+      "mode": "test",
+      "source": "native/tests/json_host_profiles.rs",
+      "weight": 8486
+    },
+    {
+      "id": "yoke-code-intelligence:test:json_output_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "json_output_review",
+      "mode": "test",
+      "source": "native/tests/json_output_review.rs",
+      "weight": 3147
+    },
+    {
+      "id": "yoke-code-intelligence:test:knowledge:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "knowledge",
+      "mode": "test",
+      "source": "native/tests/knowledge.rs",
+      "weight": 20667
+    },
+    {
+      "id": "yoke-code-intelligence:test:knowledge_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "knowledge_cli",
+      "mode": "test",
+      "source": "native/tests/knowledge_cli.rs",
+      "weight": 2491
+    },
+    {
+      "id": "yoke-code-intelligence:test:language_constructs:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "language_constructs",
+      "mode": "test",
+      "source": "native/tests/language_constructs.rs",
+      "weight": 12960
+    },
+    {
+      "id": "yoke-code-intelligence:test:ledger:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "ledger",
+      "mode": "test",
+      "source": "native/tests/ledger.rs",
+      "weight": 6564
+    },
+    {
+      "id": "yoke-code-intelligence:test:ledger_admission_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "ledger_admission_review",
+      "mode": "test",
+      "source": "native/tests/ledger_admission_review.rs",
+      "weight": 2204
+    },
+    {
+      "id": "yoke-code-intelligence:test:ledger_batches:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "ledger_batches",
+      "mode": "test",
+      "source": "native/tests/ledger_batches.rs",
+      "weight": 6813
+    },
+    {
+      "id": "yoke-code-intelligence:test:ledger_batches_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "ledger_batches_review",
+      "mode": "test",
+      "source": "native/tests/ledger_batches_review.rs",
+      "weight": 5833
+    },
+    {
+      "id": "yoke-code-intelligence:test:legacy_retrieval_oracle:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "legacy_retrieval_oracle",
+      "mode": "test",
+      "source": "native/tests/legacy_retrieval_oracle.rs",
+      "weight": 1200
+    },
+    {
+      "id": "yoke-code-intelligence:test:live:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "live",
+      "mode": "test",
+      "source": "native/tests/live.rs",
+      "weight": 11654
+    },
+    {
+      "id": "yoke-code-intelligence:test:live_enrichment:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "live_enrichment",
+      "mode": "test",
+      "source": "native/tests/live_enrichment.rs",
+      "weight": 9117
+    },
+    {
+      "id": "yoke-code-intelligence:test:lsp:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "lsp",
+      "mode": "test",
+      "source": "native/tests/lsp.rs",
+      "weight": 10425
+    },
+    {
+      "id": "yoke-code-intelligence:test:lsp_action_resolve:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "lsp_action_resolve",
+      "mode": "test",
+      "source": "native/tests/lsp_action_resolve.rs",
+      "weight": 7974
+    },
+    {
+      "id": "yoke-code-intelligence:test:lsp_dependency_scope:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "lsp_dependency_scope",
+      "mode": "test",
+      "source": "native/tests/lsp_dependency_scope.rs",
+      "weight": 2135
+    },
+    {
+      "id": "yoke-code-intelligence:test:lsp_enrichment:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "lsp_enrichment",
+      "mode": "test",
+      "source": "native/tests/lsp_enrichment.rs",
+      "weight": 17373
+    },
+    {
+      "id": "yoke-code-intelligence:test:lsp_lifecycle:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "lsp_lifecycle",
+      "mode": "test",
+      "source": "native/tests/lsp_lifecycle.rs",
+      "weight": 4229
+    },
+    {
+      "id": "yoke-code-intelligence:test:lsp_resource_settings:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "lsp_resource_settings",
+      "mode": "test",
+      "source": "native/tests/lsp_resource_settings.rs",
+      "weight": 20351
+    },
+    {
+      "id": "yoke-code-intelligence:test:lsp_source_execution:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "lsp_source_execution",
+      "mode": "test",
+      "source": "native/tests/lsp_source_execution.rs",
+      "weight": 17259
+    },
+    {
+      "id": "yoke-code-intelligence:test:maintenance:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "maintenance",
+      "mode": "test",
+      "source": "native/tests/maintenance.rs",
+      "weight": 11381
+    },
+    {
+      "id": "yoke-code-intelligence:test:manifest_graph:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "manifest_graph",
+      "mode": "test",
+      "source": "native/tests/manifest_graph.rs",
+      "weight": 9373
+    },
+    {
+      "id": "yoke-code-intelligence:test:markdown_graph:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "markdown_graph",
+      "mode": "test",
+      "source": "native/tests/markdown_graph.rs",
+      "weight": 2611
+    },
+    {
+      "id": "yoke-code-intelligence:test:mcp_collection_grants:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "mcp_collection_grants",
+      "mode": "test",
+      "source": "native/tests/mcp_collection_grants.rs",
+      "weight": 9762
+    },
+    {
+      "id": "yoke-code-intelligence:test:mcp_collection_grants_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "mcp_collection_grants_review",
+      "mode": "test",
+      "source": "native/tests/mcp_collection_grants_review.rs",
+      "weight": 11391
+    },
+    {
+      "id": "yoke-code-intelligence:test:mcp_http:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "mcp_http",
+      "mode": "test",
+      "source": "native/tests/mcp_http.rs",
+      "weight": 51950
+    },
+    {
+      "id": "yoke-code-intelligence:test:mcp_http_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "mcp_http_cli",
+      "mode": "test",
+      "source": "native/tests/mcp_http_cli.rs",
+      "weight": 10049
+    },
+    {
+      "id": "yoke-code-intelligence:test:mcp_http_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "mcp_http_review",
+      "mode": "test",
+      "source": "native/tests/mcp_http_review.rs",
+      "weight": 4890
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_archive_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_archive_cli",
+      "mode": "test",
+      "source": "native/tests/meaning_archive_cli.rs",
+      "weight": 19545
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_archive_primitives:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_archive_primitives",
+      "mode": "test",
+      "source": "native/tests/meaning_archive_primitives.rs",
+      "weight": 12669
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_build:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_build",
+      "mode": "test",
+      "source": "native/tests/meaning_build.rs",
+      "weight": 20986
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_cli",
+      "mode": "test",
+      "source": "native/tests/meaning_cli.rs",
+      "weight": 24855
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_collection_archives:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_collection_archives",
+      "mode": "test",
+      "source": "native/tests/meaning_collection_archives.rs",
+      "weight": 14169
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_commit_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_commit_review",
+      "mode": "test",
+      "source": "native/tests/meaning_commit_review.rs",
+      "weight": 5742
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_feedback:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_feedback",
+      "mode": "test",
+      "source": "native/tests/meaning_feedback.rs",
+      "weight": 15033
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_graph:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_graph",
+      "mode": "test",
+      "source": "native/tests/meaning_graph.rs",
+      "weight": 11336
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_graph_views:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_graph_views",
+      "mode": "test",
+      "source": "native/tests/meaning_graph_views.rs",
+      "weight": 39637
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_groups_admission:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_groups_admission",
+      "mode": "test",
+      "source": "native/tests/meaning_groups_admission.rs",
+      "weight": 5599
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_identity:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_identity",
+      "mode": "test",
+      "source": "native/tests/meaning_identity.rs",
+      "weight": 40102
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_join_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_join_cli",
+      "mode": "test",
+      "source": "native/tests/meaning_join_cli.rs",
+      "weight": 30181
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_projection_portable:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_projection_portable",
+      "mode": "test",
+      "source": "native/tests/meaning_projection_portable.rs",
+      "weight": 22795
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_protocol:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_protocol",
+      "mode": "test",
+      "source": "native/tests/meaning_protocol.rs",
+      "weight": 9918
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_retention_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_retention_review",
+      "mode": "test",
+      "source": "native/tests/meaning_retention_review.rs",
+      "weight": 12024
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_view:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_view",
+      "mode": "test",
+      "source": "native/tests/meaning_view.rs",
+      "weight": 33357
+    },
+    {
+      "id": "yoke-code-intelligence:test:meaning_view_archives:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "meaning_view_archives",
+      "mode": "test",
+      "source": "native/tests/meaning_view_archives.rs",
+      "weight": 23465
+    },
+    {
+      "id": "yoke-code-intelligence:test:media:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "media",
+      "mode": "test",
+      "source": "native/tests/media.rs",
+      "weight": 26542
+    },
+    {
+      "id": "yoke-code-intelligence:test:media_asr:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "media_asr",
+      "mode": "test",
+      "source": "native/tests/media_asr.rs",
+      "weight": 10651
+    },
+    {
+      "id": "yoke-code-intelligence:test:member_decorators:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "member_decorators",
+      "mode": "test",
+      "source": "native/tests/member_decorators.rs",
+      "weight": 19069
+    },
+    {
+      "id": "yoke-code-intelligence:test:mixed_meaning_claims:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "mixed_meaning_claims",
+      "mode": "test",
+      "source": "native/tests/mixed_meaning_claims.rs",
+      "weight": 15497
+    },
+    {
+      "id": "yoke-code-intelligence:test:mixed_meaning_composition:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "mixed_meaning_composition",
+      "mode": "test",
+      "source": "native/tests/mixed_meaning_composition.rs",
+      "weight": 21379
+    },
+    {
+      "id": "yoke-code-intelligence:test:mixed_meaning_provider:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "mixed_meaning_provider",
+      "mode": "test",
+      "source": "native/tests/mixed_meaning_provider.rs",
+      "weight": 26982
+    },
+    {
+      "id": "yoke-code-intelligence:test:mixed_meaning_queries:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "mixed_meaning_queries",
+      "mode": "test",
+      "source": "native/tests/mixed_meaning_queries.rs",
+      "weight": 17472
+    },
+    {
+      "id": "yoke-code-intelligence:test:mixed_pdf_view:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "mixed_pdf_view",
+      "mode": "test",
+      "source": "native/tests/mixed_pdf_view.rs",
+      "weight": 20567
+    },
+    {
+      "id": "yoke-code-intelligence:test:mixed_view_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "mixed_view_cli",
+      "mode": "test",
+      "source": "native/tests/mixed_view_cli.rs",
+      "weight": 43658
+    },
+    {
+      "id": "yoke-code-intelligence:test:model_bedrock:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "model_bedrock",
+      "mode": "test",
+      "source": "native/tests/model_bedrock.rs",
+      "weight": 28672
+    },
+    {
+      "id": "yoke-code-intelligence:test:model_bedrock_batch_cli_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "model_bedrock_batch_cli_review",
+      "mode": "test",
+      "source": "native/tests/model_bedrock_batch_cli_review.rs",
+      "weight": 11216
+    },
+    {
+      "id": "yoke-code-intelligence:test:model_bedrock_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "model_bedrock_cli",
+      "mode": "test",
+      "source": "native/tests/model_bedrock_cli.rs",
+      "weight": 3972
+    },
+    {
+      "id": "yoke-code-intelligence:test:model_bedrock_cli_actual:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "model_bedrock_cli_actual",
+      "mode": "test",
+      "source": "native/tests/model_bedrock_cli_actual.rs",
+      "weight": 15594
+    },
+    {
+      "id": "yoke-code-intelligence:test:model_bedrock_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "model_bedrock_review",
+      "mode": "test",
+      "source": "native/tests/model_bedrock_review.rs",
+      "weight": 13293
+    },
+    {
+      "id": "yoke-code-intelligence:test:model_http:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "model_http",
+      "mode": "test",
+      "source": "native/tests/model_http.rs",
+      "weight": 27506
+    },
+    {
+      "id": "yoke-code-intelligence:test:model_http_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "model_http_cli",
+      "mode": "test",
+      "source": "native/tests/model_http_cli.rs",
+      "weight": 11476
+    },
+    {
+      "id": "yoke-code-intelligence:test:model_http_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "model_http_review",
+      "mode": "test",
+      "source": "native/tests/model_http_review.rs",
+      "weight": 6127
+    },
+    {
+      "id": "yoke-code-intelligence:test:model_identity:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "model_identity",
+      "mode": "test",
+      "source": "native/tests/model_identity.rs",
+      "weight": 2112
+    },
+    {
+      "id": "yoke-code-intelligence:test:monorepo_pre_feature_envelope:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "monorepo_pre_feature_envelope",
+      "mode": "test",
+      "source": "native/tests/monorepo_pre_feature_envelope.rs",
+      "weight": 8878
+    },
+    {
+      "id": "yoke-code-intelligence:test:monorepo_profiles:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "monorepo_profiles",
+      "mode": "test",
+      "source": "native/tests/monorepo_profiles.rs",
+      "weight": 22636
+    },
+    {
+      "id": "yoke-code-intelligence:test:monorepo_retrieval:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "monorepo_retrieval",
+      "mode": "test",
+      "source": "native/tests/monorepo_retrieval.rs",
+      "weight": 14990
+    },
+    {
+      "id": "yoke-code-intelligence:test:monorepo_scopes:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "monorepo_scopes",
+      "mode": "test",
+      "source": "native/tests/monorepo_scopes.rs",
+      "weight": 6295
+    },
+    {
+      "id": "yoke-code-intelligence:test:neo4j_publish:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "neo4j_publish",
+      "mode": "test",
+      "source": "native/tests/neo4j_publish.rs",
+      "weight": 10847
+    },
+    {
+      "id": "yoke-code-intelligence:test:neo4j_publish_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "neo4j_publish_cli",
+      "mode": "test",
+      "source": "native/tests/neo4j_publish_cli.rs",
+      "weight": 11406
+    },
+    {
+      "id": "yoke-code-intelligence:test:notes:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "notes",
+      "mode": "test",
+      "source": "native/tests/notes.rs",
+      "weight": 19792
+    },
+    {
+      "id": "yoke-code-intelligence:test:office:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "office",
+      "mode": "test",
+      "source": "native/tests/office.rs",
+      "weight": 15403
+    },
+    {
+      "id": "yoke-code-intelligence:test:office_bounds:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "office_bounds",
+      "mode": "test",
+      "source": "native/tests/office_bounds.rs",
+      "weight": 6292
+    },
+    {
+      "id": "yoke-code-intelligence:test:ollama:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "ollama",
+      "mode": "test",
+      "source": "native/tests/ollama.rs",
+      "weight": 25608
+    },
+    {
+      "id": "yoke-code-intelligence:test:operations:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "operations",
+      "mode": "test",
+      "source": "native/tests/operations.rs",
+      "weight": 13955
+    },
+    {
+      "id": "yoke-code-intelligence:test:parity_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "parity_cli",
+      "mode": "test",
+      "source": "native/tests/parity_cli.rs",
+      "weight": 11529
+    },
+    {
+      "id": "yoke-code-intelligence:test:parity_construct_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "parity_construct_review",
+      "mode": "test",
+      "source": "native/tests/parity_construct_review.rs",
+      "weight": 1687
+    },
+    {
+      "id": "yoke-code-intelligence:test:parity_retention:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "parity_retention",
+      "mode": "test",
+      "source": "native/tests/parity_retention.rs",
+      "weight": 14268
+    },
+    {
+      "id": "yoke-code-intelligence:test:parity_source_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "parity_source_review",
+      "mode": "test",
+      "source": "native/tests/parity_source_review.rs",
+      "weight": 2167
+    },
+    {
+      "id": "yoke-code-intelligence:test:parity_view_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "parity_view_review",
+      "mode": "test",
+      "source": "native/tests/parity_view_review.rs",
+      "weight": 4807
+    },
+    {
+      "id": "yoke-code-intelligence:test:parser_epoch9:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "parser_epoch9",
+      "mode": "test",
+      "source": "native/tests/parser_epoch9.rs",
+      "weight": 7497
+    },
+    {
+      "id": "yoke-code-intelligence:test:plan_feedback:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "plan_feedback",
+      "mode": "test",
+      "source": "native/tests/plan_feedback.rs",
+      "weight": 24939
+    },
+    {
+      "id": "yoke-code-intelligence:test:plan_integrity:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "plan_integrity",
+      "mode": "test",
+      "source": "native/tests/plan_integrity.rs",
+      "weight": 17136
+    },
+    {
+      "id": "yoke-code-intelligence:test:platform_credentials:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "platform_credentials",
+      "mode": "test",
+      "source": "native/tests/platform_credentials.rs",
+      "weight": 5032
+    },
+    {
+      "id": "yoke-code-intelligence:test:postgres_catalog:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "postgres_catalog",
+      "mode": "test",
+      "source": "native/tests/postgres_catalog.rs",
+      "weight": 11790
+    },
+    {
+      "id": "yoke-code-intelligence:test:postgres_catalog_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "postgres_catalog_cli",
+      "mode": "test",
+      "source": "native/tests/postgres_catalog_cli.rs",
+      "weight": 5462
+    },
+    {
+      "id": "yoke-code-intelligence:test:process:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "process",
+      "mode": "test",
+      "source": "native/tests/process.rs",
+      "weight": 9241
+    },
+    {
+      "id": "yoke-code-intelligence:test:project_session:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "project_session",
+      "mode": "test",
+      "source": "native/tests/project_session.rs",
+      "weight": 9614
+    },
+    {
+      "id": "yoke-code-intelligence:test:projects:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "projects",
+      "mode": "test",
+      "source": "native/tests/projects.rs",
+      "weight": 11864
+    },
+    {
+      "id": "yoke-code-intelligence:test:propagated_delete_contract:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "propagated_delete_contract",
+      "mode": "test",
+      "source": "native/tests/propagated_delete_contract.rs",
+      "weight": 44822
+    },
+    {
+      "id": "yoke-code-intelligence:test:propagated_delete_live:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "propagated_delete_live",
+      "mode": "test",
+      "source": "native/tests/propagated_delete_live.rs",
+      "weight": 9780
+    },
+    {
+      "id": "yoke-code-intelligence:test:protocol_connection:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "protocol_connection",
+      "mode": "test",
+      "source": "native/tests/protocol_connection.rs",
+      "weight": 7626
+    },
+    {
+      "id": "yoke-code-intelligence:test:provider_batch_bounds:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "provider_batch_bounds",
+      "mode": "test",
+      "source": "native/tests/provider_batch_bounds.rs",
+      "weight": 3207
+    },
+    {
+      "id": "yoke-code-intelligence:test:provider_batches:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "provider_batches",
+      "mode": "test",
+      "source": "native/tests/provider_batches.rs",
+      "weight": 17785
+    },
+    {
+      "id": "yoke-code-intelligence:test:provider_batches_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "provider_batches_review",
+      "mode": "test",
+      "source": "native/tests/provider_batches_review.rs",
+      "weight": 13939
+    },
+    {
+      "id": "yoke-code-intelligence:test:provider_scope_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "provider_scope_review",
+      "mode": "test",
+      "source": "native/tests/provider_scope_review.rs",
+      "weight": 8974
+    },
+    {
+      "id": "yoke-code-intelligence:test:providers:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "providers",
+      "mode": "test",
+      "source": "native/tests/providers.rs",
+      "weight": 19559
+    },
+    {
+      "id": "yoke-code-intelligence:test:publication:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "publication",
+      "mode": "test",
+      "source": "native/tests/publication.rs",
+      "weight": 1410
+    },
+    {
+      "id": "yoke-code-intelligence:test:python_empty_suite:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "python_empty_suite",
+      "mode": "test",
+      "source": "native/tests/python_empty_suite.rs",
+      "weight": 16811
+    },
+    {
+      "id": "yoke-code-intelligence:test:query_parity:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "query_parity",
+      "mode": "test",
+      "source": "native/tests/query_parity.rs",
+      "weight": 13415
+    },
+    {
+      "id": "yoke-code-intelligence:test:read_only_dependencies:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "read_only_dependencies",
+      "mode": "test",
+      "source": "native/tests/read_only_dependencies.rs",
+      "weight": 19377
+    },
+    {
+      "id": "yoke-code-intelligence:test:refactor_intents:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "refactor_intents",
+      "mode": "test",
+      "source": "native/tests/refactor_intents.rs",
+      "weight": 18469
+    },
+    {
+      "id": "yoke-code-intelligence:test:registry_replay_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "registry_replay_review",
+      "mode": "test",
+      "source": "native/tests/registry_replay_review.rs",
+      "weight": 13314
+    },
+    {
+      "id": "yoke-code-intelligence:test:replacement:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "replacement",
+      "mode": "test",
+      "source": "native/tests/replacement.rs",
+      "weight": 1198
+    },
+    {
+      "id": "yoke-code-intelligence:test:repository_discovery:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "repository_discovery",
+      "mode": "test",
+      "source": "native/tests/repository_discovery.rs",
+      "weight": 10430
+    },
+    {
+      "id": "yoke-code-intelligence:test:repository_discovery_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "repository_discovery_cli",
+      "mode": "test",
+      "source": "native/tests/repository_discovery_cli.rs",
+      "weight": 2859
+    },
+    {
+      "id": "yoke-code-intelligence:test:resource_paging:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "resource_paging",
+      "mode": "test",
+      "source": "native/tests/resource_paging.rs",
+      "weight": 7576
+    },
+    {
+      "id": "yoke-code-intelligence:test:retention:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "retention",
+      "mode": "test",
+      "source": "native/tests/retention.rs",
+      "weight": 15910
+    },
+    {
+      "id": "yoke-code-intelligence:test:retrieval:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "retrieval",
+      "mode": "test",
+      "source": "native/tests/retrieval.rs",
+      "weight": 5448
+    },
+    {
+      "id": "yoke-code-intelligence:test:runtime:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "runtime",
+      "mode": "test",
+      "source": "native/tests/runtime.rs",
+      "weight": 17902
+    },
+    {
+      "id": "yoke-code-intelligence:test:scoped_parent_performance:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "scoped_parent_performance",
+      "mode": "test",
+      "source": "native/tests/scoped_parent_performance.rs",
+      "weight": 1783
+    },
+    {
+      "id": "yoke-code-intelligence:test:scoped_resolution:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "scoped_resolution",
+      "mode": "test",
+      "source": "native/tests/scoped_resolution.rs",
+      "weight": 19103
+    },
+    {
+      "id": "yoke-code-intelligence:test:selected_graph_views:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "selected_graph_views",
+      "mode": "test",
+      "source": "native/tests/selected_graph_views.rs",
+      "weight": 16665
+    },
+    {
+      "id": "yoke-code-intelligence:test:selected_view_analysis:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "selected_view_analysis",
+      "mode": "test",
+      "source": "native/tests/selected_view_analysis.rs",
+      "weight": 24084
+    },
+    {
+      "id": "yoke-code-intelligence:test:selected_view_analysis_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "selected_view_analysis_review",
+      "mode": "test",
+      "source": "native/tests/selected_view_analysis_review.rs",
+      "weight": 9860
+    },
+    {
+      "id": "yoke-code-intelligence:test:selected_view_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "selected_view_review",
+      "mode": "test",
+      "source": "native/tests/selected_view_review.rs",
+      "weight": 8343
+    },
+    {
+      "id": "yoke-code-intelligence:test:semantic_enrichment:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "semantic_enrichment",
+      "mode": "test",
+      "source": "native/tests/semantic_enrichment.rs",
+      "weight": 7863
+    },
+    {
+      "id": "yoke-code-intelligence:test:semantic_mcp:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "semantic_mcp",
+      "mode": "test",
+      "source": "native/tests/semantic_mcp.rs",
+      "weight": 16013
+    },
+    {
+      "id": "yoke-code-intelligence:test:semantic_provider_context:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "semantic_provider_context",
+      "mode": "test",
+      "source": "native/tests/semantic_provider_context.rs",
+      "weight": 10277
+    },
+    {
+      "id": "yoke-code-intelligence:test:semantic_refactor:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "semantic_refactor",
+      "mode": "test",
+      "source": "native/tests/semantic_refactor.rs",
+      "weight": 9777
+    },
+    {
+      "id": "yoke-code-intelligence:test:semantic_workspace:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "semantic_workspace",
+      "mode": "test",
+      "source": "native/tests/semantic_workspace.rs",
+      "weight": 27100
+    },
+    {
+      "id": "yoke-code-intelligence:test:server_catalog:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "server_catalog",
+      "mode": "test",
+      "source": "native/tests/server_catalog.rs",
+      "weight": 2087
+    },
+    {
+      "id": "yoke-code-intelligence:test:server_selection:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "server_selection",
+      "mode": "test",
+      "source": "native/tests/server_selection.rs",
+      "weight": 22120
+    },
+    {
+      "id": "yoke-code-intelligence:test:server_settings:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "server_settings",
+      "mode": "test",
+      "source": "native/tests/server_settings.rs",
+      "weight": 22722
+    },
+    {
+      "id": "yoke-code-intelligence:test:server_workspace_settings:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "server_workspace_settings",
+      "mode": "test",
+      "source": "native/tests/server_workspace_settings.rs",
+      "weight": 16903
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_agent_interface:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_agent_interface",
+      "mode": "test",
+      "source": "native/tests/session_agent_interface.rs",
+      "weight": 17102
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_collections:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_collections",
+      "mode": "test",
+      "source": "native/tests/session_collections.rs",
+      "weight": 17036
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_collections_admission:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_collections_admission",
+      "mode": "test",
+      "source": "native/tests/session_collections_admission.rs",
+      "weight": 1855
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_config_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_config_cli",
+      "mode": "test",
+      "source": "native/tests/session_config_cli.rs",
+      "weight": 14073
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_config_discovery:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_config_discovery",
+      "mode": "test",
+      "source": "native/tests/session_config_discovery.rs",
+      "weight": 15811
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_config_prompt_catalogs:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_config_prompt_catalogs",
+      "mode": "test",
+      "source": "native/tests/session_config_prompt_catalogs.rs",
+      "weight": 19313
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_config_templates:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_config_templates",
+      "mode": "test",
+      "source": "native/tests/session_config_templates.rs",
+      "weight": 13194
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_dashboard:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_dashboard",
+      "mode": "test",
+      "source": "native/tests/session_dashboard.rs",
+      "weight": 23668
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_dashboard_management:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_dashboard_management",
+      "mode": "test",
+      "source": "native/tests/session_dashboard_management.rs",
+      "weight": 51339
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_epoch_selection:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_epoch_selection",
+      "mode": "test",
+      "source": "native/tests/session_epoch_selection.rs",
+      "weight": 15015
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_fixed_tools:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_fixed_tools",
+      "mode": "test",
+      "source": "native/tests/session_fixed_tools.rs",
+      "weight": 17030
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_inclusions:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_inclusions",
+      "mode": "test",
+      "source": "native/tests/session_inclusions.rs",
+      "weight": 18272
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_mcp:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_mcp",
+      "mode": "test",
+      "source": "native/tests/session_mcp.rs",
+      "weight": 5563
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_memory_patterns:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_memory_patterns",
+      "mode": "test",
+      "source": "native/tests/session_memory_patterns.rs",
+      "weight": 18904
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_optional_defaults:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_optional_defaults",
+      "mode": "test",
+      "source": "native/tests/session_optional_defaults.rs",
+      "weight": 19175
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_primary_read_only:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_primary_read_only",
+      "mode": "test",
+      "source": "native/tests/session_primary_read_only.rs",
+      "weight": 17360
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_prompt_memory:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_prompt_memory",
+      "mode": "test",
+      "source": "native/tests/session_prompt_memory.rs",
+      "weight": 19242
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_prompt_runtime:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_prompt_runtime",
+      "mode": "test",
+      "source": "native/tests/session_prompt_runtime.rs",
+      "weight": 23933
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_refactor:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_refactor",
+      "mode": "test",
+      "source": "native/tests/session_refactor.rs",
+      "weight": 29325
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_review",
+      "mode": "test",
+      "source": "native/tests/session_review.rs",
+      "weight": 1462
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_root_aliases:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_root_aliases",
+      "mode": "test",
+      "source": "native/tests/session_root_aliases.rs",
+      "weight": 6387
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_startup_project:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_startup_project",
+      "mode": "test",
+      "source": "native/tests/session_startup_project.rs",
+      "weight": 13992
+    },
+    {
+      "id": "yoke-code-intelligence:test:session_steering:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "session_steering",
+      "mode": "test",
+      "source": "native/tests/session_steering.rs",
+      "weight": 24833
+    },
+    {
+      "id": "yoke-code-intelligence:test:sibling_declarators:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "sibling_declarators",
+      "mode": "test",
+      "source": "native/tests/sibling_declarators.rs",
+      "weight": 20049
+    },
+    {
+      "id": "yoke-code-intelligence:test:skill_takeaways:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "skill_takeaways",
+      "mode": "test",
+      "source": "native/tests/skill_takeaways.rs",
+      "weight": 11386
+    },
+    {
+      "id": "yoke-code-intelligence:test:skill_takeaways_batch_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "skill_takeaways_batch_review",
+      "mode": "test",
+      "source": "native/tests/skill_takeaways_batch_review.rs",
+      "weight": 2639
+    },
+    {
+      "id": "yoke-code-intelligence:test:skill_takeaways_contract_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "skill_takeaways_contract_review",
+      "mode": "test",
+      "source": "native/tests/skill_takeaways_contract_review.rs",
+      "weight": 9003
+    },
+    {
+      "id": "yoke-code-intelligence:test:skill_takeaways_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "skill_takeaways_review",
+      "mode": "test",
+      "source": "native/tests/skill_takeaways_review.rs",
+      "weight": 8635
+    },
+    {
+      "id": "yoke-code-intelligence:test:skills_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "skills_cli",
+      "mode": "test",
+      "source": "native/tests/skills_cli.rs",
+      "weight": 9744
+    },
+    {
+      "id": "yoke-code-intelligence:test:source_acquisition:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "source_acquisition",
+      "mode": "test",
+      "source": "native/tests/source_acquisition.rs",
+      "weight": 6019
+    },
+    {
+      "id": "yoke-code-intelligence:test:source_acquisition_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "source_acquisition_cli",
+      "mode": "test",
+      "source": "native/tests/source_acquisition_cli.rs",
+      "weight": 9061
+    },
+    {
+      "id": "yoke-code-intelligence:test:source_acquisition_http:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "source_acquisition_http",
+      "mode": "test",
+      "source": "native/tests/source_acquisition_http.rs",
+      "weight": 11880
+    },
+    {
+      "id": "yoke-code-intelligence:test:source_exclusions:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "source_exclusions",
+      "mode": "test",
+      "source": "native/tests/source_exclusions.rs",
+      "weight": 15302
+    },
+    {
+      "id": "yoke-code-intelligence:test:source_line_endings:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "source_line_endings",
+      "mode": "test",
+      "source": "native/tests/source_line_endings.rs",
+      "weight": 20896
+    },
+    {
+      "id": "yoke-code-intelligence:test:store_cancellation:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "store_cancellation",
+      "mode": "test",
+      "source": "native/tests/store_cancellation.rs",
+      "weight": 13590
+    },
+    {
+      "id": "yoke-code-intelligence:test:store_identity:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "store_identity",
+      "mode": "test",
+      "source": "native/tests/store_identity.rs",
+      "weight": 5100
+    },
+    {
+      "id": "yoke-code-intelligence:test:store_open_deadline:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "store_open_deadline",
+      "mode": "test",
+      "source": "native/tests/store_open_deadline.rs",
+      "weight": 6358
+    },
+    {
+      "id": "yoke-code-intelligence:test:store_read_only:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "store_read_only",
+      "mode": "test",
+      "source": "native/tests/store_read_only.rs",
+      "weight": 9898
+    },
+    {
+      "id": "yoke-code-intelligence:test:store_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "store_review",
+      "mode": "test",
+      "source": "native/tests/store_review.rs",
+      "weight": 1711
+    },
+    {
+      "id": "yoke-code-intelligence:test:symbol_delete_live:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "symbol_delete_live",
+      "mode": "test",
+      "source": "native/tests/symbol_delete_live.rs",
+      "weight": 4278
+    },
+    {
+      "id": "yoke-code-intelligence:test:symbol_delete_ranges:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "symbol_delete_ranges",
+      "mode": "test",
+      "source": "native/tests/symbol_delete_ranges.rs",
+      "weight": 6592
+    },
+    {
+      "id": "yoke-code-intelligence:test:symbol_info_budget:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "symbol_info_budget",
+      "mode": "test",
+      "source": "native/tests/symbol_info_budget.rs",
+      "weight": 14456
+    },
+    {
+      "id": "yoke-code-intelligence:test:symbol_move_declarations:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "symbol_move_declarations",
+      "mode": "test",
+      "source": "native/tests/symbol_move_declarations.rs",
+      "weight": 21510
+    },
+    {
+      "id": "yoke-code-intelligence:test:symbol_move_effect_admission:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "symbol_move_effect_admission",
+      "mode": "test",
+      "source": "native/tests/symbol_move_effect_admission.rs",
+      "weight": 29763
+    },
+    {
+      "id": "yoke-code-intelligence:test:symbol_move_own_v1:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "symbol_move_own_v1",
+      "mode": "test",
+      "source": "native/tests/symbol_move_own_v1.rs",
+      "weight": 35635
+    },
+    {
+      "id": "yoke-code-intelligence:test:symbol_workspace:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "symbol_workspace",
+      "mode": "test",
+      "source": "native/tests/symbol_workspace.rs",
+      "weight": 15224
+    },
+    {
+      "id": "yoke-code-intelligence:test:symbol_workspace_routes:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "symbol_workspace_routes",
+      "mode": "test",
+      "source": "native/tests/symbol_workspace_routes.rs",
+      "weight": 5683
+    },
+    {
+      "id": "yoke-code-intelligence:test:test_map:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "test_map",
+      "mode": "test",
+      "source": "native/tests/test_map.rs",
+      "weight": 11968
+    },
+    {
+      "id": "yoke-code-intelligence:test:trail_adapter:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "trail_adapter",
+      "mode": "test",
+      "source": "native/tests/trail_adapter.rs",
+      "weight": 5345
+    },
+    {
+      "id": "yoke-code-intelligence:test:trail_bodies:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "trail_bodies",
+      "mode": "test",
+      "source": "native/tests/trail_bodies.rs",
+      "weight": 9966
+    },
+    {
+      "id": "yoke-code-intelligence:test:trail_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "trail_review",
+      "mode": "test",
+      "source": "native/tests/trail_review.rs",
+      "weight": 3843
+    },
+    {
+      "id": "yoke-code-intelligence:test:transcript_semantic:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "transcript_semantic",
+      "mode": "test",
+      "source": "native/tests/transcript_semantic.rs",
+      "weight": 32805
+    },
+    {
+      "id": "yoke-code-intelligence:test:universal_languages:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "universal_languages",
+      "mode": "test",
+      "source": "native/tests/universal_languages.rs",
+      "weight": 16427
+    },
+    {
+      "id": "yoke-code-intelligence:test:vector_admission_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "vector_admission_review",
+      "mode": "test",
+      "source": "native/tests/vector_admission_review.rs",
+      "weight": 12555
+    },
+    {
+      "id": "yoke-code-intelligence:test:view_comparison_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "view_comparison_cli",
+      "mode": "test",
+      "source": "native/tests/view_comparison_cli.rs",
+      "weight": 16342
+    },
+    {
+      "id": "yoke-code-intelligence:test:workflow_cli:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "workflow_cli",
+      "mode": "test",
+      "source": "native/tests/workflow_cli.rs",
+      "weight": 14541
+    },
+    {
+      "id": "yoke-code-intelligence:test:workspace:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "workspace",
+      "mode": "test",
+      "source": "native/tests/workspace.rs",
+      "weight": 5152
+    },
+    {
+      "id": "yoke-code-intelligence:test:yaml_admission_review:test",
+      "package": "yoke-code-intelligence",
+      "kind": "test",
+      "name": "yaml_admission_review",
+      "mode": "test",
+      "source": "native/tests/yaml_admission_review.rs",
+      "weight": 4479
+    }
+  ],
+  "shards": [
+    [
+      "yoke-code-intelligence:bin:yoke:test",
+      "yoke-code-intelligence:example:falkor_owned_probe:build",
+      "yoke-code-intelligence:test:analyzer_epochs:test",
+      "yoke-code-intelligence:test:capture_analyzer8_fixture:test",
+      "yoke-code-intelligence:test:claude_source_hooks:test",
+      "yoke-code-intelligence:test:compiler_move_attributes:test",
+      "yoke-code-intelligence:test:config_graph:test",
+      "yoke-code-intelligence:test:dataflow:test",
+      "yoke-code-intelligence:test:deadlines:test",
+      "yoke-code-intelligence:test:document_cli:test",
+      "yoke-code-intelligence:test:editor:test",
+      "yoke-code-intelligence:test:engine_epoch_review:test",
+      "yoke-code-intelligence:test:file_api:test",
+      "yoke-code-intelligence:test:freshness:test",
+      "yoke-code-intelligence:test:git_cli:test",
+      "yoke-code-intelligence:test:git_repository_stdio:test",
+      "yoke-code-intelligence:test:github_app_history_bridge:test",
+      "yoke-code-intelligence:test:github_app_history_cli:test",
+      "yoke-code-intelligence:test:github_app_pages_cli:test",
+      "yoke-code-intelligence:test:github_discussions:test",
+      "yoke-code-intelligence:test:graph_extensions:test",
+      "yoke-code-intelligence:test:graph_view:test",
+      "yoke-code-intelligence:test:graphify_selected_queries:test",
+      "yoke-code-intelligence:test:historical_publication:test",
+      "yoke-code-intelligence:test:historical_view_boundaries:test",
+      "yoke-code-intelligence:test:host_credentials:test",
+      "yoke-code-intelligence:test:host_install_cli:test",
+      "yoke-code-intelligence:test:host_mcp_config:test",
+      "yoke-code-intelligence:test:language_constructs:test",
+      "yoke-code-intelligence:test:ledger:test",
+      "yoke-code-intelligence:test:ledger_admission_review:test",
+      "yoke-code-intelligence:test:meaning_protocol:test",
+      "yoke-code-intelligence:test:mixed_meaning_claims:test",
+      "yoke-code-intelligence:test:model_bedrock_review:test",
+      "yoke-code-intelligence:test:neo4j_publish:test",
+      "yoke-code-intelligence:test:parity_cli:test",
+      "yoke-code-intelligence:test:parity_retention:test",
+      "yoke-code-intelligence:test:projects:test",
+      "yoke-code-intelligence:test:refactor_intents:test",
+      "yoke-code-intelligence:test:retrieval:test",
+      "yoke-code-intelligence:test:session_dashboard:test",
+      "yoke-code-intelligence:test:session_fixed_tools:test",
+      "yoke-code-intelligence:test:symbol_move_effect_admission:test"
+    ],
+    [
+      "yoke-code-intelligence:test:agent_diagnostic_boundaries:test",
+      "yoke-code-intelligence:test:compiler_inline_predicates:test",
+      "yoke-code-intelligence:test:decision_cli:test",
+      "yoke-code-intelligence:test:declaration_attachment_ranges:test",
+      "yoke-code-intelligence:test:dependency_queries:test",
+      "yoke-code-intelligence:test:derived_graph_mixed_budget:test",
+      "yoke-code-intelligence:test:digest_history_acquisition:test",
+      "yoke-code-intelligence:test:explorer_http:test",
+      "yoke-code-intelligence:test:facade_file_delete:test",
+      "yoke-code-intelligence:test:facade_file_usage:test",
+      "yoke-code-intelligence:test:git_repository_host:test",
+      "yoke-code-intelligence:test:git_repository_profiles:test",
+      "yoke-code-intelligence:test:github_app_cli:test",
+      "yoke-code-intelligence:test:github_app_digest_cli:test",
+      "yoke-code-intelligence:test:github_app_digest_mapping:test",
+      "yoke-code-intelligence:test:github_app_ingress:test",
+      "yoke-code-intelligence:test:github_app_publication:test",
+      "yoke-code-intelligence:test:graph_review_adversarial:test",
+      "yoke-code-intelligence:test:graphify_adapter:test",
+      "yoke-code-intelligence:test:historical_view_comparison:test",
+      "yoke-code-intelligence:test:json_output_review:test",
+      "yoke-code-intelligence:test:ledger_batches_review:test",
+      "yoke-code-intelligence:test:live:test",
+      "yoke-code-intelligence:test:lsp_dependency_scope:test",
+      "yoke-code-intelligence:test:lsp_source_execution:test",
+      "yoke-code-intelligence:test:maintenance:test",
+      "yoke-code-intelligence:test:mcp_http_review:test",
+      "yoke-code-intelligence:test:meaning_build:test",
+      "yoke-code-intelligence:test:meaning_feedback:test",
+      "yoke-code-intelligence:test:monorepo_pre_feature_envelope:test",
+      "yoke-code-intelligence:test:monorepo_profiles:test",
+      "yoke-code-intelligence:test:monorepo_scopes:test",
+      "yoke-code-intelligence:test:ollama:test",
+      "yoke-code-intelligence:test:propagated_delete_live:test",
+      "yoke-code-intelligence:test:selected_graph_views:test",
+      "yoke-code-intelligence:test:selected_view_review:test",
+      "yoke-code-intelligence:test:session_config_prompt_catalogs:test",
+      "yoke-code-intelligence:test:session_mcp:test",
+      "yoke-code-intelligence:test:session_prompt_runtime:test",
+      "yoke-code-intelligence:test:session_review:test",
+      "yoke-code-intelligence:test:session_root_aliases:test",
+      "yoke-code-intelligence:test:store_review:test",
+      "yoke-code-intelligence:test:symbol_delete_live:test",
+      "yoke-code-intelligence:test:symbol_info_budget:test",
+      "yoke-code-intelligence:test:transcript_semantic:test"
+    ],
+    [
+      "yoke-code-intelligence:lib:yoke:doc",
+      "yoke-code-intelligence:test:agent_facade_semantics:test",
+      "yoke-code-intelligence:test:agent_file_options:test",
+      "yoke-code-intelligence:test:agent_memory_namespaces:test",
+      "yoke-code-intelligence:test:agent_repl:test",
+      "yoke-code-intelligence:test:agent_repl_api_selection:test",
+      "yoke-code-intelligence:test:compiler_inline:test",
+      "yoke-code-intelligence:test:explorer_export:test",
+      "yoke-code-intelligence:test:explorer_runtime:test",
+      "yoke-code-intelligence:test:federation_archive:test",
+      "yoke-code-intelligence:test:freshness_epoch:test",
+      "yoke-code-intelligence:test:git_affected_qualification:test",
+      "yoke-code-intelligence:test:git_compiler_affected:test",
+      "yoke-code-intelligence:test:git_owner_changes:test",
+      "yoke-code-intelligence:test:github:test",
+      "yoke-code-intelligence:test:github_app_auth:test",
+      "yoke-code-intelligence:test:github_app_digest_handoff:test",
+      "yoke-code-intelligence:test:github_app_publication_cli:test",
+      "yoke-code-intelligence:test:graph:test",
+      "yoke-code-intelligence:test:graph_analysis_policy:test",
+      "yoke-code-intelligence:test:host_cli:test",
+      "yoke-code-intelligence:test:json_float_roundtrip:test",
+      "yoke-code-intelligence:test:knowledge_cli:test",
+      "yoke-code-intelligence:test:live_enrichment:test",
+      "yoke-code-intelligence:test:lsp:test",
+      "yoke-code-intelligence:test:lsp_enrichment:test",
+      "yoke-code-intelligence:test:mcp_collection_grants:test",
+      "yoke-code-intelligence:test:meaning_collection_archives:test",
+      "yoke-code-intelligence:test:meaning_retention_review:test",
+      "yoke-code-intelligence:test:model_bedrock:test",
+      "yoke-code-intelligence:test:model_bedrock_batch_cli_review:test",
+      "yoke-code-intelligence:test:model_bedrock_cli:test",
+      "yoke-code-intelligence:test:model_http_cli:test",
+      "yoke-code-intelligence:test:platform_credentials:test",
+      "yoke-code-intelligence:test:postgres_catalog_cli:test",
+      "yoke-code-intelligence:test:process:test",
+      "yoke-code-intelligence:test:provider_batch_bounds:test",
+      "yoke-code-intelligence:test:publication:test",
+      "yoke-code-intelligence:test:query_parity:test",
+      "yoke-code-intelligence:test:resource_paging:test",
+      "yoke-code-intelligence:test:session_inclusions:test",
+      "yoke-code-intelligence:test:session_optional_defaults:test",
+      "yoke-code-intelligence:test:source_exclusions:test",
+      "yoke-code-intelligence:test:source_line_endings:test",
+      "yoke-code-intelligence:test:symbol_move_declarations:test",
+      "yoke-code-intelligence:test:view_comparison_cli:test"
+    ],
+    [
+      "yoke-code-intelligence:example:neo4j_owned_probe:build",
+      "yoke-code-intelligence:test:artifact_page_review:test",
+      "yoke-code-intelligence:test:artifacts:test",
+      "yoke-code-intelligence:test:capture_changes:test",
+      "yoke-code-intelligence:test:collection_registry_access:test",
+      "yoke-code-intelligence:test:compiler_inline_body:test",
+      "yoke-code-intelligence:test:credentials:test",
+      "yoke-code-intelligence:test:debug_adapter:test",
+      "yoke-code-intelligence:test:document_graph_review:test",
+      "yoke-code-intelligence:test:epoch_cache_review:test",
+      "yoke-code-intelligence:test:facade_directory_move:test",
+      "yoke-code-intelligence:test:federated_collections:test",
+      "yoke-code-intelligence:test:federation:test",
+      "yoke-code-intelligence:test:federation_epochs:test",
+      "yoke-code-intelligence:test:feedback_cli:test",
+      "yoke-code-intelligence:test:git_affected_details:test",
+      "yoke-code-intelligence:test:git_conflicts:test",
+      "yoke-code-intelligence:test:git_epochs:test",
+      "yoke-code-intelligence:test:github_app_auth_cli:test",
+      "yoke-code-intelligence:test:graph_archive_review:test",
+      "yoke-code-intelligence:test:historical_view_fixture_qualification:test",
+      "yoke-code-intelligence:test:host_install:test",
+      "yoke-code-intelligence:test:ignored_capture_cli:test",
+      "yoke-code-intelligence:test:meaning_groups_admission:test",
+      "yoke-code-intelligence:test:meaning_join_cli:test",
+      "yoke-code-intelligence:test:media_asr:test",
+      "yoke-code-intelligence:test:mixed_meaning_composition:test",
+      "yoke-code-intelligence:test:mixed_meaning_provider:test",
+      "yoke-code-intelligence:test:model_identity:test",
+      "yoke-code-intelligence:test:operations:test",
+      "yoke-code-intelligence:test:parity_view_review:test",
+      "yoke-code-intelligence:test:parser_epoch9:test",
+      "yoke-code-intelligence:test:postgres_catalog:test",
+      "yoke-code-intelligence:test:python_empty_suite:test",
+      "yoke-code-intelligence:test:read_only_dependencies:test",
+      "yoke-code-intelligence:test:runtime:test",
+      "yoke-code-intelligence:test:selected_view_analysis:test",
+      "yoke-code-intelligence:test:server_settings:test",
+      "yoke-code-intelligence:test:session_memory_patterns:test",
+      "yoke-code-intelligence:test:sibling_declarators:test",
+      "yoke-code-intelligence:test:skill_takeaways:test",
+      "yoke-code-intelligence:test:skill_takeaways_batch_review:test",
+      "yoke-code-intelligence:test:skill_takeaways_review:test",
+      "yoke-code-intelligence:test:skills_cli:test",
+      "yoke-code-intelligence:test:store_open_deadline:test",
+      "yoke-code-intelligence:test:trail_adapter:test",
+      "yoke-code-intelligence:test:workflow_cli:test"
+    ],
+    [
+      "yoke-code-intelligence:test:adversarial:test",
+      "yoke-code-intelligence:test:agent_symbol_contracts:test",
+      "yoke-code-intelligence:test:arxiv_source:test",
+      "yoke-code-intelligence:test:arxiv_source_cli:test",
+      "yoke-code-intelligence:test:arxiv_source_http:test",
+      "yoke-code-intelligence:test:capture_epoch_selection:test",
+      "yoke-code-intelligence:test:capture_options:test",
+      "yoke-code-intelligence:test:capture_policy:test",
+      "yoke-code-intelligence:test:compatibility_review:test",
+      "yoke-code-intelligence:test:container:test",
+      "yoke-code-intelligence:test:digest_history_jobs:test",
+      "yoke-code-intelligence:test:digest_receiver:test",
+      "yoke-code-intelligence:test:directory_move_live:test",
+      "yoke-code-intelligence:test:facade_file_move:test",
+      "yoke-code-intelligence:test:federation_archive_receipts:test",
+      "yoke-code-intelligence:test:git_epoch_selection:test",
+      "yoke-code-intelligence:test:git_impact_details:test",
+      "yoke-code-intelligence:test:git_impact_details_no_git:test",
+      "yoke-code-intelligence:test:git_impact_details_qualification:test",
+      "yoke-code-intelligence:test:git_owners:test",
+      "yoke-code-intelligence:test:git_repository_collections:test",
+      "yoke-code-intelligence:test:google_workspace_process:test",
+      "yoke-code-intelligence:test:historical_view_budget_options:test",
+      "yoke-code-intelligence:test:ignored_directory_identity:test",
+      "yoke-code-intelligence:test:lsp_resource_settings:test",
+      "yoke-code-intelligence:test:meaning_cli:test",
+      "yoke-code-intelligence:test:meaning_commit_review:test",
+      "yoke-code-intelligence:test:meaning_graph_views:test",
+      "yoke-code-intelligence:test:meaning_view:test",
+      "yoke-code-intelligence:test:mixed_view_cli:test",
+      "yoke-code-intelligence:test:model_http:test",
+      "yoke-code-intelligence:test:office_bounds:test",
+      "yoke-code-intelligence:test:parity_source_review:test",
+      "yoke-code-intelligence:test:provider_batches:test",
+      "yoke-code-intelligence:test:provider_scope_review:test",
+      "yoke-code-intelligence:test:providers:test",
+      "yoke-code-intelligence:test:registry_replay_review:test",
+      "yoke-code-intelligence:test:replacement:test",
+      "yoke-code-intelligence:test:repository_discovery_cli:test",
+      "yoke-code-intelligence:test:server_workspace_settings:test",
+      "yoke-code-intelligence:test:session_collections_admission:test",
+      "yoke-code-intelligence:test:session_prompt_memory:test",
+      "yoke-code-intelligence:test:source_acquisition_http:test",
+      "yoke-code-intelligence:test:store_read_only:test",
+      "yoke-code-intelligence:test:symbol_workspace:test",
+      "yoke-code-intelligence:test:universal_languages:test",
+      "yoke-code-intelligence:test:workspace:test"
+    ],
+    [
+      "yoke-code-intelligence:lib:yoke:test",
+      "yoke-code-intelligence:test:agent_repl_lifecycle:test",
+      "yoke-code-intelligence:test:collections_cli:test",
+      "yoke-code-intelligence:test:collections_cli_review:test",
+      "yoke-code-intelligence:test:community_analysis_policy:test",
+      "yoke-code-intelligence:test:contracts:test",
+      "yoke-code-intelligence:test:document_explorer:test",
+      "yoke-code-intelligence:test:editor_http:test",
+      "yoke-code-intelligence:test:export:test",
+      "yoke-code-intelligence:test:falkor_publish:test",
+      "yoke-code-intelligence:test:falkor_wire:test",
+      "yoke-code-intelligence:test:federation_epoch_review:test",
+      "yoke-code-intelligence:test:federation_http:test",
+      "yoke-code-intelligence:test:git_impact_details_sqlite_limits:test",
+      "yoke-code-intelligence:test:git_repository_projects:test",
+      "yoke-code-intelligence:test:github_app_ingress_cli:test",
+      "yoke-code-intelligence:test:github_app_worker_run:test",
+      "yoke-code-intelligence:test:google_workspace_cli:test",
+      "yoke-code-intelligence:test:google_workspace_http_cli:test",
+      "yoke-code-intelligence:test:graph_collections:test",
+      "yoke-code-intelligence:test:graph_root_review:test",
+      "yoke-code-intelligence:test:lsp_action_resolve:test",
+      "yoke-code-intelligence:test:lsp_lifecycle:test",
+      "yoke-code-intelligence:test:manifest_graph:test",
+      "yoke-code-intelligence:test:markdown_graph:test",
+      "yoke-code-intelligence:test:meaning_archive_cli:test",
+      "yoke-code-intelligence:test:meaning_view_archives:test",
+      "yoke-code-intelligence:test:media:test",
+      "yoke-code-intelligence:test:mixed_pdf_view:test",
+      "yoke-code-intelligence:test:neo4j_publish_cli:test",
+      "yoke-code-intelligence:test:office:test",
+      "yoke-code-intelligence:test:plan_integrity:test",
+      "yoke-code-intelligence:test:propagated_delete_contract:test",
+      "yoke-code-intelligence:test:repository_discovery:test",
+      "yoke-code-intelligence:test:retention:test",
+      "yoke-code-intelligence:test:scoped_parent_performance:test",
+      "yoke-code-intelligence:test:scoped_resolution:test",
+      "yoke-code-intelligence:test:semantic_refactor:test",
+      "yoke-code-intelligence:test:server_selection:test",
+      "yoke-code-intelligence:test:session_config_cli:test",
+      "yoke-code-intelligence:test:session_config_templates:test",
+      "yoke-code-intelligence:test:session_epoch_selection:test",
+      "yoke-code-intelligence:test:session_primary_read_only:test",
+      "yoke-code-intelligence:test:session_steering:test",
+      "yoke-code-intelligence:test:skill_takeaways_contract_review:test",
+      "yoke-code-intelligence:test:symbol_delete_ranges:test",
+      "yoke-code-intelligence:test:test_map:test"
+    ],
+    [
+      "yoke-code-intelligence:example:benchmark:build",
+      "yoke-code-intelligence:test:analyzer_cli:test",
+      "yoke-code-intelligence:test:codex_host_cli:test",
+      "yoke-code-intelligence:test:compiler_move:test",
+      "yoke-code-intelligence:test:deadline_scope:test",
+      "yoke-code-intelligence:test:decision_records_review:test",
+      "yoke-code-intelligence:test:derived_graph_preparation:test",
+      "yoke-code-intelligence:test:epoch_producers:test",
+      "yoke-code-intelligence:test:explorer_sources:test",
+      "yoke-code-intelligence:test:facade_file_rename:test",
+      "yoke-code-intelligence:test:falkor_publish_cli:test",
+      "yoke-code-intelligence:test:file_usage_live:test",
+      "yoke-code-intelligence:test:git_repository_http:test",
+      "yoke-code-intelligence:test:git_repository_preferences:test",
+      "yoke-code-intelligence:test:git_repository_scope:test",
+      "yoke-code-intelligence:test:git_review:test",
+      "yoke-code-intelligence:test:git_workflows:test",
+      "yoke-code-intelligence:test:github_app_worker_cli:test",
+      "yoke-code-intelligence:test:github_live:test",
+      "yoke-code-intelligence:test:graph_exports:test",
+      "yoke-code-intelligence:test:graphify_cli:test",
+      "yoke-code-intelligence:test:historical_receipt_fixture_qualification:test",
+      "yoke-code-intelligence:test:host_output_disposition:test",
+      "yoke-code-intelligence:test:hybrid_retrieval:test",
+      "yoke-code-intelligence:test:ignored_capture:test",
+      "yoke-code-intelligence:test:knowledge:test",
+      "yoke-code-intelligence:test:ledger_batches:test",
+      "yoke-code-intelligence:test:legacy_retrieval_oracle:test",
+      "yoke-code-intelligence:test:mcp_http:test",
+      "yoke-code-intelligence:test:meaning_identity:test",
+      "yoke-code-intelligence:test:meaning_projection_portable:test",
+      "yoke-code-intelligence:test:member_decorators:test",
+      "yoke-code-intelligence:test:monorepo_retrieval:test",
+      "yoke-code-intelligence:test:notes:test",
+      "yoke-code-intelligence:test:provider_batches_review:test",
+      "yoke-code-intelligence:test:selected_view_analysis_review:test",
+      "yoke-code-intelligence:test:semantic_enrichment:test",
+      "yoke-code-intelligence:test:semantic_mcp:test",
+      "yoke-code-intelligence:test:semantic_provider_context:test",
+      "yoke-code-intelligence:test:session_agent_interface:test",
+      "yoke-code-intelligence:test:session_refactor:test",
+      "yoke-code-intelligence:test:session_startup_project:test",
+      "yoke-code-intelligence:test:source_acquisition_cli:test",
+      "yoke-code-intelligence:test:symbol_move_own_v1:test",
+      "yoke-code-intelligence:test:symbol_workspace_routes:test",
+      "yoke-code-intelligence:test:trail_review:test",
+      "yoke-code-intelligence:test:vector_admission_review:test"
+    ],
+    [
+      "yoke-code-intelligence:test:agent_dependency_options:test",
+      "yoke-code-intelligence:test:agent_documentation:test",
+      "yoke-code-intelligence:test:agent_facade_options:test",
+      "yoke-code-intelligence:test:blob_bounds:test",
+      "yoke-code-intelligence:test:claude_session_hooks:test",
+      "yoke-code-intelligence:test:client_lock:test",
+      "yoke-code-intelligence:test:compatibility:test",
+      "yoke-code-intelligence:test:core:test",
+      "yoke-code-intelligence:test:decision_records:test",
+      "yoke-code-intelligence:test:decision_retention:test",
+      "yoke-code-intelligence:test:declaration_attachments_live:test",
+      "yoke-code-intelligence:test:document_graph:test",
+      "yoke-code-intelligence:test:federation_receipt_bounds:test",
+      "yoke-code-intelligence:test:git_affected_cli:test",
+      "yoke-code-intelligence:test:git_areas:test",
+      "yoke-code-intelligence:test:git_ignore_policy:test",
+      "yoke-code-intelligence:test:git_impact_details_cli:test",
+      "yoke-code-intelligence:test:github_app:test",
+      "yoke-code-intelligence:test:github_app_digest:test",
+      "yoke-code-intelligence:test:github_app_worker:test",
+      "yoke-code-intelligence:test:historical_view_adversarial:test",
+      "yoke-code-intelligence:test:historical_view_receipts:test",
+      "yoke-code-intelligence:test:historical_view_semantics:test",
+      "yoke-code-intelligence:test:host_config:test",
+      "yoke-code-intelligence:test:ignored_facades:test",
+      "yoke-code-intelligence:test:json_host_profiles:test",
+      "yoke-code-intelligence:test:mcp_collection_grants_review:test",
+      "yoke-code-intelligence:test:mcp_http_cli:test",
+      "yoke-code-intelligence:test:meaning_archive_primitives:test",
+      "yoke-code-intelligence:test:meaning_graph:test",
+      "yoke-code-intelligence:test:mixed_meaning_queries:test",
+      "yoke-code-intelligence:test:model_bedrock_cli_actual:test",
+      "yoke-code-intelligence:test:model_http_review:test",
+      "yoke-code-intelligence:test:parity_construct_review:test",
+      "yoke-code-intelligence:test:plan_feedback:test",
+      "yoke-code-intelligence:test:project_session:test",
+      "yoke-code-intelligence:test:protocol_connection:test",
+      "yoke-code-intelligence:test:semantic_workspace:test",
+      "yoke-code-intelligence:test:server_catalog:test",
+      "yoke-code-intelligence:test:session_collections:test",
+      "yoke-code-intelligence:test:session_config_discovery:test",
+      "yoke-code-intelligence:test:session_dashboard_management:test",
+      "yoke-code-intelligence:test:source_acquisition:test",
+      "yoke-code-intelligence:test:store_cancellation:test",
+      "yoke-code-intelligence:test:store_identity:test",
+      "yoke-code-intelligence:test:trail_bodies:test",
+      "yoke-code-intelligence:test:yaml_admission_review:test"
+    ]
+  ]
+}

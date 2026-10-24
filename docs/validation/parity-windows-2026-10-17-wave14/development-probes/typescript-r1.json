@@ -1,0 +1,23 @@
+{
+  "label": "typescript",
+  "command": [
+    "npm.cmd",
+    "test"
+  ],
+  "exitCode": 0,
+  "environment": {
+    "CARGO_TARGET_DIR": "E:\\Yoke-Build-Cache\\pdf-mixed-view-20261017",
+    "CARGO_HOME": "E:/Yoke-Build-Cache/cargo-home-yoke-20261017",
+    "CARGO_NET_OFFLINE": "true",
+    "TEMP": "E:\\Yoke-Build-Cache\\pdf-mixed-view-20261017\\temp",
+    "TMP": "E:\\Yoke-Build-Cache\\pdf-mixed-view-20261017\\temp",
+    "RTK_SUPPRESS_HOOK_WARNING": "1"
+  },
+  "runnerSha256": "dbf6e95ee624c6f05ec0edf336ae6c0d4ec302d48120e6211e13ede1bb833062",
+  "sourceBefore": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+  "sourceAfter": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+  "sourceChanges": [],
+  "log": "typescript-r1.log",
+  "logSha256": "7e42e712282cfaa24625599963e4a1e79b977bbf5d758986281786060a64c72a",
+  "interpretation": "Isolated scoped development only; no integrated acceptance or universal parity claim."
+}

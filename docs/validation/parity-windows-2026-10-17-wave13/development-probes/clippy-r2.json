@@ -1,0 +1,30 @@
+{
+  "label": "clippy",
+  "command": [
+    "cargo",
+    "clippy",
+    "--workspace",
+    "--all-targets",
+    "--locked",
+    "-j",
+    "1",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "exitCode": 101,
+  "environment": {
+    "CARGO_TARGET_DIR": "E:\\Yoke-Build-Cache\\outcome-learning-20261017",
+    "CARGO_HOME": "E:/Yoke-Build-Cache/cargo-home-yoke-20261017",
+    "CARGO_NET_OFFLINE": "true",
+    "TEMP": "E:\\Yoke-Build-Cache\\outcome-learning-20261017\\temp",
+    "TMP": "E:\\Yoke-Build-Cache\\outcome-learning-20261017\\temp",
+    "RTK_SUPPRESS_HOOK_WARNING": "1"
+  },
+  "sourceBefore": "7de284896cab937e23e8b779b31498443f8cd816c0e8b04324a9ec93be470080",
+  "sourceAfter": "7de284896cab937e23e8b779b31498443f8cd816c0e8b04324a9ec93be470080",
+  "sourceChanges": [],
+  "log": "clippy-r2.log",
+  "logSha256": "8f196d378b99bb19b1f0149900247d409ea34cd6aa57d33560029e11496c4d13",
+  "interpretation": "Separate scoped development; no full parity or integrated acceptance claim."
+}

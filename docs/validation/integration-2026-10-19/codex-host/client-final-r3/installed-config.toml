@@ -1,0 +1,13 @@
+# human 💡
+[mcp_servers.human]
+command = "unrelated-host-tool"
+enabled = false
+[mcp_servers.yoke_owned-fixture]
+command = "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe"
+args = ["--root","C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-r0sabyi3\\source 💡","serve-session","--id","owned-fixture","--host-profile","C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-r0sabyi3\\policy.json","--profile","native"]
+cwd = "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-r0sabyi3\\source 💡"
+enabled = true
+env_vars = []
+enabled_tools = ["ci_find","ci_read","ci_trace","ci_context","ci_retrieve","ci_graph"]
+startup_timeout_sec = 30
+tool_timeout_sec = 120

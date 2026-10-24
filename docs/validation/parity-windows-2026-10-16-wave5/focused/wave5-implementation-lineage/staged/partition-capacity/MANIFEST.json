@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "status": "ignored_capacity_drafts_frozen_uncompiled_unexecuted",
+  "action": "act_mva0w19b_ed935c0ac58d",
+  "originalPartitionManifestUnchanged": "18e8d83be0a8985bb0d711e6321e26d6a6e410961f08d3df698a80b3caf0c2d4",
+  "normalEditsAuthorized": false,
+  "normalSourcesChangedByA": [],
+  "files": [
+    {
+      "path": "PLAN.md",
+      "sha256": "8661d661127c5d4fd7f0cd068b8c5fc674480a4d3e8cc3aad7e39642bc30cf8a",
+      "bytes": 12738,
+      "draftTests": 0,
+      "qualifiedIgnoredTests": 0
+    },
+    {
+      "path": "PROMOTION.json",
+      "sha256": "92112c35ce9997f8126351dbbe662e228dc6b4a02ece319867972ab97194f453",
+      "bytes": 4924,
+      "draftTests": 0,
+      "qualifiedIgnoredTests": 0
+    },
+    {
+      "path": "retrieval_capacity.rs",
+      "sha256": "c4e5214284a4cb08c84a9526f9310ff316c3f0da0501b394a02ec71d53fd5e5b",
+      "bytes": 757,
+      "draftTests": 0,
+      "qualifiedIgnoredTests": 0
+    },
+    {
+      "path": "retrieval_capacity_tests.rs",
+      "sha256": "738fe1d7d5b93b7ac49989dac9d159191bf1a5b055645764d2fca0887e7aab42",
+      "bytes": 7340,
+      "draftTests": 7,
+      "qualifiedIgnoredTests": 0
+    },
+    {
+      "path": "retrieval_scopes_capacity_tests.rs",
+      "sha256": "ef5ee32507322571f3a76e9706e3bbb59e2330f440d3202ec494cdd116ac8327",
+      "bytes": 16519,
+      "draftTests": 6,
+      "qualifiedIgnoredTests": 5
+    },
+    {
+      "path": "SOURCES.json",
+      "sha256": "191c98bc11a6233374e71494ce46a6620a9f6b45cf8365e9c800353bcc5a8c62",
+      "bytes": 2800,
+      "draftTests": 0,
+      "qualifiedIgnoredTests": 0
+    }
+  ],
+  "ordinaryDraftTests": 8,
+  "qualifiedIgnoredDraftTests": 5,
+  "requiredStub": "bounded_graph_fingerprint is explicitly Internal implementation_unavailable; returns only correlation digest, no source authority",
+  "validation": {
+    "rustfmtEdition2024Check": "passed_parse_format_only",
+    "json": "PROMOTION/SOURCES parsed",
+    "independentArithmetic": "ownership16000000/+1 and observation322000001 byte lower bound; no feature execution",
+    "independentStreamSha256": "ec27c9e8186e18955923e326ec81571b342e471d31277a4a57695fd87911c858",
+    "cargo": "not_run",
+    "node": "not_run",
+    "featureTests": "not_run",
+    "largeFixtures": "not_built_or_run",
+    "services": "not_used",
+    "performance": "not_measured"
+  },
+  "claims": {
+    "capacityGuardsCertified": false,
+    "fullContractCertified": false,
+    "upstreamParityCertified": false,
+    "runtimeCosts": "planning reservations only",
+    "observation1M": "Never Ready under64MB; optional genuine count runtime pair remains unqualified until root executes"
+  },
+  "release": "Root alone may promote and implement after explicit release and actual causal RED; original18e8 package remains immutable."
+}

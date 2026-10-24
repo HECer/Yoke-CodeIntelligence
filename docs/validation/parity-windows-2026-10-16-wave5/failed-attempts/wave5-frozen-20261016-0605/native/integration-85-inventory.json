@@ -1,0 +1,27 @@
+{
+  "publication": {
+    "executable": "target\\debug\\deps\\publication-48dca67002c9b393.exe",
+    "ignored": [],
+    "registered": [
+      "first_publication_time_is_durable_and_never_refreshed_by_republication"
+    ]
+  },
+  "query_parity": {
+    "executable": "target\\debug\\deps\\query_parity-fd60f1161151b971.exe",
+    "ignored": [],
+    "registered": [
+      "advertised_native_protocol_reaches_advanced_semantic_operations",
+      "body_retrieval_in_file_mode_never_returns_symbol_rows",
+      "bulk_edit_selection_is_atomic_and_conflicting_modes_are_rejected",
+      "clipped_single_line_context_keeps_the_match_and_exact_unicode_bytes",
+      "exact_name_path_symbol_query_has_source_bound_body_and_depth",
+      "multiline_case_insensitive_search_exposes_exact_occurrences_and_symbol_owners",
+      "public_engine_semantics_preserve_host_configuration_callbacks",
+      "relative_directory_scope_is_segment_aware_and_globs_are_explicit",
+      "selected_occurrences_and_count_guards_prepare_an_atomic_reviewable_bulk_plan",
+      "task_words_inside_multiline_bodies_are_searchable_without_becoming_fact",
+      "text_search_pages_past_the_first_ten_thousand_occurrences",
+      "text_search_streams_the_captured_corpus_beyond_the_symbol_body_cache_budget"
+    ]
+  }
+}

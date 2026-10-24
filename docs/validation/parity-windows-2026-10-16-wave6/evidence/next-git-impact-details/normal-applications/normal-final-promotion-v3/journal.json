@@ -1,0 +1,30 @@
+{
+  "afterMapSha256": "11f688628aa77bf3f50c440cd954aa49e0588800aeabb838bc17d09efe9ef30f",
+  "appliedTargets": [
+    "native/docs/git-impact-details-cli.md",
+    "native/docs/git-impact-details.md",
+    "native/src/git_impact_candidates.rs",
+    "native/src/git_impact_cli.rs",
+    "native/src/git_impact_details.rs",
+    "native/src/git_impact_details_scope_tests.rs",
+    "native/src/git_impact_quotes.rs",
+    "native/src/git_workflows.rs",
+    "native/src/main.rs",
+    "native/src/meaning_archive_cli.rs",
+    "native/tests/git_impact_details.rs",
+    "native/tests/git_impact_details_cli.rs",
+    "native/tests/git_impact_details_no_git.rs",
+    "native/tests/git_impact_details_qualification.rs",
+    "native/tests/git_impact_details_sqlite_limits.rs",
+    "native/tests/support/git_impact_fixture.rs"
+  ],
+  "arbitraryDeletes": false,
+  "automaticRollback": false,
+  "complete": true,
+  "gateBindingsSha256": "8b18b29828c3e3e8151340e5543cc2e2854b3c53740a3ae178967f7b5f0764f1",
+  "inFlight": null,
+  "manifestSha256": "4ede4e32b6671a4af17d65ea4edb9c733b2d1b16e25a80c923a519750b81bcdd",
+  "multiFileAtomic": false,
+  "normalFiles": 2419,
+  "normalWrites": 16
+}

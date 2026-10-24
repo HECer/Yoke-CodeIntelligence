@@ -1,0 +1,93 @@
+{
+  "sourceCommit": "41d66b04accd89277ca2ae13a6247f82c0ce286c",
+  "nativeCodeCommit": "666656bae3c4e5a0abb9918d943505098266e455",
+  "summary": {
+    "complete": true,
+    "sourceCommit": "41d66b04accd89277ca2ae13a6247f82c0ce286c",
+    "nativeCodeCommit": "666656bae3c4e5a0abb9918d943505098266e455",
+    "sourceInputs": 1109,
+    "sourceInputsUnchanged": true,
+    "nativeCliSha256": "aa391752ae06896894e0610e65f7a006ac8757dccf32eb19428882e5cf72f7c7",
+    "nativeCliUnchanged": true,
+    "provider": {
+      "path": "C:\\Users\\Lomi\\.rustup\\toolchains\\1.94.1-x86_64-pc-windows-msvc\\bin\\rust-analyzer.exe",
+      "sha256": "8780a0a408169100c7b4df49ba2c9dcc4b40b48dd375e3985bd585f1a4fe0a57",
+      "version": "rust-analyzer 1.94.1 (e408947b 2026-03-25)",
+      "binaryUnchanged": true
+    },
+    "harness": {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\live-fddfa6c06b48f9c2.exe",
+      "bytes": 128394240,
+      "sha256": "75674de31ded284cf16671dcc2df4364e9ae4668a99fd0f1198616d11b88eef0"
+    },
+    "passed": 2,
+    "selectedOriginalIgnoredGates": true,
+    "allJobsEmpty": true,
+    "privateHomeAndTempOnly": true,
+    "productionSourceExecutionGranted": false,
+    "settingsOrAll77RuntimeCertification": false,
+    "wholeNativeOrHostedAcceptance": false,
+    "fullStatusComplete": false
+  },
+  "originalLiveTestGitTextUnchanged": true,
+  "originalLiveTestWorkingBytesSha256": "2f98ff40346b68bcebce5c0621a4c56d48359e76c8e028c3e8f4970bc8716b93",
+  "passed": 2,
+  "failed": 0,
+  "ignored": 0,
+  "measured": 0,
+  "filteredOut": 2,
+  "selectedOriginalIgnoredGates": true,
+  "countsNotAddedToHistoricalDefaultOr788GroupCounts": true,
+  "archive": {
+    "path": "raw.zip",
+    "bytes": 83939,
+    "sha256": "0f58b26e2b064bb0fd0fa63f60396e8b276ec6f7c3133d7a97aebdeee3f9080d",
+    "members": [
+      {
+        "path": "actual-rust-analyzer-gates.stderr",
+        "bytes": 245,
+        "sha256": "901f95bfdc7f6dd86d26a632d780ff8dddd9dd04fdc7bd2d1e2f48a480f2a2b7"
+      },
+      {
+        "path": "actual-rust-analyzer-gates.stdout",
+        "bytes": 385768,
+        "sha256": "7198b60c07c857b9dff63b81d160161f0e7bb21f54d49ec481c613adcd0f1954"
+      },
+      {
+        "path": "actual-rust-analyzer-version.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "actual-rust-analyzer-version.stdout",
+        "bytes": 43,
+        "sha256": "837ef86b018f1f79e858247c06a2d0674251424f68ba8278517e87d121ed34e2"
+      },
+      {
+        "path": "controller.py",
+        "bytes": 4924,
+        "sha256": "c55ad27ef5cc911aaece5c281f6d0ee9f65ba45eb2cd8563c8f8b0681cf50b8c"
+      },
+      {
+        "path": "progress.json",
+        "bytes": 1094,
+        "sha256": "2352af6630344e638460132d8ad2a766d2660c5ba56d9e187fa8bb216bc7833f"
+      },
+      {
+        "path": "result.json",
+        "bytes": 1157,
+        "sha256": "1cb7ef6ca4e30e10f1ebfa4488b486d4ca35f3d21e9cbeb9b7eee69ad628b35a"
+      },
+      {
+        "path": "source-before.json",
+        "bytes": 118158,
+        "sha256": "358dd1e08f0fb8211a9a95b02767c9976e91670dc12cf755ac57d16199892840"
+      }
+    ]
+  },
+  "sourceInputs": 1109,
+  "sourceInputsUnchangedThroughLive": true,
+  "all77RuntimeCertification": false,
+  "wholeNativeOrHostedAcceptance": false,
+  "fullStatusComplete": false
+}

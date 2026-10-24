@@ -1,0 +1,19 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 5.24s
+     Running tests\federation_epoch_review.rs (target\debug\deps\federation_epoch_review-f3bda00f0381e723.exe)
+v1_public_graph_rejects_resealed_invented_label: test
+v1_public_graph_rejects_resealed_retargeted_call: test
+v2_public_graph_rejects_resealed_invented_label: test
+v2_public_graph_rejects_resealed_retargeted_call: test
+
+4 tests, 0 benchmarks
+     Running tests\federation_epochs.rs (target\debug\deps\federation_epochs-dd4fcd9d95125532.exe)
+authentic_receiver8_v1_receipt_graph_and_archived_provenance_stay_exact: test
+declared_v2_epoch_cannot_be_downgraded_under_the_same_foreign_identity: test
+exact_v2_receipt_is_recognized_by_retention_without_an_opaque_kind_allowance: test
+explicit_receiver9_creates_an_exact_v2_receipt_and_epoch9_source_graph: test
+retrying_an_existing_v1_envelope_with_receiver9_preserves_old_id_graph_and_receipt: test
+signed_v1_source_namespace_is_preserved_by_the_same_typed_retention_preflight: test
+unknown_receipt_epochs_and_added_v1_epoch_fields_fail_before_source_callbacks: test
+
+7 tests, 0 benchmarks

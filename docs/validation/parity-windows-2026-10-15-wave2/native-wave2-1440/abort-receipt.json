@@ -1,0 +1,29 @@
+{
+  "checkedAtUtc": "2026-10-15T14:48:12.869684+00:00",
+  "phase": "native_interrupted",
+  "accepted": false,
+  "completion": "aborted_after_verified_environment_storagefull",
+  "reason": "C volume had approximately54MB free; two128MB ownedfixture set_len calls returnedOS112. No source/testchanges; freshfullnative run usesverified NTFS D withrealDOSaliases.",
+  "observedPassed": 417,
+  "observedFailed": 2,
+  "observedIgnored": 6,
+  "sourceFiles": 694,
+  "sourceChanges": [],
+  "logsSha256": {
+    "doctests.log": "12fc79b280382097a395567eeabe82cc935017565cff7fe08f2f248d93df44cf",
+    "integration-00.log": "d2e87c5f34a113dfdad559cf271d673a38edd84dc476bcb36885883f659d09ec",
+    "integration-01.log": "ac85c97c833e8aec3ee11b37768f4b2912b545fafc55eb59106fc5f973e84d6d",
+    "integration-02.log": "5daa621cec5880325b2bd28ac2e40c71805925f882b5dcc0d9ee38ebd918f32c",
+    "integration-03.log": "01bc905490ecd1b570e2945399a81faf4b509c9d014c787a174677188e41d6db",
+    "integration-04.log": "0ebfd9e5fd18b7d98f20bca6970af7d59a02da98be57b36c7789a8a6d8702fe7",
+    "integration-05.log": "f6088fe5fcc740a5d3ec679f9c813b9eb2817f28366df2d829047963280431a3",
+    "integration-06.log": "901b72c875aad3231f2287e8f3fa777a8bcdb362711b5c6a6d13a6045d6c2195",
+    "integration-07.log": "35730b1e92f53ddadedfbb92a0d2329ca324610999fc895f726fffa175a7a327",
+    "integration-08.log": "55aeed1fff1ea416a233c5c436d07e1846f885a21db254731886d03c773619f3",
+    "integration-09.log": "e0400b3ea3b9975b9c4b703990d52274324b04cc4694b2a22f1db7057ac0cc3e",
+    "integration-10.log": "c8f7fac92bf71cb56ce228af89d76462cb2e64f2506342a31a8faa8e633b9897",
+    "integration-11.log": "ca11c2e86bbcc06f97c4ae023fdaa393d971fe2e37b40c634db9610320f2ffbf",
+    "package.log": "f92cb0610b865d12ee5acb00191affae88f2301a8ef8ef1fcc1139f479cb6ece"
+  },
+  "termination": "ExactPythonacceptancecommandverifiedbeforetaskkilltree; rootCargo/test/workerprocesses stopped. Onegone descendant reportedunsupportedtermination; subsequentCIMread showedPID40976absent."
+}

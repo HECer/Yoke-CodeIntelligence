@@ -1,0 +1,16 @@
+{
+  "status": "normal frozen during root gate6412; LF normalization pending explicit release",
+  "installedDocumentSha256": "22999200ab764e4f7c4b2e4e554889baefe94b2395209cdc73a4e8c8f591b21a",
+  "workflowBeforeSha256": "b8378df0c2a56f3221438b4cf358ac1894a60ff8b66f6c580ffdaae80895bd4e",
+  "workflowCurrentCRLFIntermediateSha256": "eedec69195c82fb067294461e16f1100fbc3e4798fcb04a633a6ec2066353def",
+  "workflowExpectedMinimalLFSha256": "2beeec736fdcb8f7f8fc52956c2cdcb71ed6521ba860698cdcb103d00efd45d6",
+  "reviewedLogicalTwoHunksExact": true,
+  "otherCNormalPinsUnchanged": {
+    "native/src/protocol.rs": "e395fcd26c64be8041abb1b41fff99d04fb55bef2744e0cff471920539388f8f",
+    "native/src/trail_adapter.rs": "61e230f3ac3e7df52c775d4a5c7846c511558ca582ed94f23a8663fa9b097be3",
+    "native/src/trail_envelope_tests.rs": "9ef3546863ef0ac4f91a97a0459f10133a9a6842da3541dd4ff214742e99c8cd",
+    "native/tests/monorepo_profiles.rs": "1947ff32b76c3ac94c0f825ca7558b1848943ec8b7a5f0178c04a3a64718359b",
+    "native/tests/monorepo_pre_feature_envelope.rs": "c1563216c4d2c78f26fadadc62ffd68a4ff5f391df3396e32485f17aa5014103"
+  },
+  "executionByC": false
+}

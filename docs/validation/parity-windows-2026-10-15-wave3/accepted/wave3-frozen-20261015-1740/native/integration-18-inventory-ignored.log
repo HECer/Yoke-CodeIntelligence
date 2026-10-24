@@ -1,0 +1,18 @@
+    Finished `test` profile [unoptimized] target(s) in 0.64s
+     Running tests\lsp.rs (target\debug\deps\lsp-ad376eb03f90ca87.exe)
+0 tests, 0 benchmarks
+     Running tests\lsp_action_resolve.rs (target\debug\deps\lsp_action_resolve-53fe1341ce53a403.exe)
+actual_typescript_lazy_fix_all_preserves_the_unexecuted_auxiliary_command_boundary: test
+
+1 test, 0 benchmarks
+     Running tests\lsp_dependency_scope.rs (target\debug\deps\lsp_dependency_scope-c5f769ee5acdbb3b.exe)
+0 tests, 0 benchmarks
+     Running tests\lsp_enrichment.rs (target\debug\deps\lsp_enrichment-48c225064c76c69a.exe)
+0 tests, 0 benchmarks
+     Running tests\lsp_lifecycle.rs (target\debug\deps\lsp_lifecycle-6843554963ada3d4.exe)
+0 tests, 0 benchmarks
+     Running tests\lsp_source_execution.rs (target\debug\deps\lsp_source_execution-72fe99b4b2ad15da.exe)
+actual_jedi_source_auto_import_module_does_not_execute_without_host_authority: test
+actual_rust_source_selected_rustc_requires_explicit_host_execution_authority: test
+
+2 tests, 0 benchmarks

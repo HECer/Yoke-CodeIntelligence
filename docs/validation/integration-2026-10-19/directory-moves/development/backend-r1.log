@@ -1,0 +1,25 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence-r1-directory\native)
+warning: method `into_record` is never used
+  --> native\src\changes_directory.rs:58:19
+   |
+54 | impl SelectedDirectoryMove {
+   | -------------------------- method in this implementation
+...
+58 |     pub(crate) fn into_record(self) -> DirectoryMove {
+   |                   ^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 1m 24s
+     Running unittests src\lib.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\yoke-d0206a40818d4343.exe)
+
+running 5 tests
+test changes::directory::tests::cancellation_after_actual_rename_keeps_the_durable_intent_and_recovers_unrecorded_paths ... ok
+test changes::directory::tests::isolated_result_contains_the_complete_declared_directory_shape ... ok
+test changes::directory::tests::directory_plan_preserves_empty_dirs_exact_bytes_modes_and_identity_through_apply_and_recovery ... ok
+test changes::directory::tests::recovery_preserves_foreign_directory_members_and_can_retry_after_manual_reconciliation ... ok
+test changes::directory::tests::stale_empty_directory_or_uncaptured_file_refuses_before_any_workspace_change ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 422 filtered out; finished in 0.67s
+

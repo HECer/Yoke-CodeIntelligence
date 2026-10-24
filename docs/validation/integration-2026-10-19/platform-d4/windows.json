@@ -1,0 +1,35 @@
+{
+  "jobId": 117824956197,
+  "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39178127938/job/117824956197",
+  "groups": 256,
+  "passed": 2283,
+  "failed": 6,
+  "ignored": 37,
+  "accepted": false,
+  "failures": [
+    {
+      "test": "agent_repl::source_binding_tests::provider_queries_keep_the_symbol_snapshot_after_original_source_changes",
+      "detail": "thread 'agent_repl::source_binding_tests::provider_queries_keep_the_symbol_snapshot_after_original_source_changes' (6512) panicked at native\\src\\agent_repl.rs:2912:10:\ncalled `Result::unwrap()` on an `Err` value: Native facade operation failed: {\"code\":\"REQUEST_FAILED\",\"message\":\"Request deadline exceeded\"}\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "lsp::uri_tests::react_documents_and_siblings_keep_their_ids_with_base_language_providers",
+      "detail": "thread 'lsp::uri_tests::react_documents_and_siblings_keep_their_ids_with_base_language_providers' (5040) panicked at native\\src\\lsp.rs:3464:14:\ncalled `Result::unwrap()` on an `Err` value: Language server returned an error: {\"code\":-32000,\"message\":\"Fixture document languages or provider siblings differ\"}"
+    },
+    {
+      "test": "explicitly_selected_shell_runs_and_cell_errors_preserve_namespace",
+      "detail": "thread 'explicitly_selected_shell_runs_and_cell_errors_preserve_namespace' (6548) panicked at native\\tests\\agent_repl.rs:249:48:\ncalled `Result::unwrap()` on an `Err` value: Request deadline exceeded\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "public_external_directory_queries_share_ignored_scope_without_activation_and_honor_removal",
+      "detail": "thread 'public_external_directory_queries_share_ignored_scope_without_activation_and_honor_removal' (508) panicked at native\\tests\\ignored_facades.rs:314:6:\ncalled `Result::unwrap()` on an `Err` value: Project root is not host-registered\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "session_capacity_expiry_and_slow_connection_shutdown_are_bounded",
+      "detail": "thread 'session_capacity_expiry_and_slow_connection_shutdown_are_bounded' (5820) panicked at native\\tests\\mcp_http.rs:471:32:\nno entry found for key\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "windows_host_fixture_does_not_allocate_a_console_window",
+      "detail": "thread 'windows_host_fixture_does_not_allocate_a_console_window' (8208) panicked at native\\tests\\process.rs:107:5:\nassertion `left == right` failed\nleft: Some(1)\nright: Some(0)\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    }
+  ]
+}

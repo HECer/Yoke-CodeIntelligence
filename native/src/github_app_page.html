@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="__YOKE_PAGE_POLICY__">
+<title>Yoke pull request report</title>
+<style>
+:root{color-scheme:light dark;font-family:system-ui,sans-serif;background:#11161d;color:#e1e8ef}body{max-width:1200px;margin:auto;padding:24px;overflow-wrap:anywhere}*,*::before,*::after{box-sizing:border-box}h1{font-size:1.7rem;margin-bottom:8px}p{line-height:1.6}.muted{color:#aebac7}header{border-bottom:1px solid #425166;padding-bottom:16px}label{display:inline-flex;gap:8px;align-items:center;margin:8px 16px 8px 0}input,select,button{font:inherit;padding:8px;color:inherit;background:#1d2835;border:1px solid #687b92;border-radius:5px}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #84c9ff;outline-offset:2px}.panels{display:grid;grid-template-columns:minmax(0,2fr) minmax(240px,1fr);gap:16px}.plot{height:520px;overflow:auto;background:#16212e;border:1px solid #425166;border-radius:8px}svg{display:block;width:100%;height:auto;min-height:200px}.node rect{fill:#244052;stroke:#84b9cf;stroke-width:1}.node.changed rect{fill:#355b42;stroke:#b4dfa9}.node.selected rect{stroke:#ffdc83;stroke-width:3}.node text{fill:#eef6fa;font:12px system-ui;pointer-events:none}.edge{stroke:#8da9b9;stroke-width:1.5;fill:none}.arrow{fill:#8da9b9}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;line-height:1.5;background:#16212e;padding:12px;border-radius:8px;max-height:520px;overflow:auto}details{margin:20px 0}summary{cursor:pointer;padding:8px 0}#list{display:flex;flex-wrap:wrap;gap:6px}#list button{max-width:100%;overflow-wrap:anywhere;text-align:left}#list button[aria-pressed=true]{border-color:#ffdc83}footer{border-top:1px solid #425166;margin-top:24px;padding-top:12px;font-size:13px}@media(max-width:760px){body{padding:14px}.panels{grid-template-columns:1fr}.plot{height:380px}label{display:flex;flex-wrap:wrap}input{min-width:0;max-width:100%}}
+</style></head><body>
+<header><p class="muted">YOKE · CAPTURED PULL REQUEST REPORT</p><h1 id="title">Pull request impact</h1>
+<p>Structural candidates. This report does not prove compiler binding, runtime behavior, merge safety or complete coverage.</p><p id="binding" class="muted"></p></header>
+<main><section aria-label="Graph controls"><label>Source side <select id="side"><option value="head">Head</option><option value="base">Removed-source base</option></select></label>
+<label>Find a symbol <input id="search" type="search" autocomplete="off" spellcheck="false"></label>
+<label><input id="changed" type="checkbox">Changed symbols only</label><button id="previous" type="button">Previous</button> <button id="next" type="button">Next</button></section>
+<p id="count" role="status" aria-live="polite"></p>
+<div class="panels"><section class="plot" aria-label="Directed graph"><svg id="graph" viewBox="0 0 1000 600" role="img" aria-label="Directed structural observations; choose a symbol below to inspect its evidence"></svg></section>
+<section aria-label="Selected symbol and evidence"><h2>Inspect evidence</h2><pre id="inspect" tabindex="0">Choose a symbol to inspect exact source ranges and directed observations.</pre></section></div>
+<h2>Symbols in this view</h2><div id="list"></div>
+<details><summary>Coverage and exact captured bindings</summary><pre id="coverage"></pre></details>
+<details><summary>Historical source identities</summary><pre id="identities"></pre></details></main>
+<footer>Source bytes are authoritative. Labels and graph links remain structural observations. Provider metadata was observed during analysis; this page grants no current-head, publication or installation authority. No source code, model output, external scripts, fonts or telemetry is embedded.</footer>
+<script type="application/json" id="data">__YOKE_PAGE_DATA__</script>
+<script>
+'use strict';
+(()=>{
+const packet=JSON.parse(document.getElementById('data').textContent);
+const byId=id=>document.getElementById(id), ns='http://www.w3.org/2000/svg';
+const text=(id,value)=>{byId(id).textContent=value;};
+text('title',packet.repository+' #'+packet.number+' · structural impact');
+text('binding','Head '+packet.headSha+' · completion '+packet.completionId);
+text('coverage',JSON.stringify({coverage:packet.coverage,bindings:packet.bindings},null,2));
+text('identities',JSON.stringify({schemaVersion:packet.schemaVersion,rendererVersion:packet.rendererVersion,workspaceId:packet.workspaceId,appId:packet.appId,repositoryId:packet.repositoryId,jobId:packet.jobId,completionId:packet.completionId,queueRevision:packet.queueRevision,headSnapshotId:packet.headSnapshotId,baseSnapshotId:packet.baseSnapshotId,reviewHash:packet.reviewHash,complete:false},null,2));
+byId('side').options[1].disabled=!packet.graph.base;
+let offset=0,selected=null;
+const batch=80;
+function element(name,attributes,parent){const node=document.createElementNS(ns,name);for(const [key,value]of Object.entries(attributes))node.setAttribute(key,String(value));if(parent)parent.append(node);return node;}
+function inspect(node,section){selected=node.id;const edges=section.observations.filter(e=>e.source===node.id||e.target===node.id),ids=new Set(edges.flatMap(e=>e.evidenceIds));text('inspect',JSON.stringify({node,observations:edges,evidence:section.evidence.filter(e=>ids.has(e.id))},null,2));draw();}
+function draw(){
+ const section=packet.graph[byId('side').value];const svg=byId('graph'),list=byId('list');svg.replaceChildren();list.replaceChildren();
+ if(!section){text('count','No captured source was supplied for this side.');return;}
+ const query=byId('search').value.toLocaleLowerCase();const filtered=section.nodes.filter(n=>(!byId('changed').checked||n.roles.includes('changed'))&&(!query||(n.name+' '+n.path+' '+n.qualifiedName).toLocaleLowerCase().includes(query)));
+ offset=Math.min(offset,Math.max(0,Math.floor((filtered.length-1)/batch)*batch));
+ const visible=filtered.slice(offset,offset+batch),columns=Math.max(1,Math.min(4,Math.floor(svg.parentElement.clientWidth/245))),positions=new Map(visible.map((n,i)=>[n.id,{x:15+(i%columns)*245,y:20+Math.floor(i/columns)*70}]));
+ svg.setAttribute('viewBox','0 0 '+(columns*245+30)+' '+Math.max(200,Math.ceil(visible.length/columns)*70+40));
+ const defs=element('defs',{},svg),marker=element('marker',{id:'arrow',viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:6,markerHeight:6,orient:'auto'},defs);element('path',{d:'M 0 0 L 10 5 L 0 10 z',class:'arrow'},marker);
+ let edges=0;for(const edge of section.observations){const from=positions.get(edge.source),to=positions.get(edge.target);if(from&&to){const dx=to.x-from.x,dy=to.y-from.y,scale=Math.max(Math.abs(dx)/111,Math.abs(dy)/24,1);const line=element('line',{x1:from.x+107.5+dx/scale,y1:from.y+21+dy/scale,x2:to.x+107.5-dx/scale,y2:to.y+21-dy/scale,class:'edge','marker-end':'url(#arrow)'},svg);const title=element('title',{},line);title.textContent=edge.relation+' · '+edge.resolution;edges++;}}
+ for(const node of visible){const point=positions.get(node.id),group=element('g',{class:'node'+(node.roles.includes('changed')?' changed':'')+(selected===node.id?' selected':''),transform:'translate('+point.x+' '+point.y+')'},svg);element('rect',{width:215,height:42,rx:6},group);const title=element('title',{},group);title.textContent=node.qualifiedName+' · '+node.path;const label=element('text',{x:8,y:25},group);label.textContent=node.name.length>24?node.name.slice(0,23)+'…':node.name;group.addEventListener('click',()=>inspect(node,section));const button=document.createElement('button');button.type='button';button.textContent=node.name+' · '+node.path;button.setAttribute('aria-pressed',String(selected===node.id));button.addEventListener('click',()=>inspect(node,section));list.append(button);}
+ text('count',filtered.length?'Showing symbols '+(offset+1)+'–'+(offset+visible.length)+' of '+filtered.length+' matching / '+section.nodes.length+' captured; '+edges+' directed observations within this page. Parallel observations are retained in the evidence inspector.':'No matching symbols.');
+ byId('previous').disabled=offset===0;byId('next').disabled=offset+batch>=filtered.length;
+}
+for(const id of ['side','search','changed'])byId(id).addEventListener(id==='search'?'input':'change',()=>{offset=0;selected=null;draw();});
+new ResizeObserver(()=>draw()).observe(byId('graph').parentElement);
+byId('previous').addEventListener('click',()=>{offset=Math.max(0,offset-batch);draw();});byId('next').addEventListener('click',()=>{offset+=batch;draw();});draw();
+})();
+</script></body></html>

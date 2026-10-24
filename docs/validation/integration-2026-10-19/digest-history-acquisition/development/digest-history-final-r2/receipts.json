@@ -1,0 +1,174 @@
+[
+  {
+    "gate": "format",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 7.052,
+    "recordedAt": "2026-10-19T06:48:44.764436+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "clippy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--keep-going",
+      "-j2",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 21.162,
+    "recordedAt": "2026-10-19T06:49:05.926638+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "whole-native",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--no-fail-fast",
+      "-j2",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 101,
+    "timedOut": false,
+    "elapsedSeconds": 277.247,
+    "recordedAt": "2026-10-19T06:53:43.172838+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "doctests",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--doc",
+      "--locked",
+      "--no-fail-fast",
+      "-j2"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 27.745,
+    "recordedAt": "2026-10-19T06:54:10.919956+00:00",
+    "resultGroups": [
+      {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  {
+    "gate": "python-contracts",
+    "command": [
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts/tests",
+      "-v"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 1.233,
+    "recordedAt": "2026-10-19T06:54:12.153990+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "typescript-typecheck",
+    "command": [
+      "npm.cmd",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 4.798,
+    "recordedAt": "2026-10-19T06:54:16.952152+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "typescript-tests",
+    "command": [
+      "npm.cmd",
+      "test"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 80.423,
+    "recordedAt": "2026-10-19T06:55:37.374855+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "actual-os-credential-cli",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--test",
+      "github_app_digest_handoff",
+      "actual_cli_send_status_and_lost_response_recovery_use_os_key_without_retry",
+      "--",
+      "--exact",
+      "--ignored",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 3.923,
+    "recordedAt": "2026-10-19T06:55:41.298572+00:00",
+    "resultGroups": [
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  {
+    "gate": "actual-tls-receiver-cli",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--test",
+      "digest_receiver",
+      "actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_ca",
+      "--",
+      "--exact",
+      "--ignored",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 2.528,
+    "recordedAt": "2026-10-19T06:55:43.827149+00:00",
+    "resultGroups": [
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  }
+]

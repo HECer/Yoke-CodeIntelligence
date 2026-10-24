@@ -1,0 +1,13 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r7-google\native)
+    Finished `test` profile [unoptimized] target(s) in 3.28s
+     Running tests\source_acquisition_http.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\source_acquisition_http-764f2dd641f5f707.exe)
+
+running 5 tests
+test actual_loopback_get_and_chunked_representation_preserve_body_and_fixed_request_headers ... ok
+test host_permissions_address_binding_and_special_connector_admission_precede_connections ... ok
+test redirects_error_bodies_duplicate_headers_compression_and_truncated_bodies_are_refused ... ok
+test response_overflow_has_no_partial_success_and_deadline_or_host_cancel_closes_the_peer ... ok
+test tls_uses_explicit_roots_hostname_verification_and_literal_address_override_without_dns ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.34s
+

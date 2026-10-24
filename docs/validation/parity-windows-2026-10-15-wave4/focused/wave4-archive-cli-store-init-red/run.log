@@ -1,0 +1,27 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.19s
+     Running tests\meaning_archive_cli.rs (target\debug\deps\meaning_archive_cli-f0638f4e564dad18.exe)
+
+running 1 test
+test export_refuses_incomplete_store_without_initializing_any_state ... FAILED
+
+failures:
+
+---- export_refuses_incomplete_store_without_initializing_any_state stdout ----
+
+thread 'export_refuses_incomplete_store_without_initializing_any_state' (35716) panicked at native\tests\meaning_archive_cli.rs:533:5:
+Failed export initialized incomplete state: all: before {".yoke": None, ".yoke\\index.sqlite": Some("90d011f629f99ffc84551be855b4d5c0d3dd43aa9c70419f40e9b78000259f1d")}; after {".yoke": None, ".yoke\\blobs": None, ".yoke\\clients.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\index.sqlite": Some("800fae787860a71f9ee5f1d0e7ae1b43a2cbb7603e8371fe9947ba0861bea8bc"), ".yoke\\maintenance.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\trees": None}
+blobs: before {".yoke": None, ".yoke\\clients.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\index.sqlite": Some("800fae787860a71f9ee5f1d0e7ae1b43a2cbb7603e8371fe9947ba0861bea8bc"), ".yoke\\maintenance.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\trees": None}; after {".yoke": None, ".yoke\\blobs": None, ".yoke\\clients.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\index.sqlite": Some("800fae787860a71f9ee5f1d0e7ae1b43a2cbb7603e8371fe9947ba0861bea8bc"), ".yoke\\maintenance.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\trees": None}
+trees: before {".yoke": None, ".yoke\\blobs": None, ".yoke\\clients.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\index.sqlite": Some("800fae787860a71f9ee5f1d0e7ae1b43a2cbb7603e8371fe9947ba0861bea8bc"), ".yoke\\maintenance.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")}; after {".yoke": None, ".yoke\\blobs": None, ".yoke\\clients.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\index.sqlite": Some("800fae787860a71f9ee5f1d0e7ae1b43a2cbb7603e8371fe9947ba0861bea8bc"), ".yoke\\maintenance.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\trees": None}
+maintenance.lock: before {".yoke": None, ".yoke\\blobs": None, ".yoke\\clients.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\index.sqlite": Some("800fae787860a71f9ee5f1d0e7ae1b43a2cbb7603e8371fe9947ba0861bea8bc"), ".yoke\\trees": None}; after {".yoke": None, ".yoke\\blobs": None, ".yoke\\clients.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\index.sqlite": Some("800fae787860a71f9ee5f1d0e7ae1b43a2cbb7603e8371fe9947ba0861bea8bc"), ".yoke\\maintenance.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\trees": None}
+clients.lock: before {".yoke": None, ".yoke\\blobs": None, ".yoke\\index.sqlite": Some("800fae787860a71f9ee5f1d0e7ae1b43a2cbb7603e8371fe9947ba0861bea8bc"), ".yoke\\maintenance.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\trees": None}; after {".yoke": None, ".yoke\\blobs": None, ".yoke\\clients.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\index.sqlite": Some("800fae787860a71f9ee5f1d0e7ae1b43a2cbb7603e8371fe9947ba0861bea8bc"), ".yoke\\maintenance.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\trees": None}
+journal_mode: before {".yoke": None, ".yoke\\blobs": None, ".yoke\\clients.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\index.sqlite": Some("90d011f629f99ffc84551be855b4d5c0d3dd43aa9c70419f40e9b78000259f1d"), ".yoke\\maintenance.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\trees": None}; after {".yoke": None, ".yoke\\blobs": None, ".yoke\\clients.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\index.sqlite": Some("800fae787860a71f9ee5f1d0e7ae1b43a2cbb7603e8371fe9947ba0861bea8bc"), ".yoke\\maintenance.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\trees": None}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    export_refuses_incomplete_store_without_initializing_any_state
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 9 filtered out; finished in 0.93s
+
+error: test failed, to rerun pass `--test meaning_archive_cli`

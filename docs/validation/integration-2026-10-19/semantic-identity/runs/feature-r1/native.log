@@ -1,0 +1,38 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 38s
+     Running tests\meaning_identity.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\meaning_identity-3c041147b60b8399.exe)
+
+running 14 tests
+test actual_cli_permissions_closed_inputs_and_lost_stdout_recover_without_provider_config ... ok
+test checked_candidates_retain_every_original_claim_quote_receipt_and_equal_alias_pair ... 
+thread 'checked_candidates_retain_every_original_claim_quote_receipt_and_equal_alias_pair' (22240) panicked at native\tests\meaning_identity.rs:186:52:
+called `Option::unwrap()` on a `None` value
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test errors_invalid_usage_nonzero_and_overrun_keep_bound_receipts_without_echo_or_retry ... ok
+test explicit_model_cliques_project_nodes_without_dropping_parallel_edges_or_ordered_roles ... ok
+test interrupted_attempt_and_current_read_caps_never_turn_into_retry_or_clipped_results ... ok
+test lexical_equalities_never_override_negative_or_uncertain_model_decisions ... ok
+test model_rationale_hashes_do_not_grant_roots_to_unrelated_history ... 
+thread 'model_rationale_hashes_do_not_grant_roots_to_unrelated_history' (23288) panicked at native\tests\meaning_identity.rs:640:5:
+assertion failed: before["snapshotIds"].as_array().unwrap().iter().any(|id| id == &old)
+FAILED
+test non_clique_missing_duplicate_foreign_or_one_sided_support_refuses_with_original_bill ... ok
+test original_unknown_billing_survives_reconciliation_and_model_decision_order_is_preserved ... ok
+test provider_free_checked_export_and_candidate_export_survive_all_store_and_worker_loss ... ok
+test source_payload_response_rehashed_result_and_ledger_tampering_refuse_read_and_retention ... ok
+test sql_registration_send_and_publication_failures_preserve_the_right_accounting_phase ... ok
+test trust_policy_source_and_all_host_limits_refuse_before_any_new_attempt ... ok
+test unbound_duplicate_truncated_and_invalid_utf8_responses_retain_unknown_reservations ... ok
+
+failures:
+
+failures:
+    checked_candidates_retain_every_original_claim_quote_receipt_and_equal_alias_pair
+    model_rationale_hashes_do_not_grant_roots_to_unrelated_history
+
+test result: FAILED. 12 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 99.41s
+
+error: test failed, to rerun pass `--test meaning_identity`
+error: 1 target failed:
+    `--test meaning_identity`

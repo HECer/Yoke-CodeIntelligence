@@ -1,0 +1,15 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 2.96s
+     Running tests\lsp_action_resolve.rs (target\debug\deps\lsp_action_resolve-53fe1341ce53a403.exe)
+action_context_preserves_validated_provider_diagnostic_data_and_refuses_outside_ranges: test
+actual_typescript_lazy_fix_all_preserves_the_unexecuted_auxiliary_command_boundary: test
+deferred_edit_with_a_follow_up_command_is_resolved_but_cannot_prepare_a_partial_action: test
+lazy_code_actions_preserve_opaque_identity_and_prepare_checked_edits_before_owned_shutdown: test
+resolution_refuses_changed_action_identity_foreign_ranges_and_materialized_source_mutation: test
+unavailable_disabled_command_and_unrequested_actions_do_not_invoke_resolution: test
+
+6 tests, 0 benchmarks
+     Running tests\lsp_dependency_scope.rs (target\debug\deps\lsp_dependency_scope-c5f769ee5acdbb3b.exe)
+captured_readonly_dependency_uris_are_readable_but_cannot_be_workspace_edit_targets: test
+
+1 test, 0 benchmarks

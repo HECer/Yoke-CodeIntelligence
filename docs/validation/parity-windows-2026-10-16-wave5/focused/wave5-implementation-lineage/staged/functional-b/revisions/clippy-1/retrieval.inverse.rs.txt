@@ -1,0 +1,1412 @@
+//! Source-body BM25 and personalized graph ranking.
+use crate::{
+    capture::Deadline,
+    model::{Entity, Graph, Snapshot},
+    query,
+    query_features::{self, PathFilter},
+    store::Store,
+};
+use anyhow::{Context, Result, ensure};
+use serde_json::{Value, json};
+use std::collections::{BTreeMap, BTreeSet};
+use unicode_normalization::{UnicodeNormalization, char::is_combining_mark};
+const SOURCE_BUDGET: usize = 32_000_000;
+fn normalize(word: &str) -> String {
+    word.nfd()
+        .filter(|c| !is_combining_mark(*c))
+        .flat_map(char::to_lowercase)
+        .collect()
+}
+fn frequencies(
+    text: &str,
+    terms: &[String],
+    counts: &mut [u32],
+    length: &mut usize,
+    weight: u32,
+    deadline: &Deadline,
+) -> Result<()> {
+    for (index, word) in text
+        .split(|c: char| !c.is_alphanumeric())
+        .filter(|s| !s.is_empty())
+        .enumerate()
+    {
+        if index % 256 == 0 {
+            deadline.check()?;
+        }
+        *length = length.saturating_add(weight as usize);
+        let mut normalized = String::new();
+        for (offset, character) in word
+            .nfd()
+            .filter(|c| !is_combining_mark(*c))
+            .flat_map(char::to_lowercase)
+            .enumerate()
+        {
+            if offset % 1024 == 0 {
+                deadline.check()?;
+            }
+            normalized.push(character);
+        }
+        for (i, term) in terms.iter().enumerate() {
+            if normalized == *term {
+                counts[i] = counts[i].saturating_add(weight);
+            }
+        }
+    }
+    Ok(())
+}
+struct Document<'a> {
+    entity: &'a Entity,
+    counts: Vec<u32>,
+    length: usize,
+}
+#[path = "retrieval_balanced.rs"]
+mod balanced;
+use crate::retrieval_scopes::{
+    self as scopes, CheckedRetrievalRun, CheckedScopePartition, PolicyFallback, ProbeOutcome,
+    RetrievalHardError, RetrievalResult, VerifiedSource,
+};
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum NativeScopeMode {
+    Global,
+    ManifestBalancedV1,
+}
+pub(crate) fn native_scope_mode(args: &Value) -> RetrievalResult<NativeScopeMode> {
+    match args.get("scopeMode") {
+        None => Ok(NativeScopeMode::Global),
+        Some(Value::String(s)) if s == "global" => Ok(NativeScopeMode::Global),
+        Some(Value::String(s)) if s == "manifest_balanced_v1" => {
+            Ok(NativeScopeMode::ManifestBalancedV1)
+        }
+        _ => Err(RetrievalHardError::InvalidRequest("scope_mode")),
+    }
+}
+pub fn find(
+    store: &Store,
+    snapshot: &Snapshot,
+    graph: &Graph,
+    args: &Value,
+    deadline: &Deadline,
+) -> Result<Value> {
+    match native_scope_mode(args)? {
+        NativeScopeMode::Global => {
+            if args.get("scopeMode").is_none() {
+                return find_global_legacy(store, snapshot, graph, args, deadline);
+            }
+            let mut forwarded = args
+                .as_object()
+                .context("Retrieval options must be an object")?
+                .clone();
+            forwarded.remove("scopeMode");
+            find_global_legacy(store, snapshot, graph, &Value::Object(forwarded), deadline)
+        }
+        NativeScopeMode::ManifestBalancedV1 => {
+            let mut forwarded = args
+                .as_object()
+                .ok_or(RetrievalHardError::InvalidRequest("options"))?
+                .clone();
+            forwarded.remove("scopeMode");
+            let options = checked_retrieval_options(&Value::Object(forwarded), deadline)?;
+            let mut run = scopes::begin(store, snapshot, graph, deadline, 4_000_000)?;
+            match scopes::probe(&mut run)? {
+                ProbeOutcome::Ready(partition) => {
+                    Ok(rank_balanced(&mut run, &partition, &options)?)
+                }
+                ProbeOutcome::NotApplicable(fallback)
+                | ProbeOutcome::UnsupportedPolicy(fallback) => {
+                    Err(RetrievalHardError::InvalidRequest(fallback.code()).into())
+                }
+            }
+        }
+    }
+}
+pub(crate) fn find_compatibility_auto(
+    store: &Store,
+    snapshot: &Snapshot,
+    graph: &Graph,
+    args_without_scope_mode: &Value,
+    deadline: &Deadline,
+    output_limit: usize,
+) -> Result<Value> {
+    let options = checked_retrieval_options(args_without_scope_mode, deadline)?;
+    let mut run = scopes::begin(store, snapshot, graph, deadline, output_limit)?;
+    let result = match scopes::probe(&mut run)? {
+        ProbeOutcome::Ready(partition) => {
+            partition.validate_for(&run)?;
+            let eligible = eligible_scopes(&run, &partition, &options)?;
+            if eligible.len() >= 2 {
+                rank_balanced_mode(
+                    &mut run,
+                    &partition,
+                    &options,
+                    "auto",
+                    "usable_multi_package_query",
+                )?
+            } else {
+                let code = if eligible.is_empty() {
+                    "query_zero_eligible_scopes"
+                } else {
+                    "query_single_eligible_scope"
+                };
+                let (mut result, admission) = rank_global_checked(&mut run, &options)?;
+                let metadata = scope_metadata(
+                    &run,
+                    "auto",
+                    "global",
+                    Some(&partition),
+                    code,
+                    Some(("query_filter", code)),
+                    Some(eligible.len()),
+                    Some(admission),
+                );
+                finish_metadata(&mut result, metadata, &run, Some(&partition), None, &[])?;
+                result
+            }
+        }
+        ProbeOutcome::NotApplicable(fallback) => {
+            rank_policy_global(&mut run, &options, &fallback, "not_applicable")?
+        }
+        ProbeOutcome::UnsupportedPolicy(fallback) => {
+            rank_global_after_probe(&mut run, &options, &fallback)?
+        }
+    };
+    Ok(result)
+}
+
+struct CheckedRetrievalOptions {
+    terms: Vec<String>,
+    filter: PathFilter,
+    limit: usize,
+    per_file: usize,
+    include_body: bool,
+    graph_weight: f64,
+}
+fn checked_retrieval_options(
+    args: &Value,
+    deadline: &Deadline,
+) -> RetrievalResult<CheckedRetrievalOptions> {
+    scopes::check_deadline(deadline)?;
+    let object = args
+        .as_object()
+        .ok_or(RetrievalHardError::InvalidRequest("options"))?;
+    if !object.keys().all(|key| {
+        [
+            "query",
+            "limit",
+            "perFileLimit",
+            "includeBody",
+            "relativePath",
+            "pathGlob",
+            "excludeGlob",
+            "graphWeight",
+        ]
+        .contains(&key.as_str())
+    }) {
+        return Err(RetrievalHardError::InvalidRequest("unknown_option"));
+    }
+    let query = args["query"]
+        .as_str()
+        .filter(|query| !query.is_empty() && query.len() <= 16000)
+        .ok_or(RetrievalHardError::InvalidRequest("query"))?;
+    let terms: Vec<_> = query
+        .split(|c: char| !c.is_alphanumeric())
+        .filter(|s| !s.is_empty())
+        .map(normalize)
+        .collect::<BTreeSet<_>>()
+        .into_iter()
+        .collect();
+    if terms.is_empty() || terms.len() > 32 {
+        return Err(RetrievalHardError::InvalidRequest("query_terms"));
+    }
+    let integer = |key: &str, default| -> RetrievalResult<usize> {
+        match args.get(key) {
+            None => Ok(default),
+            Some(value) => value
+                .as_u64()
+                .filter(|n| (1..=200).contains(n))
+                .map(|n| n as usize)
+                .ok_or(RetrievalHardError::InvalidRequest("numeric_bound")),
+        }
+    };
+    if args.get("includeBody").is_some_and(|v| !v.is_boolean()) {
+        return Err(RetrievalHardError::InvalidRequest("include_body"));
+    }
+    for key in ["relativePath", "pathGlob", "excludeGlob"] {
+        if args.get(key).is_some_and(|v| !v.is_string()) {
+            return Err(RetrievalHardError::InvalidRequest("path_filter"));
+        }
+    }
+    let graph_weight = match args.get("graphWeight") {
+        None => 0.25,
+        Some(v) => v
+            .as_f64()
+            .filter(|v| v.is_finite() && (0.0..=1.0).contains(v))
+            .ok_or(RetrievalHardError::InvalidRequest("graph_weight"))?,
+    };
+    let filter =
+        PathFilter::new(args).map_err(|_| RetrievalHardError::InvalidRequest("path_filter"))?;
+    scopes::check_deadline(deadline)?;
+    Ok(CheckedRetrievalOptions {
+        terms,
+        filter,
+        limit: integer("limit", 30)?,
+        per_file: integer("perFileLimit", 3)?,
+        include_body: args["includeBody"] == true,
+        graph_weight,
+    })
+}
+fn eligible_scopes(
+    run: &CheckedRetrievalRun<'_, '_, '_>,
+    partition: &CheckedScopePartition<'_>,
+    options: &CheckedRetrievalOptions,
+) -> RetrievalResult<BTreeSet<String>> {
+    let mut eligible = BTreeSet::new();
+    for file in &run.snapshot().files {
+        scopes::check_deadline(run.deadline())?;
+        if options.filter.matches(&file.path) {
+            let handle = partition.owner(&file.path)?;
+            eligible.insert(partition.scope(&handle)?.root().to_owned());
+        }
+    }
+    Ok(eligible)
+}
+fn typed_frequencies(
+    text: &str,
+    terms: &[String],
+    counts: &mut [u32],
+    length: &mut usize,
+    weight: u32,
+    deadline: &Deadline,
+) -> RetrievalResult<()> {
+    scopes::check_deadline(deadline)?;
+    if frequencies(text, terms, counts, length, weight, deadline).is_err() {
+        scopes::check_deadline(deadline)?;
+        return Err(RetrievalHardError::Internal("tokenization_failed"));
+    }
+    scopes::check_deadline(deadline)
+}
+fn document<'input>(
+    entity: &'input Entity,
+    source: &VerifiedSource,
+    options: &CheckedRetrievalOptions,
+    deadline: &Deadline,
+) -> RetrievalResult<Document<'input>> {
+    let body = source
+        .text()
+        .get(entity.start_byte..entity.end_byte)
+        .ok_or(RetrievalHardError::SourceIntegrity("entity_range"))?;
+    let mut doc = Document {
+        entity,
+        counts: vec![0; options.terms.len()],
+        length: 0,
+    };
+    typed_frequencies(
+        body,
+        &options.terms,
+        &mut doc.counts,
+        &mut doc.length,
+        1,
+        deadline,
+    )?;
+    typed_frequencies(
+        &query::identifier_terms(&entity.name),
+        &options.terms,
+        &mut doc.counts,
+        &mut doc.length,
+        4,
+        deadline,
+    )?;
+    typed_frequencies(
+        &entity.path,
+        &options.terms,
+        &mut doc.counts,
+        &mut doc.length,
+        1,
+        deadline,
+    )?;
+    Ok(doc)
+}
+fn ranked_item(
+    entity: &Entity,
+    source: &VerifiedSource,
+    lexical: f64,
+    graph: f64,
+    score: f64,
+    include_body: bool,
+) -> RetrievalResult<Value> {
+    let mut item =
+        serde_json::to_value(entity).map_err(|_| RetrievalHardError::Internal("entity_json"))?;
+    item["contentHash"] = json!(source.content_hash());
+    item["bm25Score"] = json!(lexical);
+    item["graphScore"] = json!(graph);
+    item["rankingScore"] = json!(score);
+    if include_body {
+        let text = source.text();
+        let mut end = entity.end_byte.min(entity.start_byte.saturating_add(16000));
+        while !text.is_char_boundary(end) {
+            end -= 1;
+        }
+        item["body"] = json!(
+            text.get(entity.start_byte..end)
+                .ok_or(RetrievalHardError::SourceIntegrity("entity_range"))?
+        );
+        item["bodyEndByte"] = json!(end);
+        item["bodyTruncated"] = json!(end < entity.end_byte);
+    }
+    Ok(item)
+}
+#[derive(Default)]
+struct ScopeCounts {
+    admitted_sources: usize,
+    omitted_sources: usize,
+    admitted_documents: usize,
+    omitted_documents: usize,
+    positive_candidates: usize,
+    per_file_rejected: usize,
+    final_omitted: usize,
+}
+struct SourceOmission<'a> {
+    path: &'a str,
+    bytes: usize,
+}
+fn rank_balanced(
+    run: &mut CheckedRetrievalRun<'_, '_, '_>,
+    partition: &CheckedScopePartition<'_>,
+    options: &CheckedRetrievalOptions,
+) -> RetrievalResult<Value> {
+    rank_balanced_mode(
+        run,
+        partition,
+        options,
+        "manifest_balanced_v1",
+        "explicit_balanced_request",
+    )
+}
+fn rank_balanced_mode(
+    run: &mut CheckedRetrievalRun<'_, '_, '_>,
+    partition: &CheckedScopePartition<'_>,
+    options: &CheckedRetrievalOptions,
+    requested: &str,
+    reason: &str,
+) -> RetrievalResult<Value> {
+    partition.validate_for(run)?;
+    let deadline = run.deadline();
+    scopes::check_deadline(deadline)?;
+    let snapshot = run.snapshot();
+    let graph = run.graph();
+    let eligible = eligible_scopes(run, partition, options)?;
+    let mut counts: BTreeMap<_, _> = partition
+        .scopes()
+        .map(|scope| (scope.root().to_owned(), ScopeCounts::default()))
+        .collect();
+    let mut source_units = Vec::new();
+    let mut source_files = Vec::new();
+    let mut excluded_sources = 0;
+    for file in &snapshot.files {
+        scopes::check_deadline(deadline)?;
+        if !options.filter.matches(&file.path) {
+            excluded_sources += 1;
+            continue;
+        }
+        let handle = partition.owner(&file.path)?;
+        let scope = partition.scope(&handle)?;
+        let cost = run.source_cost(&file.path)?;
+        source_units.push(balanced::AdmissionUnit {
+            scope_root: scope.root().to_owned(),
+            path: file.path.clone(),
+            start_byte: 0,
+            end_byte: file.size,
+            entity_id: String::new(),
+            cost: cost.incremental_bytes(),
+        });
+        source_files.push(file);
+    }
+    let remaining = SOURCE_BUDGET
+        .checked_sub(run.usage().input_bytes_charged())
+        .ok_or(RetrievalHardError::Capacity("input_bytes"))?;
+    let source_plan = balanced::schedule_whole_units(&source_units, remaining, deadline)?;
+    if source_plan.used > remaining || source_plan.allowances.len() != eligible.len() {
+        return Err(RetrievalHardError::Internal("source_schedule"));
+    }
+    let mut sources = BTreeMap::new();
+    let mut admitted_source_bytes = 0usize;
+    for &index in source_plan.phase1.iter().chain(&source_plan.phase2) {
+        let file = source_files[index];
+        let source = run.read_source(&file.path)?;
+        admitted_source_bytes = admitted_source_bytes
+            .checked_add(source.text().len())
+            .ok_or(RetrievalHardError::Capacity("source_bytes"))?;
+        counts
+            .get_mut(&source_units[index].scope_root)
+            .ok_or(RetrievalHardError::Internal("scope_missing"))?
+            .admitted_sources += 1;
+        sources.insert(file.path.as_str(), source);
+    }
+    let mut omissions = Vec::with_capacity(source_plan.omitted.len());
+    for &index in &source_plan.omitted {
+        counts
+            .get_mut(&source_units[index].scope_root)
+            .ok_or(RetrievalHardError::Internal("scope_missing"))?
+            .omitted_sources += 1;
+        omissions.push(SourceOmission {
+            path: source_files[index].path.as_str(),
+            bytes: source_files[index].size,
+        });
+    }
+    omissions.sort_by_key(|row| row.path);
+    let symbol_paths: BTreeSet<_> = graph
+        .entities
+        .iter()
+        .filter(|e| e.kind != "file")
+        .map(|e| e.path.as_str())
+        .collect();
+    let mut document_units = Vec::new();
+    let mut document_entities = Vec::new();
+    let mut excluded_documents = 0;
+    for entity in &graph.entities {
+        scopes::check_deadline(deadline)?;
+        if entity.kind == "file" && symbol_paths.contains(entity.path.as_str()) {
+            continue;
+        }
+        if !options.filter.matches(&entity.path) {
+            excluded_documents += 1;
+            continue;
+        }
+        if !sources.contains_key(entity.path.as_str()) {
+            continue;
+        }
+        let handle = partition.owner(&entity.path)?;
+        let scope = partition.scope(&handle)?;
+        document_units.push(balanced::AdmissionUnit {
+            scope_root: scope.root().to_owned(),
+            path: entity.path.clone(),
+            start_byte: entity.start_byte,
+            end_byte: entity.end_byte,
+            entity_id: entity.id.clone(),
+            cost: run.document_cost(entity)?,
+        });
+        document_entities.push(entity);
+    }
+    let doc_remaining = SOURCE_BUDGET
+        .checked_sub(run.usage().document_bytes_charged())
+        .ok_or(RetrievalHardError::Capacity("document_bytes"))?;
+    let doc_plan = balanced::schedule_whole_units(&document_units, doc_remaining, deadline)?;
+    let mut docs = Vec::new();
+    let mut roots = Vec::new();
+    for &index in doc_plan.phase1.iter().chain(&doc_plan.phase2) {
+        let entity = document_entities[index];
+        let admitted = run.admit_document(entity)?;
+        let doc = document(entity, admitted.source(), options, deadline)?;
+        counts
+            .get_mut(&document_units[index].scope_root)
+            .ok_or(RetrievalHardError::Internal("scope_missing"))?
+            .admitted_documents += 1;
+        roots.push(document_units[index].scope_root.as_str());
+        docs.push(doc);
+    }
+    for &index in &doc_plan.omitted {
+        counts
+            .get_mut(&document_units[index].scope_root)
+            .ok_or(RetrievalHardError::Internal("scope_missing"))?
+            .omitted_documents += 1;
+    }
+    let mut local_docs: BTreeMap<&str, Vec<balanced::LexicalDocument>> = BTreeMap::new();
+    for (doc, root) in docs.iter().zip(&roots) {
+        local_docs
+            .entry(root)
+            .or_default()
+            .push(balanced::LexicalDocument {
+                entity_id: doc.entity.id.clone(),
+                weighted_length: doc.length,
+                term_counts: doc.counts.clone(),
+            });
+    }
+    let mut lexical = BTreeMap::new();
+    for documents in local_docs.values() {
+        lexical.extend(balanced::scope_bm25(documents, deadline)?);
+    }
+    let mass_rows: Vec<_> = docs
+        .iter()
+        .zip(&roots)
+        .map(|(doc, root)| balanced::LexicalMassRow {
+            entity_id: doc.entity.id.clone(),
+            scope_root: (*root).to_owned(),
+            bm25: lexical[&doc.entity.id],
+        })
+        .collect();
+    let seeds = balanced::equal_scope_seeds(&mass_rows, deadline)?;
+    let vertices: Vec<_> = docs.iter().map(|doc| doc.entity.id.clone()).collect();
+    let graph_enabled = options.graph_weight > 0.0 && seeds.values().any(|seed| *seed > 0.0);
+    let arcs = if graph_enabled {
+        let observations = graph
+            .observations
+            .iter()
+            .map(|edge| balanced::ResolvedObservation {
+                observation_id: edge.id.clone(),
+                source: edge.source.clone(),
+                target: edge.target.clone(),
+            })
+            .collect::<Vec<_>>();
+        balanced::canonical_arcs(&vertices, &observations, deadline)?
+    } else {
+        Vec::new()
+    };
+    let ranks = balanced::propagate(&vertices, &arcs, &seeds, graph_enabled, deadline)?;
+    let mut maxima = BTreeMap::<&str, (f64, f64)>::new();
+    for (doc, root) in docs.iter().zip(&roots) {
+        let entry = maxima.entry(root).or_default();
+        entry.0 = entry.0.max(lexical[&doc.entity.id]);
+        entry.1 = entry.1.max(ranks.ranks[&doc.entity.id]);
+    }
+    let mut normalized = Vec::new();
+    let mut rows = Vec::new();
+    for (doc, root) in docs.iter().zip(&roots) {
+        let maximum = maxima[root];
+        let lex = if maximum.0 > 0.0 {
+            lexical[&doc.entity.id] / maximum.0
+        } else {
+            0.0
+        };
+        let graph_score = if maximum.1 > 0.0 {
+            ranks.ranks[&doc.entity.id] / maximum.1
+        } else {
+            0.0
+        };
+        let score = (1.0 - options.graph_weight) * lex + options.graph_weight * graph_score;
+        rows.push(balanced::ScoredRow {
+            entity_id: doc.entity.id.clone(),
+            scope_root: (*root).to_owned(),
+            path: doc.entity.path.clone(),
+            score,
+            query_coverage_count: doc.counts.iter().filter(|&&count| count > 0).count(),
+        });
+        normalized.push((lex, graph_score));
+    }
+    let fusion = balanced::fuse_rows(&rows, options.per_file, options.limit, deadline)?;
+    // All positive rows are filtered locally before the final fusion limit.
+    for root in counts.keys().cloned().collect::<Vec<_>>() {
+        let local = rows
+            .iter()
+            .filter(|row| row.scope_root == root)
+            .cloned()
+            .collect::<Vec<_>>();
+        let full = balanced::fuse_rows(&local, options.per_file, usize::MAX, deadline)?;
+        let selected_here = fusion
+            .selected
+            .iter()
+            .filter(|entry| rows[entry.index].scope_root == root)
+            .count();
+        let count = counts
+            .get_mut(&root)
+            .ok_or(RetrievalHardError::Internal("scope_missing"))?;
+        count.positive_candidates = full.positive_candidate_count;
+        count.per_file_rejected = full.per_file_rejected_count;
+        count.final_omitted = full.selected.len() - selected_here;
+    }
+    let mut items = Vec::new();
+    for selected in &fusion.selected {
+        scopes::check_deadline(deadline)?;
+        let index = selected.index;
+        let entity = docs[index].entity;
+        let source = sources
+            .get(entity.path.as_str())
+            .ok_or(RetrievalHardError::Internal("source_missing"))?;
+        let mut item = ranked_item(
+            entity,
+            source,
+            lexical[&entity.id],
+            ranks.ranks[&entity.id],
+            rows[index].score,
+            options.include_body,
+        )?;
+        item["normalizedBm25Score"] = json!(normalized[index].0);
+        item["normalizedGraphScore"] = json!(normalized[index].1);
+        item["localRank"] = json!(selected.local_rank);
+        item["queryCoverageCount"] = json!(rows[index].query_coverage_count);
+        let handle = partition.owner(&entity.path)?;
+        item["scopeId"] = json!(partition.scope(&handle)?.id());
+        items.push(item);
+    }
+    let usage = run.usage();
+    let admission = json!({"markerBytesCharged":usage.marker_bytes_charged(),"bodyInputBytesCharged":usage.body_input_bytes_charged(),"inputBytesCharged":usage.input_bytes_charged(),"admittedSourceBytes":admitted_source_bytes,"admittedSourceCount":sources.len(),"omittedSourceCount":omissions.len(),"documentBytesCharged":usage.document_bytes_charged(),"admittedDocumentCount":docs.len(),"omittedDocumentCount":doc_plan.omitted.len(),"queryExcludedSourceCount":excluded_sources,"queryExcludedDocumentCount":excluded_documents});
+    let mut result = json!({"snapshotId":snapshot.id,"items":items,"candidateCount":fusion.positive_candidate_count,"balancedOut":fusion.per_file_rejected_count,"perFileRejectedCount":fusion.per_file_rejected_count,"limitOmittedCount":fusion.final_limit_omission_count,"perFileLimit":options.per_file,"graphWeight":options.graph_weight,"graphIterations":ranks.iterations,"ranking":"source_body_bm25_manifest_balanced_graph_v1","rankingSemantics":"heuristic_relevance_not_binding_or_runtime_proof","graphDirection":"bidirectional_captured_observations_parallel_arcs_preserved","graphSelfLoopConvention":"two_self_arcs_per_captured_self_loop","sourceBytes":admitted_source_bytes,"documentBytes":usage.document_bytes_charged(),"omittedDocumentCount":doc_plan.omitted.len(),"omittedPathCount":omissions.len(),"truncated":fusion.per_file_rejected_count>0 || fusion.final_limit_omission_count>0 || !omissions.is_empty() || !doc_plan.omitted.is_empty(),"complete":false});
+    let metadata = scope_metadata(
+        run,
+        requested,
+        "manifest_balanced_v1",
+        Some(partition),
+        reason,
+        None,
+        Some(eligible.len()),
+        Some(admission),
+    );
+    finish_metadata(
+        &mut result,
+        metadata,
+        run,
+        Some(partition),
+        Some(&counts),
+        &omissions,
+    )?;
+    Ok(result)
+}
+
+fn rank_global_after_probe(
+    run: &mut CheckedRetrievalRun<'_, '_, '_>,
+    options: &CheckedRetrievalOptions,
+    fallback: &PolicyFallback,
+) -> RetrievalResult<Value> {
+    rank_policy_global(run, options, fallback, "unsupported_policy")
+}
+fn rank_policy_global(
+    run: &mut CheckedRetrievalRun<'_, '_, '_>,
+    options: &CheckedRetrievalOptions,
+    fallback: &PolicyFallback,
+    kind: &'static str,
+) -> RetrievalResult<Value> {
+    let (mut result, admission) = rank_global_checked(run, options)?;
+    let mut metadata = scope_metadata(
+        run,
+        "auto",
+        "global",
+        None,
+        fallback.code(),
+        Some((kind, fallback.code())),
+        None,
+        Some(admission),
+    );
+    metadata["actualPackageRootCount"] = json!(fallback.physical_package_count());
+    let total = fallback
+        .diagnostics()
+        .count()
+        .checked_add(fallback.omitted_diagnostic_count())
+        .ok_or(RetrievalHardError::Capacity("diagnostic_count"))?;
+    metadata["omittedDiagnosticCount"] = json!(total);
+    result["retrievalScope"] = metadata;
+    admit_value(&result, run)?;
+    let mut optional = MetadataAdmission::new(&result, run)?;
+    for diagnostic in fallback.diagnostics().take(64) {
+        scopes::check_deadline(run.deadline())?;
+        if !append_metadata(
+            &mut result,
+            "diagnostics",
+            "omittedDiagnosticCount",
+            diagnostic_value(diagnostic),
+            &mut optional,
+            run,
+        )? {
+            break;
+        }
+    }
+    Ok(result)
+}
+fn rank_global_checked(
+    run: &mut CheckedRetrievalRun<'_, '_, '_>,
+    options: &CheckedRetrievalOptions,
+) -> RetrievalResult<(Value, Value)> {
+    let deadline = run.deadline();
+    scopes::check_deadline(deadline)?;
+    let snapshot = run.snapshot();
+    let graph = run.graph();
+    let symbol_paths: BTreeSet<_> = graph
+        .entities
+        .iter()
+        .filter(|entity| entity.kind != "file")
+        .map(|entity| entity.path.as_str())
+        .collect();
+    let mut sources = BTreeMap::new();
+    let mut omitted_paths = BTreeSet::new();
+    let mut source_bytes = 0usize;
+    let mut excluded_sources = 0usize;
+    for file in &snapshot.files {
+        scopes::check_deadline(deadline)?;
+        if !options.filter.matches(&file.path) {
+            excluded_sources += 1;
+            continue;
+        }
+        let cost = run.source_cost(&file.path)?;
+        if run
+            .usage()
+            .input_bytes_charged()
+            .checked_add(cost.incremental_bytes())
+            .is_none_or(|sum| sum > SOURCE_BUDGET)
+        {
+            omitted_paths.insert(file.path.as_str());
+            continue;
+        }
+        let source = run.read_source(&file.path)?;
+        source_bytes = source_bytes
+            .checked_add(source.text().len())
+            .ok_or(RetrievalHardError::Capacity("source_bytes"))?;
+        sources.insert(file.path.as_str(), source);
+    }
+    let mut docs = Vec::new();
+    let mut omitted_documents = 0usize;
+    let mut excluded_documents = 0usize;
+    for entity in &graph.entities {
+        scopes::check_deadline(deadline)?;
+        if entity.kind == "file" && symbol_paths.contains(entity.path.as_str()) {
+            continue;
+        }
+        if !options.filter.matches(&entity.path) {
+            excluded_documents += 1;
+            continue;
+        }
+        let Some(source) = sources.get(entity.path.as_str()) else {
+            continue;
+        };
+        let cost = run.document_cost(entity)?;
+        if run
+            .usage()
+            .document_bytes_charged()
+            .checked_add(cost)
+            .is_none_or(|sum| sum > SOURCE_BUDGET)
+        {
+            omitted_documents += 1;
+            continue;
+        }
+        run.admit_document(entity)?;
+        docs.push(document(entity, source, options, deadline)?);
+    }
+    // Keep the original global arithmetic and storage-order accumulation.
+    let n = docs.len() as f64;
+    let average = docs.iter().map(|doc| doc.length as f64).sum::<f64>() / n.max(1.0);
+    let df: Vec<_> = (0..options.terms.len())
+        .map(|i| docs.iter().filter(|doc| doc.counts[i] > 0).count() as f64)
+        .collect();
+    let mut lexical = vec![0.0; docs.len()];
+    for (index, doc) in docs.iter().enumerate() {
+        scopes::check_deadline(deadline)?;
+        for (i, tf) in doc.counts.iter().enumerate() {
+            let tf = *tf as f64;
+            if tf > 0.0 {
+                let idf = (1.0 + (n - df[i] + 0.5) / (df[i] + 0.5)).ln();
+                lexical[index] += idf * tf * 2.2
+                    / (tf + 1.2 * (0.25 + 0.75 * doc.length as f64 / average.max(1.0)));
+            }
+        }
+    }
+    let mass = lexical.iter().sum::<f64>();
+    let seeds: Vec<_> = lexical
+        .iter()
+        .map(|score| if mass > 0.0 { score / mass } else { 0.0 })
+        .collect();
+    let indices: BTreeMap<_, _> = docs
+        .iter()
+        .enumerate()
+        .map(|(i, doc)| (doc.entity.id.as_str(), i))
+        .collect();
+    let mut arcs = vec![Vec::new(); docs.len()];
+    for edge in &graph.observations {
+        scopes::check_deadline(deadline)?;
+        if let (Some(source), Some(target)) = (
+            indices.get(edge.source.as_str()),
+            edge.target.as_deref().and_then(|id| indices.get(id)),
+        ) && source != target
+        {
+            arcs[*source].push(*target);
+            arcs[*target].push(*source);
+        }
+    }
+    let mut ranks = seeds.clone();
+    let mut iterations = 0;
+    if mass > 0.0 && options.graph_weight > 0.0 {
+        for _ in 0..24 {
+            scopes::check_deadline(deadline)?;
+            let mut next: Vec<_> = seeds.iter().map(|seed| seed * 0.15).collect();
+            let mut dangling = 0.0;
+            for (source, targets) in arcs.iter().enumerate() {
+                scopes::check_deadline(deadline)?;
+                if targets.is_empty() {
+                    dangling += ranks[source] * 0.85;
+                } else {
+                    let share = ranks[source] * 0.85 / targets.len() as f64;
+                    for (i, target) in targets.iter().enumerate() {
+                        if i % 256 == 0 {
+                            scopes::check_deadline(deadline)?;
+                        }
+                        next[*target] += share;
+                    }
+                }
+            }
+            for (index, seed) in seeds.iter().enumerate() {
+                next[index] += dangling * seed;
+            }
+            let delta = next
+                .iter()
+                .zip(&ranks)
+                .map(|(a, b)| (a - b).abs())
+                .sum::<f64>();
+            ranks = next;
+            iterations += 1;
+            if delta < 1e-9 {
+                break;
+            }
+        }
+    }
+    let max_lexical = lexical
+        .iter()
+        .copied()
+        .fold(0.0, f64::max)
+        .max(f64::MIN_POSITIVE);
+    let max_graph = ranks
+        .iter()
+        .copied()
+        .fold(0.0, f64::max)
+        .max(f64::MIN_POSITIVE);
+    let scores: Vec<_> = (0..docs.len())
+        .map(|i| {
+            (1.0 - options.graph_weight) * lexical[i] / max_lexical
+                + options.graph_weight * ranks[i] / max_graph
+        })
+        .collect();
+    let mut order: Vec<_> = (0..docs.len()).filter(|i| scores[*i] > 0.0).collect();
+    order.sort_by(|a, b| {
+        scores[*b]
+            .total_cmp(&scores[*a])
+            .then_with(|| docs[*a].entity.id.cmp(&docs[*b].entity.id))
+    });
+    let candidates = order.len();
+    let mut files = BTreeMap::new();
+    let mut items = Vec::new();
+    let mut balanced_out = 0;
+    for index in order {
+        scopes::check_deadline(deadline)?;
+        let entity = docs[index].entity;
+        let used = files.entry(entity.path.as_str()).or_insert(0usize);
+        if *used >= options.per_file {
+            balanced_out += 1;
+            continue;
+        }
+        if items.len() == options.limit {
+            break;
+        }
+        *used += 1;
+        items.push(ranked_item(
+            entity,
+            &sources[entity.path.as_str()],
+            lexical[index],
+            ranks[index],
+            scores[index],
+            options.include_body,
+        )?);
+    }
+    let document_bytes = run.usage().document_bytes_charged();
+    let usage = run.usage();
+    let admission = json!({"markerBytesCharged":usage.marker_bytes_charged(),"bodyInputBytesCharged":usage.body_input_bytes_charged(),"inputBytesCharged":usage.input_bytes_charged(),"admittedSourceBytes":source_bytes,"admittedSourceCount":sources.len(),"omittedSourceCount":omitted_paths.len(),"documentBytesCharged":document_bytes,"admittedDocumentCount":docs.len(),"omittedDocumentCount":omitted_documents,"queryExcludedSourceCount":excluded_sources,"queryExcludedDocumentCount":excluded_documents});
+    Ok((
+        json!({"snapshotId":snapshot.id,"items":items,"candidateCount":candidates,"balancedOut":balanced_out,"perFileLimit":options.per_file,"graphWeight":options.graph_weight,"graphIterations":iterations,"ranking":"source_body_bm25_personalized_graph","rankingSemantics":"heuristic_relevance_not_binding_or_runtime_proof","graphDirection":"bidirectional_captured_observations_parallel_arcs_preserved","sourceBytes":source_bytes,"documentBytes":document_bytes,"omittedDocumentCount":omitted_documents,"omittedPathCount":omitted_paths.len(),"omittedPaths":omitted_paths.iter().take(200).collect::<Vec<_>>(),"truncated":candidates>options.limit || balanced_out>0 || omitted_documents>0 || !omitted_paths.is_empty(),"complete":false}),
+        admission,
+    ))
+}
+
+fn scope_metadata(
+    run: &CheckedRetrievalRun<'_, '_, '_>,
+    requested: &str,
+    effective: &str,
+    partition: Option<&CheckedScopePartition<'_>>,
+    reason: &str,
+    fallback: Option<(&str, &str)>,
+    eligible: Option<usize>,
+    admission: Option<Value>,
+) -> Value {
+    let usage = run.usage();
+    let mut metadata = json!({"schemaVersion":1,"requestedMode":requested,"effectiveMode":effective,"policy":scopes::POLICY,"partitionId":partition.map(CheckedScopePartition::id),"selectionReason":reason,"fallback":fallback.map(|(kind,code)| json!({"kind":kind,"code":code})),"actualPackageRootCount":partition.map(CheckedScopePartition::physical_package_count),"queryEligibleScopeCount":eligible,"probe":{"markerFilesChecked":usage.marker_files_checked(),"markerBytesCharged":usage.marker_bytes_charged(),"selectorWork":usage.selector_work()},"diagnostics":[],"omittedDiagnosticCount":0,"scopes":[],"omittedScopeSummaryCount":0,"declarationBindings":[],"omittedDeclarationBindingCount":0,"sourceOmissions":[],"omittedSourceOmissionCount":0});
+    if let Some(admission) = admission {
+        metadata["omittedSourceOmissionCount"] = admission["omittedSourceCount"].clone();
+        metadata["admission"] = admission;
+    }
+    metadata
+}
+fn encoded_len(value: &Value) -> RetrievalResult<usize> {
+    // Counting serializer avoids retaining a second full response buffer.
+    struct Counter(usize);
+    impl std::io::Write for Counter {
+        fn write(&mut self, bytes: &[u8]) -> std::io::Result<usize> {
+            self.0 = self
+                .0
+                .checked_add(bytes.len())
+                .ok_or_else(|| std::io::Error::other("response size overflow"))?;
+            Ok(bytes.len())
+        }
+        fn flush(&mut self) -> std::io::Result<()> {
+            Ok(())
+        }
+    }
+    let mut count = Counter(0);
+    serde_json::to_writer(&mut count, value)
+        .map_err(|_| RetrievalHardError::Internal("response_json"))?;
+    Ok(count.0)
+}
+fn admit_value(result: &Value, run: &CheckedRetrievalRun<'_, '_, '_>) -> RetrievalResult<()> {
+    scopes::check_deadline(run.deadline())?;
+    if encoded_len(result)? > run.output_limit()
+        || result
+            .get("retrievalScope")
+            .is_some_and(|scope| encoded_len(scope).is_ok_and(|size| size > 256_000))
+    {
+        return Err(RetrievalHardError::OutputCapacity("mandatory_result"));
+    }
+    scopes::check_deadline(run.deadline())
+}
+fn diagnostic_value(diagnostic: &scopes::ScopeDiagnostic) -> Value {
+    let mut value = json!({"code":diagnostic.code(),"path":diagnostic.path()});
+    if let Some(hash) = diagnostic.content_hash() {
+        value["contentHash"] = json!(hash);
+    }
+    if let Some(selector) = diagnostic.selector() {
+        value["selector"] = json!(selector);
+    }
+    if let Some(line) = diagnostic.line() {
+        value["line"] = json!(line);
+    }
+    if let Some(column) = diagnostic.column() {
+        value["column"] = json!(column);
+    }
+    value
+}
+struct MetadataAdmission {
+    costs: balanced::MetadataCostRows,
+    available: usize,
+}
+impl MetadataAdmission {
+    fn new(result: &Value, run: &CheckedRetrievalRun<'_, '_, '_>) -> RetrievalResult<Self> {
+        Ok(Self {
+            costs: balanced::MetadataCostRows {
+                diagnostics: Vec::new(),
+                scopes: Vec::new(),
+                declaration_bindings: Vec::new(),
+                source_omissions: Vec::new(),
+            },
+            available: run
+                .output_limit()
+                .checked_sub(encoded_len(result)?)
+                .ok_or(RetrievalHardError::OutputCapacity("mandatory_result"))?
+                .min(
+                    256_000usize
+                        .checked_sub(encoded_len(&result["retrievalScope"])?)
+                        .ok_or(RetrievalHardError::OutputCapacity("mandatory_metadata"))?,
+                ),
+        })
+    }
+    fn costs_mut(&mut self, index: usize) -> &mut Vec<usize> {
+        match index {
+            0 => &mut self.costs.diagnostics,
+            1 => &mut self.costs.scopes,
+            2 => &mut self.costs.declaration_bindings,
+            _ => &mut self.costs.source_omissions,
+        }
+    }
+}
+fn append_metadata(
+    result: &mut Value,
+    key: &str,
+    omitted: &str,
+    row: Value,
+    optional: &mut MetadataAdmission,
+    run: &CheckedRetrievalRun<'_, '_, '_>,
+) -> RetrievalResult<bool> {
+    scopes::check_deadline(run.deadline())?;
+    let remaining = result["retrievalScope"][omitted]
+        .as_u64()
+        .ok_or(RetrievalHardError::Internal("metadata_count"))?;
+    let next_remaining = remaining
+        .checked_sub(1)
+        .ok_or(RetrievalHardError::Internal("metadata_count"))?;
+    let array_len = result["retrievalScope"][key]
+        .as_array()
+        .ok_or(RetrievalHardError::Internal("metadata_array"))?
+        .len();
+    let array_index = match key {
+        "diagnostics" => 0,
+        "scopes" => 1,
+        "declarationBindings" => 2,
+        "sourceOmissions" => 3,
+        _ => return Err(RetrievalHardError::Internal("metadata_array")),
+    };
+    // Include exact punctuation and the reserved omitted-counter digit change.
+    let cost = encoded_len(&row)?
+        .checked_add(usize::from(array_len > 0))
+        .and_then(|n| n.checked_add(next_remaining.to_string().len()))
+        .and_then(|n| n.checked_sub(remaining.to_string().len()))
+        .ok_or(RetrievalHardError::Capacity("metadata_bytes"))?;
+    optional.costs_mut(array_index).push(cost);
+    let plan =
+        balanced::plan_optional_metadata(&optional.costs, optional.available, run.deadline())?;
+    if plan.omitted[array_index] > 0 {
+        optional.costs_mut(array_index).pop();
+        return Ok(false);
+    }
+    if plan.kept[array_index] != array_len + 1 || plan.optional_bytes_used > optional.available {
+        return Err(RetrievalHardError::Internal("metadata_plan"));
+    }
+    result["retrievalScope"][key]
+        .as_array_mut()
+        .ok_or(RetrievalHardError::Internal("metadata_array"))?
+        .push(row);
+    result["retrievalScope"][omitted] = json!(next_remaining);
+    admit_value(result, run)?;
+    Ok(true)
+}
+fn finish_metadata(
+    result: &mut Value,
+    mut metadata: Value,
+    run: &CheckedRetrievalRun<'_, '_, '_>,
+    partition: Option<&CheckedScopePartition<'_>>,
+    counts: Option<&BTreeMap<String, ScopeCounts>>,
+    omissions: &[SourceOmission<'_>],
+) -> RetrievalResult<()> {
+    metadata["omittedDiagnosticCount"] = json!(partition.map_or(0, |p| p.diagnostics().count()
+        + p.omitted_diagnostic_count()));
+    metadata["omittedScopeSummaryCount"] = json!(partition.map_or(0, |p| p.scopes().count()));
+    metadata["omittedDeclarationBindingCount"] =
+        json!(partition.map_or(0, |p| p.declarations().count()));
+    result["retrievalScope"] = metadata;
+    admit_value(result, run)?;
+    let mut optional = MetadataAdmission::new(result, run)?;
+    if let Some(partition) = partition {
+        for diagnostic in partition.diagnostics().take(64) {
+            if !append_metadata(
+                result,
+                "diagnostics",
+                "omittedDiagnosticCount",
+                diagnostic_value(diagnostic),
+                &mut optional,
+                run,
+            )? {
+                break;
+            }
+        }
+        if let Some(counts) = counts {
+            for scope in partition.scopes().take(64) {
+                let labels: Vec<_> = scope.labels().map(|label| json!({"ecosystem":label.ecosystem().as_str(),"name":label.name(),"declarationPath":label.declaration_path(),"primary":label.is_primary()})).collect();
+                let memberships: Vec<_> = scope.memberships().map(|membership| json!({"ecosystem":membership.ecosystem().as_str(),"workspaceRoot":membership.workspace_root(),"declarationPath":membership.declaration_path(),"reason":membership.reason().as_str()})).collect();
+                let count = counts
+                    .get(scope.root())
+                    .ok_or(RetrievalHardError::Internal("scope_missing"))?;
+                let row = json!({"id":scope.id(),"root":scope.root(),"kind":scope.kind().as_str(),"labels":labels,"memberships":memberships,"counts":{"admittedSourceCount":count.admitted_sources,"omittedSourceCount":count.omitted_sources,"admittedDocumentCount":count.admitted_documents,"omittedDocumentCount":count.omitted_documents,"positiveCandidateCount":count.positive_candidates,"perFileRejectedCount":count.per_file_rejected,"finalLimitOmissionCount":count.final_omitted}});
+                if !append_metadata(
+                    result,
+                    "scopes",
+                    "omittedScopeSummaryCount",
+                    row,
+                    &mut optional,
+                    run,
+                )? {
+                    break;
+                }
+            }
+        }
+        for binding in partition.declarations().take(128) {
+            if !append_metadata(
+                result,
+                "declarationBindings",
+                "omittedDeclarationBindingCount",
+                json!({"path":binding.path(),"contentHash":binding.content_hash()}),
+                &mut optional,
+                run,
+            )? {
+                break;
+            }
+        }
+    }
+    for omission in omissions.iter().take(200) {
+        if !append_metadata(
+            result,
+            "sourceOmissions",
+            "omittedSourceOmissionCount",
+            json!({"path":omission.path,"reason":"source_budget","bytes":omission.bytes}),
+            &mut optional,
+            run,
+        )? {
+            break;
+        }
+    }
+    admit_value(result, run)
+}
+
+#[cfg(test)]
+#[path = "retrieval_driver_tests.rs"]
+mod driver_tests;
+
+fn find_global_legacy(
+    store: &Store,
+    snapshot: &Snapshot,
+    graph: &Graph,
+    args: &Value,
+    deadline: &Deadline,
+) -> Result<Value> {
+    query_features::source_scope(store, snapshot, graph, deadline)?;
+    let object = args
+        .as_object()
+        .context("Retrieval options must be an object")?;
+    ensure!(
+        object.keys().all(|key| [
+            "query",
+            "limit",
+            "perFileLimit",
+            "includeBody",
+            "relativePath",
+            "pathGlob",
+            "excludeGlob",
+            "graphWeight"
+        ]
+        .contains(&key.as_str())),
+        "Unknown retrieval option"
+    );
+    let query = args["query"].as_str().context("Retrieval query required")?;
+    ensure!(
+        !query.is_empty() && query.len() <= 16000,
+        "Invalid retrieval query"
+    );
+    let terms: Vec<_> = query
+        .split(|c: char| !c.is_alphanumeric())
+        .filter(|s| !s.is_empty())
+        .map(normalize)
+        .collect::<BTreeSet<_>>()
+        .into_iter()
+        .collect();
+    ensure!(
+        !terms.is_empty() && terms.len() <= 32,
+        "Retrieval query requires 1..32 distinct words"
+    );
+    let integer = |key: &str, default: u64, max: u64| -> Result<usize> {
+        Ok(match args.get(key) {
+            Some(value) => value
+                .as_u64()
+                .filter(|n| (1..=max).contains(n))
+                .context("Invalid retrieval numeric bound")?,
+            None => default,
+        } as usize)
+    };
+    let limit = integer("limit", 30, 200)?;
+    let per_file = integer("perFileLimit", 3, 200)?;
+    ensure!(
+        args.get("includeBody").is_none_or(Value::is_boolean),
+        "Invalid includeBody flag"
+    );
+    for key in ["relativePath", "pathGlob", "excludeGlob"] {
+        ensure!(
+            args.get(key).is_none_or(Value::is_string),
+            "Invalid retrieval path filter"
+        );
+    }
+    let graph_weight = match args.get("graphWeight") {
+        Some(value) => value
+            .as_f64()
+            .filter(|n| n.is_finite() && (0.0..=1.0).contains(n))
+            .context("Invalid graph ranking weight")?,
+        None => 0.25,
+    };
+    ensure!(
+        graph.entities.len() <= 100000 && graph.observations.len() <= 1000000,
+        "Retrieval graph capacity exceeded"
+    );
+    let filter = PathFilter::new(args)?;
+    let symbol_paths: BTreeSet<_> = graph
+        .entities
+        .iter()
+        .filter(|e| e.kind != "file")
+        .map(|e| e.path.as_str())
+        .collect();
+    let mut sources = BTreeMap::new();
+    let mut omitted_paths = BTreeSet::new();
+    let mut source_bytes = 0usize;
+    let source_scope = crate::capture::source_scope_policy(store, snapshot)?;
+    for file in &snapshot.files {
+        deadline.check()?;
+        if !filter.matches(&file.path) {
+            continue;
+        }
+        if source_bytes.saturating_add(file.size) > SOURCE_BUDGET {
+            omitted_paths.insert(file.path.clone());
+            continue;
+        }
+        let source = query::source_in_scope(store, &source_scope, &file.path)?;
+        source_bytes = source_bytes
+            .checked_add(source.0.len())
+            .context("Retrieval source size overflow")?;
+        ensure!(
+            source_bytes <= SOURCE_BUDGET,
+            "Retrieval source budget exceeded"
+        );
+        sources.insert(file.path.as_str(), source);
+    }
+    let mut docs = Vec::new();
+    let mut document_bytes = 0usize;
+    let mut omitted_documents = 0usize;
+    for entity in &graph.entities {
+        deadline.check()?;
+        if !filter.matches(&entity.path)
+            || entity.kind == "file" && symbol_paths.contains(entity.path.as_str())
+        {
+            continue;
+        }
+        let Some((text, _)) = sources.get(entity.path.as_str()) else {
+            continue;
+        };
+        let body = text
+            .get(entity.start_byte..entity.end_byte)
+            .context("Retrieval entity source range invalid")?;
+        if document_bytes.saturating_add(body.len()) > SOURCE_BUDGET {
+            omitted_documents += 1;
+            continue;
+        }
+        document_bytes += body.len();
+        let mut doc = Document {
+            entity,
+            counts: vec![0; terms.len()],
+            length: 0,
+        };
+        frequencies(body, &terms, &mut doc.counts, &mut doc.length, 1, deadline)?;
+        frequencies(
+            &query::identifier_terms(&entity.name),
+            &terms,
+            &mut doc.counts,
+            &mut doc.length,
+            4,
+            deadline,
+        )?;
+        frequencies(
+            &entity.path,
+            &terms,
+            &mut doc.counts,
+            &mut doc.length,
+            1,
+            deadline,
+        )?;
+        docs.push(doc);
+    }
+    let n = docs.len() as f64;
+    let average = docs.iter().map(|d| d.length as f64).sum::<f64>() / n.max(1.0);
+    let df: Vec<_> = (0..terms.len())
+        .map(|i| docs.iter().filter(|d| d.counts[i] > 0).count() as f64)
+        .collect();
+    let mut lexical = vec![0.0; docs.len()];
+    for (index, doc) in docs.iter().enumerate() {
+        deadline.check()?;
+        for (i, tf) in doc.counts.iter().enumerate() {
+            let tf = *tf as f64;
+            if tf > 0.0 {
+                let idf = (1.0 + (n - df[i] + 0.5) / (df[i] + 0.5)).ln();
+                lexical[index] += idf * tf * 2.2
+                    / (tf + 1.2 * (0.25 + 0.75 * doc.length as f64 / average.max(1.0)));
+            }
+        }
+    }
+    let mass = lexical.iter().sum::<f64>();
+    let seeds: Vec<_> = lexical
+        .iter()
+        .map(|s| if mass > 0.0 { s / mass } else { 0.0 })
+        .collect();
+    let indices: BTreeMap<_, _> = docs
+        .iter()
+        .enumerate()
+        .map(|(i, d)| (d.entity.id.as_str(), i))
+        .collect();
+    let mut arcs = vec![Vec::new(); docs.len()];
+    for edge in &graph.observations {
+        deadline.check()?;
+        if let (Some(source), Some(target)) = (
+            indices.get(edge.source.as_str()),
+            edge.target.as_deref().and_then(|id| indices.get(id)),
+        ) && source != target
+        {
+            arcs[*source].push(*target);
+            arcs[*target].push(*source);
+        }
+    }
+    let mut ranks = seeds.clone();
+    let mut iterations = 0;
+    if mass > 0.0 && graph_weight > 0.0 {
+        for _ in 0..24 {
+            deadline.check()?;
+            let mut next: Vec<_> = seeds.iter().map(|s| s * 0.15).collect();
+            let mut dangling = 0.0;
+            for (source, targets) in arcs.iter().enumerate() {
+                deadline.check()?;
+                if targets.is_empty() {
+                    dangling += ranks[source] * 0.85;
+                } else {
+                    let share = ranks[source] * 0.85 / targets.len() as f64;
+                    for (i, target) in targets.iter().enumerate() {
+                        if i % 256 == 0 {
+                            deadline.check()?;
+                        }
+                        next[*target] += share;
+                    }
+                }
+            }
+            for (index, seed) in seeds.iter().enumerate() {
+                next[index] += dangling * seed;
+            }
+            let delta = next
+                .iter()
+                .zip(&ranks)
+                .map(|(a, b)| (a - b).abs())
+                .sum::<f64>();
+            ranks = next;
+            iterations += 1;
+            if delta < 1e-9 {
+                break;
+            }
+        }
+    }
+    let max_lexical = lexical
+        .iter()
+        .copied()
+        .fold(0.0, f64::max)
+        .max(f64::MIN_POSITIVE);
+    let max_graph = ranks
+        .iter()
+        .copied()
+        .fold(0.0, f64::max)
+        .max(f64::MIN_POSITIVE);
+    let scores: Vec<_> = (0..docs.len())
+        .map(|i| {
+            (1.0 - graph_weight) * lexical[i] / max_lexical + graph_weight * ranks[i] / max_graph
+        })
+        .collect();
+    let mut order: Vec<_> = (0..docs.len()).filter(|i| scores[*i] > 0.0).collect();
+    order.sort_by(|a, b| {
+        scores[*b]
+            .total_cmp(&scores[*a])
+            .then_with(|| docs[*a].entity.id.cmp(&docs[*b].entity.id))
+    });
+    let candidates = order.len();
+    let mut files = BTreeMap::new();
+    let mut items = Vec::new();
+    let mut balanced_out = 0;
+    for index in order {
+        deadline.check()?;
+        let entity = docs[index].entity;
+        let used = files.entry(entity.path.as_str()).or_insert(0usize);
+        if *used >= per_file {
+            balanced_out += 1;
+            continue;
+        }
+        if items.len() == limit {
+            break;
+        }
+        *used += 1;
+        let mut item = serde_json::to_value(entity)?;
+        let (text, hash) = &sources[entity.path.as_str()];
+        item["contentHash"] = json!(hash);
+        item["bm25Score"] = json!(lexical[index]);
+        item["graphScore"] = json!(ranks[index]);
+        item["rankingScore"] = json!(scores[index]);
+        if args["includeBody"] == true {
+            let mut end = entity.end_byte.min(entity.start_byte + 16000);
+            while !text.is_char_boundary(end) {
+                end -= 1;
+            }
+            item["body"] = json!(&text[entity.start_byte..end]);
+            item["bodyEndByte"] = json!(end);
+            item["bodyTruncated"] = json!(end < entity.end_byte);
+        }
+        items.push(item);
+    }
+    Ok(
+        json!({"snapshotId":snapshot.id,"items":items,"candidateCount":candidates,"balancedOut":balanced_out,"perFileLimit":per_file,"graphWeight":graph_weight,"graphIterations":iterations,"ranking":"source_body_bm25_personalized_graph","rankingSemantics":"heuristic_relevance_not_binding_or_runtime_proof","graphDirection":"bidirectional_captured_observations_parallel_arcs_preserved","sourceBytes":source_bytes,"documentBytes":document_bytes,"omittedDocumentCount":omitted_documents,"omittedPathCount":omitted_paths.len(),"omittedPaths":omitted_paths.iter().take(200).collect::<Vec<_>>(),"truncated":candidates>limit || balanced_out>0 || omitted_documents>0 || !omitted_paths.is_empty(),"complete":false}),
+    )
+}

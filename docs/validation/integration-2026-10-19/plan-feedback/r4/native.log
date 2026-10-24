@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 3.92s
+     Running tests\plan_feedback.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\plan_feedback-49826affaaf26377.exe)
+
+running 14 tests
+test altered_saved_plan_and_missing_source_cannot_reuse_an_event ... ok
+test cli_record_rank_and_closed_stdout_keep_one_immutable_recoverable_event ... ok
+test create_delete_plan_quotes_keep_the_original_side_and_byte_identity ... ok
+test every_budget_refuses_the_whole_publication_and_rank_without_mutation ... ok
+test existing_read_transaction_is_preserved_and_cannot_receive_a_feedback_write ... ok
+test forged_verification_and_approval_rows_do_not_become_outcome_authority ... ok
+test host_json_protocol_refusals_precede_store_creation ... ok
+test ordered_session_history_is_idempotent_and_cannot_rewrite_or_backdate_a_slot ... ok
+test oversized_plan_registration_and_expired_deadline_publish_nothing_and_restore_sql_limits ... ok
+test planned_result_views_replay_exact_unicode_crlf_without_application_or_execution ... ok
+test ranking_uses_latest_eligible_session_and_independently_expected_integer_decay ... ok
+test retention_protects_original_plan_sources_and_refuses_a_forged_event ... ok
+test target_selection_reports_outside_events_and_does_not_duplicate_a_plan_vote ... ok
+test wrong_plan_views_paths_hashes_utf8_boundaries_and_unchanged_quotes_refuse_without_writes ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.51s
+

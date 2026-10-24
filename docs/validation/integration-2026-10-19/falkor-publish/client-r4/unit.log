@@ -1,0 +1,16 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 12s
+     Running unittests src\lib.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\yoke-f14d0af26d19713e.exe)
+
+running 8 tests
+test falkor_publish::checks::tests::receipt_requires_exact_fields_types_cardinality_and_reviewed_identity ... ok
+test falkor_publish::journal::tests::durable_intent_blocks_resend_until_positive_read_recovery_is_recorded ... ok
+test falkor_publish::journal::tests::exclusive_guarded_file_refuses_hardlinks_aliases_truncation_and_changed_chains ... ok
+test falkor_publish::journal::tests::expired_or_regressed_approval_cannot_send_but_positive_recovery_can_be_recorded ... ok
+test falkor_publish::transport::tests::authentication_and_query_errors_do_not_echo_secrets_or_retry ... ok
+test falkor_publish::transport::tests::missing_host_permissions_and_expired_deadline_open_no_connection ... ok
+test falkor_publish::transport::tests::native_connection_preserves_unicode_auth_and_binary_frame_shapes_without_reconnect ... ok
+test falkor_publish::transport::tests::stalled_query_keeps_the_original_deadline_and_never_reissues_the_request ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 454 filtered out; finished in 1.58s
+

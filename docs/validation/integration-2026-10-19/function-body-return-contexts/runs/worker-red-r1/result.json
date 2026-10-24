@@ -1,0 +1,186 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":90,\"endByte\":91,\"text\":\"n\"}]"
+    },
+    {
+      "case": 1,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":85,\"endByte\":86,\"text\":\"n\"}]"
+    },
+    {
+      "case": 2,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":90,\"endByte\":91,\"text\":\"n\"}]"
+    },
+    {
+      "case": 3,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":86,\"endByte\":87,\"text\":\"n\"}]"
+    },
+    {
+      "case": 4,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":153,\"endByte\":154,\"text\":\"n\"}]"
+    },
+    {
+      "case": 5,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"__ci_inline_1\"",
+      "ownedRuntimeSame": false,
+      "beforeTypes": [
+        "() => void"
+      ],
+      "afterTypes": [
+        "() => void"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 6,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "[\"\",3]",
+      "after": "[\"__ci_inline_1\",3]",
+      "ownedRuntimeSame": false,
+      "beforeTypes": [
+        "() => number"
+      ],
+      "afterTypes": [
+        "() => number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 7,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"__ci_inline_1\"",
+      "ownedRuntimeSame": false,
+      "beforeTypes": [
+        "typeof (Anonymous class)"
+      ],
+      "afterTypes": [
+        "typeof (Anonymous class)"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 8,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"__ci_inline_1\"",
+      "ownedRuntimeSame": false,
+      "beforeTypes": [
+        "() => void"
+      ],
+      "afterTypes": [
+        "() => void"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 9,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "[\"\",3]",
+      "after": "[\"__ci_inline_1\",3]",
+      "ownedRuntimeSame": false,
+      "beforeTypes": [
+        "() => number"
+      ],
+      "afterTypes": [
+        "() => number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 10,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"__ci_inline_1\"",
+      "ownedRuntimeSame": false,
+      "beforeTypes": [
+        "typeof (Anonymous class)"
+      ],
+      "afterTypes": [
+        "typeof (Anonymous class)"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 11,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":89,\"endByte\":90,\"text\":\"n\"},{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":150,\"endByte\":151,\"text\":\"n\"}]"
+    },
+    {
+      "case": 12,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "[\"\",3]",
+      "after": "[\"__ci_inline_1\",3]",
+      "ownedRuntimeSame": false,
+      "beforeTypes": [
+        "() => void"
+      ],
+      "afterTypes": [
+        "() => void"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 13,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "true",
+      "after": "true",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "{ value: number; } | undefined"
+      ],
+      "afterTypes": [
+        "{ value: number; } | undefined"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 14,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":106,\"endByte\":107,\"text\":\"n\"}]"
+    },
+    {
+      "case": 15,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":100,\"endByte\":101,\"text\":\"n\"}]"
+    }
+  ],
+  "allChecksPassed": false,
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "ownedLiteralFixturesExecuted": true,
+  "diagnosticOnlyWorkerPatch": true
+}

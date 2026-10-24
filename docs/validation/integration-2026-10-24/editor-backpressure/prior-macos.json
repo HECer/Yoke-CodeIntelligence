@@ -1,0 +1,31 @@
+{
+  "artifact": {
+    "id": 12563227510,
+    "name": "native-shard-macos-latest-2",
+    "bytes": 117655,
+    "digest": "sha256:25845080395219c1f5881731b846fb74296cb2e1b0c351a69fdf88d9c68913de",
+    "run": 40101366598,
+    "head": "84e1186621eb2ac984609bb05549e9a3b93d759b"
+  },
+  "artifactDigestReverified": true,
+  "group": {
+    "group": "yoke-code-intelligence:lib:yoke:test",
+    "exitCode": 101,
+    "logs": [
+      {
+        "name": "0002.stdout",
+        "bytes": 52513,
+        "sha256": "520afda0bd6e99c419502730d2c9c15913a93cb1f8efa71707732db877ca9985"
+      },
+      {
+        "name": "0002.stderr",
+        "bytes": 448,
+        "sha256": "82be239506607b05ad5477fa773ec6242ec63a15f654a24463a69c2b218024ff"
+      }
+    ]
+  },
+  "exactPriorTestFileMatchesSelectedMacSource": true,
+  "sourceSha256": "eb4874f5e78e38f2401e03d937c409c4249907ad027ccfb07f59050ddda37c19",
+  "failureExcerpt": "---- editor_http::tests::backpressured_socket_writes_cannot_extend_the_response_deadline stdout ----\n\nthread 'editor_http::tests::backpressured_socket_writes_cannot_extend_the_response_deadline' (56524) panicked at native/src/editor_http.rs:596:9:\nFixture must reach genuinely backpressured response writing\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n",
+  "scope": "Failed prior macOS library group only, not current native acceptance"
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "kind": "ignored_contract_staging_manifest_not_acceptance",
+  "createdAtUtc": "2026-10-15T20:17:59.612699+00:00",
+  "normalSourceEdits": false,
+  "cargoOrNodeRun": false,
+  "featureTestsExecuted": false,
+  "upstreamBrowsed": false,
+  "parentDecision": "Captured package-manifest source syntax/schema is UnsupportedPolicy with observable same-budget auto fallback; authority/integrity/request/capacity/deadline/cancellation failures remain hard.",
+  "artifactHashes": {
+    "PLAN.md": "4afb8f1767025c612e6bf93be32900d4fb82547ec4e0c6b97690a0e0b462acf6",
+    "review/independent-decision-review.md": "ccdde0691a1023945aea456641b70ecd100494a1ef4a9d5c33a0f12f7c972051",
+    "CONTRACT.md": "4dc1105faa6731076dde6f0d3e5003624049a3392a4a7c1dafd1ba94f6fad53e",
+    "API.md": "f94a6cde51979e4cc5e740eb39561533d0095e22360280d1e7158b0d7045b5f5",
+    "FIXTURES.json": "39f875158543e9bc64046d2144ea82480f275cc3ef2c0fd4c4cce2c5f449a1f7"
+  },
+  "observedNormalInputHashes": {
+    "native/src/retrieval.rs": "c209e6da3dc36e09613066ea1031d3174067675d8ac97e235f887de4e6cc633b",
+    "native/src/query_features.rs": "be26064454d310b5a1ce300ae0ec5fd178d796b8e3e61b2e1870f7a5de3968ef",
+    "native/src/manifest_graph.rs": "c0dd194f780472fe2d35f6f1c345250d2046114eb477b5d91ce95263e54f1a85",
+    "native/src/config_graph.rs": "d2a6dbb1292664208e06b65e8473a68b0111f48862253eb9c4b7290c156d1179",
+    "native/src/trail_adapter.rs": "97202f01513121bc2ee9606223f54fa5e7b7aa89a4bdf6995e6819bc00153ad3",
+    "native/src/protocol.rs": "e99af9335ced8b8d102ac0805ae8292591da31447e987b41be786f79308028f1"
+  },
+  "unresolvedSupportedV1ContractConflicts": []
+}

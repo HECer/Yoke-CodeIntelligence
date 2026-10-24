@@ -1,0 +1,65 @@
+[
+  {
+    "gate": "format",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 4.399,
+    "recordedAt": "2026-10-18T22:23:39.782599+00:00"
+  },
+  {
+    "gate": "clippy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "-j2",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 1.595,
+    "recordedAt": "2026-10-18T22:23:41.378206+00:00"
+  },
+  {
+    "gate": "regressions",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--lib",
+      "--test",
+      "github_app_worker_run",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 157.281,
+    "recordedAt": "2026-10-18T22:26:18.680223+00:00"
+  },
+  {
+    "gate": "actual-live-navigation",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--test",
+      "live",
+      "--",
+      "--ignored",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 38.365,
+    "recordedAt": "2026-10-18T22:26:57.049609+00:00"
+  }
+]

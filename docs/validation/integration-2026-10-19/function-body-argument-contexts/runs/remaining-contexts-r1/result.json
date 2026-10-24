@@ -1,0 +1,32 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 1,
+      "language": "js",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":2322,\"severity\":\"error\",\"message\":\"Type 'undefined' is not assignable to type '3'.\",\"path\":\"main.js\",\"startByte\":571,\"endByte\":584,\"text\":\"__ci_inline_1\"}]"
+    }
+  ],
+  "allChecksPassed": false,
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "ownedLiteralFixturesExecuted": true,
+  "diagnosticOnlyWorkerPatch": true
+}

@@ -1,0 +1,17 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 39s
+     Running unittests src\lib.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\yoke-f14d0af26d19713e.exe)
+
+running 9 tests
+test compiler_inline::body::admission::tests::body_effects_cannot_forge_source_bindings_origins_types_paths_or_output ... ok
+test compiler_inline::body::admission::tests::var_witnesses_cannot_forge_parameter_copies_catch_targets_types_or_property_roles ... ok
+test compiler_inline::body::inferred::tests::malformed_type_groups_missing_names_and_deadlines_cannot_build_witnesses ... ok
+test compiler_inline::body::inferred::tests::source_type_witnesses_preserve_keys_labels_offsets_and_original_reads ... ok
+test compiler_inline::body::tests::frame_reconstruction_keeps_argument_order_parameter_scope_and_finally_returns ... ok
+test compiler_inline::body::tests::invocation_identifiers_refuse_wrappers_and_unicode_escapes_without_execution ... ok
+test compiler_inline::body::tests::owned_frame_execution_keeps_finally_scope_nested_returns_and_argument_comments ... ok
+test compiler_inline::body::variables::tests::var_groups_decode_names_prune_owned_scopes_and_enforce_capacity ... ok
+test compiler_inline::body::variables::tests::var_pattern_roles_exclude_nested_default_declarations_and_computed_values ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 487 filtered out; finished in 5.60s
+

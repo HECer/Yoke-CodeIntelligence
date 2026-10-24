@@ -1,0 +1,55 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 56s
+     Running tests\digest_receiver.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\digest_receiver-18cf400d5be2a42d.exe)
+
+running 47 tests
+test actual_cli_default_denial_creates_no_state_or_listener ... ok
+test actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_ca ... ignored, Requires actual Windows Credential Manager; creates/removes three unique TLS/token/signing credentials and starts only owned loopback CLI processes
+test ambiguous_framing_foreign_hosts_and_bearerless_puts_refuse_before_body_or_state ... ok
+test authentication_scope_revocation_and_absent_receipts_do_not_publish_or_disclose ... ok
+test caller_sql_durability_and_corrupted_accepted_bytes_refuse_before_binding ... ok
+test changed_wire_binding_and_rehashed_text_fields_cannot_enter_the_closed_handoff ... ok
+test detached_host_cancellation_remains_binding_after_start_returns ... ok
+test payload_capacity_and_expired_partial_body_do_not_commit_late_bytes ... ok
+test queries_preserve_duplicate_ordinals_parallel_directions_and_unverified_claims ... ok
+test query_all_selections_are_scoped_before_any_row_and_unknown_protocol_is_refused ... ok
+test query_cli_default_denial_and_invalid_host_paths_never_initialize_state ... ok
+test query_corrupt_storage_expiry_and_unknown_remote_permissions_never_become_empty_complete_results ... ok
+test query_exact_work_search_and_output_budgets_refuse_whole_results_and_preserve_sql_policy ... ok
+test query_host_and_grant_permissions_default_deny_authentication_and_revocation_are_current ... ok
+test query_local_cli_matches_library_and_never_adds_source_or_processing_records ... ok
+test query_native_client_filters_unicode_pages_and_replays_local_read_only_without_new_records ... ok
+test query_revocation_during_body_and_disabled_query_authentication_refuse_without_waiting_for_complete_body ... ok
+test real_native_client_and_receiver_commit_one_intake_and_reconcile_local_failure ... ok
+test real_tls_accepts_selected_ca_and_refuses_wrong_trust_or_name_before_intake ... ok
+test receipt_is_immutable_for_exact_repeats_and_survives_receiver_restart ... ok
+test received_snapshot_ids_never_pin_matching_local_capture_history ... ok
+test receiver_capacity_and_sql_failure_never_return_a_false_acceptance ... ok
+test revocation_during_body_acquisition_precedes_any_record_commit ... ok
+test slow_partial_request_shutdown_and_initial_permissions_remain_bounded ... ok
+test source_verification::actual_local_cli_replays_both_existing_roots_without_keys_or_state_creation ... ok
+test source_verification::empty_claim_sets_refuse_and_same_store_reads_finish_the_receipt_transaction_first ... ok
+test source_verification::frozen_literal_queries_survive_store_loss_and_remain_bounded ... ok
+test source_verification::grants_permissions_receipt_pin_and_output_budget_refuse_without_mutating_intake ... ok
+test source_verification::interpretation::actual_interpret_cli_requires_three_host_permissions_and_replays_existing_stores_without_a_provider ... ok
+test source_verification::interpretation::changing_only_unadvertised_bytes_cannot_rebind_an_old_meaning_graph_to_a_new_snapshot ... ok
+test source_verification::interpretation::cli_permissions_and_meaning_budget_precede_missing_host_files_and_state ... ok
+test source_verification::interpretation::corrupted_semantic_publication_cannot_promote_its_embedded_source_or_error_text ... ok
+test source_verification::interpretation::every_source_unit_must_fit_a_verified_declaration_even_if_its_quotes_or_coverage_are_smaller ... ok
+test source_verification::interpretation::frozen_interpretation_exports_after_both_stores_are_gone_with_deadline_and_output_checks ... ok
+test source_verification::interpretation::independent_input_mapping_and_output_limits_refuse_complete_results_without_writes ... ok
+test source_verification::interpretation::interpretation_permissions_closed_requests_and_revoked_grants_precede_parent_access ... ok
+test source_verification::interpretation::original_semantic_layer_parallel_directions_roles_and_receipts_are_preserved_without_provider_calls ... ok
+test source_verification::interpretation::overlapping_module_and_function_correspondence_preserves_every_received_ordinal ... ok
+test source_verification::interpretation::successful_no_claims_processing_keeps_explicit_source_bound_coverage ... ok
+test source_verification::matching_captured_git_identity_is_checked_without_attesting_sender_or_remote_origin ... ok
+test source_verification::optional_whole_file_hash_checks_more_than_the_advertised_declaration_projection ... ok
+test source_verification::projection_order_and_work_budgets_cannot_be_hidden_by_a_smaller_page ... ok
+test source_verification::real_source_change_or_graph_tamper_invalidates_the_comparison ... ok
+test source_verification::rehashed_sender_declarations_counters_and_duplicate_rows_cannot_pass_source_verification ... ok
+test source_verification::separate_workspace_source_replay_qualifies_each_ordinal_without_promoting_packet_claims ... ok
+test source_verification::unknown_request_fields_duplicate_keys_and_foreign_ids_never_grant_source_access ... ok
+test source_verification::verification_cli_permissions_and_budgets_precede_missing_host_inputs ... ok
+
+test result: ok. 46 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 13.64s
+

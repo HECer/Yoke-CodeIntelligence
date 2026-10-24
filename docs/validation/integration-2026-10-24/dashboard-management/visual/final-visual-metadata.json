@@ -1,0 +1,44 @@
+[
+  {
+    "name": "desktop-final",
+    "productSourceSha256": "9d1191cc9e192a0b6f292e77aa7dd068e162b7a52f63d7fceb6655cb9932b1f4",
+    "scope": "Synthetic visual fixture, not native CLI acceptance",
+    "width": 1366,
+    "contentHeight": 992,
+    "capturedHeight": 992,
+    "consoleMessages": [
+      {
+        "level": "log",
+        "text": "{\"name\":\"architecture/π\",\"state\":\"Saved version loaded · project default\",\"inert\":true,\"overflow\":false,\"content\":\"# Owned visual fixture\\n\\n<script>window.inertViolation=true</script>\\nKeep bytes 🦀 é.\\n\"}"
+      }
+    ],
+    "screenshot": {
+      "mimeType": "image/png",
+      "width": 1366,
+      "height": 992
+    }
+  },
+  {
+    "name": "mobile-conflict-final",
+    "productSourceSha256": "9d1191cc9e192a0b6f292e77aa7dd068e162b7a52f63d7fceb6655cb9932b1f4",
+    "scope": "Synthetic visual fixture, not native CLI acceptance",
+    "width": 390,
+    "contentHeight": 1659,
+    "capturedHeight": 1659,
+    "consoleMessages": [
+      {
+        "level": "log",
+        "text": "{\"draftPreserved\":true,\"saveDisabled\":true,\"newText\":\"New memory\",\"newDisabled\":false,\"newColor\":\"rgb(22, 42, 40)\"}"
+      },
+      {
+        "level": "log",
+        "text": "{\"name\":\"architecture/π\",\"state\":\"A newer saved version exists. Your draft is preserved. Reload it before trying again.\",\"inert\":true,\"overflow\":false,\"content\":\"# Owned visual fixture\\n\\n<script>window.inertViolation=true</script>\\nKeep bytes 🦀 é.\\n\\nUnsaved fixture draft π\"}"
+      }
+    ],
+    "screenshot": {
+      "mimeType": "image/png",
+      "width": 390,
+      "height": 1659
+    }
+  }
+]

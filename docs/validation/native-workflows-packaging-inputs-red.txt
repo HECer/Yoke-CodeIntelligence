@@ -1,0 +1,38 @@
+test_blob_tampering_fails_exact_git_object_identity (test_package_native.LicenseDiscovery.test_blob_tampering_fails_exact_git_object_identity) ... ok
+test_nested_license_without_root_license_is_found (test_package_native.LicenseDiscovery.test_nested_license_without_root_license_is_found) ... ok
+test_nested_package_notice_and_ancestor_license_exclude_sibling_crates (test_package_native.LicenseDiscovery.test_nested_package_notice_and_ancestor_license_exclude_sibling_crates) ... ok
+test_no_license_is_a_revision_specific_failure (test_package_native.LicenseDiscovery.test_no_license_is_a_revision_specific_failure) ... ok
+test_truncated_recursive_tree_fails_even_with_root_license (test_package_native.LicenseDiscovery.test_truncated_recursive_tree_fails_even_with_root_license) ... ok
+test_matching_release_keeps_public_security_and_release_guidance (test_package_native.PackagingInputs.test_matching_release_keeps_public_security_and_release_guidance) ... ERROR
+test_stale_release_binary_cannot_be_labeled_with_a_new_manifest_version (test_package_native.PackagingInputs.test_stale_release_binary_cannot_be_labeled_with_a_new_manifest_version) ... FAIL
+
+======================================================================
+ERROR: test_matching_release_keeps_public_security_and_release_guidance (test_package_native.PackagingInputs.test_matching_release_keeps_public_security_and_release_guidance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\scripts\tests\test_package_native.py", line 125, in test_matching_release_keeps_public_security_and_release_guidance
+    self.assertEqual(archive.read("SECURITY.md"), b"Synthetic public guidance")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HEC_e\AppData\Local\Programs\Miniconda3\Lib\zipfile\__init__.py", line 1572, in read
+    with self.open(name, "r", pwd) as fp:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HEC_e\AppData\Local\Programs\Miniconda3\Lib\zipfile\__init__.py", line 1609, in open
+    zinfo = self.getinfo(name)
+            ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HEC_e\AppData\Local\Programs\Miniconda3\Lib\zipfile\__init__.py", line 1537, in getinfo
+    raise KeyError(
+KeyError: "There is no item named 'SECURITY.md' in the archive"
+
+======================================================================
+FAIL: test_stale_release_binary_cannot_be_labeled_with_a_new_manifest_version (test_package_native.PackagingInputs.test_stale_release_binary_cannot_be_labeled_with_a_new_manifest_version)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\scripts\tests\test_package_native.py", line 112, in test_stale_release_binary_cannot_be_labeled_with_a_new_manifest_version
+    with self.assertRaisesRegex(RuntimeError, "version"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.141s
+
+FAILED (failures=1, errors=1)

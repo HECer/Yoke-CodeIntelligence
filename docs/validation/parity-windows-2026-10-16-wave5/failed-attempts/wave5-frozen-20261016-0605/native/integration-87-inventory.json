@@ -1,0 +1,24 @@
+{
+  "registry_replay_review": {
+    "executable": "target\\debug\\deps\\registry_replay_review-8390e9e4e28b3782.exe",
+    "ignored": [],
+    "registered": [
+      "historical4_keeps_its_identity_and_reports_unreplayed_claims",
+      "native8_relabel_is_rejected_after_origin_deleted",
+      "native8_retarget_is_rejected_after_origin_deleted",
+      "native9_archive_selects_proven_epoch_without_global_activation",
+      "producer_labels_cannot_change_a_proven_capture_epoch",
+      "unchanged_native8_and_view8_remain_standalone",
+      "view8_relabel_is_rejected_after_origin_deleted",
+      "view8_retarget_is_rejected_after_origin_deleted"
+    ]
+  },
+  "replacement": {
+    "executable": "target\\debug\\deps\\replacement-4678ddb3fc91b625.exe",
+    "ignored": [],
+    "registered": [
+      "capture_templates_preserve_numeric_named_unicode_escaped_and_missing_references",
+      "multiplicative_templates_are_rejected_with_bounded_memory_and_shared_deadline"
+    ]
+  }
+}

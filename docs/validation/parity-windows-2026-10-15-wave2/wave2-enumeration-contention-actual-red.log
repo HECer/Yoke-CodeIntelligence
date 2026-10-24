@@ -1,0 +1,23 @@
+    Finished `test` profile [unoptimized] target(s) in 0.62s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 1 test
+test host_install::io::namespace::windows::contention_tests::enumeration_mutex_wait_observes_the_callers_deadline ... FAILED
+
+failures:
+
+---- host_install::io::namespace::windows::contention_tests::enumeration_mutex_wait_observes_the_callers_deadline stdout ----
+
+thread 'host_install::io::namespace::windows::contention_tests::enumeration_mutex_wait_observes_the_callers_deadline' (65996) panicked at native\src\host_install_namespace.rs:527:13:
+assertion `left == right` failed: Expired scan remained blocked behind another directory scan
+  left: None
+ right: Some(true)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    host_install::io::namespace::windows::contention_tests::enumeration_mutex_wait_observes_the_callers_deadline
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 96 filtered out; finished in 0.52s
+
+error: test failed, to rerun pass `--lib`

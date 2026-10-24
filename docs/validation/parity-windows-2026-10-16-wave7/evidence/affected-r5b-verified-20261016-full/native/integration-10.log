@@ -1,0 +1,24 @@
+    Finished `test` profile [unoptimized] target(s) in 0.70s
+     Running tests\capture_policy.rs (target\debug\deps\capture_policy-b99a3d9405396fbe.exe)
+
+running 9 tests
+test arbitrary_derived_id_preserves_proven_v9_capture_policy_without_claiming_extraction ... ok
+test canonical_derived_v9_from_disk_v8_retains_v8_source_acquisition_policy ... ok
+test capture_policy_traversal_is_bounded_and_honors_the_callers_expired_deadline ... ok
+test foreign_scope_receipts_and_their_native_children_do_not_grant_disk_acquisition ... ok
+test ignored_capture_v9_lineage_preserves_members_and_rejects_resealed_member_changes ... ok
+test resealed_scope_proof_cannot_widen_only_dirs_before_following_its_valid_origin ... ok
+test overlay_v9_from_disk_v8_retains_the_base_capture_policy ... ok
+test unproven_or_tampered_capture_lineage_cannot_authorize_disk_recapture ... ok
+test exact_git_capture_receipts_select_their_own_policy_and_never_fall_back_on_corruption ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.62s
+
+     Running tests\client_lock.rs (target\debug\deps\client_lock-ca0baa8386334e28.exe)
+
+running 2 tests
+test maintenance_cannot_run_while_another_client_holds_state_open ... ok
+test exclusive_maintenance_denies_new_clients_and_restores_its_lease_after_error ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+

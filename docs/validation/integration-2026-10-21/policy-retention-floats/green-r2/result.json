@@ -1,0 +1,65 @@
+{
+  "sourceUnchanged": true,
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 8.395741899992572,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": []
+    },
+    {
+      "name": "graph_analysis_policy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "graph_analysis_policy",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 7.098099399998318,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 6,
+        "failed": 1,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graph_analysis_policy-6ffd54bdca9a5d8a.exe",
+          "sha256": "76a1eba952859a1ef76ab7706d4fcfe404bc966743677bb3f1b9ee5bab35d0e3",
+          "bytes": 118593024
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graph_analysis_policy-6ffd54bdca9a5d8a.pdb",
+          "sha256": "330094202a64005a49228465c32b99dad28cb3665b4d6530cc121e7c3ffd4ed9",
+          "bytes": 21073920
+        }
+      ]
+    }
+  ],
+  "allChecksPassed": false,
+  "scope": "Canonical policy retention exact replay plus existing graph/view/retention contracts",
+  "fullStatusCertified": false,
+  "cliSha256": "0b21c63e84a337f456181cbde723be7f009bac780f70590c8d322e38bc8d38eb"
+}

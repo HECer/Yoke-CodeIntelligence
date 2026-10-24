@@ -1,0 +1,12 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+    Finished `test` profile [unoptimized] target(s) in 0.78s
+     Running tests\operations.rs (target\debug\deps\operations-ed9395c3e80089b9.exe)
+0 tests, 0 benchmarks
+     Running tests\parity_cli.rs (target\debug\deps\parity_cli-c7f5b814c46c6b5e.exe)
+0 tests, 0 benchmarks

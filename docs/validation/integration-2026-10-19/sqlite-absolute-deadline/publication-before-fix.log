@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 2.46s
+     Running tests\store_cancellation.rs (target\debug\deps\store_cancellation-7e8ec3077ec5dbd3.exe)
+
+running 1 test
+test serialization_cancellation_cannot_publish_uncontended_record_mutations ... FAILED
+
+failures:
+
+---- serialization_cancellation_cannot_publish_uncontended_record_mutations stdout ----
+
+thread 'serialization_cancellation_cannot_publish_uncontended_record_mutations' (16584) panicked at native\tests\store_cancellation.rs:251:13:
+record published after serialization cancelled the host request
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    serialization_cancellation_cannot_publish_uncontended_record_mutations
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `--test store_cancellation`

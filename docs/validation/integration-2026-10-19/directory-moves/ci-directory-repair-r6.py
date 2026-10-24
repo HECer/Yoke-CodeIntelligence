@@ -1,0 +1,19 @@
+from pathlib import Path
+import subprocess,os,json,time,hashlib,shutil,re
+root=Path('C:/Users/Lomi/Documents/NN-Developed/Yoke-CodeIntelligence');work=Path.cwd();out=root/'validation/integration-20261018/directory-moves-development/rename-admission-repair';out.mkdir(exist_ok=False);cargo=str(Path.home()/'.cargo/bin/cargo.exe');env=os.environ.copy();env['PATH']=str(Path(cargo).parent)+os.pathsep+str(Path.home()/'AppData/Local/YokeValidation/tools/powershell-7.6.7-win-x64')+os.pathsep+env['PATH'];env['YOKE_RUST_ANALYZER']=str(Path(cargo).with_name('rust-analyzer.exe'));env['YOKE_RUSTC']=str(Path(cargo).with_name('rustc.exe'))
+names=subprocess.check_output(['git','ls-files','-c','-o','--exclude-standard','-z']).decode().split('\0');before={n:hashlib.sha256((work/n).read_bytes()).hexdigest() for n in sorted(set(names)) if n and n.startswith(('native/src/','native/tests/')) and (work/n).is_file()};(out/'source-before.json').write_bytes((json.dumps(before,indent=2)+'\n').encode())
+changed=subprocess.check_output(['git','diff','--name-only','-z'],stderr=subprocess.DEVNULL).decode().split('\0');assert sorted(n for n in changed if n)==['native/src/agent_repl.rs','native/tests/facade_directory_move.rs']
+for n in changed:
+ if n:
+  p=out/'source'/n;p.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(work/n,p)
+(out/'repair.patch').write_bytes(subprocess.check_output(['git','diff','--no-ext-diff','--binary','--','native/src','native/tests'],stderr=subprocess.DEVNULL));results=[]
+selected=['--lib']
+for name in ['facade_directory_move','facade_file_move','facade_file_rename','facade_file_delete','plan_integrity','semantic_refactor','refactor_intents']:selected+=['--test',name]
+commands=[('format',[cargo,'fmt','--all','--check']),('clippy',[cargo,'clippy','--locked','--all-targets','--keep-going','-j1','--target-dir',str(root/'target'),'--','-D','warnings']),('scoped-native',[cargo,'test','--locked','--no-fail-fast','-j1','--target-dir',str(root/'target')]+selected+['--','--test-threads=1']),('actual-directory-provider',[cargo,'test','--locked','-j1','--target-dir',str(root/'target'),'--test','directory_move_live','--','--ignored','--nocapture','--test-threads=1'])]
+for name,cmd in commands:
+ start=time.monotonic();print(json.dumps({'gate':name,'state':'running'}),flush=True)
+ with (out/(name+'.log')).open('wb') as log:r=subprocess.run(cmd,env=env,stdout=log,stderr=subprocess.STDOUT)
+ raw=(out/(name+'.log')).read_text(encoding='utf-8',errors='replace');groups=[dict(zip(['passed','failed','ignored'],map(int,m))) for m in re.findall(r'^test result: \w+\. (\d+) passed; (\d+) failed; (\d+) ignored;',raw,re.M)];result={'gate':name,'exitCode':r.returncode,'elapsedSeconds':round(time.monotonic()-start,3),'command':cmd,'groups':groups};results.append(result);(out/'receipts.json').write_bytes((json.dumps(results,indent=2)+'\n').encode());print(json.dumps({k:v for k,v in result.items() if k!='groups'}),flush=True)
+ if r.returncode and name in ['format','clippy']:break
+after={n:hashlib.sha256((work/n).read_bytes()).hexdigest() for n in before};(out/'source-after.json').write_bytes((json.dumps(after,indent=2)+'\n').encode());(out/'summary.json').write_bytes((json.dumps({'gates':results,'sourceUnchanged':before==after,'allChecksPassed':len(results)==4 and all(x['exitCode']==0 for x in results),'scope':'Scoped repair after the frozen full run exposed jb.rename reaching the directory-enabled shared relocation helper. Private directory selection is true only for jb.move; existing file-only rename refuses before provider startup even with a folder-capable provider. Frozen whole-run failures remain preserved; this replay is nonadditive.'},indent=2)+'\n').encode());assert before==after
+raise SystemExit(1 if any(x['exitCode'] for x in results) or len(results)!=4 else 0)

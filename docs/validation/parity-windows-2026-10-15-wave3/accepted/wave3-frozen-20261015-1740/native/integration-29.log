@@ -1,0 +1,74 @@
+    Finished `test` profile [unoptimized] target(s) in 0.51s
+     Running tests\selected_graph_views.rs (target\debug\deps\selected_graph_views-36da6d50955d3227.exe)
+
+running 8 tests
+test native_mcp_keeps_eight_tools_and_exercises_published_view_selection ... ok
+test bounded_selected_response_pages_complete_lineage_without_claiming_generic_artifact_scope ... ok
+test ordinary_tools_select_one_published_code_markdown_and_manifest_view ... ok
+test selected_context_and_entity_read_use_historic_cas_without_capturing_live_source ... ok
+test selected_queries_reject_scope_mismatch_unknown_fields_and_canonical_only_modes ... ok
+test selected_query_replays_published_view_and_rejects_forged_registry_scope ... ok
+test selected_source_reads_preserve_utf8_boundaries_and_reject_ambiguous_source_selectors ... ok
+test selected_semantic_claims_keep_distinct_nodes_parallel_edges_and_provider_lineage ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.03s
+
+     Running tests\selected_view_analysis.rs (target\debug\deps\selected_view_analysis-4bdd1f0c8eb0e5b6.exe)
+
+running 11 tests
+test canonical_report_bytes_and_registration_match_frozen_golden ... ok
+test existing_graphify_hubs_preserve_file_level_manifest_source_precision ... ok
+test existing_graphify_hubs_include_parallel_citations_and_count_self_loops_twice ... ok
+test existing_graphify_community_tools_assign_default_view_overlay_nodes ... ok
+test selected_report_keeps_multiple_source_bindings_without_choosing_a_fabricated_exact_anchor ... ok
+test selected_report_preparation_validation_and_admission_have_no_publication_side_effects ... ok
+test explicit_selected_analysis_and_resources_replay_historic_views_and_reject_unsupported_scope ... ok
+test selected_report_preserves_provider_claims_and_every_original_anchor_family ... ok
+test selected_report_publication_rechecks_cas_after_preparation ... ok
+test selected_report_retention_replays_exact_bytes_and_rejects_scope_and_cas_tampering ... ok
+test selected_report_resource_admission_precedes_publication_of_a_large_formatted_body ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.94s
+
+     Running tests\selected_view_analysis_review.rs (target\debug\deps\selected_view_analysis_review-ad14a7cd287a04cc.exe)
+
+running 2 tests
+test retention_plan_recognizes_selected_report_and_preserves_exact_history_and_cas_roots ... ok
+test retention_plan_refuses_forged_selected_report_scope_before_retiring_any_history ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.81s
+
+     Running tests\selected_view_review.rs (target\debug\deps\selected_view_review-c84228a655575662.exe)
+
+running 6 tests
+test selected_library_queries_reject_mutated_in_memory_views ... ok
+test selected_queries_reject_replaced_base_graph_without_republishing ... ok
+test selected_context_reports_wholly_omitted_source_when_budget_is_exhausted ... ok
+test selected_queries_reject_same_length_view_cas_corruption ... ok
+test selected_trace_visit_budget_includes_initial_entities ... ok
+test selected_queries_replay_exact_source_after_files_disappear_and_engine_reopens ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.73s
+
+     Running tests\semantic_enrichment.rs (target\debug\deps\semantic_enrichment-8f5d09398d3c4ca1.exe)
+
+running 3 tests
+test overlay_publication_is_atomic_and_existing_records_are_immutable ... ok
+test semantic_overlay_keeps_parallel_calls_and_never_mutates_the_published_graph ... ok
+test rehashed_semantic_payloads_revalidate_selection_and_canonical_binding_claims ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.43s
+
+     Running tests\semantic_mcp.rs (target\debug\deps\semantic_mcp-ff5d010631b07000.exe)
+
+running 7 tests
+test ci_find_requires_one_search_mode_and_keeps_eight_advertised_tools ... ok
+test explicit_vector_search_without_a_query_keeps_its_existing_local_mode ... ok
+test captured_path_language_and_utf8_offset_are_checked_before_execution ... ok
+test mutating_authority_mixed_and_malformed_requests_never_start_a_provider ... ok
+test unconfigured_semantic_navigation_fails_explicitly_without_execution ... ok
+test registered_stdio_navigation_binds_old_requested_snapshot_after_disk_changes ... ok
+test tsx_navigation_can_use_an_explicitly_registered_typescript_provider ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.72s
+

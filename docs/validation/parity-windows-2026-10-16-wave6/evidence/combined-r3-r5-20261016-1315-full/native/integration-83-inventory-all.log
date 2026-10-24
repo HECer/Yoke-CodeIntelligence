@@ -1,0 +1,24 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 5.90s
+     Running tests\operations.rs (target\debug\deps\operations-ed9395c3e80089b9.exe)
+additional_grammar_call_sites_have_exact_evidence_and_labeled_candidates: test
+additional_real_grammars_extract_symbols_without_running_source: test
+binary_resource_reads_cannot_abort_the_next_mcp_request: test
+cross_file_imports_are_recomputed_after_dependency_changes: test
+lsp_unicode_position_roundtrip_rejects_split_surrogates: test
+mcp_stdio_initialization_lists_exactly_eight_tools_and_rejects_host_authority: test
+real_grammars_extract_multilingual_symbols_and_diagnostics: test
+symbol_insertions_and_overlaps_use_immutable_exact_ranges: test
+
+8 tests, 0 benchmarks
+     Running tests\parity_cli.rs (target\debug\deps\parity_cli-c7f5b814c46c6b5e.exe)
+public_agent_repl_cli_executes_persistent_cells_only_with_host_trust: test
+public_graph_cli_analyzes_and_exports_without_overwriting_human_cards: test
+public_graph_view_cli_combines_manifest_nodes_and_reads_historical_view: test
+public_named_notes_cli_is_persistent_and_global_store_is_explicit: test
+public_retrieval_cli_ranks_task_words_in_source_bodies: test
+public_serena_stdio_cli_preserves_cells_and_reports_errors_under_host_authority: test
+public_session_cli_resumes_host_registered_project_and_notes: test
+public_session_stdio_cli_serves_the_extended_profile_and_exits_on_eof: test
+
+8 tests, 0 benchmarks

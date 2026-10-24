@@ -1,0 +1,34 @@
+    Finished `test` profile [unoptimized] target(s) in 0.60s
+     Running tests\lsp_enrichment.rs (target\debug\deps\lsp_enrichment-48c225064c76c69a.exe)
+
+running 19 tests
+test canonical_symbols_have_checked_anchors_and_refuse_escaped_selections ... ok
+test completion_insert_replace_edits_require_nested_ranges_and_string_replacements ... ok
+test code_actions_prepare_immutable_plans_and_do_not_execute_server_commands ... ok
+test configuration_callbacks_are_bounded_before_host_settings_are_replicated ... ok
+test diagnostic_notifications_have_a_cumulative_retention_budget ... ok
+test diagnostic_ranges_and_completion_edits_are_source_checked ... ok
+test existing_loopback_tcp_provider_is_used_without_launching_or_stopping_its_process ... ok
+test hierarchy_rounds_retain_each_providers_data_and_stop_cycles ... ok
+test incoming_calls_preserve_parallel_call_evidence_and_opaque_provider_data ... ok
+test normalized_symbols_refuse_selection_ranges_outside_the_symbol ... ok
+test prepare_rename_validates_the_providers_exact_anchor ... ok
+test published_diagnostic_uri_drive_spelling_preserves_the_captured_file_identity ... ok
+test push_only_diagnostics_preserve_actual_publication_and_reject_stale_versions ... ok
+test resource_rename_creates_a_guarded_delete_and_create_plan ... ok
+test semantic_options_reject_unknown_authority_and_configured_settings_reach_the_server ... ok
+test semantic_profiles_distinguish_host_settings_for_identical_source_results ... ok
+test semantic_rename_resource_operations_and_following_text_edits_share_one_guarded_plan ... ok
+test type_definition_binds_the_requested_snapshot_and_utf8_name ... ok
+test type_hierarchies_return_checked_source_ranges ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.47s
+
+     Running tests\lsp_lifecycle.rs (target\debug\deps\lsp_lifecycle-6843554963ada3d4.exe)
+
+running 2 tests
+test failed_health_does_not_publish_status_generation_or_claim_restart ... ok
+test restart_performs_new_real_provider_handshakes_and_advances_only_owned_status ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.78s
+

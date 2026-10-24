@@ -1,0 +1,27 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.57s
+     Running tests\language_constructs.rs (target\debug\deps\language_constructs-4f3985b025df7217.exe)
+commonlisp_function_invocations_keep_the_exact_original_call_span: test
+explicit_erlang_fun_references_point_to_the_named_function_without_becoming_calls: test
+explicit_lisp_function_designators_are_references_and_quoted_data_stays_literal: test
+fortran_parameter_bindings_do_not_escape_to_another_procedure: test
+lisp_class_superclasses_and_slot_headers_are_not_calls_but_initforms_are: test
+lisp_lexical_declaration_headers_are_not_calls_but_bodies_and_initializers_are: test
+literal_lisp_vectors_do_not_emit_executable_calls_or_function_references: test
+new_language_procedure_nodes_have_actual_function_scopes: test
+objc_message_calls_are_distinct_from_plain_identifier_references: test
+objc_untyped_foreign_receiver_does_not_resolve_to_callers_own_method: test
+powershell_nested_functions_do_not_leak_into_a_sibling_function_scope: test
+quoted_lisp_lists_and_lambda_lists_do_not_become_function_calls: test
+vb_invocations_and_address_of_references_keep_distinct_relations: test
+vb_local_declarations_block_an_unrelated_same_named_module_method: test
+
+14 tests, 0 benchmarks
+     Running tests\ledger.rs (target\debug\deps\ledger-dcddb849694983a4.exe)
+concurrent_reservations_cannot_overspend: test
+reported_cost_above_reservation_stays_charged_and_blocks_task: test
+reservations_survive_reopen_and_refuse_overspend: test
+unknown_billing_retains_reservation_and_only_unsent_attempts_cancel: test
+usage_is_monotone_deduplicated_and_policy_is_immutable: test
+
+5 tests, 0 benchmarks

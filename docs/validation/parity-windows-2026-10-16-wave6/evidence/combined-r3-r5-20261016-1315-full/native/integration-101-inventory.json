@@ -1,0 +1,23 @@
+{
+  "semantic_refactor": {
+    "executable": "target\\debug\\deps\\semantic_refactor-f66dd7e99dc076bb.exe",
+    "ignored": [],
+    "registered": [
+      "explicit_force_delete_keeps_verified_usage_context_and_still_refuses_foreign_or_stale_sources",
+      "file_move_negotiates_will_rename_and_combines_pre_rename_edits_into_one_guarded_plan",
+      "indexed_symbol_refactoring_selects_the_same_source_order_overload_as_the_facade",
+      "inline_refactoring_accepts_only_the_requested_kind_and_explicit_workspace_edits",
+      "inspection_equivalent_uses_actual_registered_diagnostics_and_declared_kind_registry",
+      "semantic_delete_refuses_actual_candidate_unresolved_foreign_and_stale_uses_without_publishing_plans",
+      "unused_semantic_delete_requires_registered_source_proof_and_only_prepares_a_guarded_plan"
+    ]
+  },
+  "server_catalog": {
+    "executable": "target\\debug\\deps\\server_catalog-daa9d2634cae3c47.exe",
+    "ignored": [],
+    "registered": [
+      "host_registration_resolves_language_metadata_without_starting_any_process",
+      "registration_never_derives_execution_authority_from_a_backend_name"
+    ]
+  }
+}

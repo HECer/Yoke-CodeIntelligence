@@ -1,0 +1,24 @@
+    Finished `test` profile [unoptimized] target(s) in 0.55s
+     Running tests\git_epoch_selection.rs (target\debug\deps\git_epoch_selection-f81aa6a9b3a3098a.exe)
+
+running 2 tests
+test worktree_cache_seed_uses_selected_epoch_without_copying_other_epoch_entries ... ok
+test selected_epoch_is_shared_by_working_and_committed_git_report_sides ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.36s
+
+     Running tests\git_epochs.rs (target\debug\deps\git_epochs-6ff58d8bd476da88.exe)
+
+running 9 tests
+test git_epoch_accessors_install_the_new_callers_deadline ... ok
+test authentic_git8_receipts_reports_and_graphs_remain_readable ... ok
+test git8_registry_archive_replays_without_the_original_workspace ... ok
+test missing_authentic_git8_graph_replays_the_original_extraction_epoch ... ok
+test explicit_git9_capture_has_distinct_identity_facts_and_missing_graph_replay ... ok
+test guarded_derivative_archive_keeps_older_git_source_proof_offline ... ok
+test synthetic_legacy_git_receipts_remain_readable_without_an_extractor_claim ... ok
+test resealed_offline_git_proof_cannot_invent_commit_or_source_bytes ... ok
+test git_epoch_selection_rejects_invalid_receipts_missing_proofs_and_expired_deadlines ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.26s
+

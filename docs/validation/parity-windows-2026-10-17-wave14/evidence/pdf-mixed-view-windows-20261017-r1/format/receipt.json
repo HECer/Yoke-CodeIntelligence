@@ -1,0 +1,54 @@
+{
+  "accepted": true,
+  "aclTempRoot": null,
+  "artifactSha256": {
+    "format.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source-after.json": "536f049021a3342eaa0b8c73a9eed7dd6b4fe445f33631fc058fbc577d29d5e4",
+    "source-before.json": "536f049021a3342eaa0b8c73a9eed7dd6b4fe445f33631fc058fbc577d29d5e4"
+  },
+  "checkedAtUtc": "2026-10-17T20:03:53.854406+00:00",
+  "failed": 0,
+  "groups": 0,
+  "ignored": 0,
+  "interpretation": "Fresh execution only. Shared freeze required across all five phases; ignored test results are never relabeled as passing.",
+  "matrixCoverage": {},
+  "passed": 0,
+  "phase": "format",
+  "phases": [
+    "format",
+    "clippy",
+    "native",
+    "python",
+    "typescript"
+  ],
+  "results": [
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "inventoryOnly": false,
+      "label": "format",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "fresh_execution",
+      "passed": 0,
+      "runnerSha256": "5b1dbf5179f274d57fc0217108867d90d9a62ae233ca551496e89d386df81a00",
+      "seconds": 3.312,
+      "sourceManifestSha256": "536f049021a3342eaa0b8c73a9eed7dd6b4fe445f33631fc058fbc577d29d5e4",
+      "tempRoot": "E:\\Yoke-Test-Scratch\\pdf-mixed-view-windows-20261017-r1-format"
+    }
+  ],
+  "runnerSha256": "5b1dbf5179f274d57fc0217108867d90d9a62ae233ca551496e89d386df81a00",
+  "sourceChanges": [],
+  "sourceFiles": 3970,
+  "sourceManifestSha256": "536f049021a3342eaa0b8c73a9eed7dd6b4fe445f33631fc058fbc577d29d5e4",
+  "tempRoot": "E:\\Yoke-Test-Scratch\\pdf-mixed-view-windows-20261017-r1-format",
+  "validationErrors": []
+}

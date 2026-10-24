@@ -1,0 +1,15 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 3.07s
+     Running tests\meaning_groups_admission.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\meaning_groups_admission-4e7ce53475b6f6a6.exe)
+
+running 7 tests
+test meaning_group_admission_every_hard_limit_and_all_zero_capacities_are_checked ... ok
+test meaning_group_admission_library_serialized_review_is_bounded_before_parent_loading ... ok
+test meaning_group_admission_nested_unknown_fields_and_duplicate_json_keys_refuse ... ok
+test meaning_group_admission_oversized_blank_rationale_hits_byte_guard_before_trimming ... ok
+test meaning_group_admission_per_group_member_limit_is_independent_of_total_capacity ... ok
+test meaning_group_admission_rationale_limit_counts_exact_utf8_bytes ... ok
+test meaning_group_admission_zero_output_is_a_valid_capacity ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+

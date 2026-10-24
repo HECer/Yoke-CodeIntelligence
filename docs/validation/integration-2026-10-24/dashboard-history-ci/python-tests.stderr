@@ -1,0 +1,16 @@
+test_a_package_cannot_split_the_original_journal_even_when_its_bytes_match (test_host_history_live.HistoryEvidenceAdmission.test_a_package_cannot_split_the_original_journal_even_when_its_bytes_match) ... ok
+test_duplicate_json_and_oversized_payload_are_rejected (test_host_history_live.HistoryEvidenceAdmission.test_duplicate_json_and_oversized_payload_are_rejected) ... ok
+test_exact_unicode_records_are_verified_independently_from_native_json (test_host_history_live.HistoryEvidenceAdmission.test_exact_unicode_records_are_verified_independently_from_native_json) ... ok
+test_foreign_fixture_relocation_preserves_bytes_and_refuses_other_parents (test_host_history_live.HistoryEvidenceAdmission.test_foreign_fixture_relocation_preserves_bytes_and_refuses_other_parents) ... ok
+test_json_file_limit_precedes_open_and_never_truncates_to_a_valid_prefix (test_host_history_live.HistoryEvidenceAdmission.test_json_file_limit_precedes_open_and_never_truncates_to_a_valid_prefix) ... ok
+test_local_non_ci_invocation_refuses_before_reading_native (test_host_history_live.HistoryEvidenceAdmission.test_local_non_ci_invocation_refuses_before_reading_native) ... ok
+test_private_endpoint_admission_never_accepts_remote_or_credential_urls (test_host_history_live.HistoryEvidenceAdmission.test_private_endpoint_admission_never_accepts_remote_or_credential_urls) ... ok
+test_record_bytes_names_and_membership_are_not_trusted (test_host_history_live.HistoryEvidenceAdmission.test_record_bytes_names_and_membership_are_not_trusted) ... ok
+test_source_inventory_preserves_exact_unicode_bytes_and_rejects_escape_paths (test_host_history_live.HistoryEvidenceAdmission.test_source_inventory_preserves_exact_unicode_bytes_and_rejects_escape_paths) ... ok
+test_truncation_oversized_lengths_and_trailing_bytes_refuse (test_host_history_live.HistoryEvidenceAdmission.test_truncation_oversized_lengths_and_trailing_bytes_refuse) ... ok
+test_worker_cannot_bypass_disk_preflight_via_the_internal_entry_point (test_host_history_live.HistoryEvidenceAdmission.test_worker_cannot_bypass_disk_preflight_via_the_internal_entry_point) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.014s
+
+OK

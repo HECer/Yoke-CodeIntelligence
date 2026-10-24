@@ -1,0 +1,54 @@
+{
+  "sourceUnchanged": true,
+  "frozenInputs": 677,
+  "nativeInputsMatched": 667,
+  "commands": [
+    {
+      "name": "format",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 5.21
+    },
+    {
+      "name": "python-contracts",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts/tests",
+        "-v"
+      ],
+      "exitCode": 0,
+      "seconds": 1.11
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "npm.cmd",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 5.15
+    },
+    {
+      "name": "tests",
+      "command": [
+        "npm.cmd",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 64.34
+    }
+  ],
+  "allChecksPassed": true,
+  "runtimeCommit": "ad8505a10281951881d96083e19fc1881cbed6ce",
+  "wholeNativeRerun": false
+}

@@ -1,0 +1,31 @@
+{
+  "diagnosticOnly": true,
+  "nativeAcceptance": false,
+  "nativeYokeImageReadOrExecuted": false,
+  "platformScope": "actual local Python sockets only",
+  "sourceSha256": "db3ec08a083c8c57179d7d37129c97bd4073caff5d7f89038f4e3ffab54464a8",
+  "trials": [
+    {
+      "payloadBytes": 40,
+      "initialWouldBlockObserved": true,
+      "queuedBytes": 2490368,
+      "clientReceiveBufferBytes": 8192,
+      "serverSendBufferBytes": 8192,
+      "responseBytesWritten": 40,
+      "outcome": "complete",
+      "elapsedSeconds": 0.00029360002372413874,
+      "nativeAcceptance": false
+    },
+    {
+      "payloadBytes": 4194304,
+      "initialWouldBlockObserved": true,
+      "queuedBytes": 2752512,
+      "clientReceiveBufferBytes": 8192,
+      "serverSendBufferBytes": 8192,
+      "responseBytesWritten": 0,
+      "outcome": "deadline",
+      "elapsedSeconds": 0.26307240000460297,
+      "nativeAcceptance": false
+    }
+  ]
+}

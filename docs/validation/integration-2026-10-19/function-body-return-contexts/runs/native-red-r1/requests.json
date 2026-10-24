@@ -1,0 +1,13 @@
+[
+  {
+    "operation": "refactor.prepare",
+    "args": {
+      "operation": "inline",
+      "arguments": {
+        "relativePath": "main.ts",
+        "namePath": "helper",
+        "keepDefinition": false
+      }
+    }
+  }
+]

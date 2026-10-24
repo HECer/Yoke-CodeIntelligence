@@ -1,0 +1,90 @@
+{
+  "recordedAt": "2026-10-18T22:48:26.854213+00:00",
+  "sourceBaseHead": "2c7a0947b09bc6025b614bafef0df3d16a7034f1",
+  "testedFileHashes": {
+    "native/tests/container.rs": "93477ede5dde04a55416eed39bbd8853ca06876f463ac5162d65531fa5bd0720",
+    "native/tests/github_app_auth.rs": "343744865c94f4b7670c5802ba8531414d0ee836539492e4491250c7eadee16c",
+    "native/tests/host_install.rs": "e9433305c9b57eb9539c036e9c3c7e61ff8475e81e6a9af192ea532aace40158",
+    "scripts/package-native.py": "74c6917af87916128b79f7306aa61a3b0b7ee186b11544a5b2e21bd8395d3897",
+    "scripts/tests/test_package_native.py": "3ba929e00c6d2ccfc517908ce85c30aa54fe76171e3b2d20af63beaa9a131252"
+  },
+  "productionBuildInputsUnchanged": 223,
+  "pythonPackagingTestsPassed": 17,
+  "nativeRegressions": [
+    {
+      "target": "container",
+      "passed": 6,
+      "ignored": 1
+    },
+    {
+      "target": "github_app_auth",
+      "passed": 14,
+      "ignored": 0
+    },
+    {
+      "target": "host_install",
+      "passed": 9,
+      "ignored": 0
+    }
+  ],
+  "previousPhaseSeparateNonadditive": {
+    "mcpHttpPassed": 18,
+    "ownedBedrockCredentialTcpPassed": 2
+  },
+  "actualRemoteAwsValidated": false,
+  "firstOptimizedBuildPassed": true,
+  "firstPackagingExitCode": 1,
+  "firstPackagingCause": "Pinned yaml-rust2 MIT-LICENSE and Apache-LICENSE names were not recognized; exact actual upstream Git objects validated after correction.",
+  "wholeNativeAccepted": false,
+  "releaseCertified": false,
+  "artifacts": {
+    "actual-yaml-rust2-notices.json": {
+      "sha256": "0b051c7b6a84df6f50e2bbb5dc312b9ae1b70a4960cbb56f22db455f31a6c630",
+      "bytes": 761
+    },
+    "clippy.txt": {
+      "sha256": "2794e928407246f3d42857e803ae515afc6d280e95a499c0b2ce2cad9d86e309",
+      "bytes": 171
+    },
+    "first-package-attempt.json": {
+      "sha256": "51d5e3bdb5a605bc15718d228d6dbc7924615fe6bd66f046cfc30d27b7ccd4eb",
+      "bytes": 289
+    },
+    "first-package-attempt.txt": {
+      "sha256": "a2c53d2ef239461657dd484f456b97ab99191cfd1522ee28a293a2e787495a12",
+      "bytes": 10805
+    },
+    "host-auth-container.txt": {
+      "sha256": "3c13b238405530a6d16485397531e3e387ce26150f89f4d877d6e3de3c1ea9b4",
+      "bytes": 3432
+    },
+    "hosted-linux-errors.json": {
+      "sha256": "5720b7067922b2b7d18911224c904e3d38eb71247b0c4e77efc358f6be007222",
+      "bytes": 373
+    },
+    "hosted-macos-errors.json": {
+      "sha256": "a96a00f0e005d831d24a54f870cb6383d2a1d5584c2057c80480b3cac1b248f2",
+      "bytes": 373
+    },
+    "http.txt": {
+      "sha256": "191cf727f1142260d7453156392a48c71999d12bc2ea3f5ad65c72898f0630e4",
+      "bytes": 1906
+    },
+    "owned-bedrock-fixture.txt": {
+      "sha256": "175516cd298ff789cdd54dd6dbd16e119213496f058be728a65b89e6a6167440",
+      "bytes": 574
+    },
+    "python-packaging.txt": {
+      "sha256": "6d9964d8ef79bcb37d1149e17d8232942968ed6fa6ba93057ceedbdaeccc7aa0",
+      "bytes": 2845
+    },
+    "receipts.json": {
+      "sha256": "ac4b91318db8bf7d553d5356e6defb63298d8947be34717881e738b6bb169e4a",
+      "bytes": 1166
+    },
+    "test-helpers-summary.json": {
+      "sha256": "5bd209c1570ea4c8c3788f81f1edd81324e95b2f1a0f8b27c3abba5a780a81e3",
+      "bytes": 1340
+    }
+  }
+}

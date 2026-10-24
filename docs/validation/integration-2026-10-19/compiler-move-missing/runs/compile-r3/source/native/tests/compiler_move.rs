@@ -1,0 +1,972 @@
+//! Real TypeScript compiler moves over immutable captured source.
+use serde_json::{Value, json};
+use std::{fs, path::PathBuf};
+use yoke::{Engine, capture::Deadline, projects::CompilerSpec};
+fn d() -> Deadline {
+    Deadline::new(30_000)
+}
+fn compiler() -> CompilerSpec {
+    CompilerSpec {
+        node: std::env::split_paths(&std::env::var_os("PATH").unwrap())
+            .map(|p| p.join(if cfg!(windows) { "node.exe" } else { "node" }))
+            .find(|p| p.is_file())
+            .unwrap()
+            .canonicalize()
+            .unwrap(),
+        typescript: PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("../node_modules/typescript/lib/typescript.js")
+            .canonicalize()
+            .unwrap(),
+        trusted: true,
+    }
+}
+fn fixture(source: &str, target: &str, consumer: &str) -> (tempfile::TempDir, Engine) {
+    let root = tempfile::tempdir().unwrap();
+    for (name, text) in [
+        ("source.ts", source),
+        ("target.ts", target),
+        ("consumer.ts", consumer),
+    ] {
+        fs::write(root.path().join(name), text).unwrap();
+    }
+    fs::write(root.path().join("tsconfig.json"),r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true},"files":["source.ts","target.ts","consumer.ts"]}"#).unwrap();
+    let engine = Engine::open(root.path()).unwrap();
+    (root, engine)
+}
+fn args(name: &str) -> Value {
+    json!({"relativePath":"source.ts","namePath":name,"targetRelativePath":"target.ts"})
+}
+fn planned(engine: &Engine, value: &Value, path: &str) -> String {
+    let snapshot = engine
+        .store
+        .snapshot(value["plan"]["resultSnapshotId"].as_str().unwrap())
+        .unwrap();
+    yoke::query::source(&engine.store, &snapshot, path)
+        .unwrap()
+        .0
+}
+fn source_unchanged(root: &std::path::Path, source: &str, target: &str, consumer: &str) {
+    for (name, text) in [
+        ("source.ts", source),
+        ("target.ts", target),
+        ("consumer.ts", consumer),
+    ] {
+        assert_eq!(fs::read(root.join(name)).unwrap(), text.as_bytes());
+    }
+}
+#[test]
+fn actual_exported_function_move_repairs_split_consumer_imports_without_source_writes() {
+    let source = "export function helper(n:number){return n+1;}\nexport const keep=3;\n";
+    let target = "export const other=4;\n";
+    let consumer = "import {helper,keep} from './source';\nexport const answer=helper(keep);\n";
+    let (root, mut engine) = fixture(source, target, consumer);
+    let result =
+        yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).unwrap();
+    assert!(!planned(&engine, &result, "source.ts").contains("function helper"));
+    assert!(planned(&engine, &result, "target.ts").contains("function helper"));
+    let after = planned(&engine, &result, "consumer.ts");
+    assert!(after.contains("./target"), "{after}");
+    assert!(after.contains("./source"), "{after}");
+    assert_eq!(result["provider"], "host_selected_typescript_compiler");
+    assert_eq!(result["complete"], false);
+    assert_eq!(result["sourceExecuted"], false);
+    source_unchanged(root.path(), source, target, consumer);
+}
+#[test]
+fn actual_private_free_dependency_preserves_same_offset_compiler_insertion_order() {
+    let source = "const delta=2;\nfunction helper(n:number){return n+delta;}\nexport const answer=helper(1);\n";
+    let target = "export const other=4;\n";
+    let consumer = "export {};\n";
+    let (root, mut engine) = fixture(source, target, consumer);
+    let result =
+        yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).unwrap();
+    let after = planned(&engine, &result, "source.ts");
+    assert!(after.contains("export const delta"), "{after}");
+    assert!(after.contains("./target"), "{after}");
+    assert!(!after.contains("export import"), "{after}");
+    assert!(planned(&engine, &result, "target.ts").contains("./source"));
+    assert_eq!(
+        result["bindingCheck"]["addedExports"]
+            .as_array()
+            .unwrap()
+            .len(),
+        2
+    );
+    source_unchanged(root.path(), source, target, consumer);
+}
+#[test]
+fn actual_jsdoc_class_move_repairs_namespace_consumer_and_keeps_unrelated_member() {
+    let source = "/** Helper docs. */\nexport class Helper {value=2;}\nexport const keep=3;\n";
+    let target = "export const other=4;\n";
+    let consumer =
+        "import * as mod from './source';\nexport const answer=new mod.Helper().value+mod.keep;\n";
+    let (root, mut engine) = fixture(source, target, consumer);
+    let result =
+        yoke::compiler_move::prepare(&mut engine, &compiler(), &args("Helper"), &d()).unwrap();
+    let after = planned(&engine, &result, "target.ts");
+    assert!(after.contains("/** Helper docs. */"), "{after}");
+    let consumer_after = planned(&engine, &result, "consumer.ts");
+    assert!(consumer_after.contains("./target"), "{consumer_after}");
+    assert!(consumer_after.contains("mod.keep"), "{consumer_after}");
+    source_unchanged(root.path(), source, target, consumer);
+}
+
+#[test]
+fn actual_declaration_matrix_keeps_original_graph_identity_and_explicit_ast_origin() {
+    for (declaration, name, consumer, scalar) in [
+        (
+            "export function helper(n:number){return n+1;}",
+            "helper",
+            "import {helper} from './source'; export const answer=helper(1);",
+            false,
+        ),
+        (
+            "export interface Helper {value:number}",
+            "Helper",
+            "import type {Helper} from './source'; export const answer:Helper={value:1};",
+            false,
+        ),
+        (
+            "export type Helper={value:number};",
+            "Helper",
+            "import type {Helper} from './source'; export const answer:Helper={value:1};",
+            false,
+        ),
+        (
+            "export enum Helper {One=1,Two=2}",
+            "Helper",
+            "import {Helper} from './source'; export const answer=Helper.Two;",
+            false,
+        ),
+        (
+            "export namespace Helper {export const value=2;}",
+            "Helper",
+            "import {Helper} from './source'; export const answer=Helper.value;",
+            true,
+        ),
+        (
+            "export const helper=(n:number)=>n+1;",
+            "helper",
+            "import {helper} from './source'; export const answer=helper(1);",
+            false,
+        ),
+        (
+            "export const helper=7;",
+            "helper",
+            "import {helper} from './source'; export const answer=helper+1;",
+            true,
+        ),
+    ] {
+        for epoch in [
+            yoke::analysis::AnalyzerEpoch::V8,
+            yoke::analysis::AnalyzerEpoch::V9,
+        ] {
+            let source = format!("{declaration}\nexport const keep=3;\n");
+            let target = "export const other=4;\n";
+            let (root, mut engine) = fixture(&source, target, consumer);
+            engine.capture_epoch = epoch;
+            let (_, graph, _, _) = engine.index(&d()).unwrap();
+            let graph_id = yoke::model::identity(&graph);
+            let result = yoke::compiler_move::prepare(&mut engine, &compiler(), &args(name), &d())
+                .unwrap_or_else(|error| panic!("{declaration}: {error:#}"));
+            assert_eq!(
+                result["intent"]["entityId"].is_null(),
+                scalar,
+                "{declaration}"
+            );
+            assert_eq!(
+                result["intent"]["sourceSelectionOrigin"],
+                if scalar {
+                    "independent_captured_variable_or_namespace_v1"
+                } else {
+                    "captured_graph_and_exact_ast"
+                }
+            );
+            assert_eq!(
+                yoke::model::identity(&engine.store.graph(&graph.snapshot_id).unwrap()),
+                graph_id
+            );
+            assert!(planned(&engine, &result, "target.ts").contains(name));
+            source_unchanged(root.path(), &source, target, consumer);
+        }
+    }
+}
+
+#[test]
+fn actual_imported_free_bindings_and_unrelated_reexports_preserve_side_effect_statements() {
+    let source = "import {delta as step} from './dep';\nimport './effect';\nexport function helper(n:number){return n+step;}\nexport const keep=3;\n";
+    let target = "const preserved=20;\nexport const other=preserved;\n";
+    let consumer = "export {keep as kept} from './source';\nimport {helper,keep} from './source';\nexport const answer=helper(keep);\n";
+    let (root, mut engine) = fixture(source, target, consumer);
+    fs::write(root.path().join("dep.ts"), "export const delta=2;\n").unwrap();
+    fs::write(root.path().join("effect.ts"), "export const observed=1;\n").unwrap();
+    let result =
+        yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).unwrap();
+    let after = planned(&engine, &result, "target.ts");
+    assert!(after.contains("./dep"), "{after}");
+    assert!(after.contains("const preserved=20"), "{after}");
+    let after = planned(&engine, &result, "consumer.ts");
+    assert!(after.contains("./target"), "{after}");
+    assert!(after.contains("kept"), "{after}");
+    assert!(planned(&engine, &result, "source.ts").contains("import './effect';"));
+    source_unchanged(root.path(), source, target, consumer);
+}
+
+#[test]
+fn actual_jsx_component_moves_keep_intrinsic_properties_and_typed_props() {
+    for extension in ["tsx", "jsx"] {
+        let source = if extension == "tsx" {
+            "export function Helper(props:{value:number}){return <span>{props.value}</span>;}\nexport const keep=3;\n"
+        } else {
+            "export function Helper(props){return <span>{props.value}</span>;}\nexport const keep=3;\n"
+        };
+        let target = "export const other=4;\n";
+        let consumer =
+            "import {Helper,keep} from './source';\nexport const answer=<Helper value={keep}/>;\n";
+        let (root, engine) = fixture(source, target, consumer);
+        drop(engine);
+        for file in ["source", "target", "consumer"] {
+            fs::rename(
+                root.path().join(format!("{file}.ts")),
+                root.path().join(format!("{file}.{extension}")),
+            )
+            .unwrap();
+        }
+        fs::write(root.path().join("global.d.ts"),"declare namespace JSX {interface Element {} interface IntrinsicElements {span:{children?:any}}}\n").unwrap();
+        fs::write(root.path().join("tsconfig.json"),serde_json::to_vec(&json!({"compilerOptions":{"strict":false,"allowJs":true,"checkJs":true,"jsx":"preserve","target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true},"files":[format!("source.{extension}"),format!("target.{extension}"),format!("consumer.{extension}"),"global.d.ts"]})).unwrap()).unwrap();
+        let mut engine = Engine::open(root.path()).unwrap();
+        let result=yoke::compiler_move::prepare(&mut engine,&compiler(),&json!({"relativePath":format!("source.{extension}"),"namePath":"Helper","targetRelativePath":format!("target.{extension}")}),&d()).unwrap();
+        let after = planned(&engine, &result, &format!("target.{extension}"));
+        assert!(after.contains("<span>{props.value}</span>"), "{after}");
+        assert!(planned(&engine, &result, &format!("consumer.{extension}")).contains("./target"));
+        assert_eq!(
+            fs::read_to_string(root.path().join(format!("source.{extension}"))).unwrap(),
+            source
+        );
+    }
+}
+
+#[test]
+fn actual_compiler_selected_reexports_and_import_alias_collisions_are_repaired() {
+    let source = "import {delta as step} from './dep';\nexport function helper(n:number){return n+step;}\nexport const keep=3;\n";
+    for (target, consumer) in [
+        (
+            "export const other=4;\n",
+            "export {helper as renamed,keep} from './source';\n",
+        ),
+        (
+            "const step=20;\nexport const other=step;\n",
+            "import {helper,keep} from './source'; export const answer=helper(keep);\n",
+        ),
+    ] {
+        let (root, mut engine) = fixture(source, target, consumer);
+        fs::write(root.path().join("dep.ts"), "export const delta=2;\n").unwrap();
+        let result =
+            yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).unwrap();
+        assert_eq!(result["sourceRepairs"].as_array().unwrap().len(), 1);
+        if consumer.starts_with("export") {
+            assert!(planned(&engine, &result, "consumer.ts").contains("./target"));
+        } else {
+            assert!(planned(&engine, &result, "target.ts").contains("__ci_move_"));
+        }
+        source_unchanged(root.path(), source, target, consumer);
+    }
+}
+
+#[test]
+fn readonly_consumer_and_ambiguous_context_cannot_publish_compiler_move_plans() {
+    let source = "export function helper(n:number){return n+1;}\nexport const keep=3;\n";
+    let (root, mut engine) = fixture(source, "export {};\n", "export {};\n");
+    fs::create_dir(root.path().join("vendor")).unwrap();
+    let consumer = "import {helper} from '../source'; export const answer=helper(2);\n";
+    fs::write(root.path().join("vendor/consumer.ts"), consumer).unwrap();
+    fs::write(root.path().join("tsconfig.json"),r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true},"files":["source.ts","target.ts","consumer.ts","vendor/consumer.ts"]}"#).unwrap();
+    engine.capture_options.read_only_dependency_dirs = vec!["vendor".into()];
+    assert!(yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).is_err());
+    unpublished(&engine);
+    assert_eq!(
+        fs::read_to_string(root.path().join("vendor/consumer.ts")).unwrap(),
+        consumer
+    );
+    let (root, mut engine) = fixture(source, "export {};\n", "export {};\n");
+    fs::create_dir(root.path().join("nested")).unwrap();
+    fs::write(root.path().join("nested/tsconfig.json"),r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true},"files":["../source.ts","../target.ts"]}"#).unwrap();
+    assert!(yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).is_err());
+    unpublished(&engine);
+}
+
+#[test]
+fn compiler_profile_rejects_tools_in_analyzed_roots_and_detects_changed_module_bytes() {
+    use yoke::project_session::{HostProfile, Session};
+    let (root, engine) = fixture(
+        "export function helper(){}\n",
+        "export {};\n",
+        "export {};\n",
+    );
+    let mut spec = compiler();
+    spec.typescript = root.path().join("compiler.cjs");
+    fs::write(
+        &spec.typescript,
+        "// host-looking source is not a host compiler\n",
+    )
+    .unwrap();
+    assert!(
+        Session::open(
+            engine,
+            HostProfile {
+                move_compiler: Some(spec),
+                ..Default::default()
+            },
+            Some("inside"),
+            &d()
+        )
+        .is_err()
+    );
+    let (root, engine) = fixture(
+        "export function helper(){}\n",
+        "export {};\n",
+        "export {};\n",
+    );
+    let host = tempfile::tempdir().unwrap();
+    let mut spec = compiler();
+    spec.typescript = host.path().join("selected.cjs");
+    fs::write(&spec.typescript, "// selected host binding A\n").unwrap();
+    let profile = HostProfile {
+        move_compiler: Some(spec.clone()),
+        ..Default::default()
+    };
+    let session = Session::open(engine, profile.clone(), Some("changed-bytes"), &d()).unwrap();
+    drop(session);
+    fs::write(&spec.typescript, "// selected host binding B\n").unwrap();
+    assert!(
+        Session::open(
+            Engine::open(root.path()).unwrap(),
+            profile,
+            Some("changed-bytes"),
+            &d()
+        )
+        .is_err()
+    );
+}
+
+#[test]
+fn combined_reexport_alias_and_shorthand_repairs_preserve_public_keys_and_original_declarations() {
+    let source = "import {delta as step} from './dep';\nexport function helper(n:number){const __ci_move_1=n;return {step,n:__ci_move_1+step};}\nexport const keep=3;\n";
+    let target = "const step=20;\nexport const other=step;\n";
+    let consumer = "export {helper as renamed,keep} from './source';\nimport {helper,keep as localKeep} from './source';\nexport const answer=helper(localKeep).step;\n";
+    let (root, mut engine) = fixture(source, target, consumer);
+    fs::write(root.path().join("dep.ts"), "export const delta=2;\n").unwrap();
+    let result =
+        yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).unwrap();
+    let target_after = planned(&engine, &result, "target.ts");
+    assert!(target_after.contains("const step=20"), "{target_after}");
+    assert!(target_after.contains("step: __ci_move_2"), "{target_after}");
+    assert!(
+        target_after.contains("__ci_move_1+__ci_move_2"),
+        "{target_after}"
+    );
+    assert_eq!(result["sourceRepairs"].as_array().unwrap().len(), 2);
+    assert_eq!(result["editComposition"], "original_byte_pieces_v1");
+    source_unchanged(root.path(), source, target, consumer);
+}
+
+#[test]
+fn private_free_binding_collisions_are_repaired_without_renaming_source_or_target_declarations() {
+    let source = "const delta=2;\nfunction helper(n:number){return {delta,n:n+delta};}\nexport const answer=helper(1);\n";
+    let target = "const delta=20;\nexport const other=delta;\n";
+    let consumer = "export {};\n";
+    let (root, mut engine) = fixture(source, target, consumer);
+    let result =
+        yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).unwrap();
+    assert!(planned(&engine, &result, "source.ts").contains("export const delta=2"));
+    let after = planned(&engine, &result, "target.ts");
+    assert!(after.contains("const delta=20"), "{after}");
+    assert!(after.contains("delta: __ci_move_"), "{after}");
+    source_unchanged(root.path(), source, target, consumer);
+}
+
+#[test]
+fn omitted_shorthand_import_is_reconstructed_without_rebinding_the_target() {
+    let source = "import {delta as step} from './dep';\nexport function helper(){return {step};}\nexport const keep=3;\n";
+    let target = "const step=20;\nexport const other=step;\n";
+    let consumer = "export {helper as renamed} from './source';\n";
+    let (root, mut engine) = fixture(source, target, consumer);
+    fs::write(root.path().join("dep.ts"), "export const delta=2;\n").unwrap();
+    let result =
+        yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).unwrap();
+    let after = planned(&engine, &result, "target.ts");
+    assert!(after.contains("step: __ci_move_"), "{after}");
+    assert!(after.contains("delta as __ci_move_"), "{after}");
+    assert!(after.contains("const step=20"), "{after}");
+    assert!(
+        result["sourceRepairs"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|r| r["kind"] == "missingImport")
+    );
+    source_unchanged(root.path(), source, target, consumer);
+}
+
+#[test]
+fn omitted_source_dependencies_add_only_required_exports_and_keep_existing_public_aliases() {
+    for declaration in [
+        "const step=2;",
+        "function step(){return 2;}",
+        "export const step=2;",
+        "export default function step(){return 2;}",
+    ] {
+        let source = format!(
+            "{declaration}\nexport function helper(){{return {{step}};}}\nexport const keep=3;\n"
+        );
+        let target = "const step=20;\nexport const other=step;\n";
+        let consumer = "export {helper as renamed} from './source';\n";
+        let (root, mut engine) = fixture(&source, target, consumer);
+        let result = yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d())
+            .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        let after = planned(&engine, &result, "target.ts");
+        assert!(after.contains("step: __ci_move_"), "{after}");
+        assert!(after.contains("const step=20"), "{after}");
+        assert!(
+            result["sourceRepairs"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|r| r["kind"] == "sourceDependency")
+        );
+        assert!(
+            result["bindingCheck"]["addedExports"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .all(|e| e["name"] == "helper" || e["name"] == "step")
+        );
+        source_unchanged(root.path(), &source, target, consumer);
+    }
+}
+
+#[test]
+fn missing_local_and_imported_dependencies_compose_in_one_plan() {
+    let source = "import {jump} from './dep';\nconst step=2;\nexport function helper(){return {step,jump};}\nexport const keep=3;\n";
+    let target = "const step=20,jump=30;\nexport const other={step,jump};\n";
+    let consumer = "export {helper as renamed} from './source';\n";
+    let (root, mut engine) = fixture(source, target, consumer);
+    fs::write(root.path().join("dep.ts"), "export const jump=3;\n").unwrap();
+    let result =
+        yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).unwrap();
+    let repairs = result["sourceRepairs"].as_array().unwrap();
+    assert!(repairs.iter().any(|r| r["kind"] == "missingImport"));
+    assert!(repairs.iter().any(|r| r["kind"] == "sourceDependency"));
+    let after = planned(&engine, &result, "target.ts");
+    assert!(
+        after.contains("step: __ci_move_") && after.contains("jump: __ci_move_"),
+        "{after}"
+    );
+    source_unchanged(root.path(), source, target, consumer);
+}
+
+#[test]
+fn proto_shorthand_keeps_an_own_property_instead_of_setting_the_result_prototype() {
+    let source = "import {value as __proto__} from './dep';\nexport function helper(){return {__proto__};}\nexport const keep=3;\n";
+    let target = "const __proto__={marker:20};\nexport const other=__proto__;\n";
+    let consumer = "export {helper as renamed} from './source';\n";
+    let (root, mut engine) = fixture(source, target, consumer);
+    fs::write(
+        root.path().join("dep.ts"),
+        "export const value={marker:2};\n",
+    )
+    .unwrap();
+    let result =
+        yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).unwrap();
+    let after = planned(&engine, &result, "target.ts");
+    assert!(after.contains("[\"__proto__\"]: __ci_move_"), "{after}");
+    let name = result["sourceRepairs"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find_map(|r| r["newName"].as_str())
+        .unwrap();
+    // Explicit execution of this owned JavaScript fixture is a regression oracle;
+    // preparation itself never executes analyzed code.
+    let executable = after
+        .lines()
+        .filter(|l| !l.starts_with("import "))
+        .collect::<Vec<_>>()
+        .join("\n")
+        .replace("export function", "function")
+        .replace("export const", "const");
+    let script = format!(
+        "const {name}={{marker:2}};\n{executable}\nconst result=helper();if(!Object.hasOwn(result,'__proto__')||Object.getPrototypeOf(result)!==Object.prototype||result.__proto__.marker!==2||other.marker!==20)throw Error('property semantics changed');"
+    );
+    let output = std::process::Command::new(compiler().node)
+        .args(["--input-type=commonjs", "-e", &script])
+        .output()
+        .unwrap();
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    source_unchanged(root.path(), source, target, consumer);
+}
+
+#[test]
+fn shorthand_only_named_default_namespace_and_combined_imports_keep_original_bindings() {
+    for (prefix, dependency) in [
+        (
+            "import {delta as step} from './dep';",
+            "export const delta=2;",
+        ),
+        ("import {step} from './dep';", "export const step=2;"),
+        (
+            "import step from './dep';",
+            "export default function delta(){return 2;}",
+        ),
+        ("import * as step from './dep';", "export const delta=2;"),
+        (
+            "import other, {delta as step} from './dep';",
+            "export default function other(){return 1;} export const delta=2;",
+        ),
+        (
+            "import {delta as step,extra} from './dep';",
+            "export const delta=2,extra=3;",
+        ),
+    ] {
+        for target in [
+            "export const other=20;\n",
+            "const step=20;\nexport const other=step;\n",
+        ] {
+            let source = format!(
+                "{prefix}\nexport function helper(){{return {{step}};}}\nexport const keep=3;\n"
+            );
+            let consumer = "import {helper} from './source'; export const answer=helper().step;\n";
+            let (root, mut engine) = fixture(&source, target, consumer);
+            fs::write(root.path().join("dep.ts"), dependency).unwrap();
+            let result =
+                yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d())
+                    .unwrap_or_else(|error| panic!("{source} {target}: {error:#}"));
+            let after = planned(&engine, &result, "target.ts");
+            assert!(after.contains("step: __ci_move_"), "{after}");
+            assert!(
+                result["bindingCheck"]["knownStaticBindingsCompared"]
+                    .as_u64()
+                    .unwrap()
+                    > 0
+            );
+            source_unchanged(root.path(), &source, target, consumer);
+        }
+    }
+}
+
+#[test]
+fn missing_import_relocation_retains_bom_crlf_directives_comments_and_repeated_property_keys() {
+    let source = "\u{feff}\"use strict\";\r\nimport { /* original */ delta as step } from './dep';\r\nexport function helper(){return [{step},{step}];}\r\nexport const keep=3;\r\n";
+    let target = "\u{feff}\"use strict\";\r\n// original target\r\nconst step=20;\r\nexport const other=step;\r\n";
+    let consumer = "export {helper as renamed,keep} from './source';\r\n";
+    let (root, mut engine) = fixture(source, "export {};\n", consumer);
+    fs::create_dir(root.path().join("nested")).unwrap();
+    fs::write(root.path().join("nested/target.ts"), target).unwrap();
+    fs::write(root.path().join("dep.ts"), "export const delta=2;\n").unwrap();
+    fs::write(root.path().join("tsconfig.json"),r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true},"files":["source.ts","nested/target.ts","consumer.ts"]}"#).unwrap();
+    let result=yoke::compiler_move::prepare(&mut engine,&compiler(),&json!({"relativePath":"source.ts","namePath":"helper","targetRelativePath":"nested/target.ts"}),&d()).unwrap();
+    let after = planned(&engine, &result, "nested/target.ts");
+    assert!(after.starts_with("\u{feff}\"use strict\";\r\n"), "{after}");
+    assert!(after.contains("\"../dep\""), "{after}");
+    assert_eq!(after.matches("step: __ci_move_").count(), 2, "{after}");
+    assert!(
+        after.contains("// original target\r\nconst step=20;"),
+        "{after}"
+    );
+    assert_eq!(
+        fs::read(root.path().join("nested/target.ts")).unwrap(),
+        target.as_bytes()
+    );
+    assert_eq!(
+        fs::read(root.path().join("source.ts")).unwrap(),
+        source.as_bytes()
+    );
+}
+
+#[test]
+fn namespace_default_type_only_and_global_shadow_aliases_keep_their_original_bindings() {
+    for (source, dependency, target) in [
+        (
+            "import * as api from './dep';\nexport function helper(n:number){return api.delta+n;}\nexport const keep=3;\n",
+            "export const delta=2;\n",
+            "const api={delta:20}; export const other=api.delta;\n",
+        ),
+        (
+            "import step from './dep';\nexport function helper(n:number){return step(n);}\nexport const keep=3;\n",
+            "export default function delta(n:number){return n+2;}\n",
+            "const step=20; export const other=step;\n",
+        ),
+        (
+            "import type {Config as Item} from './dep';\nexport function helper(n:Item){return n.value;}\nexport const keep=3;\n",
+            "export interface Config{value:number}\n",
+            "interface Item{other:number} export const other:Item={other:20};\n",
+        ),
+        (
+            "import {Array} from './dep';\nexport function helper(n:number){return Array(n);}\nexport const keep=3;\n",
+            "export function Array(n:number){return n+2;}\n",
+            "export const other=Array.from([20]);\n",
+        ),
+    ] {
+        let consumer = "export {helper as renamed,keep} from './source';\n";
+        let (root, mut engine) = fixture(source, target, consumer);
+        fs::write(root.path().join("dep.ts"), dependency).unwrap();
+        let result = yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d())
+            .unwrap_or_else(|error| panic!("{source}: {error:#}"));
+        assert!(planned(&engine, &result, "target.ts").contains("__ci_move_"));
+        source_unchanged(root.path(), source, target, consumer);
+    }
+}
+
+#[test]
+fn multiple_missing_shorthand_imports_compose_without_changing_public_keys_or_existing_aliases() {
+    let source = "import {one as step,two as jump} from './dep';\nexport function helper(){return {step,jump};}\nexport const keep=3;\n";
+    let target =
+        "const step=20,jump=30,__ci_move_1=40;\nexport const other={step,jump,__ci_move_1};\n";
+    let consumer = "export {helper as renamed} from './source';\n";
+    let (root, mut engine) = fixture(source, target, consumer);
+    fs::write(root.path().join("dep.ts"), "export const one=2,two=3;\n").unwrap();
+    let result =
+        yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).unwrap();
+    let after = planned(&engine, &result, "target.ts");
+    assert!(after.contains("step: __ci_move_2"), "{after}");
+    assert!(after.contains("jump: __ci_move_3"), "{after}");
+    assert!(
+        after.contains("const step=20,jump=30,__ci_move_1=40;"),
+        "{after}"
+    );
+    assert_eq!(
+        result["sourceRepairs"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|r| r["kind"] == "missingImport")
+            .count(),
+        2
+    );
+    source_unchanged(root.path(), source, target, consumer);
+}
+
+#[test]
+fn selected_reexports_preserve_multiple_aliases_type_flags_comments_and_crlf_bom() {
+    for consumer in [
+        "export {helper as first,helper as second,keep} from './source';",
+        "\u{feff}// 🌍\r\nexport { /* , } */ helper as renamed, keep, /* tail */ } from './source';\r\n",
+        "export type {helper as signature} from './source';\n",
+    ] {
+        let source = "export function helper(n:number){return n+1;}\nexport const keep=3;\n";
+        let target = "export const other=4;\n";
+        let (root, mut engine) = fixture(source, target, consumer);
+        let result = yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d())
+            .unwrap_or_else(|error| panic!("{consumer}: {error:#}"));
+        let after = planned(&engine, &result, "consumer.ts");
+        assert!(after.contains("./target"), "{after}");
+        if consumer.contains("/* , } */") {
+            assert!(after.starts_with("\u{feff}// 🌍\r\n"));
+            assert_eq!(after.matches("/* , } */").count(), 1);
+            assert_eq!(after.matches("/* tail */").count(), 1);
+        }
+        source_unchanged(root.path(), source, target, consumer);
+    }
+}
+
+#[test]
+fn readonly_reexport_repair_refuses_before_any_plan_publication() {
+    let source = "export function helper(n:number){return n+1;}\nexport const keep=3;\n";
+    let (root, mut engine) = fixture(source, "export {};\n", "export {};\n");
+    fs::create_dir(root.path().join("vendor")).unwrap();
+    let reexport = "export {helper as renamed} from '../source';\n";
+    fs::write(root.path().join("vendor/consumer.ts"), reexport).unwrap();
+    fs::write(root.path().join("tsconfig.json"),r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true},"files":["source.ts","target.ts","consumer.ts","vendor/consumer.ts"]}"#).unwrap();
+    engine.capture_options.read_only_dependency_dirs = vec!["vendor".into()];
+    assert!(yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).is_err());
+    unpublished(&engine);
+    assert_eq!(
+        fs::read_to_string(root.path().join("vendor/consumer.ts")).unwrap(),
+        reexport
+    );
+}
+
+#[test]
+fn actual_language_matrix_keeps_bom_unicode_crlf_and_repository_plugins_inert() {
+    for extension in ["ts", "tsx", "js", "jsx"] {
+        let declaration = if matches!(extension, "ts" | "tsx") {
+            "export function café(n:number){return n+1;}"
+        } else {
+            "export function café(n){return n+1;}"
+        };
+        let source = format!("\u{feff}// 🌍\r\n{declaration}\r\nexport const keep=3;\r\n");
+        let target = "\u{feff}export const other=4;\r\n";
+        let consumer = "import {café,keep} from './source';\r\nexport const answer=café(keep);\r\n";
+        let (root, engine) = fixture(&source, target, consumer);
+        drop(engine);
+        for file in ["source", "target", "consumer"] {
+            fs::rename(
+                root.path().join(format!("{file}.ts")),
+                root.path().join(format!("{file}.{extension}")),
+            )
+            .unwrap();
+        }
+        let marker = root.path().join("project-code-executed");
+        fs::write(
+            root.path().join("plugin.cjs"),
+            format!(
+                "require('node:fs').writeFileSync({},'executed');throw Error('must never run');",
+                serde_json::to_string(&marker).unwrap()
+            ),
+        )
+        .unwrap();
+        fs::write(root.path().join("tsconfig.json"),serde_json::to_vec(&json!({"compilerOptions":{"strict":false,"allowJs":true,"checkJs":true,"jsx":"preserve","target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true,"plugins":[{"name":"./plugin.cjs"}]},"files":[format!("source.{extension}"),format!("target.{extension}"),format!("consumer.{extension}")]})).unwrap()).unwrap();
+        let mut engine = Engine::open(root.path()).unwrap();
+        let result=yoke::compiler_move::prepare(&mut engine,&compiler(),&json!({"relativePath":format!("source.{extension}"),"namePath":"café","targetRelativePath":format!("target.{extension}")}),&d()).unwrap_or_else(|error|panic!("{extension}: {error:#}"));
+        for (file, original) in [
+            ("source", source.as_str()),
+            ("target", target),
+            ("consumer", consumer),
+        ] {
+            assert_eq!(
+                fs::read(root.path().join(format!("{file}.{extension}"))).unwrap(),
+                original.as_bytes()
+            );
+            assert!(
+                planned(&engine, &result, &format!("{file}.{extension}")).starts_with(
+                    if original.starts_with('\u{feff}') {
+                        "\u{feff}"
+                    } else {
+                        "import"
+                    }
+                )
+            );
+        }
+        assert!(!marker.exists());
+    }
+}
+
+fn unpublished(engine: &Engine) {
+    assert_eq!(engine.store.db.query_row("SELECT COUNT(*) FROM records WHERE kind IN ('plan','approval','receipt','journal')",[],|r|r.get::<_,usize>(0)).unwrap(),0);
+}
+#[test]
+fn invalid_paths_stale_selection_trust_context_and_directives_publish_no_plan() {
+    let source = "export function helper(n:number){return n+1;}\nexport const keep=3;\n";
+    for bad in [
+        json!({"relativePath":"../source.ts","namePath":"helper","targetRelativePath":"target.ts"}),
+        json!({"relativePath":"source.ts","namePath":"helper","targetRelativePath":".env"}),
+        json!({"relativePath":"source.ts","namePath":"helper","targetRelativePath":"absent.ts"}),
+        json!({"relativePath":"source.ts","namePath":"helper","targetRelativePath":"source.ts"}),
+        json!({"relativePath":"source.ts","namePath":"helper","targetRelativePath":"target.ts","snapshotId":"a".repeat(64)}),
+        json!({"relativePath":"source.ts","namePath":"helper","targetRelativePath":"target.ts","targetParentNamePath":"Container"}),
+        json!({"relativePath":"source.ts","namePath":"helper","targetRelativePath":"target.ts","command":"execute"}),
+    ] {
+        let (root, mut engine) = fixture(source, "export {};\n", "export {};\n");
+        assert!(
+            yoke::compiler_move::prepare(&mut engine, &compiler(), &bad, &d()).is_err(),
+            "{bad}"
+        );
+        unpublished(&engine);
+        assert_eq!(
+            fs::read_to_string(root.path().join("source.ts")).unwrap(),
+            source
+        );
+    }
+    for (source, target) in [
+        (
+            "'use client';\nexport function helper(){}\n",
+            "export {};\n",
+        ),
+        (source, "export function helper(){}\n"),
+        (
+            "export function helper(){return missing;}\n",
+            "export {};\n",
+        ),
+    ] {
+        let (_root, mut engine) = fixture(source, target, "export {};\n");
+        assert!(
+            yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &d()).is_err()
+        );
+        unpublished(&engine);
+    }
+    let (_root, mut engine) = fixture(source, "export {};\n", "export {};\n");
+    let mut spec = compiler();
+    spec.trusted = false;
+    assert!(yoke::compiler_move::prepare(&mut engine, &spec, &args("helper"), &d()).is_err());
+    unpublished(&engine);
+    let deadline = Deadline::new(0);
+    assert!(
+        yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"), &deadline).is_err()
+    );
+    unpublished(&engine);
+}
+
+#[test]
+fn move_profile_is_optional_host_bound_and_routed_through_the_existing_facade() {
+    use yoke::project_session::{HostProfile, Session};
+    let source = "export function helper(n:number){return n+1;}\nexport const keep=3;\n";
+    assert!(
+        serde_json::to_value(HostProfile::default())
+            .unwrap()
+            .get("moveCompiler")
+            .is_none()
+    );
+    let (root, engine) = fixture(source, "export {};\n", "export {};\n");
+    let session =
+        Session::open(engine, HostProfile::default(), Some("profile-bind"), &d()).unwrap();
+    drop(session);
+    assert!(
+        Session::open(
+            Engine::open(root.path()).unwrap(),
+            HostProfile {
+                move_compiler: Some(compiler()),
+                ..Default::default()
+            },
+            Some("profile-bind"),
+            &d()
+        )
+        .is_err()
+    );
+    for mode in ["editing", "planning"] {
+        let (_root, engine) = fixture(source, "export {};\n", "export {};\n");
+        let mut session = Session::open(
+            engine,
+            HostProfile {
+                move_compiler: Some(compiler()),
+                modes: vec![mode.into()],
+                ..Default::default()
+            },
+            Some("facade-move"),
+            &d(),
+        )
+        .unwrap();
+        let result = yoke::agent_repl::invoke_facade(
+            &mut session,
+            "jb.move",
+            json!({"relative_path":"source.ts","name_path":"helper","target_relative_path":"target.ts"}),
+            None,
+            &d(),
+        );
+        if mode == "editing" {
+            assert!(result.is_ok(), "{result:?}");
+        } else {
+            assert!(result.is_err());
+            unpublished(&session.engine);
+        }
+    }
+}
+
+#[test]
+fn actual_cli_move_requires_independent_tsc_approval_and_conditional_recovery() {
+    use std::process::Command;
+    use yoke::project_session::HostProfile;
+    for scenario in ["original", "imported", "local"] {
+        let repaired = scenario != "original";
+        let (source, target, consumer) = if scenario == "local" {
+            (
+                "const step=2;\nexport function helper(n:number){return {step,n};}\nexport const keep=3;\n",
+                "const step=20; export const other=step;\n",
+                "export {helper as renamed,keep} from './source';\n",
+            )
+        } else if repaired {
+            (
+                "import {delta as step} from './dep';\nexport function helper(n:number){return {step,n};}\nexport const keep=3;\n",
+                "const step=20; export const other=step;\n",
+                "export {helper as renamed,keep} from './source';\n",
+            )
+        } else {
+            (
+                "const delta=2;\nfunction helper(n:number){return n+delta;}\nexport const answer=helper(1);\n",
+                "export const other=4;\n",
+                "export {};\n",
+            )
+        };
+        let (root, mut engine) = fixture(source, target, consumer);
+        if scenario == "imported" {
+            fs::write(root.path().join("dep.ts"), "export const delta=2;\n").unwrap();
+        }
+        let spec = compiler();
+        let host = tempfile::tempdir().unwrap();
+        fs::write(
+            host.path().join("host.json"),
+            serde_json::to_vec(&HostProfile {
+                move_compiler: Some(spec.clone()),
+                ..Default::default()
+            })
+            .unwrap(),
+        )
+        .unwrap();
+        fs::write(host.path().join("requests.json"),serde_json::to_vec(&json!([{"operation":"refactor.prepare","args":{"operation":"move","arguments":args("helper")}}])).unwrap()).unwrap();
+        let output = Command::new(env!("CARGO_BIN_EXE_yoke"))
+            .arg("--root")
+            .arg(root.path())
+            .args(["session", "--id", "move-cli", "--host-profile"])
+            .arg(host.path().join("host.json"))
+            .arg("--requests")
+            .arg(host.path().join("requests.json"))
+            .output()
+            .unwrap();
+        assert!(
+            output.status.success(),
+            "{}",
+            String::from_utf8_lossy(&output.stderr)
+        );
+        let value: Value = serde_json::from_slice(&output.stdout).unwrap();
+        if repaired {
+            assert_eq!(
+                value["results"][0]["sourceRepairs"]
+                    .as_array()
+                    .unwrap()
+                    .len(),
+                2
+            );
+        }
+        source_unchanged(root.path(), source, target, consumer);
+        let id = value["results"][0]["plan"]["id"].as_str().unwrap();
+        engine.allow_writes = true;
+        engine.approve(id, false).unwrap();
+        assert_eq!(
+            engine
+                .invoke(
+                    "ci_change_apply",
+                    json!({"planId":id,"mode":"workspace","idempotencyKey":"unverified"})
+                )
+                .unwrap()["status"],
+            "error"
+        );
+        let verify = Command::new(env!("CARGO_BIN_EXE_yoke"))
+            .arg("--root")
+            .arg(root.path())
+            .args(["verify", "--plan", id, "--trust-project", "--command"])
+            .arg(&spec.node)
+            .arg(format!(
+                "--arg={}",
+                spec.typescript.parent().unwrap().join("tsc.js").display()
+            ))
+            .arg("--arg=--noEmit")
+            .output()
+            .unwrap();
+        assert!(
+            verify.status.success(),
+            "{}",
+            String::from_utf8_lossy(&verify.stderr)
+        );
+        let applied = engine
+            .invoke(
+                "ci_change_apply",
+                json!({"planId":id,"mode":"workspace","idempotencyKey":"verified"}),
+            )
+            .unwrap();
+        assert_eq!(applied["status"], "ok", "{applied}");
+        let expected = fs::read(root.path().join("source.ts")).unwrap();
+        let receipt = applied["data"]["receipt"]["id"].as_str().unwrap();
+        fs::write(root.path().join("source.ts"), "// foreign writer\n").unwrap();
+        assert!(yoke::changes::recover(&engine.store, &engine.root, receipt, true).is_err());
+        assert_eq!(
+            fs::read_to_string(root.path().join("source.ts")).unwrap(),
+            "// foreign writer\n"
+        );
+        fs::write(root.path().join("source.ts"), expected).unwrap();
+        yoke::changes::recover(&engine.store, &engine.root, receipt, true).unwrap();
+        source_unchanged(root.path(), source, target, consumer);
+    }
+}

@@ -1,0 +1,28 @@
+{
+  "meaning_retention_review": {
+    "executable": "target\\debug\\deps\\meaning_retention_review-22514ce83193a930.exe",
+    "ignored": [],
+    "registered": [
+      "corrupted_job_cache_and_graph_rows_refuse_retirement_and_purge_before_deleting_history",
+      "original_and_rebound_meaning_roots_survive_retirement_quarantine_and_purge_with_controls",
+      "supplied_job_cache_and_graph_metadata_cannot_override_the_persisted_retention_proof"
+    ]
+  },
+  "meaning_view": {
+    "executable": "target\\debug\\deps\\meaning_view-b5b38a8d4ebfefd0.exe",
+    "ignored": [],
+    "registered": [
+      "archived_proof_rederives_claims_and_rejects_missing_receipts_cycles_and_policy_drift",
+      "archived_replay_uses_frozen_original_and_rebound_sources_after_live_source_and_worker_removal",
+      "archived_snapshot_rows_reject_unrecognized_manifest_properties",
+      "archived_unknown_reports_remain_unknown_without_fresh_accounting_or_provider_attestation",
+      "empty_meaning_selection_stays_absent_and_never_resolves_a_worker",
+      "explicit_no_claims_keeps_source_bindings_and_complete_packet_coverage",
+      "later_task_accounting_cannot_change_a_published_layer_or_upgrade_unknown_receipts",
+      "published_rebind_retains_original_snapshot_request_and_accounting_lineage",
+      "published_selection_preserves_multifile_quotes_roles_parallel_claims_and_original_receipts",
+      "selection_order_is_deterministic_shared_dependencies_are_charged_once_and_models_stay_distinct",
+      "validation_replays_quotes_roles_provenance_scope_and_real_closure_budget"
+    ]
+  }
+}

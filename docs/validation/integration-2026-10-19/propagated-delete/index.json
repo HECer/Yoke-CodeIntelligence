@@ -1,0 +1,838 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T17:17:19.904296+00:00",
+  "parentCommit": "13f51a6eb9132348bbd66b0ea8758855ad970442",
+  "implementationCommit": "98fd455a2aa11860e8fe2504dca5a15b3195864a",
+  "integratedRuntimeCommit": "63015b3660e0746102841bf448c2927ffa1455e8",
+  "accepted": false,
+  "wholeNativeRerun": false,
+  "allScopedChecksPassed": true,
+  "finalStage": "r8",
+  "finalScopedTotals": {
+    "passed": 577,
+    "failed": 0,
+    "ignored": 7
+  },
+  "finalScopedResultGroups": [
+    {
+      "passed": 20,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 429,
+      "failed": 0,
+      "ignored": 7
+    },
+    {
+      "passed": 3,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 4,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 9,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 13,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 7,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 18,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 36,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 18,
+      "failed": 0,
+      "ignored": 0
+    }
+  ],
+  "newDefaultTestsPassed": 20,
+  "actualCompositeGateRustTestsPassed": 5,
+  "actualOwnedFixtureCount": 10,
+  "actualOwnedLanguages": [
+    "typescript",
+    "javascript",
+    "rust",
+    "python"
+  ],
+  "countsAreNonadditive": true,
+  "frozenNativeInputCount": 562,
+  "frozenIntegratedInputCount": 674,
+  "integrationSummary": {
+    "stage": "r8",
+    "checks": [
+      {
+        "gate": "format",
+        "exitCode": 0,
+        "elapsedSeconds": 5.591,
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ]
+      },
+      {
+        "gate": "python-contracts",
+        "exitCode": 0,
+        "elapsedSeconds": 1.355,
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ]
+      },
+      {
+        "gate": "typecheck",
+        "exitCode": 0,
+        "elapsedSeconds": 5.153,
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ]
+      },
+      {
+        "gate": "tests",
+        "exitCode": 0,
+        "elapsedSeconds": 60.633,
+        "command": [
+          "npm.cmd",
+          "test"
+        ]
+      }
+    ],
+    "sourceUnchanged": true,
+    "scopedInputsMatched": 562,
+    "allIntegrationChecksPassed": true,
+    "runtimeCommit": "63015b3660e0746102841bf448c2927ffa1455e8",
+    "wholeNativeRerun": false
+  },
+  "attempts": [
+    {
+      "stage": "binding-red-r7",
+      "result": "development/binding-red-r7/result.json"
+    },
+    {
+      "stage": "r2",
+      "result": "development/r2/result.json"
+    },
+    {
+      "stage": "r3",
+      "result": "development/r3/result.json"
+    },
+    {
+      "stage": "r4",
+      "result": "development/r4/result.json"
+    },
+    {
+      "stage": "r6",
+      "result": "development/r6/result.json"
+    },
+    {
+      "stage": "r8",
+      "result": "development/r8/result.json"
+    },
+    {
+      "stage": "red-r1",
+      "result": "development/red-r1/result.json"
+    },
+    {
+      "stage": "reference-red-r5",
+      "result": "development/reference-red-r5/result.json"
+    }
+  ],
+  "findings": [
+    "Original capability RED0/1 rejects propagate=true before provider/compiler work; only the first TS case was reached. It is not a compiler-result failure.",
+    "Initial R2 compile failed E0505 because a tree cursor still borrowed the returned tree; R3 drops that cursor, and both actual TS/JS propagation fixtures pass. Raw source/output and unchanged inputs are preserved.",
+    "Initial R4 qualification passed576/0/7 plus all actual gates and Clippy, but the additional source-role RED0/1 proved a provider comment-token claim could wrongly seed an unrelated previously-unused declaration. Only the first comment variant was reached in RED. R6 repeated577/0/7 and all actual/Clippy gates on the deny-list predicate. Additional R7 binding RED0/1 passed the first three variants but admitted an arrow parameter and again pruned the unrelated function. Final R8 uses positive expression-role admission/default refusal for unknown roles and repeats all20contracts with four role variants plus the entire selected regression/actual scope.",
+    "Finite explicit function propagation uses exact AST/entity and self-bound provider definitions/references. It removes only owned standalone call statements and private dependency candidates newly unused after those source regions disappear. Private cycles can prune together; surviving reported/possible consumers and exported dependencies remain protected. Unrelated already-unused functions are not swept.",
+    "Reported references, captured graph evidence and lexical/literal candidates retain their distinct roles and original observations; identical physical removals are emitted once. Missing/empty/omitted/truncated/foreign/unbound proofs refuse, rather than returning empty complete coverage.",
+    "All 20 new default contract cases pass: both epochs/force, cycles/live/export, argument dependencies, duplicate/nested calls, BOM/UTF16, authority/paths/protocol shapes/stale/deadline, exact declaration/statement/module/file/physical-byte boundaries and real owned byte-verification/approval/apply/recovery. Quota probes at 2000 files and16MB reach an intentionally unavailable definition; they do not claim a complete maximum-size provider workflow.",
+    "One actual propagation Rust test covers two owned TS/JS compiler/provider/apply/recovery fixtures. Legacy actual declaration/file-usage gates add four Rust tests/eight owned fixtures. Counts across attempts/gates are nonadditive.",
+    "All captured physical files are checked at preparation before/after provider work. This does not lease future consumers or repeat semantic queries at apply; ordinary guarded plan preconditions remain. completefalse, exhaustiveCompilerProoffalse and remainingUsagesMayBreaktrue retain unknown dynamic/external/omitted/differently-configured consumers.",
+    "General propagation outside this finite TS/JS function-module policy, other declaration/language/file cases, full R1-R9/IDE/hosted/platform acceptance, main merge and release remain open. Earlier whole-native Windows failures are preserved, not replaced by this selected run."
+  ],
+  "inventoryPreserved": {
+    "historicalInventory": {
+      "path": "docs/parity/public-contracts-2026-10-14.json",
+      "sha256": "993eb15143bf61a1cf64c80ff53d491ee13f7faeecf2ff4b53a6975de9972c3e",
+      "treatment": "Preserve unchanged as the pinned historical public-contract inventory. Its baseline05Boundary, state=open and empty windowsAcceptance values are not current implementation verdicts."
+    },
+    "ledgerSummary": {
+      "allBackendRuntimeReviewsRetained": true,
+      "assessmentCounts": {
+        "catalog_declared_runtime_review_required": 77,
+        "explicitly_unavailable": 2,
+        "mapped_partial_contract": 179,
+        "measurement_not_transferable": 1,
+        "outside_pinned_public_production_scope": 1,
+        "product_choice_review_required": 1,
+        "reference_metadata_only": 12,
+        "unreconciled_review_required": 73,
+        "unverified_hosted_contract_requires_review": 1,
+        "upstream_boundary_retained": 6
+      },
+      "categoryCounts": {
+        "graphifyCapabilities": 32,
+        "graphifyMcpSurface": 19,
+        "metadataAndScope": 11,
+        "serenaConfigurationEntries": 6,
+        "serenaConfigurationMembers": 56,
+        "serenaLanguageServerIds": 77,
+        "serenaReplFacadeMethods": 50,
+        "serenaTools": 53,
+        "serenaUpstreamBoundaries": 6,
+        "trailCapabilities": 37,
+        "trailPublicTools": 6
+      },
+      "explicitUnavailableRefs": [
+        "serena:tool:open_dashboard",
+        "serena:repl:cfg.open_dashboard"
+      ],
+      "rootIntegrityCheck": "Read-only admission rehashed 1650 prior artifact pins and 1677 new pins, replayed the complete new tree and all five raw phases against the unchanged freeze; this is local consistency evidence, not a signature.",
+      "totalEnumeratedEntries": 353,
+      "unreconciledReviewRequiredRefs": [
+        "trail:Session cold-start mining",
+        "trail:Prompt/edit/session hooks and statusline",
+        "trail:Self-hosted GitHub App",
+        "trail:History digest / brain onboarding",
+        "trail:Cloud workspace/client/team UI",
+        "graphify:postgres_catalog",
+        "graphify:google_shortcuts",
+        "graphify:url_ingest",
+        "graphify:asr",
+        "graphify:affected",
+        "graphify:db_push",
+        "graphify:git_lifecycle",
+        "graphify:diagnostics_benchmark",
+        "serena:configuration:layers",
+        "serena:configuration:projectKeys",
+        "serena:configuration:modeNames",
+        "serena:configuration:contextNames",
+        "serena:configuration:layers:0",
+        "serena:configuration:layers:1",
+        "serena:configuration:layers:2",
+        "serena:configuration:layers:3",
+        "serena:configuration:layers:4",
+        "serena:configuration:layers:5",
+        "serena:configuration:projectKeys:0",
+        "serena:configuration:projectKeys:1",
+        "serena:configuration:projectKeys:2",
+        "serena:configuration:projectKeys:3",
+        "serena:configuration:projectKeys:4",
+        "serena:configuration:projectKeys:5",
+        "serena:configuration:projectKeys:6",
+        "serena:configuration:projectKeys:7",
+        "serena:configuration:projectKeys:8",
+        "serena:configuration:projectKeys:9",
+        "serena:configuration:projectKeys:10",
+        "serena:configuration:projectKeys:11",
+        "serena:configuration:projectKeys:12",
+        "serena:configuration:projectKeys:13",
+        "serena:configuration:projectKeys:14",
+        "serena:configuration:projectKeys:15",
+        "serena:configuration:projectKeys:16",
+        "serena:configuration:projectKeys:17",
+        "serena:configuration:projectKeys:18",
+        "serena:configuration:projectKeys:19",
+        "serena:configuration:projectKeys:20",
+        "serena:configuration:projectKeys:21",
+        "serena:configuration:projectKeys:22",
+        "serena:configuration:projectKeys:23",
+        "serena:configuration:projectKeys:24",
+        "serena:configuration:modeNames:0",
+        "serena:configuration:modeNames:1",
+        "serena:configuration:modeNames:2",
+        "serena:configuration:modeNames:3",
+        "serena:configuration:modeNames:4",
+        "serena:configuration:modeNames:5",
+        "serena:configuration:modeNames:6",
+        "serena:configuration:modeNames:7",
+        "serena:configuration:modeNames:8",
+        "serena:configuration:contextNames:0",
+        "serena:configuration:contextNames:1",
+        "serena:configuration:contextNames:2",
+        "serena:configuration:contextNames:3",
+        "serena:configuration:contextNames:4",
+        "serena:configuration:contextNames:5",
+        "serena:configuration:contextNames:6",
+        "serena:configuration:contextNames:7",
+        "serena:configuration:contextNames:8",
+        "serena:configuration:contextNames:9",
+        "serena:configuration:contextNames:10",
+        "serena:configuration:contextNames:11",
+        "serena:configuration:contextNames:12",
+        "serena:configuration:contextNames:13",
+        "serena:configuration:contextNames:14",
+        "serena:configuration:contextNames:15"
+      ],
+      "validation": "All 353 original identities and false full-contract certifications plus 77 backend runtime unknowns are retained; bounded Windows development acceptance only."
+    }
+  },
+  "artifacts": [
+    {
+      "path": "ci-propagated-delete-binding-red-r7-setup.py",
+      "bytes": 381,
+      "sha256": "c16eab976eca2dc48b9e8f3b8f13241601cb9663e209446e4dad1cea988f1e1d"
+    },
+    {
+      "path": "ci-propagated-delete-binding-red-r7.py",
+      "bytes": 1643,
+      "sha256": "d31172b690932fb628a0acaa7b016087f173200f4e1f1ad4500842e16cfd27b6"
+    },
+    {
+      "path": "ci-propagated-delete-final-evidence-setup.py",
+      "bytes": 1641,
+      "sha256": "4a66cd13aebc363c3283c3f88e72b793b477b1faee75ac46aafba7fc008a6443"
+    },
+    {
+      "path": "ci-propagated-delete-integration-setup.py",
+      "bytes": 383,
+      "sha256": "56fbe065ce5ccae0fc3c0992f257d560bfe84ab7b4a22fabebfaf6818bf589c2"
+    },
+    {
+      "path": "ci-propagated-delete-pr-final.py",
+      "bytes": 4622,
+      "sha256": "0268a9d95f13e7e5d1a0021feb52fe46379a80c60a1fa209b8f6f7df8f27d526"
+    },
+    {
+      "path": "ci-propagated-delete-r2-setup.py",
+      "bytes": 324,
+      "sha256": "80832c339722045d8dd30cf0cb8180ffd4862d3b2faff09ad8f2e5f1f1e00667"
+    },
+    {
+      "path": "ci-propagated-delete-r2.py",
+      "bytes": 1755,
+      "sha256": "2854d890f63d757fb1a9715997c10528e4746e9d2d6b647dcbb83fb50b6b1dfc"
+    },
+    {
+      "path": "ci-propagated-delete-r3-setup.py",
+      "bytes": 315,
+      "sha256": "2f7c97e30c18fce9f78937019afac8bc68f76c0fdc306e59da1975198ad90fbb"
+    },
+    {
+      "path": "ci-propagated-delete-r3.py",
+      "bytes": 1755,
+      "sha256": "650630ce5d19d7d493ad537d54ca4253967c87bc0b9cd6222d1975286fc4f7d9"
+    },
+    {
+      "path": "ci-propagated-delete-r4.py",
+      "bytes": 3333,
+      "sha256": "d4d3ee107bc8d94fcf65772bf90ea1b60ff01238d708bd5cc3664a62bfceb6c0"
+    },
+    {
+      "path": "ci-propagated-delete-r6-setup.py",
+      "bytes": 315,
+      "sha256": "7a6eaebb2963062f481be8dc70a7e37bfabed33933b73ddb0070a91ff6dcfacc"
+    },
+    {
+      "path": "ci-propagated-delete-r6.py",
+      "bytes": 3333,
+      "sha256": "0c39397e21e55635f6c2ba49774fababa221e13ddd96195ff9f8b315cf9bd348"
+    },
+    {
+      "path": "ci-propagated-delete-r8-evidence-setup.py",
+      "bytes": 1782,
+      "sha256": "22b366982ef3b05861d74aa59f150b147ab6957c5f88aae96669ef76fef37bd8"
+    },
+    {
+      "path": "ci-propagated-delete-r8-setup.py",
+      "bytes": 315,
+      "sha256": "e3e3a42447b30552d0f2fcff42e118bcf89bc87e0d5ffe85df1f8ad0178724d1"
+    },
+    {
+      "path": "ci-propagated-delete-r8.py",
+      "bytes": 3333,
+      "sha256": "8cfcc25622b5575130fd232dde733e10e408d19555cbbc248b7a88d92075024e"
+    },
+    {
+      "path": "ci-propagated-delete-red-setup.py",
+      "bytes": 420,
+      "sha256": "cc0012afd959d30cea190770bb6d973d28f3b3c9749090fb8a05f1ae3e7df011"
+    },
+    {
+      "path": "ci-propagated-delete-red.py",
+      "bytes": 1759,
+      "sha256": "d826cb3a2581eb256d2d2e0d0785c73df2104321b8974d3ca9c60bb3bd3e796f"
+    },
+    {
+      "path": "ci-propagated-delete-reference-red-r5.py",
+      "bytes": 1645,
+      "sha256": "590da50909c4dad37254cb5d68a64aadeeafb37bf9bf2403c1b68dacc2cd846c"
+    },
+    {
+      "path": "ci-propagated-delete-stage-setup.py",
+      "bytes": 271,
+      "sha256": "229b62971457a0bd076ced7ff4a3d456e59768185dbad0bba89cd8645ddf2913"
+    },
+    {
+      "path": "development/binding-red-r7/native.log",
+      "bytes": 4380,
+      "sha256": "0bdd6a55c962c9b87649a1a777703a8e9207cca8284e039bba58ffd6b8912ebd"
+    },
+    {
+      "path": "development/binding-red-r7/result.json",
+      "bytes": 123717,
+      "sha256": "7be253633f5aa9b276b294fe03214e38f23d0c51ec26711d1ac4f7c3bb4486e7"
+    },
+    {
+      "path": "development/binding-red-r7/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 25354,
+      "sha256": "c1fbc21d8a067d8bca7173b0afe645d8fde59c66e2215f6dc1adf7b87218122e"
+    },
+    {
+      "path": "development/binding-red-r7/source/native/src/semantic_refactor.rs",
+      "bytes": 31164,
+      "sha256": "0f5c6a1c40259b4c32a346e8b2d28f15aacad723f868e505713d8e8b298f9a2b"
+    },
+    {
+      "path": "development/binding-red-r7/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "development/binding-red-r7/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 19795,
+      "sha256": "3a7e31776a86942a1cf0b779e022d553c223b717bd5b3098d7409b9471bc1578"
+    },
+    {
+      "path": "development/binding-red-r7/source/native/tests/propagated_delete_live.rs",
+      "bytes": 4472,
+      "sha256": "f0d25dc20ed6ff2d12214cdb74913932a8d2eb2029f3ad4579723329e40c95d4"
+    },
+    {
+      "path": "development/r2/native.log",
+      "bytes": 977,
+      "sha256": "8b86c401231bcd7e8420bf3e228c59f8d0d98518baf5631a05aa291d28a62303"
+    },
+    {
+      "path": "development/r2/result.json",
+      "bytes": 123144,
+      "sha256": "bc1b963298fc6b2a0ae4683240dfc1d7da17b38865bafe893bf7f9acd60116e7"
+    },
+    {
+      "path": "development/r2/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 23804,
+      "sha256": "a704e07f49372c6b7940a192f46a52566660e73cfdff66f281c6d9cc64d4c005"
+    },
+    {
+      "path": "development/r2/source/native/src/semantic_refactor.rs",
+      "bytes": 31164,
+      "sha256": "0f5c6a1c40259b4c32a346e8b2d28f15aacad723f868e505713d8e8b298f9a2b"
+    },
+    {
+      "path": "development/r2/source/native/tests/propagated_delete_live.rs",
+      "bytes": 4472,
+      "sha256": "f0d25dc20ed6ff2d12214cdb74913932a8d2eb2029f3ad4579723329e40c95d4"
+    },
+    {
+      "path": "development/r3/native.log",
+      "bytes": 8162,
+      "sha256": "0b2a7522ce25434e138691ba01482ef1f550c0022a9d725f8e9e08bb255555df"
+    },
+    {
+      "path": "development/r3/result.json",
+      "bytes": 123143,
+      "sha256": "9ef182a65f5bcd8ca2234e70b046bcfc671f63eb9dab536e0e0078cf0ccafbb1"
+    },
+    {
+      "path": "development/r3/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 23822,
+      "sha256": "3cb52f8b8837bb6f26009ee03e1990dc3a78af26da14ffbb6bb959889063fa12"
+    },
+    {
+      "path": "development/r3/source/native/src/semantic_refactor.rs",
+      "bytes": 31164,
+      "sha256": "0f5c6a1c40259b4c32a346e8b2d28f15aacad723f868e505713d8e8b298f9a2b"
+    },
+    {
+      "path": "development/r3/source/native/tests/propagated_delete_live.rs",
+      "bytes": 4472,
+      "sha256": "f0d25dc20ed6ff2d12214cdb74913932a8d2eb2029f3ad4579723329e40c95d4"
+    },
+    {
+      "path": "development/r4/actual-propagation.log",
+      "bytes": 8054,
+      "sha256": "07408d016252ebb8709aeab19554e709a21b16034aa8d6c5af1d91083d777820"
+    },
+    {
+      "path": "development/r4/actual-regressions.log",
+      "bytes": 19723,
+      "sha256": "c051376282f6ceb71bf6605ade93631b2729f802c2ad594535f059287f634d9e"
+    },
+    {
+      "path": "development/r4/clippy.log",
+      "bytes": 168,
+      "sha256": "2c6628bdca3af397247991c224fd8e0cc1b90524e86e95b07ee0d66b1fc6d1dd"
+    },
+    {
+      "path": "development/r4/contracts.log",
+      "bytes": 2107,
+      "sha256": "8d735e28d7d4abc64fe972bebe2be7fbe6350c065e4681367d8b12594f303165"
+    },
+    {
+      "path": "development/r4/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/r4/native.log",
+      "bytes": 79440,
+      "sha256": "a957e518c7227262ec7e99a600e4028bc6833f5542ad17c86f95dcde53040262"
+    },
+    {
+      "path": "development/r4/progress.json",
+      "bytes": 2875,
+      "sha256": "e7857c75deab983026ac47f050f89b79a1d8d7bf084ad678b15b1cfcd1864310"
+    },
+    {
+      "path": "development/r4/result.json",
+      "bytes": 126491,
+      "sha256": "cd388febd1145436834dc435ab8a4f28f7e9484f7d3ea1a61fc7d392e7e21261"
+    },
+    {
+      "path": "development/r4/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 23822,
+      "sha256": "3cb52f8b8837bb6f26009ee03e1990dc3a78af26da14ffbb6bb959889063fa12"
+    },
+    {
+      "path": "development/r4/source/native/src/semantic_refactor.rs",
+      "bytes": 31164,
+      "sha256": "0f5c6a1c40259b4c32a346e8b2d28f15aacad723f868e505713d8e8b298f9a2b"
+    },
+    {
+      "path": "development/r4/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "development/r4/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 18796,
+      "sha256": "5278ce8b5dd8d306c8672b0c7c6506d812f56bd5e12cea52d8af626f75045ebf"
+    },
+    {
+      "path": "development/r4/source/native/tests/propagated_delete_live.rs",
+      "bytes": 4472,
+      "sha256": "f0d25dc20ed6ff2d12214cdb74913932a8d2eb2029f3ad4579723329e40c95d4"
+    },
+    {
+      "path": "development/r6/actual-propagation.log",
+      "bytes": 8162,
+      "sha256": "c3675f06eedc0fe2d00a36c13486c48eb630ac8ed8b17cfc9b26f389163928cf"
+    },
+    {
+      "path": "development/r6/actual-regressions.log",
+      "bytes": 19724,
+      "sha256": "74a583c937c8f81b538c1824a3d5c6195c4e0a159aadc9d1a2f73e970ada6d10"
+    },
+    {
+      "path": "development/r6/clippy.log",
+      "bytes": 168,
+      "sha256": "20525da1b5319bde0e7adc9cb6fb1926b9e0c4e24fe2dd71c798d8398c44d37c"
+    },
+    {
+      "path": "development/r6/contracts.log",
+      "bytes": 2203,
+      "sha256": "2fd01def4e2fea5e68f397ed48d784526b652cc1e649ff5915142230e7ad2b95"
+    },
+    {
+      "path": "development/r6/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/r6/native.log",
+      "bytes": 79456,
+      "sha256": "c7c4ff058017622b0c862db9a3f690b4a330b5e3b8c744a3acc735da07eb04ec"
+    },
+    {
+      "path": "development/r6/progress.json",
+      "bytes": 2875,
+      "sha256": "70202bde26ff337684dcfc3d994ac80ead75b868f4fe0931f3a06a3903725724"
+    },
+    {
+      "path": "development/r6/result.json",
+      "bytes": 126491,
+      "sha256": "334f0d4ef7a845abdf7edd57d3800f3088aedf5b6e960e5a39721f939ea08625"
+    },
+    {
+      "path": "development/r6/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 25354,
+      "sha256": "c1fbc21d8a067d8bca7173b0afe645d8fde59c66e2215f6dc1adf7b87218122e"
+    },
+    {
+      "path": "development/r6/source/native/src/semantic_refactor.rs",
+      "bytes": 31164,
+      "sha256": "0f5c6a1c40259b4c32a346e8b2d28f15aacad723f868e505713d8e8b298f9a2b"
+    },
+    {
+      "path": "development/r6/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "development/r6/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 19734,
+      "sha256": "285ebb965ab871e75d3bab90a3c5efb93fbd2261b31dae151d77abfeae571abb"
+    },
+    {
+      "path": "development/r6/source/native/tests/propagated_delete_live.rs",
+      "bytes": 4472,
+      "sha256": "f0d25dc20ed6ff2d12214cdb74913932a8d2eb2029f3ad4579723329e40c95d4"
+    },
+    {
+      "path": "development/r8/actual-propagation.log",
+      "bytes": 8161,
+      "sha256": "97259fdc868980da4433692bb43e7db7deb4541c0e4664ce88feff486bf69008"
+    },
+    {
+      "path": "development/r8/actual-regressions.log",
+      "bytes": 19724,
+      "sha256": "4efa1c236693d46593871e9928b05b18f0e22c2e4ae5f17d5e105c1dcb93de65"
+    },
+    {
+      "path": "development/r8/clippy.log",
+      "bytes": 168,
+      "sha256": "25cbf12ef08f1745cc8d6485f768fb258146c80cb0fe7b110977f6d2395e8114"
+    },
+    {
+      "path": "development/r8/contracts.log",
+      "bytes": 2203,
+      "sha256": "2545047ccdb87f263b0dc2fd4f73b145388579373564ce0c5e804da56e9fb0d2"
+    },
+    {
+      "path": "development/r8/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/r8/native.log",
+      "bytes": 79457,
+      "sha256": "87ce5fde0805faf4869b530922b0ed98e2f11a156adaa3fb5a7d7dc0cb34f5c9"
+    },
+    {
+      "path": "development/r8/progress.json",
+      "bytes": 2876,
+      "sha256": "cffbd3c1cf481d89b64d11f9afa74e7a23b27bae38e6f205005775a0bd52ccdd"
+    },
+    {
+      "path": "development/r8/result.json",
+      "bytes": 126492,
+      "sha256": "d8b83bda3e54ce020375f972c381803056cffc0d3e3da77411a24163b5e0bfe7"
+    },
+    {
+      "path": "development/r8/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 26139,
+      "sha256": "bfeeb366bb8732e372ce0e478110c1b0566bbb429cefabdfffdbdccc7e493c6c"
+    },
+    {
+      "path": "development/r8/source/native/src/semantic_refactor.rs",
+      "bytes": 31164,
+      "sha256": "0f5c6a1c40259b4c32a346e8b2d28f15aacad723f868e505713d8e8b298f9a2b"
+    },
+    {
+      "path": "development/r8/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "development/r8/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 19795,
+      "sha256": "3a7e31776a86942a1cf0b779e022d553c223b717bd5b3098d7409b9471bc1578"
+    },
+    {
+      "path": "development/r8/source/native/tests/propagated_delete_live.rs",
+      "bytes": 4472,
+      "sha256": "f0d25dc20ed6ff2d12214cdb74913932a8d2eb2029f3ad4579723329e40c95d4"
+    },
+    {
+      "path": "development/red-r1/native.log",
+      "bytes": 1087,
+      "sha256": "c1cca99c450041bb46d3ca0ffc620464127f95625d3e3301103e03fc5068e006"
+    },
+    {
+      "path": "development/red-r1/result.json",
+      "bytes": 122912,
+      "sha256": "f7098f3c56726102a913cdfaebca844c73dc954e04227688f6d8958e9280ad87"
+    },
+    {
+      "path": "development/red-r1/source/native/src/semantic_refactor.rs",
+      "bytes": 31099,
+      "sha256": "6adbad6d75e5bc3fc74815c704884b5dbf6467bff231f6f1e826d9f68deef140"
+    },
+    {
+      "path": "development/red-r1/source/native/tests/propagated_delete_live.rs",
+      "bytes": 4472,
+      "sha256": "f0d25dc20ed6ff2d12214cdb74913932a8d2eb2029f3ad4579723329e40c95d4"
+    },
+    {
+      "path": "development/reference-red-r5/native.log",
+      "bytes": 4353,
+      "sha256": "fc9ff28f024804f4e403b9ca8ed9b056a113787fdee923d5d4085db8d5b1d188"
+    },
+    {
+      "path": "development/reference-red-r5/result.json",
+      "bytes": 123717,
+      "sha256": "ca796044b1ca8fe5f6fff5695c7718f7f902daf65ace9d052ba4ff7ffe2d52a0"
+    },
+    {
+      "path": "development/reference-red-r5/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 23822,
+      "sha256": "3cb52f8b8837bb6f26009ee03e1990dc3a78af26da14ffbb6bb959889063fa12"
+    },
+    {
+      "path": "development/reference-red-r5/source/native/src/semantic_refactor.rs",
+      "bytes": 31164,
+      "sha256": "0f5c6a1c40259b4c32a346e8b2d28f15aacad723f868e505713d8e8b298f9a2b"
+    },
+    {
+      "path": "development/reference-red-r5/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "development/reference-red-r5/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 19734,
+      "sha256": "285ebb965ab871e75d3bab90a3c5efb93fbd2261b31dae151d77abfeae571abb"
+    },
+    {
+      "path": "development/reference-red-r5/source/native/tests/propagated_delete_live.rs",
+      "bytes": 4472,
+      "sha256": "f0d25dc20ed6ff2d12214cdb74913932a8d2eb2029f3ad4579723329e40c95d4"
+    },
+    {
+      "path": "frozen-tracker.json",
+      "bytes": 493670,
+      "sha256": "38c6bf61f8edfbdd981cdfdfe7f26685810b4f216a775defc138e4baad985e1b"
+    },
+    {
+      "path": "integrated/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "integrated/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "aa69d85adf4e99d139392a806ef7b24e0daaccaf29a69b4d69c0cc07c15280e6"
+    },
+    {
+      "path": "integrated/scoped-source-materialization.json",
+      "bytes": 162662,
+      "sha256": "20971251424b9eeeafc4cf07030b18bc0f779c98075e3631d900d83ee9ce118b"
+    },
+    {
+      "path": "integrated/source-after.json",
+      "bytes": 71458,
+      "sha256": "c71f1a827dc90e183573dc2477dcc7565240acd4834983dd5c5506d2ecff4e69"
+    },
+    {
+      "path": "integrated/source-before.json",
+      "bytes": 71458,
+      "sha256": "c71f1a827dc90e183573dc2477dcc7565240acd4834983dd5c5506d2ecff4e69"
+    },
+    {
+      "path": "integrated/summary.json",
+      "bytes": 1015,
+      "sha256": "012ce3bccc1df5414a4a193ff1c8cfd45de1f84c93468de7f8bce243f44fb3f2"
+    },
+    {
+      "path": "integrated/tests.log",
+      "bytes": 25037,
+      "sha256": "faacb821e5446ac78475154e81bc073c9df2170a9fd983beed9f96090d01c94f"
+    },
+    {
+      "path": "integrated/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "preserve-propagated-delete.py",
+      "bytes": 8743,
+      "sha256": "4073b118423afebb084a89deeb0616bdcf4fdc94b85c65516d202b6ff79d869b"
+    },
+    {
+      "path": "run-propagated-delete-integrated.py",
+      "bytes": 3315,
+      "sha256": "9fc742fff52159d9c66f31c58bb61e2a19e22872ce69187e1eb25002aacce348"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 262623,
+      "sha256": "0d39db5d57a9d26a5b3e5f8d2af1fbf33fb0df01b3cdac9b2ef79671f7b6f4c4"
+    },
+    {
+      "path": "tool-versions.json",
+      "bytes": 1036,
+      "sha256": "da667d2e0b466e927c0fffb547eb707a71fa1e491a37653cba80006dde6a45eb"
+    },
+    {
+      "path": "update-propagated-delete-docs.py",
+      "bytes": 8845,
+      "sha256": "2e78395ec7196db8f09270cfe3ab5b939b0cf51df5083ee939e43bf5dea187a9"
+    },
+    {
+      "path": "verify-propagated-delete-staged.py",
+      "bytes": 1272,
+      "sha256": "6937d6f0ef06f22107d81e41b14ba2fe94e5daf5a55d426657753e9f7311abb7"
+    }
+  ],
+  "sourceMaterialization": {
+    "path": "source-materialization.json",
+    "counts": {
+      "raw_equal": 98,
+      "crlf_only_checkout_materialization": 575,
+      "thematic_status_metadata_after_freeze": 1
+    },
+    "inputCount": 674
+  },
+  "metadataAfterFreeze": {
+    "path": "docs/parity/native-reconciliation-2026-10-15.json",
+    "beforeSha256": "38c6bf61f8edfbdd981cdfdfe7f26685810b4f216a775defc138e4baad985e1b",
+    "afterSha256": "4fd6f8dd9886f02c0a63eff4b831af9c3d946d552777e8dd76662327457e4de0",
+    "scope": "Thematic R1 status/evidence only; original inventoryLedger, historicalInventory and ledgerSummary preserved."
+  }
+}

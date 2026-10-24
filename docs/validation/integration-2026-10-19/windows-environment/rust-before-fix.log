@@ -1,0 +1,58 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 14s
+     Running tests\process.rs (target\debug\deps\process-2b0da15419d96306.exe)
+
+running 2 tests
+test runtime_environment_filters_secrets_and_preserves_host_overrides ... FAILED
+test windows_runtime_environment_supports_managed_known_folders ... FAILED
+
+failures:
+
+---- runtime_environment_filters_secrets_and_preserves_host_overrides stdout ----
+
+thread 'runtime_environment_filters_secrets_and_preserves_host_overrides' (1136) panicked at native\tests\process.rs:121:9:
+assertion `left == right` failed: 
+running 1 test
+test runtime_environment_filters_secrets_and_preserves_host_overrides ... FAILED
+
+failures:
+
+failures:
+    runtime_environment_filters_secrets_and_preserves_host_overrides
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.08s
+
+
+
+thread 'runtime_environment_filters_secrets_and_preserves_host_overrides' (8160) panicked at native\tests\process.rs:150:5:
+assertion `left == right` failed
+  left: Null
+ right: "C:"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  left: Some(101)
+ right: Some(0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- windows_runtime_environment_supports_managed_known_folders stdout ----
+
+thread 'windows_runtime_environment_supports_managed_known_folders' (7548) panicked at native\tests\process.rs:177:5:
+assertion `left == right` failed: Host system drive missing
+In Zeile:1 Zeichen:78
++ ... lOrEmpty($env:SystemDrive)){throw 'Host system drive missing'}; $fold ...
++                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Host system drive missing:String) [], RuntimeException
+    + FullyQualifiedErrorId : Host system drive missing
+ 
+
+  left: Some(1)
+ right: Some(0)
+
+
+failures:
+    runtime_environment_filters_secrets_and_preserves_host_overrides
+    windows_runtime_environment_supports_managed_known_folders
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.28s
+
+error: test failed, to rerun pass `--test process`

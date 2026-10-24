@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-19T21:23:21.408109+00:00",
+  "scope": "old disposable target/debug/deps test executables only",
+  "attemptedCandidateLimit": 20,
+  "manifestWriteFailed": true,
+  "error": "PowerShell Measure-Object bytes could not bind ordered-dictionary entries after deletion loop. Per-file computed hashes were not durably saved and are unavailable. Exact successful deletion count is not claimed.",
+  "knownPreviouslyListedMembersNowAbsent": [
+    "freshness-c47dc8d7a5309a48.exe",
+    "github_app_worker-b5dd1107a2732bdc.exe",
+    "graph_extensions-c9bc81ca0803a48c.exe",
+    "parity_view_review-d47d64a495614883.exe",
+    "parity_retention-12b1826fac95f043.exe",
+    "session_collections-8afdcc929a07763d.exe",
+    "github_app_ingress-453bda4ad78738bb.exe"
+  ],
+  "knownHistoricalRunningProgramPreserved": true,
+  "freeBytesNow": 1890603008,
+  "frozenSourceInputs": 694,
+  "frozenSourcesUnchanged": true,
+  "repeatDeletionPerformed": false
+}

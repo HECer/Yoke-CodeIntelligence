@@ -1,0 +1,42 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"__ci_inline_3\"",
+      "ownedRuntimeSame": false,
+      "beforeTypes": [
+        "string"
+      ],
+      "afterTypes": [
+        "string"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 1,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"__ci_inline_3\"",
+      "ownedRuntimeSame": false,
+      "beforeTypes": [
+        "string"
+      ],
+      "afterTypes": [
+        "string"
+      ],
+      "resultTypesExact": true
+    }
+  ],
+  "allChecksPassed": false,
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "ownedLiteralFixturesExecuted": true,
+  "diagnosticOnlyWorkerPatch": true
+}

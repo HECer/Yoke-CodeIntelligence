@@ -1,0 +1,127 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 32s
+     Running tests\collection_registry_access.rs (target\debug\deps\collection_registry_access-a3603a3c10f46851.exe)
+
+running 7 tests
+test native_and_checked_view_metadata_keep_distinct_kinds_and_reject_unsafe_legacy_presentation ... ok
+test read_only_native_archive_survives_original_source_deletion_without_writes ... ok
+test readonly_guard_excludes_independent_writers_and_refuses_uncheckpointed_wal ... ok
+test foreign_metadata_requires_fresh_current_grants_for_each_inspection ... ok
+test readonly_uri_preserves_unicode_spaces_and_literal_uri_characters ... ok
+test unknown_registry_open_does_not_create_state ... ok
+test stale_and_absent_cas_never_replace_existing_binding ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.67s
+
+     Running tests\collections_cli.rs (target\debug\deps\collections_cli-847332a6ce2d6cca.exe)
+
+running 5 tests
+test archived_collection_cli_queries_without_opening_a_source_project ... ok
+test collection_registration_requires_separate_authority_before_creating_any_state ... ok
+test collection_cli_registration_is_create_only_or_exact_compare_and_swap ... ok
+test unknown_collection_cli_registry_does_not_create_files ... ok
+test foreign_collection_cli_reloads_current_host_grants_and_keeps_source_only_distinct ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.55s
+
+     Running tests\mcp_collection_grants.rs (target\debug\deps\mcp_collection_grants-3dafe0be4ffc6a49.exe)
+
+running 2 tests
+test native_archive_does_not_open_a_configured_but_unused_federation_receiver ... ok
+test current_principal_grants_are_injected_per_http_call_and_removed_on_upsert ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s
+
+     Running tests\mcp_collection_grants_review.rs (target\debug\deps\mcp_collection_grants_review-992fccd168e3c90f.exe)
+
+running 3 tests
+test non_session_profile_rejects_host_collection_grants_before_opening_source_state ... ok
+test collection_grants_are_borrowed_per_dispatch_and_sources_remain_noncanonical ... ok
+test replacing_principal_policy_cancels_running_session_before_waiting_for_read_lease ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.26s
+
+     Running tests\meaning_archive_cli.rs (target\debug\deps\meaning_archive_cli-6b0740a70c15a6fa.exe)
+
+running 10 tests
+test existing_output_file_directory_and_hardlink_are_never_overwritten ... FAILED
+test duplicate_malformed_and_over_budget_bytes_cannot_initialize_a_registry ... ok
+test export_refuses_incomplete_store_without_initializing_any_state ... ok
+test invalid_budgets_and_missing_existing_store_fail_before_filesystem_initialization ... ok
+test permission_and_explicit_cas_precede_any_input_or_registry_creation ... ok
+test inspect_supplied_bytes_is_storeless_and_emits_unknown_metadata_without_quotes ... ok
+test source_provider_flags_are_rejected_without_reading_selected_files ... ok
+test published_view_export_preserves_full_typed_archive_without_source_publication ... ok
+test stdout_loss_reports_already_durable_registration_and_output_archive_identities ... ok
+test typed_registration_cas_and_load_keep_exact_bytes_after_all_original_state_is_removed ... ok
+
+failures:
+
+---- existing_output_file_directory_and_hardlink_are_never_overwritten stdout ----
+
+thread 'existing_output_file_directory_and_hardlink_are_never_overwritten' (12960) panicked at native\tests\meaning_archive_cli.rs:381:60:
+called `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: "Dem Client fehlt ein erforderliches Recht." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    existing_output_file_directory_and_hardlink_are_never_overwritten
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.72s
+
+error: test failed, to rerun pass `--test meaning_archive_cli`
+     Running tests\meaning_collection_archives.rs (target\debug\deps\meaning_collection_archives-e8b4b7a1316d14f4.exe)
+
+running 7 tests
+test adding_a_typed_archive_preserves_released_source_registration_payload_ids_and_queries ... ok
+test collection_metadata_reports_the_complete_typed_layer_without_quotes_or_false_accounting ... ok
+test complete_archive_bytes_are_explicit_input_but_protected_foreign_cas_is_never_a_fallback ... ok
+test source_only_collection_entry_points_never_return_a_partial_typed_registration ... ok
+test typed_collection_cas_and_invalid_name_refusals_leave_no_registration_or_source_blobs ... ok
+test typed_collection_load_rejects_deleted_historical_source_without_repairing_the_database ... ok
+test typed_registration_reopens_and_replays_after_the_original_store_tree_and_worker_are_gone ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.28s
+
+     Running tests\registry_replay_review.rs (target\debug\deps\registry_replay_review-bbf6cff4db162921.exe)
+
+running 8 tests
+test historical4_keeps_its_identity_and_reports_unreplayed_claims ... ok
+test native8_relabel_is_rejected_after_origin_deleted ... ok
+test native8_retarget_is_rejected_after_origin_deleted ... ok
+test native9_archive_selects_proven_epoch_without_global_activation ... ok
+test producer_labels_cannot_change_a_proven_capture_epoch ... ok
+test unchanged_native8_and_view8_remain_standalone ... ok
+test view8_relabel_is_rejected_after_origin_deleted ... ok
+test view8_retarget_is_rejected_after_origin_deleted ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.40s
+
+     Running tests\session_collections.rs (target\debug\deps\session_collections-8afdcc929a07763d.exe)
+
+running 8 tests
+test collection_policy_changes_invalidate_resume_but_empty_policy_keeps_original_fingerprint ... ok
+test empty_collections_preserve_legacy_host_serialization ... ok
+test native_archived_queries_never_open_original_or_active_source ... ok
+test configured_query_only_project_can_register_current_checked_view_without_activation ... ok
+test native_registry_read_wrapper_uses_exact_archived_membership ... ok
+test registry_coordination_is_host_policy_and_defaults_preserve_existing_profile_bytes ... ok
+test registration_requires_host_write_authority_and_explicit_binding_expectation ... ok
+test transient_current_foreign_grants_authorize_only_the_registered_receiver_and_call ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.52s
+
+     Running tests\session_epoch_selection.rs (target\debug\deps\session_epoch_selection-3a76f94cf0fc1b02.exe)
+
+running 6 tests
+test mutable_engine_handles_cannot_silently_change_a_pinned_session_epoch ... ok
+test default_v8_preserves_the_original_session_record_and_can_resume_saved_bytes ... ok
+test same_epoch_resume_keeps_project_selection_and_cross_epoch_resume_cannot_mutate_records ... ok
+test session_v9_propagates_to_default_registered_readonly_and_query_only_projects ... ok
+test session_v9_reads_old_native_archives_without_recapture_or_registration_authority ... ok
+test session_v9_keeps_federation_receiver_receipts_and_current_grants_separate ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.62s
+
+error: 1 target failed:
+    `--test meaning_archive_cli`

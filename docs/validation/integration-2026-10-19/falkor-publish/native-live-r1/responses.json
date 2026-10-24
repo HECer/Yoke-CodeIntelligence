@@ -1,0 +1,555 @@
+{
+  "modules": [
+    [
+      "name",
+      "graph",
+      "ver",
+      60002,
+      "path",
+      "/var/lib/falkordb/bin/falkordb.so",
+      "args",
+      []
+    ],
+    [
+      "name",
+      "vectorset",
+      "ver",
+      1,
+      "path",
+      "",
+      "args",
+      []
+    ]
+  ],
+  "plain-original-elements": [
+    [
+      "n.category",
+      "n.rowJson"
+    ],
+    [
+      [
+        "entity",
+        "{\"endByte\":74,\"endLine\":3,\"id\":\"b08935e27c140ca7e86c2631c78ff32de61a565e60a7881f53bbbd42532c4842\",\"key\":\"owned.rs:file:0\",\"kind\":\"file\",\"language\":\"rust\",\"name\":\"owned.rs\",\"nameEndByte\":null,\"nameStartByte\":null,\"parentKey\":null,\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"qualifiedName\":\"owned.rs\",\"signature\":\"owned.rs [rust]\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":0,\"startLine\":1}"
+      ],
+      [
+        "entity",
+        "{\"endByte\":51,\"endLine\":2,\"id\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"key\":\"owned.rs:function:15\",\"kind\":\"function\",\"language\":\"rust\",\"name\":\"alpha\",\"nameEndByte\":23,\"nameStartByte\":18,\"parentKey\":\"owned.rs:file:0\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"qualifiedName\":\"owned.rs/alpha\",\"signature\":\"fn alpha()\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":15,\"startLine\":2}"
+      ],
+      [
+        "entity",
+        "{\"endByte\":72,\"endLine\":3,\"id\":\"ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118\",\"key\":\"owned.rs:function:53\",\"kind\":\"function\",\"language\":\"rust\",\"name\":\"beta\",\"nameEndByte\":60,\"nameStartByte\":56,\"parentKey\":\"owned.rs:file:0\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"qualifiedName\":\"owned.rs/beta\",\"signature\":\"fn beta()\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":53,\"startLine\":3}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":51,\"endLine\":2,\"id\":\"b15800570f8743b49cfd940ba600f18f9599f397adf2bee97904c0c7da27f3b7\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":15,\"startLine\":2,\"trust\":\"source-data\"}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":32,\"endLine\":2,\"id\":\"dab640bf0ae32de7b9c16fd4bf398dbaa07688621ac6cf1f5ae7952c45ae9111\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":26,\"startLine\":2,\"trust\":\"source-data\"}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":39,\"endLine\":2,\"id\":\"e51982c7955b96726898d882583fd20ceda9a5490ed6b0cda2a248d865d384aa\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":33,\"startLine\":2,\"trust\":\"source-data\"}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":49,\"endLine\":2,\"id\":\"8dc68e0b742800fc47e5280ee70068c35c0735e7a0a7873e405ac8efea88df0d\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":40,\"startLine\":2,\"trust\":\"source-data\"}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":72,\"endLine\":3,\"id\":\"1ea3316bf82d352432ce807c44bc7a01c34b94bcce4097f9059ac6b8ba988154\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":53,\"startLine\":3,\"trust\":\"source-data\"}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":70,\"endLine\":3,\"id\":\"e1520f2b973ecdc0f4d667f86041164db8a2b19c909f11124c376b13fdd3a539\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":63,\"startLine\":3,\"trust\":\"source-data\"}"
+      ],
+      [
+        "unresolved",
+        "{\"observationId\":\"a75d528dc9fe69de6534521ca4631659390edae32e44c49aec84e6598b661df7\",\"sourceTargetWasNull\":true,\"targetLabel\":\"missing\"}"
+      ],
+      [
+        "revision",
+        "{\"complete\":false,\"coverage\":{\"exhaustive\":false,\"indexedFiles\":1,\"languages\":{\"rust\":1},\"limitations\":[\"Structural candidate resolution is not compiler binding or exhaustive runtime coverage.\",\"Unsupported text formats have full-text search but no AST semantics. Binary/media files are explicitly omitted.\",\"Lexical/import/receiver bindings are syntax-local candidates. Parallel targets preserve possible dispatch; dynamic assignment, dependencies and runtime targets remain nonexhaustive.\"],\"omissions\":0,\"semantic\":false,\"sourceFiles\":1,\"unresolved\":1},\"diagnostics\":[],\"entityCount\":3,\"evidenceCount\":6,\"graphHash\":\"6209c7ed5b5738455a7d631c362e98f408d1c79c770727302306a234f989bf1f\",\"observationCount\":6,\"payloadHash\":\"bbea06c21f91d3d6fb37247cde041547f3e16448eac454acff3074cfdd4e6533\",\"schemaVersion\":1,\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"sourceAuthority\":false,\"sourceClaimsAttested\":false,\"sourceFiles\":[{\"hash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"language\":\"rust\",\"mode\":420,\"path\":\"owned.rs\",\"size\":74}],\"unresolvedCount\":1,\"workspaceId\":\"a207066e57441ebab3fbe799b5bef8cfde660e37884f263cfbec8961b678b1dd\"}"
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 0.650589 milliseconds",
+      "Graph version: 10"
+    ]
+  ],
+  "plain-original-observations": [
+    [
+      "a.sourceId",
+      "b.sourceId",
+      "b.sourceTargetWasNull",
+      "r.rowJson"
+    ],
+    [
+      [
+        "386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55",
+        "ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118",
+        null,
+        "{\"id\":\"613a86c5c8eeb8899c764ea650a8db60291e58f8d56b880fee5b55d0ca68ecfa\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"target\":\"ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118\",\"targetLabel\":\"beta\",\"relation\":\"calls\",\"resolution\":\"heuristic\",\"evidenceIds\":[\"dab640bf0ae32de7b9c16fd4bf398dbaa07688621ac6cf1f5ae7952c45ae9111\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ],
+      [
+        "ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118",
+        "386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55",
+        null,
+        "{\"id\":\"a45bc62cbf2a4f3c75e5a42b093885a1d35253b456f068ff0ab922d1a4763f09\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118\",\"target\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"targetLabel\":\"alpha\",\"relation\":\"calls\",\"resolution\":\"heuristic\",\"evidenceIds\":[\"e1520f2b973ecdc0f4d667f86041164db8a2b19c909f11124c376b13fdd3a539\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ],
+      [
+        "b08935e27c140ca7e86c2631c78ff32de61a565e60a7881f53bbbd42532c4842",
+        "386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55",
+        null,
+        "{\"id\":\"cfeea2d83f17b7b3fae6705561ddeeec62a982c9bb1386da8cdfa1df01f9f9f1\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"b08935e27c140ca7e86c2631c78ff32de61a565e60a7881f53bbbd42532c4842\",\"target\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"targetLabel\":\"owned.rs:function:15\",\"relation\":\"contains\",\"resolution\":\"syntactic\",\"evidenceIds\":[\"b15800570f8743b49cfd940ba600f18f9599f397adf2bee97904c0c7da27f3b7\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ],
+      [
+        "386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55",
+        null,
+        "true",
+        "{\"id\":\"a75d528dc9fe69de6534521ca4631659390edae32e44c49aec84e6598b661df7\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"target\":null,\"targetLabel\":\"missing\",\"relation\":\"calls\",\"resolution\":\"unresolved\",\"evidenceIds\":[\"8dc68e0b742800fc47e5280ee70068c35c0735e7a0a7873e405ac8efea88df0d\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ],
+      [
+        "386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55",
+        "ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118",
+        null,
+        "{\"id\":\"e6d4d54c4002ee005446711eebd0f7c23199b09fb8c1fcd1683640e58ba511dd\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"target\":\"ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118\",\"targetLabel\":\"beta\",\"relation\":\"calls\",\"resolution\":\"heuristic\",\"evidenceIds\":[\"e51982c7955b96726898d882583fd20ceda9a5490ed6b0cda2a248d865d384aa\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ],
+      [
+        "b08935e27c140ca7e86c2631c78ff32de61a565e60a7881f53bbbd42532c4842",
+        "ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118",
+        null,
+        "{\"id\":\"82a43fc4d0c24d4dc1f7c05b8b90eaf5c5dcf5e38104ce0d38dbfab0714ac8e6\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"b08935e27c140ca7e86c2631c78ff32de61a565e60a7881f53bbbd42532c4842\",\"target\":\"ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118\",\"targetLabel\":\"owned.rs:function:53\",\"relation\":\"contains\",\"resolution\":\"syntactic\",\"evidenceIds\":[\"1ea3316bf82d352432ce807c44bc7a01c34b94bcce4097f9059ac6b8ba988154\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 5.524812 milliseconds",
+      "Graph version: 10"
+    ]
+  ],
+  "plain-same-journal-no-resend": [
+    [
+      "s.lockCounter"
+    ],
+    [
+      [
+        1
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 0.530677 milliseconds",
+      "Graph version: 10"
+    ]
+  ],
+  "plain-insert-owned-count-conflict": [
+    [
+      "Nodes created: 1",
+      "Properties set: 3",
+      "Cached execution: 0",
+      "Query internal execution time: 9.883816 milliseconds",
+      "Graph version: 12"
+    ]
+  ],
+  "plain-count-conflict-counter-unchanged": [
+    [
+      "s.lockCounter"
+    ],
+    [
+      [
+        2
+      ]
+    ],
+    [
+      "Cached execution: 1",
+      "Query internal execution time: 0.335960 milliseconds",
+      "Graph version: 12"
+    ]
+  ],
+  "plain-remove-only-owned-count-extra": [
+    [
+      "Nodes deleted: 1",
+      "Cached execution: 0",
+      "Query internal execution time: 15.397898 milliseconds",
+      "Graph version: 13"
+    ]
+  ],
+  "tls-original-elements": [
+    [
+      "n.category",
+      "n.rowJson"
+    ],
+    [
+      [
+        "entity",
+        "{\"endByte\":74,\"endLine\":3,\"id\":\"b08935e27c140ca7e86c2631c78ff32de61a565e60a7881f53bbbd42532c4842\",\"key\":\"owned.rs:file:0\",\"kind\":\"file\",\"language\":\"rust\",\"name\":\"owned.rs\",\"nameEndByte\":null,\"nameStartByte\":null,\"parentKey\":null,\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"qualifiedName\":\"owned.rs\",\"signature\":\"owned.rs [rust]\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":0,\"startLine\":1}"
+      ],
+      [
+        "entity",
+        "{\"endByte\":51,\"endLine\":2,\"id\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"key\":\"owned.rs:function:15\",\"kind\":\"function\",\"language\":\"rust\",\"name\":\"alpha\",\"nameEndByte\":23,\"nameStartByte\":18,\"parentKey\":\"owned.rs:file:0\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"qualifiedName\":\"owned.rs/alpha\",\"signature\":\"fn alpha()\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":15,\"startLine\":2}"
+      ],
+      [
+        "entity",
+        "{\"endByte\":72,\"endLine\":3,\"id\":\"ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118\",\"key\":\"owned.rs:function:53\",\"kind\":\"function\",\"language\":\"rust\",\"name\":\"beta\",\"nameEndByte\":60,\"nameStartByte\":56,\"parentKey\":\"owned.rs:file:0\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"qualifiedName\":\"owned.rs/beta\",\"signature\":\"fn beta()\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":53,\"startLine\":3}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":51,\"endLine\":2,\"id\":\"b15800570f8743b49cfd940ba600f18f9599f397adf2bee97904c0c7da27f3b7\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":15,\"startLine\":2,\"trust\":\"source-data\"}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":32,\"endLine\":2,\"id\":\"dab640bf0ae32de7b9c16fd4bf398dbaa07688621ac6cf1f5ae7952c45ae9111\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":26,\"startLine\":2,\"trust\":\"source-data\"}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":39,\"endLine\":2,\"id\":\"e51982c7955b96726898d882583fd20ceda9a5490ed6b0cda2a248d865d384aa\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":33,\"startLine\":2,\"trust\":\"source-data\"}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":49,\"endLine\":2,\"id\":\"8dc68e0b742800fc47e5280ee70068c35c0735e7a0a7873e405ac8efea88df0d\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":40,\"startLine\":2,\"trust\":\"source-data\"}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":72,\"endLine\":3,\"id\":\"1ea3316bf82d352432ce807c44bc7a01c34b94bcce4097f9059ac6b8ba988154\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":53,\"startLine\":3,\"trust\":\"source-data\"}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":70,\"endLine\":3,\"id\":\"e1520f2b973ecdc0f4d667f86041164db8a2b19c909f11124c376b13fdd3a539\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":63,\"startLine\":3,\"trust\":\"source-data\"}"
+      ],
+      [
+        "unresolved",
+        "{\"observationId\":\"a75d528dc9fe69de6534521ca4631659390edae32e44c49aec84e6598b661df7\",\"sourceTargetWasNull\":true,\"targetLabel\":\"missing\"}"
+      ],
+      [
+        "revision",
+        "{\"complete\":false,\"coverage\":{\"exhaustive\":false,\"indexedFiles\":1,\"languages\":{\"rust\":1},\"limitations\":[\"Structural candidate resolution is not compiler binding or exhaustive runtime coverage.\",\"Unsupported text formats have full-text search but no AST semantics. Binary/media files are explicitly omitted.\",\"Lexical/import/receiver bindings are syntax-local candidates. Parallel targets preserve possible dispatch; dynamic assignment, dependencies and runtime targets remain nonexhaustive.\"],\"omissions\":0,\"semantic\":false,\"sourceFiles\":1,\"unresolved\":1},\"diagnostics\":[],\"entityCount\":3,\"evidenceCount\":6,\"graphHash\":\"6209c7ed5b5738455a7d631c362e98f408d1c79c770727302306a234f989bf1f\",\"observationCount\":6,\"payloadHash\":\"bbea06c21f91d3d6fb37247cde041547f3e16448eac454acff3074cfdd4e6533\",\"schemaVersion\":1,\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"sourceAuthority\":false,\"sourceClaimsAttested\":false,\"sourceFiles\":[{\"hash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"language\":\"rust\",\"mode\":420,\"path\":\"owned.rs\",\"size\":74}],\"unresolvedCount\":1,\"workspaceId\":\"a207066e57441ebab3fbe799b5bef8cfde660e37884f263cfbec8961b678b1dd\"}"
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 0.694959 milliseconds",
+      "Graph version: 10"
+    ]
+  ],
+  "tls-original-observations": [
+    [
+      "a.sourceId",
+      "b.sourceId",
+      "b.sourceTargetWasNull",
+      "r.rowJson"
+    ],
+    [
+      [
+        "386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55",
+        "ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118",
+        null,
+        "{\"id\":\"e6d4d54c4002ee005446711eebd0f7c23199b09fb8c1fcd1683640e58ba511dd\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"target\":\"ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118\",\"targetLabel\":\"beta\",\"relation\":\"calls\",\"resolution\":\"heuristic\",\"evidenceIds\":[\"e51982c7955b96726898d882583fd20ceda9a5490ed6b0cda2a248d865d384aa\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ],
+      [
+        "386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55",
+        null,
+        "true",
+        "{\"id\":\"a75d528dc9fe69de6534521ca4631659390edae32e44c49aec84e6598b661df7\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"target\":null,\"targetLabel\":\"missing\",\"relation\":\"calls\",\"resolution\":\"unresolved\",\"evidenceIds\":[\"8dc68e0b742800fc47e5280ee70068c35c0735e7a0a7873e405ac8efea88df0d\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ],
+      [
+        "b08935e27c140ca7e86c2631c78ff32de61a565e60a7881f53bbbd42532c4842",
+        "ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118",
+        null,
+        "{\"id\":\"82a43fc4d0c24d4dc1f7c05b8b90eaf5c5dcf5e38104ce0d38dbfab0714ac8e6\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"b08935e27c140ca7e86c2631c78ff32de61a565e60a7881f53bbbd42532c4842\",\"target\":\"ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118\",\"targetLabel\":\"owned.rs:function:53\",\"relation\":\"contains\",\"resolution\":\"syntactic\",\"evidenceIds\":[\"1ea3316bf82d352432ce807c44bc7a01c34b94bcce4097f9059ac6b8ba988154\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ],
+      [
+        "b08935e27c140ca7e86c2631c78ff32de61a565e60a7881f53bbbd42532c4842",
+        "386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55",
+        null,
+        "{\"id\":\"cfeea2d83f17b7b3fae6705561ddeeec62a982c9bb1386da8cdfa1df01f9f9f1\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"b08935e27c140ca7e86c2631c78ff32de61a565e60a7881f53bbbd42532c4842\",\"target\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"targetLabel\":\"owned.rs:function:15\",\"relation\":\"contains\",\"resolution\":\"syntactic\",\"evidenceIds\":[\"b15800570f8743b49cfd940ba600f18f9599f397adf2bee97904c0c7da27f3b7\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ],
+      [
+        "ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118",
+        "386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55",
+        null,
+        "{\"id\":\"a45bc62cbf2a4f3c75e5a42b093885a1d35253b456f068ff0ab922d1a4763f09\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118\",\"target\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"targetLabel\":\"alpha\",\"relation\":\"calls\",\"resolution\":\"heuristic\",\"evidenceIds\":[\"e1520f2b973ecdc0f4d667f86041164db8a2b19c909f11124c376b13fdd3a539\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ],
+      [
+        "386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55",
+        "ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118",
+        null,
+        "{\"id\":\"613a86c5c8eeb8899c764ea650a8db60291e58f8d56b880fee5b55d0ca68ecfa\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"target\":\"ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118\",\"targetLabel\":\"beta\",\"relation\":\"calls\",\"resolution\":\"heuristic\",\"evidenceIds\":[\"dab640bf0ae32de7b9c16fd4bf398dbaa07688621ac6cf1f5ae7952c45ae9111\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 1.639697 milliseconds",
+      "Graph version: 10"
+    ]
+  ],
+  "tls-same-journal-no-resend": [
+    [
+      "s.lockCounter"
+    ],
+    [
+      [
+        1
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 0.240349 milliseconds",
+      "Graph version: 10"
+    ]
+  ],
+  "tls-insert-owned-count-conflict": [
+    [
+      "Nodes created: 1",
+      "Properties set: 3",
+      "Cached execution: 0",
+      "Query internal execution time: 1.786408 milliseconds",
+      "Graph version: 12"
+    ]
+  ],
+  "tls-count-conflict-counter-unchanged": [
+    [
+      "s.lockCounter"
+    ],
+    [
+      [
+        2
+      ]
+    ],
+    [
+      "Cached execution: 1",
+      "Query internal execution time: 0.164950 milliseconds",
+      "Graph version: 12"
+    ]
+  ],
+  "tls-remove-only-owned-count-extra": [
+    [
+      "Nodes deleted: 1",
+      "Cached execution: 0",
+      "Query internal execution time: 1.141038 milliseconds",
+      "Graph version: 13"
+    ]
+  ],
+  "proxy-original-elements": [
+    [
+      "n.category",
+      "n.rowJson"
+    ],
+    [
+      [
+        "entity",
+        "{\"endByte\":74,\"endLine\":3,\"id\":\"b08935e27c140ca7e86c2631c78ff32de61a565e60a7881f53bbbd42532c4842\",\"key\":\"owned.rs:file:0\",\"kind\":\"file\",\"language\":\"rust\",\"name\":\"owned.rs\",\"nameEndByte\":null,\"nameStartByte\":null,\"parentKey\":null,\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"qualifiedName\":\"owned.rs\",\"signature\":\"owned.rs [rust]\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":0,\"startLine\":1}"
+      ],
+      [
+        "entity",
+        "{\"endByte\":51,\"endLine\":2,\"id\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"key\":\"owned.rs:function:15\",\"kind\":\"function\",\"language\":\"rust\",\"name\":\"alpha\",\"nameEndByte\":23,\"nameStartByte\":18,\"parentKey\":\"owned.rs:file:0\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"qualifiedName\":\"owned.rs/alpha\",\"signature\":\"fn alpha()\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":15,\"startLine\":2}"
+      ],
+      [
+        "entity",
+        "{\"endByte\":72,\"endLine\":3,\"id\":\"ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118\",\"key\":\"owned.rs:function:53\",\"kind\":\"function\",\"language\":\"rust\",\"name\":\"beta\",\"nameEndByte\":60,\"nameStartByte\":56,\"parentKey\":\"owned.rs:file:0\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"qualifiedName\":\"owned.rs/beta\",\"signature\":\"fn beta()\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":53,\"startLine\":3}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":51,\"endLine\":2,\"id\":\"b15800570f8743b49cfd940ba600f18f9599f397adf2bee97904c0c7da27f3b7\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":15,\"startLine\":2,\"trust\":\"source-data\"}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":32,\"endLine\":2,\"id\":\"dab640bf0ae32de7b9c16fd4bf398dbaa07688621ac6cf1f5ae7952c45ae9111\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":26,\"startLine\":2,\"trust\":\"source-data\"}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":39,\"endLine\":2,\"id\":\"e51982c7955b96726898d882583fd20ceda9a5490ed6b0cda2a248d865d384aa\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":33,\"startLine\":2,\"trust\":\"source-data\"}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":49,\"endLine\":2,\"id\":\"8dc68e0b742800fc47e5280ee70068c35c0735e7a0a7873e405ac8efea88df0d\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":40,\"startLine\":2,\"trust\":\"source-data\"}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":72,\"endLine\":3,\"id\":\"1ea3316bf82d352432ce807c44bc7a01c34b94bcce4097f9059ac6b8ba988154\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":53,\"startLine\":3,\"trust\":\"source-data\"}"
+      ],
+      [
+        "evidence",
+        "{\"anchor\":\"exact\",\"contentHash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"endByte\":70,\"endLine\":3,\"id\":\"e1520f2b973ecdc0f4d667f86041164db8a2b19c909f11124c376b13fdd3a539\",\"path\":\"owned.rs\",\"producer\":\"yoke-tree-sitter-8\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"startByte\":63,\"startLine\":3,\"trust\":\"source-data\"}"
+      ],
+      [
+        "unresolved",
+        "{\"observationId\":\"a75d528dc9fe69de6534521ca4631659390edae32e44c49aec84e6598b661df7\",\"sourceTargetWasNull\":true,\"targetLabel\":\"missing\"}"
+      ],
+      [
+        "revision",
+        "{\"complete\":false,\"coverage\":{\"exhaustive\":false,\"indexedFiles\":1,\"languages\":{\"rust\":1},\"limitations\":[\"Structural candidate resolution is not compiler binding or exhaustive runtime coverage.\",\"Unsupported text formats have full-text search but no AST semantics. Binary/media files are explicitly omitted.\",\"Lexical/import/receiver bindings are syntax-local candidates. Parallel targets preserve possible dispatch; dynamic assignment, dependencies and runtime targets remain nonexhaustive.\"],\"omissions\":0,\"semantic\":false,\"sourceFiles\":1,\"unresolved\":1},\"diagnostics\":[],\"entityCount\":3,\"evidenceCount\":6,\"graphHash\":\"6209c7ed5b5738455a7d631c362e98f408d1c79c770727302306a234f989bf1f\",\"observationCount\":6,\"payloadHash\":\"bbea06c21f91d3d6fb37247cde041547f3e16448eac454acff3074cfdd4e6533\",\"schemaVersion\":1,\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"sourceAuthority\":false,\"sourceClaimsAttested\":false,\"sourceFiles\":[{\"hash\":\"63464d15b77ec3e468a07639b845fa518c765706f9b5f507b769e9bb8049f506\",\"language\":\"rust\",\"mode\":420,\"path\":\"owned.rs\",\"size\":74}],\"unresolvedCount\":1,\"workspaceId\":\"a207066e57441ebab3fbe799b5bef8cfde660e37884f263cfbec8961b678b1dd\"}"
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 0.402620 milliseconds",
+      "Graph version: 10"
+    ]
+  ],
+  "proxy-original-observations": [
+    [
+      "a.sourceId",
+      "b.sourceId",
+      "b.sourceTargetWasNull",
+      "r.rowJson"
+    ],
+    [
+      [
+        "b08935e27c140ca7e86c2631c78ff32de61a565e60a7881f53bbbd42532c4842",
+        "386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55",
+        null,
+        "{\"id\":\"cfeea2d83f17b7b3fae6705561ddeeec62a982c9bb1386da8cdfa1df01f9f9f1\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"b08935e27c140ca7e86c2631c78ff32de61a565e60a7881f53bbbd42532c4842\",\"target\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"targetLabel\":\"owned.rs:function:15\",\"relation\":\"contains\",\"resolution\":\"syntactic\",\"evidenceIds\":[\"b15800570f8743b49cfd940ba600f18f9599f397adf2bee97904c0c7da27f3b7\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ],
+      [
+        "386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55",
+        "ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118",
+        null,
+        "{\"id\":\"e6d4d54c4002ee005446711eebd0f7c23199b09fb8c1fcd1683640e58ba511dd\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"target\":\"ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118\",\"targetLabel\":\"beta\",\"relation\":\"calls\",\"resolution\":\"heuristic\",\"evidenceIds\":[\"e51982c7955b96726898d882583fd20ceda9a5490ed6b0cda2a248d865d384aa\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ],
+      [
+        "386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55",
+        "ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118",
+        null,
+        "{\"id\":\"613a86c5c8eeb8899c764ea650a8db60291e58f8d56b880fee5b55d0ca68ecfa\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"target\":\"ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118\",\"targetLabel\":\"beta\",\"relation\":\"calls\",\"resolution\":\"heuristic\",\"evidenceIds\":[\"dab640bf0ae32de7b9c16fd4bf398dbaa07688621ac6cf1f5ae7952c45ae9111\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ],
+      [
+        "ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118",
+        "386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55",
+        null,
+        "{\"id\":\"a45bc62cbf2a4f3c75e5a42b093885a1d35253b456f068ff0ab922d1a4763f09\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118\",\"target\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"targetLabel\":\"alpha\",\"relation\":\"calls\",\"resolution\":\"heuristic\",\"evidenceIds\":[\"e1520f2b973ecdc0f4d667f86041164db8a2b19c909f11124c376b13fdd3a539\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ],
+      [
+        "b08935e27c140ca7e86c2631c78ff32de61a565e60a7881f53bbbd42532c4842",
+        "ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118",
+        null,
+        "{\"id\":\"82a43fc4d0c24d4dc1f7c05b8b90eaf5c5dcf5e38104ce0d38dbfab0714ac8e6\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"b08935e27c140ca7e86c2631c78ff32de61a565e60a7881f53bbbd42532c4842\",\"target\":\"ed3081ca5dc9045abce1ab644b8fde774a058bab9421eaacf5e3994400b39118\",\"targetLabel\":\"owned.rs:function:53\",\"relation\":\"contains\",\"resolution\":\"syntactic\",\"evidenceIds\":[\"1ea3316bf82d352432ce807c44bc7a01c34b94bcce4097f9059ac6b8ba988154\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ],
+      [
+        "386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55",
+        null,
+        "true",
+        "{\"id\":\"a75d528dc9fe69de6534521ca4631659390edae32e44c49aec84e6598b661df7\",\"snapshotId\":\"7f1d4a79c84224433a962f9e37319467162ba1a08f2c39fc969909d452f52e6e\",\"source\":\"386da91f5065195c1ee7ca9929ee905050a2293939bed6bb718922f49a658e55\",\"target\":null,\"targetLabel\":\"missing\",\"relation\":\"calls\",\"resolution\":\"unresolved\",\"evidenceIds\":[\"8dc68e0b742800fc47e5280ee70068c35c0735e7a0a7873e405ac8efea88df0d\"],\"producer\":\"yoke-tree-sitter-8\"}"
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 1.586928 milliseconds",
+      "Graph version: 10"
+    ]
+  ],
+  "proxy-same-journal-no-resend": [
+    [
+      "s.lockCounter"
+    ],
+    [
+      [
+        1
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 0.207860 milliseconds",
+      "Graph version: 10"
+    ]
+  ],
+  "proxy-insert-owned-count-conflict": [
+    [
+      "Nodes created: 1",
+      "Properties set: 3",
+      "Cached execution: 0",
+      "Query internal execution time: 1.715496 milliseconds",
+      "Graph version: 12"
+    ]
+  ],
+  "proxy-count-conflict-counter-unchanged": [
+    [
+      "s.lockCounter"
+    ],
+    [
+      [
+        2
+      ]
+    ],
+    [
+      "Cached execution: 1",
+      "Query internal execution time: 0.239860 milliseconds",
+      "Graph version: 12"
+    ]
+  ],
+  "proxy-remove-only-owned-count-extra": [
+    [
+      "Nodes deleted: 1",
+      "Cached execution: 0",
+      "Query internal execution time: 1.458948 milliseconds",
+      "Graph version: 13"
+    ]
+  ],
+  "race-final-state": [
+    [
+      "s.activeRevision",
+      "s.lockCounter",
+      "nodes",
+      "edges"
+    ],
+    [
+      [
+        "1c1102894aa72d189649bd910a594afafd93e47de35c38d6b203ef6ee4d7678c",
+        3,
+        0,
+        0
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 1.410588 milliseconds",
+      "Graph version: 14"
+    ]
+  ],
+  "insert-owned-wrong-index": [
+    [
+      "Indices created: 1",
+      "Cached execution: 0",
+      "Query internal execution time: 0.748199 milliseconds",
+      "Graph version: 15"
+    ]
+  ],
+  "wrong-schema-preserved": [
+    [
+      "label",
+      "property"
+    ],
+    [
+      [
+        "YOKE_NATIVE_OBSERVATION",
+        "key"
+      ],
+      [
+        "YOKE_NATIVE_OBSERVATION",
+        "revisionId"
+      ],
+      [
+        "YokeNativeElement",
+        "key"
+      ],
+      [
+        "YokeNativeElement",
+        "revisionId"
+      ],
+      [
+        "YokeNativeElement",
+        "wrongProperty"
+      ],
+      [
+        "YokeNativeScope",
+        "key"
+      ]
+    ],
+    [
+      "Cached execution: 0",
+      "Query internal execution time: 3.175213 milliseconds",
+      "Graph version: 15"
+    ]
+  ]
+}

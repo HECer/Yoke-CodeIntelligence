@@ -1,5 +1,22 @@
 # Quick start
 
+## Native Rust executable
+
+Build with Rust 1.94.1 or newer: `cargo build --workspace --release --locked -j 2`. Use `target/release/yoke.exe` on Windows or `target/release/yoke` on Unix. A portable archive can be built with `python scripts/package-native.py --skip-build --fetch-missing-licenses`; its default runtime requires no Node, Python or upstream application.
+
+```sh
+./target/release/yoke --root examples/demo index
+./target/release/yoke --root examples/demo find invoice
+./target/release/yoke --root examples/demo read src/invoice.ts
+./target/release/yoke --root examples/demo context invoice
+./target/release/yoke --root examples/demo export --format html
+./target/release/yoke --root examples/demo serve
+```
+
+The Rust state directory is `.yoke`; it contains immutable source copies and recovery journals. It is separate from TypeScript `.code-intelligence` state. Snapshot IDs are runtime-specific. Review [native guidance](../native/README.md) before configuring semantic servers or applying changes. Advanced TypeScript operations below remain available during migration.
+
+For the native Windows distribution, unpack the portable ZIP and run `yoke.exe --help`, or install the matching `win32-x64.vsix` with `code --install-extension PACKAGE.vsix`. The native VSIX includes the executable and defaults to Rust; no Node installation is required for its runtime. VS Code itself supplies the JavaScript extension host. Semantic servers remain separate host-selected executables. The package license inventory and [validation record](validation/native-rust.json) describe the exact tested build.
+
 ## Source checkout or supplied source archive
 
 Use Node 22.16+ and Git. Run `npm ci`, `npm run build`, then `node dist/cli.js --help`.
@@ -46,10 +63,10 @@ Optional UI checks require Python Playwright and Chromium. `python scripts/brows
 
 `examples/monorepo` contains an inherited base config, a solution config and two referenced packages. Index it, search `subtotal`, then verify it as shown in its README. Use [configured-project guidance](CONFIGURED-PROJECTS.md) for context filtering and opt-in installed LSP servers. Upgrading changes the analysis version in newly captured snapshots; re-index after upgrading rather than assuming an old explicit snapshot was rebuilt.
 
-## Ready-to-run archive
+## Earlier TypeScript runtime archive
 
 The runtime archive includes compiled JavaScript and the TypeScript runtime package. It does not include Node.js itself. Run `node dist/cli.js --help`, `node scripts/configured-smoke.mjs` or `node scripts/run-tests.mjs` directly; `npm test` is the source-build entry point and needs development dependencies. Additional native semantic/media providers require the documented local Python/Go tools.
 
 ## Advanced v0.3.0 workflows
 
-See [advanced operations](ADVANCED.md) for unsaved editor overlays, optional semantic providers, in-memory solution builds, retention, contracts, per-selection coverage and local model adapters. See [federation](FEDERATION.md) for signed source snapshots and host-managed grants. The supplied VSIX bundles the runtime but still needs an externally installed Node 22.16+ executable; it is not a verified VS Code extension-host run.
+See [advanced operations](ADVANCED.md) for unsaved editor overlays, optional semantic providers, in-memory solution builds, retention, contracts, per-selection coverage and local model adapters. See [federation](FEDERATION.md) for the TypeScript signed service. The earlier TypeScript 0.3 VSIX required an externally installed Node 22.16+ executable and lacked a live extension-host gate. The native 0.4 distribution has a separate actual VS Code host test and bundles its Rust executable; the native source-exchange guide is [federation](../native/docs/federation.md).

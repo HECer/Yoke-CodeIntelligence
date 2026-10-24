@@ -1,0 +1,50 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 7.37s
+     Running tests\plan_integrity.rs (target\debug\deps\plan_integrity-ca8ba141e3d85d01.exe)
+
+running 5 tests
+test clearing_saved_test_warnings_cannot_remove_the_host_test_change_gate ... FAILED
+test approved_plan_cannot_change_applied_bytes_after_its_record_is_modified ... FAILED
+test record_key_and_fixed_expiry_cannot_be_changed_without_changing_the_plan_identity ... FAILED
+test recovery_cannot_restore_different_bytes_from_a_modified_saved_plan ... FAILED
+test saved_review_text_must_describe_the_exact_captured_effect_before_approval ... FAILED
+
+failures:
+
+---- clearing_saved_test_warnings_cannot_remove_the_host_test_change_gate stdout ----
+
+thread 'clearing_saved_test_warnings_cannot_remove_the_host_test_change_gate' (10804) panicked at native\tests\plan_integrity.rs:103:5:
+Cleared warning bypassed exact test-change approval
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- approved_plan_cannot_change_applied_bytes_after_its_record_is_modified stdout ----
+
+thread 'approved_plan_cannot_change_applied_bytes_after_its_record_is_modified' (3052) panicked at native\tests\plan_integrity.rs:87:9:
+Changed saved effect reused approval: accepted=true, original_unchanged=false
+
+---- record_key_and_fixed_expiry_cannot_be_changed_without_changing_the_plan_identity stdout ----
+
+thread 'record_key_and_fixed_expiry_cannot_be_changed_without_changing_the_plan_identity' (2828) panicked at native\tests\plan_integrity.rs:133:9:
+Unbound plan id was accepted
+
+---- recovery_cannot_restore_different_bytes_from_a_modified_saved_plan stdout ----
+
+thread 'recovery_cannot_restore_different_bytes_from_a_modified_saved_plan' (14616) panicked at native\tests\plan_integrity.rs:151:5:
+Recovery consumed changed plan: accepted=true, reviewed_unchanged=false
+
+---- saved_review_text_must_describe_the_exact_captured_effect_before_approval stdout ----
+
+thread 'saved_review_text_must_describe_the_exact_captured_effect_before_approval' (19776) panicked at native\tests\plan_integrity.rs:116:5:
+Unbound review text was accepted
+
+
+failures:
+    approved_plan_cannot_change_applied_bytes_after_its_record_is_modified
+    clearing_saved_test_warnings_cannot_remove_the_host_test_change_gate
+    record_key_and_fixed_expiry_cannot_be_changed_without_changing_the_plan_identity
+    recovery_cannot_restore_different_bytes_from_a_modified_saved_plan
+    saved_review_text_must_describe_the_exact_captured_effect_before_approval
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.23s
+
+error: test failed, to rerun pass `--test plan_integrity`

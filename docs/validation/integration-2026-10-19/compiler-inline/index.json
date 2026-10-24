@@ -1,0 +1,782 @@
+{
+  "schemaVersion": 1,
+  "kind": "native-immutable-compiler-inline",
+  "sourceCommit": "972a8abf9398ccf1c39523fc0668f4db3d9b74eb",
+  "baseIntegration": "83614e989a299eaec5e3809d9105c7dff4fee78a",
+  "scope": [
+    "Explicit host TS5.8.3 function-valued variable inlining on immutable captured files",
+    "Independent initializer/reference/removal/result admission before guarded plan",
+    "Existing session/CLI/facade and independent tsc/apply/recovery gates",
+    "Scoped Windows development evidence; no universal/whole-native/other-platform/release certification"
+  ],
+  "finalPhase": "final-r2",
+  "retainedPhase": "retained-r1",
+  "phases": [
+    {
+      "phase": "compile-r1",
+      "resultPath": "runs/compile-r1/result.json",
+      "allChecksPassed": true,
+      "inputs": 787
+    },
+    {
+      "phase": "feature-r1",
+      "resultPath": "runs/feature-r1/result.json",
+      "allChecksPassed": false,
+      "inputs": 787
+    },
+    {
+      "phase": "feature-r2",
+      "resultPath": "runs/feature-r2/result.json",
+      "allChecksPassed": true,
+      "inputs": 787
+    },
+    {
+      "phase": "feature-r3",
+      "resultPath": "runs/feature-r3/result.json",
+      "allChecksPassed": false,
+      "inputs": 787
+    },
+    {
+      "phase": "feature-r4",
+      "resultPath": "runs/feature-r4/result.json",
+      "allChecksPassed": false,
+      "inputs": 787
+    },
+    {
+      "phase": "feature-r5",
+      "resultPath": "runs/feature-r5/result.json",
+      "allChecksPassed": true,
+      "inputs": 787
+    },
+    {
+      "phase": "final-r1",
+      "resultPath": "runs/final-r1/result.json",
+      "allChecksPassed": false,
+      "inputs": 788
+    },
+    {
+      "phase": "final-r2",
+      "resultPath": "runs/final-r2/result.json",
+      "allChecksPassed": true,
+      "inputs": 788
+    },
+    {
+      "phase": "retained-r1",
+      "resultPath": "runs/retained-r1/result.json",
+      "allChecksPassed": true,
+      "inputs": 783
+    }
+  ],
+  "files": [
+    {
+      "path": "runs/cache-cleanup-reconciliation.json",
+      "bytes": 525,
+      "sha256": "2eae90585c1990d3410fe6cb3b6b1dc7a47512718f3a9c2b10825e78b98ea0b9"
+    },
+    {
+      "path": "runs/cache-cleanup.json",
+      "bytes": 121779,
+      "sha256": "5b52a1dd57a15e6d32e3d1f493a6ae5b6cea1c448cddc127caba915d28bb9a11"
+    },
+    {
+      "path": "runs/cache-cleanup.ps1",
+      "bytes": 3035,
+      "sha256": "231df51403e23f4529fb3ff9d4ba65e5e4bbd985c4997c4d511c8948286eb079"
+    },
+    {
+      "path": "runs/compile-r1/check.log",
+      "bytes": 168,
+      "sha256": "f10fd7b3dc25ae487d198a8e5d76001d46952d16c1845b7c1196229224a08f61"
+    },
+    {
+      "path": "runs/compile-r1/result.json",
+      "bytes": 537,
+      "sha256": "a946526af11d8abcf65c50bf2af32eb8af092a3fab935245349ecae32562573c"
+    },
+    {
+      "path": "runs/compile-r1/runner.py",
+      "bytes": 3275,
+      "sha256": "c6bf02aecf2ee6414a00e2aa3872c6785d749272932ec634c70c254fa522f91a"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/agent_repl.rs",
+      "bytes": 113702,
+      "sha256": "2d6600498bd092961258d2f7f93fa189e5a33f8d114bd8a4de5ec108ee00f361"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/compiler_inline.rs",
+      "bytes": 20617,
+      "sha256": "d5c42a4b9f8fa565dac62d939a91a3f3c0c643e7666cbdb2803dc71acb6c0e53"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/compiler_inline_worker.cjs",
+      "bytes": 8985,
+      "sha256": "a84f2dd812e221138826d23ec2e0668d0247f5e3884bd519d4df932d918e691e"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/compiler_worker.cjs",
+      "bytes": 13005,
+      "sha256": "f16a81fa64e66707874ea6429e2b370a10a4c082424afc574a4d1432e24321da"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/lib.rs",
+      "bytes": 33538,
+      "sha256": "2c875d4fa0ff7258479ced4074e11cf41415b33bc50edaa5e481d020f71a00bd"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/project_session.rs",
+      "bytes": 64718,
+      "sha256": "3b182bb609c812d7b3daf223014a07cc5cd7a1b100ce8908f2998ba4ca9ad483"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/projects.rs",
+      "bytes": 8674,
+      "sha256": "c1c2140e80439e5bfa732658d7b9b494537023ee2915cba2872aff00c4391b6e"
+    },
+    {
+      "path": "runs/compile-r1/source/native/tests/compiler_inline.rs",
+      "bytes": 14495,
+      "sha256": "78e7dc9833f2219a90b63f394d032a63d929754ef9330c8d10c926d32e793def"
+    },
+    {
+      "path": "runs/compile-r1/source-after.json",
+      "bytes": 85346,
+      "sha256": "eb0b69131fbf655132e2734bbdc4e40dda023005e53de8b7824559c5b45e7e64"
+    },
+    {
+      "path": "runs/compile-r1/source-before.json",
+      "bytes": 85346,
+      "sha256": "eb0b69131fbf655132e2734bbdc4e40dda023005e53de8b7824559c5b45e7e64"
+    },
+    {
+      "path": "runs/evidence.py",
+      "bytes": 6225,
+      "sha256": "03fb2e77a3120385a8690b5b8465dca35a5edde28365d67c25d8f86bb0828a54"
+    },
+    {
+      "path": "runs/feature-r1/native.log",
+      "bytes": 2062,
+      "sha256": "bf35ec16e1be34c81e9c544583c4828dd13d2b68f911dc86e75b8868b415b30d"
+    },
+    {
+      "path": "runs/feature-r1/result.json",
+      "bytes": 877,
+      "sha256": "684c498b2ddbc2b0fec40d2756739f0986c2c9e980823420996afb7797ced1d0"
+    },
+    {
+      "path": "runs/feature-r1/runner.py",
+      "bytes": 3275,
+      "sha256": "c6bf02aecf2ee6414a00e2aa3872c6785d749272932ec634c70c254fa522f91a"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/agent_repl.rs",
+      "bytes": 113702,
+      "sha256": "2d6600498bd092961258d2f7f93fa189e5a33f8d114bd8a4de5ec108ee00f361"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_inline.rs",
+      "bytes": 20798,
+      "sha256": "8d25b3afb0032cebaef12276a3b20615c3dc51e683b9d535abac78d4b42fecfe"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_inline_worker.cjs",
+      "bytes": 8978,
+      "sha256": "8e043e8976b1a51119c427ccc88f848d68c243e429eb529494b3baa36d5eb0f3"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_worker.cjs",
+      "bytes": 13005,
+      "sha256": "f16a81fa64e66707874ea6429e2b370a10a4c082424afc574a4d1432e24321da"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/lib.rs",
+      "bytes": 33538,
+      "sha256": "2c875d4fa0ff7258479ced4074e11cf41415b33bc50edaa5e481d020f71a00bd"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/project_session.rs",
+      "bytes": 65293,
+      "sha256": "a7a0ad0ed88fe208944ebcb4ed9f0d4449fa44a7b2a3a521bd8c937d4bc0bb3a"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/projects.rs",
+      "bytes": 8674,
+      "sha256": "c1c2140e80439e5bfa732658d7b9b494537023ee2915cba2872aff00c4391b6e"
+    },
+    {
+      "path": "runs/feature-r1/source/native/tests/compiler_inline.rs",
+      "bytes": 16637,
+      "sha256": "246d2314f7b722b2094704835ec24fcd3f2449c5342a14cbbdfb6a4378d0a9d7"
+    },
+    {
+      "path": "runs/feature-r1/source-after.json",
+      "bytes": 85346,
+      "sha256": "98650561e13366e9e509b654c9e8ab64a2224dd1324ff533acd5c51550a33ac8"
+    },
+    {
+      "path": "runs/feature-r1/source-before.json",
+      "bytes": 85346,
+      "sha256": "98650561e13366e9e509b654c9e8ab64a2224dd1324ff533acd5c51550a33ac8"
+    },
+    {
+      "path": "runs/feature-r2/native.log",
+      "bytes": 56613,
+      "sha256": "ff8e268b475f07cc10d92f16a8ab6b72224825f9d2576a9bc3b098a20e855e9f"
+    },
+    {
+      "path": "runs/feature-r2/result.json",
+      "bytes": 786,
+      "sha256": "adada51b218896b3b301a41bdff1036c6ae75eecb0c62cf388850a74fd9de93a"
+    },
+    {
+      "path": "runs/feature-r2/runner.py",
+      "bytes": 3275,
+      "sha256": "c6bf02aecf2ee6414a00e2aa3872c6785d749272932ec634c70c254fa522f91a"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/agent_repl.rs",
+      "bytes": 113702,
+      "sha256": "2d6600498bd092961258d2f7f93fa189e5a33f8d114bd8a4de5ec108ee00f361"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_inline.rs",
+      "bytes": 25999,
+      "sha256": "465c36972dbbf3e50e2e04cef006507365587db5c80a4ee054cd0cc5f1ad4903"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_inline_worker.cjs",
+      "bytes": 8978,
+      "sha256": "8e043e8976b1a51119c427ccc88f848d68c243e429eb529494b3baa36d5eb0f3"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_worker.cjs",
+      "bytes": 13005,
+      "sha256": "f16a81fa64e66707874ea6429e2b370a10a4c082424afc574a4d1432e24321da"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/lib.rs",
+      "bytes": 33538,
+      "sha256": "2c875d4fa0ff7258479ced4074e11cf41415b33bc50edaa5e481d020f71a00bd"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/project_session.rs",
+      "bytes": 65293,
+      "sha256": "a7a0ad0ed88fe208944ebcb4ed9f0d4449fa44a7b2a3a521bd8c937d4bc0bb3a"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/projects.rs",
+      "bytes": 8674,
+      "sha256": "c1c2140e80439e5bfa732658d7b9b494537023ee2915cba2872aff00c4391b6e"
+    },
+    {
+      "path": "runs/feature-r2/source/native/tests/compiler_inline.rs",
+      "bytes": 16781,
+      "sha256": "7d85fe5ff6c10acd38f84f774a804a31e516e51ba8e7b103a1e26086249f37d3"
+    },
+    {
+      "path": "runs/feature-r2/source-after.json",
+      "bytes": 85346,
+      "sha256": "faea0d71cbf77cc86449521d98fc35deec01d8c8f8543160d8296a2fff0890f3"
+    },
+    {
+      "path": "runs/feature-r2/source-before.json",
+      "bytes": 85346,
+      "sha256": "faea0d71cbf77cc86449521d98fc35deec01d8c8f8543160d8296a2fff0890f3"
+    },
+    {
+      "path": "runs/feature-r3/native.log",
+      "bytes": 2188,
+      "sha256": "eca70e12ab96f0d2b2d4d67e70f23e88d05562c680a3f73d9d7740f6b94308ad"
+    },
+    {
+      "path": "runs/feature-r3/result.json",
+      "bytes": 863,
+      "sha256": "36c1e8a351354e570058f16f1ab2a1aa06bbc03cc34cce54a37393af386037c6"
+    },
+    {
+      "path": "runs/feature-r3/runner.py",
+      "bytes": 3275,
+      "sha256": "c6bf02aecf2ee6414a00e2aa3872c6785d749272932ec634c70c254fa522f91a"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/agent_repl.rs",
+      "bytes": 113702,
+      "sha256": "2d6600498bd092961258d2f7f93fa189e5a33f8d114bd8a4de5ec108ee00f361"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/compiler_inline.rs",
+      "bytes": 32023,
+      "sha256": "9b272f1b3b205fded3e02117f4b7b798ae955068499024ba02091f9bc7881f22"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/compiler_inline_worker.cjs",
+      "bytes": 8978,
+      "sha256": "8e043e8976b1a51119c427ccc88f848d68c243e429eb529494b3baa36d5eb0f3"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/compiler_worker.cjs",
+      "bytes": 13005,
+      "sha256": "f16a81fa64e66707874ea6429e2b370a10a4c082424afc574a4d1432e24321da"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/lib.rs",
+      "bytes": 33538,
+      "sha256": "2c875d4fa0ff7258479ced4074e11cf41415b33bc50edaa5e481d020f71a00bd"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/project_session.rs",
+      "bytes": 65293,
+      "sha256": "da067017932a17e5c6f869205f6c0fc8bbd6a062c5e312961a6e9eb5a2023c8d"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/projects.rs",
+      "bytes": 8674,
+      "sha256": "c1c2140e80439e5bfa732658d7b9b494537023ee2915cba2872aff00c4391b6e"
+    },
+    {
+      "path": "runs/feature-r3/source/native/tests/compiler_inline.rs",
+      "bytes": 19811,
+      "sha256": "777c63793d833085b29012380070dcde592c31f695643e9932b8b0ccee09b74c"
+    },
+    {
+      "path": "runs/feature-r3/source-after.json",
+      "bytes": 85346,
+      "sha256": "842fe86d1e3367f4b01bd5cfff9a28c80417b900097d6874bb59c279349fbbbb"
+    },
+    {
+      "path": "runs/feature-r3/source-before.json",
+      "bytes": 85346,
+      "sha256": "842fe86d1e3367f4b01bd5cfff9a28c80417b900097d6874bb59c279349fbbbb"
+    },
+    {
+      "path": "runs/feature-r4/native.log",
+      "bytes": 2416,
+      "sha256": "ab47e61a646e404e6e3d8aa1260ec99eb46d598ef776101995ec59bdf777b520"
+    },
+    {
+      "path": "runs/feature-r4/result.json",
+      "bytes": 864,
+      "sha256": "77fda1aff2df44560f092790e6cc34c4c8f57841e3fce9851cd1677ca338c341"
+    },
+    {
+      "path": "runs/feature-r4/runner.py",
+      "bytes": 3275,
+      "sha256": "c6bf02aecf2ee6414a00e2aa3872c6785d749272932ec634c70c254fa522f91a"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/agent_repl.rs",
+      "bytes": 113702,
+      "sha256": "2d6600498bd092961258d2f7f93fa189e5a33f8d114bd8a4de5ec108ee00f361"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/compiler_inline.rs",
+      "bytes": 32879,
+      "sha256": "0c7d589140a1525ee8eb3ffda8c7bc1bc8ebcac8b75cf653c3b8eaaca4d1c22f"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/compiler_inline_worker.cjs",
+      "bytes": 9204,
+      "sha256": "7e7bd535f009a69001540ce01ed745cee9d1d9f6a97051b3790d2332852643b5"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/compiler_worker.cjs",
+      "bytes": 13005,
+      "sha256": "f16a81fa64e66707874ea6429e2b370a10a4c082424afc574a4d1432e24321da"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/lib.rs",
+      "bytes": 33538,
+      "sha256": "2c875d4fa0ff7258479ced4074e11cf41415b33bc50edaa5e481d020f71a00bd"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/project_session.rs",
+      "bytes": 66144,
+      "sha256": "b9fa4f351f589577932e4ba3f26028a44fbf015ba5a8880e9ed5589eca66f390"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/projects.rs",
+      "bytes": 8674,
+      "sha256": "c1c2140e80439e5bfa732658d7b9b494537023ee2915cba2872aff00c4391b6e"
+    },
+    {
+      "path": "runs/feature-r4/source/native/tests/compiler_inline.rs",
+      "bytes": 22313,
+      "sha256": "d243da2970cc6167a53c3c19eb6fdfaf22694246ab537600fa4ee2d1f9d17ba9"
+    },
+    {
+      "path": "runs/feature-r4/source-after.json",
+      "bytes": 85346,
+      "sha256": "b32b1017c3e5ed89dc1cee58074f0d8a36cd7f38dcfe2df292a2637cb480f177"
+    },
+    {
+      "path": "runs/feature-r4/source-before.json",
+      "bytes": 85346,
+      "sha256": "b32b1017c3e5ed89dc1cee58074f0d8a36cd7f38dcfe2df292a2637cb480f177"
+    },
+    {
+      "path": "runs/feature-r5/native.log",
+      "bytes": 1842,
+      "sha256": "7f7de5cadac65a71192b6ac33f47c83094b595aaaa0c0a787be7f08cae144a63"
+    },
+    {
+      "path": "runs/feature-r5/result.json",
+      "bytes": 768,
+      "sha256": "274e3813c0e8c9dbdb7aead2141e633482a26f1fa7fb934c0c03bbea756bf411"
+    },
+    {
+      "path": "runs/feature-r5/runner.py",
+      "bytes": 3275,
+      "sha256": "c6bf02aecf2ee6414a00e2aa3872c6785d749272932ec634c70c254fa522f91a"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/agent_repl.rs",
+      "bytes": 113702,
+      "sha256": "2d6600498bd092961258d2f7f93fa189e5a33f8d114bd8a4de5ec108ee00f361"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/compiler_inline.rs",
+      "bytes": 32879,
+      "sha256": "0c7d589140a1525ee8eb3ffda8c7bc1bc8ebcac8b75cf653c3b8eaaca4d1c22f"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/compiler_inline_worker.cjs",
+      "bytes": 9489,
+      "sha256": "a5c7b4bc952f82afc5fd9c0705d0dfee00e6395398e8ae23e3039f2039e38697"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/compiler_worker.cjs",
+      "bytes": 13005,
+      "sha256": "f16a81fa64e66707874ea6429e2b370a10a4c082424afc574a4d1432e24321da"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/lib.rs",
+      "bytes": 33538,
+      "sha256": "2c875d4fa0ff7258479ced4074e11cf41415b33bc50edaa5e481d020f71a00bd"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/project_session.rs",
+      "bytes": 66144,
+      "sha256": "b9fa4f351f589577932e4ba3f26028a44fbf015ba5a8880e9ed5589eca66f390"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/projects.rs",
+      "bytes": 8674,
+      "sha256": "c1c2140e80439e5bfa732658d7b9b494537023ee2915cba2872aff00c4391b6e"
+    },
+    {
+      "path": "runs/feature-r5/source/native/tests/compiler_inline.rs",
+      "bytes": 23978,
+      "sha256": "59fa07379e5132578aea262940ab358e92d83c97ad27dd56bd1cce5bbdb859c8"
+    },
+    {
+      "path": "runs/feature-r5/source-after.json",
+      "bytes": 85346,
+      "sha256": "02022ba02a3feaa0a44db24f97afd32a52db72456a26b90ac46e68512132d79f"
+    },
+    {
+      "path": "runs/feature-r5/source-before.json",
+      "bytes": 85346,
+      "sha256": "02022ba02a3feaa0a44db24f97afd32a52db72456a26b90ac46e68512132d79f"
+    },
+    {
+      "path": "runs/final-r1/build.log",
+      "bytes": 60,
+      "sha256": "8f7e4ceb00df5dc62ca3b6026179a489fafc4ebb4e806d47a516480d2351c06f"
+    },
+    {
+      "path": "runs/final-r1/clippy.log",
+      "bytes": 168,
+      "sha256": "c0475bf801460aa1d992f32264d2f7657cf2ca232ef48b46cb3f18009fae7fe9"
+    },
+    {
+      "path": "runs/final-r1/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/final-r1/native.log",
+      "bytes": 16215,
+      "sha256": "5790bcd12fdbd5c0ec36a53aedc6f0f5a95bbb2138713378de166d8fc3723a7a"
+    },
+    {
+      "path": "runs/final-r1/result.json",
+      "bytes": 2378,
+      "sha256": "7eb45f6030c096b6a6607ba8a153945f9aa330c13bb6d7580281f8e0bbaef126"
+    },
+    {
+      "path": "runs/final-r1/runner.py",
+      "bytes": 3275,
+      "sha256": "c6bf02aecf2ee6414a00e2aa3872c6785d749272932ec634c70c254fa522f91a"
+    },
+    {
+      "path": "runs/final-r1/source/native/docs/agent-sessions.md",
+      "bytes": 15390,
+      "sha256": "a2f579113c97004e090ec26db599a607408abfe4f47c5b59f8551fcb971165d0"
+    },
+    {
+      "path": "runs/final-r1/source/native/docs/compiler-inline.md",
+      "bytes": 6871,
+      "sha256": "cfc81a5279a854c138dc029759a8f21a1042be7e1eec3a6f4224967994a91163"
+    },
+    {
+      "path": "runs/final-r1/source/native/docs/compiler.md",
+      "bytes": 4255,
+      "sha256": "1902db6ae6ed0e331c1a38519fe2ff465ea83577741a5b54262aac74c1f18249"
+    },
+    {
+      "path": "runs/final-r1/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 20542,
+      "sha256": "14ddb0447fe7ed06fddb35945cf6de8b6e8040b47267d405d20594f77c7fd6c4"
+    },
+    {
+      "path": "runs/final-r1/source/native/README.md",
+      "bytes": 29207,
+      "sha256": "7cd5d02efaafdbe90f852fd799e36382d647bf814297ed357e028caf418c1e0d"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/agent_repl.rs",
+      "bytes": 113702,
+      "sha256": "2d6600498bd092961258d2f7f93fa189e5a33f8d114bd8a4de5ec108ee00f361"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_inline.rs",
+      "bytes": 32879,
+      "sha256": "0c7d589140a1525ee8eb3ffda8c7bc1bc8ebcac8b75cf653c3b8eaaca4d1c22f"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_inline_worker.cjs",
+      "bytes": 9489,
+      "sha256": "a5c7b4bc952f82afc5fd9c0705d0dfee00e6395398e8ae23e3039f2039e38697"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_worker.cjs",
+      "bytes": 13005,
+      "sha256": "f16a81fa64e66707874ea6429e2b370a10a4c082424afc574a4d1432e24321da"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/lib.rs",
+      "bytes": 33538,
+      "sha256": "2c875d4fa0ff7258479ced4074e11cf41415b33bc50edaa5e481d020f71a00bd"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/project_session.rs",
+      "bytes": 66144,
+      "sha256": "b9fa4f351f589577932e4ba3f26028a44fbf015ba5a8880e9ed5589eca66f390"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/projects.rs",
+      "bytes": 8674,
+      "sha256": "c1c2140e80439e5bfa732658d7b9b494537023ee2915cba2872aff00c4391b6e"
+    },
+    {
+      "path": "runs/final-r1/source/native/tests/compiler_inline.rs",
+      "bytes": 23978,
+      "sha256": "59fa07379e5132578aea262940ab358e92d83c97ad27dd56bd1cce5bbdb859c8"
+    },
+    {
+      "path": "runs/final-r1/source-after.json",
+      "bytes": 85451,
+      "sha256": "ae6a515cf6a27f8ba5e5d4d2072f9f623423190924ba6c5bba1e0ad43c0e2ea7"
+    },
+    {
+      "path": "runs/final-r1/source-before.json",
+      "bytes": 85451,
+      "sha256": "ae6a515cf6a27f8ba5e5d4d2072f9f623423190924ba6c5bba1e0ad43c0e2ea7"
+    },
+    {
+      "path": "runs/final-r2/build.log",
+      "bytes": 61,
+      "sha256": "c2dc4720cab075c60be0509e7940b04318480f97738c31ee7ec1adc1e6f501f3"
+    },
+    {
+      "path": "runs/final-r2/clippy.log",
+      "bytes": 168,
+      "sha256": "f76973b869659ecba7195eeb09b15ec0624799a0bbc7afb2984e8967cf82ea67"
+    },
+    {
+      "path": "runs/final-r2/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/final-r2/native.log",
+      "bytes": 71696,
+      "sha256": "83dc37ac42efcc81ff9d482f58e4c166302ad5541449bbb80e71853982a4db88"
+    },
+    {
+      "path": "runs/final-r2/result.json",
+      "bytes": 2380,
+      "sha256": "9f4ef6259ef90c7ee56aeb4676986aac0f04fbb8dd1cd25b03241b28bb55f449"
+    },
+    {
+      "path": "runs/final-r2/runner.py",
+      "bytes": 3275,
+      "sha256": "c6bf02aecf2ee6414a00e2aa3872c6785d749272932ec634c70c254fa522f91a"
+    },
+    {
+      "path": "runs/final-r2/source/native/docs/agent-sessions.md",
+      "bytes": 15390,
+      "sha256": "a2f579113c97004e090ec26db599a607408abfe4f47c5b59f8551fcb971165d0"
+    },
+    {
+      "path": "runs/final-r2/source/native/docs/compiler-inline.md",
+      "bytes": 6871,
+      "sha256": "cfc81a5279a854c138dc029759a8f21a1042be7e1eec3a6f4224967994a91163"
+    },
+    {
+      "path": "runs/final-r2/source/native/docs/compiler.md",
+      "bytes": 4255,
+      "sha256": "1902db6ae6ed0e331c1a38519fe2ff465ea83577741a5b54262aac74c1f18249"
+    },
+    {
+      "path": "runs/final-r2/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 20542,
+      "sha256": "14ddb0447fe7ed06fddb35945cf6de8b6e8040b47267d405d20594f77c7fd6c4"
+    },
+    {
+      "path": "runs/final-r2/source/native/README.md",
+      "bytes": 29207,
+      "sha256": "7cd5d02efaafdbe90f852fd799e36382d647bf814297ed357e028caf418c1e0d"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/agent_repl.rs",
+      "bytes": 113702,
+      "sha256": "2d6600498bd092961258d2f7f93fa189e5a33f8d114bd8a4de5ec108ee00f361"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_inline.rs",
+      "bytes": 33158,
+      "sha256": "04db45fb8567ea787f9c6fe20b0f8b0f1a9e457706780d38095626562b654640"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_inline_worker.cjs",
+      "bytes": 9489,
+      "sha256": "a5c7b4bc952f82afc5fd9c0705d0dfee00e6395398e8ae23e3039f2039e38697"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_worker.cjs",
+      "bytes": 13005,
+      "sha256": "f16a81fa64e66707874ea6429e2b370a10a4c082424afc574a4d1432e24321da"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/lib.rs",
+      "bytes": 33538,
+      "sha256": "2c875d4fa0ff7258479ced4074e11cf41415b33bc50edaa5e481d020f71a00bd"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/project_session.rs",
+      "bytes": 66144,
+      "sha256": "b9fa4f351f589577932e4ba3f26028a44fbf015ba5a8880e9ed5589eca66f390"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/projects.rs",
+      "bytes": 8674,
+      "sha256": "c1c2140e80439e5bfa732658d7b9b494537023ee2915cba2872aff00c4391b6e"
+    },
+    {
+      "path": "runs/final-r2/source/native/tests/compiler_inline.rs",
+      "bytes": 23978,
+      "sha256": "59fa07379e5132578aea262940ab358e92d83c97ad27dd56bd1cce5bbdb859c8"
+    },
+    {
+      "path": "runs/final-r2/source-after.json",
+      "bytes": 85451,
+      "sha256": "132d4949b632755387041e382f73d811c3b25a7d4dc21b76b0e7b61232dc0c02"
+    },
+    {
+      "path": "runs/final-r2/source-before.json",
+      "bytes": 85451,
+      "sha256": "132d4949b632755387041e382f73d811c3b25a7d4dc21b76b0e7b61232dc0c02"
+    },
+    {
+      "path": "runs/materialization.json",
+      "bytes": 251046,
+      "sha256": "4a8db097b4e1086270b0f54aca02ab3c0009d123c4ed4c546da9edee3f11cc71"
+    },
+    {
+      "path": "runs/metadata-key-order-proof.json",
+      "bytes": 459,
+      "sha256": "7538ad840481c5d989df556093900ac57b77d73d6d0685c4305c814fb5e5746d"
+    },
+    {
+      "path": "runs/metadata.py",
+      "bytes": 7766,
+      "sha256": "e3d5fe9dcd5aed1c1a3f5f8a8ac24386cf899f60d3427e79ca2ccb72ec02bdb6"
+    },
+    {
+      "path": "runs/prior-pr.json",
+      "bytes": 26354,
+      "sha256": "af36630f1c06f053242f09cd9119009117ad4a2bb31731a94a065b559515d3af"
+    },
+    {
+      "path": "runs/publish.py",
+      "bytes": 5570,
+      "sha256": "66a6e4b4d69728e28b25e42c28f68ef8506f8da3ab2033cf2430cc0033a9b253"
+    },
+    {
+      "path": "runs/qualification.json",
+      "bytes": 5007,
+      "sha256": "fc715981af2ed7bc8a46c6fa9690f211ab290b99ea76924a4bee199f66434168"
+    },
+    {
+      "path": "runs/retained-r1/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "9c546624e0ce4872278fc5aa4289629398105c6ca6a888bb93f70957c493a25f"
+    },
+    {
+      "path": "runs/retained-r1/result.json",
+      "bytes": 738,
+      "sha256": "8f64ffdf4fb1914c4a964bbcb8c01986976a6bfcd59c18e938364167118d2c5d"
+    },
+    {
+      "path": "runs/retained-r1/runner.py",
+      "bytes": 2194,
+      "sha256": "e0196452d756782e3f461fc6e4c9e6e35679eaa18cffaadecf8a50499ea3f786"
+    },
+    {
+      "path": "runs/retained-r1/source-after.json",
+      "bytes": 84166,
+      "sha256": "e02301c83d9377c801dc385fdef169888c17908bd905cabce169301613bef093"
+    },
+    {
+      "path": "runs/retained-r1/source-before.json",
+      "bytes": 84166,
+      "sha256": "e02301c83d9377c801dc385fdef169888c17908bd905cabce169301613bef093"
+    },
+    {
+      "path": "runs/retained-r1/tests.log",
+      "bytes": 25038,
+      "sha256": "2e056a3e918a48d9f9d27f68382b85d797bff8ccdb1e5ee871e77625d4faf897"
+    },
+    {
+      "path": "runs/retained-r1/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "runs/staged-source-proof.json",
+      "bytes": 917,
+      "sha256": "0fd739c10a8ee1f79e0a00ca549506584990be845d51d148a1585329aeee7a99"
+    },
+    {
+      "path": "runs/tool-runtimes.json",
+      "bytes": 999,
+      "sha256": "6b797b608cdeb787c0851b761f7b4038679178f2cfbc40f43f83c0581df8cadc"
+    },
+    {
+      "path": "runs/tracker-before-encoding-only.json",
+      "bytes": 592245,
+      "sha256": "1c9680e344bbcc0703948087cea26d7cd5035908ad4fb0e8ad6c403d1c92bee8"
+    },
+    {
+      "path": "runs/tracker-before-key-order-only.json",
+      "bytes": 592245,
+      "sha256": "1c9680e344bbcc0703948087cea26d7cd5035908ad4fb0e8ad6c403d1c92bee8"
+    },
+    {
+      "path": "runs/tracker-reconciliation.json",
+      "bytes": 224,
+      "sha256": "1060c8fd322d79647fe7236b75f3886c97d40c267196ec3d085785cf7f5ee236"
+    }
+  ]
+}

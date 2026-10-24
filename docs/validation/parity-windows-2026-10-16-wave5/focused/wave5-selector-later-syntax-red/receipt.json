@@ -1,0 +1,26 @@
+{
+  "checkedAtUtc": "2026-10-16T00:02:49.940397+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--lib",
+    "raw_selectors_before_later_source_syntax",
+    "--",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 121.375,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-selector-later-syntax-red",
+  "logSha256": "32b8fc348d9b4c81a0265d6a1f0d94759dd57f1e80d03eb9d9893eda45d83e88",
+  "groups": 1,
+  "passed": 0,
+  "failed": 3,
+  "ignored": 0,
+  "sourceChanges": []
+}

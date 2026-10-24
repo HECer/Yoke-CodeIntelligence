@@ -1,0 +1,83 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 7.56s
+     Running tests\store_review.rs (target\debug\deps\store_review-5fff24c677e876db.exe)
+
+running 1 test
+test source_blob_artifact_fallback_cannot_bypass_captured_path_authority ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests\test_map.rs (target\debug\deps\test_map-913379a96a9c85ac.exe)
+
+running 12 tests
+test collector_requires_host_trust_and_a_real_available_command ... ok
+test failed_tests_remain_selected_even_when_source_is_unchanged ... ok
+test a_covered_configuration_change_still_widens_to_every_known_test ... ok
+test import_binds_hashes_rejects_malformed_and_retains_failed_tests ... ok
+test selection_widens_unknown_config_and_new_tests ... ok
+test node_source_stdout_cannot_forge_test_results_and_changed_copy_invalidates_hash_binding ... ok
+test overflowing_node_reporter_output_never_publishes_a_pass ... ok
+test v8_utf16_ranges_respect_crlf_and_narrower_zero_hit_ranges ... ok
+test widening_with_an_empty_or_partial_caller_list_includes_all_recorded_tests ... ok
+test source_stdout_cannot_fake_a_skipped_only_pass ... ok
+test actual_node_collection_separates_stdout_and_rejects_skipped_only_pass ... ok
+test timed_out_node_collection_retains_the_previous_map ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.88s
+
+     Running tests\trail_adapter.rs (target\debug\deps\trail_adapter-26b9a5c2ec70b6a1.exe)
+
+running 4 tests
+test named_call_trace_accepts_full_closure_without_the_native_depth_eight_limit ... ok
+test public_trail_mcp_profile_lists_six_tools_and_accepts_legacy_query_aliases ... ok
+test six_public_trail_tools_preserve_freshness_and_exact_file_api_contracts ... ok
+test task_retrieval_regex_hits_and_repo_orientation_use_captured_source ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s
+
+     Running tests\trail_bodies.rs (target\debug\deps\trail_bodies-b68b4cc4940ea540.exe)
+
+running 4 tests
+test full_definitions_exceed_old_excerpt_limit_and_default_crux_has_eight_lines ... ok
+test find_all_returns_more_than_two_hundred_source_occurrences ... ok
+test public_file_api_returns_all_three_hundred_and_fifty_headers_in_one_projection ... ok
+test large_full_definition_results_are_published_as_readable_artifacts ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.34s
+
+     Running tests\trail_review.rs (target\debug\deps\trail_review-246e5c99a4fc09cd.exe)
+
+running 4 tests
+test trail_incoming_coupling_does_not_count_the_containing_file_as_a_dependency ... ok
+test trail_qualified_symbol_selection_matches_the_declared_container_suffix ... ok
+test trail_dependency_trace_excludes_source_containment_edges ... ok
+test trail_file_trace_seeds_the_files_symbols_for_incoming_dependency_closure ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.50s
+
+     Running tests\universal_languages.rs (target\debug\deps\universal_languages-746feac12a53433c.exe)
+
+running 20 tests
+test composite_scripts_skip_html_comments_and_non_executable_data ... ok
+test astro_frontmatter_svelte_scripts_and_ejs_blocks_are_source_bound ... ok
+test added_grammars_extract_declarations_from_real_source ... ok
+test blade_php_and_razor_code_blocks_keep_template_byte_anchors ... ok
+test file_metadata_does_not_copy_configuration_values_into_graph_signatures ... ok
+test dreammaker_call_lines_cannot_be_mislabeled_as_function_declarations ... ok
+test ejs_comment_and_escaped_tags_do_not_become_code ... ok
+test duplicate_script_types_keep_the_first_authored_attribute ... ok
+test language_specific_calls_keep_the_call_expression_anchor ... ok
+test newly_supported_extensions_are_not_silently_plain_text ... ok
+test harmless_html_attribute_ampersands_do_not_abort_script_extraction ... ok
+test r6_named_methods_and_s7_method_assignments_are_distinct_declarations ... ok
+test r_object_system_declarations_preserve_literal_names_and_methods ... ok
+test object_and_module_declarations_keep_named_method_owners ... ok
+test razor_raw_strings_and_interpolations_do_not_close_the_outer_code_block ... ok
+test separate_vue_scripts_cannot_repair_each_others_syntax_or_span_markup ... ok
+test unsupported_embedded_language_is_explicit_and_quoted_tag_attributes_are_respected ... ok
+test structural_fallbacks_extract_named_declarations_with_exact_ranges ... ok
+test vue_scripts_keep_original_utf8_offsets_and_ignore_markup_calls ... ok
+test large_robot_keyword_sets_respect_the_shared_deadline_without_quadratic_section_scans ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+

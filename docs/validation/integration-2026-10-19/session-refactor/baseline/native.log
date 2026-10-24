@@ -1,0 +1,33 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+warning: function `unpublished` is never used
+  --> native\tests\session_refactor.rs:63:4
+   |
+63 | fn unpublished(f: &Fixture) {
+   |    ^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (test "session_refactor") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 22.03s
+     Running tests\session_refactor.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\session_refactor-7d4d1615b98760f6.exe)
+
+running 1 test
+test session_refactor_prepares_the_native_plan_without_steering_or_source_writes ... FAILED
+
+failures:
+
+---- session_refactor_prepares_the_native_plan_without_steering_or_source_writes stdout ----
+
+thread 'session_refactor_prepares_the_native_plan_without_steering_or_source_writes' (25708) panicked at native\tests\session_refactor.rs:79:14:
+called `Result::unwrap()` on an `Err` value: Unsupported session operation
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    session_refactor_prepares_the_native_plan_without_steering_or_source_writes
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `--test session_refactor`
+error: 1 target failed:
+    `--test session_refactor`

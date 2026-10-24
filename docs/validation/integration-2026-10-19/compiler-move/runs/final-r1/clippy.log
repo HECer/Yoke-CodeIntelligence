@@ -1,0 +1,50 @@
+    Checking yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+error: this method chain can be written more clearly with `if .. else ..`
+   --> native\src\compiler_move_ast.rs:438:23
+    |
+438 |                 text: identifier.then(|| raw.to_owned()).unwrap_or_default(),
+    |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: try: `if identifier { raw.to_owned() } else { Default::default() }`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#obfuscated_if_else
+    = note: `-D clippy::obfuscated-if-else` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::obfuscated_if_else)]`
+
+error: this boolean expression can be simplified
+   --> native\src\compiler_move_ast.rs:541:12
+    |
+541 |           if !matches!(node.kind(), "comment" | "hash_bang_line")
+    |  ____________^
+542 | |             && !(node.kind() == "expression_statement"
+543 | |                 && node.named_child(0).is_some_and(|n| n.kind() == "string"))
+    | |_____________________________________________________________________________^ help: try: `!(matches!(node.kind(), "comment" | "hash_bang_line") || node.kind() == "expression_statement" && node.named_child(0).is_some_and(|n| n.kind() == "string"))`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#nonminimal_bool
+    = note: `-D clippy::nonminimal-bool` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::nonminimal_bool)]`
+
+error: this boolean expression can be simplified
+  --> native\src\compiler_move_bindings.rs:82:20
+   |
+82 |                 && (resolution == "resolved") == !targets.is_empty(),
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: try: `(resolution == "resolved") != targets.is_empty()`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#nonminimal_bool
+
+error: compiling a regex in a loop
+   --> native\src\compiler_move_bindings.rs:134:32
+    |
+134 | ...                   && regex::Regex::new(r"\Alib(?:\.[a-z0-9.-]+)?\.d\.ts\z")?
+    |                          ^^^^^^^^^^^^^^^^^
+    |
+help: move the regex construction outside this loop
+   --> native\src\compiler_move_bindings.rs:92:9
+    |
+ 92 |         for target in targets {
+    |         ^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#regex_creation_in_loops
+    = note: `-D clippy::regex-creation-in-loops` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::regex_creation_in_loops)]`
+
+error: could not compile `yoke-code-intelligence` (lib) due to 4 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `yoke-code-intelligence` (lib test) due to 4 previous errors

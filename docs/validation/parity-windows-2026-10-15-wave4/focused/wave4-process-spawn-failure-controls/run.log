@@ -1,0 +1,12 @@
+✔ a real missing owned executable reports unavailable after failed-spawn resource cleanup (9.2448ms)
+ℹ {"fixture":"missing executable","actualLaunches":1,"resultError":{"name":"CIError","code":"PROCESS_UNAVAILABLE","message":"spawn D:\\Yoke-Test-Scratch\\wave4-process-spawn-failure-controls\\yoke-owned-spawn-failure-IUWa69\\missing-owned-executable.exe ENOENT"},"atSettlement":[{"pid":null,"initialPid":null,"childClosed":true,"errors":[{"name":"Error","code":"ENOENT","syscall":"spawn D:\\Yoke-Test-Scratch\\wave4-process-spawn-failure-controls\\yoke-owned-spawn-failure-IUWa69\\missing-owned-executable.exe"}],"streams":{"stdin":{"shape":"Socket","closeObserved":true,"destroyed":true},"stdout":{"shape":"Socket","closeObserved":true,"destroyed":true},"stderr":{"shape":"Socket","closeObserved":true,"destroyed":true}}}],"finalObserved":[{"pid":null,"initialPid":null,"childClosed":true,"errors":[{"name":"Error","code":"ENOENT","syscall":"spawn D:\\Yoke-Test-Scratch\\wave4-process-spawn-failure-controls\\yoke-owned-spawn-failure-IUWa69\\missing-owned-executable.exe"}],"streams":{"stdin":{"shape":"Socket","closeObserved":true,"destroyed":true},"stdout":{"shape":"Socket","closeObserved":true,"destroyed":true},"stderr":{"shape":"Socket","closeObserved":true,"destroyed":true}}}]}
+✔ a real nonexistent owned cwd reports unavailable after failed-spawn resource cleanup (2.9111ms)
+ℹ {"fixture":"missing cwd","actualLaunches":1,"resultError":{"name":"CIError","code":"PROCESS_UNAVAILABLE","message":"spawn C:\\Program Files\\nodejs\\node.exe ENOENT"},"atSettlement":[{"pid":null,"initialPid":null,"childClosed":true,"errors":[{"name":"Error","code":"ENOENT","syscall":"spawn C:\\Program Files\\nodejs\\node.exe"}],"streams":{"stdin":{"shape":"Socket","closeObserved":true,"destroyed":true},"stdout":{"shape":"Socket","closeObserved":true,"destroyed":true},"stderr":{"shape":"Socket","closeObserved":true,"destroyed":true}}}],"finalObserved":[{"pid":null,"initialPid":null,"childClosed":true,"errors":[{"name":"Error","code":"ENOENT","syscall":"spawn C:\\Program Files\\nodejs\\node.exe"}],"streams":{"stdin":{"shape":"Socket","closeObserved":true,"destroyed":true},"stdout":{"shape":"Socket","closeObserved":true,"destroyed":true},"stderr":{"shape":"Socket","closeObserved":true,"destroyed":true}}}]}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 103.7684

@@ -1,0 +1,559 @@
+{
+  "archive": "raw-logs.zip",
+  "sha256": "28af1136b7b7d1a937686a6ba0f5e54e044a16e18b62cc80a9088572b79d4900",
+  "bytes": 390088,
+  "members": [
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/built-cli.json",
+      "sha256": "a9411eb83bf5b514ea5c8f14f6c0d941fb46560ea079f77329d3b9f742a8bf63",
+      "bytes": 1432
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/compiler-scratch-guard.json",
+      "sha256": "fc8c17a4602d06c64f06b82ccb7fd60c4e2d80b99f361d78e38cda2291132809",
+      "bytes": 289
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/controller.py",
+      "sha256": "129aad40bbbbcbcb20e437fd9c7b35541ca61ddb13134fef80cd4178294d2e74",
+      "bytes": 8021
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/dashboard-test-build.stderr",
+      "sha256": "2248c2d930a659f7b86c9cde4b389ff6ba45004e448cdda411750edc60dd75ce",
+      "bytes": 173
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/dashboard-test-build.stdout",
+      "sha256": "2f004fcc1a52563534d06a2298eb6a7c63de5af92d238e36b2b31483c7c66927",
+      "bytes": 386615
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/dashboard-tests.json",
+      "sha256": "99d01517c69b333d5addc950bb455ed603fec89e8b071548f9a3e8d4ca4cb154",
+      "bytes": 1524
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/dashboard-whole-test.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/dashboard-whole-test.stdout",
+      "sha256": "688158a42e1bffe9cbfb6d5ffc70c0abed51608e8e222bce5e337675d4266bcb",
+      "bytes": 1214
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/decompress-built-cli-yoke.exe.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/decompress-built-cli-yoke.exe.stdout",
+      "sha256": "b35e412a64ca7ad204f86788975829ef7946f6f1c651a121ec59d2f20c09a4bb",
+      "bytes": 172
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/decompress-built-cli-yoke.pdb.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/decompress-built-cli-yoke.pdb.stdout",
+      "sha256": "b35e412a64ca7ad204f86788975829ef7946f6f1c651a121ec59d2f20c09a4bb",
+      "bytes": 172
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/fresh-cli-help.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/fresh-cli-help.stdout",
+      "sha256": "796d5081cb0c554012a8d32f50a38c09593aae0a3e795a463d15949d04288efa",
+      "bytes": 3268
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/fresh-cli-version.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/fresh-cli-version.stdout",
+      "sha256": "20eeb8aea208f5d298168abe4ae67bb92ecf1b3dbb6ce0bde1d7050aa3b3c422",
+      "bytes": 11
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/fresh-host-documents-help.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/fresh-host-documents-help.stdout",
+      "sha256": "29408388b75a9178ce058ae6df0e359fe4174b47518987eb27091a613f1ba6a5",
+      "bytes": 1109
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/fresh-native-cli-build.stderr",
+      "sha256": "4ddc61e93a34a57902a8c3ead110e79bdd49d19cf5cc71ac1dae39b8398ef7b7",
+      "bytes": 60
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/fresh-native-cli-build.stdout",
+      "sha256": "fa0fa0f95199741c3c9c26b233fefa3069585e98b1037514afd2ad01a9974308",
+      "bytes": 385573
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/lzx-built-cli-yoke.exe.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/lzx-built-cli-yoke.exe.stdout",
+      "sha256": "9f6b90be4c90ce88f5265be9b0c95906c2fb1b627fe7408088922192d82d868e",
+      "bytes": 279
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/lzx-built-cli-yoke.pdb.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/lzx-built-cli-yoke.pdb.stdout",
+      "sha256": "3dd637f8b9399c98309c6d2fbcc32aefa930669f0f335c0856dad70e919e2a56",
+      "bytes": 278
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/lzx-owned-dashboard-session_dashboard-e13324dd90851931.exe.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/lzx-owned-dashboard-session_dashboard-e13324dd90851931.exe.stdout",
+      "sha256": "846f43ef9d1f237d350b0b644c79995a9c5721a28ad33d4f84807fce0334446f",
+      "bytes": 284
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/lzx-owned-dashboard-session_dashboard-e13324dd90851931.pdb.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/lzx-owned-dashboard-session_dashboard-e13324dd90851931.pdb.stdout",
+      "sha256": "cf1485cff86898026dbab35cfc298284096e6f2c2bc807637a07ce8a9c65f51f",
+      "bytes": 282
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/native-clippy.stderr",
+      "sha256": "91315f15beb2bde7e585b5eb751ae3071d59d4803cf3e7f4c2b67759a8cff9f8",
+      "bytes": 172
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/native-clippy.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/native-format.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/native-format.stdout",
+      "sha256": "141ad374276050cb7aaeac0e4084d18c9fa7acd6b8575f72ca2bb9d99a1c826c",
+      "bytes": 47658
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/npm-tests.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/npm-tests.stdout",
+      "sha256": "b8655804b20265a87975995a245d029289a71107c9e6f4376688ebcfbd49754d",
+      "bytes": 25118
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/progress.json",
+      "sha256": "12c826d32c23cbae997791d3b2a3181357dff233f3a290ef293eb2dcc1baeefe",
+      "bytes": 7191
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/result.json",
+      "sha256": "f702cc4746c8e5f79a6cd5d2b35ed822e5f9a117282f007fe0d9f1c3394ac2e6",
+      "bytes": 876
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/source-before.json",
+      "sha256": "fe10c0baad4c45965b06ec429b8ecec7377c158b9d7dc7f44f6618d3d7e4176d",
+      "bytes": 124205
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/typecheck.stderr",
+      "sha256": "0c5e2568b4c79c13debcc497cf347b98e7a01e636ae2bed42cf3faa742048c94",
+      "bytes": 209
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks1/typecheck.stdout",
+      "sha256": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5",
+      "bytes": 77
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/built-cli.json",
+      "sha256": "1918e9b628fe198b17d00cb95f6298ee9a0a33cdd4d96d7c96a5f201fa0a380e",
+      "bytes": 1432
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/compiler-scratch-guard.json",
+      "sha256": "ea69dadcfd3d7db24afdbc7152be67ce0e019933242b6d78922dd90acd4efd07",
+      "bytes": 289
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/controller.py",
+      "sha256": "78ecf4568a6f982aaa476c517c403fcf8dc45aa53d004a5bfeefb96fa66dac2f",
+      "bytes": 8021
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/dashboard-test-build.stderr",
+      "sha256": "130ba180b886b31b56c5e470a0ecc04ce7768755aac1793e74fe55155d62e92e",
+      "bytes": 173
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/dashboard-test-build.stdout",
+      "sha256": "c29e32f715a1d8073ce80765545b8399119030dc4e27393715992861cf419c12",
+      "bytes": 386615
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/dashboard-tests.json",
+      "sha256": "efd8fde8d02382b6ed23bcebe106f4fc976306abc7c547ae0c1bcbb4943c0afc",
+      "bytes": 1524
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/dashboard-whole-test.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/dashboard-whole-test.stdout",
+      "sha256": "545364833ea94f42818a29c58c388952cfcd2af4645fb667aa942d134892cb45",
+      "bytes": 1214
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/decompress-built-cli-yoke.exe.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/decompress-built-cli-yoke.exe.stdout",
+      "sha256": "b35e412a64ca7ad204f86788975829ef7946f6f1c651a121ec59d2f20c09a4bb",
+      "bytes": 172
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/decompress-built-cli-yoke.pdb.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/decompress-built-cli-yoke.pdb.stdout",
+      "sha256": "b35e412a64ca7ad204f86788975829ef7946f6f1c651a121ec59d2f20c09a4bb",
+      "bytes": 172
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/fresh-cli-help.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/fresh-cli-help.stdout",
+      "sha256": "796d5081cb0c554012a8d32f50a38c09593aae0a3e795a463d15949d04288efa",
+      "bytes": 3268
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/fresh-cli-version.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/fresh-cli-version.stdout",
+      "sha256": "20eeb8aea208f5d298168abe4ae67bb92ecf1b3dbb6ce0bde1d7050aa3b3c422",
+      "bytes": 11
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/fresh-host-documents-help.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/fresh-host-documents-help.stdout",
+      "sha256": "29408388b75a9178ce058ae6df0e359fe4174b47518987eb27091a613f1ba6a5",
+      "bytes": 1109
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/fresh-native-cli-build.stderr",
+      "sha256": "bb76d746acf8827d33e2ea465a2a7e5fa1c6a4d49d77f76f98461f0764efb480",
+      "bytes": 60
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/fresh-native-cli-build.stdout",
+      "sha256": "a61883b10aec32ff01f7b8c63a5194ee01cfe5f6e22fc0b1d89835ed80609b7a",
+      "bytes": 385573
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/lzx-built-cli-yoke.exe.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/lzx-built-cli-yoke.exe.stdout",
+      "sha256": "4feadb845db60b44eaec65bc3644d0c82f839f822ff7ede6d4cfface78969048",
+      "bytes": 279
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/lzx-built-cli-yoke.pdb.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/lzx-built-cli-yoke.pdb.stdout",
+      "sha256": "6a4444738cb8e5bb039e796d9ac9f4bc1679a164a6f803dce3ff25c60d9f26ef",
+      "bytes": 278
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/lzx-owned-dashboard-session_dashboard-e13324dd90851931.exe.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/lzx-owned-dashboard-session_dashboard-e13324dd90851931.exe.stdout",
+      "sha256": "846f43ef9d1f237d350b0b644c79995a9c5721a28ad33d4f84807fce0334446f",
+      "bytes": 284
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/lzx-owned-dashboard-session_dashboard-e13324dd90851931.pdb.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/lzx-owned-dashboard-session_dashboard-e13324dd90851931.pdb.stdout",
+      "sha256": "38c5666b61f19dd1943bcc070a8674ac30746f1ef89553efc3c3c63c77a05d18",
+      "bytes": 282
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/native-clippy.stderr",
+      "sha256": "3e84d2b0984c226a4c89d72c9c47a840d0b7e63bd0d4a1558e96b3a954f70273",
+      "bytes": 172
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/native-clippy.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/native-format.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/native-format.stdout",
+      "sha256": "141ad374276050cb7aaeac0e4084d18c9fa7acd6b8575f72ca2bb9d99a1c826c",
+      "bytes": 47658
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/npm-tests.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/npm-tests.stdout",
+      "sha256": "9e539b75322e3c9b090e77c3f728b7917015f07b7e001348804e9d0cdd230d75",
+      "bytes": 25112
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/progress.json",
+      "sha256": "a6711f1fe644c9c6defcec510024d24fbd13293aeff8536c705e938525a892d5",
+      "bytes": 7196
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/remote-product-verification.json",
+      "sha256": "590cd57b95fb6474d67241b6fdd42eb6df28e3be0367efc876d519bfcfc2b3ae",
+      "bytes": 423
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/result.json",
+      "sha256": "5963a6c8aeb71ec6ebc9bc0b7b90a0d21140a82e7872686abeda0c6a363873b8",
+      "bytes": 876
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/source-before.json",
+      "sha256": "3d8520c793991859f6303372308d263448ad954c7a3a0cf116dbddebf6123ae7",
+      "bytes": 124205
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/staged-product.json",
+      "sha256": "5e178d144e4e1edbcd93162840819c0e902be59cbbdcac3f321145ce37d41296",
+      "bytes": 350
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/typecheck.stderr",
+      "sha256": "0c5e2568b4c79c13debcc497cf347b98e7a01e636ae2bed42cf3faa742048c94",
+      "bytes": 209
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-checks2/typecheck.stdout",
+      "sha256": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5",
+      "bytes": 77
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-visual1/dialog.fixture.html",
+      "sha256": "fc14ec03a1bb128e9c3ca06ba73274c62ed219905fbe8268a5c530707d5a8d4a",
+      "bytes": 69038
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-visual1/dialog.receipt.json",
+      "sha256": "b7324942b0c2f2ef3bdcd1a10fa46b6face400a0aebb6f56e31d15359172e847",
+      "bytes": 347
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-visual1/skip.fixture.html",
+      "sha256": "cd6bb267a48239de5d71ec4dd5e2905f4c2d04d90b461cb11cb1036052e7b1de",
+      "bytes": 69036
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-visual1/skip.receipt.json",
+      "sha256": "75b47a1a576049b2db7cddd5520f5740e29ffc49362f1cc86ca87d2e7e467b04",
+      "bytes": 347
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-visual1/source.json",
+      "sha256": "a7d37dac8cb82f09b5e342d4f6437430bccf123860326fdfcadf6be0b604d9f8",
+      "bytes": 147
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-visual2/dialog.fixture.html",
+      "sha256": "bf6d0964a44bd2cfe12165d25e333281abc899ec3b4b0c12675aec127f0e6674",
+      "bytes": 69101
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-visual2/dialog.receipt.json",
+      "sha256": "b7324942b0c2f2ef3bdcd1a10fa46b6face400a0aebb6f56e31d15359172e847",
+      "bytes": 347
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-visual2/skip.fixture.html",
+      "sha256": "05aecd1c8d15f4089a0c363f7f5457b212796ca58a86417bbdd3161f6020fb61",
+      "bytes": 69099
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-visual2/skip.receipt.json",
+      "sha256": "75b47a1a576049b2db7cddd5520f5740e29ffc49362f1cc86ca87d2e7e467b04",
+      "bytes": 347
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-visual2/source.json",
+      "sha256": "076b8df76ecabf8b5123f4e44e5302cf214f9e8812fd5e74991cc7b0fe2aa5d2",
+      "bytes": 147
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/.ui-complete",
+      "sha256": "992e7cafaba726a4392fb955e4dfd59f6aeaa28b79a66e4455e40f1113317c95",
+      "bytes": 78
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/actual-native-keyboard.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/actual-native-keyboard.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/automation-attempts.json",
+      "sha256": "13b3c937a5b95ebee6d543699adcf26587a55bafc734c92b1081ec7b076cce17",
+      "bytes": 1302
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/browser-acceptance.json",
+      "sha256": "0eea949c4b1ab1a352d21ca7529c7b4afe893b7ca087d35788a3e77e226eb680",
+      "bytes": 766
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/browser-receipts.json",
+      "sha256": "5b3e0746cfdcbac34434e618ac9eda3f7b6738013b3b5bd25e363651cc5b6d17",
+      "bytes": 2014
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/compiler-scratch-guard.json",
+      "sha256": "ddcf70fa73531f3de4f9e6b4e2280fde1076fd472ecbac36b7b9bd6b1f8af864",
+      "bytes": 287
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/controller.py",
+      "sha256": "0e6562474c32faa1a90674f4efef4371481a7d1a43a8e56c5e3fd391808c8baa",
+      "bytes": 4605
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/live-result.json",
+      "sha256": "88a114770461879bf56e1c564bf8cd1d271edf45d06fdb70ec55ec1792f4c555",
+      "bytes": 213
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/native-bootstrap.html",
+      "sha256": "9da1cee7a2042cbd972e8c87fef3524fcbe8ee3760ce9e954555e4b25d148c1f",
+      "bytes": 65860
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/native-dom-draft.fixture.html",
+      "sha256": "3c48385c68900956b6e3bce834bc10470f84cd48a948da47c3aaa3b98e3bbf07",
+      "bytes": 25777
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/native-dom-skip.fixture.html",
+      "sha256": "02701e3400626884d4de1690da75334041a2a7a40b7d73892b1ea1fb191d0021",
+      "bytes": 25225
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/native-process-exited.json",
+      "sha256": "791985384adbfd767e446835f88a8079801de4879d5f190d160faf48f26faf23",
+      "bytes": 90
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/native.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/progress.json",
+      "sha256": "3b5e237d42f562d81a75aadf9370d7f9b993d6c886aed7cf09c8b0c9f4422a4c",
+      "bytes": 509
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/result.json",
+      "sha256": "7ae4b4a2ba7f7f426eb687831a071a30acf9fbb094d37abac8b1ae8a0222115c",
+      "bytes": 217
+    },
+    {
+      "path": "dashboard-keyboard-20261024-cce9714b-live1/worker.py",
+      "sha256": "6504572ece75b531128d80afa3c2f721d75e9671d1bdbf1ae9a348f7e04b52c5",
+      "bytes": 3608
+    }
+  ],
+  "excluded": [
+    "dashboard-keyboard-20261024-cce9714b-visual1/dialog.png",
+    "dashboard-keyboard-20261024-cce9714b-visual1/dialog.png.base64",
+    "dashboard-keyboard-20261024-cce9714b-visual1/skip.png",
+    "dashboard-keyboard-20261024-cce9714b-visual1/skip.png.base64",
+    "dashboard-keyboard-20261024-cce9714b-visual2/dialog.png",
+    "dashboard-keyboard-20261024-cce9714b-visual2/dialog.png.base64",
+    "dashboard-keyboard-20261024-cce9714b-visual2/skip.png",
+    "dashboard-keyboard-20261024-cce9714b-visual2/skip.png.base64",
+    "dashboard-keyboard-20261024-cce9714b-live1/native-dom-draft.png",
+    "dashboard-keyboard-20261024-cce9714b-live1/native-dom-draft.png.base64",
+    "dashboard-keyboard-20261024-cce9714b-live1/native-dom-skip.png",
+    "dashboard-keyboard-20261024-cce9714b-live1/native-dom-skip.png.base64",
+    "dashboard-keyboard-20261024-cce9714b-live1/private-dashboard.json"
+  ],
+  "reopenedEveryMember": true,
+  "privateCapabilitiesBinariesEncodedImagesExcluded": true
+}

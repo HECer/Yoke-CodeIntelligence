@@ -1,0 +1,14 @@
+{
+  "head": "328ea51729a8ffa7c310c092535b159f3c56b5e7",
+  "jobId": 117844454647,
+  "groups": 258,
+  "passed": 2310,
+  "failed": 1,
+  "ignored": 37,
+  "failures": [
+    {
+      "test": "explicitly_selected_shell_runs_and_cell_errors_preserve_namespace",
+      "detail": "thread 'explicitly_selected_shell_runs_and_cell_errors_preserve_namespace' (3624) panicked at native\\tests\\agent_repl.rs:250:67:\ncalled `Result::unwrap()` on an `Err` value: Request deadline exceeded\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    }
+  ]
+}

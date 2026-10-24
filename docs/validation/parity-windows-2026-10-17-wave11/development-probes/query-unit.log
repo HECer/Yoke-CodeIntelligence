@@ -1,0 +1,11 @@
+   Compiling yoke-code-intelligence v0.5.0 (E:\Yoke-Worktrees\meaning-join-20261017\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 35s
+     Running unittests src\lib.rs (E:/Yoke-Build-Cache/meaning-join-20261017\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 3 tests
+test meaning_join::query::tests::trace_capacity_refuses_before_clipping_and_preserves_the_checked_value ... ok
+test meaning_join::query::tests::asymmetric_directions_and_depth_keep_exact_induced_parallel_observations ... ok
+test meaning_join::query::tests::hyperedges_never_create_directed_steps_or_return_partial_role_slots ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 371 filtered out; finished in 0.00s
+

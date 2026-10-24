@@ -1,0 +1,52 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+warning: unused import: `anyhow::Context as _`
+ --> native\src\transcript_semantic.rs:8:5
+  |
+8 | use anyhow::Context as _;
+  |     ^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> native\src\transcript_semantic_store.rs:376:9
+    |
+376 |     let mut admission = Context::new(store, &o, d)?;
+    |         ----^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (lib) generated 2 warnings (run `cargo fix --lib -p yoke-code-intelligence` to apply 2 suggestions)
+    Finished `test` profile [unoptimized] target(s) in 1m 41s
+     Running tests\transcript_semantic.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\transcript_semantic-2e8c90e17f6716bf.exe)
+
+running 13 tests
+test actual_cli_enforces_write_and_trust_before_reads_and_replays_without_config ... ok
+test bound_bills_survive_domain_usage_error_exit_and_overrun_rejection ... ok
+test current_read_caps_refuse_whole_results_without_returning_an_empty_complete_value ... ok
+test exact_unicode_crlf_context_preserves_parallel_candidates_and_never_creates_events ... ok
+test interrupted_process_preserves_the_unknown_attempt_and_never_authorizes_retry ... ok
+test no_candidates_requires_an_explicit_coverage_response ... ok
+test original_unknown_receipt_stays_unknown_after_later_ledger_reconciliation ... ok
+test payload_response_source_header_and_rehashed_result_tampering_refuse_read_and_retention ... ok
+test publication_failure_keeps_bound_response_for_read_only_recovery_without_resending ... 
+thread 'publication_failure_keeps_bound_response_for_read_only_recovery_without_resending' (16868) panicked at native\tests\transcript_semantic.rs:621:82:
+called `Result::unwrap()` on an `Err` value: Unknown database schema; retention refused
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test replay_needs_no_provider_and_private_checked_export_survives_store_loss ... ok
+test reservation_registration_failure_is_atomic_and_unsent_reservation_is_cancelled ... ok
+test trust_utf8_source_hash_and_all_preflight_budgets_refuse_before_reservation ... ok
+test unbound_malformed_duplicate_and_incomplete_replies_keep_unknown_reservations ... ok
+
+failures:
+
+failures:
+    publication_failure_keeps_bound_response_for_read_only_recovery_without_resending
+
+test result: FAILED. 12 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.31s
+
+error: test failed, to rerun pass `--test transcript_semantic`
+error: 1 target failed:
+    `--test transcript_semantic`

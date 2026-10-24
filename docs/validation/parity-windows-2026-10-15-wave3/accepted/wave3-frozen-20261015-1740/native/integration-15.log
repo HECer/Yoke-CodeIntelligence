@@ -1,0 +1,91 @@
+    Finished `test` profile [unoptimized] target(s) in 0.56s
+     Running tests\host_credentials.rs (target\debug\deps\host_credentials-d3ecb384a1a8a4e4.exe)
+
+running 5 tests
+test actual_github_credential_round_trip_is_create_only_and_keeps_secrets_out_of_metadata ... ignored, Actual Windows Credential Manager; creates and removes only one unique Yoke GitHub fixture entry
+test actual_tls_and_service_token_never_export_private_material_or_overwrite_entries ... ignored, Requires the actual Windows per-user Credential Manager; creates and removes only unique Yoke test entries
+test model_token_admission_rejects_header_injection_and_oversize_without_exposure ... ok
+test github_token_admission_rejects_invalid_bytes_without_exposing_them ... ok
+test host_credential_names_cannot_access_unrelated_accounts ... ok
+
+test result: ok. 3 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\host_install.rs (target\debug\deps\host_install-ecb3efabd0fd83d7.exe)
+
+running 9 tests
+test dry_run_is_deterministic_and_creates_no_source_engine_or_host_state ... ok
+test every_target_and_host_binding_is_checked_before_first_write ... ok
+test receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths ... ok
+test state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed ... ok
+test internal_volume_guid_binding_launches_the_real_binary_and_is_not_a_user_path_grant ... ok
+test windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_change ... ok
+test private_state_never_contains_unrelated_human_config_or_policy_contents ... ok
+test uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block ... ok
+test install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.31s
+
+     Running tests\host_install_cli.rs (target\debug\deps\host_install_cli-580c103695fa8de9.exe)
+
+running 11 tests
+test host_install_cli_initialization_permission_precedes_selection_and_plan_reads ... ok
+test host_install_cli_initialization_refuses_foreign_scaffold_bytes_without_disclosing_them ... ok
+test host_install_cli_initialization_admits_a_valid_output_budget_before_writing_state ... ok
+test host_install_cli_initialization_output_failure_identifies_its_durable_result ... ok
+test host_install_cli_planning_and_status_are_pure_and_keep_human_text_private ... ok
+test host_install_cli_initialization_repairs_an_owned_scaffold_and_replays_without_source_changes ... ok
+test host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation ... ok
+test host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write ... ok
+test host_install_cli_write_permission_precedes_selection_or_plan_reads ... ok
+test host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried ... ok
+test host_install_cli_installs_and_uninstalls_only_its_owned_fragment ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.28s
+
+     Running tests\host_output_disposition.rs (target\debug\deps\host_output_disposition-9c7bbb14919ba5e0.exe)
+
+running 11 tests
+test armed_empty_output_is_deleted_after_real_process_exit ... ok
+test disposition_probe_worker ... ignored, spawned only by owned-temp disposition capability tests
+test armed_empty_output_is_deleted_after_real_process_kill ... ok
+test disarmed_output_can_be_explicitly_deleted_by_extended_delete_on_the_same_handle ... ok
+test disarmed_output_can_be_explicitly_deleted_by_legacy_boolean_on_the_same_handle ... ok
+test extended_zero_flags_are_characterized_after_exit_and_kill ... ok
+test legacy_false_does_not_disarm_creation_time_delete_on_close ... ok
+test required_same_handle_disarm_preserves_subsequent_bytes_after_real_process_exit ... ok
+test required_same_handle_disarm_preserves_subsequent_bytes_after_real_process_kill ... ok
+test required_same_handle_disarm_survives_real_process_exit ... ok
+test required_same_handle_disarm_survives_real_process_kill ... ok
+
+test result: ok. 10 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests\hybrid_retrieval.rs (target\debug\deps\hybrid_retrieval-965a15cea6c717ed.exe)
+
+running 3 tests
+test graph_ranking_retrieves_a_source_connected_neighbor_without_lexical_match ... ok
+test retrieval_rejects_foreign_graphs_and_unbounded_or_unknown_options ... ok
+test task_retrieval_ranks_source_bodies_and_balances_files_with_exact_anchors ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s
+
+     Running tests\ignored_capture.rs (target\debug\deps\ignored_capture-0d67016a001ac4c7.exe)
+
+running 15 tests
+test empty_ignored_option_preserves_released_nondefault_configured_capture_identity ... ok
+test empty_ignored_option_preserves_released_serialization_and_default_capture_identity ... ok
+test editor_ignored_prefix_updates_are_denied_before_buffer_revisions_change ... ok
+test derived_edits_outside_ignored_scope_keep_exact_old_classification_and_readonly_sources ... ok
+test host_ignored_option_never_relaxes_secret_internal_or_normalized_path_protection ... ok
+test host_optin_captures_ignored_sources_read_only_and_binds_complete_observed_outcomes ... ok
+test missing_future_reordered_and_incomplete_observed_proofs_never_fall_back_to_default_capture ... ok
+test ignored_source_archives_retain_exact_capture_proof_after_original_store_is_gone ... ok
+test observed_ignore_outcomes_are_immutable_when_current_ignore_files_change ... ok
+test ordinary_editor_overlays_preserve_ignored_source_classification_without_live_receipt_authority ... ok
+test retention_recognizes_only_the_exact_ignored_proof_kind_and_rejects_mutated_rows ... ok
+test windows_case_aliases_cannot_create_files_inside_host_readonly_ignored_prefixes ... ok
+test windows_short_name_aliases_cannot_create_files_inside_host_readonly_prefixes ... ok
+test readonly_ignored_edits_and_new_files_fail_before_any_durable_plan_or_snapshot ... ok
+test windows_short_name_aliases_do_not_grant_protected_writes_without_ignored_optin ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.20s
+

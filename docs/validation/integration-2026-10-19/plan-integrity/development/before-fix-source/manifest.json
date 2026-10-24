@@ -1,0 +1,8 @@
+{
+  "phase": "after five actual owned saved-plan integrity failures, before runtime correction",
+  "sha256": {
+    "native/src/changes.rs": "86b87818eb21a0aea2d54c97633fd2d1eaf67f96569c5328667d19c3d8153110",
+    "native/tests/plan_integrity.rs": "6b1ed3387248b5cd9c5a11c593c479d7c3c0b6102bdbb5735bd960920479fbaf"
+  },
+  "threatScope": "Stored plan modification/corruption with an otherwise valid host approval. No untrusted-repository route to modifying the application database is claimed."
+}

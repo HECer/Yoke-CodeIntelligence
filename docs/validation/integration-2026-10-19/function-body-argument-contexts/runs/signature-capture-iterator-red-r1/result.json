@@ -1,0 +1,25 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "language": "ts",
+      "beforeDiagnostics": [],
+      "beforeTypes": [
+        "number"
+      ],
+      "beforeObserved": "{\"result\":3,\"events\":[]}",
+      "afterDiagnostics": [],
+      "afterTypes": [
+        "number"
+      ],
+      "afterObserved": "{\"result\":99,\"events\":[\"iterator\"]}",
+      "sameTypes": true,
+      "sameRuntime": false
+    }
+  ],
+  "allChecksPassed": false,
+  "nativeAdmission": false,
+  "prototypeOnly": true,
+  "ownedLiteralFixturesExecuted": true,
+  "analyzedCodeExecuted": false
+}

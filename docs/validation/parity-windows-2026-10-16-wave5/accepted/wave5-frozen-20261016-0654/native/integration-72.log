@@ -1,0 +1,15 @@
+    Finished `test` profile [unoptimized] target(s) in 0.54s
+     Running tests\model_identity.rs (target\debug\deps\model_identity-19f2f210e851753e.exe)
+
+running 1 test
+test large_identity_preserves_exact_released_json_bytes_without_a_second_corpus_buffer ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
+
+     Running tests\monorepo_pre_feature_envelope.rs (target\debug\deps\monorepo_pre_feature_envelope-969d0005b34db2f9.exe)
+
+running 1 test
+test full_definition_envelope_overflow_is_an_error_without_an_artifact_fallback ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.73s
+

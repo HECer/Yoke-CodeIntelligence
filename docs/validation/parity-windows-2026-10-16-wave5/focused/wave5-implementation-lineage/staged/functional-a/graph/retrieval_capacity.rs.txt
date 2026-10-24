@@ -1,0 +1,19 @@
+//! Ignored required stream-boundary stub; not an authority constructor.
+//! Root must observe causal RED before releasing its functional body.
+
+use crate::{capture::Deadline, retrieval_scopes::RetrievalHardError};
+use serde::Serialize;
+
+// Required coupling on later promotion: begin must apply this to its supplied
+// original Graph BEFORE loading/cloning the stored Graph or opening any source.
+// A digest is correlation data; this function cannot create a checked run.
+pub(crate) fn bounded_graph_fingerprint<T: Serialize + ?Sized>(
+    _value: &T,
+    _deadline: &Deadline,
+) -> Result<String, RetrievalHardError> {
+    Err(RetrievalHardError::Internal("implementation_unavailable"))
+}
+
+#[cfg(test)]
+#[path = "retrieval_capacity_tests.rs"]
+mod tests;

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "C:\Users\HEC_e\AppData\Local\Temp\yoke-native-05-distribution-check-20261014.py", line 79, in <module>
+    replies = [json.loads(line) for line in command(str(executable), '--root', str(workspace), 'mcp', input=''.join(json.dumps(value) + '\n' for value in rpc)).splitlines()]
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HEC_e\AppData\Local\Temp\yoke-native-05-distribution-check-20261014.py", line 21, in command
+    return subprocess.run(args, input=input, cwd=ROOT, check=True, capture_output=True, text=True, timeout=60).stdout.strip()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HEC_e\AppData\Local\Programs\Miniconda3\Lib\subprocess.py", line 573, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '('C:\\Users\\HEC_e\\AppData\\Local\\Temp\\yoke-distribution-05-1_u8rf1n\\portable\\yoke.exe', '--root', 'C:\\Users\\HEC_e\\AppData\\Local\\Temp\\yoke-distribution-05-1_u8rf1n\\workspace', 'mcp')' returned non-zero exit status 2.

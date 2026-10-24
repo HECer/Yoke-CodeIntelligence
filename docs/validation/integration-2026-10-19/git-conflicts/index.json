@@ -1,0 +1,837 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T10:03:43.130822+00:00",
+  "parentCommit": "b09380a23572491cd5052dcaacf73ccbe41af9ea",
+  "accepted": false,
+  "allLocalChecksPassed": false,
+  "wholeNativeRun": false,
+  "actualGitConflictCasesPassed": 12,
+  "actualCliHostPathCasesPassed": 18,
+  "privateProtocolCasesIncludedInLibrary": 7,
+  "frozenInputCount": 649,
+  "scopedNativeTotals": {
+    "passed": 577,
+    "failed": 2,
+    "ignored": 7
+  },
+  "nativeResultGroups": 21,
+  "allSelectedNativeTargetsRan": true,
+  "inventoryPreserved": {
+    "inventoryLedger": true,
+    "historicalInventory": true,
+    "ledgerSummary": true
+  },
+  "newSourceFiles": [
+    {
+      "source": "native/src/git_conflicts.rs",
+      "artifact": "new-source/native/src/git_conflicts.rs",
+      "sha256": "5e8181f29d0537656f30957a19751726076fa698a02018e0861a30bae2371b45"
+    },
+    {
+      "source": "native/src/git_conflicts_tests.rs",
+      "artifact": "new-source/native/src/git_conflicts_tests.rs",
+      "sha256": "102ad495aba5c4a6228b05656cab19f06a4f35acffe8482cd7ca73bb3e0cb766"
+    },
+    {
+      "source": "native/src/git_conflicts_cli.rs",
+      "artifact": "new-source/native/src/git_conflicts_cli.rs",
+      "sha256": "829613eef6f7ce6573bcc75ef99b7eea49c60f962676b7b020a27a252322aaee"
+    },
+    {
+      "source": "native/tests/git_conflicts.rs",
+      "artifact": "new-source/native/tests/git_conflicts.rs",
+      "sha256": "5a8e67b151ae9f64f82972d12759b22e80ce70129c3c237e527edfc64c9383e3"
+    }
+  ],
+  "summary": {
+    "allChecksPassed": false,
+    "sourceUnchanged": true,
+    "wholeNativeRun": false,
+    "selectedIntegrationTargets": [
+      "git_conflicts",
+      "git_workflows",
+      "git_cli",
+      "git_epochs",
+      "git_epoch_selection",
+      "git_review",
+      "git_affected_cli",
+      "git_affected_details",
+      "git_affected_qualification",
+      "git_impact_details",
+      "git_impact_details_cli",
+      "git_impact_details_no_git",
+      "git_impact_details_qualification",
+      "git_impact_details_sqlite_limits",
+      "capture_options",
+      "capture_policy",
+      "ignored_capture",
+      "editor",
+      "process",
+      "deadline_scope"
+    ],
+    "checks": [
+      {
+        "gate": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 6.934,
+        "recordedAt": "2026-10-19T09:50:07.582095+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--keep-going",
+          "-j1",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 204.899,
+        "recordedAt": "2026-10-19T09:53:32.481820+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "library",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j1",
+          "--lib",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 189.355,
+        "recordedAt": "2026-10-19T09:56:41.837611+00:00",
+        "resultGroups": [
+          {
+            "passed": 413,
+            "failed": 0,
+            "ignored": 7
+          }
+        ]
+      },
+      {
+        "gate": "native-selected",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "--no-fail-fast",
+          "-j1",
+          "--test",
+          "git_conflicts",
+          "--test",
+          "git_workflows",
+          "--test",
+          "git_cli",
+          "--test",
+          "git_epochs",
+          "--test",
+          "git_epoch_selection",
+          "--test",
+          "git_review",
+          "--test",
+          "git_affected_cli",
+          "--test",
+          "git_affected_details",
+          "--test",
+          "git_affected_qualification",
+          "--test",
+          "git_impact_details",
+          "--test",
+          "git_impact_details_cli",
+          "--test",
+          "git_impact_details_no_git",
+          "--test",
+          "git_impact_details_qualification",
+          "--test",
+          "git_impact_details_sqlite_limits",
+          "--test",
+          "capture_options",
+          "--test",
+          "capture_policy",
+          "--test",
+          "ignored_capture",
+          "--test",
+          "editor",
+          "--test",
+          "process",
+          "--test",
+          "deadline_scope",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 101,
+        "timedOut": false,
+        "elapsedSeconds": 311.056,
+        "recordedAt": "2026-10-19T10:01:52.893716+00:00",
+        "resultGroups": [
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 29,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 17,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 15,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "doctests",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--doc",
+          "--locked",
+          "-j1"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 21.128,
+        "recordedAt": "2026-10-19T10:02:14.022909+00:00",
+        "resultGroups": [
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "python-contracts",
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 1.16,
+        "recordedAt": "2026-10-19T10:02:15.183391+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 4.647,
+        "recordedAt": "2026-10-19T10:02:19.830603+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 58.647,
+        "recordedAt": "2026-10-19T10:03:18.477929+00:00",
+        "resultGroups": []
+      }
+    ],
+    "scope": "Scoped Windows validation for new opt-in actual index conflict inspection and early readonly CLI dispatch: full library plus20 Git/capture/scope/editor/process integration targets, all-target Clippy, Python and mandatory TypeScript checks. No HostGit/shared Store/source-scope implementation changes. Whole-native, hosted/platform, wider semantic/upstream and full STATUS acceptance remain separate."
+  },
+  "findings": [
+    "Explicit host index-read and Git-trust admission precede existing-readonly Store access. Current native snapshot/lineage/path scope plus independent Git-source permission is mandatory for stage-body reads. Neither imported snapshots nor derived wrappers around foreign origins confer local Git authority; captured readonly dependency paths remain readable without write permission.",
+    "Two matching bounded NUL-delimited unmerged listings and object-format observations preserve every stage occurrence. SHA1/SHA256 raw blob hashes, original UTF8/CRLF bytes and stage-specific offsets are checked before bounded preview/page output. Symlink/gitlink/tree stages remain metadata; protected paths and unsafe text are omitted explicitly. No working source, canonical CAS body, other worktree source path, network, model or state write is introduced.",
+    "Twelve real Git/SQLite/CLI cases cover actual merges, epochs8/9, SHA1/SHA256, all7 constructed stage-presence patterns, per-worktree linked indexes, clean indexes, stale exact pages, source/cache/path separation, readonly dependencies, native Git/overlay and foreign lineage, budgets, SQL transaction/policy restoration, permissions and exact stdout envelopes. Seven separately labeled private protocol tests are included in full-library counts rather than added again.",
+    "A genuine foreign-snapshot scope regression failed before the native-origin closure correction. Exact red source copies/log/hash manifest precede the fix. Earlier development also preserves one compile-only temporary-borrow fixture error, three calibration/Windows fixture failures, and an interrupted compile with no claimed result. The first frozen preflight refuses two test-style Clippy findings before any functional gate; initializer and borrowed-slice fixes do not change runtime behavior.",
+    "Eighteen additional actual CLI host-path/protocol cases use the exact frozen final binary. Valid limits/page controls reach existing-state refusal; relative, parent, device/ADS and real junction paths, duplicate/missing/unknown/authority-bearing JSON, oversized host files and hard-max violations refuse before Store creation or stdout. Counts are separate from Cargo totals.",
+    "An actual duplicate-page JSON CLI test exposed a marker mismatch: malformed input was denied with the general safe JSON parser error instead of git_conflicts_input_invalid. The exact pre-fix source and actual failing harness/log are retained. Parsing now maps both strict parsing and typed decode errors to the same fixed public marker; a direct malformed/duplicate/unknown/invalid-UTF8/oversize regression covers the boundary. No authorization bypass or input-value disclosure was observed.",
+    "Selected validation is not a whole-native run. Prior whole-native Windows symlink prerequisites, hosted platform acceptance, compiler override/dispatch identity, inferred conflict causes, predicted merge safety, working-file resolution, pushed-ref freshness, area classification, remaining full STATUS functionality and upstream/release certification stay open. No main merge, release, live App installation or public comment is claimed."
+  ],
+  "artifacts": [
+    {
+      "path": "before-page-marker-fix/clippy.log",
+      "bytes": 172,
+      "sha256": "cec45bc2c0cbfddae271b82415392c40bda685de0809decc6f3744438077dfa9"
+    },
+    {
+      "path": "before-page-marker-fix/doctests.log",
+      "bytes": 192,
+      "sha256": "e8dd22872ec36e7e4492b7486ec397f2fac72455f5672cade2e0c5b9e3c25ec9"
+    },
+    {
+      "path": "before-page-marker-fix/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "before-page-marker-fix/library.log",
+      "bytes": 47913,
+      "sha256": "76cd04fb4dea0f9a2da4bbb751e7ba6bc0a02f5a05fcf52e9265384e43354472"
+    },
+    {
+      "path": "before-page-marker-fix/native-selected.log",
+      "bytes": 20204,
+      "sha256": "ba737a00d104a8181481a158a45db13aeca930ce3e7c23b48d755fab75607655"
+    },
+    {
+      "path": "before-page-marker-fix/native-target-inventory.json",
+      "bytes": 87406,
+      "sha256": "8a2b03869ee46635cd24a1224c50f7ad94190d5347f6749c5e12a8198b0e671f"
+    },
+    {
+      "path": "before-page-marker-fix/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "ab2c58dea6bd8d29abd2d91cc4bfd5d735c86f66f1b5bfebe5f433874cee351c"
+    },
+    {
+      "path": "before-page-marker-fix/receipts.json",
+      "bytes": 5510,
+      "sha256": "f1fe81ff03ec49470930b15fa88b9a67bca065a07b62fff792f04c56466997c0"
+    },
+    {
+      "path": "before-page-marker-fix/source-after.json",
+      "bytes": 69382,
+      "sha256": "2e0bbd1dbfee3755ea59e71e0b82a00e1141f720f86a4b2ea8a3d14421e380f9"
+    },
+    {
+      "path": "before-page-marker-fix/source-before.json",
+      "bytes": 69382,
+      "sha256": "2e0bbd1dbfee3755ea59e71e0b82a00e1141f720f86a4b2ea8a3d14421e380f9"
+    },
+    {
+      "path": "before-page-marker-fix/summary.json",
+      "bytes": 7142,
+      "sha256": "1d246bb8edb3633b689ea3bbfd5638f9a4db3abbe63e0442969e55f8ceaadbe8"
+    },
+    {
+      "path": "before-page-marker-fix/tested-native-binary.json",
+      "bytes": 122,
+      "sha256": "36acf7e6794acf298077d0f59d531b21caaed4a94c1308d9323ce52f33855f50"
+    },
+    {
+      "path": "before-page-marker-fix/tested-source/native/src/git_conflicts.rs",
+      "bytes": 27625,
+      "sha256": "ac2f69ad33f4554147f797a1c7aaac854e68f88e60bd59898d46b947516e1dd4"
+    },
+    {
+      "path": "before-page-marker-fix/tested-source/native/src/git_conflicts_cli.rs",
+      "bytes": 3118,
+      "sha256": "829613eef6f7ce6573bcc75ef99b7eea49c60f962676b7b020a27a252322aaee"
+    },
+    {
+      "path": "before-page-marker-fix/tested-source/native/src/git_conflicts_tests.rs",
+      "bytes": 7828,
+      "sha256": "73b21656e5a403cc58d627c8bb1fa069103f1ebd43438d7fb211deea5ce859d4"
+    },
+    {
+      "path": "before-page-marker-fix/tested-source/native/tests/git_conflicts.rs",
+      "bytes": 33059,
+      "sha256": "5a8e67b151ae9f64f82972d12759b22e80ce70129c3c237e527edfc64c9383e3"
+    },
+    {
+      "path": "before-page-marker-fix/tested-source-provenance.json",
+      "bytes": 887,
+      "sha256": "15998a3746be2264e92c6a0c4ac2cbdf452c6614a8f4f59eb212f497a0652f0a"
+    },
+    {
+      "path": "before-page-marker-fix/typescript-tests.log",
+      "bytes": 25049,
+      "sha256": "caa4a99baf4ea31e078c947ea325959316cb1ee672c921b82f7e5a5e4690c044"
+    },
+    {
+      "path": "before-page-marker-fix/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "development/fmt-r1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/fmt-r2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/fmt-r3.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/fmt-r4.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/foreign-scope-red-source/manifest.json",
+      "bytes": 419,
+      "sha256": "35f5bff8acdb2d8ba698646f0c15ef2dd9ba5023059c381dafdab8bdabf595c9"
+    },
+    {
+      "path": "development/foreign-scope-red-source/native/src/git_conflicts.rs",
+      "bytes": 26885,
+      "sha256": "a3184fbf1c2276ad8e01a5643ea1eb38f33390c3613c490a15e5ee620303d59e"
+    },
+    {
+      "path": "development/foreign-scope-red-source/native/src/git_conflicts_tests.rs",
+      "bytes": 7784,
+      "sha256": "1c81f8ef2e8c4f9ef1f74bcb85db74c9a62b1f2b0129b7d06f0c6e3474274809"
+    },
+    {
+      "path": "development/foreign-scope-red-source/native/tests/git_conflicts.rs",
+      "bytes": 27834,
+      "sha256": "9a13a8b88e915fec3907b5ad81924f21db3cb7236338abc7791cbcb2f733d64b"
+    },
+    {
+      "path": "development/foreign-scope-red.log",
+      "bytes": 1024,
+      "sha256": "c057b0121614343553a02f4555c09ad266a6bde6ff9fbd23d79933c77aa4a5ef"
+    },
+    {
+      "path": "development/git-conflicts-cli-path-gates.py",
+      "bytes": 5159,
+      "sha256": "d48da8f5dcfd911cff45610bafba9d5efd2b5cb35e2012cf29cb8f04f4b738e0"
+    },
+    {
+      "path": "development/host-limits-above-hard-max.stderr.log",
+      "bytes": 38,
+      "sha256": "b4bce6ebc2b7430fcd9f72c6ce96ec9644fb09833653165ff5e4b16f85758c5f"
+    },
+    {
+      "path": "development/host-limits-ads.stderr.log",
+      "bytes": 34,
+      "sha256": "6fd4a2a04f69c16e29188497a306682b5bca11b0e197d17296da2d76a4ea6a67"
+    },
+    {
+      "path": "development/host-limits-authority.stderr.log",
+      "bytes": 34,
+      "sha256": "6fd4a2a04f69c16e29188497a306682b5bca11b0e197d17296da2d76a4ea6a67"
+    },
+    {
+      "path": "development/host-limits-device-prefix.stderr.log",
+      "bytes": 34,
+      "sha256": "6fd4a2a04f69c16e29188497a306682b5bca11b0e197d17296da2d76a4ea6a67"
+    },
+    {
+      "path": "development/host-limits-duplicate-key.stderr.log",
+      "bytes": 34,
+      "sha256": "6fd4a2a04f69c16e29188497a306682b5bca11b0e197d17296da2d76a4ea6a67"
+    },
+    {
+      "path": "development/host-limits-missing-field.stderr.log",
+      "bytes": 34,
+      "sha256": "6fd4a2a04f69c16e29188497a306682b5bca11b0e197d17296da2d76a4ea6a67"
+    },
+    {
+      "path": "development/host-limits-oversized.stderr.log",
+      "bytes": 34,
+      "sha256": "6fd4a2a04f69c16e29188497a306682b5bca11b0e197d17296da2d76a4ea6a67"
+    },
+    {
+      "path": "development/host-limits-parent.stderr.log",
+      "bytes": 34,
+      "sha256": "6fd4a2a04f69c16e29188497a306682b5bca11b0e197d17296da2d76a4ea6a67"
+    },
+    {
+      "path": "development/host-limits-positive-control.stderr.log",
+      "bytes": 38,
+      "sha256": "d20b7e35815262a3dc4d03c12c300938a925e4b31ed640ad7a5b526390ebdc90"
+    },
+    {
+      "path": "development/host-limits-real-junction-ancestor.stderr.log",
+      "bytes": 34,
+      "sha256": "6fd4a2a04f69c16e29188497a306682b5bca11b0e197d17296da2d76a4ea6a67"
+    },
+    {
+      "path": "development/host-limits-relative.stderr.log",
+      "bytes": 34,
+      "sha256": "6fd4a2a04f69c16e29188497a306682b5bca11b0e197d17296da2d76a4ea6a67"
+    },
+    {
+      "path": "development/host-page-authority.stderr.log",
+      "bytes": 34,
+      "sha256": "6fd4a2a04f69c16e29188497a306682b5bca11b0e197d17296da2d76a4ea6a67"
+    },
+    {
+      "path": "development/host-page-duplicate-key.stderr.log",
+      "bytes": 34,
+      "sha256": "6fd4a2a04f69c16e29188497a306682b5bca11b0e197d17296da2d76a4ea6a67"
+    },
+    {
+      "path": "development/host-page-positive-control.stderr.log",
+      "bytes": 38,
+      "sha256": "d20b7e35815262a3dc4d03c12c300938a925e4b31ed640ad7a5b526390ebdc90"
+    },
+    {
+      "path": "development/host-page-real-junction-ancestor.stderr.log",
+      "bytes": 34,
+      "sha256": "6fd4a2a04f69c16e29188497a306682b5bca11b0e197d17296da2d76a4ea6a67"
+    },
+    {
+      "path": "development/host-page-relative.stderr.log",
+      "bytes": 34,
+      "sha256": "6fd4a2a04f69c16e29188497a306682b5bca11b0e197d17296da2d76a4ea6a67"
+    },
+    {
+      "path": "development/host-page-unknown-value-not-echoed.stderr.log",
+      "bytes": 34,
+      "sha256": "6fd4a2a04f69c16e29188497a306682b5bca11b0e197d17296da2d76a4ea6a67"
+    },
+    {
+      "path": "development/host-page-utf8-byte-budget-hard-max.stderr.log",
+      "bytes": 34,
+      "sha256": "6fd4a2a04f69c16e29188497a306682b5bca11b0e197d17296da2d76a4ea6a67"
+    },
+    {
+      "path": "development/host-path-gates.json",
+      "bytes": 14651,
+      "sha256": "aa2505ebda656d4d2b91978d22c44c559d70385c9816df92096af337404c03e8"
+    },
+    {
+      "path": "development/host-path-r1.log",
+      "bytes": 931,
+      "sha256": "dd571f3c08a5032e33883354ea9933f21a6f0be03468d815f1c363fbfe1e94f5"
+    },
+    {
+      "path": "development/host-path-r1.py",
+      "bytes": 5159,
+      "sha256": "d48da8f5dcfd911cff45610bafba9d5efd2b5cb35e2012cf29cb8f04f4b738e0"
+    },
+    {
+      "path": "development/interrupted-r3.json",
+      "bytes": 309,
+      "sha256": "954f5ee2a84afb6294fe7fc4f8f04aa6037847cf63c6b6a523956fd60341fa04"
+    },
+    {
+      "path": "development/native-r1.log",
+      "bytes": 852,
+      "sha256": "b2b2c28c1b98a5759cd9c3158ddbec12eec4f4a22e64802508d400d66e0c47b7"
+    },
+    {
+      "path": "development/native-r2.log",
+      "bytes": 2629,
+      "sha256": "0fd5776a6a9b6c4f7790837d57d66739f8b264c514e927bf46310bc4b142fe39"
+    },
+    {
+      "path": "development/native-r3.log",
+      "bytes": 111,
+      "sha256": "2996a9fac479da9a7e983ca1ac7e3bc4be4f1f0e00f49870de4d3c7305b3555f"
+    },
+    {
+      "path": "development/native-r4.log",
+      "bytes": 1536,
+      "sha256": "86fc70c44c6c25156304e4e1bc2f8855f4470cb70c631bb62a9f072cff57ae51"
+    },
+    {
+      "path": "development/parse-marker-red-source/manifest.json",
+      "bytes": 531,
+      "sha256": "38370cd5b391323d302a2886cbec55196aea62b1ad82d693540779f3e4b2b9e9"
+    },
+    {
+      "path": "development/parse-marker-red-source/native/src/git_conflicts.rs",
+      "bytes": 27625,
+      "sha256": "ac2f69ad33f4554147f797a1c7aaac854e68f88e60bd59898d46b947516e1dd4"
+    },
+    {
+      "path": "failure-classification.json",
+      "bytes": 1259,
+      "sha256": "952df7d1c20f1000752e93ceec68680e361059178d198a87b003d881dbc4107c"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 172,
+      "sha256": "d099fd5dcfcab7c249ee8197425a0bef515eaa7953596272c38de72a8ac19073"
+    },
+    {
+      "path": "final/doctests.log",
+      "bytes": 193,
+      "sha256": "6db4c4c9bbbc7c3ce4f48b7a377e5caaebcd5d830f5eb7e5efe965a6db567aa6"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/library.log",
+      "bytes": 48035,
+      "sha256": "5b4c504a88093be1d2ccb4b8dddc0f062c5eaa54327c32efea1861c229bac197"
+    },
+    {
+      "path": "final/native-selected.log",
+      "bytes": 20204,
+      "sha256": "a2d6e0c27f92d4016cd9ff3425e0639022e1cf82783641a95e45b43a056bfde0"
+    },
+    {
+      "path": "final/native-target-inventory.json",
+      "bytes": 87406,
+      "sha256": "8a2b03869ee46635cd24a1224c50f7ad94190d5347f6749c5e12a8198b0e671f"
+    },
+    {
+      "path": "final/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "0335241a30515565f048359bd3ed69db313e696803fb316e3e10cae875bae7dc"
+    },
+    {
+      "path": "final/receipts.json",
+      "bytes": 5511,
+      "sha256": "6b2442518820ffdf550733607b34d83d3e5c8793908994f2bbc96c24a3edce15"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 69382,
+      "sha256": "c3df1013262617cdd74f70fcf15c0efe30cdadbb385c07abf4bf85495807ef2e"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 69382,
+      "sha256": "c3df1013262617cdd74f70fcf15c0efe30cdadbb385c07abf4bf85495807ef2e"
+    },
+    {
+      "path": "final/summary.json",
+      "bytes": 7143,
+      "sha256": "4a4a7c5ecd154691d4c3db5a8f411bd100fac6a706889577a982362809924653"
+    },
+    {
+      "path": "final/tested-native-binary.json",
+      "bytes": 122,
+      "sha256": "bbfbfa9d1da1875a3bf9e43331f18011504b7a7618325cb5e645f0e9d62d5e17"
+    },
+    {
+      "path": "final/typescript-tests.log",
+      "bytes": 25039,
+      "sha256": "480aa512e80983b9f1f7cedc065167bd91b4be9b273b16031d8fe923c0402a48"
+    },
+    {
+      "path": "final/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "helper-syntax.json",
+      "bytes": 508,
+      "sha256": "fe94c706bb56219d3a801b2f45b15ff3343c0eb2805cdfd8d29a705fa3946e16"
+    },
+    {
+      "path": "helper-syntax.log",
+      "bytes": 72,
+      "sha256": "70563c8958a65ce6f17b8748f5085c15aeac2db0b631059e60a69b481f2b1ddf"
+    },
+    {
+      "path": "new-source/native/src/git_conflicts.rs",
+      "bytes": 28362,
+      "sha256": "5e8181f29d0537656f30957a19751726076fa698a02018e0861a30bae2371b45"
+    },
+    {
+      "path": "new-source/native/src/git_conflicts_cli.rs",
+      "bytes": 3118,
+      "sha256": "829613eef6f7ce6573bcc75ef99b7eea49c60f962676b7b020a27a252322aaee"
+    },
+    {
+      "path": "new-source/native/src/git_conflicts_tests.rs",
+      "bytes": 8580,
+      "sha256": "102ad495aba5c4a6228b05656cab19f06a4f35acffe8482cd7ca73bb3e0cb766"
+    },
+    {
+      "path": "new-source/native/tests/git_conflicts.rs",
+      "bytes": 33059,
+      "sha256": "5a8e67b151ae9f64f82972d12759b22e80ce70129c3c237e527edfc64c9383e3"
+    },
+    {
+      "path": "preflight-r1/clippy.log",
+      "bytes": 1605,
+      "sha256": "c99d75f5fe79bc0893c361bc6af9105507bda0ff0b97203b2bae9a8b4f0c0b05"
+    },
+    {
+      "path": "preflight-r1/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "preflight-r1/native-target-inventory.json",
+      "bytes": 87406,
+      "sha256": "8a2b03869ee46635cd24a1224c50f7ad94190d5347f6749c5e12a8198b0e671f"
+    },
+    {
+      "path": "preflight-r1/preflight-failure.json",
+      "bytes": 833,
+      "sha256": "84c8a1b455a85118b4413b6781be14ec070a14a8a3ed2a78cf2fd1bcc25087c4"
+    },
+    {
+      "path": "preflight-r1/preflight-source/native/src/git_conflicts_tests.rs",
+      "bytes": 7784,
+      "sha256": "1c81f8ef2e8c4f9ef1f74bcb85db74c9a62b1f2b0129b7d06f0c6e3474274809"
+    },
+    {
+      "path": "preflight-r1/preflight-source/native/tests/git_conflicts.rs",
+      "bytes": 32076,
+      "sha256": "207ee49d204e3b7f44b0dbb120f6c86c3eb646fb4f50a6210bbd3772ab9a94a6"
+    },
+    {
+      "path": "preflight-r1/receipts.json",
+      "bytes": 745,
+      "sha256": "6cc637219238d07456d911796c06b13a1d619673d389e0487c933a532c0f03a4"
+    },
+    {
+      "path": "preflight-r1/run-local-validation.py",
+      "bytes": 4830,
+      "sha256": "c6c61da696ca2849b9213dd99f530feb8e4d6465f2918e0ed7619ff9eb543afa"
+    },
+    {
+      "path": "preflight-r1/source-after.json",
+      "bytes": 69382,
+      "sha256": "f6b6af33ae8d436eadcf6081a138dc75ca61a28f7bc3ffe53a5a81525858ae18"
+    },
+    {
+      "path": "preflight-r1/source-before.json",
+      "bytes": 69382,
+      "sha256": "f6b6af33ae8d436eadcf6081a138dc75ca61a28f7bc3ffe53a5a81525858ae18"
+    },
+    {
+      "path": "run-elevated-reparse-checks.ps1",
+      "bytes": 5032,
+      "sha256": "bca2b2e037d31b62465915589b9a5c8ce85463f17fc6ddee1e98615667dbd8e7"
+    },
+    {
+      "path": "run-local-validation.py",
+      "bytes": 4833,
+      "sha256": "e459823078860d7af6e707952dee8fe552f3ac9fa86c54b97ac1c232f2f56a38"
+    },
+    {
+      "path": "runtime-change.patch",
+      "bytes": 2464,
+      "sha256": "a7da8fc7e6844eb83a3f21940c691c72e2cdf73e636e2cf757d93a2a42646ed5"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 241687,
+      "sha256": "27ef761915c1ee6713d7e66d9db70ea498360d42d0699b9f989908ba5863a45b"
+    },
+    {
+      "path": "windows-reparse-gates.json",
+      "bytes": 1338,
+      "sha256": "bb1923b383f74b7751e3666b5b2280fe3536ca0f81a669544ed9cacc4ab3a35c"
+    },
+    {
+      "path": "WINDOWS-REPARSE-GATES.md",
+      "bytes": 1755,
+      "sha256": "e086344abb8327ea937706439bf9d20cc1341ee1d68af0552b0c7200fed28379"
+    }
+  ],
+  "sourceMaterialization": "source-materialization.json"
+}

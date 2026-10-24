@@ -1,0 +1,18 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 5.98s
+     Running tests\manifest_graph.rs (target\debug\deps\manifest_graph-51f2ce9c74f5c644.exe)
+apm_yaml_manifest_dependencies_are_not_treated_as_npm: test
+cargo_inheritance_uses_the_nearest_declared_workspace: test
+cargo_path_link_must_match_declared_package_identity: test
+cargo_workspace_inherits_renamed_path_dependencies_without_merging_packages: test
+derived_publication_refuses_an_existing_record_with_different_scope: test
+invalid_xml_or_expired_capture_cannot_publish_derived_graph: test
+package_json_graph_preserves_aliases_and_never_stores_credentials: test
+pyproject_go_and_pom_declarations_have_distinct_ecosystems: test
+
+8 tests, 0 benchmarks
+     Running tests\markdown_graph.rs (target\debug\deps\markdown_graph-773ed0b86310e621.exe)
+commonmark_nested_labels_multiline_definitions_and_indented_code_have_correct_links: test
+markdown_wiki_reference_frontmatter_and_symbol_citations_are_source_bound: test
+
+2 tests, 0 benchmarks

@@ -1,0 +1,29 @@
+{
+  "qualifiedProductCommit": "2240fadd29dbfb361f706dfc5a97be510e6cf3bb",
+  "frozenInputs": 1129,
+  "onlyFiveDocumentInputsChanged": [
+    "docs/ARCHITECTURE.md",
+    "docs/REMAINING_WORK.md",
+    "docs/STATUS.md",
+    "docs/parity/native-reconciliation-2026-10-15.json",
+    "native/docs/compiler-move.md"
+  ],
+  "allOtherFrozenInputsExact": true,
+  "allPreviousReconciliationKeysAndValuesExact": true,
+  "newEvidenceDocuments": [
+    "README.md",
+    "checkpoint.json",
+    "raw-index.json",
+    "raw-logs.zip"
+  ],
+  "runtimeAndTestInputsChangedAfterQualification": false,
+  "localMarkdownLinksVerified": 501,
+  "rawArchiveReopenedAndEveryMemberSizeAndSha256Exact": true,
+  "evidenceFilesSha256": {
+    "checkpoint.json": "d0be71518a3fd1a60febf6b486bc73515d3de43d00fc016933f03451e9d56793",
+    "raw-index.json": "12dbdad6192b959dd9879d14738f968613c7b514d7defc4d16f0f8ae3ff0256c",
+    "raw-logs.zip": "d0df0a4de09ba7dbf4430b8e6972067669a95d72afc6f30080d878dda8fe7a49",
+    "README.md": "7d1a64574f2e091092b2b86a060a5471995ee2f4838991987d539c7c144bdf3d"
+  },
+  "moveContractRetainsPriorGitLfConvention": true
+}

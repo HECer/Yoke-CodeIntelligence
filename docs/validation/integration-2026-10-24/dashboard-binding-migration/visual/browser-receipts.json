@@ -1,0 +1,36 @@
+{
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "nativeBrowser": true,
+  "nativeScreenshotsClaimed": false,
+  "blocked": {
+    "actions": 0,
+    "draftRetained": true,
+    "height": 844,
+    "message": "Host binding metadata blocks this file. Inspect and resolve the explicit host migration before saving or recovering document changes. Your draft is retained. This page cannot migrate host grants.",
+    "overflow": false,
+    "planDisabled": true,
+    "readOnly": true,
+    "saveDisabled": true,
+    "width": 390
+  },
+  "retired": {
+    "actions": 0,
+    "draftRetained": true,
+    "message": "This file is bound to a different host write selection. Use the selection and journal folder that currently own this file to resolve pending work, or run explicit host binding migration once all journals are resolved. This page cannot migrate host grants.",
+    "overflow": false,
+    "planDisabled": true,
+    "readOnly": true,
+    "saveDisabled": true
+  },
+  "shutdown": {
+    "draftRetained": true,
+    "overflow": false,
+    "readOnly": true,
+    "shutdownDisabled": true
+  },
+  "snapshotFailures": [
+    "Preview snapshot failed: Preview automation snapshot timed out after 15000ms.",
+    "Preview snapshot failed: Preview automation snapshot timed out after 15000ms."
+  ]
+}

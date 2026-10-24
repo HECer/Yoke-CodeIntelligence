@@ -1,0 +1,24 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 9.23s
+     Running tests\adversarial.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\adversarial-49f0ae53200d545a.exe)
+bare_package_imports_do_not_become_syntactic_sibling_file_bindings: test
+cli_trace_honors_a_requested_snapshot_after_disk_changes: test
+conservative_token_budget_bounds_the_serialized_result: test
+derived_source_cannot_introduce_obvious_credentials_into_state: test
+huge_unicode_argument_errors_cannot_abort_the_mcp_session: test
+insufficient_workspace_response_budget_is_rejected_before_a_write: test
+missing_anonymous_tokens_are_reported_as_syntax_diagnostics: test
+private_ec_keys_and_credential_file_variants_are_excluded: test
+protected_package_credentials_and_obvious_tokens_never_enter_snapshots: test
+sqlite_sidecar_links_cannot_rewrite_files_outside_state: test
+sqlite_writer_contention_respects_the_cli_deadline: test
+syntax_delta_is_multiplicity_aware_and_test_paths_are_case_insensitive: test
+unchanged_index_republishes_the_disk_snapshot_after_patch_preparation: test
+windows_device_names_and_path_aliases_are_never_edit_targets: test
+
+14 tests, 0 benchmarks
+     Running tests\agent_dependency_options.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\agent_dependency_options-e75d75411186bf90.exe)
+dependency_search_is_host_captured_read_only_scope_and_filters_before_the_match_threshold: test
+requesting_dependencies_never_captures_ungranted_paths_or_protected_files: test
+
+2 tests, 0 benchmarks

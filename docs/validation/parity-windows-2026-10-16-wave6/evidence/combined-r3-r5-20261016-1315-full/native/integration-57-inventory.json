@@ -1,0 +1,33 @@
+{
+  "language_constructs": {
+    "executable": "target\\debug\\deps\\language_constructs-4f3985b025df7217.exe",
+    "ignored": [],
+    "registered": [
+      "commonlisp_function_invocations_keep_the_exact_original_call_span",
+      "explicit_erlang_fun_references_point_to_the_named_function_without_becoming_calls",
+      "explicit_lisp_function_designators_are_references_and_quoted_data_stays_literal",
+      "fortran_parameter_bindings_do_not_escape_to_another_procedure",
+      "lisp_class_superclasses_and_slot_headers_are_not_calls_but_initforms_are",
+      "lisp_lexical_declaration_headers_are_not_calls_but_bodies_and_initializers_are",
+      "literal_lisp_vectors_do_not_emit_executable_calls_or_function_references",
+      "new_language_procedure_nodes_have_actual_function_scopes",
+      "objc_message_calls_are_distinct_from_plain_identifier_references",
+      "objc_untyped_foreign_receiver_does_not_resolve_to_callers_own_method",
+      "powershell_nested_functions_do_not_leak_into_a_sibling_function_scope",
+      "quoted_lisp_lists_and_lambda_lists_do_not_become_function_calls",
+      "vb_invocations_and_address_of_references_keep_distinct_relations",
+      "vb_local_declarations_block_an_unrelated_same_named_module_method"
+    ]
+  },
+  "ledger": {
+    "executable": "target\\debug\\deps\\ledger-dcddb849694983a4.exe",
+    "ignored": [],
+    "registered": [
+      "concurrent_reservations_cannot_overspend",
+      "reported_cost_above_reservation_stays_charged_and_blocks_task",
+      "reservations_survive_reopen_and_refuse_overspend",
+      "unknown_billing_retains_reservation_and_only_unsent_attempts_cancel",
+      "usage_is_monotone_deduplicated_and_policy_is_immutable"
+    ]
+  }
+}

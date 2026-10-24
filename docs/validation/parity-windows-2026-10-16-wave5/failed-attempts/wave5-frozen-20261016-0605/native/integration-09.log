@@ -1,0 +1,24 @@
+    Finished `test` profile [unoptimized] target(s) in 0.66s
+     Running tests\capture_epoch_selection.rs (target\debug\deps\capture_epoch_selection-53e108e301f91721.exe)
+
+running 3 tests
+test resealed_unknown_epoch_and_changed_v9_proofs_fail_closed ... ok
+test typed_v8_disk_capture_matches_authentic_snapshot_and_receipt_bytes ... ok
+test selected_v9_capture_has_distinct_proofs_and_replays_through_default_readers ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.12s
+
+     Running tests\capture_options.rs (target\debug\deps\capture_options-402d0090ba83d878.exe)
+
+running 8 tests
+test capture_option_proof_obeys_the_shared_store_deadline ... ok
+test known_lsp_only_languages_are_explicit_capture_metadata_without_ast_claims ... ok
+test explicit_include_lifts_only_builtin_skip_and_never_widens_only_dirs ... ok
+test derived_snapshot_preserves_only_proven_capture_options ... ok
+test language_overrides_are_host_typed_and_change_immutable_identity ... ok
+test scoped_capture_uses_directory_segments_and_keeps_protections ... ok
+test unsafe_scope_and_unknown_language_fail_before_capture ... ok
+test exhausted_origin_chain_cannot_publish_an_invalid_capture_proof ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.63s
+

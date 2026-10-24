@@ -1,0 +1,13 @@
+{
+  "name": "yoke-upstream-live-validation",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@nanonets/graft": "^0.21.1",
+    "typescript": "5.8.3"
+  },
+  "type": "module",
+  "allowScripts": {
+    "tree-sitter-kotlin@0.3.8": true
+  }
+}

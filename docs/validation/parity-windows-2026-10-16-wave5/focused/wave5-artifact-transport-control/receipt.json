@@ -1,0 +1,27 @@
+{
+  "checkedAtUtc": "2026-10-16T06:47:33.526868+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "2",
+    "--test",
+    "trail_bodies",
+    "large_find_all_results_remain_complete_readable_artifacts",
+    "--",
+    "--exact",
+    "--test-threads=4"
+  ],
+  "exitCode": 0,
+  "seconds": 9.219,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-artifact-transport-control-20261016",
+  "logSha256": "95490655d78aa8626ab8c88c573eef34bbe4e79316999a6e97bfefd7470de0e8",
+  "groups": 1,
+  "passed": 1,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

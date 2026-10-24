@@ -1,0 +1,26 @@
+{
+  "model_bedrock_cli_actual": {
+    "executable": "target\\debug\\deps\\model_bedrock_cli_actual-0bfd6a33f71dc038.exe",
+    "ignored": [
+      "actual_cli_bedrock_batch_has_three_accounted_attempts_and_one_complete_corpus",
+      "actual_cli_bedrock_summary_uses_chunked_session_and_one_accounted_attempt"
+    ],
+    "registered": [
+      "actual_cli_bedrock_batch_has_three_accounted_attempts_and_one_complete_corpus",
+      "actual_cli_bedrock_summary_uses_chunked_session_and_one_accounted_attempt"
+    ]
+  },
+  "model_bedrock_review": {
+    "executable": "target\\debug\\deps\\model_bedrock_review-bf263af38b3aa1ee.exe",
+    "ignored": [],
+    "registered": [
+      "arn_slashes_and_dot_segments_stay_inside_one_signed_model_segment",
+      "cohere_maps_two_ordered_vectors_to_exact_supplied_source_ids",
+      "missing_usage_stays_unknown_and_reported_zero_remains_known",
+      "rerank_rejects_foreign_missing_duplicate_and_out_of_range_results",
+      "session_expiring_inside_credential_callback_never_reaches_wire",
+      "unicode_escaped_inner_object_keys_never_echo_temporary_credentials",
+      "unsupported_dialect_operation_and_wrong_source_scope_precede_credentials"
+    ]
+  }
+}

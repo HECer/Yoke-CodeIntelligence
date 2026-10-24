@@ -1,0 +1,38 @@
+{
+  "trail_review": {
+    "executable": "target\\debug\\deps\\trail_review-246e5c99a4fc09cd.exe",
+    "ignored": [],
+    "registered": [
+      "trail_dependency_trace_excludes_source_containment_edges",
+      "trail_file_trace_seeds_the_files_symbols_for_incoming_dependency_closure",
+      "trail_incoming_coupling_does_not_count_the_containing_file_as_a_dependency",
+      "trail_qualified_symbol_selection_matches_the_declared_container_suffix"
+    ]
+  },
+  "universal_languages": {
+    "executable": "target\\debug\\deps\\universal_languages-746feac12a53433c.exe",
+    "ignored": [],
+    "registered": [
+      "added_grammars_extract_declarations_from_real_source",
+      "astro_frontmatter_svelte_scripts_and_ejs_blocks_are_source_bound",
+      "blade_php_and_razor_code_blocks_keep_template_byte_anchors",
+      "composite_scripts_skip_html_comments_and_non_executable_data",
+      "dreammaker_call_lines_cannot_be_mislabeled_as_function_declarations",
+      "duplicate_script_types_keep_the_first_authored_attribute",
+      "ejs_comment_and_escaped_tags_do_not_become_code",
+      "file_metadata_does_not_copy_configuration_values_into_graph_signatures",
+      "harmless_html_attribute_ampersands_do_not_abort_script_extraction",
+      "language_specific_calls_keep_the_call_expression_anchor",
+      "large_robot_keyword_sets_respect_the_shared_deadline_without_quadratic_section_scans",
+      "newly_supported_extensions_are_not_silently_plain_text",
+      "object_and_module_declarations_keep_named_method_owners",
+      "r6_named_methods_and_s7_method_assignments_are_distinct_declarations",
+      "r_object_system_declarations_preserve_literal_names_and_methods",
+      "razor_raw_strings_and_interpolations_do_not_close_the_outer_code_block",
+      "separate_vue_scripts_cannot_repair_each_others_syntax_or_span_markup",
+      "structural_fallbacks_extract_named_declarations_with_exact_ranges",
+      "unsupported_embedded_language_is_explicit_and_quoted_tag_attributes_are_respected",
+      "vue_scripts_keep_original_utf8_offsets_and_ignore_markup_calls"
+    ]
+  }
+}

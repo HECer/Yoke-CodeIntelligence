@@ -1,0 +1,77 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 7.19s
+     Running tests\graph.rs (target\debug\deps\graph-2aaa35d28f1690cd.exe)
+
+running 1 test
+test community_partition_separates_dense_call_groups_despite_a_bridge ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests\graph_archive_review.rs (target\debug\deps\graph_archive_review-34a08598b98b6c0e.exe)
+
+running 2 tests
+test collection_reregistration_caps_existing_source_sql_cells_before_length_reads ... ok
+test resealed_archives_cannot_reclassify_a_captured_file_as_protected_source ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.69s
+
+     Running tests\graph_collections.rs (target\debug\deps\graph_collections-07ab8869252f0b4a.exe)
+
+running 12 tests
+test archived_capture_scope_keeps_configured_readonly_dependencies_and_rejects_missing_proof ... ok
+test canonical_collection_also_rejects_resealed_protected_source_after_registration ... ok
+test collection_historical_source_survives_original_history_retirement_and_blob_purge ... ok
+test collection_queries_use_namespaced_entities_and_exact_original_call_anchors ... ok
+test collection_sqlite_sidecars_cannot_write_through_links ... ok
+test legacy_default_native_archive_without_scope_sidecar_retains_original_identity ... ok
+test registered_collection_namespaces_equal_symbols_and_preserves_parallel_edges ... ok
+test registration_is_immutable_and_rejects_forged_graph_or_unregistered_scope ... ok
+test registry_payload_capacity_is_checked_before_decoding_corrupt_registration ... ok
+test registry_payload_sqlite_cell_is_capped_before_length_admission ... ok
+test selected_view_collection_preserves_origins_namespaces_and_source_after_retirement ... ok
+test view_archive_rejects_resealed_invented_rows_corrupt_inputs_and_foreign_view ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.29s
+
+     Running tests\graph_exports.rs (target\debug\deps\graph_exports-bf0f997dadd52384.exe)
+
+running 10 tests
+test export_rejects_forged_graph_invalid_limits_and_expired_deadline ... ok
+test canvas_is_parseable_directional_and_source_bound ... ok
+test bounded_projection_reports_omissions_and_publishes_exact_bundle ... ok
+test cypher_is_escaped_and_keeps_each_directed_parallel_observation ... ok
+test standalone_exports_include_verified_hashes_and_neutralize_canvas_markdown ... ok
+test svg_replaces_xml_forbidden_display_controls_but_keeps_source_hash ... ok
+test svg_and_html_exports_never_execute_hostile_source_markup ... ok
+test markdown_cards_have_collision_safe_names_and_preserve_human_notes ... ok
+test wiki_contains_actual_community_articles_and_escaped_source_links ... ok
+test tampered_export_bundle_cannot_write_any_destination_bytes ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.70s
+
+     Running tests\graph_extensions.rs (target\debug\deps\graph_extensions-5cf6101264dc4545.exe)
+
+running 9 tests
+test expired_and_rebound_or_corrupt_source_reports_are_rejected ... ok
+test ambiguous_members_cannot_collide_community_identities ... ok
+test duplicate_structural_identities_are_reported_ambiguous ... ok
+test invalid_analysis_options_fail_without_persisting ... ok
+test empty_graph_and_hub_exclusion_remain_explicit ... ok
+test persisted_wrong_line_anchors_are_not_certified_as_exact ... ok
+test report_is_reproducible_with_actual_leiden_and_source_bound_labels ... ok
+test report_keeps_parallel_arcs_exact_anchors_and_uncertainty ... ok
+test snapshot_diff_ignores_offset_and_id_churn_but_detects_body_change ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.41s
+
+     Running tests\graph_review_adversarial.rs (target\debug\deps\graph_review_adversarial-69abd8cc0880666f.exe)
+
+running 5 tests
+test review_launcher_option_values_are_not_persisted_as_packages ... ok
+test review_json_pointer_can_address_array_child_keys ... ok
+test review_cargo_ordinary_ancestor_does_not_shadow_workspace ... ok
+test review_tree_export_script_is_valid_javascript ... ok
+test review_yaml_mcp_config_preserves_server_contract ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.58s
+

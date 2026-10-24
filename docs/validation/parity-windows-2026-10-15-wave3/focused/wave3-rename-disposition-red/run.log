@@ -1,0 +1,82 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: unused import: `Path`
+  --> native\tests\host_output_disposition.rs:21:12
+   |
+21 |     path::{Path, PathBuf},
+   |            ^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (test "host_output_disposition") generated 1 warning (run `cargo fix --test "host_output_disposition" -p yoke-code-intelligence` to apply 1 suggestion)
+    Finished `test` profile [unoptimized] target(s) in 2.84s
+     Running tests\facade_file_rename.rs (target\debug\deps\facade_file_rename-26aacd7ab6c8a3a1.exe)
+
+running 9 tests
+test file_rename_permissions_and_external_context_refusal_precede_provider_start ... ok
+
+thread 'guarded_file_rename_plan_refuses_stale_source_before_any_workspace_write' (85980) panicked at native\tests\facade_file_rename.rs:478:10:
+called `Result::unwrap()` on an `Err` value: Missing string argument: name_path
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test guarded_file_rename_plan_refuses_stale_source_before_any_workspace_write ... FAILED
+
+thread 'nullable_file_rename_omitted_and_null_selectors_preserve_parent_for_v8_v9' (24892) panicked at native\tests\facade_file_rename.rs:239:38:
+Omitted/null name_path must select the captured file: Missing string argument: name_path
+test nullable_file_rename_omitted_and_null_selectors_preserve_parent_for_v8_v9 ... FAILED
+test directory_missing_excluded_and_readonly_sources_have_no_file_rename_authority ... ok
+
+thread 'public_file_rename_accepts_generated_false_defaults_and_explicit_false_options' (82808) panicked at native\tests\facade_file_rename.rs:262:14:
+Public null-file defaults must reach the supported file path: Missing string argument: name_path
+test public_file_rename_accepts_generated_false_defaults_and_explicit_false_options ... FAILED
+
+thread 'root_file_rename_uses_the_supplied_unicode_basename_without_creating_a_parent' (78076) panicked at native\tests\facade_file_rename.rs:276:6:
+called `Result::unwrap()` on an `Err` value: Missing string argument: name_path
+test root_file_rename_uses_the_supplied_unicode_basename_without_creating_a_parent ... FAILED
+test occupied_file_directory_uncaptured_binary_and_source_alias_refuse_before_provider ... ok
+test empty_selectors_and_true_or_malformed_file_occurrence_options_refuse_before_provider ... ok
+test file_rename_new_name_is_a_portable_single_basename_and_never_a_destination_path ... ok
+
+failures:
+
+failures:
+    guarded_file_rename_plan_refuses_stale_source_before_any_workspace_write
+    nullable_file_rename_omitted_and_null_selectors_preserve_parent_for_v8_v9
+    public_file_rename_accepts_generated_false_defaults_and_explicit_false_options
+    root_file_rename_uses_the_supplied_unicode_basename_without_creating_a_parent
+
+test result: FAILED. 5 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.12s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --test facade_file_rename`
+     Running tests\host_output_disposition.rs (target\debug\deps\host_output_disposition-9c7bbb14919ba5e0.exe)
+
+running 9 tests
+test disposition_probe_worker ... ignored, spawned only by owned-temp disposition capability tests
+disposition capability ExZero/Exit/populate=false: {"nonce":"yoke-output-disposition-Rqtfjv","action":"exZero","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:c1700800000013000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:c1700800000013000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=None
+disposition capability Armed/Kill/populate=false: {"nonce":"yoke-output-disposition-STNVne","action":"armed","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:bd700800000016000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:bd700800000016000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=None
+test armed_empty_output_is_deleted_after_real_process_kill ... ok
+disposition capability LegacyFalse/Exit/populate=false: {"nonce":"yoke-output-disposition-pJhGFZ","action":"legacyFalse","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:bd700800000017000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:bd700800000017000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=None
+disposition capability Armed/Exit/populate=false: {"nonce":"yoke-output-disposition-RKo3Oa","action":"armed","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:c0700800000014000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:c0700800000014000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=None
+test armed_empty_output_is_deleted_after_real_process_exit ... ok
+disposition capability ExZero/Kill/populate=false: {"nonce":"yoke-output-disposition-fdixSU","action":"exZero","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:c0700800000015000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:c0700800000015000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=None
+test extended_zero_flags_are_characterized_after_exit_and_kill ... ok
+disposition capability LegacyFalse/Kill/populate=false: {"nonce":"yoke-output-disposition-jEQGmw","action":"legacyFalse","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:c2700800000013000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:c2700800000013000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=None
+test legacy_false_does_not_disarm_creation_time_delete_on_close ... ok
+disposition capability ExOnCloseOnly/Exit/populate=true: {"nonce":"yoke-output-disposition-DAuRht","action":"exOnCloseOnly","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:c0700800000016000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:c0700800000016000000000000000000","length":31,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=Some(Facts { identity: "58bed981bed95858:c0700800000016000000000000000000", length: 31, delete_pending: false, native_mode_status: 0, native_mode: 32 })
+test required_same_handle_disarm_preserves_subsequent_bytes_after_real_process_exit ... ok
+disposition capability ExOnCloseOnly/Kill/populate=true: {"nonce":"yoke-output-disposition-qKN7uU","action":"exOnCloseOnly","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:c3700800000013000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:c3700800000013000000000000000000","length":31,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=Some(Facts { identity: "58bed981bed95858:c3700800000013000000000000000000", length: 31, delete_pending: false, native_mode_status: 0, native_mode: 32 })
+test required_same_handle_disarm_preserves_subsequent_bytes_after_real_process_kill ... ok
+disposition capability ExOnCloseOnly/Exit/populate=false: {"nonce":"yoke-output-disposition-zxUq59","action":"exOnCloseOnly","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:b6700800000016000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:b6700800000016000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=Some(Facts { identity: "58bed981bed95858:b6700800000016000000000000000000", length: 0, delete_pending: false, native_mode_status: 0, native_mode: 32 })
+test required_same_handle_disarm_survives_real_process_exit ... ok
+disposition capability ExOnCloseOnly/Kill/populate=false: {"nonce":"yoke-output-disposition-1YrPJW","action":"exOnCloseOnly","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:bb700800000016000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:bb700800000016000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=Some(Facts { identity: "58bed981bed95858:bb700800000016000000000000000000", length: 0, delete_pending: false, native_mode_status: 0, native_mode: 32 })
+test required_same_handle_disarm_survives_real_process_kill ... ok
+
+test result: ok. 8 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+error: 1 target failed:
+    `-p yoke-code-intelligence --test facade_file_rename`

@@ -1,0 +1,26 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native)
+    Finished `test` profile [unoptimized] target(s) in 8.40s
+     Running tests\git_impact_details_cli.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\git_impact_details_cli-469a41b44fa7fa24.exe)
+
+running 1 test
+test invalid_uninitialized_wal_shm_pairs_refuse_without_physical_mutation ... FAILED
+
+failures:
+
+---- invalid_uninitialized_wal_shm_pairs_refuse_without_physical_mutation stdout ----
+
+thread 'invalid_uninitialized_wal_shm_pairs_refuse_without_physical_mutation' (81104) panicked at native\tests\git_impact_details_cli.rs:1075:9:
+assertion `left == right` failed: uninitialized sidecar mutation with 0 SHM bytes
+  left: {".yoke": None, ".yoke\\blobs": None, ".yoke\\clients.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\index.sqlite": Some("c9fc0338e30a5a31d95bc18de79bed633b697a7a7aa3d07da5ca6faf4266cf0d"), ".yoke\\index.sqlite-shm": Some("fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"), ".yoke\\index.sqlite-wal": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\maintenance.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\trees": None}
+ right: {".yoke": None, ".yoke\\blobs": None, ".yoke\\clients.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\index.sqlite": Some("c9fc0338e30a5a31d95bc18de79bed633b697a7a7aa3d07da5ca6faf4266cf0d"), ".yoke\\index.sqlite-shm": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\index.sqlite-wal": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\maintenance.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\trees": None}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    invalid_uninitialized_wal_shm_pairs_refuse_without_physical_mutation
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 14 filtered out; finished in 0.14s
+
+error: test failed, to rerun pass `--test git_impact_details_cli`
+error: 1 target failed:
+    `--test git_impact_details_cli`

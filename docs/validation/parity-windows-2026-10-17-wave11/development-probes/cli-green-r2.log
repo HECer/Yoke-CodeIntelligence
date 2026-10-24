@@ -1,0 +1,16 @@
+   Compiling yoke-code-intelligence v0.5.0 (E:\Yoke-Worktrees\meaning-join-20261017\native)
+    Finished `test` profile [unoptimized] target(s) in 25.17s
+     Running tests\meaning_join_cli.rs (E:/Yoke-Build-Cache/meaning-join-20261017\debug\deps\meaning_join_cli-6a666de6959ec2c0.exe)
+
+running 8 tests
+test join_host_admission_precedes_missing_or_incomplete_store_initialization ... ok
+test joined_graphs_retain_all_original_claims_directed_copies_slots_and_receipts_without_live_source ... ok
+test empty_join_groups_keep_equal_labels_and_cross_graph_references_distinct ... ok
+test join_order_and_host_member_order_do_not_change_projection_bytes_or_identity ... ok
+test join_refuses_forged_pins_unselected_members_and_tampered_parent_receipts ... ok
+test checked_lookup_degrees_and_directed_trace_keep_selfloops_and_raw_slot_counts ... ok
+test join_global_capture_and_execution_flags_refuse_with_valid_registered_parents ... ok
+test join_capacities_and_exact_output_newline_refuse_the_whole_request_without_publication ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.86s
+

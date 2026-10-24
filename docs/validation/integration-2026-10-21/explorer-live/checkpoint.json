@@ -1,0 +1,50 @@
+{
+  "sourceCommit": "bf00ddc07743ab8b277baf221a970c66dbc55d74",
+  "sourceInputs": 1007,
+  "codeFiles": {
+    "native/src/lib.rs": "f949ce877cdcba71c8cdda98c7c78690ce4533ed4fc38670de9adecb6b246f92",
+    "native/src/main.rs": "c3b89c6a4b1d40f7d7e10d1f92f732cf31eb292445ecb0e2d65ef17ea32e616d",
+    "native/src/explorer_http.rs": "35caeebd85314c12e1a9272e1833fa63b47b3a76f624947f3fbe234084cdcbf2",
+    "native/src/explorer_live.html": "fb6ec0c6558b0282a189a84bd5f8b460611a50aac0b0471a1d1fd4cae5bc6419",
+    "native/tests/explorer_http.rs": "e2e671f707857ffea0d4b887af250a4e20a0cae75020b1f3d76b6cc869c12c57"
+  },
+  "nativeCliSha256": "104b22e25b5608f21371c677537762e341078bbf4fe8ecfd8ae569c006084cb5",
+  "rustPassed": 31,
+  "newLiveRustPassed": 6,
+  "typeScript": {
+    "passed": 260,
+    "existingSkips": 3
+  },
+  "allTargetClippyPassed": true,
+  "finalDeltaFromWholeScopedChecks": "Only two live-HTML access-state labels; Rust source and tests unchanged",
+  "finalDeltaChecks": [
+    "rebuilt actual CLI",
+    "six live HTTP cases",
+    "fmt",
+    "JavaScript syntax",
+    "eleven real browser images and functional controls"
+  ],
+  "realVisualRounds": 5,
+  "finalImagesVisuallyInspected": 11,
+  "actualPendingRequestVisuallyChecked": true,
+  "sandboxCanonicalDownload": {
+    "name": "yoke-canonical-graph.json",
+    "bytes": 6853,
+    "sha256": "214ec05d3c99f9a5d5d2065db62769bc45b13fd8f9a87e87b3a66979d8e53f1c",
+    "exact": true
+  },
+  "legacyHtmlSha256": "c3b4e6bbf9b63ce55a35e5cb2dfaf16237d64723e4aeb0f5051f0ef424a4f4e0",
+  "rawMembers": 154,
+  "rawBytes": 3154567,
+  "rawZipBytes": 2624440,
+  "privateCapabilityValuesScanned": 10,
+  "privateCapabilityValuesPublished": 0,
+  "privateProcessStdoutStderrReadyAndProfilesExcluded": true,
+  "wholeNativeBaselineRerun": false,
+  "fullWindowsAccepted": false,
+  "fullStatusAccepted": false,
+  "systemSettingsChanged": false,
+  "analyzedSourceExecuted": false,
+  "modelRequested": false,
+  "automaticWatchImplemented": false
+}

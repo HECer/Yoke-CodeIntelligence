@@ -1,0 +1,31 @@
+    Finished `test` profile [unoptimized] target(s) in 0.55s
+     Running tests\monorepo_scopes.rs (target\debug\deps\monorepo_scopes-cd55843ab8feea0c.exe)
+
+running 3 tests
+test malformed_captured_manifest_is_explicit_policy_error_without_source_contents ... ok
+test public_partition_and_anchors_use_captured_bytes_after_live_tree_changes ... ok
+test public_scope_summaries_keep_one_share_per_physical_root_and_excluded_items ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.49s
+
+     Running tests\notes.rs (target\debug\deps\notes-662e2c807df93ad8.exe)
+
+running 15 tests
+test authored_revision_timestamp_uses_unix_milliseconds ... ok
+test global_address_namespace_is_reserved_and_reference_boundaries_are_exact ... ok
+test edited_note_keeps_historical_anchor_and_reports_changed_source ... ok
+test global_note_policy_matches_its_canonical_global_namespace ... ok
+test host_note_policy_defaults_read_only_and_rejects_unknown_authority_fields ... ok
+test hidden_and_read_only_references_do_not_leak_or_block_renames ... ok
+test global_storage_is_host_selected_and_missing_or_ignored_notes_do_not_leak ... ok
+test full_retired_head_quota_rejects_publication_atomically_and_allows_reuse ... ok
+test maximally_encoded_accepted_note_remains_readable_after_commit ... ok
+test memory_reference_left_boundaries_exclude_larger_uri_schemes_and_identifiers ... ok
+test named_note_crud_retains_authored_scope_revisions_and_exact_source ... ok
+test regex_gap_growth_fails_before_remaining_budget_underflow_and_keeps_the_revision ... ok
+test regex_edits_count_guard_and_read_only_policy_do_not_partially_mutate_notes ... ok
+test rename_rewrites_exact_mem_references_atomically_except_read_only_notes ... ok
+test retired_heads_remain_bounded_without_consuming_active_note_content_quota ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.33s
+

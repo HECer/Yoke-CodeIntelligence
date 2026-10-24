@@ -1,0 +1,34 @@
+{
+  "sourceCommit": "55c1ab70dcfa6b73e68011a3be1c1ab1151dfb4f",
+  "qualifiedFrozenInputs": 1078,
+  "changedFrozenInputs": {
+    "docs/REMAINING_WORK.md": {
+      "before": "8603fcee506eea23aa301f8c9e1c9167127df06a4738f1497737a49561776210",
+      "after": "84740d1550a809f05717347dfb2bbdcac1f3fe32179c9a07dd6ca29e5dbd1add"
+    },
+    "docs/STATUS.md": {
+      "before": "efe4d2071a13eec90b7f632a7ff9a2a56e341968f3d32156c5ff5b74617126ce",
+      "after": "4b4a64675d1e5b1adcb9a22d879690f38782e898edeef7a65a63e2c3f6301264"
+    },
+    "docs/parity/native-reconciliation-2026-10-15.json": {
+      "before": "d3566a75f8a1a01580e929c53b5085f0f7713d332be27079ba7dd63b34508851",
+      "after": "b347de2d126d60d6595ba3f97caf01f0d5d9a5a3a62259b8e66cf4b8ff6608a8"
+    },
+    "native/docs/ignored-source-capture.md": {
+      "before": "41460c9a29e3f467f691123072a110bb171b2d711d201c078905850b161ba4f1",
+      "after": "97f8565a7607c8a81d83878ef3813e9a94b79611e4af446326dfe11d4daa4178"
+    }
+  },
+  "onlyDocumentationChangedAfterQualification": true,
+  "productGitBlobsExact": {
+    "native/src/capture.rs": "3546a0b3066789f2b94d5bff1928c18f5506c663",
+    "native/src/capture_directory_identity.rs": "902cdcae884e2abfc4893cb6529bd1a2c1214f5f",
+    "native/src/lib.rs": "24bdcf51e334f1eff12b8d8b29d00199151b1e80",
+    "native/src/source_exclusions.rs": "8535928de1fe9ff876e3fe1c9e0950592cc776a8",
+    "native/src/store.rs": "e3ce480519d8e973963d7a0faab6b0a01d4cd8a9",
+    "native/src/store_read_only.rs": "5bc392f6684fdddf744bf869cf7e989e8cd59d2d",
+    "native/tests/ignored_directory_identity.rs": "12f0c84467991749911c00bc4152a703928c322f"
+  },
+  "originalLedgerSummaryAndAllPreviousReconciliationFieldsExact": true,
+  "testsRerunAfterDocumentation": false
+}

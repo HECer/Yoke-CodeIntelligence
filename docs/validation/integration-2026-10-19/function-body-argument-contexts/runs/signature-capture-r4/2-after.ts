@@ -1,0 +1,1 @@
+if(void 0!==void 0){var phantom=function(fn:(n:number)=>number):[typeof fn]{throw new Error();};void phantom;}const collect=((...raw:unknown[])=>raw) as unknown as typeof phantom;const rawArgs=collect(n=>n+1);const arg=rawArgs[0];const result=arg(3);export const observed=result;

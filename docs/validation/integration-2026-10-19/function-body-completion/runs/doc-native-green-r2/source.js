@@ -1,0 +1,1 @@
+export const marker=1;/** @returns {string|number} */ function helper(){return {value:3};}const result=helper();export const observed={marker,result};

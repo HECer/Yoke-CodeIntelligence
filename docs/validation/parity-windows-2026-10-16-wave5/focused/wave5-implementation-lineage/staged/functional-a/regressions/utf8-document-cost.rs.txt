@@ -1,0 +1,54 @@
+// Actual saved-row corruption, not an unpublished/forged checked entity.
+#[test]
+fn cached_document_cost_rejects_mid_utf8_boundaries_before_budget_admission() {
+    let source = "fn f(){ /*é*/ }\n";
+    let f = fixture(&[
+        ("a/package.json", r#"{"name":"a"}"#),
+        ("b/package.json", r#"{"name":"b"}"#),
+        ("a/lib.rs", source),
+    ]);
+    let d = Deadline::new(20_000);
+    let (mut valid, _) = checked(&f, &d);
+    let original = f
+        .graph
+        .entities
+        .iter()
+        .find(|e| e.path == "a/lib.rs" && e.name == "f")
+        .unwrap();
+    valid.read_source("a/lib.rs").unwrap();
+    assert!(valid.document_cost(original).unwrap() > 0);
+    drop(valid);
+    let mut corrupt = f.graph.clone();
+    let end = source.find('é').unwrap() + 1;
+    assert!(!source.is_char_boundary(end));
+    let changed = corrupt
+        .entities
+        .iter_mut()
+        .find(|e| e.id == original.id)
+        .unwrap();
+    changed.end_byte = end;
+    assert!(changed.start_byte < changed.end_byte && changed.end_byte <= source.len());
+    f.engine
+        .store
+        .db
+        .execute(
+            "UPDATE graphs SET value=?1 WHERE id=?2",
+            rusqlite::params![serde_json::to_string(&corrupt).unwrap(), f.snapshot.id],
+        )
+        .unwrap();
+    // Exact saved row now matches supplied graph. A forged clone would fail a
+    // different full-metadata check and would not exercise this UTF8 guard.
+    let changed = corrupt
+        .entities
+        .iter()
+        .find(|e| e.id == original.id)
+        .unwrap();
+    let mut run = begin(&f.engine.store, &f.snapshot, &corrupt, &d, 4_000_000).unwrap();
+    run.read_source("a/lib.rs").unwrap();
+    let before = run.usage();
+    assert!(matches!(
+        hard(run.document_cost(changed)),
+        RetrievalHardError::SourceIntegrity(_)
+    ));
+    assert_eq!(run.usage(), before);
+}

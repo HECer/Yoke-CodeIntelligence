@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T00:31:26.809588+00:00",
+  "baseCommit": "d4edf7d7f7fcdfe2351fac7f2eab84d9fd781ad7",
+  "kind": "captured_git_history_file_and_symbol_mapping_development",
+  "acceptedWholeNative": false,
+  "checks": {
+    "broadRun": {
+      "groups": 9,
+      "passed": 515,
+      "failed": 0,
+      "ignored": 7
+    },
+    "finalOutputAdmissionRun": {
+      "groups": 2,
+      "passed": 409,
+      "failed": 0,
+      "ignored": 7
+    },
+    "allTargetClippyWarningsDenied": "passed_both_runs",
+    "format": "passed_both_runs",
+    "typescriptTypecheck": "passed_broad_run",
+    "typescript": {
+      "passed": 254,
+      "failed": 0,
+      "skipped": 3
+    },
+    "sourceUnchangedWithinBothRuns": true,
+    "currentRuntimeInputsMatchFinalManifest": true,
+    "runtimeInputsVerified": 602
+  },
+  "coverage": [
+    "Actual owned Git SHA-1 and SHA-256 histories and mixed supported analyzer epochs",
+    "Verified file additions/deletions/content/mode facts over captured path union",
+    "Exact UTF-8/CRLF anchors, body-free signatures, changed fingerprints and cross-path syntax candidates",
+    "Qualified inline module names and duplicate groups preserve all original candidates",
+    "Missing and unselected captures remain explicitly unavailable; omission is not deletion",
+    "All selected captures share source/metadata/lineage/entity/AST/name/export budgets",
+    "Captured commit proof quotas admitted before artifact payload reads",
+    "Incremental exact encoded row admission, escaped JSON, zero budgets and cancellation",
+    "Current host grant, snapshot/commit scope, caller transaction refusal and SQL policy restoration",
+    "Actual CLI independent permission gates, closed request schema and exact output bytes including LF",
+    "Unchanged CAS, logical SQL and current checkout in read-only mapping tests"
+  ],
+  "proofs": {
+    "broadRunManifest": "digest-mapping-r1/source-freeze.json",
+    "finalManifest": "digest-mapping-r2/source-freeze.json",
+    "onlyInterveningRuntimeDelta": "source-delta.json",
+    "interveningDelta": "one new mapping module output-admission/metric refinement and its integration tests; other runtime inputs unchanged",
+    "documentationAndEvidenceWrittenAfterValidation": true
+  },
+  "preparationNotes": {
+    "acceptanceEvidence": false,
+    "observations": [
+      "Initial test compile rejected attempts to access private HostProfile grants and serialize it; fixtures now use the public parse contract.",
+      "First executable preparation had 9 passes/2 fixture failures: default 32KB CLI output capacity and accidental Git tracking of owned .yoke state. Both fixed without weakening runtime limits.",
+      "Next preparation had 11 passes/1 fixture failure: corruption targeted an unsupported .gitignore graph row after fixture changes; it now targets an actual replayed Rust declaration.",
+      "Subsequent manual preparation passed all 12 then frozen broad run added the independent CLI permission case, for 13 new integration tests."
+    ]
+  },
+  "boundaries": [
+    "Selected existing captures only; no automatic source acquisition, provider discussions, service handoff or universal export certification",
+    "Symbol associations remain syntax candidates; semantic identity/compiler/provider verification and complete remain false",
+    "Scoped counts overlap and must not be added; seven actual host gates remain ignored",
+    "No full-native acceptance, release, main merge, live App installation or deployment; full STATUS/R1-R9 objective remains active"
+  ],
+  "artifacts": [
+    {
+      "path": "digest-mapping-r1/clippy.log",
+      "bytes": 172,
+      "sha256": "026b8992e9ffa1a40820151629d6065776bc52b5b7ea265fa9eeb9416dbce29d"
+    },
+    {
+      "path": "digest-mapping-r1/digest-git-library.log",
+      "bytes": 58272,
+      "sha256": "fb49063cd04592ba781f3362291e38fec91138d4819385d0320c3fc60a1c2776"
+    },
+    {
+      "path": "digest-mapping-r1/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "digest-mapping-r1/receipts.json",
+      "bytes": 1778,
+      "sha256": "552d0c0c1d32a277b4bbcbfadd2f8989b50ec7ad8e12e382e282a461f760fbb7"
+    },
+    {
+      "path": "digest-mapping-r1/source-freeze.json",
+      "bytes": 64352,
+      "sha256": "e31a63a2cfd671971129785e4633b73e2e4f39893c449a79d291df01a17acc9f"
+    },
+    {
+      "path": "digest-mapping-r1/summary.json",
+      "bytes": 2020,
+      "sha256": "70fb61ab79a0a804bdf5a8b84fe591d1bdf6a3ba8e7b8980e068992881468623"
+    },
+    {
+      "path": "digest-mapping-r1/typescript-tests.log",
+      "bytes": 24421,
+      "sha256": "eaad789323e5223c32a14fec1e6ce76ec5a31368a3e9874138bbc584e1b5f659"
+    },
+    {
+      "path": "digest-mapping-r1/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "digest-mapping-r2/clippy.log",
+      "bytes": 172,
+      "sha256": "b2a514b26b96c5f1d4793f1343d968a0b54f0b63db1b0a842f7d8f6f42eb46c9"
+    },
+    {
+      "path": "digest-mapping-r2/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "digest-mapping-r2/receipts.json",
+      "bytes": 1056,
+      "sha256": "305fd5208d66c720bbfef5bedac70acc06606ad0886b4c4e60d4a07c8e44ac2d"
+    },
+    {
+      "path": "digest-mapping-r2/row-budget-and-mapping.log",
+      "bytes": 47475,
+      "sha256": "11cca340d599c5e64d3eb02a3b6928fe54340639d0e7fc3d86109618f2536805"
+    },
+    {
+      "path": "digest-mapping-r2/source-freeze.json",
+      "bytes": 64352,
+      "sha256": "77ee6427e2af23ff615fb127a5996682b2747dbec6d99e17051c77ae7431c3e9"
+    },
+    {
+      "path": "digest-mapping-r2/summary.json",
+      "bytes": 1228,
+      "sha256": "597683132e232f6b4a67fb64dd997861141207439bf6de20aec188b626eaca8f"
+    },
+    {
+      "path": "source-delta.json",
+      "bytes": 443,
+      "sha256": "c2eb17d39d1ed8d296a5696a657d2f62edf365e85c511b2b021d88409bcae64e"
+    }
+  ]
+}

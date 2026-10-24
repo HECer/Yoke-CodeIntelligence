@@ -1,0 +1,33 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-j2",
+    "--test",
+    "digest_history_acquisition",
+    "--test",
+    "github_app_digest_mapping",
+    "--test",
+    "capture_policy",
+    "--test",
+    "git_epochs",
+    "--",
+    "--test-threads=2"
+  ],
+  "exitCode": 101,
+  "elapsedSeconds": 91.601,
+  "recordedAt": "2026-10-19T06:22:18.581123+00:00",
+  "resultGroups": [
+    {
+      "passed": 9,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 8,
+      "failed": 1,
+      "ignored": 0
+    }
+  ]
+}

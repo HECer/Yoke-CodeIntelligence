@@ -1,0 +1,16 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7027,\"severity\":\"error\",\"message\":\"Unreachable code detected.\",\"path\":\"main.ts\",\"startByte\":181,\"endByte\":201,\"text\":\"break __ci_inline_2;\"}]"
+    }
+  ],
+  "allChecksPassed": false,
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "ownedLiteralFixturesExecuted": true,
+  "diagnosticOnlyWorkerPatch": true
+}

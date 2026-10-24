@@ -1,0 +1,17 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 08s
+     Running tests\store_cancellation.rs (target\debug\deps\store_cancellation-7e8ec3077ec5dbd3.exe)
+
+running 9 tests
+test active_sql_is_interrupted_by_inherited_host_cancellation ... ok
+test brief_writer_contention_still_allows_atomic_publication ... ok
+test cancelled_store_refuses_new_publication_until_deadline_is_replaced ... ok
+test ledger_lock_wait_keeps_the_same_host_cancellation_policy ... ok
+test serialization_cancellation_cannot_publish_uncontended_record_mutations ... ok
+test busy_policy_belongs_to_the_connection_after_its_store_is_dropped ... ok
+test sqlite_busy_wait_observes_cancellation_before_the_long_operation_deadline ... ok
+test sqlite_lock_contention_retains_a_finite_timeout_and_atomic_recovery ... ok
+test sqlite_busy_wait_does_not_restart_the_budget_after_serialization ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.10s
+

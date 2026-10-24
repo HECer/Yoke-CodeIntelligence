@@ -1,0 +1,53 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 14s
+     Running tests\protocol_connection.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\protocol_connection-6ea4be39476f2f7c.exe)
+
+running 5 tests
+test host_selected_profiles_keep_their_public_surface_across_messages ... ok
+test incomplete_stdio_frames_are_rejected_before_dispatch_or_publication ... ok
+test legal_request_ids_and_escaped_source_fit_the_complete_response_envelope ... ok
+test owned_transport_state_retains_initialization_and_refuses_profile_switches ... ok
+test separate_transport_messages_preserve_initialization_and_profile_state ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.81s
+
+     Running tests\python_empty_suite.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\python_empty_suite-44c8ad02260bca75.exe)
+
+running 9 tests
+test absence_and_explicit_reject_retain_the_released_empty_suite_refusal ... ok
+test actual_python_ast_and_guarded_apply_recovery_validate_the_planned_pass ... ignored, requires YOKE_PYTHON selecting actual Python for stdlib AST-only verification
+test closed_protocol_and_mixed_intents_refuse_before_new_capture_or_plan_publication ... ok
+test comments_remain_owned_and_existing_statements_or_module_need_no_pass ... ok
+test explicit_policy_still_checks_forged_bindings_paths_and_the_shared_deadline ... ok
+test native_mcp_prepares_the_exact_opt_in_edit_without_apply_or_execution_authority ... ok
+test nested_function_class_and_control_flow_suites_receive_exactly_one_pass ... ok
+test only_class_method_owns_decorators_without_changing_bom_unicode_or_crlf ... ok
+test policy_cannot_be_applied_to_another_language_or_grant_write_authority ... ok
+
+test result: ok. 8 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 2.50s
+
+     Running tests\sibling_declarators.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\sibling_declarators-b65363f7d2ffa240.exe)
+
+running 8 tests
+test ambiguous_comment_attachments_loop_bindings_and_named_expressions_refuse_without_publication ... ok
+test closed_policy_types_and_combinations_fail_before_implicit_capture ... ok
+test default_and_explicit_reject_keep_the_original_multi_declaration_refusal ... ok
+test first_middle_and_last_declarators_keep_all_unrelated_bytes ... ok
+test forged_paths_names_kinds_offsets_and_deadline_cannot_select_another_declaration ... ok
+test native_mcp_advertises_and_prepares_the_same_checked_pair_of_byte_edits ... ok
+test nested_commas_and_owned_initializer_comments_are_not_separators ... ok
+test sibling_policy_is_language_scoped_and_cannot_grant_application ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.17s
+
+     Running tests\symbol_delete_ranges.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\symbol_delete_ranges-9ba3dc16892cbe8c.exe)
+
+running 5 tests
+test declaration_ownership_handles_generators_classes_types_and_single_function_variables ... ok
+test deletion_spans_do_not_change_insert_or_replace_entity_coordinates ... ok
+test exported_functions_and_default_functions_preserve_unicode_crlf_and_neighbor_bytes ... ok
+test multi_declarators_named_expressions_object_methods_and_loop_bindings_refuse_before_plan ... ok
+test nested_declarations_do_not_consume_their_parent_or_adjacent_comments ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.29s
+

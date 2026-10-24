@@ -1,0 +1,2594 @@
+diff --git a/native/src/agent_repl.rs b/native/src/agent_repl.rs
+index b7b4064..1b0bade 100644
+--- a/native/src/agent_repl.rs
++++ b/native/src/agent_repl.rs
+@@ -568,11 +568,24 @@ fn prepare_captured_file_relocation(
+     let destination = crate::paths::normalized(destination)?;
+     let engine = session.active_engine_at(deadline)?;
+     let (snapshot, _, _, _) = engine.index(deadline)?;
++    let source_host = crate::paths::scoped(&engine.root, &path)?;
++    match std::fs::symlink_metadata(source_host) {
++        Ok(metadata) if metadata.is_dir() && !crate::paths::is_link(&metadata) => {
++            return crate::semantic_refactor::invoke(
++                engine,
++                "move",
++                &json!({"snapshotId":snapshot.id,"relativePath":path,"targetRelativePath":destination}),
++                deadline,
++            );
++        }
++        Err(error) if error.kind() != std::io::ErrorKind::NotFound => return Err(error.into()),
++        _ => {}
++    }
+     {
+         let scope = crate::capture::source_scope_policy(&engine.store, &snapshot)?;
+-        scope.file(&path).context(
+-            "Only captured file relocation is supported; directory tree operations are unavailable",
+-        )?;
++        scope
++            .file(&path)
++            .context("Relocation source must be a captured file or supported complete directory")?;
+         scope.check_host_write_scope(&path)?;
+         scope.check_host_write_scope(&destination)?;
+     }
+diff --git a/native/src/changes.rs b/native/src/changes.rs
+index 7998d38..ebd5309 100644
+--- a/native/src/changes.rs
++++ b/native/src/changes.rs
+@@ -19,6 +19,10 @@ use std::{
+ };
+ #[path = "changes_plan.rs"]
+ mod checked_plan;
++#[path = "changes_directory.rs"]
++mod directory;
++pub use directory::DirectoryMove;
++pub(crate) use directory::SelectedDirectoryMove;
+ 
+ pub fn now() -> u64 {
+     SystemTime::now()
+@@ -78,6 +82,8 @@ pub struct Plan {
+     pub files: Vec<PlannedFile>,
+     pub diff: String,
+     pub warnings: Vec<String>,
++    #[serde(default, skip_serializing_if = "Option::is_none")]
++    pub directory_move: Option<DirectoryMove>,
+ }
+ #[derive(Clone, Serialize, Deserialize)]
+ #[serde(rename_all = "camelCase")]
+@@ -147,6 +153,51 @@ pub fn prepare_at(
+     graph: &Graph,
+     args: &Value,
+     deadline: &Deadline,
++) -> Result<Plan> {
++    prepare_inner(epoch, store, snapshot, graph, args, None, deadline)
++}
++pub(crate) fn select_directory_move(
++    root: &Path,
++    store: &Store,
++    snapshot: &Snapshot,
++    source: &str,
++    destination: &str,
++    deadline: &Deadline,
++) -> Result<SelectedDirectoryMove> {
++    DirectoryMove::select(root, store, snapshot, source, destination, deadline)
++}
++pub(crate) fn prepare_directory(
++    store: &mut Store,
++    snapshot: &Snapshot,
++    graph: &Graph,
++    args: &Value,
++    selected: &SelectedDirectoryMove,
++    root: &Path,
++    deadline: &Deadline,
++) -> Result<Plan> {
++    selected.record().validate(snapshot, deadline)?;
++    selected.record().check_before(root, deadline)?;
++    let epoch =
++        crate::capture::analyzer_epoch_for_snapshot_with_deadline(store, snapshot, deadline)?;
++    prepare_inner(
++        epoch,
++        store,
++        snapshot,
++        graph,
++        args,
++        Some(selected.record()),
++        deadline,
++    )
++}
++#[allow(clippy::too_many_arguments)]
++fn prepare_inner(
++    epoch: analysis::AnalyzerEpoch,
++    store: &mut Store,
++    snapshot: &Snapshot,
++    graph: &Graph,
++    args: &Value,
++    directory_move: Option<&DirectoryMove>,
++    deadline: &Deadline,
+ ) -> Result<Plan> {
+     let mut edits: Vec<Edit> = if let Some(value) = args.get("edits") {
+         serde_json::from_value(value.clone())?
+@@ -228,7 +279,9 @@ pub fn prepare_at(
+         } else {
+             String::new()
+         };
+-        let mut mode = before.map_or(0o644, |f| f.mode);
++        let moved_source =
++            directory_move.and_then(|directory| directory.source_for_destination(&path));
++        let mut mode = before.or(moved_source).map_or(0o644, |f| f.mode);
+         let after = match &edits[0] {
+             Edit::Create { text, .. } => {
+                 ensure!(
+@@ -339,7 +392,11 @@ pub fn prepare_at(
+                 path: path.clone(),
+                 hash,
+                 size: text.len(),
+-                language: crate::capture::language_for_snapshot(store, snapshot, &path)?,
++                language: if let Some(original) = moved_source {
++                    original.language.clone()
++                } else {
++                    crate::capture::language_for_snapshot(store, snapshot, &path)?
++                },
+                 mode,
+             });
+         }
+@@ -355,9 +412,8 @@ pub fn prepare_at(
+         capture_consistency: "derived-from-immutable".into(),
+     };
+     let created = now();
+-    let id = identity(&(&snapshot.id, &result.id, &changed, created));
+-    let plan = Plan {
+-        id: id.clone(),
++    let mut plan = Plan {
++        id: String::new(),
+         base_snapshot_id: snapshot.id.clone(),
+         result_snapshot_id: result.id.clone(),
+         workspace_id: snapshot.workspace_id.clone(),
+@@ -366,7 +422,13 @@ pub fn prepare_at(
+         files: changed,
+         diff,
+         warnings,
++        directory_move: directory_move.cloned(),
+     };
++    plan.id = checked_plan::plan_identity(&plan);
++    let id = plan.id.clone();
++    if let Some(directory) = &plan.directory_move {
++        directory.validate_result(snapshot, &result, deadline)?;
++    }
+     checked_plan::admit_prepared(&plan, snapshot, &result, deadline)?;
+     let mut extractions = Vec::new();
+     for file in &result.files {
+@@ -393,6 +455,31 @@ pub fn materialize(
+         deadline,
+     )
+ }
++pub(crate) fn materialize_plan(
++    store: &Store,
++    plan: &Plan,
++    target: &Path,
++    deadline: &Deadline,
++) -> Result<()> {
++    let snapshot = store.snapshot(&plan.result_snapshot_id)?;
++    materialize(store, &snapshot, target, deadline)?;
++    if let Some(directory) = &plan.directory_move {
++        directory.materialize_directories(target, deadline)?;
++        directory.check_materialized(target, &snapshot, deadline)?;
++    }
++    Ok(())
++}
++pub(crate) fn plan_directory_integrity(
++    plan: &Plan,
++    snapshot: &Snapshot,
++    root: &Path,
++    deadline: &Deadline,
++) -> Result<()> {
++    if let Some(directory) = &plan.directory_move {
++        directory.check_materialized(root, snapshot, deadline)?;
++    }
++    Ok(())
++}
+ /// Host-selected omissions affect only this private copy, never captured source.
+ pub fn materialize_selected_sources(
+     store: &Store,
+@@ -587,12 +674,7 @@ pub fn apply(
+             !target.exists(),
+             "Previous materialization exists without receipt; inspect recovery"
+         );
+-        materialize(
+-            store,
+-            &store.snapshot(&plan.result_snapshot_id)?,
+-            &target,
+-            deadline,
+-        )?;
++        materialize_plan(store, &plan, &target, deadline)?;
+         receipt.sandbox_path = Some(target.display().to_string());
+         receipt.status = "applied".into();
+         store.record("receipt", &receipt_id, &receipt)?;
+@@ -632,18 +714,34 @@ pub fn apply(
+             file.path
+         );
+     }
++    if let Some(directory) = &plan.directory_move {
++        directory.check_before(root, deadline)?;
++    }
+     store.record("journal", &receipt_id, &receipt)?;
+     let result = (|| -> Result<()> {
++        if let Some(directory) = &plan.directory_move {
++            directory.rename(root, deadline)?;
++        }
+         for file in &plan.files {
+             deadline.check()?;
+-            ensure!(
+-                matches_file(root, file, false)?,
+-                "Concurrent source conflict"
+-            );
+-            write_file(store, root, file, true)?;
++            let handled = if let Some(directory) = &plan.directory_move {
++                directory.apply_file(store, root, file, deadline)?
++            } else {
++                false
++            };
++            if !handled {
++                ensure!(
++                    matches_file(root, file, false)?,
++                    "Concurrent source conflict"
++                );
++                write_file(store, root, file, true)?;
++            }
+             receipt.applied_paths.push(file.path.clone());
+             store.record("journal", &receipt_id, &receipt)?;
+         }
++        if let Some(directory) = &plan.directory_move {
++            directory.check_after(root, &store.snapshot(&plan.result_snapshot_id)?, deadline)?;
++        }
+         receipt.status = "applied".into();
+         store.record("journal", &receipt_id, &receipt)?;
+         store.record("receipt", &receipt_id, &receipt)?;
+@@ -664,8 +762,23 @@ pub fn recover(store: &Store, root: &Path, journal: &str, allow_writes: bool) ->
+         "Journal already rolled back"
+     );
+     let mut conflicts = Vec::new();
++    if let Some(directory) = &plan.directory_move {
++        let deadline = store.inherited_deadline(&Deadline::new(30_000))?;
++        if let Err(error) = directory.recover(store, root, &plan, &deadline) {
++            let failure = recovery_failure(store, &mut receipt, error);
++            let _ = store.record("receipt", journal, &receipt);
++            return Err(failure);
++        }
++    }
+     // Check all planned files, including a write that preceded its journal update.
+     for file in plan.files.iter().rev() {
++        if plan
++            .directory_move
++            .as_ref()
++            .is_some_and(|directory| directory.handles(&file.path))
++        {
++            continue;
++        }
+         if matches_file(root, file, false)? {
+             continue;
+         }
+diff --git a/native/src/changes_directory.rs b/native/src/changes_directory.rs
+new file mode 100644
+index 0000000..7a66112
+--- /dev/null
++++ b/native/src/changes_directory.rs
+@@ -0,0 +1,738 @@
++//! Checked physical membership for a single captured directory relocation.
++//! Still unpublished until the caller binds it into one guarded change plan.
++use super::{Plan, PlannedFile};
++use crate::{
++    capture::Deadline,
++    model::{Snapshot, SourceFile, identity, valid_id},
++    paths::{is_link, normalized, scoped},
++    store::Store,
++};
++use anyhow::{Context, Result, ensure};
++use serde::{Deserialize, Serialize};
++use std::{
++    collections::{BTreeMap, BTreeSet},
++    fs,
++    path::Path,
++};
++
++const INVALID: &str = "changes_directory_invalid";
++const STALE: &str = "changes_directory_stale";
++const CAPACITY: &str = "changes_directory_capacity_exceeded";
++const MAX_FILES: usize = 1000;
++const MAX_DIRECTORIES: usize = 2000;
++const MAX_BYTES: usize = 16_000_000;
++#[cfg(test)]
++thread_local! {
++    static CANCEL_AFTER_RENAME: std::cell::RefCell<Option<std::sync::Arc<std::sync::atomic::AtomicBool>>> = const {std::cell::RefCell::new(None)};
++}
++#[cfg(test)]
++#[path = "changes_directory_tests.rs"]
++mod tests;
++
++#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
++#[serde(rename_all = "camelCase", deny_unknown_fields)]
++struct DirectoryBinding {
++    path: String,
++    identity: String,
++    mode: u32,
++}
++
++#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
++#[serde(rename_all = "camelCase", deny_unknown_fields)]
++pub struct DirectoryMove {
++    source: String,
++    destination: String,
++    source_parent_identity: String,
++    destination_parent_identity: String,
++    directories: Vec<DirectoryBinding>,
++    #[serde(deserialize_with = "strict_files")]
++    files: Vec<SourceFile>,
++}
++fn strict_files<'de, D: serde::Deserializer<'de>>(
++    deserializer: D,
++) -> std::result::Result<Vec<SourceFile>, D::Error> {
++    #[derive(Deserialize)]
++    #[serde(rename_all = "camelCase", deny_unknown_fields)]
++    struct File {
++        path: String,
++        hash: String,
++        size: usize,
++        language: String,
++        mode: u32,
++    }
++    Ok(Vec::<File>::deserialize(deserializer)?
++        .into_iter()
++        .map(|file| SourceFile {
++            path: file.path,
++            hash: file.hash,
++            size: file.size,
++            language: file.language,
++            mode: file.mode,
++        })
++        .collect())
++}
++
++/// Only a successful host filesystem and captured-source selection creates this.
++#[derive(Clone)]
++pub(crate) struct SelectedDirectoryMove(DirectoryMove);
++impl SelectedDirectoryMove {
++    pub(crate) fn record(&self) -> &DirectoryMove {
++        &self.0
++    }
++}
++
++fn below(path: &str, parent: &str) -> bool {
++    path.strip_prefix(parent)
++        .is_some_and(|suffix| suffix.starts_with('/'))
++}
++fn parent(path: &str) -> &str {
++    path.rsplit_once('/').map_or("", |(parent, _)| parent)
++}
++fn mapped(path: &str, source: &str, destination: &str) -> Result<String> {
++    ensure!(path == source || below(path, source), INVALID);
++    Ok(format!("{destination}{}", &path[source.len()..]))
++}
++fn missing(path: &Path) -> Result<bool> {
++    match fs::symlink_metadata(path) {
++        Ok(_) => Ok(false),
++        Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(true),
++        Err(error) => Err(error.into()),
++    }
++}
++fn mode(metadata: &fs::Metadata) -> u32 {
++    #[cfg(unix)]
++    {
++        use std::os::unix::fs::PermissionsExt;
++        metadata.permissions().mode() & 0o777
++    }
++    #[cfg(not(unix))]
++    {
++        let _ = metadata;
++        0o644
++    }
++}
++fn directory_binding(root: &Path, relative: &str, d: &Deadline) -> Result<DirectoryBinding> {
++    d.check()?;
++    let path = if relative.is_empty() {
++        root.to_path_buf()
++    } else {
++        scoped(root, relative)?
++    };
++    let metadata = fs::symlink_metadata(&path)?;
++    ensure!(metadata.is_dir() && !is_link(&metadata), INVALID);
++    ensure!(
++        path.canonicalize()? == root.canonicalize()?.join(relative),
++        "changes_directory_noncanonical_host_spelling"
++    );
++    let identity = directory_identity(&path)?;
++    d.check()?;
++    Ok(DirectoryBinding {
++        path: relative.into(),
++        identity,
++        mode: mode(&metadata),
++    })
++}
++#[cfg(unix)]
++fn directory_identity(path: &Path) -> Result<String> {
++    use std::os::unix::fs::MetadataExt;
++    let file = fs::File::open(path)?;
++    let metadata = file.metadata()?;
++    ensure!(metadata.is_dir(), INVALID);
++    Ok(identity(&(
++        "directory-unix-v1",
++        metadata.dev(),
++        metadata.ino(),
++    )))
++}
++#[cfg(windows)]
++fn directory_identity(path: &Path) -> Result<String> {
++    use std::{
++        ffi::c_void,
++        os::windows::{fs::OpenOptionsExt, io::AsRawHandle},
++    };
++    // FILE_ID_INFO retains the full128-bit ID on both NTFS and ReFS.
++    #[repr(C)]
++    struct FileId {
++        volume: u64,
++        id: [u8; 16],
++    }
++    #[link(name = "kernel32")]
++    unsafe extern "system" {
++        fn GetFileInformationByHandleEx(
++            handle: *mut c_void,
++            class: i32,
++            data: *mut c_void,
++            size: u32,
++        ) -> i32;
++    }
++    let file = fs::OpenOptions::new()
++        .read(true)
++        .share_mode(7)
++        .custom_flags(0x0200_0000 | 0x0020_0000)
++        .open(path)?;
++    let metadata = file.metadata()?;
++    ensure!(metadata.is_dir() && !is_link(&metadata), INVALID);
++    let mut id = FileId {
++        volume: 0,
++        id: [0; 16],
++    };
++    ensure!(
++        unsafe {
++            GetFileInformationByHandleEx(
++                file.as_raw_handle(),
++                18,
++                std::ptr::from_mut(&mut id).cast(),
++                std::mem::size_of::<FileId>() as u32,
++            )
++        } != 0,
++        INVALID
++    );
++    Ok(identity(&("directory-windows-v1", id.volume, id.id)))
++}
++#[cfg(not(any(unix, windows)))]
++fn directory_identity(_path: &Path) -> Result<String> {
++    anyhow::bail!("changes_directory_platform_unavailable")
++}
++
++fn admit_files(files: &[SourceFile], d: &Deadline) -> Result<()> {
++    ensure!(
++        !files.is_empty(),
++        "changes_directory_empty_source_unsupported"
++    );
++    ensure!(files.len() <= MAX_FILES, CAPACITY);
++    let mut bytes = 0usize;
++    let mut previous = None;
++    for file in files {
++        d.check()?;
++        ensure!(
++            normalized(&file.path)? == file.path
++                && valid_id(&file.hash)
++                && file.size <= 4_000_000
++                && file.mode <= 0o777
++                && previous.is_none_or(|p: &str| p < file.path.as_str()),
++            INVALID
++        );
++        previous = Some(file.path.as_str());
++        bytes = bytes.checked_add(file.size).context(CAPACITY)?;
++        ensure!(bytes <= MAX_BYTES, CAPACITY);
++    }
++    Ok(())
++}
++
++impl DirectoryMove {
++    pub(crate) fn source(&self) -> &str {
++        &self.source
++    }
++    pub(crate) fn destination(&self) -> &str {
++        &self.destination
++    }
++    pub(crate) fn files(&self) -> &[SourceFile] {
++        &self.files
++    }
++    pub(crate) fn source_for_destination(&self, path: &str) -> Option<&SourceFile> {
++        let suffix = path
++            .strip_prefix(&self.destination)
++            .filter(|suffix| suffix.starts_with('/'))?;
++        let source = format!("{}{suffix}", self.source);
++        self.files
++            .binary_search_by(|file| file.path.cmp(&source))
++            .ok()
++            .map(|index| &self.files[index])
++    }
++    pub(crate) fn destination_path(&self, original: &str) -> Result<String> {
++        mapped(original, &self.source, &self.destination)
++    }
++    pub(crate) fn validate(&self, base: &Snapshot, d: &Deadline) -> Result<()> {
++        d.check()?;
++        ensure!(
++            normalized(&self.source)? == self.source
++                && normalized(&self.destination)? == self.destination
++                && !self.source.eq_ignore_ascii_case(&self.destination)
++                && !below(
++                    &self.source.to_ascii_lowercase(),
++                    &self.destination.to_ascii_lowercase()
++                )
++                && !below(
++                    &self.destination.to_ascii_lowercase(),
++                    &self.source.to_ascii_lowercase()
++                )
++                && valid_id(&self.destination_parent_identity)
++                && valid_id(&self.source_parent_identity),
++            INVALID
++        );
++        admit_files(&self.files, d)?;
++        let expected: Vec<_> = base
++            .files
++            .iter()
++            .filter(|f| below(&f.path, &self.source))
++            .collect();
++        ensure!(
++            expected.len() == self.files.len()
++                && expected.iter().zip(&self.files).all(|(a, b)| *a == b),
++            INVALID
++        );
++        ensure!(
++            !self.directories.is_empty() && self.directories.len() <= MAX_DIRECTORIES,
++            CAPACITY
++        );
++        let mut previous = None;
++        let mut names = BTreeSet::new();
++        let mut ids = BTreeSet::new();
++        for directory in &self.directories {
++            d.check()?;
++            ensure!(
++                normalized(&directory.path)? == directory.path
++                    && (directory.path == self.source || below(&directory.path, &self.source))
++                    && valid_id(&directory.identity)
++                    && directory.mode <= 0o777
++                    && previous.is_none_or(|p: &str| p < directory.path.as_str())
++                    && ids.insert(&directory.identity),
++                INVALID
++            );
++            previous = Some(directory.path.as_str());
++            names.insert(directory.path.as_str());
++        }
++        ensure!(
++            self.directories[0].path == self.source
++                && !ids.contains(&self.destination_parent_identity)
++                && !ids.contains(&self.source_parent_identity),
++            INVALID
++        );
++        for directory in self.directories.iter().skip(1) {
++            ensure!(names.contains(parent(&directory.path)), INVALID);
++        }
++        for file in &self.files {
++            ensure!(
++                names.contains(parent(&file.path)) && !names.contains(file.path.as_str()),
++                INVALID
++            );
++        }
++        d.check()
++    }
++    pub(crate) fn validate_result(
++        &self,
++        base: &Snapshot,
++        result: &Snapshot,
++        d: &Deadline,
++    ) -> Result<()> {
++        self.validate(base, d)?;
++        ensure!(
++            !base
++                .files
++                .iter()
++                .any(|file| file.path == self.destination || below(&file.path, &self.destination))
++                && !result
++                    .files
++                    .iter()
++                    .any(|file| file.path == self.source || below(&file.path, &self.source)),
++            INVALID
++        );
++        let projected = self.projected_files(result, d)?;
++        ensure!(
++            result
++                .files
++                .iter()
++                .filter(|file| below(&file.path, &self.destination))
++                .count()
++                == projected.len(),
++            INVALID
++        );
++        for (before, after) in self.files.iter().zip(projected) {
++            ensure!(before.language == after.language, INVALID);
++        }
++        Ok(())
++    }
++    pub(crate) fn select(
++        root: &Path,
++        store: &Store,
++        base: &Snapshot,
++        source: &str,
++        destination: &str,
++        d: &Deadline,
++    ) -> Result<SelectedDirectoryMove> {
++        let source = normalized(source)?;
++        let destination = normalized(destination)?;
++        let scope = crate::capture::source_scope_policy(store, base)?;
++        let options = crate::capture::options_for_snapshot(store, base)?;
++        ensure!(
++            !options
++                .include_ignored_dirs
++                .iter()
++                .any(|selected| selected == &source || below(selected, &source)),
++            "changes_directory_ignored_capture_root_move_unavailable"
++        );
++        scope.check_host_write_scope(&source)?;
++        scope.check_host_write_scope(&destination)?;
++        ensure!(
++            missing(&scoped(root, &destination)?)?,
++            "changes_directory_destination_occupied"
++        );
++        let destination_parent = directory_binding(root, parent(&destination), d)?;
++        let source_parent = directory_binding(root, parent(&source), d)?;
++        let files: Vec<_> = base
++            .files
++            .iter()
++            .filter(|f| below(&f.path, &source))
++            .cloned()
++            .collect();
++        admit_files(&files, d)?;
++        for file in &files {
++            scope.file(&file.path)?;
++            scope.check_host_write_scope(&file.path)?;
++            scope.check_host_write_scope(&mapped(&file.path, &source, &destination)?)?;
++        }
++        let directories = inventory(root, &source, &files, None, d)?;
++        let record = Self {
++            source,
++            destination,
++            source_parent_identity: source_parent.identity,
++            destination_parent_identity: destination_parent.identity,
++            directories,
++            files,
++        };
++        record.validate(base, d)?;
++        // All membership and byte admission precedes original-file body reads.
++        check_bodies(root, &record.files, d)?;
++        record.check_before(root, d)?;
++        Ok(SelectedDirectoryMove(record))
++    }
++    pub(crate) fn check_before(&self, root: &Path, d: &Deadline) -> Result<()> {
++        ensure!(missing(&scoped(root, &self.destination)?)?, STALE);
++        let target_parent = directory_binding(root, parent(&self.destination), d)?;
++        let source_parent = directory_binding(root, parent(&self.source), d)?;
++        ensure!(
++            target_parent.identity == self.destination_parent_identity
++                && source_parent.identity == self.source_parent_identity,
++            STALE
++        );
++        inventory(root, &self.source, &self.files, Some(&self.directories), d)?;
++        check_bodies(root, &self.files, d)
++    }
++    pub(crate) fn projected_files(
++        &self,
++        snapshot: &Snapshot,
++        d: &Deadline,
++    ) -> Result<Vec<SourceFile>> {
++        let mut files = Vec::with_capacity(self.files.len());
++        for original in &self.files {
++            d.check()?;
++            let path = self.destination_path(&original.path)?;
++            let file = snapshot
++                .files
++                .iter()
++                .find(|f| f.path == path)
++                .context(INVALID)?;
++            ensure!(file.mode == original.mode, INVALID);
++            files.push(file.clone());
++        }
++        admit_files(&files, d)?;
++        Ok(files)
++    }
++    pub(crate) fn check_after(&self, root: &Path, result: &Snapshot, d: &Deadline) -> Result<()> {
++        self.check_parents(root, d)?;
++        ensure!(missing(&scoped(root, &self.source)?)?, STALE);
++        let files = self.projected_files(result, d)?;
++        let directories = self.projected_directories()?;
++        inventory(root, &self.destination, &files, Some(&directories), d)?;
++        check_bodies(root, &files, d)
++    }
++    fn check_parents(&self, root: &Path, d: &Deadline) -> Result<()> {
++        ensure!(
++            directory_binding(root, parent(&self.source), d)?.identity
++                == self.source_parent_identity
++                && directory_binding(root, parent(&self.destination), d)?.identity
++                    == self.destination_parent_identity,
++            STALE
++        );
++        Ok(())
++    }
++    pub(crate) fn rename(&self, root: &Path, d: &Deadline) -> Result<()> {
++        self.check_before(root, d)?;
++        fs::rename(
++            scoped(root, &self.source)?,
++            scoped(root, &self.destination)?,
++        )?;
++        sync_parents(root, &self.source, &self.destination)?;
++        #[cfg(test)]
++        CANCEL_AFTER_RENAME.with(|slot| {
++            if let Some(flag) = slot.borrow().as_ref() {
++                flag.store(true, std::sync::atomic::Ordering::SeqCst);
++            }
++        });
++        d.check()
++    }
++    pub(crate) fn handles(&self, path: &str) -> bool {
++        self.files
++            .binary_search_by(|file| file.path.as_str().cmp(path))
++            .is_ok()
++            || self.source_for_destination(path).is_some()
++    }
++    pub(crate) fn apply_file(
++        &self,
++        store: &Store,
++        root: &Path,
++        file: &PlannedFile,
++        d: &Deadline,
++    ) -> Result<bool> {
++        d.check()?;
++        if self
++            .files
++            .binary_search_by(|source| source.path.cmp(&file.path))
++            .is_ok()
++        {
++            ensure!(missing(&scoped(root, &file.path)?)?, STALE);
++            return Ok(true);
++        }
++        if let Some(original) = self.source_for_destination(&file.path) {
++            let write = PlannedFile {
++                path: file.path.clone(),
++                before_hash: Some(original.hash.clone()),
++                after_hash: file.after_hash.clone(),
++                mode: original.mode,
++            };
++            ensure!(super::matches_file(root, &write, false)?, STALE);
++            if write.before_hash != write.after_hash {
++                super::write_file(store, root, &write, true)?;
++            }
++            return Ok(true);
++        }
++        Ok(false)
++    }
++    pub(crate) fn materialize_directories(&self, root: &Path, d: &Deadline) -> Result<()> {
++        let entries = self.projected_directories()?;
++        for entry in &entries {
++            d.check()?;
++            let path = scoped(root, &entry.path)?;
++            fs::create_dir_all(&path)?;
++            let metadata = fs::symlink_metadata(&path)?;
++            ensure!(metadata.is_dir() && !is_link(&metadata), INVALID);
++        }
++        #[cfg(unix)]
++        for entry in entries.iter().rev() {
++            use std::os::unix::fs::PermissionsExt;
++            fs::set_permissions(
++                scoped(root, &entry.path)?,
++                fs::Permissions::from_mode(entry.mode),
++            )?;
++        }
++        d.check()
++    }
++    pub(crate) fn check_materialized(
++        &self,
++        root: &Path,
++        result: &Snapshot,
++        d: &Deadline,
++    ) -> Result<()> {
++        ensure!(missing(&scoped(root, &self.source)?)?, STALE);
++        let files = self.projected_files(result, d)?;
++        let actual = inventory(root, &self.destination, &files, None, d)?;
++        let expected = self.projected_directories()?;
++        ensure!(
++            actual.len() == expected.len()
++                && actual
++                    .iter()
++                    .zip(&expected)
++                    .all(|(a, b)| a.path == b.path && a.mode == b.mode),
++            STALE
++        );
++        check_bodies(root, &files, d)
++    }
++    pub(crate) fn recover(
++        &self,
++        store: &Store,
++        root: &Path,
++        plan: &Plan,
++        d: &Deadline,
++    ) -> Result<()> {
++        self.check_parents(root, d)?;
++        let source_missing = missing(&scoped(root, &self.source)?)?;
++        let destination_missing = missing(&scoped(root, &self.destination)?)?;
++        ensure!(
++            source_missing != destination_missing,
++            "changes_directory_recovery_conflict"
++        );
++        if destination_missing {
++            return self.check_before(root, d);
++        }
++        let result = store.snapshot(&plan.result_snapshot_id)?;
++        let after = self.projected_files(&result, d)?;
++        let mut before = Vec::with_capacity(self.files.len());
++        let mut observed = Vec::with_capacity(self.files.len());
++        let mut total = 0usize;
++        for original in &self.files {
++            d.check()?;
++            let path = self.destination_path(&original.path)?;
++            let actual = fs::symlink_metadata(scoped(root, &path)?)?;
++            ensure!(
++                actual.is_file() && !is_link(&actual) && actual.len() <= 4_000_000,
++                STALE
++            );
++            total = total
++                .checked_add(usize::try_from(actual.len())?)
++                .context(CAPACITY)?;
++            ensure!(total <= 2 * MAX_BYTES, CAPACITY);
++            before.push(SourceFile {
++                path: path.clone(),
++                ..original.clone()
++            });
++            observed.push(SourceFile {
++                path,
++                size: actual.len() as usize,
++                ..original.clone()
++            });
++        }
++        inventory(
++            root,
++            &self.destination,
++            &observed,
++            Some(&self.projected_directories()?),
++            d,
++        )?;
++        // Admit every file as original or planned bytes before the first restore.
++        for (before, after) in before.iter().zip(&after) {
++            let path = scoped(root, &before.path)?;
++            ensure!(
++                crate::verify::file_integrity(before, &path, d)?
++                    || crate::verify::file_integrity(after, &path, d)?,
++                "changes_directory_foreign_write_preserved"
++            );
++        }
++        for (before, after) in before.iter().zip(&after).rev() {
++            d.check()?;
++            let path = scoped(root, &before.path)?;
++            if crate::verify::file_integrity(before, &path, d)? {
++                continue;
++            }
++            ensure!(
++                crate::verify::file_integrity(after, &path, d)?,
++                "changes_directory_foreign_write_preserved"
++            );
++            super::write_file(
++                store,
++                root,
++                &PlannedFile {
++                    path: before.path.clone(),
++                    before_hash: Some(before.hash.clone()),
++                    after_hash: Some(after.hash.clone()),
++                    mode: before.mode,
++                },
++                false,
++            )?;
++        }
++        inventory(
++            root,
++            &self.destination,
++            &before,
++            Some(&self.projected_directories()?),
++            d,
++        )?;
++        check_bodies(root, &before, d)?;
++        ensure!(missing(&scoped(root, &self.source)?)?, STALE);
++        self.check_parents(root, d)?;
++        fs::rename(
++            scoped(root, &self.destination)?,
++            scoped(root, &self.source)?,
++        )?;
++        sync_parents(root, &self.source, &self.destination)?;
++        self.check_before(root, d)
++    }
++    fn projected_directories(&self) -> Result<Vec<DirectoryBinding>> {
++        self.directories
++            .iter()
++            .map(|entry| {
++                Ok(DirectoryBinding {
++                    path: mapped(&entry.path, &self.source, &self.destination)?,
++                    ..entry.clone()
++                })
++            })
++            .collect()
++    }
++}
++
++fn sync_parents(root: &Path, source: &str, destination: &str) -> Result<()> {
++    #[cfg(unix)]
++    {
++        let mut parents = BTreeSet::new();
++        parents.insert(parent(source));
++        parents.insert(parent(destination));
++        for parent in parents {
++            let path = if parent.is_empty() {
++                root.to_path_buf()
++            } else {
++                scoped(root, parent)?
++            };
++            fs::File::open(path)?.sync_all()?;
++        }
++    }
++    #[cfg(not(unix))]
++    {
++        let _ = (root, source, destination);
++    }
++    Ok(())
++}
++
++/// Inventories every entry; ignored, protected, linked and uncaptured files refuse.
++/// The expected complete directory set also preserves otherwise invisible empty dirs.
++fn inventory(
++    root: &Path,
++    start: &str,
++    expected_files: &[SourceFile],
++    expected_dirs: Option<&[DirectoryBinding]>,
++    d: &Deadline,
++) -> Result<Vec<DirectoryBinding>> {
++    let expected: BTreeMap<_, _> = expected_files
++        .iter()
++        .map(|file| (file.path.as_str(), file))
++        .collect();
++    let mut queue = vec![start.to_owned()];
++    let mut directories = Vec::new();
++    let mut seen = BTreeSet::new();
++    while let Some(relative) = queue.pop() {
++        d.check()?;
++        ensure!(directories.len() < MAX_DIRECTORIES, CAPACITY);
++        let binding = directory_binding(root, &relative, d)?;
++        directories.push(binding);
++        for entry in fs::read_dir(scoped(root, &relative)?)? {
++            d.check()?;
++            let entry = entry?;
++            let name = entry
++                .file_name()
++                .into_string()
++                .map_err(|_| anyhow::anyhow!(INVALID))?;
++            let path = normalized(&format!("{relative}/{name}"))?;
++            let metadata = fs::symlink_metadata(entry.path())?;
++            ensure!(!is_link(&metadata), INVALID);
++            if metadata.is_dir() {
++                ensure!(queue.len() + directories.len() < MAX_DIRECTORIES, CAPACITY);
++                queue.push(path);
++            } else {
++                let file = expected
++                    .get(path.as_str())
++                    .context("changes_directory_uncaptured_entry")?;
++                ensure!(
++                    metadata.is_file()
++                        && metadata.len() == file.size as u64
++                        && mode(&metadata) == file.mode
++                        && seen.insert(path),
++                    STALE
++                );
++                ensure!(seen.len() <= MAX_FILES, CAPACITY);
++            }
++        }
++    }
++    ensure!(seen.len() == expected.len(), STALE);
++    directories.sort_by(|a, b| a.path.cmp(&b.path));
++    if let Some(expected) = expected_dirs {
++        ensure!(directories == expected, STALE);
++    }
++    Ok(directories)
++}
++fn check_bodies(root: &Path, files: &[SourceFile], d: &Deadline) -> Result<()> {
++    for file in files {
++        ensure!(
++            crate::verify::file_integrity(file, &scoped(root, &file.path)?, d)?,
++            STALE
++        );
++    }
++    d.check()
++}
+diff --git a/native/src/changes_directory_tests.rs b/native/src/changes_directory_tests.rs
+new file mode 100644
+index 0000000..e3bdd2b
+--- /dev/null
++++ b/native/src/changes_directory_tests.rs
+@@ -0,0 +1,397 @@
++//! Owned filesystem fixtures and explicit host prerequisites, without provider execution.
++use super::*;
++use crate::{Engine, analysis::AnalyzerEpoch, changes};
++use serde_json::json;
++fn d() -> Deadline {
++    Deadline::new(30_000)
++}
++const BEFORE: &str = "pub fn original(){ /* café 🦀 */ }\r\n";
++const AFTER: &str = "pub fn moved(){ /* café 🦀 */ }\r\n";
++struct Fixture {
++    engine: Engine,
++    plan: Plan,
++    root: tempfile::TempDir,
++}
++fn fixture(epoch: AnalyzerEpoch) -> Fixture {
++    let root = tempfile::tempdir().unwrap();
++    fs::create_dir_all(root.path().join("src/tree/sub")).unwrap();
++    fs::create_dir_all(root.path().join("src/tree/empty/nested")).unwrap();
++    fs::create_dir(root.path().join("pkg")).unwrap();
++    fs::write(root.path().join("src/tree/a.rs"), BEFORE).unwrap();
++    fs::write(
++        root.path().join("src/tree/sub/café.rs"),
++        "pub fn retained(){}\r\n",
++    )
++    .unwrap();
++    fs::write(
++        root.path().join("src/use.rs"),
++        "// original folder reference\r\n",
++    )
++    .unwrap();
++    #[cfg(unix)]
++    {
++        use std::os::unix::fs::PermissionsExt;
++        fs::set_permissions(
++            root.path().join("src/tree/a.rs"),
++            fs::Permissions::from_mode(0o750),
++        )
++        .unwrap();
++    }
++    let mut engine = Engine::open(root.path()).unwrap();
++    engine.capture_epoch = epoch;
++    let (snapshot, graph, _, _) = engine.index(&d()).unwrap();
++    let selected = DirectoryMove::select(
++        root.path(),
++        &engine.store,
++        &snapshot,
++        "src/tree",
++        "pkg/tree",
++        &d(),
++    )
++    .unwrap();
++    let mut edits = Vec::new();
++    for file in selected.record().files() {
++        let old = String::from_utf8(engine.store.read_blob(&file.hash).unwrap()).unwrap();
++        edits.push(json!({"kind":"delete","path":file.path,"expectedHash":file.hash}));
++        edits.push(json!({"kind":"create","path":selected.record().destination_path(&file.path).unwrap(),"text":if file.path.ends_with("/a.rs"){AFTER}else{&old}}));
++    }
++    let file = snapshot
++        .files
++        .iter()
++        .find(|file| file.path == "src/use.rs")
++        .unwrap();
++    edits.push(json!({"kind":"replace","path":file.path,"expectedHash":file.hash,"startByte":0,"endByte":file.size,"text":"// moved folder reference\r\n"}));
++    let plan = changes::prepare_directory(
++        &mut engine.store,
++        &snapshot,
++        &graph,
++        &json!({"edits":edits}),
++        &selected,
++        root.path(),
++        &d(),
++    )
++    .unwrap();
++    Fixture { root, engine, plan }
++}
++fn prerequisites(f: &Fixture) {
++    changes::approve(&f.engine.store, &f.plan.id, true).unwrap();
++    f.engine.store.record("verification",&f.plan.id,&json!({"status":"passed","level":"executed","snapshotId":f.plan.result_snapshot_id,"fixtureProvenance":"Owned host prerequisite fixture; no compiler or provider execution asserted"})).unwrap();
++}
++fn apply(f: &Fixture, key: &str, deadline: &Deadline) -> Result<changes::Receipt> {
++    changes::apply(
++        &f.engine.store,
++        f.root.path(),
++        &json!({"planId":f.plan.id,"idempotencyKey":key,"mode":"workspace"}),
++        true,
++        deadline,
++    )
++}
++#[test]
++fn directory_plan_preserves_empty_dirs_exact_bytes_modes_and_identity_through_apply_and_recovery() {
++    for epoch in [AnalyzerEpoch::V8, AnalyzerEpoch::V9] {
++        let f = fixture(epoch);
++        let record = f.plan.directory_move.as_ref().unwrap();
++        let original = directory_binding(f.root.path(), "src/tree", &d()).unwrap();
++        assert_eq!(record.files().len(), 2);
++        assert!(!f.root.path().join("pkg/tree").exists());
++        changes::load_checked_plan(&f.engine.store, &f.plan.id, &d()).unwrap();
++        prerequisites(&f);
++        let receipt = apply(&f, "owned-directory-roundtrip", &d()).unwrap();
++        assert!(!f.root.path().join("src/tree").exists());
++        assert!(f.root.path().join("pkg/tree/empty/nested").is_dir());
++        assert_eq!(
++            fs::read(f.root.path().join("pkg/tree/a.rs")).unwrap(),
++            AFTER.as_bytes()
++        );
++        assert_eq!(
++            directory_binding(f.root.path(), "pkg/tree", &d())
++                .unwrap()
++                .identity,
++            original.identity
++        );
++        record
++            .check_after(
++                f.root.path(),
++                &f.engine.store.snapshot(&f.plan.result_snapshot_id).unwrap(),
++                &d(),
++            )
++            .unwrap();
++        changes::recover(&f.engine.store, f.root.path(), &receipt.id, true).unwrap();
++        assert!(f.root.path().join("src/tree/empty/nested").is_dir());
++        assert!(!f.root.path().join("pkg/tree").exists());
++        assert_eq!(
++            fs::read(f.root.path().join("src/tree/a.rs")).unwrap(),
++            BEFORE.as_bytes()
++        );
++        assert_eq!(
++            fs::read(f.root.path().join("src/use.rs")).unwrap(),
++            b"// original folder reference\r\n"
++        );
++        assert_eq!(
++            directory_binding(f.root.path(), "src/tree", &d()).unwrap(),
++            original
++        );
++    }
++}
++#[test]
++fn stale_empty_directory_or_uncaptured_file_refuses_before_any_workspace_change() {
++    for mutation in [
++        "extra-directory",
++        "missing-empty-directory",
++        "uncaptured-file",
++    ] {
++        let f = fixture(AnalyzerEpoch::V9);
++        prerequisites(&f);
++        match mutation {
++            "extra-directory" => fs::create_dir(f.root.path().join("src/tree/added")).unwrap(),
++            "missing-empty-directory" => {
++                fs::remove_dir(f.root.path().join("src/tree/empty/nested")).unwrap()
++            }
++            _ => fs::write(
++                f.root.path().join("src/tree/.env"),
++                "OWNED_FIXTURE=not-a-secret\n",
++            )
++            .unwrap(),
++        }
++        assert!(apply(&f, mutation, &d()).is_err(), "{mutation}");
++        assert!(!f.root.path().join("pkg/tree").exists());
++        assert_eq!(
++            fs::read(f.root.path().join("src/tree/a.rs")).unwrap(),
++            BEFORE.as_bytes()
++        );
++    }
++}
++#[test]
++fn recovery_preserves_foreign_directory_members_and_can_retry_after_manual_reconciliation() {
++    let f = fixture(AnalyzerEpoch::V8);
++    prerequisites(&f);
++    let receipt = apply(&f, "foreign-directory-member", &d()).unwrap();
++    let foreign = f.root.path().join("pkg/tree/foreign.txt");
++    fs::write(&foreign, "owned foreign write\r\n").unwrap();
++    assert!(changes::recover(&f.engine.store, f.root.path(), &receipt.id, true).is_err());
++    assert_eq!(fs::read(&foreign).unwrap(), b"owned foreign write\r\n");
++    assert_eq!(
++        fs::read(f.root.path().join("pkg/tree/a.rs")).unwrap(),
++        AFTER.as_bytes()
++    );
++    fs::remove_file(&foreign).unwrap();
++    changes::recover(&f.engine.store, f.root.path(), &receipt.id, true).unwrap();
++    assert_eq!(
++        fs::read(f.root.path().join("src/tree/a.rs")).unwrap(),
++        BEFORE.as_bytes()
++    );
++}
++#[test]
++fn cancellation_after_actual_rename_keeps_the_durable_intent_and_recovers_unrecorded_paths() {
++    use std::sync::{Arc, atomic::AtomicBool};
++    struct RestoreHook;
++    impl Drop for RestoreHook {
++        fn drop(&mut self) {
++            CANCEL_AFTER_RENAME.with(|slot| slot.borrow_mut().take());
++        }
++    }
++    let f = fixture(AnalyzerEpoch::V9);
++    prerequisites(&f);
++    let flag = Arc::new(AtomicBool::new(false));
++    let deadline = Deadline::run_bounded(&d(), Arc::clone(&flag), || Ok(d())).unwrap();
++    CANCEL_AFTER_RENAME.with(|slot| slot.replace(Some(Arc::clone(&flag))));
++    let hook = RestoreHook;
++    let error = apply(&f, "cancelled-directory-rename", &deadline)
++        .err()
++        .expect("Cancellation must fail");
++    drop(hook);
++    let recovery = error.downcast_ref::<changes::RecoveryRequired>().unwrap();
++    let id = recovery.journal_id.clone();
++    assert!(!recovery.emergency_persisted);
++    assert!(!f.root.path().join("src/tree").exists());
++    assert_eq!(
++        fs::read(f.root.path().join("pkg/tree/a.rs")).unwrap(),
++        BEFORE.as_bytes()
++    );
++    f.engine.store.clear_deadline();
++    let journal: changes::Receipt = f.engine.store.get_record("journal", &id).unwrap();
++    assert_eq!(journal.status, "intent");
++    assert!(journal.applied_paths.is_empty());
++    changes::recover(&f.engine.store, f.root.path(), &id, true).unwrap();
++    assert!(f.root.path().join("src/tree/empty/nested").is_dir());
++    assert_eq!(
++        fs::read(f.root.path().join("src/tree/a.rs")).unwrap(),
++        BEFORE.as_bytes()
++    );
++}
++#[test]
++fn isolated_result_contains_the_complete_declared_directory_shape() {
++    let f = fixture(AnalyzerEpoch::V8);
++    let receipt = changes::apply(
++        &f.engine.store,
++        f.root.path(),
++        &json!({"planId":f.plan.id,"idempotencyKey":"isolated-directory-shape","mode":"isolated"}),
++        false,
++        &d(),
++    )
++    .unwrap();
++    let copied = Path::new(receipt.sandbox_path.as_ref().unwrap());
++    assert!(copied.join("pkg/tree/empty/nested").is_dir());
++    assert_eq!(
++        fs::read(copied.join("pkg/tree/a.rs")).unwrap(),
++        AFTER.as_bytes()
++    );
++    assert!(f.root.path().join("src/tree/empty/nested").is_dir());
++    assert!(!f.root.path().join("pkg/tree").exists());
++}
++
++#[test]
++fn rehashed_incomplete_directory_membership_still_fails_before_the_durable_write_intent() {
++    let f = fixture(AnalyzerEpoch::V9);
++    let mut plan = f.plan.clone();
++    plan.directory_move
++        .as_mut()
++        .unwrap()
++        .directories
++        .retain(|dir| dir.path != "src/tree/empty/nested");
++    plan.id = changes::checked_plan::plan_identity(&plan);
++    f.engine.store.record("plan", &plan.id, &plan).unwrap();
++    changes::approve(&f.engine.store, &plan.id, false).unwrap();
++    f.engine.store.record("verification",&plan.id,&json!({"status":"passed","level":"executed","snapshotId":plan.result_snapshot_id,"fixtureProvenance":"Owned host prerequisite fixture; no compiler execution asserted"})).unwrap();
++    assert!(changes::apply(&f.engine.store,f.root.path(),&json!({"planId":plan.id,"idempotencyKey":"rehashed-incomplete-tree","mode":"workspace"}),true,&d()).is_err());
++    assert_eq!(f.engine.store.db.query_row("SELECT COUNT(*) FROM records WHERE kind='journal' AND json_extract(value,'$.planId')=?1",[&plan.id],|r|r.get::<_,u64>(0)).unwrap(),0);
++    assert!(f.root.path().join("src/tree/empty/nested").is_dir());
++    assert!(!f.root.path().join("pkg/tree").exists());
++    assert_eq!(
++        fs::read(f.root.path().join("src/tree/a.rs")).unwrap(),
++        BEFORE.as_bytes()
++    );
++}
++
++#[test]
++fn saved_directory_metadata_rejects_unknown_nested_fields_and_noncanonical_paths() {
++    let f = fixture(AnalyzerEpoch::V8);
++    let mut value = serde_json::to_value(&f.plan).unwrap();
++    value["directoryMove"]["files"][0]["hostAuthority"] = json!(true);
++    f.engine.store.record("plan", &f.plan.id, &value).unwrap();
++    assert!(changes::load_checked_plan(&f.engine.store, &f.plan.id, &d()).is_err());
++    for source in ["../outside", "src/./tree", "src/tree/", "C:/outside"] {
++        let mut plan = f.plan.clone();
++        plan.directory_move.as_mut().unwrap().source = source.into();
++        plan.id = changes::checked_plan::plan_identity(&plan);
++        f.engine.store.record("plan", &plan.id, &plan).unwrap();
++        assert!(
++            changes::approve(&f.engine.store, &plan.id, true).is_err(),
++            "{source}"
++        );
++    }
++    assert!(f.root.path().join("src/tree/empty/nested").is_dir());
++    assert!(!f.root.path().join("pkg/tree").exists());
++}
++
++#[test]
++fn complete_directory_file_quota_admits_exactly1000_and_refuses1001_without_provider_or_plan() {
++    let mut f = fixture(AnalyzerEpoch::V9);
++    for i in 0..998 {
++        fs::write(f.root.path().join(format!("src/tree/f{i:04}.rs")), b"").unwrap();
++    }
++    let (snapshot, _, _, _) = f.engine.index(&d()).unwrap();
++    let selected = DirectoryMove::select(
++        f.root.path(),
++        &f.engine.store,
++        &snapshot,
++        "src/tree",
++        "pkg/tree",
++        &d(),
++    )
++    .unwrap();
++    assert_eq!(selected.record().files.len(), 1000);
++    fs::write(f.root.path().join("src/tree/overflow.rs"), b"").unwrap();
++    let (snapshot, _, _, _) = f.engine.index(&d()).unwrap();
++    let error = DirectoryMove::select(
++        f.root.path(),
++        &f.engine.store,
++        &snapshot,
++        "src/tree",
++        "pkg/tree",
++        &d(),
++    )
++    .err()
++    .unwrap();
++    assert_eq!(error.to_string(), CAPACITY);
++    assert!(!f.root.path().join("pkg/tree").exists());
++}
++
++#[test]
++fn complete_empty_directory_quota_admits_exactly2000_and_refuses2001_without_a_move() {
++    let f = fixture(AnalyzerEpoch::V9);
++    for i in 0..1996 {
++        fs::create_dir(f.root.path().join(format!("src/tree/d{i:04}"))).unwrap();
++    }
++    let base = f.engine.store.snapshot(&f.plan.base_snapshot_id).unwrap();
++    let selected = DirectoryMove::select(
++        f.root.path(),
++        &f.engine.store,
++        &base,
++        "src/tree",
++        "pkg/tree",
++        &d(),
++    )
++    .unwrap();
++    assert_eq!(selected.record().directories.len(), 2000);
++    fs::create_dir(f.root.path().join("src/tree/overflow")).unwrap();
++    let error = DirectoryMove::select(
++        f.root.path(),
++        &f.engine.store,
++        &base,
++        "src/tree",
++        "pkg/tree",
++        &d(),
++    )
++    .err()
++    .unwrap();
++    assert_eq!(error.to_string(), CAPACITY);
++    assert!(!f.root.path().join("pkg/tree").exists());
++}
++
++#[test]
++fn selected_source_byte_ceiling_counts_each_physical_file_even_when_cas_is_deduplicated() {
++    let root = tempfile::tempdir().unwrap();
++    fs::create_dir(root.path().join("source")).unwrap();
++    fs::create_dir(root.path().join("pkg")).unwrap();
++    let bytes = vec![b'x'; 4_000_000];
++    for i in 0..4 {
++        fs::write(root.path().join(format!("source/{i}.txt")), &bytes).unwrap();
++    }
++    let mut engine = Engine::open(root.path()).unwrap();
++    let (snapshot, _, _, _) = engine.index(&d()).unwrap();
++    assert_eq!(
++        snapshot
++            .files
++            .iter()
++            .map(|file| file.hash.as_str())
++            .collect::<BTreeSet<_>>()
++            .len(),
++        1
++    );
++    let selected = DirectoryMove::select(
++        root.path(),
++        &engine.store,
++        &snapshot,
++        "source",
++        "pkg/source",
++        &d(),
++    )
++    .unwrap();
++    assert_eq!(selected.record().files.len(), 4);
++    fs::write(root.path().join("source/one-byte.txt"), b"y").unwrap();
++    let (snapshot, _, _, _) = engine.index(&d()).unwrap();
++    let error = DirectoryMove::select(
++        root.path(),
++        &engine.store,
++        &snapshot,
++        "source",
++        "pkg/source",
++        &d(),
++    )
++    .err()
++    .unwrap();
++    assert_eq!(error.to_string(), CAPACITY);
++    assert!(!root.path().join("pkg/source").exists());
++    drop(engine);
++}
+diff --git a/native/src/changes_plan.rs b/native/src/changes_plan.rs
+index d2f821d..35ee7a2 100644
+--- a/native/src/changes_plan.rs
++++ b/native/src/changes_plan.rs
+@@ -21,6 +21,26 @@ const MAX_PLAN_BYTES: usize = 64_000_000;
+ const MAX_SNAPSHOT_BYTES: usize = 32_000_000;
+ const MAX_SOURCE_BYTES: usize = 128_000_000;
+ 
++pub(super) fn plan_identity(plan: &Plan) -> String {
++    if let Some(directory) = &plan.directory_move {
++        identity(&(
++            "directory-move-v1",
++            &plan.base_snapshot_id,
++            &plan.result_snapshot_id,
++            &plan.files,
++            plan.created_at,
++            directory,
++        ))
++    } else {
++        identity(&(
++            &plan.base_snapshot_id,
++            &plan.result_snapshot_id,
++            &plan.files,
++            plan.created_at,
++        ))
++    }
++}
++
+ fn raw(store: &Store, snapshot: bool, id: &str, maximum: usize, d: &Deadline) -> Result<Value> {
+     d.check()?;
+     ensure!(valid_id(id), INVALID);
+@@ -141,6 +161,9 @@ fn binding(
+         INVALID
+     );
+     let epoch = capture::analyzer_epoch_for_snapshot_with_deadline(store, base, d)?;
++    if let Some(directory) = &plan.directory_move {
++        directory.validate_result(base, result, d)?;
++    }
+     ensure!(
+         epoch.derived_snapshot_id(base, &result.files) == result.id,
+         INVALID
+@@ -159,14 +182,19 @@ fn binding(
+             }
+             continue;
+         }
++        let moved = plan
++            .directory_move
++            .as_ref()
++            .and_then(|directory| directory.source_for_destination(path));
++        let expected_mode = b.or(moved).map_or(0o644, |f| f.mode);
+         expected.push(PlannedFile {
+             path: path.into(),
+             before_hash: b.map(|f| f.hash.clone()),
+             after_hash: a.map(|f| f.hash.clone()),
+-            mode: b.map_or(0o644, |f| f.mode),
++            mode: expected_mode,
+         });
+         if let Some(a) = a {
+-            ensure!(a.mode == b.map_or(0o644, |f| f.mode), INVALID);
++            ensure!(a.mode == expected_mode, INVALID);
+         }
+     }
+     ensure!(
+@@ -283,13 +311,7 @@ pub(super) fn load(store: &Store, id: &str, d: &Deadline) -> Result<Plan> {
+                     && valid_id(id)
+                     && plan.workspace_id == store.workspace_id
+                     && plan.created_at.checked_add(86400) == Some(plan.expires_at)
+-                    && plan.id
+-                        == identity(&(
+-                            &plan.base_snapshot_id,
+-                            &plan.result_snapshot_id,
+-                            &plan.files,
+-                            plan.created_at
+-                        )),
++                    && plan.id == plan_identity(&plan),
+                 INVALID
+             );
+             let base: Snapshot = crate::json::decode(raw(
+diff --git a/native/src/container.rs b/native/src/container.rs
+index c9a8538..b00d446 100644
+--- a/native/src/container.rs
++++ b/native/src/container.rs
+@@ -258,7 +258,7 @@ pub fn execute_container(
+     let tree = tempfile::Builder::new()
+         .prefix("yoke-container-source-")
+         .tempdir()?;
+-    changes::materialize(&engine.store, &snapshot, tree.path(), deadline)?;
++    changes::materialize_plan(&engine.store, &plan, tree.path(), deadline)?;
+     let control = tempfile::Builder::new()
+         .prefix("yoke-container-control-")
+         .tempdir()?;
+@@ -425,8 +425,9 @@ pub fn execute_container(
+         cleanup_confirmed = cleanup(exe, spec, control.path(), id);
+     }
+     timed_out |= deadline.check().is_err();
+-    let source_integrity =
+-        crate::verify::snapshot_integrity(&snapshot, tree.path(), deadline).unwrap_or(false);
++    let source_integrity = crate::verify::snapshot_integrity(&snapshot, tree.path(), deadline)
++        .unwrap_or(false)
++        && changes::plan_directory_integrity(&plan, &snapshot, tree.path(), deadline).is_ok();
+     let approved = error.is_none()
+         && exit_code == Some(0)
+         && executed_tests > 0
+diff --git a/native/src/lsp.rs b/native/src/lsp.rs
+index 914e1f8..96d11c1 100644
+--- a/native/src/lsp.rs
++++ b/native/src/lsp.rs
+@@ -1258,6 +1258,7 @@ pub(crate) struct CheckedWorkspaceEdit {
+     manifest_hash: String,
+     pub operations: Vec<CheckedEditOperation>,
+     pub files: BTreeMap<String, Option<String>>,
++    directory_move: Option<changes::SelectedDirectoryMove>,
+ }
+ impl CheckedWorkspaceEdit {
+     fn retained_bytes(&self) -> usize {
+@@ -1279,6 +1280,17 @@ impl CheckedWorkspaceEdit {
+             "Checked WorkspaceEdit source binding changed"
+         );
+         let edits = self.edits(engine, snapshot, deadline)?;
++        if let Some(directory) = &self.directory_move {
++            return changes::prepare_directory(
++                &mut engine.store,
++                snapshot,
++                graph,
++                &json!({"edits":edits}),
++                directory,
++                &engine.root,
++                deadline,
++            );
++        }
+         changes::prepare(
+             &mut engine.store,
+             snapshot,
+@@ -1456,6 +1468,18 @@ fn check_workspace_edit(
+     root: &Path,
+     edit: &Value,
+     deadline: &Deadline,
++) -> Result<CheckedWorkspaceEdit> {
++    check_workspace_edit_directory(engine, snapshot, _graph, root, edit, None, deadline)
++}
++#[allow(clippy::too_many_arguments)]
++fn check_workspace_edit_directory(
++    engine: &Engine,
++    snapshot: &Snapshot,
++    _graph: &Graph,
++    root: &Path,
++    edit: &Value,
++    directory: Option<&changes::SelectedDirectoryMove>,
++    deadline: &Deadline,
+ ) -> Result<CheckedWorkspaceEdit> {
+     ensure!(
+         edit.is_object() && edit.get("changes").is_some() != edit.get("documentChanges").is_some(),
+@@ -1537,6 +1561,40 @@ fn check_workspace_edit(
+                                 .as_str()
+                                 .context("Rename target URI missing")?,
+                         )?;
++                        if let Some(directory) = directory {
++                            let selected = directory.record();
++                            ensure!(
++                                old == selected.source()
++                                    && new == selected.destination()
++                                    && document.get("options").is_none()
++                                    && operations.iter().all(|op| matches!(
++                                        op,
++                                        CheckedEditOperation::TextDocument { .. }
++                                    )),
++                                "Unsupported directory rename resource sequence"
++                            );
++                            for source in selected.files() {
++                                let destination = selected.destination_path(&source.path)?;
++                                virtual_file(&engine.store, snapshot, &mut files, &source.path)?;
++                                virtual_file(&engine.store, snapshot, &mut files, &destination)?;
++                                ensure!(
++                                    files[&destination].is_none(),
++                                    "Directory resource destination exists"
++                                );
++                                let text = files
++                                    .get_mut(&source.path)
++                                    .unwrap()
++                                    .take()
++                                    .context("Directory resource source missing")?;
++                                files.insert(destination, Some(text));
++                            }
++                            operations.push(CheckedEditOperation::Rename {
++                                old,
++                                new,
++                                applied: true,
++                            });
++                            continue;
++                        }
+                         ensure!(
+                             old != new && !old.eq_ignore_ascii_case(&new),
+                             "Ambiguous resource rename"
+@@ -1617,6 +1675,7 @@ fn check_workspace_edit(
+         manifest_hash: identity(snapshot),
+         operations,
+         files,
++        directory_move: directory.cloned(),
+     };
+     ensure!(
+         checked.files.len() <= 2000 && checked.retained_bytes() <= 32_000_000,
+@@ -1746,6 +1805,7 @@ pub fn run_at_with_options(
+         request,
+         options,
+         None,
++        None,
+         deadline,
+     )
+ }
+@@ -1766,6 +1826,7 @@ pub fn run_at_configured(
+         request,
+         options,
+         None,
++        None,
+         deadline,
+     )
+ }
+@@ -1789,6 +1850,40 @@ pub(crate) fn stage_at(
+         request,
+         options,
+         Some(&mut edits),
++        None,
++        deadline,
++    )?;
++    Ok(StagedSemantic { value, edits })
++}
++pub(crate) fn stage_directory_move_at(
++    engine: &mut Engine,
++    host: (&Server, Option<&HostConfiguration>),
++    snapshot: &Snapshot,
++    graph: &Graph,
++    selected: &changes::SelectedDirectoryMove,
++    deadline: &Deadline,
++) -> Result<StagedSemantic> {
++    let file = selected
++        .record()
++        .files()
++        .iter()
++        .find(|file| file.language == host.0.language)
++        .context("Directory move provider has no selected source file")?;
++    let mut edits = Vec::new();
++    let value = run_at_internal(
++        engine,
++        host,
++        snapshot,
++        graph,
++        SemanticRequest {
++            path: &file.path,
++            offset: 0,
++            operation: "willRenameFiles",
++            new_name: None,
++        },
++        &json!({"renamePath":selected.record().destination()}),
++        Some(&mut edits),
++        Some(selected),
+         deadline,
+     )?;
+     Ok(StagedSemantic { value, edits })
+@@ -1802,6 +1897,7 @@ fn run_at_internal(
+     request: SemanticRequest<'_>,
+     options: &Value,
+     staged: Option<&mut Vec<CheckedWorkspaceEdit>>,
++    directory: Option<&changes::SelectedDirectoryMove>,
+     deadline: &Deadline,
+ ) -> Result<Value> {
+     ensure!(host.0.trust, "Language server trust is required");
+@@ -1809,7 +1905,7 @@ fn run_at_internal(
+     let profile = server_profile(host.0, host.1, deadline)?;
+     let profile_hash = identity(&profile);
+     let mut value = run_at_unprofiled(
+-        engine, host, snapshot, graph, request, options, staged, deadline,
++        engine, host, snapshot, graph, request, options, staged, directory, deadline,
+     )?;
+     value["serverProfileHash"] = json!(profile_hash);
+     value["serverProfileBinding"] = profile["commandBinding"].clone();
+@@ -2518,10 +2614,20 @@ fn run_at_unprofiled(
+     request: SemanticRequest<'_>,
+     options: &Value,
+     mut staged: Option<&mut Vec<CheckedWorkspaceEdit>>,
++    directory: Option<&changes::SelectedDirectoryMove>,
+     deadline: &Deadline,
+ ) -> Result<Value> {
+     let (server, configuration) = host;
+     let options = QueryOptions::parse(options)?;
++    if let Some(directory) = directory {
++        ensure!(
++            request.operation == "willRenameFiles"
++                && options.rename_path.as_deref() == Some(directory.record().destination()),
++            "Directory move request binding mismatch"
++        );
++        directory.record().validate(snapshot, deadline)?;
++        directory.record().check_before(&engine.root, deadline)?;
++    }
+     engine.store.set_deadline(deadline)?;
+     deadline.check()?;
+     ensure!(
+@@ -2628,12 +2734,13 @@ fn run_at_unprofiled(
+     );
+     let mut rename_resource = None;
+     if operation == "willRenameFiles" {
++        let operation_source = directory.map_or(path, |directory| directory.record().source());
+         let destination = options
+             .rename_path
+             .as_deref()
+             .context("Source-bound renamePath required")?;
+         ensure!(
+-            !path.eq_ignore_ascii_case(destination)
++            !operation_source.eq_ignore_ascii_case(destination)
+                 && !snapshot
+                     .files
+                     .iter()
+@@ -2655,13 +2762,10 @@ fn run_at_unprofiled(
+                 "Unsupported file-operation URI scheme"
+             );
+             let pattern = &filter["pattern"];
+-            if pattern["matches"] == "folder" {
+-                continue;
+-            }
+             ensure!(
+                 pattern
+                     .get("matches")
+-                    .is_none_or(|kind| kind.as_str() == Some("file")),
++                    .is_none_or(|kind| matches!(kind.as_str(), Some("file" | "folder"))),
+                 "Invalid file-operation match type"
+             );
+             ensure!(
+@@ -2675,15 +2779,28 @@ fn run_at_unprofiled(
+                 .context("File-operation glob missing")?;
+             let matcher =
+                 crate::query_features::glob(glob, pattern["options"]["ignoreCase"] == true)?;
+-            selected |= matcher.is_match(path);
++            let applies = pattern.get("matches").is_none_or(|kind| {
++                kind.as_str()
++                    == Some(if directory.is_some() {
++                        "folder"
++                    } else {
++                        "file"
++                    })
++            });
++            selected |= applies && matcher.is_match(operation_source);
+         }
+         ensure!(
+             selected,
+             "Selected source file is outside server willRenameFiles registration filters"
+         );
+         let target_uri = uri(&tree.path().join(destination))?;
+-        params = json!({"files":[{"oldUri":document_uri,"newUri":target_uri}]});
+-        rename_resource = Some(json!({"kind":"rename","oldUri":document_uri,"newUri":target_uri}));
++        let source_uri = if directory.is_some() {
++            uri(&tree.path().join(operation_source))?
++        } else {
++            document_uri.clone()
++        };
++        params = json!({"files":[{"oldUri":source_uri,"newUri":target_uri}]});
++        rename_resource = Some(json!({"kind":"rename","oldUri":source_uri,"newUri":target_uri}));
+     }
+     if operation == "references" {
+         params["context"] =
+@@ -2924,13 +3041,22 @@ fn run_at_unprofiled(
+                     .clone();
+             }
+         }
++        if directory.is_some() {
++            ensure!(
++                documents
++                    .iter()
++                    .all(|document| document.get("kind").is_none()),
++                "Directory move provider may return only original-coordinate text edits"
++            );
++        }
+         documents.push(rename);
+-        let checked = check_workspace_edit(
++        let checked = check_workspace_edit_directory(
+             engine,
+             snapshot,
+             graph,
+             tree.path(),
+             &json!({"documentChanges":documents}),
++            directory,
+             deadline,
+         )?;
+         if let Some(staged) = staged.as_deref_mut() {
+diff --git a/native/src/semantic_directory_move.rs b/native/src/semantic_directory_move.rs
+new file mode 100644
+index 0000000..6dcdb4f
+--- /dev/null
++++ b/native/src/semantic_directory_move.rs
+@@ -0,0 +1,82 @@
++//! One source-bound folder operation using one explicitly registered provider.
++use crate::{
++    Engine,
++    capture::Deadline,
++    changes, lsp,
++    model::{Graph, Snapshot},
++};
++use anyhow::{Context, Result, ensure};
++use serde_json::{Value, json};
++use std::collections::BTreeSet;
++
++pub(super) fn prepare(
++    engine: &mut Engine,
++    snapshot: &Snapshot,
++    graph: &Graph,
++    source: &str,
++    destination: &str,
++    deadline: &Deadline,
++) -> Result<Value> {
++    let selected = changes::select_directory_move(
++        &engine.root,
++        &engine.store,
++        snapshot,
++        source,
++        destination,
++        deadline,
++    )?;
++    let languages: BTreeSet<_> = selected
++        .record()
++        .files()
++        .iter()
++        .map(|file| file.language.clone())
++        .collect();
++    let registered: Vec<_> = languages
++        .iter()
++        .filter(|language| engine.servers.contains_key(language.as_str()))
++        .collect();
++    ensure!(
++        registered.len() == 1,
++        "Directory move requires exactly one registered provider language; multi-provider repair is unavailable"
++    );
++    let language = registered[0];
++    let server = engine
++        .servers
++        .get(language)
++        .cloned()
++        .context("Directory move provider unavailable")?;
++    let configuration = engine.server_configurations.get(language).cloned();
++    if let Some(configuration) = &configuration {
++        ensure!(
++            !configuration
++                .workspace_folders
++                .iter()
++                .any(|folder| folder == source
++                    || folder
++                        .strip_prefix(source)
++                        .is_some_and(|suffix| suffix.starts_with('/'))),
++            "Directory move would relocate a host-registered workspace root"
++        );
++    }
++    let mut staged = lsp::stage_directory_move_at(
++        engine,
++        (&server, configuration.as_ref()),
++        snapshot,
++        graph,
++        &selected,
++        deadline,
++    )?;
++    ensure!(
++        staged.edits.len() == 1,
++        "Directory move requires one unpublished edit batch"
++    );
++    let checked = staged.edits.pop().context("Directory move edit absent")?;
++    let plan = checked.prepare(engine, snapshot, graph, deadline)?;
++    let other: Vec<_> = languages
++        .iter()
++        .filter(|other| other.as_str() != server.language)
++        .collect();
++    Ok(
++        json!({"snapshotId":snapshot.id,"plan":plan,"serverProfileHash":staged.value["serverProfileHash"],"providerSourceOmissions":staged.value["providerSourceOmissions"],"provider":"host_selected_lsp","equivalent":"independent_captured_directory_move","referenceRepairCoverage":{"providerLanguage":server.language,"otherCapturedLanguages":other,"exhaustiveCompilerProof":false},"complete":false,"commandsExecuted":false}),
++    )
++}
+diff --git a/native/src/semantic_refactor.rs b/native/src/semantic_refactor.rs
+index 979e740..f29a2dd 100644
+--- a/native/src/semantic_refactor.rs
++++ b/native/src/semantic_refactor.rs
+@@ -7,6 +7,8 @@ use crate::{
+ };
+ use anyhow::{Context, Result, bail, ensure};
+ use serde_json::{Value, json};
++#[path = "semantic_directory_move.rs"]
++mod directory_moves;
+ #[path = "semantic_refactor_intents.rs"]
+ mod intents;
+ #[path = "semantic_move_intents.rs"]
+@@ -240,6 +242,21 @@ pub fn invoke(
+         let destination = args["targetRelativePath"]
+             .as_str()
+             .context("File move destination required")?;
++        let host_path = crate::paths::scoped(&engine.root, path)?;
++        match std::fs::symlink_metadata(host_path) {
++            Ok(metadata) if metadata.is_dir() && !crate::paths::is_link(&metadata) => {
++                return directory_moves::prepare(
++                    engine,
++                    &snapshot,
++                    &graph,
++                    path,
++                    destination,
++                    deadline,
++                );
++            }
++            Err(error) if error.kind() != std::io::ErrorKind::NotFound => return Err(error.into()),
++            _ => {}
++        }
+         let file = graph
+             .entities
+             .iter()
+diff --git a/native/src/verify.rs b/native/src/verify.rs
+index a6234f7..fa935a5 100644
+--- a/native/src/verify.rs
++++ b/native/src/verify.rs
+@@ -137,7 +137,7 @@ pub fn execute(
+         &json!({"status":"running","level":"executed","snapshotId":snapshot.id}),
+     )?;
+     let tree = tempfile::Builder::new().prefix("yoke-verify-").tempdir()?;
+-    changes::materialize(&engine.store, &snapshot, tree.path(), deadline)?;
++    changes::materialize_plan(&engine.store, &plan, tree.path(), deadline)?;
+     let mut process = Command::new(command);
+     process
+         .args(args)
+@@ -242,11 +242,12 @@ pub fn execute(
+     let output_complete = output.iter().all(Option::is_some) && !read_error;
+     let stdout = output[0].take().unwrap_or_default();
+     let stderr = output[1].take().unwrap_or_default();
+-    let integrity = snapshot.files.iter().all(|file| {
+-        scoped(tree.path(), &file.path)
+-            .and_then(|path| file_integrity(file, &path, deadline))
+-            .unwrap_or(false)
+-    });
++    let integrity =
++        snapshot.files.iter().all(|file| {
++            scoped(tree.path(), &file.path)
++                .and_then(|path| file_integrity(file, &path, deadline))
++                .unwrap_or(false)
++        }) && changes::plan_directory_integrity(&plan, &snapshot, tree.path(), deadline).is_ok();
+     timed_out |= deadline.check().is_err();
+     let passed = status.is_some_and(|s| s.success())
+         && integrity
+diff --git a/native/tests/directory_move_live.rs b/native/tests/directory_move_live.rs
+new file mode 100644
+index 0000000..9bb71ae
+--- /dev/null
++++ b/native/tests/directory_move_live.rs
+@@ -0,0 +1,109 @@
++//! Explicit actual-provider gate. No protocol fixture or compiler fallback.
++use serde_json::json;
++use std::{fs, path::Path};
++use yoke::{Engine, capture::Deadline, changes, lsp};
++
++#[test]
++#[ignore = "requires YOKE_RUST_ANALYZER and YOKE_RUSTC selecting actual installed executables"]
++fn actual_rust_analyzer_folder_move_compiles_applies_and_recovers() {
++    let analyzer =
++        std::env::var("YOKE_RUST_ANALYZER").expect("Select the actual rust-analyzer executable");
++    let compiler = std::env::var("YOKE_RUSTC").expect("Select the actual rustc executable");
++    for command in [&analyzer, &compiler] {
++        assert!(Path::new(command).is_absolute() && Path::new(command).is_file());
++    }
++    let root = tempfile::tempdir().unwrap();
++    fs::create_dir_all(root.path().join("src/tree/empty/nested")).unwrap();
++    let library = "// owned actual-provider fixture: café 🦀\r\npub mod tree;\r\npub fn value() -> i32 { tree::answer() }\r\n";
++    let module = "pub fn answer() -> i32 { 42 }\r\n";
++    fs::write(root.path().join("Cargo.toml"), "[package]\nname = \"yoke_directory_live_fixture\"\nversion = \"0.1.0\"\nedition = \"2021\"\n").unwrap();
++    fs::write(root.path().join("src/lib.rs"), library).unwrap();
++    fs::write(root.path().join("src/tree/mod.rs"), module).unwrap();
++    let mut engine = Engine::open(root.path()).unwrap();
++    engine
++        .register_configured_server(lsp::ConfiguredServer {
++            server: lsp::Server {
++                command: analyzer,
++                args: vec![],
++                language: "rust".into(),
++                trust: true,
++            },
++            configuration: lsp::HostConfiguration {
++                passive_profile: Some(lsp::PassiveProfile::RustAnalyzer),
++                ..Default::default()
++            },
++        })
++        .unwrap();
++    let result = yoke::semantic_refactor::invoke(
++        &mut engine,
++        "move",
++        &json!({"relativePath":"src/tree","targetRelativePath":"src/renamed"}),
++        &Deadline::new(90_000),
++    );
++    let value =
++        result.unwrap_or_else(|error| panic!("Actual rust-analyzer folder gate: {error:#}"));
++    println!("actual-provider-plan={value}");
++    let id = value["plan"]["id"].as_str().unwrap();
++    assert_eq!(value["complete"], false);
++    assert!(
++        value["plan"]["files"]
++            .as_array()
++            .unwrap()
++            .iter()
++            .any(|file| file["path"] == "src/lib.rs"),
++        "Actual module reference repair was absent: {value}"
++    );
++    assert_eq!(
++        fs::read(root.path().join("src/lib.rs")).unwrap(),
++        library.as_bytes()
++    );
++    assert!(root.path().join("src/tree/empty/nested").is_dir());
++    let verification = yoke::verify::execute(
++        &engine,
++        id,
++        &compiler,
++        &[
++            "--crate-type=lib".into(),
++            "--edition=2021".into(),
++            "src/lib.rs".into(),
++            "-o".into(),
++            "owned-directory-live.rlib".into(),
++        ],
++        true,
++        &Deadline::new(90_000),
++    )
++    .unwrap();
++    println!("actual-rustc-verification={verification}");
++    assert_eq!(verification["status"], "passed", "{verification}");
++    assert_eq!(verification["sourceIntegrity"], true);
++    changes::approve(&engine.store, id, false).unwrap();
++    let receipt = changes::apply(
++        &engine.store,
++        root.path(),
++        &json!({"planId":id,"idempotencyKey":"actual-rust-analyzer-folder","mode":"workspace"}),
++        true,
++        &Deadline::new(30_000),
++    )
++    .unwrap();
++    assert!(!root.path().join("src/tree").exists());
++    assert!(root.path().join("src/renamed/empty/nested").is_dir());
++    assert_eq!(
++        fs::read(root.path().join("src/renamed/mod.rs")).unwrap(),
++        module.as_bytes()
++    );
++    assert_ne!(
++        fs::read(root.path().join("src/lib.rs")).unwrap(),
++        library.as_bytes()
++    );
++    changes::recover(&engine.store, root.path(), &receipt.id, true).unwrap();
++    assert_eq!(
++        fs::read(root.path().join("src/lib.rs")).unwrap(),
++        library.as_bytes()
++    );
++    assert_eq!(
++        fs::read(root.path().join("src/tree/mod.rs")).unwrap(),
++        module.as_bytes()
++    );
++    assert!(root.path().join("src/tree/empty/nested").is_dir());
++    assert!(!root.path().join("src/renamed").exists());
++}
+diff --git a/native/tests/facade_directory_move.rs b/native/tests/facade_directory_move.rs
+new file mode 100644
+index 0000000..1b76b3a
+--- /dev/null
++++ b/native/tests/facade_directory_move.rs
+@@ -0,0 +1,416 @@
++//! Owned standard-LSP folder fixture, exact native effects and guarded real filesystem writes.
++use serde_json::{Value, json};
++use std::{fs, path::Path};
++use yoke::{
++    Engine,
++    analysis::AnalyzerEpoch,
++    capture::{CaptureOptions, Deadline},
++    changes, lsp,
++    project_session::{HostProfile, Session},
++};
++const BEFORE: &str = "pub fn original(){ /* café 🦀 */ }\r\n";
++const AFTER: &str = "// provider prepared folder move\r\npub fn original(){ /* café 🦀 */ }\r\n";
++fn d() -> Deadline {
++    Deadline::new(30_000)
++}
++struct Fixture {
++    session: Session,
++    log: tempfile::TempDir,
++    root: tempfile::TempDir,
++}
++fn fixture(epoch: AnalyzerEpoch, mode: &str) -> Fixture {
++    let root = tempfile::tempdir().unwrap();
++    let log = tempfile::tempdir().unwrap();
++    fs::create_dir_all(root.path().join("src/tree/sub")).unwrap();
++    fs::create_dir_all(root.path().join("src/tree/empty/nested")).unwrap();
++    fs::create_dir(root.path().join("pkg.rs")).unwrap();
++    fs::write(root.path().join("src/tree/a.rs"), BEFORE).unwrap();
++    fs::write(
++        root.path().join("src/tree/sub/café.rs"),
++        "pub fn retained(){}\r\n",
++    )
++    .unwrap();
++    fs::write(
++        root.path().join("src/use.rs"),
++        "// original folder reference\r\n",
++    )
++    .unwrap();
++    let mut engine = Engine::open(root.path()).unwrap();
++    engine.capture_epoch = epoch;
++    engine
++        .register_configured_server(lsp::ConfiguredServer {
++            server: lsp::Server {
++                command: "node".into(),
++                args: vec![
++                    Path::new(env!("CARGO_MANIFEST_DIR"))
++                        .join("tests/fixtures/directory-move-lsp.mjs")
++                        .display()
++                        .to_string(),
++                    log.path().join("protocol.log").display().to_string(),
++                    mode.into(),
++                ],
++                language: "rust".into(),
++                trust: true,
++            },
++            configuration: lsp::HostConfiguration {
++                passive_profile: Some(lsp::PassiveProfile::ContractFixture),
++                ..Default::default()
++            },
++        })
++        .unwrap();
++    let session = Session::open(
++        engine,
++        HostProfile::default(),
++        Some("owned-directory-move"),
++        &d(),
++    )
++    .unwrap();
++    Fixture { session, log, root }
++}
++fn invoke(f: &mut Fixture, args: Value) -> anyhow::Result<Value> {
++    yoke::agent_repl::invoke_facade(&mut f.session, "jb.move", args, None, &d())
++}
++fn records(f: &Fixture) -> (usize, usize) {
++    let db = &f.session.engine.store.db;
++    (
++        db.query_row(
++            "SELECT COUNT(*) FROM records WHERE kind IN ('plan','approval','receipt')",
++            [],
++            |r| r.get(0),
++        )
++        .unwrap(),
++        db.query_row(
++            "SELECT COUNT(*) FROM snapshots WHERE json_extract(value,'$.kind')='derived'",
++            [],
++            |r| r.get(0),
++        )
++        .unwrap(),
++    )
++}
++fn transcript(f: &Fixture) -> Vec<Value> {
++    let path = f.log.path().join("protocol.log");
++    if !path.exists() {
++        return vec![];
++    }
++    fs::read_to_string(path)
++        .unwrap()
++        .lines()
++        .map(|line| serde_json::from_str(line).unwrap())
++        .collect()
++}
++fn unchanged(f: &Fixture) {
++    assert_eq!(
++        fs::read(f.root.path().join("src/tree/a.rs")).unwrap(),
++        BEFORE.as_bytes()
++    );
++    assert!(f.root.path().join("src/tree/empty/nested").is_dir());
++    assert!(!f.root.path().join("pkg.rs/tree").exists());
++}
++#[test]
++fn omitted_null_empty_directory_selectors_bind_one_parent_basename_plan_for_both_epochs() {
++    for epoch in [AnalyzerEpoch::V8, AnalyzerEpoch::V9] {
++        for selector in [None, Some(Value::Null), Some(json!(""))] {
++            let mut f = fixture(epoch, "edits");
++            let mut args = json!({"relative_path":"src/tree","target_relative_path":"pkg.rs"});
++            if let Some(selector) = selector {
++                args["name_path"] = selector;
++            }
++            let value = invoke(&mut f, args).unwrap();
++            let plan: &Value = &value["plan"];
++            assert_eq!(value["equivalent"], "independent_captured_directory_move");
++            assert_eq!(value["complete"], false);
++            assert_eq!(value["commandsExecuted"], false);
++            assert_eq!(plan["directoryMove"]["source"], "src/tree");
++            assert_eq!(plan["directoryMove"]["destination"], "pkg.rs/tree");
++            assert_eq!(records(&f), (1, 1));
++            unchanged(&f);
++            let result = f
++                .session
++                .engine
++                .store
++                .snapshot(plan["resultSnapshotId"].as_str().unwrap())
++                .unwrap();
++            assert_eq!(
++                yoke::query::source(&f.session.engine.store, &result, "pkg.rs/tree/a.rs")
++                    .unwrap()
++                    .0,
++                AFTER
++            );
++            assert_eq!(
++                yoke::capture::analyzer_epoch_for_snapshot(&f.session.engine.store, &result)
++                    .unwrap(),
++                epoch
++            );
++            let requests = transcript(&f);
++            let rename = requests
++                .iter()
++                .find(|r| r["method"] == "workspace/willRenameFiles")
++                .unwrap();
++            assert!(
++                rename["params"]["files"][0]["oldUri"]
++                    .as_str()
++                    .unwrap()
++                    .ends_with("/src/tree")
++            );
++            assert!(
++                rename["params"]["files"][0]["newUri"]
++                    .as_str()
++                    .unwrap()
++                    .ends_with("/pkg.rs/tree")
++            );
++            assert!(
++                !requests
++                    .iter()
++                    .any(|r| r["method"] == "workspace/executeCommand")
++            );
++        }
++    }
++}
++#[test]
++fn native_directory_move_keeps_the_explicit_final_name_contract() {
++    let mut f = fixture(AnalyzerEpoch::V9, "null");
++    let value = yoke::semantic_refactor::invoke(
++        &mut f.session.engine,
++        "move",
++        &json!({"relativePath":"src/tree","targetRelativePath":"pkg.rs/renamed"}),
++        &d(),
++    )
++    .unwrap();
++    assert_eq!(
++        value["plan"]["directoryMove"]["destination"],
++        "pkg.rs/renamed"
++    );
++    assert_eq!(records(&f), (1, 1));
++    unchanged(&f);
++}
++#[test]
++fn occupied_missing_protected_and_uncaptured_tree_entries_refuse_before_provider_start() {
++    for case in [
++        "occupied",
++        "missing-parent",
++        "protected-file",
++        "uncaptured-binary",
++        "missing-source",
++        "descendant",
++    ] {
++        let mut f = fixture(AnalyzerEpoch::V8, "edits");
++        let mut args = json!({"relative_path":"src/tree","target_relative_path":"pkg.rs"});
++        match case {
++            "occupied" => fs::create_dir(f.root.path().join("pkg.rs/tree")).unwrap(),
++            "missing-parent" => args["target_relative_path"] = json!("absent"),
++            "protected-file" => fs::write(
++                f.root.path().join("src/tree/.env"),
++                "OWNED_FIXTURE=not-a-secret\n",
++            )
++            .unwrap(),
++            "uncaptured-binary" => fs::write(
++                f.root.path().join("src/tree/opaque.bin"),
++                b"\0owned opaque bytes",
++            )
++            .unwrap(),
++            "missing-source" => args["relative_path"] = json!("absent"),
++            _ => args["target_relative_path"] = json!("src/tree/sub"),
++        }
++        assert!(invoke(&mut f, args).is_err(), "{case}");
++        assert_eq!(records(&f), (0, 0));
++        assert!(transcript(&f).is_empty(), "{case}");
++        assert_eq!(
++            fs::read(f.root.path().join("src/tree/a.rs")).unwrap(),
++            BEFORE.as_bytes()
++        );
++    }
++}
++#[test]
++fn directory_edit_permission_and_excluded_scope_refusals_precede_provider_start() {
++    let mut f = fixture(AnalyzerEpoch::V9, "edits");
++    f.session
++        .invoke("switchModes", &json!({"modes":["planning"]}), &d())
++        .unwrap();
++    assert!(
++        invoke(
++            &mut f,
++            json!({"relative_path":"src/tree","target_relative_path":"pkg.rs"})
++        )
++        .is_err()
++    );
++    assert!(transcript(&f).is_empty());
++    assert_eq!(records(&f), (0, 0));
++    let mut f = fixture(AnalyzerEpoch::V9, "edits");
++    f.session.engine.capture_options = CaptureOptions {
++        only_dirs: vec!["src".into()],
++        ..Default::default()
++    };
++    assert!(
++        invoke(
++            &mut f,
++            json!({"relative_path":"src/tree","target_relative_path":"pkg.rs"})
++        )
++        .is_err()
++    );
++    assert!(transcript(&f).is_empty());
++    assert_eq!(records(&f), (0, 0));
++    unchanged(&f);
++}
++#[test]
++fn folder_capability_and_original_coordinate_text_only_effects_are_required_before_publication() {
++    for mode in [
++        "file-only",
++        "bad-resource",
++        "outside",
++        "bad-version",
++        "unknown-root",
++    ] {
++        let mut f = fixture(AnalyzerEpoch::V8, mode);
++        let error = invoke(
++            &mut f,
++            json!({"relative_path":"src/tree","target_relative_path":"pkg.rs"}),
++        )
++        .expect_err("Unsupported folder edit must refuse");
++        assert!(!format!("{error:#}").contains("fixture_private_value"));
++        assert_eq!(records(&f), (0, 0), "{mode}");
++        unchanged(&f);
++        let calls = transcript(&f);
++        assert!(
++            !calls
++                .iter()
++                .any(|r| r["method"] == "workspace/executeCommand")
++        );
++        if mode == "file-only" {
++            assert!(
++                !calls
++                    .iter()
++                    .any(|r| r["method"] == "workspace/willRenameFiles")
++            );
++        }
++    }
++}
++#[test]
++fn actual_owned_verification_applies_and_recovers_the_full_directory_shape() {
++    let mut f = fixture(AnalyzerEpoch::V9, "edits");
++    let value = invoke(
++        &mut f,
++        json!({"relative_path":"src/tree","target_relative_path":"pkg.rs"}),
++    )
++    .unwrap();
++    let id = value["plan"]["id"].as_str().unwrap();
++    let verification=yoke::verify::execute(&f.session.engine,id,"node",&["-e".into(),"const fs=require('fs');process.exit(fs.existsSync('pkg.rs/tree/empty/nested')&&!fs.existsSync('src/tree')&&fs.readFileSync('pkg.rs/tree/a.rs','utf8').startsWith('// provider prepared folder move\\r\\n')?0:1)".into()],true,&d()).unwrap();
++    assert_eq!(verification["status"], "passed", "{verification}");
++    assert_eq!(verification["level"], "executed");
++    changes::approve(&f.session.engine.store, id, false).unwrap();
++    let receipt = changes::apply(
++        &f.session.engine.store,
++        f.root.path(),
++        &json!({"planId":id,"idempotencyKey":"owned-folder-full-roundtrip","mode":"workspace"}),
++        true,
++        &d(),
++    )
++    .unwrap();
++    assert!(!f.root.path().join("src/tree").exists());
++    assert!(f.root.path().join("pkg.rs/tree/empty/nested").is_dir());
++    assert_eq!(
++        fs::read(f.root.path().join("pkg.rs/tree/a.rs")).unwrap(),
++        AFTER.as_bytes()
++    );
++    changes::recover(&f.session.engine.store, f.root.path(), &receipt.id, true).unwrap();
++    unchanged(&f);
++    assert_eq!(
++        fs::read(f.root.path().join("src/use.rs")).unwrap(),
++        b"// original folder reference\r\n"
++    );
++}
++
++#[cfg(windows)]
++#[test]
++fn directory_destination_parent_requires_its_exact_existing_host_spelling() {
++    let mut f = fixture(AnalyzerEpoch::V8, "edits");
++    let result = invoke(
++        &mut f,
++        json!({"relative_path":"src/tree","target_relative_path":"PKG.RS"}),
++    );
++    assert!(
++        result.is_err(),
++        "A directory plan used an alias spelling of its existing parent"
++    );
++    assert_eq!(records(&f), (0, 0));
++    assert!(transcript(&f).is_empty());
++    unchanged(&f);
++}
++
++#[cfg(windows)]
++#[test]
++fn an_actual_unprivileged_junction_refuses_before_provider_start() {
++    let mut f = fixture(AnalyzerEpoch::V9, "edits");
++    let outside = tempfile::tempdir().unwrap();
++    fs::write(outside.path().join("foreign.rs"), b"pub fn foreign(){}\n").unwrap();
++    let link = f.root.path().join("src/tree/junction");
++    let status = std::process::Command::new("node")
++        .args([
++            "-e",
++            "require('fs').symlinkSync(process.argv[1],process.argv[2],'junction')",
++        ])
++        .arg(outside.path())
++        .arg(&link)
++        .status()
++        .unwrap();
++    assert!(
++        status.success(),
++        "Owned junction fixture could not be created"
++    );
++    assert!(yoke::paths::is_link(&fs::symlink_metadata(&link).unwrap()));
++    let result = invoke(
++        &mut f,
++        json!({"relative_path":"src/tree","target_relative_path":"pkg.rs"}),
++    );
++    assert!(
++        result.is_err(),
++        "The full tree contained an actual reparse point"
++    );
++    assert_eq!(records(&f), (0, 0));
++    assert!(transcript(&f).is_empty());
++    unchanged(&f);
++    assert_eq!(
++        fs::read(outside.path().join("foreign.rs")).unwrap(),
++        b"pub fn foreign(){}\n"
++    );
++    fs::remove_dir(link).unwrap();
++}
++
++#[test]
++fn a_successful_verifier_that_changes_empty_directory_shape_cannot_authorize_apply() {
++    for script in [
++        "require('fs').rmdirSync('pkg.rs/tree/empty/nested')",
++        "require('fs').mkdirSync('pkg.rs/tree/unexpected-empty')",
++    ] {
++        let mut f = fixture(AnalyzerEpoch::V9, "edits");
++        let value = invoke(
++            &mut f,
++            json!({"relative_path":"src/tree","target_relative_path":"pkg.rs"}),
++        )
++        .unwrap();
++        let id = value["plan"]["id"].as_str().unwrap();
++        let verification = yoke::verify::execute(
++            &f.session.engine,
++            id,
++            "node",
++            &["-e".into(), script.into()],
++            true,
++            &d(),
++        )
++        .unwrap();
++        assert_eq!(verification["exitCode"], 0, "{verification}");
++        assert_eq!(verification["sourceIntegrity"], false, "{verification}");
++        assert_eq!(verification["status"], "failed", "{verification}");
++        changes::approve(&f.session.engine.store, id, false).unwrap();
++        assert!(
++            changes::apply(
++                &f.session.engine.store,
++                f.root.path(),
++                &json!({"planId":id,"idempotencyKey":"changed-empty-shape","mode":"workspace"}),
++                true,
++                &d()
++            )
++            .is_err()
++        );
++        unchanged(&f);
++    }
++}
+diff --git a/native/tests/facade_file_move.rs b/native/tests/facade_file_move.rs
+index 6ad8dde..f35a599 100644
+--- a/native/tests/facade_file_move.rs
++++ b/native/tests/facade_file_move.rs
+@@ -230,9 +230,8 @@ fn occupied_final_child_and_same_parent_moves_refuse_without_change_objects() {
+ }
+ 
+ #[test]
+-fn directory_symbol_parent_and_malformed_file_selectors_are_explicit_refusals() {
++fn symbol_parent_and_malformed_file_selectors_are_explicit_refusals() {
+     for args in [
+-        json!({"relative_path":"src","target_relative_path":"target.rs"}),
+         json!({"relative_path":SOURCE_PATH,"target_relative_path":"target.rs","target_parent_name_path":"Parent"}),
+         json!({"relative_path":SOURCE_PATH,"target_relative_path":"target.rs","name_path":false}),
+         json!({"relative_path":SOURCE_PATH,"target_relative_path":"target.rs","name_path":0}),
+@@ -245,6 +244,26 @@ fn directory_symbol_parent_and_malformed_file_selectors_are_explicit_refusals()
+     }
+ }
+ 
++#[test]
++fn directory_move_with_a_file_only_provider_negotiates_capabilities_but_publishes_no_plan() {
++    let mut f = fixture(AnalyzerEpoch::V8, CaptureOptions::default());
++    assert_refused(
++        &mut f,
++        json!({"relative_path":"src","target_relative_path":"target.rs"}),
++    );
++    let requests = transcript(&f);
++    assert!(
++        requests
++            .iter()
++            .any(|request| request["method"] == "initialize")
++    );
++    assert!(
++        !requests
++            .iter()
++            .any(|request| request["method"] == "workspace/willRenameFiles")
++    );
++}
++
+ #[test]
+ fn unsafe_target_parents_and_captured_readonly_or_excluded_scopes_never_prepare_plans() {
+     for parent in [
+diff --git a/native/tests/fixtures/directory-move-lsp.mjs b/native/tests/fixtures/directory-move-lsp.mjs
+new file mode 100644
+index 0000000..03d4aca
+--- /dev/null
++++ b/native/tests/fixtures/directory-move-lsp.mjs
+@@ -0,0 +1,42 @@
++// Owned standard-LSP protocol fixture. No IDE, compiler or project-code execution.
++import fs from 'node:fs';
++import path from 'node:path';
++import {fileURLToPath,pathToFileURL} from 'node:url';
++const transcript=process.argv[2],mode=process.argv[3]||'edits';
++let buffer=Buffer.alloc(0);
++function reply(message,result){
++ const bytes=Buffer.from(JSON.stringify({jsonrpc:'2.0',id:message.id,result}));
++ process.stdout.write(`Content-Length: ${bytes.length}\r\n\r\n`);process.stdout.write(bytes);
++}
++function edit(text){return [{range:{start:{line:0,character:0},end:{line:0,character:0}},newText:text}];}
++function handle(message){
++ fs.appendFileSync(transcript,JSON.stringify({method:message.method,params:message.params})+'\n');
++ if(message.method==='initialize'){
++  const matches=mode==='file-only'?'file':'folder';
++  reply(message,{capabilities:{positionEncoding:'utf-16',textDocumentSync:1,workspace:{fileOperations:{willRename:{filters:[{scheme:'file',pattern:{glob:'**',matches}}]}}}}});
++ }else if(message.method==='workspace/willRenameFiles'){
++  const directory=fileURLToPath(message.params.files[0].oldUri);
++  if(!fs.statSync(directory).isDirectory())throw new Error('Fixture requires a real copied source folder');
++  const source=pathToFileURL(path.join(directory,'a.rs')).href;
++  const outside=pathToFileURL(path.resolve(directory,'..','use.rs')).href;
++  const changes={[source]:edit('// provider prepared folder move\r\n'),[outside]:edit('// provider folder reference\r\n')};
++  if(mode==='null')reply(message,null);
++  else if(mode==='bad-resource')reply(message,{documentChanges:[{kind:'create',uri:pathToFileURL(path.join(directory,'injected.rs')).href}]});
++  else if(mode==='outside')reply(message,{changes:{[pathToFileURL(path.resolve(directory,'../../..','owned-outside-source.rs')).href]:edit('// should refuse\n')}});
++  else if(mode==='bad-version')reply(message,{documentChanges:[{textDocument:{uri:source,version:'fixture_private_value'},edits:edit('// should refuse\n')}]});
++  else if(mode==='unknown-root')reply(message,{changes,unexpected:'fixture_private_value'});
++  else reply(message,{changes});
++ }else if(message.method==='shutdown')reply(message,null);
++ else if(message.method==='exit')process.exit(0);
++ else if(message.id!==undefined)reply(message,null);
++}
++process.stdin.on('data',chunk=>{
++ buffer=Buffer.concat([buffer,chunk]);if(buffer.length>4_000_000)throw new Error('Fixture frame bound');
++ for(;;){
++  const end=buffer.indexOf('\r\n\r\n');if(end<0)return;
++  const match=/Content-Length: (\d+)/i.exec(buffer.subarray(0,end).toString());if(!match)throw new Error('Fixture framing');
++  const length=Number(match[1]);if(length>4_000_000)throw new Error('Fixture payload bound');
++  if(buffer.length<end+4+length)return;
++  const message=JSON.parse(buffer.subarray(end+4,end+4+length));buffer=buffer.subarray(end+4+length);handle(message);
++ }
++});
+diff --git a/native/tests/plan_integrity.rs b/native/tests/plan_integrity.rs
+index f2424a2..39340ee 100644
+--- a/native/tests/plan_integrity.rs
++++ b/native/tests/plan_integrity.rs
+@@ -17,10 +17,10 @@ fn d() -> Deadline {
+     Deadline::new(30_000)
+ }
+ struct Fixture {
+-    root: tempfile::TempDir,
+     engine: Engine,
+     plan: Plan,
+     path: PathBuf,
++    root: tempfile::TempDir,
+ }
+ fn fixture(name: &str, epoch: AnalyzerEpoch) -> Fixture {
+     let root = tempfile::tempdir().unwrap();

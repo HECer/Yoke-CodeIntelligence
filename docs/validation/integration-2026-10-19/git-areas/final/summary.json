@@ -1,0 +1,357 @@
+{
+  "allChecksPassed": false,
+  "sourceUnchanged": true,
+  "wholeNativeRun": false,
+  "selectedIntegrationTargets": [
+    "git_areas",
+    "meaning_build",
+    "meaning_cli",
+    "meaning_graph",
+    "meaning_groups_admission",
+    "meaning_protocol",
+    "git_conflicts",
+    "git_workflows",
+    "git_cli",
+    "git_epochs",
+    "git_epoch_selection",
+    "git_review",
+    "git_affected_cli",
+    "git_affected_details",
+    "git_affected_qualification",
+    "git_impact_details",
+    "git_impact_details_cli",
+    "git_impact_details_no_git",
+    "git_impact_details_qualification",
+    "git_impact_details_sqlite_limits",
+    "capture_options",
+    "capture_policy",
+    "ignored_capture",
+    "editor",
+    "process",
+    "deadline_scope"
+  ],
+  "checks": [
+    {
+      "gate": "format",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 5.006,
+      "recordedAt": "2026-10-19T10:32:58.258179+00:00",
+      "resultGroups": []
+    },
+    {
+      "gate": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--keep-going",
+        "-j1",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 169.309,
+      "recordedAt": "2026-10-19T10:35:47.567391+00:00",
+      "resultGroups": []
+    },
+    {
+      "gate": "library",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j1",
+        "--lib",
+        "--",
+        "--test-threads=2"
+      ],
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 174.874,
+      "recordedAt": "2026-10-19T10:38:42.441488+00:00",
+      "resultGroups": [
+        {
+          "passed": 413,
+          "failed": 0,
+          "ignored": 7
+        }
+      ]
+    },
+    {
+      "gate": "native-selected",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "--no-fail-fast",
+        "-j1",
+        "--test",
+        "git_areas",
+        "--test",
+        "meaning_build",
+        "--test",
+        "meaning_cli",
+        "--test",
+        "meaning_graph",
+        "--test",
+        "meaning_groups_admission",
+        "--test",
+        "meaning_protocol",
+        "--test",
+        "git_conflicts",
+        "--test",
+        "git_workflows",
+        "--test",
+        "git_cli",
+        "--test",
+        "git_epochs",
+        "--test",
+        "git_epoch_selection",
+        "--test",
+        "git_review",
+        "--test",
+        "git_affected_cli",
+        "--test",
+        "git_affected_details",
+        "--test",
+        "git_affected_qualification",
+        "--test",
+        "git_impact_details",
+        "--test",
+        "git_impact_details_cli",
+        "--test",
+        "git_impact_details_no_git",
+        "--test",
+        "git_impact_details_qualification",
+        "--test",
+        "git_impact_details_sqlite_limits",
+        "--test",
+        "capture_options",
+        "--test",
+        "capture_policy",
+        "--test",
+        "ignored_capture",
+        "--test",
+        "editor",
+        "--test",
+        "process",
+        "--test",
+        "deadline_scope",
+        "--",
+        "--test-threads=2"
+      ],
+      "exitCode": 101,
+      "timedOut": false,
+      "elapsedSeconds": 230.869,
+      "recordedAt": "2026-10-19T10:42:33.310568+00:00",
+      "resultGroups": [
+        {
+          "passed": 8,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 9,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 7,
+          "failed": 1,
+          "ignored": 0
+        },
+        {
+          "passed": 12,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 8,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 12,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 9,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 29,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 14,
+          "failed": 1,
+          "ignored": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 17,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 15,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 26,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 13,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "doctests",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--doc",
+        "--locked",
+        "-j1"
+      ],
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 13.851,
+      "recordedAt": "2026-10-19T10:42:47.162165+00:00",
+      "resultGroups": [
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "python-contracts",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts/tests",
+        "-v"
+      ],
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 1.292,
+      "recordedAt": "2026-10-19T10:42:48.454266+00:00",
+      "resultGroups": []
+    },
+    {
+      "gate": "typescript-typecheck",
+      "command": [
+        "npm.cmd",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 4.776,
+      "recordedAt": "2026-10-19T10:42:53.230843+00:00",
+      "resultGroups": []
+    },
+    {
+      "gate": "typescript-tests",
+      "command": [
+        "npm.cmd",
+        "test"
+      ],
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 60.26,
+      "recordedAt": "2026-10-19T10:43:53.491486+00:00",
+      "resultGroups": []
+    }
+  ],
+  "scope": "Scoped Windows validation for new read-only impact-area classifier, explicit same-snapshot Meaning replay and early CLI dispatch: full library plus26 Git/Meaning/capture/scope/editor/process integration targets, all-target Clippy, Python and mandatory TypeScript checks. No shared impact/Meaning producer, HostGit, Store or source-scope implementation changes. Whole-native, hosted/platform, wider semantic/upstream and full STATUS acceptance remain separate."
+}

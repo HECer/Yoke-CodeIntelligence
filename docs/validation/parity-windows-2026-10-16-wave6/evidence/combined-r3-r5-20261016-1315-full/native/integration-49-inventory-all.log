@@ -1,0 +1,14 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 5.76s
+     Running tests\historical_view_fixture_qualification.rs (target\debug\deps\historical_view_fixture_qualification-51cfbc36f26879ae.exe)
+genuine_original_and_rebound_typed_archives_qualify_both_epochs_without_a_live_store: test
+genuine_source_only_views_qualify_epoch8_and_epoch9_and_the_mutation_oracle: test
+
+2 tests, 0 benchmarks
+     Running tests\historical_view_receipts.rs (target\debug\deps\historical_view_receipts-9bd63eedbe6a9c95.exe)
+h11_checked_archives_keep_original_reports_after_later_ledger_reconciliation_and_store_removal: test
+h11_different_currencies_and_versions_remain_original_nonaggregated_receipts: test
+h11_new_digest_oracle_sorts_nested_objects_without_reordering_arrays_or_erasing_nulls: test
+h11_published_comparison_preserves_null_zero_independent_usage_and_receipt_reuse: test
+
+4 tests, 0 benchmarks

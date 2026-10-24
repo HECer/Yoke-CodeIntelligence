@@ -1,0 +1,13 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 41s
+     Running unittests src\lib.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\yoke-f14d0af26d19713e.exe)
+
+running 5 tests
+test compiler_move::repairs::tests::coherent_repaired_effects_still_require_original_bindings_ownership_and_property_keys ... ok
+test compiler_move::repairs::tests::original_byte_composition_matches_independent_sequential_utf8_edits ... ok
+test compiler_move::tests::coherent_rehashed_compiler_effect_cannot_change_bodies_exports_or_omit_import_names ... ok
+test compiler_move::tests::native_syntax_correspondence_keeps_operators_precedence_comments_and_for_separators ... ok
+test compiler_move::tests::raw_compiler_edit_order_bom_utf8_overlap_and_capacity_are_independently_admitted ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 482 filtered out; finished in 14.32s
+

@@ -1,0 +1,19 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 7.36s
+     Running tests\monorepo_pre_feature_envelope.rs (target\debug\deps\monorepo_pre_feature_envelope-969d0005b34db2f9.exe)
+
+running 1 test
+
+thread 'full_definition_envelope_overflow_is_an_error_without_an_artifact_fallback' (35976) panicked at native\tests\monorepo_pre_feature_envelope.rs:202:5:
+Expected causal compatibility_envelope output rejection; metadata={"artifactCountAfter":1,"artifactCountBefore":0,"artifactPresent":true,"errorMessagePreview":null,"fullDefinitionControlsPassed":2,"inlineJsonBytes":453,"itemCount":2,"logicalEnvelopeLimit":4000000,"minimumLogicalEnvelopeBytes":4000062,"resultTransport":"immutable_paged_artifact","status":"ok","toolIsError":false}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test full_definition_envelope_overflow_is_an_error_without_an_artifact_fallback ... FAILED
+
+failures:
+
+failures:
+    full_definition_envelope_overflow_is_an_error_without_an_artifact_fallback
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.74s
+
+error: test failed, to rerun pass `--test monorepo_pre_feature_envelope`

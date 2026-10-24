@@ -1,0 +1,214 @@
+{
+  "recordedAt": "2026-10-19T11:37:11.910273+00:00",
+  "nativeBinarySha256": "13c469ad8d2f10ebf5f301698292c007c25610104100a25055d0e8454afe2e1d",
+  "casesPassed": 14,
+  "allCasesPassed": true,
+  "scope": "Actual native CLI on exclusively owned temporary source and raw SQLite fault injection. One explicitly authorized Node verifier reads only owned copied fixture bytes; no analyzed third-party code or compiler execution is claimed. Separate from Cargo counts.",
+  "cases": [
+    {
+      "case": "cli-prepare",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-plan-cli-gt8wg9n7\\source",
+        "prepare",
+        "--input",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-plan-cli-gt8wg9n7\\host\\edits.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "case": "cli-test-change-gate",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-plan-cli-gt8wg9n7\\source",
+        "approve",
+        "e21628486029cb790278b77643eda7f7de4b23a8646f9747c12a4694f5e6a9e5"
+      ],
+      "exitCode": 1,
+      "expectedSuccess": false
+    },
+    {
+      "case": "cli-approve-exact",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-plan-cli-gt8wg9n7\\source",
+        "approve",
+        "e21628486029cb790278b77643eda7f7de4b23a8646f9747c12a4694f5e6a9e5",
+        "--allow-test-changes"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "case": "cli-review-corruption",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-plan-cli-gt8wg9n7\\source",
+        "approve",
+        "e21628486029cb790278b77643eda7f7de4b23a8646f9747c12a4694f5e6a9e5",
+        "--allow-test-changes"
+      ],
+      "exitCode": 1,
+      "expectedSuccess": false
+    },
+    {
+      "case": "cli-warnings-corruption",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-plan-cli-gt8wg9n7\\source",
+        "approve",
+        "e21628486029cb790278b77643eda7f7de4b23a8646f9747c12a4694f5e6a9e5",
+        "--allow-test-changes"
+      ],
+      "exitCode": 1,
+      "expectedSuccess": false
+    },
+    {
+      "case": "cli-expiry-corruption",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-plan-cli-gt8wg9n7\\source",
+        "approve",
+        "e21628486029cb790278b77643eda7f7de4b23a8646f9747c12a4694f5e6a9e5",
+        "--allow-test-changes"
+      ],
+      "exitCode": 1,
+      "expectedSuccess": false
+    },
+    {
+      "case": "cli-zero-timeout",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-plan-cli-gt8wg9n7\\source",
+        "--timeout",
+        "0",
+        "approve",
+        "e21628486029cb790278b77643eda7f7de4b23a8646f9747c12a4694f5e6a9e5",
+        "--allow-test-changes"
+      ],
+      "exitCode": 1,
+      "expectedSuccess": false
+    },
+    {
+      "case": "cli-invalid-before-verifier",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-plan-cli-gt8wg9n7\\source",
+        "verify",
+        "--plan",
+        "e21628486029cb790278b77643eda7f7de4b23a8646f9747c12a4694f5e6a9e5",
+        "--command",
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "--arg=-e",
+        "--arg=require(\"fs\").writeFileSync(\"C:\\\\Users\\\\Lomi\\\\AppData\\\\Local\\\\Temp\\\\yoke-plan-cli-gt8wg9n7\\\\host\\\\verifier-started\",\"started\")",
+        "--trust-project"
+      ],
+      "exitCode": 1,
+      "expectedSuccess": false
+    },
+    {
+      "case": "cli-owned-executed-verification",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-plan-cli-gt8wg9n7\\source",
+        "verify",
+        "--plan",
+        "e21628486029cb790278b77643eda7f7de4b23a8646f9747c12a4694f5e6a9e5",
+        "--command",
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "--arg=-e",
+        "--arg=process.exit(require(\"fs\").readFileSync(\"src/spec.rs\",\"utf8\")===\"pub fn reviewed(){ /* caf\\u00e9 \\ud83e\\udd80 */ }\\r\\n\"?0:1)",
+        "--trust-project"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "case": "cli-approved-effect-corruption",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-plan-cli-gt8wg9n7\\source",
+        "--allow-writes",
+        "apply",
+        "e21628486029cb790278b77643eda7f7de4b23a8646f9747c12a4694f5e6a9e5",
+        "--key",
+        "owned-corrupt",
+        "--mode",
+        "workspace"
+      ],
+      "exitCode": 1,
+      "expectedSuccess": false
+    },
+    {
+      "case": "cli-workspace-apply",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-plan-cli-gt8wg9n7\\source",
+        "--allow-writes",
+        "apply",
+        "e21628486029cb790278b77643eda7f7de4b23a8646f9747c12a4694f5e6a9e5",
+        "--key",
+        "owned-valid",
+        "--mode",
+        "workspace"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "case": "cli-recovery-corruption",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-plan-cli-gt8wg9n7\\source",
+        "--allow-writes",
+        "recover",
+        "59d8ef704afde7cf4ae53373e4ab213f2e4e5e5cc1b911aaf9123ab3adb6cfa1"
+      ],
+      "exitCode": 1,
+      "expectedSuccess": false
+    },
+    {
+      "case": "cli-existing-idempotent-receipt",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-plan-cli-gt8wg9n7\\source",
+        "--allow-writes",
+        "apply",
+        "e21628486029cb790278b77643eda7f7de4b23a8646f9747c12a4694f5e6a9e5",
+        "--key",
+        "owned-valid",
+        "--mode",
+        "workspace"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "case": "cli-conditional-recovery",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-plan-cli-gt8wg9n7\\source",
+        "--allow-writes",
+        "recover",
+        "59d8ef704afde7cf4ae53373e4ab213f2e4e5e5cc1b911aaf9123ab3adb6cfa1"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    }
+  ]
+}

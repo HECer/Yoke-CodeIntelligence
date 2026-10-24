@@ -1,0 +1,38 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 688,
+  "binaryHash": "dc9996ac17f9c634a848f9b2eb576c56d09c01b10d730d3abfdd95f9cfc01df9",
+  "results": [
+    {
+      "name": "web",
+      "url": "https://example.com/",
+      "hostSelectedAddress": "172.66.147.243:443",
+      "nativeCapture": true,
+      "bodyBytes": 577,
+      "bodyHash": "25ddf2c883e0d1958ea971d279a7e4f0fd446724ee3db7db19dadabd4a62e484",
+      "archiveHash": "4e54c33618ac5ba091e0bba115349cc10da3d8ff58c7344a0c48a204bfb8e528",
+      "hostSetupDNSPerformed": true,
+      "frozenReadNetworkConnections": 0
+    },
+    {
+      "name": "pdf",
+      "url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+      "hostSelectedAddress": "104.18.23.19:443",
+      "nativeCapture": true,
+      "bodyBytes": 13264,
+      "bodyHash": "3df79d34abbca99308e79cb94461c1893582604d68329a41fd4bec1885e6adb4",
+      "archiveHash": "ef86ecc4b91290a6367f75b0504886f63627822c912b28f0041b541c6714f66a",
+      "hostSetupDNSPerformed": true,
+      "frozenReadNetworkConnections": 0,
+      "nativePdfText": true,
+      "textPages": 1
+    },
+    {
+      "name": "lost-stdout-owned-HTTP",
+      "artifactPreserved": true,
+      "identityReported": true,
+      "exitCode": 1
+    }
+  ],
+  "arxivNativeImplementation": false
+}

@@ -1,0 +1,19 @@
+    Finished `test` profile [unoptimized] target(s) in 1.30s
+     Running tests\ledger.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\ledger-dcddb849694983a4.exe)
+
+running 5 tests
+test reported_cost_above_reservation_stays_charged_and_blocks_task ... ok
+test reservations_survive_reopen_and_refuse_overspend ... ok
+test unknown_billing_retains_reservation_and_only_unsent_attempts_cancel ... ok
+test usage_is_monotone_deduplicated_and_policy_is_immutable ... ok
+test concurrent_reservations_cannot_overspend ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.41s
+
+     Running tests\ledger_admission_review.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\ledger_admission_review-8a6bcc31976b0106.exe)
+
+running 1 test
+test oversized_accounting_cells_are_rejected_before_rust_materialization_and_restore_sql_limit ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.52s
+

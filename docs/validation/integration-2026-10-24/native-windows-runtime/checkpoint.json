@@ -1,0 +1,44 @@
+{
+  "codeRevision": "6b9a60dda07d546ce09108cf40018a4fe29e3099",
+  "platform": "x86_64-pc-windows-msvc",
+  "rustVersion": "1.94.1",
+  "sourceInputCount": 1003,
+  "wholeGroupTests": {
+    "process": {
+      "passed": 7,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filteredOut": 0,
+      "wholeGroup": true
+    },
+    "agent-repl": {
+      "passed": 22,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filteredOut": 0,
+      "wholeGroup": true
+    },
+    "library": {
+      "passed": 703,
+      "failed": 0,
+      "ignored": 7,
+      "measured": 0,
+      "filteredOut": 0,
+      "wholeGroup": true
+    }
+  },
+  "selectedInlineBodyRegressions": 4,
+  "completeInlineBodyGroupClaimed": false,
+  "all11OwnedRunsNaturallyEmptyBeforeCleanup": true,
+  "originalD80LibraryIncompleteReceiptReclassified": false,
+  "hostedFailureCauseEstablished": false,
+  "fullNativeSuiteClaimed": false,
+  "stillOpen": [
+    "hosted PowerShell/root-cause acceptance",
+    "remaining native integration/default target groups",
+    "all current platform/live/history/browser/VSIX",
+    "full STATUS/main/release"
+  ]
+}

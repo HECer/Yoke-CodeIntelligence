@@ -1,0 +1,37 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 11s
+     Running tests\propagated_delete_contract.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\propagated_delete_contract-e5e3858a7938ce91.exe)
+
+running 8 tests
+test wrapped_policy_bounds_wrapper_depth_without_clipping_the_whole_usage ... FAILED
+test wrapped_policy_deduplicates_nested_calls_and_keeps_surviving_dependencies ... FAILED
+test wrapped_policy_is_opt_in_and_explicit_v1_keeps_the_original_effects ... ok
+test wrapped_policy_preserves_surviving_statement_boundaries ... ok
+test wrapped_policy_refuses_value_consumers_optional_calls_and_unowned_statement_slots ... ok
+test wrapped_policy_rejects_invalid_native_selectors_before_starting_a_provider ... ok
+test wrapped_policy_removes_only_complete_parenthesized_await_and_void_statements ... ok
+test wrapped_policy_requires_the_same_complete_bound_provider_proofs ... ok
+
+failures:
+
+---- wrapped_policy_bounds_wrapper_depth_without_clipping_the_whole_usage stdout ----
+
+thread 'wrapped_policy_bounds_wrapper_depth_without_clipping_the_whole_usage' (25232) panicked at native\tests\propagated_delete_contract.rs:332:32:
+called `Result::unwrap()` on an `Err` value: Propagated deletion would alter surviving syntax
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- wrapped_policy_deduplicates_nested_calls_and_keeps_surviving_dependencies stdout ----
+
+thread 'wrapped_policy_deduplicates_nested_calls_and_keeps_surviving_dependencies' (8800) panicked at native\tests\propagated_delete_contract.rs:351:14:
+called `Result::unwrap()` on an `Err` value: Propagated deletion would alter surviving syntax
+
+
+failures:
+    wrapped_policy_bounds_wrapper_depth_without_clipping_the_whole_usage
+    wrapped_policy_deduplicates_nested_calls_and_keeps_surviving_dependencies
+
+test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 20 filtered out; finished in 27.50s
+
+error: test failed, to rerun pass `--test propagated_delete_contract`
+error: 1 target failed:
+    `--test propagated_delete_contract`

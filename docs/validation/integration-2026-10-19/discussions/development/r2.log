@@ -1,0 +1,33 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 10.59s
+     Running tests\github_discussions.rs (target\debug\deps\github_discussions-ecd057bb99c496f2.exe)
+
+running 6 tests
+test captures_all_channels_exact_unicode_reply_edges_and_rechecks_the_closed_head ... ok
+test closed_listing_cannot_lose_its_state_filter_in_pagination ... ok
+test changed_head_and_cross_pull_comment_never_become_a_capture ... ok
+test missing_text_grant_and_zero_budget_refuse_before_network ... ok
+test provider_null_description_is_known_absence_not_missing_page_coverage ... FAILED
+test replay_rejects_rehashed_foreign_receipts_and_omitted_requested_pulls ... FAILED
+
+failures:
+
+---- provider_null_description_is_known_absence_not_missing_page_coverage stdout ----
+
+thread 'provider_null_description_is_known_absence_not_missing_page_coverage' (18520) panicked at native\tests\github_discussions.rs:237:5:
+assertion failed: c.payload.coverage_complete
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- replay_rejects_rehashed_foreign_receipts_and_omitted_requested_pulls stdout ----
+
+thread 'replay_rejects_rehashed_foreign_receipts_and_omitted_requested_pulls' (16936) panicked at native\tests\github_discussions.rs:254:9:
+mutation 0
+
+
+failures:
+    provider_null_description_is_known_absence_not_missing_page_coverage
+    replay_rejects_rehashed_foreign_receipts_and_omitted_requested_pulls
+
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+error: test failed, to rerun pass `--test github_discussions`

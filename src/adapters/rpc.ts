@@ -8,6 +8,7 @@ export class RpcPeer extends EventEmitter {
     private buffer = Buffer.alloc(0);
     private next = 1;
     private dead = false;
+    private stopped: Promise<void> = Promise.resolve();
     private pending = new Map<number, {
         resolve: (value: unknown) => void;
         reject: (error: Error) => void;
@@ -17,6 +18,7 @@ export class RpcPeer extends EventEmitter {
     start(command: string, args: string[], cwd: string): void {
         assert(!this.child, 'PEER_STARTED', 'Peer already started');
         this.child = spawn(command, args, { cwd, shell: false, detached: process.platform !== 'win32', stdio: ['pipe', 'pipe', 'pipe'], env: { PATH: process.env.PATH ?? '', SystemRoot: process.env.SystemRoot ?? '', PYTHONNOUSERSITE: '1', PYTHONDONTWRITEBYTECODE: '1', NO_COLOR: '1' } });
+        this.stopped = new Promise(resolve => this.child!.once('close', () => resolve()));
         this.child.stdout.on('data', (data: Buffer) => {
             try {
                 this.ingest(data);
@@ -155,4 +157,16 @@ export class RpcPeer extends EventEmitter {
         this.emit('closed', error);
     }
     close(): void { this.fail(new CIError('PEER_CLOSED', 'Provider closed by host')); }
+    /** Wait for actual process/stdio closure, rather than the early RPC failure event. */
+    async waitForExit(deadline: Deadline): Promise<void> {
+        deadline.check();
+        await new Promise<void>((resolve, reject) => {
+            const cleanup = () => { clearTimeout(timer); deadline.signal?.removeEventListener('abort', abort); };
+            const abort = () => { cleanup(); reject(new CIError('CANCELLED', 'Provider exit wait cancelled')); };
+            const timer = setTimeout(() => { cleanup(); reject(new CIError('DEADLINE_EXCEEDED', 'Provider exit exceeded shared deadline')); }, deadline.remaining);
+            deadline.signal?.addEventListener('abort', abort, { once: true });
+            this.stopped.then(() => { cleanup(); resolve(); });
+        });
+        deadline.check();
+    }
 }

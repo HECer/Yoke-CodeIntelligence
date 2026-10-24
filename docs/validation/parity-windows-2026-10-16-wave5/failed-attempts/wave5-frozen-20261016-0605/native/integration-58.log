@@ -1,0 +1,23 @@
+    Finished `test` profile [unoptimized] target(s) in 1.15s
+     Running tests\manifest_graph.rs (target\debug\deps\manifest_graph-51f2ce9c74f5c644.exe)
+
+running 8 tests
+test apm_yaml_manifest_dependencies_are_not_treated_as_npm ... ok
+test cargo_path_link_must_match_declared_package_identity ... ok
+test cargo_workspace_inherits_renamed_path_dependencies_without_merging_packages ... ok
+test cargo_inheritance_uses_the_nearest_declared_workspace ... ok
+test invalid_xml_or_expired_capture_cannot_publish_derived_graph ... ok
+test derived_publication_refuses_an_existing_record_with_different_scope ... ok
+test package_json_graph_preserves_aliases_and_never_stores_credentials ... ok
+test pyproject_go_and_pom_declarations_have_distinct_ecosystems ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.75s
+
+     Running tests\markdown_graph.rs (target\debug\deps\markdown_graph-773ed0b86310e621.exe)
+
+running 2 tests
+test commonmark_nested_labels_multiline_definitions_and_indented_code_have_correct_links ... ok
+test markdown_wiki_reference_frontmatter_and_symbol_citations_are_source_bound ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.23s
+

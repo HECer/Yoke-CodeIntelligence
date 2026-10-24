@@ -1,0 +1,47 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 10s
+     Running unittests src\lib.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\yoke-f14d0af26d19713e.exe)
+
+running 3 tests
+test compiler_inline::body::admission::tests::body_effects_cannot_forge_source_bindings_origins_types_paths_or_output ... ok
+test compiler_inline::body::tests::frame_reconstruction_keeps_argument_order_parameter_scope_and_finally_returns ... ok
+test compiler_inline::body::tests::owned_frame_execution_keeps_finally_scope_nested_returns_and_argument_comments ... FAILED
+
+failures:
+
+---- compiler_inline::body::tests::owned_frame_execution_keeps_finally_scope_nested_returns_and_argument_comments stdout ----
+
+thread 'compiler_inline::body::tests::owned_frame_execution_keeps_finally_scope_nested_returns_and_argument_comments' (19056) panicked at native\src\compiler_inline_body.rs:579:13:
+[eval]:1
+const vm=require('node:vm');function observe(s){const c={};vm.runInNewContext(s,c,{timeout:1000});return JSON.stringify(c.observed);}if(observe("function helper(){exit:while(true){try{return 1;}finally{break exit;}}}const result=helper();globalThis.observed={result,isUndefined:result===undefined};")!==observe("let __ci_inline_1;\n{\n\n{\n__ci_inline_2: {exit:while(true){try{{ __ci_inline_1 = ( 1);; break __ci_inline_2; }}finally{break exit;}}}\n}\n}\nconst result=__ci_inline_1;globalThis.observed={result,isUndefined:result===undefined};"))throw Error('owned frame changed observations');
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^
+
+Error: owned frame changed observations
+    at [eval]:1:552
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3
+
+Node.js v24.21.0
+
+let __ci_inline_1;
+{
+
+{
+__ci_inline_2: {exit:while(true){try{{ __ci_inline_1 = ( 1);; break __ci_inline_2; }}finally{break exit;}}}
+}
+}
+const result=__ci_inline_1;globalThis.observed={result,isUndefined:result===undefined};
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    compiler_inline::body::tests::owned_frame_execution_keeps_finally_scope_nested_returns_and_argument_comments
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 487 filtered out; finished in 2.23s
+
+error: test failed, to rerun pass `--lib`

@@ -1,0 +1,100 @@
+{
+  "baseIntegration": "d36a6d0459e0b38352a04be30ce1f284e63ac768",
+  "sourceCommit": "b1da9f70a57bbca1f1573b9b54d58beca517c63c",
+  "newIntegrationCases": [
+    "actual_exported_function_move_repairs_split_consumer_imports_without_source_writes",
+    "actual_private_free_dependency_preserves_same_offset_compiler_insertion_order",
+    "actual_jsdoc_class_move_repairs_namespace_consumer_and_keeps_unrelated_member",
+    "actual_declaration_matrix_keeps_original_graph_identity_and_explicit_ast_origin",
+    "actual_imported_free_bindings_and_unrelated_reexports_preserve_side_effect_statements",
+    "actual_jsx_component_moves_keep_intrinsic_properties_and_typed_props",
+    "actual_compiler_broken_selected_reexports_and_import_alias_collisions_are_refused",
+    "readonly_consumer_and_ambiguous_context_cannot_publish_compiler_move_plans",
+    "compiler_profile_rejects_tools_in_analyzed_roots_and_detects_changed_module_bytes",
+    "actual_language_matrix_keeps_bom_unicode_crlf_and_repository_plugins_inert",
+    "invalid_paths_stale_selection_trust_context_and_directives_publish_no_plan",
+    "move_profile_is_optional_host_bound_and_routed_through_the_existing_facade",
+    "actual_cli_move_requires_independent_tsc_approval_and_conditional_recovery"
+  ],
+  "newUnitCases": [
+    "compiler_move::tests::coherent_rehashed_compiler_effect_cannot_change_bodies_exports_or_omit_import_names",
+    "compiler_move::tests::native_syntax_correspondence_keeps_operators_precedence_comments_and_for_separators",
+    "compiler_move::tests::raw_compiler_edit_order_bom_utf8_overlap_and_capacity_are_independently_admitted"
+  ],
+  "newCasesPassed": 16,
+  "additionalStdlibCliProbePassed": true,
+  "compiler": "TypeScript 5.8.3",
+  "declarationEpochScenarios": 14,
+  "encodingLanguageScenarios": 4,
+  "jsxComponentScenarios": 2,
+  "combinedNativeTotals": {
+    "passed": 645,
+    "failed": 0,
+    "ignored": 9
+  },
+  "combinedGroups": 13,
+  "nativeFrozenInputs": 795,
+  "retainedFrozenInputs": 789,
+  "libraryRuntimeInputHashesMatched": 318,
+  "wholeNativeRerun": false,
+  "otherPlatformsCertified": false,
+  "fullParityCertified": false,
+  "releasePerformed": false,
+  "unchangedSources": {
+    "native/src/analysis.rs": {
+      "currentSha256": "06b761e1e0b5e48d2892c9653bbe54f04dcb94f4eda1796701eb4cfc7f6f8050",
+      "baseGitSha256": "06b761e1e0b5e48d2892c9653bbe54f04dcb94f4eda1796701eb4cfc7f6f8050",
+      "match": "raw"
+    },
+    "native/src/model.rs": {
+      "currentSha256": "dbf4f3a895b6a2abf0ec7d75ca8914c8fd7d4d3c241e1a0e1977a953146398ed",
+      "baseGitSha256": "1a4eb3c9aa6ef9d9568d284b172c89eab296b74a420b20b9f44f5272da3c0bbd",
+      "match": "crlf-only"
+    },
+    "native/src/lsp.rs": {
+      "currentSha256": "4f499a085e5c1a3ffe330481d401e52aeea6a038bb52eb532e86ccb1a6492727",
+      "baseGitSha256": "2a4cab6f748b68c5254cb36a706af0937c643e7926fa8627c4618bbcd4737144",
+      "match": "crlf-only"
+    },
+    "native/src/lsp_refactor_intents.rs": {
+      "currentSha256": "e6ec61714bbe629ed5d2f735e7efb5ad4596b789f6ebc59be6498380b864a0f5",
+      "baseGitSha256": "613d8b0bd893b6a32267288ead2a3ae5a469eee0fc4ff9cdcd069716c4933ec4",
+      "match": "crlf-only"
+    },
+    "native/src/semantic_move_intents.rs": {
+      "currentSha256": "e82135e42bb6a9228dafa5269e6714ddfcf3bfe9ba3f6ff3ff2d7a950a1d0520",
+      "baseGitSha256": "2180690a1860f73959fab4db4b386e5c5726d144b4499cf59943450bf2f7a23f",
+      "match": "crlf-only"
+    },
+    "native/src/semantic_refactor.rs": {
+      "currentSha256": "b508782248be05cba3b97ad42c41acde5fe2accb134fd6a6c6f63f61aebf88d9",
+      "baseGitSha256": "63c5eec7d08a4f0a349174a641e2d76209a2fc9cbf648160596b9044518729e6",
+      "match": "crlf-only"
+    },
+    "native/src/changes.rs": {
+      "currentSha256": "f1826e81498a8d47da2992e9af5fc8e612b43fb8507f8b41fdee1227fb2be77f",
+      "baseGitSha256": "f1826e81498a8d47da2992e9af5fc8e612b43fb8507f8b41fdee1227fb2be77f",
+      "match": "raw"
+    },
+    "native/src/agent_repl.rs": {
+      "currentSha256": "2d6600498bd092961258d2f7f93fa189e5a33f8d114bd8a4de5ec108ee00f361",
+      "baseGitSha256": "2d6600498bd092961258d2f7f93fa189e5a33f8d114bd8a4de5ec108ee00f361",
+      "match": "raw"
+    },
+    "native/tests/session_refactor.rs": {
+      "currentSha256": "09f81f562c9a38568e166dc7ca34c93252266f22c1fbb22ef582c855c6d2ef2e",
+      "baseGitSha256": "09f81f562c9a38568e166dc7ca34c93252266f22c1fbb22ef582c855c6d2ef2e",
+      "match": "raw"
+    },
+    "native/tests/compiler_inline.rs": {
+      "currentSha256": "59fa07379e5132578aea262940ab358e92d83c97ad27dd56bd1cce5bbdb859c8",
+      "baseGitSha256": "59fa07379e5132578aea262940ab358e92d83c97ad27dd56bd1cce5bbdb859c8",
+      "match": "raw"
+    },
+    "native/tests/fixtures/postgres-catalog-response.jsonl": {
+      "currentSha256": "f67a05349a6cedf55222afd3bb3231c169d382dd4b078d76544daac517530b47",
+      "baseGitSha256": "f67a05349a6cedf55222afd3bb3231c169d382dd4b078d76544daac517530b47",
+      "match": "raw"
+    }
+  }
+}

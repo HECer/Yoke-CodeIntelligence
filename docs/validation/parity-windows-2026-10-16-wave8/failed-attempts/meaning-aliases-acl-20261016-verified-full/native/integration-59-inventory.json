@@ -1,0 +1,20 @@
+{
+  "ledger": {
+    "executable": "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\ledger-dcddb849694983a4.exe",
+    "ignored": [],
+    "registered": [
+      "concurrent_reservations_cannot_overspend",
+      "reported_cost_above_reservation_stays_charged_and_blocks_task",
+      "reservations_survive_reopen_and_refuse_overspend",
+      "unknown_billing_retains_reservation_and_only_unsent_attempts_cancel",
+      "usage_is_monotone_deduplicated_and_policy_is_immutable"
+    ]
+  },
+  "ledger_admission_review": {
+    "executable": "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\ledger_admission_review-8a6bcc31976b0106.exe",
+    "ignored": [],
+    "registered": [
+      "oversized_accounting_cells_are_rejected_before_rust_materialization_and_restore_sql_limit"
+    ]
+  }
+}

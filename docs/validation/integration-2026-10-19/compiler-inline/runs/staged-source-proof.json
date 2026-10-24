@@ -1,0 +1,28 @@
+{
+  "stagedTree": "6e02b305714fd9d402ed22dcc0b85e3f3c6271b9",
+  "stagedFiles": [
+    "README.md",
+    "docs/ARCHITECTURE.md",
+    "docs/REMAINING_WORK.md",
+    "docs/STATUS.md",
+    "docs/parity/native-reconciliation-2026-10-15.json",
+    "native/README.md",
+    "native/docs/agent-sessions.md",
+    "native/docs/compiler.md",
+    "native/docs/semantic-refactor-intents.md",
+    "native/docs/compiler-inline.md",
+    "native/src/agent_repl.rs",
+    "native/src/compiler_worker.cjs",
+    "native/src/lib.rs",
+    "native/src/project_session.rs",
+    "native/src/projects.rs",
+    "native/src/compiler_inline.rs",
+    "native/src/compiler_inline_worker.cjs",
+    "native/tests/compiler_inline.rs"
+  ],
+  "nativeAndRetainedFrozenRuntimeSourcesUnchanged": true,
+  "protectedPostgres": {
+    "bytes": 2779,
+    "sha256": "f67a05349a6cedf55222afd3bb3231c169d382dd4b078d76544daac517530b47"
+  }
+}

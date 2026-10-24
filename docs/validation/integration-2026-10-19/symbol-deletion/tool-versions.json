@@ -1,0 +1,46 @@
+{
+  "rustc": {
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\rustc.exe",
+      "--version"
+    ],
+    "output": "rustc 1.94.1 (e408947bf 2026-03-25)"
+  },
+  "cargo": {
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "--version"
+    ],
+    "output": "cargo 1.94.1 (29ea6fb6a 2026-03-24)"
+  },
+  "node": {
+    "command": [
+      "node",
+      "--version"
+    ],
+    "output": "v24.21.0"
+  },
+  "python": {
+    "command": [
+      "python",
+      "--version"
+    ],
+    "output": "Python 3.14.7"
+  },
+  "typescriptLanguageServer": {
+    "command": [
+      "node",
+      "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript-language-server\\lib\\cli.mjs",
+      "--version"
+    ],
+    "output": "5.1.3"
+  },
+  "typescript": {
+    "command": [
+      "node",
+      "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\tsc.js",
+      "--version"
+    ],
+    "output": "Version 5.8.3"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "checkedAtUtc": "2026-10-15T20:53:43.841309+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "-j",
+    "2",
+    "--lib",
+    "host_install::io::tests::metadata_directory_hardlinked_rows_are_refused_without_changing_either_name",
+    "--",
+    "--exact",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 54.516,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-host-hardlink-diagnostic",
+  "logSha256": "3c050c5935491bd93d3c5a52667e0724aa14a46007db10458aae77ed6d6d3cab",
+  "groups": 1,
+  "passed": 0,
+  "failed": 1,
+  "ignored": 0,
+  "sourceChanges": []
+}

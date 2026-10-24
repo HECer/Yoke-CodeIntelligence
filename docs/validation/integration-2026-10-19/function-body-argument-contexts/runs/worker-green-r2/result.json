@@ -1,0 +1,219 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 1,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 2,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 3,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 4,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 5,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 6,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "string"
+      ],
+      "afterTypes": [
+        "string"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 7,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "string"
+      ],
+      "afterTypes": [
+        "string"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 8,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "string"
+      ],
+      "afterTypes": [
+        "string"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 9,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 10,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "3",
+      "after": "3",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "{ n: number; }"
+      ],
+      "afterTypes": [
+        "{ n: number; }"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 11,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "[\"\",3]",
+      "after": "[\"\",3]",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "() => 3"
+      ],
+      "afterTypes": [
+        "() => number"
+      ],
+      "resultTypesExact": false
+    },
+    {
+      "case": 12,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "6",
+      "after": "6",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    }
+  ],
+  "allChecksPassed": false,
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "ownedLiteralFixturesExecuted": true,
+  "diagnosticOnlyWorkerPatch": false,
+  "prototypeBehaviorWorkerPatch": true
+}

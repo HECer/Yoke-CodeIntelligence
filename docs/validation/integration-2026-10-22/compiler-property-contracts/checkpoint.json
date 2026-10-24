@@ -1,0 +1,158 @@
+{
+  "sourceCommit": "0ac3a2dc1588f093790b3264b5aafdaa00310a11",
+  "cliSha256": "4644a4351f0b66ab58f4b862d5f43655c1730cc62ed91ca68fdc897bb6f1b32b",
+  "frozenInputs": 1065,
+  "rust": {
+    "cargoTargets": {
+      "git_compiler_affected": {
+        "passed": 30,
+        "failed": 0,
+        "ignored": 0
+      },
+      "projects": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "compiler_inline": {
+        "passed": 16,
+        "failed": 0,
+        "ignored": 0
+      },
+      "compiler_move": {
+        "passed": 25,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_dashboard": {
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0
+      },
+      "native-lib": {
+        "passed": 569,
+        "failed": 0,
+        "ignored": 7
+      },
+      "git_affected_details": {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0
+      },
+      "git_affected_qualification": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "git_impact_details": {
+        "passed": 29,
+        "failed": 0,
+        "ignored": 0
+      },
+      "git_impact_details_qualification": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "compiler_inline_predicates": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "compiler_inline_body": {
+        "passed": 17,
+        "failed": 0,
+        "ignored": 0
+      },
+      "semantic_refactor": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_refactor": {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 2
+      },
+      "semantic_mcp": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "symbol_move_own_v1": {
+        "passed": 18,
+        "failed": 0,
+        "ignored": 0
+      },
+      "protocol_connection": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    "distinctPassed": 780,
+    "failed": 0,
+    "existingIgnored": 9,
+    "newFunctions": 4
+  },
+  "newRelations": [
+    "overridesProperty",
+    "implementsProperty"
+  ],
+  "newProofBasis": "compiler_property_contract_dependency",
+  "genuinePublishedSourceRed": {
+    "source": "326a287780513f58bd8ffa95427489aa37a93487",
+    "passed": 0,
+    "failed": 1
+  },
+  "actualCompilerCli": {
+    "complete": true,
+    "allJobsEmpty": true,
+    "sourceInputsUnchanged": true,
+    "frozenInputs": 1065,
+    "cliSha256": "4644a4351f0b66ab58f4b862d5f43655c1730cc62ed91ca68fdc897bb6f1b32b",
+    "nodeSha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+    "typescriptSha256": "dd17428736a07e1db1a138d8a14295ddb2699ba780ee15038acdd2c6da5373a0",
+    "typescriptVersion": "5.8.3",
+    "actualNativeGitWorkflowAndCompilerAffected": true,
+    "genericGetterAndParallelCallablePropertyContracts": true,
+    "exactOriginalUtf8AndCrLf": true,
+    "inventedGenericInstances": false,
+    "runtimeDispatchEstablished": false,
+    "depthZeroNoTraversal": true,
+    "wholeSqlBeforeAfterExact": true,
+    "projectCodeExecuted": false,
+    "sourceFilesAndGitExact": true,
+    "all77RuntimeAcceptanceCertified": false
+  },
+  "defaultCompatibility": {
+    "complete": true,
+    "sourceInputsUnchanged": true,
+    "allJobsEmpty": true,
+    "cliSha256": "4644a4351f0b66ab58f4b862d5f43655c1730cc62ed91ca68fdc897bb6f1b32b",
+    "frozenInputs": 1065,
+    "sameOldNewOwnedFixture": true,
+    "defaultConfigurationMcp53AndLiteralLspDataRawExact": true,
+    "onlyNativeRequestIdDurationExcludedAfterOldRepeatProof": true,
+    "wholeOriginalSqlExactBeforeNewBinding": true,
+    "originalSqlReconstructedRemovingOnlyNewSessionRowsAfterActualOpenClose": true,
+    "actualDashboardPrivateUrlValidatedThenRedacted": true,
+    "dashboardListenerClosedAfterActualHostExit": true,
+    "staleUpgradeDowngradeRefused": true,
+    "sourceGitHostOldImageBytesExact": true
+  },
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "formatTargetRoots": 346,
+  "cargoFormatAllWindowsOs206": true,
+  "allQualifiedJobsEmpty": true,
+  "originalTenSymlinkFixtureGitAndFrozenWorkingBytesUnchanged": true,
+  "originalInventoryAssessmentsUnchanged": true,
+  "fullStatusComplete": false,
+  "fullNativeCurrentHeadCertified": false,
+  "systemSettingsChanged": false,
+  "rawMembers": 423
+}

@@ -1,0 +1,21 @@
+    Finished `test` profile [unoptimized] target(s) in 1.25s
+     Running tests\skill_takeaways_batch_review.rs (target\debug\deps\skill_takeaways_batch_review-81407239cf5a1828.exe)
+
+running 1 test
+test predictable_later_fold_capacity_failure_is_admitted_before_the_first_skill_changes ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.55s
+
+     Running tests\skill_takeaways_contract_review.rs (target\debug\deps\skill_takeaways_contract_review-28e43c35279ec703.exe)
+
+running 7 tests
+test confirmed_only_fold_with_no_ready_takeaways_keeps_version_revision_and_empty_sections ... ok
+test confirm_accepts_an_existing_takeaway_filename_suffix ... ok
+test confirm_accepts_the_known_absolute_takeaway_path_without_arbitrary_file_authority ... ok
+test folded_result_takeaways_report_the_same_version_as_the_published_state ... ok
+test unknown_confirm_and_fold_succeed_without_creating_a_skill_or_operation ... ok
+test unicode_lowercase_teacher_and_duplicate_confirmations_are_noops ... ok
+test show_orders_waiting_takeaways_by_newest_date_then_filename_and_renders_short_dates ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.10s
+

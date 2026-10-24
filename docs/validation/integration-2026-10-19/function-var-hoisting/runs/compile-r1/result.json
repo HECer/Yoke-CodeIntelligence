@@ -1,0 +1,24 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 807,
+  "commands": [
+    {
+      "name": "check",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "check",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--all-targets"
+      ],
+      "exitCode": 0,
+      "seconds": 105.64290549998987
+    }
+  ],
+  "allChecksPassed": true,
+  "wholeNativeRerun": false
+}

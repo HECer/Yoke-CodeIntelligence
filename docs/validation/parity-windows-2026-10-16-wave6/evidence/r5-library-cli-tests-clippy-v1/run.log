@@ -1,0 +1,76 @@
+    Checking yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native)
+error[E0432]: unresolved imports `yoke::git_workflows::impact_details`, `yoke::git_workflows::impact_details`
+ --> native\tests\git_impact_details_sqlite_limits.rs:8:20
+  |
+8 |     git_workflows::impact_details::{self, DetailOptions},
+  |                    ^^^^^^^^^^^^^^   ^^^^ no `impact_details` in `git_workflows`
+  |                    |
+  |                    could not find `impact_details` in `git_workflows`
+
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `yoke-code-intelligence` (test "git_impact_details_sqlite_limits") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error[E0432]: unresolved imports `yoke::git_workflows::impact_details`, `yoke::git_workflows::impact_details`
+ --> native\tests\git_impact_details_no_git.rs:8:20
+  |
+8 |     git_workflows::impact_details::{self, DetailOptions},
+  |                    ^^^^^^^^^^^^^^   ^^^^ no `impact_details` in `git_workflows`
+  |                    |
+  |                    could not find `impact_details` in `git_workflows`
+
+error: could not compile `yoke-code-intelligence` (test "git_impact_details_no_git") due to 1 previous error
+error[E0432]: unresolved imports `yoke::git_workflows::impact_details`, `yoke::git_workflows::impact_details`
+  --> native\tests\git_impact_details.rs:10:9
+   |
+10 |         impact_details::{self, DetailOptions, ImpactDetails},
+   |         ^^^^^^^^^^^^^^   ^^^^ no `impact_details` in `git_workflows`
+   |         |
+   |         could not find `impact_details` in `git_workflows`
+
+error: could not compile `yoke-code-intelligence` (test "git_impact_details") due to 1 previous error
+error[E0432]: unresolved imports `yoke::git_workflows::impact_details`, `yoke::git_workflows::impact_details`
+ --> native\tests\git_impact_details_cli.rs:8:5
+  |
+8 |     impact_details::{self, DetailOptions}}, model::hash};
+  |     ^^^^^^^^^^^^^^   ^^^^ no `impact_details` in `git_workflows`
+  |     |
+  |     could not find `impact_details` in `git_workflows`
+
+error: unnecessary `>= y + 1` or `x - 1 >=`
+   --> native\tests\git_impact_details_cli.rs:233:17
+    |
+233 |         assert!(bytes.len()+1<=4_000_000);
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^ help: change it to: `bytes.len() < 4_000_000`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#int_plus_one
+    = note: `-D clippy::int-plus-one` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::int_plus_one)]`
+
+error[E0282]: type annotations needed
+   --> native\tests\git_impact_details_cli.rs:233:17
+    |
+233 |         assert!(bytes.len()+1<=4_000_000);
+    |                 ^^^^^ cannot infer type
+
+Some errors have detailed explanations: E0282, E0432.
+For more information about an error, try `rustc --explain E0282`.
+error: could not compile `yoke-code-intelligence` (test "git_impact_details_cli") due to 3 previous errors
+error: manual implementation of `.is_multiple_of()`
+   --> native\src\git_impact_candidates.rs:315:12
+    |
+315 |         if start % BYTE_CHECK_INTERVAL == 0 {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: replace with: `start.is_multiple_of(BYTE_CHECK_INTERVAL)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#manual_is_multiple_of
+    = note: `-D clippy::manual-is-multiple-of` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::manual_is_multiple_of)]`
+
+error: manual implementation of `.is_multiple_of()`
+   --> native\src\git_impact_candidates.rs:321:12
+    |
+321 |         if end % BYTE_CHECK_INTERVAL == 0 {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: replace with: `end.is_multiple_of(BYTE_CHECK_INTERVAL)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#manual_is_multiple_of
+
+error: could not compile `yoke-code-intelligence` (lib test) due to 2 previous errors

@@ -1,0 +1,57 @@
+{
+  "sourceCommit": "6951ff94aee42e867329a2a042204c13c670b788",
+  "sourceUnchanged": true,
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "rustc",
+        "-p",
+        "yoke-code-intelligence",
+        "--profile",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "digest_history_jobs",
+        "--",
+        "-C",
+        "extra-filename=-full-native-20261021"
+      ],
+      "cwd": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CI-r1-attach",
+      "exitCode": 0,
+      "seconds": 102.93240449999576,
+      "totals": []
+    },
+    {
+      "name": "tests",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\digest_history_jobs-full-native-20261021.exe",
+        "--test-threads=1"
+      ],
+      "cwd": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CI-r1-attach\\native",
+      "exitCode": 0,
+      "seconds": 57.7569688000076,
+      "totals": [
+        [
+          "13",
+          "0",
+          "0"
+        ]
+      ]
+    }
+  ],
+  "standardCargoTest": false,
+  "difference": "Only test artifact output suffix; same test profile, frozen sources, lock, test harness, assertions and package cwd. Held original output/processes untouched.",
+  "allChecksPassed": true,
+  "fullWindowsCertified": false,
+  "executable": {
+    "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\digest_history_jobs-full-native-20261021.exe",
+    "sha256": "6020eb49655261998bfbc526c8162e83e7eeea2f8e87001f9027176c985be829",
+    "bytes": 118354944
+  }
+}

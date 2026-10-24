@@ -1,0 +1,25 @@
+{
+  "qualifiedCodeCommit": "3c08fa3ffe669c4f642bf82972bea50d65b0706f",
+  "productionFilesUnchangedAfterQualification": true,
+  "changedFrozenInputs": {
+    "docs/REMAINING_WORK.md": {
+      "before": "d99bed6a70266c708c840d6f2c9349241d9fd528a9364649341c8bd1f644e6e2",
+      "after": "13980b5d6faa4f31391e47e610cf81a1c0885d1475a1d17845f0c48afbcc3292"
+    },
+    "docs/STATUS.md": {
+      "before": "7dd1011e4806e30eed46cd5d0d0d7d88a156ba2b401031bad5e8d27d4d01a18a",
+      "after": "0f23b4a89a6097ba892a8ecb152b339d8097b42a1227738c98dd3bcdeceeac38"
+    },
+    "docs/parity/native-reconciliation-2026-10-15.json": {
+      "before": "eb5b24366bc83b42ab15f1c4f7cf7563c98b1a985900dc29aae7ccf7d35d3826",
+      "after": "6f716278c28ea1f0036c895906c32138f3613b57469c681b8d64d63ba88eda62"
+    }
+  },
+  "newDocumentationAfterQualification": [
+    "native/docs/vsix-packaging.md"
+  ],
+  "newProductTestsClaimedAfterDocumentation": false,
+  "originalInventoryLedgerAndSummaryUnchanged": true,
+  "reconciliationExactlyOneAdditiveKey": "nativeVsixArchiveAdmission20261023",
+  "everyArchiveMemberLengthAndSha256Reopened": true
+}

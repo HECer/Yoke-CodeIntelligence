@@ -1,0 +1,52 @@
+[
+  {
+    "name": "format",
+    "exitCode": 0,
+    "elapsedSeconds": 6.061,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ]
+  },
+  {
+    "name": "actual-rust-python",
+    "exitCode": 0,
+    "elapsedSeconds": 145.081,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "declaration_attachments_live",
+      "--",
+      "--ignored",
+      "--nocapture",
+      "--test-threads=1"
+    ]
+  },
+  {
+    "name": "ranges",
+    "exitCode": 101,
+    "elapsedSeconds": 24.769,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "declaration_attachment_ranges",
+      "--test",
+      "symbol_delete_ranges",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ]
+  }
+]

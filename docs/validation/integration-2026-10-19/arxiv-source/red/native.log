@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 48s
+     Running tests\arxiv_source.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\arxiv_source-6ba7d8be364be02a.exe)
+
+running 1 test
+test received_arxiv_metadata_keeps_parallel_author_labels_and_exact_original_tag_bytes ... FAILED
+
+failures:
+
+---- received_arxiv_metadata_keeps_parallel_author_labels_and_exact_original_tag_bytes stdout ----
+
+thread 'received_arxiv_metadata_keeps_parallel_author_labels_and_exact_original_tag_bytes' (17640) panicked at native\tests\arxiv_source.rs:8:58:
+called `Result::unwrap()` on an `Err` value: arxiv_source_unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    received_arxiv_metadata_keeps_parallel_author_labels_and_exact_original_tag_bytes
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `--test arxiv_source`

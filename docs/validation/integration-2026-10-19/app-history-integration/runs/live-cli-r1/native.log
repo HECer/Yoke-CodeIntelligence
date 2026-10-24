@@ -1,0 +1,15 @@
+
+running 1 test
+test actual_cli_lost_stdout_status_pause_resume_and_run_use_the_owned_os_key ... 
+thread 'actual_cli_lost_stdout_status_pause_resume_and_run_use_the_owned_os_key' (12628) panicked at native\tests\support/github_app_worker_history_fixture.rs:219:10:
+called `Result::unwrap()` on an `Err` value: github_app_transport_failed
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    actual_cli_lost_stdout_status_pause_resume_and_run_use_the_owned_os_key
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.99s
+

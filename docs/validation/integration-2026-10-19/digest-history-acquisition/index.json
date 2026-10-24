@@ -1,0 +1,2567 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T07:32:47.091121+00:00",
+  "parentCommit": "4c399000d4dd870f0d0af2744e73256d49de2870",
+  "accepted": false,
+  "allLocalChecksPassed": false,
+  "scopedAcquisitionCasesPassed": 10,
+  "frozenInputCount": 640,
+  "wholeNativeTotals": {
+    "passed": 2389,
+    "failed": 10,
+    "ignored": 39
+  },
+  "nativeResultGroups": 263,
+  "allTestableNativeTargetsRan": true,
+  "actualOSCredentialGates": [
+    {
+      "gate": "actual-os-credential-cli",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--test",
+        "github_app_digest_handoff",
+        "actual_cli_send_status_and_lost_response_recovery_use_os_key_without_retry",
+        "--",
+        "--exact",
+        "--ignored",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 1.884,
+      "recordedAt": "2026-10-19T07:32:29.853703+00:00",
+      "resultGroups": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "actual-tls-receiver-cli",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--test",
+        "digest_receiver",
+        "actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_ca",
+        "--",
+        "--exact",
+        "--ignored",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 2.048,
+      "recordedAt": "2026-10-19T07:32:31.902052+00:00",
+      "resultGroups": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    }
+  ],
+  "newSourceFiles": [
+    {
+      "source": "native/src/github_app_digest_acquisition.rs",
+      "artifact": "new-source/native/src/github_app_digest_acquisition.rs",
+      "sha256": "d98489faa1ac706044a55869285e453f32b78718ea550f9aab1e134269ce7948"
+    },
+    {
+      "source": "native/src/digest_history_capture_cli.rs",
+      "artifact": "new-source/native/src/digest_history_capture_cli.rs",
+      "sha256": "fbe0194addda444a3a1760635e7394c9a04e05d6935969109d598d66844ebcc4"
+    },
+    {
+      "source": "native/tests/digest_history_acquisition.rs",
+      "artifact": "new-source/native/tests/digest_history_acquisition.rs",
+      "sha256": "8fe281ed1a311a4ede005ea08986e5f077409a4ce0dc75274896c44d43bb9202"
+    }
+  ],
+  "summary": {
+    "allChecksPassed": false,
+    "sourceUnchanged": true,
+    "allTestableNativeTargetsRan": true,
+    "nativeTargetCoverage": {
+      "expectedTestableTargets": {
+        "yoke": 2,
+        "adversarial": 1,
+        "agent_dependency_options": 1,
+        "agent_diagnostic_boundaries": 1,
+        "agent_documentation": 1,
+        "agent_facade_options": 1,
+        "agent_facade_semantics": 1,
+        "agent_file_options": 1,
+        "agent_memory_namespaces": 1,
+        "agent_repl": 1,
+        "agent_repl_lifecycle": 1,
+        "agent_symbol_contracts": 1,
+        "analyzer_cli": 1,
+        "analyzer_epochs": 1,
+        "artifact_page_review": 1,
+        "artifacts": 1,
+        "blob_bounds": 1,
+        "capture_analyzer8_fixture": 1,
+        "capture_changes": 1,
+        "capture_epoch_selection": 1,
+        "capture_options": 1,
+        "capture_policy": 1,
+        "client_lock": 1,
+        "collection_registry_access": 1,
+        "collections_cli": 1,
+        "collections_cli_review": 1,
+        "compatibility": 1,
+        "compatibility_review": 1,
+        "config_graph": 1,
+        "container": 1,
+        "contracts": 1,
+        "core": 1,
+        "credentials": 1,
+        "dataflow": 1,
+        "deadline_scope": 1,
+        "deadlines": 1,
+        "debug_adapter": 1,
+        "decision_cli": 1,
+        "decision_records": 1,
+        "decision_records_review": 1,
+        "decision_retention": 1,
+        "dependency_queries": 1,
+        "derived_graph_mixed_budget": 1,
+        "derived_graph_preparation": 1,
+        "digest_history_acquisition": 1,
+        "digest_receiver": 1,
+        "document_cli": 1,
+        "document_explorer": 1,
+        "document_graph": 1,
+        "document_graph_review": 1,
+        "editor": 1,
+        "editor_http": 1,
+        "engine_epoch_review": 1,
+        "epoch_cache_review": 1,
+        "epoch_producers": 1,
+        "explorer_export": 1,
+        "explorer_runtime": 1,
+        "export": 1,
+        "facade_file_delete": 1,
+        "facade_file_move": 1,
+        "facade_file_rename": 1,
+        "federated_collections": 1,
+        "federation": 1,
+        "federation_archive": 1,
+        "federation_archive_receipts": 1,
+        "federation_epoch_review": 1,
+        "federation_epochs": 1,
+        "federation_http": 1,
+        "federation_receipt_bounds": 1,
+        "feedback_cli": 1,
+        "file_api": 1,
+        "freshness": 1,
+        "freshness_epoch": 1,
+        "git_affected_cli": 1,
+        "git_affected_details": 1,
+        "git_affected_qualification": 1,
+        "git_cli": 1,
+        "git_epoch_selection": 1,
+        "git_epochs": 1,
+        "git_impact_details": 1,
+        "git_impact_details_cli": 1,
+        "git_impact_details_no_git": 1,
+        "git_impact_details_qualification": 1,
+        "git_impact_details_sqlite_limits": 1,
+        "git_review": 1,
+        "git_workflows": 1,
+        "github": 1,
+        "github_app": 1,
+        "github_app_auth": 1,
+        "github_app_auth_cli": 1,
+        "github_app_cli": 1,
+        "github_app_digest": 1,
+        "github_app_digest_cli": 1,
+        "github_app_digest_handoff": 1,
+        "github_app_digest_mapping": 1,
+        "github_app_ingress": 1,
+        "github_app_ingress_cli": 1,
+        "github_app_pages_cli": 1,
+        "github_app_publication": 1,
+        "github_app_publication_cli": 1,
+        "github_app_worker": 1,
+        "github_app_worker_cli": 1,
+        "github_app_worker_run": 1,
+        "github_discussions": 1,
+        "github_live": 1,
+        "graph": 1,
+        "graph_archive_review": 1,
+        "graph_collections": 1,
+        "graph_exports": 1,
+        "graph_extensions": 1,
+        "graph_review_adversarial": 1,
+        "graph_root_review": 1,
+        "graph_view": 1,
+        "graphify_adapter": 1,
+        "graphify_cli": 1,
+        "graphify_selected_queries": 1,
+        "historical_publication": 1,
+        "historical_receipt_fixture_qualification": 1,
+        "historical_view_adversarial": 1,
+        "historical_view_boundaries": 1,
+        "historical_view_budget_options": 1,
+        "historical_view_comparison": 1,
+        "historical_view_fixture_qualification": 1,
+        "historical_view_receipts": 1,
+        "historical_view_semantics": 1,
+        "host_cli": 1,
+        "host_config": 1,
+        "host_credentials": 1,
+        "host_install": 1,
+        "host_install_cli": 1,
+        "host_output_disposition": 1,
+        "hybrid_retrieval": 1,
+        "ignored_capture": 1,
+        "ignored_capture_cli": 1,
+        "ignored_facades": 1,
+        "json_output_review": 1,
+        "knowledge": 1,
+        "knowledge_cli": 1,
+        "language_constructs": 1,
+        "ledger": 1,
+        "ledger_admission_review": 1,
+        "ledger_batches": 1,
+        "ledger_batches_review": 1,
+        "legacy_retrieval_oracle": 1,
+        "live": 1,
+        "live_enrichment": 1,
+        "lsp": 1,
+        "lsp_action_resolve": 1,
+        "lsp_dependency_scope": 1,
+        "lsp_enrichment": 1,
+        "lsp_lifecycle": 1,
+        "lsp_source_execution": 1,
+        "maintenance": 1,
+        "manifest_graph": 1,
+        "markdown_graph": 1,
+        "mcp_collection_grants": 1,
+        "mcp_collection_grants_review": 1,
+        "mcp_http": 1,
+        "mcp_http_cli": 1,
+        "mcp_http_review": 1,
+        "meaning_archive_cli": 1,
+        "meaning_archive_primitives": 1,
+        "meaning_build": 1,
+        "meaning_cli": 1,
+        "meaning_collection_archives": 1,
+        "meaning_commit_review": 1,
+        "meaning_graph": 1,
+        "meaning_graph_views": 1,
+        "meaning_groups_admission": 1,
+        "meaning_join_cli": 1,
+        "meaning_protocol": 1,
+        "meaning_retention_review": 1,
+        "meaning_view": 1,
+        "meaning_view_archives": 1,
+        "media": 1,
+        "mixed_pdf_view": 1,
+        "mixed_view_cli": 1,
+        "model_bedrock": 1,
+        "model_bedrock_batch_cli_review": 1,
+        "model_bedrock_cli": 1,
+        "model_bedrock_cli_actual": 1,
+        "model_bedrock_review": 1,
+        "model_http": 1,
+        "model_http_cli": 1,
+        "model_http_review": 1,
+        "model_identity": 1,
+        "monorepo_pre_feature_envelope": 1,
+        "monorepo_profiles": 1,
+        "monorepo_retrieval": 1,
+        "monorepo_scopes": 1,
+        "notes": 1,
+        "office": 1,
+        "office_bounds": 1,
+        "ollama": 1,
+        "operations": 1,
+        "parity_cli": 1,
+        "parity_construct_review": 1,
+        "parity_retention": 1,
+        "parity_source_review": 1,
+        "parity_view_review": 1,
+        "parser_epoch9": 1,
+        "platform_credentials": 1,
+        "process": 1,
+        "project_session": 1,
+        "projects": 1,
+        "protocol_connection": 1,
+        "provider_batch_bounds": 1,
+        "provider_batches": 1,
+        "provider_batches_review": 1,
+        "provider_scope_review": 1,
+        "providers": 1,
+        "publication": 1,
+        "query_parity": 1,
+        "read_only_dependencies": 1,
+        "refactor_intents": 1,
+        "registry_replay_review": 1,
+        "replacement": 1,
+        "resource_paging": 1,
+        "retention": 1,
+        "retrieval": 1,
+        "runtime": 1,
+        "scoped_parent_performance": 1,
+        "scoped_resolution": 1,
+        "selected_graph_views": 1,
+        "selected_view_analysis": 1,
+        "selected_view_analysis_review": 1,
+        "selected_view_review": 1,
+        "semantic_enrichment": 1,
+        "semantic_mcp": 1,
+        "semantic_provider_context": 1,
+        "semantic_refactor": 1,
+        "server_catalog": 1,
+        "session_collections": 1,
+        "session_collections_admission": 1,
+        "session_epoch_selection": 1,
+        "session_mcp": 1,
+        "session_review": 1,
+        "session_root_aliases": 1,
+        "skill_takeaways": 1,
+        "skill_takeaways_batch_review": 1,
+        "skill_takeaways_contract_review": 1,
+        "skill_takeaways_review": 1,
+        "skills_cli": 1,
+        "store_cancellation": 1,
+        "store_identity": 1,
+        "store_open_deadline": 1,
+        "store_read_only": 1,
+        "store_review": 1,
+        "symbol_move_declarations": 1,
+        "symbol_move_effect_admission": 1,
+        "symbol_move_own_v1": 1,
+        "test_map": 1,
+        "trail_adapter": 1,
+        "trail_bodies": 1,
+        "trail_review": 1,
+        "universal_languages": 1,
+        "vector_admission_review": 1,
+        "view_comparison_cli": 1,
+        "workflow_cli": 1,
+        "workspace": 1,
+        "yaml_admission_review": 1
+      },
+      "observedExecutableNames": {
+        "yoke": 2,
+        "adversarial": 1,
+        "agent_dependency_options": 1,
+        "agent_diagnostic_boundaries": 1,
+        "agent_documentation": 1,
+        "agent_facade_options": 1,
+        "agent_facade_semantics": 1,
+        "agent_file_options": 1,
+        "agent_memory_namespaces": 1,
+        "agent_repl": 1,
+        "agent_repl_lifecycle": 1,
+        "agent_symbol_contracts": 1,
+        "analyzer_cli": 1,
+        "analyzer_epochs": 1,
+        "artifact_page_review": 1,
+        "artifacts": 1,
+        "blob_bounds": 1,
+        "capture_analyzer8_fixture": 1,
+        "capture_changes": 1,
+        "capture_epoch_selection": 1,
+        "capture_options": 1,
+        "capture_policy": 1,
+        "client_lock": 1,
+        "collection_registry_access": 1,
+        "collections_cli": 1,
+        "collections_cli_review": 1,
+        "compatibility": 1,
+        "compatibility_review": 1,
+        "config_graph": 1,
+        "container": 1,
+        "contracts": 1,
+        "core": 1,
+        "credentials": 1,
+        "dataflow": 1,
+        "deadline_scope": 1,
+        "deadlines": 1,
+        "debug_adapter": 1,
+        "decision_cli": 1,
+        "decision_records": 1,
+        "decision_records_review": 1,
+        "decision_retention": 1,
+        "dependency_queries": 1,
+        "derived_graph_mixed_budget": 1,
+        "derived_graph_preparation": 1,
+        "digest_history_acquisition": 1,
+        "digest_receiver": 1,
+        "document_cli": 1,
+        "document_explorer": 1,
+        "document_graph": 1,
+        "document_graph_review": 1,
+        "editor": 1,
+        "editor_http": 1,
+        "engine_epoch_review": 1,
+        "epoch_cache_review": 1,
+        "epoch_producers": 1,
+        "explorer_export": 1,
+        "explorer_runtime": 1,
+        "export": 1,
+        "facade_file_delete": 1,
+        "facade_file_move": 1,
+        "facade_file_rename": 1,
+        "federated_collections": 1,
+        "federation": 1,
+        "federation_archive": 1,
+        "federation_archive_receipts": 1,
+        "federation_epoch_review": 1,
+        "federation_epochs": 1,
+        "federation_http": 1,
+        "federation_receipt_bounds": 1,
+        "feedback_cli": 1,
+        "file_api": 1,
+        "freshness": 1,
+        "freshness_epoch": 1,
+        "git_affected_cli": 1,
+        "git_affected_details": 1,
+        "git_affected_qualification": 1,
+        "git_cli": 1,
+        "git_epoch_selection": 1,
+        "git_epochs": 1,
+        "git_impact_details": 1,
+        "git_impact_details_cli": 1,
+        "git_impact_details_no_git": 1,
+        "git_impact_details_qualification": 1,
+        "git_impact_details_sqlite_limits": 1,
+        "git_review": 1,
+        "git_workflows": 1,
+        "github": 1,
+        "github_app": 1,
+        "github_app_auth": 1,
+        "github_app_auth_cli": 1,
+        "github_app_cli": 1,
+        "github_app_digest": 1,
+        "github_app_digest_cli": 1,
+        "github_app_digest_handoff": 1,
+        "github_app_digest_mapping": 1,
+        "github_app_ingress": 1,
+        "github_app_ingress_cli": 1,
+        "github_app_pages_cli": 1,
+        "github_app_publication": 1,
+        "github_app_publication_cli": 1,
+        "github_app_worker": 1,
+        "github_app_worker_cli": 1,
+        "github_app_worker_run": 1,
+        "github_discussions": 1,
+        "github_live": 1,
+        "graph": 1,
+        "graph_archive_review": 1,
+        "graph_collections": 1,
+        "graph_exports": 1,
+        "graph_extensions": 1,
+        "graph_review_adversarial": 1,
+        "graph_root_review": 1,
+        "graph_view": 1,
+        "graphify_adapter": 1,
+        "graphify_cli": 1,
+        "graphify_selected_queries": 1,
+        "historical_publication": 1,
+        "historical_receipt_fixture_qualification": 1,
+        "historical_view_adversarial": 1,
+        "historical_view_boundaries": 1,
+        "historical_view_budget_options": 1,
+        "historical_view_comparison": 1,
+        "historical_view_fixture_qualification": 1,
+        "historical_view_receipts": 1,
+        "historical_view_semantics": 1,
+        "host_cli": 1,
+        "host_config": 1,
+        "host_credentials": 1,
+        "host_install": 1,
+        "host_install_cli": 1,
+        "host_output_disposition": 1,
+        "hybrid_retrieval": 1,
+        "ignored_capture": 1,
+        "ignored_capture_cli": 1,
+        "ignored_facades": 1,
+        "json_output_review": 1,
+        "knowledge": 1,
+        "knowledge_cli": 1,
+        "language_constructs": 1,
+        "ledger": 1,
+        "ledger_admission_review": 1,
+        "ledger_batches": 1,
+        "ledger_batches_review": 1,
+        "legacy_retrieval_oracle": 1,
+        "live": 1,
+        "live_enrichment": 1,
+        "lsp": 1,
+        "lsp_action_resolve": 1,
+        "lsp_dependency_scope": 1,
+        "lsp_enrichment": 1,
+        "lsp_lifecycle": 1,
+        "lsp_source_execution": 1,
+        "maintenance": 1,
+        "manifest_graph": 1,
+        "markdown_graph": 1,
+        "mcp_collection_grants": 1,
+        "mcp_collection_grants_review": 1,
+        "mcp_http": 1,
+        "mcp_http_cli": 1,
+        "mcp_http_review": 1,
+        "meaning_archive_cli": 1,
+        "meaning_archive_primitives": 1,
+        "meaning_build": 1,
+        "meaning_cli": 1,
+        "meaning_collection_archives": 1,
+        "meaning_commit_review": 1,
+        "meaning_graph": 1,
+        "meaning_graph_views": 1,
+        "meaning_groups_admission": 1,
+        "meaning_join_cli": 1,
+        "meaning_protocol": 1,
+        "meaning_retention_review": 1,
+        "meaning_view": 1,
+        "meaning_view_archives": 1,
+        "media": 1,
+        "mixed_pdf_view": 1,
+        "mixed_view_cli": 1,
+        "model_bedrock": 1,
+        "model_bedrock_batch_cli_review": 1,
+        "model_bedrock_cli": 1,
+        "model_bedrock_cli_actual": 1,
+        "model_bedrock_review": 1,
+        "model_http": 1,
+        "model_http_cli": 1,
+        "model_http_review": 1,
+        "model_identity": 1,
+        "monorepo_pre_feature_envelope": 1,
+        "monorepo_profiles": 1,
+        "monorepo_retrieval": 1,
+        "monorepo_scopes": 1,
+        "notes": 1,
+        "office": 1,
+        "office_bounds": 1,
+        "ollama": 1,
+        "operations": 1,
+        "parity_cli": 1,
+        "parity_construct_review": 1,
+        "parity_retention": 1,
+        "parity_source_review": 1,
+        "parity_view_review": 1,
+        "parser_epoch9": 1,
+        "platform_credentials": 1,
+        "process": 1,
+        "project_session": 1,
+        "projects": 1,
+        "protocol_connection": 1,
+        "provider_batch_bounds": 1,
+        "provider_batches": 1,
+        "provider_batches_review": 1,
+        "provider_scope_review": 1,
+        "providers": 1,
+        "publication": 1,
+        "query_parity": 1,
+        "read_only_dependencies": 1,
+        "refactor_intents": 1,
+        "registry_replay_review": 1,
+        "replacement": 1,
+        "resource_paging": 1,
+        "retention": 1,
+        "retrieval": 1,
+        "runtime": 1,
+        "scoped_parent_performance": 1,
+        "scoped_resolution": 1,
+        "selected_graph_views": 1,
+        "selected_view_analysis": 1,
+        "selected_view_analysis_review": 1,
+        "selected_view_review": 1,
+        "semantic_enrichment": 1,
+        "semantic_mcp": 1,
+        "semantic_provider_context": 1,
+        "semantic_refactor": 1,
+        "server_catalog": 1,
+        "session_collections": 1,
+        "session_collections_admission": 1,
+        "session_epoch_selection": 1,
+        "session_mcp": 1,
+        "session_review": 1,
+        "session_root_aliases": 1,
+        "skill_takeaways": 1,
+        "skill_takeaways_batch_review": 1,
+        "skill_takeaways_contract_review": 1,
+        "skill_takeaways_review": 1,
+        "skills_cli": 1,
+        "store_cancellation": 1,
+        "store_identity": 1,
+        "store_open_deadline": 1,
+        "store_read_only": 1,
+        "store_review": 1,
+        "symbol_move_declarations": 1,
+        "symbol_move_effect_admission": 1,
+        "symbol_move_own_v1": 1,
+        "test_map": 1,
+        "trail_adapter": 1,
+        "trail_bodies": 1,
+        "trail_review": 1,
+        "universal_languages": 1,
+        "vector_admission_review": 1,
+        "view_comparison_cli": 1,
+        "workflow_cli": 1,
+        "workspace": 1,
+        "yaml_admission_review": 1,
+        "benchmark": 1
+      },
+      "expectedTestableTargetCount": 262,
+      "observedInvocations": 263,
+      "missing": {},
+      "failures": [
+        "sqlite_sidecar_links_cannot_rewrite_files_outside_state",
+        "source_symlink_cannot_redirect_a_forced_file_deletion",
+        "receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority",
+        "windows_host_aliases_cannot_read_protected_files_or_alternate_streams",
+        "affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success",
+        "windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive",
+        "collection_sqlite_sidecars_cannot_write_through_links",
+        "blob_links_are_refused_and_external_targets_are_preserved",
+        "existing_output_file_directory_and_hardlink_are_never_overwritten",
+        "media_cannot_bypass_source_scope_links_ignore_or_protected_paths"
+      ],
+      "allTestableTargetsRan": true
+    },
+    "checks": [
+      {
+        "gate": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 6.408,
+        "recordedAt": "2026-10-19T07:10:55.918282+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--keep-going",
+          "-j2",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 19.15,
+        "recordedAt": "2026-10-19T07:11:15.068858+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "whole-native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--no-fail-fast",
+          "-j1",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 101,
+        "timedOut": false,
+        "elapsedSeconds": 1157.143,
+        "recordedAt": "2026-10-19T07:30:32.209471+00:00",
+        "resultGroups": [
+          {
+            "passed": 406,
+            "failed": 0,
+            "ignored": 7
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 22,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 2
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 2
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 23,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 16,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 20,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 29,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 17,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 21,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 35,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 38,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 18,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 20,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 102,
+            "failed": 0,
+            "ignored": 4
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 33,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 28,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 22,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 2
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 15,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 4
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 3
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 19,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 2
+          },
+          {
+            "passed": 11,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 18,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 26,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 15,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 2
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 16,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 15,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 15,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 16,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 23,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 18,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 36,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 18,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 20,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "doctests",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--doc",
+          "--locked",
+          "--no-fail-fast",
+          "-j2"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 42.945,
+        "recordedAt": "2026-10-19T07:31:15.169393+00:00",
+        "resultGroups": [
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "python-contracts",
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 1.713,
+        "recordedAt": "2026-10-19T07:31:16.883944+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 6.401,
+        "recordedAt": "2026-10-19T07:31:23.286113+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 64.683,
+        "recordedAt": "2026-10-19T07:32:27.969496+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "actual-os-credential-cli",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j2",
+          "--test",
+          "github_app_digest_handoff",
+          "actual_cli_send_status_and_lost_response_recovery_use_os_key_without_retry",
+          "--",
+          "--exact",
+          "--ignored",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 1.884,
+        "recordedAt": "2026-10-19T07:32:29.853703+00:00",
+        "resultGroups": [
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "actual-tls-receiver-cli",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j2",
+          "--test",
+          "digest_receiver",
+          "actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_ca",
+          "--",
+          "--exact",
+          "--ignored",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 2.048,
+        "recordedAt": "2026-10-19T07:32:31.902052+00:00",
+        "resultGroups": [
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      }
+    ],
+    "scope": "Full default Windows native all-target test run after atomic Git/Store publication changes, plus separate actual OS/TLS CLI gates, Python17 and TypeScript mandatory checks. Native host-gated ignored cases, persistent whole-history continuation, unattended App integration, production/remote-source/semantic reasoning and full STATUS/upstream equivalence remain open. Preserve all failures and their exact source scope; do not equate a default run with all live or hosted platform certification."
+  },
+  "findings": [
+    "Explicit automatic bounded captured-head history acquisition inherits the exact verified disk-origin source scope and head epoch. Existing date-priority nonmerge/nonempty-message rows and direct parents are selected automatically. Current App/repository grants and host capture/history/Git-trust/write flags precede host file/Store acquisition. No signing credential, network/model provider or checkout/latest mutation is introduced.",
+    "Shared candidate file/source/commit/tree listing/entry allowances are debited before object bodies are retained. Native commit/tree/blob hashes and path/ignore/secret/binary/mode rules remain authoritative. Fresh aggregate source/graph replay and mapped relations precede exact result-byte admission. Duplicate/parallel syntax evidence and false completeness/semantic identity flags remain intact.",
+    "One owned immediate WAL/FULL SQL transaction contains every snapshot, graph, FTS symbol/document, publication timestamp, inherited scope, commit artifact registration and source receipt. A second-target receipt failure rolls back the fully prepared first target as well. CAS files can remain unreferenced after failure and provide no authority. Existing snapshot/graph/scope/receipt collisions are refused. Ordinary single-commit Git capture now uses the same atomic SQL boundary.",
+    "Ten new actual Git/SQLite/CLI cases cover SHA1/SHA256, epochs8/9, Unicode/CRLF, dirty checkout/index/latest preservation, offline mapping agreement, repeat identity, default/scope/disk-source/caller-transaction denial, aggregate budget exhaustion, exact output limits, late multi-target rollback, corruption, durability/SQL policy/expiry, host-path refusal and zero-history nonpublication. Existing Git/capture/mapping contracts are retained.",
+    "Development r1 all-target check passed with one unused import warning. r2 passed9 capture-policy and8 acquisition cases but a new FTS-trigger test setup was invalid (SQLite disallows virtual-table triggers); later targets did not run in that fail-fast command. r3 passed41 selected cases including10 acquisition cases, then Clippy rejected an as_ref/map expression; r4 corrected it to as_deref and all-target Clippy passed. All raw attempts are retained.",
+    "Two initial frozen whole-native builds failed with actual LNK1180 disk-space errors before executing native tests; all other gates passed in both attempts and640 inputs remained unchanged. Cache deletion was rejected by automatic approval review and never executed. Ordinary reversible NTFS compression preserved all112 executable,132 debug-file and10542 generated-file hashes. No data was deleted. The final native build reduces only Cargo compiler/linker concurrency from2 to1; all target selection, compiler options and two test threads remain intact. Raw logs and hash reports preserve the exact environment recovery. The final full default run is reported separately without adding overlapping attempt counts.",
+    "Persistent whole-history jobs/checkpointed continuation, unattended App integration, public production, remote source ownership/verification, semantic reasoning and universal upstream/whole-STATUS acceptance remain open. Original353 inventory identities,73 unreconciled rows,77 backend unknowns and false full-contract certifications are retained. No release, main merge, live App deployment or public comment is claimed.",
+    "Final full default execution covers all262 testable Cargo targets plus the example harness,263 result groups:2389passed/10failed/39ignored. All ten failures are independently classified as OS1314 while creating real Windows symbolic-link fixtures; security assertions are not reached and no test is weakened. Format/all-target Clippy, doctests0, Python17, TS260/3skip/typecheck and two actual OS/TLS CLI gates pass. A manually elevated, source/CLI/test-hash-bound ten-case replay helper is prepared and parsed but not executed; Windows rights are unchanged. Full default and whole-STATUS acceptance remain false."
+  ],
+  "artifacts": [
+    {
+      "path": "development/digest-history-final/actual-os-credential-cli.log",
+      "bytes": 488,
+      "sha256": "49bfceb726d4635793ef8d7c1499c8b4ba93187b9a569bd1960c0d57ee8bdddf"
+    },
+    {
+      "path": "development/digest-history-final/actual-tls-receiver-cli.log",
+      "bytes": 472,
+      "sha256": "2724a5f759e08fb17ba320253fb17a9d25501fee9105ffb9e48d93661502bf6d"
+    },
+    {
+      "path": "development/digest-history-final/clippy.log",
+      "bytes": 60,
+      "sha256": "9fcf58569cebdb6a084814c042109e570bf14ad1afc6f6c09402301b09a0ec58"
+    },
+    {
+      "path": "development/digest-history-final/doctests.log",
+      "bytes": 192,
+      "sha256": "1d3715f973e5c9b6c6aa802b1e98bdf62f36cd21a00eeddb9ce6de2dc8183dfa"
+    },
+    {
+      "path": "development/digest-history-final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/digest-history-final/native-target-coverage.json",
+      "bytes": 15357,
+      "sha256": "1e3e096a53692a501225ac2f0755f8d1d942f8b18698d3383051688d68e720fe"
+    },
+    {
+      "path": "development/digest-history-final/native-target-inventory.json",
+      "bytes": 86750,
+      "sha256": "7b34df1291f8b5c1279ffaa4e6760a3b0268cc7e6271be8d84b3815ad58672bd"
+    },
+    {
+      "path": "development/digest-history-final/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "01f804f874e85306b1bc7ab339dcdd9754255829d74f67d2f16c77da89853ce3"
+    },
+    {
+      "path": "development/digest-history-final/receipts.json",
+      "bytes": 3774,
+      "sha256": "38ca58729976a1210e6cfa66f23fdb58fe063b0d95405ca8fc6970a9c0c75462"
+    },
+    {
+      "path": "development/digest-history-final/source-after.json",
+      "bytes": 68412,
+      "sha256": "6d01173f766bd474693ba2576df8ad2f50f14eedfc6fc9f142ff142e8be7ac5b"
+    },
+    {
+      "path": "development/digest-history-final/source-before.json",
+      "bytes": 68412,
+      "sha256": "6d01173f766bd474693ba2576df8ad2f50f14eedfc6fc9f142ff142e8be7ac5b"
+    },
+    {
+      "path": "development/digest-history-final/summary.json",
+      "bytes": 21194,
+      "sha256": "61527152d609c6600b251f7d1d79030fdc8997c72f0bf74d82a0e6f7f780cded"
+    },
+    {
+      "path": "development/digest-history-final/tested-native-binary.json",
+      "bytes": 122,
+      "sha256": "cf57f55630a04c29ebb0943d7f6e79ee6760e26659d20fbe70fd18f2f33b16f3"
+    },
+    {
+      "path": "development/digest-history-final/typescript-tests.log",
+      "bytes": 25042,
+      "sha256": "98f7aa95ef7b5727b35033ddcc8d090ca74ab1429fa552de693f58c7872cdf5f"
+    },
+    {
+      "path": "development/digest-history-final/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "development/digest-history-final/whole-native.log",
+      "bytes": 32046,
+      "sha256": "dee5a9df0a18caab4056a422e3e56c9b6dc3c71e0d2caa2e275a12a839a3a168"
+    },
+    {
+      "path": "development/digest-history-final-r2/actual-os-credential-cli.log",
+      "bytes": 376,
+      "sha256": "79bab905a9bc017e179952ddaf461812eab03a446ba7ebb025935be71dd52b2e"
+    },
+    {
+      "path": "development/digest-history-final-r2/actual-tls-receiver-cli.log",
+      "bytes": 361,
+      "sha256": "7b04904733650ee47b69cdb0beca703198039e06fe5a5163def5ff553fcd25a0"
+    },
+    {
+      "path": "development/digest-history-final-r2/clippy.log",
+      "bytes": 61,
+      "sha256": "795bbeaee3585b033aab5adced646005a4dae3d5a7daa0e88400fe3741bc9769"
+    },
+    {
+      "path": "development/digest-history-final-r2/doctests.log",
+      "bytes": 193,
+      "sha256": "df13554b815df459ca803faf23669a5fcbfb934024641a4b540004c51712ba26"
+    },
+    {
+      "path": "development/digest-history-final-r2/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/digest-history-final-r2/native-target-coverage.json",
+      "bytes": 15357,
+      "sha256": "1e3e096a53692a501225ac2f0755f8d1d942f8b18698d3383051688d68e720fe"
+    },
+    {
+      "path": "development/digest-history-final-r2/native-target-inventory.json",
+      "bytes": 86750,
+      "sha256": "7b34df1291f8b5c1279ffaa4e6760a3b0268cc7e6271be8d84b3815ad58672bd"
+    },
+    {
+      "path": "development/digest-history-final-r2/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "a758749344c7f63c95e50b8655e840fa7c1148d0191c7b6cbb233f421f3aa926"
+    },
+    {
+      "path": "development/digest-history-final-r2/receipts.json",
+      "bytes": 3775,
+      "sha256": "8f93025c7a9f59e88358c753a287e599e809eebded848fa08913eae04a4648d3"
+    },
+    {
+      "path": "development/digest-history-final-r2/source-after.json",
+      "bytes": 68412,
+      "sha256": "6d01173f766bd474693ba2576df8ad2f50f14eedfc6fc9f142ff142e8be7ac5b"
+    },
+    {
+      "path": "development/digest-history-final-r2/source-before.json",
+      "bytes": 68412,
+      "sha256": "6d01173f766bd474693ba2576df8ad2f50f14eedfc6fc9f142ff142e8be7ac5b"
+    },
+    {
+      "path": "development/digest-history-final-r2/summary.json",
+      "bytes": 21195,
+      "sha256": "21a7b40258aaf37c26086cb379bf751cff4dad79394d9b8074f5869b6bdea018"
+    },
+    {
+      "path": "development/digest-history-final-r2/tested-native-binary.json",
+      "bytes": 122,
+      "sha256": "cf57f55630a04c29ebb0943d7f6e79ee6760e26659d20fbe70fd18f2f33b16f3"
+    },
+    {
+      "path": "development/digest-history-final-r2/typescript-tests.log",
+      "bytes": 25058,
+      "sha256": "f418645b3f4c5c9a675284d8958f0370f193c9dd6ff753bcee9fb62c310d7ba7"
+    },
+    {
+      "path": "development/digest-history-final-r2/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "development/digest-history-final-r2/whole-native.log",
+      "bytes": 17578,
+      "sha256": "dd7d9c1f1836710028e66e78f37dbacd90377cb08b0c219032e60a256487603c"
+    },
+    {
+      "path": "development/ntfs-build-libraries-compression.json",
+      "bytes": 608,
+      "sha256": "783871b01fbc8fb332ead61e46a4183e6c98f696b3cb1767621864c9d09d5fc7"
+    },
+    {
+      "path": "development/ntfs-build-libraries-compression.log",
+      "bytes": 61910,
+      "sha256": "c585b51412b7465993f0bedaaa724da4508933a90bc84def85517d9dcc642689"
+    },
+    {
+      "path": "development/ntfs-compression-0.log",
+      "bytes": 261,
+      "sha256": "043d7aad2cd0b69798642fb2f092d3d17de51c1bc14110c798d74ea7c78993ce"
+    },
+    {
+      "path": "development/ntfs-compression-1.log",
+      "bytes": 293,
+      "sha256": "c6dcb59684a8c4f1198a7613fa0a65e69851b1c1c8ba0c9144acee4186f36e6a"
+    },
+    {
+      "path": "development/ntfs-compression.json",
+      "bytes": 15809,
+      "sha256": "0ca610e6e6eff008798b0c5478e457261e2ca0c82f197e30d69edd8e87daeff9"
+    },
+    {
+      "path": "development/ntfs-debug-compression-0.log",
+      "bytes": 261,
+      "sha256": "469f45ff4c4134f9c95d9d0607b4e1af915ca8e93b062b8bd97e59c0865e87de"
+    },
+    {
+      "path": "development/ntfs-debug-compression-1.log",
+      "bytes": 290,
+      "sha256": "d1ef5a380b3a3e2fcc7e2db296d12d7160dfc680bcb7b47822f823b22277a331"
+    },
+    {
+      "path": "development/ntfs-debug-compression.json",
+      "bytes": 18468,
+      "sha256": "03cabfe773fa015403b347fcda8cbb0ae7e209e5307f6c58d4e8aec1f70c09b3"
+    },
+    {
+      "path": "development/ntfs-generated-debug-compression-0.log",
+      "bytes": 255,
+      "sha256": "03bac0c0fbf10b25fbe6d27961404400fc2d4e8726c2d76fb04d258a8a0ba5e1"
+    },
+    {
+      "path": "development/ntfs-generated-debug-compression-1.log",
+      "bytes": 268060,
+      "sha256": "5e02c17f54672a4f95907d6c85f93cd2dbfc805b475fe5ab457d1c599a92ef1c"
+    },
+    {
+      "path": "development/ntfs-generated-debug-compression.json",
+      "bytes": 1609423,
+      "sha256": "00bcf33dfea9d493b60a4e9d58cf402053e96757cbbfe48332fa7c1888127f1f"
+    },
+    {
+      "path": "development/ntfs-incremental-compression.json",
+      "bytes": 611,
+      "sha256": "08cb6cad348300f048cb289e5488864243ff63bc5bdd66524e6a35002d79b6a2"
+    },
+    {
+      "path": "development/ntfs-incremental-compression.log",
+      "bytes": 840,
+      "sha256": "3135165ac1a7c76a1d88c351691b684a3d283d3b0d9a9a088e24e16cc75ae6cf"
+    },
+    {
+      "path": "development/r1-check.log",
+      "bytes": 554,
+      "sha256": "a909ce9c63590c66f69bac385032be466e6dd0b96c59b3d9fe877945c85e5a2d"
+    },
+    {
+      "path": "development/r2-native.log",
+      "bytes": 3244,
+      "sha256": "d1d1565ec0e7227aeff33258276228ad3ade941c5676671d357610af05006bc8"
+    },
+    {
+      "path": "development/r2-receipt.json",
+      "bytes": 567,
+      "sha256": "583c7281bc2b2c31002cb2dbddfc93e6d483a33526818d04428d35ea76055cfc"
+    },
+    {
+      "path": "development/r3-clippy.log",
+      "bytes": 912,
+      "sha256": "79cb086b9555cc4cc36b878f4524dbea9f0660bfc9cce34ca44f8a120f6efb40"
+    },
+    {
+      "path": "development/r3-native.log",
+      "bytes": 4571,
+      "sha256": "6e4978163c8bdc8b933ce5ce7a4fa27c3b5bd4e9ca41d6f15fb856ad84de0b70"
+    },
+    {
+      "path": "development/r3-receipts.json",
+      "bytes": 1234,
+      "sha256": "31a21a8a8ad2f3efc268c65c786160234ec290ef361a2567cc2f1e4e4f3777f4"
+    },
+    {
+      "path": "development/r4-clippy-receipt.json",
+      "bytes": 287,
+      "sha256": "05e39495e31d2e3ec5393f895a80ef9fa9c163cefbd05dcba4e62b54abc6fd3c"
+    },
+    {
+      "path": "development/r4-clippy.log",
+      "bytes": 172,
+      "sha256": "2cb1c8505b3a0f55b96299d10be944fdcac60f0b7386f425ee3199e74d947d6c"
+    },
+    {
+      "path": "development/whole-native-failure-classification.json",
+      "bytes": 5272,
+      "sha256": "0edc880f74d4782abcde3c25032926be6a296a05a914d70e1d0c1dbe6e8ee35a"
+    },
+    {
+      "path": "development/windows-reparse-gates.json",
+      "bytes": 4703,
+      "sha256": "de39158a65c9e95d0af58943adf0e3af51c240064e1a1c8aa312acda3ce28aae"
+    },
+    {
+      "path": "elevated-helper-preparation.json",
+      "bytes": 103,
+      "sha256": "cae363659e1b07f9f114c08c87311b6a0980c52196e75b62c69c752492751656"
+    },
+    {
+      "path": "final/actual-os-credential-cli.log",
+      "bytes": 376,
+      "sha256": "1a8aab2af47aec2322e37b96f37bdf4d0875e0bd095c6f656dbcf7b3de4fc693"
+    },
+    {
+      "path": "final/actual-tls-receiver-cli.log",
+      "bytes": 361,
+      "sha256": "e09661623db09c8560c717c76dd97103a38a7c639870b9dd6564121744e68f01"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 61,
+      "sha256": "026d99060b496c079849d8a5879de35236123aeb1757c978e045a69d633fc129"
+    },
+    {
+      "path": "final/doctests.log",
+      "bytes": 193,
+      "sha256": "0c7d85bb200c780e585949be74e5236e60e87cf118fa4e6d2b4e368d8550c9f7"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native-target-coverage.json",
+      "bytes": 16136,
+      "sha256": "ccb61480dbfa978f6182f1c18c3c62a74a91d81ae525d7079f0ee0b43570e0e8"
+    },
+    {
+      "path": "final/native-target-inventory.json",
+      "bytes": 86750,
+      "sha256": "7b34df1291f8b5c1279ffaa4e6760a3b0268cc7e6271be8d84b3815ad58672bd"
+    },
+    {
+      "path": "final/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "d51efff47871d157540e8a6fbb047781bf354697ae9abd7d4b46b90ce7bf0d12"
+    },
+    {
+      "path": "final/receipts.json",
+      "bytes": 26210,
+      "sha256": "80072cbccf101b3f70757bc0d1d77a94d2c1c8f0b68f19e464ccd02e308905ce"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 68412,
+      "sha256": "6d01173f766bd474693ba2576df8ad2f50f14eedfc6fc9f142ff142e8be7ac5b"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 68412,
+      "sha256": "6d01173f766bd474693ba2576df8ad2f50f14eedfc6fc9f142ff142e8be7ac5b"
+    },
+    {
+      "path": "final/summary.json",
+      "bytes": 47064,
+      "sha256": "9368953f2d4e42d30ed6602aab147aed3b09efe810f3396c359edb85a62e4386"
+    },
+    {
+      "path": "final/tested-native-binary.json",
+      "bytes": 122,
+      "sha256": "cf57f55630a04c29ebb0943d7f6e79ee6760e26659d20fbe70fd18f2f33b16f3"
+    },
+    {
+      "path": "final/typescript-tests.log",
+      "bytes": 25047,
+      "sha256": "73bcc5e5af0e850ac43e92b3ae5133586d627d5ddc52bc8ccb877ebf00fc3467"
+    },
+    {
+      "path": "final/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "final/whole-native.log",
+      "bytes": 282997,
+      "sha256": "9abd8877db9b5138cb145c00799e162051e3fbebf6e523a67fdbc4c53c46d6ea"
+    },
+    {
+      "path": "new-source/native/src/digest_history_capture_cli.rs",
+      "bytes": 4567,
+      "sha256": "fbe0194addda444a3a1760635e7394c9a04e05d6935969109d598d66844ebcc4"
+    },
+    {
+      "path": "new-source/native/src/github_app_digest_acquisition.rs",
+      "bytes": 9632,
+      "sha256": "d98489faa1ac706044a55869285e453f32b78718ea550f9aab1e134269ce7948"
+    },
+    {
+      "path": "new-source/native/tests/digest_history_acquisition.rs",
+      "bytes": 19963,
+      "sha256": "8fe281ed1a311a4ede005ea08986e5f077409a4ce0dc75274896c44d43bb9202"
+    },
+    {
+      "path": "run-elevated-reparse-checks.ps1",
+      "bytes": 5032,
+      "sha256": "bca2b2e037d31b62465915589b9a5c8ce85463f17fc6ddee1e98615667dbd8e7"
+    },
+    {
+      "path": "run-local-validation.py",
+      "bytes": 5527,
+      "sha256": "ea7c8c9a49dc84328d60dc5a031fb1c71a6a35b8272f93ac733c8b4de23e1ebb"
+    },
+    {
+      "path": "runtime-change.patch",
+      "bytes": 13480,
+      "sha256": "71b24ad04e2a1bfd8f87ecc9b19ba32cc640f8144f57b8f3e8e30eb005e1b9be"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 238396,
+      "sha256": "fdec06e8a800f4d14b755387b7a1d4321568e5ff33f14f742375fe0211a6c358"
+    },
+    {
+      "path": "windows-reparse-gates.json",
+      "bytes": 4703,
+      "sha256": "de39158a65c9e95d0af58943adf0e3af51c240064e1a1c8aa312acda3ce28aae"
+    },
+    {
+      "path": "WINDOWS-REPARSE-GATES.md",
+      "bytes": 2332,
+      "sha256": "19514bfdb516d52065327b6f3ed458525133564ed95b91a779635c9a2ca55584"
+    }
+  ],
+  "sourceMaterialization": "source-materialization.json",
+  "windowsReparsePrerequisites": {
+    "failedCases": 10,
+    "allObservedFailuresAreFixturePrerequisite1314": true,
+    "descriptor": "windows-reparse-gates.json",
+    "helper": "run-elevated-reparse-checks.ps1",
+    "instructions": "WINDOWS-REPARSE-GATES.md",
+    "helperParsed": true,
+    "elevatedHelperExecuted": false,
+    "windowsRightsChanged": false
+  },
+  "buildEnvironment": {
+    "compilerLinkConcurrency": 1,
+    "testThreads": 2,
+    "allTargetSelectionPreserved": true,
+    "ordinaryNTFSCompressionOnly": true,
+    "generatedFileHashesVerifiedUnchanged": 10542,
+    "deletedFiles": 0,
+    "sourceMutationDuringFinalValidation": false
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "checkedAtUtc": "2026-10-15T15:33:38.715307+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-p",
+    "yoke-code-intelligence",
+    "--locked",
+    "-j",
+    "2",
+    "--test",
+    "graphify_selected_queries",
+    "--",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 4.766,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave3-graphify-selected-red",
+  "logSha256": "3cd0a7307399b299c649fe7b4b86bab45678028cea2b24f74e5e509b39eeb2f7",
+  "groups": 1,
+  "passed": 3,
+  "failed": 5,
+  "ignored": 0,
+  "sourceChanges": []
+}

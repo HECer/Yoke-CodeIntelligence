@@ -1,0 +1,17 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.45s
+     Running tests\workspace.rs (target\debug\deps\workspace-c7e87e907ce0c02f.exe)
+executed_verification_deadline_includes_descendants_holding_output_pipes: test
+real_rustc_verification_approval_apply_and_rollback_preserve_original: test
+rollback_restores_deleted_sources_and_keeps_foreign_writes: test
+syntax_only_verification_does_not_authorize_workspace_writes: test
+
+4 tests, 0 benchmarks
+     Running tests\yaml_admission_review.rs (target\debug\deps\yaml_admission_review-91453fd17d0712c3.exe)
+container_aliases_include_nested_scalar_bytes: test
+expanded_scalar_byte_budget_is_shared_across_documents: test
+retained_nested_anchor_copies_are_charged_without_aliases: test
+scalar_aliases_are_admitted_before_total_clone_allocation: test
+small_unicode_aliases_and_independent_documents_remain_supported: test
+
+5 tests, 0 benchmarks

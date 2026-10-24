@@ -1,0 +1,36 @@
+    Finished `test` profile [unoptimized] target(s) in 0.62s
+     Running tests\adversarial.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\adversarial-68010fc6cded6364.exe)
+
+running 14 tests
+test bare_package_imports_do_not_become_syntactic_sibling_file_bindings ... ok
+test cli_trace_honors_a_requested_snapshot_after_disk_changes ... ok
+test conservative_token_budget_bounds_the_serialized_result ... ok
+test derived_source_cannot_introduce_obvious_credentials_into_state ... ok
+test huge_unicode_argument_errors_cannot_abort_the_mcp_session ... ok
+test insufficient_workspace_response_budget_is_rejected_before_a_write ... ok
+test missing_anonymous_tokens_are_reported_as_syntax_diagnostics ... ok
+test private_ec_keys_and_credential_file_variants_are_excluded ... ok
+test protected_package_credentials_and_obvious_tokens_never_enter_snapshots ... ok
+test sqlite_sidecar_links_cannot_rewrite_files_outside_state ... FAILED
+test sqlite_writer_contention_respects_the_cli_deadline ... ok
+test syntax_delta_is_multiplicity_aware_and_test_paths_are_case_insensitive ... ok
+test unchanged_index_republishes_the_disk_snapshot_after_patch_preparation ... ok
+test windows_device_names_and_path_aliases_are_never_edit_targets ... ok
+
+failures:
+
+---- sqlite_sidecar_links_cannot_rewrite_files_outside_state stdout ----
+
+thread 'sqlite_sidecar_links_cannot_rewrite_files_outside_state' (30704) panicked at native\tests\adversarial.rs:20:60:
+called `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: "Dem Client fehlt ein erforderliches Recht." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    sqlite_sidecar_links_cannot_rewrite_files_outside_state
+
+test result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.79s
+
+error: test failed, to rerun pass `--test adversarial`
+error: 1 target failed:
+    `--test adversarial`

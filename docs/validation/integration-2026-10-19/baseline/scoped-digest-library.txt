@@ -1,0 +1,43 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 2.70s
+     Running tests\github_app_digest.rs (target\debug\deps\github_app_digest-af81450ee32fffc9.exe)
+
+running 35 tests
+test cancelled_digest_preserves_source_and_restores_the_store_deadline ... ok
+test captured_git::captured_git_preview_refuses_forged_commit_tree_blob_and_analyzer_facts ... ok
+test blocked_first_sql_read_obeys_deadline_and_restores_the_original_busy_timeout ... ok
+test captured_git::captured_git_source_budget_precedes_commit_blob_validation_without_repair ... ok
+test captured_git::captured_git_preview_verifies_commit_without_live_checkout_or_git_metadata ... ok
+test captured_git::git_disk_origin_refuses_hidden_selector_rows_without_decoding_them ... ok
+test captured_git::git_lineage_aggregate_exact_boundary_includes_every_proof_row ... ok
+test captured_git::git_lineage_metadata_has_an_independent_host_budget_before_commit_reads ... ok
+test captured_git::git_preview_refuses_unbounded_derived_origin_chains_before_scope_replay ... ok
+test captured_git::lowered_metadata_budgets_preserve_the_separate_commit_registration_row_allowance ... ok
+test captured_git::selected_metadata_budget_does_not_reduce_the_independent_lineage_row_allowance ... ok
+test configured_disk_proof_bytes_have_an_independent_budget ... ok
+test declaration_projection_does_not_require_unused_rationale_graph_rows ... ok
+test digest_refuses_corrupt_captured_bytes_without_repairing_or_writing_them ... ok
+test digest_refuses_grant_mismatch_and_caller_owned_transaction ... ok
+test digest_replays_native_source_and_refuses_changed_graph_names_spans_or_producers ... ok
+test digest_request_rejects_duplicate_keys_urls_bodies_and_invalid_native_identities ... ok
+test digest_symbol_limit_reports_omissions_and_complete_stdout_budget_precedes_mutations ... ok
+test captured_git::small_git_selection_refuses_oversized_origin_metadata_before_commit_reads ... ok
+test digest_uses_immutable_captured_bytes_after_current_source_changes ... ok
+test digest_work_caps_apply_even_when_no_symbols_are_requested ... ok
+test executable_array_type_expressions_are_omitted_from_body_free_headers ... ok
+test disk_preview_refuses_shadow_inheritance_and_overlay_selector_records ... ok
+test header_literals_and_generic_defaults_are_unresolved_but_known_abi_headers_survive ... ok
+test language_override_cannot_route_document_formats_through_rust_replay ... ok
+test malformed_saved_graph_cannot_echo_source_bearing_values_through_errors ... ok
+test native_digest_projects_only_public_headers_and_exact_captured_symbol_fingerprints ... ok
+test native_replay_names_have_an_aggregate_budget_independent_of_emitted_symbols ... ok
+test private_ast_nesting_is_bounded_before_native_replay_even_with_zero_output_rows ... ok
+test public_constant_initializers_and_private_module_children_are_not_exported_as_source ... ok
+test public_reexports_remain_explicitly_unresolved_without_exposing_private_targets ... ok
+test repeated_call_receiver_text_is_bounded_before_native_replay ... ok
+test unsupported_language_exports_are_reported_as_unknown_instead_of_empty_complete ... ok
+test valid_closed_digest_request_is_admitted_without_provider_or_body_fields ... ok
+test replay_preserves_native_method_identity_and_long_unicode_signature_finalization ... ok
+
+test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.46s
+

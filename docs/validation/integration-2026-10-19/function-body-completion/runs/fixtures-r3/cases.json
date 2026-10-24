@@ -1,0 +1,1 @@
+[{"language": "js", "keep": false, "source": "/** @returns {number} */\nfunction helper(){throw new Error('owned');}const events=[];try{helper();}catch(e){if(e instanceof Error)events.push(e.message);else throw e;}export const observed=events;", "originalCase": 17}]

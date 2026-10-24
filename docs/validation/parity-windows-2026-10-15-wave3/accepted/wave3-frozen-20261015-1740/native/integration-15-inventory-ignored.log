@@ -1,0 +1,18 @@
+    Finished `test` profile [unoptimized] target(s) in 0.57s
+     Running tests\host_credentials.rs (target\debug\deps\host_credentials-d3ecb384a1a8a4e4.exe)
+actual_github_credential_round_trip_is_create_only_and_keeps_secrets_out_of_metadata: test
+actual_tls_and_service_token_never_export_private_material_or_overwrite_entries: test
+
+2 tests, 0 benchmarks
+     Running tests\host_install.rs (target\debug\deps\host_install-ecb3efabd0fd83d7.exe)
+0 tests, 0 benchmarks
+     Running tests\host_install_cli.rs (target\debug\deps\host_install_cli-580c103695fa8de9.exe)
+0 tests, 0 benchmarks
+     Running tests\host_output_disposition.rs (target\debug\deps\host_output_disposition-9c7bbb14919ba5e0.exe)
+disposition_probe_worker: test
+
+1 test, 0 benchmarks
+     Running tests\hybrid_retrieval.rs (target\debug\deps\hybrid_retrieval-965a15cea6c717ed.exe)
+0 tests, 0 benchmarks
+     Running tests\ignored_capture.rs (target\debug\deps\ignored_capture-0d67016a001ac4c7.exe)
+0 tests, 0 benchmarks

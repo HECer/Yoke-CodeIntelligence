@@ -1,0 +1,107 @@
+{
+  "sourceCommit": "da23e006b37d62401a8dcc5da89ae2dfa98d3a88",
+  "cliSha256": "6844883dba0872c863c65c719f035c5d8efb07eb56a3614c5edac94fde2d9673",
+  "frozenInputs": 1044,
+  "rust": {
+    "targets": {
+      "symbol-info-lib": {
+        "passed": 16,
+        "failed": 0,
+        "ignored": 0
+      },
+      "symbol_info_budget": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_symbol_contracts": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_facade_semantics": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_facade_options": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl_api_selection": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl_lifecycle": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl": {
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_config_cli": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_steering": {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_agent_interface": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_optional_defaults": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "project_session": {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_mcp": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deadline_scope": {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      "protocol_connection": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    "distinctPassed": 119,
+    "failed": 0,
+    "existingIgnored": 0,
+    "newFunctions": 11
+  },
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "formatTargetRoots": 339,
+  "cargoFormatAllWindowsOs206": true,
+  "allQualifiedJobsEmpty": true,
+  "fullStatusComplete": false,
+  "fullNativeCurrentHeadCertified": false,
+  "systemSettingsChanged": false,
+  "originalInventoryAssessmentsUnchanged": true,
+  "originalHoverReadbackCommandRerun": false,
+  "rawMembers": 353
+}

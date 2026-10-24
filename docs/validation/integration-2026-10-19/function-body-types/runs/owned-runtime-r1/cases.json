@@ -1,0 +1,37 @@
+[
+  {
+    "case": 0,
+    "before": "function helper():number[]{const fs:Array<()=>number>=[];for(var row of [{n:1},{n:2}])fs.push(()=>row.n);return fs.map(f=>f());}const result=helper();export const observed=result;",
+    "after": "let __ci_inline_1;\n{\n\n{\n__ci_inline_2: {\nlet row: typeof __ci_inline_3 = void 0 as any;\nconst fs:Array<()=>number>=[];{\nif (false) {\nfor (var __ci_inline_3 of ([{n:1},{n:2}])) {void __ci_inline_3;}\n}\nfor( row of [{n:1},{n:2}])fs.push(()=>row.n);\n}{ __ci_inline_1 = ( fs.map(f=>f()));; break __ci_inline_2; }\n__ci_inline_1 = void 0;\n}\n}\n}\nconst result=(__ci_inline_1 as (number[]));export const observed=result;"
+  },
+  {
+    "case": 1,
+    "before": "function helper():number[]{const fs:Array<()=>number>=[];for(var row of [[1],[2]])fs.push(()=>row[0]);return fs.map(f=>f());}const result=helper();export const observed=result;",
+    "after": "let __ci_inline_1;\n{\n\n{\n__ci_inline_2: {\nlet row: typeof __ci_inline_3 = void 0 as any;\nconst fs:Array<()=>number>=[];{\nif (false) {\nfor (var __ci_inline_3 of ([[1],[2]])) {void __ci_inline_3;}\n}\nfor( row of [[1],[2]])fs.push(()=>row[0]);\n}{ __ci_inline_1 = ( fs.map(f=>f()));; break __ci_inline_2; }\n__ci_inline_1 = void 0;\n}\n}\n}\nconst result=(__ci_inline_1 as (number[]));export const observed=result;"
+  },
+  {
+    "case": 2,
+    "before": "function helper():number[]{const fs:Array<()=>number>=[];for(var row of [[\"a\",1] as const,[\"bb\",2] as const])fs.push(()=>row[0].length);return fs.map(f=>f());}const result=helper();export const observed=result;",
+    "after": "let __ci_inline_1;\n{\n\n{\n__ci_inline_2: {\nlet row: typeof __ci_inline_3 = void 0 as any;\nconst fs:Array<()=>number>=[];{\nif (false) {\nfor (var __ci_inline_3 of ([[\"a\",1] as const,[\"bb\",2] as const])) {void __ci_inline_3;}\n}\nfor( row of [[\"a\",1] as const,[\"bb\",2] as const])fs.push(()=>row[0].length);\n}{ __ci_inline_1 = ( fs.map(f=>f()));; break __ci_inline_2; }\n__ci_inline_1 = void 0;\n}\n}\n}\nconst result=(__ci_inline_1 as (number[]));export const observed=result;"
+  },
+  {
+    "case": 3,
+    "before": "function helper():number[]{const fs:Array<()=>number>=[];for(var fn of [(x:number)=>x+1,(x:number)=>x+2])fs.push(()=>fn(3));return fs.map(f=>f());}const result=helper();export const observed=result;",
+    "after": "let __ci_inline_1;\n{\n\n{\n__ci_inline_2: {\nlet fn: typeof __ci_inline_3 = void 0 as any;\nconst fs:Array<()=>number>=[];{\nif (false) {\nfor (var __ci_inline_3 of ([(x:number)=>x+1,(x:number)=>x+2])) {void __ci_inline_3;}\n}\nfor( fn of [(x:number)=>x+1,(x:number)=>x+2])fs.push(()=>fn(3));\n}{ __ci_inline_1 = ( fs.map(f=>f()));; break __ci_inline_2; }\n__ci_inline_1 = void 0;\n}\n}\n}\nconst result=(__ci_inline_1 as (number[]));export const observed=result;"
+  },
+  {
+    "case": 4,
+    "before": "function helper():number[]{const fs:Array<()=>number>=[];for(var row of [{n:1},null])fs.push(()=>row?.n??0);return fs.map(f=>f());}const result=helper();export const observed=result;",
+    "after": "let __ci_inline_1;\n{\n\n{\n__ci_inline_2: {\nlet row: typeof __ci_inline_3 = void 0 as any;\nconst fs:Array<()=>number>=[];{\nif (false) {\nfor (var __ci_inline_3 of ([{n:1},null])) {void __ci_inline_3;}\n}\nfor( row of [{n:1},null])fs.push(()=>row?.n??0);\n}{ __ci_inline_1 = ( fs.map(f=>f()));; break __ci_inline_2; }\n__ci_inline_1 = void 0;\n}\n}\n}\nconst result=(__ci_inline_1 as (number[]));export const observed=result;"
+  },
+  {
+    "case": 5,
+    "before": "function helper():number[]{const fs:Array<()=>number>=[];for(var [key,row] of new Map([[1,{n:1}],[2,{n:2}]]))fs.push(()=>row.n+key);return fs.map(f=>f());}const result=helper();export const observed=result;",
+    "after": "let __ci_inline_1;\n{\n\n{\n__ci_inline_2: {\nlet key: number = void 0 as any;\nlet row: typeof __ci_inline_4 = void 0 as any;\nconst fs:Array<()=>number>=[];{\nif (false) {\nfor (var [__ci_inline_3,__ci_inline_4] of (new Map([[1,{n:1}],[2,{n:2}]]))) {void __ci_inline_3;void __ci_inline_4;}\n}\nfor( [key,row] of new Map([[1,{n:1}],[2,{n:2}]]))fs.push(()=>row.n+key);\n}{ __ci_inline_1 = ( fs.map(f=>f()));; break __ci_inline_2; }\n__ci_inline_1 = void 0;\n}\n}\n}\nconst result=(__ci_inline_1 as (number[]));export const observed=result;"
+  },
+  {
+    "case": 6,
+    "before": "function helper():()=>number{var read=()=>row.n;var row={n:3};return read;}const result=helper();export const observed=result();",
+    "after": "let __ci_inline_1;\n{\n\n{\n__ci_inline_2: {\nlet read: typeof __ci_inline_3 = void 0 as any;\nlet row: typeof __ci_inline_4 = void 0 as any;\n{\nif (false) {\nvar __ci_inline_3=()=>row.n;void __ci_inline_3;\n}\n( read= (()=>row.n));\n}{\nif (false) {\nvar __ci_inline_4={n:3};void __ci_inline_4;\n}\n( row= ({n:3}));\n}{ __ci_inline_1 = ( read);; break __ci_inline_2; }\n__ci_inline_1 = void 0;\n}\n}\n}\nconst result=(__ci_inline_1 as (()=>number));export const observed=result();"
+  }
+]

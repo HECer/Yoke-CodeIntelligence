@@ -1,0 +1,17 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+error[E0716]: temporary value dropped while borrowed
+   --> native\tests\git_conflicts.rs:130:18
+    |
+126 |         conflicts::inspect(
+    |         ------------------ borrow later used by call
+...
+130 |                 &self.scope_ids()
+    |                  ^^^^^^^^^^^^^^^-
+    |                  |              |
+    |                  |              temporary value is freed at the end of this statement
+    |                  creates a temporary value which is freed while still in use
+    |
+    = note: consider using a `let` binding to create a longer lived value
+
+For more information about this error, try `rustc --explain E0716`.
+error: could not compile `yoke-code-intelligence` (test "git_conflicts") due to 1 previous error

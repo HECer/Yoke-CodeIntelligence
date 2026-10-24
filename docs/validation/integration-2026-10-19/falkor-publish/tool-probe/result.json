@@ -1,0 +1,26 @@
+[
+  {
+    "tool": "wsl",
+    "path": "C:\\Windows\\System32\\wsl.exe",
+    "sha256": "4e589e3883229b7a74a4acdb878689dcec94e2539fcad1c194f415b149c337a9",
+    "exitCode": 1,
+    "stdout": "\r\r\nCopyright (c) Microsoft Corporation. Alle Rechte vorbehalten.\r\r\n\r\r\nNutzung: wsl.exe [Argument]\r\r\n\r\r\nArgumente:\r\r\n\r\r\n    --install <Options>\r\r\n        Installieren des Windows-Subsystems f\u00fcr Linux-Features. Wenn keine Optionen angegeben werden,\r\r\n        werden die empfohlenen Features zusammen mit der Standarddistribution installiert.\r\r\n\r\r\n        Um die Standarddistribution sowie eine Liste anderer g\u00fcltiger Distributionen anzuzeigen,\r\r\n        verwenden Sie \u201ewsl --list --online\u201c.\r\r\n\r\r\n        Optionen:\r\r\n            --distribution, -d [Argument]\r\r\n                Gibt die herunterzuladende und zu installierende Distribution mit Namen an.\r\r\n\r\r\n                Argumente:\r\r\n                    Ein g\u00fcltiger Distributionsname (Gro\u00df-/Kleinschreibung wird nicht beachtet).\r\r\n\r\r\n                Beispiele:\r\r\n                    wsl --install -d Ubuntu\r\r\n                    wsl --install --distribution Debian\r\r\n\r\r\n            --inbox\r\r\n                Installiert das optionale Windows-Feature anstelle der \u00fcber den Microsoft Store verf\u00fcgbaren Version.\r\r\n\r\r\n            --no-distribution\r\r\n                Keine Distribution installieren (kann nicht mit --distribution verwendet werden).\r\r\n\r\r\n",
+    "stderr": ""
+  },
+  {
+    "tool": "android-qemu",
+    "path": "C:\\Users\\Lomi\\AppData\\Local\\Android\\Sdk\\emulator\\qemu\\windows-x86_64\\qemu-system-x86_64-headless.exe",
+    "sha256": "38a5930dd323993b36ec4220277c695082e3dd829600203dc1d9bb882b8786f0",
+    "exitCode": 0,
+    "stdout": "Android emulator version 37.2.12.0 (build_id 16428233) (CL:N/A)\r\nCopyright (C) 2006-2024 The Android Open Source Project and many others.\r\nThis program is a derivative of the QEMU CPU emulator (www.qemu.org).\r\n\r\n  This software is licensed under the terms of the GNU General Public\r\n  License version 2, as published by the Free Software Foundation, and\r\n  may be copied, distributed, and modified under those terms.\r\n\r\n  This program is distributed in the hope that it will be useful,\r\n  but WITHOUT ANY WARRANTY; without even the implied warranty of\r\n  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\r\n  GNU General Public License for more details.\r\n\r\n",
+    "stderr": ""
+  },
+  {
+    "tool": "android-qemu-machines",
+    "path": "C:\\Users\\Lomi\\AppData\\Local\\Android\\Sdk\\emulator\\qemu\\windows-x86_64\\qemu-system-x86_64-headless.exe",
+    "sha256": "38a5930dd323993b36ec4220277c695082e3dd829600203dc1d9bb882b8786f0",
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "unknown option: -machine\r\nplease use -help for a list of valid options\r\n"
+  }
+]

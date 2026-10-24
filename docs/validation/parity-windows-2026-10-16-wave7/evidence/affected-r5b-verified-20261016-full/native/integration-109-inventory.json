@@ -1,0 +1,19 @@
+{
+  "store_identity": {
+    "executable": "target\\debug\\deps\\store_identity-0ab8be677c48a4fa.exe",
+    "ignored": [],
+    "registered": [
+      "a_corrupted_snapshot_payload_cannot_alias_a_different_lookup_identity",
+      "graph_lookup_and_every_evidence_member_keep_the_same_snapshot_identity",
+      "snapshot_workspace_mismatch_is_rejected_before_source_retrieval",
+      "valid_disk_and_derived_snapshot_identities_remain_readable"
+    ]
+  },
+  "store_review": {
+    "executable": "target\\debug\\deps\\store_review-5fff24c677e876db.exe",
+    "ignored": [],
+    "registered": [
+      "source_blob_artifact_fallback_cannot_bypass_captured_path_authority"
+    ]
+  }
+}

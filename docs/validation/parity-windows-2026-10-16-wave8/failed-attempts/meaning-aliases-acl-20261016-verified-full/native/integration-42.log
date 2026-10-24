@@ -1,0 +1,16 @@
+    Finished `test` profile [unoptimized] target(s) in 1.15s
+     Running tests\graph.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\graph-2aaa35d28f1690cd.exe)
+
+running 1 test
+test community_partition_separates_dense_call_groups_despite_a_bridge ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests\graph_archive_review.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\graph_archive_review-34a08598b98b6c0e.exe)
+
+running 2 tests
+test collection_reregistration_caps_existing_source_sql_cells_before_length_reads ... ok
+test resealed_archives_cannot_reclassify_a_captured_file_as_protected_source ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.31s
+

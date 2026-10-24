@@ -1,0 +1,22 @@
+    Finished `test` profile [unoptimized] target(s) in 1.24s
+     Running tests\lsp_lifecycle.rs (target\debug\deps\lsp_lifecycle-6843554963ada3d4.exe)
+
+running 2 tests
+test failed_health_does_not_publish_status_generation_or_claim_restart ... ok
+test restart_performs_new_real_provider_handshakes_and_advances_only_owned_status ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.63s
+
+     Running tests\lsp_source_execution.rs (target\debug\deps\lsp_source_execution-72fe99b4b2ad15da.exe)
+
+running 7 tests
+test actual_jedi_source_auto_import_module_does_not_execute_without_host_authority ... ignored, requires YOKE_PYTHON_LSP identifying the actual installed Jedi language-server
+test actual_rust_source_selected_rustc_requires_explicit_host_execution_authority ... ignored, requires real installed rust-analyzer and an independently built harmless rustc probe
+test passive_host_redirect_settings_are_refused_before_a_provider_is_started ... ok
+test unknown_passive_backend_contract_is_unavailable_before_process_start ... ok
+test passive_rust_manifest_and_host_tool_redirects_are_refused_before_provider_start ... ok
+test passive_rust_keeps_proven_nested_workspace_and_dependency_paths_available ... ok
+test passive_rust_omits_selectors_only_from_provider_copy_and_reports_original_hashes ... ok
+
+test result: ok. 5 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 1.58s
+

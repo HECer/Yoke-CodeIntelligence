@@ -1,0 +1,49 @@
+{
+  "recordedAt": "2026-10-18T23:20:25.572393+00:00",
+  "kind": "actual_hosted_native_runtime_failures",
+  "wholePlatformAccepted": false,
+  "reports": {
+    "linux": {
+      "job": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39173832405/job/117812300264",
+      "sourceCommit": "9f483534d59f1956f0fc96898d1f5959bf898e87",
+      "executionGroupsWithSummaries": 256,
+      "passed": 1902,
+      "failed": 71,
+      "ignored": 23,
+      "failedGroups": 16,
+      "accepted": false,
+      "rawLogSha256": "13dc7adaf742d2d0e512811181d1ff71bcae9b12524879bbb3fbc830782e0491"
+    },
+    "macos": {
+      "job": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39173832405/job/117812300060",
+      "sourceCommit": "9f483534d59f1956f0fc96898d1f5959bf898e87",
+      "executionGroupsWithSummaries": 256,
+      "passed": 1726,
+      "failed": 247,
+      "ignored": 23,
+      "failedGroups": 56,
+      "accepted": false,
+      "rawLogSha256": "95055aac56d1026a9dba23c727f6058b38ab6db26cf4376ad90ea1369c49b3b7"
+    }
+  },
+  "measuredCauses": [
+    "Non-Windows read-only registry and guarded host-install backends explicitly refuse; those remain missing production capabilities.",
+    "macOS temporary paths passed via /var contain platform aliases rejected by the strict ancestor checks; many unrelated fixtures fail initial admission.",
+    "macOS runtime cleanup and several native-worker/coverage cases need reevaluation after canonical-root fixture admission."
+  ],
+  "correction": "Use the canonical path of the same runner-selected temporary directory on macOS. No source permission, link checks, tests, deadlines or refusals are disabled.",
+  "localSetupCheck": {
+    "exitCode": 0,
+    "actualWorkflowScriptExecuted": true,
+    "ownedJunctionResolved": true,
+    "hostTempPolicyChanged": false,
+    "validationRulesUnchanged": true
+  },
+  "workflowSha256": "a567b5cd086d3d1c9ebd5cf3a9a76f83d726adc866639b44df43e0c247b589f1",
+  "nextGates": [
+    "Actual macOS rerun with canonical temp root",
+    "Implement missing portable production capabilities with their own safety proofs",
+    "Full native CI on all three platforms"
+  ],
+  "status": "incomplete"
+}

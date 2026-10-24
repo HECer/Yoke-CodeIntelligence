@@ -1,0 +1,18 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.22s
+     Running tests\parity_cli.rs (target\debug\deps\parity_cli-c7f5b814c46c6b5e.exe)
+public_agent_repl_cli_executes_persistent_cells_only_with_host_trust: test
+public_graph_cli_analyzes_and_exports_without_overwriting_human_cards: test
+public_graph_view_cli_combines_manifest_nodes_and_reads_historical_view: test
+public_named_notes_cli_is_persistent_and_global_store_is_explicit: test
+public_retrieval_cli_ranks_task_words_in_source_bodies: test
+public_serena_stdio_cli_preserves_cells_and_reports_errors_under_host_authority: test
+public_session_cli_resumes_host_registered_project_and_notes: test
+public_session_stdio_cli_serves_the_extended_profile_and_exits_on_eof: test
+
+8 tests, 0 benchmarks
+     Running tests\parity_construct_review.rs (target\debug\deps\parity_construct_review-cc6b783fc409aaf8.exe)
+lisp_let_binding_pairs_are_not_invocations_of_same_named_functions: test
+quoted_lisp_declarations_do_not_create_executable_declaration_entities: test
+
+2 tests, 0 benchmarks

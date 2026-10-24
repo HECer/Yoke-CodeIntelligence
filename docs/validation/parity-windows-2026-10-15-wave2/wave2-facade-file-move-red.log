@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.55s
+     Running tests\facade_file_move.rs (target\debug\deps\facade_file_move-6144897cf260e5ee.exe)
+
+running 1 test
+test file_move_omitted_null_and_empty_selectors_preserve_basename_in_the_target_parent_for_v8_v9 ... FAILED
+
+failures:
+
+---- file_move_omitted_null_and_empty_selectors_preserve_basename_in_the_target_parent_for_v8_v9 stdout ----
+
+thread 'file_move_omitted_null_and_empty_selectors_preserve_basename_in_the_target_parent_for_v8_v9' (80952) panicked at native\tests\facade_file_move.rs:134:13:
+target is a parent directory, not a new filename: {"commandsExecuted":false,"complete":false,"equivalent":"independent_will_rename_files","plan":{"baseSnapshotId":"274eedee1745041ff8448b7452c0b0ddbf7c961a7f01b1ddbe9a2296241bc9b4","createdAt":1792073844,"diff":"--- src/mód.rs\n+++ /dev/null\n@@ -1 +0,0 @@\n-fn helper() {}\n--- /dev/null\n+++ target.rs\n@@ -0,0 +1,2 @@\n+// provider prepared move\n+fn helper() {}\n","expiresAt":1792160244,"files":[{"afterHash":null,"beforeHash":"a9056e4d5143dee5a485795c9873cfe0b792536a818f0a5abb4504f1e08ad4ad","mode":420,"path":"src/mód.rs"},{"afterHash":"5798b321f3a1f037f11fc1649794274665c8b06c0f170e9739fc194bd2fb657a","beforeHash":null,"mode":420,"path":"target.rs"}],"id":"3cdd8e090bec819b7b7fefaef17d59c0df0cd15a38d59fc7f0ece74c86df2d95","resultSnapshotId":"8fe5e3792eaf9fe4479ca7536f22ec128a6b4b10293744e5b0cc149a0cdde69a","warnings":[],"workspaceId":"a11c91d8deeac96d5505523ae68dc55bd2cda6e621ff9a016504260df84565b1"},"provider":"host_selected_lsp","serverProfileHash":"30f7e524d471ea834fc691cb373672cb494f7dae5a9d3e7f8b50dabb95c47dc6","snapshotId":"274eedee1745041ff8448b7452c0b0ddbf7c961a7f01b1ddbe9a2296241bc9b4"}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    file_move_omitted_null_and_empty_selectors_preserve_basename_in_the_target_parent_for_v8_v9
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.62s
+
+error: test failed, to rerun pass `--test facade_file_move`

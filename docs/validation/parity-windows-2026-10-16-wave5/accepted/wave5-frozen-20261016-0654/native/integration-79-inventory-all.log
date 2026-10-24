@@ -1,0 +1,19 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.12s
+     Running tests\parity_view_review.rs (target\debug\deps\parity_view_review-5885658842c4425e.exe)
+resealed_view_cannot_invent_canonical_labels_or_parent_claims: test
+resealed_view_cannot_relabel_a_selected_overlay_or_upgrade_its_precision: test
+resealed_view_cannot_remove_canonical_observations: test
+
+3 tests, 0 benchmarks
+     Running tests\parser_epoch9.rs (target\debug\deps\parser_epoch9-683ec3da72b69dcb.exe)
+commonlisp9_extracts_local_functions_without_treating_binding_lists_as_calls: test
+commonlisp9_function_namespace_and_flet_labels_visibility_are_distinct: test
+commonlisp9_local_function_designators_use_the_function_namespace: test
+commonlisp9_preserves_escaped_symbol_case: test
+commonlisp9_rejects_known_impossible_arity_but_keeps_optional_and_rest_candidates: test
+powershell9_function_drive_reference_is_distinct_from_value_and_literal_text: test
+powershell9_matches_command_case_without_binding_dynamic_command_variables: test
+verilog9_retains_task_declaration_and_task_function_scope: test
+
+8 tests, 0 benchmarks

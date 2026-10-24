@@ -1,0 +1,29 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-name-pattern",
+    "^LIVE installed (graft|graphify) pinned structural extraction$",
+    "test/live/upstreams.mjs"
+  ],
+  "exitCode": 1,
+  "elapsedSeconds": 2.972,
+  "recordedAt": "2026-10-19T01:34:08.664095+00:00",
+  "copiedSourceAndDistInputsVerified": 163,
+  "sourceUnchanged": true,
+  "fixtureParent": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\fixtures",
+  "selectedGates": [
+    "graft0.21.1",
+    "graphifyy0.9.87"
+  ],
+  "serena": "not selected; no reviewed installed executable configured",
+  "environment": {
+    "base": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r",
+    "node": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node",
+    "python": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\python\\Scripts\\python.exe",
+    "createdAt": "2026-10-19T01:30:59.129768+00:00",
+    "installScripts": "disabled",
+    "scope": "isolated optional live-gate environment; no host hook/config registration"
+  }
+}

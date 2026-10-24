@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.07s
+     Running tests\server_catalog.rs (target\debug\deps\server_catalog-daa9d2634cae3c47.exe)
+
+running 2 tests
+test host_registration_resolves_language_metadata_without_starting_any_process ... ok
+test registration_never_derives_execution_authority_from_a_backend_name ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\session_epoch_selection.rs (target\debug\deps\session_epoch_selection-dd56743ad0b1b890.exe)
+
+running 6 tests
+test mutable_engine_handles_cannot_silently_change_a_pinned_session_epoch ... ok
+test default_v8_preserves_the_original_session_record_and_can_resume_saved_bytes ... ok
+test session_v9_keeps_federation_receiver_receipts_and_current_grants_separate ... ok
+test session_v9_reads_old_native_archives_without_recapture_or_registration_authority ... ok
+test same_epoch_resume_keeps_project_selection_and_cross_epoch_resume_cannot_mutate_records ... ok
+test session_v9_propagates_to_default_registered_readonly_and_query_only_projects ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.52s
+

@@ -1,0 +1,11 @@
+    Finished `test` profile [unoptimized] target(s) in 0.66s
+     Running unittests src\lib.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\yoke-f14d0af26d19713e.exe)
+
+running 4 tests
+test process::windows_job::history_spawn_tests::a_later_wrapper_failure_proves_root_exit_before_returning_the_spawn_error ... ok
+test process::windows_job::history_spawn_tests::assignment_and_job_termination_refusals_still_reap_the_unassigned_root ... ok
+test process::windows_job::history_spawn_tests::assignment_failure_reaps_the_unassigned_suspended_root_and_its_owned_job ... ok
+test process::windows_job::history_spawn_tests::zero_cleanup_budget_requests_termination_and_refuses_exit_proof ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 440 filtered out; finished in 0.12s
+

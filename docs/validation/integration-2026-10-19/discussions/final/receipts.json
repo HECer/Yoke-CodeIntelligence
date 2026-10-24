@@ -1,0 +1,177 @@
+[
+  {
+    "gate": "format",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 4.492,
+    "recordedAt": "2026-10-19T03:58:45.481711+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "clippy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--keep-going",
+      "-j2",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 1.12,
+    "recordedAt": "2026-10-19T03:58:46.601954+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "native-discussions-and-source",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "--no-fail-fast",
+      "-j2",
+      "--lib",
+      "--test",
+      "github",
+      "--test",
+      "github_discussions",
+      "--test",
+      "github_app_digest",
+      "--test",
+      "github_app_digest_cli",
+      "--test",
+      "github_app_digest_mapping",
+      "--test",
+      "github_app_cli",
+      "--test",
+      "github_app_auth_cli",
+      "--test",
+      "store_read_only",
+      "--test",
+      "store_open_deadline",
+      "--test",
+      "store_cancellation",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 209.536,
+    "recordedAt": "2026-10-19T04:02:16.138691+00:00",
+    "resultGroups": [
+      {
+        "passed": 403,
+        "failed": 0,
+        "ignored": 7
+      },
+      {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 35,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 38,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 14,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  {
+    "gate": "python-contracts",
+    "command": [
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts/tests",
+      "-v"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 1.17,
+    "recordedAt": "2026-10-19T04:02:17.309409+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "typescript-typecheck",
+    "command": [
+      "npm.cmd",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 4.72,
+    "recordedAt": "2026-10-19T04:02:22.030389+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "typescript-tests",
+    "command": [
+      "npm.cmd",
+      "test"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 62.969,
+    "recordedAt": "2026-10-19T04:03:24.999856+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "actual-native-github-https",
+    "command": [
+      "python",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\run-discussions-live-final.py"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 3.937,
+    "recordedAt": "2026-10-19T04:03:28.937729+00:00",
+    "resultGroups": []
+  }
+]

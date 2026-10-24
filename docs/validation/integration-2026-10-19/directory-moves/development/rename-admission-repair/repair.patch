@@ -1,0 +1,78 @@
+diff --git a/native/src/agent_repl.rs b/native/src/agent_repl.rs
+index 1b0bade..b2a4c31 100644
+--- a/native/src/agent_repl.rs
++++ b/native/src/agent_repl.rs
+@@ -562,6 +562,7 @@ fn prepare_captured_file_relocation(
+     session: &mut Session,
+     path: &str,
+     destination: &str,
++    directory_move: bool,
+     deadline: &Deadline,
+ ) -> Result<Value> {
+     let path = crate::paths::normalized_syntax(path)?;
+@@ -571,6 +572,10 @@ fn prepare_captured_file_relocation(
+     let source_host = crate::paths::scoped(&engine.root, &path)?;
+     match std::fs::symlink_metadata(source_host) {
+         Ok(metadata) if metadata.is_dir() && !crate::paths::is_link(&metadata) => {
++            ensure!(
++                directory_move,
++                "File rename requires a captured regular file"
++            );
+             return crate::semantic_refactor::invoke(
+                 engine,
+                 "move",
+@@ -1096,7 +1101,13 @@ fn dispatch_unbounded(
+                 let destination = crate::paths::normalized(&format!("{parent}/{basename}"))?;
+                 // The pinned JB facade uses a parent directory. The direct
+                 // native move API continues to take the final destination path.
+-                return prepare_captured_file_relocation(session, &path, &destination, deadline);
++                return prepare_captured_file_relocation(
++                    session,
++                    &path,
++                    &destination,
++                    true,
++                    deadline,
++                );
+             }
+             match args.get("target_parent_name_path") {
+                 None | Some(Value::Null) => {}
+@@ -1461,6 +1472,7 @@ fn dispatch_unbounded(
+                             session,
+                             &path,
+                             &destination,
++                            false,
+                             deadline,
+                         );
+                     }
+diff --git a/native/tests/facade_directory_move.rs b/native/tests/facade_directory_move.rs
+index 1b76b3a..5b56b29 100644
+--- a/native/tests/facade_directory_move.rs
++++ b/native/tests/facade_directory_move.rs
+@@ -183,6 +183,27 @@ fn native_directory_move_keeps_the_explicit_final_name_contract() {
+     assert_eq!(records(&f), (1, 1));
+     unchanged(&f);
+ }
++
++#[test]
++fn captured_file_rename_cannot_gain_directory_authority_from_a_folder_capable_provider() {
++    for epoch in [AnalyzerEpoch::V8, AnalyzerEpoch::V9] {
++        for selector in [None, Some(Value::Null)] {
++            let mut f = fixture(epoch, "edits");
++            let mut args = json!({"relative_path":"src/tree","new_name":"renamed"});
++            if let Some(selector) = selector {
++                args["name_path"] = selector;
++            }
++            assert!(
++                yoke::agent_repl::invoke_facade(&mut f.session, "jb.rename", args, None, &d())
++                    .is_err()
++            );
++            assert_eq!(records(&f), (0, 0));
++            assert!(transcript(&f).is_empty());
++            unchanged(&f);
++            assert!(!f.root.path().join("src/renamed").exists());
++        }
++    }
++}
+ #[test]
+ fn occupied_missing_protected_and_uncaptured_tree_entries_refuse_before_provider_start() {
+     for case in [

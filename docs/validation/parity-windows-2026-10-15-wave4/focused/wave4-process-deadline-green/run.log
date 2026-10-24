@@ -1,0 +1,77 @@
+✔ provider cleanup closes a real child and its stdio within a bounded interval (2544.7323ms)
+✔ an expired process deadline refuses before any actual child launch (4.7558ms)
+✔ an already cancelled process refuses before any actual child launch (1.2416ms)
+✖ a deadline expiring immediately after actual spawn closes the child and stdio before rejection (2395.5103ms)
+✖ cancellation immediately after actual spawn closes the child and stdio before rejection (2026.6046ms)
+✔ an armed ordinary process deadline closes a stalled actual child and all stdio (3047.5771ms)
+✔ an armed ordinary cancellation closes a ready actual child and all stdio (1829.6056ms)
+✔ an ordinary successful actual process preserves captured output and closes all stdio (85.5616ms)
+(node:81988) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ MCP initializes, exposes exactly eight tools and returns one complete content payload (1367.373ms)
+✔ MCP rejects tools before initialization and reports unknown tools (531.8663ms)
+✔ MCP invalid JSON does not poison the next valid request (427.1128ms)
+✔ MCP cancellation reaches the active request AbortSignal (1.5239ms)
+✔ actual CLI emits parseable JSON with runtime warnings kept on stderr (1480.513ms)
+✔ CLI help and invalid tool exit status work without external packages (1661.847ms)
+✔ CLI canonical graph export is a real, readable graph file (1856.2021ms)
+✔ deleting a tracked Git file produces a new snapshot rather than perpetual WORKSPACE_BUSY (916.9886ms)
+✔ loopback explorer requires a bearer token and refuses write tools (977.2356ms)
+✔ loopback explorer rejects a cross-site Origin even with a valid token (421.3712ms)
+✔ bounded subprocess capture never treats truncated logs as complete (501.7756ms)
+✔ subprocess deadlines kill a stalled process instead of waiting indefinitely (2044.4522ms)
+✔ publisher dry run names the public owner and makes no remote changes (90.2811ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 19
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13032.3783
+
+✖ failing tests:
+
+test at test\process-deadline-transition.test.mjs:106:1
+✖ a deadline expiring immediately after actual spawn closes the child and stdio before rejection (2395.5103ms)
+  AssertionError [ERR_ASSERTION]: runProcess settled before child stdin closed
+  
+  false !== true
+  
+      at assertOneClosedChild (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/test/process-deadline-transition.test.mjs:71:16)
+      at expectClosedRejection (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/test/process-deadline-transition.test.mjs:83:5)
+      at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+      at async file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/test/process-deadline-transition.test.mjs:117:9
+      at async withRecordedChild (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/test/process-deadline-transition.test.mjs:48:9)
+      at async TestContext.<anonymous> (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/test/process-deadline-transition.test.mjs:110:5)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\process-deadline-transition.test.mjs:122:1
+✖ cancellation immediately after actual spawn closes the child and stdio before rejection (2026.6046ms)
+  AssertionError [ERR_ASSERTION]: runProcess settled before child stdin closed
+  
+  false !== true
+  
+      at assertOneClosedChild (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/test/process-deadline-transition.test.mjs:71:16)
+      at expectClosedRejection (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/test/process-deadline-transition.test.mjs:83:5)
+      at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+      at async file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/test/process-deadline-transition.test.mjs:132:9
+      at async withRecordedChild (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/test/process-deadline-transition.test.mjs:48:9)
+      at async TestContext.<anonymous> (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/test/process-deadline-transition.test.mjs:127:5)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

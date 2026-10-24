@@ -1,0 +1,37 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 755,
+  "commands": [
+    {
+      "name": "native",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--no-fail-fast",
+        "--test",
+        "github_app_worker_history",
+        "--",
+        "--test-threads=1",
+        "checked_completion",
+        "--nocapture"
+      ],
+      "exitCode": 101,
+      "seconds": 1.3626125000009779,
+      "totals": {
+        "passed": 0,
+        "failed": 1,
+        "ignored": 0
+      },
+      "groups": 1,
+      "failures": []
+    }
+  ],
+  "allChecksPassed": false,
+  "wholeNativeRerun": false
+}

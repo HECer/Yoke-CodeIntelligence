@@ -1,0 +1,2 @@
+from pathlib import Path
+temp=Path.home()/'AppData/Local/Temp';raw=(temp/'ci-symbol-delete-red.py').read_bytes();assert raw.count(b'symbol-delete-development/red-r1')==1 and raw.count(b"'symbol_delete_live'")==1;raw=raw.replace(b'symbol-delete-development/red-r1',b'propagated-delete-development/red-r1').replace(b"'symbol_delete_live'",b"'propagated_delete_live'");(temp/'ci-propagated-delete-red.py').write_bytes(raw)

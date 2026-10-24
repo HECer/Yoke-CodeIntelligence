@@ -1,0 +1,18 @@
+{
+  "kind": "behavioral_red_before_pdf_implementation",
+  "passed": 0,
+  "failed": 2,
+  "copiedSourceManifestSha256": "d6510d06d4cc8d3f53a0f375f4801e2529e24b16c7a5a960e47bafcfb4c4f5ec",
+  "copiedSourceUnchanged": true,
+  "baselineExecutable": "E:\\Yoke-Build-Cache\\outcome-learning-20261017\\debug\\yoke.exe",
+  "baselineExecutableSha256": "a0005cf51bb78e69a5b4aa75967d683b3eb653021d3abf773c6f747ac47b6b7d",
+  "executableBuildSourceNotReasserted": true,
+  "contractSha256": "fe2091eebfee097f447dfc6b3b358201f4026a961002361e298b8f7f0573c968",
+  "log": "cli-red-r3.log",
+  "logSha256": "8a282023f383dc3cb76848fcebfa16dfad59f3e0490e0e302f9422774c9d36b7",
+  "originalPdfWorkerOracleSha256": "97aa510dd9d92d6d75ef53a700937f05b2958ffda4ace51e406073c4af322b84",
+  "fixturePdfSha256": "32e6099421e8f7c0c9ceca441ab5b95f7e52a19403974a7a526ce45c0bfc5a79",
+  "decodedPageHash": "b33591b9a033f7848183324ceca1ecd8bfff3e4102016f3a57984ec03d6a79e8",
+  "initialAttempt": "cli-red.log retains a fixture CLI typo; the positive case there is not used as behavioral RED. Oracle validation found the original parser emits a trailing LF; the final contract includes it and was rerun RED. Earlier contract/oracle scripts and oracle-red-r1.log are retained.",
+  "interpretation": "Actual unchanged prior executable: valid frozen source/PDF setup reaches missing native-pdf-text flag; schema2 lacks permission marker. No PDF implementation, build, full acceptance or parity claim."
+}

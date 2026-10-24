@@ -1,0 +1,33 @@
+    Finished `test` profile [unoptimized] target(s) in 0.83s
+     Running tests\resource_paging.rs (target\debug\deps\resource_paging-a420510022e74047.exe)
+
+running 4 tests
+test generic_resource_pages_reach_large_artifacts_under_the_original_eight_tool_profile ... ok
+test streaming_pages_verify_bytes_outside_the_page_and_preserve_unicode_boundaries ... ok
+test project_resource_pages_use_only_registered_roots_without_activation ... ok
+test large_graphify_resources_preserve_the_complete_original_body_in_paged_storage ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.03s
+
+     Running tests\retention.rs (target\debug\deps\retention-c9716eb52673495e.exe)
+
+running 16 tests
+test future_opaque_json_artifact_schema_is_not_inferred_to_be_dependency_free ... ok
+test labeled_uncommitted_history_journal_restores_only_hash_bound_rows ... ok
+test labeled_uncommitted_history_journal_restores_missing_rows_without_changing_current_source ... ok
+test committed_retirement_can_feed_conservative_cas_quarantine_and_purge_without_losing_receipts ... ok
+test missing_history_age_and_corrupt_metadata_never_become_retirement_permission ... ok
+test multiply_linked_quarantine_content_is_unknown_physical_reclamation_and_is_preserved ... ok
+test newly_rooted_quarantine_and_tampered_plan_refuse_purge_without_deleting_bytes ... ok
+test opaque_published_artifacts_defer_history ... ok
+test reviewed_history_retirement_removes_only_unrooted_rows_and_preserves_original_source ... ok
+test partial_purge_reports_actual_removed_bytes_and_can_resume_only_its_exact_intent ... ok
+test purge_reclaims_only_exact_committed_unreachable_quarantine_bytes_after_confirmation ... ok
+test stale_plan_and_concurrent_client_leave_history_intact ... ok
+test source_bindings_inside_published_json_artifacts_protect_history ... ok
+test unknown_nested_snapshot_fields_defer_history ... ok
+test unknown_record_blocks_retirement_even_without_explicit_hash_fields ... ok
+test pin_and_every_source_bound_workflow_record_protect_history ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.85s
+

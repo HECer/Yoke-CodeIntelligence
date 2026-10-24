@@ -1,0 +1,30 @@
+{
+  "label": "feedback",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "1",
+    "--test",
+    "feedback_cli",
+    "--",
+    "--test-threads=2"
+  ],
+  "exitCode": 101,
+  "environment": {
+    "CARGO_TARGET_DIR": "E:\\Yoke-Build-Cache\\outcome-learning-20261017",
+    "CARGO_HOME": "E:/Yoke-Build-Cache/cargo-home-yoke-20261017",
+    "CARGO_NET_OFFLINE": "true",
+    "TEMP": "E:\\Yoke-Build-Cache\\outcome-learning-20261017\\temp",
+    "TMP": "E:\\Yoke-Build-Cache\\outcome-learning-20261017\\temp",
+    "RTK_SUPPRESS_HOOK_WARNING": "1"
+  },
+  "sourceBefore": "f15bd193e4e502a42a045e2f686ea447434f59c37a935f2f95cf3d6bb5bfba61",
+  "sourceAfter": "f15bd193e4e502a42a045e2f686ea447434f59c37a935f2f95cf3d6bb5bfba61",
+  "sourceChanges": [],
+  "log": "feedback-r1.log",
+  "logSha256": "21e4029ab7531c05f9ceb3485e10c4c596597e274c7235ed1b47478bf78a22d7",
+  "interpretation": "Separate scoped development; no full parity or integrated acceptance claim."
+}

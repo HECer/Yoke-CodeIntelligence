@@ -1,0 +1,780 @@
+{
+  "sourceCommit": "52f60c2097356f41f0573f99d47977b204cfa39f",
+  "cliSha256": "989c2bbce725aa22dbfd2efdfd5bb341994e5dffb29d56515fa3068eb96fedaf",
+  "ownedRoot": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+  "sourceFiles": {
+    "src/core.rs": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+    "src/consumer.rs": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+    "web/client.ts": "121ba93f828bc4a5fe0dd30671a5baec00bf5ce1607e1e3e08e90648811fb349",
+    "docs/design.md": "b2eee646d8fd28f03af0ca9e01e983aa298dbc8984d55a0238cc5226daf437f3"
+  },
+  "commands": [
+    {
+      "label": "index",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+        "--timeout",
+        "30000",
+        "--max-bytes",
+        "1000000",
+        "index"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "report-1",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+        "--timeout",
+        "30000",
+        "--max-bytes",
+        "1000000",
+        "graph",
+        "analyze"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "report-2",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+        "--timeout",
+        "30000",
+        "--max-bytes",
+        "1000000",
+        "graph",
+        "analyze"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "defaultReport": {
+    "artifactId": "e3d059b15611c3627b3bf0e4e1553791e11d44d0de8d7e6d2f5f8546947b5040",
+    "audit": {
+      "byRelation": {
+        "calls": 5,
+        "contains": 5
+      },
+      "byResolution": {
+        "heuristic": 4,
+        "syntactic": 5,
+        "unresolved": 1
+      },
+      "confidenceMeaning": "source_and_analysis_categories_not_probabilities",
+      "coverage": {
+        "exhaustive": false,
+        "indexedFiles": 4,
+        "languages": {
+          "markdown": 1,
+          "rust": 2,
+          "typescript": 1
+        },
+        "limitations": [
+          "Structural candidate resolution is not compiler binding or exhaustive runtime coverage.",
+          "Unsupported text formats have full-text search but no AST semantics. Binary/media files are explicitly omitted.",
+          "Lexical/import/receiver bindings are syntax-local candidates. Parallel targets preserve possible dispatch; dynamic assignment, dependencies and runtime targets remain nonexhaustive."
+        ],
+        "omissions": 0,
+        "semantic": false,
+        "sourceFiles": 4,
+        "unresolved": 1
+      },
+      "omissions": [],
+      "totalEntities": 10,
+      "totalObservations": 10,
+      "unresolvedObservations": 1
+    },
+    "clustering": {
+      "algorithm": "leiden",
+      "cancellation": "before_and_after_bounded_library_call_not_inside_leiden",
+      "excludeHubsPercentile": null,
+      "excludedHubs": [],
+      "hubReattachment": "weighted_majority_then_standalone_may_exceed_max_community_size",
+      "maxCommunitySize": 0,
+      "maxIterations": 10,
+      "producer": "leiden-rs-0.8.1",
+      "projection": "undirected_weighted_resolved_observations_parallel_weight_retained",
+      "quality": 0.37755102040816313,
+      "resolution": 1.0,
+      "seed": 42,
+      "uncertainWeight": 0.5
+    },
+    "communities": [
+      {
+        "anchor": {
+          "anchor": "exact",
+          "endByte": 24,
+          "endLine": 1,
+          "entityId": "60b1115556433575705162061440b2c81e03a72c2edf66d8c4df5c6efeb8025e",
+          "path": "src/core.rs",
+          "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "cohesion": 0.8333333333333334,
+        "cohesionProjection": "unique_undirected_positive_weight_pairs",
+        "id": "2e3a1ac160b97b2d00ed100fbdb556a89911d3f8a93910ad10c7e5a6533427fe",
+        "identityMethod": "unique_structural_members",
+        "label": "core \u00b7 Path \u00b7 leaf",
+        "labelProducer": "deterministic_source_hubs",
+        "members": [
+          "60b1115556433575705162061440b2c81e03a72c2edf66d8c4df5c6efeb8025e",
+          "775369723e66f6d18e1e5bc03f92afdad17991dae73e331511ad1493d0ddc2ff",
+          "94583d4547b0145fd8b70d9307723f81a70f80c4203aee054aac238fe1b00378",
+          "acf9e6e3eb5a550e8a2e51a730cfe9752cb0c807a529933a03fece97b4aa7a4e"
+        ],
+        "stableMemberKeys": [
+          "[\"src/core.rs\",\"file\",\"src/core.rs\",[]]",
+          "[\"src/core.rs\",\"function\",\"src/core.rs/Path\",[[\"file\",\"src/core.rs\"]]]",
+          "[\"src/core.rs\",\"function\",\"src/core.rs/core\",[[\"file\",\"src/core.rs\"]]]",
+          "[\"src/core.rs\",\"function\",\"src/core.rs/leaf\",[[\"file\",\"src/core.rs\"]]]"
+        ]
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "endByte": 43,
+          "endLine": 1,
+          "entityId": "914b9bccb3ccfa760d2b0ff5ba599ff262f24347b6acded6e44bc228647c5842",
+          "path": "src/consumer.rs",
+          "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "cohesion": 1.0,
+        "cohesionProjection": "unique_undirected_positive_weight_pairs",
+        "id": "2012127c9329d8e5e3e62105c9af4b69d5913c8c9366421de5efda9b29e3fc9a",
+        "identityMethod": "unique_structural_members",
+        "label": "consumer",
+        "labelProducer": "deterministic_source_hubs",
+        "members": [
+          "914b9bccb3ccfa760d2b0ff5ba599ff262f24347b6acded6e44bc228647c5842",
+          "d8ab91d3a9829f54003f89c76c00e7dbafb676d149d30da631c6d457779faf3c"
+        ],
+        "stableMemberKeys": [
+          "[\"src/consumer.rs\",\"file\",\"src/consumer.rs\",[]]",
+          "[\"src/consumer.rs\",\"function\",\"src/consumer.rs/consumer\",[[\"file\",\"src/consumer.rs\"]]]"
+        ]
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "endByte": 38,
+          "endLine": 1,
+          "entityId": "f82956aac09fedbf36be9edb1357094f9d752671f90811e02ea782529730cf9a",
+          "path": "web/client.ts",
+          "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "cohesion": 1.0,
+        "cohesionProjection": "unique_undirected_positive_weight_pairs",
+        "id": "27234ec462334509313a2a2639fa0d39be605d0c3f66222b2867de3a7489efad",
+        "identityMethod": "unique_structural_members",
+        "label": "client",
+        "labelProducer": "deterministic_source_hubs",
+        "members": [
+          "949dd5aea1c7f2e8a11e3b5f1bd191dc7558a691d0160a15a35294cc2e7d8d78",
+          "f82956aac09fedbf36be9edb1357094f9d752671f90811e02ea782529730cf9a"
+        ],
+        "stableMemberKeys": [
+          "[\"web/client.ts\",\"file\",\"web/client.ts\",[]]",
+          "[\"web/client.ts\",\"function\",\"web/client.ts/client\",[[\"file\",\"web/client.ts\"]]]"
+        ]
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "endByte": 15,
+          "endLine": 1,
+          "entityId": "ad650f0ea238209590d2939b0267a5715aafd89f0d7e5235c8e646a3e0bf4d55",
+          "path": "docs/design.md",
+          "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "cohesion": 0.0,
+        "cohesionProjection": "unique_undirected_positive_weight_pairs",
+        "id": "9a99d84516b49e1b6c65361eb6de86bcd66a987147994ea1890eac63b970869a",
+        "identityMethod": "unique_structural_members",
+        "label": "Owned design",
+        "labelProducer": "deterministic_source_hubs",
+        "members": [
+          "ad650f0ea238209590d2939b0267a5715aafd89f0d7e5235c8e646a3e0bf4d55"
+        ],
+        "stableMemberKeys": [
+          "[\"docs/design.md\",\"concept\",\"docs/design.md/Owned design\",[[\"file\",\"docs/design.md\"]]]"
+        ]
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "endByte": 63,
+          "endLine": 3,
+          "entityId": "68a787812d74623e0fc9517910f7156179117b346f9a2d523a1e08bfc51c99db",
+          "path": "docs/design.md",
+          "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "cohesion": 0.0,
+        "cohesionProjection": "unique_undirected_positive_weight_pairs",
+        "id": "ea798183869b3adca6f2284fe4cd1295e99b766c86a58413eb57cbf95f10d991",
+        "identityMethod": "unique_structural_members",
+        "label": "docs/design.md",
+        "labelProducer": "deterministic_source_hubs",
+        "members": [
+          "68a787812d74623e0fc9517910f7156179117b346f9a2d523a1e08bfc51c99db"
+        ],
+        "stableMemberKeys": [
+          "[\"docs/design.md\",\"file\",\"docs/design.md\",[]]"
+        ]
+      }
+    ],
+    "complete": false,
+    "diff": null,
+    "evidenceAnchors": [
+      {
+        "anchor": "exact",
+        "contentHash": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+        "endByte": 43,
+        "endLine": 1,
+        "id": "26d822d5cf63e944af48e688303a2f528f52108876b685e01b62f0e8018b25ba",
+        "path": "src/consumer.rs",
+        "producer": "yoke-tree-sitter-8",
+        "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+        "startByte": 0,
+        "startLine": 1,
+        "trust": "source-data"
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+        "endByte": 24,
+        "endLine": 1,
+        "id": "45cfd0464e023b349ac9885fa39ac5dfda190a670e4c91f846c9ab8c59e213ae",
+        "path": "src/consumer.rs",
+        "producer": "yoke-tree-sitter-8",
+        "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+        "startByte": 18,
+        "startLine": 1,
+        "trust": "source-data"
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+        "endByte": 31,
+        "endLine": 1,
+        "id": "4a965a3c9ec0cd782c7e64e776d0ab66b6a77deccb6a2aa0764bafeb4999102d",
+        "path": "src/consumer.rs",
+        "producer": "yoke-tree-sitter-8",
+        "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+        "startByte": 25,
+        "startLine": 1,
+        "trust": "source-data"
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+        "endByte": 41,
+        "endLine": 1,
+        "id": "74305e5700636695c5591593c84099c5eba7dab1711ef06fbeb7e981e8a81d99",
+        "path": "src/consumer.rs",
+        "producer": "yoke-tree-sitter-8",
+        "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+        "startByte": 32,
+        "startLine": 1,
+        "trust": "source-data"
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+        "endByte": 24,
+        "endLine": 1,
+        "id": "3c0862419ad18fa843cef926fcc2ea293584d55e2f786c4251fd2c07582213ac",
+        "path": "src/core.rs",
+        "producer": "yoke-tree-sitter-8",
+        "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+        "startByte": 0,
+        "startLine": 1,
+        "trust": "source-data"
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+        "endByte": 21,
+        "endLine": 1,
+        "id": "89f6cd922d1cccb6f8188aa6ddb4f36b29bf9ca4af0a880b7cd5b112c6a90d71",
+        "path": "src/core.rs",
+        "producer": "yoke-tree-sitter-8",
+        "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+        "startByte": 15,
+        "startLine": 1,
+        "trust": "source-data"
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+        "endByte": 36,
+        "endLine": 2,
+        "id": "444ae327aeae27de5b222d9781f6f2a609e110ebd18fcd58249433519459e3ee",
+        "path": "src/core.rs",
+        "producer": "yoke-tree-sitter-8",
+        "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+        "startByte": 25,
+        "startLine": 2,
+        "trust": "source-data"
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+        "endByte": 59,
+        "endLine": 3,
+        "id": "d5311f36b4e56a0cbf9003be255f9b1dc2c0cb3ba7a15ca035e0f9ff2ade95fb",
+        "path": "src/core.rs",
+        "producer": "yoke-tree-sitter-8",
+        "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+        "startByte": 37,
+        "startLine": 3,
+        "trust": "source-data"
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+        "endByte": 57,
+        "endLine": 3,
+        "id": "d55383cda8106f57df45556f1229306af42be8ae37c5e6309dd96fb84f21cd5d",
+        "path": "src/core.rs",
+        "producer": "yoke-tree-sitter-8",
+        "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+        "startByte": 51,
+        "startLine": 3,
+        "trust": "source-data"
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "121ba93f828bc4a5fe0dd30671a5baec00bf5ce1607e1e3e08e90648811fb349",
+        "endByte": 37,
+        "endLine": 1,
+        "id": "832cc920621e363ec43d8059eb19f3b6b70b9c038c250b9eadcecd8773c77597",
+        "path": "web/client.ts",
+        "producer": "yoke-tree-sitter-8",
+        "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+        "startByte": 7,
+        "startLine": 1,
+        "trust": "source-data"
+      }
+    ],
+    "godNodes": [
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+          "endByte": 24,
+          "endLine": 1,
+          "entityId": "60b1115556433575705162061440b2c81e03a72c2edf66d8c4df5c6efeb8025e",
+          "path": "src/core.rs",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "degree": 4,
+        "degreeDefinition": "resolved_parallel_in_plus_out_self_loop_twice",
+        "entityId": "60b1115556433575705162061440b2c81e03a72c2edf66d8c4df5c6efeb8025e",
+        "label": "src/core.rs/core"
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+          "endByte": 43,
+          "endLine": 1,
+          "entityId": "914b9bccb3ccfa760d2b0ff5ba599ff262f24347b6acded6e44bc228647c5842",
+          "path": "src/consumer.rs",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "degree": 3,
+        "degreeDefinition": "resolved_parallel_in_plus_out_self_loop_twice",
+        "entityId": "914b9bccb3ccfa760d2b0ff5ba599ff262f24347b6acded6e44bc228647c5842",
+        "label": "src/consumer.rs/consumer"
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+          "endByte": 59,
+          "endLine": 3,
+          "entityId": "94583d4547b0145fd8b70d9307723f81a70f80c4203aee054aac238fe1b00378",
+          "path": "src/core.rs",
+          "startByte": 37,
+          "startLine": 3
+        },
+        "degree": 3,
+        "degreeDefinition": "resolved_parallel_in_plus_out_self_loop_twice",
+        "entityId": "94583d4547b0145fd8b70d9307723f81a70f80c4203aee054aac238fe1b00378",
+        "label": "src/core.rs/Path"
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+          "endByte": 36,
+          "endLine": 2,
+          "entityId": "acf9e6e3eb5a550e8a2e51a730cfe9752cb0c807a529933a03fece97b4aa7a4e",
+          "path": "src/core.rs",
+          "startByte": 25,
+          "startLine": 2
+        },
+        "degree": 2,
+        "degreeDefinition": "resolved_parallel_in_plus_out_self_loop_twice",
+        "entityId": "acf9e6e3eb5a550e8a2e51a730cfe9752cb0c807a529933a03fece97b4aa7a4e",
+        "label": "src/core.rs/leaf"
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "121ba93f828bc4a5fe0dd30671a5baec00bf5ce1607e1e3e08e90648811fb349",
+          "endByte": 37,
+          "endLine": 1,
+          "entityId": "949dd5aea1c7f2e8a11e3b5f1bd191dc7558a691d0160a15a35294cc2e7d8d78",
+          "path": "web/client.ts",
+          "startByte": 7,
+          "startLine": 1
+        },
+        "degree": 1,
+        "degreeDefinition": "resolved_parallel_in_plus_out_self_loop_twice",
+        "entityId": "949dd5aea1c7f2e8a11e3b5f1bd191dc7558a691d0160a15a35294cc2e7d8d78",
+        "label": "web/client.ts/client"
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "b2eee646d8fd28f03af0ca9e01e983aa298dbc8984d55a0238cc5226daf437f3",
+          "endByte": 15,
+          "endLine": 1,
+          "entityId": "ad650f0ea238209590d2939b0267a5715aafd89f0d7e5235c8e646a3e0bf4d55",
+          "path": "docs/design.md",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "degree": 0,
+        "degreeDefinition": "resolved_parallel_in_plus_out_self_loop_twice",
+        "entityId": "ad650f0ea238209590d2939b0267a5715aafd89f0d7e5235c8e646a3e0bf4d55",
+        "label": "docs/design.md/Owned design"
+      }
+    ],
+    "graphHash": "861b029f82b8baac659ff52f1a45eb41f6bb4322e9ac11b04634bb9c04d3abf6",
+    "limitations": "Partial structural graph: not runtime or compiler proof. Rankings and suggested questions are heuristics, not probabilities or independently confirmed facts. Source snapshots and parallel directed observations remain unchanged.",
+    "markdownArtifactId": "2db70ac329553729c94dc637feece5f6ba5b2444a7c45e1a6f59c86974eb834a",
+    "modelCalls": 0,
+    "options": {
+      "excludeHubsPercentile": null,
+      "hubLimit": 10,
+      "maxCommunitySize": 0,
+      "maxIterations": 10,
+      "previousSnapshotId": null,
+      "questionLimit": 10,
+      "resolution": 1.0,
+      "seed": 42,
+      "surpriseLimit": 10,
+      "uncertainWeight": 0.5
+    },
+    "previousGraphHash": null,
+    "previousSnapshotId": null,
+    "producer": "yoke-graph-report-v1",
+    "questions": [
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+          "endByte": 43,
+          "endLine": 1,
+          "entityId": "914b9bccb3ccfa760d2b0ff5ba599ff262f24347b6acded6e44bc228647c5842",
+          "path": "src/consumer.rs",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "kind": "unresolved",
+        "observationId": "b1887f2d021c9862aa1f1f90e7e2278ac1fa96e2e96b066275649af840c39f2b",
+        "question": "Where is missing resolved for src/consumer.rs/consumer?"
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+          "endByte": 43,
+          "endLine": 1,
+          "entityId": "914b9bccb3ccfa760d2b0ff5ba599ff262f24347b6acded6e44bc228647c5842",
+          "path": "src/consumer.rs",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "kind": "candidate",
+        "observationId": "3331706fc00ea3524f4f48adf97f995fe6a669b405fd3224d06a2f387609cb2c",
+        "question": "What source or compiler evidence confirms src/consumer.rs/consumer \u2192 src/core.rs/core (calls)?"
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+          "endByte": 43,
+          "endLine": 1,
+          "entityId": "914b9bccb3ccfa760d2b0ff5ba599ff262f24347b6acded6e44bc228647c5842",
+          "path": "src/consumer.rs",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "kind": "bridge",
+        "observationId": "0341d7da2bb0ae5cd046af3c468c6908109250a46da942a61fc66e3af9e71c08",
+        "question": "Why does this calls relationship cross a source boundary?"
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "b2eee646d8fd28f03af0ca9e01e983aa298dbc8984d55a0238cc5226daf437f3",
+          "endByte": 15,
+          "endLine": 1,
+          "entityId": "ad650f0ea238209590d2939b0267a5715aafd89f0d7e5235c8e646a3e0bf4d55",
+          "path": "docs/design.md",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "kind": "isolation",
+        "question": "Is docs/design.md/Owned design intentionally isolated from the captured graph?"
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+          "endByte": 43,
+          "endLine": 1,
+          "entityId": "914b9bccb3ccfa760d2b0ff5ba599ff262f24347b6acded6e44bc228647c5842",
+          "path": "src/consumer.rs",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "kind": "candidate",
+        "observationId": "0341d7da2bb0ae5cd046af3c468c6908109250a46da942a61fc66e3af9e71c08",
+        "question": "What source or compiler evidence confirms src/consumer.rs/consumer \u2192 src/core.rs/Path (calls)?"
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+          "endByte": 43,
+          "endLine": 1,
+          "entityId": "914b9bccb3ccfa760d2b0ff5ba599ff262f24347b6acded6e44bc228647c5842",
+          "path": "src/consumer.rs",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "kind": "bridge",
+        "observationId": "3331706fc00ea3524f4f48adf97f995fe6a669b405fd3224d06a2f387609cb2c",
+        "question": "Why does this calls relationship cross a source boundary?"
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "121ba93f828bc4a5fe0dd30671a5baec00bf5ce1607e1e3e08e90648811fb349",
+          "endByte": 37,
+          "endLine": 1,
+          "entityId": "949dd5aea1c7f2e8a11e3b5f1bd191dc7558a691d0160a15a35294cc2e7d8d78",
+          "path": "web/client.ts",
+          "startByte": 7,
+          "startLine": 1
+        },
+        "kind": "isolation",
+        "question": "Is web/client.ts/client intentionally isolated from the captured graph?"
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+          "endByte": 24,
+          "endLine": 1,
+          "entityId": "60b1115556433575705162061440b2c81e03a72c2edf66d8c4df5c6efeb8025e",
+          "path": "src/core.rs",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "kind": "candidate",
+        "observationId": "6b35991dc8ab813bbfef1833ea6e211f8f5aac5e093cb1d33436e1fca32cf32e",
+        "question": "What source or compiler evidence confirms src/core.rs/core \u2192 src/core.rs/leaf (calls)?"
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+          "endByte": 59,
+          "endLine": 3,
+          "entityId": "94583d4547b0145fd8b70d9307723f81a70f80c4203aee054aac238fe1b00378",
+          "path": "src/core.rs",
+          "startByte": 37,
+          "startLine": 3
+        },
+        "kind": "candidate",
+        "observationId": "34f36bc6d8a3caccc3c7c31136f61738c98e2e24022db9891670007a7faf3869",
+        "question": "What source or compiler evidence confirms src/core.rs/Path \u2192 src/core.rs/core (calls)?"
+      }
+    ],
+    "snapshotId": "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+    "sourceBindings": [
+      {
+        "anchor": "exact",
+        "contentHash": "b2eee646d8fd28f03af0ca9e01e983aa298dbc8984d55a0238cc5226daf437f3",
+        "endByte": 63,
+        "endLine": 3,
+        "entityId": "68a787812d74623e0fc9517910f7156179117b346f9a2d523a1e08bfc51c99db",
+        "path": "docs/design.md",
+        "startByte": 0,
+        "startLine": 1
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "b2eee646d8fd28f03af0ca9e01e983aa298dbc8984d55a0238cc5226daf437f3",
+        "endByte": 15,
+        "endLine": 1,
+        "entityId": "ad650f0ea238209590d2939b0267a5715aafd89f0d7e5235c8e646a3e0bf4d55",
+        "path": "docs/design.md",
+        "startByte": 0,
+        "startLine": 1
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+        "endByte": 44,
+        "endLine": 1,
+        "entityId": "d8ab91d3a9829f54003f89c76c00e7dbafb676d149d30da631c6d457779faf3c",
+        "path": "src/consumer.rs",
+        "startByte": 0,
+        "startLine": 1
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+        "endByte": 43,
+        "endLine": 1,
+        "entityId": "914b9bccb3ccfa760d2b0ff5ba599ff262f24347b6acded6e44bc228647c5842",
+        "path": "src/consumer.rs",
+        "startByte": 0,
+        "startLine": 1
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+        "endByte": 60,
+        "endLine": 3,
+        "entityId": "775369723e66f6d18e1e5bc03f92afdad17991dae73e331511ad1493d0ddc2ff",
+        "path": "src/core.rs",
+        "startByte": 0,
+        "startLine": 1
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+        "endByte": 24,
+        "endLine": 1,
+        "entityId": "60b1115556433575705162061440b2c81e03a72c2edf66d8c4df5c6efeb8025e",
+        "path": "src/core.rs",
+        "startByte": 0,
+        "startLine": 1
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+        "endByte": 36,
+        "endLine": 2,
+        "entityId": "acf9e6e3eb5a550e8a2e51a730cfe9752cb0c807a529933a03fece97b4aa7a4e",
+        "path": "src/core.rs",
+        "startByte": 25,
+        "startLine": 2
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+        "endByte": 59,
+        "endLine": 3,
+        "entityId": "94583d4547b0145fd8b70d9307723f81a70f80c4203aee054aac238fe1b00378",
+        "path": "src/core.rs",
+        "startByte": 37,
+        "startLine": 3
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "121ba93f828bc4a5fe0dd30671a5baec00bf5ce1607e1e3e08e90648811fb349",
+        "endByte": 38,
+        "endLine": 1,
+        "entityId": "f82956aac09fedbf36be9edb1357094f9d752671f90811e02ea782529730cf9a",
+        "path": "web/client.ts",
+        "startByte": 0,
+        "startLine": 1
+      },
+      {
+        "anchor": "exact",
+        "contentHash": "121ba93f828bc4a5fe0dd30671a5baec00bf5ce1607e1e3e08e90648811fb349",
+        "endByte": 37,
+        "endLine": 1,
+        "entityId": "949dd5aea1c7f2e8a11e3b5f1bd191dc7558a691d0160a15a35294cc2e7d8d78",
+        "path": "web/client.ts",
+        "startByte": 7,
+        "startLine": 1
+      }
+    ],
+    "surprises": [
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+          "endByte": 43,
+          "endLine": 1,
+          "entityId": "914b9bccb3ccfa760d2b0ff5ba599ff262f24347b6acded6e44bc228647c5842",
+          "path": "src/consumer.rs",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "evidenceIds": [
+          "4a965a3c9ec0cd782c7e64e776d0ab66b6a77deccb6a2aa0764bafeb4999102d"
+        ],
+        "observationId": "0341d7da2bb0ae5cd046af3c468c6908109250a46da942a61fc66e3af9e71c08",
+        "rankingScore": 2,
+        "reason": "cross_file_candidate",
+        "relation": "calls",
+        "resolution": "heuristic",
+        "source": "914b9bccb3ccfa760d2b0ff5ba599ff262f24347b6acded6e44bc228647c5842",
+        "target": "94583d4547b0145fd8b70d9307723f81a70f80c4203aee054aac238fe1b00378"
+      },
+      {
+        "anchor": {
+          "anchor": "exact",
+          "contentHash": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+          "endByte": 43,
+          "endLine": 1,
+          "entityId": "914b9bccb3ccfa760d2b0ff5ba599ff262f24347b6acded6e44bc228647c5842",
+          "path": "src/consumer.rs",
+          "startByte": 0,
+          "startLine": 1
+        },
+        "evidenceIds": [
+          "45cfd0464e023b349ac9885fa39ac5dfda190a670e4c91f846c9ab8c59e213ae"
+        ],
+        "observationId": "3331706fc00ea3524f4f48adf97f995fe6a669b405fd3224d06a2f387609cb2c",
+        "rankingScore": 2,
+        "reason": "cross_file_candidate",
+        "relation": "calls",
+        "resolution": "heuristic",
+        "source": "914b9bccb3ccfa760d2b0ff5ba599ff262f24347b6acded6e44bc228647c5842",
+        "target": "60b1115556433575705162061440b2c81e03a72c2edf66d8c4df5c6efeb8025e"
+      }
+    ],
+    "workspaceId": "235bf26bef02dd233c49fc08a33418447ca1d0d4a39da773148328d66a52d9be"
+  },
+  "sameReportRepeated": true,
+  "sourceUnchanged": true,
+  "purpose": "Re-run unchanged checked saved scope after R3 build and require identical legacy JSON, artifact and Markdown identities."
+}

@@ -1,0 +1,13 @@
+2026-10-19 21:01:29.250 CEST [7932] LOG:  starting PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit
+2026-10-19 21:01:29.250 CEST [7932] LOG:  listening on IPv4 address "127.0.0.1", port 54985
+2026-10-19 21:01:29.400 CEST [19916] LOG:  database system was shut down at 2026-10-19 21:01:26 CEST
+2026-10-19 21:01:29.405 CEST [7932] LOG:  database system is ready to accept connections
+2026-10-19 21:01:29.638 CEST [24004] ERROR:  cannot execute CREATE TABLE in a read-only transaction
+2026-10-19 21:01:29.638 CEST [24004] STATEMENT:  CREATE TEMP TABLE forbidden(x integer);
+2026-10-19 21:01:29.840 CEST [7932] LOG:  received fast shutdown request
+2026-10-19 21:01:29.841 CEST [7932] LOG:  aborting any active transactions
+2026-10-19 21:01:29.846 CEST [7932] LOG:  background worker "logical replication launcher" (PID 10728) exited with exit code 1
+2026-10-19 21:01:29.846 CEST [23192] LOG:  shutting down
+2026-10-19 21:01:29.847 CEST [23192] LOG:  checkpoint starting: shutdown immediate
+2026-10-19 21:01:29.900 CEST [23192] LOG:  checkpoint complete: wrote 77 buffers (0.5%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.039 s, total=0.054 s; sync files=59, longest=0.002 s, average=0.001 s; distance=376 kB, estimate=376 kB; lsn=0/1846588, redo lsn=0/1846588
+2026-10-19 21:01:30.005 CEST [7932] LOG:  database system is shut down

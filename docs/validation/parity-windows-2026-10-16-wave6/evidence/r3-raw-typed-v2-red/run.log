@@ -1,0 +1,59 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r3-shadow-unavailable-v1\native)
+warning: unused import: `serde_json::json`
+ --> native\src\meaning_comparison_fixture_internal.rs:2:5
+  |
+2 | use serde_json::json;
+  |     ^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error: lifetime may not live long enough
+   --> native\src\view_comparison_source.rs:733:43
+    |
+716 |     left_texts: &mut Texts<'_>,
+    |     ---------- has type `&mut Texts<'1>`
+717 |     right_texts: &mut Texts<'_>,
+    |     ----------- has type `&mut Texts<'2>`
+...
+733 |         (before, "before", &nodes.before, left_texts, &left_evidence),
+    |                                           ^^^^^^^^^^ requires that `'2` must outlive `'1`
+    |
+    = note: requirement occurs because of a mutable reference to `Texts<'_>`
+    = note: mutable references are invariant over their type parameter
+    = help: see <https://doc.rust-lang.org/nomicon/subtyping.html> for more information about variance
+help: consider introducing a named lifetime parameter
+    |
+712 ~ fn compare_observations<'a>(
+713 |     before: &View,
+714 |     after: &View,
+715 |     nodes: &NodeResult,
+716 ~     left_texts: &mut Texts<'a>,
+717 ~     right_texts: &mut Texts<'a>,
+    |
+
+error: lifetime may not live long enough
+   --> native\src\view_comparison_source.rs:734:40
+    |
+716 |     left_texts: &mut Texts<'_>,
+    |     ---------- has type `&mut Texts<'1>`
+717 |     right_texts: &mut Texts<'_>,
+    |     ----------- has type `&mut Texts<'2>`
+...
+734 |         (after, "after", &nodes.after, right_texts, &right_evidence),
+    |                                        ^^^^^^^^^^^ requires that `'1` must outlive `'2`
+    |
+    = note: requirement occurs because of a mutable reference to `Texts<'_>`
+    = note: mutable references are invariant over their type parameter
+    = help: see <https://doc.rust-lang.org/nomicon/subtyping.html> for more information about variance
+help: consider introducing a named lifetime parameter
+    |
+712 ~ fn compare_observations<'a>(
+713 |     before: &View,
+714 |     after: &View,
+715 |     nodes: &NodeResult,
+716 ~     left_texts: &mut Texts<'a>,
+717 ~     right_texts: &mut Texts<'a>,
+    |
+
+warning: `yoke-code-intelligence` (lib test) generated 1 warning
+error: could not compile `yoke-code-intelligence` (lib test) due to 2 previous errors; 1 warning emitted

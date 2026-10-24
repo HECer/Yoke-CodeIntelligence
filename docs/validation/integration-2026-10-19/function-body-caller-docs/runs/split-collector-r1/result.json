@@ -1,0 +1,42 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "[\"\",3]",
+      "after": "[\"\",3]",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "Callback"
+      ],
+      "afterTypes": [
+        "Callback"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 1,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    }
+  ],
+  "allChecksPassed": true,
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "ownedLiteralFixturesExecuted": true,
+  "diagnosticOnlyWorkerPatch": true
+}

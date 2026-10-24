@@ -1,0 +1,124 @@
+--- before/native/src/retrieval_marker_decode.rs
++++ after/native/src/retrieval_marker_decode.rs
+@@ -396,7 +396,7 @@
+     }
+     fn advance(&mut self) -> Parsed<()> {
+         self.at += 1;
+-        if self.at % 1_024 == 0 {
++        if self.at.is_multiple_of(1_024) {
+             self.guard.check()?;
+         }
+         Ok(())
+@@ -835,7 +835,7 @@
+     // It also checks flow/block nesting before any application tree is allocated.
+     let mut scanner = Scanner::new(text.chars());
+     let mut depth = 0usize;
+-    while let Some(token) = scanner.next() {
++    for token in scanner.by_ref() {
+         guard.check()?;
+         match token.1 {
+             TokenType::Alias(_)
+--- before/native/src/retrieval_partition.rs
++++ after/native/src/retrieval_partition.rs
+@@ -215,14 +215,13 @@
+         if let Some(pnpm) = workspaces
+             .iter()
+             .find(|w| w.root == npm.root && w.ecosystem == Ecosystem::Pnpm)
++            && (npm.positive != pnpm.positive || !pnpm.negative.is_empty())
+         {
+-            if npm.positive != pnpm.positive || !pnpm.negative.is_empty() {
+-                let source = sources
+-                    .iter()
+-                    .find(|s| s.path == npm.path)
+-                    .ok_or(RetrievalHardError::Internal("marker_binding"))?;
+-                diagnostics.push(diagnostic(source, "conflicting_npm_pnpm_membership", None));
+-            }
++            let source = sources
++                .iter()
++                .find(|s| s.path == npm.path)
++                .ok_or(RetrievalHardError::Internal("marker_binding"))?;
++            diagnostics.push(diagnostic(source, "conflicting_npm_pnpm_membership", None));
+         }
+     }
+     let mut roots: BTreeMap<String, CheckedScope> = BTreeMap::new();
+--- before/native/src/retrieval_scopes.rs
++++ after/native/src/retrieval_scopes.rs
+@@ -607,14 +607,13 @@
+         let original = self.original_entity(entity)?;
+         // Documents are scheduled only after whole-source admission. Checking
+         // cached text here also protects documents later omitted by that budget.
+-        if let Some(source) = self.verified.get(&original.path) {
+-            if source
++        if let Some(source) = self.verified.get(&original.path)
++            && source
+                 .text()
+                 .get(original.start_byte..original.end_byte)
+                 .is_none()
+-            {
+-                return Err(RetrievalHardError::SourceIntegrity("document_range"));
+-            }
++        {
++            return Err(RetrievalHardError::SourceIntegrity("document_range"));
+         }
+         Ok(if self.admitted_documents.contains(&original.id) {
+             0
+--- before/native/src/retrieval_saved_graph_tests.rs
++++ after/native/src/retrieval_saved_graph_tests.rs
+@@ -238,10 +238,9 @@
+                 table_name: "graphs",
+                 column_name: "value",
+             } = ctx.action
++                && observed.fetch_add(1, Ordering::SeqCst) >= 2
+             {
+-                if observed.fetch_add(1, Ordering::SeqCst) >= 2 {
+-                    return Authorization::Deny;
+-                }
++                return Authorization::Deny;
+             }
+             Authorization::Allow
+         }));
+@@ -281,10 +280,9 @@
+                     table_name: "graphs",
+                     column_name: "value",
+                 } = ctx.action
++                    && observed.fetch_add(1, Ordering::SeqCst) >= 2
+                 {
+-                    if observed.fetch_add(1, Ordering::SeqCst) >= 2 {
+-                        flag.store(true, Ordering::SeqCst);
+-                    }
++                    flag.store(true, Ordering::SeqCst);
+                 }
+                 Authorization::Allow
+             }));
+@@ -359,13 +357,12 @@
+                 table_name: "graphs",
+                 column_name: "value",
+             } = ctx.action
++                && observed.fetch_add(1, Ordering::SeqCst) == 2
+             {
+-                if observed.fetch_add(1, Ordering::SeqCst) == 2 {
+-                    writer
+-                        .execute("UPDATE graphs SET value='{bad' WHERE id=?1", [&id])
+-                        .unwrap();
+-                    done.store(true, Ordering::SeqCst);
+-                }
++                writer
++                    .execute("UPDATE graphs SET value='{bad' WHERE id=?1", [&id])
++                    .unwrap();
++                done.store(true, Ordering::SeqCst);
+             }
+             Authorization::Allow
+         }));
+@@ -417,10 +414,9 @@
+                 table_name: "graphs",
+                 column_name: "value",
+             } = ctx.action
++                && observed.fetch_add(1, Ordering::SeqCst) >= 2
+             {
+-                if observed.fetch_add(1, Ordering::SeqCst) >= 2 {
+-                    return Authorization::Deny;
+-                }
++                return Authorization::Deny;
+             }
+             Authorization::Allow
+         }));

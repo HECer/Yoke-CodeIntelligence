@@ -1,0 +1,31 @@
+{
+  "qualifiedCodeCommit": "666656bae3c4e5a0abb9918d943505098266e455",
+  "productionFilesUnchangedAfterQualification": true,
+  "changedFrozenInputs": {
+    "docs/REMAINING_WORK.md": {
+      "before": "13980b5d6faa4f31391e47e610cf81a1c0885d1475a1d17845f0c48afbcc3292",
+      "after": "d5de40174b545039abdba77d829b75174cbf4e69ee43d06aa3583d5013985320"
+    },
+    "docs/STATUS.md": {
+      "before": "0f23b4a89a6097ba892a8ecb152b339d8097b42a1227738c98dd3bcdeceeac38",
+      "after": "0f8676e4ef3be22b48173a73650e7ea30c88c2455a2dc843d8869d55a5f13e87"
+    },
+    "docs/parity/native-reconciliation-2026-10-15.json": {
+      "before": "6f716278c28ea1f0036c895906c32138f3613b57469c681b8d64d63ba88eda62",
+      "after": "a55a1128a209d66ec039dc5f680439c19ab40daf123884ff8f1b8ddbca3e8aaf"
+    }
+  },
+  "newDocumentationAfterQualification": [
+    "native/docs/lsp-resource-settings.md"
+  ],
+  "existingDocumentationOutsideFrozenInputs": {
+    "native/docs/server-workspace-settings.md": {
+      "before": "b41e98574173b16e82522c8de902b7cbd23cc37354f391946cfab4dc8461ab97",
+      "after": "b8479f9894ddb74c0d13333cf32266ff7177db8a0f590f7ebf95c49040092c98"
+    }
+  },
+  "newProductTestsClaimedAfterDocumentation": false,
+  "originalInventoryLedgerAndSummaryUnchanged": true,
+  "reconciliationExactlyOneAdditiveKey": "nativeLspResourceSettingsAcceptance20261023",
+  "everyArchiveMemberLengthAndSha256Reopened": true
+}

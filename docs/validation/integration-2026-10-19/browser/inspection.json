@@ -1,0 +1,42 @@
+{
+  "casFilesHashed": 1,
+  "fixtureOnly": true,
+  "htmlSha256": "cbc39880be92e1f6ecffe6b3cf19dff0fbf38997aa1ada0d6882202a701d70bf",
+  "liveGitHubValidated": false,
+  "nativeListener": true,
+  "oracle": "native_pages_http_browser_v1",
+  "pageId": "4e48b0f1b4239447f40128880290cc1323782b678385d589d0c05cd4fadcbe72",
+  "sourceBytes": 77,
+  "sourceSha256": "8b786fa2f110d961c128b4e6af0221c10a40e41a0107f70afca05f9b8a27824e",
+  "staticHelper": false,
+  "desktopCssViewport": [
+    1280,
+    800
+  ],
+  "mobileCssViewport": [
+    390,
+    844
+  ],
+  "desktopHorizontalOverflow": false,
+  "mobileHorizontalOverflow": false,
+  "unicodeSearchMatches": 2,
+  "missingSearchMessage": "No matching symbols.",
+  "inspectedSource": "caller",
+  "inspectedTarget": "target",
+  "relation": "calls",
+  "resolution": "heuristic",
+  "sourceEvidenceBytes": [
+    65,
+    73
+  ],
+  "consoleDiagnostics": [
+    "Browser ignores frame-ancestors in meta CSP; the identical directive is present in the native HTTP CSP header (asserted separately by native HTTP tests)."
+  ],
+  "nativeListenerExitCode": 0,
+  "storeCasAndSourceUnchanged": true,
+  "screenshots": [
+    "desktop.png",
+    "mobile.png"
+  ],
+  "notes": "Owned real native HTTP fixture, not a live GitHub installation or real customer repository."
+}

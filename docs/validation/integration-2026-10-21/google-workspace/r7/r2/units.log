@@ -1,0 +1,17 @@
+    Finished `test` profile [unoptimized] target(s) in 0.67s
+     Running unittests src\lib.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\yoke-f14d0af26d19713e.exe)
+
+running 10 tests
+test google_workspace::tests::archive_budgets_and_binary_inspection_remain_distinct_from_capture ... ok
+test google_workspace::tests::archive_replay_and_split_unicode_reads_preserve_received_bytes ... ok
+test google_workspace::tests::archive_schema_mime_byte_hash_and_identity_forgeries_refuse ... ok
+test google_workspace::tests::blank_documents_and_numbered_account_urls_remain_data_without_identity_claims ... ok
+test google_workspace::tests::coherent_received_claims_never_become_source_or_account_authority ... ok
+test google_workspace::tests::pointer_aliases_and_supported_url_shapes_bind_the_original_hash ... ok
+test google_workspace::tests::pointer_data_cannot_steer_hosts_paths_aliases_or_permissions ... ok
+test google_workspace::tests::pointer_resource_keys_and_account_labels_do_not_enter_public_metadata ... ok
+test google_workspace::tests::received_sheet_inspection_keeps_cached_cells_and_original_container_separate ... ok
+test google_workspace::tests::shortcut_duplicate_fields_encoding_deadline_and_capacity_fail_explicitly ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 503 filtered out; finished in 0.02s
+

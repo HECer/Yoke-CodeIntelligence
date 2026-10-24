@@ -1,0 +1,27 @@
+{
+  "core": {
+    "executable": "target\\debug\\deps\\core-7a5fad0c4c025ad0.exe",
+    "ignored": [],
+    "registered": [
+      "bounded_results_keep_artifacts_and_reject_authority_fields",
+      "context_and_graph_analytics_are_source_bound",
+      "directed_graph_preserves_parallel_calls_and_exact_unicode_anchors",
+      "immutable_capture_excludes_secrets_and_reuses_content_cache",
+      "prepared_edits_are_isolated_and_reject_stale_hashes",
+      "source_paths_and_utf8_boundaries_fail_closed"
+    ]
+  },
+  "credentials": {
+    "executable": "target\\debug\\deps\\credentials-e5a8ba326d82852f.exe",
+    "ignored": [
+      "windows_gate::windows_concurrent_generation_keeps_one_key",
+      "windows_gate::windows_credential_roundtrip_refuses_overwrite"
+    ],
+    "registered": [
+      "credential_names_cannot_escape_the_federation_namespace",
+      "ordinary_names_resolve_only_to_the_federation_namespace",
+      "windows_gate::windows_concurrent_generation_keeps_one_key",
+      "windows_gate::windows_credential_roundtrip_refuses_overwrite"
+    ]
+  }
+}

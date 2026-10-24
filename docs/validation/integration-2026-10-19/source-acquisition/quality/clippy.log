@@ -1,0 +1,57 @@
+    Checking windows-sys v0.61.2
+    Checking socket2 v0.6.5
+    Checking mio v1.2.4
+    Checking anstyle-query v1.1.5
+    Checking anstyle-wincon v3.0.11
+    Checking tokio v1.53.3
+    Checking winapi-util v0.1.11
+    Checking same-file v1.0.6
+    Checking anstream v1.0.0
+    Checking clap_builder v4.6.7
+    Checking walkdir v2.5.0
+    Checking schannel v0.1.29
+    Checking rustls-platform-verifier v0.7.1
+    Checking aws-smithy-async v1.3.0
+    Checking hyper v1.12.0
+    Checking aws-smithy-runtime-api v1.19.0
+    Checking hyper-util v0.1.21
+    Checking tower v0.5.3
+    Checking tokio-rustls v0.26.6
+    Checking tower-http v0.6.11
+    Checking hyper-rustls v0.27.10
+    Checking aws-credential-types v1.3.0
+    Checking aws-smithy-http v0.64.1
+    Checking reqwest v0.13.5
+    Checking aws-sigv4 v1.6.0
+    Checking rustls-native-certs v0.8.4
+    Checking ignore v0.4.33
+    Checking clap v4.6.7
+    Checking tempfile v3.27.0
+    Checking yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+error: this `if` statement can be collapsed
+   --> native\src\source_acquisition.rs:119:21
+    |
+119 | /                     if let Some((key, value)) = parameter.split_once('=') {
+120 | |                         if key.eq_ignore_ascii_case("charset") {
+121 | |                             input(matches!(
+122 | |                                 value.trim_matches('"').to_ascii_lowercase().as_str(),
+...   |
+126 | |                     }
+    | |_____________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+119 ~                     if let Some((key, value)) = parameter.split_once('=')
+120 ~                         && key.eq_ignore_ascii_case("charset") {
+121 |                             input(matches!(
+...
+124 |                             ))?;
+125 ~                         }
+    |
+
+error: could not compile `yoke-code-intelligence` (lib) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `yoke-code-intelligence` (lib test) due to 1 previous error

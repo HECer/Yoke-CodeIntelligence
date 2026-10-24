@@ -1,0 +1,23 @@
+{
+  "selected_view_review": {
+    "executable": "target\\debug\\deps\\selected_view_review-c84228a655575662.exe",
+    "ignored": [],
+    "registered": [
+      "selected_context_reports_wholly_omitted_source_when_budget_is_exhausted",
+      "selected_library_queries_reject_mutated_in_memory_views",
+      "selected_queries_reject_replaced_base_graph_without_republishing",
+      "selected_queries_reject_same_length_view_cas_corruption",
+      "selected_queries_replay_exact_source_after_files_disappear_and_engine_reopens",
+      "selected_trace_visit_budget_includes_initial_entities"
+    ]
+  },
+  "semantic_enrichment": {
+    "executable": "target\\debug\\deps\\semantic_enrichment-8f5d09398d3c4ca1.exe",
+    "ignored": [],
+    "registered": [
+      "overlay_publication_is_atomic_and_existing_records_are_immutable",
+      "rehashed_semantic_payloads_revalidate_selection_and_canonical_binding_claims",
+      "semantic_overlay_keeps_parallel_calls_and_never_mutates_the_published_graph"
+    ]
+  }
+}

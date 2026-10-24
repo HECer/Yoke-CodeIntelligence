@@ -1,0 +1,306 @@
+[
+  {
+    "name": "fmt",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 6.406237199989846,
+    "sourceUnchanged": true,
+    "totals": {
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    "deletedNewTestArtifacts": []
+  },
+  {
+    "name": "graph_analysis_policy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "graph_analysis_policy",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "seconds": 109.98461589997169,
+    "sourceUnchanged": true,
+    "totals": {
+      "passed": 4,
+      "failed": 0,
+      "ignored": 0
+    },
+    "deletedNewTestArtifacts": [
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graph_analysis_policy-6ffd54bdca9a5d8a.exe",
+        "sha256": "96f0647f175b2aadbac1a127db8c9c490c0a0599787cd33e6f37997d45ff2200",
+        "bytes": 106278912
+      },
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graph_analysis_policy-6ffd54bdca9a5d8a.pdb",
+        "sha256": "3f890adffcae418f74011e926241ef276d579ad9b6b4ba07c309f58149c270cf",
+        "bytes": 13987840
+      }
+    ]
+  },
+  {
+    "name": "graph_extensions",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "graph_extensions",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "seconds": 4.880257900018478,
+    "sourceUnchanged": true,
+    "totals": {
+      "passed": 9,
+      "failed": 0,
+      "ignored": 0
+    },
+    "deletedNewTestArtifacts": [
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graph_extensions-8a616392411b438e.exe",
+        "sha256": "89981fad9ad91b0325fab4b79f8026a486afd90e7a6df8d18fb28d6f2918fa4e",
+        "bytes": 100295680
+      },
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graph_extensions-8a616392411b438e.pdb",
+        "sha256": "177f7afec2d743669be531f665f2189ab9ad4471ffcd4b6d2c407955c01d0974",
+        "bytes": 10366976
+      }
+    ]
+  },
+  {
+    "name": "selected_view_analysis",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "selected_view_analysis",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "seconds": 18.736858599993866,
+    "sourceUnchanged": true,
+    "totals": {
+      "passed": 11,
+      "failed": 0,
+      "ignored": 0
+    },
+    "deletedNewTestArtifacts": [
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\selected_view_analysis-580db6dad934bf2b.exe",
+        "sha256": "6b971f990eb01f60c06f571030c34c38265cb520958955672cf7d5f7635d4590",
+        "bytes": 113011200
+      },
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\selected_view_analysis-580db6dad934bf2b.pdb",
+        "sha256": "11dbc3cf74e83fdb67a06dd39895d7f5339c4ade7da4393f5a618ace1231a5d3",
+        "bytes": 19042304
+      }
+    ]
+  },
+  {
+    "name": "selected_view_analysis_review",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "selected_view_analysis_review",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "seconds": 5.910260300006485,
+    "sourceUnchanged": true,
+    "totals": {
+      "passed": 2,
+      "failed": 0,
+      "ignored": 0
+    },
+    "deletedNewTestArtifacts": [
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\selected_view_analysis_review-df9dda77cdfe3212.exe",
+        "sha256": "39f447e719058e95c357f40a6523aa0d6e079f506cef081e342a0d2280d20c17",
+        "bytes": 118779392
+      },
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\selected_view_analysis_review-df9dda77cdfe3212.pdb",
+        "sha256": "fd701951c77a281e4e1869e81d7842e59688ca235d50a5ced56b306badac83a4",
+        "bytes": 21155840
+      }
+    ]
+  },
+  {
+    "name": "view_comparison_cli",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "view_comparison_cli",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "seconds": 8.361342099989997,
+    "sourceUnchanged": true,
+    "totals": {
+      "passed": 10,
+      "failed": 0,
+      "ignored": 0
+    },
+    "deletedNewTestArtifacts": [
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\view_comparison_cli-03cad59080fbc020.exe",
+        "sha256": "56e9d7bd913a177a73a180c185e32e2b3bfb501c313937b6b984c988493c081d",
+        "bytes": 104460288
+      },
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\view_comparison_cli-03cad59080fbc020.pdb",
+        "sha256": "edab214b309fd750d408bb2388732d41eb228e811cf5285297916c8d23941075",
+        "bytes": 12955648
+      }
+    ]
+  },
+  {
+    "name": "graphify_adapter",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "graphify_adapter",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "seconds": 5.71471499998006,
+    "sourceUnchanged": true,
+    "totals": {
+      "passed": 7,
+      "failed": 0,
+      "ignored": 0
+    },
+    "deletedNewTestArtifacts": [
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graphify_adapter-65d7ac73a1c41e3b.exe",
+        "sha256": "63de966834cf9ef1ef95c7083b98ee68ad7228e3ab0e910822c16b2755638a56",
+        "bytes": 112740352
+      },
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graphify_adapter-65d7ac73a1c41e3b.pdb",
+        "sha256": "4b919979123925643ee6e94012e6e0d85ae6848c19d5b7b0c6405f30654a4f4e",
+        "bytes": 18927616
+      }
+    ]
+  },
+  {
+    "name": "graph_view",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "graph_view",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "seconds": 7.547791999997571,
+    "sourceUnchanged": true,
+    "totals": {
+      "passed": 11,
+      "failed": 0,
+      "ignored": 0
+    },
+    "deletedNewTestArtifacts": [
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graph_view-374135c21ba14f5d.exe",
+        "sha256": "346e293c0e14bfb087ef075d527ed1c8dedcee649dc91b2b09981bf92513732d",
+        "bytes": 108563968
+      },
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graph_view-374135c21ba14f5d.pdb",
+        "sha256": "0a802406fe6df562aafc8c3559c309ee2c3930558b681c47ae8e0120f2c593a4",
+        "bytes": 15200256
+      }
+    ]
+  },
+  {
+    "name": "clippy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exitCode": 101,
+    "seconds": 60.58781400002772,
+    "sourceUnchanged": true,
+    "totals": {
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    "deletedNewTestArtifacts": []
+  }
+]

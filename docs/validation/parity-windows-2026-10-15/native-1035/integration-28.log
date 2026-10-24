@@ -1,0 +1,67 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 18.39s
+     Running tests\skill_takeaways_review.rs (target\debug\deps\skill_takeaways_review-0d15ce095fce6336.exe)
+
+running 4 tests
+test deeply_nested_skill_frontmatter_is_admitted_before_yaml_materialization ... ok
+test malformed_recovery_is_rejected_before_any_prepared_publication ... ok
+test resealed_pending_operation_cannot_redirect_the_revision_to_another_skill ... ok
+test oversized_fold_is_rejected_before_publishing_an_unrecoverable_plan ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.61s
+
+     Running tests\skills_cli.rs (target\debug\deps\skills_cli-091e7a1a8e0b53d0.exe)
+
+running 5 tests
+test cli_rejects_untrusted_roots_and_source_options_before_initializing_state ... ok
+test small_output_budget_retains_the_complete_mutation_receipt_in_the_personal_store ... ok
+test host_cli_observes_missing_revision_guards_and_preserves_explicit_stale_guards ... ok
+test public_cli_preserves_authored_history_through_confirm_fold_and_publish ... ok
+test folding_the_library_preflights_every_revision_before_changing_the_first_skill ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.91s
+
+     Running tests\store_cancellation.rs (target\debug\deps\store_cancellation-a0db40c66b27d046.exe)
+
+running 3 tests
+test cancelled_store_refuses_new_publication_until_deadline_is_replaced ... ok
+test active_sql_is_interrupted_by_inherited_host_cancellation ... ok
+test sqlite_lock_contention_retains_a_finite_timeout_and_atomic_recovery ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.55s
+
+     Running tests\store_identity.rs (target\debug\deps\store_identity-0ab8be677c48a4fa.exe)
+
+running 4 tests
+test snapshot_workspace_mismatch_is_rejected_before_source_retrieval ... ok
+test valid_disk_and_derived_snapshot_identities_remain_readable ... ok
+test graph_lookup_and_every_evidence_member_keep_the_same_snapshot_identity ... ok
+test a_corrupted_snapshot_payload_cannot_alias_a_different_lookup_identity ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+
+     Running tests\store_review.rs (target\debug\deps\store_review-5fff24c677e876db.exe)
+
+running 1 test
+test source_blob_artifact_fallback_cannot_bypass_captured_path_authority ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests\test_map.rs (target\debug\deps\test_map-913379a96a9c85ac.exe)
+
+running 12 tests
+test failed_tests_remain_selected_even_when_source_is_unchanged ... ok
+test collector_requires_host_trust_and_a_real_available_command ... ok
+test a_covered_configuration_change_still_widens_to_every_known_test ... ok
+test import_binds_hashes_rejects_malformed_and_retains_failed_tests ... ok
+test selection_widens_unknown_config_and_new_tests ... ok
+test node_source_stdout_cannot_forge_test_results_and_changed_copy_invalidates_hash_binding ... ok
+test overflowing_node_reporter_output_never_publishes_a_pass ... ok
+test v8_utf16_ranges_respect_crlf_and_narrower_zero_hit_ranges ... ok
+test widening_with_an_empty_or_partial_caller_list_includes_all_recorded_tests ... ok
+test source_stdout_cannot_fake_a_skipped_only_pass ... ok
+test actual_node_collection_separates_stdout_and_rejects_skipped_only_pass ... ok
+test timed_out_node_collection_retains_the_previous_map ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.78s
+

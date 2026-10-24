@@ -1,0 +1,117 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: `GetSecurityInfo` redeclared with a different signature
+    --> native\src\host_output_recovery_tests.rs:1194:9
+     |
+1194 | /         fn GetSecurityInfo(
+1195 | |             handle: *mut c_void,
+1196 | |             object: u32,
+1197 | |             information: u32,
+...    |
+1202 | |             descriptor: *mut *mut c_void,
+1203 | |         ) -> u32;
+     | |_________________^ this signature doesn't match the previous declaration
+     |
+    ::: native\src\host_install_io.rs:483:9
+     |
+ 483 | /         fn GetSecurityInfo(
+ 484 | |             handle: *mut c_void,
+ 485 | |             object_type: i32,
+ 486 | |             information: u32,
+...    |
+ 491 | |             descriptor: *mut *mut c_void,
+ 492 | |         ) -> u32;
+     | |_________________- `GetSecurityInfo` previously declared here
+     |
+     = note: expected `unsafe extern "system" fn(*mut std::ffi::c_void, i32, u32, *mut *mut std::ffi::c_void, *mut *mut std::ffi::c_void, *mut *mut std::ffi::c_void, *mut *mut std::ffi::c_void, *mut *mut std::ffi::c_void) -> u32`
+                found `unsafe extern "system" fn(*mut std::ffi::c_void, u32, u32, *mut *mut std::ffi::c_void, *mut *mut std::ffi::c_void, *mut *mut std::ffi::c_void, *mut *mut std::ffi::c_void, *mut *mut std::ffi::c_void) -> u32`
+     = note: `#[warn(clashing_extern_declarations)]` on by default
+
+warning: `SetSecurityInfo` redeclared with a different signature
+    --> native\src\host_output_recovery_tests.rs:1204:9
+     |
+1204 | /         fn SetSecurityInfo(
+1205 | |             handle: *mut c_void,
+1206 | |             object: u32,
+1207 | |             information: u32,
+...    |
+1211 | |             sacl: *mut c_void,
+1212 | |         ) -> u32;
+     | |_________________^ this signature doesn't match the previous declaration
+     |
+    ::: native\src\host_install_io.rs:522:9
+     |
+ 522 | /         fn SetSecurityInfo(
+ 523 | |             handle: *mut c_void,
+ 524 | |             object_type: i32,
+ 525 | |             information: u32,
+...    |
+ 529 | |             sacl: *mut c_void,
+ 530 | |         ) -> u32;
+     | |_________________- `SetSecurityInfo` previously declared here
+     |
+     = note: expected `unsafe extern "system" fn(*mut std::ffi::c_void, i32, u32, *mut std::ffi::c_void, *mut std::ffi::c_void, *mut std::ffi::c_void, *mut std::ffi::c_void) -> u32`
+                found `unsafe extern "system" fn(*mut std::ffi::c_void, u32, u32, *mut std::ffi::c_void, *mut std::ffi::c_void, *mut std::ffi::c_void, *mut std::ffi::c_void) -> u32`
+
+warning: `yoke-code-intelligence` (lib test) generated 2 warnings
+    Finished `test` profile [unoptimized] target(s) in 41.52s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 33 tests
+test host_install::output_recovery_tests::actual_apply_exposes_no_human_bytes_before_durable_output_identity ... ok
+test host_install::output_recovery_tests::actual_allocating_process_exit_rolls_back_without_output ... ok
+test host_install::output_recovery_tests::actual_apply_pre_identity_process_exit_rolls_back_without_unidentified_output ... ok
+test host_install::output_recovery_tests::actual_apply_post_prepared_kill_still_resumes_as_a_positive_harness_control ... ok
+test host_install::output_recovery_tests::actual_allocating_kill_resumes_without_creating_unowned_output ... ok
+test host_install::output_recovery_tests::actual_apply_pre_identity_kill_resumes_after_os_removes_unregistered_empty_output ... ok
+test host_install::output_recovery_tests::actual_disarmed_process_exit_rolls_back_the_exact_empty_registered_object ... ok
+test host_install::output_recovery_tests::actual_disarmed_kill_resumes_the_exact_empty_registered_object ... ok
+test host_install::output_recovery_tests::actual_disarmed_recovery_preserves_a_replacement_empty_file ... ok
+test host_install::output_recovery_tests::actual_apply_rechecks_live_original_acl_before_moving_original ... FAILED
+test host_install::output_recovery_tests::actual_apply_rechecks_live_prepared_output_acl_before_moving_original ... FAILED
+test host_install::output_recovery_tests::actual_flushed_process_exit_rolls_back_before_prepared_identity_event ... ok
+test host_install::output_recovery_tests::actual_flushed_kill_resumes_before_prepared_identity_event ... ok
+test host_install::output_recovery_tests::actual_flushed_recovery_preserves_replacement_identical_canonical_bytes ... ok
+test host_install::output_recovery_tests::actual_partial_recovery_preflights_second_root_before_first_append ... ok
+test host_install::output_recovery_tests::actual_partial_process_exit_rolls_back_the_same_raw_prefix_object ... ok
+test host_install::output_recovery_tests::actual_partial_recovery_preserves_noncanonical_bytes_on_registered_identity ... ok
+test host_install::output_recovery_tests::actual_partial_kill_resumes_a_raw_prefix_ending_inside_utf8 ... ok
+test host_install::output_recovery_tests::actual_partial_recovery_preserves_replacement_identical_raw_prefix ... ok
+test host_install::output_recovery_tests::actual_populating_process_exit_rolls_back_without_copying_human_bytes ... ok
+test host_install::output_recovery_tests::actual_populating_lineage_cannot_restart_when_registered_output_disappears ... ok
+test host_install::output_recovery_tests::actual_pre_identity_crash_preserves_foreign_canonical_bytes_occupant ... ok
+test host_install::output_recovery_tests::actual_populating_kill_resumes_the_exact_registered_object ... ok
+test host_install::output_recovery_tests::actual_pre_identity_crash_preserves_foreign_empty_occupant ... ok
+test host_install::output_recovery_tests::actual_registered_process_exit_rolls_back_after_os_removes_armed_output ... ok
+test host_install::output_recovery_tests::actual_registered_kill_resumes_with_a_new_bounded_attempt ... ok
+test host_install::output_recovery_tests::actual_prepared_recovery_refuses_acl_tampering_before_publication ... ok
+test host_install::output_recovery_tests::output_recovery_worker ... ignored, spawned only with an explicitly selected parent-owned temp fixture
+test host_install::output_recovery_tests::actual_pre_identity_recovery_refuses_changed_original_acl_without_retry ... FAILED
+test host_install::output_recovery_tests::actual_registered_retry_limit_refuses_fourth_allocation_but_allows_rollback ... ok
+test host_install::output_recovery_tests::strict_v2_rollback_rejects_an_output_identity_that_was_never_registered ... ok
+test host_install::output_recovery_tests::actual_retained_reader_blocks_prefix_recovery_without_mutating_state ... ok
+test host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work ... FAILED
+
+failures:
+
+---- host_install::output_recovery_tests::actual_apply_rechecks_live_original_acl_before_moving_original stdout ----
+Error: Live apply accepted changed security and moved the original: TerminalOutcome { plan_id: "6fae5513d1443a77119e45fd0a2b4cf2a7843db45621959ec922edda66e1cc8d", journal_id: "5d79deec64b0518c405f9689f6a5953f07b2893b23d562168783550613049eae", success: true, receipt_id: Some("8f9f27b14b5c59419d1719a20dce6343f2ba48501156adb4abd500692052fe78"), status: Some("installed"), error: None }
+
+---- host_install::output_recovery_tests::actual_apply_rechecks_live_prepared_output_acl_before_moving_original stdout ----
+Error: Live apply accepted changed security and moved the original: TerminalOutcome { plan_id: "9ebce73fdb015726f344fff70adff1c7c013aa38e9381e38f0849308e05d16be", journal_id: "36d4013b70528e3fee52690cf4b0a74c3df3ad77bdecf2513a4631ef4b029041", success: true, receipt_id: Some("afa7ac9f6efd236c4b2fe3fd710788a1c00f8e755f0d6170df9076f3baebc829"), status: Some("installed"), error: None }
+
+---- host_install::output_recovery_tests::actual_pre_identity_recovery_refuses_changed_original_acl_without_retry stdout ----
+Error: Pre-identity recovery adopted the original's changed ACL as a fresh baseline
+
+---- host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work stdout ----
+Error: Host installation recovery required; journal 9a2780f999a8dccb21953cfd662740e082dab5b279aa38137de6689b507823e3. Request deadline exceeded. Matching originals and foreign files are preserved
+
+
+failures:
+    host_install::output_recovery_tests::actual_apply_rechecks_live_original_acl_before_moving_original
+    host_install::output_recovery_tests::actual_apply_rechecks_live_prepared_output_acl_before_moving_original
+    host_install::output_recovery_tests::actual_pre_identity_recovery_refuses_changed_original_acl_without_retry
+    host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work
+
+test result: FAILED. 28 passed; 4 failed; 1 ignored; 0 measured; 115 filtered out; finished in 42.45s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --lib`

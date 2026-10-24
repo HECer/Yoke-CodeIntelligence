@@ -1,0 +1,53 @@
+// Genuine captured TOML AoT entries are raw selector items; their descendants are not.
+#[test]
+fn raw_selector_aot_entries_debit_outer_items_but_not_descendant_lists() {
+    let positive = fixture(&[
+        ("Cargo.toml", "[workspace]\nmembers=['p/*']\n"),
+        ("p/a/Cargo.toml", "[package]\nname='a'\n"),
+        ("p/b/Cargo.toml", "[package]\nname='b'\n"),
+    ]);
+    let d = Deadline::new(20_000);
+    let (_, partition) = checked(&positive, &d);
+    assert_eq!(partition.physical_package_count(), 2);
+    for field in ["members", "exclude"] {
+        for count in [1usize, 2_048, 2_049] {
+            let marker = format!("[[workspace.{field}]]\n").repeat(count);
+            assert!(marker.len() < 1_000_000);
+            let f = fixture(&[
+                ("Cargo.toml", &marker),
+                ("p/a/Cargo.toml", "[package]\nname='a'\n"),
+                ("p/b/Cargo.toml", "[package]\nname='b'\n"),
+            ]);
+            captured(&f, "Cargo.toml", &marker);
+            if count <= 2_048 {
+                unsupported(&f, "source_schema");
+            } else {
+                let d = Deadline::new(20_000);
+                let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
+                assert_eq!(
+                    hard(probe(&mut run)),
+                    RetrievalHardError::Capacity("selectors")
+                );
+            }
+        }
+    }
+    let unrelated = "[[workspace.metadata.members]]\n".repeat(2_049);
+    let f = fixture(&[
+        ("Cargo.toml", &unrelated),
+        ("p/a/Cargo.toml", "[package]\nname='a'\n"),
+        ("p/b/Cargo.toml", "[package]\nname='b'\n"),
+    ]);
+    let d = Deadline::new(20_000);
+    let (_, partition) = checked(&f, &d);
+    assert_eq!(partition.physical_package_count(), 2);
+    let descendants = vec!["'p/*'"; 2_049].join(",");
+    for header in ["[[workspace]]", "[[workspace.members]]"] {
+        let marker = format!("{header}\nmembers=[{descendants}]\n");
+        let f = fixture(&[
+            ("Cargo.toml", &marker),
+            ("p/a/Cargo.toml", "[package]\nname='a'\n"),
+            ("p/b/Cargo.toml", "[package]\nname='b'\n"),
+        ]);
+        unsupported(&f, "source_schema");
+    }
+}

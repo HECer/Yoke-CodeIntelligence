@@ -1,0 +1,83 @@
+{
+  "protocol_connection": {
+    "executable": "target\\debug\\deps\\protocol_connection-6f45346f06f41a07.exe",
+    "ignored": [],
+    "registered": [
+      "host_selected_profiles_keep_their_public_surface_across_messages",
+      "incomplete_stdio_frames_are_rejected_before_dispatch_or_publication",
+      "legal_request_ids_and_escaped_source_fit_the_complete_response_envelope",
+      "owned_transport_state_retains_initialization_and_refuses_profile_switches",
+      "separate_transport_messages_preserve_initialization_and_profile_state"
+    ]
+  },
+  "provider_batch_bounds": {
+    "executable": "target\\debug\\deps\\provider_batch_bounds-7b96361b355c1588.exe",
+    "ignored": [],
+    "registered": [
+      "entity_limit_rejects_before_copying_entire_unverified_graph_selection"
+    ]
+  },
+  "provider_batches": {
+    "executable": "target\\debug\\deps\\provider_batches-fe61bea4ba2699b8.exe",
+    "ignored": [],
+    "registered": [
+      "another_state_client_blocks_batch_before_spending_and_restores_original_client",
+      "bound_unknown_cost_can_later_reconcile_without_invalidating_original_response_artifact",
+      "budget_call_limits_source_limits_and_existing_namespace_reject_before_first_child",
+      "completed_and_failed_batches_are_typed_retention_roots_not_unknown_records",
+      "deadline_preserves_dispatched_unknown_and_reports_unreleased_unsent_without_retry",
+      "first_cost_overrun_blocks_remaining_reserved_chunk_and_releases_only_unsent",
+      "id_addressed_reversed_cohere_response_is_reordered_before_atomic_publication",
+      "initial_batch_registration_failure_rolls_back_all_reservations_before_launch",
+      "initially_unknown_usage_can_receive_its_first_response_report_later",
+      "partial_failure_preserves_each_reported_cost_and_never_publishes_partial_corpus",
+      "two_titan_chunks_have_separate_attempts_and_one_complete_legacy_vector_collection",
+      "unknown_costs_remain_null_and_retain_both_reservations",
+      "valid_large_per_attempt_usage_never_overflows_or_invalidates_completed_corpus",
+      "vector_and_complete_batch_publication_roll_back_together_after_billed_chunks"
+    ]
+  },
+  "provider_batches_review": {
+    "executable": "target\\debug\\deps\\provider_batches_review-fb8e8e5278794de4.exe",
+    "ignored": [],
+    "registered": [
+      "complete_bound_reply_with_nonzero_exit_still_preserves_cost_and_usage",
+      "each_chunk_keeps_native_protocol_one_and_legacy_attempt_bound_request_identity",
+      "every_source_is_verified_before_first_chunk_reservation_or_launch",
+      "failed_new_batch_leaves_existing_other_model_corpus_byte_identical",
+      "full_vector_store_capacity_is_rejected_before_any_reservation_or_child",
+      "legal_reversed_cohere_items_are_reassembled_by_id_before_publication",
+      "model_child_can_acquire_sqlite_write_transaction_while_parent_holds_only_client_lease",
+      "retained_batch_rejects_unknown_nested_fields_and_rebound_request_identity",
+      "unbound_reported_cost_remains_unknown_and_only_never_sent_attempt_is_released",
+      "worst_finite_float_serialization_rejects_entire_batch_before_billing"
+    ]
+  },
+  "provider_scope_review": {
+    "executable": "target\\debug\\deps\\provider_scope_review-efdd81e89803991c.exe",
+    "ignored": [],
+    "registered": [
+      "corrupt_cas_size_is_refused_before_source_allocation_or_provider_launch",
+      "escaped_request_is_admitted_before_serialization_allocation_and_billing",
+      "explicitly_captured_readonly_dependencies_keep_exact_model_source_binding",
+      "persisted_unknown_native_identity_does_not_grant_model_source_authority"
+    ]
+  },
+  "providers": {
+    "executable": "target\\debug\\deps\\providers-4a75185b5a986379.exe",
+    "ignored": [],
+    "registered": [
+      "complete_bound_failed_replies_still_account_for_reported_costs",
+      "corpus_excerpts_stop_at_exact_utf8_boundaries_and_report_omissions",
+      "embeddings_and_query_search_use_versioned_source_bound_collections",
+      "host_trust_and_exact_reply_binding_fail_closed",
+      "invalid_requests_and_missing_capabilities_fail_before_model_attempts",
+      "media_descriptions_bind_captured_bytes_without_source_writes",
+      "query_vector_dimension_must_match_indexed_corpus_before_settlement",
+      "reranking_and_vectors_reject_invalid_exact_candidates",
+      "successful_unknown_billing_and_known_overrun_keep_budget_conservative",
+      "summaries_use_immutable_utf8_source_and_remain_inferences",
+      "unavailable_timeout_and_output_cap_keep_unknown_reservations"
+    ]
+  }
+}

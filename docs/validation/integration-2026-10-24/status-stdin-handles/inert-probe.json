@@ -1,0 +1,74 @@
+{
+  "kind": "owned-raw-handle-bridge-probe",
+  "cases": [
+    {
+      "host": "powershell.exe",
+      "mode": "inherited-stdin",
+      "inputBytes": 0,
+      "observedBytes": 0,
+      "exactOriginalInputBytes": true,
+      "expectedByteBehaviorVerified": true,
+      "exactUnicodeQuotedArgument": true,
+      "exactIndependentStderr": true,
+      "exitCode": 0,
+      "seconds": 0.29237139999167994
+    },
+    {
+      "host": "powershell.exe",
+      "mode": "inherited-stdin",
+      "inputBytes": 164,
+      "observedBytes": 164,
+      "exactOriginalInputBytes": true,
+      "expectedByteBehaviorVerified": true,
+      "exactUnicodeQuotedArgument": true,
+      "exactIndependentStderr": true,
+      "exitCode": 0,
+      "seconds": 0.24239090003538877
+    },
+    {
+      "host": "powershell.exe",
+      "mode": "inherited-stdin",
+      "inputBytes": 65536,
+      "observedBytes": 65536,
+      "exactOriginalInputBytes": true,
+      "expectedByteBehaviorVerified": true,
+      "exactUnicodeQuotedArgument": true,
+      "exactIndependentStderr": true,
+      "exitCode": 0,
+      "seconds": 0.25862659997073933
+    },
+    {
+      "host": "powershell.exe",
+      "mode": "unicode-bom-text-wrapper",
+      "inputBytes": 164,
+      "observedBytes": 166,
+      "exactOriginalInputBytes": false,
+      "expectedByteBehaviorVerified": true,
+      "exactUnicodeQuotedArgument": true,
+      "exactIndependentStderr": true,
+      "exitCode": 0,
+      "seconds": 0.2573197999736294
+    },
+    {
+      "host": "powershell.exe",
+      "mode": "unicode-console-inherited-stdin",
+      "inputBytes": 164,
+      "observedBytes": 164,
+      "exactOriginalInputBytes": true,
+      "expectedByteBehaviorVerified": true,
+      "exactUnicodeQuotedArgument": true,
+      "exactIndependentStderr": true,
+      "exitCode": 0,
+      "seconds": 0.27525569999124855
+    }
+  ],
+  "nativeYokeImageOpenedOrExecuted": false,
+  "jobAdmission": {
+    "specificJobMembershipConfirmed": true,
+    "queryHandleClosedBeforeNativeRead": true
+  },
+  "modernShellAvailable": false,
+  "probeSourceSha256": "7720bcd3f547fe259b46fcb8afa5260f718307a6b6069e5af3dd994866ed0b4d",
+  "containmentHelperSha256": "bc9629eda761d22fe5d273b5ac5238c96d483784b9e87002ea5016f08053c6ba",
+  "activeAfterCleanup": 0
+}

@@ -1,0 +1,14 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+    Finished `test` profile [unoptimized] target(s) in 0.64s
+     Running tests\model_http.rs (target\debug\deps\model_http-68d161d3020e979e.exe)
+0 tests, 0 benchmarks
+     Running tests\model_http_cli.rs (target\debug\deps\model_http_cli-2f155f4d3d0c5f8b.exe)
+actual_cli_http_summary_preserves_source_binding_and_unknown_billing: test
+
+1 test, 0 benchmarks

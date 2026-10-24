@@ -1,0 +1,25 @@
+{
+  "checkedAtUtc": "2026-10-15T20:49:02.718433+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "-j",
+    "2",
+    "--lib",
+    "host_install::output_recovery_tests::journal_scope_tests",
+    "--",
+    "--test-threads=4"
+  ],
+  "exitCode": 0,
+  "seconds": 1.328,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-host-journal-scoped-guards",
+  "logSha256": "48055951663b78a2a7a576143995cff0c9bf5799a0f49700e42beee4296e09d9",
+  "groups": 1,
+  "passed": 3,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

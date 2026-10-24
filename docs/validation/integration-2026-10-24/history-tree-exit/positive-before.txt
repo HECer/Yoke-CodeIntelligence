@@ -1,0 +1,30 @@
+C:\Python314\python.exe : test_actual_assigned_inert_worker_proves_own_exit_before_cleanup
+(test_host_history_live.HistoryEvidenceAdmission.test_actual_assigned_inert_worker_proves_own_exit_before_cleanup) ...
+FAIL
+In Zeile:2 Zeichen:1
++ C:\Python314\python.exe -X utf8 -B -W error -m unittest discover -s s ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (test_actual_ass...eanup) ... FAIL:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+======================================================================
+FAIL: test_actual_assigned_inert_worker_proves_own_exit_before_cleanup
+(test_host_history_live.HistoryEvidenceAdmission.test_actual_assigned_inert_worker_proves_own_exit_before_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\scripts\tests\test_host_history_live.py", line 290,
+in test_actual_assigned_inert_worker_proves_own_exit_before_cleanup
+    self.run_inert_assigned_worker(leave_child=False, must_refuse=False)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\scripts\tests\test_host_history_live.py", line 286,
+in run_inert_assigned_worker
+    self.assertEqual(job["activeAtParentExit"], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0
+
+----------------------------------------------------------------------
+Ran 1 test in 0.161s
+
+FAILED (failures=1)
+Owned inert Job observation: {"activeAfterCleanup": 0, "activeAtParentExit": 1, "assignedBeforeResume": true, "complete": true, "exitCode": 0, "pid": 44288, "startedSuspended": true}

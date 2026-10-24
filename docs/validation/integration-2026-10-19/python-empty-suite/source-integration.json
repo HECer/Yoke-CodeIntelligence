@@ -1,0 +1,39 @@
+{
+  "sourceCommit": "d37abc179208b02c46ae1998689963a9be935eb6",
+  "runtimeCommit": "0ce017ab212953bc9a705961f74ace297a9dc31b",
+  "parentCommit": "87e7cfb276c481d3692b4e142dd39f9f22e81b5e",
+  "paths": [
+    "native/README.md",
+    "native/docs/semantic-refactor-intents.md",
+    "native/docs/symbol-deletion.md",
+    "native/src/changes.rs",
+    "native/src/changes_symbol_delete.rs",
+    "native/src/mcp_http_rejection_tests.rs",
+    "native/src/protocol.rs",
+    "native/src/validation.rs",
+    "native/tests/python_empty_suite.rs"
+  ],
+  "newCases": {
+    "unitAdmission": 1,
+    "defaultIntegration": 8,
+    "actualPythonAstOnly": 1
+  },
+  "nativeGroups": 10,
+  "nativeTotals": {
+    "passed": 559,
+    "failed": 0,
+    "ignored": 8
+  },
+  "nativeInputsMatched": 732,
+  "nativeBinarySha256": "95791c456b0db2ea3734b424e501f8d15df8e97cfec16b4755f193a94411c64f",
+  "actualPython": {
+    "path": "C:\\Python314\\python.exe",
+    "sha256": "4942b86a6597e5aee0128daa00050ed79bc21f6e709a78eb19cbfeb0c2f39ac9",
+    "version": "Python 3.14.7"
+  },
+  "productionBinaryUnchangedFromPriorBroadNativeTests": true,
+  "testOnlyCorrection": [
+    "native/src/mcp_http_rejection_tests.rs"
+  ],
+  "wholeNativeRerun": false
+}

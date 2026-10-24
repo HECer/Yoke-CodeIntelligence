@@ -1,0 +1,49 @@
+{
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "nativeBrowser": true,
+  "nativeScreenshot": false,
+  "snapshotFailures": [
+    "Preview snapshot failed: Preview automation snapshot timed out after 15000ms.",
+    "Preview snapshot failed: Preview automation snapshot timed out after 15000ms."
+  ],
+  "restored": {
+    "body": "ci\nCode Intelligence\nNative session dashboard\nOverview\nActivity\nTools\nConfiguration\nMemories\nFiles\nLogs\nWORKSPACE INTELLIGENCE\nConfiguration files\nConnected\nHost-approved",
+    "buttons": [],
+    "draftReadOnly": true,
+    "draftRetained": true,
+    "overflow": false,
+    "rolledBack": true
+  },
+  "reloaded": {
+    "explicitReloadObservedOriginal": true,
+    "newDraft": "project: original\nAfter recovery: retained shutdown draft 🦀\n"
+  },
+  "shutdown": {
+    "body": "ci\nCode Intelligence\nNative session dashboard\nOverview\nActivity\nTools\nConfiguration\nMemories\nFiles\nLogs\nWORKSPACE INTELLIGENCE\nHost configuration\nClosing\nHost-approved controls\nEnd request accepted. This MCP Session is closing; exit is not ",
+    "draftReadOnly": true,
+    "draftRetained": true,
+    "overflow": false,
+    "shutdownDisabled": true
+  },
+  "reviewMetrics": {
+    "height": 844,
+    "nativeDom": true,
+    "nativeScreenshot": false,
+    "overflow": false,
+    "stage": "review",
+    "width": 390
+  },
+  "restoredMetrics": {
+    "height": 844,
+    "nativeDom": true,
+    "nativeScreenshot": false,
+    "overflow": false,
+    "stage": "restored",
+    "width": 390
+  },
+  "actualUiOnlyRollbackAction": true,
+  "cancelProof": "cancel-file-proof.json",
+  "fileProof": "ui-file-proof.json",
+  "exitProof": "native-process-exited.json"
+}
