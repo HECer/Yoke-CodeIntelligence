@@ -2,23 +2,25 @@
 
 ## Current dashboard management scope (2026-10-24)
 
-[Current scoped acceptance](validation/integration-2026-10-24/dashboard-owned-shutdown/README.md)
-adds host-granted owning-session shutdown to the previously accepted private raw
-logs, file/language activity labels and global-file/language controls. It requires
-a trusted transport binding and current Session authority. Acknowledgement never
-claims process exit. Three actual stdio variants exit before stdin EOF; HTTP
-closes A while B and the service remain usable. Final scope has 752 native passes,
-zero failures, seven existing ignores and 1143 exact inputs in eleven whole groups,
-with no reuse. Lint/format/typecheck/npm and actual native browser workflows pass.
-Synthetic and captured-native-DOM rerenders are distinguished from screenshots.
-The original 353/73/77 and whole Windows/platform/upstream certificates stay unchanged.
+[Current scoped acceptance](validation/integration-2026-10-24/dashboard-project-files/README.md)
+connects selected project files to original native immutable plans, separate host
+approval, executed verification, full current base snapshot, WriterLock and
+workspace journals. Browser status inspection cannot grant either host proof.
+Three actual stdio variants, HTTP actor-local proposals/shared file bytes and
+actual native browser confirmation/save/draft retention pass. Final scope has
+760 native passes, zero failures, seven existing ignores and 1145 exact inputs
+in eleven whole groups, with no reuse. Lint/format/typecheck/npm pass. Pixel
+rerenders remain distinct from native screenshots. Original 353/73/77 and whole
+Windows/platform/upstream certificates stay unchanged.
 
-The full dashboard action remains active. Complete project configuration writes
-through original workspace permission, exact approval and executed-verification
-gates, and explicit document write-binding migration/retirement. Global file
-writes retain independent host selection, physical/security preconditions and
-the pinned journal namespace. Editing bytes must not reload or execute
-configuration. Private raw logs retain finite concurrent-observation semantics.
+The full dashboard action remains active. Implement explicit global document
+write-binding migration/retirement and dashboard workspace recovery. The latter
+currently reports unavailable/incomplete inspection and directs to the original
+native host recovery workflow. Global writes retain independent host selection,
+physical/security preconditions and pinned journals; project writes retain the
+original source writer. Editing bytes must not reload or execute configuration.
+Private raw logs retain finite concurrent-observation semantics, and owning
+shutdown retains its separate host grant and trusted transport binding.
 
 Tray, automatic opening and broader keyboard/touch/accessibility/all-browser
 acceptance remain open. [Selected global files and language controls](validation/integration-2026-10-24/dashboard-documents/README.md)

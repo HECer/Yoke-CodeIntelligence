@@ -38,8 +38,10 @@ Registration alone grants no activation, and selection starts no process.
 See the [selection contract and scoped acceptance](session-dashboard-language-servers.md).
 
 A separate `management.documents` selection adds explicit UTF-8 file reads and
-reviewed global host-file writes with durable conditional recovery. Project
-files remain read only. The Windows guarded backend permanently binds each written
+reviewed global host-file writes with durable conditional recovery. Independently
+[granted project-file writes](session-dashboard-project-files.md) use native plans,
+separate host approval/executed verification and original workspace journals.
+The Windows guarded backend permanently binds each written global
 target to its original selection/journal; migration and retirement are unavailable.
 Saving bytes does not reload the running configuration. See the
 [file contract](session-dashboard-documents.md).
@@ -98,8 +100,8 @@ operation text is replaced by a fixed label. This activity is independent of the
 separately selected raw-log reader and does not count every public protocol
 request. Evicted activity rows are disclosed.
 
-Project-file writes through existing approval/verification gates, binding migration,
-tray integration and automatic browser opening remain unavailable in this build. Their absence is disclosed rather than
+Dashboard workspace recovery, global binding migration, tray integration and
+automatic browser opening remain unavailable in this build. Their absence is disclosed rather than
 as empty successful results. Source-write approval and host execution grants are
 not changed through management. Existing guarded edit/approval/verification and
 recovery workflows retain their independent authority.
@@ -189,3 +191,9 @@ records 752 native passes on 1143 exact inputs, without group reuse, real stdio
 exit before stdin EOF and HTTP Session/service isolation. Actual native browser
 checks retain unsaved drafts and distinguish acknowledgement from proven process
 exit; pixel evidence remains synthetic or a captured-DOM rerender.
+
+The later [project-file acceptance](../../docs/validation/integration-2026-10-24/dashboard-project-files/README.md)
+records 760 native passes on 1145 exact inputs, no group reuse and real original
+host approval/executed verification through stdio, HTTP and native browser saves.
+Workspace recovery remains the original native host workflow. The dashboard
+reports this limitation explicitly, retaining possible journal IDs and drafts.

@@ -1,9 +1,10 @@
 # Host-selected dashboard configuration files
 
 This native 0.5.0 feature reads explicitly selected UTF-8 files and edits selected
-global host files through reviewed proposals and conditional recovery. Project
-files are read only in this implementation: the existing workspace write,
-approval and executed-verification gates have not been connected to this editor.
+global host files through reviewed proposals and conditional recovery. Selected
+[project-file writes](session-dashboard-project-files.md) additionally require
+host workspace writes and native exact approval/executed verification; they use
+the original workspace writer and journals, never the global-file authority.
 Saving file bytes does not reload or execute the file or change the running
 Session's configuration. No configuration-file schema validation is performed.
 
@@ -131,13 +132,21 @@ and `action`. File actions have `action.kind = "document"` and a closed `request
 | `read` | `documentId` |
 | `plan` | `documentId`, `expectedRevision`, `content` |
 | `apply` | `documentId`, `planId` |
+| `inspect` (project proposal only) | `documentId`, `planId`; reads existing host approval/verification |
 | `pending` | `documentId` |
 | `recover` | `documentId`, `journalId`, `expectedEvent`, `direction` (`resume` or `rollback`) |
 
 Requests cannot provide paths, commands, grants or serialized approval objects.
 Reading/planning is distinct from saving. Unconfirmed write outcomes are not
 reported as unapplied. Capability responses distinguish configuration reading,
-selected global editing and unavailable project editing. Existing default-mode
+selected global editing and independently host-granted project editing. Existing default-mode
 capability bytes remain unchanged when no document selection is present.
 
 The [scoped acceptance](../../docs/validation/integration-2026-10-24/dashboard-documents/README.md) records 733 native passes, current CLI transports, actual native browser workflows and separately identified pixel rerenders. This is not a full dashboard, Windows baseline, cross-platform or upstream runtime certificate. At that checkpoint, document actions used the fixed `other_operation` fallback. The later [raw-log acceptance](../../docs/validation/integration-2026-10-24/dashboard-raw-logs/README.md) adds fixed allowlisted document/language/log labels; arguments/results remain excluded.
+
+The later [project-file acceptance](../../docs/validation/integration-2026-10-24/dashboard-project-files/README.md)
+connects exact selected captured project files to native plans and independent
+host proofs. The UI shows both proposal and workspace IDs, requires a status
+check and confirmation, and preserves drafts on refusal. The original native
+host workflow performs workspace recovery; dashboard inspection explicitly
+reports unavailable/incomplete state instead of an empty recovery list.

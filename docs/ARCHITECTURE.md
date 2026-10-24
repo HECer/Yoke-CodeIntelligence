@@ -862,7 +862,7 @@ Passive Rust JSON project selectors are omitted only from private provider copie
 
 Primary and additional semantic workspace folder identities share ASCII-only case folding on Windows and preserve opaque Unicode bytes. Exact captured source membership remains independent. Distinct filesystem names that Unicode lowercasing expands into the same text no longer merge or lose semantic roots.
 
-Explicit host dashboard configuration binds a distinct session fingerprint and starts a private loopback view only on open. Default access is read only. A second management opt-in queues bounded inert requests to the same owning non-Send Session thread; stdio polls OS input readiness and MCP-HTTP polls its actor between requests. Current session SHA/project, raw tool/API policy, note head CAS, revocation and original deadlines remain checked. Creation requires absence in the existing immediate note transaction; immutable note/source evidence remains intact. Accepted socket deadlines are capped by capability expiry, and Winsock sockets explicitly leave inherited nonblocking mode. Source writes and execution grants remain independent. A bounded worker owns fresh capabilities and nonpersisted structured activity without arguments/results/raw logs. Existing-only read-only SQL checks every displayed workspace/session binding. Session drop, stdio EOF and revocation close only owned listeners. Default absent/null management serialization and catalogs remain byte-preserving. The later selected-document and language acceptance is scoped separately; project writes, migration and broader UI scope remain open. Private raw-log windows and owning-session shutdown are separately implemented below. See [dashboard contract](../native/docs/session-dashboard.md) and [scoped acceptance](validation/integration-2026-10-24/dashboard-management/README.md).
+Explicit host dashboard configuration binds a distinct session fingerprint and starts a private loopback view only on open. Default access is read only. A second management opt-in queues bounded inert requests to the same owning non-Send Session thread; stdio polls OS input readiness and MCP-HTTP polls its actor between requests. Current session SHA/project, raw tool/API policy, note head CAS, revocation and original deadlines remain checked. Creation requires absence in the existing immediate note transaction; immutable note/source evidence remains intact. Accepted socket deadlines are capped by capability expiry, and Winsock sockets explicitly leave inherited nonblocking mode. Source writes and execution grants remain independent. A bounded worker owns fresh capabilities and nonpersisted structured activity without arguments/results/raw logs. Existing-only read-only SQL checks every displayed workspace/session binding. Session drop, stdio EOF and revocation close only owned listeners. Default absent/null management serialization and catalogs remain byte-preserving. The later selected-document and language acceptance is scoped separately; migration and broader UI scope remain open. Private raw-log windows, owning-session shutdown and gated project writes are separately implemented below. See [dashboard contract](../native/docs/session-dashboard.md) and [scoped acceptance](validation/integration-2026-10-24/dashboard-management/README.md).
 
 An independent dashboard language allowlist now selects only pinned host registrations. Project-local persisted overrides retain ordered backend priority or a legacy-language subset; an empty legacy subset explicitly disables semantic providers. Current policy, Session SHA and registry checks precede metadata CAS, followed by an infallible prevalidated Engine projection. Other projects derive from the original registry. No provider starts for selection alone, no configuration file is reloaded, and immutable evidence stays unchanged. The later 733-pass selected-document checkpoint also qualifies current CLI stdio/HTTP and actual browser selection; provider runtimes remain uncertified. See the [selection contract](../native/docs/session-dashboard-language-servers.md).
 
@@ -878,8 +878,8 @@ file/security revisions, atomic plan/genesis records, registered output and
 conditional no-replace publication/recovery. A permanent opaque owner binding
 beside each global target prevents silent selection/journal migration; malformed
 or foreign metadata is preserved and refuses. Completed recovery reports no new
-changes. Project files remain read only pending original workspace approval and
-executed verification integration. Text never becomes runtime configuration or
+changes. Project files use the separately connected native workspace gates below.
+Text never becomes runtime configuration or
 code. See [file contract](../native/docs/session-dashboard-documents.md) and
 [scoped acceptance](validation/integration-2026-10-24/dashboard-documents/README.md).
 
@@ -926,3 +926,23 @@ The 752-pass acceptance on 1143 exact inputs proves stdio exit before stdin EOF,
 HTTP isolation and specifically captured runtime exit before owned Job cleanup.
 See the [contract](../native/docs/session-dashboard-shutdown.md) and
 [scoped evidence](validation/integration-2026-10-24/dashboard-owned-shutdown/README.md).
+
+### Selected project-file writes
+
+Writable project selections additionally require original host workspace writes,
+editing/non-query/non-read-only policy and current native tool admission. Trusted
+physical root bindings derive the source path, and native capture must contain
+the exact selected before-bytes. Actor-local proposals retain a separate native
+workspace plan ID and publish canonical effective after-bytes. The browser only
+reads independent host approval and executed-verification records. Save invokes
+the original native writer, preserving full current base snapshot, WriterLock,
+scope, exact approval/result verification and durable workspace journals.
+The global-file writer remains unable to write project files. Possible journal
+IDs survive unconfirmed outcomes without claiming journal creation. Dashboard
+workspace recovery explicitly remains unavailable; the original native host
+workflow remains authoritative. Saving never reloads or executes configuration.
+The 760-pass acceptance on 1145 exact inputs includes three stdio variants,
+independent HTTP proposals/shared bytes and actual native browser saves with
+separately labeled pixel rerenders. See the
+[contract](../native/docs/session-dashboard-project-files.md) and
+[evidence](validation/integration-2026-10-24/dashboard-project-files/README.md).

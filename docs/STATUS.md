@@ -1,6 +1,50 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
-## Owning MCP Session shutdown: current scoped acceptance (2026-10-24)
+## Selected project-file writes: current scoped acceptance (2026-10-24)
+
+Product `125a538cffc90c45807f30b232afd70752998a6d` is pushed to the integration
+branch; all seven product blobs are independently verified on GitHub. Explicitly
+writable selected project files now use native immutable workspace plans. Host
+workspace writes, current editing/read-only/query policy and tool exclusions
+remain checked. The browser prepares and inspects; it cannot approve a plan or
+execute verification. Saving uses original exact approval, passed executed
+verification for the result snapshot, current full base snapshot, WriterLock,
+scope/expiry checks and workspace journals. Global-file authority is never used
+for project writes. Effective line-ending after-bytes are published for review.
+
+Final scope has **760 native passes, zero failures, seven existing ignores and
+zero filtered functions** in eleven whole groups, including all 647 library and
+22 management functions. All 1145 inputs stay exact through qualification and
+live acceptance; no preceding-source group is reused. All-target Clippy with
+warnings denied, all 368 format roots, typecheck and npm260/3 existing skips pass.
+Qualified CLI SHA:
+`d4fbfbcc3a6de7175e6d6528cf77c9ef26ad4726c158e76d5dc3579da53542fc`.
+
+Three actual stdio variants refuse before host approval and executed verification,
+then save exact reviewed bytes through native receipts. Real host-authored Python
+checks verify inert configuration bytes in copied trees. HTTP proposals remain
+actor-local while saved file bytes are shared. The actual native browser checks
+disabled Save, real host proof status, Cancel, confirmation, exact persisted hash
+and retention of a later unsaved project draft after owning shutdown. All owned
+Jobs finish empty and the fresh synthetic credential is removed. Native exit and
+owned runtime exit are proved before stdin EOF/Job cleanup. Inspected pixels are
+synthetic or captured-native-DOM rerenders; native snapshot attempts timed out.
+
+The initial 643-pass/4-fail/7-ignore library result and corrected fixtures remain
+in the evidence. The focused eight-function pass (646 filtered) is not added to
+760. A controller cwd issue was corrected before reaching its CLI stage; its
+unused resume draft never ran. [Contract](../native/docs/session-dashboard-project-files.md)
+and [scoped evidence](validation/integration-2026-10-24/dashboard-project-files/README.md).
+
+This supersedes historical project-write debt below. Workspace recovery remains
+the original native host workflow; the dashboard reports unavailable/incomplete
+inspection rather than empty completion. Dashboard workspace recovery, global
+write-binding migration/retirement, tray/automatic opening and broader STATUS/
+accessibility/platform/upstream/release work remain open. Original 353/73/77
+boundaries and ten historical Windows OS1314 baseline failures remain unchanged.
+No main merge, release or full dashboard certificate is claimed.
+
+## Earlier owning MCP Session shutdown: scoped acceptance (2026-10-24)
 
 Product `3bcea306547f641f294f018b09077183d5f4e646` is pushed to the integration
 branch; all eleven product blobs are independently verified on GitHub. A separate
