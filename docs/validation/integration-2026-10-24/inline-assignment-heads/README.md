@@ -16,7 +16,7 @@ remain. The normal fixed block preserves unbraced `if/else` ownership. Original
 target, operator, comments and statement suffix are source copies; only the
 selected call becomes the existing checked result expression.
 
-Resolving an identifier assignment reference adds no source evaluation ahead
+The generated recipe adds no explicit target-base, key or old-value read ahead
 of the call. Arguments still run once before the callee body; the actual write
 still runs only after its completion. Throws retain the old target value.
 Existing return/finally handling retains overridden or cancelled returns.
@@ -24,6 +24,8 @@ Properties, computed/destructuring targets, compound/logical assignments,
 chained assignments and assignments used by a return/loop/another expression
 remain unavailable because they need additional sequencing. This adds no general
 expression lifting, application authority or claim of complete runtime equivalence.
+The qualified targets here are ordinary captured lexical bindings; reflective
+global-environment behavior is not established by these fixtures.
 
 `probe.cjs` assembles the ten unmodified worker components in actual
 `projects.rs` order, using installed TypeScript5.8.3 and Node. A worker has the

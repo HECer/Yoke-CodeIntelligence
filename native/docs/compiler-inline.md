@@ -24,8 +24,8 @@ throw expression, if condition or switch discriminant. A complete call may also
 be the right side of a plain identifier assignment occupying one whole expression
 statement, such as `result = helper(2)`. Parentheses around that call or the whole
 assignment are retained; the assignment wrapper depth is limited to 2,000.
-Identifier reference resolution introduces no source evaluation before the
-call. The original assignment runs after the expanded call completes, so a throw
+The generated recipe adds no explicit target-base, key or old-value read before
+the call. The original assignment runs after the expanded call completes, so a throw
 leaves the old target value and a normal return performs the original write.
 The original target, `=` token, comments and statement suffix remain exact source
 copies. Property/computed/destructuring targets, compound/logical assignments,
