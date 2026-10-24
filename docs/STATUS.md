@@ -1,5 +1,36 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Dashboard language selection: implementation with partial acceptance (2026-10-24)
+
+Product `4d353f0a9c0e31da3e0888b7990f84be8d06dce3` adds explicit host-granted
+language-server selection to the private dashboard. All eight product blobs are
+independently remote-verified. Ordered backend choices, a legacy-language subset
+(including explicit disable), and reset apply to the original Session and active
+project. Dormant registration alone does not grant selection. Host registry
+bindings, current policy and session SHA remain authoritative; persisted project
+overrides cannot leak a filtered primary registry into other projects.
+
+The final implementation passes all 600 library functions, with seven existing
+ignores, all-target Clippy with warnings denied, all 368 format roots, typecheck
+and npm260/3 existing skips on 1134 unchanged inputs. The 13-function dashboard
+group passed before the subsequent capability/activity/UI refinements; its five
+new functions cover actual fixture-provider dispatch, order, disable, persistence,
+separate grants, stale requests and registry mutation. It is not a final-source
+13-function pass. Synthetic desktop/mobile reorder and stale-project render
+fixtures were inspected separately from native transport acceptance.
+
+The subsequent CLI build stopped at the unchanged 500MB disk guard. The expanded
+whole matrix, new CLI, native browser and three stdio/two-session HTTP acceptance
+are pending. Prepared live controllers have not run. No new executable is
+qualified, and the old partial linker output is not substituted or optimized.
+The full dashboard/STATUS action stays active; configuration documents with
+durable recovery, private raw logs and owned shutdown remain unimplemented.
+
+[Selection contract](../native/docs/session-dashboard-language-servers.md) and
+[scoped evidence](validation/integration-2026-10-24/dashboard-languages/README.md).
+Existing inventories, runtime unknowns and platform/release certificates remain
+unchanged. The following checkpoint describes the preceding management scope.
+
 ## Native dashboard management checkpoint (2026-10-24)
 
 Product commit `552cd8d8a1075d4f360eb1517e1f72a5683db40e` is pushed to the

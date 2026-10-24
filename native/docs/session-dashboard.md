@@ -31,6 +31,12 @@ selected through the browser. `notesPolicy.writable` still defaults false.
 Current raw tool/API exclusions, ignored/read-only patterns, `no-memories`,
 registered-project restrictions and independent execution/write grants apply.
 
+An additional `management.languageServers` host allowlist enables project-local
+provider selection and restoration of host defaults. Backend order remains
+significant; an empty legacy selection disables semantic providers explicitly.
+Registration alone grants no activation, and selection starts no process.
+See the [selection contract and partial acceptance](session-dashboard-language-servers.md).
+
 The CLI `serve-session` host installs the owner-thread driver when management is
 explicitly selected. Its native/Serena profiles expose opening operations.
 MCP-HTTP installs its actor driver for Session-backed principals; the pure Engine
@@ -73,7 +79,7 @@ record arguments, results, source bytes, command lines or error messages. Unknow
 operation text is replaced by a fixed label. This is not a raw log viewer or a
 count of every public protocol request. Evicted activity rows are disclosed.
 
-Registered-language selection, configuration-file editing with durable conditional
+Configuration-file editing with durable conditional
 recovery, raw log access, tray integration, automatic browser opening and MCP
 shutdown remain unavailable in this build. Their absence is disclosed rather than
 as empty successful results. Source-write approval and host execution grants are

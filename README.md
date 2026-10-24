@@ -21,7 +21,9 @@ Use `target/release/yoke.exe` on Windows. Rust 1.94.1 or newer is required to bu
 
 [Selected graph queries](native/docs/selected-graph-queries.md) and [graph analytics](native/docs/graph-extensions.md) preserve the original source evidence. Explicit [meaning extraction](native/docs/meaning-cli.md) adds concepts, directed relationships and ordered hyperedges with quoted source support, immutable receipts and a cost ledger. Loading, querying and inspecting those graphs never starts a provider. [Refactoring intent checks](native/docs/semantic-refactor-intents.md) and [lossless host configuration patches](native/docs/host-config.md) describe their supported inputs and boundaries.
 
-An explicitly enabled [native session dashboard](native/docs/session-dashboard.md) shows private session status, selected tools and bounded structured activity. A second host opt-in adds live project/mode controls and project-memory editing with revision checks. Registered-language selection, configuration files, raw logs and shutdown remain open; the [scoped acceptance](docs/validation/integration-2026-10-24/dashboard-management/README.md) is not a full dashboard certificate.
+An explicitly enabled [native session dashboard](native/docs/session-dashboard.md) shows private session status, selected tools and bounded structured activity. A second host opt-in adds live project/mode controls and project-memory editing with revision checks. New language-selection CLI acceptance, configuration files, raw logs and shutdown remain open; the [scoped acceptance](docs/validation/integration-2026-10-24/dashboard-management/README.md) is not a full dashboard certificate.
+
+An independent host allowlist adds [project-local dashboard language-server selection](native/docs/session-dashboard-language-servers.md). Its new CLI/native-browser acceptance remains pending after the guarded local build exhausted disk headroom; source checks and synthetic visual fixtures are documented separately.
 
 Explicit [authored-memory embeddings](native/docs/prompt-memories.md) add selected
 application-note revisions to live prompts with current policies and honest

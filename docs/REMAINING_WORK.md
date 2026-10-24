@@ -2,6 +2,14 @@
 
 ## Current dashboard management scope (2026-10-24)
 
+Registered language/backend selection is now implemented under an independent
+host allowlist, with project-local persisted overrides and stale-state/registry
+guards. Its [acceptance remains partial](validation/integration-2026-10-24/dashboard-languages/README.md):
+the new CLI build hit the 500MB disk guard, so the expanded matrix and new native
+stdio/HTTP/browser acceptance still need to finish. The older 13-function run
+precedes final capability/activity/UI refinements; do not promote it to a
+final-source result. The full dashboard action remains active.
+
 [Scoped native acceptance](validation/integration-2026-10-24/dashboard-management/README.md)
 now covers explicit host management for current-session project/mode controls and
 project named-memory CRUD. The non-Send Session stays on its owning host thread,
@@ -10,8 +18,7 @@ bounds survive idle input. Real Session/Serena/Python stdio, two independent
 MCP-HTTP sessions and the actual native browser are checked. The 677-pass matrix
 is scoped; original353/73/77-runtime and whole Windows/platform claims remain.
 
-Complete the remaining full management action: registered language/backend
-selection under independent project grants, explicitly host-selected global and
+Complete selection acceptance and the remaining management action: explicitly host-selected global and
 project configuration documents with hash CAS and durable conditional recovery,
 explicit private raw logs, and shutdown restricted to the owning MCP resource.
 Dormant backend registration alone must not become selection/execution authority.
