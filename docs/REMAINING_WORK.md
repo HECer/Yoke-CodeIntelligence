@@ -1,5 +1,34 @@
 # Remaining implementation and acceptance
 
+## Platform CI dependencies separated; actual hosted acceptance remains open
+
+Each platform's final acceptance now waits only for its own eight shard jobs.
+All27 check names, original commands/conditions/budgets, coverage validation,
+rust-analyzer, release build/upload and Windows history checks remain exact.
+Local actionlint,18 negative variants,6144 readiness-model cases and parsed
+original-step equivalence pass; the whole Python suite passes113/0/0. These
+are structural checks, not native/hosted execution or measured queue savings.
+All three platforms and full STATUS still need actual acceptance.
+[Evidence](validation/integration-2026-10-24/platform-ci-dependencies/README.md).
+
+## Default-feature Windows typing/lint pass; native execution remains open
+
+At source d80c6c78, all-target Cargo checking and warnings-denied Clippy pass
+against1003 unchanged native/Cargo/workflow inputs on Windows with Rust1.94.1
+and the `x86_64-pc-windows-msvc` target.
+Their370 native artifact observations represent368 distinct Cargo targets,
+not test/group execution or Unix/doctest acceptance. Per-file compression of1152
+old own text evidence files preserves every byte/hash/mtime/identity and restores
+the unchanged build admission without compressing/deleting caches or images.
+
+The separate library image build has Cargo0 but an incomplete owner receipt:
+one group member survives until forced cleanup. Root exit and empty cleanup are
+then proven; this does not retroactively prove pre-cleanup tree exit. No native
+test or image is adopted/executed. Below-admission free space after linking,
+full native/runtime/platform, PowerShell phases, history/browser/VSIX and complete
+STATUS/main/release remain open.
+[Evidence](validation/integration-2026-10-24/native-windows-typing/README.md).
+
 ## Windows PowerShell timeout cause still needs hosted observations
 
 Private bounded phase markers are added to the two original failing native

@@ -5,15 +5,16 @@ on:
 permissions:
   contents: read
 jobs:
-  native-shards:
+  native-shards-linux:
+    name: native-shards (${{ matrix.os }}, ${{ matrix.shard }})
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest]
         shard: [0, 1, 2, 3, 4, 5, 6, 7]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
-    steps:
+    steps: &native-shard-steps
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@1.94.1
         with:
@@ -90,17 +91,38 @@ jobs:
           name: native-shard-${{ matrix.os }}-${{ matrix.shard }}
           path: validation/ci-native-shard
           if-no-files-found: warn
-  native-rust:
-    needs: native-shards
+  native-shards-windows:
+    name: native-shards (${{ matrix.os }}, ${{ matrix.shard }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps: *native-shard-steps
+  native-shards-macos:
+    name: native-shards (${{ matrix.os }}, ${{ matrix.shard }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps: *native-shard-steps
+  native-rust-linux:
+    name: native-rust (${{ matrix.os }})
+    needs: native-shards-linux
     # A different platform's failure cannot replace this platform's evidence.
     if: always() && !cancelled()
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
-    steps:
+    steps: &native-acceptance-steps
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@1.94.1
         with:
@@ -165,3 +187,25 @@ jobs:
           name: host-document-history-windows
           path: validation/ci-host-document-history
           if-no-files-found: warn
+  native-rust-windows:
+    name: native-rust (${{ matrix.os }})
+    needs: native-shards-windows
+    if: always() && !cancelled()
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps: *native-acceptance-steps
+  native-rust-macos:
+    name: native-rust (${{ matrix.os }})
+    needs: native-shards-macos
+    if: always() && !cancelled()
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps: *native-acceptance-steps

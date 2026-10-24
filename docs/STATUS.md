@@ -1,5 +1,42 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Native CI acceptance now waits only for its own platform (2026-10-24)
+
+Each platform's acceptance job now depends on its own eight whole-target shards,
+rather than all24 shards across Windows, Linux and macOS. All27 expanded check
+names, original steps, assertions, timeouts, failure evidence, per-platform
+coverage, actual rust-analyzer, release build and Windows history checks remain.
+Plain YAML aliases share the unchanged step lists. Full acceptance still needs
+all three platforms; no hosted pass or queue-speed improvement is claimed.
+Actionlint1.7.12, parsed original-step equivalence,18 damaged variants and6144
+dependency-readiness model cases pass locally. The full Python suite is113/0/0.
+[Evidence](validation/integration-2026-10-24/platform-ci-dependencies/README.md).
+
+## Local Windows native typing and Clippy: runtime acceptance open (2026-10-24)
+
+At source d80c6c78, `cargo check --workspace --all-targets --locked` and full
+workspace/all-target Clippy with warnings denied pass on Windows with Rust1.94.1
+and the `x86_64-pc-windows-msvc` target.
+All1003 frozen native/Cargo/workflow inputs remain exact. Each metadata run
+reports370 fresh native artifact observations over368 distinct Cargo targets;
+these are not test functions or executed groups. This supersedes earlier local
+typing-pending notes for default-feature Windows code only. Unix typing,
+doctests and native runtime behavior remain separate.
+
+Byte-preserving per-file compression of1152 older own text logs/manifests
+restores the existing1.2GB start admission. Every SHA-256, file identity and
+mtime remains exact; no native image, cache or directory is compressed/deleted.
+The independent500MB reserve remains. Reported compressed-file size reductions are not
+exclusive physical-volume savings.
+
+The library test-binary build reports Cargo0, but its owned group still has one
+member before forced cleanup. The group is empty and root exit proved afterward;
+the controlled build receipt remains incomplete. The candidate is not adopted
+or executed, and no native tests run. Free space falls below1.2GB again after
+linking. Current native/platform/history/browser/VSIX, full STATUS, main and
+release acceptance remain open.
+[Evidence](validation/integration-2026-10-24/native-windows-typing/README.md).
+
 ## Windows PowerShell phases: hosted cause remains unmeasured (2026-10-24)
 
 Two existing native tests now retain bounded private phase markers across a

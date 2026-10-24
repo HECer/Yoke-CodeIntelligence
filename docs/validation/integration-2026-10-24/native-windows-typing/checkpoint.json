@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-10-24T19:38:39.171056+00:00",
+  "codeRevision": "d80c6c784f462d5ad60c0f553986b2b4895108d4",
+  "platform": "Windows x86_64 MSVC",
+  "sourceInputCount": 1003,
+  "sameInputsAcrossThreeRuns": true,
+  "nativeTypeCheck": true,
+  "clippyWarningsDenied": true,
+  "newlyExecutedNativeTests": 0,
+  "linkedLibraryCandidateAdoptedOrExecuted": false,
+  "libraryCargoExit": 0,
+  "libraryOwnerReceiptComplete": false,
+  "libraryMemberCountBeforeForcedCleanup": 1,
+  "allThreeRootExitsAndEmptyJobsAfterCleanup": true,
+  "freeBeforeCompression": 1061720064,
+  "freeAfterSecondCompression": 1277575168,
+  "freeAfterLibraryBuild": 1064316928,
+  "existingAdmissionBytes": 1200000000,
+  "existingRuntimeFloorBytes": 500000000,
+  "noNativeProfileOrAssertionChange": true,
+  "scope": "Default-feature Windows Cargo metadata/type/lint only; no native runtime, Unix, full platform or release acceptance",
+  "stillOpen": [
+    "library producer child identity/complete lifecycle",
+    "native test execution",
+    "hosted PowerShell phases",
+    "full platform/STATUS/history/VSIX",
+    "main/release"
+  ]
+}
