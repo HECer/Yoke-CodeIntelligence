@@ -133,7 +133,7 @@ and `action`. File actions have `action.kind = "document"` and a closed `request
 | `plan` | `documentId`, `expectedRevision`, `content` |
 | `apply` | `documentId`, `planId` |
 | `inspect` (project proposal only) | `documentId`, `planId`; reads existing host approval/verification |
-| `pending` | `documentId` |
+| `pending` | `documentId`; optional SHA-256 `cursor` for project-journal pages only |
 | `recover` | `documentId`, `journalId`, `expectedEvent`, `direction` (`resume` or `rollback`) |
 
 Requests cannot provide paths, commands, grants or serialized approval objects.
@@ -147,6 +147,7 @@ The [scoped acceptance](../../docs/validation/integration-2026-10-24/dashboard-d
 The later [project-file acceptance](../../docs/validation/integration-2026-10-24/dashboard-project-files/README.md)
 connects exact selected captured project files to native plans and independent
 host proofs. The UI shows both proposal and workspace IDs, requires a status
-check and confirmation, and preserves drafts on refusal. The original native
-host workflow performs workspace recovery; dashboard inspection explicitly
-reports unavailable/incomplete state instead of an empty recovery list.
+check and confirmation, and preserves drafts on refusal. [Project-journal recovery](session-dashboard-project-recovery.md) now permits
+bounded exact-selection inspection and confirmed conditional rollback. Project
+journals accept only `rollback`; other native/older unbound journals retain the
+original host workflow. Empty pages never claim complete workspace recovery.

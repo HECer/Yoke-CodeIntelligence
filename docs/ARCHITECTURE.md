@@ -939,10 +939,28 @@ the original native writer, preserving full current base snapshot, WriterLock,
 scope, exact approval/result verification and durable workspace journals.
 The global-file writer remains unable to write project files. Possible journal
 IDs survive unconfirmed outcomes without claiming journal creation. Dashboard
-workspace recovery explicitly remains unavailable; the original native host
-workflow remains authoritative. Saving never reloads or executes configuration.
+recovery for bound single-file project journals is separately connected below;
+other native and older unbound journals retain the original host workflow. Saving never reloads or executes configuration.
 The 760-pass acceptance on 1145 exact inputs includes three stdio variants,
 independent HTTP proposals/shared bytes and actual native browser saves with
 separately labeled pixel rerenders. See the
 [contract](../native/docs/session-dashboard-project-files.md) and
 [evidence](validation/integration-2026-10-24/dashboard-project-files/README.md).
+
+### Reviewed project-file journal recovery
+
+Optional closed-schema selection provenance is recorded inside the original
+workspace journal by a trusted internal Engine route. It is data, never write
+permission; ordinary Receipt API/absent-binding bytes remain unchanged. Native
+progress/emergency/host rollback preserves it. Retention omits only this member
+from generic reference walking, preserving native plan/snapshot references.
+Finite pages inspect at most eight bounded rows and return at most two matching
+journals, with exact cursors and explicit unavailable/unbound coverage. Current
+Session and physical-root selection, workspace grants, edit/read-only/query and
+tool/source-scope checks precede rollback. Reviewed raw journal bytes and checked
+plan are re-read under the original WriterLock; only recognized before/after
+bytes may be restored. The browser reviews both versions and confirms rollback;
+resume is not synthesized. Drafts and journal/plan IDs survive uncertainty.
+The [788-pass scope](validation/integration-2026-10-24/dashboard-project-recovery/README.md)
+also exercises real stdio/HTTP/native-browser rollback. Broader journals, global
+binding migration, full dashboard and release acceptance remain separate.

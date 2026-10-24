@@ -195,5 +195,8 @@ exit; pixel evidence remains synthetic or a captured-DOM rerender.
 The later [project-file acceptance](../../docs/validation/integration-2026-10-24/dashboard-project-files/README.md)
 records 760 native passes on 1145 exact inputs, no group reuse and real original
 host approval/executed verification through stdio, HTTP and native browser saves.
-Workspace recovery remains the original native host workflow. The dashboard
-reports this limitation explicitly, retaining possible journal IDs and drafts.
+That checkpoint retained host-only workspace recovery. The later
+[project-journal acceptance](../../docs/validation/integration-2026-10-24/dashboard-project-recovery/README.md)
+adds bounded exact-selection inspection and confirmed conditional rollback,
+with 788 scoped native passes on 1149 exact inputs and no group reuse. Other
+native/older unbound journals use the host workflow. Drafts and IDs remain retained.

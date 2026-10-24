@@ -1,6 +1,54 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
-## Selected project-file writes: current scoped acceptance (2026-10-24)
+## Selected project-file journal recovery: current scoped acceptance (2026-10-24)
+
+Product `191c06b7c9f5baa3149f3f773a8278d082dfe22a` is pushed to the integration branch. All twelve product blobs
+are independently verified on GitHub. The dashboard can now inspect finite pages
+of native journals bound to its exact current writable project-file selection,
+review immutable before/after bytes, and explicitly confirm conditional rollback.
+The raw journal revision is rechecked under the original WriterLock. Current
+Session/root/project/editing/read-only/query/tool/source-scope grants still apply;
+metadata never grants permission. Unknown current bytes are preserved. Resume and
+older unbound/native journals remain in the original host workflow. Empty pages
+are never advertised as complete workspace recovery. Native host rollback and
+emergency journal updates preserve optional provenance; default Receipt API and
+unbound serialization remain unchanged. Provenance does not retain CAS evidence.
+
+Final scope has **788 native passes, zero failures, seven existing ignores and
+zero filtered functions** in thirteen whole groups: library657, management22,
+dashboard13, notes15, HTTP18, protocol5, steering12, selection8, settings8,
+project6, retention17, capture-changes1 and main6. No older-source group is reused.
+All 1149 frozen inputs stay exact through qualification and live checks.
+All-target Clippy with warnings denied, 368 format roots, typecheck and npm260/3
+existing skips pass. Qualified CLI SHA:
+`0ded3e33a52c750ce7b43ab54392ec234c72a1c7fe889f205ab970697f51f7f9`.
+
+Three real stdio variants inspect original/native plan IDs and exact before/after
+bytes; reject resume, stale reviews and foreign bytes; restore exact originals;
+then refuse stale retries and expose terminal journals without recovery actions.
+Real HTTP actors share durable journals, while proposals remain actor-local:
+one actor's rollback invalidates the other's saved review. The native browser
+reviews both byte versions, cancels without writing, confirms rollback, retains
+the previous draft until explicit reload, and proves restored file bytes.
+Owned native/Python exits, independent HTTP runtime state and empty Jobs retain
+their original proofs. No existing credentials, system policy, model call or
+analyzed project execution is introduced. Pixel evidence distinguishes synthetic
+fixtures and captured-native-DOM rerenders from native screenshots.
+
+The first paging assertion failure is retained: a valid two-entry page could
+precede the authored corrupt row. The corrected test follows exact cursors and
+counts that row once. Focused 7+11 passes are not added to the whole-group total.
+The unavailable-format-tool attempt and initial synthetic-fixture JSON parsing
+failure remain distinct from the passing final gates and inspected fixtures.
+[Contract](../native/docs/session-dashboard-project-recovery.md) and [scoped evidence](validation/integration-2026-10-24/dashboard-project-recovery/README.md).
+
+This supersedes dashboard recovery debt for these bound single-file journals.
+Global write-binding migration/retirement, broader native recovery UI, tray/
+automatic opening, accessibility/platform/upstream and full STATUS/release work
+remain open. Original 353/73/77 boundaries and ten historical Windows OS1314
+baseline failures are unchanged. No main merge, release or full certificate.
+
+## Earlier selected project-file writes: scoped acceptance (2026-10-24)
 
 Product `125a538cffc90c45807f30b232afd70752998a6d` is pushed to the integration
 branch; all seven product blobs are independently verified on GitHub. Explicitly

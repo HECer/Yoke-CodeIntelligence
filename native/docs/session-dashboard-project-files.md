@@ -39,10 +39,12 @@ approval/verification. An operation that entered the writer but did not confirm
 success is unconfirmed; its possible deterministic workspace journal ID and
 native plan ID are returned without claiming that a journal was created.
 
-Workspace journal inspection/recovery uses the original native host workflow.
-The dashboard explicitly reports that it cannot list complete workspace recovery
-state, resume or roll back those journals; it never returns an empty complete
-recovery result. Global-file conditional recovery keeps its separate contract.
+[Selected project-file journal recovery](session-dashboard-project-recovery.md)
+uses the original native journal and WriterLock. Explicit finite pages expose
+bound before/after bytes and current journal revision; confirmation permits only
+conditional rollback. Other native/older unbound journals use the original host
+workflow. Empty pages never claim complete workspace recovery. Global-file
+conditional recovery keeps its separate contract.
 No source, journal or immutable snapshot is deleted by selecting this route.
 
 Saving bytes does not reload configuration or automatically execute project code.

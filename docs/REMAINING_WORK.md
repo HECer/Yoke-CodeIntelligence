@@ -2,31 +2,25 @@
 
 ## Current dashboard management scope (2026-10-24)
 
-[Current scoped acceptance](validation/integration-2026-10-24/dashboard-project-files/README.md)
-connects selected project files to original native immutable plans, separate host
-approval, executed verification, full current base snapshot, WriterLock and
-workspace journals. Browser status inspection cannot grant either host proof.
-Three actual stdio variants, HTTP actor-local proposals/shared file bytes and
-actual native browser confirmation/save/draft retention pass. Final scope has
-760 native passes, zero failures, seven existing ignores and 1145 exact inputs
-in eleven whole groups, with no reuse. Lint/format/typecheck/npm pass. Pixel
-rerenders remain distinct from native screenshots. Original 353/73/77 and whole
-Windows/platform/upstream certificates stay unchanged.
+[Current scoped acceptance](validation/integration-2026-10-24/dashboard-project-recovery/README.md)
+adds bounded native-journal before/after inspection and confirmed conditional
+rollback for exact writable project-file selections. Current grants, reviewed
+journal revision, original WriterLock, immutable evidence and foreign-byte
+preservation remain authoritative. Older/unbound/native multi-file journals
+retain host recovery. An empty page never claims complete workspace recovery.
+Final scope: 788 native passes/zero failures/seven existing ignores, thirteen
+whole groups, no reuse, 1149 exact inputs; lint/368-root format/typecheck/npm pass.
+Real stdio/HTTP/browser rollback and stale-review refusal are exercised. Original
+353/73/77 and whole Windows/platform/upstream certificates remain unchanged.
 
-The full dashboard action remains active. Implement explicit global document
-write-binding migration/retirement and dashboard workspace recovery. The latter
-currently reports unavailable/incomplete inspection and directs to the original
-native host recovery workflow. Global writes retain independent host selection,
-physical/security preconditions and pinned journals; project writes retain the
-original source writer. Editing bytes must not reload or execute configuration.
-Private raw logs retain finite concurrent-observation semantics, and owning
-shutdown retains its separate host grant and trusted transport binding.
-
-Tray, automatic opening and broader keyboard/touch/accessibility/all-browser
-acceptance remain open. [Selected global files and language controls](validation/integration-2026-10-24/dashboard-documents/README.md)
-and the [project/mode/memory foundation](validation/integration-2026-10-24/dashboard-management/README.md)
-retain their earlier scopes. Neither this file nor the new acceptance marks the
-full dashboard or STATUS done.
+The full dashboard action remains active. Global document write-binding
+migration/retirement and broader recovery UI remain open. Keep independent host
+selection, physical/security preconditions and durable pinned journals; editing
+bytes must not reload or execute configuration. Private raw logs retain finite
+concurrent-observation semantics; owning shutdown retains its separate grant and
+trusted transport binding. Tray, automatic opening and broader keyboard/touch/
+accessibility/all-browser acceptance remain open. Neither this file nor the new
+acceptance marks the full dashboard or STATUS done.
 
 ## Captured import attributes
 
