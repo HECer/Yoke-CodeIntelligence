@@ -64,3 +64,15 @@ jobs:
           path: |
             target/release/yoke
             target/release/yoke.exe
+      - name: Exercise global document history through the release CLI and owning Sessions
+        id: host_history
+        if: runner.os == 'Windows'
+        timeout-minutes: 5
+        run: python scripts/host_history_live.py --native target/release/yoke.exe --output validation/ci-host-document-history
+      - name: Preserve owned host-history acceptance evidence
+        if: always() && runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-document-history-windows
+          path: validation/ci-host-document-history
+          if-no-files-found: warn
