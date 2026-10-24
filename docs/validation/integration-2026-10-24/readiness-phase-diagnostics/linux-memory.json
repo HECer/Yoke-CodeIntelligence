@@ -1,0 +1,112 @@
+{
+  "artifactId": 12567908413,
+  "archiveDigestExact": true,
+  "sourceFixtureExact": true,
+  "result": {
+    "schema": 1,
+    "diagnosticOnly": true,
+    "nativeAcceptance": false,
+    "sourceRevision": "c11511ee821d16741b4082e59ecd2bf671462270",
+    "platform": "linux",
+    "fixtureSha256": "297ca269080447ddfd42d6070aac178e370db0331aac8acf687a5a6140500fd1",
+    "kernelRelease": "6.17.0-1022-azure",
+    "architecture": "x86_64",
+    "requestedBytes": 268435456,
+    "trials": [
+      {
+        "name": "direct",
+        "mode": "self",
+        "nanoDisabled": false,
+        "exitCode": 0,
+        "refusal": null,
+        "groupAbsenceObserved": true,
+        "observation": {
+          "schema": 1,
+          "mode": "self",
+          "requestedBytes": 268435456,
+          "vmObservationAvailable": true,
+          "virtualBytesBefore": 2756608,
+          "setLimitAttempted": true,
+          "setLimitSucceeded": true,
+          "setLimitErrno": 0,
+          "limitObservationAvailable": true,
+          "observedSoftBytes": 268435456,
+          "observedHardBytes": 268435456,
+          "exactLimitInstalled": true,
+          "allocationProbeAttempted": true,
+          "mallocDenied": true,
+          "mallocErrno": 12,
+          "mmapDenied": true,
+          "mmapErrno": 12,
+          "nativeAcceptance": false
+        }
+      },
+      {
+        "name": "shell-inherited",
+        "mode": "inherited",
+        "nanoDisabled": false,
+        "exitCode": 0,
+        "refusal": null,
+        "groupAbsenceObserved": true,
+        "observation": {
+          "schema": 1,
+          "mode": "inherited",
+          "requestedBytes": 268435456,
+          "vmObservationAvailable": true,
+          "virtualBytesBefore": 2756608,
+          "setLimitAttempted": false,
+          "setLimitSucceeded": null,
+          "setLimitErrno": 0,
+          "limitObservationAvailable": true,
+          "observedSoftBytes": 268435456,
+          "observedHardBytes": 268435456,
+          "exactLimitInstalled": true,
+          "allocationProbeAttempted": true,
+          "mallocDenied": true,
+          "mallocErrno": 12,
+          "mmapDenied": true,
+          "mmapErrno": 12,
+          "nativeAcceptance": false
+        }
+      }
+    ],
+    "diagnosticComplete": true,
+    "nativeYokeImageReadOrExecuted": false,
+    "scope": "Owned C process/API observations, not Yoke or full memory qualification",
+    "compiler": "/usr/bin/clang",
+    "compileExit": 0,
+    "ownedProbeSha256": "a7849edd1d9fefca2b99a5a110ef1f4374577c8c4699b9dd16b7ae82699d9062",
+    "logs": [
+      {
+        "name": "compile.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "compile.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "direct.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "direct.stdout",
+        "bytes": 428,
+        "sha256": "bdcaf05f44f8671ececb3917b06b2da257673ac0dedfa45c3f71397110b6f3a0"
+      },
+      {
+        "name": "shell-inherited.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "shell-inherited.stdout",
+        "bytes": 434,
+        "sha256": "95ffbcfbf216584a27a827043f722c1cc69cf946e397dc9de7467e3f1e93dfe3"
+      }
+    ]
+  }
+}

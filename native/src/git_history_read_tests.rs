@@ -183,7 +183,14 @@ fn object_information_and_contents_share_the_original_deadline() {
         !reader.exceeded_ceiling,
         "An object request extended the host deadline"
     );
-    assert_eq!((reader.sizes, reader.bodies), (1, 1));
+    assert_eq!(
+        (reader.sizes, reader.bodies),
+        (1, 1),
+        "elapsed={:?}; fixture_delay={:?}; host_remaining={:?}",
+        start.elapsed(),
+        reader.delay,
+        d.remaining()
+    );
     assert!(start.elapsed() < Duration::from_millis(200));
 }
 

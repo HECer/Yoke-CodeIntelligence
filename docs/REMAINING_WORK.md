@@ -1,5 +1,17 @@
 # Remaining implementation and acceptance
 
+## Readiness and scheduling causes remain unmeasured
+
+The [test diagnostics](validation/integration-2026-10-24/readiness-phase-diagnostics/README.md)
+preserve all original startup/request/count/elapsed bounds while recording only
+failure phase and scalar observations. Actual execution of the changed native
+tests remains pending. The older Windows startup failures and macOS history/drip
+failures are not reclassified as passes. The verified Linux owned-C memory probe
+and ten terminal CI cancellations retain their own non-native scopes. Current
+native/platform/runtime/history live/current VSIX and full STATUS remain open.
+Changed-file rustfmt, Python103/0/0, typecheck and npm260/0/3 existing skips pass
+with their own scopes, without native execution.
+
 ## Scoped SQLite deadline restoration awaits native confirmation
 
 The [callback correction](validation/integration-2026-10-24/sqlite-publication-deadline/README.md)

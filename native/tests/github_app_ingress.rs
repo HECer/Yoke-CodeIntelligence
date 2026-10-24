@@ -616,7 +616,13 @@ fn absolute_request_deadline_stops_a_peer_which_keeps_sending_partial_headers() 
     let _ = read.read_to_end(&mut wire);
     stop.store(true, Ordering::SeqCst);
     drip.join().unwrap();
-    assert!(sent.load(Ordering::SeqCst) >= 2);
+    assert!(
+        sent.load(Ordering::SeqCst) >= 2,
+        "sent={}; elapsed={:?}; response_bytes={}",
+        sent.load(Ordering::SeqCst),
+        now.elapsed(),
+        wire.len()
+    );
     assert!(now.elapsed() < Duration::from_millis(750));
     assert!(f.records().is_empty());
     f.stop();

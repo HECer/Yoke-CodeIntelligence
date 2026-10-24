@@ -1,5 +1,21 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Readiness diagnostics and scoped hosted observations (2026-10-24)
+
+Windows editor failures at c11511ee occur at the original3-second startup wait,
+before request behavior. The fixture now records atomic startup stage, elapsed
+and worker/channel state on failure. Existing macOS history/drip failures gain
+only timing/count diagnostics. Original assertions, sleeps and budgets remain;
+these modified native tests await execution. No production behavior changes.
+Changed-file rustfmt, Python103/0/0, typecheck and npm260/0/3 existing skips pass.
+
+The c11511ee Linux owned-C diagnostic now compiles and verifies256-MiB direct/
+inherited limits with512-MiB allocation denial and group cleanup. This is not
+native product or macOS qualification. Ten requested obsolete queued-run
+cancellations are confirmed terminal, not counted as passing checks. Current
+native/platform/live/VSIX and full STATUS remain open.
+[Evidence](validation/integration-2026-10-24/readiness-phase-diagnostics/README.md).
+
 ## Publication SQLite deadline callback: native confirmation pending (2026-10-24)
 
 The scoped source/publication policy now reinstalls the owned SQLite busy

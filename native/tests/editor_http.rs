@@ -3,7 +3,11 @@ use std::{
     fs,
     io::{self, Read, Write},
     net::{Shutdown, TcpStream},
-    sync::mpsc,
+    sync::{
+        Arc,
+        atomic::{AtomicU8, Ordering},
+        mpsc,
+    },
     thread::{self, JoinHandle},
     time::{Duration, Instant},
 };
@@ -16,13 +20,16 @@ use yoke::{
 struct HandshakeWriter {
     bytes: Vec<u8>,
     sender: mpsc::Sender<Value>,
+    startup_stage: Arc<AtomicU8>,
 }
 impl Write for HandshakeWriter {
     fn write(&mut self, bytes: &[u8]) -> io::Result<usize> {
+        self.startup_stage.store(3, Ordering::Release);
         self.bytes.extend_from_slice(bytes);
         if let Some(end) = self.bytes.iter().position(|b| *b == b'\n') {
             let value = serde_json::from_slice(&self.bytes[..end]).map_err(io::Error::other)?;
             self.sender.send(value).map_err(io::Error::other)?;
+            self.startup_stage.store(4, Ordering::Release);
             self.bytes.drain(..=end);
         }
         Ok(bytes.len())
@@ -44,8 +51,13 @@ impl Server {
         fs::write(dir.path().join("app.rs"), "fn saved() {}\n").unwrap();
         let root = dir.path().to_owned();
         let (sender, receiver) = mpsc::channel();
+        let startup_stage = Arc::new(AtomicU8::new(0));
+        let worker_stage = Arc::clone(&startup_stage);
+        let startup_started = Instant::now();
         let join = thread::spawn(move || {
+            worker_stage.store(1, Ordering::Release);
             let mut engine = Engine::open(root)?;
+            worker_stage.store(2, Ordering::Release);
             // Transport must remain read-only even when the owning host enables writes.
             engine.allow_writes = true;
             serve(
@@ -58,12 +70,27 @@ impl Server {
                 HandshakeWriter {
                     bytes: Vec::new(),
                     sender,
+                    startup_stage: worker_stage,
                 },
             )
         });
         let handshake = receiver
             .recv_timeout(Duration::from_secs(3))
-            .expect("Editor service must announce its loopback endpoint");
+            .unwrap_or_else(|error| {
+                let stage = match startup_stage.load(Ordering::Acquire) {
+                    0 => "worker_not_entered",
+                    1 => "engine_open_entered",
+                    2 => "engine_open_completed",
+                    3 => "announcement_write_entered",
+                    4 => "announcement_sent",
+                    _ => "invalid_fixture_stage",
+                };
+                panic!(
+                    "Editor service must announce its loopback endpoint: {error:?}; stage={stage}; elapsed={:?}; worker_finished={}",
+                    startup_started.elapsed(),
+                    join.is_finished()
+                );
+            });
         let endpoint = handshake["endpoint"].as_str().unwrap().to_string();
         let token = handshake["token"].as_str().unwrap().to_string();
         assert!(endpoint.starts_with("http://127.0.0.1:") && endpoint.ends_with("/editor"));
