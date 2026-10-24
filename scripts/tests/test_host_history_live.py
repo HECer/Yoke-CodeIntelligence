@@ -224,6 +224,78 @@ class HistoryEvidenceAdmission(unittest.TestCase):
                         with self.assertRaises(RuntimeError):
                             LIVE.source_inputs()
 
+    def run_inert_assigned_worker(self, leave_child, must_refuse):
+        # Exercise the real suspended-parent runner and named-Job admission,
+        # substituting only its fixed worker script. No Yoke path/image exists.
+        self.assertGreaterEqual(LIVE.shutil.disk_usage(LIVE.ROOT).free, LIVE.MIN_FREE)
+        with tempfile.TemporaryDirectory(prefix="owned-history-job-tree-") as directory:
+            root = Path(directory).resolve()
+            fixture, output = root / "fixture", root / "output"
+            fixture.mkdir()
+            output.mkdir()
+            script = root / "inert-worker.py"
+            script.write_text('''import ctypes, importlib.util, json, pathlib, subprocess, sys
+import _winapi
+spec = json.loads(pathlib.Path(sys.argv[2]).read_text(encoding="utf-8"))
+loader = importlib.util.spec_from_file_location("owned_history", spec["module"])
+live = importlib.util.module_from_spec(loader)
+loader.loader.exec_module(live)
+proof = live.require_worker_job(spec["workerJobName"])
+proof["nativeYokeImageReadOrExecuted"] = False
+if spec["leaveChild"]:
+    process, thread, pid, _ = _winapi.CreateProcess(
+        None, subprocess.list2cmdline([sys.executable, "-I", "-c", "import time; time.sleep(30)"]),
+        None, None, False, subprocess.CREATE_NO_WINDOW, None, None, subprocess.STARTUPINFO())
+    _winapi.CloseHandle(thread)
+    _winapi.CloseHandle(process)
+    proof["ownedChildStarted"] = True
+live.write_json(pathlib.Path(spec["output"]) / "inert-admission.json", proof)
+''', encoding="utf-8")
+            name = "Local\\YokeHistoryCI-" + LIVE.os.urandom(32).hex()
+            spec_path = fixture / "spec.json"
+            LIVE.write_json(spec_path, {"module": str(Path(LIVE.__file__).resolve()),
+                "workerJobName": name, "output": str(output), "leaveChild": leave_child})
+            environment = {key: LIVE.os.environ[key] for key in
+                ("PATH", "SystemRoot", "SystemDrive", "WINDIR") if key in LIVE.os.environ}
+            environment.update(HOME=str(fixture), USERPROFILE=str(fixture), TEMP=str(fixture), TMP=str(fixture))
+            try:
+                with mock.patch.object(LIVE, "__file__", str(script)):
+                    if must_refuse:
+                        with self.assertRaisesRegex(RuntimeError, "did not complete"):
+                            LIVE.bounded_worker(spec_path, fixture, output, environment, name)
+                    else:
+                        LIVE.bounded_worker(spec_path, fixture, output, environment, name)
+            finally:
+                job = LIVE.read_json(output / "job.json")
+                # These actual receipts are required even if the acceptance
+                # assertion fails against the preceding runner.
+                self.assertEqual(job["exitCode"], 0)
+                self.assertTrue(job["startedSuspended"])
+                self.assertTrue(job["assignedBeforeResume"])
+                self.assertEqual(job["activeAfterCleanup"], 0)
+                print("Owned inert Job observation: " + json.dumps(job, sort_keys=True))
+            admission = LIVE.read_json(output / "inert-admission.json")
+            self.assertTrue(admission["specificJobMembershipConfirmed"])
+            self.assertTrue(admission["queryHandleClosedBeforeNativeRead"])
+            self.assertFalse(admission["nativeYokeImageReadOrExecuted"])
+            self.assertEqual(job["complete"], not must_refuse)
+            if leave_child:
+                self.assertTrue(admission["ownedChildStarted"])
+                self.assertGreater(job["activeAtParentExit"], 0)
+                self.assertGreater(job["activeBeforeCleanup"], 0)
+                self.assertFalse(job["treeExitedBeforeCleanup"])
+            else:
+                self.assertEqual(job["activeBeforeCleanup"], 0)
+                self.assertTrue(job["treeExitedBeforeCleanup"])
+
+    @unittest.skipUnless(LIVE.os.name == "nt", "Actual assigned Job tree requires Windows")
+    def test_actual_assigned_inert_worker_proves_own_exit_before_cleanup(self):
+        self.run_inert_assigned_worker(leave_child=False, must_refuse=False)
+
+    @unittest.skipUnless(LIVE.os.name == "nt", "Actual assigned Job tree requires Windows")
+    def test_actual_child_left_after_worker_exit_cannot_become_success_via_cleanup(self):
+        self.run_inert_assigned_worker(leave_child=True, must_refuse=True)
+
 
 if __name__ == "__main__":
     unittest.main()

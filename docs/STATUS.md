@@ -1,5 +1,18 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## History worker tree exit: stricter admission, native acceptance pending (2026-10-24)
+
+An actual inert Windows worker counterexample shows the earlier runner accepting
+exit0 while a child survives until forced Job cleanup. Success now independently
+requires an observed empty assigned Job before that cleanup, with at most one
+second of observation inside the original180-second deadline. Actual clean and
+leaking Python trees prove positive admission and refusal; all owned Jobs end
+empty.18 focused history tests and103 whole Python tests pass separately, with
+overlapping counts. Typecheck and npm260/0/3 existing skips pass. Native
+source/workflow remain unchanged;
+archive/live/native/current VSIX/full STATUS acceptance remains open.
+[Evidence](validation/integration-2026-10-24/history-tree-exit/README.md).
+
 ## Unix memory API diagnostic: observations pending (2026-10-24)
 
 A fixed owned C fixture now measures Unix CI memory API behavior separately

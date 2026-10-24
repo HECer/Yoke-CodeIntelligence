@@ -1,5 +1,17 @@
 # Remaining implementation and acceptance
 
+## History native acceptance retains independent pre-cleanup exit proof
+
+The [runner correction](validation/integration-2026-10-24/history-tree-exit/README.md)
+requires an observed empty assigned Job before forced cleanup can run. Actual
+inert Windows clean/leaking worker trees pass/refuse respectively, and cleanup
+leaves zero active processes.18 focused history tests and103 whole Python tests
+pass separately; typecheck and npm260/0/3 existing skips pass. This corrects a
+demonstrated false-success path without changing native sources, the workflow
+or existing operation limits.
+It does not execute the actual archive/native/runtime gate. Full hosted history,
+browser, current VSIX and STATUS acceptance remain open.
+
 ## Unix memory diagnosis awaits actual runner observations
 
 The [CI-only diagnostic](validation/integration-2026-10-24/unix-memory-diagnostic/README.md)

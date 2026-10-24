@@ -640,6 +640,16 @@ def bounded_worker(spec_path, fixture, output, environment, job_name):
                 output_size(fixture)
             row["exitCode"] = _winapi.GetExitCodeProcess(process)
             row["activeAtParentExit"] = active()
+            # A signalled root alone does not prove that its assigned tree has
+            # exited. Observe accounting settling before forced cleanup, using
+            # at most one second within the original worker deadline.
+            drain_deadline = min(deadline, time.monotonic() + 1)
+            remaining_active = row["activeAtParentExit"]
+            while remaining_active and time.monotonic() < drain_deadline:
+                time.sleep(.01)
+                remaining_active = active()
+            row["activeBeforeCleanup"] = remaining_active
+            row["treeExitedBeforeCleanup"] = remaining_active == 0
     finally:
         if process is not None and not row["assignedBeforeResume"]:
             _winapi.TerminateProcess(process, 124)
@@ -651,7 +661,9 @@ def bounded_worker(spec_path, fixture, output, environment, job_name):
         for handle in (thread, process, job):
             if handle is not None:
                 require(api.CloseHandle(handle), "Owned Job handle close failed")
-        row["complete"] = row.get("exitCode") == 0 and row["activeAfterCleanup"] == 0
+        row["complete"] = (row.get("exitCode") == 0
+                           and row.get("treeExitedBeforeCleanup") is True
+                           and row["activeAfterCleanup"] == 0)
         write_json(output / "job.json", row)
     require(row["complete"], "Owned live worker did not complete")
 
