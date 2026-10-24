@@ -1,5 +1,42 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Owning MCP Session shutdown: current scoped acceptance (2026-10-24)
+
+Product `3bcea306547f641f294f018b09077183d5f4e646` is pushed to the integration
+branch; all eleven product blobs are independently verified on GitHub. A separate
+host grant and trusted transport binding enable ending only the owning MCP
+connection. Current Session authority still applies. The owner quiesces after
+acceptance and waits for the reply-write attempt or abandoned delivery before
+normal cleanup. An acknowledgement does not claim completed process exit.
+
+Final scope has **752 native passes, zero failures, seven existing ignores and
+zero filtered functions** in eleven whole groups, including all 639 library and
+22 management functions. All 1143 inputs stay exact through qualification and
+live acceptance; no preceding-source group is reused. All-target Clippy with
+warnings denied, all 368 format roots, typecheck and npm260/3 existing skips pass.
+Qualified CLI SHA:
+`8d7f4166f8824a6bcd5025727eacbcbf856980a587581fef054ee1e90c3fcb6a`.
+
+Three actual stdio variants exit before stdin EOF. HTTP closes only A; B retains
+its runtime value 99 and the service accepts C. Held image-checked process handles
+prove owned Python runtime exits before Job cleanup. Actual native browser
+cancellation, rapid reopening, confirmation and retained copyable unsaved drafts
+pass at 390-by-844 without horizontal overflow. Snapshot automation timed out;
+inspected pixels are labeled synthetic fixtures or static captured-native-DOM
+rerenders, never native screenshots. Original compile and visual failures remain
+in the evidence. All owned Jobs finish empty and the fresh synthetic credential
+is removed. No privilege change, existing credential or automatic execution of
+analyzed project code is used.
+
+[Contract](../native/docs/session-dashboard-shutdown.md) and
+[scoped evidence](validation/integration-2026-10-24/dashboard-owned-shutdown/README.md).
+This supersedes owning-shutdown debt in the historical checkpoints below.
+Project writes through original approval/executed-verification gates, binding
+migration/retirement, tray/automatic opening and broader accessibility/STATUS/
+platform/upstream/release work remain open. The original 353/73/77 boundaries and
+ten historical Windows OS1314 baseline failures remain unchanged. No main merge,
+release or full dashboard certificate is claimed; the full action remains active.
+
 ## Private raw logs and activity labels: scoped acceptance (2026-10-24)
 
 Product `c65c1512bfbefc7f5c408bf4a31b6a7cdd15a73e` is pushed to the integration

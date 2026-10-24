@@ -862,7 +862,7 @@ Passive Rust JSON project selectors are omitted only from private provider copie
 
 Primary and additional semantic workspace folder identities share ASCII-only case folding on Windows and preserve opaque Unicode bytes. Exact captured source membership remains independent. Distinct filesystem names that Unicode lowercasing expands into the same text no longer merge or lose semantic roots.
 
-Explicit host dashboard configuration binds a distinct session fingerprint and starts a private loopback view only on open. Default access is read only. A second management opt-in queues bounded inert requests to the same owning non-Send Session thread; stdio polls OS input readiness and MCP-HTTP polls its actor between requests. Current session SHA/project, raw tool/API policy, note head CAS, revocation and original deadlines remain checked. Creation requires absence in the existing immediate note transaction; immutable note/source evidence remains intact. Accepted socket deadlines are capped by capability expiry, and Winsock sockets explicitly leave inherited nonblocking mode. Source writes and execution grants remain independent. A bounded worker owns fresh capabilities and nonpersisted structured activity without arguments/results/raw logs. Existing-only read-only SQL checks every displayed workspace/session binding. Session drop, stdio EOF and revocation close only owned listeners. Default absent/null management serialization and catalogs remain byte-preserving. The later selected-document and language acceptance is scoped separately; project writes, migration, owned shutdown and broader UI scope remain open. Private raw-log windows are separately implemented below. See [dashboard contract](../native/docs/session-dashboard.md) and [scoped acceptance](validation/integration-2026-10-24/dashboard-management/README.md).
+Explicit host dashboard configuration binds a distinct session fingerprint and starts a private loopback view only on open. Default access is read only. A second management opt-in queues bounded inert requests to the same owning non-Send Session thread; stdio polls OS input readiness and MCP-HTTP polls its actor between requests. Current session SHA/project, raw tool/API policy, note head CAS, revocation and original deadlines remain checked. Creation requires absence in the existing immediate note transaction; immutable note/source evidence remains intact. Accepted socket deadlines are capped by capability expiry, and Winsock sockets explicitly leave inherited nonblocking mode. Source writes and execution grants remain independent. A bounded worker owns fresh capabilities and nonpersisted structured activity without arguments/results/raw logs. Existing-only read-only SQL checks every displayed workspace/session binding. Session drop, stdio EOF and revocation close only owned listeners. Default absent/null management serialization and catalogs remain byte-preserving. The later selected-document and language acceptance is scoped separately; project writes, migration and broader UI scope remain open. Private raw-log windows and owning-session shutdown are separately implemented below. See [dashboard contract](../native/docs/session-dashboard.md) and [scoped acceptance](validation/integration-2026-10-24/dashboard-management/README.md).
 
 An independent dashboard language allowlist now selects only pinned host registrations. Project-local persisted overrides retain ordered backend priority or a legacy-language subset; an empty legacy subset explicitly disables semantic providers. Current policy, Session SHA and registry checks precede metadata CAS, followed by an infallible prevalidated Engine projection. Other projects derive from the original registry. No provider starts for selection alone, no configuration file is reloaded, and immutable evidence stays unchanged. The later 733-pass selected-document checkpoint also qualifies current CLI stdio/HTTP and actual browser selection; provider runtimes remain uncertified. See the [selection contract](../native/docs/session-dashboard-language-servers.md).
 
@@ -910,3 +910,19 @@ pixels distinguish synthetic fixtures and captured-DOM rerenders. Other
 permissions and project execution/write gates remain independent. See the
 [contract](../native/docs/session-dashboard-raw-logs.md) and
 [evidence](validation/integration-2026-10-24/dashboard-raw-logs/README.md).
+
+### Owning MCP Session shutdown
+
+An independent false-by-default host grant plus a nonserializable trusted driver
+binding selects only the current managed stdio connection or HTTP Session actor.
+Current project/root/Session SHA, policy, original deadline and revocation precede
+acceptance. An atomic owner signal quiesces later/prefetched operations. An opaque
+completion value survives bounded reply encoding and the listener's response-write
+attempt; completion or abandoned delivery releases normal owner cleanup. The HTTP
+service stop flag is untouched. Acceptance reports no confirmed process exit.
+The browser requires confirmation, stops polling on accepted/unconfirmed results
+and preserves copyable draft text. Fixed activity excludes arguments/results.
+The 752-pass acceptance on 1143 exact inputs proves stdio exit before stdin EOF,
+HTTP isolation and specifically captured runtime exit before owned Job cleanup.
+See the [contract](../native/docs/session-dashboard-shutdown.md) and
+[scoped evidence](validation/integration-2026-10-24/dashboard-owned-shutdown/README.md).

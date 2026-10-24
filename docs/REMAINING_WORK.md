@@ -2,24 +2,23 @@
 
 ## Current dashboard management scope (2026-10-24)
 
-[Current scoped acceptance](validation/integration-2026-10-24/dashboard-raw-logs/README.md)
-adds independently selected private raw-log windows and fixed document/language/
-log activity labels. Explicit reads preserve raw Base64 bytes, byte offsets and
-opened-generation identity; no auto capture, polling, write or immutable-file
-claim is introduced. Final scope has 747 native passes in eleven whole groups,
-zero failures, seven existing ignores and 1141 unchanged inputs, with no group
-reuse. Lint/format/typecheck/npm and actual CLI stdio/HTTP/native-browser checks
-pass. Synthetic pixels and captured-native-DOM rerenders are distinguished from
-actual screenshots. The original 353/73/77 and whole Windows/platform/upstream
-certificates are unchanged.
+[Current scoped acceptance](validation/integration-2026-10-24/dashboard-owned-shutdown/README.md)
+adds host-granted owning-session shutdown to the previously accepted private raw
+logs, file/language activity labels and global-file/language controls. It requires
+a trusted transport binding and current Session authority. Acknowledgement never
+claims process exit. Three actual stdio variants exit before stdin EOF; HTTP
+closes A while B and the service remain usable. Final scope has 752 native passes,
+zero failures, seven existing ignores and 1143 exact inputs in eleven whole groups,
+with no reuse. Lint/format/typecheck/npm and actual native browser workflows pass.
+Synthetic and captured-native-DOM rerenders are distinguished from screenshots.
+The original 353/73/77 and whole Windows/platform/upstream certificates stay unchanged.
 
 The full dashboard action remains active. Complete project configuration writes
 through original workspace permission, exact approval and executed-verification
-gates; explicit document write-binding migration/retirement; and shutdown
-restricted to the owning MCP resource. Global file writes retain independent
-host selection, physical/security preconditions and the pinned journal namespace.
-Editing file bytes must not reload or execute configuration. Private raw logs
-retain their separate finite selection and concurrent-observation semantics.
+gates, and explicit document write-binding migration/retirement. Global file
+writes retain independent host selection, physical/security preconditions and
+the pinned journal namespace. Editing bytes must not reload or execute
+configuration. Private raw logs retain finite concurrent-observation semantics.
 
 Tray, automatic opening and broader keyboard/touch/accessibility/all-browser
 acceptance remain open. [Selected global files and language controls](validation/integration-2026-10-24/dashboard-documents/README.md)

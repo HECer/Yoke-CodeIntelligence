@@ -50,6 +50,11 @@ started. Exact Base64 bytes, decimal offsets and opened-generation identity
 remain distinct from a lossy UTF-8 preview. Concurrent files are not immutable
 snapshots. See the [raw-log contract](session-dashboard-raw-logs.md).
 
+A separate `management.shutdown: true` host grant and trusted built-in transport
+binding enable [ending only the owning MCP Session](session-dashboard-shutdown.md).
+Confirmation is explicit; acknowledgement does not claim exit. Other HTTP Sessions
+and the service remain active. Library management alone cannot install a stop target.
+
 The CLI `serve-session` host installs the owner-thread driver when management is
 explicitly selected. Its native/Serena profiles expose opening operations.
 MCP-HTTP installs its actor driver for Session-backed principals; the pure Engine
@@ -94,8 +99,7 @@ separately selected raw-log reader and does not count every public protocol
 request. Evicted activity rows are disclosed.
 
 Project-file writes through existing approval/verification gates, binding migration,
-tray integration, automatic browser opening and MCP shutdown remain
-unavailable in this build. Their absence is disclosed rather than
+tray integration and automatic browser opening remain unavailable in this build. Their absence is disclosed rather than
 as empty successful results. Source-write approval and host execution grants are
 not changed through management. Existing guarded edit/approval/verification and
 recovery workflows retain their independent authority.
@@ -131,6 +135,7 @@ Host bounds (camelCase) are:
 | `management.sessionControls` | `true` when opted in | boolean |
 | `management.memories` | `true` when opted in | boolean; write policy remains separate |
 | `management.operationTimeoutMs` | `30000` | `100`–`60000` |
+| `management.shutdown` | `false` | boolean; trusted owning transport binding also required |
 | `management.documents` | absent/null | closed explicit selection; Windows guarded backend |
 | `management.rawLogs` | absent/null | closed exact-file selection; explicit 1-64000-byte windows; Windows backend |
 
@@ -178,3 +183,9 @@ flows and actual native browser DOM checks. Fixed allowlisted document/language/
 log labels retain status/timing while arguments/results remain excluded. Native
 snapshot failures and the captured-DOM pixel rerenders are explicitly labeled.
 Full dashboard/platform certification remains open.
+
+The later [owning-shutdown acceptance](../../docs/validation/integration-2026-10-24/dashboard-owned-shutdown/README.md)
+records 752 native passes on 1143 exact inputs, without group reuse, real stdio
+exit before stdin EOF and HTTP Session/service isolation. Actual native browser
+checks retain unsaved drafts and distinguish acknowledgement from proven process
+exit; pixel evidence remains synthetic or a captured-DOM rerender.
