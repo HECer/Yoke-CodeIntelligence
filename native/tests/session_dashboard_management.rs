@@ -1227,3 +1227,150 @@ fn a_new_host_journal_selection_reports_the_original_file_authority_instead_of_e
         b"fn untouched() {}\r\n"
     );
 }
+
+#[cfg(windows)]
+fn log_session(selected: bool, denied: bool) -> (tempfile::TempDir, Session, std::path::PathBuf) {
+    let fixture = tempfile::tempdir().unwrap();
+    let source = fixture.path().join("source");
+    fs::create_dir(&source).unwrap();
+    fs::write(source.join("main.rs"), b"fn untouched() {}\r\n").unwrap();
+    let path = fixture.path().join("private.log");
+    let mut host = json!({"dashboard":{"management":{"sessionControls":false,"memories":false}},"steering":{}});
+    if selected {
+        host["dashboard"]["management"]["rawLogs"] = json!({"logs":[{"id":"private","label":"Owned private log","path":path}],"maxWindowBytes":64});
+    }
+    if denied {
+        host["steering"]["global"] = json!({"excludedTools":["ci_session"]});
+    }
+    let session = Session::open(
+        Engine::open(&source).unwrap(),
+        serde_json::from_value(host).unwrap(),
+        Some("private-logs"),
+        &d(),
+    )
+    .unwrap();
+    (fixture, session, path)
+}
+#[cfg(windows)]
+#[test]
+fn private_raw_logs_require_explicit_read_and_never_enter_activity_or_state() {
+    use base64::Engine as _;
+    let (fixture, mut session, path) = log_session(true, false);
+    let (address, token) = start(&mut session);
+    let before = view(address, &token);
+    assert_eq!(before["capabilities"]["rawLogs"], true);
+    assert_eq!(
+        before["view"]["management"]["rawLogs"]["automaticCapture"],
+        false
+    );
+    assert!(!path.exists());
+    let (status, missing) = call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"readLog","logId":"private"}),
+    );
+    assert_eq!(status, 422, "{missing}");
+    assert!(!path.exists());
+    let bytes = b"owned private marker\r\n<script>inert()</script>\xff";
+    fs::write(&path, bytes).unwrap();
+    let (status, read) = call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"readLog","logId":"private"}),
+    );
+    assert_eq!(status, 200, "{read}");
+    assert_eq!(read["fileChanged"], false);
+    assert_eq!(read["metadataChanged"], false);
+    assert_eq!(read["sourceWritten"], false);
+    let o = &read["data"]["observation"];
+    assert_eq!(o["textLossy"], true);
+    assert_eq!(o["immutableSnapshot"], false);
+    assert_eq!(
+        base64::engine::general_purpose::STANDARD
+            .decode(o["base64"].as_str().unwrap())
+            .unwrap(),
+        bytes
+    );
+    let after = view(address, &token);
+    assert_eq!(
+        after["view"]["management"]["sessionStateSha256"],
+        before["view"]["management"]["sessionStateSha256"]
+    );
+    let serialized = serde_json::to_string(&after).unwrap();
+    assert!(!serialized.contains("owned private marker"));
+    assert!(!serialized.contains("<script>"));
+    assert!(
+        after["activity"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|r| r["operation"] == "dashboard.logs.read")
+    );
+    assert_eq!(fs::read(&path).unwrap(), bytes);
+    assert_eq!(
+        fs::read(fixture.path().join("source/main.rs")).unwrap(),
+        b"fn untouched() {}\r\n"
+    );
+}
+#[cfg(windows)]
+#[test]
+fn raw_log_selection_does_not_grant_paths_larger_windows_or_other_session_access() {
+    let (_fixture, mut session, path) = log_session(true, false);
+    fs::write(&path, b"private original").unwrap();
+    let (address, token) = start(&mut session);
+    for action in [
+        json!({"kind":"readLog","logId":"private","path":path}),
+        json!({"kind":"readLog","logId":"../outside"}),
+        json!({"kind":"readLog","logId":"private","maxBytes":0}),
+        json!({"kind":"readLog","logId":"private","maxBytes":65}),
+        json!({"kind":"readLog","logId":"not-selected"}),
+    ] {
+        let (status, refused) = call(&mut session, address, &token, action);
+        assert!(status >= 400, "{refused}");
+        assert!(refused["data"].is_null());
+    }
+    for (selected, denied) in [(false, false), (true, true)] {
+        let (_other_fixture, mut other, other_path) = log_session(selected, denied);
+        fs::write(&other_path, b"different private original").unwrap();
+        let (other_address, other_token) = start(&mut other);
+        let (status, refused) = call(
+            &mut other,
+            other_address,
+            &other_token,
+            json!({"kind":"readLog","logId":"private"}),
+        );
+        assert_eq!(status, 403, "{refused}");
+        let wrong = raw(
+            other_address,
+            wire(
+                other_address,
+                &token,
+                request(
+                    &view(other_address, &other_token),
+                    json!({"kind":"readLog","logId":"private"}),
+                ),
+            ),
+        );
+        assert_eq!(wrong.0, 401);
+        assert_eq!(fs::read(other_path).unwrap(), b"different private original");
+    }
+    assert_eq!(fs::read(path).unwrap(), b"private original");
+}
+#[test]
+fn absent_or_null_raw_log_grant_preserves_serialized_management_defaults() {
+    let absent: yoke::session_dashboard::ManagementConfig =
+        serde_json::from_value(json!({})).unwrap();
+    let null: yoke::session_dashboard::ManagementConfig =
+        serde_json::from_value(json!({"rawLogs":null})).unwrap();
+    assert_eq!(absent, null);
+    let encoded = serde_json::to_value(absent).unwrap();
+    assert!(encoded.get("rawLogs").is_none());
+    assert!(
+        serde_json::from_value::<yoke::session_dashboard::ManagementConfig>(
+            json!({"rawLogs":{"logs":[],"command":"anything"}})
+        )
+        .is_err()
+    );
+}

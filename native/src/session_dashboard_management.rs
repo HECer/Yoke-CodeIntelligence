@@ -20,6 +20,8 @@ pub struct Config {
     pub language_servers: Option<LanguageGrant>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub documents: Option<crate::host_install::documents::Config>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub raw_logs: Option<crate::host_install::logs::Config>,
 }
 impl Default for Config {
     fn default() -> Self {
@@ -29,6 +31,7 @@ impl Default for Config {
             operation_timeout_ms: 30_000,
             language_servers: None,
             documents: None,
+            raw_logs: None,
         }
     }
 }
@@ -43,6 +46,9 @@ impl Config {
         }
         if let Some(documents) = &self.documents {
             documents.validate()?;
+        }
+        if let Some(logs) = &self.raw_logs {
+            logs.validate()?;
         }
         Ok(())
     }
@@ -120,6 +126,11 @@ pub(crate) struct Request {
     deny_unknown_fields
 )]
 pub(crate) enum Action {
+    ReadLog {
+        log_id: String,
+        #[serde(default)]
+        max_bytes: Option<usize>,
+    },
     Document {
         request: DocumentRequest,
     },
@@ -246,6 +257,13 @@ impl Request {
             Ok(())
         };
         match &self.action {
+            Action::ReadLog { log_id, max_bytes } => {
+                crate::project_session::label(log_id)?;
+                ensure!(
+                    max_bytes.is_none_or(|n| (1..=64000).contains(&n)),
+                    "dashboard_log_window_capacity"
+                );
+            }
             Action::Document { request } => request.validate()?,
             Action::ReadMemory { name } | Action::DeleteMemory { name, .. } => project_name(name)?,
             Action::CreateMemory { name, content } | Action::WriteMemory { name, content, .. } => {
@@ -423,6 +441,37 @@ impl Client {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn raw_log_request_rejects_paths_commands_offsets_and_excessive_budgets() {
+        let base = json!({"id":"a".repeat(64),"sessionStateSha256":"b".repeat(64),"project":"default","action":{"kind":"readLog","logId":"session-log","maxBytes":8}});
+        crate::json::decode::<Request>(base.clone())
+            .unwrap()
+            .validate()
+            .unwrap();
+        for field in ["path", "command", "offset", "service", "grant"] {
+            let mut bad = base.clone();
+            bad["action"][field] = json!("untrusted");
+            assert!(crate::json::decode::<Request>(bad).is_err());
+        }
+        for value in [json!(0), json!(64001)] {
+            let mut bad = base.clone();
+            bad["action"]["maxBytes"] = value;
+            assert!(
+                crate::json::decode::<Request>(bad)
+                    .unwrap()
+                    .validate()
+                    .is_err()
+            );
+        }
+        let mut bad = base;
+        bad["action"]["logId"] = json!("../outside");
+        assert!(
+            crate::json::decode::<Request>(bad)
+                .unwrap()
+                .validate()
+                .is_err()
+        );
+    }
     #[test]
     fn argumentless_management_actions_reject_all_unknown_authority_fields() {
         for kind in ["resetModes", "resetLanguageServers"] {

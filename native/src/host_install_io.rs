@@ -16,6 +16,21 @@ pub(super) struct GuardedDirectory {
     _handles: Vec<File>,
 }
 
+pub(super) fn has_ancestor_identity(
+    directory: &GuardedDirectory,
+    identity: &str,
+    d: &Deadline,
+) -> Result<bool> {
+    #[cfg(windows)]
+    return windows::has_ancestor_identity(directory, identity, d);
+    #[cfg(not(windows))]
+    {
+        let _ = (directory, identity);
+        d.check()?;
+        anyhow::bail!("Guarded host ancestry is Windows-only")
+    }
+}
+
 pub(super) struct HeldFile {
     pub(super) path: PathBuf,
     pub(super) identity: String,
@@ -27,6 +42,30 @@ pub(super) struct HeldFile {
     _delete_access: bool,
     _writable: bool,
     _executable_binding: bool,
+}
+
+/// A finite observation of one opened log generation, never an immutable snapshot.
+pub(super) struct LogWindow {
+    pub(super) identity: String,
+    pub(super) initial_size: u64,
+    pub(super) final_size: u64,
+    pub(super) start: u64,
+    pub(super) bytes: Vec<u8>,
+}
+
+pub(super) fn read_log_tail(path: &Path, maximum: usize, d: &Deadline) -> Result<LogWindow> {
+    anyhow::ensure!(
+        (1..=64_000).contains(&maximum),
+        "Host log window budget invalid"
+    );
+    #[cfg(windows)]
+    return windows::read_log_tail(path, maximum, d);
+    #[cfg(not(windows))]
+    {
+        let _ = path;
+        d.check()?;
+        anyhow::bail!("Guarded host log reading is Windows-only")
+    }
 }
 
 pub(super) struct OutputBinding {
@@ -338,6 +377,19 @@ pub(super) fn guarded_directory(path: &Path, d: &Deadline) -> Result<GuardedDire
     }
 }
 
+/// Log observation pins directory names without blocking an active logger's
+/// Win32 child-file rotation. Deleting/renaming the directory still refuses.
+pub(super) fn guarded_log_directory(path: &Path, d: &Deadline) -> Result<GuardedDirectory> {
+    #[cfg(windows)]
+    return windows::guarded_log_directory(path, d);
+    #[cfg(not(windows))]
+    {
+        let _ = path;
+        d.check()?;
+        anyhow::bail!("Guarded host log directories are Windows-only")
+    }
+}
+
 pub(super) fn read_file(
     path: &Path,
     max_bytes: usize,
@@ -488,6 +540,8 @@ mod windows {
             std::cell::RefCell::new(None);
         static AFTER_OUTPUT_RETAIN: std::cell::RefCell<Option<Box<dyn FnOnce()>>> =
             std::cell::RefCell::new(None);
+        static AFTER_LOG_SIZE: std::cell::RefCell<Option<NamespaceHook>> =
+            std::cell::RefCell::new(None);
     }
 
     #[cfg(test)]
@@ -498,6 +552,11 @@ mod windows {
     #[cfg(test)]
     pub(super) fn set_output_retain_hook(hook: Option<Box<dyn FnOnce()>>) {
         AFTER_OUTPUT_RETAIN.with(|slot| *slot.borrow_mut() = hook);
+    }
+
+    #[cfg(test)]
+    pub(super) fn set_log_size_hook(hook: Option<NamespaceHook>) {
+        AFTER_LOG_SIZE.with(|slot| *slot.borrow_mut() = hook);
     }
 
     #[cfg(test)]
@@ -747,6 +806,18 @@ mod windows {
     }
 
     pub(super) fn guarded_directory(path: &Path, d: &Deadline) -> Result<GuardedDirectory> {
+        guarded_directory_with_sharing(path, SHARE_READ, d)
+    }
+
+    pub(super) fn guarded_log_directory(path: &Path, d: &Deadline) -> Result<GuardedDirectory> {
+        guarded_directory_with_sharing(path, 3, d) // READ | WRITE, never DELETE
+    }
+
+    fn guarded_directory_with_sharing(
+        path: &Path,
+        share: u32,
+        d: &Deadline,
+    ) -> Result<GuardedDirectory> {
         d.check()?;
         checked_path(path)?;
         let mut components = path.components();
@@ -768,7 +839,7 @@ mod windows {
         let root = OpenOptions::new()
             .read(true)
             .access_mode(GENERIC_READ | FILE_TRAVERSE)
-            .share_mode(SHARE_READ)
+            .share_mode(share)
             .custom_flags(OPEN_REPARSE_POINT | BACKUP_SEMANTICS)
             .open(&anchor)
             .context("Cannot guard host volume anchor")?;
@@ -786,7 +857,7 @@ mod windows {
                     kind: EntryKind::Directory,
                     disposition: Disposition::Open,
                     access: GENERIC_READ | FILE_TRAVERSE,
-                    share: SHARE_READ,
+                    share,
                 },
                 d,
             )
@@ -804,6 +875,20 @@ mod windows {
             identity,
             _handles: handles,
         })
+    }
+
+    pub(super) fn has_ancestor_identity(
+        directory: &GuardedDirectory,
+        identity: &str,
+        d: &Deadline,
+    ) -> Result<bool> {
+        for handle in &directory._handles {
+            d.check()?;
+            if information(handle, true)?.0 == identity {
+                return Ok(true);
+            }
+        }
+        Ok(false)
     }
 
     fn parent_handle(directory: &GuardedDirectory) -> Result<&File> {
@@ -1111,6 +1196,64 @@ mod windows {
         d: &Deadline,
     ) -> Result<Option<HeldFile>> {
         read_checked_file(path, max_bytes, delete_access, None, d)
+    }
+
+    pub(super) fn read_log_tail(path: &Path, maximum: usize, d: &Deadline) -> Result<LogWindow> {
+        d.check()?;
+        checked_path(path)?;
+        let parent = guarded_log_directory(path.parent().context("Host log has no parent")?, d)?;
+        let path = parent
+            .path
+            .join(path.file_name().context("Host log file name missing")?);
+        #[cfg(test)]
+        run_namespace_hook()?;
+        // Unlike document guards, this handle permits active writers and rotation.
+        // The opened generation remains the sole source for this observation.
+        let mut handle = namespace::open_at(
+            parent_handle(&parent)?,
+            path.file_name().context("Host log leaf missing")?,
+            OpenRequest {
+                kind: EntryKind::File,
+                disposition: Disposition::Open,
+                access: GENERIC_READ,
+                share: 7, // FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE
+            },
+            d,
+        )?
+        .file;
+        let (identity, before) = information(&handle, false)?;
+        let initial_size = u64::from(before.size_high) << 32 | u64::from(before.size_low);
+        let start = initial_size.saturating_sub(maximum as u64);
+        let expected = usize::try_from(initial_size - start)?;
+        #[cfg(test)]
+        if let Some(hook) = AFTER_LOG_SIZE.with(|slot| slot.borrow_mut().take()) {
+            hook()?;
+        }
+        handle.seek(SeekFrom::Start(start))?;
+        let mut bytes = Vec::with_capacity(expected);
+        let mut chunk = [0u8; 8192];
+        while bytes.len() < expected {
+            d.check()?;
+            let remaining = (expected - bytes.len()).min(chunk.len());
+            let count = handle.read(&mut chunk[..remaining])?;
+            if count == 0 {
+                break;
+            }
+            bytes.extend_from_slice(&chunk[..count]);
+        }
+        let (after_identity, after) = information(&handle, false)?;
+        ensure!(
+            identity == after_identity,
+            "Host log opened identity changed"
+        );
+        d.check()?;
+        Ok(LogWindow {
+            identity,
+            initial_size,
+            final_size: u64::from(after.size_high) << 32 | u64::from(after.size_low),
+            start,
+            bytes,
+        })
     }
 
     pub(super) fn read_checked_file(
@@ -2142,6 +2285,113 @@ mod windows {
 #[cfg(all(test, windows))]
 mod tests {
     use super::*;
+    #[test]
+    fn log_window_accepts_active_writer_without_relaxing_document_guard() -> Result<()> {
+        use std::io::Write;
+        let root = tempfile::tempdir()?;
+        let path = root.path().join("active.log");
+        let mut writer = OpenOptions::new()
+            .create_new(true)
+            .write(true)
+            .share_mode(7)
+            .open(&path)?;
+        writer.write_all(b"0123456789")?;
+        writer.flush()?;
+        let d = Deadline::new(10_000);
+        assert!(read_file(&path, 100, false, &d).is_err());
+        let window = read_log_tail(&path, 4, &d)?;
+        assert_eq!(
+            (window.initial_size, window.start, window.final_size),
+            (10, 6, 10)
+        );
+        assert_eq!(window.bytes, b"6789");
+        assert_eq!(fs::read(path)?, b"0123456789");
+        Ok(())
+    }
+
+    #[test]
+    fn log_window_never_chases_bytes_appended_after_initial_size() -> Result<()> {
+        use std::io::Write;
+        let root = tempfile::tempdir()?;
+        let path = root.path().join("append.log");
+        fs::write(&path, b"0123456789")?;
+        let changed = path.clone();
+        windows::set_log_size_hook(Some(Box::new(move || {
+            OpenOptions::new()
+                .append(true)
+                .open(changed)?
+                .write_all(b"later bytes")?;
+            Ok(())
+        })));
+        let window = read_log_tail(&path, 4, &Deadline::new(10_000))?;
+        assert_eq!(window.bytes, b"6789");
+        assert_eq!((window.initial_size, window.final_size), (10, 21));
+        Ok(())
+    }
+
+    #[test]
+    fn log_window_reports_truncation_without_inventing_an_empty_complete_file() -> Result<()> {
+        let root = tempfile::tempdir()?;
+        let path = root.path().join("truncate.log");
+        fs::write(&path, b"0123456789")?;
+        let changed = path.clone();
+        windows::set_log_size_hook(Some(Box::new(move || {
+            OpenOptions::new().write(true).open(changed)?.set_len(2)?;
+            Ok(())
+        })));
+        let window = read_log_tail(&path, 4, &Deadline::new(10_000))?;
+        assert!(window.bytes.is_empty());
+        assert_eq!(
+            (window.start, window.initial_size, window.final_size),
+            (6, 10, 2)
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn log_window_reads_only_the_opened_generation_during_rotation() -> Result<()> {
+        let root = tempfile::tempdir()?;
+        let path = root.path().join("rotate.log");
+        fs::write(&path, b"old generation")?;
+        let original = read_log_tail(&path, 100, &Deadline::new(10_000))?;
+        let changed = path.clone();
+        windows::set_log_size_hook(Some(Box::new(move || {
+            let parent = changed.parent().unwrap();
+            assert!(
+                fs::rename(parent, parent.with_extension("moved")).is_err(),
+                "Log parent must remain pinned"
+            );
+            fs::rename(&changed, changed.with_extension("rotated"))?;
+            fs::write(changed, b"new generation")?;
+            Ok(())
+        })));
+        let window = read_log_tail(&path, 100, &Deadline::new(10_000))?;
+        let newer = read_log_tail(&path, 100, &Deadline::new(10_000))?;
+        assert_eq!(window.bytes, b"old generation");
+        assert_eq!(window.identity, original.identity);
+        assert_eq!(newer.bytes, b"new generation");
+        assert_ne!(newer.identity, window.identity);
+        Ok(())
+    }
+
+    #[test]
+    fn log_window_refuses_hardlinks_streams_budgets_missing_and_expired_reads() -> Result<()> {
+        let root = tempfile::tempdir()?;
+        let path = root.path().join("selected.log");
+        let d = Deadline::new(10_000);
+        assert!(read_log_tail(&path, 8, &d).is_err());
+        assert!(!path.exists());
+        fs::write(&path, b"owned")?;
+        for n in [0, 64001, usize::MAX] {
+            assert!(read_log_tail(&path, n, &d).is_err());
+        }
+        assert!(read_log_tail(&path, 8, &Deadline::new(0)).is_err());
+        assert!(read_log_tail(&path.with_file_name("selected.log:stream"), 8, &d).is_err());
+        fs::hard_link(&path, root.path().join("alias"))?;
+        assert!(read_log_tail(&path, 8, &d).is_err());
+        assert_eq!(fs::read(path)?, b"owned");
+        Ok(())
+    }
     #[test]
     fn owned_read_rejects_foreign_identity_before_byte_budget_or_content_admission() {
         let root = tempfile::tempdir().unwrap();
@@ -3300,6 +3550,25 @@ mod tests {
         );
         assert_eq!(fs::read(foreign.join("AGENTS.md"))?, b"foreign marker");
         assert!(!selected.join("AGENTS.md").exists());
+        Ok(())
+    }
+
+    #[test]
+    fn log_window_never_follows_retag_after_parent_guard_acquisition() -> Result<()> {
+        let fixture = tempfile::tempdir()?;
+        let selected = fixture.path().join("selected");
+        let foreign = fixture.path().join("foreign");
+        fs::create_dir(&selected)?;
+        fs::create_dir(&foreign)?;
+        fs::write(foreign.join("private.log"), b"foreign marker")?;
+        let writer = install_retarget_hook(&selected, &foreign);
+        let result = read_log_tail(&selected.join("private.log"), 1024, &Deadline::new(30_000));
+        let escaped = result.is_ok();
+        drop(result);
+        finish_retarget_hook(writer)?;
+        assert!(!escaped, "Log reader traversed a newly retagged parent");
+        assert_eq!(fs::read(foreign.join("private.log"))?, b"foreign marker");
+        assert!(!selected.join("private.log").exists());
         Ok(())
     }
 

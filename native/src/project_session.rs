@@ -234,6 +234,7 @@ pub struct Session {
     dashboard: Option<crate::session_dashboard::Handle>,
     dashboard_management: Option<crate::session_dashboard::management::Mailbox>,
     dashboard_documents: Option<dashboard_documents::Runtime>,
+    dashboard_logs: Option<dashboard_logs::Runtime>,
     dashboard_lifetime: Option<std::sync::Arc<std::sync::atomic::AtomicBool>>,
     host_backend_servers: Option<BTreeMap<String, crate::lsp::ConfiguredServer>>,
     dashboard_language_registry: Option<dashboard_languages::Registry>,
@@ -258,6 +259,8 @@ pub struct Session {
 mod dashboard_documents;
 #[path = "session_dashboard_languages.rs"]
 mod dashboard_languages;
+#[path = "session_dashboard_logs.rs"]
+mod dashboard_logs;
 #[path = "session_dashboard_session.rs"]
 mod dashboard_management;
 #[path = "session_prompt_session.rs"]
@@ -1152,6 +1155,7 @@ impl Session {
         }
         let mut fingerprint_capture_options = engine.capture_options.clone();
         let dashboard_documents = dashboard_documents::Runtime::capture(&host, &engine, deadline)?;
+        let dashboard_logs = dashboard_logs::Runtime::capture(&host, &engine, deadline)?;
         if engine.git_repository_host.is_some() {
             fingerprint_capture_options.repository_scope = None;
         }
@@ -1323,6 +1327,11 @@ impl Session {
                 "host_dashboard_documents_v1",
                 documents.binding(),
             ))
+        } else {
+            fingerprint
+        };
+        let fingerprint = if let Some(logs) = &dashboard_logs {
+            identity(&(fingerprint, "host_dashboard_logs_v1", logs.binding()))
         } else {
             fingerprint
         };
@@ -1574,6 +1583,7 @@ impl Session {
             dashboard: None,
             dashboard_management: None,
             dashboard_documents,
+            dashboard_logs,
             dashboard_lifetime: None,
             host_backend_servers,
             dashboard_language_registry,

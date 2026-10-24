@@ -27,6 +27,8 @@ pub use source_hooks::{
 pub mod documents;
 #[path = "host_install_io.rs"]
 mod io;
+#[path = "host_logs.rs"]
+pub mod logs;
 #[path = "host_install_recovery.rs"]
 mod recovery;
 pub use adapter::{AdapterBinding, JsonMcpClient, JsonMcpSource};

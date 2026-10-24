@@ -43,7 +43,7 @@ impl Session {
         }
         Some(
             json!({"enabled":self.dashboard_management.is_some(),"sessionControls":config.session_controls,
-            "memories":config.memories,"configurationFiles":self.dashboard_documents_view().unwrap_or(json!(false)),"languageSelection":self.dashboard_language_view().unwrap_or(json!(false)),"rawLogs":false,"shutdown":false,
+            "memories":config.memories,"configurationFiles":self.dashboard_documents_view().unwrap_or(json!(false)),"languageSelection":self.dashboard_language_view().unwrap_or(json!(false)),"rawLogs":self.dashboard_logs_view().unwrap_or(json!(false)),"shutdown":false,
             "operationTimeoutMs":config.operation_timeout_ms,"sessionStateSha256":crate::model::hash(&self.persisted),
             "modeChoices":choices,"modeResetAvailable":self.steering_enabled(),"memoryWritesGranted":self.host.notes_policy.writable,
             "noMemoriesMode":self.state.modes.iter().any(|m|m=="no-memories")}),
@@ -126,6 +126,9 @@ impl Session {
             .context("Dashboard management unavailable")?
             .clone();
         let (operation, args, tool, api, write) = match &request.action {
+            Action::ReadLog { log_id, max_bytes } => {
+                return self.dashboard_log_action(request, log_id, *max_bytes, deadline);
+            }
             Action::Document { request: document } => {
                 return self.dashboard_document_action(request, document, deadline);
             }

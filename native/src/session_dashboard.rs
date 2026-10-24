@@ -142,6 +142,14 @@ fn event_name(operation: &str) -> &'static str {
         "ci_read" => "ci_read",
         "ci_trace" => "ci_trace",
         "ci_context" => "ci_context",
+        "dashboard.languages" => "dashboard.languages",
+        "dashboard.languages.reset" => "dashboard.languages.reset",
+        "dashboard.documents.read" => "dashboard.documents.read",
+        "dashboard.documents.plan" => "dashboard.documents.plan",
+        "dashboard.documents.apply" => "dashboard.documents.apply",
+        "dashboard.documents.pending" => "dashboard.documents.pending",
+        "dashboard.documents.recover" => "dashboard.documents.recover",
+        "dashboard.logs.read" => "dashboard.logs.read",
         _ => "other_operation",
     }
 }
@@ -301,6 +309,7 @@ impl Handle {
         if let Some(config) = &self.management {
             value["scope"] = json!("private_native_session_management");
             value["capabilities"]["sessionControls"] = json!(config.session_controls);
+            value["capabilities"]["rawLogs"] = json!(config.raw_logs.is_some());
             if config.language_servers.is_some() {
                 value["capabilities"]["languageSelection"] = json!(config.session_controls);
             }
@@ -595,6 +604,7 @@ fn snapshot(
             data["capabilities"]["languageSelection"] = config["sessionControls"].clone();
         }
         document_capabilities(&mut data, &config["configurationFiles"]);
+        data["capabilities"]["rawLogs"] = json!(config["rawLogs"].is_object());
         data["capabilities"]["memoryEditing"] = serde_json::json!(
             config["memories"] == true
                 && config["memoryWritesGranted"] == true
