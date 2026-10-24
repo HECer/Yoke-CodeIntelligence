@@ -1,5 +1,6 @@
 #![cfg(windows)]
 //! Real captured Views and receipt-owned callbacks; no client/model equivalence claim.
+use base64::{Engine as _, engine::general_purpose::STANDARD};
 use serde_json::{Value, json};
 use std::{
     collections::BTreeMap,
@@ -376,6 +377,20 @@ fn paths_event_authority_duplicate_keys_and_tiny_output_refuse_without_side_effe
         )
         .is_err()
     );
+    let input = serde_json::to_vec(&event(&f, SourceHookMode::Status)).unwrap();
+    for preamble in [b"\xef\xbb\xbf".as_slice(), b"\xff\xfe", b"\xfe\xff"] {
+        let malformed = [preamble, input.as_slice()].concat();
+        assert!(
+            host_install::claude_source_hook(
+                SourceHookMode::Status,
+                launch.as_bytes(),
+                &malformed,
+                4096,
+                &Deadline::new(30000)
+            )
+            .is_err()
+        );
+    }
     let expired = Deadline::new(1);
     std::thread::sleep(std::time::Duration::from_millis(5));
     assert!(
@@ -447,6 +462,17 @@ fn legacy_session_profile_bytes_remain_distinct_and_external_files_cannot_be_ado
 
 #[test]
 fn selected_status_bootstrap_preserves_unicode_quoted_bindings_and_uses_no_profile() {
+    assert_status_bootstrap("");
+}
+
+#[test]
+fn selected_status_bootstrap_keeps_input_exact_with_a_bom_emitting_console_encoding() {
+    // .NET Framework treats UTF-16 as managed Console encoding without setting
+    // an OS console code page. The old redirected StreamWriter emits its BOM.
+    assert_status_bootstrap("[Console]::InputEncoding=[Text.UnicodeEncoding]::new($false,$true); ");
+}
+
+fn assert_status_bootstrap(console_prefix: &str) {
     let mut f = fixture(Default::default());
     let shell = PathBuf::from(std::env::var_os("SystemRoot").unwrap())
         .join("System32/WindowsPowerShell/v1.0/powershell.exe");
@@ -462,6 +488,19 @@ fn selected_status_bootstrap_preserves_unicode_quoted_bindings_and_uses_no_profi
         .unwrap();
     assert_eq!(prefix, shell.to_str().unwrap().replace('\\', "/"));
     assert!(!command.contains(f.source.to_str().unwrap()));
+    let bytes = STANDARD.decode(encoded).unwrap();
+    assert_eq!(bytes.len() % 2, 0);
+    let units = bytes
+        .chunks_exact(2)
+        .map(|pair| u16::from_le_bytes([pair[0], pair[1]]))
+        .collect::<Vec<_>>();
+    let script = console_prefix.to_owned() + &String::from_utf16(&units).unwrap();
+    let encoded = STANDARD.encode(
+        script
+            .encode_utf16()
+            .flat_map(u16::to_le_bytes)
+            .collect::<Vec<_>>(),
+    );
     let mut request = std::process::Command::new(&shell);
     request
         .args([
@@ -469,7 +508,7 @@ fn selected_status_bootstrap_preserves_unicode_quoted_bindings_and_uses_no_profi
             "-NoProfile",
             "-NonInteractive",
             "-EncodedCommand",
-            encoded,
+            &encoded,
         ])
         .current_dir(&f.source);
     for (key, name) in [

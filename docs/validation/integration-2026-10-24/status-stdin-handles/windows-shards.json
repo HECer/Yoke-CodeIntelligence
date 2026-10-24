@@ -1,0 +1,2308 @@
+{
+  "sourceRevision": "4ea583e1ab64375afa1afbce4fdaae6e50720ee9",
+  "runId": 40104906189,
+  "exactSameSelectedInputsAndInventoryAcrossShards": true,
+  "inventorySha256": "0c096ddd098539648bebdca6f98dfddb71dcc3ee5940555dd4042f31e58e0eef",
+  "wholeCargoGroupsAttempted": 369,
+  "successfulWholeGroups": 366,
+  "failedWholeGroups": [
+    "yoke-code-intelligence:test:process:test",
+    "yoke-code-intelligence:test:agent_repl:test",
+    "yoke-code-intelligence:test:claude_source_hooks:test"
+  ],
+  "completeSuccessfulPlatform": false,
+  "individualTestCountsNotInferred": true,
+  "reports": [
+    {
+      "artifact": {
+        "id": 12564204480,
+        "name": "native-shard-windows-latest-0",
+        "bytes": 95077,
+        "digest": "sha256:859b3c619d0aaf8a4f325f08b4341cd2e0d841031ac71734d99ca2fa26f733f5",
+        "run": 40104906189,
+        "head": "4ea583e1ab64375afa1afbce4fdaae6e50720ee9"
+      },
+      "transferDigestExact": true,
+      "sourceAndInventoryVerified": true,
+      "logHashesVerified": true,
+      "receiptComplete": true,
+      "platform": "Windows",
+      "index": 0,
+      "groups": [
+        {
+          "group": "yoke-code-intelligence:bin:yoke:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:example:benchmark:build",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:agent_diagnostic_boundaries:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:agent_symbol_contracts:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:collection_registry_access:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:community_analysis_policy:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:decision_records:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:decision_retention:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:declaration_attachment_ranges:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:dependency_queries:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:derived_graph_mixed_budget:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:explorer_sources:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:facade_file_usage:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:falkor_publish:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:falkor_publish_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_owner_changes:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_history_bridge:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_ingress:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_worker_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:graph_exports:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:host_install_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:host_mcp_config:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:knowledge:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:mcp_collection_grants:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:model_http:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:model_identity:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:monorepo_pre_feature_envelope:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:operations:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:postgres_catalog_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:protocol_connection:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:refactor_intents:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:replacement:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:server_workspace_settings:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_agent_interface:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_collections_admission:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_config_discovery:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_memory_patterns:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_prompt_memory:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:store_open_deadline:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:symbol_delete_live:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:symbol_info_budget:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:test_map:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:workspace:test",
+          "exitCode": 0,
+          "logs": []
+        }
+      ],
+      "nativeYokeImageOpenedOrExecutedLocally": false,
+      "scope": "One same-source Windows shard only; not platform/live/VSIX/release qualification"
+    },
+    {
+      "artifact": {
+        "id": 12564309093,
+        "name": "native-shard-windows-latest-1",
+        "bytes": 103720,
+        "digest": "sha256:6fd68fa16cd3448dafb66d5b26767c2ab40d6be7f38aacc0674eb55428a12eb9",
+        "run": 40104906189,
+        "head": "4ea583e1ab64375afa1afbce4fdaae6e50720ee9"
+      },
+      "transferDigestExact": true,
+      "sourceAndInventoryVerified": true,
+      "logHashesVerified": true,
+      "receiptComplete": true,
+      "platform": "Windows",
+      "index": 1,
+      "groups": [
+        {
+          "group": "yoke-code-intelligence:example:falkor_owned_probe:build",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:agent_memory_namespaces:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:agent_repl_api_selection:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:agent_repl_lifecycle:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:analyzer_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:artifacts:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:container:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:decision_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:digest_history_jobs:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:directory_move_live:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:facade_file_rename:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:federated_collections:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:federation_archive:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:file_usage_live:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_affected_qualification:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_conflicts:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_publication:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:historical_receipt_fixture_qualification:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:historical_view_budget_options:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:historical_view_comparison:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:ignored_capture_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:ignored_facades:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:json_output_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:live_enrichment:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:lsp_action_resolve:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:lsp_dependency_scope:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_archive_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_collection_archives:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_join_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_projection_portable:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:mixed_meaning_composition:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:ollama:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:postgres_catalog:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:project_session:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:publication:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:repository_discovery:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:runtime:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:selected_graph_views:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_dashboard:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_inclusions:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:skill_takeaways:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:skill_takeaways_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:source_exclusions:test",
+          "exitCode": 0,
+          "logs": []
+        }
+      ],
+      "nativeYokeImageOpenedOrExecutedLocally": false,
+      "scope": "One same-source Windows shard only; not platform/live/VSIX/release qualification"
+    },
+    {
+      "artifact": {
+        "id": 12563799872,
+        "name": "native-shard-windows-latest-2",
+        "bytes": 123435,
+        "digest": "sha256:7961142ff9e66cbf41d97dfbf0022335a91039a108569fd87251fc5b7ef8b5d2",
+        "run": 40104906189,
+        "head": "4ea583e1ab64375afa1afbce4fdaae6e50720ee9"
+      },
+      "transferDigestExact": true,
+      "sourceAndInventoryVerified": true,
+      "logHashesVerified": true,
+      "receiptComplete": false,
+      "platform": "Windows",
+      "index": 2,
+      "groups": [
+        {
+          "group": "yoke-code-intelligence:lib:yoke:test",
+          "exitCode": 0,
+          "logs": [
+            {
+              "stream": "0000.stdout",
+              "tail": [
+                "test session_config::tests::line_ending_yaml_rejects_bad_values_wrong_layers_and_unknown_project_without_grants ... ok",
+                "test session_config::tests::line_ending_yaml_uses_global_project_local_precedence_independent_of_input_order ... ok",
+                "test session_config::tests::nonnative_active_defaults_invalid_types_and_scope_refuse_without_echoing_source_values ... ok",
+                "test session_config::tests::ordered_language_servers_project_without_creating_runtime_registrations_or_trust ... ok",
+                "test session_config::tests::ordered_server_yaml_refuses_bad_roles_types_ids_and_registration_payloads ... ok",
+                "test session_config::tests::server_settings_yaml_cannot_grant_projects_runtime_or_unknown_vendor_options ... ok",
+                "test session_config::tests::source_parser_profile_and_deadline_budgets_fail_explicitly ... ok",
+                "test session_config::tests::stale_pins_duplicate_targets_unknown_capabilities_and_templates_refuse ... ok",
+                "test session_config::tests::standard_default_project_data_confirms_native_defaults_without_new_host_policy ... ok",
+                "test session_config::tests::symbol_information_seconds_resolve_global_project_local_and_explicit_null_inheritance ... ok",
+                "test session_config::tests::symbol_information_yaml_rejects_underflow_nonfinite_invalid_roles_and_other_float_settings ... ok",
+                "test session_config::tests::symbol_workspace_yaml_refuses_bad_roles_types_paths_aliases_and_unknown_registrations ... ok",
+                "test session_config::tests::symbol_workspace_yaml_resolves_pinned_layers_and_null_inheritance_without_source_grants ... ok",
+                "test session_config::tests::yaml_duplicate_alias_merge_tag_document_type_and_encoding_ambiguities_refuse ... ok",
+                "test session_config::tests::yaml_read_only_only_tightens_primary_or_registered_named_projects ... ok",
+                "test session_dashboard::management::tests::abandoned_shutdown_delivery_unblocks_only_its_already_accepted_owner ... ok",
+                "test session_dashboard::management::tests::absent_and_false_shutdown_grants_preserve_existing_serialization ... ok",
+                "test session_dashboard::management::tests::argumentless_management_actions_reject_all_unknown_authority_fields ... ok",
+                "test session_dashboard::management::tests::document_actions_reject_unknown_authority_and_invalid_byte_or_revision_requests ... ok",
+                "test session_dashboard::management::tests::expired_queued_action_cannot_begin_after_caller_timeout ... ok",
+                "test session_dashboard::management::tests::management_envelope_and_actions_reject_unknown_authority_and_wrong_revisions ... ok",
+                "test session_dashboard::management::tests::raw_log_request_rejects_paths_commands_offsets_and_excessive_budgets ... ok",
+                "test session_dashboard::management::tests::running_action_timeout_is_reported_as_unknown_and_cancels_its_deadline ... ok",
+                "test session_dashboard::management::tests::shutdown_signal_waits_for_response_attempt_and_cannot_target_another_owner ... ok",
+                "test session_prompt::catalog::tests::actual_prefix_mapping_preserves_canonical_names_and_refuses_forged_catalog_rows ... ok",
+                "test session_prompt::catalog::tests::category_metadata_covers_every_pinned_public_name_and_preserves_nonediting_symbolic_reads ... ok",
+                "test session_prompt::memory::tests::selected_names_retain_unicode_and_refuse_unsafe_or_duplicate_addresses ... ok",
+                "test session_prompt::memory::tests::serialized_receipts_exclude_content_and_reject_forged_revision_or_scope ... ok",
+                "test session_prompt::tests::runtime_selection_cannot_spoof_derived_variables_or_rebind_an_existing_callback ... ok",
+                "test session_prompt::tests::shared_context_preserves_preceding_inline_canonical_bytes_and_catalog_defaults ... ok",
+                "test skill_takeaways::tests::a_large_applied_receipt_prefix_cannot_hide_pending_journals ... ok",
+                "test skill_takeaways::tests::expanded_yaml_frontmatter_is_rejected_before_alias_materialization ... ok",
+                "test skill_takeaways::tests::manual_edit_after_observation_is_never_adopted_as_a_write_precondition ... ok",
+                "test source_exclusions::tests::later_groups_cannot_unignore_prior_host_rules_and_directory_parents_must_reopen ... ok",
+                "test source_exclusions::tests::malformed_patterns_paths_limits_and_expiry_refuse_instead_of_empty_matchers ... ok",
+                "test source_exclusions::tests::unicode_normalization_is_not_invented_and_concrete_case_replays_independently ... ok",
+                "test source_line_endings::tests::all_newline_forms_keep_unicode_bom_no_final_newline_and_idempotence ... ok",
+                "test source_line_endings::tests::exact_growth_budget_and_expired_deadline_are_admitted_before_conversion ... ok",
+                "test store::busy::tests::removed_client_data_leaves_a_fail_closed_callback_and_can_be_reinstalled ... ok",
+                "test symbol_info_budget::tests::seconds_are_bounded_and_positive_sub_milliseconds_never_disable_stopping ... ok",
+                "test symbol_info_budget::tests::soft_budget_stops_only_subsequent_requests_and_zero_remains_host_bounded ... ok",
+                "test trail_adapter::envelope_tests::logical_envelope_counter_matches_escaped_utf8_at_the_exact_boundary ... ok",
+                "test trail_adapter::envelope_tests::logical_envelope_counter_observes_cancellation_between_writes ... ok",
+                "test trail_adapter::envelope_tests::logical_envelope_counter_refuses_a_large_body_without_exposing_content ... ok",
+                "test trail_adapter::envelope_tests::logical_envelope_counter_uses_the_original_expired_deadline ... ok",
+                "test verify::integrity_tests::oversized_copied_source_is_rejected_within_the_hash_budget ... ok",
+                "test view_comparison::budget_tests::bounded_serializer_exact_bytes_and_next_byte_refuse_before_poison ... ok",
+                "test view_comparison::budget_tests::bounded_typed_digest_preserves_released_serialization_order ... ok",
+                "test view_comparison::budget_tests::canonical_value_conversion_is_preflighted_before_poison_serialize ... ok",
+                "test view_comparison::budget_tests::recursive_rows_check_same_deadline_after_final_child_progress ... ok",
+                "test view_comparison::budget_tests::recursive_rows_count_all_copies_and_cancel_only_after_completed_child_progress ... ok",
+                "test view_comparison::budget_tests::serializer_cancellation_after_actual_progress_uses_same_inherited_deadline ... ok",
+                "",
+                "test result: ok. 694 passed; 0 failed; 7 ignored; 0 measured; 0 filtered out; finished in 338.85s",
+                ""
+              ]
+            },
+            {
+              "stream": "0000.stderr",
+              "tail": [
+                "   Compiling hashlink v0.10.0",
+                "   Compiling aws-smithy-http v0.64.1",
+                "   Compiling aws-credential-types v1.3.0",
+                "   Compiling serde_urlencoded v0.7.1",
+                "   Compiling hmac v0.13.0",
+                "   Compiling sha2 v0.11.1",
+                "   Compiling rustls-platform-verifier v0.7.1",
+                "   Compiling cbc v0.1.2",
+                "   Compiling aes v0.8.4",
+                "   Compiling ecb v0.1.2",
+                "   Compiling regex v1.13.1",
+                "   Compiling hashlink v0.12.2",
+                "   Compiling md-5 v0.10.6",
+                "   Compiling yasna v0.5.2",
+                "   Compiling serde_spanned v1.1.2",
+                "   Compiling toml_datetime v1.1.2+spec-1.1.0",
+                "   Compiling nom v8.0.0",
+                "   Compiling schannel v0.1.29",
+                "   Compiling arraydeque v0.5.1",
+                "   Compiling fallible-iterator v0.3.0",
+                "   Compiling toml_writer v1.1.3+spec-1.1.0",
+                "   Compiling hex v0.4.3",
+                "   Compiling rustc-hash v2.1.3",
+                "   Compiling rangemap v1.8.0",
+                "   Compiling fastrand v2.5.0",
+                "   Compiling weezl v0.1.12",
+                "   Compiling fallible-streaming-iterator v0.1.9",
+                "   Compiling typed-path v0.12.3",
+                "   Compiling ttf-parser v0.25.1",
+                "   Compiling streaming-iterator v0.1.9",
+                "   Compiling lopdf v0.42.0",
+                "   Compiling zip v9.0.3",
+                "   Compiling rusqlite v0.37.0",
+                "   Compiling tempfile v3.27.0",
+                "   Compiling leiden-rs v0.8.1",
+                "   Compiling aws-sigv4 v1.6.0",
+                "   Compiling toml v1.1.8+spec-1.1.0",
+                "   Compiling yaml-rust2 v0.13.0",
+                "   Compiling rustls-native-certs v0.8.4",
+                "   Compiling rcgen v0.13.2",
+                "   Compiling reqwest v0.13.5",
+                "   Compiling fs2 v0.4.3",
+                "   Compiling rayon v1.12.0",
+                "   Compiling ignore v0.4.33",
+                "   Compiling process-wrap v8.2.2",
+                "   Compiling ed25519-dalek v2.2.0",
+                "   Compiling clap v4.6.7",
+                "   Compiling minijinja v3.0.3",
+                "   Compiling sha1 v0.10.7",
+                "   Compiling hmac v0.12.1",
+                "   Compiling quick-xml v0.42.0",
+                "   Compiling similar v2.7.0",
+                "   Compiling yoke-code-intelligence v0.5.0 (D:\\a\\Yoke-CodeIntelligence\\Yoke-CodeIntelligence\\native)",
+                "    Finished `test` profile [unoptimized] target(s) in 4m 37s",
+                "     Running unittests src\\lib.rs (target\\debug\\deps\\yoke-3731cc109f7cf153.exe)"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:adversarial:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:arxiv_source:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:capture_policy:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:compatibility_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:dataflow:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:deadline_scope:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:declaration_attachments_live:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:document_explorer:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:engine_epoch_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:export:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:facade_file_delete:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:file_api:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_compiler_affected:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_impact_details:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_repository_projects:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_digest_handoff:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_pages_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_publication_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:graph_extensions:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:graphify_selected_queries:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:historical_view_adversarial:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:host_config:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:host_credentials:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:ignored_capture:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:ignored_directory_identity:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:ledger_batches_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:lsp:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_archive_primitives:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_graph:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:media:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:mixed_meaning_claims:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:monorepo_scopes:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:notes:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:parity_source_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:process:test",
+          "exitCode": 101,
+          "logs": [
+            {
+              "stream": "0036.stdout",
+              "tail": [
+                "",
+                "running 7 tests",
+                "test capture_transfers_exact_unicode_bytes_and_independent_streams ... ok",
+                "test descendant_held_stdio_cannot_extend_the_shared_deadline ... ok",
+                "test output_overflow_is_a_failure_with_bounded_retained_bytes ... ok",
+                "test runtime_environment_filters_secrets_and_preserves_host_overrides ... ok",
+                "test source_selected_defaults_and_oversized_stdin_are_rejected_before_spawn ... ok",
+                "test windows_host_fixture_does_not_allocate_a_console_window ... ok",
+                "test windows_runtime_environment_supports_managed_known_folders ... FAILED",
+                "",
+                "failures:",
+                "",
+                "---- windows_runtime_environment_supports_managed_known_folders stdout ----",
+                "",
+                "thread 'windows_runtime_environment_supports_managed_known_folders' (2376) panicked at native\\tests\\process.rs:177:5:",
+                "assertion `left == right` failed: ",
+                "  left: Some(1)",
+                " right: Some(0)",
+                "note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace",
+                "",
+                "",
+                "failures:",
+                "    windows_runtime_environment_supports_managed_known_folders",
+                "",
+                "test result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 22.04s",
+                ""
+              ]
+            },
+            {
+              "stream": "0036.stderr",
+              "tail": [
+                "   Compiling yoke-code-intelligence v0.5.0 (D:\\a\\Yoke-CodeIntelligence\\Yoke-CodeIntelligence\\native)",
+                "    Finished `test` profile [unoptimized] target(s) in 2.46s",
+                "     Running tests\\process.rs (target\\debug\\deps\\process-bb4aecb482f54758.exe)",
+                "error: test failed, to rerun pass `-p yoke-code-intelligence --test process`",
+                "error: 1 target failed:",
+                "    `-p yoke-code-intelligence --test process`"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:propagated_delete_live:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:provider_scope_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:registry_replay_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:repository_discovery_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:selected_view_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_collections:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_prompt_runtime:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:universal_languages:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:workflow_cli:test",
+          "exitCode": 0,
+          "logs": []
+        }
+      ],
+      "nativeYokeImageOpenedOrExecutedLocally": false,
+      "scope": "One same-source Windows shard only; not platform/live/VSIX/release qualification"
+    },
+    {
+      "artifact": {
+        "id": 12565011769,
+        "name": "native-shard-windows-latest-3",
+        "bytes": 99727,
+        "digest": "sha256:96f611201ecdea32a4c003125e040a65781771684ca8c5cacdc924f96088922a",
+        "run": 40104906189,
+        "head": "4ea583e1ab64375afa1afbce4fdaae6e50720ee9"
+      },
+      "transferDigestExact": true,
+      "sourceAndInventoryVerified": true,
+      "logHashesVerified": true,
+      "receiptComplete": true,
+      "platform": "Windows",
+      "index": 3,
+      "groups": [
+        {
+          "group": "yoke-code-intelligence:lib:yoke:doc",
+          "exitCode": 0,
+          "logs": [
+            {
+              "stream": "0000.stdout",
+              "tail": [
+                "",
+                "running 0 tests",
+                "",
+                "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+                ""
+              ]
+            },
+            {
+              "stream": "0000.stderr",
+              "tail": [
+                "    Updating crates.io index",
+                "   Compiling yoke-code-intelligence v0.5.0 (D:\\a\\Yoke-CodeIntelligence\\Yoke-CodeIntelligence\\native)",
+                "    Finished `test` profile [unoptimized] target(s) in 2m 07s",
+                "   Doc-tests yoke"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:agent_facade_semantics:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:agent_file_options:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:artifact_page_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:capture_changes:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:client_lock:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:compatibility:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:compiler_inline_body:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:compiler_inline_predicates:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:credentials:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:debug_adapter:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:document_graph_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:facade_file_move:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:federation:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:federation_epochs:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:feedback_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_ignore_policy:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_owners:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_repository_collections:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_repository_preferences:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_auth_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_digest:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_discussions:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:graph_analysis_policy:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:graph_archive_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:graph_view:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:historical_publication:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:historical_view_fixture_qualification:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:host_output_disposition:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:legacy_retrieval_oracle:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:mcp_collection_grants_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:mcp_http_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_groups_admission:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_view:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:member_decorators:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:model_bedrock_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:neo4j_publish:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:parity_view_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:parser_epoch9:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:projects:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:python_empty_suite:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:server_catalog:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_primary_read_only:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:skill_takeaways_batch_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:skills_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:symbol_move_declarations:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:trail_adapter:test",
+          "exitCode": 0,
+          "logs": []
+        }
+      ],
+      "nativeYokeImageOpenedOrExecutedLocally": false,
+      "scope": "One same-source Windows shard only; not platform/live/VSIX/release qualification"
+    },
+    {
+      "artifact": {
+        "id": 12564855928,
+        "name": "native-shard-windows-latest-4",
+        "bytes": 101484,
+        "digest": "sha256:4284fed8ea3423dfea6d89a706235efd8f2a40a3a5c8caaf3b7410ed864af866",
+        "run": 40104906189,
+        "head": "4ea583e1ab64375afa1afbce4fdaae6e50720ee9"
+      },
+      "transferDigestExact": true,
+      "sourceAndInventoryVerified": true,
+      "logHashesVerified": true,
+      "receiptComplete": true,
+      "platform": "Windows",
+      "index": 4,
+      "groups": [
+        {
+          "group": "yoke-code-intelligence:example:neo4j_owned_probe:build",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:agent_dependency_options:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:analyzer_epochs:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:capture_epoch_selection:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:compiler_move_attributes:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:core:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:digest_receiver:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:document_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:editor_http:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:epoch_cache_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:explorer_export:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:facade_directory_move:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:freshness:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_impact_details_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_impact_details_no_git:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_repository_profiles:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_history_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_worker:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:graph_root_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:host_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:language_constructs:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:ledger:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:live:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:manifest_graph:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_feedback:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_protocol:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:mixed_meaning_provider:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:mixed_meaning_queries:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:mixed_pdf_view:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:mixed_view_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:model_http_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:parity_retention:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:platform_credentials:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:provider_batches:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:providers:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:resource_paging:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:retrieval:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:scoped_parent_performance:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:semantic_workspace:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:server_selection:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:server_settings:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_config_prompt_catalogs:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:skill_takeaways_contract_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:store_cancellation:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:transcript_semantic:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:yaml_admission_review:test",
+          "exitCode": 0,
+          "logs": []
+        }
+      ],
+      "nativeYokeImageOpenedOrExecutedLocally": false,
+      "scope": "One same-source Windows shard only; not platform/live/VSIX/release qualification"
+    },
+    {
+      "artifact": {
+        "id": 12565075310,
+        "name": "native-shard-windows-latest-5",
+        "bytes": 100962,
+        "digest": "sha256:ff6e4eafb069be76aa33abd59d51fa92ab1e8e6c5fdb5617b1e7f9dbe8459dcf",
+        "run": 40104906189,
+        "head": "4ea583e1ab64375afa1afbce4fdaae6e50720ee9"
+      },
+      "transferDigestExact": true,
+      "sourceAndInventoryVerified": true,
+      "logHashesVerified": true,
+      "receiptComplete": false,
+      "platform": "Windows",
+      "index": 5,
+      "groups": [
+        {
+          "group": "yoke-code-intelligence:test:blob_bounds:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:capture_analyzer8_fixture:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:claude_source_hooks:test",
+          "exitCode": 101,
+          "logs": [
+            {
+              "stream": "0002.stdout",
+              "tail": [
+                "",
+                "running 9 tests",
+                "test changed_policy_settings_view_binding_and_captured_blob_refuse ... ok",
+                "test first_reader_creates_only_sqlite_coordination_and_preserves_all_original_bytes ... ok",
+                "test legacy_session_profile_bytes_remain_distinct_and_external_files_cannot_be_adopted ... ok",
+                "test paths_event_authority_duplicate_keys_and_tiny_output_refuse_without_side_effects ... ok",
+                "test post_edit_after_disk_drift_remains_explicitly_historical_and_never_reindexes_or_applies_event_text ... ok",
+                "test selected_shell_hash_and_source_boundary_are_checked_before_writes_or_callbacks ... ok",
+                "test selected_status_bootstrap_preserves_unicode_quoted_bindings_and_uses_no_profile ... FAILED",
+                "test source_context_and_incoming_parallel_observations_are_real_immutable_view_queries ... ok",
+                "test zero_prompt_term_and_source_budgets_remain_zero_without_empty_complete_results ... ok",
+                "",
+                "failures:",
+                "",
+                "---- selected_status_bootstrap_preserves_unicode_quoted_bindings_and_uses_no_profile stdout ----",
+                "",
+                "thread 'selected_status_bootstrap_preserves_unicode_quoted_bindings_and_uses_no_profile' (5988) panicked at native\\tests\\claude_source_hooks.rs:501:5:",
+                "assertion `left == right` failed: yoke: claude_source_hook_refused",
+                "; stdin=true, output=true, timeout=false, io_error=false, elapsed=2.064284s; independent library callback: Ok(\"ok\")",
+                "  left: Some(1)",
+                " right: Some(0)",
+                "note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace",
+                "",
+                "",
+                "failures:",
+                "    selected_status_bootstrap_preserves_unicode_quoted_bindings_and_uses_no_profile",
+                "",
+                "test result: FAILED. 8 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 49.85s",
+                ""
+              ]
+            },
+            {
+              "stream": "0002.stderr",
+              "tail": [
+                "   Compiling yoke-code-intelligence v0.5.0 (D:\\a\\Yoke-CodeIntelligence\\Yoke-CodeIntelligence\\native)",
+                "    Finished `test` profile [unoptimized] target(s) in 3.27s",
+                "     Running tests\\claude_source_hooks.rs (target\\debug\\deps\\claude_source_hooks-ffd6b7bf32a209ed.exe)",
+                "error: test failed, to rerun pass `-p yoke-code-intelligence --test claude_source_hooks`",
+                "error: 1 target failed:",
+                "    `-p yoke-code-intelligence --test claude_source_hooks`"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:codex_host_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:collections_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:derived_graph_preparation:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:digest_history_acquisition:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:document_graph:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:epoch_producers:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:falkor_wire:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:federation_epoch_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:federation_http:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_affected_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_affected_details:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_repository_scope:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_repository_stdio:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_auth:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_worker_run:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_live:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:google_workspace_http_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:graph:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:graphify_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:historical_view_boundaries:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:host_install:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:hybrid_retrieval:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:json_host_profiles:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:ledger_batches:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:lsp_enrichment:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:maintenance:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_view_archives:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:model_bedrock:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:monorepo_profiles:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:plan_feedback:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:propagated_delete_contract:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:provider_batches_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:semantic_enrichment:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:semantic_mcp:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_epoch_selection:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_mcp:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:store_read_only:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:symbol_delete_ranges:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:symbol_workspace:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:symbol_workspace_routes:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:trail_bodies:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:trail_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:vector_admission_review:test",
+          "exitCode": 0,
+          "logs": []
+        }
+      ],
+      "nativeYokeImageOpenedOrExecutedLocally": false,
+      "scope": "One same-source Windows shard only; not platform/live/VSIX/release qualification"
+    },
+    {
+      "artifact": {
+        "id": 12564392609,
+        "name": "native-shard-windows-latest-6",
+        "bytes": 101320,
+        "digest": "sha256:92fc647b5cce9f7e30821cbce34b3ce078ba10649f34b2eb9bdcfba6c72cb936",
+        "run": 40104906189,
+        "head": "4ea583e1ab64375afa1afbce4fdaae6e50720ee9"
+      },
+      "transferDigestExact": true,
+      "sourceAndInventoryVerified": true,
+      "logHashesVerified": true,
+      "receiptComplete": true,
+      "platform": "Windows",
+      "index": 6,
+      "groups": [
+        {
+          "group": "yoke-code-intelligence:test:arxiv_source_http:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:claude_session_hooks:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:collections_cli_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:compiler_inline:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:compiler_move:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:contracts:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:deadlines:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:decision_records_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:federation_archive_receipts:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_epoch_selection:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_impact_details_qualification:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_impact_details_sqlite_limits:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_digest_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_ingress_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:google_workspace_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:graph_collections:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:historical_view_receipts:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:ledger_admission_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:lsp_lifecycle:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:lsp_source_execution:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:markdown_graph:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:mcp_http:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_build:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_commit_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_identity:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_retention_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:model_bedrock_batch_cli_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:model_bedrock_cli_actual:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:office_bounds:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:parity_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:plan_integrity:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:retention:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:scoped_resolution:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:selected_view_analysis:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:selected_view_analysis_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:semantic_provider_context:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_config_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_config_templates:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_refactor:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_root_aliases:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:sibling_declarators:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:source_acquisition_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:source_line_endings:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:store_identity:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:store_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:symbol_move_own_v1:test",
+          "exitCode": 0,
+          "logs": []
+        }
+      ],
+      "nativeYokeImageOpenedOrExecutedLocally": false,
+      "scope": "One same-source Windows shard only; not platform/live/VSIX/release qualification"
+    },
+    {
+      "artifact": {
+        "id": 12564423435,
+        "name": "native-shard-windows-latest-7",
+        "bytes": 104592,
+        "digest": "sha256:4b4e2e3c9f20569a898ba9773f3684b43efc38c2ead7df67013fcc8b75031635",
+        "run": 40104906189,
+        "head": "4ea583e1ab64375afa1afbce4fdaae6e50720ee9"
+      },
+      "transferDigestExact": true,
+      "sourceAndInventoryVerified": true,
+      "logHashesVerified": true,
+      "receiptComplete": false,
+      "platform": "Windows",
+      "index": 7,
+      "groups": [
+        {
+          "group": "yoke-code-intelligence:test:agent_documentation:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:agent_facade_options:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:agent_repl:test",
+          "exitCode": 101,
+          "logs": [
+            {
+              "stream": "0002.stdout",
+              "tail": [
+                "",
+                "running 22 tests",
+                "test composite_rename_selects_the_captured_parent_file_provider_not_the_logical_ast_language ... ok",
+                "test edits_are_guarded_plans_shell_is_separate_and_results_do_not_execute_repr ... ok",
+                "test exception_rendering_never_reads_user_overridden_exception_properties ... ok",
+                "test explicitly_selected_shell_runs_and_cell_errors_preserve_namespace ... FAILED",
+                "test external_inspection_facades_query_only_registered_source_without_activating_or_preparing_plans ... ok",
+                "test external_project_context_composes_read_queries_and_cannot_prepare_edits ... ok",
+                "test facade_requested_options_are_enforced_or_rejected_without_silent_dropping ... ok",
+                "test forged_worker_callback_authority_keys_are_rejected_and_worker_state_is_lost ... ok",
+                "test independent_jb_declaration_uses_the_same_python_regex_and_guarded_provider_bridge ... ok",
+                "test inspection_facades_are_source_bound_reads_in_planning_mode_with_honest_kind_registry ... ok",
+                "test line_bulk_and_symbol_edits_are_source_checked_independent_immutable_plans ... ok",
+                "test memory_facade_global_namespace_uses_only_the_registered_global_store ... ok",
+                "test persistent_cells_compose_real_source_queries_and_source_bound_notes ... ok",
+                "test provider_hierarchies_and_symbol_diagnostics_keep_exact_source_scope ... ok",
+                "test pure_facade_has_no_python_shell_or_caller_selected_host_authority ... ok",
+                "test python_regex_declaration_and_semantic_implementations_preserve_snapshot_anchors ... ok",
+                "test selected_python_worker_preserves_windows_runtime_drive ... ok",
+                "test semantic_refactoring_facades_check_modes_before_provider_queries_or_durable_plans ... ok",
+                "test semantic_rename_facade_only_prepares_registered_provider_guarded_plans ... ok",
+                "test surrogate_dict_keys_are_normalized_without_losing_the_persistent_worker ... ok",
+                "test symbol_references_and_semantic_diagnostics_use_registered_source_provider ... ok",
+                "test trust_output_and_deadline_failures_are_explicit_and_discard_worker_state ... ok",
+                "",
+                "failures:",
+                "",
+                "---- explicitly_selected_shell_runs_and_cell_errors_preserve_namespace stdout ----",
+                "",
+                "thread 'explicitly_selected_shell_runs_and_cell_errors_preserve_namespace' (5764) panicked at native\\tests\\agent_repl.rs:250:67:",
+                "called `Result::unwrap()` on an `Err` value: Request deadline exceeded",
+                "note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace",
+                "",
+                "",
+                "failures:",
+                "    explicitly_selected_shell_runs_and_cell_errors_preserve_namespace",
+                "",
+                "test result: FAILED. 21 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 28.89s",
+                ""
+              ]
+            },
+            {
+              "stream": "0002.stderr",
+              "tail": [
+                "   Compiling yoke-code-intelligence v0.5.0 (D:\\a\\Yoke-CodeIntelligence\\Yoke-CodeIntelligence\\native)",
+                "    Finished `test` profile [unoptimized] target(s) in 2.80s",
+                "     Running tests\\agent_repl.rs (target\\debug\\deps\\agent_repl-10fb918f43249624.exe)",
+                "error: test failed, to rerun pass `-p yoke-code-intelligence --test agent_repl`",
+                "error: 1 target failed:",
+                "    `-p yoke-code-intelligence --test agent_repl`"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:arxiv_source_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:capture_options:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:config_graph:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:editor:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:explorer_http:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:explorer_runtime:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:federation_receipt_bounds:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:freshness_epoch:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_areas:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_epochs:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_repository_host:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_repository_http:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:git_workflows:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:github_app_digest_mapping:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:google_workspace_process:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:graph_review_adversarial:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:graphify_adapter:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:historical_view_semantics:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:json_float_roundtrip:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:knowledge_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:lsp_resource_settings:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:mcp_http_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:meaning_graph_views:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:media_asr:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:model_bedrock_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:model_http_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:monorepo_retrieval:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:neo4j_publish_cli:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:office:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:parity_construct_review:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:provider_batch_bounds:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:query_parity:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:read_only_dependencies:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:semantic_refactor:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_dashboard_management:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_fixed_tools:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_optional_defaults:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_startup_project:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_steering:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:source_acquisition:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:source_acquisition_http:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:symbol_move_effect_admission:test",
+          "exitCode": 0,
+          "logs": []
+        },
+        {
+          "group": "yoke-code-intelligence:test:view_comparison_cli:test",
+          "exitCode": 0,
+          "logs": []
+        }
+      ],
+      "nativeYokeImageOpenedOrExecutedLocally": false,
+      "scope": "One same-source Windows shard only; not platform/live/VSIX/release qualification"
+    }
+  ]
+}

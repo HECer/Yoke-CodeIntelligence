@@ -1,5 +1,21 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Status-hook binary stdin correction: native confirmation pending (2026-10-24)
+
+At4ea583e1 the Windows shell/source-boundary test now passes; the status callback
+instead refuses after2.064s with complete pipes and no timeout. Eight verified
+Windows shard artifacts retain this evidence and separate REPL/known-folder
+failures. The source4ea whole library passes694/0/7 ignored, not current native.
+
+The status bootstrap now inherits binary stdin to avoid a managed writer's BOM.
+Five actual inert PowerShell5 cases verify exact0/164/65536-byte transport,
+Unicode arguments, stderr, reproduced old preamble insertion and clean owned-Job
+exit. Current native tests add the generated command under that managed encoding
+and explicit rejection of caller BOMs; native execution remains pending.87 Python
+tests,368-root format, typecheck/npm260/0/3 existing skips pass. Shell policy,
+permissions, deadlines, JSON rules and OS settings remain. Full acceptance is
+open. [Evidence](validation/integration-2026-10-24/status-stdin-handles/README.md).
+
 ## Unix cleanup-test trait correction: hosted confirmation pending (2026-10-24)
 
 Actual2154c13d Ubuntu Clippy rejects the new Unix fault wrapper with E0277:

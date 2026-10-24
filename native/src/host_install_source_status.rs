@@ -142,8 +142,12 @@ pub(super) fn command(selection: &Selection, launch: &str) -> Result<Option<Stri
         .map(|word| windows_word(word))
         .collect::<Vec<_>>()
         .join(" ");
+    // Inherit the binary stdin handle. Process.StandardInput creates an
+    // autoflushed text writer which can emit an encoding preamble even when
+    // callers subsequently write only through its BaseStream. Output readers
+    // have no such writer preamble and remain separate bounded byte streams.
     let script = format!(
-        "$ErrorActionPreference='Stop'; $p=$null; $started=$false; $code=1; try {{ $s=[System.Diagnostics.ProcessStartInfo]::new(); $s.FileName={}; $s.Arguments={}; $s.UseShellExecute=$false; $s.CreateNoWindow=$true; $s.RedirectStandardInput=$true; $s.RedirectStandardOutput=$true; $s.RedirectStandardError=$true; $p=[System.Diagnostics.Process]::new(); $p.StartInfo=$s; if(-not $p.Start()){{throw 'start'}}; $started=$true; $out=[Console]::OpenStandardOutput(); $err=[Console]::OpenStandardError(); $o=$p.StandardOutput.BaseStream.CopyToAsync($out); $e=$p.StandardError.BaseStream.CopyToAsync($err); $i=[Console]::OpenStandardInput().CopyToAsync($p.StandardInput.BaseStream); if(-not $i.Wait(20000)){{throw 'input'}}; $p.StandardInput.BaseStream.Close(); if(-not $p.WaitForExit(25000)){{throw 'wait'}}; if(-not $o.Wait(2000) -or -not $e.Wait(2000)){{throw 'output'}}; $out.Flush(); $err.Flush(); $code=$p.ExitCode }} catch {{ [Console]::Error.WriteLine('yoke_status_shell_refused') }} finally {{ if($p){{if($started -and -not $p.HasExited){{$p.Kill(); $null=$p.WaitForExit(5000)}}; $p.Dispose()}} }}; exit $code",
+        "$ErrorActionPreference='Stop'; $p=$null; $started=$false; $code=1; try {{ $s=[System.Diagnostics.ProcessStartInfo]::new(); $s.FileName={}; $s.Arguments={}; $s.UseShellExecute=$false; $s.CreateNoWindow=$true; $s.RedirectStandardInput=$false; $s.RedirectStandardOutput=$true; $s.RedirectStandardError=$true; $p=[System.Diagnostics.Process]::new(); $p.StartInfo=$s; if(-not $p.Start()){{throw 'start'}}; $started=$true; $out=[Console]::OpenStandardOutput(); $err=[Console]::OpenStandardError(); $o=$p.StandardOutput.BaseStream.CopyToAsync($out); $e=$p.StandardError.BaseStream.CopyToAsync($err); if(-not $p.WaitForExit(25000)){{throw 'wait'}}; if(-not $o.Wait(2000) -or -not $e.Wait(2000)){{throw 'output'}}; $out.Flush(); $err.Flush(); $code=$p.ExitCode }} catch {{ [Console]::Error.WriteLine('yoke_status_shell_refused') }} finally {{ if($p){{if($started -and -not $p.HasExited){{$p.Kill(); $null=$p.WaitForExit(5000)}}; $p.Dispose()}} }}; exit $code",
         literal(executable_path),
         literal(&words)
     );

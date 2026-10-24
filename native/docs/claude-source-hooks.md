@@ -109,8 +109,12 @@ executable requires a new reviewed installation. This is not OS isolation.
 
 The generated command uses `-NoLogo -NoProfile -NonInteractive -EncodedCommand`.
 Its UTF-16 program starts only the bound native callback with explicit
-ProcessStartInfo stdin/stdout/stderr pipes and Windows CRT argument quoting.
-Input copy, process exit and output draining have finite waits; unfinished owned
+an inherited binary stdin handle, separate ProcessStartInfo stdout/stderr pipes
+and Windows CRT argument quoting. Inheriting stdin avoids a managed text writer
+adding its encoding preamble before the original event bytes. Caller-supplied
+BOM prefixes still refuse; no JSON/source normalization is added. The native
+callback bounds input waiting, and process exit/output draining have finite
+waits; unfinished owned
 process cleanup fails closed. No execution-policy, system privilege or Developer
 Mode changes occur. The status text contains only native version, a View-ID
 prefix, entity count and `freshness unchecked`; foreign text/control sequences
@@ -125,6 +129,9 @@ and universal accessibility remain open. An owned text renderer's screenshots
 qualify only the captured status text, not the interactive client interface.
 
 See the dated [validation checkpoint](../../docs/validation/integration-2026-10-23/source-hooks/README.md).
+The later [stdin transport correction](../../docs/validation/integration-2026-10-24/status-stdin-handles/README.md)
+has actual inert PowerShell5 byte-transfer evidence; its current native CLI and
+interactive client acceptance remain pending.
 Provider contracts: [hooks](https://code.claude.com/docs/en/hooks),
 [statusline](https://code.claude.com/docs/en/statusline),
 [permissions](https://code.claude.com/docs/en/permissions) and

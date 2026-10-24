@@ -173,12 +173,19 @@ fn windows_runtime_environment_supports_managed_known_folders() {
             .join("System32/WindowsPowerShell/v1.0/powershell.exe"),
     );
     command.current_dir(root.path()).args(["-NoProfile", "-NonInteractive", "-Command", r#"$ErrorActionPreference='Stop'; if([string]::IsNullOrEmpty($env:SystemDrive)){throw 'Host system drive missing'}; $folder=[Environment]::GetFolderPath([Environment+SpecialFolder]::CommonApplicationData,[Environment+SpecialFolderOption]::DoNotVerify); if(-not [IO.Path]::IsPathRooted($folder)){throw 'Managed known folder is not absolute'}; Write-Output 'owned-windows-runtime'"#]);
+    let started = std::time::Instant::now();
     let result = run_capture(command, b"", &Deadline::new(20_000), limits()).unwrap();
     assert_eq!(
         result.exit_code,
         Some(0),
-        "{}",
-        String::from_utf8_lossy(&result.stderr)
+        "{}; stdin={}, output={}, timeout={}, overflow={}, io_error={}, elapsed={:?}",
+        String::from_utf8_lossy(&result.stderr),
+        result.stdin_complete,
+        result.output_complete,
+        result.timed_out,
+        result.output_exceeded,
+        result.io_error,
+        started.elapsed()
     );
     assert_eq!(
         String::from_utf8(result.stdout).unwrap().trim(),

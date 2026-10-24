@@ -1,5 +1,16 @@
 # Remaining implementation and acceptance
 
+## Exact status stdin transport awaits actual native confirmation
+
+The [stdin correction](validation/integration-2026-10-24/status-stdin-handles/README.md)
+inherits the binary handle to prevent managed preamble insertion. Five inert
+PowerShell5 cases verify original bytes/arguments/stderr and owned cleanup,
+including a real old-wrapper preamble regression. The native tests preserve
+strict caller-BOM refusal and existing budgets, but are not yet run. Source4ea
+Windows boundary checks and694-pass library keep their own proven scope; REPL,
+managed known-folder, macOS memory/runtime/timing, archive/live/current VSIX and
+full STATUS remain open. Python87/format/typecheck/npm pass independently.
+
 ## Actual volume-alias assertions await hosted native confirmation
 
 The [test-fixture checkpoint](validation/integration-2026-10-24/volume-alias-fixtures/README.md)
