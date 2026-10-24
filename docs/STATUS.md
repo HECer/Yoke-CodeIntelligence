@@ -1,6 +1,45 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
-## Global document proposal generations: current scoped acceptance (2026-10-24)
+## Global document history archive: implemented, acceptance pending (2026-10-24)
+
+Development product `5ccfdffe70d17e3c1623aca86c1c605df8342be5` is pushed; all nine changed Git blobs are
+independently verified. Explicit host history-plan/apply/inspect/read/recover
+now select closed journals of a migrated global file. Both complete selections,
+independent host authorities, current destination generation and private archive
+root remain required. Immutable exact evidence precedes recorded removal intent
+and identity/security/hash-checked original removal. Whole-journal packages use
+an independent32–512-record budget and explicitly disclose the remainder. Before
+removal, reviewed cancellation retains originals; after intent, recovery resumes
+only. The pending marker blocks ordinary writes/recovery and new migrations.
+Completion requires its retained marker; missing/foreign evidence stays uncertain.
+
+Current local scope: **694 whole-library passed /0 failed /7 existing ignored /
+0 filtered**, including16 new archive functions. All-target Clippy-Dwarnings,
+368 format roots, typecheck and npm260/3 existing skips pass on1154 exact inputs.
+The following integration build stops at the unchanged500MB disk supervisor.
+Cargo emitted an own library and management-test executable, but that test was
+not executed and no current CLI build/live acceptance is claimed. The overall
+qualification is incomplete. Its transient281993216-byte free-space receipt and
+later cleanup observations remain recorded: the polling guard is not an OS disk
+reservation. No protected/failed output is adopted, and no guard/profile/test/
+privilege setting or source byte is relaxed to continue below the limit.
+
+The exact current client renders the archive blocker at1280 and390 pixels with
+the draft retained/read only, writes disabled and no retirement action. These
+are synthetic backend fixtures, not native browser/CLI acceptance or screenshots.
+Initial Rust CI for this product is running on Windows/Linux/macOS; no successful
+CI or release result is claimed. Local native integration/CLI/transport/browser,
+current release/VSIX and complete archive acceptance remain open. The preceding
+810-pass generation scope retains its own source; its total is not reassigned.
+[Contract](../native/docs/session-dashboard-history-archive.md) and
+[partial evidence](validation/integration-2026-10-24/dashboard-history-archive/README.md).
+
+This supersedes only the earlier statement that archive code did not exist.
+Standalone owner deletion and physical archive purge remain unimplemented.
+Broader STATUS, original353/73/77, ten OS1314 prerequisites, main and release
+acceptance stay unchanged; the overall task remains active.
+
+## Earlier global document proposal generations: scoped acceptance (2026-10-24)
 
 Product `5c4dee9a4e6f23366be4c474fb9844e7be654d5d` is pushed and all three product blobs independently
 verified on GitHub. An actual old-CLI counterexample showed that an ordinary
@@ -45,8 +84,9 @@ keeps the500MB stop,1.2GB admission, profiles and original tests unchanged.
 Protected hardlinked outputs are skipped; no deletion or system-setting change.
 [Evidence](validation/integration-2026-10-24/dashboard-document-generations/README.md).
 
-History archival still has only a work-in-progress contract and bounded journal
-byte validators; no archive CLI, removal or acceptance is claimed. Standalone
+At that generation checkpoint, history archival had only a WIP contract and
+bounded journal validators. The implementation above now supersedes that code
+status, while complete archive acceptance remains pending. Standalone
 owner deletion, remaining STATUS/Windows/Unix/upstream/Google/current VSIX,
 main and release qualification remain open. Earlier353/73/77 and ten OS1314
 prerequisites are unchanged. The overall task remains active.

@@ -1,5 +1,24 @@
 # Remaining implementation and acceptance
 
+## History archival: implementation present, acceptance remains open
+
+The [partial archive checkpoint](validation/integration-2026-10-24/dashboard-history-archive/README.md)
+implements explicit host plan/apply/inspect/read and event-reviewed recovery for
+bounded whole closed journals after binding migration. Both grants and current
+owner generation remain required. Exact immutable evidence precedes original
+removal; cancellation is allowed only before removal intent. Remainder counts
+prevent a bounded package from claiming all history. Pending metadata blocks
+writes/migration and appears explicitly incomplete in the dashboard.
+
+694 whole-library passes include16 new archive functions; Clippy/368-root format/
+typecheck/npm260+3 pass on1154 exact inputs. A subsequent integration build stops
+at the unchanged disk guard. Its emitted management test and current CLI are not
+qualified; no native CLI/transport/browser or full archive acceptance is claimed.
+Synthetic exact-client desktop/mobile fixtures are inspected. The new hosted
+Rust checks are in progress, without a CI/release certificate. Further local
+builds remain stopped while free space is below the guard. Standalone owner
+deletion, physical archive purge and broader STATUS requirements remain open.
+
 ## Current dashboard management scope (2026-10-24)
 
 The [current proposal-generation correction](validation/integration-2026-10-24/dashboard-document-generations/README.md)
@@ -11,8 +30,9 @@ typecheck/npm pass. The library continuation is same-source, counted once. An
 actual old-CLI counterexample, three corrected API variants and native browser
 UI save/refusal/own-exit proofs are retained. This supersedes the earlier ordinary
 proposal-revocation statement, while preserving the historical805 scope below.
-History archival has only a WIP contract and pure bounded byte validators; its
-CLI/removal/recovery and live acceptance remain open. No current VSIX/release
+At that earlier checkpoint archival had only a WIP contract and byte validators.
+The new implementation above supersedes that code status; its complete
+integration/CLI/transport/browser acceptance remains open. No current VSIX/release
 binary has been admitted; the previous staged source is historical.
 
 
@@ -38,8 +58,9 @@ Actual native keyboard checks and13 dashboard tests pass; the preceding805 count
 remains tied to the migration source. Broader accessibility remains open.
 
 The full dashboard action remains active. Standalone retirement/deletion of an
-unbound owner, closed-journal history retirement/removal and broader recovery UI
-remain open. Migration retires one previous write selection and retains journals.
+unbound owner and broader recovery UI remain open. Closed-journal archive code
+is now implemented but its complete acceptance remains open above. Migration
+itself retires one previous write selection and retains journals.
 Tray, automatic opening and broader keyboard/touch/accessibility/all-browser
 acceptance remain open. Project files retain their native workspace gates and
 bound-journal conditional rollback. Raw logs retain finite concurrent-observation
