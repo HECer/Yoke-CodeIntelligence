@@ -1,5 +1,17 @@
 # Remaining implementation and acceptance
 
+## Windows temporary spelling correction awaits actual hosted confirmation
+
+The [CI-only correction](validation/integration-2026-10-24/windows-ci-temp/README.md)
+selects the ordinary long spelling of the existing Windows runtime Temp directory
+after repeated same-identity/link/path checks.13 focused and87 whole Python tests
+pass separately, without native Yoke execution. Original product shell policy,
+assertions, operation deadlines and OS settings remain. All eight Linux shards
+at84e11866 pass; three Windows and seven macOS shards fail. Verified diagnostics
+retain Windows shell/provider deadlines and source-hook refusal, plus macOS
+memory-limit, process-cleanup, filesystem and timing failures. Those remain open;
+this correction is not full platform/live/VSIX or release acceptance.
+
 ## Whole-target native scheduling awaits actual CI acceptance
 
 The [new layout](validation/integration-2026-10-24/native-target-shards/README.md)

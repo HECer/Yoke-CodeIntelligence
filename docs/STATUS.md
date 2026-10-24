@@ -1,5 +1,21 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Windows CI temporary spelling: partial correction, confirmation pending (2026-10-24)
+
+At source84e11866 all eight Linux shards pass in push run40101366598;
+Windows1/2/7 and seven macOS shards fail. Ten failed-shard log artifacts are
+independently checked by API size/digest, inventory and log hashes. The Windows
+fixture-path refusal motivates a CI-only canonical spelling of the same existing
+temporary directory, with repeated identity observations and link/path refusal.
+GetTempPath2W matches the Rust runtime; only subsequent job TEMP/TMP changes.
+No shell policy, system setting, privilege or test deadline changes.
+
+13 focused and87 whole Python tests pass separately; typecheck/npm260/0/3
+existing skips and changed-file rustfmt pass. No current native build or run is
+attempted locally. Windows shell/provider deadlines and subprocess refusal,
+macOS memory/cleanup/filesystem/timing failures and full acceptance remain open.
+[Evidence and limits](validation/integration-2026-10-24/windows-ci-temp/README.md).
+
 ## Whole-target native CI scheduling: acceptance pending (2026-10-24)
 
 The earlier Windows job is terminal/cancelled after roughly45 minutes, still in

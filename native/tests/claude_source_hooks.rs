@@ -486,6 +486,7 @@ fn selected_status_bootstrap_preserves_unicode_quoted_bindings_and_uses_no_profi
     }
     let before = manifest(f._dir.path());
     let input = event(&f, SourceHookMode::Status);
+    let command_started = std::time::Instant::now();
     let captured = yoke::process::run_capture(
         request,
         &serde_json::to_vec(&input).unwrap(),
@@ -500,8 +501,13 @@ fn selected_status_bootstrap_preserves_unicode_quoted_bindings_and_uses_no_profi
     assert_eq!(
         captured.exit_code,
         Some(0),
-        "{}; independent library callback: {:?}",
+        "{}; stdin={}, output={}, timeout={}, io_error={}, elapsed={:?}; independent library callback: {:?}",
         String::from_utf8_lossy(&captured.stderr),
+        captured.stdin_complete,
+        captured.output_complete,
+        captured.timed_out,
+        captured.io_error,
+        command_started.elapsed(),
         callback(SourceHookMode::Status, &launch, &input, 4096)
             .map(|_| "ok")
             .map_err(|error| format!("{error:#}"))

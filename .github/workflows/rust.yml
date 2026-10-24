@@ -24,6 +24,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
+      - name: Use the same Windows temporary directory by its canonical long path
+        if: runner.os == 'Windows'
+        run: python scripts/ci_windows_temp.py
       - name: Use a canonical macOS temporary root
         if: runner.os == 'macOS'
         shell: bash
@@ -85,6 +88,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
+      - name: Use the same Windows temporary directory by its canonical long path
+        if: runner.os == 'Windows'
+        run: python scripts/ci_windows_temp.py
       - name: Use a canonical macOS temporary root
         if: runner.os == 'macOS'
         shell: bash
