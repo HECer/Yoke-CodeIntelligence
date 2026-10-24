@@ -63,10 +63,12 @@ The UI exposes an ordered list with individual Move/Remove controls. A draft is
 pinned to its original project and Session revision; later session changes lock
 it until explicit Refresh session. Confirmation retains the original binding.
 Display strings use text nodes, and desktop/mobile rendering is separately
-identified as synthetic visual acceptance. Broader accessibility,
-project configuration writes, binding migration, owned shutdown and full
-dashboard/STATUS acceptance remain open. Selected global file recovery is
-[separately implemented](session-dashboard-documents.md).
+identified as synthetic visual acceptance. Broader accessibility and full
+dashboard/STATUS acceptance remain open. Separate host grants now enable
+[project-file writes](session-dashboard-project-files.md),
+[host-only binding migration](session-dashboard-binding-migration.md),
+[owning shutdown](session-dashboard-shutdown.md) and
+[selected global file recovery](session-dashboard-documents.md).
 
 [Selected private raw logs](session-dashboard-raw-logs.md) now have a separate
 host grant and finite concurrent byte-window contract; language selection grants

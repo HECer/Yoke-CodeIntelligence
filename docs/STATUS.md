@@ -1,5 +1,26 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Dashboard keyboard access: scoped acceptance (2026-10-24)
+
+Product `480fb00d3ba2866cb0b0a63fb8f3e7f2361d8737` is pushed and its exact HTML blob independently
+verified on GitHub. A first-focusable skip link reaches the main content;
+explicit page navigation focuses its heading, while automatic refresh preserves
+input focus. Confirmation dialogs expose their explanation to assistive tools.
+Real native Tab/Enter/Shift-Tab/Escape checks retain unsaved inert Unicode drafts,
+restore focus on cancellation and confirm own shutdown before stdin EOF/Job
+cleanup. The390×844 dialog fits its viewport. Synthetic and captured-native-DOM
+pixel rerenders are inspected; native snapshot/click adapter timeouts and an
+initial Tab attempt retaining BODY focus are preserved. No native screenshot or full
+accessibility certificate is claimed.
+
+Current HTML scope:13 dashboard tests/zero failures, all-target Clippy-Dwarnings,
+368 format roots, typecheck and npm260/3 existing skips pass on1152 exact inputs.
+CLI SHA-256 `03ef5e39ce72e21269bd447d9bf814ca2479f486221fe9bfc40674f267df7bcf`. The earlier805-pass
+migration qualification retains its own source commit; it is not a new whole-
+source total for this HTML change. Original Windows prerequisites, broader
+dashboard/STATUS, main and release acceptance remain open. See
+[keyboard evidence](validation/integration-2026-10-24/dashboard-keyboard/README.md).
+
 ## Explicit global write-binding migration: current scoped acceptance (2026-10-24)
 
 Product `5bd0eadd88508b889520072ad53bc1b70ba58174` is pushed and all eight product blobs independently fetched

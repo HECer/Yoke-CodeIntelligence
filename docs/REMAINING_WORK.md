@@ -18,6 +18,11 @@ after the500MB disk stop; no different-source group is reused. Clippy/368-root
 format/typecheck/npm pass. Resource-only historical tests remain excluded.
 Earlier353/73/77 and whole Windows/platform/upstream certificates are unchanged.
 
+A later [keyboard scope](validation/integration-2026-10-24/dashboard-keyboard/README.md)
+adds a skip link, explicit-navigation heading focus and described confirmations.
+Actual native keyboard checks and13 dashboard tests pass; the preceding805 count
+remains tied to the migration source. Broader accessibility remains open.
+
 The full dashboard action remains active. Standalone retirement/deletion of an
 unbound owner, closed-journal history retirement/removal and broader recovery UI
 remain open. Migration retires one previous write selection and retains journals.

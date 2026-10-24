@@ -41,8 +41,10 @@ A separate `management.documents` selection adds explicit UTF-8 file reads and
 reviewed global host-file writes with durable conditional recovery. Independently
 [granted project-file writes](session-dashboard-project-files.md) use native plans,
 separate host approval/executed verification and original workspace journals.
-The Windows guarded backend permanently binds each written global
-target to its original selection/journal; migration and retirement are unavailable.
+The Windows guarded backend binds each written global target to its selection
+and original journal. [Explicit host migration](session-dashboard-binding-migration.md)
+can retire the preceding write selection after reviewing both authorities and
+closed histories; standalone owner deletion and history removal remain unavailable.
 Saving bytes does not reload the running configuration. See the
 [file contract](session-dashboard-documents.md).
 
@@ -100,9 +102,11 @@ operation text is replaced by a fixed label. This activity is independent of the
 separately selected raw-log reader and does not count every public protocol
 request. Evicted activity rows are disclosed.
 
-Dashboard workspace recovery, global binding migration, tray integration and
-automatic browser opening remain unavailable in this build. Their absence is disclosed rather than
-as empty successful results. Source-write approval and host execution grants are
+Selected project files support [bound-journal conditional rollback](session-dashboard-project-recovery.md).
+Other native or older unbound journals retain host recovery. Global binding
+migration uses the explicit host-only workflow. Tray integration and automatic
+browser opening remain unavailable; missing capabilities are disclosed rather
+than returned as empty successful results. Source-write approval and host execution grants are
 not changed through management. Existing guarded edit/approval/verification and
 recovery workflows retain their independent authority.
 
@@ -209,3 +213,19 @@ global file. Pending/retired authority retains browser drafts and disables write
 Actual stdio/HTTP/browser and fresh-host writer checks pass; pixels remain
 synthetic or captured-DOM rerenders. Standalone owner/history deletion, tray/
 automatic opening and full dashboard/release certificates remain open.
+
+
+## Keyboard content access
+
+The first focusable link skips repeated navigation and moves focus to the main
+content. Explicit navigation buttons move focus to the current page heading;
+automatic refresh and permission-driven page fallback do not request focus.
+Confirmation dialogs retain native modal keyboard behavior, start on Cancel and
+reference their explanatory text through `aria-describedby`. Escape preserves a
+pending draft and restores the invoking control. Drafts remain local until an
+independently authorized save.
+
+[Scoped keyboard acceptance](../../docs/validation/integration-2026-10-24/dashboard-keyboard/README.md)
+records13 dashboard tests, lint/format/typecheck/npm checks, actual native keyboard
+interaction and inspected desktop/mobile rerenders. Screen-reader products,
+all-browser/touch behavior and full accessibility certification remain open.
