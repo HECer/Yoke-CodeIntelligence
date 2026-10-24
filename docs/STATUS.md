@@ -1,5 +1,47 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Private raw logs and activity labels: scoped acceptance (2026-10-24)
+
+Product `c65c1512bfbefc7f5c408bf4a31b6a7cdd15a73e` is pushed to the integration
+branch; all eleven product blobs are independently verified on GitHub. An
+independent `management.rawLogs` selection now exposes explicit finite byte
+windows from private host files outside every analyzed root. Physical ancestor
+identities and pinned parents retain namespace boundaries. Separate log directory
+read/write sharing permits rotation without weakening strict document guards.
+Opened-generation Base64 bytes, decimal offsets and hashes remain authoritative;
+no immutable snapshot or whole-file completeness is inferred. Document, language
+and log activity names are fixed allowlisted labels with no arguments/results.
+
+Final scoped acceptance has **747 native passes, zero failures, seven existing
+ignores and zero filtered functions** across eleven whole groups, including all
+634 library and 22 dashboard-management functions. All 1141 inputs stay exact
+through qualification and live acceptance; no preceding-source group is reused.
+All-target Clippy with warnings denied, all 368 formatting roots, typecheck and
+npm: 260 passes and 3 existing skips pass. Qualified CLI SHA:
+`8c65cefa4acf52b44dd0bbab7cc3cb5bd6297c69c3b88719b2d2a2db166ce59e`.
+
+Actual CLI acceptance covers three stdio variants, Python state from 41 through 45 and
+two independent HTTP Sessions with deliberately shared host-selected log bytes
+and separate observation IDs. The actual native browser proves explicit reads,
+no automatic reread after append, exact Base64, inert script text, disclosed
+lossy UTF-8 and preserved stale observations after a competing project change.
+The actual 390-by-844 viewport has no horizontal overflow. Inspected pixels are synthetic
+fixtures or static captured-native-DOM rerenders, not native screenshots: snapshot
+automation twice timed out. All owned Jobs finish empty; the fresh synthetic
+service credential is removed after exact verification. No privilege change,
+manual deletion, model call or automatic analyzed-project execution is added.
+
+The original rotation failure (633 passes, 1 failure and 7 ignores), its finite Windows OS
+comparison and the fixture-only 400-response parser failure remain in the evidence. The
+corrected actual-source isolated 105-function harness is separately labeled and
+is not added to the final 747 native passes. [Contract](../native/docs/session-dashboard-raw-logs.md)
+and [scoped evidence](validation/integration-2026-10-24/dashboard-raw-logs/README.md).
+Project configuration writes through original approval/executed-verification,
+write-binding migration/retirement, owning-MCP shutdown, tray/automatic opening
+and full dashboard/STATUS/platform/upstream/release acceptance remain open.
+The original 353/73/77 boundaries and ten historical Windows OS1314 baseline failures
+remain unchanged; no main merge or release is claimed.
+
 ## Selected global documents and language selection: scoped acceptance (2026-10-24)
 
 Product `5e094c6dded5c0ab2965f5bfc74d42ff25ad886d` is pushed to the integration

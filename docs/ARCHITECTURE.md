@@ -862,7 +862,7 @@ Passive Rust JSON project selectors are omitted only from private provider copie
 
 Primary and additional semantic workspace folder identities share ASCII-only case folding on Windows and preserve opaque Unicode bytes. Exact captured source membership remains independent. Distinct filesystem names that Unicode lowercasing expands into the same text no longer merge or lose semantic roots.
 
-Explicit host dashboard configuration binds a distinct session fingerprint and starts a private loopback view only on open. Default access is read only. A second management opt-in queues bounded inert requests to the same owning non-Send Session thread; stdio polls OS input readiness and MCP-HTTP polls its actor between requests. Current session SHA/project, raw tool/API policy, note head CAS, revocation and original deadlines remain checked. Creation requires absence in the existing immediate note transaction; immutable note/source evidence remains intact. Accepted socket deadlines are capped by capability expiry, and Winsock sockets explicitly leave inherited nonblocking mode. Source writes and execution grants remain independent. A bounded worker owns fresh capabilities and nonpersisted structured activity without arguments/results/raw logs. Existing-only read-only SQL checks every displayed workspace/session binding. Session drop, stdio EOF and revocation close only owned listeners. Default absent/null management serialization and catalogs remain byte-preserving. The later selected-document and language acceptance is scoped separately; project writes, migration, raw logs, shutdown and broader UI scope remain open. See [dashboard contract](../native/docs/session-dashboard.md) and [scoped acceptance](validation/integration-2026-10-24/dashboard-management/README.md).
+Explicit host dashboard configuration binds a distinct session fingerprint and starts a private loopback view only on open. Default access is read only. A second management opt-in queues bounded inert requests to the same owning non-Send Session thread; stdio polls OS input readiness and MCP-HTTP polls its actor between requests. Current session SHA/project, raw tool/API policy, note head CAS, revocation and original deadlines remain checked. Creation requires absence in the existing immediate note transaction; immutable note/source evidence remains intact. Accepted socket deadlines are capped by capability expiry, and Winsock sockets explicitly leave inherited nonblocking mode. Source writes and execution grants remain independent. A bounded worker owns fresh capabilities and nonpersisted structured activity without arguments/results/raw logs. Existing-only read-only SQL checks every displayed workspace/session binding. Session drop, stdio EOF and revocation close only owned listeners. Default absent/null management serialization and catalogs remain byte-preserving. The later selected-document and language acceptance is scoped separately; project writes, migration, owned shutdown and broader UI scope remain open. Private raw-log windows are separately implemented below. See [dashboard contract](../native/docs/session-dashboard.md) and [scoped acceptance](validation/integration-2026-10-24/dashboard-management/README.md).
 
 An independent dashboard language allowlist now selects only pinned host registrations. Project-local persisted overrides retain ordered backend priority or a legacy-language subset; an empty legacy subset explicitly disables semantic providers. Current policy, Session SHA and registry checks precede metadata CAS, followed by an infallible prevalidated Engine projection. Other projects derive from the original registry. No provider starts for selection alone, no configuration file is reloaded, and immutable evidence stays unchanged. The later 733-pass selected-document checkpoint also qualifies current CLI stdio/HTTP and actual browser selection; provider runtimes remain uncertified. See the [selection contract](../native/docs/session-dashboard-language-servers.md).
 
@@ -882,3 +882,31 @@ changes. Project files remain read only pending original workspace approval and
 executed verification integration. Text never becomes runtime configuration or
 code. See [file contract](../native/docs/session-dashboard-documents.md) and
 [scoped acceptance](validation/integration-2026-10-24/dashboard-documents/README.md).
+
+### Selected private raw log observations
+
+An independent dashboard `management.rawLogs` host selection binds exact paths,
+physical parent identities and every analyzed root. Physical ancestor identities
+exclude source roots even under Unicode case aliases. Setup reads directory
+metadata only. The original Session admits each typed ID-only request under its
+current project/state, ci_session policy, deadline and revocation. No payload
+enters state or structured activity; fixed document/language/log labels retain
+status/timing while unknown text remains `other_operation`.
+
+A dedicated Windows reader shares read/write/delete on the opened log generation.
+Log directory handles share read/write without delete, permitting child-file
+rotation while pinning parent names. Strict document guards keep read-only
+sharing. Each read stops at the initially selected byte range, never follows
+later appends or a replacement filename, and reports initial/final sizes,
+short-read state, fresh observation ID and exact Base64/SHA. Decimal-string
+ranges retain large integer precision. A lossy UTF-8 preview is explicitly
+separate from raw bytes; immutableSnapshot and currentPathGenerationGuaranteed
+remain false even when observed lengths match. Missing files refuse explicitly.
+
+The UI reads only on request, preserves stale observations after Session/project
+changes and never autoloads logs while refreshing status. The scoped 747-pass
+acceptance includes current CLI stdio/HTTP and actual native browser DOM flows;
+pixels distinguish synthetic fixtures and captured-DOM rerenders. Other
+permissions and project execution/write gates remain independent. See the
+[contract](../native/docs/session-dashboard-raw-logs.md) and
+[evidence](validation/integration-2026-10-24/dashboard-raw-logs/README.md).

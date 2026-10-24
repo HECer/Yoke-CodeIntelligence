@@ -2,28 +2,30 @@
 
 ## Current dashboard management scope (2026-10-24)
 
-[Current scoped acceptance](validation/integration-2026-10-24/dashboard-documents/README.md)
-completes the earlier language CLI/stdio/HTTP/native-browser acceptance and adds
-selected global configuration-file editing with reviewed proposals and durable
-conditional recovery. Selected project files can be read. Final scope has 733
-native passes in eleven whole groups, zero failures, seven existing ignores and
-1138 unchanged inputs; lint/format/typecheck/npm and current CLI live checks pass.
-Synthetic pixels and captured-native-DOM rerenders are distinguished from actual
-native screenshots. This does not upgrade original353/73/77-runtime or whole
-Windows/platform/upstream certificates.
+[Current scoped acceptance](validation/integration-2026-10-24/dashboard-raw-logs/README.md)
+adds independently selected private raw-log windows and fixed document/language/
+log activity labels. Explicit reads preserve raw Base64 bytes, byte offsets and
+opened-generation identity; no auto capture, polling, write or immutable-file
+claim is introduced. Final scope has 747 native passes in eleven whole groups,
+zero failures, seven existing ignores and 1141 unchanged inputs, with no group
+reuse. Lint/format/typecheck/npm and actual CLI stdio/HTTP/native-browser checks
+pass. Synthetic pixels and captured-native-DOM rerenders are distinguished from
+actual screenshots. The original 353/73/77 and whole Windows/platform/upstream
+certificates are unchanged.
 
 The full dashboard action remains active. Complete project configuration writes
-through the original workspace permission, exact approval and executed-verification
-gates; automatic document write-binding migration/retirement; meaningful document
-activity labels (currently the fixed `other_operation` fallback); explicit private
-raw logs; and shutdown restricted to the owning MCP resource. Global file writes
-must retain their separate host selection, physical/security preconditions and
-pinned journal namespace. A configuration file edit must not reload or execute it.
+through original workspace permission, exact approval and executed-verification
+gates; explicit document write-binding migration/retirement; and shutdown
+restricted to the owning MCP resource. Global file writes retain independent
+host selection, physical/security preconditions and the pinned journal namespace.
+Editing file bytes must not reload or execute configuration. Private raw logs
+retain their separate finite selection and concurrent-observation semantics.
 
 Tray, automatic opening and broader keyboard/touch/accessibility/all-browser
-acceptance remain open. The existing project/mode/memory management foundation is
-[separately qualified](validation/integration-2026-10-24/dashboard-management/README.md).
-Neither this file nor the new acceptance marks the full dashboard or STATUS done.
+acceptance remain open. [Selected global files and language controls](validation/integration-2026-10-24/dashboard-documents/README.md)
+and the [project/mode/memory foundation](validation/integration-2026-10-24/dashboard-management/README.md)
+retain their earlier scopes. Neither this file nor the new acceptance marks the
+full dashboard or STATUS done.
 
 ## Captured import attributes
 

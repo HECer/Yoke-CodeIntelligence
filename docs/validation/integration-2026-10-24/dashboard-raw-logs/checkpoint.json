@@ -1,0 +1,168 @@
+{
+  "project": "HECer/Yoke-CodeIntelligence",
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "productCommit": "c65c1512bfbefc7f5c408bf4a31b6a7cdd15a73e",
+  "productRemoteBlobsVerified": 11,
+  "sourceInputs": 1141,
+  "native": {
+    "groups": [
+      {
+        "target": "session_dashboard_management",
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-logs-20261024-95e4b76d-qualified2\\whole-session_dashboard_management.stdout"
+      },
+      {
+        "target": "session_dashboard",
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-logs-20261024-95e4b76d-qualified2\\whole-session_dashboard.stdout"
+      },
+      {
+        "target": "notes",
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-logs-20261024-95e4b76d-qualified2\\whole-notes.stdout"
+      },
+      {
+        "target": "mcp_http",
+        "passed": 18,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-logs-20261024-95e4b76d-qualified2\\whole-mcp_http.stdout"
+      },
+      {
+        "target": "protocol_connection",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-logs-20261024-95e4b76d-qualified2\\whole-protocol_connection.stdout"
+      },
+      {
+        "target": "session_steering",
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-logs-20261024-95e4b76d-qualified2\\whole-session_steering.stdout"
+      },
+      {
+        "target": "server_selection",
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-logs-20261024-95e4b76d-qualified2\\whole-server_selection.stdout"
+      },
+      {
+        "target": "server_settings",
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-logs-20261024-95e4b76d-qualified2\\whole-server_settings.stdout"
+      },
+      {
+        "target": "project_session",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-logs-20261024-95e4b76d-qualified2\\whole-project_session.stdout"
+      },
+      {
+        "target": "library",
+        "passed": 634,
+        "failed": 0,
+        "ignored": 7,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-logs-20261024-95e4b76d-qualified2\\whole-library.stdout"
+      },
+      {
+        "target": "main",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-logs-20261024-95e4b76d-qualified2\\whole-main.stdout"
+      }
+    ],
+    "totals": {
+      "passed": 747,
+      "failed": 0,
+      "ignored": 7,
+      "measured": 0,
+      "filtered": 0
+    },
+    "sourceInputs": 1141,
+    "sourceInputsExact": true,
+    "reusedGroupCount": 0,
+    "platform": "Windows",
+    "fullPlatformOrParityCertification": false
+  },
+  "cliSha256": "8c65cefa4acf52b44dd0bbab7cc3cb5bd6297c69c3b88719b2d2a2db166ce59e",
+  "rawLogsAreExplicitConcurrentByteWindows": true,
+  "automaticCaptureOrPolling": false,
+  "strictDocumentSharingPreserved": true,
+  "rawLogDirectoryDeleteSharing": false,
+  "rawBytesBase64Authoritative": true,
+  "wholeFileOrImmutableSnapshotClaimed": false,
+  "allJobsEmpty": true,
+  "browserAcceptance": {
+    "complete": true,
+    "product": "Code Intelligence",
+    "version": "0.5.0",
+    "cliSha256": "8c65cefa4acf52b44dd0bbab7cc3cb5bd6297c69c3b88719b2d2a2db166ce59e",
+    "sourceHtmlSha256": "c22a62b72eeee5a0291daba8ca31db6d7746af5e828fae24d33a805d0e227563",
+    "sourceHtmlMatchesBuild": true,
+    "exactBase64AfterAppend": true,
+    "explicitReadOnly": true,
+    "noAutomaticRereadAfterAppend": true,
+    "separateObservationReceipt": true,
+    "bodyExcludedFromState": true,
+    "scriptTextInert": true,
+    "encodingLossDisclosed": true,
+    "competingProjectChangeMarkedObservationStale": true,
+    "previousBytesPreserved": true,
+    "sourceWritten": false,
+    "nativeScreenshot": false,
+    "capturedNativeDomRerenderVisuallyInspected": true,
+    "viewport": {
+      "capturedActualNativeDom": true,
+      "complete": true,
+      "documentWidth": 375,
+      "height": 844,
+      "logsVisible": true,
+      "nativeScreenshot": false,
+      "noHorizontalOverflow": true,
+      "staleObservationVisible": true,
+      "textReadOnly": true,
+      "width": 390
+    }
+  },
+  "precedingRotationFailurePreserved": true,
+  "priorDiagnosticCopiedScopeFieldsCorrectedBySeparateReceipts": true,
+  "fullStatusComplete": false,
+  "mainMerged": false,
+  "released": false
+}

@@ -44,6 +44,12 @@ target to its original selection/journal; migration and retirement are unavailab
 Saving bytes does not reload the running configuration. See the
 [file contract](session-dashboard-documents.md).
 
+A separate `management.rawLogs` selection enables explicit finite reads from
+private host log files outside every analyzed root. No capture or polling is
+started. Exact Base64 bytes, decimal offsets and opened-generation identity
+remain distinct from a lossy UTF-8 preview. Concurrent files are not immutable
+snapshots. See the [raw-log contract](session-dashboard-raw-logs.md).
+
 The CLI `serve-session` host installs the owner-thread driver when management is
 explicitly selected. Its native/Serena profiles expose opening operations.
 MCP-HTTP installs its actor driver for Session-backed principals; the pure Engine
@@ -83,11 +89,12 @@ Native protocol catalogs and per-operation runtime/write grants remain separate.
 It also shows bounded structured activity for native session operations observed
 after opening, including pending/completed/failed state and timing. It does not
 record arguments, results, source bytes, command lines or error messages. Unknown
-operation text is replaced by a fixed label. This is not a raw log viewer or a
-count of every public protocol request. Evicted activity rows are disclosed.
+operation text is replaced by a fixed label. This activity is independent of the
+separately selected raw-log reader and does not count every public protocol
+request. Evicted activity rows are disclosed.
 
 Project-file writes through existing approval/verification gates, binding migration,
-raw log access, tray integration, automatic browser opening and MCP shutdown remain
+tray integration, automatic browser opening and MCP shutdown remain
 unavailable in this build. Their absence is disclosed rather than
 as empty successful results. Source-write approval and host execution grants are
 not changed through management. Existing guarded edit/approval/verification and
@@ -125,6 +132,7 @@ Host bounds (camelCase) are:
 | `management.memories` | `true` when opted in | boolean; write policy remains separate |
 | `management.operationTimeoutMs` | `30000` | `100`–`60000` |
 | `management.documents` | absent/null | closed explicit selection; Windows guarded backend |
+| `management.rawLogs` | absent/null | closed exact-file selection; explicit 1-64000-byte windows; Windows backend |
 
 The listener starts only on the explicit open operation. Repeated opens reuse the
 live instance; an expired instance is replaced with a fresh capability. Dropping
@@ -155,7 +163,7 @@ pixels; this is not full accessibility or all-browser certification.
 
 This independent native view and management slice address part of the public dashboard surface;
 the [public guide](https://oraios.github.io/serena/02-usage/060_dashboard.html)
-also describes broader management and raw-log features not implemented here.
+also describes a broader management surface than this scoped implementation.
 It is not a parity or cross-platform runtime certificate.
 
 The later [selected-document/language acceptance](../../docs/validation/integration-2026-10-24/dashboard-documents/README.md)
@@ -163,5 +171,10 @@ records 733 scoped native passes and current CLI stdio/HTTP/native-browser flows
 Nine byte-identical integration groups are reused once after a controller cwd
 failure before library execution. Native snapshot capture timed out: pixel
 artifacts distinguish synthetic fixtures and static captured-native-DOM rerenders.
-File actions currently use the fixed `other_operation` activity label, while
-arguments/results remain excluded. Full dashboard/platform certification is open.
+At that checkpoint file actions used the fixed `other_operation` fallback.
+The later [private raw-log acceptance](../../docs/validation/integration-2026-10-24/dashboard-raw-logs/README.md)
+records 747 native passes with no preceding-source group reuse, current CLI live
+flows and actual native browser DOM checks. Fixed allowlisted document/language/
+log labels retain status/timing while arguments/results remain excluded. Native
+snapshot failures and the captured-DOM pixel rerenders are explicitly labeled.
+Full dashboard/platform certification remains open.
