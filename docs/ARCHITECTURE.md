@@ -964,3 +964,25 @@ resume is not synthesized. Drafts and journal/plan IDs survive uncertainty.
 The [788-pass scope](validation/integration-2026-10-24/dashboard-project-recovery/README.md)
 also exercises real stdio/HTTP/native-browser rollback. Broader journals, global
 binding migration, full dashboard and release acceptance remain separate.
+
+### Explicit global document write-binding migration
+
+The separate host-documents CLI takes complete old/new selections and registered
+root sets. Two independently constructed write authorities and an exact reviewed
+plan authorize only one shared physical global target. Current source/owner
+identity, security, bytes and bounded closed-history digests are rechecked under
+deterministically ordered journal locks and held physical guards. Unknown or
+unfinished history, occupied terminal backup/output roles and stale reviews refuse.
+Immutable intent and a fixed pending marker precede in-place owner metadata
+rewrite; its name/identity/security remain present. Partial owned metadata fails
+closed and explicit event-reviewed recovery fixes a direction before mutation.
+Admitted prefixes, event sequence/capacity and terminal-event reservation keep
+recovery bounded; foreign bytes and occupied names remain preserved. Format2
+owner generations retire the old write selection; ordinary format1 bytes stay
+unchanged and old builds refuse format2. Profiles are never automatically reloaded.
+The dashboard reports blocking metadata/incomplete state and retains drafts,
+without a migration action or serialized grant. Configuration bytes are unchanged
+by migration. Old reads remain governed by the old independent read selection.
+The [805-pass scope](validation/integration-2026-10-24/dashboard-binding-migration/README.md)
+includes real CLI/stdIO/HTTP/native-browser workflows. Standalone owner deletion,
+history cleanup and broader dashboard/release acceptance remain separate.

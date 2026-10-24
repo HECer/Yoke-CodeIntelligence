@@ -2,25 +2,30 @@
 
 ## Current dashboard management scope (2026-10-24)
 
-[Current scoped acceptance](validation/integration-2026-10-24/dashboard-project-recovery/README.md)
-adds bounded native-journal before/after inspection and confirmed conditional
-rollback for exact writable project-file selections. Current grants, reviewed
-journal revision, original WriterLock, immutable evidence and foreign-byte
-preservation remain authoritative. Older/unbound/native multi-file journals
-retain host recovery. An empty page never claims complete workspace recovery.
-Final scope: 788 native passes/zero failures/seven existing ignores, thirteen
-whole groups, no reuse, 1149 exact inputs; lint/368-root format/typecheck/npm pass.
-Real stdio/HTTP/browser rollback and stale-review refusal are exercised. Original
-353/73/77 and whole Windows/platform/upstream certificates remain unchanged.
+[Current scoped acceptance](validation/integration-2026-10-24/dashboard-binding-migration/README.md)
+adds explicit host-only per-target migration of global write bindings. Both
+complete selections and independent authorities, current physical/security/byte
+state and closed-history digests precede a durable marked metadata transition.
+The original owner name/identity stays present. Exact event-reviewed recovery
+preserves foreign data; fresh generations retire the preceding write selection.
+Profiles never reload automatically; browser blockers retain copyable drafts and
+cannot migrate grants. Real CLI/stdIO/HTTP/browser checks and a fresh-host write
+pass. The old Python45 survives the new host's write.
 
-The full dashboard action remains active. Global document write-binding
-migration/retirement and broader recovery UI remain open. Keep independent host
-selection, physical/security preconditions and durable pinned journals; editing
-bytes must not reload or execute configuration. Private raw logs retain finite
-concurrent-observation semantics; owning shutdown retains its separate grant and
-trusted transport binding. Tray, automatic opening and broader keyboard/touch/
-accessibility/all-browser acceptance remain open. Neither this file nor the new
-acceptance marks the full dashboard or STATUS done.
+Final scope:805 native passes/zero failures/seven existing ignores, thirteen
+whole groups,1152 exact inputs. One same-source library group continues once
+after the500MB disk stop; no different-source group is reused. Clippy/368-root
+format/typecheck/npm pass. Resource-only historical tests remain excluded.
+Earlier353/73/77 and whole Windows/platform/upstream certificates are unchanged.
+
+The full dashboard action remains active. Standalone retirement/deletion of an
+unbound owner, closed-journal history retirement/removal and broader recovery UI
+remain open. Migration retires one previous write selection and retains journals.
+Tray, automatic opening and broader keyboard/touch/accessibility/all-browser
+acceptance remain open. Project files retain their native workspace gates and
+bound-journal conditional rollback. Raw logs retain finite concurrent-observation
+semantics; owning shutdown retains its separate grant and transport binding.
+Neither this file nor the new scope marks full dashboard or STATUS done.
 
 ## Captured import attributes
 

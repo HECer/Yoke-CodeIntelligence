@@ -105,14 +105,18 @@ Before the first changing save, an opaque
 It binds the physical parent/leaf, exact document selection and journal identity.
 It remains after completion. Changing IDs, labels, limits, registered roots or
 the journal selection does not silently migrate that authority or bypass older
-journals. Restore the original selection/root to continue. Automatic migration,
-binding deletion and journal retirement are not implemented. Foreign or malformed
-binding files refuse and are never overwritten or cleaned up automatically.
+journals. Restore the selection/root that owns the file to resolve unfinished
+work. [Explicit host migration](session-dashboard-binding-migration.md) can review
+both complete selections and retire the old write binding of one global target.
+Automatic migration, standalone binding deletion and journal-history removal
+remain unavailable. Foreign metadata refuses and is never silently adopted.
 
 A different binding is reported explicitly as `blockedByDifferentAuthority`, not
 as an available empty recovery list. The browser retains the draft and explains
-the required original authority. Removing or replacing host state externally is
-not a supported recovery or migration procedure.
+the required current authority. Blocking migration metadata is separately
+reported as `blockedByBindingMigration` with `complete:false`. Host-only reviewed
+recovery resolves it; this page cannot migrate grants or reload its profile.
+Removing/replacing host state externally is not a supported migration procedure.
 
 Selections are limited to sixteen files and 64,000 bytes of serialized selection
 configuration. File content is limited to 64,000 UTF-8 bytes, or a smaller host

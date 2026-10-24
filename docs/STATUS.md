@@ -1,6 +1,60 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
-## Selected project-file journal recovery: current scoped acceptance (2026-10-24)
+## Explicit global write-binding migration: current scoped acceptance (2026-10-24)
+
+Product `5bd0eadd88508b889520072ad53bc1b70ba58174` is pushed and all eight product blobs independently fetched
+from GitHub. A host can now review and migrate the write binding of one exact
+global document between two independently writable selections. Both complete
+selection/root sets, current document and owner identity/security, exact bytes
+and closed journal histories are checked. Metadata stays in the original held
+owner file, so no absent/unbound interval admits another selection. A durable
+pending marker blocks ordinary writes and recovery until explicit host recovery.
+Fresh generations retire the preceding write selection and prevent old reviews
+from reviving when returning to it. Never-migrated format1 bytes stay unchanged;
+older builds refuse migrated format2. This does not edit configuration bytes,
+reload profiles, migrate project files or grant rights from serialized data.
+
+Final scope: **805 native passed, zero failures, seven existing ignored and zero
+filtered**, thirteen unique whole groups. Library673, management22, dashboard13,
+notes15, HTTP18, protocol5, steering12, selection8, settings8, project6,
+retention17, capture-changes1, main7. One byte-identical same-source library group
+continues after a downstream disk stop and is counted once; no different-source
+group is reused. All 1152 inputs stay exact through qualification/live checks.
+All-target Clippy with warnings denied, all368 format roots, typecheck and
+npm260/3 existing skips pass. Qualified CLI SHA:
+`5ffab66ed573302a674104a41c7478cf1cb3f00cb68e1395675847e0b968233c`.
+
+Three actual stdio variants run CLI plan/apply/inspect/recover, reject a missing
+host flag, preserve an occupied completion path and expose an explicit incomplete
+browser blocker. Exact owned-fixture relocation permits reviewed recovery;
+migration leaves configuration bytes exact, old writes refuse, and a fresh host
+profile writes successfully under the new binding. An additional live case
+retains the old Python value45 after the fresh host writes. Real HTTP actors both
+observe the retired write authority without automatic profile reload; runtime99,
+new Session123 and owning shutdown stay independent. Actual native browser checks
+retain the draft through blocked and retired authority states, keep writes
+disabled and prove old native/Python exit before stdin EOF/Job cleanup. All Jobs
+finish empty; owned tab closes and the new synthetic credential is removed.
+Inspected images are synthetic or captured-native-DOM rerenders; two native
+snapshot timeouts are preserved, without a native screenshot claim.
+
+Earlier CLI return-type and Clippy naming failures remain in the archive. The
+unchanged500MB guard stopped a downstream build after the library passed.
+Verified own evidence and positively qualified exact artifacts received
+SHA-preserving lossless compression, without deletion or policy changes. A
+resource-only historical main test initially used a missing scratch environment;
+its corrected seven passes are excluded from805. Focused passes are also not
+added. The continuation rechecks all1152 bytes and the passed library executable.
+[Contract](../native/docs/session-dashboard-binding-migration.md) and
+[scoped evidence](validation/integration-2026-10-24/dashboard-binding-migration/README.md).
+
+This closes explicit per-target migration and retirement of its preceding write
+selection. Standalone unbound-owner deletion, journal-history retirement/removal,
+broader native recovery UI, tray/automatic opening and full dashboard/STATUS/
+platform/upstream/release acceptance remain open. Earlier353/73/77 and ten
+historical OS1314 prerequisites remain unchanged. No main merge or release.
+
+## Earlier selected project-file journal recovery: scoped acceptance (2026-10-24)
 
 Product `191c06b7c9f5baa3149f3f773a8278d082dfe22a` is pushed to the integration branch. All twelve product blobs
 are independently verified on GitHub. The dashboard can now inspect finite pages

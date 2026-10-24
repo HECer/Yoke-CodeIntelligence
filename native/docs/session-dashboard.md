@@ -200,3 +200,12 @@ That checkpoint retained host-only workspace recovery. The later
 adds bounded exact-selection inspection and confirmed conditional rollback,
 with 788 scoped native passes on 1149 exact inputs and no group reuse. Other
 native/older unbound journals use the host workflow. Drafts and IDs remain retained.
+
+The later [explicit binding-migration acceptance](../../docs/validation/integration-2026-10-24/dashboard-binding-migration/README.md)
+records805 native passes on1152 exact inputs. One same-source library group
+continues once after a disk stop; no different-source group is reused. The host
+CLI reviews old/new grants and changes only the original owner metadata of one
+global file. Pending/retired authority retains browser drafts and disables writes.
+Actual stdio/HTTP/browser and fresh-host writer checks pass; pixels remain
+synthetic or captured-DOM rerenders. Standalone owner/history deletion, tray/
+automatic opening and full dashboard/release certificates remain open.

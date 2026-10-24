@@ -136,8 +136,20 @@ Passive Rust also omits captured rust-project.json selectors only from its priva
 
 Windows workspace-folder identity compares ASCII case conservatively and preserves opaque Unicode names. This avoids merging distinct captured directories through expanding Unicode lowercase mappings. Captured membership and source/write/runtime authority remain independent; this is not an all-filesystem alias certificate.
 
-The optional native session dashboard exposes a bounded read-only allowlist behind a fresh private loopback capability and exact Host/Origin checks. HTTP cannot change source, host configuration or memory. Structured activity excludes arguments/results/raw logs and never persists. Existing-only read-only SQL checks the exact session binding; host exit and MCP-HTTP revocation close access. This is not an OS-account security boundary. Keep returned capability URLs private. See [dashboard contract](native/docs/session-dashboard.md).
+The optional native session dashboard defaults to a bounded read-only allowlist behind a fresh private loopback capability and exact Host/Origin checks. Separate host opt-ins and the owning trusted transport driver admit bounded management; project source writes still require independent workspace authority, exact approval and executed verification. The read-only default cannot change source, host configuration or memory. Structured activity excludes arguments/results/raw logs and never persists. Existing-only read-only SQL checks the exact session binding; host exit and MCP-HTTP revocation close access. This is not an OS-account security boundary. Keep returned capability URLs private. See [dashboard contract](native/docs/session-dashboard.md).
 
 Compiler property-contract input checks reject mismatched physical/getter/setter/static roles, owner/heritage source anchors and forged dispatch metadata under the existing bounded protocol. Trusted compiler facts remain source-checked observations rather than independent semantic attestation. No new project execution, runtime authority or source-write grant is introduced.
 
 Compiler constructor-property admission checks explicit flags, exact constructor source containment/body and class/member ownership receipts. Missing anonymous owners remain visible partial coverage; no source execution or runtime authority follows from a parameter initializer or source-contract edge. Trusted compiler reports are not independent semantic attestation.
+
+Explicit global write-binding migration requires both complete host selections,
+independent write authorities and a concrete reviewed plan. Serialized records,
+hashes, repository prose and browser confirmation cannot construct those grants.
+Current physical identity/security, source bytes, closed journals and event
+revision are rechecked before owned metadata changes. A durable pending marker
+blocks ordinary writes; in-place metadata retains its occupied name and identity.
+Foreign contents/paths, missing state and old schema readers fail closed. This
+does not change authored configuration bytes, reload profiles or revoke prior
+independent read grants. Exact recorded recovery stays host-only. Keep selections
+and journals private. These application controls do not isolate from a hostile
+process with the same host filesystem rights; no independent audit is claimed.
