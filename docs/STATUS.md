@@ -1,5 +1,24 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## TypeScript body namespace correction: native admission pending (2026-10-24)
+
+Classic body expansion now resolves free references with the pinned compiler's
+actual type, value or namespace meaning. An unrelated same-name binding in the
+other namespace no longer causes a false refusal; actual shadows still refuse,
+including value references inside `typeof` and shorthand properties. Missing or
+unknown classification fails closed. Source recipes, Rust admission and apply
+permissions are unchanged.
+
+The actual TypeScript5.8.3 worker diagnostic covers22 cases:12 valid variants
+accept and10 adversarial variants refuse. At parent c1366e8d, the same22 cases
+all refuse, including12 false refusals. Accepted projections retain copied
+binding targets, result types, exact UTF-8/CRLF edits and owned runtime results.
+Two new native test functions are added but have not run locally: available
+space remains below the1.2GB native build admission. Typecheck and npm260/0/3
+existing skips pass. Direct worker success is not independent Rust or platform
+acceptance. R1, current native CI, live history/VSIX, main and release remain open.
+[Evidence](validation/integration-2026-10-24/typescript-namespace-bindings/README.md).
+
 ## Readiness diagnostics and scoped hosted observations (2026-10-24)
 
 Windows editor failures at c11511ee occur at the original3-second startup wait,

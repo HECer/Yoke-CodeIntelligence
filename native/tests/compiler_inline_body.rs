@@ -923,6 +923,64 @@ fn explicit_return_contexts_and_anonymous_return_names_retain_types_and_owned_ex
     }
 }
 #[test]
+fn body_free_references_keep_separate_type_value_and_namespace_bindings() {
+    for source in [
+        "type Result={run:(n:number)=>number};function helper(n:number):Result{return {run:value=>value+n};}export function outer(Result:number){const result=helper(2);return result.run(Result);}export const observed=outer(3);",
+        "const BASE=2;function helper(n:number):number{return n+BASE;}export function outer(){type BASE={unused:true};const extra:BASE={unused:true};const result=helper(3);return [result,extra.unused];}export const observed=outer();",
+        "namespace Types{export type Result={value:number};}function helper(n:number):Types.Result{return {value:n};}export function outer(Types:number){const result=helper(2);return result.value+Types;}export const observed=outer(3);",
+        "const Witness:number=3;function helper(n:typeof Witness):typeof Witness{return n;}export function outer(){type Witness={unused:true};const extra:Witness={unused:true};const result=helper(3);return [result,extra.unused];}export const observed=outer();",
+        "const BASE=2;function helper():{BASE:number}{return {BASE};}export function outer(){type BASE={unused:true};const extra:BASE={unused:true};const result=helper();return [result.BASE,extra.unused];}export const observed=outer();",
+        "// 🧪\r\ntype Résultat={value:number};\r\nfunction helper(n:number):Résultat{return {value:n};}\r\nexport function outer(Résultat:number){const result=helper(2);return result.value+Résultat;}\r\nexport const observed=outer(3);\r\n",
+    ] {
+        for epoch in [AnalyzerEpoch::V8, AnalyzerEpoch::V9] {
+            for keep in [false, true] {
+                let (root, mut engine) = fixture(source, "ts");
+                engine.capture_epoch = epoch;
+                let r = yoke::compiler_inline::prepare(
+                    &mut engine,
+                    &compiler(),
+                    &args(keep, "ts"),
+                    &d(),
+                )
+                .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+                let after = planned(&engine, &r, "ts");
+                assert_eq!(after.contains("function helper"), keep, "{after}");
+                assert_eq!(r["sourceExecuted"], false);
+                assert_eq!(r["complete"], false);
+                assert_eq!(r["verificationRequired"], true);
+                same_execution(source, &after);
+                assert_eq!(
+                    fs::read_to_string(root.path().join("main.ts")).unwrap(),
+                    source
+                );
+            }
+        }
+    }
+}
+#[test]
+fn body_namespace_classification_still_refuses_actual_lexical_shadows() {
+    for source in [
+        "const BASE=2;function helper(n:number):number{return n+BASE;}export function outer(BASE:number){const result=helper(3);return result;}export const observed=outer(4);",
+        "const Witness:number=3;function helper(n:typeof Witness):typeof Witness{return n;}export function outer(Witness:number){const value=helper(3);return value+Witness;}export const observed=outer(2);",
+        "namespace Types{export type Result={value:number};}function helper(n:number):Types.Result{return {value:n};}namespace Consumer{namespace Types{export type Result={value:string};}export function outer(){const extra:Types.Result={value:\"x\"};const result=helper(2);return [result.value,extra.value];}}export const observed=Consumer.outer();",
+        "const BASE=2;function helper():{BASE:number}{return {BASE};}export function outer(BASE:number){const result=helper();return result.BASE;}export const observed=outer(4);",
+    ] {
+        let (root, mut engine) = fixture(source, "ts");
+        let error =
+            yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+                .unwrap_err();
+        assert!(
+            format!("{error:#}").contains("Body free binding would change"),
+            "{source}: {error:#}"
+        );
+        unpublished(&engine);
+        assert_eq!(
+            fs::read_to_string(root.path().join("main.ts")).unwrap(),
+            source
+        );
+    }
+}
+#[test]
 fn return_annotations_cannot_capture_consumer_type_shadows() {
     let source = "type Result={run:(n:number)=>number};function helper():Result{return {run:n=>n+1};}export function outer(){type Result={value:number};const unused:Result={value:3};const result=helper();return result.run(unused.value);}";
     let (root, mut engine) = fixture(source, "ts");

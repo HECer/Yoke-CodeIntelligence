@@ -32,6 +32,20 @@ overlapping statement frames remain unavailable. See the
 Exported definitions require `keepDefinition=true`; captured
 consumers outside the file, recursive references and noncall/write consumers refuse.
 
+Free references in the classic body and its TypeScript signature use the pinned
+compiler's reference meaning when resolving each consumer: type, value and
+namespace bindings remain separate. A value parameter called `Result` does not
+capture a copied `Result` type alias; a type alias called `BASE` does not capture
+a copied `BASE` value. Qualified type roots use the namespace meaning, while
+`typeof` queries and object shorthand retain value meaning. Actual shadows in
+the required namespace still refuse. Missing or unknown reference classification
+fails closed. This uses TypeScript 5.8.3's internal `getMeaningFromLocation`
+export; it adds no compatibility with another compiler version. Existing source
+copies, before/after diagnostics, binding/type observations and independent Rust
+reconstruction remain mandatory. The
+[direct compiler qualification](../../docs/validation/integration-2026-10-24/typescript-namespace-bindings/README.md)
+does not establish native integration acceptance.
+
 Every argument, including extra arguments, is evaluated once before any parameter
 initialization.
 Simple literal and identifier arguments retain direct fresh bindings so original
