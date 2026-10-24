@@ -699,7 +699,7 @@ pub(crate) fn derive_with<T>(
     let run = || -> Result<Result<T>> {
         options.admit(report_id, meaning_graph_ids, d)?;
         ensure!(store.db.is_autocommit(), Failure::Input);
-        crate::github_app::worker::publication_policy(store, d, || {
+        crate::github_app::worker::publication_policy(store, d, |d| {
             let prior = store.db.limit(Limit::SQLITE_LIMIT_LENGTH)?;
             store
                 .db

@@ -273,7 +273,7 @@ pub(crate) fn transaction(
     let result = (|| {
         admit(c, writes, d)?;
         ensure!(store.db.is_autocommit(), JobFailure::State);
-        crate::github_app::worker::publication_policy(store, d, || {
+        crate::github_app::worker::publication_policy(store, d, |d| {
             use rusqlite::limits::Limit;
             let prior = store.db.limit(Limit::SQLITE_LIMIT_LENGTH)?;
             store

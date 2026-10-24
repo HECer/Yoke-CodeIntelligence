@@ -297,7 +297,7 @@ fn sql<T>(
     run: impl FnOnce(&mut History) -> Result<T>,
 ) -> Result<T> {
     c.admit(false, write, d)?;
-    crate::github_app::worker::publication_policy(c.store, d, || {
+    crate::github_app::worker::publication_policy(c.store, d, |d| {
         use rusqlite::limits::Limit;
         let prior = c.store.db.limit(Limit::SQLITE_LIMIT_LENGTH)?;
         c.store.db.set_limit(

@@ -1,0 +1,41 @@
+{
+  "artifact": {
+    "id": 12563227510,
+    "name": "native-shard-macos-latest-2",
+    "bytes": 117655,
+    "digest": "sha256:25845080395219c1f5881731b846fb74296cb2e1b0c351a69fdf88d9c68913de",
+    "run": 40101366598,
+    "head": "84e1186621eb2ac984609bb05549e9a3b93d759b"
+  },
+  "artifactDigestReverified": true,
+  "group": {
+    "group": "yoke-code-intelligence:test:github_app_digest_handoff:test",
+    "exitCode": 101,
+    "logs": [
+      {
+        "name": "0019.stdout",
+        "bytes": 2118,
+        "sha256": "32d13d1c0a1dd6f8bb300eee33570c7095b6af82ad0130c82163ce2e40d56e10"
+      },
+      {
+        "name": "0019.stderr",
+        "bytes": 536,
+        "sha256": "035edfaf1060e0bac8154071baadc1a810d176a6bdf23fb351d623839ca16581"
+      }
+    ]
+  },
+  "oldSources": [
+    {
+      "path": "native/src/github_app_worker_source.rs",
+      "sha256": "e2e99976f40651d27622797257070f189fb6e83296eccc614db6c2994dbf568f",
+      "exactToSelectedMacInput": true
+    },
+    {
+      "path": "native/tests/github_app_digest_handoff.rs",
+      "sha256": "ea083879d1d670fe3994ff046f5547a2f460677553be6455836dd210c651a362",
+      "exactToSelectedMacInput": true
+    }
+  ],
+  "failureExcerpt": "---- sql_contention_preserves_policy_and_deadline_without_network_or_late_intent stdout ----\n\nthread 'sql_contention_preserves_policy_and_deadline_without_network_or_late_intent' (84745) panicked at native/tests/github_app_digest_handoff.rs:871:5:\nassertion failed: start.elapsed() < Duration::from_secs(1)\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    sql_contention_preserves_policy_and_deadline_without_network_or_late_intent\n\ntest result: FAILED. 17 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.77s\n\n",
+  "completeHostedTimingCauseMeasured": false
+}

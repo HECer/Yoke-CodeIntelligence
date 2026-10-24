@@ -384,7 +384,7 @@ pub(crate) fn recovery_publication_source(
 pub(crate) fn publication_policy<T>(
     store: &Store,
     d: &Deadline,
-    run: impl FnOnce() -> Result<T>,
+    run: impl FnOnce(&Deadline) -> Result<T>,
 ) -> Result<T> {
     source::policy(store, d, run)
 }
@@ -495,7 +495,7 @@ pub fn run(
         _context.store.db.is_autocommit(),
         "github_app_worker_caller_transaction_refused"
     );
-    source::policy(_context.store, _d, || {
+    source::policy(_context.store, _d, |_d| {
         let admit_historical = |value: Value| -> Result<Value> {
             crate::json::encode_bounded(&value["review"], _remote.max_report_bytes, _d)
                 .map_err(|_| anyhow::anyhow!(CAPACITY))?;

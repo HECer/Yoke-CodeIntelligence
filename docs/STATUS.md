@@ -1,5 +1,20 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Publication SQLite deadline callback: native confirmation pending (2026-10-24)
+
+The scoped source/publication policy now reinstalls the owned SQLite busy
+callback before direct SQL and inherits the Store's earlier deadline. A caller's
+built-in busy timeout had replaced that callback; changing its saved deadline
+data alone could not reactivate it. Numeric timeout/length/deadline policy is
+restored on success or refusal. An actual private SQLite C-API probe observes
+zero callback calls and about0.948s without reinstallation versus22 calls and
+about0.061s with it. This is Python's SQLite3.50.4 API evidence, not native Rust
+or macOS acceptance. Three new native tests await execution; the original60-ms
+contention test is unchanged. Full native/platform/live/VSIX/STATUS remains open.
+368 format roots, Python103/0/0, typecheck and npm260/0/3 existing skips pass
+separately; none executes the changed native code.
+[Evidence](validation/integration-2026-10-24/sqlite-publication-deadline/README.md).
+
 ## Dashboard timeout result transport: native confirmation pending (2026-10-24)
 
 Management now prepares two bounded refusal representations before queueing,

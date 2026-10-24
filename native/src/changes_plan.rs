@@ -300,7 +300,7 @@ fn review(
 pub(super) fn load(store: &Store, id: &str, d: &Deadline) -> Result<Plan> {
     let d = store.inherited_deadline(d)?;
     let run = || -> Result<Plan> {
-        crate::github_app::worker::publication_policy(store, &d, || {
+        crate::github_app::worker::publication_policy(store, &d, |_| {
             let prior = store.db.limit(Limit::SQLITE_LIMIT_LENGTH)?;
             store
                 .db

@@ -429,7 +429,7 @@ fn sql<T>(
             "github_app_pages_sql_durability_required"
         );
     }
-    worker::publication_policy(store, d, || {
+    worker::publication_policy(store, d, |d| {
         store
             .db
             .busy_timeout(d.remaining().min(Duration::from_millis(50)))?;
@@ -461,7 +461,7 @@ pub(super) fn validated_inline_records(
     let mut o = Options::default();
     o.worker.queue.max_payload_bytes = super::super::MAX_PAYLOAD_BYTES;
     o.admit(d)?;
-    worker::publication_policy(store, d, || {
+    worker::publication_policy(store, d, |d| {
         store
             .db
             .busy_timeout(d.remaining().min(Duration::from_millis(50)))?;

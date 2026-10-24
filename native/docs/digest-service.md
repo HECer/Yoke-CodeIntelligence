@@ -135,6 +135,13 @@ The same host deadline covers source replay, locks, SQL, HTTP and output. Host
 cancellation is checked at boundaries and between response reads; a blocking
 HTTP operation remains bounded by its original timeout.
 
+The scoped source/publication policy reinstalls the Store-owned deadline-aware
+busy callback before direct transaction SQL, including `BEGIN IMMEDIATE`.
+Updating deadline data alone cannot undo an external `busy_timeout` replacement.
+The requested deadline also inherits any earlier Store ceiling. The saved numeric
+busy timeout and Store deadline/length policy are restored on success or refusal;
+this does not promise restoration of arbitrary external callback functions.
+
 An intent alone is an unknown outcome, including a crash before sending. The
 same request cannot send again, the same proposal cannot use a different request
 ID, and a pending App/repository blocks another submission across installation

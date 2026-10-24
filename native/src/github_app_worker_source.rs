@@ -113,14 +113,21 @@ pub(super) struct Review {
 }
 
 /// Restore the caller's SQL policy even when pure analysis uses legacy Store helpers.
-pub(super) fn policy<T>(store: &Store, d: &Deadline, run: impl FnOnce() -> Result<T>) -> Result<T> {
-    d.check()?;
+pub(super) fn policy<T>(
+    store: &Store,
+    d: &Deadline,
+    run: impl FnOnce(&Deadline) -> Result<T>,
+) -> Result<T> {
+    let effective = store.inherited_deadline(d)?;
     let busy: u64 = store
         .db
         .query_row("PRAGMA busy_timeout", [], |r| r.get(0))?;
     let length = store.db.limit(Limit::SQLITE_LIMIT_LENGTH)?;
-    let prior = store.replace_deadline(Some(d.clone()));
-    let result = run();
+    let prior = store.replace_deadline(Some(effective.clone()));
+    // A public caller's busy_timeout replaces SQLite's callback. Updating the
+    // registered deadline data alone does not reinstall that callback before
+    // direct SQL (including BEGIN IMMEDIATE) starts waiting on a writer.
+    let result = store.check_deadline().and_then(|()| run(&effective));
     let restore_length = store.db.set_limit(Limit::SQLITE_LIMIT_LENGTH, length);
     store.replace_deadline(prior);
     let restore_busy = store.db.busy_timeout(Duration::from_millis(busy));
@@ -128,10 +135,104 @@ pub(super) fn policy<T>(store: &Store, d: &Deadline, run: impl FnOnce() -> Resul
         restore_length.is_ok() && restore_busy.is_ok(),
         "github_app_worker_sql_policy_restore_failed"
     );
-    if result.is_err() {
-        d.check()?;
+    if result
+        .as_ref()
+        .err()
+        .is_some_and(crate::process::cleanup_unproven)
+    {
+        return result;
     }
+    effective.check()?;
     result
+}
+
+#[cfg(test)]
+mod policy_tests {
+    use super::*;
+
+    #[test]
+    fn publication_policy_reinstalls_deadline_waits_and_restores_external_sql_settings() {
+        let root = tempfile::tempdir().unwrap();
+        let store = Store::open(root.path()).unwrap();
+        for fail in [false, true] {
+            store.db.busy_timeout(Duration::from_millis(777)).unwrap();
+            let original_limit = store.db.limit(Limit::SQLITE_LIMIT_LENGTH).unwrap();
+            let result = policy(&store, &Deadline::new(2000), |effective| {
+                effective.check()?;
+                let busy: u64 = store
+                    .db
+                    .query_row("PRAGMA busy_timeout", [], |row| row.get(0))?;
+                // Installing a custom callback clears the built-in timeout.
+                assert_eq!(busy, 0);
+                store.db.set_limit(Limit::SQLITE_LIMIT_LENGTH, 65536)?;
+                if fail {
+                    anyhow::bail!("owned_policy_failure");
+                }
+                Ok(())
+            });
+            assert_eq!(result.is_err(), fail);
+            assert_eq!(
+                store.db.limit(Limit::SQLITE_LIMIT_LENGTH).unwrap(),
+                original_limit
+            );
+            assert_eq!(
+                store
+                    .db
+                    .query_row("PRAGMA busy_timeout", [], |row| row.get::<_, u64>(0))
+                    .unwrap(),
+                777
+            );
+        }
+    }
+
+    #[test]
+    fn expired_store_deadline_refuses_longer_publication_before_running_sql() {
+        let root = tempfile::tempdir().unwrap();
+        let store = Store::open(root.path()).unwrap();
+        store.set_deadline(&Deadline::new(0)).unwrap_err();
+        store.db.busy_timeout(Duration::from_millis(777)).unwrap();
+        let called = std::cell::Cell::new(false);
+        let error = policy(&store, &Deadline::new(2000), |_| {
+            called.set(true);
+            Ok(())
+        })
+        .unwrap_err();
+        assert!(error.to_string().contains("deadline"));
+        assert!(!called.get());
+        assert_eq!(
+            store
+                .db
+                .query_row("PRAGMA busy_timeout", [], |row| row.get::<_, u64>(0))
+                .unwrap(),
+            777
+        );
+        assert!(store.inherited_deadline(&Deadline::new(2000)).is_err());
+    }
+
+    #[test]
+    fn publication_receives_the_intersected_store_deadline_instead_of_longer_request() {
+        let root = tempfile::tempdir().unwrap();
+        let store = Store::open(root.path()).unwrap();
+        store.set_deadline(&Deadline::new(20_000)).unwrap();
+        store.db.busy_timeout(Duration::from_millis(777)).unwrap();
+        let requested = Deadline::new(600_000);
+        policy(&store, &requested, |effective| {
+            assert!(effective.remaining() <= Duration::from_secs(20));
+            assert!(effective.remaining() < requested.remaining());
+            Ok(())
+        })
+        .unwrap();
+        assert!(
+            store.inherited_deadline(&requested).unwrap().remaining() <= Duration::from_secs(20)
+        );
+        assert_eq!(
+            store
+                .db
+                .query_row("PRAGMA busy_timeout", [], |row| row.get::<_, u64>(0))
+                .unwrap(),
+            777
+        );
+    }
 }
 
 // Fixed slots are the only table/kind selectors. Absent proof rows are sealed too.

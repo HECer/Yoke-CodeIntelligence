@@ -66,6 +66,17 @@ length limit after its statements and owned transaction have left scope.
 Arbitrary externally installed raw SQLite callbacks are outside this ownership
 contract.
 
+The separate scoped source/publication policy intersects the requested deadline
+with the Store's existing ceiling and reinstalls its owned deadline-aware busy
+callback before running direct SQL. A caller's `busy_timeout` may have replaced
+that callback even while its registered deadline data still exists. Success and
+refusal restore the saved Store deadline, SQL length limit and numeric busy
+timeout; a longer request cannot revive an expired Store ceiling.
+The scoped operation receives that effective deadline for its own checks before
+publication/commit. Existing plan readers/approval paths already intersect their
+deadline before entering this policy. Final scope checks preserve typed owned-
+process cleanup uncertainty rather than replacing it with a timeout marker.
+
 Retention validates the complete closed worker history without OS keys or network
 access. Current claim/release events grant no snapshot or CAS root authority;
 Git IDs, signatures and request text are never traversed as generic references.

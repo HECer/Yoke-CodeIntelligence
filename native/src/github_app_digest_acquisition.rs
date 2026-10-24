@@ -82,7 +82,7 @@ pub fn acquire(
         engine.store.db.is_autocommit(),
         "github_app_digest_acquisition_caller_transaction_refused"
     );
-    let result = crate::github_app::worker::publication_policy(&engine.store, d, || {
+    let result = crate::github_app::worker::publication_policy(&engine.store, d, |d| {
         // The source proof/capture metadata and generated graphs share the
         // established row ceiling; the scoped policy restores the caller limit.
         let prior = engine.store.db.limit(Limit::SQLITE_LIMIT_LENGTH)?;

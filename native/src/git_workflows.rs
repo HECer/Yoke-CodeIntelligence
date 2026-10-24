@@ -1092,7 +1092,7 @@ pub fn capture_commit_at(
         engine.store.db.is_autocommit(),
         "Git capture caller transaction refused"
     );
-    crate::github_app::worker::publication_policy(&engine.store, deadline, || {
+    crate::github_app::worker::publication_policy(&engine.store, deadline, |deadline| {
         let tx = rusqlite::Transaction::new_unchecked(
             &engine.store.db,
             rusqlite::TransactionBehavior::Immediate,

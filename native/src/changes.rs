@@ -643,7 +643,7 @@ pub fn approve(store: &Store, id: &str, allow_tests: bool) -> Result<Plan> {
 }
 pub fn approve_at(store: &Store, id: &str, allow_tests: bool, deadline: &Deadline) -> Result<Plan> {
     let deadline = store.inherited_deadline(deadline)?;
-    crate::github_app::worker::publication_policy(store, &deadline, || {
+    crate::github_app::worker::publication_policy(store, &deadline, |_| {
         let plan = load_checked_plan(store, id, &deadline)?;
         ensure!(plan.expires_at > now(), "Plan expired");
         ensure!(

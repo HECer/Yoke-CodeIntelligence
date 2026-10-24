@@ -1,5 +1,17 @@
 # Remaining implementation and acceptance
 
+## Scoped SQLite deadline restoration awaits native confirmation
+
+The [callback correction](validation/integration-2026-10-24/sqlite-publication-deadline/README.md)
+reinstalls the Store-owned deadline callback before direct SQL and intersects an
+earlier Store ceiling, then restores saved SQL settings. An actual owned Python
+SQLite C-API comparison confirms the replaced-callback mechanism and cleanup.
+Three new native unit tests and the unchanged60-ms service contention test await
+execution; no bundled Rust SQLite/native service pass is claimed. Full native,
+platform/runtime/memory/timing/live/current VSIX/STATUS acceptance remains open.
+368 format roots, Python103/0/0, typecheck and npm260/0/3 existing skips pass
+with their own separate scopes.
+
 ## Dashboard timeout delivery awaits native confirmation
 
 The [transport correction](validation/integration-2026-10-24/dashboard-timeout-delivery/README.md)

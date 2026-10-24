@@ -646,7 +646,7 @@ pub fn inspect(
             root.join(".yoke").canonicalize()? == store.dir.canonicalize()?,
             Failure::Source
         );
-        crate::github_app::worker::publication_policy(store, d, || {
+        crate::github_app::worker::publication_policy(store, d, |d| {
             let prior = store.db.limit(Limit::SQLITE_LIMIT_LENGTH)?;
             store
                 .db

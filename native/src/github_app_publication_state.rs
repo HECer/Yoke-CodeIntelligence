@@ -562,7 +562,7 @@ pub(super) fn validated_inline_records(
     let mut options = Options::default();
     options.worker.queue.max_payload_bytes = super::super::MAX_PAYLOAD_BYTES;
     options.admit(d)?;
-    worker::publication_policy(store, d, || {
+    worker::publication_policy(store, d, |d| {
         store
             .db
             .busy_timeout(d.remaining().min(Duration::from_millis(50)))?;
@@ -606,7 +606,7 @@ fn sql<T>(
     if write {
         admit_durability(c, d)?;
     }
-    worker::publication_policy(c.store, d, || {
+    worker::publication_policy(c.store, d, |d| {
         c.store
             .db
             .busy_timeout(d.remaining().min(Duration::from_millis(50)))?;

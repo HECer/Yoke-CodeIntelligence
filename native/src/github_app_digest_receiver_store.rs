@@ -112,7 +112,7 @@ pub(super) fn sql<T>(
         store.db.is_autocommit(),
         "github_app_digest_receiver_caller_transaction_refused"
     );
-    crate::github_app::worker::publication_policy(store, d, || {
+    crate::github_app::worker::publication_policy(store, d, |d| {
         let prior = store.db.limit(Limit::SQLITE_LIMIT_LENGTH)?;
         store.db.set_limit(
             Limit::SQLITE_LIMIT_LENGTH,
