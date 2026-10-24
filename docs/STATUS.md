@@ -1,5 +1,22 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Whole-target native CI scheduling: acceptance pending (2026-10-24)
+
+The earlier Windows job is terminal/cancelled after roughly45 minutes, still in
+the suite. Its log preserves one shell-REPL deadline failure and two source-hook
+failures. These remain open. CI now distributes all369 default Cargo groups
+(365 test executables, three compile-only examples, one library doctest invocation)
+over eight shards per platform. Original assertions/operation deadlines, profiles,
+Windows1/Unix2 test threads, warning/permission gates and45-minute job limits stay.
+Every same-source shard and whole-group/log receipt is required before the
+original platform release/live steps. Missing evidence refuses completeness.
+
+11 scheduler and16 separate history-admission tests pass locally without native
+Yoke execution; source-hook changes add failure-only diagnostics. Format/typecheck/
+npm260/3 existing skips pass. Hosted partitioned execution and complete STATUS
+remain open; preceding504963a6 Node/Clippy successes keep their own source scope.
+[Evidence and limits](validation/integration-2026-10-24/native-target-shards/README.md).
+
 ## History worker containment admission: hosted confirmation pending (2026-10-24)
 
 The CI worker now verifies membership in its parent's specific fresh named

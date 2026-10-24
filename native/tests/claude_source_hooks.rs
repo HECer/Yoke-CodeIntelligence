@@ -500,8 +500,11 @@ fn selected_status_bootstrap_preserves_unicode_quoted_bindings_and_uses_no_profi
     assert_eq!(
         captured.exit_code,
         Some(0),
-        "{}",
-        String::from_utf8_lossy(&captured.stderr)
+        "{}; independent library callback: {:?}",
+        String::from_utf8_lossy(&captured.stderr),
+        callback(SourceHookMode::Status, &launch, &input, 4096)
+            .map(|_| "ok")
+            .map_err(|error| format!("{error:#}"))
     );
     assert!(
         captured.stdin_complete
@@ -532,7 +535,10 @@ fn selected_shell_hash_and_source_boundary_are_checked_before_writes_or_callback
         .with_source_status_shell(&inside, &Deadline::new(30000))
         .err()
         .unwrap();
-    assert!(error.to_string().contains("outside analyzed source"));
+    assert!(
+        error.to_string().contains("outside analyzed source"),
+        "unexpected source-shell refusal: {error:#}"
+    );
     assert!(fs::read_dir(&f.state).unwrap().next().is_none());
 
     let mut f = fixture_at(Default::default(), "source-ascii");

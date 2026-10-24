@@ -1,5 +1,15 @@
 # Remaining implementation and acceptance
 
+## Whole-target native scheduling awaits actual CI acceptance
+
+The [new layout](validation/integration-2026-10-24/native-target-shards/README.md)
+partitions369 complete default Cargo groups over eight jobs per platform while
+retaining the original test threads/assertions/deadlines/profiles and45-minute
+job limit. Exact eight-shard/source/group/log coverage precedes release/live.
+11 scheduler tests and16 separate history-admission tests pass without native
+execution. Three earlier Windows shell failures and actual full CI/live/VSIX
+acceptance remain open. A cancelled partial suite is not a successful baseline.
+
 ## Live worker Job admission awaits hosted native execution
 
 The internal worker now requires membership in its parent's specific fresh Job,
