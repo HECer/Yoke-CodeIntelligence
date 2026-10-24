@@ -1,5 +1,13 @@
 # Remaining implementation and acceptance
 
+## Live worker Job admission awaits hosted native execution
+
+The internal worker now requires membership in its parent's specific fresh Job,
+verified and closed before native image reads.16 Windows admission/evidence tests
+pass without Yoke execution; the actual positive assigned-worker/archive path
+remains a hosted gate. Native source/workflow/limits are unchanged.
+See [evidence](validation/integration-2026-10-24/history-worker-job/README.md).
+
 ## Unix CI helper fix awaits hosted confirmation
 
 Both Unix Clippy jobs at head `d90a4e35` reject a Windows-only test deadline

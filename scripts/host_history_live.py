@@ -534,7 +534,40 @@ def output_size(root):
     return total
 
 
-def bounded_worker(spec_path, fixture, output, environment):
+def worker_job_name(value):
+    require(isinstance(value, str) and re.fullmatch(r"Local\\YokeHistoryCI-[0-9a-f]{64}", value),
+            "Explicit owned worker Job name required")
+    return value
+
+
+def require_worker_job(name):
+    """Prove membership in this parent's specific Job before any native read.
+
+    Query access cannot assign this process to a Job. Close the non-inheritable
+    query handle before continuing so it cannot retain kill-on-close ownership.
+    """
+    name = worker_job_name(name)
+    api = ctypes.WinDLL("kernel32", use_last_error=True)
+    for function, args, result in (
+        ("OpenJobObjectW", [ctypes.c_uint32, ctypes.c_int, ctypes.c_wchar_p], ctypes.c_void_p),
+        ("GetCurrentProcess", [], ctypes.c_void_p),
+        ("IsProcessInJob", [ctypes.c_void_p, ctypes.c_void_p, ctypes.POINTER(ctypes.c_int)], ctypes.c_int),
+        ("CloseHandle", [ctypes.c_void_p], ctypes.c_int),
+    ):
+        entry = getattr(api, function)
+        entry.argtypes, entry.restype = args, result
+    handle = api.OpenJobObjectW(0x0004, False, name)
+    require(bool(handle), "Owned worker Job unavailable")
+    try:
+        assigned = ctypes.c_int()
+        require(api.IsProcessInJob(api.GetCurrentProcess(), handle, ctypes.byref(assigned))
+                and assigned.value, "Worker is outside its assigned Job")
+    finally:
+        require(api.CloseHandle(handle), "Owned worker Job query handle close failed")
+    return {"specificJobMembershipConfirmed": True, "queryHandleClosedBeforeNativeRead": True}
+
+
+def bounded_worker(spec_path, fixture, output, environment, job_name):
     # The layout and suspended-assignment ordering follow the already exercised
     # repository Windows runner, with explicit 64-bit admission and cleanup proof.
     import _winapi
@@ -564,8 +597,13 @@ def bounded_worker(spec_path, fixture, output, environment):
         function = getattr(api, name)
         function.argtypes, function.restype = args, result
     require(shutil.disk_usage(ROOT).free >= MIN_FREE, "Native live acceptance disk reserve unavailable")
-    job = api.CreateJobObjectW(None, None)
+    job_name = worker_job_name(job_name)
+    ctypes.set_last_error(0)
+    job = api.CreateJobObjectW(None, job_name)
     require(bool(job), "Windows Job unavailable")
+    if ctypes.get_last_error() == 183:
+        require(api.CloseHandle(job), "Occupied Job handle close failed")
+        raise RuntimeError("Owned worker Job name is already occupied")
     process = thread = None
     row = {"startedSuspended": True, "assignedBeforeResume": False, "complete": False}
 
@@ -622,6 +660,7 @@ def worker(spec_path):
     require(os.name == "nt" and shutil.disk_usage(ROOT).free >= MIN_FREE,
             "Native live worker platform or disk reserve unavailable")
     spec = read_json(spec_path, 64000)
+    admission = require_worker_job(spec.get("workerJobName"))
     native, fixture, output = (Path(spec[key]) for key in ("native", "fixture", "output"))
     require(os.name == "nt" and native.is_absolute() and fixture.is_absolute() and output.is_absolute(),
             "Explicit Windows fixture paths required")
@@ -637,6 +676,7 @@ def worker(spec_path):
     finally:
         write_json(output / "live-result.json", {"product": "Code Intelligence", "version": "0.5.0",
             "complete": complete, "nativeSha256": spec["nativeSha256"], "variants": variants,
+            "workerJobAdmission": admission,
             "modelCalls": 0, "analyzedSourceExecuted": False, "existingCredentialsSelected": False,
             "nativeBrowserAcceptanceClaimed": False})
     return 0
@@ -685,13 +725,17 @@ def main(arguments=None):
         "scope": "Tracked native/src/python/scripts and Cargo/package manifests; not the complete checkout",
         "sha256": inputs})
     spec_path = fixture / "spec.json"
-    write_json(spec_path, {"native": str(native), "nativeSha256": digest, "fixture": str(fixture), "output": str(output)})
+    job_name = "Local\\YokeHistoryCI-" + os.urandom(32).hex()
+    write_json(spec_path, {"native": str(native), "nativeSha256": digest, "fixture": str(fixture),
+                          "output": str(output), "workerJobName": job_name})
     complete = False
     try:
-        bounded_worker(spec_path, fixture, output, environment)
+        bounded_worker(spec_path, fixture, output, environment, job_name)
         result = read_json(output / "live-result.json")
         require(result["complete"] is True and len(result["variants"]) == 3 and sha(native) == digest,
                 "Live acceptance proof incomplete")
+        require(result.get("workerJobAdmission") == {"specificJobMembershipConfirmed": True,
+                    "queryHandleClosedBeforeNativeRead": True}, "Worker Job admission proof incomplete")
         require(source_inputs() == inputs, "Selected source inputs changed during live acceptance")
         subprocess.run(["git", "diff", "--no-ext-diff", "--no-textconv", "--exit-code", "HEAD", "--"], cwd=ROOT, check=True,
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)

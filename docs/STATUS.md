@@ -1,5 +1,17 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## History worker containment admission: hosted confirmation pending (2026-10-24)
+
+The CI worker now verifies membership in its parent's specific fresh named
+Windows Job before reading the native image. A non-inheritable query handle
+closes before proceeding; missing/wrong Jobs and query/close failures refuse.
+The normal suspended assignment, kill-on-close, deadlines, capacities and500MB
+floor remain unchanged.16 admission/evidence tests pass on Windows, including
+one actual empty-Job refusal and a simulated preceding-source regression.
+No native Yoke image is read or executed. Typecheck/npm260/3 existing skips pass;
+native Rust/workflow bytes remain exact. The hosted native gate and full STATUS
+remain open. [Evidence](validation/integration-2026-10-24/history-worker-job/README.md).
+
 ## Unix CI test-helper correction: hosted confirmation pending (2026-10-24)
 
 Rust CI for head `d90a4e35` stops on both Ubuntu and macOS because the document
