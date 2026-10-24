@@ -1,0 +1,38 @@
+2026-10-24T15:27:52.2865008Z error[E0277]: `process::cleanup_tests::SignalFailureOnce` doesn't implement `std::fmt::Debug`
+2026-10-24T15:27:52.2865694Z    --> native/src/process_cleanup_tests.rs:92:26
+2026-10-24T15:27:52.2866019Z     |
+2026-10-24T15:27:52.2866425Z  92 | impl StdChildWrapper for SignalFailureOnce {
+2026-10-24T15:27:52.2867364Z     |                          ^^^^^^^^^^^^^^^^^ the trait `std::fmt::Debug` is not implemented for `process::cleanup_tests::SignalFailureOnce`
+2026-10-24T15:27:52.2867979Z     |
+2026-10-24T15:27:52.2868823Z     = note: add `#[derive(Debug)]` to `process::cleanup_tests::SignalFailureOnce` or manually `impl std::fmt::Debug for process::cleanup_tests::SignalFailureOnce`
+2026-10-24T15:27:52.2869706Z note: required by a bound in `process_wrap::std::StdChildWrapper`
+2026-10-24T15:27:52.2870451Z    --> /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/process-wrap-8.2.2/src/generic_wrap.rs:244:19
+2026-10-24T15:27:52.2870944Z     |
+2026-10-24T15:27:52.2871446Z 244 |           $v trait $name: std::fmt::Debug + Send + Sync $body
+2026-10-24T15:27:52.2872083Z     |                           ^^^^^^^^^^^^^^^ required by this bound in `StdChildWrapper`
+2026-10-24T15:27:52.2872484Z     |
+2026-10-24T15:27:52.2873098Z    ::: /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/process-wrap-8.2.2/src/std/core.rs:21:1
+2026-10-24T15:27:52.2873888Z     |
+2026-10-24T15:27:52.2874370Z  21 | / crate::generic_wrap::MaybeAnyTrait! {
+2026-10-24T15:27:52.2874960Z  22 | | /// Wrapper for `std::process::Child`.
+2026-10-24T15:27:52.2875401Z  23 | | ///
+2026-10-24T15:27:52.2876146Z  24 | | /// This trait exposes most of the functionality of the underlying [`Child`]. It is implemented for
+2026-10-24T15:27:52.2876758Z ...   |
+2026-10-24T15:27:52.2877186Z  58 | | pub trait StdChildWrapper {
+2026-10-24T15:27:52.2877802Z     | |           --------------- required by a bound in this trait
+2026-10-24T15:27:52.2878254Z ...   |
+2026-10-24T15:27:52.2878613Z 215 | | }
+2026-10-24T15:27:52.2879338Z     | |_- in this macro invocation
+2026-10-24T15:27:52.2880248Z     = note: this error originates in the macro `crate::generic_wrap::MaybeAnyTrait` (in Nightly builds, run with -Z macro-backtrace for more info)
+2026-10-24T15:27:52.2881244Z help: consider annotating `process::cleanup_tests::SignalFailureOnce` with `#[derive(Debug)]`
+2026-10-24T15:27:52.2881712Z     |
+2026-10-24T15:27:52.2882012Z  86 + #[derive(Debug)]
+2026-10-24T15:27:52.2882426Z  87 | struct SignalFailureOnce {
+2026-10-24T15:27:52.2882752Z     |
+2026-10-24T15:27:52.2882868Z 
+2026-10-24T15:28:09.5375770Z For more information about this error, try `rustc --explain E0277`.
+2026-10-24T15:28:09.5703778Z error: could not compile `yoke-code-intelligence` (lib test) due to 1 previous error
+2026-10-24T15:28:09.5705173Z warning: build failed, waiting for other jobs to finish...
+2026-10-24T15:28:43.7806890Z ##[error]Process completed with exit code 101.
+2026-10-24T15:28:43.7856285Z ##[group]Run actions/upload-artifact@v4
+2026-10-24T15:28:43.7856447Z with:

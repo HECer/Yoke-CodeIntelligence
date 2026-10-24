@@ -13,6 +13,11 @@ memory/runtime/timing, live/VSIX and complete STATUS gates remain open.
 
 ## Checked runtime cleanup and representable Unicode fixtures await hosted tests
 
+Ubuntu Clippy at2154c13d fails with E0277 because the new Unix test fault wrapper
+lacks Debug, required by process-wrap's generated trait. The one-line derivation
+is corrected; hosted compilation/tests remain pending. Production and original
+assertions/budgets are unchanged. [Compiler evidence](validation/integration-2026-10-24/unix-cleanup-test-trait/README.md).
+
 The [new native checkpoint](validation/integration-2026-10-24/runtime-cleanup-unicode/README.md)
 reuses bounded checked process cleanup, retains actual cleanup uncertainty and
 requires owned-root status after Unix ESRCH. Five native lifecycle regressions

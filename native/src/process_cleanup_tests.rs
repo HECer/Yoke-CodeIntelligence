@@ -83,6 +83,7 @@ fn invalid_cleanup_budgets_never_become_successful_exit_receipts() {
 }
 
 #[cfg(unix)]
+#[derive(Debug)]
 struct SignalFailureOnce {
     inner: Box<dyn StdChildWrapper>,
     error: Option<i32>,

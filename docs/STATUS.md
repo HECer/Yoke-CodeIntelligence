@@ -1,5 +1,14 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Unix cleanup-test trait correction: hosted confirmation pending (2026-10-24)
+
+Actual2154c13d Ubuntu Clippy rejects the new Unix fault wrapper with E0277:
+process-wrap's generated trait requires Debug. The correction adds only that
+test wrapper's derive; production, warning gates, assertions and budgets stay.
+Changed-file rustfmt passes; actual Unix compilation/test confirmation remains
+pending. Prior format/Python/TypeScript passes never certified native typing.
+[Evidence](validation/integration-2026-10-24/unix-cleanup-test-trait/README.md).
+
 ## Volume-aware Unicode fixture assertions: hosted confirmation pending (2026-10-24)
 
 Two native integration-test files now observe exclusive directory creation and

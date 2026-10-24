@@ -1,0 +1,19 @@
+{
+  "baseline": "b7a5049ed36fccd3c2beb192d55485e7c81a6cdf",
+  "observedFailedSource": "2154c13d5449f31f198e5dc0ae2fba01579cd5ee",
+  "observedFailedRun": 40106033047,
+  "observedFailedJob": 120907798275,
+  "compilerError": "E0277",
+  "cause": "Pinned process-wrap generated StdChildWrapper supertraits require Debug",
+  "correction": "Unix test-only derive(Debug); no behavior/assertion/budget/profile/warning-gate change",
+  "path": "native/src/process_cleanup_tests.rs",
+  "sha256": "632e39e788def591d125fe242ae6f23d66d0a7cd60f73264a814ca61616e654c",
+  "gitBlobSha": "916cfb0e73f4037e2a250682cab7ed202a32815a",
+  "changedFileRustfmtExit": 0,
+  "nativeCompilationOrExecutionAttemptedLocally": false,
+  "nativeRegressionsPreserved": 5,
+  "hostedCorrectedCompilationVerified": false,
+  "localFullNativeBuildAdmissionBytes": 1200000000,
+  "freeBytesObserved": 1104052224,
+  "fullStatusComplete": false
+}
