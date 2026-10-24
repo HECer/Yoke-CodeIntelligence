@@ -18,6 +18,8 @@ pub struct Config {
     pub operation_timeout_ms: u64,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub language_servers: Option<LanguageGrant>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub documents: Option<crate::host_install::documents::Config>,
 }
 impl Default for Config {
     fn default() -> Self {
@@ -26,6 +28,7 @@ impl Default for Config {
             memories: true,
             operation_timeout_ms: 30_000,
             language_servers: None,
+            documents: None,
         }
     }
 }
@@ -37,6 +40,9 @@ impl Config {
         );
         if let Some(grant) = &self.language_servers {
             grant.validate()?;
+        }
+        if let Some(documents) = &self.documents {
+            documents.validate()?;
         }
         Ok(())
     }
@@ -114,6 +120,9 @@ pub(crate) struct Request {
     deny_unknown_fields
 )]
 pub(crate) enum Action {
+    Document {
+        request: DocumentRequest,
+    },
     ListMemories {
         #[serde(default)]
         topic: String,
@@ -142,14 +151,84 @@ pub(crate) enum Action {
     SwitchModes {
         modes: Vec<String>,
     },
-    ResetModes,
+    ResetModes {},
     ActivateProject {
         project: String,
     },
     SelectLanguageServers {
         selection: LanguageSelection,
     },
-    ResetLanguageServers,
+    ResetLanguageServers {},
+}
+#[derive(Debug, Deserialize)]
+#[serde(
+    tag = "kind",
+    rename_all = "camelCase",
+    rename_all_fields = "camelCase",
+    deny_unknown_fields
+)]
+pub(crate) enum DocumentRequest {
+    Read {
+        document_id: String,
+    },
+    Plan {
+        document_id: String,
+        expected_revision: String,
+        content: String,
+    },
+    Apply {
+        document_id: String,
+        plan_id: String,
+    },
+    Pending {
+        document_id: String,
+    },
+    Recover {
+        document_id: String,
+        journal_id: String,
+        expected_event: String,
+        direction: String,
+    },
+}
+impl DocumentRequest {
+    pub(crate) fn document_id(&self) -> &str {
+        match self {
+            Self::Read { document_id }
+            | Self::Plan { document_id, .. }
+            | Self::Apply { document_id, .. }
+            | Self::Pending { document_id }
+            | Self::Recover { document_id, .. } => document_id,
+        }
+    }
+    fn validate(&self) -> Result<()> {
+        crate::project_session::label(self.document_id())?;
+        match self {
+            Self::Plan {
+                expected_revision,
+                content,
+                ..
+            } => ensure!(
+                valid_id(expected_revision) && content.len() <= 64000,
+                "dashboard_document_proposal_capacity_or_revision"
+            ),
+            Self::Apply { plan_id, .. } => {
+                ensure!(valid_id(plan_id), "dashboard_document_plan_id_invalid")
+            }
+            Self::Recover {
+                journal_id,
+                expected_event,
+                direction,
+                ..
+            } => ensure!(
+                valid_id(journal_id)
+                    && valid_id(expected_event)
+                    && matches!(direction.as_str(), "resume" | "rollback"),
+                "dashboard_document_recovery_invalid"
+            ),
+            _ => {}
+        }
+        Ok(())
+    }
 }
 impl Request {
     pub(crate) fn validate(&self) -> Result<()> {
@@ -167,6 +246,7 @@ impl Request {
             Ok(())
         };
         match &self.action {
+            Action::Document { request } => request.validate()?,
             Action::ReadMemory { name } | Action::DeleteMemory { name, .. } => project_name(name)?,
             Action::CreateMemory { name, content } | Action::WriteMemory { name, content, .. } => {
                 project_name(name)?;
@@ -343,6 +423,46 @@ impl Client {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn argumentless_management_actions_reject_all_unknown_authority_fields() {
+        for kind in ["resetModes", "resetLanguageServers"] {
+            let base = json!({"kind":kind});
+            serde_json::from_value::<Action>(base.clone()).unwrap();
+            for field in ["command", "scope", "project", "service"] {
+                let mut action = base.clone();
+                action[field] = json!("untrusted");
+                assert!(
+                    serde_json::from_value::<Action>(action).is_err(),
+                    "{kind}: {field}"
+                );
+            }
+        }
+    }
+    #[test]
+    fn document_actions_reject_unknown_authority_and_invalid_byte_or_revision_requests() {
+        let base = json!({"id":"a".repeat(64),"sessionStateSha256":"b".repeat(64),"project":"default","action":{"kind":"document","request":{"kind":"plan","documentId":"settings","expectedRevision":"c".repeat(64),"content":"inert"}}});
+        let valid: Request = crate::json::decode(base.clone()).unwrap();
+        valid.validate().unwrap();
+        for key in ["path", "root", "approval", "command", "allowWrites"] {
+            let mut value = base.clone();
+            value["action"]["request"][key] = json!(true);
+            assert!(crate::json::decode::<Request>(value).is_err());
+        }
+        for (key, value) in [
+            ("content", json!("x".repeat(64001))),
+            ("expectedRevision", json!("stale")),
+            ("documentId", json!("../outside")),
+        ] {
+            let mut bad = base.clone();
+            bad["action"]["request"][key] = value;
+            assert!(
+                crate::json::decode::<Request>(bad)
+                    .unwrap()
+                    .validate()
+                    .is_err()
+            );
+        }
+    }
     fn request() -> Request {
         crate::json::decode(json!({"id":"a".repeat(64),"sessionStateSha256":"b".repeat(64),"project":"default","action":{"kind":"createMemory","name":"owned","content":"original"}})).unwrap()
     }

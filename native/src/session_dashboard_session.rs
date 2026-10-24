@@ -8,6 +8,9 @@ impl Session {
         // requests observe closure, and cannot be applied by a later driver.
         self.dashboard = None;
         self.dashboard_management = None;
+        if let Some(documents) = &mut self.dashboard_documents {
+            documents.clear_plans();
+        }
     }
     pub fn dashboard_management_requested(&self) -> bool {
         self.host
@@ -40,7 +43,7 @@ impl Session {
         }
         Some(
             json!({"enabled":self.dashboard_management.is_some(),"sessionControls":config.session_controls,
-            "memories":config.memories,"configurationFiles":false,"languageSelection":self.dashboard_language_view().unwrap_or(json!(false)),"rawLogs":false,"shutdown":false,
+            "memories":config.memories,"configurationFiles":self.dashboard_documents_view().unwrap_or(json!(false)),"languageSelection":self.dashboard_language_view().unwrap_or(json!(false)),"rawLogs":false,"shutdown":false,
             "operationTimeoutMs":config.operation_timeout_ms,"sessionStateSha256":crate::model::hash(&self.persisted),
             "modeChoices":choices,"modeResetAvailable":self.steering_enabled(),"memoryWritesGranted":self.host.notes_policy.writable,
             "noMemoriesMode":self.state.modes.iter().any(|m|m=="no-memories")}),
@@ -123,6 +126,9 @@ impl Session {
             .context("Dashboard management unavailable")?
             .clone();
         let (operation, args, tool, api, write) = match &request.action {
+            Action::Document { request: document } => {
+                return self.dashboard_document_action(request, document, deadline);
+            }
             Action::ListMemories { topic } => (
                 "notes.list",
                 json!({"topic":topic}),
@@ -183,7 +189,7 @@ impl Session {
                 None,
                 true,
             ),
-            Action::ResetModes => (
+            Action::ResetModes {} => (
                 "switchModes",
                 json!({"reset":true}),
                 "ci_session",
@@ -204,7 +210,7 @@ impl Session {
                 None,
                 true,
             ),
-            Action::ResetLanguageServers => (
+            Action::ResetLanguageServers {} => (
                 "dashboard.languages.reset",
                 Value::Null,
                 "ci_session",
@@ -246,7 +252,7 @@ impl Session {
             Action::SelectLanguageServers { selection } => {
                 self.dashboard_select_languages(Some(selection.clone()), deadline)
             }
-            Action::ResetLanguageServers => self.dashboard_select_languages(None, deadline),
+            Action::ResetLanguageServers {} => self.dashboard_select_languages(None, deadline),
             _ => self.invoke(operation, &args, deadline),
         };
         if operation.starts_with("dashboard.languages") {

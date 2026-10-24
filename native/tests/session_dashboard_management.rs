@@ -854,3 +854,376 @@ fn incomplete_request_cannot_extend_the_host_dashboard_lifetime() {
     assert_eq!(header.split_whitespace().nth(1), Some("408"));
     assert!(!header.contains("native_session_dashboard_v1"));
 }
+
+#[cfg(windows)]
+fn document_session(writable: bool) -> (tempfile::TempDir, Session, std::path::PathBuf) {
+    let temp = tempfile::tempdir().unwrap();
+    let source = temp.path().join("source");
+    fs::create_dir(&source).unwrap();
+    fs::write(source.join("main.rs"), b"fn untouched() {}\r\n").unwrap();
+    let selected = temp.path().join("host.yaml");
+    fs::write(&selected, "\u{feff}# original\r\nvalue: inert\r\n").unwrap();
+    let journal = temp.path().join("journals");
+    fs::create_dir(&journal).unwrap();
+    let host:HostProfile=serde_json::from_value(json!({"dashboard":{"management":{"sessionControls":false,"memories":false,"documents":{"documents":[{"id":"host","label":"Owned host settings","path":selected,"scope":{"kind":"global"},"writable":writable}],"journalRoot":journal}}}})).unwrap();
+    let session = Session::open(
+        Engine::open(&source).unwrap(),
+        host,
+        Some("documents"),
+        &d(),
+    )
+    .unwrap();
+    (temp, session, selected)
+}
+#[cfg(windows)]
+fn document_call(
+    s: &mut Session,
+    address: SocketAddr,
+    token: &str,
+    request: Value,
+) -> (u16, Value) {
+    call(
+        s,
+        address,
+        token,
+        json!({"kind":"document","request":request}),
+    )
+}
+#[cfg(windows)]
+#[test]
+fn selected_global_document_requires_reviewed_plan_and_keeps_source_and_running_profile() {
+    let (temp, mut session, path) = document_session(true);
+    let (address, token) = start(&mut session);
+    let state = view(address, &token);
+    assert_eq!(state["capabilities"]["configurationReading"], true);
+    assert_eq!(state["capabilities"]["configurationEditing"], true);
+    assert_eq!(state["capabilities"]["projectConfigurationEditing"], false);
+    let reopened = session.invoke("openDashboard", &json!({}), &d()).unwrap();
+    assert_eq!(reopened["capabilities"]["configurationReading"], true);
+    assert_eq!(reopened["capabilities"]["configurationEditing"], true);
+    assert_eq!(state["view"]["management"]["sessionControls"], false);
+    assert_eq!(
+        state["view"]["management"]["configurationFiles"]["choices"][0]["writable"],
+        true
+    );
+    let original = session.invoke("configuration", &json!({}), &d()).unwrap();
+    let (status, loaded) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"read","documentId":"host"}),
+    );
+    assert_eq!(status, 200, "{loaded}");
+    let content = "\u{feff}# explicit proposal\r\ncommand: <script>inert</script>\r\n";
+    let before = fs::read(&path).unwrap();
+    let revision = loaded["data"]["document"]["revision"].clone();
+    let (status, planned) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"plan","documentId":"host","expectedRevision":revision,"content":content}),
+    );
+    assert_eq!(status, 200, "{planned}");
+    assert_eq!(planned["fileChanged"], false);
+    assert_eq!(fs::read(&path).unwrap(), before);
+    let id = planned["data"]["plan"]["id"].clone();
+    let (status, result) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"apply","documentId":"host","planId":id}),
+    );
+    assert_eq!(status, 200, "{result}");
+    assert_eq!(result["fileChanged"], true);
+    assert_eq!(result["sourceWritten"], false);
+    assert_eq!(fs::read(&path).unwrap(), content.as_bytes());
+    assert_eq!(
+        fs::read(temp.path().join("source/main.rs")).unwrap(),
+        b"fn untouched() {}\r\n"
+    );
+    assert_eq!(
+        session.invoke("configuration", &json!({}), &d()).unwrap(),
+        original
+    );
+    let (status, replay) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"apply","documentId":"host","planId":id}),
+    );
+    assert_eq!(status, 422, "{replay}");
+    assert_eq!(fs::read(&path).unwrap(), content.as_bytes());
+    let (status, pending) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"pending","documentId":"host"}),
+    );
+    assert_eq!(status, 200, "{pending}");
+    assert_eq!(pending["data"]["journals"], json!([]));
+}
+#[cfg(windows)]
+#[test]
+fn document_selection_does_not_grant_arbitrary_paths_or_readonly_writes() {
+    let (_temp, mut session, path) = document_session(false);
+    let (address, token) = start(&mut session);
+    assert_eq!(
+        view(address, &token)["capabilities"]["configurationReading"],
+        true
+    );
+    assert_eq!(
+        view(address, &token)["capabilities"]["configurationEditing"],
+        false
+    );
+    let before = fs::read(&path).unwrap();
+    let (status, loaded) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"read","documentId":"host"}),
+    );
+    assert_eq!(status, 200);
+    for request in [
+        json!({"kind":"read","documentId":"outside"}),
+        json!({"kind":"read","documentId":"../host"}),
+        json!({"kind":"read","documentId":"host","path":path}),
+        json!({"kind":"plan","documentId":"host","expectedRevision":loaded["data"]["document"]["revision"],"content":"unapproved"}),
+        json!({"kind":"apply","documentId":"host","planId":"a".repeat(64)}),
+        json!({"kind":"pending","documentId":"host"}),
+    ] {
+        let (status, result) = document_call(&mut session, address, &token, request);
+        assert_ne!(status, 200, "{result}");
+        assert_eq!(fs::read(&path).unwrap(), before);
+    }
+}
+#[cfg(windows)]
+#[test]
+fn competing_file_change_refuses_reviewed_document_plan_without_overwriting_new_bytes() {
+    let (_temp, mut session, path) = document_session(true);
+    let (address, token) = start(&mut session);
+    let (_, loaded) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"read","documentId":"host"}),
+    );
+    let (status, planned) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"plan","documentId":"host","expectedRevision":loaded["data"]["document"]["revision"],"content":"proposal\r\n"}),
+    );
+    assert_eq!(status, 200);
+    fs::write(&path, b"competing saved bytes\r\n").unwrap();
+    let (status, result) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"apply","documentId":"host","planId":planned["data"]["plan"]["id"]}),
+    );
+    assert_eq!(status, 422, "{result}");
+    assert_eq!(fs::read(&path).unwrap(), b"competing saved bytes\r\n");
+}
+#[cfg(windows)]
+#[test]
+fn project_document_payloads_follow_active_project_and_never_gain_workspace_write_authority() {
+    let temp = tempfile::tempdir().unwrap();
+    let primary = temp.path().join("primary");
+    let secondary = temp.path().join("secondary");
+    let journal = temp.path().join("journal");
+    for root in [&primary, &secondary, &journal] {
+        fs::create_dir(root).unwrap();
+    }
+    fs::write(primary.join("project.yaml"), b"primary: original\r\n").unwrap();
+    fs::write(secondary.join("project.yaml"), b"secondary: original\r\n").unwrap();
+    let host:HostProfile=serde_json::from_value(json!({"projects":[{"name":"other","root":secondary}],"dashboard":{"management":{"documents":{"documents":[{"id":"primary","label":"Primary","path":primary.join("project.yaml"),"scope":{"kind":"project","project":"default"},"writable":true},{"id":"secondary","label":"Secondary","path":secondary.join("project.yaml"),"scope":{"kind":"project","project":"other"},"writable":true}],"journalRoot":journal}}}})).unwrap();
+    let mut session = Session::open(
+        Engine::open(&primary).unwrap(),
+        host,
+        Some("project-documents"),
+        &d(),
+    )
+    .unwrap();
+    let (address, token) = start(&mut session);
+    let (_, loaded) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"read","documentId":"primary"}),
+    );
+    assert_eq!(
+        loaded["data"]["document"]["content"],
+        "primary: original\r\n"
+    );
+    let (status, _) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"read","documentId":"secondary"}),
+    );
+    assert_eq!(status, 403);
+    let (status, _) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"plan","documentId":"primary","expectedRevision":loaded["data"]["document"]["revision"],"content":"unapproved"}),
+    );
+    assert_eq!(status, 422);
+    assert_eq!(
+        view(address, &token)["view"]["management"]["configurationFiles"]["choices"][0]["writable"],
+        false
+    );
+    let old = view(address, &token);
+    let (status, result) = call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"activateProject","project":"other"}),
+    );
+    assert_eq!(status, 200, "{result}");
+    let (_, loaded) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"read","documentId":"secondary"}),
+    );
+    assert_eq!(
+        loaded["data"]["document"]["content"],
+        "secondary: original\r\n"
+    );
+    let stale = wire(
+        address,
+        &token,
+        request(
+            &old,
+            json!({"kind":"document","request":{"kind":"read","documentId":"primary"}}),
+        ),
+    );
+    let client = thread::spawn(move || raw(address, stale));
+    while !client.is_finished() {
+        session.poll_dashboard_management(&d()).unwrap();
+        thread::sleep(Duration::from_millis(1));
+    }
+    assert_eq!(client.join().unwrap().0, 409);
+    assert_eq!(
+        fs::read(primary.join("project.yaml")).unwrap(),
+        b"primary: original\r\n"
+    );
+    assert_eq!(
+        fs::read(secondary.join("project.yaml")).unwrap(),
+        b"secondary: original\r\n"
+    );
+}
+
+#[cfg(windows)]
+#[test]
+fn refreshed_envelope_cannot_rebind_an_old_file_proposal_to_a_new_session_revision() {
+    let (_temp, mut session, path) = document_session(true);
+    let (address, token) = start(&mut session);
+    let before = fs::read(&path).unwrap();
+    let (_, loaded) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"read","documentId":"host"}),
+    );
+    let (status, planned) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"plan","documentId":"host","expectedRevision":loaded["data"]["document"]["revision"],"content":"old reviewed proposal\r\n"}),
+    );
+    assert_eq!(status, 200);
+    session
+        .invoke("switchModes", &json!({"modes":["editing"]}), &d())
+        .unwrap();
+    let (status, result) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"apply","documentId":"host","planId":planned["data"]["plan"]["id"]}),
+    );
+    assert_eq!(status, 422, "{result}");
+    assert_eq!(fs::read(&path).unwrap(), before);
+    let (status, pending) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"pending","documentId":"host"}),
+    );
+    assert_eq!(status, 200);
+    assert_eq!(pending["data"]["journals"], json!([]));
+}
+
+#[cfg(windows)]
+#[test]
+fn a_new_host_journal_selection_reports_the_original_file_authority_instead_of_empty_completion() {
+    let (temp, mut first, path) = document_session(true);
+    let (address, token) = start(&mut first);
+    let (_, loaded) = document_call(
+        &mut first,
+        address,
+        &token,
+        json!({"kind":"read","documentId":"host"}),
+    );
+    let (_, planned) = document_call(
+        &mut first,
+        address,
+        &token,
+        json!({"kind":"plan","documentId":"host","expectedRevision":loaded["data"]["document"]["revision"],"content":"original authority saved\r\n"}),
+    );
+    let (status, result) = document_call(
+        &mut first,
+        address,
+        &token,
+        json!({"kind":"apply","documentId":"host","planId":planned["data"]["plan"]["id"]}),
+    );
+    assert_eq!(status, 200, "{result}");
+    let journal = temp.path().join("different-journal");
+    fs::create_dir(&journal).unwrap();
+    let host:HostProfile=serde_json::from_value(json!({"dashboard":{"management":{"documents":{"documents":[{"id":"host","label":"Changed host selection","path":path,"scope":{"kind":"global"},"writable":true}],"journalRoot":journal}}}})).unwrap();
+    let mut second = Session::open(
+        Engine::open(temp.path().join("source")).unwrap(),
+        host,
+        Some("different-document-authority"),
+        &d(),
+    )
+    .unwrap();
+    let (address, token) = start(&mut second);
+    let (status, pending) = document_call(
+        &mut second,
+        address,
+        &token,
+        json!({"kind":"pending","documentId":"host"}),
+    );
+    assert_eq!(status, 200, "{pending}");
+    assert_eq!(pending["data"]["blockedByDifferentAuthority"], true);
+    assert!(yoke::model::valid_id(
+        pending["data"]["originalAuthority"].as_str().unwrap()
+    ));
+    let (status, loaded) = document_call(
+        &mut second,
+        address,
+        &token,
+        json!({"kind":"read","documentId":"host"}),
+    );
+    assert_eq!(status, 200);
+    let (_, planned) = document_call(
+        &mut second,
+        address,
+        &token,
+        json!({"kind":"plan","documentId":"host","expectedRevision":loaded["data"]["document"]["revision"],"content":"new authority must not silently adopt\r\n"}),
+    );
+    let (status, result) = document_call(
+        &mut second,
+        address,
+        &token,
+        json!({"kind":"apply","documentId":"host","planId":planned["data"]["plan"]["id"]}),
+    );
+    assert_eq!(status, 422, "{result}");
+    assert_eq!(fs::read(&path).unwrap(), b"original authority saved\r\n");
+    assert_eq!(
+        fs::read(temp.path().join("source/main.rs")).unwrap(),
+        b"fn untouched() {}\r\n"
+    );
+}

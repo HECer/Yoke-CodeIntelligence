@@ -145,6 +145,13 @@ impl ArmedOutput {
 }
 
 impl RegisteredOutput {
+    pub(super) fn byte_length(&self, d: &Deadline) -> Result<usize> {
+        d.check()?;
+        #[cfg(windows)]
+        return Ok(self.file.byte_length);
+        #[cfg(not(windows))]
+        anyhow::bail!("Guarded host-output byte inspection is Windows-only")
+    }
     #[cfg(all(test, windows))]
     pub(super) fn binding(&self) -> OutputBinding {
         OutputBinding {
@@ -342,6 +349,33 @@ pub(super) fn read_file(
     #[cfg(not(windows))]
     {
         let _ = (path, max_bytes, delete_access, d);
+        anyhow::bail!("Host-install guarded filesystem backend is Windows-only")
+    }
+}
+
+/// Inspect identity before reading bytes from a backup or prepared-output name.
+/// The caller supplies only identities already bound to its durable operation.
+pub(super) fn read_owned_file(
+    path: &Path,
+    identities: &[&str],
+    max_bytes: usize,
+    delete_access: bool,
+    d: &Deadline,
+) -> Result<Option<HeldFile>> {
+    anyhow::ensure!(
+        !identities.is_empty()
+            && identities.len() <= 2
+            && identities
+                .iter()
+                .all(|id| !id.is_empty() && id.len() <= 128),
+        "Owned host file identity selection invalid"
+    );
+    #[cfg(windows)]
+    return windows::read_checked_file(path, max_bytes, delete_access, Some(identities), d);
+    #[cfg(not(windows))]
+    {
+        let _ = (path, max_bytes, delete_access);
+        d.check()?;
         anyhow::bail!("Host-install guarded filesystem backend is Windows-only")
     }
 }
@@ -1076,6 +1110,16 @@ mod windows {
         delete_access: bool,
         d: &Deadline,
     ) -> Result<Option<HeldFile>> {
+        read_checked_file(path, max_bytes, delete_access, None, d)
+    }
+
+    pub(super) fn read_checked_file(
+        path: &Path,
+        max_bytes: usize,
+        delete_access: bool,
+        identities: Option<&[&str]>,
+        d: &Deadline,
+    ) -> Result<Option<HeldFile>> {
         d.check()?;
         let (parent, path) = parent_and_path(path, d)?;
         #[cfg(test)]
@@ -1096,6 +1140,10 @@ mod windows {
             Err(error) => return Err(error).context("Cannot acquire host file guard"),
         };
         let (identity, info) = information(&handle, false)?;
+        ensure!(
+            identities.is_none_or(|ids| ids.contains(&identity.as_str())),
+            "Owned host file identity mismatch before content admission"
+        );
         ensure!(
             !delete_access || info.attributes & ATTRIBUTE_READONLY == 0,
             "Readonly host target mutation refused"
@@ -2094,6 +2142,35 @@ mod windows {
 #[cfg(all(test, windows))]
 mod tests {
     use super::*;
+    #[test]
+    fn owned_read_rejects_foreign_identity_before_byte_budget_or_content_admission() {
+        let root = tempfile::tempdir().unwrap();
+        let path = root.path().join("foreign.txt");
+        std::fs::write(&path, b"foreign content must remain unchanged").unwrap();
+        let d = crate::capture::Deadline::new(10_000);
+        let error = match read_owned_file(&path, &["foreign-identity"], 0, false, &d) {
+            Ok(_) => panic!("Foreign identity was admitted"),
+            Err(error) => error,
+        };
+        assert!(
+            error
+                .to_string()
+                .contains("identity mismatch before content")
+        );
+        assert!(read_owned_file(&path, &[], 100, false, &d).is_err());
+        let original = read_file(&path, 100, false, &d).unwrap().unwrap();
+        assert_eq!(
+            read_owned_file(&path, &[&original.identity], 100, false, &d)
+                .unwrap()
+                .unwrap()
+                .bytes,
+            original.bytes
+        );
+        assert_eq!(
+            std::fs::read(path).unwrap(),
+            b"foreign content must remain unchanged"
+        );
+    }
     use std::{
         ffi::c_void,
         fs::{self, OpenOptions},

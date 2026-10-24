@@ -23,6 +23,8 @@ pub use source_hooks::{
     SourceHookLimits, SourceHookMode, SourceHookSource, SourceStatusShell,
     source_hook as claude_source_hook,
 };
+#[path = "host_documents.rs"]
+pub mod documents;
 #[path = "host_install_io.rs"]
 mod io;
 #[path = "host_install_recovery.rs"]

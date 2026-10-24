@@ -311,6 +311,11 @@ impl Handle {
                             && state.value["management"]["noMemoriesMode"] != true
                     })
             );
+            if config.documents.is_some()
+                && let Ok(state) = self.state.try_lock()
+            {
+                document_capabilities(&mut value, &state.value["management"]["configurationFiles"]);
+            }
         }
         value
     }
@@ -589,6 +594,7 @@ fn snapshot(
         if config["languageSelection"].is_object() {
             data["capabilities"]["languageSelection"] = config["sessionControls"].clone();
         }
+        document_capabilities(&mut data, &config["configurationFiles"]);
         data["capabilities"]["memoryEditing"] = serde_json::json!(
             config["memories"] == true
                 && config["memoryWritesGranted"] == true
@@ -597,6 +603,14 @@ fn snapshot(
     }
     crate::json::encode_bounded(&data, 1_000_000, d)
         .map_err(|_| Failure(413, "Dashboard response budget exceeded"))
+}
+fn document_capabilities(value: &mut Value, documents: &Value) {
+    if let Some(choices) = documents["choices"].as_array() {
+        value["capabilities"]["configurationReading"] = json!(true);
+        value["capabilities"]["configurationEditing"] =
+            json!(choices.iter().any(|c| c["writable"] == true));
+        value["capabilities"]["projectConfigurationEditing"] = json!(false);
+    }
 }
 fn respond(
     stream: &mut TcpStream,

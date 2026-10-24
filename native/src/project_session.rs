@@ -233,6 +233,7 @@ pub struct Session {
     git_repository_projects: Option<crate::git_workflows::repository_projects::Hosts>,
     dashboard: Option<crate::session_dashboard::Handle>,
     dashboard_management: Option<crate::session_dashboard::management::Mailbox>,
+    dashboard_documents: Option<dashboard_documents::Runtime>,
     dashboard_lifetime: Option<std::sync::Arc<std::sync::atomic::AtomicBool>>,
     host_backend_servers: Option<BTreeMap<String, crate::lsp::ConfiguredServer>>,
     dashboard_language_registry: Option<dashboard_languages::Registry>,
@@ -253,6 +254,8 @@ pub struct Session {
     debug_adapters: BTreeMap<String, crate::debug_adapter::DebugAdapter>,
     process_cleanup_unproven: bool,
 }
+#[path = "session_dashboard_documents.rs"]
+mod dashboard_documents;
 #[path = "session_dashboard_languages.rs"]
 mod dashboard_languages;
 #[path = "session_dashboard_session.rs"]
@@ -1148,6 +1151,7 @@ impl Session {
             ensure!(root.is_dir(), "Global note root must be a directory");
         }
         let mut fingerprint_capture_options = engine.capture_options.clone();
+        let dashboard_documents = dashboard_documents::Runtime::capture(&host, &engine, deadline)?;
         if engine.git_repository_host.is_some() {
             fingerprint_capture_options.repository_scope = None;
         }
@@ -1310,6 +1314,15 @@ impl Session {
         };
         let fingerprint = if let Some(config) = &host.dashboard {
             identity(&(fingerprint, "host_session_dashboard_v1", config))
+        } else {
+            fingerprint
+        };
+        let fingerprint = if let Some(documents) = &dashboard_documents {
+            identity(&(
+                fingerprint,
+                "host_dashboard_documents_v1",
+                documents.binding(),
+            ))
         } else {
             fingerprint
         };
@@ -1560,6 +1573,7 @@ impl Session {
             git_repository_projects,
             dashboard: None,
             dashboard_management: None,
+            dashboard_documents,
             dashboard_lifetime: None,
             host_backend_servers,
             dashboard_language_registry,
