@@ -104,22 +104,43 @@ fn frozen(engine: &mut Engine) -> Vec<u8> {
     serde_json::to_vec(&(snapshot, graph)).unwrap()
 }
 
-fn unicode_roots(root: &Path) -> [(&'static str, &'static str); 2] {
-    let values = [
-        (
-            "\u{130}",
-            "// \u{1f4a1} e\u{301}\r\nfn unicode_first() {}\r\n",
-        ),
-        (
-            "i\u{307}",
-            "// \u{1f9ed} e\u{301}\r\nfn unicode_second() {}\r\n",
-        ),
-    ];
+const UNICODE_ROOTS: [(&str, &str); 2] = [
+    (
+        "\u{130}",
+        "// \u{1f4a1} e\u{301}\r\nfn unicode_first() {}\r\n",
+    ),
+    (
+        "i\u{307}",
+        "// \u{1f9ed} e\u{301}\r\nfn unicode_second() {}\r\n",
+    ),
+];
+
+fn unicode_roots(root: &Path) -> bool {
+    let values = UNICODE_ROOTS;
     assert_ne!(values[0].0, values[1].0);
     assert_eq!(values[0].0.to_lowercase(), values[1].0.to_lowercase());
-    for (name, text) in values {
-        // Exclusive directory creation also rejects a real filesystem alias.
-        fs::create_dir(root.join(name)).unwrap();
+    for (index, (name, text)) in values.into_iter().enumerate() {
+        match fs::create_dir(root.join(name)) {
+            Ok(()) => {}
+            Err(error) if index == 1 && error.kind() == std::io::ErrorKind::AlreadyExists => {
+                // A real volume alias cannot represent two source roots. Never
+                // overwrite the first fixture; test refusal of the uncaptured
+                // spelling instead of inventing a second captured directory.
+                assert!(
+                    !fs::read_dir(root)
+                        .unwrap()
+                        .any(|entry| entry.unwrap().file_name() == name)
+                );
+                for (spelling, _) in values {
+                    assert_eq!(
+                        fs::read(root.join(spelling).join("main.rs")).unwrap(),
+                        values[0].1.as_bytes()
+                    );
+                }
+                return false;
+            }
+            Err(error) => panic!("Owned Unicode directory creation failed: {error}"),
+        }
         fs::write(root.join(name).join("main.rs"), text).unwrap();
     }
     for (name, text) in values {
@@ -128,15 +149,16 @@ fn unicode_roots(root: &Path) -> [(&'static str, &'static str); 2] {
             text.as_bytes()
         );
     }
-    values
+    true
 }
 
 #[test]
-fn distinct_unicode_roots_keep_both_source_bound_symbol_projections() {
+fn unicode_root_spellings_preserve_distinct_projections_or_refuse_volume_aliases() {
     let r = tempfile::tempdir().unwrap();
     let root = root(r.path(), "source");
     let log = r.path().join("log");
-    let values = unicode_roots(&root);
+    let distinct = unicode_roots(&root);
+    let values = UNICODE_ROOTS;
     let roots = values.iter().map(|v| v.0.to_owned()).collect::<Vec<_>>();
     assert_eq!(yoke::symbol_workspace::folders(&roots).unwrap(), roots);
     if cfg!(windows) {
@@ -144,7 +166,30 @@ fn distinct_unicode_roots_keep_both_source_bound_symbol_projections() {
     }
     let before = frozen(&mut engine(&root, &log));
     let p = serde_json::from_value(json!({"symbolWorkspaceFolders":{"global":roots}})).unwrap();
-    let mut s = open(&root, &log, p, "unicode-symbols");
+    let opened = Session::open(engine(&root, &log), p, Some("unicode-symbols"), &d());
+    if !distinct {
+        if let Ok(mut s) = opened {
+            let refused = agent_repl::invoke_facade(
+                &mut s,
+                "lsp.find_symbol",
+                json!({"name_path_pattern":"*"}),
+                None,
+                &d(),
+            );
+            assert!(
+                refused.is_err(),
+                "Uncaptured alias must refuse: {refused:?}"
+            );
+            assert_eq!(frozen(&mut s.engine), before);
+        }
+        assert!(!log.exists());
+        assert_eq!(
+            fs::read(root.join(values[0].0).join("main.rs")).unwrap(),
+            values[0].1.as_bytes()
+        );
+        return;
+    }
+    let mut s = opened.unwrap();
     let found = symbols(&mut s);
     assert_eq!(found["items"].as_array().unwrap().len(), 2, "{found}");
     assert_eq!(found["symbolIndexScope"]["folders"], json!(roots));
@@ -167,14 +212,29 @@ fn distinct_unicode_roots_keep_both_source_bound_symbol_projections() {
 }
 
 #[test]
-fn distinct_unicode_primary_and_additional_roots_reach_provider_and_callback() {
+fn unicode_workspace_roots_reach_provider_only_when_both_spellings_are_captured() {
     let r = tempfile::tempdir().unwrap();
     let root = root(r.path(), "source");
     let log = r.path().join("log");
-    let values = unicode_roots(&root);
+    let distinct = unicode_roots(&root);
+    let values = UNICODE_ROOTS;
     let before = frozen(&mut engine(&root, &log));
     let p = serde_json::from_value(json!({"languageServers":{"global":["rust"]},"symbolWorkspaceFolders":{"global":[values[0].0]},"additionalWorkspaceFolders":{"global":[values[1].0]}})).unwrap();
-    let mut s = open(&root, &log, p, "unicode-context");
+    let opened = Session::open(engine(&root, &log), p, Some("unicode-context"), &d());
+    if !distinct {
+        if let Ok(mut s) = opened {
+            let refused = s.engine.invoke("ci_find", json!({"languageServer":{"path":format!("{}/main.rs",values[0].0),"offset":values[0].1.find("unicode_first").unwrap(),"operation":"hover"}})).unwrap();
+            assert_eq!(refused["status"], "error", "{refused}");
+            assert_eq!(frozen(&mut s.engine), before);
+        }
+        assert!(!log.exists());
+        assert_eq!(
+            fs::read(root.join(values[0].0).join("main.rs")).unwrap(),
+            values[0].1.as_bytes()
+        );
+        return;
+    }
+    let mut s = opened.unwrap();
     let value = s.engine.invoke("ci_find", json!({"languageServer":{"path":format!("{}/main.rs",values[0].0),"offset":values[0].1.find("unicode_first").unwrap(),"operation":"hover"}})).unwrap();
     assert_eq!(value["status"], "ok", "{value}");
     let metadata: Value = serde_json::from_str(

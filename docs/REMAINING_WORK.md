@@ -1,5 +1,16 @@
 # Remaining implementation and acceptance
 
+## Actual volume-alias assertions await hosted native confirmation
+
+The [test-fixture checkpoint](validation/integration-2026-10-24/volume-alias-fixtures/README.md)
+retains positive Unicode root/provider checks on volumes which represent both
+names and requires explicit pre-provider refusal of an uncaptured alias otherwise.
+Discovery and uppercase metadata expectations use actual volume entries/lookup.
+Only two Rust integration-test files change. Windows filesystem observations and
+formatting pass; native compilation/execution remains pending. An alias-branch
+pass does not certify distinct-root capability on that filesystem. Other native,
+memory/runtime/timing, live/VSIX and complete STATUS gates remain open.
+
 ## Checked runtime cleanup and representable Unicode fixtures await hosted tests
 
 The [new native checkpoint](validation/integration-2026-10-24/runtime-cleanup-unicode/README.md)

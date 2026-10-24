@@ -1,5 +1,19 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Volume-aware Unicode fixture assertions: hosted confirmation pending (2026-10-24)
+
+Two native integration-test files now observe exclusive directory creation and
+actual entry names before asserting distinct Unicode roots. Distinct volumes
+retain the original positive symbol/provider assertions; aliasing volumes must
+refuse the uncaptured spelling without provider execution or fixture overwrite.
+Discovery expects only real entries, and uppercase Git metadata follows actual
+volume lookup behavior. No production, workflow, profile or deadline changes.
+An independent Windows filesystem probe and368-root format checks pass; the new
+native branches have not been compiled or run locally. A successful alias case
+does not certify support for two distinct roots on that volume. Native/platform/
+live/VSIX and full STATUS acceptance remain open.
+[Evidence](validation/integration-2026-10-24/volume-alias-fixtures/README.md).
+
 ## Bounded runtime cleanup and Unicode fixture correction: acceptance pending (2026-10-24)
 
 The native runtime owner now consumes its process through the existing bounded

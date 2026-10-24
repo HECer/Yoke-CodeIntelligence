@@ -19,10 +19,27 @@ fn deterministic_nested_candidates_keep_nearest_marked_parent_and_unicode_names(
         "é π '/outer/.git",
         "é π '/outer/plain/deep/.git",
         "SS/.git",
-        "ß/.git",
     ] {
         directory(root.path(), path);
     }
+    // Some volumes alias these Unicode case-fold variants. Exclusive creation
+    // observes that fact before any second marker or source could be written.
+    let distinct = match fs::create_dir(root.path().join("ß")) {
+        Ok(()) => {
+            directory(root.path(), "ß/.git");
+            true
+        }
+        Err(error) if error.kind() == std::io::ErrorKind::AlreadyExists => {
+            assert!(root.path().join("ß/.git").is_dir());
+            assert!(
+                !fs::read_dir(root.path())
+                    .unwrap()
+                    .any(|entry| entry.unwrap().file_name() == "ß")
+            );
+            false
+        }
+        Err(error) => panic!("Owned Unicode directory creation failed: {error}"),
+    };
     // Marker contents, source syntax, executable-looking files and ignore rules
     // are inert. Discovery never initializes the source's own state directory.
     fs::write(
@@ -44,10 +61,15 @@ fn deterministic_nested_candidates_keep_nearest_marked_parent_and_unicode_names(
         .iter()
         .map(|c| c.path.as_str())
         .collect::<Vec<_>>();
-    assert_eq!(
-        paths,
-        [".", "SS", "ß", "é π '/outer", "é π '/outer/plain/deep"]
-    );
+    if distinct {
+        assert_eq!(
+            paths,
+            [".", "SS", "ß", "é π '/outer", "é π '/outer/plain/deep"]
+        );
+    } else {
+        assert_eq!(paths, [".", "SS", "é π '/outer", "é π '/outer/plain/deep"]);
+        assert!(report.select("ß").is_err());
+    }
     assert_eq!(report.select(".").unwrap().parent, None);
     assert_eq!(report.select("SS").unwrap().parent.as_deref(), Some("."));
     assert_eq!(
@@ -145,7 +167,7 @@ fn exact_caps_accept_one_root_marker_and_uppercase_metadata_stays_protected() {
     let report = scan(root.path(), &options).unwrap();
     assert_eq!(report.entries_visited, 1);
     assert_eq!(report.directories_visited, 1);
-    if cfg!(windows) {
+    if root.path().join(".git").is_dir() {
         assert_eq!(report.candidates.len(), 1);
         assert_eq!(report.candidates[0].path, ".");
         assert!(report.omissions.is_empty());

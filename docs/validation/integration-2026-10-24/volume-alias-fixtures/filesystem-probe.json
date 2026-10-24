@@ -1,0 +1,40 @@
+{
+  "scope": "Actual Windows filesystem fixture observations only; not native Rust execution or macOS qualification",
+  "cases": [
+    {
+      "first": "SS",
+      "second": "ß",
+      "distinctDirectoriesObserved": true,
+      "actualEntryNames": [
+        "SS",
+        "ß"
+      ],
+      "sameInodeObserved": false,
+      "noAliasOverwrite": true
+    },
+    {
+      "first": "İ",
+      "second": "i̇",
+      "distinctDirectoriesObserved": true,
+      "actualEntryNames": [
+        "i̇",
+        "İ"
+      ],
+      "sameInodeObserved": false,
+      "noAliasOverwrite": true
+    },
+    {
+      "first": ".GIT",
+      "second": ".git",
+      "distinctDirectoriesObserved": false,
+      "actualEntryNames": [
+        ".GIT"
+      ],
+      "sameInodeObserved": true,
+      "noAliasOverwrite": true
+    }
+  ],
+  "nativeYokeImageReadOrExecuted": false,
+  "fullNativeBuildAdmissionBytes": 1200000000,
+  "freeBytesObserved": 1115668480
+}
