@@ -69,7 +69,20 @@ jobs:
       # Each original Cargo target stays whole. Windows fixtures remain serial;
       # concurrency adversaries retain their original internal threads.
       - name: Test complete default Cargo target groups
+        id: native_tests
         run: python scripts/native_shards.py run --index ${{ matrix.shard }}
+      - name: Observe owned PowerShell startup after a failed Windows shard
+        id: powershell_probe
+        if: failure() && steps.native_tests.outcome == 'failure' && runner.os == 'Windows' && (matrix.shard == 5 || matrix.shard == 7)
+        timeout-minutes: 2
+        run: python scripts/host_powershell_probe.py --output validation/ci-host-powershell
+      - name: Preserve separate PowerShell diagnostics (never native acceptance)
+        if: always() && runner.os == 'Windows' && (matrix.shard == 5 || matrix.shard == 7)
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-powershell-diagnostic-${{ matrix.shard }}
+          path: validation/ci-host-powershell/result.json
+          if-no-files-found: warn
       - name: Preserve complete or partial shard receipts and raw group logs
         if: always()
         uses: actions/upload-artifact@v4

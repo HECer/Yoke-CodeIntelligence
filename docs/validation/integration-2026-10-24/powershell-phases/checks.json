@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-10-24T18:50:07.381551+00:00",
+  "parentCommit": "0e8eb633005af6e5e63837098afacb0ad0781fb4",
+  "sourceHashScope": "Local working-copy bytes; CI/remote text rendering is separately scoped",
+  "sourceHashes": {
+    ".github/workflows/rust.yml": "2c7c4a9b84cc4ecef9e05f029f13a2c673f9793cf11c0c999d0b77a1f8e6f45b",
+    "scripts/host_powershell_probe.py": "c21f0ce96b03e040e8edef12f870e207b00fcb3ce9b7894205603f2339949a48",
+    "scripts/tests/test_host_powershell_probe.py": "724e9edd49a899e74e8ebf1e26e2e7739d1e620e3923b322285397507602d566",
+    "native/tests/process.rs": "7ddb668e1144e8f87df9c6b171bf591e19d25849df0ad59ba4677ac7eba6186a",
+    "native/tests/agent_repl.rs": "25a621fd2867bd7905e6fce431ddcf04e821d78f37a04aac536b31cba1eb5fcb"
+  },
+  "python": {
+    "passed": 113,
+    "failed": 0,
+    "skipped": 0,
+    "newIncludedTests": 10,
+    "newActualWindowsTests": 2,
+    "command": "C:/Python314/python.exe -X utf8 -B -Werror -m unittest discover -s scripts/tests -v",
+    "rustPathAddedForHostContracts": true
+  },
+  "npmTypecheck": {
+    "exit": 0
+  },
+  "npmTest": {
+    "exit": 0,
+    "passed": 260,
+    "failed": 0,
+    "skipped": 3,
+    "existingSkips": true
+  },
+  "rustfmt": {
+    "exit": 0,
+    "changedFiles": [
+      "native/tests/process.rs",
+      "native/tests/agent_repl.rs"
+    ]
+  },
+  "gitDiffCheck": {
+    "exit": 0
+  },
+  "native": {
+    "compiled": false,
+    "executed": false,
+    "newTestFunctions": 0,
+    "existingTestFunctionsInstrumented": 2,
+    "buildAdmissionBytes": 1200000000,
+    "freeBytesAtObservation": 1070391296
+  },
+  "ownedPowerShell": {
+    "trials": 4,
+    "diagnosticComplete": true,
+    "nativeAcceptance": false,
+    "jobsEmptyBeforeAndAfterForcedCleanup": true
+  },
+  "hostedCause": "unmeasured; original failures remain open",
+  "initialCorrections": [
+    "First inert worker used its fixture cwd as repository root, exited1 before shell; root resolution corrected, outer Job cleanup0",
+    "First full Python call lacked Cargo on PATH:2 host-precondition failures/1skip; corrected full113 run is separate",
+    "Native REPL markers are outside the analyzed project; numeric stages do not expose marker contents/paths"
+  ],
+  "rawPrivateLogHashes": {
+    "python.txt": "b2737f44fba30e0d63787b0ae43119a2f3cf9d7587f4ba3475c5d45073d6aeba",
+    "typecheck.txt": "14fa52248ca2ffd3c4139d326f687af5269d514ed300c028ba0be21f9e447e8d",
+    "npm-test.txt": "7bfdf38b043807e94216ec70eb385be74d23fd9d729c122532782214a126e37c"
+  },
+  "logRendering": "UTF8 with trailing line whitespace removed; PowerShell wraps npm stderr notices as NativeCommandError, actual npm exits0",
+  "acceptanceStillOpen": [
+    "changed native tests",
+    "hosted phase/Job diagnostic",
+    "current full native/platform matrix",
+    "history/browser/VSIX live",
+    "full STATUS/R1-R9",
+    "main/release"
+  ]
+}

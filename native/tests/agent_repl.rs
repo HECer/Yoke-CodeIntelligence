@@ -241,13 +241,51 @@ fn explicitly_selected_shell_runs_and_cell_errors_preserve_namespace() {
         }
     });
     let mut repl = AgentRepl::spawn(config, &setup).unwrap();
+    let phases = tempfile::tempdir().unwrap();
+    let python_phase = phases.path().join("owned-python-cell-phase");
+    let shell_phase = phases.path().join("owned-shell-phase");
     let cell = if cfg!(windows) {
-        "remembered=17\ns.shell.execute_shell_command('Write-Output owned-shell-test')['stdout'].strip()"
+        let command = format!(
+            "[IO.File]::WriteAllText('{}','entered'); Write-Output owned-shell-test; [IO.File]::WriteAllText('{}','finished')",
+            shell_phase.to_str().unwrap().replace('\'', "''"),
+            shell_phase.to_str().unwrap().replace('\'', "''")
+        );
+        format!(
+            "remembered=17\nwith open({},'w',encoding='ascii') as _owned_phase:\n _owned_phase.write('entered')\ns.shell.execute_shell_command({})['stdout'].strip()",
+            serde_json::to_string(&python_phase).unwrap(),
+            serde_json::to_string(&command).unwrap()
+        )
     } else {
         "remembered=17\ns.shell.execute_shell_command('printf owned-shell-test')['stdout'].strip()"
+            .to_string()
     };
     // Independent calls retain a 20s operation deadline after host/Python setup.
-    let value = repl.execute(&mut s, cell, &Deadline::new(20000)).unwrap();
+    let started = std::time::Instant::now();
+    let value = repl
+        .execute(&mut s, &cell, &Deadline::new(20000))
+        .unwrap_or_else(|error| {
+            let stage = |path: &std::path::Path| {
+                fs::File::open(path)
+                    .and_then(|file| {
+                        let mut bytes = Vec::new();
+                        std::io::Read::read_to_end(&mut std::io::Read::take(file, 64), &mut bytes)?;
+                        Ok(bytes)
+                    })
+                    .ok()
+                    .map(|bytes| match bytes.as_slice() {
+                        b"entered" => 1,
+                        b"finished" => 2,
+                        _ => 0,
+                    })
+                    .unwrap_or(0)
+            };
+            panic!(
+                "{error:#}; python_phase={}, shell_phase={}, elapsed={:?}",
+                stage(&python_phase),
+                stage(&shell_phase),
+                started.elapsed()
+            );
+        });
     assert_eq!(value["result"], "owned-shell-test", "{value}");
     assert!(
         repl.execute(

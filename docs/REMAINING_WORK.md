@@ -1,5 +1,18 @@
 # Remaining implementation and acceptance
 
+## Windows PowerShell timeout cause still needs hosted observations
+
+Private bounded phase markers are added to the two original failing native
+tests without changing their20-second deadlines or assertions. A separate
+failure-only Windows diagnostic measures fixed owned commands, nested Jobs,
+primary/snapshot resumption and independent cleanup/EOF evidence. Its four local
+trials pass;113 Python tests (including10 new cases), typecheck/npm and changed
+Rust formatting pass separately. The changed Rust tests are not executed locally
+below the native build admission. Local PowerShell observations do not establish
+the hosted cause or repair the original failures. Actual hosted diagnostics,
+current native/platform/history/VSIX and full STATUS acceptance remain open.
+[Details](validation/integration-2026-10-24/powershell-phases/README.md).
+
 ## TypeScript namespace and assignment extensions await native admission
 
 The pinned compiler worker now distinguishes type/value/namespace references;

@@ -1,5 +1,23 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Windows PowerShell phases: hosted cause remains unmeasured (2026-10-24)
+
+Two existing native tests now retain bounded private phase markers across a
+timeout, distinguishing observed Python-cell/script/folder progress without
+depending on pipe EOF. Original20-second operation limits, assertions and shell
+profiles remain. These changed native tests have not been compiled or run here.
+Production process/runtime code is unchanged.
+
+A separate failure-only diagnostic on Windows shards5/7 compares fixed owned
+PowerShell commands under one/two Jobs and primary-thread/snapshot resumption.
+It records actual resume/exit/script/EOF/cleanup observations, with no native
+acceptance claim. Four local trials finish in about0.2s and leave empty
+Jobs before forced cleanup. Ten new Python tests are included in the113/0/0
+whole Python result; counts are nonadditive. Typecheck and npm260/0/3 existing
+skips pass. These local observations do not explain the actual hosted20s failures.
+Current native/platform/history/VSIX, full STATUS, main and release remain open.
+[Evidence](validation/integration-2026-10-24/powershell-phases/README.md).
+
 ## TypeScript body assignment extension: native admission pending (2026-10-24)
 
 Classic body expansion now handles a complete call on the right of a plain

@@ -1,0 +1,331 @@
+"""Fixed Windows PowerShell startup observations, never native acceptance.
+
+Only owned literal commands run. No Yoke image, token, profile or project code
+is read/executed. Every child is assigned to owned Jobs before resumption.
+"""
+import argparse
+import ctypes as c
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import shutil
+import subprocess
+import sys
+import threading
+import time
+
+ROOT = Path(__file__).resolve().parents[1]
+ENVIRONMENT = ("PATH", "SystemRoot", "SystemDrive", "WINDIR", "USERPROFILE", "HOME",
+               "TEMP", "TMP", "LANG", "RUSTUP_HOME", "CARGO_HOME")
+MAX_LOG = 65_536
+TRIAL_SECONDS = 20
+
+
+class CleanupUnproven(RuntimeError):
+    def __init__(self, observation):
+        super().__init__("Diagnostic owned cleanup unproven")
+        self.observation = observation
+
+
+def selected_environment(source):
+    environment = {key: source[key] for key in ENVIRONMENT if key in source}
+    environment.update(CI="1", DO_NOT_TRACK="1", NO_COLOR="1")
+    return environment
+
+
+def commands():
+    prefix = ("[Console]::Error.WriteLine('owned-script-entry'); "
+              "[Console]::Error.WriteLine('owned-host-version:'+$PSVersionTable.PSVersion.ToString()); "
+              "$ErrorActionPreference='Stop'; ")
+    suffix = "; [Console]::Error.WriteLine('owned-script-end')"
+    plain = prefix + "Write-Output 'owned-shell-test'" + suffix
+    folder = (prefix + "[Console]::Error.WriteLine('owned-before-folder'); "
+              "$folder=[Environment]::GetFolderPath([Environment+SpecialFolder]::CommonApplicationData,"
+              "[Environment+SpecialFolderOption]::DoNotVerify); "
+              "[Console]::Error.WriteLine('owned-after-folder'); "
+              "if(-not [IO.Path]::IsPathRooted($folder)){throw 'Managed known folder is not absolute'}; "
+              "Write-Output 'owned-windows-runtime'" + suffix)
+    return [("single-primary", plain, 1, "primary"),
+            ("nested-primary-folder", folder, 2, "primary"),
+            ("nested-snapshot", plain, 2, "snapshot"),
+            ("nested-snapshot-folder", folder, 2, "snapshot")]
+
+
+def windows_api():
+    from ctypes import wintypes as w
+
+    class Basic(c.Structure):
+        _fields_ = [("process", c.c_int64), ("job", c.c_int64), ("flags", w.DWORD),
+                    ("minimum", c.c_size_t), ("maximum", c.c_size_t), ("active", w.DWORD),
+                    ("affinity", c.c_size_t), ("priority", w.DWORD), ("scheduling", w.DWORD)]
+
+    class Extended(c.Structure):
+        _fields_ = [("basic", Basic), ("io", c.c_uint64 * 6), ("process", c.c_size_t),
+                    ("job", c.c_size_t), ("peak_process", c.c_size_t), ("peak_job", c.c_size_t)]
+
+    class Thread(c.Structure):
+        _fields_ = [("size", w.DWORD), ("usage", w.DWORD), ("id", w.DWORD),
+                    ("owner", w.DWORD), ("base", w.LONG), ("delta", w.LONG), ("flags", w.DWORD)]
+
+    class Association(c.Structure):
+        _fields_ = [("key", c.c_void_p), ("port", c.c_void_p)]
+
+    if c.sizeof(Extended) != 144 or c.sizeof(Thread) != 28:
+        raise RuntimeError("Unsupported Windows diagnostic layout")
+    api = c.WinDLL("kernel32", use_last_error=True)
+    for name, args, result in [
+        ("CreateJobObjectW", [c.c_void_p, c.c_wchar_p], c.c_void_p),
+        ("SetInformationJobObject", [c.c_void_p, c.c_int, c.c_void_p, w.DWORD], w.BOOL),
+        ("QueryInformationJobObject", [c.c_void_p, c.c_int, c.c_void_p, w.DWORD, c.c_void_p], w.BOOL),
+        ("AssignProcessToJobObject", [c.c_void_p, c.c_void_p], w.BOOL),
+        ("TerminateJobObject", [c.c_void_p, w.UINT], w.BOOL),
+        ("ResumeThread", [c.c_void_p], w.DWORD),
+        ("CloseHandle", [c.c_void_p], w.BOOL),
+        ("CreateIoCompletionPort", [c.c_void_p, c.c_void_p, c.c_size_t, w.DWORD], c.c_void_p),
+        ("CreateToolhelp32Snapshot", [w.DWORD, w.DWORD], c.c_void_p),
+        ("Thread32First", [c.c_void_p, c.POINTER(Thread)], w.BOOL),
+        ("Thread32Next", [c.c_void_p, c.POINTER(Thread)], w.BOOL),
+        ("OpenThread", [w.DWORD, w.BOOL, w.DWORD], c.c_void_p),
+    ]:
+        function = getattr(api, name)
+        function.argtypes, function.restype = args, result
+    return api, Extended, Thread, Association
+
+
+def require(value, label):
+    if not value:
+        raise RuntimeError(label)
+
+
+def trial(shell, fixture, environment, definition):
+    require(shutil.disk_usage(ROOT).free >= 500_000_000, "Diagnostic disk reserve unavailable")
+    import _winapi
+    import msvcrt
+
+    name, command, count, resume = definition
+    api, Extended, Thread, Association = windows_api()
+    handles, jobs, pipes, readers = [], [], [], []
+    process = thread = None
+    logs = [bytearray(), bytearray()]
+    reader_done = [False, False]
+    reader_error = [False, False]
+    overflow = [False, False]
+    row = {"name": name, "jobsRequested": count, "resumeMode": resume,
+           "startedSuspended": False, "assignedBeforeResume": False,
+           "timedOut": False, "nativeAcceptance": False}
+    started = time.monotonic()
+    end = started + TRIAL_SECONDS
+    cleanup_errors = []
+
+    def active(job):
+        data = c.create_string_buffer(48)
+        require(api.QueryInformationJobObject(job, 1, data, 48, None), "Job accounting unavailable")
+        return int.from_bytes(data.raw[40:44], "little")
+
+    def read_stream(index, fd):
+        try:
+            while True:
+                data = os.read(fd, 8192)
+                if not data:
+                    reader_done[index] = True
+                    return
+                remaining = MAX_LOG - len(logs[index])
+                logs[index].extend(data[:remaining])
+                overflow[index] |= len(data) > remaining
+        except OSError:
+            reader_error[index] = True
+        finally:
+            os.close(fd)
+
+    try:
+        for index in range(count):
+            job = api.CreateJobObjectW(None, None)
+            require(job, "Owned diagnostic Job unavailable")
+            handles.append(job)
+            jobs.append(job)
+            limits = Extended()
+            limits.basic.flags = 0x2000 if index == 0 else 0
+            require(api.SetInformationJobObject(job, 9, c.byref(limits), c.sizeof(limits)), "Job limits unavailable")
+            if index:
+                port = api.CreateIoCompletionPort(c.c_void_p(-1), None, 0, 1)
+                require(port, "Owned completion port unavailable")
+                handles.append(port)
+                association = Association(job, port)
+                require(api.SetInformationJobObject(job, 7, c.byref(association), c.sizeof(association)), "Completion association failed")
+        stdin_read, stdin_write = os.pipe()
+        stdout_read, stdout_write = os.pipe()
+        stderr_read, stderr_write = os.pipe()
+        pipes.extend([stdin_read, stdin_write, stdout_read, stdout_write, stderr_read, stderr_write])
+        child_handles = [msvcrt.get_osfhandle(fd) for fd in (stdin_read, stdout_write, stderr_write)]
+        for handle in child_handles:
+            os.set_handle_inheritable(handle, True)
+        startup = subprocess.STARTUPINFO()
+        startup.dwFlags = subprocess.STARTF_USESTDHANDLES
+        startup.hStdInput, startup.hStdOutput, startup.hStdError = child_handles
+        startup.lpAttributeList = {"handle_list": child_handles}
+        argv = [str(shell), "-NoProfile", "-NonInteractive", "-Command", command]
+        process, thread, pid, tid = _winapi.CreateProcess(None, subprocess.list2cmdline(argv), None, None, True,
+            subprocess.CREATE_NO_WINDOW | 4, environment, str(fixture), startup)
+        row["startedSuspended"] = True
+        row["pid"] = pid
+        for job in jobs:
+            require(api.AssignProcessToJobObject(job, process), "Suspended Job assignment failed")
+        row["assignedBeforeResume"] = True
+        for fd in (stdin_read, stdout_write, stderr_write, stdin_write):
+            os.close(fd)
+            pipes.remove(fd)
+        for index, fd in enumerate((stdout_read, stderr_read)):
+            reader = threading.Thread(target=read_stream, args=(index, fd), daemon=True)
+            readers.append(reader)
+            pipes.remove(fd)
+            reader.start()
+        resumed = []
+        if resume == "primary":
+            previous = api.ResumeThread(thread)
+            require(previous != 0xffffffff, "Primary thread resume failed")
+            resumed.append({"primary": True, "previousSuspendCount": previous})
+        else:
+            snapshot = api.CreateToolhelp32Snapshot(4, 0)
+            require(snapshot not in (None, c.c_void_p(-1).value), "Thread snapshot unavailable")
+            try:
+                entry = Thread()
+                entry.size = c.sizeof(entry)
+                available = api.Thread32First(snapshot, c.byref(entry))
+                scanned = 0
+                while available:
+                    scanned += 1
+                    require(scanned <= 131072 and time.monotonic() < end, "Thread snapshot capacity/deadline")
+                    if entry.owner == pid:
+                        handle = api.OpenThread(2, False, entry.id)
+                        require(handle, "Owned thread open failed")
+                        try:
+                            previous = api.ResumeThread(handle)
+                            require(previous != 0xffffffff, "Owned thread resume failed")
+                            require(len(resumed) < 128, "Owned thread observation capacity")
+                            resumed.append({"primary": entry.id == tid, "previousSuspendCount": previous})
+                        finally:
+                            if not api.CloseHandle(handle):
+                                cleanup_errors.append("thread-handle-close")
+                                raise RuntimeError("Owned thread close failed")
+                    available = api.Thread32Next(snapshot, c.byref(entry))
+                row["snapshotEntriesScanned"] = scanned
+                row["snapshotEndError"] = c.get_last_error()
+            finally:
+                if not api.CloseHandle(snapshot):
+                    cleanup_errors.append("snapshot-handle-close")
+                    raise RuntimeError("Snapshot close failed")
+        row["resumedThreads"] = resumed
+        row["primaryObservedResumed"] = any(item["primary"] and item["previousSuspendCount"] > 0 for item in resumed)
+        row["resumeElapsedSeconds"] = time.monotonic() - started
+        while _winapi.WaitForSingleObject(process, 10) == 258:
+            if time.monotonic() >= end:
+                row["timedOut"] = True
+                break
+        if not row["timedOut"]:
+            row["exitCode"] = _winapi.GetExitCodeProcess(process)
+            row["timedOut"] = time.monotonic() >= end
+        remaining = [active(job) for job in jobs]
+        drain_end = min(end, time.monotonic() + .5)
+        while any(remaining) and time.monotonic() < drain_end:
+            time.sleep(.01)
+            remaining = [active(job) for job in jobs]
+        row["activeBeforeCleanup"] = remaining
+        row["treeExitedBeforeCleanup"] = all(value == 0 for value in remaining)
+    except Exception as error:
+        row["errorType"] = type(error).__name__
+        row["error"] = str(error)
+    finally:
+        if process is not None and not row["assignedBeforeResume"]:
+            try:
+                _winapi.TerminateProcess(process, 124)
+            except OSError:
+                cleanup_errors.append("root-termination")
+        for job in jobs:
+            if not api.TerminateJobObject(job, 125):
+                cleanup_errors.append("job-termination")
+        cleanup_end = time.monotonic() + 2
+        try:
+            while jobs and any(active(job) for job in jobs) and time.monotonic() < cleanup_end:
+                time.sleep(.01)
+            row["activeAfterCleanup"] = [active(job) for job in jobs]
+            if any(value != 0 for value in row["activeAfterCleanup"]):
+                cleanup_errors.append("job-still-active")
+        except RuntimeError:
+            row["activeAfterCleanup"] = None
+            cleanup_errors.append("job-accounting")
+        row["rootExitedAfterCleanup"] = process is None
+        if process is not None:
+            try:
+                milliseconds = max(0, min(2000, int((cleanup_end - time.monotonic()) * 1000)))
+                row["rootExitedAfterCleanup"] = _winapi.WaitForSingleObject(process, milliseconds) == 0
+                if not row["rootExitedAfterCleanup"]:
+                    cleanup_errors.append("root-exit")
+            except OSError:
+                cleanup_errors.append("root-wait")
+        for reader in readers:
+            reader.join(timeout=.25)
+        for fd in pipes:
+            try:
+                os.close(fd)
+            except OSError:
+                cleanup_errors.append("pipe-close")
+        for handle in [thread, process, *reversed(handles)]:
+            if handle is not None:
+                if not api.CloseHandle(handle):
+                    cleanup_errors.append("handle-close")
+    row.update(elapsedSeconds=time.monotonic() - started,
+               stdout=bytes(logs[0]).decode("utf8", "replace"), stderr=bytes(logs[1]).decode("utf8", "replace"),
+               streamEOF=reader_done, readerError=reader_error, outputExceeded=overflow)
+    if cleanup_errors:
+        row.update(cleanupUnproven=True, cleanupErrors=cleanup_errors, diagnosticComplete=False)
+        raise CleanupUnproven(row)
+    row["diagnosticComplete"] = (not row.get("error") and not row["timedOut"]
+        and row.get("exitCode") == 0 and row.get("primaryObservedResumed") is True
+        and row.get("treeExitedBeforeCleanup") is True
+        and row.get("rootExitedAfterCleanup") is True
+        and all(reader_done) and not any(reader_error) and not any(overflow))
+    return row
+
+
+def main(arguments=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", required=True, type=Path)
+    args = parser.parse_args(arguments)
+    require(os.name == "nt", "PowerShell diagnostic requires Windows")
+    revision = os.environ.get("GITHUB_SHA")
+    require(revision is None or re.fullmatch(r"[0-9a-f]{40}", revision), "Diagnostic source revision invalid")
+    require(shutil.disk_usage(ROOT).free >= 500_000_000, "Diagnostic disk reserve unavailable")
+    output = args.output.resolve()
+    output.mkdir(exist_ok=False, parents=True)
+    fixture = output / "fixture"
+    fixture.mkdir()
+    shell = Path(os.environ["SystemRoot"]) / "System32/WindowsPowerShell/v1.0/powershell.exe"
+    require(shell.is_absolute() and shell.is_file(), "Selected system PowerShell unavailable")
+    environment = selected_environment(os.environ)
+    report = {"schema": 1, "diagnosticOnly": True, "nativeAcceptance": False,
+              "diagnosticComplete": False,
+              "nativeYokeImageReadOrExecuted": False, "trialDeadlineSeconds": TRIAL_SECONDS,
+              "sourceRevision": revision,
+              "sourceSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+              "environmentNames": sorted(environment), "trials": []}
+    (output / "result.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf8")
+    for definition in commands():
+        try:
+            row = trial(shell, fixture, environment, definition)
+        except CleanupUnproven as error:
+            report["trials"].append(error.observation)
+            (output / "result.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf8")
+            raise
+        report["trials"].append(row)
+        (output / "result.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf8")
+        print(json.dumps({key: row.get(key) for key in
+              ("name", "diagnosticComplete", "timedOut", "elapsedSeconds", "primaryObservedResumed", "activeAfterCleanup")}))
+    report["diagnosticComplete"] = all(row["diagnosticComplete"] for row in report["trials"])
+    (output / "result.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf8")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

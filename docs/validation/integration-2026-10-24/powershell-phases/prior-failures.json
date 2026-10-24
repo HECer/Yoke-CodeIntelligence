@@ -1,0 +1,98 @@
+[
+  {
+    "artifactId": 12570298242,
+    "archiveBytes": 105884,
+    "archiveSha256": "4f80f1b87da3923d0ac53edc495b97a99769a33f79a62e3e47f6f2e779f42d62",
+    "archiveDigestExact": true,
+    "sourceRevision": "d1796478389559fa0390ceac3789b10caaea14da",
+    "platform": "Windows",
+    "shard": 5,
+    "fullSourceInputMapIndependentlyVerified": false,
+    "allGroupLogBytesAndHashesExact": true,
+    "groupsAttempted": 47,
+    "groupsSuccessful": 46,
+    "failed": [
+      {
+        "group": "yoke-code-intelligence:test:process:test",
+        "log": {
+          "name": "0035.stdout",
+          "bytes": 1152,
+          "sha256": "05928cb3b2e6ef6e005b9910d344e2596b8111a05e3b9abdcb8a7b002c5887dc"
+        },
+        "tail": "\nrunning 7 tests\ntest capture_transfers_exact_unicode_bytes_and_independent_streams ... ok\ntest descendant_held_stdio_cannot_extend_the_shared_deadline ... ok\ntest output_overflow_is_a_failure_with_bounded_retained_bytes ... ok\ntest runtime_environment_filters_secrets_and_preserves_host_overrides ... ok\ntest source_selected_defaults_and_oversized_stdin_are_rejected_before_spawn ... ok\ntest windows_host_fixture_does_not_allocate_a_console_window ... ok\ntest windows_runtime_environment_supports_managed_known_folders ... FAILED\n\nfailures:\n\n---- windows_runtime_environment_supports_managed_known_folders stdout ----\n\nthread 'windows_runtime_environment_supports_managed_known_folders' (7348) panicked at native\\tests\\process.rs:178:5:\nassertion `left == right` failed: ; stdin=true, output=false, timeout=true, overflow=false, io_error=false, elapsed=20.0228429s\n  left: Some(1)\n right: Some(0)\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    windows_runtime_environment_supports_managed_known_folders\n\ntest result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 22.11s\n\n"
+      }
+    ],
+    "sourceComparisonCheckpoint": "0e8eb633005af6e5e63837098afacb0ad0781fb4"
+  },
+  {
+    "artifactId": 12569838725,
+    "archiveBytes": 104727,
+    "archiveSha256": "a4d280400c845e4c783357019141a87668fd1775518f6450dd1a397d28588b9f",
+    "archiveDigestExact": true,
+    "sourceRevision": "d1796478389559fa0390ceac3789b10caaea14da",
+    "platform": "Windows",
+    "shard": 7,
+    "fullSourceInputMapIndependentlyVerified": false,
+    "allGroupLogBytesAndHashesExact": true,
+    "groupsAttempted": 47,
+    "groupsSuccessful": 46,
+    "failed": [
+      {
+        "group": "yoke-code-intelligence:test:agent_repl:test",
+        "log": {
+          "name": "0001.stdout",
+          "bytes": 2477,
+          "sha256": "5351a2313f97515ae75699b22ee38df703632dcba1c2855558e945d0b0eeaf4e"
+        },
+        "tail": "\nrunning 22 tests\ntest composite_rename_selects_the_captured_parent_file_provider_not_the_logical_ast_language ... ok\ntest edits_are_guarded_plans_shell_is_separate_and_results_do_not_execute_repr ... ok\ntest exception_rendering_never_reads_user_overridden_exception_properties ... ok\ntest explicitly_selected_shell_runs_and_cell_errors_preserve_namespace ... FAILED\ntest external_inspection_facades_query_only_registered_source_without_activating_or_preparing_plans ... ok\ntest external_project_context_composes_read_queries_and_cannot_prepare_edits ... ok\ntest facade_requested_options_are_enforced_or_rejected_without_silent_dropping ... ok\ntest forged_worker_callback_authority_keys_are_rejected_and_worker_state_is_lost ... ok\ntest independent_jb_declaration_uses_the_same_python_regex_and_guarded_provider_bridge ... ok\ntest inspection_facades_are_source_bound_reads_in_planning_mode_with_honest_kind_registry ... ok\ntest line_bulk_and_symbol_edits_are_source_checked_independent_immutable_plans ... ok\ntest memory_facade_global_namespace_uses_only_the_registered_global_store ... ok\ntest persistent_cells_compose_real_source_queries_and_source_bound_notes ... ok\ntest provider_hierarchies_and_symbol_diagnostics_keep_exact_source_scope ... ok\ntest pure_facade_has_no_python_shell_or_caller_selected_host_authority ... ok\ntest python_regex_declaration_and_semantic_implementations_preserve_snapshot_anchors ... ok\ntest selected_python_worker_preserves_windows_runtime_drive ... ok\ntest semantic_refactoring_facades_check_modes_before_provider_queries_or_durable_plans ... ok\ntest semantic_rename_facade_only_prepares_registered_provider_guarded_plans ... ok\ntest surrogate_dict_keys_are_normalized_without_losing_the_persistent_worker ... ok\ntest symbol_references_and_semantic_diagnostics_use_registered_source_provider ... ok\ntest trust_output_and_deadline_failures_are_explicit_and_discard_worker_state ... ok\n\nfailures:\n\n---- explicitly_selected_shell_runs_and_cell_errors_preserve_namespace stdout ----\n\nthread 'explicitly_selected_shell_runs_and_cell_errors_preserve_namespace' (6368) panicked at native\\tests\\agent_repl.rs:250:67:\ncalled `Result::unwrap()` on an `Err` value: Request deadline exceeded\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    explicitly_selected_shell_runs_and_cell_errors_preserve_namespace\n\ntest result: FAILED. 21 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 32.11s\n\n"
+      }
+    ],
+    "sourceComparisonCheckpoint": "0e8eb633005af6e5e63837098afacb0ad0781fb4"
+  },
+  {
+    "artifactId": 12570990902,
+    "runId": 40117089821,
+    "jobId": 120940493863,
+    "runHead": "c1366e8d24e02732059d5eae11b71a75789faca2",
+    "actualCheckedOutSource": "15fbf432adeaf5d4d79133632d9a93ea3783857e",
+    "sourceScope": "PR merge checkout, not its head",
+    "archiveDigestExact": true,
+    "allGroupLogBytesAndHashesExact": true,
+    "fullSourceInputMapIndependentlyVerified": false,
+    "selectedSourceProofs": {
+      "native/tests/agent_repl.rs": {
+        "artifactHash": "65d3b41ed23685af55c68645294f5453cfbd7cfe4f1624af688d5d6bac4be988",
+        "matchingCurrentByteRenderings": [
+          "CRLF"
+        ]
+      },
+      "native/tests/process.rs": {
+        "artifactHash": "e97a71293f5b616764c87809f3d24c0b014e7f7e91aaafc5b3875c5efe443c8e",
+        "matchingCurrentByteRenderings": [
+          "CRLF"
+        ]
+      },
+      "native/src/process.rs": {
+        "artifactHash": "8661278b8e3bbeae0e470547e2b52605543553d1a9674888538b96410c69b70a",
+        "matchingCurrentByteRenderings": [
+          "CRLF"
+        ]
+      }
+    },
+    "groupsAttempted": 47,
+    "groupsSuccessful": 46,
+    "failed": [
+      {
+        "group": "yoke-code-intelligence:test:agent_repl:test",
+        "log": {
+          "name": "0000.stdout",
+          "bytes": 2477,
+          "sha256": "acdbe9ac8a703fc33961b8e1080e41b7cdb0163d7308e19382076b4313f5bab7"
+        },
+        "text": "\nrunning 22 tests\ntest composite_rename_selects_the_captured_parent_file_provider_not_the_logical_ast_language ... ok\ntest edits_are_guarded_plans_shell_is_separate_and_results_do_not_execute_repr ... ok\ntest exception_rendering_never_reads_user_overridden_exception_properties ... ok\ntest explicitly_selected_shell_runs_and_cell_errors_preserve_namespace ... FAILED\ntest external_inspection_facades_query_only_registered_source_without_activating_or_preparing_plans ... ok\ntest external_project_context_composes_read_queries_and_cannot_prepare_edits ... ok\ntest facade_requested_options_are_enforced_or_rejected_without_silent_dropping ... ok\ntest forged_worker_callback_authority_keys_are_rejected_and_worker_state_is_lost ... ok\ntest independent_jb_declaration_uses_the_same_python_regex_and_guarded_provider_bridge ... ok\ntest inspection_facades_are_source_bound_reads_in_planning_mode_with_honest_kind_registry ... ok\ntest line_bulk_and_symbol_edits_are_source_checked_independent_immutable_plans ... ok\ntest memory_facade_global_namespace_uses_only_the_registered_global_store ... ok\ntest persistent_cells_compose_real_source_queries_and_source_bound_notes ... ok\ntest provider_hierarchies_and_symbol_diagnostics_keep_exact_source_scope ... ok\ntest pure_facade_has_no_python_shell_or_caller_selected_host_authority ... ok\ntest python_regex_declaration_and_semantic_implementations_preserve_snapshot_anchors ... ok\ntest selected_python_worker_preserves_windows_runtime_drive ... ok\ntest semantic_refactoring_facades_check_modes_before_provider_queries_or_durable_plans ... ok\ntest semantic_rename_facade_only_prepares_registered_provider_guarded_plans ... ok\ntest surrogate_dict_keys_are_normalized_without_losing_the_persistent_worker ... ok\ntest symbol_references_and_semantic_diagnostics_use_registered_source_provider ... ok\ntest trust_output_and_deadline_failures_are_explicit_and_discard_worker_state ... ok\n\nfailures:\n\n---- explicitly_selected_shell_runs_and_cell_errors_preserve_namespace stdout ----\n\nthread 'explicitly_selected_shell_runs_and_cell_errors_preserve_namespace' (8616) panicked at native\\tests\\agent_repl.rs:250:67:\ncalled `Result::unwrap()` on an `Err` value: Request deadline exceeded\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    explicitly_selected_shell_runs_and_cell_errors_preserve_namespace\n\ntest result: FAILED. 21 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 39.30s\n\n"
+      }
+    ],
+    "priorDiagnosticRejection": "Initial helper required PR head source and stopped before accepting this artifact; actual merge checkout is now separately pinned",
+    "sourceComparisonCheckpoint": "0e8eb633005af6e5e63837098afacb0ad0781fb4"
+  }
+]

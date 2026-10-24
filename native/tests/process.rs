@@ -168,23 +168,42 @@ fn runtime_environment_filters_secrets_and_preserves_host_overrides() {
 #[test]
 fn windows_runtime_environment_supports_managed_known_folders() {
     let root = TempDir::new().unwrap();
+    let phase = root.path().join("owned-powershell-phase");
     let mut command = Command::new(
         std::path::PathBuf::from(std::env::var_os("SystemRoot").unwrap())
             .join("System32/WindowsPowerShell/v1.0/powershell.exe"),
     );
-    command.current_dir(root.path()).args(["-NoProfile", "-NonInteractive", "-Command", r#"$ErrorActionPreference='Stop'; if([string]::IsNullOrEmpty($env:SystemDrive)){throw 'Host system drive missing'}; $folder=[Environment]::GetFolderPath([Environment+SpecialFolder]::CommonApplicationData,[Environment+SpecialFolderOption]::DoNotVerify); if(-not [IO.Path]::IsPathRooted($folder)){throw 'Managed known folder is not absolute'}; Write-Output 'owned-windows-runtime'"#]);
+    command.env("YOKE_OWNED_PHASE_FILE", &phase).current_dir(root.path()).args(["-NoProfile", "-NonInteractive", "-Command", r#"[IO.File]::WriteAllText($env:YOKE_OWNED_PHASE_FILE,'entered'); $ErrorActionPreference='Stop'; if([string]::IsNullOrEmpty($env:SystemDrive)){throw 'Host system drive missing'}; [IO.File]::WriteAllText($env:YOKE_OWNED_PHASE_FILE,'before-folder'); $folder=[Environment]::GetFolderPath([Environment+SpecialFolder]::CommonApplicationData,[Environment+SpecialFolderOption]::DoNotVerify); [IO.File]::WriteAllText($env:YOKE_OWNED_PHASE_FILE,'after-folder'); if(-not [IO.Path]::IsPathRooted($folder)){throw 'Managed known folder is not absolute'}; Write-Output 'owned-windows-runtime'; [IO.File]::WriteAllText($env:YOKE_OWNED_PHASE_FILE,'finished')"#]);
     let started = std::time::Instant::now();
     let result = run_capture(command, b"", &Deadline::new(20_000), limits()).unwrap();
+    // The capture's partial pipes need not have reached EOF at a timeout. This
+    // owned fixed marker distinguishes script entry from the managed call.
+    let observed_phase = std::fs::File::open(&phase)
+        .and_then(|file| {
+            let mut bytes = Vec::new();
+            std::io::Read::read_to_end(&mut std::io::Read::take(file, 64), &mut bytes)?;
+            Ok(bytes)
+        })
+        .ok()
+        .map(|bytes| match bytes.as_slice() {
+            b"entered" => 1,
+            b"before-folder" => 2,
+            b"after-folder" => 3,
+            b"finished" => 4,
+            _ => 0,
+        })
+        .unwrap_or(0);
     assert_eq!(
         result.exit_code,
         Some(0),
-        "{}; stdin={}, output={}, timeout={}, overflow={}, io_error={}, elapsed={:?}",
+        "{}; stdin={}, output={}, timeout={}, overflow={}, io_error={}, phase={}, elapsed={:?}",
         String::from_utf8_lossy(&result.stderr),
         result.stdin_complete,
         result.output_complete,
         result.timed_out,
         result.output_exceeded,
         result.io_error,
+        observed_phase,
         started.elapsed()
     );
     assert_eq!(
