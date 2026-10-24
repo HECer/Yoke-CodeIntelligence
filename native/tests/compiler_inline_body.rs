@@ -1573,3 +1573,118 @@ fn repeated_conditional_and_overlapping_statement_heads_refuse_without_publicati
         );
     }
 }
+
+#[test]
+fn complete_identifier_assignments_keep_write_order_completion_and_branch_ownership() {
+    for (language, source) in [
+        (
+            "ts",
+            "const events:string[]=[];let target=1;function helper(n:number):number{events.push('body:'+n);target=10;return n+target;}target=helper((events.push('arg:'+target),target));export const observed={target,events};",
+        ),
+        (
+            "ts",
+            "const events:string[]=[];function helper(n:number):number{events.push('body');return n*2;}function run(flag:boolean){let target=1;if(flag)target=helper((events.push('arg'),3));else target=5;return target;}export const observed=[run(false),run(true),events];",
+        ),
+        (
+            "ts",
+            "const events:string[]=[];function helper(n:number):number{events.push('body');if(n)throw 'owned';return n;}let target=7;try{target=helper((events.push('arg'),3));}catch(error){events.push(String(error));}finally{events.push('target:'+target);}export const observed={target,events};",
+        ),
+        (
+            "ts",
+            "const events:string[]=[];function helper(n:number):number{try{events.push('try');return n;}finally{events.push('finally');return n+2;}}let target=0;target=helper((events.push('arg'),3));export const observed={target,events};",
+        ),
+        (
+            "ts",
+            "function helper():number|undefined{exit:while(true){try{return 1;}finally{break exit;}}}let target:number|undefined=7;target=helper();export const observed={target,isUndefined:target===undefined};",
+        ),
+        (
+            "ts",
+            "function helper():{run:(n:number)=>number}{return {run:n=>n+1};}let target:{run:(n:number)=>number}={run:n=>n};target=helper();export const observed=target.run(3);",
+        ),
+        (
+            "ts",
+            "function helper():never{throw 'owned';}let target=7;const events:string[]=[];try{target=helper();}catch(error){events.push(String(error));}export const observed={target,events};",
+        ),
+        (
+            "ts",
+            "function helper(n:number):number{return n+1;}let target=0;(((target = ((helper(2))))));export const observed=target;",
+        ),
+        (
+            "ts",
+            "// 🧪\r\nfunction helper(valeurÉ:number):number{return valeurÉ+1;}\r\nlet target=0;\r\ntarget /* avant */ = /* appel */ ((helper(/* café */2)));\r\nexport const observed=target;\r\n",
+        ),
+        (
+            "js",
+            "/** @param {number} n */\nfunction helper(n){return n+1;}\nlet target=0;target=helper(2);export const observed=target;\n",
+        ),
+    ] {
+        for (epoch, keep) in [(AnalyzerEpoch::V8, false), (AnalyzerEpoch::V9, true)] {
+            let (root, mut engine) = fixture(source, language);
+            engine.capture_epoch = epoch;
+            let r = yoke::compiler_inline::prepare(
+                &mut engine,
+                &compiler(),
+                &args(keep, language),
+                &d(),
+            )
+            .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+            let after = planned(&engine, &r, language);
+            assert_eq!(after.contains("function helper"), keep, "{after}");
+            assert_eq!(r["sourceExecuted"], false);
+            assert_eq!(r["complete"], false);
+            assert_eq!(r["verificationRequired"], true);
+            same_execution(source, &after);
+            for comment in ["/* avant */", "/* appel */", "/* café */"] {
+                if source.contains(comment) {
+                    assert!(after.contains(comment), "{after}");
+                }
+            }
+            assert_eq!(
+                fs::read(root.path().join(format!("main.{language}"))).unwrap(),
+                source.as_bytes()
+            );
+        }
+    }
+}
+
+#[test]
+fn effectful_targets_and_compound_or_consumed_assignments_refuse_without_publication() {
+    for consumer in [
+        "const box={value:0};box.value=helper();",
+        "const box=[0];function key(){return 0;}box[key()]=helper();",
+        "const box={value:0};function base(){return box;}base().value=helper();",
+        "let target=0;target+=helper();",
+        "let target=0;target||=helper();",
+        "let target=0,other=0;other=target=helper();",
+        "let target=0;function run(){return target=helper();}run();",
+        "let target=0;function use(n:number){return n;}use(target=helper());",
+        "let target=0;for(target=helper();target<4;target++){}",
+        "let target=0;((target=helper()),target++);",
+        "let target=0;(target as number)=helper();",
+    ] {
+        let source = format!("function helper():number{{return 3;}}{consumer}export {{}};");
+        let (root, mut engine) = fixture(&source, "ts");
+        let error =
+            yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+                .unwrap_err();
+        assert!(
+            format!("{error:#}").contains("Body expression context needs sequencing"),
+            "{source}: {error:#}"
+        );
+        unpublished(&engine);
+        assert_eq!(
+            fs::read(root.path().join("main.ts")).unwrap(),
+            source.as_bytes()
+        );
+    }
+    let source = "function helper():number[]{return [3];}let target=0;[target]=helper();export {};";
+    let (root, mut engine) = fixture(source, "ts");
+    let error = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+        .unwrap_err();
+    assert!(format!("{error:#}").contains("Body expression context needs sequencing"));
+    unpublished(&engine);
+    assert_eq!(
+        fs::read(root.path().join("main.ts")).unwrap(),
+        source.as_bytes()
+    );
+}

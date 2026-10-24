@@ -2,6 +2,112 @@
 use super::*;
 
 #[test]
+fn assignment_effects_cannot_retarget_compound_or_inject_a_coherently_rehashed_write() {
+    let root = tempfile::tempdir().unwrap();
+    let source = "// 🧪\r\nfunction helper(n:number):number{return n+1;}\r\nlet target=0,other=0;\r\ntarget /* keep */ = /* call */ ((helper(2)));\r\nexport const observed={target,other};\r\n";
+    fs::write(root.path().join("main.ts"), source).unwrap();
+    fs::write(root.path().join("tsconfig.json"),r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true},"files":["main.ts"]}"#).unwrap();
+    let mut engine = Engine::open(root.path()).unwrap();
+    let d = Deadline::new(60_000);
+    let (snapshot, graph, _, _) = engine.index(&d).unwrap();
+    let symbol =
+        crate::agent_repl::source_symbol(&engine.store, &snapshot, &graph, "helper", "main.ts", &d)
+            .unwrap();
+    let tree = parse("typescript", source, &d).unwrap();
+    let declaration = classic(&tree, &symbol, source, &d).unwrap().unwrap();
+    let spec = CompilerSpec {
+        node: std::env::split_paths(&std::env::var_os("PATH").unwrap())
+            .map(|p| p.join(if cfg!(windows) { "node.exe" } else { "node" }))
+            .find(|p| p.is_file())
+            .unwrap()
+            .canonicalize()
+            .unwrap(),
+        typescript: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("../node_modules/typescript/lib/typescript.js")
+            .canonicalize()
+            .unwrap(),
+        trusted: true,
+    };
+    let intent = json!({"path":symbol.path,"name":symbol.name,"startByte":symbol.start_byte,"endByte":symbol.end_byte,"nameStartByte":symbol.name_start_byte,"nameEndByte":symbol.name_end_byte,"keepDefinition":false});
+    let report = crate::projects::execute(
+        &engine.store,
+        &snapshot,
+        &spec,
+        "inlineBody",
+        Some(intent),
+        &d,
+    )
+    .unwrap();
+    let baseline = report["bodyInline"].clone();
+    let admit = |value: Value| -> Result<String> {
+        let effect: Effect = crate::json::decode(value)?;
+        Ok(check(
+            &engine,
+            &spec,
+            &snapshot,
+            &symbol,
+            source,
+            &tree,
+            declaration,
+            false,
+            &effect,
+            &report,
+            &d,
+        )?
+        .1)
+    };
+    let result = admit(baseline.clone()).unwrap();
+    assert!(result.contains("target /* keep */ = /* call */"));
+    assert!(!result.contains("helper(2)"));
+    for replacement in [
+        "other /* keep */ = /* call */",
+        "target /* keep */ += /* call */",
+        "target /* keep */ ||= /* call */",
+        "target /* changed */ = /* call */",
+        "other++;target /* keep */ = /* call */",
+        "({value:target}).value /* keep */ = /* call */",
+    ] {
+        let mut forged = baseline.clone();
+        let edit = forged["edits"]
+            .as_array_mut()
+            .unwrap()
+            .iter_mut()
+            .find(|e| {
+                e["text"]
+                    .as_str()
+                    .unwrap()
+                    .contains("target /* keep */ = /* call */")
+            })
+            .unwrap();
+        let text = edit["text"]
+            .as_str()
+            .unwrap()
+            .replace("target /* keep */ = /* call */", replacement);
+        edit["text"] = json!(text);
+        let mut projected = source.to_string();
+        for edit in forged["edits"].as_array().unwrap().iter().rev() {
+            projected.replace_range(
+                edit["startByte"].as_u64().unwrap() as usize
+                    ..edit["endByte"].as_u64().unwrap() as usize,
+                edit["text"].as_str().unwrap(),
+            );
+        }
+        forged["resultHash"] = json!(crate::model::hash(projected));
+        let error = admit(forged).unwrap_err();
+        assert!(
+            format!("{error:#}")
+                .contains("Body compiler replacement differs from native source reconstruction"),
+            "{replacement}: {error:#}"
+        );
+    }
+    assert_eq!(
+        fs::read(root.path().join("main.ts")).unwrap(),
+        source.as_bytes()
+    );
+    assert_eq!(engine.store.db.query_row("SELECT COUNT(*) FROM records WHERE kind IN ('plan','approval','receipt','journal','native_compiler_report_v1')",[],|r|r.get::<_,usize>(0)).unwrap(),0);
+}
+
+#[test]
 fn predicate_effects_cannot_activate_the_signature_or_forge_relay_flow_and_bindings() {
     let root = tempfile::tempdir().unwrap();
     let source = "// owned \u{03c0}\nfunction helper(value:unknown):value is string{return typeof value==='string';}\nexport function run(input:unknown){const ok=helper(input);return ok?input.length:0;}\nexport const observed=run('owned');\n";

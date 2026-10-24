@@ -238,6 +238,43 @@ fn statement_for(call: Node<'_>) -> Result<Node<'_>> {
             },
         );
     }
+    if parent.kind() == "assignment_expression" {
+        let mut cursor = parent.walk();
+        ensure!(
+            parent
+                .child_by_field_name("left")
+                .is_some_and(|n| n.kind() == "identifier")
+                && parent
+                    .child_by_field_name("right")
+                    .is_some_and(|n| n.id() == value.id())
+                && parent.children(&mut cursor).any(|n| n.kind() == "="),
+            "Function-body assignment target or right side needs sequencing"
+        );
+        let mut assignment = parent;
+        let mut depth = 0usize;
+        while assignment
+            .parent()
+            .is_some_and(|p| p.kind() == "parenthesized_expression")
+        {
+            depth += 1;
+            ensure!(
+                depth <= 2000,
+                "Function-body assignment wrapper capacity exceeded"
+            );
+            assignment = assignment.parent().unwrap();
+        }
+        let statement = assignment
+            .parent()
+            .context("Function-body assignment statement absent")?;
+        ensure!(
+            statement.kind() == "expression_statement"
+                && children(statement)
+                    .first()
+                    .is_some_and(|n| n.id() == assignment.id()),
+            "Function-body assignment context needs sequencing"
+        );
+        return Ok(statement);
+    }
     let complete_value = match parent.kind() {
         "if_statement" => parent.child_by_field_name("condition"),
         "switch_statement" => parent.child_by_field_name("value"),
@@ -891,6 +928,25 @@ mod tests {
                 Some("switch_statement"),
             ),
             ("throw ((helper()));", Some("throw_statement")),
+            ("target = ((helper()));", Some("expression_statement")),
+            ("(((target = helper())));", Some("expression_statement")),
+            (
+                "if(flag)target=helper();else target=0;",
+                Some("expression_statement"),
+            ),
+            ("box.value=helper();", None),
+            ("box[key()]=helper();", None),
+            ("base().value=helper();", None),
+            ("[target]=helper();", None),
+            ("({target}=helper());", None),
+            ("target+=helper();", None),
+            ("target||=helper();", None),
+            ("other=target=helper();", None),
+            ("return target=helper();", None),
+            ("use(target=helper());", None),
+            ("for(target=helper();;){break;}", None),
+            ("((target=helper()),target++);", None),
+            ("(target as number)=helper();", None),
             ("if(flag&&helper()){}", None),
             ("switch(1+helper()){}", None),
             ("throw other(helper());", None),
@@ -906,6 +962,13 @@ mod tests {
             let call = node_at(&tree, start, start + "helper()".len(), &d).unwrap();
             let actual = statement_for(call);
             assert_eq!(actual.as_ref().ok().map(|n| n.kind()), expected, "{source}");
+        }
+        for depth in [1, 2000, 2001] {
+            let source = format!("{}target=helper(){};", "(".repeat(depth), ")".repeat(depth));
+            let tree = parse("typescript", &source, &d).unwrap();
+            let start = source.find("helper()").unwrap();
+            let call = node_at(&tree, start, start + "helper()".len(), &d).unwrap();
+            assert_eq!(statement_for(call).is_ok(), depth <= 2000, "{depth}");
         }
     }
     #[test]

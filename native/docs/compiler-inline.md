@@ -20,7 +20,20 @@ One owning strict ES module can select a nonasync function declaration without a
 TypeScript type-parameter list and complete direct calls in that captured file.
 A call must occupy one whole
 single-declarator lexical initializer, return expression, expression statement,
-throw expression, if condition or switch discriminant. Parentheses are retained.
+throw expression, if condition or switch discriminant. A complete call may also
+be the right side of a plain identifier assignment occupying one whole expression
+statement, such as `result = helper(2)`. Parentheses around that call or the whole
+assignment are retained; the assignment wrapper depth is limited to 2,000.
+Identifier reference resolution introduces no source evaluation before the
+call. The original assignment runs after the expanded call completes, so a throw
+leaves the old target value and a normal return performs the original write.
+The original target, `=` token, comments and statement suffix remain exact source
+copies. Property/computed/destructuring targets, compound/logical assignments,
+chained assignments and assignments consumed by another expression require
+additional sequencing and refuse. See the
+[direct assignment qualification](../../docs/validation/integration-2026-10-24/inline-assignment-heads/README.md);
+independent native execution is still pending for this extension.
+Other parentheses are retained too.
 Non-declaration statements receive a block so unbraced branches retain their
 control scope. Direct if/switch/throw heads evaluate the selected call once before
 the original statement. The worker and independent Rust reconstruction require

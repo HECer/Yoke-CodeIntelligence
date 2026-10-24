@@ -1,5 +1,20 @@
 # Remaining implementation and acceptance
 
+## TypeScript namespace and assignment extensions await native admission
+
+The pinned compiler worker now distinguishes type/value/namespace references;
+unrelated cross-namespace names no longer cause false refusals. Its22 direct
+cases pass with12 valid accepts and10 genuine-shadow refusals. The separate
+[assignment extension](validation/integration-2026-10-24/inline-assignment-heads/README.md)
+adds complete call right sides in standalone plain identifier assignments.
+Both worker and Rust derive the exact original assignment and statement.
+Its44 direct worker cases accept20 valid variants and refuse24 targets/contexts
+which need additional sequencing; exact edits, actual target bindings/types and
+owned literal runtime observations are checked. Three native test functions and
+an extended original AST-field/capacity test are added but not locally compiled
+or executed below the established disk admission. Neither direct worker result
+certifies Rust reconstruction, application, native platforms or full R1/STATUS.
+
 ## Readiness and scheduling causes remain unmeasured
 
 The [test diagnostics](validation/integration-2026-10-24/readiness-phase-diagnostics/README.md)

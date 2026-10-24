@@ -1,5 +1,24 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## TypeScript body assignment extension: native admission pending (2026-10-24)
+
+Classic body expansion now handles a complete call on the right of a plain
+identifier assignment that occupies one expression statement. Worker and Rust
+independently derive the original `=` assignment, target and statement; original
+target/operator/comment bytes remain copies. Parentheses and unbraced branches
+retain ownership. No property/computed/destructuring target, compound/logical/
+chained or consumed assignment is admitted by this extension.
+
+The actual TypeScript5.8.3 worker passes44 direct cases:20 valid variants accept
+and24 sequencing-sensitive variants refuse. All44 refuse at parent e125c304.
+Accepted projections retain target bindings/types, exact bytes/hashes, argument/
+write order, exceptions, finally completion and owned runtime observations.
+Three native test functions and the original AST-field/capacity test are added/
+extended but not run locally below the1.2GB native build admission. No current
+Rust/application/platform acceptance is claimed. Full R1/STATUS, native CI,
+history/VSIX live acceptance, main and release remain open.
+[Evidence](validation/integration-2026-10-24/inline-assignment-heads/README.md).
+
 ## TypeScript body namespace correction: native admission pending (2026-10-24)
 
 Classic body expansion now resolves free references with the pinned compiler's
