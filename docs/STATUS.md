@@ -1,5 +1,18 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## HTTP backpressure fixture: native confirmation pending (2026-10-24)
+
+The library socket test now sends a4-MiB response after actual WouldBlock, so a
+tiny write cannot fit into space released by in-flight bytes and invalidate its
+pressure assumption. An actual local Python socket probe demonstrates a40-byte
+write succeeding after WouldBlock while the4-MiB write reaches the deadline.
+The250-ms response budget, existing assertions/buffer/fill/wait bounds and
+production transport remain unchanged. Rustfmt, Python103/0/0, typecheck and
+npm260/0/3 existing skips pass separately; the modified native test has not run.
+Current hosted/native,
+remaining timing/runtime/memory, live/VSIX and full STATUS gates remain open.
+[Evidence](validation/integration-2026-10-24/editor-backpressure/README.md).
+
 ## History worker tree exit: stricter admission, native acceptance pending (2026-10-24)
 
 An actual inert Windows worker counterexample shows the earlier runner accepting

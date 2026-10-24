@@ -1,5 +1,15 @@
 # Remaining implementation and acceptance
 
+## HTTP backpressure fixture awaits native execution
+
+The [test-only correction](validation/integration-2026-10-24/editor-backpressure/README.md)
+retains original timeout assertions/budgets and observes pressure using a larger
+actual response. A local inert socket probe demonstrates the preceding tiny-write
+assumption failing; it does not certify Rust/macOS execution. Changed-file format,
+Python103/0/0, typecheck and npm260/0/3 existing skips pass. Hosted native
+confirmation and all other open
+platform/runtime/memory/timing/live/current VSIX/full STATUS requirements remain.
+
 ## History native acceptance retains independent pre-cleanup exit proof
 
 The [runner correction](validation/integration-2026-10-24/history-tree-exit/README.md)

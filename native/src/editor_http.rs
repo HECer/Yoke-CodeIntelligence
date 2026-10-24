@@ -578,24 +578,30 @@ mod tests {
             "Fixture must fill the real socket's outbound queue"
         );
         stream.set_nonblocking(false).unwrap();
-        let body = json!({"ok":true,"data":"pending response"});
+        // WouldBlock is only an observation of the current send queue. Bytes
+        // already in flight can still move into the unread receive window and
+        // make room for a tiny response. Keep the actual response substantially
+        // larger than these bounded socket buffers so pressure lasts through
+        // the original response deadline, rather than assuming it stays full.
+        let body = json!({"ok":true,"data":"x".repeat(4 * 1024 * 1024)});
         let (sender, receiver) = std::sync::mpsc::channel();
         let task = thread::spawn(move || {
             let deadline = Deadline::new(250);
             let started = std::time::Instant::now();
             let result = respond(&mut stream, Response { status: 200, body }, &deadline);
+            let failure_status = result.as_ref().err().map(|error| error.status);
             let timeout = result.is_err_and(|error| error.status == 408);
-            let _ = sender.send((timeout, started.elapsed()));
+            let _ = sender.send((timeout, started.elapsed(), failure_status));
         });
         let result = receiver.recv_timeout(Duration::from_secs(3));
         if result.is_err() {
             let _ = client.shutdown(Shutdown::Both);
         }
         task.join().unwrap();
-        let (timeout, elapsed) = result.expect("Writer must stop at its deadline");
+        let (timeout, elapsed, failure_status) = result.expect("Writer must stop at its deadline");
         assert!(
             timeout,
-            "Fixture must reach genuinely backpressured response writing"
+            "Fixture must reach genuinely backpressured response writing: status={failure_status:?}, queued={queued}, elapsed={elapsed:?}"
         );
         assert!(elapsed < Duration::from_secs(3));
     }
