@@ -1,5 +1,23 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Scoped Windows native execution now passes (2026-10-24)
+
+At source6b9a60dd, the complete default library group passes703/0 with7 unchanged
+ignored tests; complete process and agent_repl groups pass7/0 and22/0. All three
+groups run without a name filter. Four exact body-inlining regressions also
+pass, each with24 other functions filtered; the full25-function body group is
+not claimed. These cover the new namespace and standalone-assignment behavior.
+
+Four fresh no-run producers and seven test executions all prove root exit and
+their owned tree empty before forced cleanup, against1003 identical pinned
+native/Cargo/workflow inputs. Profiles, assertions, ignores and test deadlines
+are unchanged. The earlier d80 incomplete library producer remains incomplete;
+a separately rebuilt library image now has a clean producer and actual runtime
+result. The two prior PowerShell-related tests pass locally, but the hosted
+cause and actual current CI/platform/live/history/VSIX acceptance remain open.
+This supersedes local execution-pending notes only for these named scopes.
+[Evidence](validation/integration-2026-10-24/native-windows-runtime/README.md).
+
 ## Native CI acceptance now waits only for its own platform (2026-10-24)
 
 Each platform's acceptance job now depends on its own eight whole-target shards,

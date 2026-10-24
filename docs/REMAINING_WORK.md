@@ -1,5 +1,19 @@
 # Remaining implementation and acceptance
 
+## Scoped local Windows native runtime confirmed; full acceptance still open
+
+Source6b9a60dd passes the complete library703/0/7 existing ignored, process7/0
+and agent_repl22/0 groups without name filters. Four separately selected body
+namespace/assignment regressions also pass; each retains24 filtered functions,
+so full body-group acceptance is not claimed. All four fresh producers and seven
+executions prove owned tree exit before forced cleanup and unchanged1003 selected
+native/Cargo/workflow inputs. The earlier incomplete d80 producer is preserved;
+the newly rebuilt library has independent clean production and runtime evidence.
+No original test deadline, profile, assertion or ignore is relaxed. Remaining
+native groups, hosted failures/current CI, platforms/live/history/browser/VSIX,
+complete STATUS/R1–R9/main/release still require their own acceptance.
+[Evidence](validation/integration-2026-10-24/native-windows-runtime/README.md).
+
 ## Platform CI dependencies separated; actual hosted acceptance remains open
 
 Each platform's final acceptance now waits only for its own eight shard jobs.

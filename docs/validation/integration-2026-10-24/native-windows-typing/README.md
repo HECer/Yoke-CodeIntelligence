@@ -42,7 +42,11 @@ producer completion. The candidate is neither hashed/adopted nor executed.
 There is no native test result. Its metadata-only observed name/size are not
 binary qualification. The strict owner result remains false despite Cargo0.
 Free space after linking is about1.06GB, below the unchanged1.2GB admission.
-No retry, old executable substitution, cache deletion or limit relaxation follows.
+At that initial checkpoint no retry, old executable substitution, cache deletion
+or limit relaxation follows. The later [runtime checkpoint](../native-windows-runtime/README.md)
+records independent builds above admission, including a freshly recompiled
+library with a clean producer and actual test execution. It preserves this
+initial incomplete owner receipt.
 
 `runs.json` preserves these separate outcomes, commands, compiler versions,
 actual Job receipts and artifact observations. `source-inputs.json` pins the
