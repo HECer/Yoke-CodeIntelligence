@@ -1,5 +1,16 @@
 # Remaining implementation and acceptance
 
+## Hosted host-history acceptance is configured, not yet complete
+
+The [new CI gate](validation/integration-2026-10-24/dashboard-history-ci/README.md)
+runs the real release CLI and private owning Sessions after the successful
+Windows release build/upload. A separate bounded evidence artifact preserves
+both-authority pending refusal, two-package exact readback, fresh same-host save
+and own native/runtime exit proofs.11 pure admission tests pass locally; actual
+CI execution and native browser acceptance remain pending. Native source and
+the original workflow prefix/limits are unchanged. The local disk guard remains
+in force; no new native executable is adopted or run below it.
+
 ## History archival: implementation present, acceptance remains open
 
 The [partial archive checkpoint](validation/integration-2026-10-24/dashboard-history-archive/README.md)

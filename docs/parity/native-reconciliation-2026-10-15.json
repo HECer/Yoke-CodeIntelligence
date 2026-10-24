@@ -14976,5 +14976,26 @@
     "fullStatusComplete": false,
     "mainMerged": false,
     "released": false
+  },
+  "nativeDashboardHistoryCiGatePending20261024": {
+    "productCommit": "9c32ef68afef7adaf21586ff586b11f0001748e0",
+    "remoteProductBlobsVerified": 3,
+    "evidence": "docs/validation/integration-2026-10-24/dashboard-history-ci/README.md",
+    "purePythonAdmissionTestsPassed": 11,
+    "nativeExecutionAttemptedLocally": false,
+    "priorArchiveProductInputsUnchanged": 9,
+    "originalRustWorkflowPrefixExact": true,
+    "normalReleaseArtifactUploadPreserved": true,
+    "ciOnlyAfterReleaseBuild": true,
+    "plannedStdioVariants": 3,
+    "actualCiLiveAcceptanceComplete": false,
+    "nativeBrowserAcceptanceComplete": false,
+    "sourceInventoryIsCompleteBuildInventory": false,
+    "previousNative694Reassigned": false,
+    "previousTypescript260Reassigned": false,
+    "unchangedNativeDiskStopBytes": 500000000,
+    "fullStatusComplete": false,
+    "mainMerged": false,
+    "released": false
   }
 }

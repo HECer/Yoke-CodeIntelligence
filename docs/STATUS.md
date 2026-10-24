@@ -1,5 +1,32 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Host-history CI acceptance gate: configured, result pending (2026-10-24)
+
+Product `9c32ef68afef7adaf21586ff586b11f0001748e0` adds an owned live acceptance
+driver after the successful Windows release build and the existing release
+artifact upload. All three changed Git blobs are independently verified. The
+original Rust workflow prefix, tests, permissions, job timeout and release
+upload remain exact. A separate artifact retains bounded test evidence; native
+Session diagnostics stay in the private fixture outside that artifact.
+
+The driver exercises native/Serena/persistent-Python stdio Sessions and real
+private HTTP management. It checks both retired and current host authority while
+archival is pending, exact two-package evidence/readback, stale-event refusal,
+foreign occupants, a fresh save in the same destination host and isolated own
+shutdown. A suspended worker is assigned to its kill-on-close Job before resume;
+deadlines, protocol/output/source limits and the existing500MB stop remain.
+Actual checkout revision, selected source hashes, executable hash, process
+receipts and Job cleanup are recorded. This does not claim a complete build-input
+inventory or native browser acceptance.
+
+**11 pure Python admission tests pass locally**, without opening or running a
+native executable. All nine preceding archive product inputs remain exact.
+Native694 and TypeScript260/3 keep their preceding source scopes; neither is
+rerun or reassigned here. The real CI driver has not yet been observed passing.
+Archive integration/live/browser/release and complete STATUS acceptance remain
+open. Local native work remains stopped below the disk reserve.
+[CI gate evidence](validation/integration-2026-10-24/dashboard-history-ci/README.md).
+
 ## Global document history archive: implemented, acceptance pending (2026-10-24)
 
 Development product `5ccfdffe70d17e3c1623aca86c1c605df8342be5` is pushed; all nine changed Git blobs are
