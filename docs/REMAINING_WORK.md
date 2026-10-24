@@ -1,5 +1,26 @@
 # Remaining implementation and acceptance
 
+## Current dashboard management scope (2026-10-24)
+
+[Scoped native acceptance](validation/integration-2026-10-24/dashboard-management/README.md)
+now covers explicit host management for current-session project/mode controls and
+project named-memory CRUD. The non-Send Session stays on its owning host thread,
+revision/absence checks prevent overwrites, and operation/lifetime/revocation
+bounds survive idle input. Real Session/Serena/Python stdio, two independent
+MCP-HTTP sessions and the actual native browser are checked. The 677-pass matrix
+is scoped; original353/73/77-runtime and whole Windows/platform claims remain.
+
+Complete the remaining full management action: registered language/backend
+selection under independent project grants, explicitly host-selected global and
+project configuration documents with hash CAS and durable conditional recovery,
+explicit private raw logs, and shutdown restricted to the owning MCP resource.
+Dormant backend registration alone must not become selection/execution authority.
+Tray, automatic browser opening and broader keyboard/touch/accessibility and
+all-browser acceptance remain open. The current implementation does not replace
+those requirements with a notes-only scope, and the full action is not done.
+
+## Captured import attributes
+
 Immutable compiler moves now retain literal import attributes from captured
 source. Source-only repairs restore compiler omissions and shorthand-only import
 dependencies. Native syntax and bound-target checks reject changed, dropped,

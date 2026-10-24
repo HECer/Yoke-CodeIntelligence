@@ -1,5 +1,42 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Native dashboard management checkpoint (2026-10-24)
+
+Product commit `552cd8d8a1075d4f360eb1517e1f72a5683db40e` is pushed to the
+integration branch; all twelve product blobs were independently remote-verified.
+A second host opt-in now enables project/mode controls and current-project
+named-memory CRUD with revision CAS on the same owning Session thread. Default
+absent/null management retains preceding bytes and authority. The native CLI
+supports Session/Serena stdio, including a persistent trusted runtime, and
+Session-backed MCP-HTTP. A library host must install and poll its driver.
+
+The final scoped matrix has 677 native passes, zero failures, seven existing
+ignored workers and zero filtered functions in eight unique whole groups, on
+1133 unchanged inputs. All-target Clippy with warnings denied, the complete
+368-root format helper, native build, typecheck and npm260 passes/3 existing
+skips pass. Two red/green regressions fix Windows split-request aborts and accepted
+requests outliving a shorter capability. Actual CLI runs cover three stdio
+variants and two independent HTTP sessions. The actual native browser covers
+CRUD, a competing-client conflict with retained draft, project/mode changes and
+390px layout bounds. Both source files remain exact. All owned jobs finish and
+all newly created synthetic credentials are removed; no privilege setting changes.
+
+The exact HTML was separately rendered and visually inspected on desktop/mobile
+and conflict states. These synthetic pixel fixtures are distinguished from the
+actual native browser workflow because collaborative screenshot capture timed out.
+This is not a current whole-native/Windows/non-Windows/upstream certificate and
+does not upgrade the ten original Windows symlink prerequisites or old inventories.
+
+The full dashboard action remains active. Registered-language selection,
+host-selected global/project configuration files with durable conditional
+recovery, explicit private raw logs and owned MCP shutdown remain open, as do
+tray/automatic opening and broader accessibility/STATUS/R1-R9 work. The older
+read-only checkpoint below remains historical/default-mode evidence. See
+[evidence](validation/integration-2026-10-24/dashboard-management/README.md) and
+[contract](../native/docs/session-dashboard.md). Main and release stay open.
+
+## Compiler move import attributes checkpoint
+
 Immutable compiler moves now retain literal import attributes from captured
 source. Source-only repairs restore compiler omissions and shorthand-only import
 dependencies. Native syntax and bound-target checks reject changed, dropped,

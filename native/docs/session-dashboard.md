@@ -1,11 +1,61 @@
 # Native session dashboard
 
-The native dashboard is an explicitly enabled, read-only session view. The host
+The native dashboard is an explicitly enabled session view, read only by default. The host
 selects `"dashboard": {}` in its JSON HostProfile, then calls `open_dashboard`,
 `cfg.open_dashboard()` or native session operation `openDashboard`. Existing
 tool/API exclusions and optional-tool selection remain independent. Project
 YAML, repository text, request arguments and another project query cannot grant
 dashboard authority. No listener or browser starts for absent/null configuration.
+
+A second host opt-in enables current-session management:
+
+```json
+{
+  "notesPolicy": { "writable": true },
+  "dashboard": {
+    "management": {
+      "sessionControls": true,
+      "memories": true,
+      "operationTimeoutMs": 30000
+    }
+  }
+}
+```
+
+Management switches the active host-registered project, selects known modes or
+restores layered host modes. It also lists, reads, creates, replaces, renames and
+deletes current-project named memories. These use the native named-note store;
+central AgentMemory coordination is separate. Global memory scope, arbitrary
+paths, new registrations, commands, trust and source-write approval cannot be
+selected through the browser. `notesPolicy.writable` still defaults false.
+Current raw tool/API exclusions, ignored/read-only patterns, `no-memories`,
+registered-project restrictions and independent execution/write grants apply.
+
+The CLI `serve-session` host installs the owner-thread driver when management is
+explicitly selected. Its native/Serena profiles expose opening operations.
+MCP-HTTP installs its actor driver for Session-backed principals; the pure Engine
+`native` HTTP profile refuses management. A library host must enable management
+before opening and regularly call `Session::poll_dashboard_management`, including
+while protocol input is idle. JSON cannot install a driver. The non-Send Session
+stays on its owning thread; only bounded inert requests cross the mailbox.
+
+Private `POST /api/manage` requires exact Host and same-origin Origin, Bearer
+capability, JSON content type and canonical bounded Content-Length. Its closed
+envelope contains a 64-hex request ID, current `sessionStateSha256`, current project
+and a typed action. Unknown fields, duplicate JSON keys, global scope and
+unsupported authority refuse. The owning thread rechecks session/project/root
+binding, current policy, original deadline and revocation before execution.
+
+Creation requires absence inside the existing immediate SQLite transaction.
+Replacement, deletion and rename require the loaded note revision. Conflicts
+cannot overwrite a newer head; immutable history, anchors and native reference
+updates retain their existing policy. Expired queued tickets cannot execute later.
+When execution might have started, timeout/disconnection is an unconfirmed outcome;
+refresh saved state before retrying. The UI retains drafts on conflicts and
+project/session changes and never silently rebinds them. Reload/discard and
+destructive operations are explicit. Unchanged content is not rewritten, uniform
+CRLF survives edits, and mixed line endings display read only with the native-API
+alternative disclosed. Names and content render as inert text.
 
 The result contains a private IPv4-loopback URL with a short-lived capability
 in its fragment. The client opens that URL; `browserOpened` is false and
@@ -23,20 +73,30 @@ record arguments, results, source bytes, command lines or error messages. Unknow
 operation text is replaced by a fixed label. This is not a raw log viewer or a
 count of every public protocol request. Evicted activity rows are disclosed.
 
-Configuration/memory editing, raw log access, tray integration, automatic browser
-opening and MCP shutdown are unavailable in this scope. Their capabilities are
-reported false rather than as empty successful results. Source and host settings
-cannot be changed through HTTP. Existing guarded edit/approval/verification and
+Registered-language selection, configuration-file editing with durable conditional
+recovery, raw log access, tray integration, automatic browser opening and MCP
+shutdown remain unavailable in this build. Their absence is disclosed rather than
+as empty successful results. Source-write approval and host execution grants are
+not changed through management. Existing guarded edit/approval/verification and
 recovery workflows retain their independent authority.
 
 Only the static bootstrap is public. Session data requires exact Host, allowed
 Origin and constant-time Bearer capability validation. HTTP framing, headers,
-routes, response sizes and request lifetimes are bounded; mutations and request
-pipelining refuse. Source/session text is rendered as inert text. No external
+routes, response sizes and request lifetimes are bounded. Mutations require the
+separate management opt-in; request pipelining refuses. Source/session text is
+rendered as inert text. No external
 assets or network destinations are used. Each data request opens existing-only
 read-only state and checks the exact workspace/session row against the view.
 Concurrent changes refuse with 409 until the current host session supplies a
 fresh view. Neither stored data nor the browser can select another root.
+
+Accepted sockets explicitly use blocking reads/writes under the original bounded
+deadline, including separately arriving headers and bodies. This avoids Winsock's
+inherited listener nonblocking mode; see the
+[accept contract](https://learn.microsoft.com/en-us/windows/win32/api/winsock2/nf-winsock2-accept).
+The accepted request is capped by remaining dashboard lifetime. Management queue
+wait, execution and response share their original operation ceiling, also capped
+by that lifetime; polling never restarts it.
 
 Host bounds (camelCase) are:
 
@@ -47,6 +107,10 @@ Host bounds (camelCase) are:
 | `lifetimeMs` | `3600000` | `100`–`86400000` |
 | `maxRequests` | `10000` | `1`–`100000` |
 | `activityCapacity` | `200` | `1`–`1000` |
+| `management` | absent/null | explicit optional object |
+| `management.sessionControls` | `true` when opted in | boolean |
+| `management.memories` | `true` when opted in | boolean; write policy remains separate |
+| `management.operationTimeoutMs` | `30000` | `100`–`60000` |
 
 The listener starts only on the explicit open operation. Repeated opens reuse the
 live instance; an expired instance is replaced with a fresh capability. Dropping
@@ -58,13 +122,24 @@ MCP-HTTP dashboards additionally share the transport session's revocation/expiry
 signal, checked before data admission and response. Revoking that access closes
 the listener independently of later actor/process cleanup.
 
+Managed stdio also closes its listener on EOF. Actual catalog changes notify idle
+stdio immediately; MCP-HTTP coalesces its notification into the next normal
+response. Closing one HTTP session does not stop other sessions or the service.
+
 Explicit configuration binds the host session fingerprint and stale admission.
 Absent/null configuration preserves prior serialization, session fingerprints,
 configuration replies and default tool-catalog bytes. The retained default
 catalog description is upgraded only for explicitly dashboard-enabled sessions.
 No default source execution, model call, external service or install is added.
 
-This independent native view addresses part of the public dashboard surface;
+Absent/null management preserves the preceding read-only configuration bytes,
+fingerprints and catalogs. Explicit management binds a distinct host fingerprint.
+The [2026-10-24 scoped evidence](../../docs/validation/integration-2026-10-24/dashboard-management/README.md)
+records 677 native passes, real CLI transports and an actual native browser
+workflow. Separately labeled exact-HTML fixtures provide inspected desktop/mobile
+pixels; this is not full accessibility or all-browser certification.
+
+This independent native view and management slice address part of the public dashboard surface;
 the [public guide](https://oraios.github.io/serena/02-usage/060_dashboard.html)
 also describes broader management and raw-log features not implemented here.
 It is not a parity or cross-platform runtime certificate.

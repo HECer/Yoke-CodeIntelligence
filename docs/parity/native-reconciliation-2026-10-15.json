@@ -14561,5 +14561,41 @@
     "runtimeLoaderInterpretationValidated": false,
     "originalLedgerAndAssessmentsChanged": false,
     "fullStatusComplete": false
+  },
+  "nativeDashboardManagement20261024": {
+    "qualifiedProductCommit": "552cd8d8a1075d4f360eb1517e1f72a5683db40e",
+    "evidence": "docs/validation/integration-2026-10-24/dashboard-management/README.md",
+    "nativeContract": "native/docs/session-dashboard.md",
+    "rust": {
+      "passed": 677,
+      "failed": 0,
+      "ignored": 7,
+      "filtered": 0,
+      "uniqueWholeGroups": 8,
+      "addedFunctionsAlreadyIncluded": 14
+    },
+    "frozenInputs": 1133,
+    "currentCliSha256": "90a518f30131996d7210187b34d7ba4a01bfae6be3e372b3e52178908dea3238",
+    "actualStdioVariants": 3,
+    "actualIndependentHttpSessions": 2,
+    "nativeBrowserCrudConflictAndControls": true,
+    "allOwnedJobsEmpty": true,
+    "allFreshSyntheticCredentialsRemoved": true,
+    "defaultModelCalls": false,
+    "analyzedSourceExecuted": false,
+    "systemOrPrivilegeSettingsChanged": false,
+    "remaining": [
+      "Registered-language selection under independent project grants",
+      "Host-selected global/project configuration files with durable conditional recovery",
+      "Explicit private raw logs and owned MCP shutdown",
+      "Tray, automatic opening and broader accessibility/platform/STATUS/R1-R9 acceptance"
+    ],
+    "originalLedgerAndAssessmentsChanged": false,
+    "fullDashboardManagement": false,
+    "fullNativeRun": false,
+    "fullContractCertification": false,
+    "fullStatusComplete": false,
+    "mainMerged": false,
+    "released": false
   }
 }
