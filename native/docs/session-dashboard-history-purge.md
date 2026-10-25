@@ -57,6 +57,9 @@ phases and selected lineage. No live source can replace missing record evidence.
 Original journal records must remain absent. Unknown same-binding journal records,
 unfinished selected journals, occupied backup/output roles and pending binding,
 archive or purge maintenance refuse. Sibling packages remain independent.
+On Windows, reserved journal and purge namespaces are identified with ASCII case
+insensitivity and then require exact canonical spelling. Case-variant orphans
+cannot disappear from dependency review; distinct Unicode names are not folded.
 
 The original disjoint-root and physical ancestor checks, held analyzed-root/target
 bindings, deterministically ordered journal locks and `.yoke-history.lock` remain
@@ -93,6 +96,14 @@ report **unverified removal bytes**. Mere absence never proves which process
 deleted the frame or upgrades unverified removal into confirmed attribution.
 Completion retains a per-operation marker by guarded rename of the blocker.
 Header/event/completion evidence is never deleted by this workflow.
+
+A completed cancellation receipt stays inspectable during a later purge of
+the same reviewed frame. Its own confirmed/unverified removal totals remain
+zero. A validated subsequent operation is identified separately by
+`subsequentPurgePlanId` and `subsequentPurgeComplete`; another operation's pending
+marker is not the cancelled operation's marker. A pending cancellation still
+blocks overall archive completion until its own completion marker is retained.
+Frame absence without an independently admitted subsequent purge still refuses.
 
 A response lost after preparation requires inspection and exact current-event
 review. Before deletion intent, explicit `--direction rollback` cancels while

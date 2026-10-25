@@ -79,9 +79,12 @@ impl PurgeFixture {
         )
     }
     fn interrupt(&self, checkpoint: &'static str) {
+        self.interrupt_plan(&self.plan, checkpoint);
+    }
+    fn interrupt_plan(&self, plan: &HistoryArchivePurgePlan, checkpoint: &'static str) {
         let approval = self
             .access
-            .approve(&self.f.from, &self.f.to, &self.plan, &d())
+            .approve(&self.f.from, &self.f.to, plan, &d())
             .unwrap();
         STOP_AFTER.with(|slot| *slot.borrow_mut() = Some(checkpoint));
         let result = apply_history_archive_purge(
@@ -90,7 +93,7 @@ impl PurgeFixture {
             &self.access,
             &approval,
             &self.permission(),
-            &self.plan,
+            plan,
             64000,
             &d(),
         );
@@ -272,6 +275,145 @@ fn purge_cancellation_is_preintent_only_and_retains_frame_with_fresh_review_poss
     let e = f.inspect().unwrap();
     assert!(f.recover(&e.event_id, RecoveryDirection::Rollback).is_err());
     assert!(f.frame_path().exists());
+}
+
+#[test]
+fn retained_cancellation_survives_later_purge_and_its_pending_marker() {
+    for stop in [
+        "complete",
+        "history_purge_marked",
+        "history_purge_intent",
+        "history_purge_unlinked",
+        "history_purge_progress",
+        "history_purge_committed",
+        "history_purge_cancelled",
+    ] {
+        let f = PurgeFixture::new();
+        f.interrupt("history_purge_marked");
+        let initial = f.inspect().unwrap();
+        let cancelled = f
+            .recover(&initial.event_id, RecoveryDirection::Rollback)
+            .unwrap();
+        let later =
+            plan_history_archive_purge(&f.f.from, &f.f.to, &f.access, &f.archive, &d()).unwrap();
+        if stop == "complete" {
+            let approval = f.access.approve(&f.f.from, &f.f.to, &later, &d()).unwrap();
+            apply_history_archive_purge(
+                &f.f.from,
+                &f.f.to,
+                &f.access,
+                &approval,
+                &f.permission(),
+                &later,
+                64000,
+                &d(),
+            )
+            .unwrap();
+        } else {
+            f.interrupt_plan(
+                &later,
+                if stop == "history_purge_cancelled" {
+                    "history_purge_marked"
+                } else {
+                    stop
+                },
+            );
+            if stop == "history_purge_cancelled" {
+                let current =
+                    inspect_history_archive_purge(&f.f.from, &f.f.to, &f.access, &later, &d())
+                        .unwrap();
+                STOP_AFTER.with(|slot| *slot.borrow_mut() = Some("history_purge_cancelled"));
+                assert!(
+                    recover_history_archive_purge(
+                        &f.f.from,
+                        &f.f.to,
+                        &f.access,
+                        &f.permission(),
+                        &later,
+                        &current.event_id,
+                        RecoveryDirection::Rollback,
+                        64000,
+                        &d(),
+                    )
+                    .err()
+                    .unwrap()
+                    .to_string()
+                    .contains("history_purge_cancelled")
+                );
+            }
+        }
+        let current =
+            inspect_history_archive_purge(&f.f.from, &f.f.to, &f.access, &later, &d()).unwrap();
+        let old = f.inspect().unwrap();
+        assert!(
+            old.complete && old.phase == "cancelled" && !old.marker_present,
+            "{stop}"
+        );
+        assert_eq!(old.confirmed_removed_content_bytes, 0);
+        assert_eq!(old.unverified_removal_bytes, 0);
+        assert_eq!(
+            old.subsequent_purge_plan_id.as_deref(),
+            Some(later.id.as_str())
+        );
+        assert_eq!(old.subsequent_purge_complete, Some(current.complete));
+        assert_eq!(old.evidence_unavailable, current.evidence_unavailable);
+        let marker = purge_marker_path(&f.f.from.documents["old"]).unwrap();
+        let marker_before = marker.exists().then(|| fs::read(&marker).unwrap());
+        let replay = f
+            .recover(&cancelled.event_id, RecoveryDirection::Rollback)
+            .unwrap();
+        assert!(replay.complete);
+        assert_eq!(
+            marker_before,
+            marker.exists().then(|| fs::read(&marker).unwrap())
+        );
+        let archive =
+            inspect_history_archive(&f.f.from, &f.f.to, &f.f.archive, &f.archive, &d()).unwrap();
+        assert_eq!(archive.complete, current.complete, "{stop}");
+        if !current.complete {
+            recover_history_archive_purge(
+                &f.f.from,
+                &f.f.to,
+                &f.access,
+                &f.permission(),
+                &later,
+                &current.event_id,
+                if stop == "history_purge_cancelled" {
+                    RecoveryDirection::Rollback
+                } else {
+                    RecoveryDirection::Resume
+                },
+                64000,
+                &d(),
+            )
+            .unwrap();
+        }
+        let final_old = f.inspect().unwrap();
+        assert!(final_old.complete && final_old.phase == "cancelled");
+        assert_eq!(final_old.confirmed_removed_content_bytes, 0);
+        assert_eq!(final_old.unverified_removal_bytes, 0);
+        assert_eq!(
+            final_old.evidence_unavailable,
+            stop != "history_purge_cancelled"
+        );
+        if stop != "history_purge_cancelled" {
+            assert_eq!(final_old.subsequent_purge_complete, Some(true));
+        } else {
+            assert!(final_old.subsequent_purge_plan_id.is_none());
+        }
+    }
+}
+
+#[test]
+fn cancellation_does_not_explain_unrecorded_frame_loss() {
+    let f = PurgeFixture::new();
+    f.interrupt("history_purge_marked");
+    let initial = f.inspect().unwrap();
+    f.recover(&initial.event_id, RecoveryDirection::Rollback)
+        .unwrap();
+    fs::remove_file(f.frame_path()).unwrap();
+    assert!(f.inspect().is_err());
+    assert!(inspect_history_archive(&f.f.from, &f.f.to, &f.f.archive, &f.archive, &d(),).is_err());
 }
 
 #[test]
@@ -485,6 +627,75 @@ fn original_record_reappearance_unknown_names_and_occupied_roles_block_purge() {
         assert_eq!(fs::read(&path).unwrap(), b"foreign relevant data");
         assert!(f.frame_path().exists());
     }
+}
+
+#[test]
+fn case_variant_relevant_orphans_after_approval_refuse_before_purge_publication() {
+    for namespace in ["journal", "purge"] {
+        for suffix in [".plan.json", ".e0001.json"] {
+            let f = PurgeFixture::new();
+            let approval = f.access.approve(&f.f.from, &f.f.to, &f.plan, &d()).unwrap();
+            let (root, prefix) = if namespace == "journal" {
+                (
+                    f.f.from.journal.as_ref().unwrap().0.clone(),
+                    format!("yoke-doc-{}-", f.f.from.binding),
+                )
+            } else {
+                (f.f.archive.root.clone(), purge_prefix(&f.archive))
+            };
+            let foreign = root.join(format!(
+                "{}{}{}",
+                prefix.to_ascii_uppercase(),
+                "a".repeat(64),
+                suffix,
+            ));
+            fs::write(&foreign, b"foreign case-variant evidence").unwrap();
+            let frame = fs::read(f.frame_path()).unwrap();
+            assert!(
+                apply_history_archive_purge(
+                    &f.f.from,
+                    &f.f.to,
+                    &f.access,
+                    &approval,
+                    &f.permission(),
+                    &f.plan,
+                    64000,
+                    &d(),
+                )
+                .is_err()
+            );
+            assert_eq!(fs::read(f.frame_path()).unwrap(), frame);
+            assert_eq!(
+                fs::read(&foreign).unwrap(),
+                b"foreign case-variant evidence"
+            );
+            assert!(!plan_path(&f.f.archive.root, &purge_stem(&f.plan)).exists());
+            assert!(
+                !purge_marker_path(&f.f.from.documents["old"])
+                    .unwrap()
+                    .exists()
+            );
+        }
+    }
+    let f = PurgeFixture::new();
+    f.interrupt("history_purge_marked");
+    let initial = f.inspect().unwrap();
+    let foreign = f.f.archive.root.join(format!(
+        "{}.e0001.json",
+        purge_stem(&f.plan).to_ascii_uppercase(),
+    ));
+    fs::write(&foreign, b"foreign selected-event spelling").unwrap();
+    let frame = fs::read(f.frame_path()).unwrap();
+    assert!(f.inspect().is_err());
+    assert!(
+        f.recover(&initial.event_id, RecoveryDirection::Resume)
+            .is_err()
+    );
+    assert_eq!(fs::read(f.frame_path()).unwrap(), frame);
+    assert_eq!(
+        fs::read(foreign).unwrap(),
+        b"foreign selected-event spelling"
+    );
 }
 
 #[test]

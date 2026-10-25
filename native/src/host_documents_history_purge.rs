@@ -5,6 +5,24 @@ use super::*;
 const PURGE_EVENTS: u32 = 3;
 const PURGE_REPLY_RESERVE: usize = 8192;
 
+fn admit_namespace_spelling(names: &[String], prefix: &str, d: &Deadline) -> Result<()> {
+    for name in names {
+        d.check()?;
+        if cfg!(windows)
+            && name
+                .as_bytes()
+                .get(..prefix.len())
+                .is_some_and(|head| head.eq_ignore_ascii_case(prefix.as_bytes()))
+        {
+            ensure!(
+                name.starts_with(prefix),
+                "Noncanonical relevant history purge namespace spelling"
+            );
+        }
+    }
+    Ok(())
+}
+
 #[derive(Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct HistoryPurgeFileWitness {
@@ -219,6 +237,7 @@ fn dependency_state(access: &Access, document: &str, d: &Deadline) -> Result<Str
     let directory = io::open_metadata_directory(&root.root.path, d)?;
     let names = directory.names(MAX_ENTRIES, d)?;
     let prefix = format!("yoke-doc-{}-", access.binding);
+    admit_namespace_spelling(&names, &prefix, d)?;
     let mut expected = BTreeSet::new();
     let mut rows = Vec::new();
     let mut total = 0u64;
@@ -638,8 +657,9 @@ fn load_purge_event(root: &Path, p: &HistoryArchivePurgePlan, d: &Deadline) -> R
         "Purge header differs"
     );
     let directory = io::open_metadata_directory(root, d)?;
-    let mut names = directory
-        .names(MAX_ARCHIVE_ENTRIES, d)?
+    let names = directory.names(MAX_ARCHIVE_ENTRIES, d)?;
+    admit_namespace_spelling(&names, &format!("{stem}."), d)?;
+    let mut names = names
         .into_iter()
         .filter(|n| n.starts_with(&format!("{stem}.")) && n != &format!("{stem}.plan.json"))
         .collect::<Vec<_>>();
@@ -748,8 +768,8 @@ fn finish_purge_marker(
     Ok(())
 }
 
-// A selected archive can have retained cancellations, but only one noncancelled
-// purge. Unknown relevant names and orphan events cannot hide behind frame loss.
+// Completed cancellations remain historical. At most one purge can be
+// noncancelled or still awaiting its cancellation completion marker.
 fn evidence(
     from: &Access,
     to: &Access,
@@ -761,6 +781,7 @@ fn evidence(
     let directory = io::open_metadata_directory(&root.path, d)?;
     let names = directory.names(MAX_ARCHIVE_ENTRIES, d)?;
     let prefix = purge_prefix(archive);
+    admit_namespace_spelling(&names, &prefix, d)?;
     let mut expected = BTreeSet::new();
     let mut active = None;
     for name in names
@@ -784,6 +805,11 @@ fn evidence(
                 purge_completion(selected, &p, d)?;
             } else {
                 check_purge_marker(selected, &p, d)?;
+                ensure!(
+                    active.is_none(),
+                    "Multiple unfinished purges for selected archive"
+                );
+                active = Some((p, e));
             }
         } else {
             ensure!(
@@ -814,6 +840,10 @@ pub struct HistoryArchivePurgeReview {
     pub evidence_unavailable: bool,
     pub marker_present: bool,
     pub complete: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub subsequent_purge_plan_id: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub subsequent_purge_complete: Option<bool>,
     pub confirmed_removed_content_bytes: usize,
     pub unverified_removal_bytes: usize,
     pub measured_filesystem_space_bytes: Option<u64>,
@@ -832,20 +862,38 @@ fn purge_review(
     let root = access.root(from, to, d)?;
     verify_retained(from, to, access, p, d)?;
     let present = held_frame(from, &root.path, p, false, d)?.is_some();
+    let selected = &from.documents[&p.archive.migration.from_document_id];
+    let subsequent =
+        if e.phase == PurgePhase::Cancelled && exists(&purge_completion_path(selected, p), d)? {
+            purge_completion(selected, p, d)?;
+            if let Some((later, event)) = evidence(from, to, access, &p.archive, d)? {
+                ensure!(
+                    later.id != p.id && later.frame == p.frame,
+                    "Subsequent purge does not explain this reviewed frame"
+                );
+                // A returned cancellation has no completion marker yet; therefore
+                // this branch cannot recurse through another completed cancellation.
+                Some(purge_review(from, to, access, &later, &event, d)?)
+            } else {
+                None
+            }
+        } else {
+            None
+        };
     ensure!(
         present
             || matches!(
                 e.phase,
                 PurgePhase::Deleting | PurgePhase::Removed | PurgePhase::Committed
-            ),
+            )
+            || subsequent.as_ref().is_some_and(|r| r.evidence_unavailable),
         "Archive frame absent before deletion intent"
     );
     ensure!(
         !present || !matches!(e.phase, PurgePhase::Removed | PurgePhase::Committed),
         "Purged frame path has a replacement occupant"
     );
-    let selected = &from.documents[&p.archive.migration.from_document_id];
-    let marked = pending(selected, d)?;
+    let marked = subsequent.is_none() && pending(selected, d)?;
     if marked {
         check_purge_marker(selected, p, d)?;
     }
@@ -868,6 +916,8 @@ fn purge_review(
         evidence_unavailable: !present,
         marker_present: marked,
         complete: terminal && !marked,
+        subsequent_purge_plan_id: subsequent.as_ref().map(|r| r.plan_id.clone()),
+        subsequent_purge_complete: subsequent.as_ref().map(|r| r.complete),
         confirmed_removed_content_bytes: if e.removal == Removal::Confirmed {
             p.frame.byte_length
         } else {
@@ -960,6 +1010,10 @@ fn resume_purge(
 ) -> Result<HistoryArchivePurgeReview> {
     let selected = &from.documents[&p.archive.migration.from_document_id];
     if matches!(e.phase, PurgePhase::Committed | PurgePhase::Cancelled) {
+        if e.phase == PurgePhase::Cancelled && exists(&purge_completion_path(selected, p), d)? {
+            purge_completion(selected, p, d)?;
+            return purge_review(from, to, &access.archive, p, e, d);
+        }
         finish_purge_marker(selected, p, d)?;
         return purge_review(from, to, &access.archive, p, e, d);
     }
@@ -1136,6 +1190,7 @@ pub fn recover_history_archive_purge(
                 Removal::None,
                 d,
             )?;
+            checkpoint("history_purge_cancelled")?;
         }
     }
     resume_purge(from, to, access, p, &mut e, &root.path, d)
@@ -1162,11 +1217,11 @@ fn require_recorded_purge(
     e: &PurgeEvent,
     d: &Deadline,
 ) -> Result<()> {
+    let recorded = evidence(from, to, access, &p.archive, d)?;
     if e.phase == PurgePhase::Cancelled {
         return Ok(());
     }
-    let (selected, event) = evidence(from, to, access, &p.archive, d)?
-        .context("Selected purge operation evidence absent")?;
+    let (selected, event) = recorded.context("Selected purge operation evidence absent")?;
     ensure!(
         selected.id == p.id && event.id == e.id,
         "Selected purge evidence changed or has conflicting dependencies"
@@ -1201,6 +1256,30 @@ mod tests;
 #[cfg(test)]
 mod protocol_tests {
     use super::*;
+    #[test]
+    fn namespace_spelling_preserves_unicode_distinctions_and_refuses_windows_aliases() {
+        let prefix = format!("yoke-doc-{}-", "a".repeat(64));
+        let canonical = format!("{prefix}{}.plan.json", "b".repeat(64));
+        let upper = canonical.to_ascii_uppercase();
+        let d = Deadline::new(10_000);
+        assert!(admit_namespace_spelling(&[canonical], &prefix, &d).is_ok());
+        assert_eq!(
+            admit_namespace_spelling(&[upper], &prefix, &d).is_err(),
+            cfg!(windows)
+        );
+        assert!(
+            admit_namespace_spelling(
+                &["YOKE-DOC-İ-distinct".into(), "yoke-doc-ı-distinct".into()],
+                &prefix,
+                &d,
+            )
+            .is_ok()
+        );
+        assert!(
+            admit_namespace_spelling(&[format!("{prefix}entry")], &prefix, &Deadline::new(0),)
+                .is_err()
+        );
+    }
     #[test]
     fn purge_protocol_refuses_unknown_duplicate_and_noncanonical_json() {
         let event = PurgeEvent {
