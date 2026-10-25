@@ -984,9 +984,10 @@ The dashboard reports blocking metadata/incomplete state and retains drafts,
 without a migration action or serialized grant. Configuration bytes are unchanged
 by migration. Old reads remain governed by the old independent read selection.
 The [805-pass scope](validation/integration-2026-10-24/dashboard-binding-migration/README.md)
-includes real CLI/stdIO/HTTP/native-browser workflows. Standalone owner
-retirement, physical archive purge and broader dashboard/release acceptance
-remain separate.
+includes real CLI/stdIO/HTTP/native-browser workflows. The later logical owner
+retirement and committed-frame purge implementations have separate host grants
+and await their own qualification. Physical owner deletion/reactivation and
+broader dashboard/release acceptance remain open.
 
 ### Global proposal generation binding
 
@@ -1000,7 +1001,9 @@ proposal approval. Project/absent-field serialized identities remain unchanged.
 Canonical bounded journal header/event admission now also works on exact byte
 records without filesystem fallback. A separately granted closed-journal archive
 workflow implements plan/apply/inspection, exact-record reads and event-reviewed
-recovery; its current live qualification remains pending. Standalone owner
-retirement and physical archive purge remain separate open operations. See the
-[archive contract](../native/docs/session-dashboard-history-archive.md).
+recovery; its current live qualification remains pending. Separate source
+implementations now provide [logical owner retirement](../native/docs/host-document-owner-retirement.md)
+and [committed-frame purge](../native/docs/session-dashboard-history-purge.md),
+with qualification pending. Physical owner deletion/reactivation remains open.
+See the [archive contract](../native/docs/session-dashboard-history-archive.md).
 See [810-pass generation scope](validation/integration-2026-10-24/dashboard-document-generations/README.md).

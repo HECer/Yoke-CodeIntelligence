@@ -94,6 +94,13 @@ exact retained reads continue using their independent immutable evidence. Pendin
 archive mutation still needs the current active owner/generation. Physical archive
 purge is a separate workflow and receives no permission from retirement.
 
+The owning Session dashboard checks this blocker before ordinary owner lookup.
+It returns `blockedByOwnerRetirement:true`, `complete:false` and an empty blocked
+journal view, rather than claiming a complete empty recovery result. The client
+retains the draft and disables document writes/recovery. It offers no retirement
+or ownership-restoration action. Native HTTP and desktop/mobile qualification of
+this integration remain pending.
+
 ## Qualification boundary
 
 The isolated implementation child performed source parsing/formatting and diff

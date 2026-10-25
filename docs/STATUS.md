@@ -1,5 +1,27 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Owner lifecycle and archive purge: source integration awaiting qualification (2026-10-25)
+
+The host CLI/API now includes reviewed logical global-owner retirement and
+separately approved physical purge of one committed document archive frame.
+Retirement retains a restrictive fixed-name tombstone and the original generation;
+purge retains receipts and distinguishes confirmed from unverified removal.
+Windows namespace aliases refuse, and earlier cancellation receipts remain
+inspectable during a later purge. Dashboard retirement blockers retain drafts,
+disable writes/recovery and explicitly report incomplete recovery state.
+
+The two implementations and their shared CLI/export conflicts are integrated.
+New tests cover permission separation, interruption/recovery, case-variant
+orphans, historical cancellations, cached cross-maintenance approvals and actual
+HTTP retirement blockers. They are authored, not executed. Scoped Rustfmt parsing
+and formatting pass; compilation, native tests/Clippy, real CLI/Session workflows
+and actual desktop/mobile visual inspection remain pending. The earlier 760-pass
+result below does not qualify this newer source. No real user-data maintenance,
+physical owner deletion/reactivation, all-host release proof or broader STATUS,
+platform, bundled-runtime VSIX, main or release completion is claimed.
+See [retirement](../native/docs/host-document-owner-retirement.md) and
+[purge](../native/docs/session-dashboard-history-purge.md).
+
 ## Platform repair: five Windows native groups pass (2026-10-25)
 
 At source `a9608c7f`, five complete native groups pass 760/0 with 7 unchanged
@@ -389,7 +411,8 @@ current release/VSIX and complete archive acceptance remain open. The preceding
 [partial evidence](validation/integration-2026-10-24/dashboard-history-archive/README.md).
 
 This supersedes only the earlier statement that archive code did not exist.
-Standalone owner deletion and physical archive purge remain unimplemented.
+Physical owner deletion remains unimplemented. Committed-frame archive purge
+now has the later source implementation described above; qualification is pending.
 Broader STATUS, original353/73/77, ten OS1314 prerequisites, main and release
 acceptance stay unchanged; the overall task remains active.
 

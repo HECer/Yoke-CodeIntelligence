@@ -1098,3 +1098,156 @@ fn retained_archive_reads_do_not_require_live_owner_but_new_purge_does() {
             .contains("evidence unavailable after recorded physical purge")
     );
 }
+
+#[test]
+fn cached_purge_approval_cannot_bypass_pending_or_committed_owner_retirement() {
+    use crate::host_install::documents as maintenance;
+    for pending in [true, false] {
+        let f = PurgeFixture::new();
+        let approval = f.access.approve(&f.f.from, &f.f.to, &f.plan, &d()).unwrap();
+        let retirement = maintenance::plan_owner_retirement(&f.f.to, "new", &d()).unwrap();
+        let authority = WriteAuthority::new(&f.f.to).unwrap();
+        let approved = authority
+            .approve_owner_retirement(&f.f.to, &retirement, &d())
+            .unwrap();
+        if pending {
+            STOP_AFTER.with(|slot| *slot.borrow_mut() = Some("owner_retirement_marked"));
+            let interrupted = maintenance::apply_owner_retirement(
+                &f.f.to,
+                &authority,
+                &approved,
+                &retirement,
+                &d(),
+            );
+            STOP_AFTER.with(|slot| {
+                slot.borrow_mut().take();
+            });
+            assert!(
+                interrupted
+                    .err()
+                    .unwrap()
+                    .to_string()
+                    .contains("owner_retirement_marked")
+            );
+        } else {
+            maintenance::apply_owner_retirement(&f.f.to, &authority, &approved, &retirement, &d())
+                .unwrap();
+        }
+        let frame = fs::read(f.frame_path()).unwrap();
+        assert!(
+            apply_history_archive_purge(
+                &f.f.from,
+                &f.f.to,
+                &f.access,
+                &approval,
+                &f.permission(),
+                &f.plan,
+                64000,
+                &d(),
+            )
+            .is_err()
+        );
+        assert!(
+            plan_history_archive_purge(&f.f.from, &f.f.to, &f.access, &f.archive, &d(),).is_err()
+        );
+        assert!(!plan_path(&f.f.archive.root, &purge_stem(&f.plan)).exists());
+        assert_eq!(fs::read(f.frame_path()).unwrap(), frame);
+        let record = &f.archive.records[0];
+        let retained = read_history_archive_record(
+            &f.f.from,
+            &f.f.to,
+            &f.f.archive,
+            &f.archive,
+            &record.name,
+            &d(),
+        )
+        .unwrap();
+        assert_eq!(retained.sha256, record.hash);
+        assert!(
+            inspect_history_archive(&f.f.from, &f.f.to, &f.f.archive, &f.archive, &d(),)
+                .unwrap()
+                .complete
+        );
+    }
+}
+
+#[test]
+fn pending_purge_refuses_retirement_before_any_owner_rewrite_or_intent() {
+    use crate::host_install::documents as maintenance;
+    let f = PurgeFixture::new();
+    let retirement = maintenance::plan_owner_retirement(&f.f.to, "new", &d()).unwrap();
+    let authority = WriteAuthority::new(&f.f.to).unwrap();
+    let approved = authority
+        .approve_owner_retirement(&f.f.to, &retirement, &d())
+        .unwrap();
+    let owner = owner_path(&f.f.to.documents["new"]).unwrap();
+    let original = fs::read(&owner).unwrap();
+    let frame = fs::read(f.frame_path()).unwrap();
+    f.interrupt("history_purge_marked");
+    assert!(
+        maintenance::apply_owner_retirement(&f.f.to, &authority, &approved, &retirement, &d(),)
+            .is_err()
+    );
+    let root = &f.f.to.journal.as_ref().unwrap().0;
+    assert!(
+        !root
+            .join(format!("yoke-owner-retirement-{}.plan.json", retirement.id))
+            .exists()
+    );
+    assert!(
+        !f.f.target
+            .parent()
+            .unwrap()
+            .join(format!(
+                ".yoke-doc-owner-retirement-{}.pending.json",
+                retirement.target,
+            ))
+            .exists()
+    );
+    assert_eq!(fs::read(&owner).unwrap(), original);
+    assert_eq!(fs::read(f.frame_path()).unwrap(), frame);
+    let event = f.inspect().unwrap();
+    f.recover(&event.event_id, RecoveryDirection::Rollback)
+        .unwrap();
+    let fresh = maintenance::plan_owner_retirement(&f.f.to, "new", &d()).unwrap();
+    let approved = authority
+        .approve_owner_retirement(&f.f.to, &fresh, &d())
+        .unwrap();
+    maintenance::apply_owner_retirement(&f.f.to, &authority, &approved, &fresh, &d()).unwrap();
+    assert!(f.inspect().unwrap().complete);
+    assert_eq!(fs::read(f.frame_path()).unwrap(), frame);
+}
+
+#[test]
+fn committed_purge_receipts_and_unavailable_record_evidence_survive_retirement() {
+    use crate::host_install::documents as maintenance;
+    let f = PurgeFixture::new();
+    assert!(f.apply().unwrap().complete);
+    let retirement = maintenance::plan_owner_retirement(&f.f.to, "new", &d()).unwrap();
+    let authority = WriteAuthority::new(&f.f.to).unwrap();
+    let approved = authority
+        .approve_owner_retirement(&f.f.to, &retirement, &d())
+        .unwrap();
+    maintenance::apply_owner_retirement(&f.f.to, &authority, &approved, &retirement, &d()).unwrap();
+    let receipt = f.inspect().unwrap();
+    assert!(receipt.complete && receipt.evidence_unavailable);
+    assert!(
+        inspect_history_archive(&f.f.from, &f.f.to, &f.f.archive, &f.archive, &d(),)
+            .unwrap()
+            .complete
+    );
+    assert!(
+        read_history_archive_record(
+            &f.f.from,
+            &f.f.to,
+            &f.f.archive,
+            &f.archive,
+            &f.archive.records[0].name,
+            &d(),
+        )
+        .err()
+        .unwrap()
+        .to_string()
+        .contains("evidence unavailable")
+    );
+}

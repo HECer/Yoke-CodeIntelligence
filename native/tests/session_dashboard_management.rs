@@ -996,6 +996,136 @@ fn document_selection_does_not_grant_arbitrary_paths_or_readonly_writes() {
         assert_eq!(fs::read(&path).unwrap(), before);
     }
 }
+
+#[cfg(windows)]
+#[test]
+fn retirement_metadata_reports_incomplete_state_and_rejects_cached_dashboard_writes() {
+    use yoke::host_install::documents::{self, Access, Config, ProjectRoot, WriteAuthority};
+    let (temp, mut session, path) = document_session(true);
+    let (address, token) = start(&mut session);
+    let running = session.invoke("configuration", &json!({}), &d()).unwrap();
+    let (_, loaded) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"read","documentId":"host"}),
+    );
+    let (status, first) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"plan","documentId":"host",
+            "expectedRevision":loaded["data"]["document"]["revision"],
+            "content":"owned saved settings\r\n"}),
+    );
+    assert_eq!(status, 200, "{first}");
+    let journal_id = first["data"]["plan"]["id"].as_str().unwrap().to_owned();
+    let (status, saved) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"apply","documentId":"host","planId":journal_id}),
+    );
+    assert_eq!(status, 200, "{saved}");
+    let config: Config = serde_json::from_value(json!({
+        "documents":[{"id":"host","label":"Owned host settings","path":path,
+            "scope":{"kind":"global"},"writable":true}],
+        "journalRoot":temp.path().join("journals")
+    }))
+    .unwrap();
+    let access = Access::open(
+        &config,
+        &[ProjectRoot {
+            name: "default".into(),
+            path: temp.path().join("source"),
+        }],
+        &d(),
+    )
+    .unwrap();
+    let journal = access.inspect_journal(&journal_id, &d()).unwrap();
+    let (status, current) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"read","documentId":"host"}),
+    );
+    assert_eq!(status, 200, "{current}");
+    let (status, cached) = document_call(
+        &mut session,
+        address,
+        &token,
+        json!({"kind":"plan","documentId":"host",
+            "expectedRevision":current["data"]["document"]["revision"],
+            "content":"must never replace retained bytes"}),
+    );
+    assert_eq!(status, 200, "{cached}");
+    let plan = documents::plan_owner_retirement(&access, "host", &d()).unwrap();
+    let authority = WriteAuthority::new(&access).unwrap();
+    let approval = authority
+        .approve_owner_retirement(&access, &plan, &d())
+        .unwrap();
+    let marker = temp.path().join(format!(
+        ".yoke-doc-owner-retirement-{}.pending.json",
+        plan.target,
+    ));
+    let original = fs::read(&path).unwrap();
+    for retired in [false, true] {
+        if retired {
+            fs::remove_file(&marker).unwrap();
+            documents::apply_owner_retirement(&access, &authority, &approval, &plan, &d()).unwrap();
+        } else {
+            fs::write(&marker, b"foreign pending retirement evidence").unwrap();
+        }
+        let (status, pending) = document_call(
+            &mut session,
+            address,
+            &token,
+            json!({"kind":"pending","documentId":"host"}),
+        );
+        assert_eq!(status, 200, "{pending}");
+        assert_eq!(pending["data"]["blockedByOwnerRetirement"], true);
+        assert_eq!(pending["data"]["complete"], false);
+        assert_eq!(pending["data"]["journals"], json!([]));
+        assert_eq!(pending["fileChanged"], false);
+        for action in [
+            json!({"kind":"apply","documentId":"host","planId":cached["data"]["plan"]["id"]}),
+            json!({"kind":"recover","documentId":"host","journalId":journal_id,
+                "expectedEvent":journal.event_id,"direction":"resume"}),
+        ] {
+            let (status, refused) = document_call(&mut session, address, &token, action);
+            assert_eq!(status, 422, "{refused}");
+        }
+        let (status, read) = document_call(
+            &mut session,
+            address,
+            &token,
+            json!({"kind":"read","documentId":"host"}),
+        );
+        assert_eq!(status, 200, "{read}");
+        assert_eq!(
+            read["data"]["document"]["content"]
+                .as_str()
+                .unwrap()
+                .as_bytes(),
+            original
+        );
+        assert_eq!(fs::read(&path).unwrap(), original);
+        if !retired {
+            assert_eq!(
+                fs::read(&marker).unwrap(),
+                b"foreign pending retirement evidence"
+            );
+        }
+    }
+    assert_eq!(
+        session.invoke("configuration", &json!({}), &d()).unwrap(),
+        running
+    );
+    assert_eq!(
+        fs::read(temp.path().join("source/main.rs")).unwrap(),
+        b"fn untouched() {}\r\n"
+    );
+}
 #[cfg(windows)]
 #[test]
 fn competing_file_change_refuses_reviewed_document_plan_without_overwriting_new_bytes() {
