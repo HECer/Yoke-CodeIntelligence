@@ -1,6 +1,6 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
-## Owner lifecycle and archive purge: source integration awaiting qualification (2026-10-25)
+## Document maintenance: two local Windows native groups pass (2026-10-25)
 
 The host CLI/API now includes reviewed logical global-owner retirement and
 separately approved physical purge of one committed document archive frame.
@@ -10,17 +10,29 @@ Windows namespace aliases refuse, and earlier cancellation receipts remain
 inspectable during a later purge. Dashboard retirement blockers retain drafts,
 disable writes/recovery and explicitly report incomplete recovery state.
 
-The two implementations and their shared CLI/export conflicts are integrated.
-New tests cover permission separation, interruption/recovery, case-variant
-orphans, historical cancellations, cached cross-maintenance approvals and actual
-HTTP retirement blockers. They are authored, not executed. Scoped Rustfmt parsing
-and formatting pass; compilation, native tests/Clippy, real CLI/Session workflows
-and actual desktop/mobile visual inspection remain pending. The earlier 760-pass
-result below does not qualify this newer source. No real user-data maintenance,
+At source `a27b5084`, the complete library passes 764/0 with 7 original ignores;
+`session_dashboard_management` passes 24/0 with no ignores or name filters.
+Two fresh producers and their executions prove root exit and empty owned Jobs
+before forced cleanup. All 1049 selected inputs remain identical. Full
+warnings-denied workspace/all-target Clippy, 368 native format roots, typecheck,
+npm 260/0/3 original skips, Python 130/0/0 and Actionlint pass locally. These
+execute permission separation, interruption/recovery, namespace, cancellation,
+cross-maintenance and HTTP retirement fixtures; broader CLI/Session and actual
+desktop/mobile qualification remain pending.
+
+Ubuntu's exact-source hosted coverage, actual rust-analyzer and release build
+also pass. Windows and macOS retain failing shards. A later dashboard mutex
+contention correction and separate PowerShell LocalAppData trial pass source
+checks, Python 136/0/0 and npm 260/0/3; their native/hosted acceptance is pending.
+Seven macOS composition cases now identify address-space limit installation
+errno 22 before PDF input. No conforming replacement backend is established.
+The isolated fresh release producer stops on the unchanged disk reserve;
+its output is never adopted. No real user-data maintenance,
 physical owner deletion/reactivation, all-host release proof or broader STATUS,
 platform, bundled-runtime VSIX, main or release completion is claimed.
-See [retirement](../native/docs/host-document-owner-retirement.md) and
-[purge](../native/docs/session-dashboard-history-purge.md).
+See [retirement](../native/docs/host-document-owner-retirement.md),
+[purge](../native/docs/session-dashboard-history-purge.md) and the scoped
+[execution evidence](validation/integration-2026-10-25/document-maintenance/README.md).
 
 ## Platform repair: five Windows native groups pass (2026-10-25)
 

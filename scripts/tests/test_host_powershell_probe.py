@@ -170,6 +170,85 @@ class PowerShellDiagnostic(unittest.TestCase):
             self.assertEqual(marker.read_bytes(), b"preserve")
             trial.assert_not_called()
 
+    def test_local_app_data_control_keeps_the_exact_original_final_command(self):
+        original = PROBE.commands()
+        selected = PROBE.local_app_data_commands()
+        self.assertEqual(selected, [("nested-snapshot-folder-local-app-data", *original[-1][1:])])
+        self.assertEqual(PROBE.commands(), original)
+        self.assertEqual(len(selected), 1)
+        self.assertEqual(PROBE.TRIAL_SECONDS, 20)
+        self.assertEqual(PROBE.CLEANUP_SECONDS, 2)
+        self.assertLess(PROBE.TRIAL_SECONDS + PROBE.CLEANUP_SECONDS
+                        + 2 * PROBE.READER_JOIN_SECONDS, 60)
+
+    def test_local_app_data_changes_only_one_explicit_environment_key(self):
+        source = {"PATH": "owned-tools", "SystemRoot": "C:\\Windows",
+                  "LOCALAPPDATA": "C:\\Owned Host\\Local",
+                  "APPDATA": "unselected", "PSModulePath": "unselected",
+                  "OPENAI_API_KEY": "owned-not-a-secret"}
+        with mock.patch.object(PROBE.Path, "is_dir", return_value=True):
+            selected = PROBE.local_app_data_environment(source)
+        baseline = PROBE.selected_environment(source)
+        self.assertNotIn("LOCALAPPDATA", baseline)
+        self.assertEqual(selected, {**baseline, "LOCALAPPDATA": source["LOCALAPPDATA"]})
+        self.assertNotIn("APPDATA", selected)
+        self.assertNotIn("PSModulePath", selected)
+        self.assertNotIn("OPENAI_API_KEY", selected)
+
+    def test_local_app_data_refuses_missing_relative_remote_and_control_values_before_lookup(self):
+        for value in (None, "", "relative", "C:relative", "\\\\server\\share",
+                      "C:\\owned\\..\\Local", "C:\\owned\\.\\Local",
+                      "C:\\owned\nLocal", "C:\\owned\x00Local", "x" * 32768):
+            with self.subTest(value=value), mock.patch.object(PROBE.Path, "is_dir") as directory:
+                source = {} if value is None else {"LOCALAPPDATA": value}
+                with self.assertRaises(RuntimeError):
+                    PROBE.local_app_data_environment(source)
+                directory.assert_not_called()
+        with mock.patch.object(PROBE.Path, "is_dir", return_value=False):
+            with self.assertRaisesRegex(RuntimeError, "directory is unavailable"):
+                PROBE.local_app_data_environment({"LOCALAPPDATA": "C:\\missing"})
+
+    def test_local_app_data_invalid_host_value_refuses_before_output_creation(self):
+        with mock.patch.object(PROBE, "os", types.SimpleNamespace(name="nt", environ={})), \
+             mock.patch.object(PROBE.shutil, "disk_usage", return_value=types.SimpleNamespace(free=500_000_000)), \
+             mock.patch.object(PROBE.Path, "mkdir") as mkdir, \
+             mock.patch.object(PROBE, "trial") as trial:
+            with self.assertRaises(RuntimeError):
+                PROBE.main(["--output", "unused-owned-output", "--local-app-data"])
+            mkdir.assert_not_called()
+            trial.assert_not_called()
+
+    def test_local_app_data_cli_is_separate_and_does_not_transcribe_the_host_value(self):
+        with tempfile.TemporaryDirectory() as raw:
+            output = (Path(raw) / "new-output").resolve()
+            value = "C:\\Owned Host\\Private Local"
+            environment = {"SystemRoot": raw, "LOCALAPPDATA": value, "GITHUB_SHA": "a" * 40}
+            row = {"diagnosticComplete": True, "nativeAcceptance": False}
+            with mock.patch.object(PROBE, "os", types.SimpleNamespace(name="nt", environ=environment)), \
+                 mock.patch.object(PROBE.shutil, "disk_usage", return_value=types.SimpleNamespace(free=500_000_000)), \
+                 mock.patch.object(PROBE.Path, "is_file", return_value=True), \
+                 mock.patch.object(PROBE.Path, "is_dir", return_value=True), \
+                 mock.patch.object(PROBE, "trial", return_value=row) as trial, \
+                 mock.patch("builtins.print"):
+                self.assertEqual(PROBE.main(["--output", str(output), "--local-app-data"]), 0)
+            self.assertEqual(trial.call_count, 1)
+            self.assertEqual(trial.call_args.args[3], PROBE.local_app_data_commands()[0])
+            self.assertEqual(trial.call_args.args[2]["LOCALAPPDATA"], value)
+            report = json.loads((output / "result.json").read_text(encoding="utf8"))
+            self.assertEqual(report["diagnosticMode"], "local-app-data")
+            self.assertIn("LOCALAPPDATA", report["environmentNames"])
+            self.assertNotIn(value, json.dumps(report))
+            self.assertFalse(report["nativeAcceptance"])
+
+    def test_supplemental_controls_are_mutually_exclusive(self):
+        with mock.patch.object(PROBE.Path, "mkdir") as mkdir, \
+             mock.patch.object(PROBE, "trial") as trial, mock.patch("sys.stderr"):
+            with self.assertRaises(SystemExit) as refused:
+                PROBE.main(["--output", "unused-owned-output", "--captured-write-output", "--local-app-data"])
+            self.assertEqual(refused.exception.code, 2)
+            mkdir.assert_not_called()
+            trial.assert_not_called()
+
     def test_environment_excludes_credentials_profiles_and_unapproved_host_input(self):
         source = {"SystemDrive": "C:", "PATH": "owned-tools", "TEMP": "owned-temp",
                   "OPENAI_API_KEY": "owned-not-a-credential", "GOOGLE_APPLICATION_CREDENTIALS": "owned-not-a-path",

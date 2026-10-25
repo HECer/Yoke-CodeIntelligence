@@ -590,9 +590,7 @@ fn snapshot(
     d: &Deadline,
 ) -> HttpResult<Vec<u8>> {
     let (expected_state, view, activity, statistics) = {
-        let s = state
-            .try_lock()
-            .map_err(|_| Failure(503, "Dashboard view unavailable"))?;
+        let s = view_lock(state, d, || {})?;
         (
             s.expected_state.clone(),
             s.value.clone(),
@@ -623,6 +621,29 @@ fn snapshot(
     crate::json::encode_bounded(&data, 1_000_000, d)
         .map_err(|_| Failure(413, "Dashboard response budget exceeded"))
 }
+
+fn view_lock<'a>(
+    state: &'a Mutex<View>,
+    d: &Deadline,
+    mut waiting: impl FnMut(),
+) -> HttpResult<std::sync::MutexGuard<'a, View>> {
+    loop {
+        // Publishing activity briefly holds this mutex. Share the original
+        // request deadline instead of treating ordinary contention as failure.
+        remaining(d)?;
+        match state.try_lock() {
+            Ok(view) => return Ok(view),
+            Err(std::sync::TryLockError::Poisoned(_)) => {
+                return Err(Failure(503, "Dashboard view unavailable"));
+            }
+            Err(std::sync::TryLockError::WouldBlock) => {
+                waiting();
+                std::thread::sleep(remaining(d)?.min(Duration::from_millis(1)));
+            }
+        }
+    }
+}
+
 fn shutdown_capabilities(value: &mut Value, shutdown: &Value) {
     if shutdown.is_object() {
         value["capabilities"]["mcpShutdown"] = json!(true);
@@ -700,4 +721,118 @@ fn respond(
         }
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod view_lock_tests {
+    use super::*;
+
+    fn view() -> View {
+        View {
+            expected_state: "before".into(),
+            value: json!({"revision":"before"}),
+            activity: VecDeque::new(),
+            next_id: 0,
+            dropped: 0,
+            completed: 0,
+            failed: 0,
+            running: 0,
+        }
+    }
+
+    #[test]
+    fn brief_publication_contention_returns_one_coherent_current_view() {
+        let state = Arc::new(Mutex::new(view()));
+        let mut publisher = state.lock().unwrap();
+        let (blocked, observed) = std::sync::mpsc::sync_channel(1);
+        let reader_state = state.clone();
+        let reader = std::thread::spawn(move || {
+            let mut blocked = Some(blocked);
+            let deadline = Deadline::new(1000);
+            match view_lock(&reader_state, &deadline, || {
+                if let Some(sender) = blocked.take() {
+                    let _ = sender.send(());
+                }
+            }) {
+                Ok(view) => Some((
+                    view.expected_state.clone(),
+                    view.value.clone(),
+                    view.running,
+                )),
+                Err(_) => None,
+            }
+        });
+        let was_blocked = observed.recv_timeout(Duration::from_secs(2));
+        publisher.expected_state = "after".into();
+        publisher.value = json!({"revision":"after"});
+        publisher.running = 1;
+        // Release the writer and join before any assertion can panic.
+        drop(publisher);
+        let result = reader.join();
+        assert!(
+            was_blocked.is_ok(),
+            "Reader never observed actual contention"
+        );
+        assert_eq!(
+            result.unwrap(),
+            Some(("after".into(), json!({"revision":"after"}), 1))
+        );
+    }
+
+    #[test]
+    fn expired_original_request_never_gets_a_new_snapshot_wait_budget() {
+        let state = Mutex::new(view());
+        let expired = Deadline::new(0);
+        // Even an available mutex cannot revive an expired request.
+        assert!(matches!(
+            view_lock(&state, &expired, || panic!("Unexpected wait")),
+            Err(Failure(408, _))
+        ));
+        let publisher = state.lock().unwrap();
+        assert!(matches!(
+            view_lock(&state, &expired, || panic!("Expired request waited")),
+            Err(Failure(408, _))
+        ));
+        drop(publisher);
+    }
+
+    #[test]
+    fn poisoned_view_refuses_without_waiting_or_recovering_its_contents() {
+        let state = Arc::new(Mutex::new(view()));
+        let publisher_state = state.clone();
+        assert!(
+            std::thread::spawn(move || {
+                let _publisher = publisher_state.lock().unwrap();
+                panic!("Owned publisher poison fixture");
+            })
+            .join()
+            .is_err()
+        );
+        assert!(matches!(
+            view_lock(&state, &Deadline::new(1000), || panic!(
+                "Poisoned view waited"
+            )),
+            Err(Failure(503, _))
+        ));
+    }
+
+    #[test]
+    fn host_cancellation_while_contended_stops_the_existing_request() {
+        let state = Mutex::new(view());
+        let publisher = state.lock().unwrap();
+        let cancelled = Arc::new(AtomicBool::new(false));
+        let signal = cancelled.clone();
+        let mut refused = false;
+        let result = Deadline::run_bounded(&Deadline::new(1000), cancelled, || {
+            let request = Deadline::new(1000);
+            refused = matches!(
+                view_lock(&state, &request, || signal.store(true, Ordering::SeqCst)),
+                Err(Failure(408, _))
+            );
+            Ok(())
+        });
+        drop(publisher);
+        assert!(refused, "Contended view ignored host cancellation");
+        assert_eq!(result.unwrap_err().to_string(), "Request cancelled by host");
+    }
 }

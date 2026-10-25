@@ -8,7 +8,7 @@ import ctypes as c
 import hashlib
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 import re
 import shutil
 import subprocess
@@ -82,6 +82,25 @@ def captured_write_output_commands():
     require(plain.count(original) == 1, "Canonical Write-Output control changed")
     return [("nested-snapshot-captured-write-output", plain.replace(original, captured, 1),
              count, resume)]
+
+
+def local_app_data_commands():
+    """Keep the original folder/cmdlet trial; vary one environment key only."""
+    _name, script, count, resume = commands()[-1]
+    return [("nested-snapshot-folder-local-app-data", script, count, resume)]
+
+
+def local_app_data_environment(source):
+    value = source.get("LOCALAPPDATA")
+    require(isinstance(value, str) and 0 < len(value) <= 32767
+            and not any(ord(char) < 32 for char in value),
+            "Host LocalAppData is unavailable")
+    path = PureWindowsPath(value)
+    require(path.is_absolute() and re.fullmatch(r"[A-Za-z]:", path.drive)
+            and not any(part in (".", "..") for part in re.split(r"[\\/]", value)),
+            "Host LocalAppData must be an absolute local directory")
+    require(Path(value).is_dir(), "Host LocalAppData directory is unavailable")
+    return {**selected_environment(source), "LOCALAPPDATA": value}
 
 
 def windows_api():
@@ -447,24 +466,31 @@ def trial(shell, fixture, environment, definition):
 def main(arguments=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
-    parser.add_argument("--captured-write-output", action="store_true",
-                        help="Run only the separate captured Write-Output diagnostic control")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--captured-write-output", action="store_true",
+                      help="Run only the separate captured Write-Output diagnostic control")
+    mode.add_argument("--local-app-data", action="store_true",
+                      help="Run only the original folder trial with host LOCALAPPDATA")
     args = parser.parse_args(arguments)
-    definitions = captured_write_output_commands() if args.captured_write_output else commands()
+    definitions = (captured_write_output_commands() if args.captured_write_output else
+                   local_app_data_commands() if args.local_app_data else commands())
     require(os.name == "nt", "PowerShell diagnostic requires Windows")
     revision = os.environ.get("GITHUB_SHA")
     require(revision is None or re.fullmatch(r"[0-9a-f]{40}", revision), "Diagnostic source revision invalid")
     require(shutil.disk_usage(ROOT).free >= 500_000_000, "Diagnostic disk reserve unavailable")
+    # Validate the supplemental host value before creating an evidence directory.
+    environment = (local_app_data_environment(os.environ) if args.local_app_data else
+                   selected_environment(os.environ))
     output = args.output.resolve()
     output.mkdir(exist_ok=False, parents=True)
     fixture = output / "fixture"
     fixture.mkdir()
     shell = Path(os.environ["SystemRoot"]) / "System32/WindowsPowerShell/v1.0/powershell.exe"
     require(shell.is_absolute() and shell.is_file(), "Selected system PowerShell unavailable")
-    environment = selected_environment(os.environ)
     report = {"schema": 2, "diagnosticOnly": True, "nativeAcceptance": False,
               "diagnosticComplete": False,
-              "diagnosticMode": "captured-write-output" if args.captured_write_output else "canonical",
+              "diagnosticMode": ("captured-write-output" if args.captured_write_output else
+                                 "local-app-data" if args.local_app_data else "canonical"),
               "nativeYokeImageReadOrExecuted": False, "trialDeadlineSeconds": TRIAL_SECONDS,
               "memberObservationSeconds": MEMBER_SECONDS, "maxObservedMembers": MAX_MEMBERS,
               "sourceRevision": revision,
