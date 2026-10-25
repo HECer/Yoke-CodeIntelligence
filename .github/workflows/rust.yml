@@ -107,6 +107,17 @@ jobs:
           name: host-powershell-local-app-data-diagnostic-${{ matrix.shard }}
           path: validation/ci-host-powershell-local-app-data/result.json
           if-no-files-found: warn
+      - name: Separate PowerShell command lookup from fixed module import
+        if: failure() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        timeout-minutes: 1
+        run: python scripts/host_powershell_probe.py --command-boundary --output validation/ci-host-powershell-command-boundary
+      - name: Preserve command lookup and import phase diagnostics
+        if: always() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-powershell-command-boundary-diagnostic-${{ matrix.shard }}
+          path: validation/ci-host-powershell-command-boundary/result.json
+          if-no-files-found: warn
       - name: Preserve complete or partial shard receipts and raw group logs
         if: always()
         uses: actions/upload-artifact@v4

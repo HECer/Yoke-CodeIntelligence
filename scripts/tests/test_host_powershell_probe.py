@@ -249,6 +249,102 @@ class PowerShellDiagnostic(unittest.TestCase):
             mkdir.assert_not_called()
             trial.assert_not_called()
 
+    def test_command_boundaries_use_two_fresh_fixed_commands_without_changing_prior_controls(self):
+        canonical = PROBE.commands()
+        captured = PROBE.captured_write_output_commands()
+        local = PROBE.local_app_data_commands()
+        selected = PROBE.command_boundary_commands()
+        self.assertEqual([row[0] for row in selected],
+                         ["nested-snapshot-command-lookup", "nested-snapshot-fixed-module-import"])
+        for _, script, count, resume in selected:
+            self.assertEqual((count, resume), (2, "snapshot"))
+            self.assertEqual(script.count("$ExecutionContext.InvokeCommand.GetCommand("), 1)
+            self.assertEqual(script.count("$value = & $command 'owned-shell-test'"), 1)
+            self.assertEqual(script.count("[Console]::Out.WriteLine($value)"), 1)
+            self.assertIn("$command -isnot [System.Management.Automation.CmdletInfo]", script)
+            self.assertIn("$command.ModuleName -cne 'Microsoft.PowerShell.Utility'", script)
+            self.assertIn("$boundaryClock=[Diagnostics.Stopwatch]::StartNew()", script)
+            for phase in ("before-command-lookup", "after-command-lookup",
+                          "before-command-invoke", "after-command-invoke"):
+                self.assertIn("owned-" + phase + "-ms:", script)
+            self.assertLess(script.index("before-command-lookup"), script.index(".GetCommand("))
+            self.assertLess(script.index(".GetCommand("), script.index("after-command-lookup"))
+            self.assertLess(script.index("after-command-lookup"), script.index("before-command-invoke"))
+            self.assertLess(script.index("before-command-invoke"), script.index("$value = & $command"))
+            self.assertLess(script.index("$value = & $command"), script.index("after-command-invoke"))
+            self.assertNotIn("Get-Command", script)
+            self.assertNotIn("Get-Module", script)
+            self.assertNotIn("Out-String", script)
+            self.assertNotIn(";;", script.replace(" ", ""))
+        self.assertNotIn("Import-Module", selected[0][1])
+        imported = selected[1][1]
+        self.assertIn("Import-Module -Name ($PSHOME+'\\Modules\\Microsoft.PowerShell.Utility"
+                      "\\Microsoft.PowerShell.Utility.psd1') -ErrorAction Stop", imported)
+        self.assertLess(imported.index("before-fixed-module-import"), imported.index("Import-Module"))
+        self.assertLess(imported.index("Import-Module"), imported.index("after-fixed-module-import"))
+        self.assertLess(imported.index("after-fixed-module-import"), imported.index("before-command-lookup"))
+        self.assertEqual(PROBE.commands(), canonical)
+        self.assertEqual(PROBE.captured_write_output_commands(), captured)
+        self.assertEqual(PROBE.local_app_data_commands(), local)
+
+    def test_command_boundary_keeps_each_original_deadline_and_fits_separate_step(self):
+        self.assertEqual(PROBE.TRIAL_SECONDS, 20)
+        self.assertEqual(PROBE.CLEANUP_SECONDS, 2)
+        waits = len(PROBE.command_boundary_commands()) * (
+            PROBE.TRIAL_SECONDS + PROBE.CLEANUP_SECONDS + 2 * PROBE.READER_JOIN_SECONDS)
+        self.assertEqual(waits, 45)
+        self.assertLess(waits, 60)
+
+    def test_command_boundary_refuses_changed_captured_command_before_execution(self):
+        with mock.patch.object(PROBE, "captured_write_output_commands",
+                               return_value=[("owned", "changed-command", 2, "snapshot")]):
+            with self.assertRaisesRegex(RuntimeError, "Captured Write-Output control changed"):
+                PROBE.command_boundary_commands()
+
+    def test_command_boundary_cli_uses_baseline_environment_and_reports_both_trials(self):
+        with tempfile.TemporaryDirectory() as raw:
+            output = (Path(raw) / "new-output").resolve()
+            environment = {"SystemRoot": raw, "LOCALAPPDATA": "unselected-private-value",
+                           "PSModulePath": "unselected-modules", "GITHUB_SHA": "a" * 40}
+            row = {"diagnosticComplete": False, "nativeAcceptance": False}
+            with mock.patch.object(PROBE, "os", types.SimpleNamespace(name="nt", environ=environment)), \
+                 mock.patch.object(PROBE.shutil, "disk_usage", return_value=types.SimpleNamespace(free=500_000_000)), \
+                 mock.patch.object(PROBE.Path, "is_file", return_value=True), \
+                 mock.patch.object(PROBE, "trial", return_value=row) as trial, mock.patch("builtins.print"):
+                self.assertEqual(PROBE.main(["--output", str(output), "--command-boundary"]), 0)
+            self.assertEqual([call.args[3] for call in trial.call_args_list], PROBE.command_boundary_commands())
+            self.assertTrue(all(call.args[2] == PROBE.selected_environment(environment)
+                                for call in trial.call_args_list))
+            report = json.loads((output / "result.json").read_text(encoding="utf8"))
+            self.assertEqual(report["diagnosticMode"], "command-boundary")
+            self.assertEqual(len(report["trials"]), 2)
+            self.assertFalse(report["nativeAcceptance"] or report["diagnosticComplete"])
+            self.assertNotIn("unselected-private-value", json.dumps(report))
+
+    def test_command_boundary_refuses_values_and_other_modes_before_output(self):
+        for extra in (["--command-boundary=true"],
+                      ["--command-boundary", "--captured-write-output"],
+                      ["--command-boundary", "--local-app-data"]):
+            with self.subTest(extra=extra), mock.patch.object(PROBE.Path, "mkdir") as mkdir, \
+                 mock.patch.object(PROBE, "trial") as trial, mock.patch("sys.stderr"):
+                with self.assertRaises(SystemExit) as refused:
+                    PROBE.main(["--output", "unused-owned-output", *extra])
+                self.assertEqual(refused.exception.code, 2)
+                mkdir.assert_not_called()
+                trial.assert_not_called()
+
+    def test_command_boundary_preserves_existing_output_and_never_starts_a_trial(self):
+        with tempfile.TemporaryDirectory() as raw:
+            marker = Path(raw) / "foreign-marker"
+            marker.write_bytes(b"preserve")
+            with mock.patch.object(PROBE, "os", types.SimpleNamespace(name="nt", environ={})), \
+                 mock.patch.object(PROBE.shutil, "disk_usage", return_value=types.SimpleNamespace(free=500_000_000)), \
+                 mock.patch.object(PROBE, "trial") as trial:
+                with self.assertRaises(FileExistsError):
+                    PROBE.main(["--output", raw, "--command-boundary"])
+            self.assertEqual(marker.read_bytes(), b"preserve")
+            trial.assert_not_called()
+
     def test_environment_excludes_credentials_profiles_and_unapproved_host_input(self):
         source = {"SystemDrive": "C:", "PATH": "owned-tools", "TEMP": "owned-temp",
                   "OPENAI_API_KEY": "owned-not-a-credential", "GOOGLE_APPLICATION_CREDENTIALS": "owned-not-a-path",

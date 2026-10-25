@@ -90,6 +90,40 @@ def local_app_data_commands():
     return [("nested-snapshot-folder-local-app-data", script, count, resume)]
 
 
+def command_boundary_commands():
+    """Two fresh children isolate lookup/autoload from an explicit fixed import."""
+    _name, captured, count, resume = captured_write_output_commands()[0]
+    entry = "[Console]::Error.WriteLine('owned-before-captured-write-output'); "
+    invocation = "$value = Write-Output 'owned-shell-test'"
+    require(captured.count(entry) == 1 and captured.count(invocation) == 1,
+            "Captured Write-Output control changed")
+
+    def phase(name):
+        return ("[Console]::Error.WriteLine('owned-" + name + "-ms:'"
+                "+$boundaryClock.ElapsedMilliseconds.ToString([Globalization.CultureInfo]::InvariantCulture)); ")
+
+    clock = ("[Console]::Error.WriteLine('owned-before-boundary-clock'); "
+             "$boundaryClock=[Diagnostics.Stopwatch]::StartNew(); ")
+    lookup = (phase("before-command-lookup")
+              + "$command=$ExecutionContext.InvokeCommand.GetCommand('Write-Output',"
+              "[System.Management.Automation.CommandTypes]::Cmdlet); "
+              + phase("after-command-lookup")
+              + "if($command -isnot [System.Management.Automation.CmdletInfo] "
+              "-or $command.Name -cne 'Write-Output' "
+              "-or $command.ModuleName -cne 'Microsoft.PowerShell.Utility')"
+              "{throw 'Owned Write-Output command binding unavailable'}; ")
+    imported = (phase("before-fixed-module-import")
+                + "Import-Module -Name ($PSHOME+'\\Modules\\Microsoft.PowerShell.Utility"
+                "\\Microsoft.PowerShell.Utility.psd1') -ErrorAction Stop; "
+                + phase("after-fixed-module-import"))
+    call = (phase("before-command-invoke") + "$value = & $command 'owned-shell-test'; "
+            + phase("after-command-invoke"))
+    return [("nested-snapshot-" + name,
+             captured.replace(entry, clock + preparation + lookup + entry, 1)
+                     .replace(invocation, call.rstrip("; "), 1), count, resume)
+            for name, preparation in (("command-lookup", ""), ("fixed-module-import", imported))]
+
+
 def local_app_data_environment(source):
     value = source.get("LOCALAPPDATA")
     require(isinstance(value, str) and 0 < len(value) <= 32767
@@ -471,9 +505,12 @@ def main(arguments=None):
                       help="Run only the separate captured Write-Output diagnostic control")
     mode.add_argument("--local-app-data", action="store_true",
                       help="Run only the original folder trial with host LOCALAPPDATA")
+    mode.add_argument("--command-boundary", action="store_true",
+                      help="Run separate lookup and fixed module-import boundary controls")
     args = parser.parse_args(arguments)
     definitions = (captured_write_output_commands() if args.captured_write_output else
-                   local_app_data_commands() if args.local_app_data else commands())
+                   local_app_data_commands() if args.local_app_data else
+                   command_boundary_commands() if args.command_boundary else commands())
     require(os.name == "nt", "PowerShell diagnostic requires Windows")
     revision = os.environ.get("GITHUB_SHA")
     require(revision is None or re.fullmatch(r"[0-9a-f]{40}", revision), "Diagnostic source revision invalid")
@@ -490,7 +527,8 @@ def main(arguments=None):
     report = {"schema": 2, "diagnosticOnly": True, "nativeAcceptance": False,
               "diagnosticComplete": False,
               "diagnosticMode": ("captured-write-output" if args.captured_write_output else
-                                 "local-app-data" if args.local_app_data else "canonical"),
+                                 "local-app-data" if args.local_app_data else
+                                 "command-boundary" if args.command_boundary else "canonical"),
               "nativeYokeImageReadOrExecuted": False, "trialDeadlineSeconds": TRIAL_SECONDS,
               "memberObservationSeconds": MEMBER_SECONDS, "maxObservedMembers": MAX_MEMBERS,
               "sourceRevision": revision,

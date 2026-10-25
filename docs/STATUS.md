@@ -1,5 +1,34 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Hosted follow-up: dashboard and Darwin cleanup pass; platform gates remain (2026-10-25)
+
+At `553e5dc1`, the PR Windows library passes 768/0 with 7 original ignores;
+the complete dashboard and dashboard-management groups pass 13/0 and 24/0.
+All four new contention regressions and the original pending-provider HTTP
+case pass. macOS passes those four tests, dashboard 13/0, twelve cleanup
+regressions, runtime 14/0, process 5/0 and ingress 20/0. Both Ubuntu workflow
+runs pass all shards, coverage, actual rust-analyzer and release build.
+
+Windows still fails two original Python PowerShell tests and the managed-folder
+process case at 20 seconds; the push REPL case also fails. The isolated
+LocalAppData control does not repair the failing hosts. A new separate lookup
+and fixed-module-import control records scalar phase times, retaining the
+original commands, limits, assertions and production environment.
+
+All 43 macOS PDF failures now individually identify `SetAddressSpace` errno 22
+before input. Twenty-five prompt-family cases include explicit spawn/direct
+limit refusals and separately scoped generic/downstream symptoms. The remaining
+library history fixture observes its first 40-ms sleep returning at 155.738 ms,
+after the original 65-ms deadline; forcing a body read would be incorrect.
+Its original gate and the strict memory contract remain unchanged and failing.
+
+The new controls pass locally with checked natural tree exit. Typecheck, npm
+260/0/3 original skips and Actionlint pass. Both full Python runs execute all
+142 tests successfully, but an owned `vctip.exe` compiler helper survives
+the original drain. Checked forced cleanup empties the Job; both controller
+receipts remain incomplete. These are not complete platform or release passes.
+See the [hosted follow-up evidence](validation/integration-2026-10-25/hosted-platform-followup/README.md).
+
 ## Document maintenance: two local Windows native groups pass (2026-10-25)
 
 The host CLI/API now includes reviewed logical global-owner retirement and
@@ -23,7 +52,8 @@ desktop/mobile qualification remain pending.
 Ubuntu's exact-source hosted coverage, actual rust-analyzer and release build
 also pass. Windows and macOS retain failing shards. A later dashboard mutex
 contention correction and separate PowerShell LocalAppData trial pass source
-checks, Python 136/0/0 and npm 260/0/3; their native/hosted acceptance is pending.
+checks, Python 136/0/0 and npm 260/0/3. The named dashboard tests now pass as
+recorded above; complete platform acceptance remains pending.
 Seven macOS composition cases now identify address-space limit installation
 errno 22 before PDF input. No conforming replacement backend is established.
 The isolated fresh release producer stops on the unchanged disk reserve;
