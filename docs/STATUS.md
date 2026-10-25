@@ -1,5 +1,25 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Platform repair: five Windows native groups pass (2026-10-25)
+
+At source `a9608c7f`, five complete native groups pass 760/0 with 7 unchanged
+library ignores and no name filters: library 703, repository discovery 8,
+GitHub App ingress 20, process 7 and agent REPL 22. Five fresh producers, five
+test executions and warnings-denied workspace/all-target Clippy preserve 1044
+identical selected inputs. Every phase proves root exit and an empty owned Job
+before forced cleanup. Original profiles, deadlines, assertions and ignores stay.
+Native formatting, typecheck, npm 260/0/3 original skips, Python 126/0/0 and
+Actionlint 1.7.12 also pass locally.
+
+The repair requires actual Unix child exit plus independent group absence,
+propagates complete-output cleanup refusal, fixes protected-marker fixture
+expectations and adds bounded timing/PowerShell failure observations. Actual
+Unix behavior and the historical hosted PowerShell stall remain unqualified.
+New hosted CI, the complete native suite, strict Darwin memory enforcement,
+history/browser, bundled-runtime VSIX, full STATUS, main and release remain open.
+This supersedes execution-pending notes only for these named local scopes.
+[Evidence](validation/integration-2026-10-25/native-platform-repair/README.md).
+
 ## Scoped Windows native execution now passes (2026-10-24)
 
 At source6b9a60dd, the complete default library group passes703/0 with7 unchanged

@@ -984,8 +984,9 @@ The dashboard reports blocking metadata/incomplete state and retains drafts,
 without a migration action or serialized grant. Configuration bytes are unchanged
 by migration. Old reads remain governed by the old independent read selection.
 The [805-pass scope](validation/integration-2026-10-24/dashboard-binding-migration/README.md)
-includes real CLI/stdIO/HTTP/native-browser workflows. Standalone owner deletion,
-history cleanup and broader dashboard/release acceptance remain separate.
+includes real CLI/stdIO/HTTP/native-browser workflows. Standalone owner
+retirement, physical archive purge and broader dashboard/release acceptance
+remain separate.
 
 ### Global proposal generation binding
 
@@ -997,5 +998,9 @@ the epoch during recovery too; existing generationless journals retain original
 explicit event-reviewed recovery. That compatibility route never admits ordinary
 proposal approval. Project/absent-field serialized identities remain unchanged.
 Canonical bounded journal header/event admission now also works on exact byte
-records without filesystem fallback; no archive mutation workflow exists yet.
+records without filesystem fallback. A separately granted closed-journal archive
+workflow implements plan/apply/inspection, exact-record reads and event-reviewed
+recovery; its current live qualification remains pending. Standalone owner
+retirement and physical archive purge remain separate open operations. See the
+[archive contract](../native/docs/session-dashboard-history-archive.md).
 See [810-pass generation scope](validation/integration-2026-10-24/dashboard-document-generations/README.md).
