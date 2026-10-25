@@ -173,7 +173,23 @@ fn windows_runtime_environment_supports_managed_known_folders() {
         std::path::PathBuf::from(std::env::var_os("SystemRoot").unwrap())
             .join("System32/WindowsPowerShell/v1.0/powershell.exe"),
     );
-    command.env("YOKE_OWNED_PHASE_FILE", &phase).current_dir(root.path()).args(["-NoProfile", "-NonInteractive", "-Command", r#"[IO.File]::WriteAllText($env:YOKE_OWNED_PHASE_FILE,'entered'); $ErrorActionPreference='Stop'; if([string]::IsNullOrEmpty($env:SystemDrive)){throw 'Host system drive missing'}; [IO.File]::WriteAllText($env:YOKE_OWNED_PHASE_FILE,'before-folder'); $folder=[Environment]::GetFolderPath([Environment+SpecialFolder]::CommonApplicationData,[Environment+SpecialFolderOption]::DoNotVerify); [IO.File]::WriteAllText($env:YOKE_OWNED_PHASE_FILE,'after-folder'); if(-not [IO.Path]::IsPathRooted($folder)){throw 'Managed known folder is not absolute'}; [Console]::Error.WriteLine('owned-before-write-output'); Write-Output 'owned-windows-runtime'; [Console]::Error.WriteLine('owned-after-write-output'); [IO.File]::WriteAllText($env:YOKE_OWNED_PHASE_FILE,'finished')"#]);
+    // Declare the fixture's cmdlet dependency inside the same operation budget.
+    // Generic production capture continues to forward the supplied command.
+    let original = r#"[IO.File]::WriteAllText($env:YOKE_OWNED_PHASE_FILE,'entered'); $ErrorActionPreference='Stop'; if([string]::IsNullOrEmpty($env:SystemDrive)){throw 'Host system drive missing'}; [IO.File]::WriteAllText($env:YOKE_OWNED_PHASE_FILE,'before-folder'); $folder=[Environment]::GetFolderPath([Environment+SpecialFolder]::CommonApplicationData,[Environment+SpecialFolderOption]::DoNotVerify); [IO.File]::WriteAllText($env:YOKE_OWNED_PHASE_FILE,'after-folder'); if(-not [IO.Path]::IsPathRooted($folder)){throw 'Managed known folder is not absolute'}; [Console]::Error.WriteLine('owned-before-write-output'); Write-Output 'owned-windows-runtime'; [Console]::Error.WriteLine('owned-after-write-output'); [IO.File]::WriteAllText($env:YOKE_OWNED_PHASE_FILE,'finished')"#;
+    let initialized = [
+        include_str!("fixtures/windows-powershell-utility.ps1"),
+        original,
+    ]
+    .concat();
+    command
+        .env("YOKE_OWNED_PHASE_FILE", &phase)
+        .current_dir(root.path())
+        .args([
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            initialized.as_str(),
+        ]);
     let started = std::time::Instant::now();
     let result = run_capture(command, b"", &Deadline::new(20_000), limits()).unwrap();
     // The capture's partial pipes need not have reached EOF at a timeout. This
@@ -213,6 +229,41 @@ fn windows_runtime_environment_supports_managed_known_folders() {
     assert!(
         result.output_complete && !result.timed_out && !result.output_exceeded && !result.io_error
     );
+}
+
+#[cfg(windows)]
+#[test]
+fn windows_owned_fixture_refuses_missing_utility_before_payload_entry() {
+    let root = TempDir::new().unwrap();
+    let phase = root.path().join("payload-entered");
+    let missing = root.path().join("missing ' π ; module.psd1");
+    let bootstrap = include_str!("fixtures/windows-powershell-utility.ps1");
+    let selected =
+        "($PSHOME+'\\Modules\\Microsoft.PowerShell.Utility\\Microsoft.PowerShell.Utility.psd1')";
+    assert_eq!(bootstrap.matches(selected).count(), 1);
+    let failed = bootstrap.replacen(selected, "$env:YOKE_OWNED_MISSING_MODULE", 1);
+    let script = [failed.as_str(), "[IO.File]::WriteAllText($env:YOKE_OWNED_PHASE_FILE,'entered'); [Console]::Out.WriteLine('unexpected-payload')"].concat();
+    let mut command = Command::new(
+        std::path::PathBuf::from(std::env::var_os("SystemRoot").unwrap())
+            .join("System32/WindowsPowerShell/v1.0/powershell.exe"),
+    );
+    command
+        .current_dir(root.path())
+        .env("YOKE_OWNED_PHASE_FILE", &phase)
+        .env("YOKE_OWNED_MISSING_MODULE", &missing)
+        .args(["-NoProfile", "-NonInteractive", "-Command", script.as_str()]);
+    let output = run_capture(command, b"", &Deadline::new(20_000), limits()).unwrap();
+    assert_eq!(output.exit_code, Some(125));
+    assert!(output.stdout.is_empty());
+    assert_eq!(
+        String::from_utf8(output.stderr).unwrap().trim(),
+        "Owned PowerShell Utility module unavailable"
+    );
+    assert!(
+        output.output_complete && !output.timed_out && !output.output_exceeded && !output.io_error
+    );
+    assert!(!phase.exists());
+    assert!(!missing.exists());
 }
 
 #[cfg(windows)]

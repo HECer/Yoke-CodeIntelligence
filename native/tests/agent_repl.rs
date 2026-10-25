@@ -250,6 +250,13 @@ fn explicitly_selected_shell_runs_and_cell_errors_preserve_namespace() {
             shell_phase.to_str().unwrap().replace('\'', "''"),
             shell_phase.to_str().unwrap().replace('\'', "''")
         );
+        // This owned payload requires Utility; the production HostShell does
+        // not rewrite arbitrary caller scripts or initialize their modules.
+        let command = [
+            include_str!("fixtures/windows-powershell-utility.ps1"),
+            command.as_str(),
+        ]
+        .concat();
         format!(
             "remembered=17\nwith open({},'w',encoding='ascii') as _owned_phase:\n _owned_phase.write('entered')\ns.shell.execute_shell_command({})['stdout'].strip()",
             serde_json::to_string(&python_phase).unwrap(),

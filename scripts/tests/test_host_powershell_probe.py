@@ -15,6 +15,15 @@ SPEC = importlib.util.spec_from_file_location(
 PROBE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(PROBE)
 
+FIXTURE_BOOTSTRAP = (Path(__file__).resolve().parents[2] / "native/tests/fixtures/windows-powershell-utility.ps1").read_bytes().decode("utf8")
+FIXTURE_MODULE = "($PSHOME+'\\Modules\\Microsoft.PowerShell.Utility\\Microsoft.PowerShell.Utility.psd1')"
+
+
+def initialized_owned_fixture(definition):
+    """Declare this test payload's dependency; never alter the raw probe plan."""
+    name, script, count, resume = definition
+    return ("initialized-" + name, FIXTURE_BOOTSTRAP + script, count, resume)
+
 
 def simulated_trial(assigned=False, termination=True, leaking=False, close=True,
                     observation=None, clock=None, wait=None):
@@ -583,7 +592,8 @@ class PowerShellDiagnostic(unittest.TestCase):
     def test_actual_nested_snapshot_resume_records_host_and_both_empty_jobs(self):
         with tempfile.TemporaryDirectory() as raw:
             shell = Path(os.environ["SystemRoot"]) / "System32/WindowsPowerShell/v1.0/powershell.exe"
-            row = PROBE.trial(shell, Path(raw), PROBE.selected_environment(os.environ), PROBE.commands()[-1])
+            row = PROBE.trial(shell, Path(raw), PROBE.selected_environment(os.environ),
+                              initialized_owned_fixture(PROBE.commands()[-1]))
         self.assertTrue(row["diagnosticComplete"], row)
         self.assertTrue(row["startedSuspended"] and row["assignedBeforeResume"])
         self.assertTrue(row["primaryObservedResumed"])
@@ -615,7 +625,7 @@ class PowerShellDiagnostic(unittest.TestCase):
                        "[IO.File]::WriteAllText('" + quoted + "','finished')")
             shell = Path(os.environ["SystemRoot"]) / "System32/WindowsPowerShell/v1.0/powershell.exe"
             row = PROBE.trial(shell, root, PROBE.selected_environment(os.environ),
-                              ("owned-phase-path", command, 2, "snapshot"))
+                              initialized_owned_fixture(("owned-phase-path", command, 2, "snapshot")))
             self.assertTrue(row["diagnosticComplete"], row)
             self.assertEqual(marker.read_bytes(), b"finished")
             self.assertEqual(python_marker.read_bytes(), b"entered")
@@ -623,6 +633,67 @@ class PowerShellDiagnostic(unittest.TestCase):
             self.assertEqual(row["stdout"].strip(), "owned-shell-test")
             self.assertIn("owned-before-write-output", row["stderr"])
             self.assertIn("owned-after-write-output", row["stderr"])
+
+    def test_fixture_initialization_preserves_scripts_jobs_and_every_raw_control(self):
+        plans = [PROBE.commands(), PROBE.captured_write_output_commands(),
+                 PROBE.local_app_data_commands(), PROBE.command_boundary_commands(),
+                 PROBE.fixed_import_original_commands()]
+        for definition in (PROBE.commands()[-1], ("owned", "[Console]::Out.WriteLine('owned')", 2, "snapshot")):
+            prepared = initialized_owned_fixture(definition)
+            self.assertTrue(prepared[1].endswith(definition[1]))
+            self.assertEqual(prepared[1], FIXTURE_BOOTSTRAP + definition[1])
+            self.assertEqual(prepared[2:], definition[2:])
+        self.assertEqual(FIXTURE_BOOTSTRAP.count(FIXTURE_MODULE), 1)
+        self.assertIn("-ErrorAction Stop", FIXTURE_BOOTSTRAP)
+        self.assertIn("exit 125", FIXTURE_BOOTSTRAP)
+        self.assertEqual(plans, [PROBE.commands(), PROBE.captured_write_output_commands(),
+                                PROBE.local_app_data_commands(), PROBE.command_boundary_commands(),
+                                PROBE.fixed_import_original_commands()])
+
+    @unittest.skipUnless(os.name == "nt", "Actual owned PowerShell requires Windows")
+    def test_missing_fixture_import_exits_before_the_original_payload(self):
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            missing = root / "missing ' π ; module.psd1"
+            marker = root / "payload-entered"
+            bootstrap = FIXTURE_BOOTSTRAP.replace(FIXTURE_MODULE, "'" + str(missing).replace("'", "''") + "'", 1)
+            script = bootstrap + "[IO.File]::WriteAllText($env:YOKE_OWNED_PAYLOAD_MARKER,'entered'); [Console]::Out.WriteLine('unexpected-payload')"
+            environment = PROBE.selected_environment(os.environ)
+            environment["YOKE_OWNED_PAYLOAD_MARKER"] = str(marker)
+            shell = Path(os.environ["SystemRoot"]) / "System32/WindowsPowerShell/v1.0/powershell.exe"
+            row = PROBE.trial(shell, root, environment, ("missing-fixture-import", script, 2, "snapshot"))
+            self.assertEqual(row["exitCode"], 125, row)
+            self.assertFalse(row["diagnosticComplete"] or row["nativeAcceptance"])
+            self.assertFalse(row["timedOut"])
+            self.assertTrue(row["treeExitedBeforeCleanup"] and row["rootExitedAfterCleanup"])
+            self.assertEqual(row["activeBeforeCleanup"], [0, 0])
+            self.assertEqual(row["activeAfterCleanup"], [0, 0])
+            self.assertEqual(row["stdout"], "")
+            self.assertEqual(row["stderr"].strip(), "Owned PowerShell Utility module unavailable")
+            self.assertFalse(marker.exists() or missing.exists())
+
+    @unittest.skipUnless(os.name == "nt", "Actual owned PowerShell requires Windows")
+    def test_fixture_fixed_system_import_does_not_execute_foreign_module_path(self):
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            marker = root / "foreign ' π ; loaded"
+            modules = root / "foreign-modules"
+            module = modules / "Microsoft.PowerShell.Utility"
+            module.mkdir(parents=True)
+            (module / "Microsoft.PowerShell.Utility.psd1").write_text(
+                "@{RootModule='owned.psm1';ModuleVersion='1.0.0';FunctionsToExport=@('Write-Output')}", encoding="utf8")
+            (module / "owned.psm1").write_text(
+                "[IO.File]::WriteAllText($env:YOKE_OWNED_FOREIGN_MARKER,'loaded'); "
+                "function Write-Output { param($value) [Console]::Out.WriteLine('foreign-output') }", encoding="utf8")
+            environment = PROBE.selected_environment(os.environ)
+            environment.update(PSModulePath=str(modules), YOKE_OWNED_FOREIGN_MARKER=str(marker))
+            shell = Path(os.environ["SystemRoot"]) / "System32/WindowsPowerShell/v1.0/powershell.exe"
+            row = PROBE.trial(shell, root, environment, initialized_owned_fixture(PROBE.commands()[-1]))
+            self.assertTrue(row["diagnosticComplete"], row)
+            self.assertEqual(row["stdout"].strip(), "owned-windows-runtime")
+            self.assertEqual(row["activeBeforeCleanup"], [0, 0])
+            self.assertEqual(row["activeAfterCleanup"], [0, 0])
+            self.assertFalse(row["nativeAcceptance"] or marker.exists())
 
 
 class OwnedMemberObservations(unittest.TestCase):

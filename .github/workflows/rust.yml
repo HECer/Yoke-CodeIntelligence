@@ -73,13 +73,13 @@ jobs:
       - name: Test complete default Cargo target groups
         id: native_tests
         run: python scripts/native_shards.py run --index ${{ matrix.shard }}
-      - name: Observe owned PowerShell startup after a failed Windows shard
+      - name: Observe raw PowerShell startup independently of prepared fixtures
         id: powershell_probe
-        if: failure() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        if: always() && runner.os == 'Windows' && (matrix.shard == 0 || steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
         timeout-minutes: 2
         run: python scripts/host_powershell_probe.py --output validation/ci-host-powershell
       - name: Preserve separate PowerShell diagnostics (never native acceptance)
-        if: always() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        if: always() && runner.os == 'Windows' && (matrix.shard == 0 || steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
         uses: actions/upload-artifact@v4
         with:
           name: host-powershell-diagnostic-${{ matrix.shard }}
