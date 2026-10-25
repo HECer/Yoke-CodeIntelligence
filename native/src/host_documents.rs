@@ -22,12 +22,14 @@ pub use journal::{
     HistoryArchivePlan, HistoryArchivePurgeAccess, HistoryArchivePurgeApproval,
     HistoryArchivePurgePermission, HistoryArchivePurgePlan, HistoryArchivePurgeReview,
     HistoryArchiveRecord, HistoryArchiveReview, HistoryPurgeFileWitness,
-    HistoryPurgeRetainedWitness, JournalView, Receipt, RecoveryApproval, RecoveryDirection,
+    HistoryPurgeRetainedWitness, JournalView, OwnerRetirementApproval, OwnerRetirementPlan,
+    OwnerRetirementReceipt, OwnerRetirementReview, Receipt, RecoveryApproval, RecoveryDirection,
     WriteAuthority, apply_binding_migration, apply_history_archive, apply_history_archive_purge,
-    inspect_binding_migration, inspect_history_archive, inspect_history_archive_purge,
-    plan_binding_migration, plan_history_archive, plan_history_archive_purge,
+    apply_owner_retirement, inspect_binding_migration, inspect_history_archive,
+    inspect_history_archive_purge, inspect_owner_retirement, plan_binding_migration,
+    plan_history_archive, plan_history_archive_purge, plan_owner_retirement,
     read_history_archive_record, recover_binding_migration, recover_history_archive,
-    recover_history_archive_purge,
+    recover_history_archive_purge, recover_owner_retirement,
 };
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]

@@ -27,6 +27,7 @@ fn marker_path(selected: &BoundDocument) -> Result<PathBuf> {
     )))
 }
 pub(super) fn require_no_pending(selected: &BoundDocument, d: &Deadline) -> Result<()> {
+    super::owner_retirement::require_no_pending(selected, d)?;
     ensure!(
         !exists(&marker_path(selected)?, d)?,
         "Host document binding migration is pending; use its explicit host recovery workflow"

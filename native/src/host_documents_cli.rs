@@ -12,8 +12,8 @@ use yoke::{
     host_install::documents::{
         self, Access, BindingMigrationAuthority, BindingMigrationPlan, Config,
         HistoryArchiveAccess, HistoryArchivePlan, HistoryArchivePurgeAccess,
-        HistoryArchivePurgePermission, HistoryArchivePurgePlan, ProjectRoot, RecoveryDirection,
-        WriteAuthority,
+        HistoryArchivePurgePermission, HistoryArchivePurgePlan, OwnerRetirementPlan, ProjectRoot,
+        RecoveryDirection, WriteAuthority,
     },
 };
 
@@ -22,7 +22,7 @@ pub struct Arguments {
     #[arg(long)]
     from_selection: PathBuf,
     #[arg(long)]
-    to_selection: PathBuf,
+    to_selection: Option<PathBuf>,
     #[arg(long, default_value_t = 512)]
     history_record_budget: usize,
     #[command(subcommand)]
@@ -30,6 +30,34 @@ pub struct Arguments {
 }
 #[derive(Subcommand)]
 enum Operation {
+    #[command(name = "owner-retirement-plan")]
+    OwnerRetirementPlan {
+        #[arg(long)]
+        document: String,
+    },
+    #[command(name = "owner-retirement-inspect")]
+    OwnerRetirementInspect {
+        #[arg(long)]
+        plan: PathBuf,
+    },
+    #[command(name = "owner-retirement-apply")]
+    OwnerRetirementApply {
+        #[arg(long)]
+        plan: PathBuf,
+        #[arg(long)]
+        allow_host_writes: bool,
+    },
+    #[command(name = "owner-retirement-recover")]
+    OwnerRetirementRecover {
+        #[arg(long)]
+        plan: PathBuf,
+        #[arg(long)]
+        expected_event: String,
+        #[arg(long, value_enum)]
+        direction: Direction,
+        #[arg(long)]
+        allow_host_writes: bool,
+    },
     #[command(name = "history-purge-plan")]
     HistoryPurgePlan {
         #[arg(long)]
@@ -204,12 +232,24 @@ impl Arguments {
         }
         | Operation::HistoryRecover {
             allow_host_writes, ..
+        }
+        | Operation::OwnerRetirementApply {
+            allow_host_writes, ..
+        }
+        | Operation::OwnerRetirementRecover {
+            allow_host_writes, ..
         } = &self.operation
         {
             ensure!(
                 *allow_host_writes,
                 "{} requires --allow-host-writes",
                 if matches!(
+                    self.operation,
+                    Operation::OwnerRetirementApply { .. }
+                        | Operation::OwnerRetirementRecover { .. }
+                ) {
+                    "Host owner retirement"
+                } else if matches!(
                     self.operation,
                     Operation::HistoryApply { .. } | Operation::HistoryRecover { .. }
                 ) {
@@ -220,11 +260,17 @@ impl Arguments {
             );
         }
         if let Operation::Recover { expected_event, .. }
-        | Operation::HistoryRecover { expected_event, .. } = &self.operation
+        | Operation::HistoryRecover { expected_event, .. }
+        | Operation::OwnerRetirementRecover { expected_event, .. } = &self.operation
         {
             ensure!(
                 yoke::model::valid_id(expected_event),
-                "Explicit migration event review required"
+                "{}",
+                if matches!(self.operation, Operation::OwnerRetirementRecover { .. }) {
+                    "Explicit owner retirement event review required"
+                } else {
+                    "Explicit migration event review required"
+                }
             );
         }
         if let Operation::HistoryPurgeRecover { expected_event, .. } = &self.operation {
@@ -297,8 +343,80 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<()> {
         "Host migration output budget refused"
     );
     let d = Deadline::new(timeout);
+    let retirement = matches!(
+        args.operation,
+        Operation::OwnerRetirementPlan { .. }
+            | Operation::OwnerRetirementInspect { .. }
+            | Operation::OwnerRetirementApply { .. }
+            | Operation::OwnerRetirementRecover { .. }
+    );
+    ensure!(
+        retirement || args.to_selection.is_some(),
+        "Binding migration and history operations require --to-selection"
+    );
+    ensure!(
+        !retirement || args.to_selection.is_none(),
+        "Standalone owner retirement accepts only the original --from-selection"
+    );
     let from = access(&args.from_selection, &d)?;
-    let to = access(&args.to_selection, &d)?;
+    match &args.operation {
+        Operation::OwnerRetirementPlan { document } => {
+            return print(
+                &documents::plan_owner_retirement(&from, document, &d)?,
+                maximum,
+                &d,
+            );
+        }
+        Operation::OwnerRetirementInspect { plan } => {
+            let p: OwnerRetirementPlan = read(plan, 32000, &d)?;
+            return print(
+                &documents::inspect_owner_retirement(&from, &p, &d)?,
+                maximum,
+                &d,
+            );
+        }
+        Operation::OwnerRetirementApply { plan, .. }
+        | Operation::OwnerRetirementRecover { plan, .. } => {
+            let p: OwnerRetirementPlan = read(plan, 32000, &d)?;
+            let authority = WriteAuthority::new(&from)?;
+            let result = match &args.operation {
+                Operation::OwnerRetirementApply { .. } => {
+                    let approval = authority.approve_owner_retirement(&from, &p, &d)?;
+                    documents::apply_owner_retirement(&from, &authority, &approval, &p, &d)
+                }
+                Operation::OwnerRetirementRecover {
+                    expected_event,
+                    direction,
+                    ..
+                } => documents::recover_owner_retirement(
+                    &from,
+                    &authority,
+                    &p,
+                    expected_event,
+                    match direction {
+                        Direction::Resume => RecoveryDirection::Resume,
+                        Direction::Rollback => RecoveryDirection::Rollback,
+                    },
+                    &d,
+                ),
+                _ => unreachable!(),
+            };
+            let receipt = result.with_context(|| format!("Owner retirement {} did not confirm completion; preserve the fixed owner and original journals and inspect before retrying", p.id))?;
+            return print(&receipt, maximum, &d).with_context(|| {
+                format!(
+                    "Owner retirement {} completed durably; output delivery failed",
+                    p.id
+                )
+            });
+        }
+        _ => {}
+    }
+    let to = access(
+        args.to_selection
+            .as_deref()
+            .context("Destination selection required")?,
+        &d,
+    )?;
     match &args.operation {
         Operation::HistoryPurgePlan {
             archive_plan,
@@ -529,6 +647,10 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<()> {
                 )
             })
         }
+        Operation::OwnerRetirementPlan { .. }
+        | Operation::OwnerRetirementInspect { .. }
+        | Operation::OwnerRetirementApply { .. }
+        | Operation::OwnerRetirementRecover { .. } => unreachable!(),
     }
 }
 
@@ -674,5 +796,90 @@ mod tests {
                     .contains("review")
             );
         }
+    }
+    #[test]
+    fn owner_retirement_permission_and_event_review_precede_missing_host_inputs() {
+        let event = "a".repeat(64);
+        for operation in [
+            vec!["owner-retirement-apply", "--plan", "missing-plan.json"],
+            vec![
+                "owner-retirement-recover",
+                "--plan",
+                "missing-plan.json",
+                "--expected-event",
+                &event,
+                "--direction",
+                "rollback",
+            ],
+        ] {
+            let mut input = vec!["owned", "--from-selection", "missing-original.json"];
+            input.extend(operation);
+            let parsed = Cli::try_parse_from(input).unwrap();
+            assert!(parsed.args.to_selection.is_none());
+            assert!(
+                run(&parsed.args, 10000, 64000)
+                    .unwrap_err()
+                    .to_string()
+                    .contains("Host owner retirement requires --allow-host-writes")
+            );
+        }
+        let parsed = Cli::try_parse_from([
+            "owned",
+            "--from-selection",
+            "missing-original.json",
+            "owner-retirement-recover",
+            "--plan",
+            "missing-plan.json",
+            "--expected-event",
+            "../foreign",
+            "--direction",
+            "resume",
+            "--allow-host-writes",
+        ])
+        .unwrap();
+        assert!(
+            run(&parsed.args, 10000, 64000)
+                .unwrap_err()
+                .to_string()
+                .contains("Explicit owner retirement event review required")
+        );
+    }
+
+    #[test]
+    fn standalone_retirement_refuses_a_second_selection_and_other_operations_still_require_it() {
+        let parsed = Cli::try_parse_from([
+            "owned",
+            "--from-selection",
+            "missing-original.json",
+            "--to-selection",
+            "unexpected-second.json",
+            "owner-retirement-plan",
+            "--document",
+            "owned",
+        ])
+        .unwrap();
+        assert!(
+            run(&parsed.args, 10000, 64000)
+                .unwrap_err()
+                .to_string()
+                .contains("only the original --from-selection")
+        );
+        let parsed = Cli::try_parse_from([
+            "owned",
+            "--from-selection",
+            "missing-original.json",
+            "binding-plan",
+            "--from-document",
+            "owned",
+            "--to-document",
+            "owned",
+        ])
+        .unwrap();
+        assert!(
+            run(&parsed.args, 10000, 64000)
+                .unwrap_err()
+                .to_string()
+                .contains("require --to-selection")
+        );
     }
 }

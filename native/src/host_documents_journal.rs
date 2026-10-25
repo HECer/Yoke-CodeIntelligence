@@ -3,6 +3,8 @@
 use super::*;
 #[path = "host_documents_binding_migration.rs"]
 mod binding_migration;
+#[path = "host_documents_owner_retirement.rs"]
+mod owner_retirement;
 pub use binding_migration::{
     BindingMigrationApproval, BindingMigrationAuthority, BindingMigrationPlan,
     BindingMigrationReceipt, BindingMigrationReview, HistoryArchiveAccess, HistoryArchiveApproval,
@@ -14,6 +16,11 @@ pub use binding_migration::{
     inspect_history_archive_purge, plan_binding_migration, plan_history_archive,
     plan_history_archive_purge, read_history_archive_record, recover_binding_migration,
     recover_history_archive, recover_history_archive_purge,
+};
+pub use owner_retirement::{
+    OwnerRetirementApproval, OwnerRetirementPlan, OwnerRetirementReceipt, OwnerRetirementReview,
+    apply_owner_retirement, inspect_owner_retirement, plan_owner_retirement,
+    recover_owner_retirement,
 };
 
 const MAX_EVENTS: u32 = 32;
@@ -156,6 +163,7 @@ fn expected_owner(access: &Access, selected: &BoundDocument) -> Result<OwnerBind
     Ok(owner)
 }
 fn read_owner(selected: &BoundDocument, d: &Deadline) -> Result<Option<OwnerBinding>> {
+    owner_retirement::require_no_pending(selected, d)?;
     let path = owner_path(selected)?;
     let Some(file) = io::read_file(&path, 2048, false, d)? else {
         return Ok(None);
