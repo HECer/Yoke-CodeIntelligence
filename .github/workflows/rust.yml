@@ -85,6 +85,17 @@ jobs:
           name: host-powershell-diagnostic-${{ matrix.shard }}
           path: validation/ci-host-powershell/result.json
           if-no-files-found: warn
+      - name: Isolate captured PowerShell output in a separate bounded trial
+        if: failure() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        timeout-minutes: 1
+        run: python scripts/host_powershell_probe.py --captured-write-output --output validation/ci-host-powershell-captured
+      - name: Preserve captured-output boundary diagnostics
+        if: always() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-powershell-captured-diagnostic-${{ matrix.shard }}
+          path: validation/ci-host-powershell-captured/result.json
+          if-no-files-found: warn
       - name: Preserve complete or partial shard receipts and raw group logs
         if: always()
         uses: actions/upload-artifact@v4

@@ -131,7 +131,7 @@ impl StdChildWrapper for SignalFailureOnce {
                 status: info.si_status,
                 signal: result
                     .as_ref()
-                    .map(|()| ())
+                    .copied()
                     .map_err(|error| error.raw_os_error()),
             });
             return result;

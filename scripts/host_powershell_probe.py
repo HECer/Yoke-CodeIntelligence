@@ -69,6 +69,21 @@ def commands():
             ("nested-snapshot-folder", folder, 2, "snapshot")]
 
 
+def captured_write_output_commands():
+    """Separate single-trial invocation; never extend the canonical trial budget."""
+    _name, plain, count, resume = commands()[2]
+    original = ("[Console]::Error.WriteLine('owned-before-write-output'); "
+                "Write-Output 'owned-shell-test'; "
+                "[Console]::Error.WriteLine('owned-after-write-output')")
+    captured = ("[Console]::Error.WriteLine('owned-before-captured-write-output'); "
+                "$value = Write-Output 'owned-shell-test'; "
+                "[Console]::Error.WriteLine('owned-after-captured-write-output'); "
+                "[Console]::Out.WriteLine($value)")
+    require(plain.count(original) == 1, "Canonical Write-Output control changed")
+    return [("nested-snapshot-captured-write-output", plain.replace(original, captured, 1),
+             count, resume)]
+
+
 def windows_api():
     from ctypes import wintypes as w
 
@@ -432,7 +447,10 @@ def trial(shell, fixture, environment, definition):
 def main(arguments=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--captured-write-output", action="store_true",
+                        help="Run only the separate captured Write-Output diagnostic control")
     args = parser.parse_args(arguments)
+    definitions = captured_write_output_commands() if args.captured_write_output else commands()
     require(os.name == "nt", "PowerShell diagnostic requires Windows")
     revision = os.environ.get("GITHUB_SHA")
     require(revision is None or re.fullmatch(r"[0-9a-f]{40}", revision), "Diagnostic source revision invalid")
@@ -446,13 +464,14 @@ def main(arguments=None):
     environment = selected_environment(os.environ)
     report = {"schema": 2, "diagnosticOnly": True, "nativeAcceptance": False,
               "diagnosticComplete": False,
+              "diagnosticMode": "captured-write-output" if args.captured_write_output else "canonical",
               "nativeYokeImageReadOrExecuted": False, "trialDeadlineSeconds": TRIAL_SECONDS,
               "memberObservationSeconds": MEMBER_SECONDS, "maxObservedMembers": MAX_MEMBERS,
               "sourceRevision": revision,
               "sourceSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
               "environmentNames": sorted(environment), "trials": []}
     (output / "result.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf8")
-    for definition in commands():
+    for definition in definitions:
         try:
             row = trial(shell, fixture, environment, definition)
         except CleanupUnproven as error:

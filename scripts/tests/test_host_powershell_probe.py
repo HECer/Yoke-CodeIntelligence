@@ -86,6 +86,90 @@ class PowerShellDiagnostic(unittest.TestCase):
         self.assertEqual(waits, 112.5)
         self.assertLess(waits, 120)
 
+    def test_captured_write_output_is_one_separate_equivalent_nested_snapshot_trial(self):
+        canonical = PROBE.commands()
+        definitions = PROBE.captured_write_output_commands()
+        self.assertEqual(len(definitions), 1)
+        captured = definitions[0]
+        self.assertEqual(captured[0], "nested-snapshot-captured-write-output")
+        self.assertEqual(captured[2:], canonical[2][2:])
+        self.assertEqual(captured[1], canonical[2][1]
+                         .replace("Write-Output 'owned-shell-test'",
+                                  "$value = Write-Output 'owned-shell-test'")
+                         .replace("owned-before-write-output", "owned-before-captured-write-output")
+                         .replace("owned-after-write-output')",
+                                  "owned-after-captured-write-output'); [Console]::Out.WriteLine($value)"))
+        self.assertEqual(captured[1].count("Write-Output 'owned-shell-test'"), 1)
+        self.assertEqual(captured[1].count("[Console]::Out.WriteLine($value)"), 1)
+        self.assertLess(captured[1].index("owned-before-captured-write-output"),
+                        captured[1].index("$value = Write-Output"))
+        self.assertLess(captured[1].index("$value = Write-Output"),
+                        captured[1].index("owned-after-captured-write-output"))
+        self.assertLess(captured[1].index("owned-after-captured-write-output"),
+                        captured[1].index("[Console]::Out.WriteLine($value)"))
+        self.assertEqual(PROBE.commands(), canonical)
+        self.assertEqual(len(canonical), 5)
+        self.assertEqual(canonical[-1][0], "nested-snapshot-folder")
+        waits = len(definitions) * (PROBE.TRIAL_SECONDS + PROBE.CLEANUP_SECONDS
+                                    + 2 * PROBE.READER_JOIN_SECONDS)
+        self.assertEqual(waits, 22.5)
+        self.assertLess(waits, 120)
+
+    def test_captured_output_cli_dispatch_does_not_run_the_canonical_plan(self):
+        canonical = PROBE.commands()
+        definitions = PROBE.captured_write_output_commands()
+        for supplemental in (False, True):
+            with self.subTest(supplemental=supplemental), tempfile.TemporaryDirectory() as raw:
+                root = Path(raw)
+                output = (root / "new-output").resolve()
+                environment = {"GITHUB_SHA": "a" * 40, "SystemRoot": str(root),
+                               "PSModulePath": "unapproved-modules"}
+                row = {"diagnosticComplete": False, "nativeAcceptance": False}
+                arguments = ["--output", str(output)]
+                if supplemental:
+                    arguments.append("--captured-write-output")
+                with mock.patch.object(PROBE, "os", types.SimpleNamespace(name="nt", environ=environment)), \
+                     mock.patch.object(PROBE.shutil, "disk_usage", return_value=types.SimpleNamespace(free=500_000_000)), \
+                     mock.patch.object(PROBE.Path, "is_file", return_value=True), \
+                     mock.patch.object(PROBE, "trial", return_value=row) as trial, \
+                     mock.patch("builtins.print"):
+                    self.assertEqual(PROBE.main(arguments), 0)
+                selected = definitions if supplemental else canonical
+                self.assertEqual([call.args[3] for call in trial.call_args_list], selected)
+                self.assertTrue(all(call.args[1] == output / "fixture" for call in trial.call_args_list))
+                self.assertTrue(all(call.args[2] == PROBE.selected_environment(environment)
+                                    for call in trial.call_args_list))
+                report = json.loads((output / "result.json").read_text(encoding="utf8"))
+                self.assertEqual(report["diagnosticMode"], "captured-write-output" if supplemental else "canonical")
+                self.assertEqual(report["trialDeadlineSeconds"], 20)
+                self.assertEqual(len(report["trials"]), len(selected))
+                self.assertFalse(report["nativeAcceptance"] or report["diagnosticComplete"])
+
+    def test_captured_output_flag_rejects_values_and_unknown_modes_before_output_or_process(self):
+        for option in ("--captured-write-output=false", "--captured-write-output=owned", "--unapproved-control"):
+            with self.subTest(option=option), \
+                 mock.patch.object(PROBE.Path, "mkdir") as mkdir, \
+                 mock.patch.object(PROBE, "trial") as trial, \
+                 mock.patch("sys.stderr"):
+                with self.assertRaises(SystemExit) as refused:
+                    PROBE.main(["--output", "unused-owned-output", option])
+                self.assertEqual(refused.exception.code, 2)
+                mkdir.assert_not_called()
+                trial.assert_not_called()
+
+    def test_captured_output_mode_preserves_existing_output_before_any_trial(self):
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            marker = root / "foreign-marker"
+            marker.write_bytes(b"preserve")
+            with mock.patch.object(PROBE, "os", types.SimpleNamespace(name="nt", environ={"GITHUB_SHA": "a" * 40})), \
+                 mock.patch.object(PROBE.shutil, "disk_usage", return_value=types.SimpleNamespace(free=500_000_000)), \
+                 mock.patch.object(PROBE, "trial") as trial:
+                with self.assertRaises(FileExistsError):
+                    PROBE.main(["--output", str(root), "--captured-write-output"])
+            self.assertEqual(marker.read_bytes(), b"preserve")
+            trial.assert_not_called()
+
     def test_environment_excludes_credentials_profiles_and_unapproved_host_input(self):
         source = {"SystemDrive": "C:", "PATH": "owned-tools", "TEMP": "owned-temp",
                   "OPENAI_API_KEY": "owned-not-a-credential", "GOOGLE_APPLICATION_CREDENTIALS": "owned-not-a-path",

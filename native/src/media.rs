@@ -763,6 +763,191 @@ pub fn ingest_transcript(
 const PDF_MEMORY: u64 = 256 * 1024 * 1024;
 const PDF_INPUT: usize = 10_000_000;
 const PDF_OUTPUT: usize = 8_000_000;
+const PDF_STDERR: usize = 64_000;
+const PDF_FAILURE_PREFIX: &[u8] = b"YOKE_PDF_FAILURE_V1 ";
+const PDF_FAILURE_RECORD: usize = 512;
+
+// This closed record contains no file names, PDF bytes or library error text.
+// The worker writes it only on failure; it is never a successful PDF response.
+#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+enum PdfFailurePhase {
+    ResourceLimits,
+    InputMetadata,
+    InputRead,
+    DocumentLoad,
+    PageTree,
+    PageText,
+    ResultSerialization,
+}
+
+#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+enum PdfResourceApi {
+    CreateJob,
+    SetJobLimits,
+    AssignJob,
+    QueryJobLimits,
+    VerifyJobLimits,
+    SetAddressSpace,
+    SetCpu,
+    GetAddressSpace,
+    GetCpu,
+    VerifyRlimits,
+    Unavailable,
+}
+
+#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct PdfFailureRecord {
+    schema: u8,
+    phase: PdfFailurePhase,
+    api: Option<PdfResourceApi>,
+    os_error: Option<i32>,
+    requested_memory_bytes: u64,
+    requested_cpu_seconds: u32,
+}
+
+impl PdfFailureRecord {
+    fn valid(&self) -> bool {
+        self.schema == 1
+            && self.requested_memory_bytes == PDF_MEMORY
+            && self.requested_cpu_seconds == 20
+            && self.os_error != Some(0)
+            && (self.phase == PdfFailurePhase::ResourceLimits) == self.api.is_some()
+    }
+}
+
+// The API and errno are recorded at the failing call, before another OS call can
+// replace the thread's last-error value. A verification mismatch has no errno.
+#[derive(Clone, Copy, Debug)]
+struct PdfResourceFailure {
+    api: PdfResourceApi,
+    os_error: Option<i32>,
+}
+
+impl std::fmt::Display for PdfResourceFailure {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "PDF worker resource setup refused; api={:?}; osError={:?}",
+            self.api, self.os_error
+        )
+    }
+}
+
+impl std::error::Error for PdfResourceFailure {}
+
+#[cfg(any(windows, target_os = "linux", target_os = "macos"))]
+fn pdf_resource_os_error(api: PdfResourceApi) -> anyhow::Error {
+    let os_error = std::io::Error::last_os_error().raw_os_error();
+    PdfResourceFailure { api, os_error }.into()
+}
+
+fn pdf_resource_mismatch(api: PdfResourceApi) -> anyhow::Error {
+    PdfResourceFailure {
+        api,
+        os_error: None,
+    }
+    .into()
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum PdfFailureEvidence {
+    Recorded(PdfFailureRecord),
+    Unavailable,
+    Invalid,
+}
+
+fn pdf_failure_evidence(stderr: &[u8]) -> PdfFailureEvidence {
+    if stderr.len() > PDF_STDERR {
+        return PdfFailureEvidence::Invalid;
+    }
+    let mut record = None;
+    for line in stderr.split(|byte| *byte == b'\n') {
+        let Some(raw) = line.strip_prefix(PDF_FAILURE_PREFIX) else {
+            continue;
+        };
+        if record.is_some() || raw.len() > PDF_FAILURE_RECORD {
+            return PdfFailureEvidence::Invalid;
+        }
+        let Ok(parsed) = serde_json::from_slice::<PdfFailureRecord>(raw) else {
+            return PdfFailureEvidence::Invalid;
+        };
+        if !parsed.valid() || serde_json::to_vec(&parsed).ok().as_deref() != Some(raw) {
+            return PdfFailureEvidence::Invalid;
+        }
+        record = Some(parsed);
+    }
+    record.map_or(
+        PdfFailureEvidence::Unavailable,
+        PdfFailureEvidence::Recorded,
+    )
+}
+
+// No source chain is exposed: worker/library errors may contain PDF-controlled
+// text. Both public formatting paths contain only closed fields and scalars.
+#[derive(Clone, Copy, Debug)]
+struct PdfWorkerRefusal(PdfFailureRecord);
+
+impl std::fmt::Display for PdfWorkerRefusal {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "Native PDF worker refused input; diagnostic={:?}",
+            self.0
+        )
+    }
+}
+
+impl std::error::Error for PdfWorkerRefusal {}
+
+fn pdf_failure_record(phase: PdfFailurePhase, error: &anyhow::Error) -> PdfFailureRecord {
+    let resource = error.downcast_ref::<PdfResourceFailure>();
+    PdfFailureRecord {
+        schema: 1,
+        phase,
+        api: (phase == PdfFailurePhase::ResourceLimits)
+            .then(|| resource.map_or(PdfResourceApi::Unavailable, |failure| failure.api)),
+        os_error: resource.and_then(|failure| failure.os_error).or_else(|| {
+            error.chain().find_map(|cause| {
+                cause
+                    .downcast_ref::<std::io::Error>()
+                    .and_then(std::io::Error::raw_os_error)
+            })
+        }),
+        requested_memory_bytes: PDF_MEMORY,
+        requested_cpu_seconds: 20,
+    }
+}
+
+struct PdfWorkerFailure {
+    exit_code: Option<i32>,
+    signal: Option<i32>,
+    // Retained for this failure only, not persisted or included in Debug/Display.
+    private_stderr: Vec<u8>,
+}
+
+impl std::fmt::Display for PdfWorkerFailure {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "Native PDF worker failed; malformed, encrypted or resource-limited PDF; exitCode={:?}; signal={:?}; diagnostic={:?}",
+            self.exit_code,
+            self.signal,
+            pdf_failure_evidence(&self.private_stderr)
+        )
+    }
+}
+
+impl std::fmt::Debug for PdfWorkerFailure {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self, f)
+    }
+}
+
+impl std::error::Error for PdfWorkerFailure {}
+
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub(crate) struct ResourceLimits {
@@ -843,18 +1028,24 @@ fn pdf_limits() -> Result<ResourceLimits> {
     unsafe {
         SetErrorMode(0x1 | 0x2 | 0x8000);
         let job = CreateJobObjectW(std::ptr::null_mut(), std::ptr::null());
-        ensure!(!job.is_null(), "Cannot create bounded PDF worker job");
+        if job.is_null() {
+            return Err(pdf_resource_os_error(PdfResourceApi::CreateJob));
+        }
         let set = SetInformationJobObject(
             job,
             9,
             (&limits as *const Extended).cast(),
             std::mem::size_of::<Extended>() as u32,
         );
-        let assigned = set != 0 && AssignProcessToJobObject(job, GetCurrentProcess()) != 0;
-        if !assigned {
-            let error = std::io::Error::last_os_error();
+        if set == 0 {
+            let error = pdf_resource_os_error(PdfResourceApi::SetJobLimits);
             CloseHandle(job);
-            return Err(error).context("Cannot enforce PDF worker memory limits");
+            return Err(error);
+        }
+        if AssignProcessToJobObject(job, GetCurrentProcess()) == 0 {
+            let error = pdf_resource_os_error(PdfResourceApi::AssignJob);
+            CloseHandle(job);
+            return Err(error);
         }
         let mut installed = Extended::default();
         let queried = QueryInformationJobObject(
@@ -864,15 +1055,17 @@ fn pdf_limits() -> Result<ResourceLimits> {
             std::mem::size_of::<Extended>() as u32,
             std::ptr::null_mut(),
         );
-        ensure!(
-            queried != 0
-                && installed.basic.flags & limits.basic.flags == limits.basic.flags
-                && installed.process_memory == PDF_MEMORY as usize
-                && installed.job_memory == PDF_MEMORY as usize
-                && installed.basic.active == 1
-                && installed.basic.process_time == limits.basic.process_time,
-            "PDF worker resource limits could not be verified"
-        );
+        if queried == 0 {
+            return Err(pdf_resource_os_error(PdfResourceApi::QueryJobLimits));
+        }
+        if !(installed.basic.flags & limits.basic.flags == limits.basic.flags
+            && installed.process_memory == PDF_MEMORY as usize
+            && installed.job_memory == PDF_MEMORY as usize
+            && installed.basic.active == 1
+            && installed.basic.process_time == limits.basic.process_time)
+        {
+            return Err(pdf_resource_mismatch(PdfResourceApi::VerifyJobLimits));
+        }
     }
     Ok(ResourceLimits {
         memory_bytes: PDF_MEMORY,
@@ -905,11 +1098,12 @@ fn pdf_limits() -> Result<ResourceLimits> {
     };
     // Hard limits remain local to this isolated native worker.
     unsafe {
-        ensure!(
-            setrlimit(address_space, &memory) == 0 && setrlimit(0, &cpu) == 0,
-            "Cannot enforce PDF worker resource limits: {}",
-            std::io::Error::last_os_error()
-        );
+        if setrlimit(address_space, &memory) != 0 {
+            return Err(pdf_resource_os_error(PdfResourceApi::SetAddressSpace));
+        }
+        if setrlimit(0, &cpu) != 0 {
+            return Err(pdf_resource_os_error(PdfResourceApi::SetCpu));
+        }
         let mut installed_memory = Limit {
             current: 0,
             maximum: 0,
@@ -918,15 +1112,19 @@ fn pdf_limits() -> Result<ResourceLimits> {
             current: 0,
             maximum: 0,
         };
-        ensure!(
-            getrlimit(address_space, &mut installed_memory) == 0
-                && getrlimit(0, &mut installed_cpu) == 0
-                && installed_memory.current == PDF_MEMORY
-                && installed_memory.maximum == PDF_MEMORY
-                && installed_cpu.current == 20
-                && installed_cpu.maximum == 21,
-            "PDF worker resource limits could not be verified"
-        );
+        if getrlimit(address_space, &mut installed_memory) != 0 {
+            return Err(pdf_resource_os_error(PdfResourceApi::GetAddressSpace));
+        }
+        if getrlimit(0, &mut installed_cpu) != 0 {
+            return Err(pdf_resource_os_error(PdfResourceApi::GetCpu));
+        }
+        if !(installed_memory.current == PDF_MEMORY
+            && installed_memory.maximum == PDF_MEMORY
+            && installed_cpu.current == 20
+            && installed_cpu.maximum == 21)
+        {
+            return Err(pdf_resource_mismatch(PdfResourceApi::VerifyRlimits));
+        }
     }
     Ok(ResourceLimits {
         memory_bytes: PDF_MEMORY,
@@ -936,7 +1134,7 @@ fn pdf_limits() -> Result<ResourceLimits> {
 }
 #[cfg(not(any(windows, target_os = "linux", target_os = "macos")))]
 fn pdf_limits() -> Result<ResourceLimits> {
-    anyhow::bail!("Native PDF worker resource limits are unavailable on this platform")
+    Err(pdf_resource_mismatch(PdfResourceApi::Unavailable))
 }
 
 struct LimitedText {
@@ -1554,18 +1752,47 @@ pub(crate) struct PdfResult {
 /// This function installs process-wide resource limits and never belongs in a
 /// reusable application process or in the parent MCP request thread.
 pub fn pdf_worker(input: &Path) -> Result<Value> {
+    let mut phase = PdfFailurePhase::ResourceLimits;
+    match pdf_worker_inner(input, &mut phase) {
+        Ok(value) => Ok(value),
+        Err(error) => {
+            let record = pdf_failure_record(phase, &error);
+            // Diagnostic IO is best effort and cannot replace the refusal. Only
+            // this fixed small record crosses stderr; the original error is
+            // deliberately excluded from both the public error and its chain.
+            let _ = (|| -> Result<()> {
+                let raw = serde_json::to_vec(&record)?;
+                ensure!(
+                    raw.len() <= PDF_FAILURE_RECORD,
+                    "PDF diagnostic capacity exceeded"
+                );
+                let mut stderr = std::io::stderr().lock();
+                stderr.write_all(PDF_FAILURE_PREFIX)?;
+                stderr.write_all(&raw)?;
+                stderr.write_all(b"\n")?;
+                Ok(())
+            })();
+            Err(PdfWorkerRefusal(record).into())
+        }
+    }
+}
+
+fn pdf_worker_inner(input: &Path, phase: &mut PdfFailurePhase) -> Result<Value> {
     let resource_limits = pdf_limits()?;
+    *phase = PdfFailurePhase::InputMetadata;
     let meta = fs::symlink_metadata(input)?;
     ensure!(
         meta.is_file() && !is_link(&meta) && meta.len() <= PDF_INPUT as u64,
         "PDF worker input must be a regular file at most 10 MB"
     );
+    *phase = PdfFailurePhase::InputRead;
     let bytes = fs::read(input)?;
     ensure!(
         bytes.len() <= PDF_INPUT && bytes.len() as u64 == meta.len(),
         "PDF worker input changed or grew"
     );
     let source_hash = hash(&bytes);
+    *phase = PdfFailurePhase::DocumentLoad;
     let document = lopdf::Document::load_mem_with_options(
         &bytes,
         lopdf::LoadOptions {
@@ -1577,6 +1804,7 @@ pub fn pdf_worker(input: &Path) -> Result<Value> {
         !document.is_encrypted(),
         "Encrypted PDF requires an explicitly decrypted copy"
     );
+    *phase = PdfFailurePhase::PageTree;
     let pages = pdf_pages(&document)?;
     ensure!(
         !pages.is_empty() && pages.len() <= 2000,
@@ -1586,6 +1814,7 @@ pub fn pdf_worker(input: &Path) -> Result<Value> {
     let mut total = 0usize;
     let mut warnings = Vec::new();
     let mut total_operations = 0usize;
+    *phase = PdfFailurePhase::PageText;
     for (i, (&page, &object)) in pages.iter().enumerate() {
         ensure!(page as usize == i + 1, "PDF page numbering is inconsistent");
         let mut writer = LimitedText {
@@ -1630,6 +1859,7 @@ pub fn pdf_worker(input: &Path) -> Result<Value> {
             origin: "native_pdf_text_not_ocr".into(),
         });
     }
+    *phase = PdfFailurePhase::ResultSerialization;
     Ok(serde_json::to_value(PdfResult {
         schema: 1,
         source_hash,
@@ -1736,7 +1966,7 @@ pub(crate) fn frozen_pdf_with_worker(
         .context("Native PDF worker stderr missing")?;
     let (sender, receiver) = std::sync::mpsc::sync_channel(2);
     read_worker_pipe(stdout, PDF_OUTPUT, sender.clone(), true);
-    read_worker_pipe(stderr, 64_000, sender, false);
+    read_worker_pipe(stderr, PDF_STDERR, sender, false);
     let mut output = None;
     let mut error_output = None;
     let mut status = None;
@@ -1757,12 +1987,22 @@ pub(crate) fn frozen_pdf_with_worker(
             ),
         }
     }
-    ensure!(
-        status
-            .context("Native PDF worker status missing")?
-            .success(),
-        "Native PDF worker failed; malformed, encrypted or resource-limited PDF"
-    );
+    let status = status.context("Native PDF worker status missing")?;
+    if !status.success() {
+        #[cfg(unix)]
+        let signal = {
+            use std::os::unix::process::ExitStatusExt;
+            status.signal()
+        };
+        #[cfg(not(unix))]
+        let signal = None;
+        return Err(PdfWorkerFailure {
+            exit_code: status.code(),
+            signal,
+            private_stderr: error_output.context("Native PDF worker stderr missing")?,
+        }
+        .into());
+    }
     ensure!(
         hash(fs::read(&copy)?) == source_hash,
         "Native PDF worker modified its immutable input copy"
@@ -1841,4 +2081,202 @@ pub fn inspect_with_worker(
     result["metadata"] = data["metadata"].clone();
     result["contentInterpretation"] = data["contentInterpretation"].clone();
     Ok(result)
+}
+
+#[cfg(test)]
+mod pdf_failure_tests {
+    use super::*;
+
+    fn record() -> PdfFailureRecord {
+        PdfFailureRecord {
+            schema: 1,
+            phase: PdfFailurePhase::ResourceLimits,
+            api: Some(PdfResourceApi::SetAddressSpace),
+            os_error: Some(22),
+            requested_memory_bytes: PDF_MEMORY,
+            requested_cpu_seconds: 20,
+        }
+    }
+
+    fn wire(record: &PdfFailureRecord) -> Vec<u8> {
+        let mut bytes = PDF_FAILURE_PREFIX.to_vec();
+        bytes.extend(serde_json::to_vec(record).unwrap());
+        bytes.push(b'\n');
+        bytes
+    }
+
+    #[test]
+    fn canonical_closed_failure_record_preserves_exact_original_limits() {
+        let expected = record();
+        let bytes = wire(&expected);
+        assert!(bytes.len() <= PDF_FAILURE_RECORD);
+        assert_eq!(
+            pdf_failure_evidence(&bytes),
+            PdfFailureEvidence::Recorded(expected)
+        );
+        for phase in [
+            PdfFailurePhase::InputMetadata,
+            PdfFailurePhase::InputRead,
+            PdfFailurePhase::DocumentLoad,
+            PdfFailurePhase::PageTree,
+            PdfFailurePhase::PageText,
+            PdfFailurePhase::ResultSerialization,
+        ] {
+            let expected = PdfFailureRecord {
+                phase,
+                api: None,
+                ..record()
+            };
+            assert_eq!(
+                pdf_failure_evidence(&wire(&expected)),
+                PdfFailureEvidence::Recorded(expected)
+            );
+        }
+    }
+
+    #[test]
+    fn worker_failure_formatting_never_publishes_retained_stderr() {
+        let secret = b"private-fixture-pdf-body-\xff\x00";
+        let mut private_stderr = secret.to_vec();
+        private_stderr.push(b'\n');
+        private_stderr.extend(wire(&record()));
+        let failure = PdfWorkerFailure {
+            exit_code: Some(17),
+            signal: None,
+            private_stderr,
+        };
+        assert!(failure.private_stderr.starts_with(secret));
+        for rendered in [format!("{failure}"), format!("{failure:?}")] {
+            assert!(rendered.contains("exitCode=Some(17)"));
+            assert!(rendered.contains("SetAddressSpace"));
+            assert!(rendered.contains("Some(22)"));
+            assert!(!rendered.contains("private-fixture-pdf-body"));
+            assert!(!rendered.contains('\u{fffd}'));
+        }
+        assert!(std::error::Error::source(&failure).is_none());
+    }
+
+    #[test]
+    fn missing_or_malformed_stderr_never_fabricates_a_startup_phase() {
+        for stderr in [b"".as_slice(), b"private raw error", b"\xff\x00"] {
+            assert_eq!(
+                pdf_failure_evidence(stderr),
+                PdfFailureEvidence::Unavailable
+            );
+            let failure = PdfWorkerFailure {
+                exit_code: None,
+                signal: Some(9),
+                private_stderr: stderr.to_vec(),
+            };
+            let rendered = format!("{failure:?}");
+            assert!(rendered.contains("signal=Some(9)"));
+            assert!(rendered.contains("Unavailable"));
+            assert!(!rendered.contains("private raw error"));
+        }
+        let mut duplicate = wire(&record());
+        duplicate.extend(wire(&record()));
+        assert_eq!(
+            pdf_failure_evidence(&duplicate),
+            PdfFailureEvidence::Invalid
+        );
+        let mut truncated = wire(&record());
+        truncated.pop();
+        truncated.pop();
+        assert_eq!(
+            pdf_failure_evidence(&truncated),
+            PdfFailureEvidence::Invalid
+        );
+    }
+
+    #[test]
+    fn diagnostic_protocol_rejects_unknown_duplicate_noncanonical_and_unbounded_fields() {
+        let canonical = serde_json::to_vec(&record()).unwrap();
+        let mut cases = vec![
+            canonical[..canonical.len() - 1]
+                .iter()
+                .copied()
+                .chain(b",\"extra\":1}".iter().copied())
+                .collect::<Vec<_>>(),
+            canonical[..canonical.len() - 1]
+                .iter()
+                .copied()
+                .chain(b",\"schema\":1}".iter().copied())
+                .collect(),
+            canonical
+                .iter()
+                .copied()
+                .chain(b" ".iter().copied())
+                .collect(),
+            vec![b' '; PDF_FAILURE_RECORD + 1],
+            b"{\"schema\":1,\"phase\":\"private uncontrolled text\"}".to_vec(),
+            b"{\"schema\":1,\"phase\":\"\xff\"}".to_vec(),
+            "{\"schema\":1,\"phase\":\"秘密\"}".as_bytes().to_vec(),
+        ];
+        for changed in [
+            PdfFailureRecord {
+                schema: 2,
+                ..record()
+            },
+            PdfFailureRecord {
+                requested_memory_bytes: PDF_MEMORY + 1,
+                ..record()
+            },
+            PdfFailureRecord {
+                requested_cpu_seconds: 21,
+                ..record()
+            },
+            PdfFailureRecord {
+                os_error: Some(0),
+                ..record()
+            },
+            PdfFailureRecord {
+                api: None,
+                ..record()
+            },
+            PdfFailureRecord {
+                phase: PdfFailurePhase::DocumentLoad,
+                ..record()
+            },
+        ] {
+            cases.push(serde_json::to_vec(&changed).unwrap());
+        }
+        for raw in cases {
+            let mut stderr = PDF_FAILURE_PREFIX.to_vec();
+            stderr.extend(raw);
+            stderr.push(b'\n');
+            assert_eq!(pdf_failure_evidence(&stderr), PdfFailureEvidence::Invalid);
+        }
+        assert_eq!(
+            pdf_failure_evidence(&vec![b'x'; PDF_STDERR + 1]),
+            PdfFailureEvidence::Invalid
+        );
+    }
+
+    #[test]
+    fn resource_errno_and_nonresource_phase_do_not_retain_arbitrary_error_context() {
+        let resource: anyhow::Error = PdfResourceFailure {
+            api: PdfResourceApi::SetAddressSpace,
+            os_error: Some(22),
+        }
+        .into();
+        let resource = resource.context("private arbitrary worker error context");
+        let diagnostic = pdf_failure_record(PdfFailurePhase::ResourceLimits, &resource);
+        assert_eq!(diagnostic, record());
+        let refusal = PdfWorkerRefusal(diagnostic);
+        for rendered in [format!("{refusal}"), format!("{refusal:?}")] {
+            assert!(!rendered.contains("private arbitrary"));
+        }
+        assert!(std::error::Error::source(&refusal).is_none());
+        let io: anyhow::Error = std::io::Error::from_raw_os_error(13).into();
+        let diagnostic = pdf_failure_record(PdfFailurePhase::InputRead, &io);
+        assert_eq!(diagnostic.phase, PdfFailurePhase::InputRead);
+        assert_eq!(diagnostic.api, None);
+        assert_eq!(diagnostic.os_error, Some(13));
+        assert!(diagnostic.valid());
+        let malformed = anyhow::anyhow!("PDF text with private arbitrary context");
+        let diagnostic = pdf_failure_record(PdfFailurePhase::DocumentLoad, &malformed);
+        assert_eq!(diagnostic.os_error, None);
+        assert_eq!(diagnostic.api, None);
+        assert!(!format!("{diagnostic:?}").contains("private arbitrary"));
+    }
 }
