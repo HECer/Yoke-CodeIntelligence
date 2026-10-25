@@ -124,6 +124,24 @@ def command_boundary_commands():
             for name, preparation in (("command-lookup", ""), ("fixed-module-import", imported))]
 
 
+def fixed_import_original_commands():
+    """Retain ordinary string-name invocation after one fixed host-module import."""
+    name, script, count, resume = commands()[-1]
+    require((name, count, resume) == ("nested-snapshot-folder", 2, "snapshot"),
+            "Canonical folder control changed")
+    prelude = (
+        "[Console]::Error.WriteLine('owned-before-original-import-clock'); "
+        "$originalImportClock=[Diagnostics.Stopwatch]::StartNew(); "
+        "[Console]::Error.WriteLine('owned-before-original-module-import-ms:'"
+        "+$originalImportClock.ElapsedMilliseconds.ToString([Globalization.CultureInfo]::InvariantCulture)); "
+        "Import-Module -Name ($PSHOME+'\\Modules\\Microsoft.PowerShell.Utility"
+        "\\Microsoft.PowerShell.Utility.psd1') -ErrorAction Stop; "
+        "[Console]::Error.WriteLine('owned-after-original-module-import-ms:'"
+        "+$originalImportClock.ElapsedMilliseconds.ToString([Globalization.CultureInfo]::InvariantCulture)); "
+    )
+    return [("nested-snapshot-fixed-import-original", prelude + script, count, resume)]
+
+
 def local_app_data_environment(source):
     value = source.get("LOCALAPPDATA")
     require(isinstance(value, str) and 0 < len(value) <= 32767
@@ -507,10 +525,13 @@ def main(arguments=None):
                       help="Run only the original folder trial with host LOCALAPPDATA")
     mode.add_argument("--command-boundary", action="store_true",
                       help="Run separate lookup and fixed module-import boundary controls")
+    mode.add_argument("--fixed-import-original", action="store_true",
+                      help="Run the exact original folder command after fixed Utility import")
     args = parser.parse_args(arguments)
     definitions = (captured_write_output_commands() if args.captured_write_output else
                    local_app_data_commands() if args.local_app_data else
-                   command_boundary_commands() if args.command_boundary else commands())
+                   command_boundary_commands() if args.command_boundary else
+                   fixed_import_original_commands() if args.fixed_import_original else commands())
     require(os.name == "nt", "PowerShell diagnostic requires Windows")
     revision = os.environ.get("GITHUB_SHA")
     require(revision is None or re.fullmatch(r"[0-9a-f]{40}", revision), "Diagnostic source revision invalid")
@@ -528,7 +549,8 @@ def main(arguments=None):
               "diagnosticComplete": False,
               "diagnosticMode": ("captured-write-output" if args.captured_write_output else
                                  "local-app-data" if args.local_app_data else
-                                 "command-boundary" if args.command_boundary else "canonical"),
+                                 "command-boundary" if args.command_boundary else
+                                 "fixed-import-original" if args.fixed_import_original else "canonical"),
               "nativeYokeImageReadOrExecuted": False, "trialDeadlineSeconds": TRIAL_SECONDS,
               "memberObservationSeconds": MEMBER_SECONDS, "maxObservedMembers": MAX_MEMBERS,
               "sourceRevision": revision,

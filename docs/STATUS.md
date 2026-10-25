@@ -1,5 +1,21 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Windows command lookup: stalled boundary observed (2026-10-25)
+
+At `0d0b43e3`, the fresh cmdlet-only lookup does not return before 20 seconds.
+A fresh fixed Utility import followed by lookup and command-object invocation
+finishes in 0.572 seconds with natural tree exit. This changes two dimensions;
+normal string-name invocation after import is not yet established.
+
+A separate new control prepends that import to the exact original folder
+script. Its ordinary `Write-Output`, environment, two snapshot Jobs, original
+20-second deadline and two-second cleanup remain. It passes locally in 0.242
+seconds with exact output, all original markers and empty Jobs before force.
+Typecheck, npm 260/0/3 original skips and Actionlint pass. All 147 Python tests
+pass, but the owned compiler helper still makes their lifecycle receipt
+incomplete. Hosted results and any production repair remain pending.
+[Evidence](validation/integration-2026-10-25/powershell-command-lookup/README.md).
+
 ## Hosted follow-up: dashboard and Darwin cleanup pass; platform gates remain (2026-10-25)
 
 At `553e5dc1`, the PR Windows library passes 768/0 with 7 original ignores;

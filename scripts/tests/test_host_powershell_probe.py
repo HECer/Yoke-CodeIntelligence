@@ -345,6 +345,75 @@ class PowerShellDiagnostic(unittest.TestCase):
             self.assertEqual(marker.read_bytes(), b"preserve")
             trial.assert_not_called()
 
+    def test_fixed_import_keeps_the_exact_original_script_and_normal_name_resolution(self):
+        canonical = PROBE.commands()
+        row = PROBE.fixed_import_original_commands()[0]
+        self.assertEqual(row[0], "nested-snapshot-fixed-import-original")
+        self.assertEqual(row[2:], canonical[-1][2:])
+        self.assertTrue(row[1].endswith(canonical[-1][1]))
+        self.assertEqual(row[1].count("Write-Output 'owned-windows-runtime'"), 1)
+        self.assertNotIn(".GetCommand(", row[1])
+        self.assertNotIn("& $command", row[1])
+        self.assertIn("$originalImportClock=[Diagnostics.Stopwatch]::StartNew()", row[1])
+        self.assertIn("Import-Module -Name ($PSHOME+'\\Modules\\Microsoft.PowerShell.Utility"
+                      "\\Microsoft.PowerShell.Utility.psd1') -ErrorAction Stop", row[1])
+        self.assertLess(row[1].index("owned-before-original-module-import-ms:"), row[1].index("Import-Module"))
+        self.assertLess(row[1].index("Import-Module"), row[1].index("owned-after-original-module-import-ms:"))
+        self.assertLess(row[1].index("owned-after-original-module-import-ms:"), row[1].index("owned-script-entry"))
+        self.assertEqual(PROBE.commands(), canonical)
+        self.assertEqual(PROBE.TRIAL_SECONDS, 20)
+        self.assertEqual(PROBE.CLEANUP_SECONDS, 2)
+        self.assertEqual(len(PROBE.fixed_import_original_commands()), 1)
+
+    def test_fixed_import_refuses_a_changed_original_job_or_resume_definition(self):
+        for count, resume in ((1, "snapshot"), (2, "primary")):
+            with self.subTest(count=count, resume=resume), mock.patch.object(
+                    PROBE, "commands", return_value=[("nested-snapshot-folder", "owned", count, resume)]):
+                with self.assertRaisesRegex(RuntimeError, "Canonical folder control changed"):
+                    PROBE.fixed_import_original_commands()
+
+    def test_fixed_import_cli_uses_only_the_new_control_and_baseline_environment(self):
+        with tempfile.TemporaryDirectory() as raw:
+            output = (Path(raw) / "new-output").resolve()
+            environment = {"SystemRoot": raw, "PSModulePath": "unselected-module-value"}
+            row = {"diagnosticComplete": True, "nativeAcceptance": False}
+            with mock.patch.object(PROBE, "os", types.SimpleNamespace(name="nt", environ=environment)), \
+                 mock.patch.object(PROBE.shutil, "disk_usage", return_value=types.SimpleNamespace(free=500_000_000)), \
+                 mock.patch.object(PROBE.Path, "is_file", return_value=True), \
+                 mock.patch.object(PROBE, "trial", return_value=row) as trial, mock.patch("builtins.print"):
+                self.assertEqual(PROBE.main(["--output", str(output), "--fixed-import-original"]), 0)
+            self.assertEqual([call.args[3] for call in trial.call_args_list], PROBE.fixed_import_original_commands())
+            self.assertEqual(trial.call_args.args[2], PROBE.selected_environment(environment))
+            report = json.loads((output / "result.json").read_text(encoding="utf8"))
+            self.assertEqual(report["diagnosticMode"], "fixed-import-original")
+            self.assertFalse(report["nativeAcceptance"])
+            self.assertEqual(len(report["trials"]), 1)
+            self.assertNotIn("unselected-module-value", json.dumps(report))
+
+    def test_fixed_import_refuses_other_modes_and_values_before_output(self):
+        for extra in (["--fixed-import-original=true"],
+                      *[["--fixed-import-original", flag] for flag in
+                        ("--captured-write-output", "--local-app-data", "--command-boundary")]):
+            with self.subTest(extra=extra), mock.patch.object(PROBE.Path, "mkdir") as mkdir, \
+                 mock.patch.object(PROBE, "trial") as trial, mock.patch("sys.stderr"):
+                with self.assertRaises(SystemExit) as refused:
+                    PROBE.main(["--output", "unused-owned-output", *extra])
+                self.assertEqual(refused.exception.code, 2)
+                mkdir.assert_not_called()
+                trial.assert_not_called()
+
+    def test_fixed_import_preserves_existing_evidence_before_execution(self):
+        with tempfile.TemporaryDirectory() as raw:
+            marker = Path(raw) / "foreign-marker"
+            marker.write_bytes(b"preserve")
+            with mock.patch.object(PROBE, "os", types.SimpleNamespace(name="nt", environ={})), \
+                 mock.patch.object(PROBE.shutil, "disk_usage", return_value=types.SimpleNamespace(free=500_000_000)), \
+                 mock.patch.object(PROBE, "trial") as trial:
+                with self.assertRaises(FileExistsError):
+                    PROBE.main(["--output", raw, "--fixed-import-original"])
+            self.assertEqual(marker.read_bytes(), b"preserve")
+            trial.assert_not_called()
+
     def test_environment_excludes_credentials_profiles_and_unapproved_host_input(self):
         source = {"SystemDrive": "C:", "PATH": "owned-tools", "TEMP": "owned-temp",
                   "OPENAI_API_KEY": "owned-not-a-credential", "GOOGLE_APPLICATION_CREDENTIALS": "owned-not-a-path",
