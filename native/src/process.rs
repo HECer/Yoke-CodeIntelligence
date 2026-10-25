@@ -290,6 +290,12 @@ fn capture(
             }
         }
     }
+    #[cfg(not(windows))]
+    if output_complete && exit.is_some() {
+        // Complete pipes are not a process-group exit receipt. Report checked
+        // cleanup failures here instead of suppressing them in best-effort Drop.
+        exit = Some(child.cleanup_checked(Duration::from_secs(2))?);
+    }
     Ok(CapturedOutput {
         exit_code: exit.and_then(|status| status.code()),
         stdout: outputs[0].take().unwrap_or_default(),
@@ -365,8 +371,35 @@ pub fn current_memory_limit() -> Result<Option<usize>> {
     }
 }
 
+#[cfg(unix)]
+fn owned_group_absent(pgid: u32) -> Result<bool> {
+    let pgid = libc::pid_t::try_from(pgid)
+        .map_err(|_| CleanupUnproven::new("Invalid owned process group identity"))?;
+    ensure!(
+        pgid > 1,
+        CleanupUnproven::new("Invalid owned process group identity")
+    );
+    // Signal zero observes the original group without delivering a signal.
+    // A permission error never establishes absence, including for zombies.
+    if unsafe { libc::kill(-pgid, 0) } == 0 {
+        return Ok(false);
+    }
+    let error = std::io::Error::last_os_error();
+    match error.raw_os_error() {
+        Some(libc::ESRCH) => Ok(true),
+        Some(libc::EPERM) => Ok(false),
+        _ => Err(CleanupUnproven::new(format!(
+            "Owned process group observation unavailable (os error {:?})",
+            error.raw_os_error()
+        ))
+        .into()),
+    }
+}
+
 pub struct ManagedChild {
     inner: Box<dyn StdChildWrapper>,
+    #[cfg(unix)]
+    owned_pgid: u32,
     drop_wait: bool,
     #[cfg(windows)]
     job: Arc<windows_job::OwnedJob>,
@@ -418,19 +451,22 @@ impl ManagedChild {
         };
         #[cfg(unix)]
         wrapper.wrap(process_wrap::std::ProcessGroup::leader());
+        #[cfg(windows)]
+        let inner = job.spawn_checked(&mut wrapper)?;
+        #[cfg(not(windows))]
+        let inner = wrapper.spawn()?;
         Ok(Self {
-            #[cfg(windows)]
-            inner: job.spawn_checked(&mut wrapper)?,
-            #[cfg(not(windows))]
-            inner: wrapper.spawn()?,
+            #[cfg(unix)]
+            owned_pgid: inner.inner().id(),
+            inner,
             drop_wait: true,
             #[cfg(windows)]
             job,
         })
     }
-    /// Consume an owned process and prove its exit after requesting wrapper
-    /// termination. Cleanup uses a separate bounded host budget even when the
-    /// request that owned the process has already been cancelled.
+    /// Consume an owned process and prove root exit and managed cleanup.
+    /// Cleanup uses a separate bounded host budget even when the owning
+    /// request has already been cancelled.
     pub fn terminate_checked(mut self, budget: Duration) -> Result<std::process::ExitStatus> {
         self.cleanup_checked(budget)
     }
@@ -454,17 +490,31 @@ impl ManagedChild {
         }
         #[cfg(not(windows))]
         {
-            if let Err(error) = self.inner.start_kill() {
-                // A naturally exited/reaped leader can already have no group.
-                // ESRCH alone is not an exit receipt: the raw owned child must
-                // still report an actual status below. Other signal failures
-                // never become successful cleanup.
+            // Reap a completed root before requesting unnecessary termination.
+            // Once reaped, its numeric PGID is observation-only: it could be
+            // reused after the original group disappears. Remaining members
+            // must refuse here; later signalling needs retained ownership.
+            #[cfg(unix)]
+            let mut exit = self
+                .inner
+                .inner_mut()
+                .try_wait()
+                .map_err(|_| CleanupUnproven::new("Owned process exit status unavailable"))?;
+            #[cfg(not(unix))]
+            let mut exit = None;
+            if exit.is_none()
+                && let Err(error) = self.inner.start_kill()
+            {
+                // The unreaped root still pins its PID during this one request.
+                // Darwin can report EPERM if exit races the group signal.
+                // Neither signal error is proof; both receipts below must pass.
                 #[cfg(unix)]
-                let absent = error.raw_os_error() == Some(libc::ESRCH);
+                let reconcile = error.raw_os_error() == Some(libc::ESRCH)
+                    || (cfg!(target_os = "macos") && error.raw_os_error() == Some(libc::EPERM));
                 #[cfg(not(unix))]
-                let absent = false;
+                let reconcile = false;
                 ensure!(
-                    absent,
+                    reconcile,
                     CleanupUnproven::new(format!(
                         "Owned process termination request failed (os error {:?})",
                         error.raw_os_error()
@@ -476,20 +526,33 @@ impl ManagedChild {
                 CleanupUnproven::new("Invalid owned process cleanup budget")
             );
             loop {
-                if let Some(status) =
-                    self.inner.inner_mut().try_wait().map_err(|_| {
-                        CleanupUnproven::new("Owned process exit status unavailable")
-                    })?
-                {
-                    return Ok(status);
-                }
-                let remaining = end.saturating_duration_since(std::time::Instant::now());
                 ensure!(
-                    !remaining.is_zero(),
+                    std::time::Instant::now() < end,
                     CleanupUnproven::new(
-                        "Owned process exit could not be proven within cleanup budget"
+                        "Owned process exit and group absence unproven within cleanup budget"
                     )
                 );
+                if exit.is_none() {
+                    exit = self.inner.inner_mut().try_wait().map_err(|_| {
+                        CleanupUnproven::new("Owned process exit status unavailable")
+                    })?;
+                }
+                if let Some(status) = exit {
+                    #[cfg(unix)]
+                    let absent = owned_group_absent(self.owned_pgid)?;
+                    #[cfg(not(unix))]
+                    let absent = true;
+                    if absent {
+                        ensure!(
+                            std::time::Instant::now() < end,
+                            CleanupUnproven::new(
+                                "Owned process exit and group absence unproven within cleanup budget"
+                            )
+                        );
+                        return Ok(status);
+                    }
+                }
+                let remaining = end.saturating_duration_since(std::time::Instant::now());
                 thread::sleep(remaining.min(Duration::from_millis(10)));
             }
         }

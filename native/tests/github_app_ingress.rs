@@ -595,36 +595,102 @@ fn absolute_request_deadline_stops_a_peer_which_keeps_sending_partial_headers() 
     let mut c = config();
     c.request_timeout_ms = 120;
     let mut f = Fixture::new(c, options());
+    // Diagnostic phases share this pre-connect epoch; the acceptance timer
+    // and server deadline still start in their original places.
+    let observed_from = Instant::now();
     let mut read = TcpStream::connect(f.address()).unwrap();
+    let connected_at = observed_from.elapsed();
     read.set_read_timeout(Some(Duration::from_secs(2))).unwrap();
     let mut write = read.try_clone().unwrap();
     let stop = Arc::new(AtomicBool::new(false));
     let stopping = stop.clone();
     let sent = Arc::new(AtomicUsize::new(0));
     let count = sent.clone();
+    let spawn_started_at = observed_from.elapsed();
     let drip = std::thread::spawn(move || {
-        for _ in 0..60 {
-            if stopping.load(Ordering::SeqCst) || write.write_all(b"P").is_err() {
+        // Owned by this thread until join; no observer mutex or shared log.
+        let entered_at = observed_from.elapsed();
+        let mut first_two_writes = [(None, None, None); 2];
+        // Error and stop observations use one-based attempt numbers.
+        let mut write_error = None;
+        let mut stop_observed = None;
+        let mut last_wake_at = None;
+        for attempt in 0..60 {
+            if stopping.load(Ordering::SeqCst) {
+                stop_observed = Some((attempt + 1, observed_from.elapsed()));
+                break;
+            }
+            if let Some((attempt_at, _, _)) = first_two_writes.get_mut(attempt) {
+                *attempt_at = Some(observed_from.elapsed());
+            }
+            if let Err(error) = write.write_all(b"P") {
+                write_error = Some((attempt + 1, observed_from.elapsed(), error.kind()));
                 break;
             }
             count.fetch_add(1, Ordering::SeqCst);
+            if let Some((_, success_at, _)) = first_two_writes.get_mut(attempt) {
+                *success_at = Some(observed_from.elapsed());
+            }
             std::thread::sleep(Duration::from_millis(25));
+            let woke_at = observed_from.elapsed();
+            last_wake_at = Some(woke_at);
+            if let Some((_, _, wake)) = first_two_writes.get_mut(attempt) {
+                *wake = Some(woke_at);
+            }
         }
+        (
+            ("entry", entered_at),
+            ("first-two-attempt-success-wake", first_two_writes),
+            ("write-error-attempt-time-kind", write_error),
+            ("stop-attempt-time", stop_observed),
+            ("last-wake", last_wake_at),
+            ("return", observed_from.elapsed()),
+        )
     });
     let now = Instant::now();
     let mut wire = Vec::new();
-    let _ = read.read_to_end(&mut wire);
+    let read_started_at = observed_from.elapsed();
+    let read_outcome = read.read_to_end(&mut wire).map_err(|error| error.kind());
+    let read_completed_at = observed_from.elapsed();
     stop.store(true, Ordering::SeqCst);
-    drip.join().unwrap();
+    let stop_requested_at = observed_from.elapsed();
+    let join_started_at = observed_from.elapsed();
+    let joined = drip.join();
+    let join_completed_at = observed_from.elapsed();
+    let client_phases = [
+        ("connect-return", connected_at),
+        ("spawn-entry", spawn_started_at),
+        ("read-entry", read_started_at),
+        ("read-return", read_completed_at),
+        ("stop-request", stop_requested_at),
+        ("join-entry", join_started_at),
+        ("join-return", join_completed_at),
+    ];
+    assert!(
+        joined.is_ok(),
+        "writer panicked; elapsed={:?}; response_bytes={}; read_outcome={read_outcome:?}; client_phases={client_phases:?}",
+        now.elapsed(),
+        wire.len()
+    );
+    let writer = joined.unwrap();
     assert!(
         sent.load(Ordering::SeqCst) >= 2,
-        "sent={}; elapsed={:?}; response_bytes={}",
+        "sent={}; elapsed={:?}; response_bytes={}; read_outcome={read_outcome:?}; client_phases={client_phases:?}; writer={writer:?}",
         sent.load(Ordering::SeqCst),
         now.elapsed(),
         wire.len()
     );
-    assert!(now.elapsed() < Duration::from_millis(750));
-    assert!(f.records().is_empty());
+    assert!(
+        now.elapsed() < Duration::from_millis(750),
+        "elapsed={:?}; response_bytes={}; read_outcome={read_outcome:?}; client_phases={client_phases:?}; writer={writer:?}",
+        now.elapsed(),
+        wire.len()
+    );
+    assert!(
+        f.records().is_empty(),
+        "response_bytes={}; read_outcome={read_outcome:?}; client_phases={client_phases:?}; writer={writer:?}",
+        wire.len()
+    );
     f.stop();
 }
 #[test]

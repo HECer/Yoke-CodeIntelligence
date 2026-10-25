@@ -48,6 +48,7 @@ jobs:
           key: native-shard-${{ matrix.shard }}
       - run: npm ci
       - run: python -m unittest discover -s scripts/tests -v
+        id: python_tests
         if: matrix.shard == 0
       - name: Observe Unix memory APIs without native acceptance claims
         if: matrix.shard == 0 && runner.os != 'Windows'
@@ -74,11 +75,11 @@ jobs:
         run: python scripts/native_shards.py run --index ${{ matrix.shard }}
       - name: Observe owned PowerShell startup after a failed Windows shard
         id: powershell_probe
-        if: failure() && steps.native_tests.outcome == 'failure' && runner.os == 'Windows' && (matrix.shard == 5 || matrix.shard == 7)
+        if: failure() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
         timeout-minutes: 2
         run: python scripts/host_powershell_probe.py --output validation/ci-host-powershell
       - name: Preserve separate PowerShell diagnostics (never native acceptance)
-        if: always() && runner.os == 'Windows' && (matrix.shard == 5 || matrix.shard == 7)
+        if: always() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
         uses: actions/upload-artifact@v4
         with:
           name: host-powershell-diagnostic-${{ matrix.shard }}

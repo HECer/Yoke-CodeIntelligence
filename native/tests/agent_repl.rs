@@ -246,7 +246,7 @@ fn explicitly_selected_shell_runs_and_cell_errors_preserve_namespace() {
     let shell_phase = phases.path().join("owned-shell-phase");
     let cell = if cfg!(windows) {
         let command = format!(
-            "[IO.File]::WriteAllText('{}','entered'); Write-Output owned-shell-test; [IO.File]::WriteAllText('{}','finished')",
+            "[IO.File]::WriteAllText('{}','entered'); [Console]::Error.WriteLine('owned-before-write-output'); Write-Output owned-shell-test; [Console]::Error.WriteLine('owned-after-write-output'); [IO.File]::WriteAllText('{}','finished')",
             shell_phase.to_str().unwrap().replace('\'', "''"),
             shell_phase.to_str().unwrap().replace('\'', "''")
         );

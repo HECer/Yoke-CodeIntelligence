@@ -167,16 +167,33 @@ fn exact_caps_accept_one_root_marker_and_uppercase_metadata_stays_protected() {
     let report = scan(root.path(), &options).unwrap();
     assert_eq!(report.entries_visited, 1);
     assert_eq!(report.directories_visited, 1);
+    // Marker lookup follows the volume's alias behavior; enumeration uses the
+    // scanner's platform-specific spelling rule independently.
     if root.path().join(".git").is_dir() {
         assert_eq!(report.candidates.len(), 1);
         assert_eq!(report.candidates[0].path, ".");
-        assert!(report.omissions.is_empty());
     } else {
         assert!(report.candidates.is_empty());
+    }
+    if cfg!(windows) {
+        assert!(report.omissions.is_empty());
+    } else {
         assert_eq!(report.omissions.len(), 1);
         assert_eq!(report.omissions[0].path, ".GIT");
         assert_eq!(report.omissions[0].reason, "protected-path");
     }
+    assert!(report.select(".GIT").is_err());
+    assert!(report.select(".GIT/private").is_err());
+    assert!(report.select(".git/private").is_err());
+    assert_eq!(
+        scan(&root.path().join(".GIT/private"), &options)
+            .unwrap_err()
+            .to_string(),
+        "repository_discovery_protected_root"
+    );
+    assert!(!report.complete);
+    assert!(!report.registration_granted);
+    assert!(!report.source_access_granted);
 }
 
 #[test]

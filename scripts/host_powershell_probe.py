@@ -21,6 +21,16 @@ ENVIRONMENT = ("PATH", "SystemRoot", "SystemDrive", "WINDIR", "USERPROFILE", "HO
                "TEMP", "TMP", "LANG", "RUSTUP_HOME", "CARGO_HOME")
 MAX_LOG = 65_536
 TRIAL_SECONDS = 20
+MEMBER_SECONDS = .25
+CLEANUP_SECONDS = 2
+READER_JOIN_SECONDS = .25
+MAX_MEMBERS = 16
+MAX_IMAGE_CHARS = 4096
+
+
+class JobProcessIds(c.Structure):
+    _fields_ = [("assigned", c.c_uint32), ("returned", c.c_uint32),
+                ("ids", c.c_size_t * MAX_MEMBERS)]
 
 
 class CleanupUnproven(RuntimeError):
@@ -40,16 +50,22 @@ def commands():
               "[Console]::Error.WriteLine('owned-host-version:'+$PSVersionTable.PSVersion.ToString()); "
               "$ErrorActionPreference='Stop'; ")
     suffix = "; [Console]::Error.WriteLine('owned-script-end')"
-    plain = prefix + "Write-Output 'owned-shell-test'" + suffix
+    before = "[Console]::Error.WriteLine('owned-before-write-output'); "
+    after = "; [Console]::Error.WriteLine('owned-after-write-output')"
+    plain = prefix + before + "Write-Output 'owned-shell-test'" + after + suffix
+    console = (prefix + "[Console]::Error.WriteLine('owned-before-console-out'); "
+               "[Console]::Out.WriteLine('owned-shell-test'); "
+               "[Console]::Error.WriteLine('owned-after-console-out')" + suffix)
     folder = (prefix + "[Console]::Error.WriteLine('owned-before-folder'); "
               "$folder=[Environment]::GetFolderPath([Environment+SpecialFolder]::CommonApplicationData,"
               "[Environment+SpecialFolderOption]::DoNotVerify); "
               "[Console]::Error.WriteLine('owned-after-folder'); "
               "if(-not [IO.Path]::IsPathRooted($folder)){throw 'Managed known folder is not absolute'}; "
-              "Write-Output 'owned-windows-runtime'" + suffix)
+              + before + "Write-Output 'owned-windows-runtime'" + after + suffix)
     return [("single-primary", plain, 1, "primary"),
             ("nested-primary-folder", folder, 2, "primary"),
             ("nested-snapshot", plain, 2, "snapshot"),
+            ("nested-snapshot-console", console, 2, "snapshot"),
             ("nested-snapshot-folder", folder, 2, "snapshot")]
 
 
@@ -88,6 +104,12 @@ def windows_api():
         ("Thread32First", [c.c_void_p, c.POINTER(Thread)], w.BOOL),
         ("Thread32Next", [c.c_void_p, c.POINTER(Thread)], w.BOOL),
         ("OpenThread", [w.DWORD, w.BOOL, w.DWORD], c.c_void_p),
+        ("OpenProcess", [w.DWORD, w.BOOL, w.DWORD], c.c_void_p),
+        ("IsProcessInJob", [c.c_void_p, c.c_void_p, c.c_void_p], w.BOOL),
+        ("GetProcessTimes", [c.c_void_p] * 5, w.BOOL),
+        ("QueryFullProcessImageNameW", [c.c_void_p, w.DWORD, c.c_wchar_p, c.c_void_p], w.BOOL),
+        ("WaitForSingleObject", [c.c_void_p, w.DWORD], w.DWORD),
+        ("GetExitCodeProcess", [c.c_void_p, c.c_void_p], w.BOOL),
     ]:
         function = getattr(api, name)
         function.argtypes, function.restype = args, result
@@ -97,6 +119,98 @@ def windows_api():
 def require(value, label):
     if not value:
         raise RuntimeError(label)
+
+
+def observe_members(api, jobs, root, root_pid, handles, end):
+    """One bounded outer-Job snapshot, not a complete process history.
+
+    Metadata comes only from membership-checked handles, retained until cleanup.
+    Image names are OS metadata; no executable bytes or command lines are read.
+    """
+    result = {"complete": False, "members": None, "unavailable": []}
+
+    def budget():
+        if time.monotonic() >= end:
+            if "deadline" not in result["unavailable"]:
+                result["unavailable"].append("deadline")
+            return False
+        return True
+
+    if not budget():
+        return result
+    data = JobProcessIds()
+    # A nested Job's outer list already includes its descendants; never sum Jobs.
+    if not api.QueryInformationJobObject(jobs[0], 3, c.byref(data), c.sizeof(data), None):
+        result["unavailable"].append("job-process-list")
+        return result
+    result.update(assignedAtQuery=int(data.assigned), returnedAtQuery=int(data.returned))
+    if data.returned > MAX_MEMBERS or data.returned > data.assigned:
+        result["unavailable"].append("invalid-job-process-list")
+        return result
+    pids = list(data.ids[:data.returned])
+    if any(pid <= 0 or pid > 0xffffffff for pid in pids) or len(set(pids)) != len(pids):
+        result["unavailable"].append("invalid-job-process-list")
+        return result
+    if data.assigned != data.returned:
+        result["unavailable"].append("job-process-list-capacity")
+    result["members"] = [
+        {"pid": pid, "root": pid == root_pid, "inOuterOwnedJob": None,
+         "creationTime100ns": None, "imagePath": None, "exited": None,
+         "exitCode": None, "unavailable": []}
+        for pid in pids
+    ]
+    for member in result["members"]:
+        if not budget():
+            member["unavailable"].append("deadline")
+            continue
+        handle = root if member["root"] else api.OpenProcess(0x00101000, False, member["pid"])
+        if not handle:
+            member["unavailable"].append("process-open")
+            continue
+        if not member["root"]:
+            # Track even an unverified handle immediately, so errors cannot leak it.
+            handles.append(handle)
+        if not budget():
+            member["unavailable"].append("deadline")
+            continue
+        owned = c.c_int32()
+        if not api.IsProcessInJob(handle, jobs[0], c.byref(owned)):
+            member["unavailable"].append("membership-query")
+            continue
+        member["inOuterOwnedJob"] = bool(owned.value)
+        if not owned.value:
+            member["unavailable"].append("not-in-owned-job")
+            continue
+
+        created, exited, kernel, user = (c.c_uint64() for _ in range(4))
+        if budget() and api.GetProcessTimes(handle, c.byref(created), c.byref(exited),
+                                           c.byref(kernel), c.byref(user)) and created.value:
+            member["creationTime100ns"] = created.value
+        else:
+            member["unavailable"].append("creation-time")
+        image = c.create_unicode_buffer(MAX_IMAGE_CHARS)
+        length = c.c_uint32(MAX_IMAGE_CHARS)
+        if (budget() and api.QueryFullProcessImageNameW(handle, 0, image, c.byref(length))
+                and 0 < length.value < MAX_IMAGE_CHARS):
+            member["imagePath"] = image[:length.value]
+        else:
+            member["unavailable"].append("image-name")
+        wait = api.WaitForSingleObject(handle, 0) if budget() else None
+        if wait == 0:
+            member["exited"] = True
+            code = c.c_uint32()
+            if budget() and api.GetExitCodeProcess(handle, c.byref(code)):
+                member["exitCode"] = code.value
+            else:
+                member["unavailable"].append("exit-code")
+        elif wait == 258:
+            member["exited"] = False
+        else:
+            member["unavailable"].append("exit-state")
+    within_budget = budget()
+    result["complete"] = (within_budget and not result["unavailable"]
+                          and all(not member["unavailable"] for member in result["members"]))
+    return result
 
 
 def trial(shell, fixture, environment, definition):
@@ -114,10 +228,13 @@ def trial(shell, fixture, environment, definition):
     overflow = [False, False]
     row = {"name": name, "jobsRequested": count, "resumeMode": resume,
            "startedSuspended": False, "assignedBeforeResume": False,
-           "timedOut": False, "nativeAcceptance": False}
+           "timedOut": False, "nativeAcceptance": False,
+           "membersBeforeCleanup": {"complete": False, "members": None,
+                                    "unavailable": ["not-assigned"]}}
     started = time.monotonic()
     end = started + TRIAL_SECONDS
     cleanup_errors = []
+    members_sampled = False
 
     def active(job):
         data = c.create_string_buffer(48)
@@ -138,6 +255,21 @@ def trial(shell, fixture, environment, definition):
             reader_error[index] = True
         finally:
             os.close(fd)
+
+    def sample_members():
+        nonlocal members_sampled
+        members_sampled = True
+        sample_started = time.monotonic()
+        try:
+            observation = observe_members(
+                api, jobs, process, pid, handles, min(end, sample_started + MEMBER_SECONDS))
+            observation.update(startedElapsedSeconds=sample_started - started,
+                               finishedElapsedSeconds=time.monotonic() - started)
+        except Exception as error:
+            # Optional observation must never skip mandatory owned cleanup.
+            observation = {"complete": False, "members": None,
+                           "unavailable": ["observation-error"], "errorType": type(error).__name__}
+        row["membersBeforeCleanup"] = observation
 
     try:
         for index in range(count):
@@ -220,9 +352,13 @@ def trial(shell, fixture, environment, definition):
         row["primaryObservedResumed"] = any(item["primary"] and item["previousSuspendCount"] > 0 for item in resumed)
         row["resumeElapsedSeconds"] = time.monotonic() - started
         while _winapi.WaitForSingleObject(process, 10) == 258:
-            if time.monotonic() >= end:
+            now = time.monotonic()
+            if now >= end:
                 row["timedOut"] = True
                 break
+            if not members_sampled and now >= end - MEMBER_SECONDS:
+                # Sample within the original deadline; the child keeps running.
+                sample_members()
         if not row["timedOut"]:
             row["exitCode"] = _winapi.GetExitCodeProcess(process)
             row["timedOut"] = time.monotonic() >= end
@@ -237,6 +373,8 @@ def trial(shell, fixture, environment, definition):
         row["errorType"] = type(error).__name__
         row["error"] = str(error)
     finally:
+        if row["assignedBeforeResume"] and not members_sampled:
+            sample_members()
         if process is not None and not row["assignedBeforeResume"]:
             try:
                 _winapi.TerminateProcess(process, 124)
@@ -245,7 +383,7 @@ def trial(shell, fixture, environment, definition):
         for job in jobs:
             if not api.TerminateJobObject(job, 125):
                 cleanup_errors.append("job-termination")
-        cleanup_end = time.monotonic() + 2
+        cleanup_end = time.monotonic() + CLEANUP_SECONDS
         try:
             while jobs and any(active(job) for job in jobs) and time.monotonic() < cleanup_end:
                 time.sleep(.01)
@@ -258,14 +396,15 @@ def trial(shell, fixture, environment, definition):
         row["rootExitedAfterCleanup"] = process is None
         if process is not None:
             try:
-                milliseconds = max(0, min(2000, int((cleanup_end - time.monotonic()) * 1000)))
+                milliseconds = max(0, min(CLEANUP_SECONDS * 1000,
+                                          int((cleanup_end - time.monotonic()) * 1000)))
                 row["rootExitedAfterCleanup"] = _winapi.WaitForSingleObject(process, milliseconds) == 0
                 if not row["rootExitedAfterCleanup"]:
                     cleanup_errors.append("root-exit")
             except OSError:
                 cleanup_errors.append("root-wait")
         for reader in readers:
-            reader.join(timeout=.25)
+            reader.join(timeout=READER_JOIN_SECONDS)
         for fd in pipes:
             try:
                 os.close(fd)
@@ -285,6 +424,7 @@ def trial(shell, fixture, environment, definition):
         and row.get("exitCode") == 0 and row.get("primaryObservedResumed") is True
         and row.get("treeExitedBeforeCleanup") is True
         and row.get("rootExitedAfterCleanup") is True
+        and row["membersBeforeCleanup"]["complete"] is True
         and all(reader_done) and not any(reader_error) and not any(overflow))
     return row
 
@@ -304,9 +444,10 @@ def main(arguments=None):
     shell = Path(os.environ["SystemRoot"]) / "System32/WindowsPowerShell/v1.0/powershell.exe"
     require(shell.is_absolute() and shell.is_file(), "Selected system PowerShell unavailable")
     environment = selected_environment(os.environ)
-    report = {"schema": 1, "diagnosticOnly": True, "nativeAcceptance": False,
+    report = {"schema": 2, "diagnosticOnly": True, "nativeAcceptance": False,
               "diagnosticComplete": False,
               "nativeYokeImageReadOrExecuted": False, "trialDeadlineSeconds": TRIAL_SECONDS,
+              "memberObservationSeconds": MEMBER_SECONDS, "maxObservedMembers": MAX_MEMBERS,
               "sourceRevision": revision,
               "sourceSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
               "environmentNames": sorted(environment), "trials": []}

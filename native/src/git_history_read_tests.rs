@@ -15,6 +15,23 @@ struct PendingRead {
     started: mpsc::Sender<()>,
     cancelled: mpsc::Receiver<()>,
 }
+// Fixed first observations: (elapsed since walk start, request deadline remaining).
+// Elapsed and remaining are sampled separately, without changing fixture control flow.
+#[derive(Debug, Default)]
+struct ReadPhases {
+    size_entry: Option<(Duration, Duration)>,
+    size_pre_sleep: Option<(Duration, Duration)>,
+    size_post_sleep: Option<(Duration, Duration)>,
+    size_deadline_check_ok: Option<(Duration, Duration)>,
+    contents_entry: Option<(Duration, Duration)>,
+}
+enum ReadPhase {
+    SizeEntry,
+    SizePreSleep,
+    SizePostSleep,
+    SizeDeadlineCheckOk,
+    ContentsEntry,
+}
 struct Reader {
     objects: BTreeMap<String, Vec<u8>>,
     ceiling: Deadline,
@@ -23,8 +40,25 @@ struct Reader {
     sizes: usize,
     bodies: usize,
     exceeded_ceiling: bool,
+    phase_start: Option<Instant>,
+    phases: ReadPhases,
 }
 impl Reader {
+    fn record_phase(&mut self, phase: ReadPhase, d: &Deadline) {
+        let Some(start) = self.phase_start else {
+            return;
+        };
+        let slot = match phase {
+            ReadPhase::SizeEntry => &mut self.phases.size_entry,
+            ReadPhase::SizePreSleep => &mut self.phases.size_pre_sleep,
+            ReadPhase::SizePostSleep => &mut self.phases.size_post_sleep,
+            ReadPhase::SizeDeadlineCheckOk => &mut self.phases.size_deadline_check_ok,
+            ReadPhase::ContentsEntry => &mut self.phases.contents_entry,
+        };
+        if slot.is_none() {
+            *slot = Some((start.elapsed(), d.remaining()));
+        }
+    }
     fn observe(&mut self, d: &Deadline) {
         // Read the outer ceiling first so scheduling between these reads cannot
         // falsely classify the same Deadline as a newly extended deadline.
@@ -37,16 +71,21 @@ impl Reader {
 }
 impl Objects for Reader {
     fn size(&mut self, id: &str, d: &Deadline) -> Result<usize> {
+        self.record_phase(ReadPhase::SizeEntry, d);
         self.observe(d);
         self.sizes += 1;
+        self.record_phase(ReadPhase::SizePreSleep, d);
         std::thread::sleep(self.delay);
+        self.record_phase(ReadPhase::SizePostSleep, d);
         d.check()?;
+        self.record_phase(ReadPhase::SizeDeadlineCheckOk, d);
         self.objects
             .get(id)
             .map(Vec::len)
             .ok_or_else(|| anyhow::anyhow!("Poisoned ancestor must remain unread"))
     }
     fn contents(&mut self, id: &str, _maximum: usize, d: &Deadline) -> Result<Vec<u8>> {
+        self.record_phase(ReadPhase::ContentsEntry, d);
         self.observe(d);
         self.bodies += 1;
         if let Some(pending) = self.pending.take() {
@@ -166,6 +205,8 @@ fn fixture(d: &Deadline) -> (Reader, String) {
             sizes: 0,
             bodies: 0,
             exceeded_ceiling: false,
+            phase_start: None,
+            phases: ReadPhases::default(),
         },
         head_id,
     )
@@ -177,21 +218,44 @@ fn object_information_and_contents_share_the_original_deadline() {
     let (mut reader, head) = fixture(&d);
     reader.delay = Duration::from_millis(40);
     let start = Instant::now();
+    reader.phase_start = Some(start);
     let result: Result<History> = walk(&mut reader, &head, &Options::default(), &d);
-    assert!(result.unwrap_err().to_string().contains("deadline"));
+    assert!(
+        result.is_err(),
+        "expected deadline refusal; elapsed={:?}; host_remaining={:?}; phases={:?}",
+        start.elapsed(),
+        d.remaining(),
+        reader.phases
+    );
+    assert!(
+        result.unwrap_err().to_string().contains("deadline"),
+        "elapsed={:?}; host_remaining={:?}; phases={:?}",
+        start.elapsed(),
+        d.remaining(),
+        reader.phases
+    );
     assert!(
         !reader.exceeded_ceiling,
-        "An object request extended the host deadline"
+        "An object request extended the host deadline; phases={:?}",
+        reader.phases
     );
     assert_eq!(
         (reader.sizes, reader.bodies),
         (1, 1),
-        "elapsed={:?}; fixture_delay={:?}; host_remaining={:?}",
+        "elapsed={:?}; fixture_delay={:?}; host_remaining={:?}; phases={:?}",
         start.elapsed(),
         reader.delay,
-        d.remaining()
+        d.remaining(),
+        reader.phases
     );
-    assert!(start.elapsed() < Duration::from_millis(200));
+    assert!(
+        start.elapsed() < Duration::from_millis(200),
+        "elapsed={:?}; fixture_delay={:?}; host_remaining={:?}; phases={:?}",
+        start.elapsed(),
+        reader.delay,
+        d.remaining(),
+        reader.phases
+    );
 }
 
 #[test]
