@@ -963,7 +963,7 @@ fn real_private_reparse_frame_is_refused_without_symlink_privilege_or_link_follo
         fn DeviceIoControl(
             handle: *mut std::ffi::c_void,
             code: u32,
-            input: *mut std::ffi::c_void,
+            input: *const std::ffi::c_void,
             input_size: u32,
             output: *mut std::ffi::c_void,
             output_size: u32,
