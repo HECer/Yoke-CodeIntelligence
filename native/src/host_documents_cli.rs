@@ -11,7 +11,9 @@ use yoke::{
     capture::Deadline,
     host_install::documents::{
         self, Access, BindingMigrationAuthority, BindingMigrationPlan, Config,
-        HistoryArchiveAccess, HistoryArchivePlan, ProjectRoot, RecoveryDirection, WriteAuthority,
+        HistoryArchiveAccess, HistoryArchivePlan, HistoryArchivePurgeAccess,
+        HistoryArchivePurgePermission, HistoryArchivePurgePlan, ProjectRoot, RecoveryDirection,
+        WriteAuthority,
     },
 };
 
@@ -28,6 +30,48 @@ pub struct Arguments {
 }
 #[derive(Subcommand)]
 enum Operation {
+    #[command(name = "history-purge-plan")]
+    HistoryPurgePlan {
+        #[arg(long)]
+        archive_plan: PathBuf,
+        #[arg(long)]
+        archive_root: PathBuf,
+    },
+    #[command(name = "history-purge-inspect")]
+    HistoryPurgeInspect {
+        #[arg(long)]
+        plan: PathBuf,
+        #[arg(long)]
+        archive_root: PathBuf,
+    },
+    #[command(name = "history-purge-apply")]
+    HistoryPurgeApply {
+        #[arg(long)]
+        plan: PathBuf,
+        #[arg(long)]
+        archive_root: PathBuf,
+        #[arg(long)]
+        confirmed_plan: String,
+        #[arg(long)]
+        allow_host_writes: bool,
+        #[arg(long)]
+        allow_state_deletion: bool,
+    },
+    #[command(name = "history-purge-recover")]
+    HistoryPurgeRecover {
+        #[arg(long)]
+        plan: PathBuf,
+        #[arg(long)]
+        archive_root: PathBuf,
+        #[arg(long)]
+        expected_event: String,
+        #[arg(long, value_enum)]
+        direction: Direction,
+        #[arg(long)]
+        allow_host_writes: bool,
+        #[arg(long)]
+        allow_state_deletion: bool,
+    },
     #[command(name = "history-read")]
     HistoryRead {
         #[arg(long)]
@@ -123,6 +167,32 @@ struct RegisteredProject {
 }
 impl Arguments {
     pub fn preflight_permission(&self) -> Result<()> {
+        if let Operation::HistoryPurgeApply {
+            allow_host_writes,
+            allow_state_deletion,
+            ..
+        }
+        | Operation::HistoryPurgeRecover {
+            allow_host_writes,
+            allow_state_deletion,
+            ..
+        } = &self.operation
+        {
+            ensure!(
+                *allow_host_writes,
+                "Host history purge requires --allow-host-writes"
+            );
+            ensure!(
+                *allow_state_deletion,
+                "Host history purge requires separate --allow-state-deletion"
+            );
+        }
+        if let Operation::HistoryPurgeApply { confirmed_plan, .. } = &self.operation {
+            ensure!(
+                yoke::model::valid_id(confirmed_plan),
+                "Exact reviewed purge --confirmed-plan required"
+            );
+        }
         if let Operation::Apply {
             allow_host_writes, ..
         }
@@ -155,6 +225,12 @@ impl Arguments {
             ensure!(
                 yoke::model::valid_id(expected_event),
                 "Explicit migration event review required"
+            );
+        }
+        if let Operation::HistoryPurgeRecover { expected_event, .. } = &self.operation {
+            ensure!(
+                yoke::model::valid_id(expected_event),
+                "Explicit current purge event review required"
             );
         }
         Ok(())
@@ -224,6 +300,101 @@ pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<()> {
     let from = access(&args.from_selection, &d)?;
     let to = access(&args.to_selection, &d)?;
     match &args.operation {
+        Operation::HistoryPurgePlan {
+            archive_plan,
+            archive_root,
+        } => {
+            let archive: HistoryArchivePlan = read(archive_plan, 512000, &d)?;
+            ensure!(
+                archive.record_budget == args.history_record_budget,
+                "Explicit history record budget differs from selected archive"
+            );
+            let a = WriteAuthority::new(&from)?;
+            let b = WriteAuthority::new(&to)?;
+            let access =
+                HistoryArchivePurgeAccess::new(&from, &to, &archive, archive_root, &a, &b, &d)?;
+            print(
+                &documents::plan_history_archive_purge(&from, &to, &access, &archive, &d)?,
+                maximum,
+                &d,
+            )
+        }
+        Operation::HistoryPurgeInspect { plan, archive_root }
+        | Operation::HistoryPurgeApply {
+            plan, archive_root, ..
+        }
+        | Operation::HistoryPurgeRecover {
+            plan, archive_root, ..
+        } => {
+            let plan: HistoryArchivePurgePlan = read(plan, 512000, &d)?;
+            ensure!(
+                plan.archive.record_budget == args.history_record_budget,
+                "Explicit history record budget differs from selected archive"
+            );
+            let a = WriteAuthority::new(&from)?;
+            let b = WriteAuthority::new(&to)?;
+            let access = HistoryArchivePurgeAccess::new(
+                &from,
+                &to,
+                &plan.archive,
+                archive_root,
+                &a,
+                &b,
+                &d,
+            )?;
+            let result = match &args.operation {
+                Operation::HistoryPurgeInspect { .. } => {
+                    documents::inspect_history_archive_purge(&from, &to, &access, &plan, &d)
+                }
+                Operation::HistoryPurgeApply {
+                    confirmed_plan,
+                    allow_state_deletion,
+                    ..
+                } => {
+                    ensure!(
+                        *confirmed_plan == plan.id,
+                        "Exact reviewed purge plan confirmation differs"
+                    );
+                    let permission = HistoryArchivePurgePermission::new(*allow_state_deletion)?;
+                    let approved = access.approve(&from, &to, &plan, &d)?;
+                    documents::apply_history_archive_purge(
+                        &from,
+                        &to,
+                        &access,
+                        &approved,
+                        &permission,
+                        &plan,
+                        maximum,
+                        &d,
+                    )
+                }
+                Operation::HistoryPurgeRecover {
+                    expected_event,
+                    direction,
+                    allow_state_deletion,
+                    ..
+                } => {
+                    let permission = HistoryArchivePurgePermission::new(*allow_state_deletion)?;
+                    documents::recover_history_archive_purge(
+                        &from,
+                        &to,
+                        &access,
+                        &permission,
+                        &plan,
+                        expected_event,
+                        match direction {
+                            Direction::Resume => RecoveryDirection::Resume,
+                            Direction::Rollback => RecoveryDirection::Rollback,
+                        },
+                        maximum,
+                        &d,
+                    )
+                }
+                _ => unreachable!(),
+            };
+            let receipt = result.with_context(|| format!("History archive purge {} did not confirm completion; preserve retained receipts and inspect before event-reviewed recovery", plan.id))?;
+            print(&receipt, maximum, &d).with_context(|| format!("History archive purge {} receipt output delivery failed; inspect retained evidence", plan.id))
+        }
         Operation::HistoryPlan {
             migration,
             archive_root,
@@ -435,6 +606,72 @@ mod tests {
                     .unwrap_err()
                     .to_string()
                     .contains("Host history archival requires --allow-host-writes")
+            );
+        }
+    }
+    #[test]
+    fn purge_permissions_and_current_event_review_precede_missing_host_inputs() {
+        let id = "a".repeat(64);
+        for operation in ["history-purge-apply", "history-purge-recover"] {
+            for grant in 0..2 {
+                let mut args = vec![
+                    "owned",
+                    "--from-selection",
+                    "missing-old.json",
+                    "--to-selection",
+                    "missing-new.json",
+                    operation,
+                    "--plan",
+                    "missing.json",
+                    "--archive-root",
+                    "missing-root",
+                ];
+                if operation == "history-purge-apply" {
+                    args.extend(["--confirmed-plan", &id]);
+                } else {
+                    args.extend(["--expected-event", &id, "--direction", "resume"]);
+                }
+                if grant == 1 {
+                    args.push("--allow-host-writes");
+                }
+                let parsed = Cli::try_parse_from(args).unwrap();
+                let error = run(&parsed.args, 10_000, 64_000).unwrap_err().to_string();
+                assert!(error.contains(if grant == 0 {
+                    "--allow-host-writes"
+                } else {
+                    "--allow-state-deletion"
+                }));
+            }
+        }
+        for (operation, review) in [
+            ("history-purge-apply", "--confirmed-plan"),
+            ("history-purge-recover", "--expected-event"),
+        ] {
+            let mut args = vec![
+                "owned",
+                "--from-selection",
+                "missing-old.json",
+                "--to-selection",
+                "missing-new.json",
+                operation,
+                "--plan",
+                "missing.json",
+                "--archive-root",
+                "missing-root",
+                review,
+                "../not-an-id",
+                "--allow-host-writes",
+                "--allow-state-deletion",
+            ];
+            if operation == "history-purge-recover" {
+                args.extend(["--direction", "resume"]);
+            }
+            let parsed = Cli::try_parse_from(args).unwrap();
+            assert!(
+                run(&parsed.args, 10_000, 64_000)
+                    .unwrap_err()
+                    .to_string()
+                    .contains("review")
             );
         }
     }

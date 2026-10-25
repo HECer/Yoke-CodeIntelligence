@@ -2,6 +2,14 @@
 //! Host authority and the archive selection are never deserialized from a plan.
 use super::*;
 use base64::Engine as _;
+#[path = "host_documents_history_purge.rs"]
+mod history_purge;
+pub use history_purge::{
+    HistoryArchivePurgeAccess, HistoryArchivePurgeApproval, HistoryArchivePurgePermission,
+    HistoryArchivePurgePlan, HistoryArchivePurgeReview, HistoryPurgeFileWitness,
+    HistoryPurgeRetainedWitness, apply_history_archive_purge, inspect_history_archive_purge,
+    plan_history_archive_purge, recover_history_archive_purge,
+};
 
 const MAX_ARCHIVE: usize = 16_000_000;
 const MAX_RECORDS: usize = 512;
@@ -50,7 +58,7 @@ fn history_marker(selected: &BoundDocument) -> Result<PathBuf> {
     )))
 }
 pub(super) fn pending(selected: &BoundDocument, d: &Deadline) -> Result<bool> {
-    exists(&history_marker(selected)?, d)
+    Ok(exists(&history_marker(selected)?, d)? || history_purge::pending(selected, d)?)
 }
 pub(super) fn require_no_pending(selected: &BoundDocument, d: &Deadline) -> Result<()> {
     ensure!(
@@ -926,6 +934,9 @@ pub struct HistoryArchiveReview {
     pub present_original_records: usize,
     pub absent_original_records: usize,
     pub immutable_archive_verified: bool,
+    pub archived_record_evidence_available: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub purge: Option<HistoryArchivePurgeReview>,
     pub marker_present: bool,
     pub complete: bool,
     pub unselected_closed_journals_at_review: usize,
@@ -944,12 +955,16 @@ fn review(
 ) -> Result<HistoryArchiveReview> {
     let root = access.root(from, to, d)?;
     let terminal = matches!(e.phase, ArchivePhase::Committed | ArchivePhase::Cancelled);
+    let purge = history_purge::archived_frame_status(from, to, access, p, d)?;
     let has_archive = exists(&archive_path(&root.path, p), d)?;
     if has_archive {
         let _held = validate_archive(from, &root.path, p, d)?;
     }
     ensure!(
-        has_archive || matches!(e.phase, ArchivePhase::Prepared | ArchivePhase::Cancelled),
+        has_archive
+            || matches!(e.phase, ArchivePhase::Prepared | ArchivePhase::Cancelled)
+            || (e.phase == ArchivePhase::Committed
+                && purge.as_ref().is_some_and(|r| r.evidence_unavailable)),
         "Durable archive required after publication"
     );
     let present = original_records(
@@ -967,6 +982,7 @@ fn review(
     if terminal && !marker_present {
         require_completion(selected, p, d)?;
     }
+    let purge_complete = purge.as_ref().is_none_or(|r| r.complete);
     Ok(HistoryArchiveReview {
         plan_id: p.id.clone(),
         event_id: e.id.clone(),
@@ -978,8 +994,10 @@ fn review(
         present_original_records: present,
         absent_original_records: p.records.len() - present,
         immutable_archive_verified: has_archive,
+        archived_record_evidence_available: has_archive,
+        purge,
         marker_present,
-        complete: terminal && !marker_present,
+        complete: terminal && !marker_present && purge_complete,
         unselected_closed_journals_at_review: p.unselected_closed_journals_at_review,
         all_closed_journals_selected_at_review: p.unselected_closed_journals_at_review == 0,
         original_absence_proves_this_process_deleted_it: false,
@@ -1035,6 +1053,13 @@ pub fn read_history_archive_record(
         .iter()
         .find(|r| r.name == name)
         .context("Archive record is not selected")?;
+    if history_purge::archived_frame_status(from, to, access, p, d)?
+        .is_some_and(|r| r.evidence_unavailable)
+    {
+        anyhow::bail!(
+            "Exact archived record evidence unavailable after recorded physical purge; retained receipts do not contain record bytes"
+        );
+    }
     let held = validate_archive(from, &root.path, p, d)?;
     let records = admit_frame(from, p, &held.bytes, d)?;
     let bytes = records
@@ -1096,13 +1121,9 @@ fn resume(
 ) -> Result<HistoryArchiveReview> {
     let selected = &from.documents[&p.migration.from_document_id];
     if matches!(e.phase, ArchivePhase::Committed | ArchivePhase::Cancelled) {
-        let result = review(from, to, access, p, e, d)?;
+        review(from, to, access, p, e, d)?;
         finish_marker(selected, p, d)?;
-        return Ok(HistoryArchiveReview {
-            marker_present: false,
-            complete: true,
-            ..result
-        });
+        return review(from, to, access, p, e, d);
     }
     check_marker(selected, p, d)?;
     let (_source, _owner) = current(from, to, p, d)?;
@@ -1256,22 +1277,22 @@ mod tests {
     fn d() -> Deadline {
         Deadline::new(30_000)
     }
-    struct Fixture {
-        _temp: tempfile::TempDir,
-        target: PathBuf,
-        source: PathBuf,
-        from: Access,
-        to: Access,
-        a: WriteAuthority,
-        b: WriteAuthority,
-        migration: BindingMigrationPlan,
-        archive: HistoryArchiveAccess,
+    pub(super) struct Fixture {
+        pub(super) _temp: tempfile::TempDir,
+        pub(super) target: PathBuf,
+        pub(super) source: PathBuf,
+        pub(super) from: Access,
+        pub(super) to: Access,
+        pub(super) a: WriteAuthority,
+        pub(super) b: WriteAuthority,
+        pub(super) migration: BindingMigrationPlan,
+        pub(super) archive: HistoryArchiveAccess,
     }
     impl Fixture {
-        fn new() -> Self {
+        pub(super) fn new() -> Self {
             Self::with_saves(1)
         }
-        fn with_saves(saves: usize) -> Self {
+        pub(super) fn with_saves(saves: usize) -> Self {
             let temp = tempfile::tempdir().unwrap();
             let source = temp.path().join("source-İ");
             let old = temp.path().join("old-journal");
@@ -1337,11 +1358,11 @@ mod tests {
                 archive,
             }
         }
-        fn plan(&self) -> HistoryArchivePlan {
+        pub(super) fn plan(&self) -> HistoryArchivePlan {
             plan_history_archive(&self.from, &self.to, &self.archive, &self.migration, &d())
                 .unwrap()
         }
-        fn apply(&self, p: &HistoryArchivePlan) -> Result<HistoryArchiveReview> {
+        pub(super) fn apply(&self, p: &HistoryArchivePlan) -> Result<HistoryArchiveReview> {
             let approved = self.archive.approve(&self.from, &self.to, p, &d())?;
             apply_history_archive(&self.from, &self.to, &self.archive, &approved, p, &d())
         }

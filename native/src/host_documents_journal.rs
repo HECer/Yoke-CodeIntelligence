@@ -6,10 +6,14 @@ mod binding_migration;
 pub use binding_migration::{
     BindingMigrationApproval, BindingMigrationAuthority, BindingMigrationPlan,
     BindingMigrationReceipt, BindingMigrationReview, HistoryArchiveAccess, HistoryArchiveApproval,
-    HistoryArchivePlan, HistoryArchiveRecord, HistoryArchiveReview, apply_binding_migration,
-    apply_history_archive, inspect_binding_migration, inspect_history_archive,
-    plan_binding_migration, plan_history_archive, read_history_archive_record,
-    recover_binding_migration, recover_history_archive,
+    HistoryArchivePlan, HistoryArchivePurgeAccess, HistoryArchivePurgeApproval,
+    HistoryArchivePurgePermission, HistoryArchivePurgePlan, HistoryArchivePurgeReview,
+    HistoryArchiveRecord, HistoryArchiveReview, HistoryPurgeFileWitness,
+    HistoryPurgeRetainedWitness, apply_binding_migration, apply_history_archive,
+    apply_history_archive_purge, inspect_binding_migration, inspect_history_archive,
+    inspect_history_archive_purge, plan_binding_migration, plan_history_archive,
+    plan_history_archive_purge, read_history_archive_record, recover_binding_migration,
+    recover_history_archive, recover_history_archive_purge,
 };
 
 const MAX_EVENTS: u32 = 32;

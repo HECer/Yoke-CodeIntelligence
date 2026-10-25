@@ -3,9 +3,13 @@ use super::*;
 #[path = "host_documents_history_archive.rs"]
 mod history_archive;
 pub use history_archive::{
-    HistoryArchiveAccess, HistoryArchiveApproval, HistoryArchivePlan, HistoryArchiveRecord,
-    HistoryArchiveReview, apply_history_archive, inspect_history_archive, plan_history_archive,
-    read_history_archive_record, recover_history_archive,
+    HistoryArchiveAccess, HistoryArchiveApproval, HistoryArchivePlan, HistoryArchivePurgeAccess,
+    HistoryArchivePurgeApproval, HistoryArchivePurgePermission, HistoryArchivePurgePlan,
+    HistoryArchivePurgeReview, HistoryArchiveRecord, HistoryArchiveReview, HistoryPurgeFileWitness,
+    HistoryPurgeRetainedWitness, apply_history_archive, apply_history_archive_purge,
+    inspect_history_archive, inspect_history_archive_purge, plan_history_archive,
+    plan_history_archive_purge, read_history_archive_record, recover_history_archive,
+    recover_history_archive_purge,
 };
 
 const MAX_MIGRATION: usize = 32_000;
