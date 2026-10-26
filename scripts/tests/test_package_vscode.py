@@ -170,6 +170,63 @@ class NativeVsix(unittest.TestCase):
                     self.package()
                 self.assertFalse(self.output.exists())
 
+    def test_windows_release_binary_above_generic_cap_preserves_exact_bytes(self):
+        # Inert bytes exercise the real archive/read/write path, never execution.
+        unit = b"Owned inert Windows archive fixture\n"
+        binary = (unit * (MODULE.NATIVE_ENTRY_BYTES // len(unit) + 1))[:MODULE.NATIVE_ENTRY_BYTES + 1]
+        self.assertEqual(len(binary), MODULE.NATIVE_ENTRY_BYTES + 1)
+        with zipfile.ZipFile(self.native, "w", zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr("yoke.exe", binary)
+            archive.writestr("manifest.json", json.dumps({
+                "version": "0.4.0", "target": "x86_64-pc-windows-msvc",
+                "binarySha256": hashlib.sha256(binary).hexdigest()
+            }))
+        self.package()
+        with zipfile.ZipFile(self.output) as archive:
+            stored = archive.read("extension/runtime/native/yoke.exe")
+            self.assertEqual(stored, binary)
+            self.assertIn(b'TargetPlatform="win32-x64"', archive.read("extension.vsixmanifest"))
+
+    def test_windows_binary_ceiling_refuses_before_manifest_or_payload_read(self):
+        self.native_members([("yoke.exe", b"Inert oversized metadata fixture")])
+        original = zipfile.ZipFile.infolist
+
+        def declared(archive):
+            entries = original(archive)
+            if Path(archive.filename) == self.native:
+                for entry in entries:
+                    if entry.filename == "yoke.exe":
+                        entry.file_size = MODULE.NATIVE_WINDOWS_BINARY_BYTES + 1
+            return entries
+
+        with patch.object(zipfile.ZipFile, "infolist", declared):
+            self.assert_refused_before_native_payload()
+
+    def test_larger_windows_role_requires_the_windows_manifest_selection(self):
+        self.native_members([("yoke.exe", b"Inert unselected metadata fixture")])
+        original_info, original_read = zipfile.ZipFile.infolist, zipfile.ZipFile.read
+        reads = []
+
+        def declared(archive):
+            entries = original_info(archive)
+            if Path(archive.filename) == self.native:
+                for entry in entries:
+                    if entry.filename == "yoke.exe":
+                        entry.file_size = MODULE.NATIVE_ENTRY_BYTES + 1
+            return entries
+
+        def read(archive, entry, *args, **kwargs):
+            if Path(archive.filename) == self.native:
+                reads.append(entry.filename if isinstance(entry, zipfile.ZipInfo) else entry)
+            return original_read(archive, entry, *args, **kwargs)
+
+        with patch.object(zipfile.ZipFile, "infolist", declared), \
+                patch.object(zipfile.ZipFile, "read", read):
+            with self.assertRaises(SystemExit):
+                self.package()
+        self.assertEqual(reads, ["manifest.json"])
+        self.assertFalse(self.output.exists())
+
     def test_directory_budgets_refuse_before_zip_metadata_allocation(self):
         original = self.native.read_bytes()
         position = original.rfind(b"PK\x05\x06")

@@ -18,6 +18,9 @@ ROOT = Path(__file__).resolve().parent.parent
 VSX = 'http://schemas.microsoft.com/developer/vsx-schema/2011'
 CT = 'http://schemas.openxmlformats.org/package/2006/content-types'
 NATIVE_ENTRY_BYTES = 128_000_000
+# The selected Windows release CLI is larger than the generic document-entry cap.
+# Its separate ceiling remains below the unchanged aggregate archive/payload cap.
+NATIVE_WINDOWS_BINARY_BYTES = 160_000_000
 NATIVE_TOTAL_BYTES = 256_000_000
 NATIVE_ARCHIVE_BYTES = 256_000_000
 NATIVE_MANIFEST_BYTES = 1_000_000
@@ -114,7 +117,9 @@ def read_native_zip(source, expected_entries, version, targets, unique_object, r
                 raise ValueError('Duplicate or aliased native archive entry')
             admitted[key] = entry
             total += entry.file_size
-            if (entry.file_size > NATIVE_ENTRY_BYTES
+            preliminary_limit = (NATIVE_WINDOWS_BINARY_BYTES
+                                 if entry.filename == 'yoke.exe' else NATIVE_ENTRY_BYTES)
+            if (entry.file_size > preliminary_limit
                     or total > NATIVE_TOTAL_BYTES
                     or entry.is_dir() and entry.file_size):
                 raise ValueError('Native archive payload budget exceeded')
@@ -140,6 +145,14 @@ def read_native_zip(source, expected_entries, version, targets, unique_object, r
         if (binary_entry is None or binary_entry.filename != binary_name
                 or binary_entry.is_dir()):
             raise ValueError('Native executable unavailable')
+        # Only the manifest-selected Windows executable receives the larger cap.
+        # Reject an oversized lookalike/extra before inflating any native payload.
+        for entry in entries:
+            limit = (NATIVE_WINDOWS_BINARY_BYTES
+                     if info['target'] == 'x86_64-pc-windows-msvc' and entry is binary_entry
+                     else NATIVE_ENTRY_BYTES)
+            if entry.file_size > limit:
+                raise ValueError('Native archive payload budget exceeded')
         files = {entry.filename: archive.read(entry)
                  for entry in entries if not entry.is_dir()}
         if any(len(files[entry.filename]) != entry.file_size
