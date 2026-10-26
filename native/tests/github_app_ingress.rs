@@ -71,7 +71,10 @@ fn exchange(address: SocketAddr, raw: &[u8]) -> Vec<u8> {
     socket.write_all(raw).unwrap();
     let mut result = Vec::new();
     socket.read_to_end(&mut result).unwrap_or_else(|error| {
-        let header_end = result.windows(4).position(|bytes| bytes == b"\r\n\r\n");
+        let header_end = result
+            .windows(4)
+            .position(|bytes| bytes == b"\r\n\r\n")
+            .map(|offset| offset + 4);
         panic!(
             "owned ingress response read failed; kind={:?}; os_error={:?}; elapsed={:?}; retained_bytes={}; has_503_status={}; header_end={header_end:?}",
             error.kind(),
