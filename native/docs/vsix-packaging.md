@@ -47,3 +47,18 @@ actual bundled extension-host behavior and release publication require their
 own evidence. Synthetic fixture archives are not deliverable native releases.
 See ../../docs/validation/integration-2026-10-23/vsix-archive-admission/README.md
 for the qualified source, adversarial trials and actual CLI packaging scope.
+
+## Qualified Windows development package (2026-10-26)
+
+The separately recorded f8 runtime and e89 packager now produce a Windows x64
+native-only 0.5.0 VSIX with the identical admitted CLI. The locked dependency
+graph, source members, notices and image hashes are checked independently.
+Actual VS Code 1.143.1 executes the unchanged JavaScript host assertions with
+`-UseBundledRuntime`; a derived PowerShell launcher refuses internal forced
+cleanup. Separate actual desktop image inspection verifies the overlay JSON
+and dirty editor source. All accepted owned process trees exit before cleanup.
+
+This is scoped development qualification with two explicit source commits.
+It does not establish an exact-current-head build, whole-platform or full
+release gate. This documentation update postdates the e89 packaged documents.
+See [receipts and inspected images](../../docs/validation/integration-2026-10-26/paired-runtime-vsix/README.md).

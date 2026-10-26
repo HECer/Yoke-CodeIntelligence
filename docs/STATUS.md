@@ -1,5 +1,31 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Windows native package, bundled editor and desktop inspection pass (2026-10-26)
+
+A separately reviewed paired-source gate now qualifies the admitted f8 runtime
+with the e89 packager. Both clean roots retain 1,050 exact inputs: 1,048 common
+records and all 1,006 native entries match; only two pinned packaging Python
+files differ, with the exact three-file Git delta. Initial and late untracked
+Cargo configuration refuses. Full locked dependency identities, features and
+edges match through an explicit root-package mapping. No build is relabeled.
+
+All 62 guard tests pass without skips. Actual native ZIP, VSIX and bundled
+VS Code 1.143.1 host stages pass with root exit and empty Jobs before cleanup.
+The native archive has 1,337 members, 316 dependencies and 557 license texts;
+the native-only VSIX has 1,342 members. Both carry the same admitted 0.5.0 CLI.
+The original JavaScript host assertions pass under a derived launcher that
+refuses internal forced cleanup. A separate visible fixture passes after actual
+inspection of generated overlay JSON and dirty Rust source, then ends naturally.
+
+The first guard fixture setup error, missing-PowerShell package run and expired
+visual acknowledgement remain failed. Portable host tools use private test
+locations and per-child environment selection; no global policy changes occur.
+These are Windows development packages with runtime source f8b02d4e and packaging
+source e89ae42c. Exact-current-head build, full platform/contracts, live
+maintenance/mobile, main and release publication remain open. The documented
+bundled-LLD linker candidate is a separate unrun build experiment.
+[Evidence, inspected images and retained failures](validation/integration-2026-10-26/paired-runtime-vsix/README.md).
+
 ## Local release CLI and original history pass; current build and VSIX remain open (2026-10-26)
 
 At runtime source `f8b02d4e`, a separately versioned compiler transaction
