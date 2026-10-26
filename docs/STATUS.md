@@ -1,5 +1,26 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Owned Windows fixtures declare their Utility dependency (2026-10-26)
+
+At source `6c522411`, positive PowerShell fixtures explicitly import the fixed OS
+Utility manifest inside their original 20-second operation budget. Original
+payload suffixes, assertions, quoting, authority checks and namespace persistence
+remain. Missing import must exit 125 before payload entry; a foreign module path
+cannot replace that selected fixture dependency. Production launchers and raw
+diagnostic commands remain unchanged. Raw observations now always run/publish
+on Windows shard 0, even when prepared fixtures pass. Cold lookup timeouts remain
+unqualified; this is a disclosed test-setup correction, not a cold-start repair.
+
+Typecheck, npm 260/0/3 original skips, Python 150 tests, all native format roots
+and Actionlint pass functionally. Python lifecycle remains incomplete because
+the owned compiler helper survives the original drain. Warnings-denied all-target
+Clippy completes with natural owned-tree exit. A Cargo-0 process producer has the
+same helper remainder and is rejected before image admission; local process/REPL
+execution is unrun. Cargo also reports ancillary standard CLI/PDB rebuilds that
+the controller's selected-image guard did not fence. Further local integration
+producers require isolated outputs. Matching hosted acceptance remains pending.
+[Evidence](validation/integration-2026-10-26/windows-fixture-initialization/README.md).
+
 ## Windows command lookup: stalled boundary observed (2026-10-25)
 
 At `0d0b43e3`, the fresh cmdlet-only lookup does not return before 20 seconds.

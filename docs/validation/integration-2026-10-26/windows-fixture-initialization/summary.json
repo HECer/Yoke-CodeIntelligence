@@ -1,0 +1,230 @@
+{
+  "schema": 1,
+  "application": "Code Intelligence",
+  "nativeVersion": "0.5.0",
+  "retainedTypeScriptVersion": "0.3.0",
+  "testedSource": "6c5224111dc5c6dfdca716896ec6a8851a615d8a",
+  "changeScope": "Declared fixed OS Utility dependency in owned positive test fixtures only",
+  "productionAndRawProbeUnchanged": true,
+  "originalAssertionProof": {
+    "test_actual_nested_snapshot_resume_records_host_and_both_empty_jobs": {
+      "assertionCallCount": 12,
+      "assertionAstUnchanged": true,
+      "sha256": "2625c6e7741e8e6a8cc628a57f36192616a5aa5ba8c778789f9f775fc4aa89c3"
+    },
+    "test_actual_owned_phase_paths_keep_unicode_quotes_and_semicolon_as_data": {
+      "assertionCallCount": 7,
+      "assertionAstUnchanged": true,
+      "sha256": "d7cf093cfc0a378dd0cd1765d46f5c04b2def789898aa0315d47f0e005a0d333"
+    },
+    "native/src/process.rs": {
+      "unchanged": true,
+      "sha256": "0ca47cc1903a0ff33d05a790d9ba1ee39a31ffcf9630d5d90ff5e48fecdfa3d8"
+    },
+    "native/src/agent_repl.rs": {
+      "unchanged": true,
+      "sha256": "a878467653ccf1f42f80d38fffb6dfc66ea2a57814d934321c0199ed04d01222"
+    },
+    "scripts/host_powershell_probe.py": {
+      "unchanged": true,
+      "sha256": "b677f4a2c46ca264cbb15f6f2710546a881e9e394def33cd830a29e9403e7c6c"
+    }
+  },
+  "sourceChecks": {
+    "selectedInputs": 1135,
+    "inputsUnchanged": true,
+    "nodePassed": 260,
+    "nodeFailed": 0,
+    "nodeOriginalSkipped": 3,
+    "pythonTestsPassed": 150,
+    "pythonTestsFailed": 0,
+    "pythonOwnedControllerCompleted": false,
+    "typecheckCompleted": true,
+    "actionlintCompleted": true,
+    "formatCompleted": true
+  },
+  "clippy": {
+    "owner": "integration-20261025-platform-repairs-control-v1",
+    "schema": 1,
+    "runId": "clippy-utility-fixture-r1",
+    "mode": "clippy",
+    "target": null,
+    "sourceCommit": "6c5224111dc5c6dfdca716896ec6a8851a615d8a",
+    "completed": true,
+    "inputsUnchanged": true,
+    "nativeImageRead": false,
+    "testExecutionRequested": false,
+    "nativeImageReadAttempted": false,
+    "metadataOnly": true,
+    "qualification": "Selected tracked source bytes and private controls are mapped before/after. External dependency/tool binaries, caches, all environment values and the entire host are not frozen. No broader platform, hosted CI, release or universal acceptance is implied. The host must execute these controllers serially and exclude other target-directory producers.",
+    "serialMutexAbandoned": false,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--keep-going",
+      "-j2",
+      "--message-format=json",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "commandOwnerCompleted": true,
+    "sourceInputCount": 1050,
+    "freeAfter": 4010749952
+  },
+  "processProducer": {
+    "owner": "integration-20261025-platform-repairs-control-v1",
+    "schema": 1,
+    "runId": "build-process-utility-fixture-r1",
+    "mode": "build",
+    "target": "process",
+    "sourceCommit": "6c5224111dc5c6dfdca716896ec6a8851a615d8a",
+    "completed": false,
+    "inputsUnchanged": true,
+    "nativeImageRead": false,
+    "testExecutionRequested": false,
+    "nativeImageReadAttempted": false,
+    "metadataOnly": false,
+    "qualification": "Selected tracked source bytes and private controls are mapped before/after. External dependency/tool binaries, caches, all environment values and the entire host are not frozen. No broader platform, hosted CI, release or universal acceptance is implied. The host must execute these controllers serially and exclude other target-directory producers.",
+    "serialMutexAbandoned": false,
+    "selectedSource": {
+      "path": "native/tests/process.rs",
+      "sha256": "e34bc3311776cc2ae387d9fd357653d5da635173ec52910c9e867bb879e6f2cb",
+      "bytes": 12741
+    },
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--test",
+      "process",
+      "--no-run",
+      "--locked",
+      "-j1",
+      "--message-format=json"
+    ],
+    "commandOwnerCompleted": false,
+    "sourceInputCount": 1050,
+    "errorType": "RuntimeError",
+    "error": "Owned command incomplete; no image adoption or acceptance",
+    "failureByteInputsUnchanged": true,
+    "failureByteRecheckIsNotCleanHeadProof": true,
+    "freeAfter": 4073431040
+  },
+  "processProducerJob": {
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--test",
+      "process",
+      "--no-run",
+      "--locked",
+      "-j1",
+      "--message-format=json"
+    ],
+    "deadlineSeconds": 1200,
+    "logCapBytes": 16000000,
+    "stdinClosed": true,
+    "startedSuspended": true,
+    "assignedBeforeResume": true,
+    "completed": false,
+    "treeExitedBeforeCleanup": false,
+    "minimumFreeObserved": 3654828032,
+    "cleanupErrors": [],
+    "streamEOF": [
+      true,
+      true
+    ],
+    "readerErrors": [
+      false,
+      false
+    ],
+    "pid": 17580,
+    "resumePreviousSuspendCount": 1,
+    "exitCode": 0,
+    "membersAtRootObservation": [
+      {
+        "pid": 22144,
+        "imageBytesRead": false,
+        "imageIdentityKnown": false,
+        "membershipConfirmed": true,
+        "imageQueryError": 5
+      },
+      {
+        "pid": 20612,
+        "imageBytesRead": false,
+        "imageIdentityKnown": false,
+        "membershipConfirmed": true,
+        "imagePathMetadata": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\vctip.exe"
+      }
+    ],
+    "rootExitedAtObservation": true,
+    "activeAtRootObservation": 2,
+    "originalDrainSeconds": 1,
+    "activeBeforeCleanup": 1,
+    "membersAfterOriginalDrain": [
+      {
+        "pid": 20612,
+        "imageBytesRead": false,
+        "imageIdentityKnown": false,
+        "membershipConfirmed": true,
+        "imagePathMetadata": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\vctip.exe"
+      }
+    ],
+    "cleanupSeconds": 2,
+    "activeAfterCleanup": 0,
+    "rootExitedAfterCleanup": true,
+    "elapsedSeconds": 156.90885759999946,
+    "capturedLogBytes": 386738,
+    "outputExceeded": false,
+    "cleanupUnproven": false
+  },
+  "ancillaryBinaryArtifactMetadata": [
+    {
+      "fresh": false,
+      "filenames": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.pdb"
+      ],
+      "executable": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "target": {
+        "kind": [
+          "bin"
+        ],
+        "crate_types": [
+          "bin"
+        ],
+        "name": "yoke",
+        "src_path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\native\\src\\main.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": false,
+        "test": true
+      },
+      "profile": {
+        "opt_level": "0",
+        "debuginfo": 0,
+        "debug_assertions": true,
+        "overflow_checks": true,
+        "test": false
+      }
+    }
+  ],
+  "qualification": {
+    "processRuntimeExecutedLocally": false,
+    "replRuntimeExecutedLocally": false,
+    "candidateImageAdopted": false,
+    "coldStartupRepaired": false,
+    "affectedHostedAcceptance": false,
+    "releaseQualified": false,
+    "fullProjectComplete": false
+  },
+  "archive": {
+    "members": 141,
+    "expandedBytes": 16174609,
+    "bytes": 1444919,
+    "sha256": "25925de6efd88dabf66f355cb51b34cfce89cdc89aa4c6c86c8126b2e2cbeec4"
+  }
+}
