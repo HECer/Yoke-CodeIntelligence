@@ -1,5 +1,29 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Current Windows unit checks pass; platform acceptance remains open (2026-10-26)
+
+At exact clean source `b3a87d5d`, fresh private producers and complete harnesses
+pass 773 library tests (seven original ignores, zero failures or filters) and
+16 CLI unit tests (zero failures, ignores or filters). Workspace/all-target Clippy
+passes with warnings denied; its 757 Cargo artifact observations are metadata.
+Owned roots/Jobs exit naturally before force, streams complete, and the selected
+1,050 source inputs, controls and protected metadata remain unchanged.
+
+A separate strict metadata controller corrects the known CPython path/handle
+mode-domain mismatch while retaining both raw observations and exact identity,
+attribute and mode checks. Its 116 protocol/helper guards pass with no skips;
+the actual metadata-only preflight covers all ten protected roles. Original
+controls and assertions remain intact. The earlier pre-Cargo refusal and later
+disk-reserve build failure remain failed; a separately inventoried reproducible
+cache eviction enabled the fresh accepted producer.
+
+The actual `771833bb` typecheck/npm results (260 passed, three original skips)
+have identical selected 1,135 source files and seven controls at `b3a87d5d`;
+those commands were not rerun. These local unit checks do not certify hosted or
+Unix platforms, integration targets, live maintenance, a matching release/VSIX,
+or full project completion. Historical `704b647d` release evidence keeps its
+original source identity. [Current source-bound evidence](validation/integration-2026-10-26/current-windows-unit-metadata/README.md).
+
 ## HTTP completion-path diagnosis pending (2026-10-26)
 
 At source `52b746dc`, macOS shard 2's backpressure fixture reports no returned
@@ -16,8 +40,10 @@ sample, original 250-ms deadline, payload, buffer/fill/wait bound or timeout
 assertion changes. The original source restores exactly after removing these
 explicit diagnostics. Scoped formatting, typecheck and npm pass (260 passed,
 three original skips), with 1,135 unchanged inputs and natural owned-tree exit.
-The changed native library, all-target Clippy and actual macOS diagnostic remain
-unrun locally. Known history timing, PDF memory and template/prompt failures
+At this earlier diagnostic checkpoint the changed native library, all-target
+Clippy and actual macOS diagnostic were unrun locally. The current Windows unit
+and Clippy results above supersede only those local unrun checks. Known history
+timing, PDF memory and template/prompt failures
 remain separate; no current platform or release acceptance is claimed.
 [Original failure and diagnostic checks](validation/integration-2026-10-26/editor-http-response-completion/README.md).
 
