@@ -1,5 +1,26 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## HTTP completion-path diagnosis pending (2026-10-26)
+
+At source `52b746dc`, macOS shard 2's backpressure fixture reports no returned
+failure, 131,072 accepted prefill bytes and 257.354 ms elapsed. This does not
+identify the selected HTTP status: serialization expiry can select the existing
+best-effort HTTP 408 path and return `Ok`. Ordinary response completion also
+returns `Ok`; earlier `WouldBlock` and post-result elapsed time do not choose
+between them or establish a production deadline defect.
+
+Source `771833bb` adds only a test success receipt with selected status,
+serialization success and byte count to distinguish those paths on failure.
+Non-test success remains unit; no production branch, socket operation, clock
+sample, original 250-ms deadline, payload, buffer/fill/wait bound or timeout
+assertion changes. The original source restores exactly after removing these
+explicit diagnostics. Scoped formatting, typecheck and npm pass (260 passed,
+three original skips), with 1,135 unchanged inputs and natural owned-tree exit.
+The changed native library, all-target Clippy and actual macOS diagnostic remain
+unrun locally. Known history timing, PDF memory and template/prompt failures
+remain separate; no current platform or release acceptance is claimed.
+[Original failure and diagnostic checks](validation/integration-2026-10-26/editor-http-response-completion/README.md).
+
 ## Inspection deadline and ingress response evidence pending (2026-10-26)
 
 Source `34068f53` adds failure-only observations to two owned integration-test
