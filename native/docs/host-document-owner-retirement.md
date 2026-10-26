@@ -114,10 +114,16 @@ guards pass without skips. The owned foreign pending-marker test is presence-bas
 blocking, not actual interruption or retirement recovery qualification.
 See [source-bound live evidence](../../docs/validation/integration-2026-10-26/owner-retirement-live/README.md).
 
+The separate [cross-maintenance live consumer](../../docs/validation/integration-2026-10-26/cross-maintenance-live/README.md)
+also qualifies one migrated generation at source `704b647d`: the exact migration
+nonce survives retirement, a cached sibling purge plan refuses, retained archive
+records still read exactly and completed purge/archive receipts stay inspectable.
+It uses two independent native/Serena fixtures with actual natural Session exit.
+
 Whole-library and CLI unit checks/Clippy retain their separately recorded source
-scopes. Actual interrupted recovery, migrated owner generations, older-binary
-refusal, retained archive reads after retirement and native desktop/mobile visual
-qualification remain open. Tests include meaningful
+scopes. Actual interrupted recovery, broader generated-owner combinations,
+older-binary refusal and native desktop/mobile visual qualification remain open.
+Tests include meaningful
 temporary-fixture interruption, recovery, replay, archive-read preservation,
 foreign protocol/path/Unicode/link and deadline/entry/byte/event exhaustion cases;
 their presence is not a passing result. No real user-data maintenance was run.

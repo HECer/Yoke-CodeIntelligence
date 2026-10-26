@@ -1,9 +1,10 @@
 # Explicit physical purge of one document history archive
 
-This source implementation awaits guarded native qualification. This contract
-does not claim executed tests, acceptance, release certification or full STATUS
-completion. It reuses the existing history archive workflow; that workflow's
-acceptance gate remains independent.
+The committed-frame purge has source-scoped Windows CLI/Session acceptance,
+recorded below. Actual interrupted purge, cancellation/recovery and unverified
+unlink attribution remain separate qualification gates. This contract does not
+claim release certification or full STATUS completion. It reuses the existing
+history archive workflow; that workflow's acceptance gate remains independent.
 
 The standalone host CLI/API can review and remove exactly one explicitly selected
 **committed** archive frame. It retains the exact archive manifest and operation
@@ -132,3 +133,25 @@ document, whose bytes this maintenance operation never changes.
 All mutation fixtures use owned temporary data. Real user-data deletion requires
 its own concrete host review and explicit deletion permission. The source task
 and this document grant no such runtime authorization.
+
+## Source-scoped Windows qualification
+
+At native source `704b647d`, two independent native/Serena fixtures each pass 95
+actual CLI cases and 70 exact record readbacks. A fresh, separately authorized
+purge removes one 28-record frame while preserving its 14-record sibling and all
+retained receipts. Missing write/deletion grants, wrong confirmation and stale
+review refuse with the intended raw exit/cause and no mutation. Confirmed removed
+content is 31,666 frame bytes per fixture; unverified removal is zero, measured
+filesystem space remains unavailable and secure erasure is not claimed.
+
+After generated-owner retirement, applying the cached sibling purge plan refuses,
+all sibling record reads remain exact, and historical purge/archive inspection
+still succeeds. All four owning Sessions and their Job exit naturally before
+forced cleanup. The separately reviewed consumer's 72 guards pass without skips;
+guard counts are not runtime coverage. See [actual source-bound receipts](../../docs/validation/integration-2026-10-26/cross-maintenance-live/README.md).
+
+These owned temporary fixtures do not qualify actual interruption, purge
+cancellation/recovery, unknown unlink attribution, older binaries, browser/mobile,
+all possible external consumers, a matching current release/VSIX or full project
+completion. The executable retains source 704; relevant-source byte equality with
+later documentation checkpoints does not relabel the build.

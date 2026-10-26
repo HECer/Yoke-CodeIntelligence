@@ -1,5 +1,33 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Actual purge, generated-owner retirement and retained reads (2026-10-26)
+
+A separate source-`704b647d` Windows consumer passes 95 actual CLI cases in each
+native/Serena fixture: 88 success exits 0 and seven expected refusal exits 1.
+Its 72 protocol/helper guards pass with zero skips; those are not extra runtime
+coverage. Each fixture archives 42 original records as 28+14 and performs 70 exact
+record reads, including all 14 remaining records after purge and after retirement.
+
+First-frame purge requires fresh review, exact confirmation, host write permission
+and separate state-deletion permission. Missing grants, wrong confirmation and
+stale review refuse without mutation. Actual purge confirms 31,666 frame-content
+bytes removed per fixture, zero unverified removal, unavailable exact record
+evidence and retained receipts. It claims neither measured disk space nor secure
+erasure. The second frame remains exact.
+
+The migrated owner's before/after generation retains the migration nonce through
+logical retirement. Applying its previously reviewed second-purge plan refuses;
+all sibling reads and historical purge/archive inspections still succeed. Exact
+configuration/source/owner identity and owning HTTP boundaries remain intact.
+All four owning Sessions exit 0 with stdin open and the Job is empty before force;
+complete source/control/protected/image and producer/version checks pass.
+
+This qualifies the recorded terminal combination at source `704b647d`, not a new
+current-head release. All 20 selected maintenance/dashboard/history-harness sources
+match `711adf54`. Actual interruption, recovery/cancellation, unverified unlink
+attribution, older binaries, browser/mobile and full project/release acceptance
+remain open. [Actual cross-maintenance evidence](validation/integration-2026-10-26/cross-maintenance-live/README.md).
+
 ## Actual owner-retirement CLI and owning HTTP checks (2026-10-26)
 
 The existing qualified `704b647d` release CLI now passes a separate live logical
