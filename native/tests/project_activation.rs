@@ -515,7 +515,12 @@ fn unicode_quoting_and_physical_root_replacement_do_not_rebind_authority() {
     );
     drop(s);
     let moved = parent.path().join("moved");
-    if fs::rename(&selected, &moved).is_ok() {
+    let renamed = fs::rename(&selected, &moved);
+    #[cfg(not(windows))]
+    renamed
+        .as_ref()
+        .expect("Owned project rename must succeed outside Windows");
+    if renamed.is_ok() {
         fs::create_dir(&selected).unwrap();
         assert!(
             Session::open(
@@ -527,11 +532,6 @@ fn unicode_quoting_and_physical_root_replacement_do_not_rebind_authority() {
             .is_err()
         );
         assert!(!selected.join("quote.txt").exists());
-    } else {
-        assert!(
-            cfg!(windows),
-            "Only Windows held-name sharing may prevent this owned rename"
-        );
     }
 }
 
