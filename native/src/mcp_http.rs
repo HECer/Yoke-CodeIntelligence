@@ -90,7 +90,19 @@ impl Target {
         }
         // This independent random label is not the transport session secret.
         let label = format!("http-{}", random_id()?);
-        let mut session = if let Some(projects) = &self.git_repository_projects {
+        let mut session = if !capture_source {
+            if let Some(projects) = &self.git_repository_projects {
+                Session::inspect_with_git_projects(
+                    engine,
+                    self.host.clone(),
+                    Some(&label),
+                    projects.clone(),
+                    deadline,
+                )?
+            } else {
+                Session::inspect(engine, self.host.clone(), Some(&label), deadline)?
+            }
+        } else if let Some(projects) = &self.git_repository_projects {
             Session::open_with_git_projects(
                 engine,
                 self.host.clone(),
@@ -120,6 +132,10 @@ pub struct Principal {
 impl Principal {
     pub fn new(id: &str, token: Zeroizing<Vec<u8>>, mut target: Target) -> Result<Self> {
         identifier(id)?;
+        ensure!(
+            target.host.activation_commands.is_none() || target.profile != Profile::Native,
+            "activation_session_profile_required"
+        );
         ensure!(
             token.len() == 32,
             "MCP host credential must contain 32 bytes"
@@ -215,7 +231,10 @@ impl Principal {
             crate::agent_repl::AgentRepl::validate_spec(spec)?;
         }
         // Validate source/session host authority before a listener can be opened.
-        drop(target.open(&Deadline::new(30_000), false)?);
+        let preflight_deadline = Deadline::new(30_000);
+        let preflight = target.open(&preflight_deadline, false)?;
+        preflight.check_activation_start(&preflight_deadline)?;
+        drop(preflight);
         Ok(Self {
             id: id.into(),
             token_hash: Sha256::digest(token.as_slice()).into(),

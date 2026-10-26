@@ -38,7 +38,9 @@ The base retains CLI-layer settings and all host project/runtime/permission
 registrations. No YAML field can create those grants.
 
 Commands and flags below are shown wrapped. Plan returns the resulting hostProfile
-and ordered source receipts without a Store or output. Export also creates a
+and ordered source receipts without a Store or output. Explicit activation
+declarations are redacted from that reply, with a configuration hash and named
+redaction; private export preserves their inert data. Export also creates a
 fresh JSON profile:
 
     yoke session-config plan --selection /absolute/selection.json
@@ -104,6 +106,9 @@ The reply contains selection, a ready ordinary hash-pinned selection, and
 projection, the actual existing YAML policy projection. Pass that selection
 object to the unchanged plan/export commands for replay. Directory receipts
 retain path/kind, selected YAML names, inspected entry count and name-list hash.
+An activation-bearing base host profile is redacted from the returned selector,
+with `selectionReplayable:false` and a hash of the complete selector. Retain the
+original private base alongside the returned pins; no command body is echoed.
 An existing empty selected directory is an observed empty selection; an absent
 or unsafe directory is an error. discoveryComplete describes the exact selected
 flat YAML scope. The separate broad complete field stays false.
@@ -267,13 +272,16 @@ bind original BOM/CRLF bytes. Without an explicit templateContext and separate
 --allow-template-evaluation grant, Jinja syntax still refuses. The optional
 [bounded native prompt renderer](prompt-templates.md) transforms only decoded
 instruction scalars; all YAML policy fields remain original parsed data.
-There is no environment, memory, shell, model or analyzed-program evaluation. Other keys, including
-activation commands and server/runtime/trust/registration settings, refuse
+There is no environment, memory, shell, model or analyzed-program evaluation.
+Activation declarations are separately inert data with an independent
+[host-authorized lifecycle](project-activation.md). Unsupported
+server/runtime/trust/registration keys still refuse
 explicitly. This is a native steering projection, not full upstream YAML/Jinja or
 all 25 project-setting equivalence.
 
 The strict event parser rejects aliases, anchors, tags, merge/duplicate keys,
-complex/non-string keys, multiple documents, nonfinite values, floats outside symbol_info_budget, malformed
+complex/non-string keys, multiple documents, nonfinite values, floats outside
+symbol_info_budget and activation_command_timeout, malformed
 UTF-8/NUL and invalid types. Limits are 268 files, 65536 bytes/file, 2000000 aggregate
 source bytes, 8192 parser events/file, depth 16 and 128000 serialized profile bytes.
 Selection JSON is at most 128000 bytes. Existing per-instruction/name/layer limits
@@ -522,10 +530,14 @@ adding a new HostProfile policy: encoding null/utf-8/UTF-8/utf8/UTF8, an unset
 activation_command, null/default 180 activation_command_timeout, null/LSP
 language_backend and null/empty ls_additional_workspace_folders. Source receipts
 conditionally identify these nativeEquivalentDefaults and nativeDefaultCapabilities.
-Other source encodings, active activation commands, non-default activation
-timeouts and JetBrains return named unavailable errors. Captured-relative
-additional folders are supported separately below; external folders remain unavailable. This is compatibility with inactive/default values, not implementation
-of the unavailable extensions. No transcoding, automatic project execution or
+Other source encodings and JetBrains return named unavailable errors.
+Nonempty activation commands and positive-number timeouts now project inert
+global/project/local declarations. Actual execution requires a separately
+selected nonserializable runtime grant and the CLI's independent host switch;
+see [activation commands](project-activation.md). Captured-relative
+additional folders are supported separately below; external folders remain unavailable.
+Inactive/default values retain their exact previous projection. No transcoding,
+automatic project execution during configuration projection or
 extra source/workspace authority occurs. Empty activation strings also refuse.
 
 Public added_modes:null means no added modes from that layer, retaining lower

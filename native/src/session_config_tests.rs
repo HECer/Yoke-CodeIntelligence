@@ -315,7 +315,7 @@ fn nonnative_active_defaults_invalid_types_and_scope_refuse_without_echoing_sour
                 json!(false),
                 json!(0),
                 json!([]),
-                json!(format!("echo {canary}")),
+                json!({"command":canary}),
             ],
             "activation_command_unavailable",
         ),
@@ -324,8 +324,8 @@ fn nonnative_active_defaults_invalid_types_and_scope_refuse_without_echoing_sour
             vec![
                 json!(0),
                 json!(-1),
-                json!(179),
-                json!(181),
+                json!(1e100),
+                json!(1e-100),
                 json!(false),
                 json!("180"),
             ],
@@ -390,13 +390,23 @@ fn nonnative_active_defaults_invalid_types_and_scope_refuse_without_echoing_sour
     for yaml in [
         b"added_modes: false\n".as_slice(),
         b"activation_command_timeout: 1e100\n",
-        b"activation_command_timeout: 180.0\n",
         b"added_modes: query-projects\n",
         b"added_modes: [false]\n",
-        b"activation_command: null\nactivation_command_timeout: 179\n",
-        b"encoding: utf-8\nactivation_command: echo-owned\n",
     ] {
         assert!(apply(&HostProfile::default(), Target::Global, yaml).is_err());
+    }
+    // Positive numbers and nonempty commands are now inert declarations, never
+    // shell permission. Keep the former active-value canaries on this boundary.
+    for yaml in [
+        b"activation_command_timeout: 180.0\n".as_slice(),
+        b"activation_command: null\nactivation_command_timeout: 179\n",
+        b"encoding: utf-8\nactivation_command: echo-owned\n",
+        b"activation_command_timeout: 181\n",
+    ] {
+        let p = apply(&HostProfile::default(), Target::Global, yaml).unwrap();
+        assert!(p.profile().activation_runtime.is_none());
+        assert_eq!(p.plan()["activationCommandsExecuted"], false);
+        assert!(!p.plan().to_string().contains("echo-owned"));
     }
 }
 
@@ -1378,10 +1388,16 @@ fn stale_pins_duplicate_targets_unknown_capabilities_and_templates_refuse() {
         b"trusted: true\n",
         b"python: C:/owned_private_canary\n",
     ] {
-        let error = apply(&HostProfile::default(), target.clone(), bytes)
-            .err()
-            .unwrap();
-        assert!(!format!("{error:?}").contains("owned_private_canary"));
+        let result = apply(&HostProfile::default(), target.clone(), bytes);
+        if bytes.starts_with(b"activation_command:") {
+            let p = result.unwrap();
+            assert!(p.profile().activation_runtime.is_none());
+            assert!(!p.plan().to_string().contains("owned_private_canary"));
+            assert_eq!(p.plan()["activationCommandsExecuted"], false);
+        } else {
+            let error = result.err().unwrap();
+            assert!(!format!("{error:?}").contains("owned_private_canary"));
+        }
     }
     for prompt in [
         b"initial_prompt: '{{ embed_memory(\"private\") }}'\n".as_slice(),

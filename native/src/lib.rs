@@ -75,6 +75,7 @@ pub mod platform_credentials;
 pub mod postgres_catalog;
 pub mod postgres_catalog_client;
 pub mod process;
+pub mod project_activation;
 pub mod project_session;
 pub mod projects;
 pub mod protocol;
