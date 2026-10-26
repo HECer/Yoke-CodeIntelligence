@@ -104,6 +104,14 @@ hook before new active-state publication. A resumed host lifecycle reruns its
 current project's hook before allowing fresh backend work. A passive
 `Session::inspect` never runs hooks or publishes a new selected session row.
 
+Each live handle binds backend readiness to the exact latest durable attempt
+witness and rechecks both the live and named state namespace before admission,
+including cached engines and projects without a command. A newer resume attempt
+revokes an older handle's admission even when the session row stays unchanged.
+Only the handle that has proved its managed capture and owned-tree cleanup
+may temporarily admit its pending witness while publishing the selected state. Failed attempts retain
+uncertainty; passive inspection remains available without executing a hook.
+
 The CLI `session --requests` route uses passive inspection for batches containing
 only the documented passive operations: configuration, project/onboarding lists,
 receipts, instructions, structural source/symbol reads, note reads/lists and

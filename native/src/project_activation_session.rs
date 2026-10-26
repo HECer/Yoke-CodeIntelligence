@@ -205,26 +205,55 @@ fn read_receipt(engine: &Engine, id: &str, d: &Deadline) -> Result<Option<(Strin
         })
         .transpose()
 }
+fn check_named_receipt(
+    engine: &Engine,
+    id: &str,
+    expected: Option<&str>,
+    d: &Deadline,
+) -> Result<()> {
+    d.check()?;
+    let current = crate::store::Store::open_existing_read_only(&engine.root, d)?;
+    ensure!(
+        current.workspace_id == engine.store.workspace_id,
+        "activation_state_namespace_changed"
+    );
+    let value: Option<String> = current
+        .db
+        .query_row(
+            "SELECT value FROM meta WHERE key=?1 AND length(CAST(value AS BLOB))<=8192",
+            [key(id)],
+            |r| r.get(0),
+        )
+        .optional()?;
+    let exists: bool = current.db.query_row(
+        "SELECT EXISTS(SELECT 1 FROM meta WHERE key=?1)",
+        [key(id)],
+        |r| r.get(0),
+    )?;
+    ensure!(
+        !exists || value.is_some(),
+        "activation_named_receipt_capacity"
+    );
+    ensure!(
+        value.as_deref() == expected,
+        "activation_named_attempt_changed"
+    );
+    Ok(())
+}
+pub(super) fn activated_witness(engine: &Engine, id: &str, d: &Deadline) -> Result<Option<String>> {
+    let row = read_receipt(engine, id, d)?;
+    ensure!(
+        row.as_ref()
+            .is_none_or(|(_, r)| matches!(r.phase, Phase::Activated)),
+        "activation_prior_outcome_unknown_no_automatic_retry"
+    );
+    let witness = row.map(|(text, _)| text);
+    check_named_receipt(engine, id, witness.as_deref(), d)?;
+    Ok(witness)
+}
 impl Attempt {
     fn check_named(&self, engine: &Engine, d: &Deadline) -> Result<()> {
-        let current = crate::store::Store::open_existing_read_only(&engine.root, d)?;
-        ensure!(
-            current.workspace_id == engine.store.workspace_id,
-            "activation_state_namespace_changed"
-        );
-        let receipt: Option<String> = current
-            .db
-            .query_row(
-                "SELECT value FROM meta WHERE key=?1 AND length(CAST(value AS BLOB))<=8192",
-                [&self.key],
-                |r| r.get(0),
-            )
-            .optional()?;
-        ensure!(
-            receipt.as_deref() == Some(self.persisted.as_str()),
-            "activation_named_attempt_changed"
-        );
-        Ok(())
+        check_named_receipt(engine, &self.receipt.session_key, Some(&self.persisted), d)
     }
     fn publish(
         &mut self,
@@ -248,9 +277,10 @@ impl Attempt {
         self.check_named(engine, d)?;
         Ok(())
     }
-    pub(super) fn activated(mut self, engine: &Engine, d: &Deadline) -> Result<()> {
+    pub(super) fn activated(mut self, engine: &Engine, d: &Deadline) -> Result<String> {
         self.publish(engine, Phase::Activated, None, d)
-            .context("activation_state_publication_may_have_completed")
+            .context("activation_state_publication_may_have_completed")?;
+        Ok(self.persisted)
     }
     pub(super) fn uncertain(mut self, engine: &Engine, d: &Deadline) {
         // Best effort bookkeeping must never replace the original CAS/capture
@@ -426,6 +456,21 @@ impl Session {
             );
             return Ok(());
         }
+        // Even a command-free project must reject a newer attempt from another
+        // handle. The private pending witness is installed only after run()
+        // has proved capture completion and cleanup, before this handle opens its backend.
+        let current = read_receipt(&self.engine, &self.state.id, d)?;
+        ensure!(
+            current.as_ref().map(|(text, _)| text.as_str())
+                == self.activation_receipt_witness.as_deref(),
+            "activation_receipt_changed_backend_refused"
+        );
+        check_named_receipt(
+            &self.engine,
+            &self.state.id,
+            self.activation_receipt_witness.as_deref(),
+            d,
+        )?;
         if config.resolve(project)?.command.is_none() {
             return Ok(());
         }
@@ -496,8 +541,9 @@ impl Session {
             }
         };
         let previously_ready = self.activation_ready_projects.contains(&project);
-        if attempt.is_some() {
+        if let Some((attempt, _)) = &attempt {
             self.activation_ready_projects.insert(project.clone());
+            self.activation_receipt_witness = Some(attempt.persisted.clone());
         }
         let result = (|| {
             self.project_engine(&project, d)?;
@@ -535,7 +581,9 @@ impl Session {
         match (result, attempt) {
             (Ok(()), Some((attempt, diagnostic))) => {
                 self.activation_diagnostic = Some(diagnostic);
-                let result = attempt.activated(&self.engine, d);
+                let result = attempt.activated(&self.engine, d).map(|witness| {
+                    self.activation_receipt_witness = Some(witness);
+                });
                 self.activation_blocked |= result.is_err();
                 result
             }

@@ -292,6 +292,123 @@ fn command_timeout_with_descendants_requires_checked_tree_cleanup_and_remaining_
     assert_eq!(r["observation"]["streamsComplete"], true);
 }
 
+fn saved_session(s: &Session) -> (String, String) {
+    s.engine
+        .store
+        .db
+        .query_row(
+            "SELECT id,value FROM records WHERE kind=?1",
+            [RECORD_KIND],
+            |row| Ok((row.get(0)?, row.get(1)?)),
+        )
+        .unwrap()
+}
+fn assert_revoked_backend(s: &mut Session) {
+    let error = s
+        .active_engine_at(&d())
+        .err()
+        .expect("A superseded activation witness must refuse backend admission");
+    let message = error.to_string();
+    assert!(
+        message.contains("activation_receipt_changed_backend_refused")
+            || message.contains("activation_named_attempt_changed"),
+        "{error:#}"
+    );
+}
+fn assert_unknown_attempt(s: &Session, id: &str) {
+    let text: String = s
+        .engine
+        .store
+        .db
+        .query_row(
+            "SELECT value FROM meta WHERE key=?1",
+            [format!("{}/{}", yoke::project_activation::VERSION, id)],
+            |row| row.get(0),
+        )
+        .unwrap();
+    let value: Value = serde_json::from_str(&text).unwrap();
+    assert!(matches!(
+        value["phase"].as_str(),
+        Some("attempting" | "outcome_unknown")
+    ));
+}
+#[test]
+fn failed_resume_revokes_an_older_live_handles_cached_backend_without_state_change() {
+    let r = root();
+    let command = if cfg!(windows) {
+        "if ([IO.File]::Exists('activation.once')) { [Console]::Out.Write(('x' * 70000)) } else { [IO.File]::WriteAllText('activation.once', 'ready') }"
+    } else {
+        "if [ -f activation.once ]; then i=0; while [ $i -lt 70000 ]; do printf x; i=$((i+1)); done; else printf ready > activation.once; fi"
+    };
+    let mut host = profile(command, json!(180));
+    let pin = selection(&host, "default", r.path(), command);
+    grant(&mut host, r.path(), &[pin]);
+    let mut older = open(r.path(), host.clone(), "shared-failure");
+    older.active_engine_at(&d()).unwrap();
+    let before = saved_session(&older);
+    assert!(
+        Session::open(
+            Engine::open(r.path()).unwrap(),
+            host,
+            Some("shared-failure"),
+            &d()
+        )
+        .is_err()
+    );
+    assert_eq!(
+        saved_session(&older),
+        before,
+        "The ordinary session CAS must remain unchanged in this regression"
+    );
+    assert_unknown_attempt(&older, &before.0);
+    assert_revoked_backend(&mut older);
+}
+#[test]
+fn successful_resume_replaces_the_older_handles_durable_activation_witness() {
+    let r = root();
+    let command = append();
+    let mut host = profile(&command, json!(180));
+    let pin = selection(&host, "default", r.path(), &command);
+    grant(&mut host, r.path(), &[pin]);
+    let mut older = open(r.path(), host.clone(), "shared-success");
+    older.active_engine_at(&d()).unwrap();
+    let before = saved_session(&older);
+    let mut newer = open(r.path(), host, "shared-success");
+    assert_eq!(count(r.path()), 2);
+    assert_eq!(saved_session(&older), before);
+    newer.active_engine_at(&d()).unwrap();
+    assert_revoked_backend(&mut older);
+}
+#[test]
+fn uncertain_secondary_attempt_also_revokes_a_command_free_cached_project() {
+    let a = root();
+    let b = root();
+    let command = if cfg!(windows) {
+        "[Console]::Out.Write(('x' * 70000))"
+    } else {
+        "i=0; while [ $i -lt 70000 ]; do printf x; i=$((i+1)); done"
+    };
+    let mut host: HostProfile = serde_json::from_value(json!({
+        "projects":[{"name":"other","root":b.path().canonicalize().unwrap()}],
+        "activationCommands":{"projects":{"other":{"project":{"activation_command":command}}}}
+    }))
+    .unwrap();
+    let pin = selection(&host, "other", b.path(), command);
+    grant(&mut host, a.path(), &[pin]);
+    let mut older = open(a.path(), host.clone(), "shared-secondary");
+    older.active_engine_at(&d()).unwrap();
+    let before = saved_session(&older);
+    let mut newer = open(a.path(), host, "shared-secondary");
+    assert!(
+        newer
+            .invoke("activate", &json!({"project":"other"}), &d())
+            .is_err()
+    );
+    assert_eq!(saved_session(&older), before);
+    assert_unknown_attempt(&older, &before.0);
+    assert_revoked_backend(&mut older);
+}
+
 #[test]
 fn output_capacity_and_enclosing_expiry_refuse_publication_and_do_not_automatically_retry() {
     for long in [false, true] {

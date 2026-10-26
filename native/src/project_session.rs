@@ -240,6 +240,7 @@ pub struct Session {
     inspection_source_read: bool,
     unpublished_inspection: bool,
     activation_ready_projects: BTreeSet<String>,
+    activation_receipt_witness: Option<String>,
     activation_blocked: bool,
     prompt_profile: crate::session_prompt::Profile,
     git_repository_projects: Option<crate::git_workflows::repository_projects::Hosts>,
@@ -1678,6 +1679,14 @@ impl Session {
                 deadline,
             )?
         };
+        let activation_witness_before_publication = if activation_attempt.is_none()
+            && host.activation_commands.is_some()
+            && !inspection_only
+        {
+            activation::activated_witness(&engine, &state.id, deadline)?
+        } else {
+            None
+        };
         let unpublished_inspection =
             inspection_only && host.activation_commands.is_some() && raw.is_none();
         let publication = (|| -> Result<()> {
@@ -1713,19 +1722,21 @@ impl Session {
             deadline.check()?;
             Ok(())
         })();
-        let activation_diagnostic = match (publication, activation_attempt) {
-            (Ok(()), Some((attempt, diagnostic))) => {
-                attempt.activated(&engine, deadline)?;
-                Some(diagnostic)
-            }
-            (Err(error), Some((attempt, _))) => {
-                attempt.uncertain(&engine, deadline);
-                return Err(error
-                    .context("activation_publication_outcome_unknown_external_effects_possible"));
-            }
-            (Err(error), None) => return Err(error),
-            (Ok(()), None) => None,
-        };
+        let (activation_diagnostic, activation_receipt_witness) =
+            match (publication, activation_attempt) {
+                (Ok(()), Some((attempt, diagnostic))) => {
+                    let witness = attempt.activated(&engine, deadline)?;
+                    (Some(diagnostic), Some(witness))
+                }
+                (Err(error), Some((attempt, _))) => {
+                    attempt.uncertain(&engine, deadline);
+                    return Err(error.context(
+                        "activation_publication_outcome_unknown_external_effects_possible",
+                    ));
+                }
+                (Err(error), None) => return Err(error),
+                (Ok(()), None) => (None, activation_witness_before_publication),
+            };
         Ok(Self {
             activation_ready_projects: if activation_diagnostic.is_some() {
                 BTreeSet::from([state.active_project.clone()])
@@ -1733,6 +1744,7 @@ impl Session {
                 BTreeSet::new()
             },
             activation_blocked: false,
+            activation_receipt_witness,
             activation_diagnostic,
             inspection_only,
             inspection_source_read: false,
