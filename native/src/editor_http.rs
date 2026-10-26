@@ -421,13 +421,30 @@ impl Write for ResponseWriter<'_> {
         Ok(())
     }
 }
-fn respond(stream: &mut TcpStream, response: Response, deadline: &Deadline) -> HttpResult<()> {
+// Tests distinguish the selected HTTP status from a returned transport failure.
+// The non-test result and both existing success paths remain unchanged.
+#[cfg(test)]
+struct ResponseCompletion {
+    status: u16,
+    serialization_succeeded: bool,
+    serialized_bytes: usize,
+}
+#[cfg(not(test))]
+type ResponseCompletion = ();
+
+fn respond(
+    stream: &mut TcpStream,
+    response: Response,
+    deadline: &Deadline,
+) -> HttpResult<ResponseCompletion> {
     let mut status = response.status;
     let mut writer = ResponseWriter {
         bytes: Vec::new(),
         deadline,
     };
     let serialized = serde_json::to_writer(&mut writer, &response.body);
+    #[cfg(test)]
+    let serialization = (serialized.is_ok(), writer.bytes.len());
     let body = if deadline.check().is_err() {
         status = 408;
         b"{\"ok\":false,\"error\":{\"code\":\"DEADLINE_EXCEEDED\",\"message\":\"Editor request deadline exceeded\"}}".to_vec()
@@ -436,6 +453,12 @@ fn respond(stream: &mut TcpStream, response: Response, deadline: &Deadline) -> H
         b"{\"ok\":false,\"error\":{\"code\":\"RESPONSE_TOO_LARGE\",\"message\":\"Editor response is too large\"}}".to_vec()
     } else {
         writer.bytes
+    };
+    #[cfg(test)]
+    let completion = ResponseCompletion {
+        status,
+        serialization_succeeded: serialization.0,
+        serialized_bytes: serialization.1,
     };
     let reason = match status {
         200 => "OK",
@@ -462,6 +485,9 @@ fn respond(stream: &mut TcpStream, response: Response, deadline: &Deadline) -> H
         let mut bytes = headers.into_bytes();
         bytes.extend(body);
         let _ = stream.write(&bytes);
+        #[cfg(test)]
+        return Ok(completion);
+        #[cfg(not(test))]
         return Ok(());
     }
     for bytes in [headers.as_bytes(), body.as_slice()] {
@@ -482,7 +508,14 @@ fn respond(stream: &mut TcpStream, response: Response, deadline: &Deadline) -> H
         }
     }
     remaining(deadline)?;
-    Ok(())
+    #[cfg(test)]
+    {
+        Ok(completion)
+    }
+    #[cfg(not(test))]
+    {
+        Ok(())
+    }
 }
 
 #[cfg(test)]
@@ -589,19 +622,27 @@ mod tests {
             let deadline = Deadline::new(250);
             let started = std::time::Instant::now();
             let result = respond(&mut stream, Response { status: 200, body }, &deadline);
+            let completion = result.as_ref().ok().map(|receipt| {
+                (
+                    receipt.status,
+                    receipt.serialization_succeeded,
+                    receipt.serialized_bytes,
+                )
+            });
             let failure_status = result.as_ref().err().map(|error| error.status);
             let timeout = result.is_err_and(|error| error.status == 408);
-            let _ = sender.send((timeout, started.elapsed(), failure_status));
+            let _ = sender.send((timeout, started.elapsed(), failure_status, completion));
         });
         let result = receiver.recv_timeout(Duration::from_secs(3));
         if result.is_err() {
             let _ = client.shutdown(Shutdown::Both);
         }
         task.join().unwrap();
-        let (timeout, elapsed, failure_status) = result.expect("Writer must stop at its deadline");
+        let (timeout, elapsed, failure_status, completion) =
+            result.expect("Writer must stop at its deadline");
         assert!(
             timeout,
-            "Fixture must reach genuinely backpressured response writing: status={failure_status:?}, queued={queued}, elapsed={elapsed:?}"
+            "Fixture must reach genuinely backpressured response writing: status={failure_status:?}, queued={queued}, elapsed={elapsed:?}, completion(status,serialization_succeeded,serialized_bytes)={completion:?}"
         );
         assert!(elapsed < Duration::from_secs(3));
     }
