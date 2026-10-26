@@ -496,6 +496,176 @@ fn lazy_secondary_requires_explicit_activation_and_target_cwd_before_cold_engine
 }
 
 #[test]
+fn removing_an_active_secondary_runs_the_cached_default_hook_before_state_publication() {
+    for refuse in [false, true] {
+        let a = root();
+        let b = root();
+        let command = if cfg!(windows) {
+            format!(
+                "{}; if ([IO.File]::Exists('deny-default')) {{ [Console]::Out.Write(('x' * 70000)) }}",
+                append()
+            )
+        } else {
+            format!(
+                "{}; if [ -f deny-default ]; then i=0; while [ $i -lt 70000 ]; do printf x; i=$((i+1)); done; fi",
+                append()
+            )
+        };
+        let mut host: HostProfile = serde_json::from_value(json!({
+            "projects":[{"name":"other","root":b.path().canonicalize().unwrap()}],
+            "activationCommands":{"global":{"activation_command":command}}
+        }))
+        .unwrap();
+        let selections = [
+            selection(&host, "default", a.path(), &command),
+            selection(&host, "other", b.path(), &command),
+        ];
+        grant(&mut host, a.path(), &selections);
+        let secondary_source = fs::read(b.path().join("main.rs")).unwrap();
+        let mut session = open(a.path(), host, "remove-active");
+        session.active_engine_at(&d()).unwrap();
+        session
+            .invoke("activate", &json!({"project":"other"}), &d())
+            .unwrap();
+        assert_eq!(count(a.path()), 1);
+        assert_eq!(count(b.path()), 1);
+        let before = saved_session(&session);
+        if refuse {
+            fs::write(a.path().join("deny-default"), "owned refusal canary").unwrap();
+        }
+        let result = session.invoke("removeProject", &json!({"project":"other"}), &d());
+        assert_eq!(count(a.path()), 2);
+        assert_eq!(count(b.path()), 1);
+        assert_eq!(
+            fs::read(b.path().join("main.rs")).unwrap(),
+            secondary_source
+        );
+        let projects = session.invoke("listProjects", &json!({}), &d()).unwrap();
+        if refuse {
+            assert!(result.is_err());
+            assert_eq!(saved_session(&session), before);
+            assert_eq!(config(&mut session)["activeProject"], "other");
+            assert!(
+                projects["items"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .any(|project| project["name"] == "other")
+            );
+            assert_unknown_attempt(&session, &before.0);
+            assert!(session.active_engine_at(&d()).is_err());
+        } else {
+            assert_eq!(result.unwrap()["sourceDeleted"], false);
+            assert_eq!(config(&mut session)["activeProject"], "default");
+            assert!(
+                projects["items"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .all(|project| project["name"] != "other")
+            );
+            assert_eq!(receipt(&mut session)["project"], "default");
+            assert_eq!(receipt(&mut session)["phase"], "activated");
+            session.active_engine_at(&d()).unwrap();
+            assert_eq!(count(a.path()), 2);
+        }
+    }
+}
+
+#[test]
+fn replacing_state_during_an_attempt_with_a_prior_clone_cannot_publish_or_reuse_a_backend() {
+    let r = root();
+    let command = if cfg!(windows) {
+        format!(
+            "{}; if ([IO.Directory]::Exists('.activation-clone')) {{ try {{ [IO.Directory]::Move('.yoke','.activation-old'); [IO.Directory]::Move('.activation-clone','.yoke'); [IO.File]::WriteAllText('namespace-replaced','1') }} catch {{ [IO.File]::WriteAllText('namespace-refused','1'); exit 23 }} }}",
+            append()
+        )
+    } else {
+        format!(
+            "{}; if [ -d .activation-clone ]; then mv .yoke .activation-old && mv .activation-clone .yoke && printf replaced > namespace-replaced || exit 23; fi",
+            append()
+        )
+    };
+    let mut host = profile(&command, json!(180));
+    let pin = selection(&host, "default", r.path(), &command);
+    grant(&mut host, r.path(), &[pin]);
+    let mut session = open(r.path(), host, "state-clone");
+    session.active_engine_at(&d()).unwrap();
+    let before = saved_session(&session);
+    let prior_receipt = receipt(&mut session);
+    let clone = r.path().join(".activation-clone");
+    fs::create_dir(&clone).unwrap();
+    for directory in ["blobs", "trees"] {
+        fs::create_dir(clone.join(directory)).unwrap();
+    }
+    for lock in ["clients.lock", "maintenance.lock"] {
+        fs::write(clone.join(lock), []).unwrap();
+    }
+    // SQLite creates an independent, committed clone before the new attempt's
+    // nonce exists. Copying only live database bytes would omit WAL state.
+    session
+        .engine
+        .store
+        .db
+        .execute(
+            "VACUUM main INTO ?1",
+            [clone.join("index.sqlite").to_str().unwrap()],
+        )
+        .unwrap();
+    let result = session.invoke("activate", &json!({"project":"default"}), &d());
+    let replaced = r.path().join("namespace-replaced").exists();
+    #[cfg(not(windows))]
+    assert!(
+        replaced,
+        "The owned Unix namespace replacement must complete"
+    );
+    assert_eq!(count(r.path()), 2);
+    if replaced {
+        assert!(result.is_err());
+        assert_eq!(saved_session(&session), before);
+        assert!(session.active_engine_at(&d()).is_err());
+        let named = yoke::store::Store::open_existing_read_only(r.path(), &d()).unwrap();
+        assert_eq!(named.workspace_id, session.engine.store.workspace_id);
+        let named_session: (String, String) = named
+            .db
+            .query_row(
+                "SELECT id,value FROM records WHERE kind=?1",
+                [RECORD_KIND],
+                |row| Ok((row.get(0)?, row.get(1)?)),
+            )
+            .unwrap();
+        assert_eq!(named_session, before);
+        let named_receipt: String = named
+            .db
+            .query_row(
+                "SELECT value FROM meta WHERE key=?1",
+                [format!(
+                    "{}/{}",
+                    yoke::project_activation::VERSION,
+                    before.0
+                )],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(
+            serde_json::from_str::<Value>(&named_receipt).unwrap(),
+            prior_receipt
+        );
+    } else {
+        // Windows may deny the owned rename while SQLite holds the original
+        // namespace. That branch must retain the original names and complete
+        // the nonzero command through the existing cleanup/receipt policy.
+        assert!(r.path().join("namespace-refused").exists());
+        assert!(!r.path().join(".activation-old").exists());
+        assert!(r.path().join(".yoke/index.sqlite").is_file());
+        result.unwrap();
+        assert_eq!(receipt(&mut session)["phase"], "activated");
+        assert_eq!(receipt(&mut session)["observation"]["exitCode"], 23);
+        session.active_engine_at(&d()).unwrap();
+    }
+}
+
+#[test]
 fn unicode_quoting_and_physical_root_replacement_do_not_rebind_authority() {
     let parent = root();
     let selected = parent.path().join("α-'quoted'-İ");
