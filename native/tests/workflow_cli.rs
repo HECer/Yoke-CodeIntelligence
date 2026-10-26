@@ -95,6 +95,24 @@ fn runtime_cli_paused_shutdown_refusal_has_no_successful_batch_output() {
 }
 
 #[test]
+fn runtime_cli_nonclosed_close_response_has_no_successful_batch_output() {
+    let source = "value = 1\n";
+    // Evaluation is separately authorized and changes only this owned worker.
+    // A complete but nonclosed reply must not stand in for checked shutdown.
+    let install = "import sys\n_owned_worker = sys.modules['__main__']\n_owned_emit = _owned_worker.emit\ndef _owned_nonclosed(event, data):\n if event == 'closed':\n  return _owned_emit('paused', {'status': 'paused', 'frames': []})\n return _owned_emit(event, data)\n_owned_worker.emit = _owned_nonclosed\n";
+    let requests = json!([{"command": "repl", "code": install, "frame": 0}]);
+    let (output, original) = runtime_response_boundary_fixture(source, requests, true);
+    assert_eq!(output.exit_code, Some(1));
+    assert!(output.stdin_complete && output.output_complete);
+    assert!(!output.timed_out && !output.output_exceeded && !output.io_error);
+    assert!(output.stdout.is_empty());
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert!(stderr.contains("shutdown was not confirmed"));
+    assert!(stderr.contains("Close response did not confirm closed state"));
+    assert_eq!(original, source.as_bytes());
+}
+
+#[test]
 fn runtime_cli_terminal_and_explicit_close_preserve_requested_events() {
     let source = "print('owned terminal response')\n";
     for (requests, status, completed) in [

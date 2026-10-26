@@ -1991,8 +1991,12 @@ fn runtime_batch_events(
         // The CLI owns shutdown after its finite batch. Confirm it through the
         // existing protocol; Drop cannot propagate a cleanup refusal. This host
         // shutdown response is not an additional user-request observation.
-        request(yoke::runtime::Request::Close)
+        let closed = request(yoke::runtime::Request::Close)
             .context("Runtime session batch shutdown was not confirmed")?;
+        ensure!(
+            closed["status"] == "closed",
+            "Runtime session batch shutdown was not confirmed: Close response was not closed"
+        );
     }
     Ok(events)
 }
@@ -5669,6 +5673,36 @@ fn main() {
 mod runtime_batch_tests {
     use super::*;
     use yoke::runtime::Request;
+
+    #[test]
+    fn nonclosed_shutdown_response_refuses_before_batch_publication() {
+        for closed in [
+            json!({"status": "paused", "frames": []}),
+            json!({"status": "finished", "frames": []}),
+            json!({"frames": []}),
+            json!({"status": true, "frames": []}),
+        ] {
+            let mut calls = 0;
+            let mut published = false;
+            let result = runtime_batch_events(json!({"status": "paused"}), vec![], |request| {
+                assert!(matches!(request, Request::Close));
+                calls += 1;
+                Ok(closed.clone())
+            })
+            .map(|events| {
+                published = true;
+                events
+            });
+            assert_eq!(calls, 1);
+            assert!(!published);
+            assert!(
+                result
+                    .unwrap_err()
+                    .to_string()
+                    .contains("shutdown was not confirmed")
+            );
+        }
+    }
 
     #[test]
     fn empty_and_paused_batches_refuse_before_successful_output_when_close_fails() {

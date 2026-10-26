@@ -584,6 +584,10 @@ impl<'a> Session<'a> {
             matches!(status, "paused" | "finished" | "closed"),
             "Unknown runtime status"
         );
+        ensure!(
+            value["command"] != "close" || status == "closed",
+            "Runtime Close response did not confirm closed state"
+        );
         let terminal = status != "paused";
         self.bind_frames(&mut result)?;
         result["snapshotId"] = json!(self.snapshot.id);
@@ -708,6 +712,20 @@ mod response_boundary_tests {
         deadline: Deadline,
         receipt: Option<Result<()>>,
     ) -> (Session<'_>, mpsc::Receiver<(u64, Vec<u8>)>) {
+        session_with_response(
+            fixture,
+            deadline,
+            receipt,
+            json!({"status": "closed", "frames": [], "programCompleted": false}),
+        )
+    }
+
+    fn session_with_response(
+        fixture: &Fixture,
+        deadline: Deadline,
+        receipt: Option<Result<()>>,
+        response: Value,
+    ) -> (Session<'_>, mpsc::Receiver<(u64, Vec<u8>)>) {
         let directory = tempfile::tempdir().unwrap();
         let root = directory.path().join("tree");
         crate::changes::materialize(
@@ -728,7 +746,7 @@ mod response_boundary_tests {
                     "sessionId": id,
                     "requestId": 1,
                     "event": "closed",
-                    "data": {"status": "closed", "frames": [], "programCompleted": false}
+                    "data": response
                 }))
                 .unwrap(),
             ))
@@ -762,6 +780,41 @@ mod response_boundary_tests {
             },
             queue,
         )
+    }
+
+    #[test]
+    fn nonclosed_close_response_requires_cleanup_and_preserves_original_state() {
+        for status in ["paused", "finished"] {
+            for cleanup_refused in [false, true] {
+                let fixture = fixture();
+                let receipt = if cleanup_refused {
+                    Err(crate::process::CleanupUnproven::new("owned close receipt refusal").into())
+                } else {
+                    Ok(())
+                };
+                let (mut session, queue) = session_with_response(
+                    &fixture,
+                    Deadline::new(10_000),
+                    Some(receipt),
+                    json!({"status": status, "frames": []}),
+                );
+                let original = session.state().clone();
+                let result = session.request(Request::Close);
+                let active = session.active;
+                let cancelled = session.cancel.load(Ordering::SeqCst);
+                let state = session.state().clone();
+                drop(session);
+                drop(queue);
+                let error = result.unwrap_err();
+                assert!(!active);
+                assert!(cancelled);
+                assert_eq!(state, original);
+                assert_eq!(crate::process::cleanup_unproven(&error), cleanup_refused);
+                assert!(
+                    format!("{error:#}").contains("Close response did not confirm closed state")
+                );
+            }
+        }
     }
 
     #[test]

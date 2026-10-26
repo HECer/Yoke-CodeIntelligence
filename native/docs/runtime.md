@@ -91,8 +91,10 @@ Missing or refused cleanup receipts remain errors, even when the lifetime has
 also expired. Dropping an already stopped session does not begin another wait.
 
 The CLI closes a still-paused session through the existing typed `Close` request
-after its finite user-request batch, including an empty batch. Shutdown failure
-prevents successful batch output. This host shutdown response is not appended
+after its finite user-request batch, including an empty batch. `Close` requires
+an exact `closed` response; a paused or other response is refused with checked
+cleanup before state publication. Shutdown failure prevents successful batch
+output. This host shutdown response is not appended
 to the original user-request events; their order and values remain observations
 from the requested operations. A terminal user response already confirms cleanup
 and needs no additional close.
