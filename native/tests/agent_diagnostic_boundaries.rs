@@ -1,5 +1,5 @@
 use serde_json::{Value, json};
-use std::{fs, path::Path};
+use std::{fs, path::Path, time::Instant};
 use yoke::{
     Engine, agent_repl,
     capture::Deadline,
@@ -30,14 +30,33 @@ fn invoke_method(source: &str, method: &str, args: Value) -> Value {
         })
         .unwrap();
     let deadline = Deadline::new(20000);
+    let started = Instant::now();
+    let selected_lines = (
+        args.get("start_line").and_then(Value::as_u64),
+        args.get("end_line").and_then(Value::as_u64),
+    );
     let mut session = Session::open(
         engine,
         HostProfile::default(),
         Some("diagnostic-eof"),
         &deadline,
     )
-    .unwrap();
-    agent_repl::invoke_facade(&mut session, method, args, None, &deadline).unwrap()
+    .unwrap_or_else(|error| {
+        panic!(
+            "diagnostic fixture failed; phase=session-open; method={method}; selected_lines={selected_lines:?}; elapsed={:?}; remaining={:?}; error={error:#}",
+            started.elapsed(),
+            deadline.remaining()
+        )
+    });
+    let opened_elapsed = started.elapsed();
+    let opened_remaining = deadline.remaining();
+    agent_repl::invoke_facade(&mut session, method, args, None, &deadline).unwrap_or_else(|error| {
+        panic!(
+            "diagnostic fixture failed; phase=facade; method={method}; selected_lines={selected_lines:?}; opened_elapsed={opened_elapsed:?}; opened_remaining={opened_remaining:?}; elapsed={:?}; remaining={:?}; error={error:#}",
+            started.elapsed(),
+            deadline.remaining()
+        )
+    })
 }
 fn invoke(source: &str, args: Value) -> Value {
     invoke_method(source, "lsp.get_diagnostics_for_file", args)

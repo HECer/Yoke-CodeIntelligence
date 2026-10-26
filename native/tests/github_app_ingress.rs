@@ -60,6 +60,7 @@ fn request(address: SocketAddr, raw: &[u8], event: &str, n: u32) -> Vec<u8> {
     data
 }
 fn exchange(address: SocketAddr, raw: &[u8]) -> Vec<u8> {
+    let started = Instant::now();
     let mut socket = TcpStream::connect(address).unwrap();
     socket
         .set_read_timeout(Some(Duration::from_secs(3)))
@@ -69,7 +70,17 @@ fn exchange(address: SocketAddr, raw: &[u8]) -> Vec<u8> {
         .unwrap();
     socket.write_all(raw).unwrap();
     let mut result = Vec::new();
-    socket.read_to_end(&mut result).unwrap();
+    socket.read_to_end(&mut result).unwrap_or_else(|error| {
+        let header_end = result.windows(4).position(|bytes| bytes == b"\r\n\r\n");
+        panic!(
+            "owned ingress response read failed; kind={:?}; os_error={:?}; elapsed={:?}; retained_bytes={}; has_503_status={}; header_end={header_end:?}",
+            error.kind(),
+            error.raw_os_error(),
+            started.elapsed(),
+            result.len(),
+            result.starts_with(b"HTTP/1.1 503 ")
+        )
+    });
     result
 }
 fn status(raw: &[u8]) -> u16 {
