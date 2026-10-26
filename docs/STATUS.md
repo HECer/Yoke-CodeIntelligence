@@ -1,5 +1,24 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Owner-retirement editor instruction corrected (2026-10-26)
+
+At product source `6a8a2b10`, a retirement blocker retains its distinct editor
+reason instead of instructing ordinary pending-journal recovery. Drafts, reviewed
+plans, disabled writes, original permissions and stale-binding checks remain.
+Six actual VM/DOM protocol cases first show five passes/one intended failure on
+the old message, then all six pass after the two-line fix. Typecheck and full npm
+pass: 266 passed, three original skips, zero failures. Both changed product blobs
+match the checked working bytes; no current native build is inferred.
+
+Visible inert Edge fixtures confirm the corrected editor message and retained
+Unicode draft/review at desktop width and an actual 390-CSS-pixel viewport. Later
+runs have complete streams and naturally empty owned Jobs before force under the
+original deadlines/profile caps. Earlier controller/lifecycle failures remain
+retained. A host dialog occludes part of the desktop image; full-layout acceptance
+is not claimed. These fixtures start no native Session or real write/recovery.
+Current native/backend/browser, platform, release and full project acceptance
+remain open. [Scoped status](validation/integration-2026-10-26/dashboard-retirement-message/README.md).
+
 ## Actual purge, generated-owner retirement and retained reads (2026-10-26)
 
 A separate source-`704b647d` Windows consumer passes 95 actual CLI cases in each
