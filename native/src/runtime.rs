@@ -70,6 +70,9 @@ enum Event {
     Eof,
     Exited,
 }
+#[cfg(test)]
+type ResponseCheck = Box<dyn FnOnce(&mut Deadline) + Send>;
+
 pub struct Session<'a> {
     _store: &'a Store,
     snapshot: Snapshot,
@@ -90,7 +93,7 @@ pub struct Session<'a> {
     _directory: tempfile::TempDir,
     // Unit-only delivery-boundary control; no production host/protocol surface.
     #[cfg(test)]
-    before_response_check: Option<Box<dyn FnOnce(&mut Deadline) + Send>>,
+    before_response_check: Option<ResponseCheck>,
 }
 impl<'a> Session<'a> {
     pub fn start(
