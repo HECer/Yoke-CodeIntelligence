@@ -137,27 +137,26 @@ fn identity(file: &File, directory: bool) -> Result<String> {
     #[cfg(windows)]
     {
         use std::{ffi::c_void, os::windows::io::AsRawHandle};
+        // Match BY_HANDLE_FILE_INFORMATION, including its distinct FILETIME fields.
         #[repr(C)]
+        #[derive(Default)]
         struct Info {
             attributes: u32,
-            times: [u32; 6],
+            created: [u32; 2],
+            accessed: [u32; 2],
+            written: [u32; 2],
             volume: u32,
-            size: [u32; 2],
+            size_high: u32,
+            size_low: u32,
             links: u32,
-            index: [u32; 2],
+            index_high: u32,
+            index_low: u32,
         }
         #[link(name = "kernel32")]
         unsafe extern "system" {
             fn GetFileInformationByHandle(file: *mut c_void, info: *mut Info) -> i32;
         }
-        let mut info = Info {
-            attributes: 0,
-            times: [0; 6],
-            volume: 0,
-            size: [0; 2],
-            links: 0,
-            index: [0; 2],
-        };
+        let mut info = Info::default();
         ensure!(
             unsafe { GetFileInformationByHandle(file.as_raw_handle(), &mut info) } != 0,
             "activation_identity_unavailable"
@@ -166,16 +165,18 @@ fn identity(file: &File, directory: bool) -> Result<String> {
             info.attributes & 0x400 == 0,
             "activation_reparse_point_refused"
         );
-        return Ok(if directory {
-            model::identity(&(info.volume, info.index))
+        // Keep the existing high/low pair ordering in the authority binding.
+        let index = [info.index_high, info.index_low];
+        Ok(if directory {
+            model::identity(&(info.volume, index))
         } else {
             model::identity(&(
                 info.volume,
-                info.index,
-                info.size,
-                [info.times[4], info.times[5]],
+                index,
+                [info.size_high, info.size_low],
+                info.written,
             ))
-        });
+        })
     }
     #[cfg(unix)]
     {
