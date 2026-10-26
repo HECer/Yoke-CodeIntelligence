@@ -1,7 +1,8 @@
 # Explicit logical retirement of one global document owner
 
 This native 0.5.0 source change adds a host-only library/CLI workflow for retiring
-the write eligibility of one selected GLOBAL document. Acceptance is pending.
+the write eligibility of one selected GLOBAL document. Windows terminal CLI and
+owning-HTTP acceptance is recorded below; broader qualification remains open.
 It does not prove that every live host released that document. The original
 complete host selection, its registered analyzed roots and original physical
 journal namespace, plus the existing `WriteAuthority`, authorize this explicit
@@ -98,15 +99,25 @@ The owning Session dashboard checks this blocker before ordinary owner lookup.
 It returns `blockedByOwnerRetirement:true`, `complete:false` and an empty blocked
 journal view, rather than claiming a complete empty recovery result. The client
 retains the draft and disables document writes/recovery. It offers no retirement
-or ownership-restoration action. Native HTTP and desktop/mobile qualification of
-this integration remain pending.
+or ownership-restoration action. Terminal owning-HTTP checks are recorded below;
+actual desktop/mobile visual qualification remains pending.
 
 ## Qualification boundary
 
-The isolated implementation child performed source parsing/formatting and diff
-checks only. Native builds/tests/Clippy, actual old-binary refusal, CLI/stdio/HTTP
-qualification, applicable live desktop/mobile blocker checks, `npm run typecheck`
-and `npm test` require fresh guarded parent validation. Tests include meaningful
+The implementation child's original checks covered source parsing/formatting and
+diffs only. A later separate Windows live consumer now qualifies the terminal
+single-selection CLI and owning HTTP behavior at native source `704b647d`: native
+and Serena Sessions each pass eight fixed CLI cases, preserve seven original
+journal records and exact configuration reads, inspect the committed schema-3
+tombstone and exit naturally before forced cleanup. All 66 new protocol/helper
+guards pass without skips. The owned foreign pending-marker test is presence-based
+blocking, not actual interruption or retirement recovery qualification.
+See [source-bound live evidence](../../docs/validation/integration-2026-10-26/owner-retirement-live/README.md).
+
+Whole-library and CLI unit checks/Clippy retain their separately recorded source
+scopes. Actual interrupted recovery, migrated owner generations, older-binary
+refusal, retained archive reads after retirement and native desktop/mobile visual
+qualification remain open. Tests include meaningful
 temporary-fixture interruption, recovery, replay, archive-read preservation,
 foreign protocol/path/Unicode/link and deadline/entry/byte/event exhaustion cases;
 their presence is not a passing result. No real user-data maintenance was run.

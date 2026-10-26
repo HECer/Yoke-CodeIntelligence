@@ -1,5 +1,29 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Actual owner-retirement CLI and owning HTTP checks (2026-10-26)
+
+The existing qualified `704b647d` release CLI now passes a separate live logical
+owner-retirement consumer in two independent native/Serena owning Sessions. Each
+performs eight actual CLI cases: plan/apply/inspect succeed; five intended
+permission/selection/marker/replay refusals retain raw exit 1 and empty stdout.
+Permission, second-selection and pending-marker causes are checked privately.
+Its 66 protocol/helper guards pass with zero skips; guard counts are not runtime coverage.
+
+Actual retirement commits the schema-3 tombstone and retained terminal marker,
+preserving the fixed owner identity, configuration bytes/identity, all seven
+original journal records per fixture and inert analyzed source. Owning HTTP reads
+stay exact; cached/new writes and ordinary recovery refuse. The explicit blocker
+reports incomplete state. Both Sessions actually exit 0 with stdin still open,
+and the owned Job becomes empty before forced cleanup. Complete matching producer,
+version, source/control/protected/image checks and context closure succeed.
+
+The owned foreign-marker case proves presence-based blocking, not an interrupted
+retirement. Actual interruption/event-reviewed recovery, migrated generations,
+older binaries, retained archive reads after retirement, purge and desktop/mobile
+visual checks remain open. Relevant maintenance source bytes match `2c49bf18`;
+the executable and this acceptance keep source `704b647d`, with no current-head
+release or full-project qualification. [Actual source-bound receipts](validation/integration-2026-10-26/owner-retirement-live/README.md).
+
 ## Current Windows unit checks pass; platform acceptance remains open (2026-10-26)
 
 At exact clean source `b3a87d5d`, fresh private producers and complete harnesses
