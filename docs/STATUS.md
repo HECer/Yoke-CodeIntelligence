@@ -1,5 +1,30 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Local release CLI and original history pass; current build and VSIX remain open (2026-10-26)
+
+At runtime source `f8b02d4e`, a separately versioned compiler transaction
+passes with Cargo exit 0 and natural inner/outer Job emptiness. Its original
+one-hour build limit, at most 60 seconds of natural inner quiescence,
+one-second outer drain and sole two-second abort remain explicit. The
+earlier direct-Cargo producer stays rejected; the new policy does not
+retrospectively pass its timing gate. The admitted CLI reports `yoke 0.5.0`.
+
+Actual native, Serena and persistent-Python history variants each read back
+all 42 original records from packages of 28 and 14. Both owning Sessions and
+the persistent runtime exit before cleanup. HTTP pending refusal under both
+authorities, exact owner/configuration bytes and a fresh destination save pass.
+Compiler guards pass 35 tests; current history-admission guards pass 33.
+
+At packaging source `e89ae42c`, the manifest-selected Windows executable may
+occupy 160 MB; ordinary/Unix entries remain 128 MB and aggregate payload
+remains 256 MB. All 17 packaging tests, typecheck and npm 260 passed/3 original
+skips pass with natural tree exit. These are separate, nonadditive scopes.
+Both later e89 release builds fail natural compiler-helper quiescence after
+Cargo exit 0; neither private image is read, admitted or executed. Current-head
+runtime, actual VSIX/bundled host, browser, maintenance, full platform, main
+and project/release qualification remain open.
+[Evidence and retained failures](validation/integration-2026-10-26/release-cli-original-history/README.md).
+
 ## Owned Windows fixtures declare their Utility dependency (2026-10-26)
 
 At source `6c522411`, positive PowerShell fixtures explicitly import the fixed OS

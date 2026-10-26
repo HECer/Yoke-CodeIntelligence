@@ -12,9 +12,13 @@ Before Python ZIP directory allocation, bounded end-of-directory inspection
 admits a single-disk ordinary ZIP with at most 8,192 entries and 8,000,000 central
 directory bytes. The physical archive cap is 256,000,000 bytes. Unsupported
 ZIP64 end records, multidisk or inconsistent directory layouts refuse.
-The existing entry cap stays 128,000,000 bytes. Combined declared payloads may
-not exceed 256,000,000 bytes; manifest.json is limited to 1,000,000 bytes.
-All entry metadata is checked before any payload is read.
+Ordinary entries and Unix executables retain the 128,000,000-byte cap.
+Only the exact manifest-selected Windows `yoke.exe` may reach 160,000,000
+bytes. The bounded manifest selects its Windows target before that larger
+payload is read; another entry or a Unix manifest cannot borrow this ceiling.
+Combined declared payloads remain limited to 256,000,000 bytes; manifest.json
+is limited to 1,000,000 bytes. All entry metadata is checked before any payload
+is read.
 
 Names use canonical forward-slash relative components. Empty/dot/traversal,
 drive/ADS/reserved Windows names, controls, backslashes, trailing dots/spaces,
