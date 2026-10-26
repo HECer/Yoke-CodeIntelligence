@@ -440,3 +440,27 @@ fn unsupported_custom_locals_are_explicit_failed_operations_without_hooks() {
     assert_eq!(session.request(Request::Stack).unwrap()["status"], "paused");
     session.request(Request::Close).unwrap();
 }
+
+#[test]
+fn explicit_close_confirms_shutdown_without_running_the_paused_payload() {
+    let source = "raise RuntimeError('owned paused payload must remain inert')\n";
+    let (workspace, engine, snapshot) = fixture(source);
+    let deadline = Deadline::new(10_000);
+    let mut session =
+        Session::start(&engine.store, &snapshot, "main.py", &spec(false), &deadline).unwrap();
+    let initial = session.state().clone();
+    let closed = session.request(Request::Close);
+    let later = session.request(Request::Stack);
+    drop(session);
+    assert_eq!(initial["status"], "paused");
+    let closed = closed.unwrap();
+    assert_eq!(closed["status"], "closed");
+    assert_eq!(closed["programCompleted"], false);
+    assert_eq!(closed["sourceIntegrity"], true);
+    assert_eq!(closed["output"], serde_json::json!([]));
+    assert!(later.is_err());
+    assert_eq!(
+        fs::read_to_string(workspace.path().join("main.py")).unwrap(),
+        source
+    );
+}

@@ -84,6 +84,19 @@ Close, terminal outcomes, errors, deadline expiry and dropping the session
 terminate the managed process group or Windows Job Object. Successful terminal
 responses require confirmed managed cleanup.
 
+Cleanup retains its separate bounded host budget after cancellation or expiry;
+that budget does not renew the session lifetime. Before delivering a successful
+response, the host checks the original lifetime deadline again after cleanup.
+Missing or refused cleanup receipts remain errors, even when the lifetime has
+also expired. Dropping an already stopped session does not begin another wait.
+
+The CLI closes a still-paused session through the existing typed `Close` request
+after its finite user-request batch, including an empty batch. Shutdown failure
+prevents successful batch output. This host shutdown response is not appended
+to the original user-request events; their order and values remain observations
+from the requested operations. A terminal user response already confirms cleanup
+and needs no additional close.
+
 This is trusted host execution, not an OS sandbox. Python imports host standard
 and installed modules, may access files and networks, and can deliberately
 modify the original workspace using an explicit path. Copy verification detects

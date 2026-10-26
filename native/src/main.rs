@@ -1975,6 +1975,27 @@ fn print_bounded(engine: &Engine, value: &Value, max: u64) -> Result<()> {
         &json!({"status":"partial","artifactId":id,"totalBytes":bytes.len(),"readWith":{"tool":"ci_read","artifactId":id},"warning":"Complete host result retained as an immutable artifact."}),
     )
 }
+fn runtime_batch_events(
+    initial: Value,
+    requests: Vec<yoke::runtime::Request>,
+    mut request: impl FnMut(yoke::runtime::Request) -> Result<Value>,
+) -> Result<Vec<Value>> {
+    let mut events = vec![initial];
+    for item in requests {
+        events.push(request(item)?);
+    }
+    if events
+        .last()
+        .is_some_and(|event| event["status"] == "paused")
+    {
+        // The CLI owns shutdown after its finite batch. Confirm it through the
+        // existing protocol; Drop cannot propagate a cleanup refusal. This host
+        // shutdown response is not an additional user-request observation.
+        request(yoke::runtime::Request::Close)
+            .context("Runtime session batch shutdown was not confirmed")?;
+    }
+    Ok(events)
+}
 fn input_json(path: &std::path::Path, max: u64) -> Result<Value> {
     ensure!(
         fs::metadata(path)?.len() <= max,
@@ -4902,10 +4923,9 @@ fn run(cli: Cli) -> Result<bool> {
             };
             let mut session =
                 yoke::runtime::Session::start(&engine.store, &snapshot, &entry, &spec, &deadline)?;
-            let mut events = vec![session.state().clone()];
-            for request in requests {
-                events.push(session.request(request)?);
-            }
+            let initial = session.state().clone();
+            let events =
+                runtime_batch_events(initial, requests, |request| session.request(request))?;
             drop(session);
             let completed = !events.iter().any(|event| {
                 event["operationCompleted"] == false
@@ -5641,6 +5661,128 @@ fn main() {
         Err(error) => {
             eprintln!("yoke: {error:#}");
             std::process::exit(1);
+        }
+    }
+}
+
+#[cfg(test)]
+mod runtime_batch_tests {
+    use super::*;
+    use yoke::runtime::Request;
+
+    #[test]
+    fn empty_and_paused_batches_refuse_before_successful_output_when_close_fails() {
+        for requests in [vec![], vec![Request::Stack]] {
+            let mut calls = Vec::new();
+            let mut output = Vec::new();
+            let result = runtime_batch_events(
+                json!({"status": "paused", "observation": "initial"}),
+                requests,
+                |request| match request {
+                    Request::Stack => {
+                        calls.push("stack");
+                        Ok(json!({"status": "paused", "observation": "stack"}))
+                    }
+                    Request::Close => {
+                        calls.push("close");
+                        anyhow::bail!("owned shutdown refusal")
+                    }
+                    _ => anyhow::bail!("unexpected fixture request"),
+                },
+            )
+            .map(|events| {
+                output = serde_json::to_vec(&events).unwrap();
+                true
+            });
+            // main maps Err to exit 1. Publication is downstream of successful
+            // collection, just as print_bounded is in the production branch.
+            let exit_code = if result.as_ref().is_ok_and(|completed| *completed) {
+                0
+            } else {
+                1
+            };
+            assert_eq!(exit_code, 1);
+            assert!(output.is_empty());
+            assert_eq!(calls.last(), Some(&"close"));
+            assert!(
+                result
+                    .unwrap_err()
+                    .to_string()
+                    .contains("shutdown was not confirmed")
+            );
+        }
+    }
+
+    #[test]
+    fn host_shutdown_preserves_every_original_observation_and_request_order() {
+        for empty in [true, false] {
+            let initial = json!({"status": "paused", "observation": "initial"});
+            let stack = json!({"status": "paused", "observation": "stack"});
+            let next = json!({"status": "paused", "observation": "next"});
+            let mut calls = Vec::new();
+            let requests = if empty {
+                vec![]
+            } else {
+                vec![Request::Stack, Request::Next]
+            };
+            let events = runtime_batch_events(initial.clone(), requests, |request| match request {
+                Request::Stack => {
+                    calls.push("stack");
+                    Ok(stack.clone())
+                }
+                Request::Next => {
+                    calls.push("next");
+                    Ok(next.clone())
+                }
+                Request::Close => {
+                    calls.push("close");
+                    Ok(json!({"status": "closed", "programCompleted": false}))
+                }
+                _ => anyhow::bail!("unexpected fixture request"),
+            })
+            .unwrap();
+            if empty {
+                assert_eq!(events, vec![initial]);
+                assert_eq!(calls, ["close"]);
+            } else {
+                assert_eq!(events, vec![initial, stack, next]);
+                assert_eq!(calls, ["stack", "next", "close"]);
+            }
+        }
+    }
+
+    #[test]
+    fn original_request_failure_is_not_masked_by_host_shutdown() {
+        let mut calls = Vec::new();
+        let result = runtime_batch_events(
+            json!({"status": "paused"}),
+            vec![Request::Next],
+            |request| {
+                calls.push(request);
+                anyhow::bail!("owned original request refusal")
+            },
+        );
+        assert_eq!(calls.len(), 1);
+        assert!(matches!(calls[0], Request::Next));
+        let error = result.unwrap_err().to_string();
+        assert_eq!(error, "owned original request refusal");
+        assert!(!error.contains("shutdown"));
+    }
+
+    #[test]
+    fn terminal_user_responses_do_not_trigger_an_extra_close() {
+        for request in [Request::Continue, Request::Close] {
+            let explicit_close = matches!(request, Request::Close);
+            let terminal = if explicit_close { "closed" } else { "finished" };
+            let mut calls = 0;
+            let events = runtime_batch_events(json!({"status": "paused"}), vec![request], |_| {
+                calls += 1;
+                Ok(json!({"status": terminal, "programCompleted": !explicit_close}))
+            })
+            .unwrap();
+            assert_eq!(calls, 1);
+            assert_eq!(events.len(), 2);
+            assert_eq!(events[1]["status"], terminal);
         }
     }
 }

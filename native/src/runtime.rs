@@ -88,6 +88,9 @@ pub struct Session<'a> {
     output_limit: usize,
     output_bytes: usize,
     _directory: tempfile::TempDir,
+    // Unit-only delivery-boundary control; no production host/protocol surface.
+    #[cfg(test)]
+    before_response_check: Option<Box<dyn FnOnce(&mut Deadline) + Send>>,
 }
 impl<'a> Session<'a> {
     pub fn start(
@@ -355,6 +358,8 @@ impl<'a> Session<'a> {
             output_limit: spec.max_output_bytes,
             output_bytes: 0,
             _directory: directory,
+            #[cfg(test)]
+            before_response_check: None,
         };
         let result = session.exchange(initial, 0);
         if let Err(error) = result {
@@ -599,6 +604,13 @@ impl<'a> Session<'a> {
             self.stop()
                 .context("Runtime process group cleanup was not confirmed")?;
         }
+        #[cfg(test)]
+        if let Some(before_check) = self.before_response_check.take() {
+            before_check(&mut self.deadline);
+        }
+        // Cleanup has its own bounded budget, but cannot renew the lifetime
+        // deadline or authorize delivery after cancellation or expiry.
+        self.deadline.check()?;
         Ok(result)
     }
     fn bind_frames(&self, result: &mut Value) -> Result<()> {
@@ -662,6 +674,208 @@ impl Drop for Session<'_> {
     fn drop(&mut self) {
         if self.active {
             let _ = self.stop();
+        }
+    }
+}
+
+#[cfg(test)]
+mod response_boundary_tests {
+    use super::*;
+
+    // Scripted transport/cleanup receipts isolate response publication. These
+    // tests do not replace actual Python or OS process-ownership acceptance.
+    struct Fixture {
+        engine: crate::Engine,
+        snapshot: Snapshot,
+        // Drop the Store's Windows file handles before removing its directory.
+        _workspace: tempfile::TempDir,
+    }
+
+    fn fixture() -> Fixture {
+        let workspace = tempfile::tempdir().unwrap();
+        fs::write(workspace.path().join("main.py"), "value = 1\n").unwrap();
+        let mut engine = crate::Engine::open(workspace.path()).unwrap();
+        let (snapshot, _, _, _) = engine.index(&Deadline::new(10_000)).unwrap();
+        Fixture {
+            _workspace: workspace,
+            engine,
+            snapshot,
+        }
+    }
+
+    fn session(
+        fixture: &Fixture,
+        deadline: Deadline,
+        receipt: Option<Result<()>>,
+    ) -> (Session<'_>, mpsc::Receiver<(u64, Vec<u8>)>) {
+        let directory = tempfile::tempdir().unwrap();
+        let root = directory.path().join("tree");
+        crate::changes::materialize(
+            &fixture.engine.store,
+            &fixture.snapshot,
+            &root,
+            &Deadline::new(10_000),
+        )
+        .unwrap();
+        let id = "owned-response-boundary".to_owned();
+        let (writer, queue) = mpsc::sync_channel(1);
+        let (event_tx, events) = mpsc::sync_channel(4);
+        event_tx.send(Event::Written(1)).unwrap();
+        event_tx
+            .send(Event::Frame(
+                serde_json::to_vec(&json!({
+                    "schema": 1,
+                    "sessionId": id,
+                    "requestId": 1,
+                    "event": "closed",
+                    "data": {"status": "closed", "frames": [], "programCompleted": false}
+                }))
+                .unwrap(),
+            ))
+            .unwrap();
+        drop(event_tx);
+        let (stopped_tx, stopped) = mpsc::sync_channel(1);
+        if let Some(result) = receipt {
+            stopped_tx.send(result).unwrap();
+        }
+        drop(stopped_tx);
+        (
+            Session {
+                _store: &fixture.engine.store,
+                snapshot: fixture.snapshot.clone(),
+                sources: BTreeMap::new(),
+                root,
+                state: json!({"status": "paused", "frames": []}),
+                id,
+                sequence: 0,
+                allow_evaluation: false,
+                active: true,
+                deadline,
+                writer,
+                events,
+                cancel: Arc::new(AtomicBool::new(false)),
+                stopped,
+                output_limit: 1024,
+                output_bytes: 0,
+                _directory: directory,
+                before_response_check: None,
+            },
+            queue,
+        )
+    }
+
+    #[test]
+    fn expiry_after_confirmed_cleanup_refuses_terminal_delivery() {
+        let fixture = fixture();
+        let (mut session, queue) = session(&fixture, Deadline::new(10_000), Some(Ok(())));
+        let original = session.state().clone();
+        // A scoped logical expiry at the actual post-cleanup boundary avoids a
+        // scheduler/sleep assumption. It is not real timing acceptance.
+        session.before_response_check = Some(Box::new(|deadline| {
+            *deadline = Deadline::new(0);
+        }));
+        let result = session.request(Request::Close);
+        let active = session.active;
+        let cancelled = session.cancel.load(Ordering::SeqCst);
+        let state = session.state().clone();
+        drop(session);
+        drop(queue);
+        assert!(
+            result
+                .unwrap_err()
+                .to_string()
+                .contains("deadline exceeded")
+        );
+        assert!(!active);
+        assert!(cancelled);
+        assert_eq!(state, original);
+    }
+
+    #[test]
+    fn cancellation_after_confirmed_cleanup_preserves_the_original_deadline() {
+        let fixture = fixture();
+        let host_cancel = Arc::new(AtomicBool::new(false));
+        let deadline = Deadline::run_bounded(&Deadline::new(10_000), host_cancel.clone(), || {
+            Ok(Deadline::new(10_000))
+        })
+        .unwrap();
+        let (mut session, queue) = session(&fixture, deadline, Some(Ok(())));
+        let original = session.state().clone();
+        session.before_response_check = Some(Box::new(move |_| {
+            host_cancel.store(true, Ordering::SeqCst);
+        }));
+        let result = session.request(Request::Close);
+        let active = session.active;
+        let state = session.state().clone();
+        drop(session);
+        drop(queue);
+        assert!(
+            result
+                .unwrap_err()
+                .to_string()
+                .contains("cancelled by host")
+        );
+        assert!(!active);
+        assert_eq!(state, original);
+    }
+
+    #[test]
+    fn timely_confirmed_cleanup_publishes_the_bound_terminal_response() {
+        let fixture = fixture();
+        let (mut session, queue) = session(&fixture, Deadline::new(10_000), Some(Ok(())));
+        let checked = Arc::new(AtomicBool::new(false));
+        let observed = checked.clone();
+        session.before_response_check = Some(Box::new(move |deadline| {
+            observed.store(deadline.check().is_ok(), Ordering::SeqCst);
+        }));
+        let result = session.request(Request::Close);
+        let active = session.active;
+        let state = session.state().clone();
+        drop(session);
+        drop(queue);
+        let value = result.unwrap();
+        assert!(checked.load(Ordering::SeqCst));
+        assert!(!active);
+        assert_eq!(value["status"], "closed");
+        assert_eq!(value["snapshotId"], fixture.snapshot.id);
+        assert_eq!(value["workspaceId"], fixture.snapshot.workspace_id);
+        assert_eq!(value["requestId"], 1);
+        assert_eq!(state, value);
+    }
+
+    #[test]
+    fn missing_and_refused_cleanup_receipts_keep_typed_error_precedence() {
+        for (missing, expired) in [(true, false), (false, false), (true, true), (false, true)] {
+            let fixture = fixture();
+            let receipt = if missing {
+                None
+            } else {
+                Some(Err(crate::process::CleanupUnproven::new(
+                    "owned receipt refusal",
+                )
+                .into()))
+            };
+            let deadline = Deadline::new(if expired { 0 } else { 10_000 });
+            let (mut session, queue) = session(&fixture, deadline, receipt);
+            let original = session.state().clone();
+            let checked = Arc::new(AtomicBool::new(false));
+            let observed = checked.clone();
+            session.before_response_check = Some(Box::new(move |deadline| {
+                observed.store(true, Ordering::SeqCst);
+                *deadline = Deadline::new(0);
+            }));
+            let result = session.request(Request::Close);
+            let active = session.active;
+            let cancelled = session.cancel.load(Ordering::SeqCst);
+            let state = session.state().clone();
+            drop(session);
+            drop(queue);
+            let error = result.unwrap_err();
+            assert!(crate::process::cleanup_unproven(&error));
+            assert!(!checked.load(Ordering::SeqCst));
+            assert!(!active);
+            assert!(cancelled);
+            assert_eq!(state, original);
         }
     }
 }

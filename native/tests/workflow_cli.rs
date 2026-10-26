@@ -1,6 +1,125 @@
 use serde_json::{Value, json};
 use std::{fs, process::Command};
 use yoke::Engine;
+
+fn runtime_response_boundary_fixture(
+    source: &str,
+    requests: Value,
+    allow_evaluation: bool,
+) -> (yoke::process::CapturedOutput, Vec<u8>) {
+    let workspace = tempfile::tempdir().unwrap();
+    let inputs = tempfile::tempdir().unwrap();
+    let source_path = workspace.path().join("main.py");
+    fs::write(&source_path, source).unwrap();
+    let request_path = inputs.path().join("requests.json");
+    fs::write(&request_path, serde_json::to_vec(&requests).unwrap()).unwrap();
+    let executable = if cfg!(windows) {
+        "python.exe"
+    } else {
+        "python3"
+    };
+    let python = std::env::split_paths(&std::env::var_os("PATH").unwrap())
+        .filter(|path| path.is_absolute())
+        .map(|path| path.join(executable))
+        .find(|path| path.is_file())
+        .expect("Actual host Python is required for runtime CLI acceptance")
+        .canonicalize()
+        .unwrap();
+    let mut command = Command::new(env!("CARGO_BIN_EXE_yoke"));
+    command
+        .current_dir(workspace.path())
+        .arg("--root")
+        .arg(workspace.path())
+        .args(["--timeout", "10000", "runtime", "main.py", "--python"])
+        .arg(python)
+        .arg("--requests")
+        .arg(request_path)
+        .arg("--trust-runtime");
+    if allow_evaluation {
+        command.arg("--allow-evaluation");
+    }
+    let output = yoke::process::run_capture(
+        command,
+        b"",
+        &yoke::capture::Deadline::new(20_000),
+        yoke::process::CaptureLimits {
+            stdin_bytes: 0,
+            stdout_bytes: 1_000_000,
+            stderr_bytes: 128_000,
+        },
+    )
+    .unwrap();
+    let original = fs::read(&source_path).unwrap();
+    // run_capture has completed checked root/group cleanup. Both temporary
+    // namespaces are dropped before the caller makes acceptance assertions.
+    (output, original)
+}
+
+#[test]
+fn runtime_cli_empty_and_paused_batches_keep_only_original_observations() {
+    let source = "raise RuntimeError('owned paused payload must remain inert')\n";
+    for requests in [json!([]), json!([{"command": "stack"}])] {
+        let expected = requests.as_array().unwrap().len() + 1;
+        let (output, original) = runtime_response_boundary_fixture(source, requests, false);
+        assert_eq!(
+            output.exit_code,
+            Some(0),
+            "{}",
+            String::from_utf8_lossy(&output.stderr)
+        );
+        assert!(output.stdin_complete && output.output_complete);
+        assert!(!output.timed_out && !output.output_exceeded && !output.io_error);
+        let report: Value = serde_json::from_slice(&output.stdout).unwrap();
+        let events = report["events"].as_array().unwrap();
+        assert_eq!(events.len(), expected);
+        assert!(events.iter().all(|event| event["status"] == "paused"));
+        assert_eq!(original, source.as_bytes());
+    }
+}
+
+#[test]
+fn runtime_cli_paused_shutdown_refusal_has_no_successful_batch_output() {
+    let source = "value = 1\n";
+    // Explicitly authorized evaluation changes only the owned worker's in-memory
+    // protocol function. The user REPL response remains paused; only a later
+    // Close refuses. Without checked host shutdown, the old CLI prints success.
+    let install = "import sys\n_owned_worker = sys.modules['__main__']\n_owned_emit = _owned_worker.emit\ndef _owned_refuse_closed(event, data):\n if event == 'closed':\n  raise _owned_worker.WorkerFailure('owned close refusal')\n return _owned_emit(event, data)\n_owned_worker.emit = _owned_refuse_closed\n";
+    let requests = json!([{"command": "repl", "code": install, "frame": 0}]);
+    let (output, original) = runtime_response_boundary_fixture(source, requests, true);
+    assert_eq!(output.exit_code, Some(1));
+    assert!(output.stdin_complete && output.output_complete);
+    assert!(!output.timed_out && !output.output_exceeded && !output.io_error);
+    assert!(output.stdout.is_empty());
+    assert!(String::from_utf8_lossy(&output.stderr).contains("shutdown was not confirmed"));
+    assert_eq!(original, source.as_bytes());
+}
+
+#[test]
+fn runtime_cli_terminal_and_explicit_close_preserve_requested_events() {
+    let source = "print('owned terminal response')\n";
+    for (requests, status, completed) in [
+        (json!([{"command": "continue"}]), "finished", true),
+        (json!([{"command": "close"}]), "closed", false),
+    ] {
+        let (output, original) = runtime_response_boundary_fixture(source, requests, false);
+        assert_eq!(
+            output.exit_code,
+            Some(0),
+            "{}",
+            String::from_utf8_lossy(&output.stderr)
+        );
+        assert!(output.stdin_complete && output.output_complete);
+        assert!(!output.timed_out && !output.output_exceeded && !output.io_error);
+        let report: Value = serde_json::from_slice(&output.stdout).unwrap();
+        let events = report["events"].as_array().unwrap();
+        assert_eq!(events.len(), 2);
+        assert_eq!(events[0]["status"], "paused");
+        assert_eq!(events[1]["status"], status);
+        assert_eq!(events[1]["programCompleted"], completed);
+        assert_eq!(original, source.as_bytes());
+    }
+}
+
 #[test]
 fn malformed_host_profile_values_are_not_repeated_in_cli_errors() {
     let workspace = tempfile::tempdir().unwrap();
