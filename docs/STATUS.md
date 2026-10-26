@@ -1,5 +1,27 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Inspection deadline and ingress response evidence pending (2026-10-26)
+
+Source `34068f53` adds failure-only observations to two owned integration-test
+helpers. The inspection helper records method/range, Session-open and facade
+phases, elapsed/remaining budget and full error context. The HTTP helper keeps
+read error kind/OS code, retained response byte count, complete header boundary
+and a 503-prefix classification. Read errors still fail; the original 20-second
+deadline, socket timeouts, exact 503, 750-ms capacity and queue assertions remain.
+
+The triggering Windows failure at `f8b02d4e` is one unidentified inspection
+request deadline; its 35.88-second group duration covers all four tests. The
+separate macOS push has seven incomplete shards and one complete shard, with
+identical selected sources. Its capacity case reports a connection reset, in
+addition to known memory-limit failures. The receipt does not establish whether
+the client received any complete 503 response or which close sequence occurred.
+
+Scoped Rust formatting, typecheck and npm pass (260 passed, three original
+skips), with 1,135 unchanged selected inputs and natural owned-tree exit. The
+affected native integration groups and all-target Clippy remain unrun locally
+at this diagnostic source. No runtime repair or platform acceptance is claimed.
+[Bounded historical evidence and current checks](validation/integration-2026-10-26/ci-boundary-diagnostics/README.md).
+
 ## Runtime response and batch shutdown checks (2026-10-26)
 
 Source `704b647d` checks the original Session lifetime again after terminal
