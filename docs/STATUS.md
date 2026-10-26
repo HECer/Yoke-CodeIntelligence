@@ -1,5 +1,65 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Runtime response and batch shutdown checks (2026-10-26)
+
+Source `704b647d` checks the original Session lifetime again after terminal
+cleanup. A typed `Close` requires an exact `closed` response before state
+publication. The CLI confirms shutdown of a paused finite batch before output,
+including an empty batch, and retains only the original requested observations.
+Cleanup refusal keeps precedence; the existing two-second stop bound remains.
+
+On that exact clean Windows source, the whole library passes 773 tests with
+zero failures, seven original ignores and zero filtered tests. The whole CLI
+unit harness passes 16 with zero failures, ignores or filters. Both use fresh
+matching private producers, complete streams and empty owned Jobs before force.
+These unit suites do not stand in for actual Python/CLI integration acceptance.
+
+Typecheck and npm pass (260 passed, three original skips). Workspace/all-target
+Clippy with warnings denied passes; its 757 Cargo artifact observations are
+metadata. Separate unit/history/runtime/package protocol guards pass
+72/41/25/53 tests respectively; the 72 unit-controller guards were run at
+the earlier `809bac07` source with the same frozen controls. The 21 visual
+guards pass at `704b647d`. Guard counts are not additional runtime coverage.
+The matching fresh release CLI reports `yoke 0.5.0` and completes naturally in
+1138.484 seconds. Native, Serena and persistent-Python history each read all
+42 original records in 28+14; the owning Sessions and selected persistent
+runtime exit before cleanup. Six actual CLI cases pass, including two intended
+Close failures with raw exit 1, no successful output and checked empty trees.
+
+The matching Windows native archive (1,339 members, 316 dependencies and 557
+license texts), native-only VSIX (1,344 members), and actual bundled-runtime
+VS Code host pass. The first package attempt refuses a missing base64-simd
+license; a fresh run uses the existing explicit license-fetch option. A separate
+visible run passes after actual inspection of overlay JSON and dirty Rust source.
+The parent observes acknowledgement validation at 58.759 seconds within the original 90-second
+window, followed by natural root/Job exit and unchanged final pins. An earlier
+visible attempt expires and remains failed. Full platform/contracts, main and
+release publication remain open.
+[Runtime, package and inspected-image evidence](validation/integration-2026-10-26/runtime-shutdown-windows/README.md).
+
+## Fixed LLD CLI and original history pass (2026-10-26)
+
+At source `e89ae42c`, a separate fixed final-bin bundled-LLD transaction passes
+50 compiler guards, a fresh CLI build and matching version. Natural inner and
+outer Job emptiness precedes forced cleanup; the original 3600/60/1/2-second
+limits and resource floors remain. The build takes 505.378 seconds, including
+0.010459 seconds of natural post-Cargo quiescence. Release settings remain thin
+LTO, one codegen unit and symbol stripping. No old result is relabeled.
+
+The matching history gate passes 41 guards and actual native, Serena and
+persistent-Python variants. Each reads all 42 original records across 28+14;
+owning Sessions and the persistent runtime exit before cleanup. All source,
+control, tool/profile and version receipts agree. Independent byte-level
+review verifies the 273-member text/metadata evidence packet.
+
+The two earlier e89 MSVC producers remain failed and unadopted. Caches and
+installed tools remain trusted; the linker experiment does not exclusively
+attribute their helper behavior. This checkpoint does not qualify a new VSIX,
+current-head/full-platform acceptance, main, publication or the whole project.
+The accompanying response-boundary source changes preserve cleanup precedence
+and original CLI events; their unit/live acceptance is a separate scope.
+[Scoped evidence and retained failures](validation/integration-2026-10-26/lld-cli-original-history/README.md).
+
 ## Windows native package, bundled editor and desktop inspection pass (2026-10-26)
 
 A separately reviewed paired-source gate now qualifies the admitted f8 runtime
@@ -22,8 +82,7 @@ visual acknowledgement remain failed. Portable host tools use private test
 locations and per-child environment selection; no global policy changes occur.
 These are Windows development packages with runtime source f8b02d4e and packaging
 source e89ae42c. Exact-current-head build, full platform/contracts, live
-maintenance/mobile, main and release publication remain open. The documented
-bundled-LLD linker candidate is a separate unrun build experiment.
+maintenance/mobile, main and release publication remain open. These paired-package receipts predate the separate LLD CLI/history checkpoint above.
 [Evidence, inspected images and retained failures](validation/integration-2026-10-26/paired-runtime-vsix/README.md).
 
 ## Local release CLI and original history pass; current build and VSIX remain open (2026-10-26)
