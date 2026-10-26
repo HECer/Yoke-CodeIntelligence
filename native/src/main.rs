@@ -5689,9 +5689,8 @@ mod runtime_batch_tests {
                 calls += 1;
                 Ok(closed.clone())
             })
-            .map(|events| {
+            .inspect(|_| {
                 published = true;
-                events
             });
             assert_eq!(calls, 1);
             assert!(!published);
