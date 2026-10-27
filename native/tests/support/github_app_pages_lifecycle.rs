@@ -488,6 +488,9 @@ fn adding_an_app_revision_respects_the_global_hard_bound_before_committing() {
         let f = Fixture::new();
         let done = completed(&f);
         let o = options(&f);
+        // Seed the exact fixture state with one commit; retain the original
+        // inherited request deadline for preparation and all page operations.
+        let revision_fixture = f.engine.store.db.unchecked_transaction().unwrap();
         for index in 0..foreign_count {
             let app_id = 1000 + index;
             let key = yoke::model::identity(&json!({"domain":"yoke-page-revision-v1",
@@ -504,15 +507,14 @@ fn adding_an_app_revision_respects_the_global_hard_bound_before_committing() {
                 "sha256={}",
                 hex::encode(mac.finalize().into_bytes())
             ));
-            f.engine
-                .store
-                .db
+            revision_fixture
                 .execute(
                     "INSERT INTO records(kind,id,value) VALUES(?1,?2,?3)",
                     rusqlite::params!["github_app_page_revision_v1", key, revision.to_string()],
                 )
                 .unwrap();
         }
+        revision_fixture.commit().unwrap();
         let p = preview(&f, &done, &o);
         let before = rows(&f);
         let result = pages::store_page(&context(&f, &o), &request(&p), &f.d);

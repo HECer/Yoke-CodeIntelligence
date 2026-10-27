@@ -1,5 +1,21 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Page-capacity fixture preparation batched; Rust acceptance pending (2026-10-26)
+
+Source `33dfe1db` seeds the existing 999/1000 signed foreign page revisions in
+one fixture transaction. The original inherited 30-second deadline, production
+operations, hard bound and all success/refusal assertions remain unchanged.
+Scoped formatting, diff checks and independent source review pass. Actual
+typecheck and npm pass: 266 passed, three original skips, zero failures, with
+1,136 selected inputs unchanged and naturally empty owned Jobs before force.
+
+The prior `47142096` CI artifacts cover 369 unique Windows groups at PR merge
+`5a94df35`: 368 exit zero; only the page-publication group fails its capacity
+fixture at preview with an expired deadline. All eight ZIP digests and 738 log
+receipts match. This locates the failure without proving its sole cause or the
+new fixture's runtime success. Full Rust/shard, platform and release acceptance
+remain open. [Scoped evidence](validation/integration-2026-10-26/pages-capacity-fixture/README.md).
+
 ## Owner-retirement editor instruction corrected (2026-10-26)
 
 At product source `6a8a2b10`, a retirement blocker retains its distinct editor
@@ -139,6 +155,22 @@ skips), with 1,135 unchanged selected inputs and natural owned-tree exit. The
 affected native integration groups and all-target Clippy remain unrun locally
 at this diagnostic source. No runtime repair or platform acceptance is claimed.
 [Bounded historical evidence and current checks](validation/integration-2026-10-26/ci-boundary-diagnostics/README.md).
+
+## Runtime startup ownership candidate (2026-10-27)
+
+Startup failures now request cancellation and wait for the process owner's
+checked cleanup receipt before returning. Missing receipts preserve typed
+cleanup uncertainty; receipt errors retain both causes. The owner checks the
+original deadline and cancellation before spawn, and pipe setup, disconnected
+startup delivery and normal observation share one checked post-spawn cleanup.
+The existing two-second cleanup allowance and Session lifetime are unchanged.
+
+Six scripted-channel regressions cover successful startup without consuming the
+live owner receipt, reported failure, expired/disconnected startup, refused or
+missing receipts, and owner observation errors. They exercise startup admission
+without launching Python. Runtime execution and the new tests remain unqualified
+until current-source library and actual runtime/CLI integration checks pass.
+The older evidence below applies to its recorded source only.
 
 ## Runtime response and batch shutdown checks (2026-10-26)
 

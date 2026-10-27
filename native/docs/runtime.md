@@ -90,6 +90,13 @@ response, the host checks the original lifetime deadline again after cleanup.
 Missing or refused cleanup receipts remain errors, even when the lifetime has
 also expired. Dropping an already stopped session does not begin another wait.
 
+Startup failures also request cancellation and await the owner's checked cleanup
+receipt within that same separate two-second allowance before returning. Missing
+receipts retain typed cleanup uncertainty. The owner checks cancellation and the
+original lifetime before spawning; every post-spawn path, including failure to
+acquire startup pipes, reaches one checked cleanup before its receipt is sent.
+This does not renew the lifetime or turn failed startup into successful execution.
+
 The CLI closes a still-paused session through the existing typed `Close` request
 after its finite user-request batch, including an empty batch. `Close` requires
 an exact `closed` response; a paused or other response is refused with checked

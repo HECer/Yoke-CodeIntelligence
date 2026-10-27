@@ -70,6 +70,35 @@ enum Event {
     Eof,
     Exited,
 }
+
+fn receive_startup<T>(
+    started: &mpsc::Receiver<std::result::Result<T, String>>,
+    stopped: &mpsc::Receiver<Result<()>>,
+    cancel: &AtomicBool,
+    deadline: &Deadline,
+) -> Result<T> {
+    let failure = match started.recv_timeout(deadline.remaining()) {
+        Ok(Ok(pipes)) => return Ok(pipes),
+        Ok(Err(error)) => anyhow::anyhow!(error),
+        Err(_) => anyhow::anyhow!("Runtime startup deadline exceeded"),
+    };
+    cancel.store(true, Ordering::SeqCst);
+    // No Session exists yet to request checked shutdown. Failure delivery still
+    // requires the owner's receipt, using the existing separate cleanup budget.
+    match stopped.recv_timeout(Duration::from_secs(2)) {
+        Ok(Ok(())) => Err(failure),
+        Ok(Err(owner_error)) => Err(owner_error.context(failure)),
+        Err(_) => Err(anyhow::Error::new(crate::process::CleanupUnproven::new(
+            "Runtime startup owner cleanup receipt unavailable",
+        ))
+        .context(failure)),
+    }
+}
+
+#[cfg(test)]
+#[path = "runtime_startup_tests.rs"]
+mod startup_tests;
+
 #[cfg(test)]
 type ResponseCheck = Box<dyn FnOnce(&mut Deadline) + Send>;
 
@@ -223,40 +252,50 @@ impl<'a> Session<'a> {
         // wrapper is not Send. This thread also enforces an idle session deadline.
         thread::spawn(move || {
             let result = (|| -> Result<()> {
+                owner_deadline.check()?;
+                ensure!(
+                    !owner_cancel.load(Ordering::SeqCst),
+                    "Runtime startup cancelled by host"
+                );
                 let mut child =
                     ManagedChild::spawn(command).context("Python runtime unavailable")?;
-                let pipes = (
-                    child.stdin().take().context("Runtime stdin unavailable")?,
-                    child
-                        .stdout()
-                        .take()
-                        .context("Runtime stdout unavailable")?,
-                    child
-                        .stderr()
-                        .take()
-                        .context("Runtime stderr unavailable")?,
-                );
-                if startup.send(Ok(pipes)).is_err() {
-                    child.terminate_checked(Duration::from_secs(2))?;
-                    return Ok(());
-                }
-                let observation = loop {
-                    if owner_cancel.load(Ordering::SeqCst) || owner_deadline.check().is_err() {
-                        break Ok(());
+                let observation = (|| -> Result<()> {
+                    let pipes = (
+                        child.stdin().take().context("Runtime stdin unavailable")?,
+                        child
+                            .stdout()
+                            .take()
+                            .context("Runtime stdout unavailable")?,
+                        child
+                            .stderr()
+                            .take()
+                            .context("Runtime stderr unavailable")?,
+                    );
+                    if startup.send(Ok(pipes)).is_err() {
+                        return Ok(());
                     }
-                    match child.inner_mut().try_wait() {
-                        Ok(Some(_)) => {
-                            let _ = owner_events.try_send(Event::Exited);
+                    loop {
+                        if owner_cancel.load(Ordering::SeqCst) || owner_deadline.check().is_err() {
                             break Ok(());
                         }
-                        Ok(None) => {}
-                        Err(error) => break Err(error),
+                        match child.inner_mut().try_wait() {
+                            Ok(Some(_)) => {
+                                let _ = owner_events.try_send(Event::Exited);
+                                break Ok(());
+                            }
+                            Ok(None) => {}
+                            Err(error) => break Err(error.into()),
+                        }
+                        thread::sleep(owner_deadline.remaining().min(Duration::from_millis(10)));
                     }
-                    thread::sleep(owner_deadline.remaining().min(Duration::from_millis(10)));
-                };
-                child.terminate_checked(Duration::from_secs(2))?;
-                observation?;
-                Ok(())
+                })();
+                // Every post-spawn path, including pipe setup failure, reaches
+                // exactly one checked cleanup before the owner sends a receipt.
+                match (child.terminate_checked(Duration::from_secs(2)), observation) {
+                    (Err(cleanup), Err(error)) => Err(cleanup.context(error)),
+                    (Err(cleanup), Ok(())) => Err(cleanup),
+                    (Ok(_), result) => result,
+                }
             })();
             if let Err(error) = &result {
                 let _ = startup.try_send(Err(error.to_string()));
@@ -264,14 +303,8 @@ impl<'a> Session<'a> {
             }
             let _ = stopped_tx.send(result);
         });
-        let (mut stdin, mut stdout, mut stderr) = match started.recv_timeout(deadline.remaining()) {
-            Ok(Ok(pipes)) => pipes,
-            Ok(Err(error)) => anyhow::bail!(error),
-            Err(_) => {
-                cancel.store(true, Ordering::SeqCst);
-                anyhow::bail!("Runtime startup deadline exceeded")
-            }
-        };
+        let (mut stdin, mut stdout, mut stderr) =
+            receive_startup(&started, &stopped, &cancel, deadline)?;
         let (writer, queue) = mpsc::sync_channel::<(u64, Vec<u8>)>(1);
         let writes = event_tx.clone();
         thread::spawn(move || {
