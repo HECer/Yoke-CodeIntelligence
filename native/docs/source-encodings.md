@@ -213,13 +213,14 @@ Authored acceptance sources:
   approval/workspace journal checks. These are deferred fixtures, not executed
   evidence and not certification of a real compiler/backend.
 
-Only system Rust 1.94.1 rustfmt parsing/formatting and source/diff/static review
-are permitted in this child increment. Cargo build/check/test/Clippy, native
-image access, Node/npm/Python/project scripts, project binaries and all actual
-transport/runtime acceptance remain unrun. Parent review must retain the PR8
-activation HostProfile/config/CLI fields when combining the independent stacks.
+The author performed source/rustfmt checks only. After review corrections, the
+parent's exact `ceb23aa9` candidate passes guarded Windows workspace/all-target
+Clippy with warnings denied and unchanged selected inputs. Its 759 Cargo
+artifact observations are metadata; no native image was admitted or executed.
+Actual codec/transport/runtime fixtures remain unrun. The independent PR8
+activation HostProfile/config/CLI fields must survive combined integration.
 
-The 24 new test functions are authored, not passed. Two parent review regressions
+The 24 new test functions are authored and typechecked, not executed. Two parent review regressions
 cover UTF-8-valid Latin1/UTF-16 symbol bodies, raw anchors, unchanged legacy
 output, and model refusal before provider execution. The static check used
 Rust 1.94.1's rustfmt 1.8.0, edition 2024, with `skip_children=true` over all 29

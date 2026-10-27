@@ -40,6 +40,9 @@ Explicit per-project LF/CRLF/native settings format prepared source after-bytes
 before review and verification; saved plans and original captures stay immutable.
 Additive per-project source exclusions also bind captures and current workspace
 write scope while retaining exact historical evidence and recovery.
+Explicit [selected source encodings](native/docs/source-encodings.md) retain raw
+bytes and byte offsets through checked UTF-16/Latin1 text views and encoded change
+plans; unsupported proof consumers refuse. Runtime qualification remains open.
 Standard native-equivalent project defaults now project without new authority, with explicit limitations for unavailable extensions.
 Passive Rust isolates JSON project selectors in private provider copies, with exact omission receipts and versioned evidence that preserves old overlays.
 Windows workspace selections preserve distinct Unicode root names while retaining ASCII alias checks and exact captured membership.

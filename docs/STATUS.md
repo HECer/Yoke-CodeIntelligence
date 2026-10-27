@@ -1,5 +1,29 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Selected source encodings and browser harness integrated; runtime acceptance open (2026-10-27)
+
+Strict selected UTF-16/LE/BE and Latin1 support now retains original source bytes,
+hashes and ranges through decoded capture/index/read/search, reviewed encoded
+changes and private LSP navigation copies. Parent review corrects symbol-body
+decoding and rejects unsupported UTF-8 proof consumers before reinterpretation.
+The 24 authored codec tests have not executed. Guarded Windows all-target Clippy
+passes at `ceb23aa9`; its 759 artifact observations are metadata only.
+
+The separate real Edge/CDP history harness preserves the original three-variant
+gate, permissions, deadlines, resource caps and ownership proofs. Fifteen focused
+Python checks, including six in-memory CDP shutdown regressions, pass. Actual
+browser interaction and all six desktop/mobile PNG inspections remain pending.
+Typecheck/npm pass at integration source `6719c3dc`: 266 passed, three original
+skips, zero failures, unchanged selected inputs and natural owned-tree exit.
+The full Python suite remains failed on two unavailable-Cargo PATH prerequisites.
+[Source-bound review evidence](validation/integration-2026-10-27/encoding-browser-review/README.md).
+
+Published baseline `1c8d3072` / merge `23284fe6` passes all eight startup-channel
+tests on Windows and macOS and final Ubuntu acceptance. Windows still fails its
+original 20-second source-bound provider query, preventing release/history;
+macOS still has original memory/timing failures. New integration platform,
+encoding/browser/visual, matching VSIX and full release acceptance remain open.
+
 ## Page-capacity fixture preparation batched; Rust acceptance pending (2026-10-26)
 
 Source `33dfe1db` seeds the existing 999/1000 signed foreign page revisions in
