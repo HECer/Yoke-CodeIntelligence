@@ -1,6 +1,6 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
-## Legacy native construction regression located; correction pending execution (2026-10-27)
+## Legacy native construction corrected; full consumer interrupted by disk reserve (2026-10-27)
 
 The full guarded Windows library consumer at source `bcfcb250` reports 751
 passes, 38 failures and seven original ignores, with natural root/tree exit.
@@ -12,7 +12,21 @@ historical manifest before the new manifest had been published.
 Owned analysis now resolves its existing scope proof at the caller-supplied
 construction epoch and passes that checked codec to publication. Historical
 reader checks remain intact. The original directory, graph/archive and retrieval
-assertions are unchanged; a fresh full consumer must verify the correction.
+assertions are unchanged. A fresh guarded producer at `d6cd3b4a` succeeds, with
+unchanged selected inputs/protected metadata and naturally empty owned Jobs.
+Its whole-library consumer is interrupted after 246.329 seconds by the unchanged
+disk reserve, at a minimum 305,274,880 free bytes. No failed test is observed
+before interruption, including restored directory and graph cases; there is no
+complete test summary or full-suite acceptance. Forced owned-tree cleanup and
+complete streams are retained. Independent post-failure source-byte checks pass,
+but do not replace the controller's skipped final admission checks.
+
+The current source has not repeated Clippy, typecheck or npm tests: storage is
+below the existing admission floor. Earlier checks retain their recorded source
+identities. Three individually proven, private outputs from failed producers
+were removed without payload reads; their prior allocation totals 390,250,496
+bytes, not the requested 12 GB. No foreign project or system setting changed.
+[Raw failed/partial runs and indexed receipts](validation/integration-2026-10-27/inherited-deadline-native-construction/README.md).
 
 ## Nested Session query deadline admission corrected (2026-10-27)
 
