@@ -256,7 +256,6 @@ impl Engine {
             snapshot,
             deadline,
             bounded_saved_graph,
-            ConstructionEncoding::CaptureProof,
         )?;
         self.store.check_deadline()?;
         self.store.db.execute("INSERT INTO meta(key,value) VALUES(?1,?2) ON CONFLICT(key) DO UPDATE SET value=excluded.value", rusqlite::params![freshness::BASELINE_KEY, result.0.id])?;
@@ -300,13 +299,7 @@ impl Engine {
         snapshot: Snapshot,
         deadline: &Deadline,
     ) -> Result<(Snapshot, Graph, usize, usize)> {
-        self.analyze_snapshot_with_graph_policy(
-            epoch,
-            snapshot,
-            deadline,
-            false,
-            ConstructionEncoding::CaptureProof,
-        )
+        self.analyze_snapshot_with_graph_policy(epoch, snapshot, deadline, false)
     }
     /// The editor has checked every buffer and host path before constructing
     /// this overlay. Its immutable receipt is deliberately published afterward.
@@ -328,7 +321,7 @@ impl Engine {
             "Owned overlay construction requires its exact published disk base"
         );
         source_encoding::require_legacy(&self.store, base, "UTF-8 editor overlay buffers")?;
-        self.analyze_snapshot_with_graph_policy(
+        self.analyze_snapshot_with_construction_policy(
             epoch,
             snapshot,
             deadline,
@@ -337,6 +330,21 @@ impl Engine {
         )
     }
     fn analyze_snapshot_with_graph_policy(
+        &mut self,
+        epoch: analysis::AnalyzerEpoch,
+        snapshot: Snapshot,
+        deadline: &Deadline,
+        bounded_saved_graph: bool,
+    ) -> Result<(Snapshot, Graph, usize, usize)> {
+        self.analyze_snapshot_with_construction_policy(
+            epoch,
+            snapshot,
+            deadline,
+            bounded_saved_graph,
+            ConstructionEncoding::CaptureProof,
+        )
+    }
+    fn analyze_snapshot_with_construction_policy(
         &mut self,
         epoch: analysis::AnalyzerEpoch,
         snapshot: Snapshot,
