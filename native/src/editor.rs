@@ -328,7 +328,7 @@ pub fn capture_at(
         omissions: disk.omissions.clone(),
         capture_consistency: "overlay-from-stable-disk-and-immutable-buffers".into(),
     };
-    let (snapshot, _, _, _) = engine.analyze_snapshot_at(epoch, snapshot, deadline)?;
+    let (snapshot, _, _, _) = engine.analyze_legacy_overlay_at(epoch, snapshot, &disk, deadline)?;
     after.base_snapshot_id = disk.id;
     after.last_snapshot_id = Some(snapshot.id.clone());
     engine.store.record("overlay-snapshot",&snapshot.id,&json!({"snapshotId":snapshot.id,"sessionId":id,"revision":before.revision,"versions":versions,"baseSnapshotId":after.base_snapshot_id}))?;

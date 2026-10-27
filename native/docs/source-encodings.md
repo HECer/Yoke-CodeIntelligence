@@ -1,9 +1,12 @@
-# Selected source encodings (source-only candidate)
+# Selected source encodings (qualification in progress)
 
 This is a bounded native codec increment, not certification of the complete
 encoding identity, all standard codecs, all language servers or the project.
-The candidate has not been compiled or functionally accepted. The parent owns
-serial guarded native/CLI/stdio/HTTP/compatibility, typecheck and npm acceptance.
+Source `b55064b9` has compiled and executed codec targets with 14/1 core and 4/1
+transport pass/fail counts. The reserved-basename and approval-schema fixture
+defects are corrected; their fresh execution and full functional acceptance
+remain pending. The parent owns serial guarded native/CLI/stdio/HTTP/compatibility,
+typecheck and npm acceptance.
 Shared release status, the original 353-entry inventory and certification flags
 are intentionally outside this change.
 

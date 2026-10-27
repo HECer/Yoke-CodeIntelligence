@@ -347,7 +347,7 @@ fn encoded_capture_applies_secret_path_and_decoded_secret_filters_before_publica
         for (name, text) in [
             (".env", "owned private path"),
             ("secret.rs", "-----BEGIN PRIVATE KEY-----"),
-            ("nul.rs", "a\0b"),
+            ("embedded-nul.rs", "a\0b"),
         ] {
             fs::write(
                 root.path().join(name),
@@ -360,7 +360,7 @@ fn encoded_capture_applies_secret_path_and_decoded_secret_filters_before_publica
         for (name, reason) in [
             (".env", "protected-path"),
             ("secret.rs", "obvious-secret"),
-            ("nul.rs", "binary-decoded-nul"),
+            ("embedded-nul.rs", "binary-decoded-nul"),
         ] {
             assert!(
                 s.omissions
