@@ -149,6 +149,8 @@ coordinates in returned anchors. Copy integrity compares decoded bytes while
 source hashes remain raw. Provider profile fingerprints include the selected
 codec/private-view recipe. Direct and staged entrypoints share this policy.
 No provider is selected, trusted or started merely by selecting a codec.
+Facade symbol bodies use the same checked view, retain raw body boundaries and
+hashes, and carry selected-codec view evidence. Legacy UTF-8 output is unchanged.
 
 The following consumers currently refuse selected non-UTF8 proof before their
 optional execution, or at their non-executing proof entrypoint:
@@ -162,6 +164,9 @@ optional execution, or at their non-executing proof entrypoint:
 - Manifest-balanced retrieval, which currently owns a separate UTF-8 source
   capability. Ordinary core context/read/search paths are supported.
 - UTF-8 editor overlay buffers and committed-source Git workflow acquisition.
+- Optional model source selection for summaries, embeddings and reranking;
+  source admission refuses before provider execution, including Latin1 bytes
+  that are independently valid UTF-8 with a different interpretation.
 - Other legacy consumers of `query::source[_in_scope]` receive an explicit
   `source_encoding_capability_unavailable` error rather than a decoded string
   whose offsets they could mistake for raw positions. Advanced archive, model,
@@ -210,7 +215,9 @@ image access, Node/npm/Python/project scripts, project binaries and all actual
 transport/runtime acceptance remain unrun. Parent review must retain the PR8
 activation HostProfile/config/CLI fields when combining the independent stacks.
 
-The 22 new test functions are authored, not passed. The static check used
+The 24 new test functions are authored, not passed. Two parent review regressions
+cover UTF-8-valid Latin1/UTF-16 symbol bodies, raw anchors, unchanged legacy
+output, and model refusal before provider execution. The static check used
 Rust 1.94.1's rustfmt 1.8.0, edition 2024, with `skip_children=true` over all 29
 changed Rust files. The two previously CRLF source files (`changes.rs` and
 `changes_plan.rs`) retain Windows newlines. The whitespace check uses
@@ -228,6 +235,7 @@ and `native/tests/source_encodings_transport.rs`. Existing integration files:
 
 ```text
 native/src/capture.rs
+native/src/agent_repl.rs
 native/src/changes.rs
 native/src/changes_plan.rs
 native/src/compiler_inline.rs
@@ -242,6 +250,7 @@ native/src/lsp.rs
 native/src/main.rs
 native/src/project_session.rs
 native/src/projects.rs
+native/src/providers.rs
 native/src/query.rs
 native/src/query_features.rs
 native/src/retrieval_scopes.rs

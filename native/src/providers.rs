@@ -206,6 +206,7 @@ pub(crate) fn sources_with_total_limit(
 ) -> Result<Vec<Source>> {
     let (maximum, bytes, total_limit) = limits;
     scope(store, snapshot, graph, deadline)?;
+    crate::source_encoding::require_legacy(store, snapshot, "model source selection")?;
     ensure!(
         !ids.is_empty() && ids.len() <= maximum,
         "Source selection is empty or exceeds capacity"

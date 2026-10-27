@@ -2839,10 +2839,7 @@ fn attach_symbol_bodies(
                 source_bytes <= 16_000_000,
                 "Symbol body source capacity exceeded"
             );
-            sources.insert(
-                path.to_owned(),
-                String::from_utf8(scope.read_source(path)?)?,
-            );
+            sources.insert(path.to_owned(), scope.source_view(path)?);
         }
         let start = item["startByte"]
             .as_u64()
@@ -2850,8 +2847,8 @@ fn attach_symbol_bodies(
         let end = item["endByte"]
             .as_u64()
             .context("Symbol body end missing")? as usize;
-        crate::paths::utf8_range(&sources[path], start, end)?;
-        let source = &sources[path][start..end];
+        let view = &sources[path];
+        let source = view.quote(start, end)?;
         body_bytes = body_bytes
             .checked_add(source.len())
             .context("Symbol body result size overflow")?;
@@ -2862,6 +2859,7 @@ fn attach_symbol_bodies(
         item["body"] = json!(source);
         item["bodyEndByte"] = json!(end);
         item["bodyTruncated"] = json!(false);
+        view.annotate(item, &file.hash);
     }
     Ok(())
 }

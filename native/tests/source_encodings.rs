@@ -809,6 +809,86 @@ fn utf16_crlf_fixture() -> Vec<u8> {
 }
 
 #[test]
+fn facade_symbol_bodies_decode_selected_bytes_without_changing_raw_anchors() {
+    for (codec, text) in [
+        (
+            Codec::Latin1,
+            "fn target() { let value = \"\u{c3}\u{a9}\"; }\n",
+        ),
+        (Codec::Utf16Le, "fn target() { let value = \"plain\"; }\n"),
+        (Codec::Utf8, "fn target() { let value = \"é\"; }\n"),
+    ] {
+        let (_root, e, raw) = engine(codec, text, false);
+        // Both selected encodings deliberately also admit a wrong UTF-8 view.
+        assert!(std::str::from_utf8(&raw).is_ok());
+        let host = serde_json::from_value(json!({"sourceEncodings":{"global":codec}})).unwrap();
+        let mut session = Session::open(e, host, Some("encoded-bodies"), &d()).unwrap();
+        let value = yoke::agent_repl::invoke_facade(
+            &mut session,
+            "lsp.find_symbol",
+            json!({"name_path_pattern":"target","relative_path":"main.rs","include_body":true}),
+            None,
+            &d(),
+        )
+        .unwrap();
+        let items = value["items"].as_array().unwrap();
+        assert_eq!(items.len(), 1, "{value}");
+        let item = &items[0];
+        assert_eq!(item["body"], text.trim_end());
+        assert_eq!(item["contentHash"], hash(&raw));
+        assert_eq!(item["startByte"], 0);
+        assert_eq!(item["endByte"], raw.len() - bytes("\n", codec, false).len());
+        assert_eq!(item["bodyEndByte"], item["endByte"]);
+        assert_eq!(item["bodyTruncated"], false);
+        if codec == Codec::Utf8 {
+            assert!(item.get("sourceView").is_none());
+        } else {
+            assert_eq!(item["sourceView"]["rawContentHash"], hash(&raw));
+            assert_eq!(item["sourceView"]["analysisContentHash"], hash(text));
+            assert_eq!(item["sourceView"]["offsetSpace"], "original_source_bytes");
+        }
+    }
+}
+
+#[test]
+fn model_source_selection_refuses_utf8_valid_latin1_before_provider_execution() {
+    let (root, mut e, raw) = engine(
+        Codec::Latin1,
+        "fn target() { let value = \"\u{c3}\u{a9}\"; }\n",
+        false,
+    );
+    assert!(std::str::from_utf8(&raw).is_ok());
+    let (snapshot, graph, _, _) = e.index(&d()).unwrap();
+    let id = graph
+        .entities
+        .iter()
+        .find(|e| e.name == "target")
+        .unwrap()
+        .id
+        .clone();
+    let provider = yoke::providers::ProviderSpec {
+        trusted: true,
+        command: root.path().join("provider-must-not-start"),
+        args: vec![],
+        model_id: "encoding-refusal".into(),
+        model_version: "v1".into(),
+        task_id: "encoding-refusal".into(),
+        currency: "EUR".into(),
+        max_cost_micros: 10,
+        task_limit_micros: 100,
+    };
+    let error =
+        yoke::providers::summarize_sources(&e.store, &snapshot, &graph, &[id], &provider, &d())
+            .unwrap_err()
+            .to_string();
+    assert_eq!(
+        error,
+        "source_encoding_capability_unavailable: model source selection requires legacy UTF-8 source proof"
+    );
+    assert!(!provider.command.exists());
+}
+
+#[test]
 fn optional_utf8_piece_consumers_refuse_without_starting_tools_or_creating_overlay_state() {
     let (_root, mut e, _) = engine(Codec::Latin1, "fn café() {}", false);
     let (s, _, _, _) = e.index(&d()).unwrap();
