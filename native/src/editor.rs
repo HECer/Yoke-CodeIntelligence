@@ -58,6 +58,7 @@ pub fn open(engine: &mut Engine, deadline: &Deadline) -> Result<Session> {
         "Too many editor sessions; close unused sessions"
     );
     let (base, _, _, _) = engine.index(deadline)?;
+    crate::source_encoding::require_legacy(&engine.store, &base, "UTF-8 editor overlay buffers")?;
     let value = Session {
         id: random_id()?,
         base_snapshot_id: base.id,
@@ -153,6 +154,7 @@ pub fn update(engine: &Engine, id: &str, input: &Value, deadline: &Deadline) -> 
     );
     let before = session(&engine.store, id)?;
     let base = engine.store.snapshot(&before.base_snapshot_id)?;
+    crate::source_encoding::require_legacy(&engine.store, &base, "UTF-8 editor overlay buffers")?;
     let scope = crate::capture::source_scope_policy(&engine.store, &base)?;
     allowed_new_path(engine, &base, &path, deadline, &scope)?;
     let digest = hash(input.text.as_bytes());
@@ -261,6 +263,7 @@ pub fn capture_at(
     engine.store.set_deadline(deadline)?;
     let before = session(&engine.store, id)?;
     let (disk, _, _, _) = engine.index(deadline)?;
+    crate::source_encoding::require_legacy(&engine.store, &disk, "UTF-8 editor overlay buffers")?;
     let mut files = disk.files.clone();
     let mut after = before.clone();
     let scope = crate::capture::source_scope_policy(&engine.store, &disk)?;

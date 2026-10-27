@@ -26,6 +26,7 @@ pub struct Store {
     deadline: RefCell<Option<crate::capture::Deadline>>,
     /// Invocation-owned policy; never reconstructed from stored source or plans.
     pub(crate) source_line_ending: Option<crate::source_line_endings::ResolvedLineEnding>,
+    pub(crate) source_encoding: Option<crate::source_encoding::Policy>,
     pub(crate) source_exclusion_selection: Option<crate::source_exclusions::Policy>,
     pub(crate) current_source_exclusions: Option<crate::source_exclusions::Compiled>,
     pub(crate) current_git_ignored_read_only: bool,
@@ -250,6 +251,7 @@ impl Store {
             workspace_id,
             deadline: RefCell::new(None),
             source_line_ending: None,
+            source_encoding: None,
             source_exclusion_selection: None,
             current_source_exclusions: None,
             current_git_ignored_read_only: false,
@@ -661,7 +663,16 @@ impl Store {
         graph: &Graph,
         update_latest: bool,
     ) -> Result<()> {
-        self.publish_rows(snapshot, graph, update_latest, false)
+        let encoding = crate::source_encoding::publication_policy(self, snapshot)?;
+        self.publish_rows(snapshot, graph, update_latest, false, encoding)
+    }
+    pub(crate) fn publish_encoded(
+        &mut self,
+        snapshot: &Snapshot,
+        graph: &Graph,
+        encoding: Option<crate::source_encoding::Policy>,
+    ) -> Result<()> {
+        self.publish_rows(snapshot, graph, true, false, encoding)
     }
     /// Only owned atomic acquisition uses this path; public publication still
     /// owns its transaction and refuses nesting. No latest pointer is changed.
@@ -674,7 +685,8 @@ impl Store {
             !self.db.is_autocommit(),
             "Historical publication requires owned transaction"
         );
-        self.publish_rows(snapshot, graph, false, true)
+        let encoding = crate::source_encoding::publication_policy(self, snapshot)?;
+        self.publish_rows(snapshot, graph, false, true, encoding)
     }
     fn publish_rows(
         &self,
@@ -682,8 +694,21 @@ impl Store {
         graph: &Graph,
         update_latest: bool,
         pending: bool,
+        encoding: Option<crate::source_encoding::Policy>,
     ) -> Result<()> {
         self.check_deadline()?;
+        if encoding.is_some() {
+            let worst = snapshot.files.iter().try_fold(0usize, |n, f| {
+                self.check_deadline()?;
+                n.checked_add(
+                    f.size
+                        .saturating_mul(2)
+                        .min(crate::source_encoding::MAX_TEXT),
+                )
+                .ok_or_else(|| anyhow::anyhow!("source_encoding_document_budget"))
+            })?;
+            ensure!(worst <= 512_000_000, "source_encoding_document_budget");
+        }
         let documents: Vec<_> = snapshot
             .files
             .iter()
@@ -691,7 +716,12 @@ impl Store {
                 self.check_deadline()?;
                 Ok((
                     file.path.clone(),
-                    String::from_utf8(self.read_blob_exact(&file.hash, file.size, 4_000_000)?)?,
+                    crate::source_encoding::View::decode(
+                        self.read_blob_exact(&file.hash, file.size, 4_000_000)?,
+                        encoding,
+                        &|| self.check_deadline(),
+                    )?
+                    .into_text(),
                 ))
             })
             .collect::<Result<_>>()?;

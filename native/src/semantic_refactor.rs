@@ -86,6 +86,11 @@ pub fn invoke(
         propagated_delete::validate_policy(args)?;
     }
     let (snapshot, graph, _, _) = engine.index(deadline)?;
+    crate::source_encoding::require_legacy(
+        &engine.store,
+        &snapshot,
+        "semantic refactoring raw-piece proof",
+    )?;
     ensure!(
         args.get("snapshotId").is_none_or(|id| id == &snapshot.id),
         "Refactoring source snapshot is stale"

@@ -2,8 +2,7 @@ use crate::{
     analysis,
     capture::Deadline,
     model::{Graph, Snapshot, SourceFile, identity},
-    paths::{is_link, scoped, utf8_range},
-    query::source,
+    paths::{is_link, scoped},
     store::Store,
 };
 use anyhow::{Context, Result, bail, ensure};
@@ -134,6 +133,8 @@ pub struct Plan {
     pub directory_move: Option<DirectoryMove>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub source_line_ending: Option<crate::source_line_endings::ResolvedLineEnding>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_encoding: Option<crate::source_encoding::Policy>,
 }
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -250,6 +251,11 @@ fn prepare_inner(
     deadline: &Deadline,
 ) -> Result<Plan> {
     validate_symbol_delete_policies(args)?;
+    let encoding = crate::source_encoding::selected(store, snapshot)?;
+    ensure!(
+        encoding == store.source_encoding,
+        "source_encoding_current_policy_changed"
+    );
     let mut edits: Vec<Edit> = if let Some(value) = args.get("edits") {
         serde_json::from_value(value.clone())?
     } else {
@@ -305,21 +311,43 @@ fn prepare_inner(
                         "typescript" | "tsx" | "javascript" | "jsx" | "rust" | "python"
                     ) =>
                 {
-                    let (text, _) = source(store, snapshot, &file.path)?;
+                    let view = crate::query::source_view(store, snapshot, &file.path)?;
+                    let text = view.text();
+                    let mut decoded_entity = entity.clone();
+                    let mut decoded_file = file.clone();
+                    decoded_file.size = text.len();
+                    decoded_entity.start_byte = view.to_decoded(entity.start_byte)?;
+                    decoded_entity.end_byte = view.to_decoded(entity.end_byte)?;
+                    decoded_entity.name_start_byte = entity
+                        .name_start_byte
+                        .map(|n| view.to_decoded(n))
+                        .transpose()?;
+                    decoded_entity.name_end_byte = entity
+                        .name_end_byte
+                        .map(|n| view.to_decoded(n))
+                        .transpose()?;
+                    let file = &decoded_file;
+                    let entity = &decoded_entity;
                     if value["emptyPythonBody"] == "pass" {
                         let selected = symbol_delete::python_with_empty_body(
-                            epoch, file, entity, &text, deadline,
+                            epoch, file, entity, text, deadline,
                         )?;
                         delete_text = selected.replacement;
-                        (selected.start, selected.end)
+                        (view.to_raw(selected.start)?, view.to_raw(selected.end)?)
                     } else if value["siblingDeclarators"] == "preserve" {
                         let selected = symbol_delete::preserving_declarators(
-                            epoch, file, entity, &text, deadline,
+                            epoch, file, entity, text, deadline,
                         )?;
-                        separator = selected.separator;
-                        (selected.start, selected.end)
+                        separator = selected
+                            .separator
+                            .map(|(a, b)| {
+                                Ok::<_, anyhow::Error>((view.to_raw(a)?, view.to_raw(b)?))
+                            })
+                            .transpose()?;
+                        (view.to_raw(selected.start)?, view.to_raw(selected.end)?)
                     } else {
-                        symbol_delete::range(epoch, file, entity, &text, deadline)?
+                        let (a, b) = symbol_delete::range(epoch, file, entity, text, deadline)?;
+                        (view.to_raw(a)?, view.to_raw(b)?)
                     }
                 }
                 _ => (entity.start_byte, entity.end_byte),
@@ -375,11 +403,10 @@ fn prepare_inner(
     for (path, mut edits) in grouped {
         deadline.check()?;
         let before = snapshot.files.iter().find(|f| f.path == path);
-        let old = if before.is_some() {
-            source(store, snapshot, &path)?.0
-        } else {
-            String::new()
-        };
+        let old_view = before
+            .map(|_| crate::query::source_view(store, snapshot, &path))
+            .transpose()?;
+        let old = old_view.as_ref().map_or("", |v| v.text());
         let moved_source =
             directory_move.and_then(|directory| directory.source_for_destination(&path));
         let mut mode = before.or(moved_source).map_or(0o644, |f| f.mode);
@@ -388,6 +415,10 @@ fn prepare_inner(
                 ensure!(
                     edits.len() == 1 && before.is_none(),
                     "Create conflicts with an existing file or another edit"
+                );
+                ensure!(
+                    text.len() <= crate::source_encoding::MAX_TEXT,
+                    "source_encoding_decoded_budget"
                 );
                 Some(text.clone())
             }
@@ -421,7 +452,10 @@ fn prepare_inner(
                         bail!("Mixed file operations refused");
                     };
                     ensure!(expected_hash == &before.hash, "Expected hash is stale");
-                    utf8_range(&old, *start_byte, *end_byte)?;
+                    old_view
+                        .as_ref()
+                        .context("Replace source view missing")?
+                        .decoded_range(*start_byte, *end_byte)?;
                     if let Some((start, end)) = previous {
                         ensure!(
                             *start_byte >= end && !(*start_byte == start && end == start),
@@ -430,8 +464,9 @@ fn prepare_inner(
                     }
                     previous = Some((*start_byte, *end_byte));
                 }
-                let mut result = old.clone();
-                for edit in edits.iter().rev() {
+                let view = old_view.as_ref().context("Replace source view missing")?;
+                let mut size = old.len();
+                for edit in &edits {
                     if let Edit::Replace {
                         start_byte,
                         end_byte,
@@ -439,9 +474,35 @@ fn prepare_inner(
                         ..
                     } = edit
                     {
-                        result.replace_range(*start_byte..*end_byte, text);
+                        let (a, b) = view.decoded_range(*start_byte, *end_byte)?;
+                        size = size
+                            .checked_sub(b - a)
+                            .and_then(|n| n.checked_add(text.len()))
+                            .context("source_encoding_decoded_budget")?;
+                        ensure!(
+                            size <= crate::source_encoding::MAX_TEXT,
+                            "source_encoding_decoded_budget"
+                        );
                     }
                 }
+                let mut result = String::with_capacity(size);
+                let mut cursor = 0;
+                for edit in &edits {
+                    deadline.check()?;
+                    if let Edit::Replace {
+                        start_byte,
+                        end_byte,
+                        text,
+                        ..
+                    } = edit
+                    {
+                        let (a, b) = view.decoded_range(*start_byte, *end_byte)?;
+                        result.push_str(&old[cursor..a]);
+                        result.push_str(text);
+                        cursor = b;
+                    }
+                }
+                result.push_str(&old[cursor..]);
                 Some(result)
             }
         };
@@ -461,23 +522,41 @@ fn prepare_inner(
                 .is_none_or(|text| !crate::paths::obvious_secret(text)),
             "Edited source contains an obvious credential"
         );
-        let after_hash = after
+        let after_bytes = after
             .as_ref()
-            .map(|s| store.blob(s.as_bytes()))
+            .map(|text| {
+                if let Some(view) = &old_view {
+                    view.encode_like(text, &|| deadline.check())
+                } else {
+                    crate::source_encoding::encode_new(text, encoding, deadline)
+                }
+            })
             .transpose()?;
+        let after_hash = after_bytes.as_ref().map(|s| store.blob(s)).transpose()?;
         if before.map(|f| &f.hash) == after_hash.as_ref() {
             continue;
         }
-        diff.push_str(
-            &TextDiff::from_lines(old.as_str(), after.as_deref().unwrap_or(""))
-                .unified_diff()
-                .context_radius(3)
-                .header(
-                    if before.is_some() { &path } else { "/dev/null" },
-                    if after.is_some() { &path } else { "/dev/null" },
-                )
-                .to_string(),
-        );
+        if encoding.is_some() {
+            crate::source_encoding::append_diff(
+                &mut diff,
+                old,
+                after.as_deref().unwrap_or(""),
+                if before.is_some() { &path } else { "/dev/null" },
+                if after.is_some() { &path } else { "/dev/null" },
+                deadline,
+            )?;
+        } else {
+            diff.push_str(
+                &TextDiff::from_lines(old, after.as_deref().unwrap_or(""))
+                    .unified_diff()
+                    .context_radius(3)
+                    .header(
+                        if before.is_some() { &path } else { "/dev/null" },
+                        if after.is_some() { &path } else { "/dev/null" },
+                    )
+                    .to_string(),
+            );
+        }
         ensure!(diff.len() <= 16_000_000, "Patch diff budget exceeded");
         let folded_path = path.to_ascii_lowercase();
         if folded_path.contains("test") || folded_path.contains("spec") {
@@ -492,11 +571,11 @@ fn prepare_inner(
             mode,
         });
         files.retain(|f| f.path != path);
-        if let (Some(text), Some(hash)) = (after, after_hash) {
+        if let (Some(bytes), Some(hash)) = (after_bytes, after_hash) {
             files.push(SourceFile {
                 path: path.clone(),
                 hash,
-                size: text.len(),
+                size: bytes.len(),
                 language: if let Some(original) = moved_source {
                     original.language.clone()
                 } else {
@@ -529,6 +608,7 @@ fn prepare_inner(
         warnings,
         directory_move: directory_move.cloned(),
         source_line_ending: store.source_line_ending,
+        source_encoding: encoding,
     };
     plan.id = checked_plan::plan_identity(&plan);
     let id = plan.id.clone();
@@ -538,11 +618,18 @@ fn prepare_inner(
     checked_plan::admit_prepared(&plan, snapshot, &result, deadline)?;
     let mut extractions = Vec::new();
     for file in &result.files {
-        let text = String::from_utf8(store.read_blob(&file.hash)?)?;
-        extractions.push(analysis::extract_at(epoch, file, &text, deadline)?);
+        let view = crate::source_encoding::View::decode(
+            store.read_blob_exact(&file.hash, file.size, 4_000_000)?,
+            encoding,
+            &|| deadline.check(),
+        )?;
+        extractions.push(crate::source_encoding::extract(
+            epoch, file, &view, deadline,
+        )?);
     }
-    let result_graph = analysis::assemble_at(epoch, &result, extractions, deadline)?;
-    store.publish(&result, &result_graph)?;
+    let mut result_graph = analysis::assemble_at(epoch, &result, extractions, deadline)?;
+    crate::source_encoding::qualify_graph(&mut result_graph, encoding);
+    store.publish_encoded(&result, &result_graph, encoding)?;
     crate::capture::inherit_options(store, snapshot, &result)?;
     store.record("plan", &id, &plan)?;
     Ok(plan)
@@ -594,6 +681,27 @@ pub fn materialize_selected_sources(
     excluded: &std::collections::BTreeSet<String>,
     deadline: &Deadline,
 ) -> Result<()> {
+    materialize_sources(store, snapshot, target, excluded, false, deadline)
+}
+/// Private compiler input only. Never used by writer/recovery or verification:
+/// those must continue to materialize the exact approved original-codec bytes.
+pub(crate) fn materialize_source_views(
+    store: &Store,
+    snapshot: &Snapshot,
+    target: &Path,
+    excluded: &std::collections::BTreeSet<String>,
+    deadline: &Deadline,
+) -> Result<()> {
+    materialize_sources(store, snapshot, target, excluded, true, deadline)
+}
+fn materialize_sources(
+    store: &Store,
+    snapshot: &Snapshot,
+    target: &Path,
+    excluded: &std::collections::BTreeSet<String>,
+    decoded: bool,
+    deadline: &Deadline,
+) -> Result<()> {
     let scope = crate::capture::source_scope_policy(store, snapshot)?;
     for path in excluded {
         deadline.check()?;
@@ -619,7 +727,16 @@ pub fn materialize_selected_sources(
                 Err(error) => return Err(error.into()),
             }
         }
-        let bytes = scope.read_source(&file.path)?;
+        let bytes = if decoded {
+            let view = scope.source_view(&file.path)?;
+            ensure!(
+                view.policy().is_none() || view.retained_bytes() <= 16_000_000,
+                "source_encoding_capability_unavailable: semantic mapping cache capacity"
+            );
+            view.into_text().into_bytes()
+        } else {
+            scope.read_source(&file.path)?
+        };
         fs::create_dir_all(path.parent().unwrap())?;
         let mut output = fs::OpenOptions::new()
             .write(true)
@@ -645,6 +762,10 @@ pub fn approve_at(store: &Store, id: &str, allow_tests: bool, deadline: &Deadlin
     let deadline = store.inherited_deadline(deadline)?;
     crate::github_app::worker::publication_policy(store, &deadline, |_| {
         let plan = load_checked_plan(store, id, &deadline)?;
+        ensure!(
+            plan.source_encoding == store.source_encoding,
+            "source_encoding_current_policy_changed"
+        );
         ensure!(plan.expires_at > now(), "Plan expired");
         ensure!(
             allow_tests || plan.warnings.is_empty(),
@@ -829,11 +950,24 @@ fn apply_inner(
     }
     // Never format an already reviewed effect at application time. A newly
     // selected host convention may only admit its exact stored after-bytes.
+    ensure!(
+        plan.source_encoding == store.source_encoding,
+        "source_encoding_current_policy_changed"
+    );
     if let Some(ending) = store.source_line_ending {
         for file in &plan.files {
             if let Some(hash) = &file.after_hash {
                 ensure!(
-                    ending.canonical(&store.read_blob(hash)?, deadline)?,
+                    ending.canonical(
+                        crate::source_encoding::View::decode(
+                            store.read_blob(hash)?,
+                            plan.source_encoding,
+                            &|| deadline.check()
+                        )?
+                        .text()
+                        .as_bytes(),
+                        deadline
+                    )?,
                     "changes_plan_line_ending_mismatch; prepare and review a new plan"
                 );
             }

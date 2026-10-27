@@ -250,6 +250,8 @@ fn catalog_language(extension: &str) -> Option<&'static str> {
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct CaptureOptions {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_encoding: Option<crate::source_encoding::Policy>,
     #[serde(default, skip_serializing_if = "crate::git_ignore_policy::disabled")]
     pub include_git_ignored: bool,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -395,6 +397,9 @@ impl CaptureOptions {
         crate::source_exclusions::Compiled::new(source_exclusions.as_ref(), &|| Ok(()))?;
         Ok(Self {
             include_git_ignored: self.include_git_ignored,
+            source_encoding: self
+                .source_encoding
+                .and_then(crate::source_encoding::Policy::canonical),
             source_exclusions,
             only_dirs,
             include_dirs,
@@ -1300,6 +1305,16 @@ pub struct CapturedSourceScope<'a> {
     exclusions: crate::source_exclusions::Compiled,
 }
 impl CapturedSourceScope<'_> {
+    pub fn source_encoding(&self) -> Option<crate::source_encoding::Policy> {
+        self.options.source_encoding
+    }
+    pub fn source_view(&self, path: &str) -> Result<crate::source_encoding::View> {
+        crate::source_encoding::View::decode(
+            self.read_source(path)?,
+            self.source_encoding(),
+            &|| self.store.check_deadline(),
+        )
+    }
     fn includes(&self, path: &str) -> Result<bool> {
         Ok(self.options.includes(path)
             && !self
@@ -1906,24 +1921,67 @@ fn scan(
             continue;
         }
         let mut bytes = Vec::new();
-        fs::File::open(entry.path())?
-            .take(4_000_001)
-            .read_to_end(&mut bytes)?;
+        if options.source_encoding.is_some() {
+            // Raw allocation is admitted independently of the later text/map.
+            bytes.reserve_exact(4_000_000);
+            let mut input = fs::File::open(entry.path())?;
+            let mut buffer = [0; 16384];
+            loop {
+                deadline.check()?;
+                let read = input.read(&mut buffer)?;
+                if read == 0 {
+                    break;
+                }
+                ensure!(
+                    read <= 4_000_000 - bytes.len(),
+                    "File grew past capture limit"
+                );
+                bytes.extend_from_slice(&buffer[..read]);
+            }
+        } else {
+            fs::File::open(entry.path())?
+                .take(4_000_001)
+                .read_to_end(&mut bytes)?;
+        }
         ensure!(bytes.len() <= 4_000_000, "File grew past capture limit");
-        if bytes.contains(&0) || std::str::from_utf8(&bytes).is_err() {
+        if options.source_encoding.is_none()
+            && (bytes.contains(&0) || std::str::from_utf8(&bytes).is_err())
+        {
             omissions.push(Omission {
                 path: relative,
                 reason: "binary-or-invalid-utf8".into(),
             });
             continue;
         }
-        if crate::paths::obvious_secret(std::str::from_utf8(&bytes)?) {
+        let view =
+            match crate::source_encoding::View::decode(bytes, options.source_encoding, &|| {
+                deadline.check()
+            }) {
+                Ok(view) => view,
+                Err(error) => {
+                    deadline.check()?;
+                    omissions.push(Omission {
+                        path: relative,
+                        reason: format!("source-decoding-refused: {error}"),
+                    });
+                    continue;
+                }
+            };
+        if view.text().contains('\0') {
+            omissions.push(Omission {
+                path: relative,
+                reason: "binary-decoded-nul".into(),
+            });
+            continue;
+        }
+        if crate::paths::obvious_secret(view.text()) {
             omissions.push(Omission {
                 path: relative,
                 reason: "obvious-secret".into(),
             });
             continue;
         }
+        let bytes = view.raw();
         total = total
             .checked_add(bytes.len())
             .ok_or_else(|| anyhow::anyhow!("Snapshot size overflow"))?;
@@ -1931,7 +1989,7 @@ fn scan(
             total <= 512_000_000 && files.len() < 100_000,
             "Snapshot capture budget exceeded"
         );
-        let hash = store.blob(&bytes)?;
+        let hash = store.blob(bytes)?;
         captured.insert(relative.clone());
         if selected {
             ignored_paths.insert(relative.clone());

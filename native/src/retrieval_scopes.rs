@@ -468,6 +468,11 @@ pub(crate) fn begin<'store: 'input, 'input, 'deadline>(
     )?;
     let source_scope = crate::capture::source_scope_policy(store, snapshot)
         .map_err(|_| authority_error(deadline))?;
+    if source_scope.source_encoding().is_some() {
+        return Err(RetrievalHardError::DeniedSource(
+            "source_encoding_capability_unavailable",
+        ));
+    }
     let mut entities = BTreeMap::new();
     for entity in &graph.entities {
         check_deadline(deadline)?;
