@@ -1,0 +1,245 @@
+"""Pure/mocked adversaries; no browser, native image, worker, Job, or network.
+
+Authored source-only. Running these later does not establish live acceptance.
+"""
+import ast
+import copy
+import importlib.util
+import io
+import json
+from pathlib import Path
+import queue
+import tempfile
+import unittest
+from unittest import mock
+
+
+SCRIPTS = Path(__file__).resolve().parents[1]
+SPEC = importlib.util.spec_from_file_location("owned_browser", SCRIPTS / "host_history_browser.py")
+BROWSER = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(BROWSER)
+
+
+class WorkerAdmission(unittest.TestCase):
+    def test_non_ci_refuses_before_spec_or_native_reads(self):
+        with mock.patch.object(BROWSER, "ci_identity", side_effect=RuntimeError("CI refused")), \
+             mock.patch.object(BROWSER, "read_json") as reader, \
+             mock.patch.object(BROWSER, "sha") as native, \
+             mock.patch.object(BROWSER.subprocess, "Popen") as launch:
+            with self.assertRaisesRegex(RuntimeError, "CI refused"):
+                BROWSER.worker(None)
+            reader.assert_not_called()
+            native.assert_not_called()
+            launch.assert_not_called()
+
+    def test_closed_schema_and_nonce_are_admitted_before_paths(self):
+        valid = {key: "inert" for key in ("schema", "workerJobName", "nonce", "native", "fixture", "output",
+                                         "node", "producer", "inputs", "ci")}
+        valid.update(schema=BROWSER.SCHEMA, nonce="a" * 64, workerJobName="Local\\YokeHistoryCI-" + "b" * 64)
+        for changed in ({}, {**valid, "unexpected": True}, {**valid, "nonce": "wrong"},
+                        {**valid, "schema": "foreign"}, {**valid, "workerJobName": "Local\\foreign"}):
+            with self.subTest(spec=changed), \
+                 mock.patch.dict(BROWSER.os.environ, {"YOKE_BROWSER_WORKER_NONCE": "a" * 64}), \
+                 mock.patch.object(BROWSER, "plain_path", side_effect=AssertionError("Must not inspect paths")), \
+                 mock.patch.object(BROWSER, "sha") as digest:
+                with self.assertRaises(RuntimeError):
+                    BROWSER.validate_spec(changed, Path("inert"))
+                digest.assert_not_called()
+
+    def test_specific_job_and_producer_precede_first_native_payload_access(self):
+        spec = {"workerJobName": "Local\\YokeHistoryCI-" + "b" * 64,
+                "ci": {}, "inputs": {}, "producer": {}}
+        for gate in ("job", "source", "producer"):
+            order = []
+
+            def job(_):
+                order.append("job")
+                if gate == "job":
+                    raise RuntimeError("Job refused")
+
+            def producer(*_):
+                order.append("producer")
+                raise RuntimeError("Producer refused")
+
+            with self.subTest(gate=gate), \
+                 mock.patch.object(BROWSER, "ci_identity", return_value={}), \
+                 mock.patch.object(BROWSER, "plain_path", side_effect=lambda p: p), \
+                 mock.patch.object(BROWSER, "read_json", return_value=spec), \
+                 mock.patch.object(BROWSER, "validate_spec", return_value=("native", "fixture", "output", "node")), \
+                 mock.patch.object(BROWSER.LIVE, "require_worker_job", side_effect=job), \
+                 mock.patch.object(BROWSER.LIVE, "source_inputs", return_value={"different": True} if gate == "source" else {}), \
+                 mock.patch.object(BROWSER, "validate_producer", side_effect=producer), \
+                 mock.patch.object(BROWSER, "sha", side_effect=AssertionError("No native image read")), \
+                 mock.patch.object(BROWSER, "exercise", side_effect=AssertionError("No worker execution")):
+                with self.assertRaises(RuntimeError):
+                    BROWSER.worker(Path("inert-spec.json"))
+                self.assertEqual(order, ["job", "producer"] if gate == "producer" else ["job"])
+
+    def producer(self):
+        native = mock.Mock()
+        native.__str__ = mock.Mock(return_value="explicit-owned-native")
+        native.stat.return_value = mock.Mock(st_size=100, st_mtime_ns=10)
+        value = {"schema": BROWSER.SCHEMA, "ci": {"GITHUB_SHA": "a" * 40}, "sourceInputs": {"driver": "b" * 64},
+                 "startedNs": 11, "finishedNs": 12, "native": str(native), "nativeSize": 100, "nativeMtimeNs": 10}
+        return native, value
+
+    def test_producer_is_exact_fresh_and_metadata_bound_without_opening_an_image(self):
+        native, value = self.producer()
+        BROWSER.validate_producer(value, value["ci"], value["sourceInputs"], native, 13)
+        changes = [{"extra": True}, {"schema": "foreign"}, {"sourceInputs": {}}, {"ci": {}},
+                   {"native": "other"}, {"nativeSize": 160000001}, {"nativeSize": True},
+                   {"nativeMtimeNs": -1}, {"finishedNs": 14}, {"startedNs": 13},
+                   {"startedNs": "11"}, {"nativeMtimeNs": 11}, {"nativeSize": 99}]
+        for change in changes:
+            changed = {**copy.deepcopy(value), **change}
+            with self.subTest(change=change), self.assertRaises(RuntimeError):
+                BROWSER.validate_producer(changed, value["ci"], value["sourceInputs"], native, 13)
+        with self.assertRaises(RuntimeError):
+            BROWSER.validate_producer(value, value["ci"], value["sourceInputs"], native, 901000000013)
+        native.open.assert_not_called()
+        native.read_bytes.assert_not_called()
+
+    def test_duplicate_oversized_truncated_and_nonobject_specs_cannot_be_admitted(self):
+        for raw in (b'{"schema":1,"schema":2}', b'{"nested":{"nonce":1,"nonce":2}}', b'{"schema":'):
+            with self.subTest(raw=raw), self.assertRaises((RuntimeError, ValueError)):
+                BROWSER.LIVE.decode(raw)
+        with self.assertRaises(RuntimeError):
+            BROWSER.LIVE.decode(b" " * 65, 64)
+        with tempfile.TemporaryDirectory(prefix="owned-browser-parser-") as directory:
+            path = Path(directory) / "owned-spec-π.json"
+            path.write_bytes(b'{}' + b' ' * 65)
+            with mock.patch.object(Path, "open", side_effect=AssertionError("Oversized input must remain unopened")):
+                with self.assertRaises(RuntimeError):
+                    BROWSER.read_json(path, 64)
+        for value in ([], None, True, "fake"):
+            with self.assertRaises(RuntimeError):
+                BROWSER.validate_spec(value, Path("inert"))
+
+    def test_link_or_escape_path_is_refused_before_native_payload_reads(self):
+        for value in (Path("relative.exe"), Path("../outside.exe")):
+            with self.assertRaises(RuntimeError):
+                BROWSER.plain_path(value)
+        with tempfile.TemporaryDirectory(prefix="owned-browser-path-") as directory:
+            target = Path(directory).resolve() / "foreign.exe"
+            target.write_bytes(b"inert data, never an executable")
+            with self.assertRaises(RuntimeError):
+                BROWSER.native_path(target)
+
+
+class PrivateEvidenceAndCleanup(unittest.TestCase):
+    def test_capabilities_urls_headers_and_oversized_observations_never_enter_evidence(self):
+        capability = "a" * 64
+        safe = {"phase": "pending", "ok": True, "states": [{"draftSha256": "b" * 64}]}
+        self.assertEqual(BROWSER.admit_driver_reply(safe, "pending", capability), safe)
+        for payload in (capability, "http://127.0.0.1:1234", "https://external.invalid/", "ws://127.0.0.1/",
+                        "wss://example.invalid/", "Bearer private", "x" * BROWSER.MAX_JSON):
+            with self.subTest(payload=payload[:80]), self.assertRaises(RuntimeError):
+                BROWSER.admit_driver_reply({**safe, "nested": [{"error": payload}]}, "pending", capability)
+        for reply in ({**safe, "ok": False}, {**safe, "phase": "after"}, [], None):
+            with self.assertRaises(RuntimeError):
+                BROWSER.admit_driver_reply(reply, "pending", capability)
+
+    def test_driver_reader_refuses_truncated_oversized_duplicate_and_malformed_frames(self):
+        for raw in (b'{"ok":true}', b'{"ok":true,"ok":false}\n', b'{broken}\n',
+                    b' ' * (BROWSER.MAX_JSON + 1) + b'\n'):
+            owner = object.__new__(BROWSER.Browser)
+            owner.frames, owner.error = queue.Queue(maxsize=4), None
+            owner.process = mock.Mock(stdout=io.BytesIO(raw))
+            owner._read()
+            self.assertEqual(owner.error, "driver-reader-failed")
+            self.assertTrue(owner.frames.empty())
+
+    def artifact_proof(self):
+        states = [{"screenshot": viewport + "-" + phase + ".png", "actualScreenshotCapture": True,
+                   "humanVisualReviewComplete": False, "noHorizontalOverflow": True,
+                   "screenshotBytes": 33} for phase in ("before", "pending", "after")
+                  for viewport in ("desktop", "mobile")]
+        return {"result": {"before": {"states": states[:2]}, "pending": {"states": states[2:4]},
+                           "saves": [{"browser": item} for item in states[4:]]}}
+
+    def test_empty_duplicate_escape_or_unreviewed_artifacts_cannot_be_protocol_only_success(self):
+        for alteration in ("empty", "duplicate", "escape", "claim"):
+            proof = self.artifact_proof()
+            first = proof["result"]["before"]["states"][0]
+            if alteration == "empty":
+                proof["result"]["saves"] = []
+            elif alteration == "duplicate":
+                first["screenshot"] = "mobile-before.png"
+            elif alteration == "escape":
+                first["screenshot"] = "../desktop-before.png"
+            else:
+                first["humanVisualReviewComplete"] = True
+            with self.subTest(alteration=alteration), \
+                 mock.patch.object(BROWSER, "plain_path", side_effect=AssertionError("No artifact open")), \
+                 self.assertRaises(RuntimeError):
+                BROWSER.verify_artifacts(Path("inert-output"), proof)
+
+    def test_screenshot_capacity_and_invalid_header_refuse_before_hashing_any_payload(self):
+        for size in (32, 2_000_001, 33):
+            image = mock.MagicMock()
+            image.stat.return_value.st_size = size
+            image.open.return_value.__enter__.return_value.read.return_value = b"invalid PNG fixture, never live!!!"
+            with self.subTest(size=size), \
+                 mock.patch.object(BROWSER, "plain_path", return_value=image), \
+                 mock.patch.object(BROWSER, "sha", side_effect=AssertionError("No unadmitted payload hash")), \
+                 self.assertRaises(RuntimeError):
+                BROWSER.verify_artifacts(Path("inert-output"), self.artifact_proof())
+            if size != 33:
+                image.open.assert_not_called()
+
+    def test_worker_success_cannot_be_created_by_forced_cleanup(self):
+        row = {"assignedBeforeResume": True, "exitCode": 0, "treeExitedBeforeCleanup": True,
+               "activeBeforeCleanup": 0, "activeAfterCleanup": 0}
+        self.assertTrue(BROWSER.success_proof(row))
+        for change in ({"assignedBeforeResume": False}, {"exitCode": 1}, {"exitCode": False},
+                       {"treeExitedBeforeCleanup": False}, {"activeBeforeCleanup": 1},
+                       {"activeAfterCleanup": 1}, {"activeBeforeCleanup": False}):
+            self.assertFalse(BROWSER.success_proof({**row, **change}))
+        self.assertFalse(BROWSER.success_proof({"activeAfterCleanup": 0}))
+
+    def test_browser_shutdown_requires_both_raw_exits_and_pipe_and_stdout_eof(self):
+        original = {"phase": "close", "ok": True, "browserCloseRequested": True,
+                    "browserExitCode": 0, "cdpEOF": True, "browserOutputEOF": True}
+        for change in ({}, {"browserCloseRequested": False}, {"browserExitCode": 125}, {"cdpEOF": False},
+                       {"browserOutputEOF": False}, {"driverExit": 125}, {"readerAlive": True}, {"extraFrame": True}):
+            owner = object.__new__(BROWSER.Browser)
+            owner.process = mock.Mock(returncode=change.get("driverExit", 0))
+            owner.reader = mock.Mock()
+            owner.reader.is_alive.return_value = change.get("readerAlive", False)
+            owner.frames = queue.Queue()
+            if change.get("extraFrame"):
+                owner.frames.put({"extra": True})
+            owner.stderr = mock.Mock()
+            owner.error = None
+            owner.call = mock.Mock(return_value={**original, **change})
+            with self.subTest(change=change):
+                if change:
+                    with self.assertRaises(RuntimeError):
+                        owner.shutdown()
+                else:
+                    self.assertTrue(owner.shutdown()["beforeForcedCleanup"])
+            owner.process.kill.assert_not_called()
+
+    def test_original_tree_runner_and_three_variant_gate_remain_unchanged(self):
+        old = ast.parse((SCRIPTS / "host_history_live.py").read_text(encoding="utf-8"))
+        new = ast.parse((SCRIPTS / "host_history_browser.py").read_text(encoding="utf-8"))
+        function = lambda tree, name: next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == name)
+        self.assertEqual(ast.dump(function(old, "bounded_worker")), ast.dump(function(new, "bounded_worker")))
+        self.assertIn('("persistent-python", "serena", Path(sys.executable))',
+                      (SCRIPTS / "host_history_live.py").read_text(encoding="utf-8"))
+        self.assertIn('"nativeBrowserAcceptanceClaimed": False',
+                      (SCRIPTS / "host_history_live.py").read_text(encoding="utf-8"))
+
+    def test_browser_source_has_no_mock_success_or_security_bypass(self):
+        source = (SCRIPTS / "host_history_browser.cjs").read_text(encoding="utf-8")
+        for forbidden in ("--no-sandbox", "--disable-web-security", "--remote-allow-origins", "Fetch.fulfillRequest",
+                          "Page.setDocumentContent", "window.fetch =", "globalThis.fetch =", "--remote-debugging-port"):
+            self.assertNotIn(forbidden, source)
+        for required in ("Fetch.continueRequest", "Fetch.failRequest", "Page.captureScreenshot", "Input.insertText",
+                         "Runtime.exceptionThrown", "Browser.close", "PNG_LIMIT = 2_000_000", "headless: true",
+                         "visualReviewComplete: false", "humanVisualReviewComplete: false"):
+            self.assertIn(required, source)
+
+
+if __name__ == "__main__":
+    unittest.main()
