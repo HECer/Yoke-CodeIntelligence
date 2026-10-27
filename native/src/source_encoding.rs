@@ -300,6 +300,10 @@ impl View {
         Ok(&self.text[a..b])
     }
     pub fn encode_like(&self, text: &str, check: &impl Fn() -> Result<()>) -> Result<Vec<u8>> {
+        ensure!(
+            self.codec != Codec::Utf8Sig || self.prefix != 0 || !text.starts_with('\u{feff}'),
+            "source_encoding_utf8_sig_ambiguous_leading_bom"
+        );
         let mut bytes = encode(text, self.codec, check)?;
         if self.prefix != 0 {
             ensure!(

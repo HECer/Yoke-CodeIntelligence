@@ -48,6 +48,9 @@ ASCII, Windows-1252, UTF-32 and every other codec are unsupported.
 Unknown codecs and invalid setting types refuse explicitly. Latin1 maps each
 byte directly to the same numbered Unicode scalar, including C1 controls;
 byte `80` is U+0080, not the Windows-1252 euro sign.
+For an existing UTF-8-SIG file without a signature, an edit that would place
+U+FEFF at the start is refused: its bytes would otherwise be consumed as a
+signature when the file is read again. Existing signatures are preserved.
 
 The resolved host profile uses `sourceEncodings` with `global` and
 `projects.<registered-name>.project/local`, with canonical enum values `utf8`,

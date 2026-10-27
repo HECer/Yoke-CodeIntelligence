@@ -998,3 +998,19 @@ fn utf8_sig_strict_prefix_boundaries_and_invalid_input() {
     assert_eq!(view.encode_like(view.text(), &|| Ok(())).unwrap(), raw);
     assert_ne!(Codec::Utf8Sig.policy(), Codec::Utf8.policy());
 }
+
+#[test]
+fn utf8_sig_bomless_edits_refuse_ambiguous_leading_character() {
+    for raw in [b"".as_slice(), b"existing".as_slice()] {
+        let view = View::decode(raw.to_vec(), Codec::Utf8Sig.policy(), &|| Ok(())).unwrap();
+        let error = view.encode_like("\u{feff}text", &|| Ok(())).unwrap_err();
+        assert!(
+            error
+                .to_string()
+                .contains("source_encoding_utf8_sig_ambiguous_leading_bom")
+        );
+        let encoded = view.encode_like("text", &|| Ok(())).unwrap();
+        let reread = View::decode(encoded, Codec::Utf8Sig.policy(), &|| Ok(())).unwrap();
+        assert_eq!(reread.text(), "text");
+    }
+}
