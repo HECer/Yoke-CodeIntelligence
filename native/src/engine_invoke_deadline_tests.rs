@@ -19,14 +19,14 @@ pub(super) fn after_deadline() {
     }
 }
 
-struct Hook;
+pub(super) struct Hook;
 impl Drop for Hook {
     fn drop(&mut self) {
         AFTER_DEADLINE.with(|slot| drop(slot.borrow_mut().take()));
     }
 }
 
-fn cancelling_hook(cancel: Arc<AtomicBool>) -> Hook {
+pub(super) fn cancelling_hook(cancel: Arc<AtomicBool>) -> Hook {
     AFTER_DEADLINE.with(|slot| {
         assert!(
             slot.replace(Some(Box::new(move || cancel.store(true, Ordering::SeqCst))))

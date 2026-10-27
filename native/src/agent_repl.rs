@@ -3085,6 +3085,43 @@ fn file_documentation(
 mod source_binding_tests {
     use super::*;
     #[test]
+    fn inherited_cancellation_survives_default_and_named_facade_semantic_queries() {
+        let root = tempfile::tempdir().unwrap();
+        fs::write(root.path().join("main.rs"), "fn helper() {}\n").unwrap();
+        let setup = Deadline::new(60_000);
+        let mut session = Session::open(
+            crate::Engine::open(root.path()).unwrap(),
+            crate::project_session::HostProfile::default(),
+            Some("inherited-semantic-deadline"),
+            &setup,
+        )
+        .unwrap();
+        let symbol = one_symbol(&mut session, "helper", "main.rs", None, &setup).unwrap();
+        for project in [None, Some("default")] {
+            let cancel = Arc::new(AtomicBool::new(false));
+            let deadline =
+                Deadline::run_bounded(&Deadline::new(20_000), Arc::clone(&cancel), || {
+                    Ok(Deadline::new(20_000))
+                })
+                .unwrap();
+            let _hook = crate::invoke_deadline_tests::cancelling_hook(cancel);
+            let error = semantic_from_symbol(
+                &mut session,
+                &symbol,
+                "implementation",
+                json!({}),
+                project,
+                &deadline,
+            )
+            .unwrap_err();
+            assert!(
+                error.to_string().contains("Request cancelled by host"),
+                "{error:#}"
+            );
+        }
+    }
+
+    #[test]
     fn provider_queries_keep_the_symbol_snapshot_after_original_source_changes() {
         let root = tempfile::tempdir().unwrap();
         let source = "// 🌍\nfn helper() {}\nfn main() { helper(); }\n";

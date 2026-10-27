@@ -7,7 +7,7 @@ actual inherited host Deadline instead of recreating a sampled duration without
 its cancellation flags. The original ceiling and captured/live cancellation
 remain attached throughout the nested operation. Public Engine timeout defaults,
 numeric-range validation and document-apply provenance retain existing behavior.
-Three deterministic unit regressions are authored, not executed. They require no
+Four deterministic unit regressions are authored, not executed. They require no
 provider process and retain a thread-local, one-shot test hook with RAII cleanup.
 
 This is a separate admission defect found while reviewing the Windows provider
