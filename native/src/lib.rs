@@ -42,6 +42,9 @@ pub mod graphify_adapter;
 pub mod host_config;
 pub mod host_credentials;
 pub mod host_install;
+#[cfg(test)]
+#[path = "engine_invoke_deadline_tests.rs"]
+mod invoke_deadline_tests;
 pub mod json;
 pub mod knowledge;
 pub mod languages;
@@ -401,7 +404,17 @@ impl Engine {
         Ok((snapshot, graph))
     }
     pub fn invoke(&mut self, tool: &str, args: Value) -> Result<Value> {
-        self.invoke_bound(tool, args, None)
+        self.invoke_bound(tool, args, None, None)
+    }
+    /// Trusted Session/facade route: serialized timeout defaults cannot replace
+    /// the actual inherited host ceiling or its live cancellation flags.
+    pub(crate) fn invoke_at(
+        &mut self,
+        tool: &str,
+        args: Value,
+        deadline: &Deadline,
+    ) -> Result<Value> {
+        self.invoke_bound(tool, args, None, Some(deadline))
     }
     /// Trusted Session route only; a serialized request cannot install this
     /// provenance context or bypass ordinary validation/write admission.
@@ -410,13 +423,14 @@ impl Engine {
         args: Value,
         binding: changes::DocumentBinding,
     ) -> Result<Value> {
-        self.invoke_bound("ci_change_apply", args, Some(binding))
+        self.invoke_bound("ci_change_apply", args, Some(binding), None)
     }
     fn invoke_bound(
         &mut self,
         tool: &str,
         args: Value,
         document: Option<changes::DocumentBinding>,
+        inherited: Option<&Deadline>,
     ) -> Result<Value> {
         let started = Instant::now();
         let deadline = Deadline::new(
@@ -425,6 +439,12 @@ impl Engine {
                 .filter(|n| (10..=600000).contains(n))
                 .unwrap_or(120000),
         );
+        let deadline = match inherited {
+            Some(parent) => deadline.intersection(parent)?,
+            None => deadline,
+        };
+        #[cfg(test)]
+        invoke_deadline_tests::after_deadline();
         let byte_max = args["maxBytes"]
             .as_u64()
             .filter(|n| (1024..=4_000_000).contains(n))

@@ -165,6 +165,16 @@ copies only revalidated compatible parser entries from the same Git worktree
 family. Neither Git execution nor parent workspace access is granted by a tool
 argument or repository file. See `git-workflows.md` for proof boundaries and
 remaining workflow gaps.
+# Nested source-query deadlines
+
+Trusted Session and facade source queries retain the actual host Deadline when
+entering Engine operations. The parsed request timeout intersects that ceiling
+and its live cancellation flags; converting a remaining budget to whole
+milliseconds cannot grant the ordinary standalone Engine default. Public facade
+entry checks and existing post-dispatch checks remain in force. Standalone
+Engine timeout defaults and document-apply provenance retain their existing
+contracts.
+
 # GitHub credentials and bounded resources
 
 `yoke credentials github-import <name>` accepts a GitHub token only through a

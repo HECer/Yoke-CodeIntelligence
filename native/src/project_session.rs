@@ -2339,9 +2339,10 @@ impl Session {
             .dashboard
             .as_ref()
             .and_then(|handle| handle.begin(name));
-        let result = self
-            .check_tool_state(deadline)
-            .and_then(|_| self.active_engine_at(deadline)?.invoke(name, args));
+        let result = self.check_tool_state(deadline).and_then(|_| {
+            self.active_engine_at(deadline)?
+                .invoke_at(name, args, deadline)
+        });
         self.finish_dashboard_activity(activity, &result);
         result
     }
@@ -2654,7 +2655,8 @@ impl Session {
                     "External project queries cannot prepare semantic plans"
                 );
                 call["timeoutMs"] = json!(deadline.remaining().as_millis().min(600000));
-                self.project_engine(name, deadline)?.invoke(tool, call)
+                self.project_engine(name, deadline)?
+                    .invoke_at(tool, call, deadline)
             }
             _ if operation.starts_with("notes.") => {
                 if self
@@ -2888,7 +2890,8 @@ impl Session {
         }
         args["timeoutMs"] = json!(deadline.remaining().as_millis().min(600000));
         let active = self.state.active_project.clone();
-        self.project_engine(&active, deadline)?.invoke(tool, args)
+        self.project_engine(&active, deadline)?
+            .invoke_at(tool, args, deadline)
     }
 }
 

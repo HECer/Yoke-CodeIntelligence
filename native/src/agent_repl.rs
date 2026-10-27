@@ -2127,7 +2127,7 @@ fn semantic_from_symbol(
     } else {
         session
             .active_engine_at(deadline)?
-            .invoke("ci_find", args)?
+            .invoke_at("ci_find", args, deadline)?
     };
     let value = unwrap_native(value)?;
     ensure!(

@@ -1,5 +1,19 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Nested Session query deadline admission corrected; execution pending (2026-10-27)
+
+Session source-query routes now intersect their parsed request timeout with the
+actual inherited host Deadline. A serialized remaining budget below 10 ms can
+no longer select the ordinary 120-second Engine default in place of that host
+ceiling; captured/live cancellation flags remain attached. Public Engine timeout
+defaults and document-apply provenance paths retain their existing behavior.
+Three deterministic unit regressions are authored, not executed. They require no
+provider process and retain a thread-local, one-shot test hook with RAII cleanup.
+
+This is a separate admission defect found while reviewing the Windows provider
+query timeout. It does not establish that timeout's cause. The original
+source-binding assertions and 20-second request deadline remain unchanged.
+
 ## Selected source encodings and browser harness integrated; runtime acceptance open (2026-10-27)
 
 Strict selected UTF-16/LE/BE and Latin1 support now retains original source bytes,
