@@ -42,6 +42,9 @@ pub mod graphify_adapter;
 pub mod host_config;
 pub mod host_credentials;
 pub mod host_install;
+#[cfg(test)]
+#[path = "engine_invoke_deadline_tests.rs"]
+mod invoke_deadline_tests;
 pub mod json;
 pub mod knowledge;
 pub mod languages;
@@ -323,7 +326,11 @@ impl Engine {
         let mut ready = Vec::new();
         let mut pending = Vec::new();
         let mut encoded_parsed = 0;
-        let encoding = source_encoding::selected(&self.store, &snapshot)?;
+        // Owned construction already supplies its exact acquisition epoch. A
+        // historical-reader lookup would require this new manifest to have
+        // been published before its graph can be built.
+        let encoding =
+            capture::options_for_snapshot_at(&self.store, &snapshot, epoch)?.source_encoding;
         for file in &snapshot.files {
             deadline.check()?;
             let key = if let Some(policy) = encoding {
@@ -373,7 +380,9 @@ impl Engine {
         ready.sort_by(|a, b| a.entities[0].path.cmp(&b.entities[0].path));
         let mut graph = analysis::assemble_at(epoch, &snapshot, ready, deadline)?;
         source_encoding::qualify_graph(&mut graph, encoding);
-        self.store.publish(&snapshot, &graph)?;
+        // Reuse the checked construction policy without a second published-
+        // manifest lookup through the current reader epoch.
+        self.store.publish_encoded(&snapshot, &graph, encoding)?;
         deadline.check()?;
         Ok((snapshot, graph, parsed, reused))
     }
@@ -402,7 +411,17 @@ impl Engine {
         Ok((snapshot, graph))
     }
     pub fn invoke(&mut self, tool: &str, args: Value) -> Result<Value> {
-        self.invoke_bound(tool, args, None)
+        self.invoke_bound(tool, args, None, None)
+    }
+    /// Trusted Session/facade route: serialized timeout defaults cannot replace
+    /// the actual inherited host ceiling or its live cancellation flags.
+    pub(crate) fn invoke_at(
+        &mut self,
+        tool: &str,
+        args: Value,
+        deadline: &Deadline,
+    ) -> Result<Value> {
+        self.invoke_bound(tool, args, None, Some(deadline))
     }
     /// Trusted Session route only; a serialized request cannot install this
     /// provenance context or bypass ordinary validation/write admission.
@@ -411,13 +430,14 @@ impl Engine {
         args: Value,
         binding: changes::DocumentBinding,
     ) -> Result<Value> {
-        self.invoke_bound("ci_change_apply", args, Some(binding))
+        self.invoke_bound("ci_change_apply", args, Some(binding), None)
     }
     fn invoke_bound(
         &mut self,
         tool: &str,
         args: Value,
         document: Option<changes::DocumentBinding>,
+        inherited: Option<&Deadline>,
     ) -> Result<Value> {
         let started = Instant::now();
         let deadline = Deadline::new(
@@ -426,6 +446,12 @@ impl Engine {
                 .filter(|n| (10..=600000).contains(n))
                 .unwrap_or(120000),
         );
+        let deadline = match inherited {
+            Some(parent) => deadline.intersection(parent)?,
+            None => deadline,
+        };
+        #[cfg(test)]
+        invoke_deadline_tests::after_deadline();
         let byte_max = args["maxBytes"]
             .as_u64()
             .filter(|n| (1024..=4_000_000).contains(n))

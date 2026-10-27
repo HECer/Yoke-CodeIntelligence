@@ -1,5 +1,36 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Legacy native construction regression located; correction pending execution (2026-10-27)
+
+The full guarded Windows library consumer at source `bcfcb250` reports 751
+passes, 38 failures and seven original ignores, with natural root/tree exit.
+All four new Deadline regressions and the original source-binding test pass.
+The failures share prepublication construction of genuine epoch-8 snapshots:
+codec lookup used the current reader, which correctly required a published
+historical manifest before the new manifest had been published.
+
+Owned analysis now resolves its existing scope proof at the caller-supplied
+construction epoch and passes that checked codec to publication. Historical
+reader checks remain intact. The original directory, graph/archive and retrieval
+assertions are unchanged; a fresh full consumer must verify the correction.
+
+## Nested Session query deadline admission corrected (2026-10-27)
+
+Session source-query routes now intersect their parsed request timeout with the
+actual inherited host Deadline instead of recreating a sampled duration without
+its cancellation flags. The original ceiling and captured/live cancellation
+remain attached throughout the nested operation. Public Engine timeout defaults,
+numeric-range validation and document-apply provenance retain existing behavior.
+Four deterministic unit regressions pass in the failed full `bcfcb250` run. They require no
+provider process and retain a thread-local, one-shot test hook with RAII cleanup.
+
+This is a separate admission defect found while reviewing the Windows provider
+query timeout. It does not establish that timeout's cause. The original
+source-binding assertions and 20-second request deadline remain unchanged.
+Values below 10 ms were already rejected by argument validation; they did not
+establish a successful 120-second provider operation. The regression control
+retains that refusal and tests cancellation with valid request timeouts.
+
 ## Selected source encodings and browser harness integrated; runtime acceptance open (2026-10-27)
 
 Strict selected UTF-16/LE/BE and Latin1 support now retains original source bytes,
