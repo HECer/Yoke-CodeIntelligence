@@ -325,7 +325,11 @@ impl Engine {
         let mut ready = Vec::new();
         let mut pending = Vec::new();
         let mut encoded_parsed = 0;
-        let encoding = source_encoding::selected(&self.store, &snapshot)?;
+        // Owned construction already supplies its exact acquisition epoch. A
+        // historical-reader lookup would require this new manifest to have
+        // been published before its graph can be built.
+        let encoding =
+            capture::options_for_snapshot_at(&self.store, &snapshot, epoch)?.source_encoding;
         for file in &snapshot.files {
             deadline.check()?;
             let key = if let Some(policy) = encoding {
@@ -375,7 +379,9 @@ impl Engine {
         ready.sort_by(|a, b| a.entities[0].path.cmp(&b.entities[0].path));
         let mut graph = analysis::assemble_at(epoch, &snapshot, ready, deadline)?;
         source_encoding::qualify_graph(&mut graph, encoding);
-        self.store.publish(&snapshot, &graph)?;
+        // Reuse the checked construction policy without a second published-
+        // manifest lookup through the current reader epoch.
+        self.store.publish_encoded(&snapshot, &graph, encoding)?;
         deadline.check()?;
         Ok((snapshot, graph, parsed, reused))
     }
