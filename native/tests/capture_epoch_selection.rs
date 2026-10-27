@@ -96,6 +96,10 @@ fn selected_v9_capture_has_distinct_proofs_and_replays_through_default_readers()
             };
             let proof: Value = engine.store.get_record(kind, &new.id).unwrap();
             assert_eq!(proof["analyzer"], "yoke-tree-sitter-9");
+            assert!(
+                capture::options_for_snapshot(&engine.store, &new).is_err(),
+                "Historical reading still requires the published immutable manifest"
+            );
         }
         let expected = publish(&mut engine, AnalyzerEpoch::V9, &new);
         assert_eq!(

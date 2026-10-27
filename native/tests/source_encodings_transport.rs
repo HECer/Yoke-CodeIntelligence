@@ -196,8 +196,8 @@ fn actual_native_stdio_read_plan_and_unknown_codec_refusal_keep_raw_source_immut
         ],
         b"",
     );
-    let approval: Value = e.store.get_record("approval", &p.id).unwrap();
-    assert_eq!(approval["planId"], p.id);
+    let approval: changes::Approval = e.store.get_record("approval", &p.id).unwrap();
+    assert_eq!(approval.plan_id, p.id);
     assert_eq!(
         tool(messages.iter().find(|m| m["id"] == 4).unwrap())["status"],
         "error"

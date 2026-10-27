@@ -1990,6 +1990,26 @@ pub(crate) fn stage_directory_move_at(
     Ok(StagedSemantic { value, edits })
 }
 #[allow(clippy::too_many_arguments)]
+fn check_semantic_manifests(
+    engine: &Engine,
+    snapshot: &Snapshot,
+    graph: &Graph,
+    deadline: &Deadline,
+) -> Result<()> {
+    engine.store.set_deadline(deadline)?;
+    deadline.check()?;
+    ensure!(
+        snapshot.workspace_id == engine.store.workspace_id
+            && identity(&engine.store.snapshot(&snapshot.id)?) == identity(snapshot),
+        "Semantic source manifest mismatch"
+    );
+    ensure!(
+        graph.snapshot_id == snapshot.id
+            && identity(&engine.store.graph(&snapshot.id)?) == identity(graph),
+        "Semantic graph manifest mismatch"
+    );
+    deadline.check()
+}
 fn run_at_internal(
     engine: &mut Engine,
     host: (&Server, Option<&HostConfiguration>),
@@ -2001,6 +2021,7 @@ fn run_at_internal(
     directory: Option<&changes::SelectedDirectoryMove>,
     deadline: &Deadline,
 ) -> Result<Value> {
+    check_semantic_manifests(engine, snapshot, graph, deadline)?;
     let selected = engine.selected_provider(request.path)?;
     let host = selected
         .as_ref()
@@ -2838,6 +2859,7 @@ fn run_at_unprofiled(
     deadline: &Deadline,
 ) -> Result<Value> {
     let (server, configuration) = host;
+    check_semantic_manifests(engine, snapshot, graph, deadline)?;
     let encoding = crate::source_encoding::selected(&engine.store, snapshot)?;
     ensure!(
         encoding.is_none()
@@ -2857,19 +2879,6 @@ fn run_at_unprofiled(
         directory.record().validate(snapshot, deadline)?;
         directory.record().check_before(&engine.root, deadline)?;
     }
-    engine.store.set_deadline(deadline)?;
-    deadline.check()?;
-    ensure!(
-        snapshot.workspace_id == engine.store.workspace_id
-            && identity(&engine.store.snapshot(&snapshot.id)?) == identity(snapshot),
-        "Semantic source manifest mismatch"
-    );
-    ensure!(
-        graph.snapshot_id == snapshot.id
-            && identity(&engine.store.graph(&snapshot.id)?) == identity(graph),
-        "Semantic graph manifest mismatch"
-    );
-    deadline.check()?;
     let SemanticRequest {
         path,
         offset,

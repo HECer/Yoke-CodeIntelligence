@@ -406,7 +406,7 @@ pub(crate) fn publication_policy(
     store.check_deadline()?;
     let receipt: bool = store.db.query_row("SELECT EXISTS(SELECT 1 FROM records WHERE id=?1 AND kind IN ('native_capture_options_v1','native_capture_scope_ignored_v1','native_capture_scope_derived_v1'))",[&snapshot.id],|r|r.get(0))?;
     if receipt {
-        selected(store, snapshot)
+        Ok(crate::capture::options_for_publication(store, snapshot)?.source_encoding)
     } else {
         Ok(None)
     }

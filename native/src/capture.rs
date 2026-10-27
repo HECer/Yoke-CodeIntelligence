@@ -1065,6 +1065,37 @@ mod epoch_migration_tests {
 pub fn options_for_snapshot(store: &Store, snapshot: &Snapshot) -> Result<CaptureOptions> {
     options_chain(store, snapshot, 0)
 }
+/// Publication constructs a new disk manifest; replay reads an existing one.
+/// A typed capture receipt may select its own reader only for that first
+/// publication, with all tuple, options, scope and member checks still applied.
+pub(crate) fn options_for_publication(
+    store: &Store,
+    snapshot: &Snapshot,
+) -> Result<CaptureOptions> {
+    store.check_deadline()?;
+    let published: bool = store.db.query_row(
+        "SELECT EXISTS(SELECT 1 FROM snapshots WHERE id=?1)",
+        [&snapshot.id],
+        |row| row.get(0),
+    )?;
+    if !published && snapshot.kind == "disk" {
+        let analyzer = if record_exists(store, IGNORED_RECORD_KIND, &snapshot.id)? {
+            Some(ignored::read(store, &snapshot.id)?.analyzer)
+        } else if record_exists(store, OPTIONS_RECORD_KIND, &snapshot.id)? {
+            Some(
+                store
+                    .get_record::<CaptureOptionsRecord>(OPTIONS_RECORD_KIND, &snapshot.id)?
+                    .analyzer,
+            )
+        } else {
+            None
+        };
+        if let Some(analyzer) = analyzer {
+            return Ok(capture_scope_at(store, snapshot, 0, &analyzer)?.0);
+        }
+    }
+    options_for_snapshot(store, snapshot)
+}
 pub(crate) fn options_for_snapshot_at(
     store: &Store,
     snapshot: &Snapshot,

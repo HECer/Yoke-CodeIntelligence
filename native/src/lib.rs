@@ -153,6 +153,11 @@ pub struct Engine {
     pub capture_epoch: analysis::AnalyzerEpoch,
     pub server_configurations: BTreeMap<String, lsp::HostConfiguration>,
 }
+enum ConstructionEncoding {
+    CaptureProof,
+    LegacyOverlay,
+}
+
 impl Engine {
     /// Bind already selected host data for direct CLI/library approval paths.
     /// This grants no source scope, writes, provider or execution authority.
@@ -251,6 +256,7 @@ impl Engine {
             snapshot,
             deadline,
             bounded_saved_graph,
+            ConstructionEncoding::CaptureProof,
         )?;
         self.store.check_deadline()?;
         self.store.db.execute("INSERT INTO meta(key,value) VALUES(?1,?2) ON CONFLICT(key) DO UPDATE SET value=excluded.value", rusqlite::params![freshness::BASELINE_KEY, result.0.id])?;
@@ -294,7 +300,41 @@ impl Engine {
         snapshot: Snapshot,
         deadline: &Deadline,
     ) -> Result<(Snapshot, Graph, usize, usize)> {
-        self.analyze_snapshot_with_graph_policy(epoch, snapshot, deadline, false)
+        self.analyze_snapshot_with_graph_policy(
+            epoch,
+            snapshot,
+            deadline,
+            false,
+            ConstructionEncoding::CaptureProof,
+        )
+    }
+    /// The editor has checked every buffer and host path before constructing
+    /// this overlay. Its immutable receipt is deliberately published afterward.
+    pub(crate) fn analyze_legacy_overlay_at(
+        &mut self,
+        epoch: analysis::AnalyzerEpoch,
+        snapshot: Snapshot,
+        base: &Snapshot,
+        deadline: &Deadline,
+    ) -> Result<(Snapshot, Graph, usize, usize)> {
+        self.store.set_deadline(deadline)?;
+        ensure!(
+            snapshot.kind == "overlay"
+                && base.kind == "disk"
+                && snapshot.workspace_id == base.workspace_id
+                && snapshot.omissions == base.omissions
+                && snapshot.capture_consistency == "overlay-from-stable-disk-and-immutable-buffers"
+                && identity(&self.store.snapshot(&base.id)?) == identity(base),
+            "Owned overlay construction requires its exact published disk base"
+        );
+        source_encoding::require_legacy(&self.store, base, "UTF-8 editor overlay buffers")?;
+        self.analyze_snapshot_with_graph_policy(
+            epoch,
+            snapshot,
+            deadline,
+            false,
+            ConstructionEncoding::LegacyOverlay,
+        )
     }
     fn analyze_snapshot_with_graph_policy(
         &mut self,
@@ -302,6 +342,7 @@ impl Engine {
         snapshot: Snapshot,
         deadline: &Deadline,
         bounded_saved_graph: bool,
+        construction_encoding: ConstructionEncoding,
     ) -> Result<(Snapshot, Graph, usize, usize)> {
         self.store.set_deadline(deadline)?;
         ensure!(
@@ -328,8 +369,12 @@ impl Engine {
         // Owned construction already supplies its exact acquisition epoch. A
         // historical-reader lookup would require this new manifest to have
         // been published before its graph can be built.
-        let encoding =
-            capture::options_for_snapshot_at(&self.store, &snapshot, epoch)?.source_encoding;
+        let encoding = match construction_encoding {
+            ConstructionEncoding::CaptureProof => {
+                capture::options_for_snapshot_at(&self.store, &snapshot, epoch)?.source_encoding
+            }
+            ConstructionEncoding::LegacyOverlay => None,
+        };
         for file in &snapshot.files {
             deadline.check()?;
             let key = if let Some(policy) = encoding {

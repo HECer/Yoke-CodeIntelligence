@@ -1,5 +1,36 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Owned overlay/publication admission corrected after platform CI (2026-10-27)
+
+At published `b55064b9`, actual platform evidence identifies two construction
+cycles: editor overlays request their receipt before the existing publication
+step creates it, and fresh configured V9 publication uses the active V8 reader
+before the new manifest exists. A private editor route now requires its exact
+published legacy disk base; first disk publication validates the typed producing
+receipt through the existing complete scope checker. Public historical readers,
+overlay receipt ordering and all original scope/refusal assertions remain intact.
+LSP admission checks immutable source/graph bindings before codec/profile lookup.
+The new historical-read assertion still requires refusal before publication.
+
+Two codec fixtures now use a portable NUL-content filename and the existing typed
+snake-case approval schema. Production path protection and serialization remain.
+These corrections pass scoped formatting/diff checks; their new runtime
+qualification remains pending. The separate original 3-second DAP timeout is
+unattributed and unchanged; macOS strict address-space capability remains open.
+
+The prior-head Node CI succeeds on Ubuntu/Windows/macOS with Node 22.16.0 and 24
+for both PR layers, including typecheck, tests, smoke and packaging dry-runs.
+Both inspected Windows-22 logs report 267 passes, two skips and zero failures.
+The exact-source Ubuntu library passes 490 tests, six original ignores and zero
+failures. Full native acceptance still refuses its integration failures.
+[Indexed platform evidence and limits](validation/integration-2026-10-27/b550-regression-audit/README.md).
+
+An additional 1,943 individually checked Cargo cache files were evicted without
+payload reads; their prior reported allocation totals 1,221,591,040 bytes. Sources,
+selected images, PDBs and retained receipts remain. This does not demonstrate
+12 GB reclaimed. The subsequent local library retry lost its process handle
+during interruption and has no final lifecycle receipt; it is not acceptance.
+
 ## Legacy native construction corrected; full consumer interrupted by disk reserve (2026-10-27)
 
 The full guarded Windows library consumer at source `bcfcb250` reports 751
@@ -51,8 +82,10 @@ Strict selected UTF-16/LE/BE and Latin1 support now retains original source byte
 hashes and ranges through decoded capture/index/read/search, reviewed encoded
 changes and private LSP navigation copies. Parent review corrects symbol-body
 decoding and rejects unsupported UTF-8 proof consumers before reinterpretation.
-The 24 authored codec tests have not executed. Guarded Windows all-target Clippy
-passes at `ceb23aa9`; its 759 artifact observations are metadata only.
+At `b55064b9`, the codec integration targets execute with 14/1 core and 4/1
+transport pass/fail counts; the two fixture defects are corrected above and await
+fresh execution. Guarded Windows all-target Clippy passes at `ceb23aa9`; its 759
+artifact observations are metadata only and retain that source identity.
 
 The separate real Edge/CDP history harness preserves the original three-variant
 gate, permissions, deadlines, resource caps and ownership proofs. Fifteen focused

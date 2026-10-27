@@ -1,0 +1,312 @@
+{
+  "schema": 1,
+  "sourceHead": "b55064b9f1df8c2fa751d5fbf733428d8bad7293",
+  "checkout": "1794d70f495cd2510499794998c88b9ccfce2605",
+  "artifacts": [
+    {
+      "artifact": {
+        "id": 12738095393,
+        "name": "native-shard-macos-latest-5",
+        "archiveBytes": 105772,
+        "archiveSha256": "a1107511d897c03ee1122cee7be0af0cec5fd01d7088a57ebf85f28acdd6536f"
+      },
+      "groups": 47,
+      "verifiedLogRecords": 94,
+      "failedGroups": [
+        "yoke-code-intelligence:test:session_config_templates:test",
+        "yoke-code-intelligence:test:session_prompt_runtime:test"
+      ],
+      "sourceMapSha256": "3752bae6613bb44cd4be4fadc473b7e418907903c4ca6481d2cde6481865eed1"
+    },
+    {
+      "artifact": {
+        "id": 12736655965,
+        "name": "native-shard-windows-latest-7",
+        "archiveBytes": 105538,
+        "archiveSha256": "891ff70f5380aa7a54691f9956d0760b984e10506dbfbfd3c07a16487ab9ad79"
+      },
+      "groups": 48,
+      "verifiedLogRecords": 96,
+      "failedGroups": [],
+      "sourceMapSha256": "9806564911062f46faf629c2f4879c6f5d168b99a13296e6ac6251dd99da3d5a"
+    },
+    {
+      "artifact": {
+        "id": 12735832534,
+        "name": "native-shard-ubuntu-latest-0",
+        "archiveBytes": 101517,
+        "archiveSha256": "2c498648771088262923646315aafe766c780d671dd27a28660c858f8b423aa0"
+      },
+      "groups": 43,
+      "verifiedLogRecords": 86,
+      "failedGroups": [
+        "yoke-code-intelligence:test:capture_epoch_selection:test",
+        "yoke-code-intelligence:test:ignored_capture:test",
+        "yoke-code-intelligence:test:source_encodings_transport:test"
+      ],
+      "sourceMapSha256": "3752bae6613bb44cd4be4fadc473b7e418907903c4ca6481d2cde6481865eed1"
+    },
+    {
+      "artifact": {
+        "id": 12735463287,
+        "name": "native-shard-ubuntu-latest-1",
+        "archiveBytes": 107451,
+        "archiveSha256": "0f1aa418e2a1dc3b4fea7757b64b7fd31b1ab2da3fedd8e8acda093641379dd1"
+      },
+      "groups": 46,
+      "verifiedLogRecords": 92,
+      "failedGroups": [
+        "yoke-code-intelligence:test:editor:test",
+        "yoke-code-intelligence:test:editor_http:test",
+        "yoke-code-intelligence:test:epoch_producers:test"
+      ],
+      "sourceMapSha256": "3752bae6613bb44cd4be4fadc473b7e418907903c4ca6481d2cde6481865eed1"
+    },
+    {
+      "artifact": {
+        "id": 12735380207,
+        "name": "native-shard-ubuntu-latest-6",
+        "archiveBytes": 108028,
+        "archiveSha256": "5b643b02e256ebdadb923fb005ebceb0a5e49896756523d1de6d1077ab906245"
+      },
+      "groups": 47,
+      "verifiedLogRecords": 94,
+      "failedGroups": [
+        "yoke-code-intelligence:test:git_conflicts:test",
+        "yoke-code-intelligence:test:read_only_dependencies:test",
+        "yoke-code-intelligence:test:source_encodings:test"
+      ],
+      "sourceMapSha256": "3752bae6613bb44cd4be4fadc473b7e418907903c4ca6481d2cde6481865eed1"
+    },
+    {
+      "artifact": {
+        "id": 12735259241,
+        "name": "native-shard-ubuntu-latest-5",
+        "archiveBytes": 107400,
+        "archiveSha256": "3f3b10c1f94ef122d61481ae0efbefd2055879ef311a358abb14ad9791ce60c0"
+      },
+      "groups": 47,
+      "verifiedLogRecords": 94,
+      "failedGroups": [
+        "yoke-code-intelligence:test:debug_adapter:test"
+      ],
+      "sourceMapSha256": "3752bae6613bb44cd4be4fadc473b7e418907903c4ca6481d2cde6481865eed1"
+    },
+    {
+      "artifact": {
+        "id": 12735178305,
+        "name": "native-shard-windows-latest-1",
+        "archiveBytes": 107615,
+        "archiveSha256": "f66bc6ac8e1d993ab160f5275c94730aaee72d70ae2c34b3d240b0566b91e74a"
+      },
+      "groups": 45,
+      "verifiedLogRecords": 90,
+      "failedGroups": [
+        "yoke-code-intelligence:test:editor:test"
+      ],
+      "sourceMapSha256": "9806564911062f46faf629c2f4879c6f5d168b99a13296e6ac6251dd99da3d5a"
+    },
+    {
+      "artifact": {
+        "id": 12734999956,
+        "name": "native-shard-windows-latest-2",
+        "archiveBytes": 106207,
+        "archiveSha256": "0172c97fa81caa6500d9a0f949376af68dc66e1302bf6f97cd627bfe2e0d21ba"
+      },
+      "groups": 46,
+      "verifiedLogRecords": 92,
+      "failedGroups": [
+        "yoke-code-intelligence:test:ignored_directory_identity:test"
+      ],
+      "sourceMapSha256": "9806564911062f46faf629c2f4879c6f5d168b99a13296e6ac6251dd99da3d5a"
+    },
+    {
+      "artifact": {
+        "id": 12734970122,
+        "name": "native-shard-macos-latest-3",
+        "archiveBytes": 107733,
+        "archiveSha256": "c56c423e13633642e1a63e44978d66f2cb27272c83b9b35faed5d87b9e228d7f"
+      },
+      "groups": 47,
+      "verifiedLogRecords": 94,
+      "failedGroups": [
+        "yoke-code-intelligence:test:federation:test",
+        "yoke-code-intelligence:test:lsp:test",
+        "yoke-code-intelligence:test:mixed_meaning_claims:test",
+        "yoke-code-intelligence:test:source_acquisition_cli:test"
+      ],
+      "sourceMapSha256": "3752bae6613bb44cd4be4fadc473b7e418907903c4ca6481d2cde6481865eed1"
+    },
+    {
+      "artifact": {
+        "id": 12734968911,
+        "name": "native-shard-windows-latest-6",
+        "archiveBytes": 108146,
+        "archiveSha256": "28eeec90472103c4bda8e43f4ea8e5f87dd0a954b62d0f097a369d6fcb81dbf7"
+      },
+      "groups": 48,
+      "verifiedLogRecords": 96,
+      "failedGroups": [
+        "yoke-code-intelligence:test:capture_epoch_selection:test",
+        "yoke-code-intelligence:test:git_conflicts:test",
+        "yoke-code-intelligence:test:source_encodings:test"
+      ],
+      "sourceMapSha256": "9806564911062f46faf629c2f4879c6f5d168b99a13296e6ac6251dd99da3d5a"
+    },
+    {
+      "artifact": {
+        "id": 12734944952,
+        "name": "native-shard-macos-latest-6",
+        "archiveBytes": 106274,
+        "archiveSha256": "43134b7741191acb27b5e9f1c0531dddc9aba8ec69b67846a05bb77667aeba51"
+      },
+      "groups": 47,
+      "verifiedLogRecords": 94,
+      "failedGroups": [
+        "yoke-code-intelligence:test:git_conflicts:test",
+        "yoke-code-intelligence:test:mixed_meaning_queries:test",
+        "yoke-code-intelligence:test:read_only_dependencies:test",
+        "yoke-code-intelligence:test:source_encodings:test"
+      ],
+      "sourceMapSha256": "3752bae6613bb44cd4be4fadc473b7e418907903c4ca6481d2cde6481865eed1"
+    },
+    {
+      "artifact": {
+        "id": 12734914129,
+        "name": "native-shard-ubuntu-latest-3",
+        "archiveBytes": 109178,
+        "archiveSha256": "eb470e74f2400884a5e785d8fd73dce3b432d553412cd4bbbfdc9d49a810cbb4"
+      },
+      "groups": 47,
+      "verifiedLogRecords": 94,
+      "failedGroups": [
+        "yoke-code-intelligence:test:federation:test",
+        "yoke-code-intelligence:test:lsp:test"
+      ],
+      "sourceMapSha256": "3752bae6613bb44cd4be4fadc473b7e418907903c4ca6481d2cde6481865eed1"
+    },
+    {
+      "artifact": {
+        "id": 12734842353,
+        "name": "native-shard-windows-latest-5",
+        "archiveBytes": 106696,
+        "archiveSha256": "dba179475f40d071e72e0aa11845db589ace484c7c43789a92467f60cb9b44ef"
+      },
+      "groups": 47,
+      "verifiedLogRecords": 94,
+      "failedGroups": [
+        "yoke-code-intelligence:test:capture_policy:test",
+        "yoke-code-intelligence:test:epoch_producers:test"
+      ],
+      "sourceMapSha256": "9806564911062f46faf629c2f4879c6f5d168b99a13296e6ac6251dd99da3d5a"
+    },
+    {
+      "artifact": {
+        "id": 12734684849,
+        "name": "native-shard-ubuntu-latest-7",
+        "archiveBytes": 108466,
+        "archiveSha256": "ddca4954e59c48389624acdd21c5f222c01beb4d2fd596b077a51bd41852db53"
+      },
+      "groups": 48,
+      "verifiedLogRecords": 96,
+      "failedGroups": [
+        "yoke-code-intelligence:test:analyzer_epochs:test"
+      ],
+      "sourceMapSha256": "3752bae6613bb44cd4be4fadc473b7e418907903c4ca6481d2cde6481865eed1"
+    },
+    {
+      "artifact": {
+        "id": 12734678508,
+        "name": "native-shard-ubuntu-latest-4",
+        "archiveBytes": 122133,
+        "archiveSha256": "31bb5bfbaa2779c391472ba0389d2871f723251cdde749fa06852307fd760e75"
+      },
+      "groups": 47,
+      "verifiedLogRecords": 94,
+      "failedGroups": [
+        "yoke-code-intelligence:test:capture_policy:test"
+      ],
+      "sourceMapSha256": "3752bae6613bb44cd4be4fadc473b7e418907903c4ca6481d2cde6481865eed1"
+    },
+    {
+      "artifact": {
+        "id": 12734253260,
+        "name": "native-shard-macos-latest-0",
+        "archiveBytes": 100124,
+        "archiveSha256": "103ee28098192e059debfb83d88652408ae583f5e4300b45e3eb35509a645b40"
+      },
+      "groups": 43,
+      "verifiedLogRecords": 86,
+      "failedGroups": [
+        "yoke-code-intelligence:test:capture_epoch_selection:test",
+        "yoke-code-intelligence:test:ignored_capture:test",
+        "yoke-code-intelligence:test:session_config_prompt_catalogs:test",
+        "yoke-code-intelligence:test:source_encodings_transport:test"
+      ],
+      "sourceMapSha256": "3752bae6613bb44cd4be4fadc473b7e418907903c4ca6481d2cde6481865eed1"
+    },
+    {
+      "artifact": {
+        "id": 12734207908,
+        "name": "native-shard-macos-latest-1",
+        "archiveBytes": 105618,
+        "archiveSha256": "3613fb2b4e5d5e82ff449a86d3247f13be510cb85b41b775bf908014e3be9a8f"
+      },
+      "groups": 46,
+      "verifiedLogRecords": 92,
+      "failedGroups": [
+        "yoke-code-intelligence:test:editor:test",
+        "yoke-code-intelligence:test:editor_http:test",
+        "yoke-code-intelligence:test:epoch_producers:test",
+        "yoke-code-intelligence:test:session_prompt_memory:test"
+      ],
+      "sourceMapSha256": "3752bae6613bb44cd4be4fadc473b7e418907903c4ca6481d2cde6481865eed1"
+    },
+    {
+      "artifact": {
+        "id": 12733599868,
+        "name": "native-shard-windows-latest-4",
+        "archiveBytes": 127531,
+        "archiveSha256": "fd6a9b31e958833960a2131c676f2d6db2cc56657ae45f9bba7c5af8e889ea84"
+      },
+      "groups": 47,
+      "verifiedLogRecords": 94,
+      "failedGroups": [
+        "yoke-code-intelligence:test:analyzer_epochs:test",
+        "yoke-code-intelligence:test:read_only_dependencies:test"
+      ],
+      "sourceMapSha256": "9806564911062f46faf629c2f4879c6f5d168b99a13296e6ac6251dd99da3d5a"
+    },
+    {
+      "artifact": {
+        "id": 12733526667,
+        "name": "native-shard-ubuntu-latest-2",
+        "archiveBytes": 107956,
+        "archiveSha256": "031637975b4a830f6f33ecf81cac3dcbfac8e309daeb18bd607ef0a9baadf5ec"
+      },
+      "groups": 46,
+      "verifiedLogRecords": 92,
+      "failedGroups": [],
+      "sourceMapSha256": "3752bae6613bb44cd4be4fadc473b7e418907903c4ca6481d2cde6481865eed1"
+    },
+    {
+      "artifact": {
+        "id": 12732844920,
+        "name": "native-shard-windows-latest-0",
+        "archiveBytes": 99559,
+        "archiveSha256": "b703c20e0a3ff53388c5f99da998128c89afd67e149067a13de1c5a65add19df"
+      },
+      "groups": 44,
+      "verifiedLogRecords": 88,
+      "failedGroups": [
+        "yoke-code-intelligence:test:editor_http:test",
+        "yoke-code-intelligence:test:ignored_capture:test"
+      ],
+      "sourceMapSha256": "9806564911062f46faf629c2f4879c6f5d168b99a13296e6ac6251dd99da3d5a"
+    }
+  ],
+  "verifiedLogRecords": 1852,
+  "imagePayloadsIncluded": false,
+  "rawArchivesContainOnlyText": true,
+  "nativeAcceptance": false
+}

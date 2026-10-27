@@ -1,0 +1,355 @@
+{
+  "schema": 1,
+  "runs": [
+    {
+      "head": "b55064b9f1df8c2fa751d5fbf733428d8bad7293",
+      "run": 40499831285,
+      "jobs": [
+        {
+          "id": 122174434250,
+          "name": "native (ubuntu-latest, 22.16.0)",
+          "conclusion": "success",
+          "requiredSteps": [
+            {
+              "name": "Run npm run typecheck",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm test",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/configured-smoke.mjs",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/publish-github.mjs --dry-run",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm pack --dry-run",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 122174434512,
+          "name": "native (windows-latest, 22.16.0)",
+          "conclusion": "success",
+          "requiredSteps": [
+            {
+              "name": "Run npm run typecheck",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm test",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/configured-smoke.mjs",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/publish-github.mjs --dry-run",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm pack --dry-run",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 122174434617,
+          "name": "native (ubuntu-latest, 24)",
+          "conclusion": "success",
+          "requiredSteps": [
+            {
+              "name": "Run npm run typecheck",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm test",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/configured-smoke.mjs",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/publish-github.mjs --dry-run",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm pack --dry-run",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 122174434703,
+          "name": "native (macos-latest, 22.16.0)",
+          "conclusion": "success",
+          "requiredSteps": [
+            {
+              "name": "Run npm run typecheck",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm test",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/configured-smoke.mjs",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/publish-github.mjs --dry-run",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm pack --dry-run",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 122174434705,
+          "name": "native (windows-latest, 24)",
+          "conclusion": "success",
+          "requiredSteps": [
+            {
+              "name": "Run npm run typecheck",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm test",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/configured-smoke.mjs",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/publish-github.mjs --dry-run",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm pack --dry-run",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 122174434721,
+          "name": "native (macos-latest, 24)",
+          "conclusion": "success",
+          "requiredSteps": [
+            {
+              "name": "Run npm run typecheck",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm test",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/configured-smoke.mjs",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/publish-github.mjs --dry-run",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm pack --dry-run",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ],
+      "windows22Observed": {
+        "tests": 269,
+        "passed": 267,
+        "failed": 0,
+        "skipped": 2
+      },
+      "scope": "GitHub job metadata and two Windows22 raw logs checked; no native Rust qualification inferred"
+    },
+    {
+      "head": "8d35f62082c34fc377f5b4116358d54dff44e0c8",
+      "run": 40499822446,
+      "jobs": [
+        {
+          "id": 122174404830,
+          "name": "native (ubuntu-latest, 24)",
+          "conclusion": "success",
+          "requiredSteps": [
+            {
+              "name": "Run npm run typecheck",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm test",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/configured-smoke.mjs",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/publish-github.mjs --dry-run",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm pack --dry-run",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 122174405077,
+          "name": "native (macos-latest, 24)",
+          "conclusion": "success",
+          "requiredSteps": [
+            {
+              "name": "Run npm run typecheck",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm test",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/configured-smoke.mjs",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/publish-github.mjs --dry-run",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm pack --dry-run",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 122174405078,
+          "name": "native (windows-latest, 22.16.0)",
+          "conclusion": "success",
+          "requiredSteps": [
+            {
+              "name": "Run npm run typecheck",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm test",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/configured-smoke.mjs",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/publish-github.mjs --dry-run",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm pack --dry-run",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 122174405270,
+          "name": "native (windows-latest, 24)",
+          "conclusion": "success",
+          "requiredSteps": [
+            {
+              "name": "Run npm run typecheck",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm test",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/configured-smoke.mjs",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/publish-github.mjs --dry-run",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm pack --dry-run",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 122174405282,
+          "name": "native (ubuntu-latest, 22.16.0)",
+          "conclusion": "success",
+          "requiredSteps": [
+            {
+              "name": "Run npm run typecheck",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm test",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/configured-smoke.mjs",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/publish-github.mjs --dry-run",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm pack --dry-run",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 122174405331,
+          "name": "native (macos-latest, 22.16.0)",
+          "conclusion": "success",
+          "requiredSteps": [
+            {
+              "name": "Run npm run typecheck",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm test",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/configured-smoke.mjs",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run node scripts/publish-github.mjs --dry-run",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm pack --dry-run",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ],
+      "windows22Observed": {
+        "tests": 269,
+        "passed": 267,
+        "failed": 0,
+        "skipped": 2
+      },
+      "scope": "GitHub job metadata and two Windows22 raw logs checked; no native Rust qualification inferred"
+    }
+  ]
+}
