@@ -1140,6 +1140,11 @@ pub(crate) fn capture_commit_pending(
         identity(&engine.store.snapshot(&origin.id)?) == identity(origin),
         "Git origin differs from immutable capture"
     );
+    crate::source_encoding::require_legacy(
+        &engine.store,
+        origin,
+        "Git committed-source acquisition proof",
+    )?;
     ensure!(
         oid_valid(commit),
         "Git capture requires an exact commit OID"
@@ -2276,6 +2281,11 @@ pub fn analyze(
         "Invalid Git workflow capacities"
     );
     let (working, working_graph, _, _) = engine.index(deadline)?;
+    crate::source_encoding::require_legacy(
+        &engine.store,
+        &working,
+        "Git workflow committed-source acquisition proof",
+    )?;
     let resolved_base = git.oid(&engine.root, &options.base_ref, deadline)?;
     let head_commit = git.oid(
         &engine.root,

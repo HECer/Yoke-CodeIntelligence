@@ -224,7 +224,18 @@ jobs:
           path: validation/ci-native-coverage.json
           if-no-files-found: warn
       - run: python scripts/run_native_tests.py --controlled-test-runner --locked --test live actual_rust_analyzer -- --ignored
+      - name: Record selected inputs before the existing Windows release build (metadata only)
+        if: runner.os == 'Windows'
+        # A marker failure is enforced by the later browser gate, never by
+        # skipping the original build/history acceptance.
+        continue-on-error: true
+        run: python scripts/host_history_browser.py --mark-build start
       - run: cargo build --workspace --release --locked
+        id: release_build
+      - name: Bind successful Windows release build to unchanged inputs (metadata only)
+        if: runner.os == 'Windows' && steps.release_build.outcome == 'success'
+        continue-on-error: true
+        run: python scripts/host_history_browser.py --mark-build complete
       - uses: actions/upload-artifact@v4
         with:
           name: yoke-${{ matrix.os }}
@@ -243,6 +254,21 @@ jobs:
           name: host-document-history-windows
           path: validation/ci-host-document-history
           if-no-files-found: warn
+      - name: Exercise the real installed Edge DOM on the owning native dashboard
+        id: host_history_browser
+        if: success() && runner.os == 'Windows' && steps.host_history.outcome == 'success' && steps.release_build.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $selectedNode = (Get-Command node.exe -CommandType Application -ErrorAction Stop).Source
+          python scripts/host_history_browser.py --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser
+      - name: Preserve real browser automation and PNGs (human visual review unclaimed)
+        if: always() && runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-document-history-browser-windows
+          path: validation/ci-host-document-history-browser
+          if-no-files-found: error
   native-rust-windows:
     name: native-rust (${{ matrix.os }})
     needs: native-shards-windows

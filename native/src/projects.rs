@@ -55,6 +55,7 @@ pub(crate) fn execute(
     intent: Option<Value>,
     deadline: &Deadline,
 ) -> Result<Value> {
+    crate::source_encoding::require_legacy(store, snapshot, "TypeScript worker raw-source proof")?;
     ensure!(
         spec.trusted,
         "Compiler execution requires explicit host trust"

@@ -60,6 +60,7 @@ struct MapRecord {
 fn scope(store: &Store, s: &Snapshot, d: &Deadline) -> Result<()> {
     d.check()?;
     store.set_deadline(d)?;
+    crate::source_encoding::require_legacy(store, s, "coverage source/line mapping")?;
     ensure!(
         s.workspace_id == store.workspace_id && identity(&store.snapshot(&s.id)?) == identity(s),
         "Snapshot scope differs from immutable store"

@@ -727,6 +727,7 @@ fn read_selected(
             Side::Base => (base_scope, base),
             Side::Head => (head_scope, head),
         };
+        scope.require_legacy_text("Git impact source details")?;
         let member = scope.file(&path)?;
         let text = if let Some(text) = by_hash.get(&member.hash) {
             Arc::clone(text)

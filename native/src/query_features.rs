@@ -277,9 +277,9 @@ fn clip(text: &str, max: usize) -> (&str, bool) {
     (&text[..end], end != text.len())
 }
 
-type SourceCache = BTreeMap<String, (String, String)>;
+type SourceCache = BTreeMap<String, (crate::source_encoding::View, String)>;
 fn source_cache(
-    store: &Store,
+    _store: &Store,
     snapshot: &Snapshot,
     scope: &crate::capture::CapturedSourceScope<'_>,
     filter: &PathFilter,
@@ -288,20 +288,37 @@ fn source_cache(
     let mut cache = BTreeMap::new();
     let mut omitted = Vec::new();
     let mut bytes = 0usize;
+    let mut retained = 0usize;
     for file in &snapshot.files {
         deadline.check()?;
         if !filter.matches_captured(scope, &file.path)? {
             continue;
         }
-        if bytes.saturating_add(file.size) > MAX_READ_BYTES {
+        let worst = if scope.source_encoding().is_some() {
+            file.size.saturating_mul(12).saturating_add(8)
+        } else {
+            file.size.saturating_mul(2)
+        };
+        let decoded_worst = if scope.source_encoding().is_some() {
+            file.size
+                .saturating_mul(2)
+                .min(crate::source_encoding::MAX_TEXT)
+        } else {
+            file.size
+        };
+        if bytes.saturating_add(decoded_worst) > MAX_READ_BYTES
+            || retained.saturating_add(worst) > 128_000_000
+        {
             omitted.push(file.path.clone());
             continue;
         }
-        let (text, hash) = query::source_in_scope(store, scope, &file.path)?;
+        let text = scope.source_view(&file.path)?;
+        let hash = file.hash.clone();
         bytes = bytes
-            .checked_add(text.len())
+            .checked_add(text.text().len())
             .context("Source cache size overflow")?;
         ensure!(bytes <= MAX_READ_BYTES, "Source cache byte budget exceeded");
+        retained += text.retained_bytes();
         cache.insert(file.path.clone(), (text, hash));
     }
     Ok((cache, omitted))
@@ -467,7 +484,7 @@ pub(crate) fn text_find_in_scope(
     text_find_filtered_in_scope(store, snapshot, graph, args, None, scope, deadline)
 }
 fn text_find_filtered_in_scope(
-    store: &Store,
+    _store: &Store,
     snapshot: &Snapshot,
     graph: &Graph,
     args: &Value,
@@ -516,9 +533,11 @@ fn text_find_filtered_in_scope(
         if filter.skip_ignored && scope.ignored_at_capture(path)? {
             continue;
         }
-        let (text, hash) = query::source_in_scope(store, scope, path)?;
-        let line_starts = crate::paths::line_starts(&text);
-        for matched in expression.find_iter(&text) {
+        let view = scope.source_view(path)?;
+        let hash = &file.hash;
+        let text = view.text();
+        let line_starts = crate::paths::line_starts(text);
+        for matched in expression.find_iter(text) {
             deadline.check()?;
             if total == scan_limit {
                 capped = true;
@@ -532,15 +551,18 @@ fn text_find_filtered_in_scope(
                         let (snippet, truncated) = clip(matched.as_str(), 500);
                         (snippet.to_owned(), start, start + snippet.len(), truncated)
                     } else {
-                        context(&text, &line_starts, start, end, before, after)
+                        context(text, &line_starts, start, end, before, after)
                     };
                 let line = line_starts.partition_point(|position| *position <= start);
-                let mut item = json!({"path":path,"contentHash":hash,"startByte":start,"endByte":end,"startLine":line,"text":clip(matched.as_str(), 500).0,"matchedTextTruncated":matched.len()>500,"context":snippet,"contextStartByte":context_start,"contextEndByte":context_end,"contextTruncated":truncated,"occurrenceId":occurrence_id(snapshot,path,&hash,start,end,matched.as_str(),&query_identity),"trust":"source-data"});
+                let raw_start = view.to_raw(start)?;
+                let raw_end = view.to_raw(end)?;
+                let mut item = json!({"path":path,"contentHash":hash,"startByte":raw_start,"endByte":raw_end,"startLine":line,"text":clip(matched.as_str(), 500).0,"matchedTextTruncated":matched.len()>500,"context":snippet,"contextStartByte":view.to_raw(context_start)?,"contextEndByte":view.to_raw(context_end)?,"contextTruncated":truncated,"occurrenceId":occurrence_id(snapshot,path,hash,raw_start,raw_end,matched.as_str(),&query_identity),"trust":"source-data"});
+                view.annotate(&mut item, hash);
                 if args["groupBySymbol"] == true {
                     item["symbol"] = owner(
                         owners.get(path.as_str()).map_or(&[], Vec::as_slice),
-                        start,
-                        end,
+                        raw_start,
+                        raw_end,
                     )
                     .map(serde_json::to_value)
                     .transpose()?
@@ -685,8 +707,7 @@ fn symbols_find_with_roots(
             }
             if let Some((text, _)) = cache.get(&entity.path) {
                 let body = text
-                    .get(entity.start_byte..entity.end_byte)
-                    .context("Symbol body range is invalid")?
+                    .quote(entity.start_byte, entity.end_byte)?
                     .to_lowercase();
                 if !terms.is_empty() && terms.iter().all(|term| body.contains(term)) {
                     selected.insert(entity.id.clone());
@@ -774,13 +795,13 @@ fn symbols_find_with_roots(
         value["namePath"] = json!(name_path(entity, &by_key));
         if args["includeBody"] == true {
             if let Some((text, _)) = cache.get(&entity.path) {
-                let source = text
-                    .get(entity.start_byte..entity.end_byte)
-                    .context("Symbol source range invalid")?;
+                let source = text.quote(entity.start_byte, entity.end_byte)?;
                 let (body, truncated) = clip(source, 16_000);
                 value["body"] = json!(body);
-                value["bodyEndByte"] = json!(entity.start_byte + body.len());
+                value["bodyEndByte"] =
+                    json!(text.to_raw(text.to_decoded(entity.start_byte)? + body.len())?);
                 value["bodyTruncated"] = json!(truncated);
+                text.annotate(&mut value, &file.hash);
             } else {
                 value["body"] = Value::Null;
                 value["bodyTruncated"] = json!(true);
@@ -904,6 +925,15 @@ pub fn bulk_replace(
             );
         }
     }
+    if crate::source_encoding::selected(&engine.store, snapshot)?.is_some() {
+        ensure!(
+            selected_source_bytes
+                .saturating_mul(12)
+                .saturating_add(chosen_paths.len() * 8)
+                <= 128_000_000,
+            "Bulk source encoding mapping capacity exceeded"
+        );
+    }
     let (fresh, _, _, _) = engine.index(deadline)?;
     ensure!(fresh.id == snapshot.id, "Bulk source snapshot is stale");
     let expression = pattern(&args)?;
@@ -918,16 +948,24 @@ pub fn bulk_replace(
         if !sources.contains_key(path) {
             sources.insert(
                 path.to_owned(),
-                query::source(&engine.store, snapshot, path)?,
+                (
+                    query::source_view(&engine.store, snapshot, path)?,
+                    matched["contentHash"]
+                        .as_str()
+                        .context("Occurrence hash missing")?
+                        .to_owned(),
+                ),
             );
         }
-        let (text, hash) = &sources[path];
-        let start = matched["startByte"]
+        let (view, hash) = &sources[path];
+        let text = view.text();
+        let raw_start = matched["startByte"]
             .as_u64()
             .context("Occurrence start missing")? as usize;
-        let end = matched["endByte"]
+        let raw_end = matched["endByte"]
             .as_u64()
             .context("Occurrence end missing")? as usize;
+        let (start, end) = view.decoded_range(raw_start, raw_end)?;
         let captures = expression
             .captures_at(text, start)
             .context("Occurrence no longer matches")?;
@@ -951,7 +989,7 @@ pub fn bulk_replace(
             .checked_add(expanded.len())
             .context("Replacement size overflow")?;
         ensure!(total <= 4_000_000, "Bulk replacement byte budget exceeded");
-        edits.push(json!({"kind":"replace","path":path,"expectedHash":hash,"startByte":start,"endByte":end,"text":expanded}));
+        edits.push(json!({"kind":"replace","path":path,"expectedHash":hash,"startByte":raw_start,"endByte":raw_end,"text":expanded}));
     }
     let plan = changes::prepare(
         &mut engine.store,

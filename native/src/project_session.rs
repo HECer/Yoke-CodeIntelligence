@@ -112,6 +112,8 @@ pub struct HostProfile {
     pub source_exclusions: Option<crate::source_exclusions::HostExclusions>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub source_line_endings: Option<crate::source_line_endings::HostLineEndings>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_encodings: Option<crate::source_encoding::HostEncodings>,
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub primary_read_only: bool,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -155,6 +157,7 @@ impl Default for HostProfile {
             symbol_info_budgets: None,
             source_exclusions: None,
             source_line_endings: None,
+            source_encodings: None,
             primary_read_only: false,
             optional_defaults: None,
             agent_interface: None,
@@ -1125,10 +1128,18 @@ impl Session {
                 host.source_exclusions = None;
             }
         }
-        let host_capture_options = (host.source_exclusions.is_some() || host.git_ignore.is_some())
-            .then(|| engine.capture_options.clone());
+        let host_capture_options = (host.source_exclusions.is_some()
+            || host.git_ignore.is_some()
+            || host.source_encodings.is_some())
+        .then(|| engine.capture_options.clone());
         if let Some(endings) = &host.source_line_endings {
             endings.validate(&host)?;
+        }
+        if let Some(encodings) = &host.source_encodings {
+            encodings.validate(&host)?;
+            if encodings.empty() {
+                host.source_encodings = None;
+            }
         }
         if !crate::session_steering::enabled(&host) {
             modes(&host.modes)?;
@@ -1434,6 +1445,15 @@ impl Session {
             )),
         };
         let host_allow_writes = engine.allow_writes;
+        let fingerprint = if let Some(encodings) = &host.source_encodings {
+            if let Some(codec) = encodings.select("default") {
+                engine.capture_options.source_encoding = codec.policy();
+            }
+            engine.capture_options = engine.capture_options.validated()?;
+            identity(&(fingerprint, crate::source_encoding::VERSION, encodings))
+        } else {
+            fingerprint
+        };
         let fingerprint = if let Some(endings) = &host.source_line_endings {
             identity(&(
                 fingerprint,
@@ -1892,6 +1912,7 @@ impl Session {
             || self.host.primary_read_only
             || !crate::source_exclusions::unselected(&self.host.source_exclusions)
             || self.host.source_line_endings.is_some()
+            || self.host.source_encodings.is_some()
             || self.host.optional_defaults.is_some()
             || self.agent_interface().is_some()
             || self
@@ -2290,6 +2311,15 @@ impl Session {
             if let Some(exclusions) = &self.host.source_exclusions {
                 engine.capture_options.source_exclusions =
                     exclusions.select(name, engine.capture_options.source_exclusions.as_ref())?;
+                engine.capture_options = engine.capture_options.validated()?;
+            }
+            if let Some(codec) = self
+                .host
+                .source_encodings
+                .as_ref()
+                .and_then(|p| p.select(name))
+            {
+                engine.capture_options.source_encoding = codec.policy();
                 engine.capture_options = engine.capture_options.validated()?;
             }
             if let Some(respect) = self
@@ -2695,6 +2725,10 @@ impl Session {
                 if let Some(endings) = &self.host.source_line_endings {
                     value["sourceLineEndings"] = serde_json::to_value(endings)?;
                     value["sourceLineEnding"] = json!(endings.select(&self.state.active_project));
+                }
+                if let Some(encodings) = &self.host.source_encodings {
+                    value["sourceEncodings"] = serde_json::to_value(encodings)?;
+                    value["sourceEncoding"] = json!(encodings.select(&self.state.active_project));
                 }
                 if let Some(project) = &self.host.startup_project {
                     value["startupProject"] = json!(project);

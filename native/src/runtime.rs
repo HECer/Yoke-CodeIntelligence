@@ -153,6 +153,11 @@ impl<'a> Session<'a> {
         spec: &RuntimeSpec,
         deadline: &Deadline,
     ) -> Result<Self> {
+        crate::source_encoding::require_legacy(
+            store,
+            snapshot,
+            "Python runtime source/trace mapping",
+        )?;
         ensure!(
             spec.trust_runtime,
             "Explicit host runtime authority is required"

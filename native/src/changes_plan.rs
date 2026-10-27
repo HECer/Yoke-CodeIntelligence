@@ -39,8 +39,13 @@ pub(super) fn plan_identity(plan: &Plan) -> String {
             plan.created_at,
         ))
     };
-    if let Some(ending) = plan.source_line_ending {
+    let original = if let Some(ending) = plan.source_line_ending {
         identity(&(original, "source-line-ending-v1", ending))
+    } else {
+        original
+    };
+    if let Some(encoding) = plan.source_encoding {
+        identity(&(original, crate::source_encoding::VERSION, encoding))
     } else {
         original
     }
@@ -166,6 +171,15 @@ fn binding(
         INVALID
     );
     let epoch = capture::analyzer_epoch_for_snapshot_with_deadline(store, base, d)?;
+    ensure!(
+        plan.source_encoding == crate::source_encoding::selected(store, base)?
+            && plan.source_encoding == crate::source_encoding::selected(store, result)?
+            && plan.source_encoding
+                == plan
+                    .source_encoding
+                    .and_then(crate::source_encoding::Policy::canonical),
+        INVALID
+    );
     if let Some(directory) = &plan.directory_move {
         directory.validate_result(base, result, d)?;
     }
@@ -255,7 +269,15 @@ fn review(
                 } else {
                     let bytes = scope.read_source(&file.path)?;
                     ensure!(objects[id] == bytes.len(), INVALID);
-                    let text: Arc<str> = Arc::from(String::from_utf8(bytes)?);
+                    let view =
+                        crate::source_encoding::View::decode(bytes, plan.source_encoding, &|| {
+                            d.check()
+                        })?;
+                    ensure!(
+                        !view.text().contains('\0') && !crate::paths::obvious_secret(view.text()),
+                        INVALID
+                    );
+                    let text: Arc<str> = Arc::from(view.into_text());
                     texts.insert(id.clone(), Arc::clone(&text));
                     text
                 };
@@ -265,10 +287,11 @@ fn review(
         if let Some(ending) = plan.source_line_ending {
             ensure!(ending.canonical(pair[1].as_bytes(), d)?, INVALID);
         }
-        let addition = TextDiff::from_lines(pair[0].as_ref(), pair[1].as_ref())
-            .unified_diff()
-            .context_radius(3)
-            .header(
+        if plan.source_encoding.is_some() {
+            crate::source_encoding::append_diff(
+                &mut diff,
+                pair[0].as_ref(),
+                pair[1].as_ref(),
                 if file.before_hash.is_some() {
                     &file.path
                 } else {
@@ -279,13 +302,31 @@ fn review(
                 } else {
                     "/dev/null"
                 },
-            )
-            .to_string();
-        ensure!(
-            addition.len() <= 16_000_000usize.saturating_sub(diff.len()),
-            CAPACITY
-        );
-        diff.push_str(&addition);
+                d,
+            )?;
+        } else {
+            let addition = TextDiff::from_lines(pair[0].as_ref(), pair[1].as_ref())
+                .unified_diff()
+                .context_radius(3)
+                .header(
+                    if file.before_hash.is_some() {
+                        &file.path
+                    } else {
+                        "/dev/null"
+                    },
+                    if file.after_hash.is_some() {
+                        &file.path
+                    } else {
+                        "/dev/null"
+                    },
+                )
+                .to_string();
+            ensure!(
+                addition.len() <= 16_000_000usize.saturating_sub(diff.len()),
+                CAPACITY
+            );
+            diff.push_str(&addition);
+        }
         let folded = file.path.to_ascii_lowercase();
         if folded.contains("test") || folded.contains("spec") {
             warnings.push(format!(

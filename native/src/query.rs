@@ -1,7 +1,6 @@
 use crate::{
     capture::Deadline,
     model::{Entity, Graph, Snapshot},
-    paths::utf8_range,
     store::Store,
 };
 use anyhow::{Result, bail, ensure};
@@ -19,11 +18,22 @@ pub(crate) fn source_in_scope(
     scope: &crate::capture::CapturedSourceScope<'_>,
     path: &str,
 ) -> Result<(String, String)> {
+    ensure!(
+        scope.source_encoding().is_none(),
+        "source_encoding_capability_unavailable: legacy source consumer has no original-byte mapping"
+    );
     let file = scope.file(path)?;
     Ok((
         String::from_utf8(scope.read_source(path)?)?,
         file.hash.clone(),
     ))
+}
+pub fn source_view(
+    store: &Store,
+    snapshot: &Snapshot,
+    path: &str,
+) -> Result<crate::source_encoding::View> {
+    crate::capture::source_scope_policy(store, snapshot)?.source_view(path)
 }
 pub fn read(store: &Store, snapshot: &Snapshot, graph: &Graph, args: &Value) -> Result<Value> {
     let entity = args
@@ -41,7 +51,10 @@ pub fn read(store: &Store, snapshot: &Snapshot, graph: &Graph, args: &Value) -> 
         .map(|e| e.path.as_str())
         .or_else(|| args["path"].as_str())
         .ok_or_else(|| anyhow::anyhow!("Source path or entity required"))?;
-    let (text, hash) = source(store, snapshot, path)?;
+    let scope = crate::capture::source_scope_policy(store, snapshot)?;
+    let hash = &scope.file(path)?.hash;
+    let view = scope.source_view(path)?;
+    let text = view.text();
     let mut start = args["startByte"]
         .as_u64()
         .map(|n| n as usize)
@@ -49,26 +62,26 @@ pub fn read(store: &Store, snapshot: &Snapshot, graph: &Graph, args: &Value) -> 
     let mut end = args["endByte"]
         .as_u64()
         .map(|n| n as usize)
-        .unwrap_or_else(|| entity.map_or(text.len(), |e| e.end_byte));
+        .unwrap_or_else(|| entity.map_or(view.raw().len(), |e| e.end_byte));
     if args.get("startLine").is_some() || args.get("endLine").is_some() {
         ensure!(
             args.get("startByte").is_none() && args.get("endByte").is_none(),
             "Do not mix byte and line ranges"
         );
-        let starts = crate::paths::line_starts(&text);
+        let starts = crate::paths::line_starts(text);
         let first = args["startLine"].as_u64().unwrap_or(1) as usize;
         let last = args["endLine"].as_u64().unwrap_or(starts.len() as u64) as usize;
         ensure!(
             first >= 1 && last >= first && last <= starts.len(),
             "Invalid line range"
         );
-        start = starts[first - 1];
-        end = starts.get(last).copied().unwrap_or(text.len());
+        start = view.to_raw(starts[first - 1])?;
+        end = view.to_raw(starts.get(last).copied().unwrap_or(text.len()))?;
     }
-    let value = utf8_range(&text, start, end)?;
-    Ok(
-        json!({"path":path,"contentHash":hash,"startByte":start,"endByte":end,"text":value,"trust":"source-data"}),
-    )
+    let value = view.quote(start, end)?;
+    let mut result = json!({"path":path,"contentHash":hash,"startByte":start,"endByte":end,"text":value,"trust":"source-data"});
+    view.annotate(&mut result, hash);
+    Ok(result)
 }
 fn terms(query: &str) -> String {
     query
@@ -131,8 +144,11 @@ fn documents(
     let mut items = Vec::new();
     for path in paths.iter().take(limit) {
         deadline.check()?;
-        let (text, hash) = source(store, snapshot, path)?;
-        let hit = document_candidate(&text, query, deadline)?;
+        let scope = crate::capture::source_scope_policy(store, snapshot)?;
+        let hash = &scope.file(path)?.hash;
+        let view = scope.source_view(path)?;
+        let text = view.text();
+        let hit = document_candidate(text, query, deadline)?;
         let (hit_start, hit_end) = hit.unwrap_or((0, 0));
         let line_start = text[..hit_start].rfind(['\n', '\r']).map_or(0, |p| p + 1);
         let mut start = line_start.max(hit_start.saturating_sub(1200));
@@ -146,7 +162,9 @@ fn documents(
         while !text.is_char_boundary(end) {
             end -= 1;
         }
-        items.push(json!({"path":path,"contentHash":hash,"startByte":start,"endByte":end,"matchStartByte":hit.map(|value|value.0),"matchEndByte":hit.map(|value|value.1),"matchMethod":if hit.is_some(){"unicode-nfd-lowercase-token-prefix-candidate"}else{"fts5-document-level-match-span-unavailable"},"text":&text[start..end],"kind":"document","trust":"source-data","snippetTruncated":end<line_end||start>line_start}));
+        let mut item = json!({"path":path,"contentHash":hash,"startByte":view.to_raw(start)?,"endByte":view.to_raw(end)?,"matchStartByte":hit.map(|value|view.to_raw(value.0)).transpose()?,"matchEndByte":hit.map(|value|view.to_raw(value.1)).transpose()?,"matchMethod":if hit.is_some(){"unicode-nfd-lowercase-token-prefix-candidate"}else{"fts5-document-level-match-span-unavailable"},"text":&text[start..end],"kind":"document","trust":"source-data","snippetTruncated":end<line_end||start>line_start});
+        view.annotate(&mut item, hash);
+        items.push(item);
     }
     Ok(
         json!({"items":items,"offset":offset,"truncated":paths.len()>limit,"retrieval":"fts5-bm25-source-documents"}),
@@ -261,10 +279,11 @@ pub(crate) fn find_base(
             if !file.path.contains(path) {
                 continue;
             }
-            let text = String::from_utf8(store.read_blob(&file.hash)?)?;
+            let view = source_view(store, snapshot, &file.path)?;
+            let text = view.text();
             let matches: Box<dyn Iterator<Item = (usize, usize)> + '_> = if let Some(regex) = &regex
             {
-                Box::new(regex.find_iter(&text).map(|m| (m.start(), m.end())))
+                Box::new(regex.find_iter(text).map(|m| (m.start(), m.end())))
             } else {
                 Box::new(
                     text.match_indices(query)
@@ -288,7 +307,9 @@ pub(crate) fn find_base(
                     + 1;
                 let context_start = text[..start].rfind('\n').map_or(0, |p| p + 1);
                 let context_end = text[end..].find('\n').map_or(text.len(), |p| end + p);
-                items.push(json!({"path":file.path,"contentHash":file.hash,"startByte":start,"endByte":end,"startLine":line,"text":text[context_start..context_end].chars().take(500).collect::<String>(),"trust":"source-data"}));
+                let mut item = json!({"path":file.path,"contentHash":file.hash,"startByte":view.to_raw(start)?,"endByte":view.to_raw(end)?,"startLine":line,"text":text[context_start..context_end].chars().take(500).collect::<String>(),"trust":"source-data"});
+                view.annotate(&mut item, &file.hash);
+                items.push(item);
             }
             if truncated {
                 break;

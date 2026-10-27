@@ -211,6 +211,7 @@ pub fn invoke(
                 output_limit,
             )?;
             let scope = crate::capture::source_scope_policy(&engine.store, &snapshot)?;
+            scope.require_legacy_text("Trail definition source bodies")?;
             let mut sources = BTreeMap::new();
             let mut source_bytes = 0usize;
             let mut output_bytes = 0usize;

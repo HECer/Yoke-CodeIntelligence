@@ -391,6 +391,7 @@ pub fn persist(
     deadline: &Deadline,
 ) -> Result<Value> {
     store.set_deadline(deadline)?;
+    crate::source_encoding::require_legacy(store, snapshot, "persisted semantic overlay proof")?;
     deadline.check()?;
     ensure!(
         snapshot.workspace_id == store.workspace_id

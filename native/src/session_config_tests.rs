@@ -296,19 +296,6 @@ fn nonnative_active_defaults_invalid_types_and_scope_refuse_without_echoing_sour
     let canary = "owned_private_canary_\u{1f4a1}_e\u{301}";
     for (key, values, code) in [
         (
-            "encoding",
-            vec![
-                json!("utf-16"),
-                json!("latin1"),
-                json!(false),
-                json!(2),
-                json!([]),
-                json!({}),
-                json!(canary),
-            ],
-            "source_encoding_unavailable",
-        ),
-        (
             "activation_command",
             vec![
                 json!(""),

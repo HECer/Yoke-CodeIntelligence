@@ -95,6 +95,7 @@ fn label(value: &str) -> Result<()> {
     Ok(())
 }
 struct DecodedFields {
+    encoding: Option<Option<crate::source_encoding::Codec>>,
     additional_folders: Option<Option<Vec<String>>>,
     native_defaults: Map<String, Value>,
     server_settings: Option<Option<crate::server_settings::Entries>>,
@@ -117,6 +118,7 @@ fn rename_fields(
     prompt_rendered: bool,
 ) -> Result<DecodedFields> {
     let mut mapped = Map::new();
+    let mut encoding = None;
     let mut additional_folders = None;
     let mut native_defaults = Map::new();
     let mut server_settings = None;
@@ -132,15 +134,19 @@ fn rename_fields(
     for (key, value) in raw {
         let name = match key.as_str() {
             "encoding" if global || project => {
-                ensure!(
-                    value.is_null()
-                        || value
-                            .as_str()
-                            .is_some_and(|v| v.eq_ignore_ascii_case("utf-8")
-                                || v.eq_ignore_ascii_case("utf8")),
-                    "session_config_source_encoding_unavailable"
-                );
-                native_defaults.insert(key, value);
+                let codec = if value.is_null() {
+                    None
+                } else {
+                    Some(crate::source_encoding::Codec::parse(
+                        value.as_str().ok_or_else(|| {
+                            anyhow::anyhow!("session_config_source_encoding_string_required")
+                        })?,
+                    )?)
+                };
+                if codec.is_none_or(|c| c == crate::source_encoding::Codec::Utf8) {
+                    native_defaults.insert(key, value);
+                }
+                encoding = Some(codec);
                 continue;
             }
             "activation_command" if global || project => {
@@ -283,6 +289,7 @@ fn rename_fields(
         mapped.insert(name.into(), value);
     }
     Ok(DecodedFields {
+        encoding,
         additional_folders,
         native_defaults,
         server_settings,
@@ -347,6 +354,8 @@ fn project_inner(
     // Preserve explicit clears/defaults until all layers are known. Defaults
     // alone still disappear from the profile exactly as before this policy.
     let mut activation = base.activation_commands.clone().unwrap_or_default();
+    let mut encodings = profile.source_encodings.clone().unwrap_or_default();
+    let mut encoding_declared = false;
     let mut seen = BTreeSet::new();
     let mut receipts = Vec::new();
     let mut total = 0usize;
@@ -422,6 +431,7 @@ fn project_inner(
             raw.insert(key.into(), json!(rendered.text));
         }
         let DecodedFields {
+            encoding,
             additional_folders,
             native_defaults,
             server_settings,
@@ -607,6 +617,20 @@ fn project_inner(
                 _ => unreachable!(),
             }
         }
+        if let Some(codec) = encoding {
+            encoding_declared = true;
+            let policy = &mut encodings;
+            match source.target {
+                Target::Global => policy.global = codec,
+                Target::Project { project } => {
+                    policy.projects.entry(project.clone()).or_default().project = codec
+                }
+                Target::ProjectLocal { project } => {
+                    policy.projects.entry(project.clone()).or_default().local = codec
+                }
+                _ => unreachable!(),
+            }
+        }
         if let Some(ending) = line_ending
             && (ending.is_some() || profile.source_line_endings.is_some())
         {
@@ -724,6 +748,13 @@ fn project_inner(
             profile.additional_workspace_folders = None;
         }
     }
+    if encoding_declared {
+        // Keep explicit UTF-8 overrides until ALL layers have been read. A later
+        // global non-UTF8 selection must not erase an earlier local UTF-8 value.
+        profile.source_encodings = ((!encodings.empty())
+            && (base.source_encodings.is_some() || encodings.non_utf8()))
+        .then_some(encodings);
+    }
     if let Some(settings) = &profile.language_server_settings {
         settings.validate(&profile)?;
     }
@@ -732,6 +763,9 @@ fn project_inner(
     }
     if let Some(endings) = &profile.source_line_endings {
         endings.validate(&profile)?;
+    }
+    if let Some(encodings) = &profile.source_encodings {
+        encodings.validate(&profile)?;
     }
     if let Some(exclusions) = &profile.source_exclusions {
         exclusions.validate(&profile, deadline)?;

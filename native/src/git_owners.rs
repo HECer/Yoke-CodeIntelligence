@@ -360,6 +360,7 @@ fn source(
     cap(file.size <= 1_000_000)?;
     charge(&mut used.rule_bytes, file.size, l.max_rule_bytes)?;
     let scope = crate::capture::source_scope_policy(store, snapshot)?;
+    scope.require_legacy_text("Git ownership source rules")?;
     check(d)?;
     let bytes = scope.read_source(path)?;
     check(d)?;

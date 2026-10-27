@@ -570,6 +570,7 @@ fn read_objects(
         .map(|scope| {
             deadline.check()?;
             let policy = crate::capture::source_scope_policy(store, scope)?;
+            policy.require_legacy_text("Meaning comparison source proofs")?;
             for file in &scope.files {
                 require(policy.file(&file.path)? == file, "comparison_input_invalid")?;
             }
