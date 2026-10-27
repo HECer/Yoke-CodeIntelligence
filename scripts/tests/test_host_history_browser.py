@@ -9,6 +9,7 @@ import io
 import json
 from pathlib import Path
 import queue
+import subprocess
 import tempfile
 import unittest
 from unittest import mock
@@ -21,6 +22,12 @@ SPEC.loader.exec_module(BROWSER)
 
 
 class WorkerAdmission(unittest.TestCase):
+    def test_real_driver_shutdown_protocol_with_in_memory_pipes(self):
+        result = subprocess.run(
+            ["node", "--test", str(SCRIPTS / "tests/host_history_browser_protocol.test.cjs")],
+            cwd=SCRIPTS.parent, capture_output=True, text=True, timeout=20, check=False)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_non_ci_refuses_before_spec_or_native_reads(self):
         with mock.patch.object(BROWSER, "ci_identity", side_effect=RuntimeError("CI refused")), \
              mock.patch.object(BROWSER, "read_json") as reader, \

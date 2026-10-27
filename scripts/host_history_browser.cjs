@@ -39,9 +39,14 @@ function fail() {
   setTimeout(() => process.exit(1), 1500);
 }
 
+class CdpPipeEOF extends Error {
+  constructor() { super('cdp-eof'); }
+}
+
 class CDP {
-  constructor(child) {
+  constructor(child, onFailure = fail) {
     this.child = child; this.pending = new Map(); this.next = 0; this.buffer = Buffer.alloc(0);
+    this.events = new Set(); this.failure = null; this.closing = false; this.onFailure = onFailure;
     child.stdio[4].on('data', chunk => {
       try {
         need(chunk.length <= FRAME && this.buffer.length + chunk.length <= FRAME);
@@ -62,18 +67,29 @@ class CDP {
             else pending.resolve(message.result);
           } else {
             need(++eventCount <= 20000 && typeof message.method === 'string');
-            this.event(message).catch(fail);
+            need(this.events.size < 128);
+            const work = this.event(message);
+            this.events.add(work);
+            work.then(() => this.events.delete(work), error => {
+              this.events.delete(work); this.reportFailure(error);
+            });
           }
         }
-      } catch { fail(); }
+      } catch (error) { this.reportFailure(error); }
     });
     child.stdio[4].on('end', () => {
       pipeEOF = true;
-      if (this.buffer.length || !closing) fail();
-      for (const entry of this.pending.values()) { clearTimeout(entry.timer); entry.reject(Error('cdp-eof')); }
+      if (this.buffer.length || !this.closing) this.reportFailure(Error('unexpected-cdp-eof'));
+      for (const entry of this.pending.values()) { clearTimeout(entry.timer); entry.reject(new CdpPipeEOF()); }
       this.pending.clear();
     });
-    for (const stream of [child.stdio[3], child.stdio[4]]) stream.on('error', () => { if (!closing) fail(); });
+    for (const stream of [child.stdio[3], child.stdio[4]]) stream.on('error', error => {
+      if (!this.closing) this.reportFailure(error);
+    });
+  }
+  reportFailure(error) {
+    this.failure ||= error;
+    this.onFailure(error);
   }
   send(method, params = {}, sessionId) {
     need(!fatal && this.pending.size < 32);
@@ -83,11 +99,26 @@ class CDP {
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => { this.pending.delete(id); reject(Error('cdp-deadline')); }, 6000);
       this.pending.set(id, {resolve, reject, timer});
-      this.child.stdio[3].write(data, error => { if (error && !closing) fail(); });
+      this.child.stdio[3].write(data, error => {
+        if (error && this.pending.has(id)) {
+          this.pending.delete(id); clearTimeout(timer); reject(error);
+        }
+      });
     });
   }
+  async close() {
+    this.closing = true;
+    // New teardown events do no work. Previously admitted handlers must finish
+    // before the close command can invalidate their outstanding CDP requests.
+    await deadline(Promise.allSettled([...this.events]), 6000);
+    if (this.failure) throw this.failure;
+    need(this.pending.size === 0);
+    try { await this.send('Browser.close'); }
+    catch (error) { if (!(error instanceof CdpPipeEOF)) throw error; }
+    if (this.failure) throw this.failure;
+  }
   async event(message) {
-    if (closing) return; // Target teardown cancels in-flight polling normally.
+    if (this.closing) return;
     const p = pages.find(page => page.session === message.sessionId);
     const e = message.params || {};
     if (message.method === 'Runtime.exceptionThrown') { scriptErrors++; throw Error('script-error'); }
@@ -413,7 +444,7 @@ async function run(value) {
     closing = true;
     // Some Chromium versions close the pipe before acknowledging Browser.close.
     // A close request followed by raw exit 0 and pipe EOF is required either way.
-    await cdp.send('Browser.close').catch(() => {});
+    await cdp.close();
     const exit = await deadline(closeExit, 6000);
     need(exit.code === 0 && exit.signal === null);
     for (let n = 0; n < 50 && (!pipeEOF || browserOutputEOF !== 2); n++) await delay(20);
@@ -425,6 +456,7 @@ async function run(value) {
   throw Error('unknown-phase');
 }
 
+if (require.main === module) {
 process.stdin.on('data', chunk => {
   try {
     need(chunk.length <= 64000 && input.length + chunk.length <= 64000);
@@ -448,3 +480,7 @@ process.stdin.on('end', () => {
 process.stdin.on('error', fail);
 process.on('uncaughtException', fail);
 process.on('unhandledRejection', fail);
+} else {
+  // Importing the protocol class starts no driver, browser or input listener.
+  module.exports = {CDP, CdpPipeEOF};
+}

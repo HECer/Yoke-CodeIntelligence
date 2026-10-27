@@ -99,6 +99,10 @@ both native owning exits, worker raw exit 0 and zero Job members **before** forc
 are success requirements. Forced cleanup only closes failure leftovers; it cannot
 make acceptance succeed. Private fixtures are retained for the ephemeral runner;
 there is no recursive deletion or foreign-process kill.
+Already admitted asynchronous CDP handlers drain before `Browser.close`. Only
+the transport's typed clean EOF may precede its acknowledgement; protocol
+refusal, timeout, partial frames and write errors still fail. Raw browser and
+driver exit/EOF receipts remain independent requirements.
 
 ## Evidence and remaining gates
 
@@ -116,12 +120,14 @@ false. The parent must actually run the guarded CI step, inspect **all six PNGs*
 fix visible issues and regenerate/inspect again before recording visual acceptance
 in a separate reviewed handoff. The harness cannot self-certify human review.
 
-Pure mocked/static adversaries are authored in `tests/test_host_history_browser.py`.
-They cover malformed/oversized/duplicate specs, producer freshness and exact
-identity, admission order before image access, capability redaction, paths and
-cleanup-to-success forgery. **They have not been run in this source-only task.**
-No native build/test, project Python/npm test, browser, Node driver or worker has
-been executed. npm typecheck/test, original three-variant history gate, new actual
+The parent ran all 15 pure/mocked Python cases in
+`tests/test_host_history_browser.py`, including six in-memory Node CDP shutdown
+regressions in `tests/host_history_browser_protocol.test.cjs`. They passed. The
+checks cover malformed/oversized/duplicate specs, producer freshness and exact
+identity, admission order before image access, capability redaction, paths,
+cleanup-to-success forgery, handler draining and strict close-error handling.
+No native build/test, browser, live Node driver or worker was executed by these
+focused checks. npm typecheck/test, original three-variant history gate, new actual
 Edge/CDP integration, screenshot/visual review, broader Serena/persistent-Python/
 HTTP browser transports, native whole-project CI and release gates remain open.
 
