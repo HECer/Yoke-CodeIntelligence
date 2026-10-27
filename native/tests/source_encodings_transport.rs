@@ -482,3 +482,161 @@ fn actual_executed_raw_byte_verification_approval_and_writer_journal_preserve_se
     );
     assert_eq!(e.store.read_blob(&s.files[0].hash).unwrap(), raw);
 }
+
+#[test]
+fn utf8_sig_registered_lsp_maps_raw_anchors_and_refuses_rename() {
+    use yoke::lsp::{
+        self, ConfiguredServer, HostConfiguration, PassiveProfile, SemanticRequest, Server,
+    };
+    let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+    for bom in [false, true] {
+        let (root, config, _) = fixture();
+        let mut raw = if bom {
+            vec![0xef, 0xbb, 0xbf]
+        } else {
+            Vec::new()
+        };
+        raw.extend_from_slice("// \u{e9}\u{1f4a1}\r\nfn target() {}\r\n".as_bytes());
+        fs::write(root.path().join("main.rs"), &raw).unwrap();
+        let mut e = Engine::open(root.path()).unwrap();
+        e.capture_options.source_encoding = Codec::Utf8Sig.policy();
+        let (s, g, _, _) = e.index(&d()).unwrap();
+        let marker = config.path().join("started");
+        let server = Server {
+            command: "node".into(),
+            args: vec![
+                "-e".into(),
+                LSP_FIXTURE.into(),
+                marker.display().to_string(),
+            ],
+            language: "rust".into(),
+            trust: true,
+        };
+        let registered = ConfiguredServer {
+            server: server.clone(),
+            configuration: HostConfiguration {
+                passive_profile: Some(PassiveProfile::ContractFixture),
+                ..Default::default()
+            },
+        };
+        let view = yoke::query::source_view(&e.store, &s, "main.rs").unwrap();
+        let offset = view.to_raw(view.text().find("target").unwrap()).unwrap();
+        let bad = lsp::run_at_configured(
+            &mut e,
+            &registered,
+            &s,
+            &g,
+            SemanticRequest {
+                path: "main.rs",
+                offset,
+                operation: "rename",
+                new_name: Some("renamed"),
+            },
+            &json!({}),
+            &d(),
+        );
+        assert!(
+            bad.unwrap_err()
+                .to_string()
+                .contains("source_encoding_capability_unavailable")
+        );
+        assert!(!marker.exists());
+        e.register_configured_server(registered).unwrap();
+        let result=e.invoke("ci_find",json!({"snapshotId":s.id,"languageServer":{"operation":"definition","path":"main.rs","offset":offset}})).unwrap();
+        assert_eq!(result["status"], "ok", "{result}");
+        assert!(marker.exists());
+        assert_eq!(result["data"]["locations"][0]["startByte"], offset);
+        assert_eq!(result["data"]["locations"][0]["text"], "target");
+        assert_eq!(result["data"]["locations"][0]["contentHash"], hash(&raw));
+        assert_eq!(fs::read(root.path().join("main.rs")).unwrap(), raw);
+    }
+}
+
+#[test]
+fn utf8_sig_executed_verification_and_writer_preserve_signature() {
+    let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+    let (root, _config, _) = fixture();
+    let mut raw = vec![0xef, 0xbb, 0xbf];
+    raw.extend_from_slice("// \u{e9}\u{1f4a1}\r\nfn target() {}\r\n".as_bytes());
+    fs::write(root.path().join("main.rs"), &raw).unwrap();
+    let mut e = Engine::open(root.path()).unwrap();
+    e.capture_options.source_encoding = Codec::Utf8Sig.policy();
+    e.allow_writes = true;
+    let (s, g, _, _) = e.index(&d()).unwrap();
+    let v = yoke::query::source_view(&e.store, &s, "main.rs").unwrap();
+    let start = v.to_raw(v.text().find("target").unwrap()).unwrap();
+    let p=changes::prepare(&mut e.store,&s,&g,&json!({"edits":[{"kind":"replace","path":"main.rs","expectedHash":hash(&raw),"startByte":start,"endByte":start+6,"text":"café"}]}),&d()).unwrap();
+    let mut expected = vec![0xef, 0xbb, 0xbf];
+    expected.extend_from_slice("// \u{e9}\u{1f4a1}\r\nfn caf\u{e9}() {}\r\n".as_bytes());
+    let verification = |expected: &[u8]| {
+        #[cfg(windows)]
+        {
+            let exe = std::path::PathBuf::from(std::env::var_os("SystemRoot").unwrap())
+                .join("System32/WindowsPowerShell/v1.0/powershell.exe");
+            let script = format!(
+                "$b=[IO.File]::ReadAllBytes('main.rs'); $h=[Security.Cryptography.SHA256]::Create(); if ([BitConverter]::ToString($h.ComputeHash($b)).Replace('-','').ToLowerInvariant() -ne '{}') {{ exit 19 }}",
+                hash(expected)
+            );
+            (
+                exe,
+                vec![
+                    "-NoProfile".into(),
+                    "-NonInteractive".into(),
+                    "-Command".into(),
+                    script,
+                ],
+            )
+        }
+        #[cfg(not(windows))]
+        {
+            (
+                std::path::PathBuf::from("/bin/sh"),
+                vec![
+                    "-c".into(),
+                    format!(
+                        "test \"$(od -An -tx1 main.rs | tr -d ' \\n')\" = '{}'",
+                        hex::encode(expected)
+                    ),
+                ],
+            )
+        }
+    };
+    changes::approve(&e.store, &p.id, false).unwrap();
+    let (command, args) = verification(&raw);
+    let wrong =
+        yoke::verify::execute(&e, &p.id, command.to_str().unwrap(), &args, true, &d()).unwrap();
+    assert_eq!(wrong["status"], "failed");
+    assert!(
+        changes::apply(
+            &e.store,
+            root.path(),
+            &json!({"planId":p.id,"idempotencyKey":"unverified","mode":"workspace"}),
+            true,
+            &d()
+        )
+        .is_err()
+    );
+    let (command, args) = verification(&expected);
+    let checked =
+        yoke::verify::execute(&e, &p.id, command.to_str().unwrap(), &args, true, &d()).unwrap();
+    assert_eq!(checked["status"], "passed", "{checked}");
+    let receipt = changes::apply(
+        &e.store,
+        root.path(),
+        &json!({"planId":p.id,"idempotencyKey":"verified","mode":"workspace"}),
+        true,
+        &d(),
+    )
+    .unwrap();
+    assert_eq!(receipt.status, "applied");
+    assert_eq!(fs::read(root.path().join("main.rs")).unwrap(), expected);
+    let journal: Value = e.store.get_record("journal", &receipt.id).unwrap();
+    assert_eq!(journal["planId"], p.id);
+    assert_eq!(
+        changes::load_checked_plan(&e.store, &p.id, &d())
+            .unwrap()
+            .source_encoding,
+        Codec::Utf8Sig.policy()
+    );
+    assert_eq!(e.store.read_blob(&s.files[0].hash).unwrap(), raw);
+}
