@@ -1013,4 +1013,18 @@ fn utf8_sig_bomless_edits_refuse_ambiguous_leading_character() {
         let reread = View::decode(encoded, Codec::Utf8Sig.policy(), &|| Ok(())).unwrap();
         assert_eq!(reread.text(), "text");
     }
+
+    let (root, mut engine, raw) = engine(Codec::Utf8Sig, "fn existing() {}\n", false);
+    let (snapshot, graph, _, _) = engine.index(&d()).unwrap();
+    let request = json!({"edits":[{"kind":"replace","path":"main.rs",
+        "expectedHash":hash(&raw),"startByte":0,"endByte":0,"text":"\u{feff}"}]});
+    let error = changes::prepare(&mut engine.store, &snapshot, &graph, &request, &d())
+        .err()
+        .expect("ambiguous edit must be refused");
+    assert!(
+        error
+            .to_string()
+            .contains("source_encoding_utf8_sig_ambiguous_leading_bom")
+    );
+    assert_eq!(fs::read(root.path().join("main.rs")).unwrap(), raw);
 }
