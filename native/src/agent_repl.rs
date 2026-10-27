@@ -3086,7 +3086,7 @@ mod source_binding_tests {
     use super::*;
     use std::sync::{
         Arc,
-        atomic::{AtomicBool, Ordering},
+        atomic::AtomicBool,
     };
     #[test]
     fn inherited_cancellation_survives_default_and_named_facade_semantic_queries() {
