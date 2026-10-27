@@ -279,6 +279,41 @@ fn admit_output(value: &Value, max_bytes: usize, d: &Deadline) -> Result<()> {
     d.check()
 }
 impl CheckedDigest {
+    /// Compare a host-selected original preview with the receipt-bound sender claim.
+    /// Input and encoded limits are independent host choices, not packet authority.
+    pub fn bind_source_preview(
+        &mut self,
+        raw: &[u8],
+        allow: bool,
+        max_input_bytes: usize,
+        max_encoded_bytes: usize,
+        d: &Deadline,
+    ) -> Result<()> {
+        ensure!(allow, PERMISSION);
+        d.check()?;
+        ensure!(
+            (1..=16_000_000).contains(&max_input_bytes)
+                && (1..=16_000_000).contains(&max_encoded_bytes),
+            CAPACITY
+        );
+        ensure!(raw.len() <= max_input_bytes, CAPACITY);
+        let value =
+            crate::json::parse(raw, max_input_bytes).map_err(|_| anyhow::anyhow!(INVALID))?;
+        d.check()?;
+        ensure!(!value.is_null(), INVALID);
+        let encoded = crate::json::encode_bounded(&value, max_encoded_bytes, d)
+            .map_err(|_| d.check().err().unwrap_or_else(|| anyhow::anyhow!(CAPACITY)))?;
+        let claim = self.value["reportedSourceDigestHash"]
+            .as_str()
+            .context(MISMATCH)?;
+        ensure!(crate::model::hash(encoded) == claim, MISMATCH);
+        d.check()?;
+        self.value["senderSourceDigestHashVerified"] = json!(true);
+        self.value["limitations"][1] = json!(
+            "The host-selected preview matches the received source-digest hash; this does not establish sender snapshot identity, remote ownership, whole-source equivalence, discussion or historical claims, or semantic reasoning."
+        );
+        Ok(())
+    }
     pub fn export(&self, max_bytes: usize, d: &Deadline) -> Result<Value> {
         ensure!((1024..=16_000_000).contains(&max_bytes), CAPACITY);
         d.check()?;

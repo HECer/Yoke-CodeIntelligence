@@ -164,6 +164,75 @@ fn options() -> verify::Options {
         ..Default::default()
     }
 }
+#[test]
+fn original_preview_hash_is_bound_only_after_receipt_and_strict_bounded_parse() {
+    let source = Source::new();
+    let d = Deadline::new(20000);
+    let preview = yoke::github_app::digest::preview_with_profile(
+        &source.engine.store,
+        &source.app,
+        &source.options,
+        &source.request,
+        &d,
+    )
+    .unwrap();
+    let raw = yoke::json::encode_bounded(&preview, source.options.max_output_bytes, &d).unwrap();
+    let f = Received::from_source(source, |_| {});
+    let (_root, engine, id) = f.local();
+    let mut checked = run(&f, &engine.store, &id, &options()).unwrap();
+    let old = checked.export(4_000_000, &d).unwrap();
+    assert_eq!(old["senderSourceDigestHashVerified"], false);
+    for bad in [
+        b"null".to_vec(),
+        b"{\"x\":1,\"x\":2}".to_vec(),
+        b"{} true".to_vec(),
+        raw[..raw.len() - 1].to_vec(),
+        b"{}".to_vec(),
+    ] {
+        assert!(
+            checked
+                .bind_source_preview(&bad, true, 4_000_000, 4_000_000, &d)
+                .is_err()
+        );
+    }
+    assert!(
+        checked
+            .bind_source_preview(&raw, false, 4_000_000, 4_000_000, &d)
+            .is_err()
+    );
+    assert!(
+        checked
+            .bind_source_preview(&raw, true, raw.len() - 1, 4_000_000, &d)
+            .is_err()
+    );
+    assert!(
+        checked
+            .bind_source_preview(&raw, true, 4_000_000, 1, &d)
+            .is_err()
+    );
+    assert!(
+        checked
+            .bind_source_preview(&raw, true, 4_000_000, 4_000_000, &Deadline::new(0))
+            .is_err()
+    );
+    assert_eq!(checked.export(4_000_000, &d).unwrap(), old);
+    let mut spaced = b" \n".to_vec();
+    spaced.extend_from_slice(&raw);
+    spaced.extend_from_slice(b" \n");
+    checked
+        .bind_source_preview(&spaced, true, 4_000_000, 4_000_000, &d)
+        .unwrap();
+    let result = checked.export(4_000_000, &d).unwrap();
+    assert_eq!(result["senderSourceDigestHashVerified"], true);
+    for key in [
+        "sourceAuthority",
+        "complete",
+        "senderSnapshotIdentityEstablished",
+        "remoteRepositoryAttested",
+    ] {
+        assert_eq!(result[key], false, "{key}");
+    }
+}
 fn run(
     f: &Received,
     source: &Store,
@@ -293,6 +362,64 @@ fn actual_local_cli_replays_both_existing_roots_without_keys_or_state_creation()
     let v: Value = serde_json::from_slice(&output.stdout).unwrap();
     assert_eq!(v["verifiedSymbols"], 1);
     assert_eq!(v["localScope"]["snapshotId"], id);
+    let preview = yoke::github_app::digest::preview_with_profile(
+        &f.sender.engine.store,
+        &f.sender.app,
+        &f.sender.options,
+        &f.sender.request,
+        &Deadline::new(20000),
+    )
+    .unwrap();
+    let preview_path = host.path().join("preview.json");
+    std::fs::write(
+        &preview_path,
+        yoke::json::encode_bounded(
+            &preview,
+            f.sender.options.max_output_bytes,
+            &Deadline::new(20000),
+        )
+        .unwrap(),
+    )
+    .unwrap();
+    let denied = command()
+        .arg("--source-preview")
+        .arg(host.path().join("missing-preview.json"))
+        .output()
+        .unwrap();
+    assert!(!denied.status.success());
+    assert!(String::from_utf8_lossy(&denied.stderr).contains("verification_permission_required"));
+    let bound = command()
+        .arg("--source-preview")
+        .arg(&preview_path)
+        .arg("--allow-source-preview")
+        .output()
+        .unwrap();
+    assert!(
+        bound.status.success(),
+        "{}",
+        String::from_utf8_lossy(&bound.stderr)
+    );
+    let bound: Value = serde_json::from_slice(&bound.stdout).unwrap();
+    assert_eq!(bound["senderSourceDigestHashVerified"], true);
+    let mut wrong = f.request(&id);
+    wrong.receipt_id = "f".repeat(64);
+    std::fs::write(
+        host.path().join("request.json"),
+        serde_json::to_vec(&wrong).unwrap(),
+    )
+    .unwrap();
+    let refused = command()
+        .arg("--source-preview")
+        .arg(host.path().join("missing-preview.json"))
+        .arg("--allow-source-preview")
+        .output()
+        .unwrap();
+    assert!(String::from_utf8_lossy(&refused.stderr).contains("verification_mismatch"));
+    std::fs::write(
+        host.path().join("request.json"),
+        serde_json::to_vec(&f.request(&id)).unwrap(),
+    )
+    .unwrap();
     assert_eq!(count(f.root.path()), before);
     assert_eq!(engine.store.latest().unwrap(), latest);
     drop(engine);
