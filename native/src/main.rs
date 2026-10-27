@@ -4738,6 +4738,7 @@ fn run(cli: Cli) -> Result<bool> {
             .extend(cli.include_ignored_dir);
         engine.capture_options = engine.capture_options.validated()?;
     }
+    engine.bind_source_encoding();
     if let Some(config) = cli.language_server_config {
         ensure!(
             cli.trust_servers,

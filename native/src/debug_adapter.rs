@@ -137,6 +137,11 @@ impl DebugAdapter {
         deadline: &Deadline,
     ) -> Result<Self> {
         deadline.check()?;
+        crate::source_encoding::require_legacy(
+            store,
+            snapshot,
+            "debug adapter source/trace mapping",
+        )?;
         profile.validate()?;
         ensure!(
             profile.trust_adapter && profile.allow_target_execution && profile.allow_evaluation,

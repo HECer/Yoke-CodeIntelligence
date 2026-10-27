@@ -108,6 +108,7 @@ pub mod session_steering;
 pub mod skill_takeaways;
 pub mod source_acquisition;
 pub mod source_acquisition_http;
+pub mod source_encoding;
 pub mod source_exclusions;
 pub mod source_line_endings;
 pub mod store;
@@ -150,7 +151,17 @@ pub struct Engine {
     pub server_configurations: BTreeMap<String, lsp::HostConfiguration>,
 }
 impl Engine {
+    /// Bind already selected host data for direct CLI/library approval paths.
+    /// This grants no source scope, writes, provider or execution authority.
+    pub fn bind_source_encoding(&mut self) {
+        self.capture_options.source_encoding = self
+            .capture_options
+            .source_encoding
+            .and_then(source_encoding::Policy::canonical);
+        self.store.source_encoding = self.capture_options.source_encoding;
+    }
     pub(crate) fn sync_source_exclusions(&mut self, deadline: &Deadline) -> Result<()> {
+        self.bind_source_encoding();
         if let Some(host) = &self.git_repository_host {
             host.check(&self.store, deadline)?;
         }
@@ -310,11 +321,29 @@ impl Engine {
         }
         let mut ready = Vec::new();
         let mut pending = Vec::new();
+        let mut encoded_parsed = 0;
+        let encoding = source_encoding::selected(&self.store, &snapshot)?;
         for file in &snapshot.files {
             deadline.check()?;
-            let key = epoch.cache_key(file);
+            let key = if let Some(policy) = encoding {
+                identity(&(epoch.cache_key(file), source_encoding::VERSION, policy))
+            } else {
+                epoch.cache_key(file)
+            };
             if let Some(extraction) = self.store.cache(&key)? {
                 ready.push(extraction);
+            } else if encoding.is_some() {
+                // Release each bounded mapping before reading the next file.
+                // The ordinary parallel UTF-8 path and cache identities stay exact.
+                let raw =
+                    self.store
+                        .read_blob_exact(&file.hash, file.size, source_encoding::MAX_RAW)?;
+                let view = source_encoding::View::decode(raw, encoding, &|| deadline.check())?;
+                let extraction = source_encoding::extract(epoch, file, &view, deadline)?;
+                self.store
+                    .put_caches(&[(key, extraction.clone())], deadline)?;
+                ready.push(extraction);
+                encoded_parsed += 1;
             } else {
                 pending.push((
                     key,
@@ -326,8 +355,8 @@ impl Engine {
                 ));
             }
         }
-        let reused = ready.len();
-        let parsed = pending.len();
+        let reused = ready.len() - encoded_parsed;
+        let parsed = pending.len() + encoded_parsed;
         let results: Vec<_> = pending
             .par_iter()
             .map(|(key, file, text)| {
@@ -341,7 +370,8 @@ impl Engine {
             ready.push(extraction);
         }
         ready.sort_by(|a, b| a.entities[0].path.cmp(&b.entities[0].path));
-        let graph = analysis::assemble_at(epoch, &snapshot, ready, deadline)?;
+        let mut graph = analysis::assemble_at(epoch, &snapshot, ready, deadline)?;
+        source_encoding::qualify_graph(&mut graph, encoding);
         self.store.publish(&snapshot, &graph)?;
         deadline.check()?;
         Ok((snapshot, graph, parsed, reused))
@@ -483,6 +513,9 @@ impl Engine {
                         json!("first_declared_extension_match_then_first_fallback");
                     status["capabilities"]["backendRuntimeCertification"] = json!(false);
                 }
+                if let Some(policy) = self.capture_options.source_encoding {
+                    status["capabilities"]["sourceEncoding"] = json!({"schema":source_encoding::VERSION,"selected":policy,"supported":["utf8","utf16_bom_required","utf16_le","utf16_be","latin1"],"otherCodecs":"unsupported","offsets":"original_source_bytes","semanticWorkspaceEdits":false,"compilerPieceRefactors":false,"runtimeTraceMapping":false,"manifestBalancedRetrieval":false,"fullEncodingIdentityCertified":false});
+                }
                 return Ok(status);
             }
             if tool == "ci_change_apply" {
@@ -563,8 +596,9 @@ impl Engine {
                         )
                     })?;
                     ensure!(server.trust, "Language server trust is required");
-                    let (text, hash) = query::source(&self.store, &snapshot, path)?;
-                    lsp::byte_to_position(&text, offset)?;
+                    let view = query::source_view(&self.store, &snapshot, path)?;
+                    let hash = file.hash.clone();
+                    lsp::byte_to_position(view.text(), view.to_decoded(offset)?)?;
                     local_only = false;
                     language_server_attempts += 1;
                     let mut response = self.run_semantic_at(

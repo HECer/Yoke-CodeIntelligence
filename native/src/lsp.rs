@@ -27,6 +27,9 @@ mod refactor_intents;
 pub(crate) use refactor_intents::stage_move_intent_at;
 #[path = "lsp_resource_settings.rs"]
 mod resource_settings;
+#[cfg(test)]
+#[path = "source_encoding_lsp_tests.rs"]
+mod source_encoding_tests;
 pub(crate) use resource_settings::{
     effective as effective_resource_settings, validate_entries as validate_resource_entries,
 };
@@ -1018,13 +1021,12 @@ fn range(text: &str, value: &Value) -> Result<(usize, usize)> {
 }
 
 struct Normalizer<'a> {
-    store: &'a crate::store::Store,
     snapshot: &'a Snapshot,
     scope: crate::capture::CapturedSourceScope<'a>,
     root: &'a Path,
     producer: &'a str,
     deadline: &'a Deadline,
-    sources: HashMap<String, (String, String)>,
+    sources: HashMap<String, (crate::source_encoding::View, String)>,
     cached_bytes: usize,
     body_bytes: usize,
     records: usize,
@@ -1038,7 +1040,6 @@ impl<'a> Normalizer<'a> {
         deadline: &'a Deadline,
     ) -> Result<Self> {
         Ok(Self {
-            store,
             snapshot,
             scope: crate::capture::source_scope_policy(store, snapshot)?,
             root,
@@ -1050,15 +1051,25 @@ impl<'a> Normalizer<'a> {
             records: 0,
         })
     }
-    fn source(&mut self, path: &str) -> Result<(&str, &str)> {
+    fn source(&mut self, path: &str) -> Result<(&crate::source_encoding::View, &str)> {
         self.deadline.check()?;
         if !self.sources.contains_key(path) {
-            let (text, hash) = query::source(self.store, self.snapshot, path)?;
-            if self.cached_bytes.saturating_add(text.len()) > 16_000_000 {
+            let text = self.scope.source_view(path)?;
+            let hash = self.scope.file(path)?.hash.clone();
+            let size = if text.policy().is_some() {
+                text.retained_bytes()
+            } else {
+                text.text().len()
+            };
+            ensure!(
+                size <= 16_000_000,
+                "source_encoding_capability_unavailable: semantic mapping cache capacity"
+            );
+            if self.cached_bytes.saturating_add(size) > 16_000_000 {
                 self.sources.clear();
                 self.cached_bytes = 0;
             }
-            self.cached_bytes += text.len();
+            self.cached_bytes += size;
             self.sources.insert(path.into(), (text, hash));
         }
         let (text, hash) = &self.sources[path];
@@ -1071,14 +1082,18 @@ impl<'a> Normalizer<'a> {
             "Semantic source-anchor budget exceeded"
         );
         let body_available = 256_000usize.saturating_sub(self.body_bytes);
-        let (text, hash) = self.source(path)?;
+        let (view, hash) = self.source(path)?;
+        let text = view.text();
         let (start, end) = range(text, span)?;
         let excerpt = if body && end - start <= 6000 && end - start <= body_available {
             Some(text[start..end].to_owned())
         } else {
             None
         };
+        let start = view.to_raw(start)?;
+        let end = view.to_raw(end)?;
         let mut value = json!({"path":path,"contentHash":hash,"startByte":start,"endByte":end});
+        view.annotate(&mut value, hash);
         value["snapshotId"] = json!(self.snapshot.id);
         value["producer"] = json!(self.producer);
         value["resolution"] = json!("exact_binding");
@@ -1788,9 +1803,15 @@ fn check_copy_verified(
     for file in &snapshot.files {
         deadline.check()?;
         if !excluded.contains(&file.path) {
+            let mut expected = file.clone();
+            if scope.source_encoding().is_some() {
+                let view = scope.source_view(&file.path)?;
+                expected.hash = crate::model::hash(view.text().as_bytes());
+                expected.size = view.text().len();
+            }
             ensure!(
                 crate::verify::file_integrity(
-                    file,
+                    &expected,
                     &read_source_path(root, &file.path, Some(&scope))?,
                     deadline
                 )?,
@@ -1992,11 +2013,26 @@ fn run_at_internal(
     let profile = server_profile(host.0, host.1, deadline)?;
     let profile_hash =
         selected_profile_hash(&profile, selected.as_ref().map(|(id, _)| id.as_str()));
+    let encoding = crate::source_encoding::selected(&engine.store, snapshot)?;
+    let profile_hash = if let Some(policy) = encoding {
+        identity(&(
+            profile_hash,
+            crate::source_encoding::VERSION,
+            policy,
+            "private_utf8_v1",
+        ))
+    } else {
+        profile_hash
+    };
     let path = request.path;
     let mut value = run_at_unprofiled(
         engine, host, snapshot, graph, request, options, staged, directory, deadline,
     )?;
     value["serverProfileHash"] = json!(profile_hash);
+    if let Some(policy) = encoding {
+        value["sourceEncodingPolicy"] = json!(policy);
+        value["privateSourceView"] = json!({"encoding":"utf8","offsetsReturned":"original_source_bytes","hashesReturned":"original_source_bytes","copyIntegrity":"decoded_utf8_content_checked","fullBackendCertification":false});
+    }
     if let Some(extra) = engine
         .additional_workspace_folders
         .as_ref()
@@ -2278,9 +2314,10 @@ fn validate_passive_manifest_sources(
             bytes <= 16_000_000,
             "Passive Cargo manifest source byte budget exceeded"
         );
-        let (text, _) = query::source_in_scope(&engine.store, &scope, &file.path)?;
+        let view = scope.source_view(&file.path)?;
+        let text = view.text();
         let manifest: toml::Value =
-            toml::from_str(&text).context("Passive Cargo manifest source could not be parsed")?;
+            toml::from_str(text).context("Passive Cargo manifest source could not be parsed")?;
         let mut pending = vec![&manifest];
         let mut nodes = 0usize;
         while let Some(value) = pending.pop() {
@@ -2595,13 +2632,7 @@ fn initialize_provider_at(
     if passive_rust {
         validate_passive_manifest_sources(engine, snapshot, deadline)?;
     }
-    changes::materialize_selected_sources(
-        &engine.store,
-        snapshot,
-        tree.path(),
-        &exclusions,
-        deadline,
-    )?;
+    changes::materialize_source_views(&engine.store, snapshot, tree.path(), &exclusions, deadline)?;
     let mut session = if let Some(endpoint) =
         configuration.and_then(|configuration| configuration.tcp_endpoint)
     {
@@ -2766,7 +2797,8 @@ fn initialize_provider_at(
                 .and_then(|config| config.language_ids.get(&file.language))
                 .map(String::as_str)
                 .unwrap_or_else(|| document_language(&file.language));
-            let (source, _) = query::source(&engine.store, snapshot, &file.path)?;
+            let view = query::source_view(&engine.store, snapshot, &file.path)?;
+            let source = view.text();
             session.notify("textDocument/didOpen", json!({"textDocument":{"uri":uri(&tree.path().join(&file.path))?,"languageId":language,"version":1,"text":source}}))?;
         }
     }
@@ -2806,6 +2838,15 @@ fn run_at_unprofiled(
     deadline: &Deadline,
 ) -> Result<Value> {
     let (server, configuration) = host;
+    let encoding = crate::source_encoding::selected(&engine.store, snapshot)?;
+    ensure!(
+        encoding.is_none()
+            || !matches!(
+                request.operation,
+                "rename" | "codeActions" | "willRenameFiles"
+            ),
+        "source_encoding_capability_unavailable: semantic workspace-edit/resource proof requires legacy UTF-8; native raw-range source changes remain available"
+    );
     let options = QueryOptions::parse(options)?;
     if let Some(directory) = directory {
         ensure!(
@@ -2836,14 +2877,21 @@ fn run_at_unprofiled(
         new_name,
     } = request;
     ensure!(server.trust, "Language server trust is required");
-    let (text, content_hash) = query::source(&engine.store, snapshot, path)?;
+    let source_view = query::source_view(&engine.store, snapshot, path)?;
+    let text = source_view.text();
+    let content_hash = &snapshot
+        .files
+        .iter()
+        .find(|f| f.path == path)
+        .context("Semantic source missing")?
+        .hash;
     let target_language = &snapshot
         .files
         .iter()
         .find(|file| file.path == path)
         .context("Semantic source file absent from snapshot")?
         .language;
-    let position = byte_to_position(&text, offset)?;
+    let position = byte_to_position(text, source_view.to_decoded(offset)?)?;
     let InitializedProvider {
         tree,
         mut session,
@@ -2855,7 +2903,7 @@ fn run_at_unprofiled(
         host,
         snapshot,
         path,
-        &text,
+        text,
         target_language,
         deadline,
     )?;
@@ -3006,9 +3054,9 @@ fn run_at_unprofiled(
     if operation == "codeActions" {
         let start = options.start_byte.unwrap_or(offset);
         let end = options.end_byte.unwrap_or(start);
-        utf8_range(&text, start, end)?;
+        utf8_range(text, start, end)?;
         params["range"] =
-            json!({"start":byte_to_position(&text,start)?,"end":byte_to_position(&text,end)?});
+            json!({"start":byte_to_position(text,start)?,"end":byte_to_position(text,end)?});
         let report = if capabilities["diagnosticProvider"].is_object() {
             let report = session.request(
                 "textDocument/diagnostic",
@@ -3048,7 +3096,7 @@ fn run_at_unprofiled(
                 .context("Code action diagnostic context budget exceeded")?;
             for item in items {
                 deadline.check()?;
-                let (first, last) = range(&text, &item["range"])?;
+                let (first, last) = range(text, &item["range"])?;
                 ensure!(
                     item["message"]
                         .as_str()
@@ -3528,9 +3576,14 @@ fn run_at_unprofiled(
     }
     if operation == "hover" {
         deadline.check()?;
-        return Ok(
-            json!({"snapshotId":snapshot.id,"response":response,"producer":server.command,"trust":"source-data","complete":false}),
-        );
+        if encoding.is_some()
+            && let Some(span) = response.get("range").cloned()
+        {
+            response["range"] = normalize.anchor(path, &span, false)?;
+        }
+        let mut result = json!({"snapshotId":snapshot.id,"response":response,"producer":server.command,"trust":"source-data","complete":false});
+        source_view.annotate(&mut result, content_hash);
+        return Ok(result);
     }
     let list = if response.is_null() {
         Vec::new()
@@ -3552,15 +3605,26 @@ fn run_at_unprofiled(
             .ok_or_else(|| anyhow::anyhow!("Location URI missing"))?;
         let relative = relative_uri_scoped(tree.path(), uri, snapshot, Some(&normalize.scope))?;
         if !sources.contains_key(&relative) {
-            let (text, hash) = query::source(&engine.store, snapshot, &relative)?;
-            if cached_bytes.saturating_add(text.len()) > 16_000_000 {
+            let text = normalize.scope.source_view(&relative)?;
+            let hash = normalize.scope.file(&relative)?.hash.clone();
+            let size = if text.policy().is_some() {
+                text.retained_bytes()
+            } else {
+                text.text().len()
+            };
+            ensure!(
+                size <= 16_000_000,
+                "source_encoding_capability_unavailable: semantic mapping cache capacity"
+            );
+            if cached_bytes.saturating_add(size) > 16_000_000 {
                 sources.clear();
                 cached_bytes = 0;
             }
-            cached_bytes += text.len();
+            cached_bytes += size;
             sources.insert(relative.clone(), (text, hash));
         }
-        let (text, hash) = &sources[&relative];
+        let (view, hash) = &sources[&relative];
+        let text = view.text();
         let value = location
             .get("range")
             .or_else(|| location.get("targetSelectionRange"))
@@ -3573,14 +3637,15 @@ fn run_at_unprofiled(
                 "LocationLink selection escaped target range"
             );
         }
-        let mut item = json!({"path":relative,"contentHash":hash,"startByte":start,"endByte":end,"producer":server.command,"resolution":"exact_binding","trust":"source-data"});
+        let mut item = json!({"path":relative,"contentHash":hash,"startByte":view.to_raw(start)?,"endByte":view.to_raw(end)?,"producer":server.command,"resolution":"exact_binding","trust":"source-data"});
+        view.annotate(&mut item, hash);
         let size = end - start;
         if size <= 6000 && size <= 256_000usize.saturating_sub(body_bytes) {
             item["text"] = json!(&text[start..end]);
             body_bytes += size;
         } else {
             item["bodyOmitted"] = json!(true);
-            item["readWith"] = json!({"tool":"ci_read","snapshotId":snapshot.id,"path":relative,"startByte":start,"endByte":end});
+            item["readWith"] = json!({"tool":"ci_read","snapshotId":snapshot.id,"path":relative,"startByte":view.to_raw(start)?,"endByte":view.to_raw(end)?});
         }
         locations.push(item);
     }

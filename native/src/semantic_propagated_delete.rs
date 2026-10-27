@@ -205,6 +205,7 @@ fn inventory(
         CAPACITY
     );
     let scope = crate::capture::source_scope_policy(&engine.store, snapshot)?;
+    scope.require_legacy_text("Semantic propagated deletion")?;
     scope.check_host_write_scope(&selected.path)?;
     let mut result = BTreeMap::new();
     let mut bytes = 0usize;

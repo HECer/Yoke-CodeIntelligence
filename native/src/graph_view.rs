@@ -342,6 +342,7 @@ fn archive_registered_meaning_view(
                 .get(member.snapshot().id.as_str())
                 .context("Meaning archive source policy absent")?;
             let file = member.file();
+            policy.require_legacy_text("Meaning archive source replay")?;
             ensure!(
                 policy.file(&file.path)? == file,
                 "Meaning archive source membership mismatch"

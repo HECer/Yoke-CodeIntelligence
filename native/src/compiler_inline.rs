@@ -518,6 +518,11 @@ pub fn prepare(
         );
     }
     let (snapshot, graph, _, _) = engine.index(d)?;
+    crate::source_encoding::require_legacy(
+        &engine.store,
+        &snapshot,
+        "compiler inline raw-piece proof",
+    )?;
     ensure!(
         args.get("snapshotId").is_none_or(|id| id == &snapshot.id),
         "Inline source snapshot is stale"

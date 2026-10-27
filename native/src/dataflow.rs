@@ -639,6 +639,7 @@ pub fn analyze(
 ) -> Result<Value> {
     deadline.check()?;
     store.set_deadline(deadline)?;
+    crate::source_encoding::require_legacy(store, snapshot, "dataflow raw-source spans")?;
     ensure!(
         snapshot.workspace_id == store.workspace_id
             && identity(&store.snapshot(&snapshot.id)?) == identity(snapshot),

@@ -689,6 +689,7 @@ fn prepare(
         MeaningSelection::Files(v) | MeaningSelection::Bodies(v) => v,
     };
     let scope = crate::capture::source_scope_policy(store, snapshot)?;
+    scope.require_legacy_text("Meaning source selection")?;
     let mut units = BTreeMap::new();
     let mut total = 0usize;
     for key in selected {

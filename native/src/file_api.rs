@@ -83,7 +83,8 @@ fn inspect_selected(
         matches[0]
     };
     let scope = crate::capture::source_scope_policy(store, snapshot)?;
-    let source = String::from_utf8(scope.read_source(&file.path)?)?;
+    let view = scope.source_view(&file.path)?;
+    let source = view.text();
     let mut declarations: Vec<_> = graph
         .entities
         .iter()
@@ -101,7 +102,7 @@ fn inspect_selected(
         .map(|entity| (entity.start_byte, entity.end_byte))
         .collect();
     let mut headers = BTreeMap::new();
-    let segments = crate::languages::embedded_units(&file.language, &source)?
+    let segments = crate::languages::embedded_units(&file.language, source)?
         .map(|units| {
             units
                 .into_iter()
@@ -114,7 +115,7 @@ fn inspect_selected(
         let Some(language) = crate::analysis::grammar(&language) else {
             continue;
         };
-        let parse_text = crate::paths::utf8_range(&source, shift, finish)?;
+        let parse_text = crate::paths::utf8_range(source, shift, finish)?;
         let mut parser = Parser::new();
         parser.set_language(&language)?;
         let mut cancelled = |_: &tree_sitter::ParseState| deadline.check().is_err();
@@ -131,7 +132,10 @@ fn inspect_selected(
             deadline.check()?;
             visited += 1;
             ensure!(visited <= 1_000_000, "API AST budget exceeded");
-            let span = (shift + node.start_byte(), shift + node.end_byte());
+            let span = (
+                view.to_raw(shift + node.start_byte())?,
+                view.to_raw(shift + node.end_byte())?,
+            );
             if targets.contains(&span) {
                 let body = node
                     .child_by_field_name("body")
@@ -157,7 +161,7 @@ fn inspect_selected(
                     .then_some(node.end_byte())
                 });
                 if let Some(end) = end {
-                    headers.insert(span, shift + end);
+                    headers.insert(span, view.to_raw(shift + end)?);
                 }
             }
             let mut cursor = node.walk();
@@ -172,14 +176,15 @@ fn inspect_selected(
         deadline.check()?;
         let mut row = json!({"entityId":entity.id,"name":entity.name,"qualifiedName":entity.qualified_name,"kind":entity.kind,"path":file.path,"contentHash":file.hash,"startByte":entity.start_byte,"endByte":entity.end_byte,"startLine":entity.start_line,"endLine":entity.end_line,"signatureAvailable":false,"trust":"source-data"});
         if let Some(end) = headers.get(&(entity.start_byte, entity.end_byte)) {
-            let header = crate::paths::utf8_range(&source, entity.start_byte, *end)?.trim_end();
+            let header = view.quote(entity.start_byte, *end)?.trim_end();
             let mut length = header.len().min(16000);
             while !header.is_char_boundary(length) {
                 length -= 1;
             }
             row["signature"] = json!(&header[..length]);
             row["signatureStartByte"] = json!(entity.start_byte);
-            row["signatureEndByte"] = json!(entity.start_byte + length);
+            row["signatureEndByte"] =
+                json!(view.to_raw(view.to_decoded(entity.start_byte)? + length)?);
             row["signatureAvailable"] = json!(true);
             row["signatureTruncated"] = json!(length < header.len());
         } else {
@@ -187,6 +192,7 @@ fn inspect_selected(
             row["signatureOmission"] =
                 json!("No verified body-free AST header for this captured declaration");
         }
+        view.annotate(&mut row, &file.hash);
         let size = serde_json::to_vec(&row)?.len() + 1;
         if output_bytes.saturating_add(size) > 32 * 1024 * 1024 {
             byte_capped = true;
