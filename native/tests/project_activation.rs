@@ -41,12 +41,32 @@ fn shell() -> Shell {
         kind,
     }
 }
-fn append() -> String {
-    if cfg!(windows) {
-        "[IO.File]::AppendAllText((Join-Path (Get-Location).Path 'activation.log'), \"ran`n\"); [Console]::Out.Write('private-output'); [Console]::Error.Write('private-error')".into()
-    } else {
-        "printf 'ran\\n' >> activation.log; printf private-output; printf private-error >&2".into()
+// These dependencies belong to the explicitly authored test command. They are
+// included before profile construction and exact command hashing, inside the
+// command's existing budget; production grants never add a shell prelude.
+fn owned_command(command: &str) -> String {
+    #[cfg(windows)]
+    {
+        format!(
+            "{}\n{}\n{command}",
+            include_str!("fixtures/windows-powershell-utility.ps1"),
+            include_str!("fixtures/windows-powershell-management.ps1")
+        )
     }
+    #[cfg(not(windows))]
+    {
+        command.to_owned()
+    }
+}
+fn append_body() -> &'static str {
+    if cfg!(windows) {
+        "[IO.File]::AppendAllText((Join-Path (Get-Location).Path 'activation.log'), \"ran`n\"); [Console]::Out.Write('private-output'); [Console]::Error.Write('private-error')"
+    } else {
+        "printf 'ran\\n' >> activation.log; printf private-output; printf private-error >&2"
+    }
+}
+fn append() -> String {
+    owned_command(append_body())
 }
 fn count(root: &Path) -> usize {
     fs::read_to_string(root.join("activation.log"))
@@ -275,11 +295,30 @@ fn nonzero_exit_keeps_external_effects_and_continues_with_complete_cleanup_recei
 fn command_timeout_with_descendants_requires_checked_tree_cleanup_and_remaining_parent_time() {
     let r = root();
     #[cfg(windows)]
-    let command = "[IO.File]::WriteAllText((Join-Path (Get-Location).Path 'started'),'1'); $p=Start-Process -FilePath (Join-Path $PSHOME 'powershell.exe') -ArgumentList '-NoProfile','-Command','Start-Sleep -Seconds 30' -PassThru -WindowStyle Hidden; $p.WaitForExit()";
+    let command = {
+        use base64::Engine as _;
+        // A fresh PowerShell child does not inherit its parent's loaded module.
+        // Encode the fixed owned payload so nested CLI quoting cannot alter it.
+        let child = format!(
+            "{}\nStart-Sleep -Seconds 30",
+            include_str!("fixtures/windows-powershell-utility.ps1")
+        );
+        let utf16: Vec<_> = child.encode_utf16().collect();
+        assert!(utf16.len() <= 4096);
+        let encoded = base64::prelude::BASE64_STANDARD.encode(
+            utf16
+                .into_iter()
+                .flat_map(u16::to_le_bytes)
+                .collect::<Vec<_>>(),
+        );
+        owned_command(&format!(
+            "[IO.File]::WriteAllText((Join-Path (Get-Location).Path 'started'),'1'); $p=Start-Process -FilePath (Join-Path $PSHOME 'powershell.exe') -ArgumentList '-NoProfile','-EncodedCommand','{encoded}' -PassThru -WindowStyle Hidden; $p.WaitForExit()"
+        ))
+    };
     #[cfg(not(windows))]
-    let command = "printf started > started; sleep 30 & wait";
-    let mut host = profile(command, json!(2.5));
-    let pin = selection(&host, "default", r.path(), command);
+    let command = owned_command("printf started > started; sleep 30 & wait");
+    let mut host = profile(&command, json!(2.5));
+    let pin = selection(&host, "default", r.path(), &command);
     grant(&mut host, r.path(), &[pin]);
     let start = Instant::now();
     let mut s = open(r.path(), host, "timeout");
@@ -424,8 +463,9 @@ fn output_capacity_and_enclosing_expiry_refuse_publication_and_do_not_automatica
         } else {
             "i=0; while [ $i -lt 70000 ]; do printf x; i=$((i+1)); done"
         };
-        let mut host = profile(command, json!(180));
-        let pin = selection(&host, "default", r.path(), command);
+        let command = owned_command(command);
+        let mut host = profile(&command, json!(180));
+        let pin = selection(&host, "default", r.path(), &command);
         grant(&mut host, r.path(), &[pin]);
         let deadline = if long { Deadline::new(1000) } else { d() };
         assert!(
@@ -463,7 +503,10 @@ fn lazy_secondary_requires_explicit_activation_and_target_cwd_before_cold_engine
     let a = root();
     let b = root();
     let command = if cfg!(windows) {
-        format!("if (Test-Path '.yoke') {{ exit 19 }}; {}", append())
+        owned_command(&format!(
+            "if (Test-Path '.yoke') {{ exit 19 }}; {}",
+            append_body()
+        ))
     } else {
         format!("test ! -d .yoke || exit 19; {}", append())
     };
@@ -675,8 +718,9 @@ fn unicode_quoting_and_physical_root_replacement_do_not_rebind_authority() {
     } else {
         "printf '%s' 'α '\"'\"'single'\"'\"' \"double\"' > quote.txt"
     };
-    let mut host = profile(command, json!(180));
-    let pin = selection(&host, "default", &selected, command);
+    let command = owned_command(command);
+    let mut host = profile(&command, json!(180));
+    let pin = selection(&host, "default", &selected, &command);
     grant(&mut host, &selected, &[pin]);
     let s = open(&selected, host.clone(), "unicode");
     assert_eq!(
@@ -714,8 +758,9 @@ fn stale_session_during_an_irreversible_attempt_refuses_before_secondary_backend
     } else {
         "printf started > started; while [ ! -f release ]; do sleep 0.01; done; printf irreversible > effect"
     };
+    let command = owned_command(command);
     let mut host:HostProfile=serde_json::from_value(json!({"projects":[{"name":"other","root":b.path().canonicalize().unwrap()}],"activationCommands":{"projects":{"other":{"project":{"activation_command":command}}}}})).unwrap();
-    let pin = selection(&host, "other", b.path(), command);
+    let pin = selection(&host, "other", b.path(), &command);
     grant(&mut host, a.path(), &[pin]);
     let mut s = open(a.path(), host.clone(), "raced");
     let before = config(&mut s);
@@ -1374,9 +1419,10 @@ fn explicitly_authorized_shell_effects_do_not_rewrite_immutable_captured_source_
     } else {
         "printf 'fn changed() {}\\n' > main.rs; exit 7"
     };
-    let mut host = profile(command, json!(180));
+    let command = owned_command(command);
+    let mut host = profile(&command, json!(180));
     host.primary_read_only = true;
-    let pin = selection(&host, "default", r.path(), command);
+    let pin = selection(&host, "default", r.path(), &command);
     grant(&mut host, r.path(), &[pin]);
     let mut engine = Engine::open(r.path()).unwrap();
     let (snapshot, _, _, _) = engine.index(&d()).unwrap();
