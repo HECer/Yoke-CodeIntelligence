@@ -68,6 +68,14 @@ before reading input. Windows limits committed job memory; Unix limits virtual
 address space and fails if it cannot enforce the requested limit. Unix execution
 is not qualified by the Windows evidence. Existing checked termination and member
 proofs remain; a failure does not publish a partial profile or create an export.
+
+Direct Unix worker limit installation/observation errors retain the failing
+`RLIMIT_AS` API, requested installation bytes and the immediate OS error in the
+error chain. The original top-level refusal messages remain unchanged. This
+diagnostic does not infer that an unrelated spawn error came from a resource
+call, establish enforcement from a failed observation, or make unavailable
+platform capability successful.
+
 OS resource limits do not provide an account/filesystem/network sandbox.
 
 The library's separately explicit project_with_prompt_renderer hook accepts a

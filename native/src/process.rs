@@ -331,10 +331,15 @@ pub fn limit_current_memory(memory_bytes: usize) -> Result<CurrentMemoryLimit> {
             rlim_cur: memory_bytes as libc::rlim_t,
             rlim_max: memory_bytes as libc::rlim_t,
         };
-        ensure!(
-            unsafe { libc::setrlimit(libc::RLIMIT_AS, &limit) } == 0,
-            "Owned memory limit unavailable"
-        );
+        // Capture errno before formatting or another OS observation can replace it.
+        if unsafe { libc::setrlimit(libc::RLIMIT_AS, &limit) } != 0 {
+            let error = std::io::Error::last_os_error();
+            return Err(error)
+                .with_context(|| {
+                    format!("RLIMIT_AS installation failed; requestedBytes={memory_bytes}")
+                })
+                .context("Owned memory limit unavailable");
+        }
         Ok(CurrentMemoryLimit {})
     }
     #[cfg(not(any(windows, unix)))]
@@ -356,10 +361,12 @@ pub fn current_memory_limit() -> Result<Option<usize>> {
             rlim_max: 0,
         };
         // SAFETY: limit is a writable rlimit; getrlimit has no child effects.
-        ensure!(
-            unsafe { libc::getrlimit(libc::RLIMIT_AS, &mut limit) } == 0,
-            "Owned memory limit observation unavailable"
-        );
+        if unsafe { libc::getrlimit(libc::RLIMIT_AS, &mut limit) } != 0 {
+            let error = std::io::Error::last_os_error();
+            return Err(error)
+                .context("RLIMIT_AS observation failed")
+                .context("Owned memory limit observation unavailable");
+        }
         let ceiling = limit.rlim_cur.min(limit.rlim_max);
         Ok((ceiling != libc::RLIM_INFINITY)
             .then(|| usize::try_from(ceiling))

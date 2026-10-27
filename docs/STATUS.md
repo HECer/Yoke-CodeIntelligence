@@ -175,6 +175,19 @@ admission without launching Python. Runtime execution and the new tests remain
 unqualified until current-source library and actual runtime/CLI integration checks pass.
 The older evidence below applies to its recorded source only.
 
+## Direct worker resource-error evidence candidate (2026-10-27)
+
+Direct Unix `setrlimit` and `getrlimit` failures now retain their immediate
+`std::io::Error` cause and a fixed `RLIMIT_AS` phase; installation also records
+the already validated requested byte ceiling. The original top-level refusal
+messages, limit values, pre-input ordering and Windows behavior are unchanged.
+Static validation of this candidate does not invoke either resource API.
+
+This does not attribute a generic fork/exec error to resource setup or establish
+a conforming macOS backend. Static source/format checks are separate from actual
+current-source worker execution, which remains pending. The original memory and
+timing acceptance gates remain intact.
+
 ## Combined platform checkpoint before the cancellation correction (2026-10-27)
 
 At PR8 source `d8533de2`, checked out as merge `48fe814d`, the
