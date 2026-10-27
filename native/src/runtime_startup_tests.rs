@@ -2,6 +2,40 @@
 //! They do not replace real Python/process-ownership integration acceptance.
 use super::*;
 
+type BeforeReceive = Box<dyn FnOnce()>;
+thread_local! {
+    static BEFORE_RECEIVE: std::cell::RefCell<Option<BeforeReceive>> =
+        const { std::cell::RefCell::new(None) };
+}
+
+pub(super) fn before_receive() {
+    let hook = BEFORE_RECEIVE.with(|slot| slot.borrow_mut().take());
+    if let Some(hook) = hook {
+        hook();
+    }
+}
+
+struct WaitHook;
+impl Drop for WaitHook {
+    fn drop(&mut self) {
+        BEFORE_RECEIVE.with(|slot| drop(slot.borrow_mut().take()));
+    }
+}
+
+fn cancel_at_receive(flag: Arc<AtomicBool>) -> WaitHook {
+    BEFORE_RECEIVE.with(|slot| {
+        assert!(
+            slot.replace(Some(Box::new(move || flag.store(true, Ordering::SeqCst))))
+                .is_none()
+        );
+    });
+    WaitHook
+}
+
+fn cancellable_deadline(flag: Arc<AtomicBool>) -> Deadline {
+    Deadline::run_bounded(&Deadline::new(10_000), flag, || Ok(Deadline::new(10_000))).unwrap()
+}
+
 #[test]
 fn successful_startup_preserves_the_live_owner_receipt_and_does_not_cancel() {
     let (startup, started) = mpsc::sync_channel(1);
@@ -138,4 +172,59 @@ fn owner_observation_failure_preserves_both_error_causes() {
     assert!(error.chain().any(|cause| cause.is::<std::io::Error>()));
     assert!(cancel.load(Ordering::SeqCst));
     assert!(matches!(stopped.try_recv(), Err(mpsc::TryRecvError::Empty)));
+}
+
+#[test]
+fn cancellation_after_wait_budget_selection_does_not_consume_the_original_lifetime() {
+    let (startup, started) = mpsc::sync_channel::<std::result::Result<usize, String>>(1);
+    let (owner, stopped) = mpsc::sync_channel(1);
+    owner.send(Ok(())).unwrap();
+    let host_cancel = Arc::new(AtomicBool::new(false));
+    let deadline = cancellable_deadline(host_cancel.clone());
+    let _hook = cancel_at_receive(host_cancel.clone());
+    let cancel = AtomicBool::new(false);
+    let now = std::time::Instant::now();
+
+    // The hook cancels after the wait duration was sampled, while this sender
+    // remains open without delivering startup. The real channel wait must wake.
+    let error = receive_startup(&started, &stopped, &cancel, &deadline).unwrap_err();
+    let elapsed = now.elapsed();
+    drop(startup);
+
+    assert_eq!(error.to_string(), "Runtime startup cancelled by host");
+    assert!(elapsed < Duration::from_secs(2), "elapsed={elapsed:?}");
+    assert!(host_cancel.load(Ordering::SeqCst));
+    assert!(cancel.load(Ordering::SeqCst));
+    assert!(!crate::process::cleanup_unproven(&error));
+    assert!(matches!(stopped.try_recv(), Err(mpsc::TryRecvError::Empty)));
+}
+
+#[test]
+fn cancellation_alongside_successful_pipe_delivery_still_requires_owner_cleanup() {
+    for refused in [false, true] {
+        let (startup, started) = mpsc::sync_channel(1);
+        startup.send(Ok(7usize)).unwrap();
+        let (owner, stopped) = mpsc::sync_channel(1);
+        owner
+            .send(if refused {
+                Err(crate::process::CleanupUnproven::new("owned cleanup refusal").into())
+            } else {
+                Ok(())
+            })
+            .unwrap();
+        let host_cancel = Arc::new(AtomicBool::new(false));
+        let deadline = cancellable_deadline(host_cancel.clone());
+        let _hook = cancel_at_receive(host_cancel);
+        let cancel = AtomicBool::new(false);
+
+        let error = receive_startup(&started, &stopped, &cancel, &deadline).unwrap_err();
+
+        assert_eq!(error.to_string(), "Runtime startup cancelled by host");
+        assert_eq!(crate::process::cleanup_unproven(&error), refused);
+        if refused {
+            assert!(format!("{error:#}").contains("owned cleanup refusal"));
+        }
+        assert!(cancel.load(Ordering::SeqCst));
+        assert!(matches!(stopped.try_recv(), Err(mpsc::TryRecvError::Empty)));
+    }
 }

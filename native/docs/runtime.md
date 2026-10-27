@@ -95,6 +95,11 @@ receipt within that same separate two-second allowance before returning. Missing
 receipts retain typed cleanup uncertainty. The owner checks cancellation and the
 original lifetime before spawning; every post-spawn path, including failure to
 acquire startup pipes, reaches one checked cleanup before its receipt is sent.
+Startup channels use waits of at most 10 ms before rechecking the original
+cancellation/deadline, and pipe delivery is checked again before admission. A
+host cancellation does not wait out a previously sampled lifetime. This does not
+interrupt a blocked OS spawn; the process owner retains responsibility and an unavailable
+receipt still reports cleanup uncertainty.
 This does not renew the lifetime or turn failed startup into successful execution.
 
 The CLI closes a still-paused session through the existing typed `Close` request

@@ -77,10 +77,31 @@ fn receive_startup<T>(
     cancel: &AtomicBool,
     deadline: &Deadline,
 ) -> Result<T> {
-    let failure = match started.recv_timeout(deadline.remaining()) {
-        Ok(Ok(pipes)) => return Ok(pipes),
-        Ok(Err(error)) => anyhow::anyhow!(error),
-        Err(_) => anyhow::anyhow!("Runtime startup deadline exceeded"),
+    let failure = loop {
+        if let Some(failure) = deadline.failure() {
+            break anyhow::anyhow!(match failure {
+                crate::capture::DeadlineFailure::Cancelled => "Runtime startup cancelled by host",
+                crate::capture::DeadlineFailure::Expired => "Runtime startup deadline exceeded",
+            });
+        }
+        let wait = deadline.remaining().min(Duration::from_millis(10));
+        #[cfg(test)]
+        startup_tests::before_receive();
+        match started.recv_timeout(wait) {
+            Ok(Ok(pipes)) => {
+                // Cancellation may arrive while waiting or alongside delivery.
+                // Do not admit received pipes after the original lifetime ends.
+                if deadline.failure().is_none() {
+                    return Ok(pipes);
+                }
+                drop(pipes);
+            }
+            Ok(Err(error)) => break anyhow::anyhow!(error),
+            Err(mpsc::RecvTimeoutError::Timeout) => {}
+            Err(mpsc::RecvTimeoutError::Disconnected) => {
+                break anyhow::anyhow!("Runtime startup deadline exceeded");
+            }
+        }
     };
     cancel.store(true, Ordering::SeqCst);
     // No Session exists yet to request checked shutdown. Failure delivery still
