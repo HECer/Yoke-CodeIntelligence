@@ -40,8 +40,16 @@ thread settings, ignores, permissions and serialized protocols:
   omission assertion. The transport fixture reads typed `changes::Approval` and
   its existing `plan_id` field. No production path or schema is changed.
 
-The new correction has only scoped rustfmt parsing/format and diff checks so far.
-Fresh complete affected groups, all-target Clippy and same-source CI are still
+The new correction passes scoped rustfmt parsing/format and diff checks.
+[`construction-clippy.json`](construction-clippy.json) indexes the raw text-only
+`construction-clippy-attempts.zip`: the first attempt reports E0061 at an internal
+Git-construction caller and retains an owned MSVC helper until forced cleanup.
+The existing four-argument boundary is restored at `8525787d`. The second attempt
+is interrupted by the original disk reserve at 328,544,256 free bytes, before
+compiler completion and without diagnostics observed. Its original cleanup proves
+the owned tree empty; selected bytes rehash unchanged, but final controller/clean
+HEAD checks are not reached. Neither attempt is accepted or executes Yoke tests.
+Fresh complete affected groups, all-target Clippy and same-source CI remain
 required. The unrelated DAP `no-configuration-phase` failure expires the original
 three-second deadline without phase evidence; no production cause or fix is
 claimed. The original strict macOS 256 MiB address-space contract remains unmet.

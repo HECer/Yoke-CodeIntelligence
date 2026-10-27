@@ -14,8 +14,11 @@ The new historical-read assertion still requires refusal before publication.
 
 Two codec fixtures now use a portable NUL-content filename and the existing typed
 snake-case approval schema. Production path protection and serialization remain.
-These corrections pass scoped formatting/diff checks; their new runtime
-qualification remains pending. The separate original 3-second DAP timeout is
+These corrections pass scoped formatting/diff checks. Clippy first found a
+missed internal Git-construction caller; the existing call boundary is restored.
+The second attempt is stopped by the original disk reserve before compiler
+completion, with no diagnosis observed. Neither attempt is accepted; current
+typing and runtime qualification remain pending. The original 3-second DAP timeout is
 unattributed and unchanged; macOS strict address-space capability remains open.
 
 The prior-head Node CI succeeds on Ubuntu/Windows/macOS with Node 22.16.0 and 24
