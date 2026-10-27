@@ -156,6 +156,22 @@ affected native integration groups and all-target Clippy remain unrun locally
 at this diagnostic source. No runtime repair or platform acceptance is claimed.
 [Bounded historical evidence and current checks](validation/integration-2026-10-26/ci-boundary-diagnostics/README.md).
 
+## Runtime startup ownership candidate (2026-10-27)
+
+Startup failures now request cancellation and wait for the process owner's
+checked cleanup receipt before returning. Missing receipts preserve typed
+cleanup uncertainty; receipt errors retain both causes. The owner checks the
+original deadline and cancellation before spawn, and pipe setup, disconnected
+startup delivery and normal observation share one checked post-spawn cleanup.
+The existing two-second cleanup allowance and Session lifetime are unchanged.
+
+Six scripted-channel regressions cover successful startup without consuming the
+live owner receipt, reported failure, expired/disconnected startup, refused or
+missing receipts, and owner observation errors. They exercise startup admission
+without launching Python. Runtime execution and the new tests remain unqualified
+until current-source library and actual runtime/CLI integration checks pass.
+The older evidence below applies to its recorded source only.
+
 ## Runtime response and batch shutdown checks (2026-10-26)
 
 Source `704b647d` checks the original Session lifetime again after terminal
