@@ -874,11 +874,12 @@ fn native_and_serena_protocols_reject_forged_grants_and_share_explicit_activatio
             json!({"command":"private-canary"}),
             json!({"timeoutMs":"deadline-cleaned"}),
             json!({"root":"/"}),
+            json!({"session_id":"foreign"}),
         ] {
             let mut args = if profile == Profile::Session {
                 json!({"operation":"activate","args":{"project":"default"}})
             } else {
-                json!({"project":"default"})
+                json!({"project":"default","session_id":"protocol"})
             };
             let target = if profile == Profile::Session {
                 args["args"].as_object_mut().unwrap()
@@ -897,7 +898,7 @@ fn native_and_serena_protocols_reject_forged_grants_and_share_explicit_activatio
         let args = if profile == Profile::Session {
             json!({"operation":"activate","args":{"project":"default"}})
         } else {
-            json!({"project":"default"})
+            json!({"project":"default","session_id":"protocol"})
         };
         let message = json!({"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":name,"arguments":args}});
         let response = connection
@@ -1030,16 +1031,19 @@ fn actual_cli_separates_passive_inspection_host_opt_in_and_model_request_fields(
 
 #[test]
 fn actual_cli_stdio_native_and_serena_lifecycles_share_the_host_selection() {
-    for profile in ["session", "serena"] {
+    for profile in ["native", "serena"] {
         let r = root();
         let (host, selection) = cli_files(r.path());
-        let (name, args) = if profile == "session" {
+        let (name, args) = if profile == "native" {
             (
                 "ci_session",
                 json!({"operation":"activate","args":{"project":"default"}}),
             )
         } else {
-            ("activate_project", json!({"project":"default"}))
+            (
+                "activate_project",
+                json!({"project":"default","session_id":"activation-stdio"}),
+            )
         };
         let input = format!(
             "{}\n{}\n",
@@ -1054,6 +1058,8 @@ fn actual_cli_stdio_native_and_serena_lifecycles_share_the_host_selection() {
             "--activation-selection".into(),
             selection.display().to_string(),
             "serve-session".into(),
+            "--id".into(),
+            "activation-stdio".into(),
             "--profile".into(),
             profile.into(),
             "--host-profile".into(),
@@ -1197,14 +1203,44 @@ fn actual_http_initialization_and_explicit_activation_keep_protocol_authority_se
                 json!({"operation":"activate","args":{"project":"default"}}),
             )
         } else {
-            ("activate_project", json!({"project":"default"}))
+            // The public owning Session label is independent of the transport
+            // secret. Obtain it through the same public configuration surface.
+            let (status, _, response) = http(
+                address,
+                "POST",
+                Some(sid),
+                Some(
+                    json!({"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"get_current_config","arguments":{}}}),
+                ),
+            );
+            assert_eq!(status, 200);
+            assert_eq!(response["result"]["isError"], false, "{response}");
+            let configuration: Value =
+                serde_json::from_str(response["result"]["content"][0]["text"].as_str().unwrap())
+                    .unwrap();
+            let label = configuration["data"]["sessionId"].as_str().unwrap();
+            assert_ne!(label, sid);
+            let (_, _, refused) = http(
+                address,
+                "POST",
+                Some(sid),
+                Some(
+                    json!({"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"activate_project","arguments":{"project":"default","session_id":sid}}}),
+                ),
+            );
+            assert_eq!(refused["result"]["isError"], true, "{refused}");
+            assert_eq!(count(r.path()), 1);
+            (
+                "activate_project",
+                json!({"project":"default","session_id":label}),
+            )
         };
         let (_, _, response) = http(
             address,
             "POST",
             Some(sid),
             Some(
-                json!({"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":name,"arguments":args}}),
+                json!({"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":name,"arguments":args}}),
             ),
         );
         assert_eq!(response["result"]["isError"], false, "{response}");
