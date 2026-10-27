@@ -384,8 +384,26 @@ fn dap_accepts_no_configuration_phase_and_discovers_optional_stopped_thread_ids(
             p.breakpoints.clear();
         }
         let deadline = Deadline::new(3000);
+        let started = std::time::Instant::now();
         let mut adapter = DebugAdapter::start(&engine.store, &snapshot, &p, &deadline)
-            .unwrap_or_else(|error| panic!("optional {mode} rejected: {error:#}"));
+            .unwrap_or_else(|error| {
+                use std::io::Read;
+                // Sample failure return (including checked startup cleanup)
+                // before diagnostic I/O; this is not protocol-only timing.
+                let elapsed = started.elapsed();
+                let remaining = deadline.remaining();
+                // This owned fixture records only request type, command, sequence
+                // and its PID. Read it only after failure, with a fixed byte cap.
+                let mut bytes = Vec::new();
+                let log_read = fs::File::open(log.path())
+                    .and_then(|file| file.take(4097).read_to_end(&mut bytes));
+                let truncated = bytes.len() > 4096;
+                bytes.truncate(4096);
+                let commands = std::str::from_utf8(&bytes);
+                panic!(
+                    "optional {mode} rejected: {error:#}; elapsed={elapsed:?}; remaining={remaining:?}; fixture_read={log_read:?}; fixture_truncated={truncated}; fixture_commands={commands:?}"
+                )
+            });
         assert_eq!(
             adapter.evaluate("value + 2", &deadline).unwrap()["result"],
             "42"
