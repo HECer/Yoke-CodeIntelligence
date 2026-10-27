@@ -1989,7 +1989,6 @@ pub(crate) fn stage_directory_move_at(
     )?;
     Ok(StagedSemantic { value, edits })
 }
-#[allow(clippy::too_many_arguments)]
 fn check_semantic_manifests(
     engine: &Engine,
     snapshot: &Snapshot,
@@ -2010,6 +2009,7 @@ fn check_semantic_manifests(
     );
     deadline.check()
 }
+#[allow(clippy::too_many_arguments)]
 fn run_at_internal(
     engine: &mut Engine,
     host: (&Server, Option<&HostConfiguration>),
