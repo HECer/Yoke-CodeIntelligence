@@ -3084,6 +3084,10 @@ fn file_documentation(
 #[cfg(test)]
 mod source_binding_tests {
     use super::*;
+    use std::sync::{
+        Arc,
+        atomic::{AtomicBool, Ordering},
+    };
     #[test]
     fn inherited_cancellation_survives_default_and_named_facade_semantic_queries() {
         let root = tempfile::tempdir().unwrap();
