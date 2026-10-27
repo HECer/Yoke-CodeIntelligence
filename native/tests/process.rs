@@ -253,7 +253,19 @@ fn windows_owned_fixture_refuses_missing_utility_before_payload_entry() {
         .env("YOKE_OWNED_MISSING_MODULE", &missing)
         .args(["-NoProfile", "-NonInteractive", "-Command", script.as_str()]);
     let output = run_capture(command, b"", &Deadline::new(20_000), limits()).unwrap();
-    assert_eq!(output.exit_code, Some(125));
+    assert_eq!(
+        output.exit_code,
+        Some(125),
+        "stdout={:?}; stderr={:?}; stdin_complete={}; output_complete={}; timed_out={}; output_exceeded={}; io_error={}; payload_entered={}",
+        String::from_utf8_lossy(&output.stdout[..output.stdout.len().min(4096)]),
+        String::from_utf8_lossy(&output.stderr[..output.stderr.len().min(4096)]),
+        output.stdin_complete,
+        output.output_complete,
+        output.timed_out,
+        output.output_exceeded,
+        output.io_error,
+        phase.exists()
+    );
     assert!(output.stdout.is_empty());
     assert_eq!(
         String::from_utf8(output.stderr).unwrap().trim(),
