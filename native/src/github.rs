@@ -1151,6 +1151,7 @@ fn source_impact_for(
                 source_bytes <= 64_000_000,
                 "PR selected source capacity exceeded"
             );
+            scope.require_legacy_text("GitHub pull-request source binding")?;
             let text = String::from_utf8(scope.read_source(&path)?)?;
             use sha1::{Digest, Sha1};
             let mut digest = Sha1::new();

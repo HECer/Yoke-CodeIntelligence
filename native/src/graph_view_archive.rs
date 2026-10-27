@@ -208,6 +208,7 @@ fn package_verified(
     // Recheck every scope before copying any source; a hash is never a source grant.
     for scope in manifest.scopes() {
         let policy = crate::capture::source_scope_policy(store, scope)?;
+        policy.require_legacy_text("Meaning archive source export")?;
         for file in &scope.files {
             deadline.check()?;
             ensure!(

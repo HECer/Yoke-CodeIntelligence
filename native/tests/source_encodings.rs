@@ -15,7 +15,7 @@ use yoke::{
     project_session::{HostProfile, HostProject, Session},
     query,
     session_config::{self, Source, Target},
-    source_encoding::{Codec, Policy, View},
+    source_encoding::{Codec, View},
 };
 
 fn d() -> Deadline {
@@ -886,6 +886,13 @@ fn model_source_selection_refuses_utf8_valid_latin1_before_provider_execution() 
         "source_encoding_capability_unavailable: model source selection requires legacy UTF-8 source proof"
     );
     assert!(!provider.command.exists());
+    let error = yoke::knowledge::build_local_vectors(&e.store, &snapshot, &graph, &d())
+        .unwrap_err()
+        .to_string();
+    assert_eq!(
+        error,
+        "source_encoding_capability_unavailable: knowledge source proofs requires legacy UTF-8 source proof"
+    );
 }
 
 #[test]

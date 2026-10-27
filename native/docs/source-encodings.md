@@ -167,6 +167,10 @@ optional execution, or at their non-executing proof entrypoint:
 - Optional model source selection for summaries, embeddings and reranking;
   source admission refuses before provider execution, including Latin1 bytes
   that are independently valid UTF-8 with a different interpretation.
+- Knowledge proof import/local vectors, Meaning source selection/archive text,
+  GitHub source declarations/bindings, Git impact/owner text and Trail definition
+  bodies retain explicit UTF-8-only admission. Raw-byte readers remain available
+  for byte-preserving capture, plans and journals.
 - Other legacy consumers of `query::source[_in_scope]` receive an explicit
   `source_encoding_capability_unavailable` error rather than a decoded string
   whose offsets they could mistake for raw positions. Advanced archive, model,
@@ -244,10 +248,19 @@ native/src/dataflow.rs
 native/src/debug_adapter.rs
 native/src/editor.rs
 native/src/file_api.rs
+native/src/github.rs
+native/src/github_app_digest_source.rs
+native/src/git_impact_details.rs
+native/src/git_owners.rs
 native/src/git_workflows.rs
+native/src/graph_view.rs
+native/src/graph_view_archive.rs
+native/src/graph_view_comparison_input.rs
+native/src/knowledge.rs
 native/src/lib.rs
 native/src/lsp.rs
 native/src/main.rs
+native/src/meaning_build.rs
 native/src/project_session.rs
 native/src/projects.rs
 native/src/providers.rs
@@ -257,9 +270,11 @@ native/src/retrieval_scopes.rs
 native/src/runtime.rs
 native/src/semantic_enrichment.rs
 native/src/semantic_refactor.rs
+native/src/semantic_propagated_delete.rs
 native/src/session_config.rs
 native/src/session_config_tests.rs
 native/src/store.rs
 native/src/store_read_only.rs
 native/src/test_map.rs
+native/src/trail_adapter.rs
 ```

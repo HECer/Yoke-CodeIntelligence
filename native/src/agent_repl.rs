@@ -2057,10 +2057,7 @@ fn diagnostic_referencing_symbols(
                 sources.len() < 200 && source_bytes <= 16_000_000,
                 "Diagnostic reference source budget exceeded"
             );
-            sources.insert(
-                path.to_owned(),
-                String::from_utf8(scope.read_source(path)?)?,
-            );
+            sources.insert(path.to_owned(), scope.source_view(path)?);
         }
         let start = item["startByte"]
             .as_u64()
@@ -2068,7 +2065,7 @@ fn diagnostic_referencing_symbols(
         let end = item["endByte"]
             .as_u64()
             .context("Diagnostic reference end missing")?;
-        crate::paths::utf8_range(&sources[path], start as usize, end as usize)?;
+        sources[path].quote(start as usize, end as usize)?;
         ranges.push(item.clone());
     }
     Ok(ranges)

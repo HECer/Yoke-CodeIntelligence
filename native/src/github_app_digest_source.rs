@@ -369,6 +369,7 @@ pub(super) fn project_for_commits(
     for file in &snapshot.files {
         d.check()?;
         scope.path_policy(&file.path).context(SOURCE)?;
+        scope.require_legacy_text("GitHub App source declarations")?;
         let text = if let Some(sources) = &mut retained {
             sources.remove(&file.path).context(SOURCE)?
         } else {

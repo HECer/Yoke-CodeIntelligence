@@ -711,8 +711,10 @@ struct SourceReader<'a> {
 }
 impl<'a> SourceReader<'a> {
     fn new(store: &'a Store, snapshot: &'a Snapshot) -> Result<Self> {
+        let scope = crate::capture::source_scope_policy(store, snapshot)?;
+        scope.require_legacy_text("knowledge source proofs")?;
         Ok(Self {
-            scope: crate::capture::source_scope_policy(store, snapshot)?,
+            scope,
             texts: BTreeMap::new(),
             cached_bytes: 0,
         })

@@ -1308,6 +1308,13 @@ impl CapturedSourceScope<'_> {
     pub fn source_encoding(&self) -> Option<crate::source_encoding::Policy> {
         self.options.source_encoding
     }
+    pub fn require_legacy_text(&self, consumer: &str) -> Result<()> {
+        ensure!(
+            self.source_encoding().is_none(),
+            "source_encoding_capability_unavailable: {consumer} requires legacy UTF-8 source proof"
+        );
+        Ok(())
+    }
     pub fn source_view(&self, path: &str) -> Result<crate::source_encoding::View> {
         crate::source_encoding::View::decode(
             self.read_source(path)?,
