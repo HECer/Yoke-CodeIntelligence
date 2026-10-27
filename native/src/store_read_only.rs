@@ -134,6 +134,7 @@ impl Store {
             workspace_id,
             deadline: RefCell::new(Some(d.clone())),
             source_line_ending: None,
+            source_encoding: None,
             source_exclusion_selection: None,
             current_source_exclusions: None,
             current_git_ignored_read_only: false,

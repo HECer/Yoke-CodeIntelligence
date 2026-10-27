@@ -260,5 +260,6 @@ native/src/semantic_refactor.rs
 native/src/session_config.rs
 native/src/session_config_tests.rs
 native/src/store.rs
+native/src/store_read_only.rs
 native/src/test_map.rs
 ```
