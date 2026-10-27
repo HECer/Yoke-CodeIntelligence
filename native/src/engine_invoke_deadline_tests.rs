@@ -56,9 +56,9 @@ fn cancellable(cancel: Arc<AtomicBool>) -> Deadline {
 }
 
 #[test]
-fn expired_inherited_deadline_refuses_before_timeout_default_or_provider_selection() {
+fn expired_inherited_deadline_refuses_before_provider_selection() {
     let (_root, mut engine, snapshot) = fixture();
-    for timeout in [0, 9, 120_000] {
+    for timeout in [10, 20_000, 120_000] {
         let error = engine
             .invoke_at("ci_find", semantic(&snapshot, timeout), &Deadline::new(0))
             .unwrap_err();
@@ -74,7 +74,7 @@ fn captured_and_live_cancellation_reach_engine_admission_without_an_ambient_scop
     cancel.store(true, Ordering::SeqCst);
     assert_eq!(
         engine
-            .invoke_at("ci_find", semantic(&snapshot, 0), &deadline)
+            .invoke_at("ci_find", semantic(&snapshot, 120_000), &deadline)
             .unwrap_err()
             .to_string(),
         "Request cancelled by host"
@@ -84,25 +84,38 @@ fn captured_and_live_cancellation_reach_engine_admission_without_an_ambient_scop
     let deadline = cancellable(Arc::clone(&cancel));
     let _hook = cancelling_hook(cancel);
     let value = engine
-        .invoke_at("ci_find", semantic(&snapshot, 0), &deadline)
+        .invoke_at("ci_find", semantic(&snapshot, 120_000), &deadline)
         .unwrap();
     assert_eq!(value["status"], "error", "{value}");
     assert_eq!(value["error"]["message"], "Request cancelled by host");
     assert_eq!(value["metrics"]["languageServerAttempts"], 0);
     // With the inherited flags removed, the same request reaches the absent
     // provider instead. That refusal must remain distinguishable from cancel.
-    let ordinary = engine.invoke("ci_find", semantic(&snapshot, 0)).unwrap();
+    let ordinary = engine
+        .invoke("ci_find", semantic(&snapshot, 120_000))
+        .unwrap();
     assert_eq!(ordinary["status"], "error");
-    assert_ne!(ordinary["error"]["message"], "Request cancelled by host");
+    assert_eq!(
+        ordinary["error"]["message"],
+        "No host-authorized semantic server registered for this language"
+    );
 }
 
 #[test]
-fn ordinary_timeout_fallback_remains_unchanged_without_a_trusted_inherited_deadline() {
+fn ordinary_timeout_validation_and_default_remain_unchanged_without_an_inherited_deadline() {
     let (_root, mut engine, _) = fixture();
     for timeout in [0, 9, 600_001] {
         let value = engine
             .invoke("ci_status", json!({"timeoutMs":timeout}))
             .unwrap();
-        assert_eq!(value["status"], "ok", "{value}");
+        assert_eq!(value["status"], "error", "{value}");
+        assert_eq!(
+            value["error"]["message"],
+            "Invalid numeric range: timeoutMs"
+        );
     }
+    assert_eq!(
+        engine.invoke("ci_status", json!({})).unwrap()["status"],
+        "ok"
+    );
 }

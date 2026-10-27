@@ -3,16 +3,19 @@
 ## Nested Session query deadline admission corrected; execution pending (2026-10-27)
 
 Session source-query routes now intersect their parsed request timeout with the
-actual inherited host Deadline. A serialized remaining budget below 10 ms can
-no longer select the ordinary 120-second Engine default in place of that host
-ceiling; captured/live cancellation flags remain attached. Public Engine timeout
-defaults and document-apply provenance paths retain their existing behavior.
+actual inherited host Deadline instead of recreating a sampled duration without
+its cancellation flags. The original ceiling and captured/live cancellation
+remain attached throughout the nested operation. Public Engine timeout defaults,
+numeric-range validation and document-apply provenance retain existing behavior.
 Three deterministic unit regressions are authored, not executed. They require no
 provider process and retain a thread-local, one-shot test hook with RAII cleanup.
 
 This is a separate admission defect found while reviewing the Windows provider
 query timeout. It does not establish that timeout's cause. The original
 source-binding assertions and 20-second request deadline remain unchanged.
+Values below 10 ms were already rejected by argument validation; they did not
+establish a successful 120-second provider operation. The regression control
+retains that refusal and tests cancellation with valid request timeouts.
 
 ## Selected source encodings and browser harness integrated; runtime acceptance open (2026-10-27)
 
