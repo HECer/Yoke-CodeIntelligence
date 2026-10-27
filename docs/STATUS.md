@@ -165,12 +165,41 @@ original deadline and cancellation before spawn, and pipe setup, disconnected
 startup delivery and normal observation share one checked post-spawn cleanup.
 The existing two-second cleanup allowance and Session lifetime are unchanged.
 
-Six scripted-channel regressions cover successful startup without consuming the
+Eight scripted-channel regressions cover successful startup without consuming the
 live owner receipt, reported failure, expired/disconnected startup, refused or
-missing receipts, and owner observation errors. They exercise startup admission
-without launching Python. Runtime execution and the new tests remain unqualified
-until current-source library and actual runtime/CLI integration checks pass.
+missing receipts, owner observation errors, cancellation after selecting a wait
+budget, and cancellation alongside successful pipe delivery. Startup receives
+recheck the original cancellation/deadline in at most 10-ms channel waits and
+refuse late pipes without extending the cleanup allowance. They exercise startup
+admission without launching Python. Runtime execution and the new tests remain
+unqualified until current-source library and actual runtime/CLI integration checks pass.
 The older evidence below applies to its recorded source only.
+
+## Combined platform checkpoint before the cancellation correction (2026-10-27)
+
+At PR8 source `d8533de2`, checked out as merge `48fe814d`, the
+[Windows native acceptance job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/40439659150/job/121990930582)
+passes all 370 default target groups exactly once across eight shards, two actual
+rust-analyzer checks and a release build. The library passes 788 tests with seven
+original ignores, including all six original startup-channel tests. Actual
+activation, process, runtime and agent-REPL groups pass 27, 8, 15 and 22 tests.
+This evidence precedes the two newly authored cancellation regressions above.
+
+The retained Windows history receipt verifies 162 CLI command outcomes and 126
+exact archive-record readbacks across native, Serena and persistent-Python owning
+stdio Sessions. Both authorities refuse pending archival, a fresh destination
+save succeeds, and roots plus managed descendants exit before forced cleanup.
+Loopback dashboard state/management calls are included; separate serve-http and
+browser qualification, matching VSIX and full release publication remain open.
+
+The same run's Ubuntu native acceptance and all six Node jobs succeed. macOS
+activation passes 28 tests, runtime 15 and the original six startup-channel cases.
+Its six failed shards retain 43 typed PDF address-space-limit refusals, 25 prompt
+failures and one independent history timing-fixture failure. The latter's first
+40-ms sleep returns at 120.487 ms, past the unchanged 65-ms deadline; production
+correctly refuses the subsequent body read. Darwin 25.6 arm64 still refuses the
+original 268,435,456-byte address-space ceiling with errno 22. No alternative
+memory contract, timing-gate relaxation or full macOS acceptance is claimed.
 
 ## Runtime response and batch shutdown checks (2026-10-26)
 
