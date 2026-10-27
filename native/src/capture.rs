@@ -729,6 +729,12 @@ fn resolve_capture_scope_at(
             &|| store.check_deadline(),
         )?);
         let historical = record.analyzer != current_analyzer;
+        if historical {
+            ensure!(
+                identity(&store.snapshot(&snapshot.id)?) == identity(snapshot),
+                "Historical ignored capture manifest mismatch"
+            );
+        }
         (record.options, historical)
     } else if record_exists(store, OPTIONS_RECORD_KIND, &snapshot.id)? {
         let record: CaptureOptionsRecord = store.get_record(OPTIONS_RECORD_KIND, &snapshot.id)?;
