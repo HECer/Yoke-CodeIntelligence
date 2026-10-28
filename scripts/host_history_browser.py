@@ -140,6 +140,9 @@ def preflight_node_path(path):
             kind = ("missing" if isinstance(error, FileNotFoundError) else
                     "denied" if isinstance(error, PermissionError) else "other-os-error")
             print("Owned browser node resolution: " + kind, file=sys.stderr)
+            for label, value in (("errno", error.errno), ("winerror", getattr(error, "winerror", None))):
+                if type(value) is int and 0 <= value <= 65535:
+                    print(f"Owned browser node resolution {label}: {value}", file=sys.stderr)
             raise
     resolved = preflight("node-path-resolve", resolve_selected)
     preflight("node-path-resolved-links", lambda: require(resolved.is_absolute()

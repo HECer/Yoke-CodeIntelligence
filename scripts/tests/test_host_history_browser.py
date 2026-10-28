@@ -76,6 +76,13 @@ class WorkerAdmission(unittest.TestCase):
                         BROWSER.preflight_node_path(node)
                     self.assertEqual(log.getvalue(), f"Owned browser node resolution: {classification}\n"
                                      "Owned browser preflight failed: node-path-resolve\n")
+            with mock.patch.object(Path, "resolve", side_effect=OSError(22, "private path")), \
+                 mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                with self.assertRaises(OSError):
+                    BROWSER.preflight_node_path(node)
+                self.assertEqual(log.getvalue(), "Owned browser node resolution: other-os-error\n"
+                                 "Owned browser node resolution errno: 22\n"
+                                 "Owned browser preflight failed: node-path-resolve\n")
             with mock.patch.object(BROWSER, "plain_path", side_effect=RuntimeError("private path")), \
                  mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
                 with self.assertRaises(RuntimeError):
