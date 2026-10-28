@@ -109,6 +109,20 @@ def validate_producer(value, identity, inputs, native, now):
             "Release metadata changed since successful build")
 
 
+def preflight(phase, operation):
+    """Report only the fixed admission phase; exception details may be private."""
+    allowed = {"ci-identity", "arguments", "disk-reserve", "native-path", "node-path",
+               "source-inputs", "producer-marker", "producer-admission", "output-path",
+               "output-create"}
+    if phase not in allowed:
+        raise ValueError("Unknown browser preflight phase")
+    try:
+        return operation()
+    except Exception:
+        print("Owned browser preflight failed: " + phase, file=sys.stderr)
+        raise
+
+
 def validate_spec(spec, spec_path):
     require(type(spec) is dict and set(spec) == {"schema", "workerJobName", "nonce", "native", "fixture",
             "output", "node", "producer", "inputs", "ci"}, "Closed worker schema required")
@@ -512,17 +526,22 @@ def main(arguments=None):
         return mark_producer(options.mark_build)
     if options.worker:
         return worker(options.worker)
-    identity = ci_identity()
-    require(options.native and options.node and options.output, "Explicit native, host Node and output required")
-    require(shutil.disk_usage(ROOT).free >= MIN_FREE, "Original disk reserve required")
-    native = native_path(options.native.absolute())
-    node = plain_path(options.node.absolute())
-    inputs = LIVE.source_inputs()
-    producer = read_json(marker_paths()[1])
-    validate_producer(producer, identity, inputs, native, time.time_ns())
-    output = plain_path(options.output.absolute(), exists=False)
-    require(output == ROOT / "validation/ci-host-document-history-browser", "Exact browser evidence destination required")
-    output.mkdir(parents=True, exist_ok=False)
+    identity = preflight("ci-identity", ci_identity)
+    preflight("arguments", lambda: require(options.native and options.node and options.output,
+                                             "Explicit native, host Node and output required"))
+    preflight("disk-reserve", lambda: require(shutil.disk_usage(ROOT).free >= MIN_FREE,
+                                                "Original disk reserve required"))
+    native = preflight("native-path", lambda: native_path(options.native.absolute()))
+    node = preflight("node-path", lambda: plain_path(options.node.absolute()))
+    inputs = preflight("source-inputs", LIVE.source_inputs)
+    producer = preflight("producer-marker", lambda: read_json(marker_paths()[1]))
+    preflight("producer-admission", lambda: validate_producer(producer, identity, inputs, native, time.time_ns()))
+    def admit_output():
+        path = plain_path(options.output.absolute(), exists=False)
+        require(path == ROOT / "validation/ci-host-document-history-browser", "Exact browser evidence destination required")
+        return path
+    output = preflight("output-path", admit_output)
+    preflight("output-create", lambda: output.mkdir(parents=True, exist_ok=False))
     fixture = Path(tempfile.mkdtemp(prefix="yoke-owned-history-browser-", dir=marker_paths()[0].parent)).resolve()
     environment = {key: os.environ[key] for key in ("PATH", "SystemRoot", "SystemDrive", "WINDIR",
         "GITHUB_ACTIONS", "RUNNER_OS", "RUNNER_TEMP", "GITHUB_SHA", "GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT")}

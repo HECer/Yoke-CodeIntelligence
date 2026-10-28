@@ -22,6 +22,35 @@ SPEC.loader.exec_module(BROWSER)
 
 
 class WorkerAdmission(unittest.TestCase):
+    def test_preflight_reports_only_a_closed_phase_and_preserves_failure(self):
+        for phase in ("ci-identity", "arguments", "disk-reserve", "native-path", "node-path",
+                      "source-inputs", "producer-marker", "producer-admission", "output-path", "output-create"):
+            with self.subTest(phase=phase), mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                error = RuntimeError("private capability and path")
+                with self.assertRaises(RuntimeError) as caught:
+                    BROWSER.preflight(phase, mock.Mock(side_effect=error))
+                self.assertIs(caught.exception, error)
+                self.assertEqual(log.getvalue(), "Owned browser preflight failed: " + phase + "\n")
+        callback = mock.Mock(return_value=42)
+        self.assertEqual(BROWSER.preflight("disk-reserve", callback), 42)
+        callback.assert_called_once_with()
+        forbidden = mock.Mock()
+        with self.assertRaises(ValueError):
+            BROWSER.preflight("private capability and path", forbidden)
+        forbidden.assert_not_called()
+
+    def test_disk_preflight_refuses_before_paths_or_output_creation(self):
+        with mock.patch.object(BROWSER, "ci_identity", return_value={}), \
+             mock.patch.object(BROWSER.shutil, "disk_usage", return_value=mock.Mock(free=BROWSER.MIN_FREE - 1)), \
+             mock.patch.object(BROWSER, "native_path") as native, \
+             mock.patch.object(Path, "mkdir") as mkdir, \
+             mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+            with self.assertRaises(RuntimeError):
+                BROWSER.main(["--native", "yoke.exe", "--node", "node.exe", "--output", "evidence"])
+            native.assert_not_called()
+            mkdir.assert_not_called()
+            self.assertEqual(log.getvalue(), "Owned browser preflight failed: disk-reserve\n")
+
     def test_real_driver_shutdown_protocol_with_in_memory_pipes(self):
         result = subprocess.run(
             ["node", "--test", str(SCRIPTS / "tests/host_history_browser_protocol.test.cjs")],
