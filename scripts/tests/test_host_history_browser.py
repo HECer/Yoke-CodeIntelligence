@@ -50,9 +50,19 @@ class WorkerAdmission(unittest.TestCase):
                 with self.assertRaises(RuntimeError):
                     BROWSER.preflight_node_path(node)
                 self.assertEqual(log.getvalue(), "Owned browser preflight failed: node-path-links\n")
-            with mock.patch.object(Path, "resolve", return_value=node.parent / "other.exe"), \
+            canonical = node.parent / "canonical-node.exe"
+            canonical.touch()
+            with mock.patch.object(Path, "resolve", return_value=canonical):
+                self.assertEqual(BROWSER.preflight_node_path(node), canonical)
+            with mock.patch.object(Path, "resolve", return_value=canonical), \
+                 mock.patch.object(Path, "is_symlink", autospec=True, side_effect=lambda path: path == canonical), \
                  mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
                 with self.assertRaises(RuntimeError):
+                    BROWSER.preflight_node_path(node)
+                self.assertEqual(log.getvalue(), "Owned browser preflight failed: node-path-canonical\n")
+            with mock.patch.object(Path, "resolve", side_effect=OSError("private path")), \
+                 mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                with self.assertRaises(OSError):
                     BROWSER.preflight_node_path(node)
                 self.assertEqual(log.getvalue(), "Owned browser preflight failed: node-path-canonical\n")
 

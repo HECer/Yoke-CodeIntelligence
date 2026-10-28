@@ -125,14 +125,13 @@ def preflight(phase, operation):
 
 
 def preflight_node_path(path):
-    # Keep the same unlinked and canonical admission as plain_path, while
-    # reporting only which property failed; no selected path is emitted.
+    # Reject links in the selected spelling before resolving it. Windows may
+    # return a different canonical spelling for the same unlinked file.
     path = Path(path)
     preflight("node-path-absolute", lambda: require(path.is_absolute(), "Absolute path required"))
     preflight("node-path-links", lambda: require(all(not p.is_symlink() and not p.is_junction()
               for p in (path, *path.parents)), "Unlinked path required"))
-    preflight("node-path-canonical", lambda: require(path == path.resolve(strict=True), "Canonical path required"))
-    return path
+    return preflight("node-path-canonical", lambda: plain_path(path.resolve(strict=True)))
 
 
 def validate_spec(spec, spec_path):
