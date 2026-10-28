@@ -132,7 +132,16 @@ def preflight_node_path(path):
     preflight("node-path-absolute", lambda: require(path.is_absolute(), "Absolute path required"))
     preflight("node-path-links", lambda: require(all(not p.is_symlink() and not p.is_junction()
               for p in (path, *path.parents)), "Unlinked path required"))
-    resolved = preflight("node-path-resolve", lambda: path.resolve(strict=True))
+    def resolve_selected():
+        try:
+            return path.resolve(strict=True)
+        except OSError as error:
+            # Emit a closed classification only: exception text can contain paths.
+            kind = ("missing" if isinstance(error, FileNotFoundError) else
+                    "denied" if isinstance(error, PermissionError) else "other-os-error")
+            print("Owned browser node resolution: " + kind, file=sys.stderr)
+            raise
+    resolved = preflight("node-path-resolve", resolve_selected)
     preflight("node-path-resolved-links", lambda: require(resolved.is_absolute()
               and all(not p.is_symlink() and not p.is_junction() for p in (resolved, *resolved.parents)),
               "Absolute unlinked path required"))

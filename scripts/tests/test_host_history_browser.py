@@ -65,7 +65,17 @@ class WorkerAdmission(unittest.TestCase):
                  mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
                 with self.assertRaises(OSError):
                     BROWSER.preflight_node_path(node)
-                self.assertEqual(log.getvalue(), "Owned browser preflight failed: node-path-resolve\n")
+                self.assertEqual(log.getvalue(), "Owned browser node resolution: other-os-error\n"
+                                 "Owned browser preflight failed: node-path-resolve\n")
+            for error, classification in [(FileNotFoundError("private path"), "missing"),
+                                          (PermissionError("private path"), "denied")]:
+                with self.subTest(classification=classification), \
+                     mock.patch.object(Path, "resolve", side_effect=error), \
+                     mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                    with self.assertRaises(type(error)):
+                        BROWSER.preflight_node_path(node)
+                    self.assertEqual(log.getvalue(), f"Owned browser node resolution: {classification}\n"
+                                     "Owned browser preflight failed: node-path-resolve\n")
             with mock.patch.object(BROWSER, "plain_path", side_effect=RuntimeError("private path")), \
                  mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
                 with self.assertRaises(RuntimeError):
