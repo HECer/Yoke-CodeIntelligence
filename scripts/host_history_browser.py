@@ -112,7 +112,8 @@ def validate_producer(value, identity, inputs, native, now):
 def preflight(phase, operation):
     """Report only the fixed admission phase; exception details may be private."""
     allowed = {"ci-identity", "arguments", "disk-reserve", "native-path", "node-path",
-               "node-path-absolute", "node-path-links", "node-path-canonical",
+               "node-path-absolute", "node-path-links", "node-path-resolve",
+               "node-path-resolved-links", "node-path-canonical",
                "source-inputs", "producer-marker", "producer-admission", "output-path",
                "output-create"}
     if phase not in allowed:
@@ -131,7 +132,11 @@ def preflight_node_path(path):
     preflight("node-path-absolute", lambda: require(path.is_absolute(), "Absolute path required"))
     preflight("node-path-links", lambda: require(all(not p.is_symlink() and not p.is_junction()
               for p in (path, *path.parents)), "Unlinked path required"))
-    return preflight("node-path-canonical", lambda: plain_path(path.resolve(strict=True)))
+    resolved = preflight("node-path-resolve", lambda: path.resolve(strict=True))
+    preflight("node-path-resolved-links", lambda: require(resolved.is_absolute()
+              and all(not p.is_symlink() and not p.is_junction() for p in (resolved, *resolved.parents)),
+              "Absolute unlinked path required"))
+    return preflight("node-path-canonical", lambda: plain_path(resolved))
 
 
 def validate_spec(spec, spec_path):

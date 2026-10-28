@@ -24,7 +24,8 @@ SPEC.loader.exec_module(BROWSER)
 class WorkerAdmission(unittest.TestCase):
     def test_preflight_reports_only_a_closed_phase_and_preserves_failure(self):
         for phase in ("ci-identity", "arguments", "disk-reserve", "native-path", "node-path",
-                      "node-path-absolute", "node-path-links", "node-path-canonical",
+                      "node-path-absolute", "node-path-links", "node-path-resolve",
+                      "node-path-resolved-links", "node-path-canonical",
                       "source-inputs", "producer-marker", "producer-admission", "output-path", "output-create"):
             with self.subTest(phase=phase), mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
                 error = RuntimeError("private capability and path")
@@ -59,10 +60,15 @@ class WorkerAdmission(unittest.TestCase):
                  mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
                 with self.assertRaises(RuntimeError):
                     BROWSER.preflight_node_path(node)
-                self.assertEqual(log.getvalue(), "Owned browser preflight failed: node-path-canonical\n")
+                self.assertEqual(log.getvalue(), "Owned browser preflight failed: node-path-resolved-links\n")
             with mock.patch.object(Path, "resolve", side_effect=OSError("private path")), \
                  mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
                 with self.assertRaises(OSError):
+                    BROWSER.preflight_node_path(node)
+                self.assertEqual(log.getvalue(), "Owned browser preflight failed: node-path-resolve\n")
+            with mock.patch.object(BROWSER, "plain_path", side_effect=RuntimeError("private path")), \
+                 mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                with self.assertRaises(RuntimeError):
                     BROWSER.preflight_node_path(node)
                 self.assertEqual(log.getvalue(), "Owned browser preflight failed: node-path-canonical\n")
 
