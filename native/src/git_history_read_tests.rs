@@ -40,6 +40,7 @@ struct Reader {
     sizes: usize,
     bodies: usize,
     exceeded_ceiling: bool,
+    different_deadline: bool,
     phase_start: Option<Instant>,
     phases: ReadPhases,
 }
@@ -60,6 +61,7 @@ impl Reader {
         }
     }
     fn observe(&mut self, d: &Deadline) {
+        self.different_deadline |= !d.same_end_as(&self.ceiling);
         // Read the outer ceiling first so scheduling between these reads cannot
         // falsely classify the same Deadline as a newly extended deadline.
         let maximum = self
@@ -205,6 +207,7 @@ fn fixture(d: &Deadline) -> (Reader, String) {
             sizes: 0,
             bodies: 0,
             exceeded_ceiling: false,
+            different_deadline: false,
             phase_start: None,
             phases: ReadPhases::default(),
         },
@@ -239,14 +242,21 @@ fn object_information_and_contents_share_the_original_deadline() {
         "An object request extended the host deadline; phases={:?}",
         reader.phases
     );
-    assert_eq!(
-        (reader.sizes, reader.bodies),
-        (1, 1),
+    assert!(
+        (reader.sizes, reader.bodies) == (1, 1)
+            || ((reader.sizes, reader.bodies) == (1, 0)
+                && reader.phases.size_post_sleep.is_some()
+                && reader.phases.contents_entry.is_none()
+                && d.remaining().is_zero()),
         "elapsed={:?}; fixture_delay={:?}; host_remaining={:?}; phases={:?}",
         start.elapsed(),
         reader.delay,
         d.remaining(),
         reader.phases
+    );
+    assert!(
+        !reader.different_deadline,
+        "An object request changed the deadline"
     );
     assert!(
         start.elapsed() < Duration::from_millis(200),
@@ -256,6 +266,33 @@ fn object_information_and_contents_share_the_original_deadline() {
         d.remaining(),
         reader.phases
     );
+}
+
+#[test]
+fn information_and_contents_receive_the_exact_same_deadline() {
+    let d = Deadline::new(2000);
+    let (mut reader, head) = fixture(&d);
+    let result = walk(&mut reader, &head, &Options::default(), &d);
+    assert!(result.is_ok(), "walk failed: {result:?}");
+    assert!(reader.sizes > 0 && reader.bodies > 0);
+    assert!(
+        !reader.different_deadline,
+        "An object request changed the deadline"
+    );
+}
+
+#[test]
+fn deadline_observer_detects_a_refreshed_request() {
+    let original = Deadline::new(2000);
+    let (mut reader, _) = fixture(&original);
+    reader.observe(&original);
+    assert!(!reader.different_deadline);
+    // A longer duration guarantees a distinct end even if both deadlines are
+    // created within the same clock tick.
+    let refreshed = Deadline::new(4000);
+    reader.observe(&refreshed);
+    assert!(reader.different_deadline);
+    assert!(reader.exceeded_ceiling);
 }
 
 #[test]
