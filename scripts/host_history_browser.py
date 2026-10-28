@@ -112,6 +112,7 @@ def validate_producer(value, identity, inputs, native, now):
 def preflight(phase, operation):
     """Report only the fixed admission phase; exception details may be private."""
     allowed = {"ci-identity", "arguments", "disk-reserve", "native-path", "node-path",
+               "node-path-absolute", "node-path-links", "node-path-canonical",
                "source-inputs", "producer-marker", "producer-admission", "output-path",
                "output-create"}
     if phase not in allowed:
@@ -121,6 +122,17 @@ def preflight(phase, operation):
     except Exception:
         print("Owned browser preflight failed: " + phase, file=sys.stderr)
         raise
+
+
+def preflight_node_path(path):
+    # Keep the same unlinked and canonical admission as plain_path, while
+    # reporting only which property failed; no selected path is emitted.
+    path = Path(path)
+    preflight("node-path-absolute", lambda: require(path.is_absolute(), "Absolute path required"))
+    preflight("node-path-links", lambda: require(all(not p.is_symlink() and not p.is_junction()
+              for p in (path, *path.parents)), "Unlinked path required"))
+    preflight("node-path-canonical", lambda: require(path == path.resolve(strict=True), "Canonical path required"))
+    return path
 
 
 def validate_spec(spec, spec_path):
@@ -532,7 +544,7 @@ def main(arguments=None):
     preflight("disk-reserve", lambda: require(shutil.disk_usage(ROOT).free >= MIN_FREE,
                                                 "Original disk reserve required"))
     native = preflight("native-path", lambda: native_path(options.native.absolute()))
-    node = preflight("node-path", lambda: plain_path(options.node.absolute()))
+    node = preflight("node-path", lambda: preflight_node_path(options.node.absolute()))
     inputs = preflight("source-inputs", LIVE.source_inputs)
     producer = preflight("producer-marker", lambda: read_json(marker_paths()[1]))
     preflight("producer-admission", lambda: validate_producer(producer, identity, inputs, native, time.time_ns()))

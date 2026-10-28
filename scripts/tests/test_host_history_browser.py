@@ -24,6 +24,7 @@ SPEC.loader.exec_module(BROWSER)
 class WorkerAdmission(unittest.TestCase):
     def test_preflight_reports_only_a_closed_phase_and_preserves_failure(self):
         for phase in ("ci-identity", "arguments", "disk-reserve", "native-path", "node-path",
+                      "node-path-absolute", "node-path-links", "node-path-canonical",
                       "source-inputs", "producer-marker", "producer-admission", "output-path", "output-create"):
             with self.subTest(phase=phase), mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
                 error = RuntimeError("private capability and path")
@@ -38,6 +39,22 @@ class WorkerAdmission(unittest.TestCase):
         with self.assertRaises(ValueError):
             BROWSER.preflight("private capability and path", forbidden)
         forbidden.assert_not_called()
+
+    def test_node_preflight_preserves_unlinked_canonical_path_admission(self):
+        with tempfile.TemporaryDirectory(prefix="owned-node-admission-") as directory:
+            node = Path(directory).resolve() / "node.exe"
+            node.touch()
+            self.assertEqual(BROWSER.preflight_node_path(node), BROWSER.plain_path(node))
+            with mock.patch.object(Path, "is_junction", return_value=True), \
+                 mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                with self.assertRaises(RuntimeError):
+                    BROWSER.preflight_node_path(node)
+                self.assertEqual(log.getvalue(), "Owned browser preflight failed: node-path-links\n")
+            with mock.patch.object(Path, "resolve", return_value=node.parent / "other.exe"), \
+                 mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                with self.assertRaises(RuntimeError):
+                    BROWSER.preflight_node_path(node)
+                self.assertEqual(log.getvalue(), "Owned browser preflight failed: node-path-canonical\n")
 
     def test_disk_preflight_refuses_before_paths_or_output_creation(self):
         with mock.patch.object(BROWSER, "ci_identity", return_value={}), \
