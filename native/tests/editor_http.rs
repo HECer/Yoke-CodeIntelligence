@@ -510,9 +510,31 @@ fn nonreading_client_does_not_block_the_next_authenticated_request() {
     stalled.write_all(headers.as_bytes()).unwrap();
     stalled.write_all(&body).unwrap();
     let started = Instant::now();
-    let (status, _) = server.request(json!({"operation":"status","sessionId":id}));
+    // Keep the same request path and deadline; only sample fixed client phases.
+    let status_body = serde_json::to_vec(&json!({"operation":"status","sessionId":id})).unwrap();
+    let status_headers = format!(
+        "POST /editor HTTP/1.1\r\nHost: {}\r\nAuthorization: Bearer {}\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+        server.host(),
+        server.token,
+        status_body.len()
+    );
+    let mut request = status_headers.into_bytes();
+    request.extend(status_body);
+    let prepared = started.elapsed();
+    let mut stream = server.connect();
+    let connected = started.elapsed();
+    stream.write_all(&request).unwrap();
+    let sent = started.elapsed();
+    stream.shutdown(Shutdown::Write).unwrap();
+    let shutdown = started.elapsed();
+    let (status, _) = read_response(stream);
+    let response = started.elapsed();
     assert_eq!(status, 200);
-    assert!(started.elapsed() < Duration::from_secs(6));
+    assert!(
+        started.elapsed() < Duration::from_secs(6),
+        "elapsed={:?}; prepared={prepared:?}; connected={connected:?}; sent={sent:?}; shutdown={shutdown:?}; response={response:?}",
+        started.elapsed()
+    );
     drop(stalled);
     server.finish();
 }

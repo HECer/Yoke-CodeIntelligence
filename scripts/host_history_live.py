@@ -518,10 +518,27 @@ class RuntimeHandle:
             self.handle = None
 
 
+class EvidenceLinkRefusal(RuntimeError):
+    """Closed link metadata; never retains a private path or reads its target."""
+    def __init__(self, root, path, kind):
+        super().__init__("Unexpected evidence link")
+        parts = path.relative_to(root).parts
+        self.area = {"home": "home", "roaming": "roaming", "local": "local", "tmp": "temporary",
+                     "edge-profile": "browser-profile", "old": "old-journal", "new": "new-journal",
+                     "host": "host-documents", "source-İ": "source", "archive-π": "archive"}.get(parts[0], "other")
+        self.entry = {"SingletonLock": "browser-singleton-lock", "SingletonCookie": "browser-singleton-cookie",
+                      "SingletonSocket": "browser-singleton-socket", "Application Data": "profile-compatibility",
+                      "Local Settings": "profile-compatibility", "My Documents": "profile-compatibility"}.get(path.name, "other")
+        self.kind = kind
+
+
 def output_size(root):
     total = count = 0
     for path in root.rglob("*"):
-        require(not path.is_symlink() and not path.is_junction(), "Unexpected evidence link")
+        if path.is_symlink():
+            raise EvidenceLinkRefusal(root, path, "symlink")
+        if path.is_junction():
+            raise EvidenceLinkRefusal(root, path, "junction")
         count += 1
         require(count <= 1024, "Evidence entry capacity exceeded")
         if path.is_file():
