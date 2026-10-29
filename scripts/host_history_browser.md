@@ -4,7 +4,12 @@ Live Windows CI has reached this harness, but **browser runtime and visual
 acceptance remain unproven**. At `43fc1b73` and the coherent-profile candidate
 `83227913`, the separate browser guard refuses a junction beneath its private
 home before producing screenshots. The latter observation has depth seven;
-the profile change does not resolve it. The exact entry and origin remain unknown.
+the profile change does not resolve it. Its exact hosted entry and origin remain
+unknown. A separate guarded local comparison now reproduces a junction at
+`home/AppData/Local/Microsoft/Windows/INetCache/Content.IE5` without launching
+Edge or Yoke. The candidate precreates that exact private role as an ordinary
+directory. All link refusals remain. This still requires hosted confirmation;
+the local comparison also changes its linker and is not isolated causal proof.
 `host_history_browser.py` is an additional Windows CI gate after the existing
 release build and successful `host_history_live.py` step. It neither replaces nor
 extends the original three-variant gate, its budgets, tests, or claims. No product
@@ -63,7 +68,10 @@ created in private CI temporary storage. Two original saves seed closed history.
 The browser worker has one fresh ordinary Windows profile: `HOME` and
 `USERPROFILE` select the same private home, with `APPDATA`, `LOCALAPPDATA` and
 temporary storage beneath its `AppData` hierarchy. LocalLow, Desktop, Documents
-and Downloads are ordinary private directories. An occupied or linked profile
+and Downloads are ordinary private directories. The legacy Internet cache
+compatibility name `AppData/Local/Microsoft/Windows/INetCache/Content.IE5` is also
+created as an ordinary directory to occupy the role before host cache use.
+Any later replacement with a junction still refuses. An occupied or linked profile
 refuses before reuse. This replaces the browser fixture's separate flat user
 directories; the original three-variant history fixture remains unchanged.
 All links still refuse, including profile links created later by a host tool.

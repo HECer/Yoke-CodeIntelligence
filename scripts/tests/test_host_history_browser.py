@@ -55,6 +55,32 @@ class WorkerAdmission(unittest.TestCase):
             self.assertEqual({path.name for path in fixture.iterdir()}, {"home"})
             self.assertLess(BROWSER.output_size(fixture), BROWSER.MAX_OUTPUT)
 
+    def test_private_internet_cache_compatibility_role_is_an_ordinary_owned_directory(self):
+        with tempfile.TemporaryDirectory(prefix="owned-browser-cache-\u03c0-") as directory:
+            fixture = Path(directory).resolve()
+            BROWSER.private_profile_environment(fixture)
+            cache = fixture / "home/AppData/Local/Microsoft/Windows/INetCache/Content.IE5"
+            self.assertTrue(cache.is_dir())
+            self.assertFalse(cache.is_symlink())
+            self.assertFalse(cache.is_junction())
+            self.assertEqual(BROWSER.plain_path(cache), cache)
+            self.assertEqual(list(cache.iterdir()), [])
+            self.assertLess(BROWSER.output_size(fixture), BROWSER.MAX_OUTPUT)
+
+    def test_known_cache_name_never_exempts_a_later_junction_from_the_original_scan(self):
+        with tempfile.TemporaryDirectory(prefix="owned-browser-cache-refusal-") as directory:
+            fixture = Path(directory).resolve()
+            BROWSER.private_profile_environment(fixture)
+            cache = fixture / "home/AppData/Local/Microsoft/Windows/INetCache/Content.IE5"
+            original = Path.is_junction
+            with mock.patch.object(Path, "is_junction", lambda path: path == cache or original(path)), \
+                 mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO):
+                with self.assertRaises(BROWSER.LIVE.EvidenceLinkRefusal) as caught:
+                    BROWSER.output_size(fixture)
+            self.assertEqual(caught.exception.kind, "junction")
+            self.assertEqual(caught.exception.depth, 7)
+            self.assertEqual(caught.exception.route[-2:], ("internet-cache", "internet-content-cache"))
+
     def test_private_profile_refuses_occupied_or_linked_roots_before_reuse(self):
         with tempfile.TemporaryDirectory(prefix="owned-browser-profile-refusal-") as directory:
             fixture = Path(directory).resolve()

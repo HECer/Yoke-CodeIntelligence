@@ -84,7 +84,11 @@ def private_profile_environment(fixture):
     require(fixture.is_dir(), "Private fixture directory required")
     home = fixture / "home"
     home.mkdir()  # A preexisting profile, including any link, must refuse.
+    # Windows can create a legacy Content.IE5 junction on first cache use.
+    # Occupy that exact private compatibility name with an ordinary directory;
+    # the original scan still refuses any replacement or other link.
     for relative in ("AppData/Local/Temp", "AppData/LocalLow", "AppData/Roaming",
+                     "AppData/Local/Microsoft/Windows/INetCache/Content.IE5",
                      "Desktop", "Documents", "Downloads"):
         path = home / relative
         path.mkdir(parents=True)

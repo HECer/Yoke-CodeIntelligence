@@ -1,5 +1,23 @@
 # Remaining implementation and acceptance
 
+## Scoped macOS cleanup evidence and fixture candidates (2026-10-30)
+
+PR8 run `40950941727` proves the strict cleanup cases at exact tested merge
+`788913c0`: all 12 cleanup regressions, five process tests and 15 runtime tests
+pass. All 372 default Cargo groups are accounted for, with 360 zero exits and
+12 failing groups. All 744 logs and 1,109 raw candidate source hashes match.
+Full macOS acceptance remains open, including hard worker memory enforcement.
+
+The ingress scheduling candidate must pass the full native target and actual
+platform CI. It retains the 120 ms request deadline and one 750 ms total bound,
+while requiring continuous stimulus. A fixed standalone peer passes normal and
+delayed pacing and refuses renewed deadlines and invalid cases. The private
+`Content.IE5` ordinary-directory candidate still needs hosted browser proof and
+all six visual inspections. Python passes 180 tests; typecheck and npm tests pass
+(266 passed, three skipped). These do not qualify the full application, VSIX,
+integrated PRs, release or main.
+[Exact evidence and remaining limits](validation/integration-2026-10-30/platform-stimulus-checkpoint/README.md).
+
 ## Source-bound Windows/Ubuntu native and owning-Session history confirmation (2026-10-29)
 
 Run `40858654238` at `76035e4be3d9a9f9984364190eae9b49764a4209` passes

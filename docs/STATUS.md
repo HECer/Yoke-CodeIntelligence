@@ -1,5 +1,29 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Scoped macOS cleanup evidence and fixture candidates (2026-10-30)
+
+PR8 run `40950941727` at tested merge `788913c0` covers all 372 default macOS
+Cargo groups: 360 exit zero and 12 fail. All 744 logs and 1,109 raw source hashes
+match their receipts and candidate Git bytes. The actual library passes 506
+tests with six original ignores, including all 12 strict cleanup regressions.
+Process and runtime targets pass five and 15 tests respectively. This is scoped
+evidence at that exact tree; the remaining failures prevent macOS acceptance.
+
+One ingress failure has a 25 ms writer sleep that wakes after about 169 ms,
+after the server closes at 134 ms. The candidate qualifies continuous traffic
+and admits at most three sequential stimulus attempts within the original total
+750 ms bound and unchanged 120 ms request deadline. A guarded std-only comparison
+passes normal and delayed pacing and refuses renewed deadlines and invalid
+stimuli. This does not execute the modified application target.
+
+A local guarded comparison also identifies a private `INetCache/Content.IE5`
+junction. The browser profile candidate precreates that exact role as an ordinary
+directory; all later links still refuse. Its actual hosted route, repair and six
+visual states remain unverified. Python passes 180 tests; typecheck and npm tests
+pass (266 passed, three skipped). Strict macOS memory enforcement, full new-source
+native CI, integrated PRs and release/main acceptance remain open.
+[Source-bound receipts and 787 checked text members](validation/integration-2026-10-30/platform-stimulus-checkpoint/README.md).
+
 ## Source-bound Windows/Ubuntu native and owning-Session history confirmation (2026-10-29)
 
 Run `40858654238` at `76035e4be3d9a9f9984364190eae9b49764a4209` passes

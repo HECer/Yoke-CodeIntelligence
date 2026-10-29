@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "fullAcceptance": false,
+  "macos": {
+    "run": 40950941727,
+    "candidate": "f02195852470c3f6ea9f749c3a9422f17b3edb9c",
+    "testedMerge": "788913c0877afa5269527b71ebeffed52d05732d",
+    "tree": "3bd5cc75b4df6aa525780127a79fa6f4dcb7a2d3",
+    "defaultGroups": 372,
+    "passedGroups": 360,
+    "failedGroups": 12,
+    "verifiedLogs": 744,
+    "rawGitSources": 1109,
+    "rawGitSourceBytes": 18089515,
+    "cleanupTestsPassed": 12,
+    "libraryPassed": 506,
+    "libraryIgnored": 6,
+    "processPassed": 5,
+    "runtimePassed": 15
+  },
+  "localComparison": {
+    "diagnosticOnly": true,
+    "nativeYokeImageReadOrExecuted": false,
+    "nativeAcceptance": false,
+    "ownedStandaloneRustImageExecuted": true,
+    "sourceSha256": "6bc568a36b71b430a518e0e906e76b50bc3ea1e6cc06135e729f23cb7e846bea",
+    "imageSha256": "73e0020bf20f67845b1cb2c25201802a0752aebf233ac6b952635c0d5b7031c3",
+    "trials": [
+      {
+        "trial": "paced",
+        "exitCode": 0,
+        "expectedExitCode": 0
+      },
+      {
+        "trial": "rescheduled",
+        "exitCode": 0,
+        "expectedExitCode": 0
+      },
+      {
+        "trial": "renewed-deadline",
+        "exitCode": 101,
+        "expectedExitCode": 101
+      },
+      {
+        "trial": "exhausted-wall-budget",
+        "exitCode": 101,
+        "expectedExitCode": 101
+      },
+      {
+        "trial": "invalid-response",
+        "exitCode": 101,
+        "expectedExitCode": 101
+      },
+      {
+        "trial": "early-unpaced-close",
+        "exitCode": 101,
+        "expectedExitCode": 101
+      }
+    ]
+  },
+  "candidateSha256": {
+    "native/tests/github_app_ingress.rs": "b8c47bd75d64e4264652453e67e6aef5dd31b3da8b69f57345c1b1e5bf453d9d",
+    "scripts/host_history_browser.py": "fd8501d3eb7a94ced527b849ba7b277ab2f52d7eeaaa822397b8d0737ffd11d3",
+    "scripts/tests/test_host_history_browser.py": "90e928d851c7634455dc79bd58b5a2e0ead3a3b70d30d2c45c4722754591e379"
+  },
+  "checks": {
+    "pythonTests": {
+      "passed": 180,
+      "failed": 0
+    },
+    "typecheck": "passed",
+    "npmTests": {
+      "passed": 266,
+      "skipped": 3,
+      "failed": 0
+    },
+    "scopedRustfmt": "passed",
+    "diffCheck": "passed"
+  },
+  "unrun": [
+    "full modified native target",
+    "full modified native build/Clippy",
+    "hosted profile repair",
+    "six dashboard visual states",
+    "integrated platform/release/VSIX/main"
+  ],
+  "textEvidenceSha256": "57e0970466ef6af9f192a1e13f712e33b134f59ff7aea963661edd356139a644"
+}
