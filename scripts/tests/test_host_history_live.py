@@ -36,7 +36,20 @@ class HistoryEvidenceAdmission(unittest.TestCase):
                 self.assertEqual(str(error), "Unexpected evidence link")
                 self.assertEqual((error.area, error.entry, error.kind),
                                  (area, entry, "symlink" if symbolic else "junction"))
+                self.assertEqual(error.depth, 2)
                 self.assertNotIn("private", repr(error.__dict__))
+
+    def test_link_metadata_keeps_profile_names_closed_and_depth_bounded(self):
+        root = Path(tempfile.gettempdir()).resolve() / "owned-link-profile"
+        for leaf, label in [("LocalLow", "profile-local-low"), ("Cookies", "profile-cookies"),
+                            ("Documents", "profile-documents"), ("private-token", "other")]:
+            error = LIVE.EvidenceLinkRefusal(root, root / "home" / "AppData" / leaf, "junction")
+            self.assertEqual((error.area, error.entry, error.depth), ("home", label, 3))
+            self.assertNotIn("private-token", repr(error.__dict__))
+        deep = root.joinpath("home", *(["private-part"] * 30))
+        error = LIVE.EvidenceLinkRefusal(root, deep, "junction")
+        self.assertEqual(error.depth, 16)
+        self.assertNotIn("private-part", repr(error.__dict__))
 
     def fixture(self):
         name = "yoke-doc-" + "a" * 64 + "-" + "b" * 64 + ".plan.json"

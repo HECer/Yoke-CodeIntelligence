@@ -1,6 +1,10 @@
 # Owned Windows host-history browser harness
 
-This is a **source-only implementation, with runtime and visual acceptance unrun**.
+Live Windows CI has reached this harness, but **browser runtime and visual
+acceptance remain unproven**. At `43fc1b73`, the release build and original
+three-variant history gate pass; the separate browser guard refuses a junction
+beneath its private home before producing screenshots. The profile-layout
+candidate below awaits fresh execution.
 `host_history_browser.py` is an additional Windows CI gate after the existing
 release build and successful `host_history_live.py` step. It neither replaces nor
 extends the original three-variant gate, its budgets, tests, or claims. No product
@@ -56,6 +60,18 @@ an OS network sandbox. Normal CSP/Host/Origin/capability checks remain active.
 
 An inert owned Unicode/CRLF source fixture and BOM/CRLF global settings file are
 created in private CI temporary storage. Two original saves seed closed history.
+The browser worker has one fresh ordinary Windows profile: `HOME` and
+`USERPROFILE` select the same private home, with `APPDATA`, `LOCALAPPDATA` and
+temporary storage beneath its `AppData` hierarchy. LocalLow, Desktop, Documents
+and Downloads are ordinary private directories. An occupied or linked profile
+refuses before reuse. This replaces the browser fixture's separate flat user
+directories; the original three-variant history fixture remains unchanged.
+All links still refuse, including profile links created later by a host tool.
+Closed link diagnostics retain only a known area/entry category and a depth
+capped at 16; targets and private path spellings remain unread and unpublished.
+The earlier hosted refusal identified a home junction, without establishing its
+exact entry or cause. The profile layout candidate needs fresh browser execution
+and all six visual inspections before acceptance.
 The original host CLI migrates the binding without changing settings bytes. One
 native owning destination stdio Session supplies the actual dashboard; a second
 old owning Session verifies the retired authority. This is not `serve-http`.

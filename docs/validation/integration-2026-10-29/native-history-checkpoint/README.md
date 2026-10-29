@@ -32,8 +32,16 @@ is claimed.
 That diagnostic job subsequently fails the separate browser gate at the strict
 private-fixture link check. Its overall failure remains a failure. There are no
 accepted browser PNGs or desktop/mobile visual results. The source-only link
-classification added at `43fc1b73` preserves refusal and awaits its own runtime
-evidence; no link target is followed or exempted.
+classification at `43fc1b73` preserves refusal and observes `area=home`,
+`entry=other`, `kind=junction`. That run again passes the release build and
+original history variants, then fails browser acceptance. The assigned worker
+has no successful exit receipt; forced cleanup leaves zero active processes.
+There are no PNGs. [The supplementary receipt](browser-link-receipt.json) and
+[exact text artifact](browser-link-43fc1b73.zip) preserve that failed attempt,
+its source map and the closed parent diagnostic. The junction's exact entry and
+origin remain unknown. A new coherent private-profile layout is a qualification
+candidate, not a demonstrated cause or accepted fix. No link target is followed
+or exempted.
 
 [The receipt](receipt.json) binds the source revisions, native coverage,
 owning-Session observations, original GitHub artifact identities/digests and

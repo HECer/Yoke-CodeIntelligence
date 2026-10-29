@@ -49,7 +49,7 @@ def output_size(root):
         reason = reasons.get(str(error), "os-error" if isinstance(error, OSError) else "other")
         print("Owned browser output scan failed: " + role + " " + reason, file=sys.stderr)
         if isinstance(error, LIVE.EvidenceLinkRefusal):
-            print(f"Owned browser refused link: area={error.area}; entry={error.entry}; kind={error.kind}",
+            print(f"Owned browser refused link: area={error.area}; entry={error.entry}; kind={error.kind}; depth={error.depth}",
                   file=sys.stderr)
         raise
 
@@ -74,6 +74,23 @@ def plain_path(path, *, exists=True):
             for p in (path, *path.parents)), "Absolute unlinked path required")
     require(path == path.resolve(strict=exists), "Canonical path required")
     return path
+
+
+def private_profile_environment(fixture):
+    """Create one ordinary private Windows profile, without inherited user paths."""
+    fixture = plain_path(fixture)
+    require(fixture.is_dir(), "Private fixture directory required")
+    home = fixture / "home"
+    home.mkdir()  # A preexisting profile, including any link, must refuse.
+    for relative in ("AppData/Local/Temp", "AppData/LocalLow", "AppData/Roaming",
+                     "Desktop", "Documents", "Downloads"):
+        path = home / relative
+        path.mkdir(parents=True)
+        plain_path(path)
+    paths = {"HOME": home, "USERPROFILE": home, "APPDATA": home / "AppData/Roaming",
+             "LOCALAPPDATA": home / "AppData/Local", "TEMP": home / "AppData/Local/Temp",
+             "TMP": home / "AppData/Local/Temp"}
+    return {key: str(plain_path(path)) for key, path in paths.items()}
 
 
 def native_path(path):
@@ -132,7 +149,7 @@ def preflight(phase, operation):
                "node-path-absolute", "node-path-links", "node-path-resolve",
                "node-path-resolved-links", "node-path-canonical",
                "source-inputs", "producer-marker", "producer-admission", "output-path",
-               "output-create"}
+               "output-create", "private-profile"}
     if phase not in allowed:
         raise ValueError("Unknown browser preflight phase")
     try:
@@ -595,11 +612,7 @@ def main(arguments=None):
     fixture = Path(tempfile.mkdtemp(prefix="yoke-owned-history-browser-", dir=marker_paths()[0].parent)).resolve()
     environment = {key: os.environ[key] for key in ("PATH", "SystemRoot", "SystemDrive", "WINDIR",
         "GITHUB_ACTIONS", "RUNNER_OS", "RUNNER_TEMP", "GITHUB_SHA", "GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT")}
-    for key, name in (("HOME", "home"), ("USERPROFILE", "home"), ("APPDATA", "roaming"),
-                      ("LOCALAPPDATA", "local"), ("TEMP", "tmp"), ("TMP", "tmp")):
-        path = fixture / name
-        path.mkdir(exist_ok=True)
-        environment[key] = str(path)
+    environment.update(preflight("private-profile", lambda: private_profile_environment(fixture)))
     environment.update(PYTHONUTF8="1", PYTHONDONTWRITEBYTECODE="1", DO_NOT_TRACK="1",
                        YOKE_BROWSER_WORKER_NONCE=os.urandom(32).hex())
     job_name = "Local\\YokeHistoryCI-" + os.urandom(32).hex()

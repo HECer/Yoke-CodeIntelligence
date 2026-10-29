@@ -528,8 +528,15 @@ class EvidenceLinkRefusal(RuntimeError):
                      "host": "host-documents", "source-İ": "source", "archive-π": "archive"}.get(parts[0], "other")
         self.entry = {"SingletonLock": "browser-singleton-lock", "SingletonCookie": "browser-singleton-cookie",
                       "SingletonSocket": "browser-singleton-socket", "Application Data": "profile-compatibility",
-                      "Local Settings": "profile-compatibility", "My Documents": "profile-compatibility"}.get(path.name, "other")
+                      "Local Settings": "profile-compatibility", "My Documents": "profile-compatibility",
+                      "AppData": "profile-appdata", "Local": "profile-local", "Roaming": "profile-roaming",
+                      "LocalLow": "profile-local-low", "Temp": "profile-temp", "Desktop": "profile-desktop",
+                      "Documents": "profile-documents", "Downloads": "profile-downloads",
+                      "Cookies": "profile-cookies", "History": "profile-history", "Recent": "profile-recent",
+                      "NetHood": "profile-network", "PrintHood": "profile-printers", "SendTo": "profile-send-to",
+                      "Start Menu": "profile-start-menu", "Templates": "profile-templates"}.get(path.name, "other")
         self.kind = kind
+        self.depth = min(len(parts), 16)
 
 
 def output_size(root):
