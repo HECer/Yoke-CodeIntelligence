@@ -26,7 +26,7 @@ _loader = importlib.util.spec_from_file_location("owned_history_live", ROOT / "s
 LIVE = importlib.util.module_from_spec(_loader)
 _loader.loader.exec_module(LIVE)
 require, sha, read_json, write_json = LIVE.require, LIVE.sha, LIVE.read_json, LIVE.write_json
-output_size, worker_job_name = LIVE.output_size, LIVE.worker_job_name
+worker_job_name = LIVE.worker_job_name
 MAX_JSON, MAX_OUTPUT, MIN_FREE = LIVE.MAX_JSON, LIVE.MAX_OUTPUT, LIVE.MIN_FREE
 SCHEMA = "owned_history_browser_v1"
 AGENT = "Code Intelligence"
@@ -35,6 +35,23 @@ DRIVER = ROOT / "scripts/host_history_browser.cjs"
 EDGES = (Path("C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"),
          Path("C:/Program Files/Microsoft/Edge/Application/msedge.exe"))
 DRAFT = "\ufeff# owned browser draft π 🦀 e\u0301 İ\r\nvalue: reviewed\r\n"
+
+
+def output_size(root):
+    try:
+        return LIVE.output_size(root)
+    except Exception as error:
+        name = Path(root).name
+        role = ("evidence" if name == "ci-host-document-history-browser" else
+                "fixture" if name.startswith("yoke-owned-history-browser-") else "other")
+        reasons = {"Unexpected evidence link": "link", "Evidence entry capacity exceeded": "entries",
+                   "Evidence byte capacity exceeded": "bytes"}
+        reason = reasons.get(str(error), "os-error" if isinstance(error, OSError) else "other")
+        print("Owned browser output scan failed: " + role + " " + reason, file=sys.stderr)
+        if isinstance(error, LIVE.EvidenceLinkRefusal):
+            print(f"Owned browser refused link: area={error.area}; entry={error.entry}; kind={error.kind}",
+                  file=sys.stderr)
+        raise
 
 
 def ci_identity():
@@ -107,6 +124,53 @@ def validate_producer(value, identity, inputs, native, now):
     stat = native.stat()
     require((stat.st_size, stat.st_mtime_ns) == (value["nativeSize"], value["nativeMtimeNs"]),
             "Release metadata changed since successful build")
+
+
+def preflight(phase, operation):
+    """Report only the fixed admission phase; exception details may be private."""
+    allowed = {"ci-identity", "arguments", "disk-reserve", "native-path", "node-path",
+               "node-path-absolute", "node-path-links", "node-path-resolve",
+               "node-path-resolved-links", "node-path-canonical",
+               "source-inputs", "producer-marker", "producer-admission", "output-path",
+               "output-create"}
+    if phase not in allowed:
+        raise ValueError("Unknown browser preflight phase")
+    try:
+        return operation()
+    except Exception:
+        print("Owned browser preflight failed: " + phase, file=sys.stderr)
+        raise
+
+
+def preflight_node_path(path):
+    # Reject links in the selected spelling before resolving it. Windows may
+    # return a different canonical spelling for the same unlinked file.
+    path = Path(path)
+    preflight("node-path-absolute", lambda: require(path.is_absolute(), "Absolute path required"))
+    preflight("node-path-links", lambda: require(all(not p.is_symlink() and not p.is_junction()
+              for p in (path, *path.parents)), "Unlinked path required"))
+    def resolve_selected():
+        try:
+            return path.resolve(strict=True)
+        except OSError as error:
+            # Emit a closed classification only: exception text can contain paths.
+            kind = ("missing" if isinstance(error, FileNotFoundError) else
+                    "denied" if isinstance(error, PermissionError) else "other-os-error")
+            print("Owned browser node resolution: " + kind, file=sys.stderr)
+            selected = str(path)
+            if kind == "other-os-error":
+                print("Owned browser node path shape: " +
+                      ("multiple-colons" if selected.count(":") > 1 else
+                       "quote" if '"' in selected else "other"), file=sys.stderr)
+            for label, value in (("errno", error.errno), ("winerror", getattr(error, "winerror", None))):
+                if type(value) is int and 0 <= value <= 65535:
+                    print(f"Owned browser node resolution {label}: {value}", file=sys.stderr)
+            raise
+    resolved = preflight("node-path-resolve", resolve_selected)
+    preflight("node-path-resolved-links", lambda: require(resolved.is_absolute()
+              and all(not p.is_symlink() and not p.is_junction() for p in (resolved, *resolved.parents)),
+              "Absolute unlinked path required"))
+    return preflight("node-path-canonical", lambda: plain_path(resolved))
 
 
 def validate_spec(spec, spec_path):
@@ -512,17 +576,22 @@ def main(arguments=None):
         return mark_producer(options.mark_build)
     if options.worker:
         return worker(options.worker)
-    identity = ci_identity()
-    require(options.native and options.node and options.output, "Explicit native, host Node and output required")
-    require(shutil.disk_usage(ROOT).free >= MIN_FREE, "Original disk reserve required")
-    native = native_path(options.native.absolute())
-    node = plain_path(options.node.absolute())
-    inputs = LIVE.source_inputs()
-    producer = read_json(marker_paths()[1])
-    validate_producer(producer, identity, inputs, native, time.time_ns())
-    output = plain_path(options.output.absolute(), exists=False)
-    require(output == ROOT / "validation/ci-host-document-history-browser", "Exact browser evidence destination required")
-    output.mkdir(parents=True, exist_ok=False)
+    identity = preflight("ci-identity", ci_identity)
+    preflight("arguments", lambda: require(options.native and options.node and options.output,
+                                             "Explicit native, host Node and output required"))
+    preflight("disk-reserve", lambda: require(shutil.disk_usage(ROOT).free >= MIN_FREE,
+                                                "Original disk reserve required"))
+    native = preflight("native-path", lambda: native_path(options.native.absolute()))
+    node = preflight("node-path", lambda: preflight_node_path(options.node.absolute()))
+    inputs = preflight("source-inputs", LIVE.source_inputs)
+    producer = preflight("producer-marker", lambda: read_json(marker_paths()[1]))
+    preflight("producer-admission", lambda: validate_producer(producer, identity, inputs, native, time.time_ns()))
+    def admit_output():
+        path = plain_path(options.output.absolute(), exists=False)
+        require(path == ROOT / "validation/ci-host-document-history-browser", "Exact browser evidence destination required")
+        return path
+    output = preflight("output-path", admit_output)
+    preflight("output-create", lambda: output.mkdir(parents=True, exist_ok=False))
     fixture = Path(tempfile.mkdtemp(prefix="yoke-owned-history-browser-", dir=marker_paths()[0].parent)).resolve()
     environment = {key: os.environ[key] for key in ("PATH", "SystemRoot", "SystemDrive", "WINDIR",
         "GITHUB_ACTIONS", "RUNNER_OS", "RUNNER_TEMP", "GITHUB_SHA", "GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT")}

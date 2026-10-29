@@ -106,6 +106,16 @@ driver exit/EOF receipts remain independent requirements.
 
 ## Evidence and remaining gates
 
+For focused CI diagnosis, a pushed commit whose message contains
+`[browser-evidence]` also starts the separate Windows history-browser diagnostic
+job. It uses the same release producer markers, original three owning-Session
+history variants, guarded browser script, and five/four-minute step ceilings.
+The job has its own 45-minute ceiling and uploads distinct `diagnostic-*`
+artifacts. It does not depend on native shard success, so an unrelated test
+failure cannot hide browser startup evidence. It supplies no shard coverage
+receipt and does not replace the full native acceptance jobs or their merge
+and release requirements. No diagnostic success establishes visual review.
+
 Only `validation/ci-host-document-history-browser` is uploaded. Source maps,
 validator/driver/native hashes, producer metadata, installed browser/engine/Node
 versions, selected DOM states, real screenshot hashes, CLI outcome summaries and
