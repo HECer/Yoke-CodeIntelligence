@@ -252,7 +252,7 @@ jobs:
           $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
           $nodeMatchClass = if ($nodeMatches.Count -eq 1) { 'one' } else { 'multiple' }
           Write-Host "Owned browser node matches: $nodeMatchClass"
-          $selectedNode = $nodeMatches.Source
+          $selectedNode = $nodeMatches[0].Source
           python scripts/host_history_browser.py --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser
       - name: Preserve real browser automation and PNGs (human visual review unclaimed)
         if: always() && runner.os == 'Windows'
