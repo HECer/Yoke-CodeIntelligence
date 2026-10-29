@@ -260,7 +260,10 @@ jobs:
         timeout-minutes: 4
         shell: pwsh
         run: |
-          $selectedNode = (Get-Command node.exe -CommandType Application -ErrorAction Stop).Source
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $nodeMatchClass = if ($nodeMatches.Count -eq 1) { 'one' } else { 'multiple' }
+          Write-Host "Owned browser node matches: $nodeMatchClass"
+          $selectedNode = $nodeMatches[0].Source
           python scripts/host_history_browser.py --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser
       - name: Preserve real browser automation and PNGs (human visual review unclaimed)
         if: always() && runner.os == 'Windows'
@@ -291,3 +294,57 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     steps: *native-acceptance-steps
+  history-browser-diagnostic:
+    name: Windows history browser diagnostic (not full native acceptance)
+    # Explicit diagnostic invocation; the original shard/acceptance jobs remain
+    # mandatory and this job cannot supply their coverage receipts.
+    if: github.event_name == 'push' && contains(github.event.head_commit.message, '[browser-evidence]')
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.94.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Use the same Windows temporary directory by its canonical long path
+        run: python scripts/ci_windows_temp.py
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: history-browser-diagnostic
+      - run: npm ci
+      - name: Verify browser and owning-Session harness admission
+        run: python -m unittest scripts.tests.test_host_history_browser scripts.tests.test_host_history_live -v
+      - name: Record release inputs before the diagnostic build
+        run: python scripts/host_history_browser.py --mark-build start
+      - name: Build the same release CLI for the diagnostic
+        run: cargo build --workspace --release --locked
+      - name: Bind the successful diagnostic build to unchanged inputs
+        run: python scripts/host_history_browser.py --mark-build complete
+      - name: Exercise the original three owning-Session history variants
+        timeout-minutes: 5
+        run: python scripts/host_history_live.py --native target/release/yoke.exe --output validation/ci-host-document-history
+      - name: Preserve diagnostic owning-Session evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostic-host-document-history-windows
+          path: validation/ci-host-document-history
+          if-no-files-found: warn
+      - name: Exercise the unchanged guarded real-browser harness
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser
+      - name: Preserve diagnostic browser automation and PNGs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostic-host-document-history-browser-windows
+          path: validation/ci-host-document-history-browser
+          if-no-files-found: error

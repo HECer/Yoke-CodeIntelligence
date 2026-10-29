@@ -15,6 +15,29 @@ SPEC.loader.exec_module(LIVE)
 
 
 class HistoryEvidenceAdmission(unittest.TestCase):
+    def test_link_scan_refuses_before_payload_or_target_access_and_retains_only_closed_labels(self):
+        root = Path(tempfile.gettempdir()).resolve() / "owned-link-observation"
+        for symbolic, top, leaf, area, entry in [
+            (True, "edge-profile", "SingletonLock", "browser-profile", "browser-singleton-lock"),
+            (False, "home", "Application Data", "home", "profile-compatibility"),
+            (False, "private-capability", "private-target", "other", "other"),
+        ]:
+            candidate = root / top / leaf
+            with self.subTest(symbolic=symbolic, area=area), \
+                 mock.patch.object(Path, "rglob", return_value=iter([candidate])), \
+                 mock.patch.object(Path, "is_symlink", return_value=symbolic), \
+                 mock.patch.object(Path, "is_junction", return_value=True), \
+                 mock.patch.object(Path, "is_file", side_effect=AssertionError("Must refuse before file query")), \
+                 mock.patch.object(Path, "readlink", side_effect=AssertionError("Must not read target")), \
+                 mock.patch.object(Path, "read_bytes", side_effect=AssertionError("Must not read payload")):
+                with self.assertRaises(LIVE.EvidenceLinkRefusal) as caught:
+                    LIVE.output_size(root)
+                error = caught.exception
+                self.assertEqual(str(error), "Unexpected evidence link")
+                self.assertEqual((error.area, error.entry, error.kind),
+                                 (area, entry, "symlink" if symbolic else "junction"))
+                self.assertNotIn("private", repr(error.__dict__))
+
     def fixture(self):
         name = "yoke-doc-" + "a" * 64 + "-" + "b" * 64 + ".plan.json"
         content = '\ufeff{"owned":"π 🦀 e\u0301\\r\\n"}'.encode("utf-8")
