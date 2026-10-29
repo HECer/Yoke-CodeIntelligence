@@ -1,5 +1,29 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Source-bound Windows/Ubuntu native and owning-Session history confirmation (2026-10-29)
+
+Run `40858654238` at `76035e4be3d9a9f9984364190eae9b49764a4209` passes
+complete default Cargo group coverage on Windows and Ubuntu: eight complete
+shards and 371 unique groups per platform, with every group exiting zero and
+all 742 referenced logs per platform matching their byte counts and hashes.
+Build-only examples and original ignored gates retain their own scope; group
+counts do not establish individual test totals or nondefault-feature coverage.
+The 1,099 source hashes match Git exactly on Ubuntu; Windows retains 45 exact
+and 1,054 explicitly identified LF/CRLF-only matches.
+
+Separate source `8f6878ae0da9197df268cac45f24fed4b24b2891` in run `40864175630`
+passes the unchanged release build and all three original owning-Session history
+variants, each with two packages and 42 original records read back. Root, native
+authority and persistent-runtime exits precede forced cleanup. The later browser
+gate still fails at private-fixture link refusal, with no accepted PNG/visual
+results. The new closed-label diagnostic at `43fc1b73` awaits runtime evidence.
+
+[Retained source-bound receipts, all 2,000 text members and limits](validation/integration-2026-10-29/native-history-checkpoint/README.md).
+Strict macOS memory enforcement, current-head browser/visual qualification,
+integrated PRs, matching VSIX/extension host, main/publication and complete
+project/release acceptance remain open. Earlier failures remain historical;
+no assertion, deadline, memory ceiling, ignore or permission is relaxed.
+
 ## Owned overlay/publication admission corrected after platform CI (2026-10-27)
 
 At published `b55064b9`, actual platform evidence identifies two construction
