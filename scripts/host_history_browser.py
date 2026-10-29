@@ -48,6 +48,9 @@ def output_size(root):
                    "Evidence byte capacity exceeded": "bytes"}
         reason = reasons.get(str(error), "os-error" if isinstance(error, OSError) else "other")
         print("Owned browser output scan failed: " + role + " " + reason, file=sys.stderr)
+        if isinstance(error, LIVE.EvidenceLinkRefusal):
+            print(f"Owned browser refused link: area={error.area}; entry={error.entry}; kind={error.kind}",
+                  file=sys.stderr)
         raise
 
 

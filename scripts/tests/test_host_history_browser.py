@@ -22,6 +22,17 @@ SPEC.loader.exec_module(BROWSER)
 
 
 class WorkerAdmission(unittest.TestCase):
+    def test_link_diagnostic_emits_closed_labels_without_private_paths(self):
+        root = Path(tempfile.gettempdir()).resolve() / "yoke-owned-history-browser-private"
+        error = BROWSER.LIVE.EvidenceLinkRefusal(root, root / "private-capability" / "private-target", "junction")
+        with mock.patch.object(BROWSER.LIVE, "output_size", side_effect=error), \
+             mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+            with self.assertRaises(BROWSER.LIVE.EvidenceLinkRefusal) as caught:
+                BROWSER.output_size(root)
+            self.assertIs(caught.exception, error)
+            self.assertEqual(log.getvalue(), "Owned browser output scan failed: fixture link\n"
+                             "Owned browser refused link: area=other; entry=other; kind=junction\n")
+
     def test_output_scan_reports_only_fixed_role_and_preserves_failure(self):
         for root, role in [(Path('ci-host-document-history-browser'), 'evidence'),
                            (Path('yoke-owned-history-browser-private'), 'fixture'),
