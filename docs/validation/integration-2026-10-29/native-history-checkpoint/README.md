@@ -39,9 +39,13 @@ has no successful exit receipt; forced cleanup leaves zero active processes.
 There are no PNGs. [The supplementary receipt](browser-link-receipt.json) and
 [exact text artifact](browser-link-43fc1b73.zip) preserve that failed attempt,
 its source map and the closed parent diagnostic. The junction's exact entry and
-origin remain unknown. A new coherent private-profile layout is a qualification
-candidate, not a demonstrated cause or accepted fix. No link target is followed
-or exempted.
+origin remain unknown. The coherent private-profile layout at `83227913` also
+fails on a home junction, at depth seven, with no PNGs or successful worker-exit
+receipt; forced cleanup leaves zero active processes.
+[That diagnostic job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/40956689835/job/123738494312)
+does not establish the cause or an accepted fix. Bounded route categories and
+opaque per-component fingerprints are the next diagnostic candidate. No link
+target is followed or exempted.
 
 [The receipt](receipt.json) binds the source revisions, native coverage,
 owning-Session observations, original GitHub artifact identities/digests and

@@ -50,6 +50,29 @@ class HistoryEvidenceAdmission(unittest.TestCase):
         error = LIVE.EvidenceLinkRefusal(root, deep, "junction")
         self.assertEqual(error.depth, 16)
         self.assertNotIn("private-part", repr(error.__dict__))
+        self.assertEqual(len(error.route), 16)
+        self.assertEqual(len(error.component_sha256), 16)
+
+    def test_link_route_classifies_known_names_without_publishing_unknown_spellings(self):
+        root = Path(tempfile.gettempdir()).resolve() / "owned-link-route"
+        relative = Path("home/AppData/Local/Microsoft/Windows/INetCache/Content.IE5")
+        error = LIVE.EvidenceLinkRefusal(root, root / relative, "junction")
+        self.assertEqual(error.route, ("home", "appdata", "local", "microsoft", "windows",
+                                       "internet-cache", "internet-content-cache"))
+        self.assertEqual(error.depth, 7)
+        names = ("home", "private-target\nBearer-token", "π e\u0301", "\ud800", "2026.10.29.1")
+        first = LIVE.EvidenceLinkRefusal(root, root.joinpath(*names), "junction")
+        other_root = root.parent / "different-private-root"
+        second = LIVE.EvidenceLinkRefusal(other_root, other_root.joinpath(*names), "junction")
+        changed = LIVE.EvidenceLinkRefusal(root, root.joinpath(*names[:-1], "2026.10.29.2"), "junction")
+        self.assertEqual(first.route, ("home", "other", "other", "other", "version"))
+        self.assertEqual(first.component_sha256, second.component_sha256)
+        self.assertNotEqual(first.component_sha256[-1], changed.component_sha256[-1])
+        self.assertEqual(first.component_sha256[:-1], changed.component_sha256[:-1])
+        for digest in first.component_sha256:
+            self.assertRegex(digest, r"^[0-9a-f]{64}$")
+        for spelling in ("private-target", "π e\u0301", "2026.10.29.1", str(root)):
+            self.assertNotIn(spelling, repr(first.__dict__))
 
     def fixture(self):
         name = "yoke-doc-" + "a" * 64 + "-" + "b" * 64 + ".plan.json"

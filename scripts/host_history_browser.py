@@ -51,6 +51,8 @@ def output_size(root):
         if isinstance(error, LIVE.EvidenceLinkRefusal):
             print(f"Owned browser refused link: area={error.area}; entry={error.entry}; kind={error.kind}; depth={error.depth}",
                   file=sys.stderr)
+            print("Owned browser link route: " + "/".join(error.route)
+                  + "; componentSha256=" + ",".join(error.component_sha256), file=sys.stderr)
         raise
 
 

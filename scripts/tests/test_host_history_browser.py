@@ -31,7 +31,12 @@ class WorkerAdmission(unittest.TestCase):
                 BROWSER.output_size(root)
             self.assertIs(caught.exception, error)
             self.assertEqual(log.getvalue(), "Owned browser output scan failed: fixture link\n"
-                             "Owned browser refused link: area=other; entry=other; kind=junction; depth=2\n")
+                             "Owned browser refused link: area=other; entry=other; kind=junction; depth=2\n"
+                             "Owned browser link route: other/other; componentSha256="
+                             + ",".join(error.component_sha256) + "\n")
+            self.assertNotIn("private-capability", log.getvalue())
+            self.assertNotIn("private-target", log.getvalue())
+            self.assertNotIn(str(root), log.getvalue())
 
     def test_private_profile_paths_share_one_unlinked_unicode_home(self):
         with tempfile.TemporaryDirectory(prefix="owned-browser-profile-π-") as directory:

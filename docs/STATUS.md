@@ -17,9 +17,10 @@ variants, each with two packages and 42 original records read back. Root, native
 authority and persistent-runtime exits precede forced cleanup. The later browser
 gate still fails at private-fixture link refusal, with no accepted PNG/visual
 results. At `43fc1b73`, the closed-label diagnostic confirms a junction beneath
-the private home. Its exact entry and origin remain unknown. A consistent
-private Windows profile layout is prepared for fresh browser qualification;
-all links still refuse. The six visual inspections remain pending.
+the private home. The coherent profile at `83227913` still refuses a home junction
+at depth seven. Its exact entry and origin remain unknown. Bounded route categories
+and opaque component fingerprints are prepared for diagnosis; all targets remain
+unread and all links still refuse. The six visual inspections remain pending.
 
 [Retained source-bound receipts, all 2,000 text members and limits](validation/integration-2026-10-29/native-history-checkpoint/README.md).
 Strict macOS memory enforcement, current-head browser/visual qualification,
