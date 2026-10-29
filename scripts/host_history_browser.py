@@ -26,7 +26,7 @@ _loader = importlib.util.spec_from_file_location("owned_history_live", ROOT / "s
 LIVE = importlib.util.module_from_spec(_loader)
 _loader.loader.exec_module(LIVE)
 require, sha, read_json, write_json = LIVE.require, LIVE.sha, LIVE.read_json, LIVE.write_json
-output_size, worker_job_name = LIVE.output_size, LIVE.worker_job_name
+worker_job_name = LIVE.worker_job_name
 MAX_JSON, MAX_OUTPUT, MIN_FREE = LIVE.MAX_JSON, LIVE.MAX_OUTPUT, LIVE.MIN_FREE
 SCHEMA = "owned_history_browser_v1"
 AGENT = "Code Intelligence"
@@ -35,6 +35,20 @@ DRIVER = ROOT / "scripts/host_history_browser.cjs"
 EDGES = (Path("C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"),
          Path("C:/Program Files/Microsoft/Edge/Application/msedge.exe"))
 DRAFT = "\ufeff# owned browser draft π 🦀 e\u0301 İ\r\nvalue: reviewed\r\n"
+
+
+def output_size(root):
+    try:
+        return LIVE.output_size(root)
+    except Exception as error:
+        name = Path(root).name
+        role = ("evidence" if name == "ci-host-document-history-browser" else
+                "fixture" if name.startswith("yoke-owned-history-browser-") else "other")
+        reasons = {"Unexpected evidence link": "link", "Evidence entry capacity exceeded": "entries",
+                   "Evidence byte capacity exceeded": "bytes"}
+        reason = reasons.get(str(error), "os-error" if isinstance(error, OSError) else "other")
+        print("Owned browser output scan failed: " + role + " " + reason, file=sys.stderr)
+        raise
 
 
 def ci_identity():

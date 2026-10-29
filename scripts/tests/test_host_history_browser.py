@@ -22,6 +22,27 @@ SPEC.loader.exec_module(BROWSER)
 
 
 class WorkerAdmission(unittest.TestCase):
+    def test_output_scan_reports_only_fixed_role_and_preserves_failure(self):
+        for root, role in [(Path('ci-host-document-history-browser'), 'evidence'),
+                           (Path('yoke-owned-history-browser-private'), 'fixture'),
+                           (Path('private-other'), 'other')]:
+            failure = RuntimeError('private path')
+            with self.subTest(role=role), mock.patch.object(BROWSER.LIVE, 'output_size', side_effect=failure), \
+                 mock.patch.object(BROWSER.sys, 'stderr', new_callable=io.StringIO) as log:
+                with self.assertRaises(RuntimeError) as caught:
+                    BROWSER.output_size(root)
+                self.assertIs(caught.exception, failure)
+                self.assertEqual(log.getvalue(), 'Owned browser output scan failed: ' + role + ' other\n')
+        for message, reason in [('Unexpected evidence link', 'link'),
+                                ('Evidence entry capacity exceeded', 'entries'),
+                                ('Evidence byte capacity exceeded', 'bytes')]:
+            with self.subTest(reason=reason), \
+                 mock.patch.object(BROWSER.LIVE, 'output_size', side_effect=RuntimeError(message)), \
+                 mock.patch.object(BROWSER.sys, 'stderr', new_callable=io.StringIO) as log:
+                with self.assertRaises(RuntimeError):
+                    BROWSER.output_size(Path('ci-host-document-history-browser'))
+                self.assertEqual(log.getvalue(), 'Owned browser output scan failed: evidence ' + reason + '\n')
+
     def test_preflight_reports_only_a_closed_phase_and_preserves_failure(self):
         for phase in ("ci-identity", "arguments", "disk-reserve", "native-path", "node-path",
                       "node-path-absolute", "node-path-links", "node-path-resolve",
