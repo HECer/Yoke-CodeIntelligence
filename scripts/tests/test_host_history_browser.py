@@ -66,6 +66,7 @@ class WorkerAdmission(unittest.TestCase):
                 with self.assertRaises(OSError):
                     BROWSER.preflight_node_path(node)
                 self.assertEqual(log.getvalue(), "Owned browser node resolution: other-os-error\n"
+                                 "Owned browser node path shape: other\n"
                                  "Owned browser preflight failed: node-path-resolve\n")
             for error, classification in [(FileNotFoundError("private path"), "missing"),
                                           (PermissionError("private path"), "denied")]:
@@ -81,8 +82,19 @@ class WorkerAdmission(unittest.TestCase):
                 with self.assertRaises(OSError):
                     BROWSER.preflight_node_path(node)
                 self.assertEqual(log.getvalue(), "Owned browser node resolution: other-os-error\n"
+                                 "Owned browser node path shape: other\n"
                                  "Owned browser node resolution errno: 22\n"
                                  "Owned browser preflight failed: node-path-resolve\n")
+            for suffix, shape in [(':another:part', 'multiple-colons'), ('"', 'quote')]:
+                with self.subTest(shape=shape), \
+                     mock.patch.object(Path, "is_symlink", return_value=False), \
+                     mock.patch.object(Path, "is_junction", return_value=False), \
+                     mock.patch.object(Path, "resolve", side_effect=OSError(22, "private path")), \
+                     mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                    with self.assertRaises(OSError):
+                        BROWSER.preflight_node_path(str(node) + suffix)
+                    self.assertIn("Owned browser node path shape: " + shape, log.getvalue())
+                    self.assertNotIn("private path", log.getvalue())
             with mock.patch.object(BROWSER, "plain_path", side_effect=RuntimeError("private path")), \
                  mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
                 with self.assertRaises(RuntimeError):

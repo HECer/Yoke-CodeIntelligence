@@ -140,6 +140,11 @@ def preflight_node_path(path):
             kind = ("missing" if isinstance(error, FileNotFoundError) else
                     "denied" if isinstance(error, PermissionError) else "other-os-error")
             print("Owned browser node resolution: " + kind, file=sys.stderr)
+            selected = str(path)
+            if kind == "other-os-error":
+                print("Owned browser node path shape: " +
+                      ("multiple-colons" if selected.count(":") > 1 else
+                       "quote" if '"' in selected else "other"), file=sys.stderr)
             for label, value in (("errno", error.errno), ("winerror", getattr(error, "winerror", None))):
                 if type(value) is int and 0 <= value <= 65535:
                     print(f"Owned browser node resolution {label}: {value}", file=sys.stderr)
