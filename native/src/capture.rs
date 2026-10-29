@@ -35,6 +35,11 @@ thread_local! {
     static HOST_DEADLINE: std::cell::RefCell<Option<Deadline>> = const {std::cell::RefCell::new(None)};
 }
 impl Deadline {
+    #[cfg(test)]
+    pub(crate) fn same_end_as(&self, other: &Self) -> bool {
+        self.end == other.end
+    }
+
     pub(crate) fn intersection(&self, other: &Self) -> Result<Self> {
         let mut result = self.clone();
         result.end = result.end.min(other.end);

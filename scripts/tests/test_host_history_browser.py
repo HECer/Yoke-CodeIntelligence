@@ -22,6 +22,129 @@ SPEC.loader.exec_module(BROWSER)
 
 
 class WorkerAdmission(unittest.TestCase):
+    def test_link_diagnostic_emits_closed_labels_without_private_paths(self):
+        root = Path(tempfile.gettempdir()).resolve() / "yoke-owned-history-browser-private"
+        error = BROWSER.LIVE.EvidenceLinkRefusal(root, root / "private-capability" / "private-target", "junction")
+        with mock.patch.object(BROWSER.LIVE, "output_size", side_effect=error), \
+             mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+            with self.assertRaises(BROWSER.LIVE.EvidenceLinkRefusal) as caught:
+                BROWSER.output_size(root)
+            self.assertIs(caught.exception, error)
+            self.assertEqual(log.getvalue(), "Owned browser output scan failed: fixture link\n"
+                             "Owned browser refused link: area=other; entry=other; kind=junction\n")
+
+    def test_output_scan_reports_only_fixed_role_and_preserves_failure(self):
+        for root, role in [(Path('ci-host-document-history-browser'), 'evidence'),
+                           (Path('yoke-owned-history-browser-private'), 'fixture'),
+                           (Path('private-other'), 'other')]:
+            failure = RuntimeError('private path')
+            with self.subTest(role=role), mock.patch.object(BROWSER.LIVE, 'output_size', side_effect=failure), \
+                 mock.patch.object(BROWSER.sys, 'stderr', new_callable=io.StringIO) as log:
+                with self.assertRaises(RuntimeError) as caught:
+                    BROWSER.output_size(root)
+                self.assertIs(caught.exception, failure)
+                self.assertEqual(log.getvalue(), 'Owned browser output scan failed: ' + role + ' other\n')
+        for message, reason in [('Unexpected evidence link', 'link'),
+                                ('Evidence entry capacity exceeded', 'entries'),
+                                ('Evidence byte capacity exceeded', 'bytes')]:
+            with self.subTest(reason=reason), \
+                 mock.patch.object(BROWSER.LIVE, 'output_size', side_effect=RuntimeError(message)), \
+                 mock.patch.object(BROWSER.sys, 'stderr', new_callable=io.StringIO) as log:
+                with self.assertRaises(RuntimeError):
+                    BROWSER.output_size(Path('ci-host-document-history-browser'))
+                self.assertEqual(log.getvalue(), 'Owned browser output scan failed: evidence ' + reason + '\n')
+
+    def test_preflight_reports_only_a_closed_phase_and_preserves_failure(self):
+        for phase in ("ci-identity", "arguments", "disk-reserve", "native-path", "node-path",
+                      "node-path-absolute", "node-path-links", "node-path-resolve",
+                      "node-path-resolved-links", "node-path-canonical",
+                      "source-inputs", "producer-marker", "producer-admission", "output-path", "output-create"):
+            with self.subTest(phase=phase), mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                error = RuntimeError("private capability and path")
+                with self.assertRaises(RuntimeError) as caught:
+                    BROWSER.preflight(phase, mock.Mock(side_effect=error))
+                self.assertIs(caught.exception, error)
+                self.assertEqual(log.getvalue(), "Owned browser preflight failed: " + phase + "\n")
+        callback = mock.Mock(return_value=42)
+        self.assertEqual(BROWSER.preflight("disk-reserve", callback), 42)
+        callback.assert_called_once_with()
+        forbidden = mock.Mock()
+        with self.assertRaises(ValueError):
+            BROWSER.preflight("private capability and path", forbidden)
+        forbidden.assert_not_called()
+
+    def test_node_preflight_preserves_unlinked_canonical_path_admission(self):
+        with tempfile.TemporaryDirectory(prefix="owned-node-admission-") as directory:
+            node = Path(directory).resolve() / "node.exe"
+            node.touch()
+            self.assertEqual(BROWSER.preflight_node_path(node), BROWSER.plain_path(node))
+            with mock.patch.object(Path, "is_junction", return_value=True), \
+                 mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                with self.assertRaises(RuntimeError):
+                    BROWSER.preflight_node_path(node)
+                self.assertEqual(log.getvalue(), "Owned browser preflight failed: node-path-links\n")
+            canonical = node.parent / "canonical-node.exe"
+            canonical.touch()
+            with mock.patch.object(Path, "resolve", return_value=canonical):
+                self.assertEqual(BROWSER.preflight_node_path(node), canonical)
+            with mock.patch.object(Path, "resolve", return_value=canonical), \
+                 mock.patch.object(Path, "is_symlink", autospec=True, side_effect=lambda path: path == canonical), \
+                 mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                with self.assertRaises(RuntimeError):
+                    BROWSER.preflight_node_path(node)
+                self.assertEqual(log.getvalue(), "Owned browser preflight failed: node-path-resolved-links\n")
+            with mock.patch.object(Path, "resolve", side_effect=OSError("private path")), \
+                 mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                with self.assertRaises(OSError):
+                    BROWSER.preflight_node_path(node)
+                self.assertEqual(log.getvalue(), "Owned browser node resolution: other-os-error\n"
+                                 "Owned browser node path shape: other\n"
+                                 "Owned browser preflight failed: node-path-resolve\n")
+            for error, classification in [(FileNotFoundError("private path"), "missing"),
+                                          (PermissionError("private path"), "denied")]:
+                with self.subTest(classification=classification), \
+                     mock.patch.object(Path, "resolve", side_effect=error), \
+                     mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                    with self.assertRaises(type(error)):
+                        BROWSER.preflight_node_path(node)
+                    self.assertEqual(log.getvalue(), f"Owned browser node resolution: {classification}\n"
+                                     "Owned browser preflight failed: node-path-resolve\n")
+            with mock.patch.object(Path, "resolve", side_effect=OSError(22, "private path")), \
+                 mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                with self.assertRaises(OSError):
+                    BROWSER.preflight_node_path(node)
+                self.assertEqual(log.getvalue(), "Owned browser node resolution: other-os-error\n"
+                                 "Owned browser node path shape: other\n"
+                                 "Owned browser node resolution errno: 22\n"
+                                 "Owned browser preflight failed: node-path-resolve\n")
+            for suffix, shape in [(':another:part', 'multiple-colons'), ('"', 'quote')]:
+                with self.subTest(shape=shape), \
+                     mock.patch.object(Path, "is_symlink", return_value=False), \
+                     mock.patch.object(Path, "is_junction", return_value=False), \
+                     mock.patch.object(Path, "resolve", side_effect=OSError(22, "private path")), \
+                     mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                    with self.assertRaises(OSError):
+                        BROWSER.preflight_node_path(str(node) + suffix)
+                    self.assertIn("Owned browser node path shape: " + shape, log.getvalue())
+                    self.assertNotIn("private path", log.getvalue())
+            with mock.patch.object(BROWSER, "plain_path", side_effect=RuntimeError("private path")), \
+                 mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                with self.assertRaises(RuntimeError):
+                    BROWSER.preflight_node_path(node)
+                self.assertEqual(log.getvalue(), "Owned browser preflight failed: node-path-canonical\n")
+
+    def test_disk_preflight_refuses_before_paths_or_output_creation(self):
+        with mock.patch.object(BROWSER, "ci_identity", return_value={}), \
+             mock.patch.object(BROWSER.shutil, "disk_usage", return_value=mock.Mock(free=BROWSER.MIN_FREE - 1)), \
+             mock.patch.object(BROWSER, "native_path") as native, \
+             mock.patch.object(Path, "mkdir") as mkdir, \
+             mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+            with self.assertRaises(RuntimeError):
+                BROWSER.main(["--native", "yoke.exe", "--node", "node.exe", "--output", "evidence"])
+            native.assert_not_called()
+            mkdir.assert_not_called()
+            self.assertEqual(log.getvalue(), "Owned browser preflight failed: disk-reserve\n")
+
     def test_real_driver_shutdown_protocol_with_in_memory_pipes(self):
         result = subprocess.run(
             ["node", "--test", str(SCRIPTS / "tests/host_history_browser_protocol.test.cjs")],
