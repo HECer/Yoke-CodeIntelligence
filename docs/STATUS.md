@@ -1,5 +1,17 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Separate Windows credential-backed TLS CI candidate (2026-10-30)
+
+A dedicated hosted-Windows profile now prepares fresh matching CLI/test images
+and explicitly selects the existing ignored receiver TLS/Credential Manager
+case inside the unchanged assigned-before-resume Job launcher. Its own filtered
+count stays separate from default shard coverage. Original Rust fixture bytes,
+ignore, assertions, deadlines and default native jobs remain unchanged.
+Synthetic admission tests pass; actual OS credentials, TLS/recovery/query
+execution and cleanup still require hosted qualification. No local native
+build/tests or credential access ran. Full platform/VSIX/main/release stays open.
+See [the profile contract](../scripts/host_credential_tls.md).
+
 ## Windows REPL and Explorer fixture failure context (2026-10-30)
 
 At `6c8bd90b`, [Windows shard 6](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41031531780/job/123982157572)
