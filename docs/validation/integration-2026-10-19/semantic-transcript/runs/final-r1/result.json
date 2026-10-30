@@ -1,0 +1,99 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 775,
+  "commands": [
+    {
+      "name": "native",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--no-fail-fast",
+        "--test",
+        "transcript_semantic",
+        "--test",
+        "feedback_cli",
+        "--test",
+        "meaning_feedback",
+        "--test",
+        "plan_feedback",
+        "--test",
+        "ledger",
+        "--test",
+        "ledger_batches",
+        "--test",
+        "ledger_admission_review",
+        "--test",
+        "ledger_batches_review",
+        "--test",
+        "retention",
+        "--",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exitCode": 101,
+      "seconds": 82.88553230001708,
+      "totals": {
+        "passed": 93,
+        "failed": 1,
+        "ignored": 0
+      },
+      "groups": 9,
+      "failures": []
+    },
+    {
+      "name": "format",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 7.900653599994257
+    },
+    {
+      "name": "build",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "build",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--bin",
+        "yoke"
+      ],
+      "exitCode": 0,
+      "seconds": 0.8659434999863151
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "seconds": 157.34300029999577
+    }
+  ],
+  "allChecksPassed": false,
+  "wholeNativeRerun": false
+}

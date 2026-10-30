@@ -1,0 +1,42 @@
+{
+  "run": 40974744304,
+  "job": 123799884303,
+  "artifact": 12944921471,
+  "sourceRevision": "76333e2e74727d546c432b8da10dbb010091d091",
+  "sourceFiles": 1099,
+  "gitBlobBytes": 17945356,
+  "rawSourceMatches": 45,
+  "lfToCrlfOnlyMatches": 1054,
+  "images": [
+    {
+      "name": "desktop-before.png",
+      "bytes": 92574,
+      "sha256": "be3cd39627103421c46dec246b9399c33b341f6e63e66f2305b8bac8db92a241",
+      "width": 1440,
+      "height": 1612,
+      "domSha256": "3fab7b0b6b4c699eecf2449b72d50de7fc37673506c44e63b4ddd65116d591e7",
+      "actualImageInspected": true,
+      "observed": "Readable before-review draft, original saved content and controls; no horizontal overflow or obvious clipping in full-content capture. Mobile path/hash text wraps within the panel."
+    },
+    {
+      "name": "mobile-before.png",
+      "bytes": 80924,
+      "sha256": "27ed1b3d0c4a52611863c103da22fbcee22009e2d9f303f41bdfef3c20e615d8",
+      "width": 390,
+      "height": 2110,
+      "domSha256": "26af253bb46a84e59660173444eb87794c2a1f88ab2fcffea9e4b7ef42a01dd5",
+      "actualImageInspected": true,
+      "observed": "Readable before-review draft, original saved content and controls; no horizontal overflow or obvious clipping in full-content capture. Mobile path/hash text wraps within the panel."
+    }
+  ],
+  "automationComplete": false,
+  "overallVisualAcceptance": false,
+  "missingStates": [
+    "desktop-pending",
+    "mobile-pending",
+    "desktop-after",
+    "mobile-after"
+  ],
+  "failure": "Worker exited1 after both before captures. No junction refusal was reported; exact later failure phase remains unknown. Zero Job members before force does not establish normal browser/native shutdown on this failing path.",
+  "protectedNativeImagePayloadReadOrExecuted": false
+}

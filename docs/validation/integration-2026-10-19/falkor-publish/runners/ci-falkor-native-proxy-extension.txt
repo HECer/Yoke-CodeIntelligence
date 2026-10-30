@@ -1,0 +1,17 @@
+      if prefix=='proxy':
+       race_plans=[]
+       for label in ['A','B']:
+        code=('fn candidate_'+label+'(){}\r\n').encode();(owned_source/('race-'+label+'.rs')).write_bytes(code);(out/('owned-race-'+label+'.rs')).write_bytes(code);snapshot_race=cli('race-'+label+'-source-index',['--root',owned_source,'index'])['snapshotId'];race_dir=out/('race-'+label);race_dir.mkdir();race_path=race_dir/'publication.json'
+        cli('race-'+label+'-prepare',['falkor-publish','prepare','--config',config,'--source-root',owned_source,'--snapshot-id',snapshot_race,'--expected-revision',revision,'--output',race_path,'--allow-output','--allow-source-coordination']);race_plan=json.loads(race_path.read_bytes());race_journal=race_dir/('falkor-'+race_plan['planId']+'.jsonl');approval('race-'+label+'-approve',race_path,race_plan,race_journal);race_plans.append((label,race_path,race_plan,race_journal))
+       race['armed']=True;before=len(proxy_events)
+       def contender(item):
+        label,path2,plan2,journal2=item
+        return do_apply('race-'+label+'-apply','apply',path2,plan2,journal2,connect,None)
+       with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:outcomes=list(pool.map(contender,race_plans))
+       race['armed']=False;assert sum(isinstance(x,dict) for x in outcomes)==1;assert sum(e['publication'] for e in proxy_events[before:])==2
+       winner=race_plans[next(i for i,r in enumerate(outcomes) if isinstance(r,dict))];loser=race_plans[next(i for i,r in enumerate(outcomes) if not isinstance(r,dict))]
+       state=run('race-final-state',['GRAPH.RO_QUERY',key,'CYPHER loser='+json.dumps(loser[2]['revisionId'])+' MATCH (s:YokeNativeScope) CALL { MATCH (n:YokeNativeElement {revisionId:$loser}) RETURN count(n) AS nodes } CALL { MATCH ()-[r:YOKE_NATIVE_OBSERVATION {revisionId:$loser}]->() RETURN count(r) AS edges } RETURN s.activeRevision,s.lockCounter,nodes,edges']);assert state[1]==[[winner[2]['revisionId'],3,0,0]]
+       before=len(proxy_events);denied=do_apply('race-loser-read-recovery-refused','recover',loser[1],loser[2],loser[3],connect,False);assert 'outcome_unconfirmed_no_automatic_resend' in denied and not any(e['publication'] for e in proxy_events[before:])
+       do_apply('historical-recovery-after-later-active','recover',path,plan,historical,connect);assert not any(e['publication'] for e in proxy_events[before:])
+       run('insert-owned-wrong-index',['GRAPH.QUERY',key,'CREATE INDEX FOR (n:YokeNativeElement) ON (n.wrongProperty)']);denied=cli('wrong-schema-refused',['falkor-publish','probe','--plan',path]+connect,success=False);assert 'schema_conflict' in denied
+       wrong=run('wrong-schema-preserved',['GRAPH.RO_QUERY',key,'CALL db.indexes() YIELD label,properties UNWIND properties AS property RETURN label,property ORDER BY label,property']);assert ['YokeNativeElement','wrongProperty'] in wrong[1]

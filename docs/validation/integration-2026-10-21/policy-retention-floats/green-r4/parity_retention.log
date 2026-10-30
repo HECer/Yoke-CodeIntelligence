@@ -1,0 +1,16 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.65s
+     Running tests\parity_retention.rs (target\debug\deps\parity_retention-3c0e5e94ea98ead8.exe)
+
+running 8 tests
+test development_six_cache_missing_only_embedded_language_keeps_exact_old_schema ... ok
+test duplicate_provenance_fields_are_refused_before_dependency_interpretation ... ok
+test parity_record_future_fields_and_corrupt_bindings_never_grant_purge ... ok
+test rehashed_report_with_unknown_nested_schema_is_refused ... ok
+test released_analyzer_four_extraction_cache_is_readable_without_rewriting_old_payloads ... ok
+test source_bound_reports_exports_and_markdown_artifacts_are_known_retention_dependencies ... ok
+test structural_semantic_and_view_artifacts_preserve_exact_source_roots ... ok
+test valid_capture_notes_session_and_unpublished_capture_do_not_disable_retention ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.51s
+

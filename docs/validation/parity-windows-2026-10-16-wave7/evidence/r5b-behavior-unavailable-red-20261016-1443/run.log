@@ -1,0 +1,101 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5b-affected-v1\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 44s
+     Running tests\git_affected_details.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\git_affected_details-7178adb8b44b9b6a.exe)
+
+running 12 tests
+test caller_transaction_sql_limit_and_state_survive_success_and_all_failure_classes ... FAILED
+test canonical_identity_binds_every_option_input_and_false_inference_field ... FAILED
+test default_options_are_closed_thirteen_fields_and_direct_callers_cannot_raise_maxima ... FAILED
+test base_root_keeps_both_descendant_candidates_and_contract_ancestor ... FAILED
+test derived_root_has_exact_ancestor_members_full_witnesses_and_no_sibling_shortcut ... FAILED
+test exact_graph_original_row_and_seed_state_budgets_succeed_one_less_refuses ... FAILED
+test no_change_still_charges_every_index_observation_and_allows_true_zero_derived_work ... FAILED
+test historical_replay_needs_no_live_git_and_preserves_report_r5a_and_store_state ... FAILED
+test recursive_rows_new_source_bytes_and_wire_boundaries_are_independently_measured ... FAILED
+test root_and_walk_seed_states_retain_parallel_calls_and_independent_incoming_distances ... FAILED
+test selected_depths_have_explicit_boundaries_and_capacity_never_drops_member_candidates ... FAILED
+test unicode_crlf_tables_bind_exact_historical_entities_observations_and_evidence_vectors ... FAILED
+
+failures:
+
+---- caller_transaction_sql_limit_and_state_survive_success_and_all_failure_classes stdout ----
+
+thread 'caller_transaction_sql_limit_and_state_survive_success_and_all_failure_classes' (96056) panicked at native\tests\git_affected_details.rs:35:10:
+qualified genuine affected result: git_affected_details_unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- canonical_identity_binds_every_option_input_and_false_inference_field stdout ----
+
+thread 'canonical_identity_binds_every_option_input_and_false_inference_field' (83176) panicked at native\tests\git_affected_details.rs:35:10:
+qualified genuine affected result: git_affected_details_unavailable
+
+---- default_options_are_closed_thirteen_fields_and_direct_callers_cannot_raise_maxima stdout ----
+
+thread 'default_options_are_closed_thirteen_fields_and_direct_callers_cannot_raise_maxima' (29612) panicked at native\tests\git_affected_details.rs:35:10:
+qualified genuine affected result: git_affected_details_unavailable
+
+---- base_root_keeps_both_descendant_candidates_and_contract_ancestor stdout ----
+
+thread 'base_root_keeps_both_descendant_candidates_and_contract_ancestor' (84312) panicked at native\tests\git_affected_details.rs:35:10:
+qualified genuine affected result: git_affected_details_unavailable
+
+---- derived_root_has_exact_ancestor_members_full_witnesses_and_no_sibling_shortcut stdout ----
+
+thread 'derived_root_has_exact_ancestor_members_full_witnesses_and_no_sibling_shortcut' (52580) panicked at native\tests\git_affected_details.rs:35:10:
+qualified genuine affected result: git_affected_details_unavailable
+
+---- exact_graph_original_row_and_seed_state_budgets_succeed_one_less_refuses stdout ----
+
+thread 'exact_graph_original_row_and_seed_state_budgets_succeed_one_less_refuses' (65396) panicked at native\tests\git_affected_details.rs:35:10:
+qualified genuine affected result: git_affected_details_unavailable
+
+---- no_change_still_charges_every_index_observation_and_allows_true_zero_derived_work stdout ----
+
+thread 'no_change_still_charges_every_index_observation_and_allows_true_zero_derived_work' (93092) panicked at native\tests\git_affected_details.rs:35:10:
+qualified genuine affected result: git_affected_details_unavailable
+
+---- historical_replay_needs_no_live_git_and_preserves_report_r5a_and_store_state stdout ----
+
+thread 'historical_replay_needs_no_live_git_and_preserves_report_r5a_and_store_state' (12740) panicked at native\tests\git_affected_details.rs:35:10:
+qualified genuine affected result: git_affected_details_unavailable
+
+---- recursive_rows_new_source_bytes_and_wire_boundaries_are_independently_measured stdout ----
+
+thread 'recursive_rows_new_source_bytes_and_wire_boundaries_are_independently_measured' (67984) panicked at native\tests\git_affected_details.rs:35:10:
+qualified genuine affected result: git_affected_details_unavailable
+
+---- root_and_walk_seed_states_retain_parallel_calls_and_independent_incoming_distances stdout ----
+
+thread 'root_and_walk_seed_states_retain_parallel_calls_and_independent_incoming_distances' (20932) panicked at native\tests\git_affected_details.rs:35:10:
+qualified genuine affected result: git_affected_details_unavailable
+
+---- selected_depths_have_explicit_boundaries_and_capacity_never_drops_member_candidates stdout ----
+
+thread 'selected_depths_have_explicit_boundaries_and_capacity_never_drops_member_candidates' (104360) panicked at native\tests\git_affected_details.rs:35:10:
+qualified genuine affected result: git_affected_details_unavailable
+
+---- unicode_crlf_tables_bind_exact_historical_entities_observations_and_evidence_vectors stdout ----
+
+thread 'unicode_crlf_tables_bind_exact_historical_entities_observations_and_evidence_vectors' (8304) panicked at native\tests\git_affected_details.rs:35:10:
+qualified genuine affected result: git_affected_details_unavailable
+
+
+failures:
+    base_root_keeps_both_descendant_candidates_and_contract_ancestor
+    caller_transaction_sql_limit_and_state_survive_success_and_all_failure_classes
+    canonical_identity_binds_every_option_input_and_false_inference_field
+    default_options_are_closed_thirteen_fields_and_direct_callers_cannot_raise_maxima
+    derived_root_has_exact_ancestor_members_full_witnesses_and_no_sibling_shortcut
+    exact_graph_original_row_and_seed_state_budgets_succeed_one_less_refuses
+    historical_replay_needs_no_live_git_and_preserves_report_r5a_and_store_state
+    no_change_still_charges_every_index_observation_and_allows_true_zero_derived_work
+    recursive_rows_new_source_bytes_and_wire_boundaries_are_independently_measured
+    root_and_walk_seed_states_retain_parallel_calls_and_independent_incoming_distances
+    selected_depths_have_explicit_boundaries_and_capacity_never_drops_member_candidates
+    unicode_crlf_tables_bind_exact_historical_entities_observations_and_evidence_vectors
+
+test result: FAILED. 0 passed; 12 failed; 0 ignored; 0 measured; 0 filtered out; finished in 32.43s
+
+error: test failed, to rerun pass `--test git_affected_details`
+error: 1 target failed:
+    `--test git_affected_details`

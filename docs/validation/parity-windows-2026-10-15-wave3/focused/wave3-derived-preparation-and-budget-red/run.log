@@ -1,0 +1,204 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: methods `path` and `identity` are never used
+   --> native\src\host_install.rs:634:19
+    |
+633 | impl DurableOutputRegistration {
+    | ------------------------------ methods in this implementation
+634 |     pub(super) fn path(&self) -> &Path {
+    |                   ^^^^
+...
+637 |     pub(super) fn identity(&self) -> &str {
+    |                   ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: fields `path` and `byte_length` are never read
+  --> native\src\host_install_io.rs:32:16
+   |
+31 | pub(super) struct OutputBinding {
+   |                   ------------- fields in this struct
+32 |     pub(super) path: PathBuf,
+   |                ^^^^
+33 |     pub(super) identity: String,
+34 |     pub(super) byte_length: usize,
+   |                ^^^^^^^^^^^
+
+warning: methods `identity`, `len`, and `is_empty` are never used
+   --> native\src\host_install_io.rs:110:19
+    |
+100 | impl ArmedOutput {
+    | ---------------- methods in this implementation
+...
+110 |     pub(super) fn identity(&self) -> &str {
+    |                   ^^^^^^^^
+...
+113 |     pub(super) fn len(&self) -> usize {
+    |                   ^^^
+...
+116 |     pub(super) fn is_empty(&self) -> bool {
+    |                   ^^^^^^^^
+
+warning: methods `binding` and `identity` are never used
+   --> native\src\host_install_io.rs:131:19
+    |
+130 | impl RegisteredOutput {
+    | --------------------- methods in this implementation
+131 |     pub(super) fn binding(&self) -> OutputBinding {
+    |                   ^^^^^^^
+...
+140 |     pub(super) fn identity(&self) -> &str {
+    |                   ^^^^^^^^
+
+warning: function `security_fingerprint` is never used
+   --> native\src\host_install_io.rs:184:15
+    |
+184 | pub(super) fn security_fingerprint(file: &HeldFile, d: &Deadline) -> Result<String> {
+    |               ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `clear_creation_delete_on_close` is never used
+   --> native\src\host_install_namespace.rs:101:15
+    |
+101 | pub(super) fn clear_creation_delete_on_close(file: &File, d: &Deadline) -> Result<()> {
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `clear_creation_delete_on_close` is never used
+   --> native\src\host_install_namespace.rs:423:19
+    |
+423 |     pub(super) fn clear_creation_delete_on_close(file: &File, d: &Deadline) -> Result<()> {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `NtSetInformationFile` is never used
+   --> native\src\host_install_namespace.rs:226:12
+    |
+226 |         fn NtSetInformationFile(
+    |            ^^^^^^^^^^^^^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib) generated 8 warnings
+    Finished `test` profile [unoptimized] target(s) in 55.79s
+     Running tests\derived_graph_mixed_budget.rs (target\debug\deps\derived_graph_mixed_budget-ac1f60fdd7a1b900.exe)
+
+running 1 test
+test valid_meaning_plus_default_structural_budget_failure_publishes_no_records_or_cas has been running for over 60 seconds
+test valid_meaning_plus_default_structural_budget_failure_publishes_no_records_or_cas ... FAILED
+
+failures:
+
+---- valid_meaning_plus_default_structural_budget_failure_publishes_no_records_or_cas stdout ----
+
+thread 'valid_meaning_plus_default_structural_budget_failure_publishes_no_records_or_cas' (7280) panicked at native\tests\derived_graph_mixed_budget.rs:229:5:
+assertion `left == right` failed: Rejected combined selection published structural records or CAS
+  left: State { tables: {"cache": 2, "documents": 2, "documents_config": 1, "documents_content": 2, "documents_data": 14, "documents_docsize": 2, "documents_idx": 11, "graphs": 1, "meta": 3, "records": 118, "snapshots": 1, "symbols": 3, "symbols_config": 1, "symbols_content": 3, "symbols_data": 3, "symbols_docsize": 3, "symbols_idx": 1}, records: "2159f743880b40c240dc655b20b0775f5a3587b67226bc349ec77cf95da8657c", blobs: {"04fde939bd298cb86fd8a56545a54e3efb97e7f32cf0ef4f567573167e146bf5": 803307, "0e379d8537bc019d3d9aa35a8cc0fd8e809c3c209338e16cac4fc374d6dd3cd0": 17763925, "1259196c9835910357ead212a85f099a849397d7d6be590fe3787b2fe0443179": 716631, "1e9c28b011986cbdfbdc5c67568f6f533d77473539ddf7aeabb31ffd4bc8a16f": 716631, "211a5ef7db57f39aa9adf9f895fe77c4cb1fa8adf71d190f22c8178b7fddd506": 803307, "2dafd861f91556d818523661a0482dafe17cce0fb413965110931d4d4572f865": 803307, "32f9d3b873594d546af70a2b7d055ffe26513d71107c374abea9280d66a11fb9": 716631, "411a8a00a25f6bddecf50cd98d6bc8eacdafd03ade6ec3edaaf18f365c7beef5": 803307, "51f41dcc647480092d758318aeb8df2b776f1522b976cc2e3d4cea95d067157f": 716631, "53fab9898a95da2b23e5b90d665f653dedd4248b69f3dab746ec81479e439a2b": 574001, "627a56958f68d4520140d3de48720da41729ff662d92a2fedf4c9edc2ad3e566": 803307, "679ababc0f2a309804fca053db633271bd057ee73556c44ca478b32a4ea5d1cc": 803307, "6a92430b112c5c913bfa255567b64bc6a1316b047c5b1a09653cc5a52655905b": 3520143, "6c77e51cc75ca91d024019b1f2aaab7d53ddd5d9c99fd78e70193c2af177ea3f": 716631, "797f60153433f02c7a7a40df9648532f3dea18ccc3ad70837a067679d4cd5b06": 716631, "7d7d15d0aba16b7b351287f41a4c92a6bf2daaf9fa167ba047f5d84552eebbc8": 803307, "82c0509c3c7eb2c2ec097b885ab92de016c7593d19053f6a8ae67a6f47a242dc": 716631, "836b84ad13e44fe54081aeb2522bd7eb06e50ab9969743ae86058f625b8b14d9": 716631, "890398e9a925f0b34874f89b50266a8bbe4bb7655e4f966d56dcb9f0876b3da5": 716631, "9212e701146e3d69ce133190bcdec961a3783a583e546ae42b7ad43adab06a84": 803307, "94d6b605666a97ec8d9ed8ecb556487d1ec85f0f61d4f7a8aebfe64a75aaad53": 716631, "960b7ddc8ead20ef925e0e6ceedba3fcc8a872cf3e7c6b354620455014dd487a": 14, "9987a3fd68c18b60624b344bb4c9ff835fe2336cb0c4777924c07ea6665c51cb": 716631, "9a57ef36da1f7db754e639bb1fd08717efdd53b15dd719d2e31aba4d146abbd6": 803307, "a0258b66602b53d83632e84a43115aa119b7becbb4a1fd37e4a245afeb4160bd": 803307, "a6533652c6a1a8d690173e6ddd8bbccb2066b32e2b82a2559ff1646e5ca52289": 716631, "a791ecc36b36d77f90504f91a4a77d2ad94d4dd8b69b6ed0d2f5380114ae56af": 716631, "ae7e4d5cf29a792095f705b5a7fef5c0c66c3b5ab5f92b0632069078e90b3236": 803307, "b2ccd1e5dce9d0f70923c21fa49ccaf2350cf829a96752d07d0cb42c9965a16b": 716631, "b5790e766ca2dfce9f63f9b1917a7acc7027f7a809ae23df263efcae03203d4d": 716631, "b5957f685b191c918449a4bc514e44823cf2981aa7a9f6037c643e097e3437a1": 803307, "b9220dfba3278fe6648bf1fdf6acfb2ed69d14f95f7704a654486567db7d953b": 803307, "cf85f65ef26eddbfd67f14a87d94f169fa26f511b11b984e9fc1d34101ba6cad": 803307, "d45d4831830f1e06b22594856b5b2d3c9c62769108ba95721de927217daff9ad": 716631, "d6d4a1f64cd0564a37f45a2d437047074453278ca4f362aec3128b39353860bd": 503, "d98f49f3df0ed63946e5b9c668120f28b906bddfeb4698bd2ce8f99830b0f1a7": 503, "db431e718d55cb6c0920bbf1ac5f4ac388af78f97e1c590774c655aa6653b10a": 803307, "dd085698e3a53b2121105af9917dc91540865ca3287f5242ba1d1846cad59245": 803307, "dd4fd99184f4bbc1fb20d9c0690b73e3459eeb0d9f47ec2fe8af2498e8ee10ea": 716631, "f1260b0fd1170ef0b8410d203ad7f892fc30e6d5d43519c503debe88cfb92cc2": 803307, "fbcebd941c7c97972797db5063eacadb3d74a467bc39f95929ae7b6c1e3763b7": 716631, "fe15861d3d31b5cbfda9b88dcfcded9b4920ce5ccdd1f291f5bc0ed3ff759931": 803307} }
+ right: State { tables: {"cache": 2, "documents": 2, "documents_config": 1, "documents_content": 2, "documents_data": 14, "documents_docsize": 2, "documents_idx": 11, "graphs": 1, "meta": 3, "records": 112, "snapshots": 1, "symbols": 3, "symbols_config": 1, "symbols_content": 3, "symbols_data": 3, "symbols_docsize": 3, "symbols_idx": 1}, records: "1036a41acd672f5785f102d96d640881d51072b4ea09ecd0fdc7a467fd9da810", blobs: {"04fde939bd298cb86fd8a56545a54e3efb97e7f32cf0ef4f567573167e146bf5": 803307, "0e379d8537bc019d3d9aa35a8cc0fd8e809c3c209338e16cac4fc374d6dd3cd0": 17763925, "1259196c9835910357ead212a85f099a849397d7d6be590fe3787b2fe0443179": 716631, "1e9c28b011986cbdfbdc5c67568f6f533d77473539ddf7aeabb31ffd4bc8a16f": 716631, "211a5ef7db57f39aa9adf9f895fe77c4cb1fa8adf71d190f22c8178b7fddd506": 803307, "2dafd861f91556d818523661a0482dafe17cce0fb413965110931d4d4572f865": 803307, "32f9d3b873594d546af70a2b7d055ffe26513d71107c374abea9280d66a11fb9": 716631, "411a8a00a25f6bddecf50cd98d6bc8eacdafd03ade6ec3edaaf18f365c7beef5": 803307, "51f41dcc647480092d758318aeb8df2b776f1522b976cc2e3d4cea95d067157f": 716631, "53fab9898a95da2b23e5b90d665f653dedd4248b69f3dab746ec81479e439a2b": 574001, "627a56958f68d4520140d3de48720da41729ff662d92a2fedf4c9edc2ad3e566": 803307, "679ababc0f2a309804fca053db633271bd057ee73556c44ca478b32a4ea5d1cc": 803307, "6c77e51cc75ca91d024019b1f2aaab7d53ddd5d9c99fd78e70193c2af177ea3f": 716631, "797f60153433f02c7a7a40df9648532f3dea18ccc3ad70837a067679d4cd5b06": 716631, "7d7d15d0aba16b7b351287f41a4c92a6bf2daaf9fa167ba047f5d84552eebbc8": 803307, "82c0509c3c7eb2c2ec097b885ab92de016c7593d19053f6a8ae67a6f47a242dc": 716631, "836b84ad13e44fe54081aeb2522bd7eb06e50ab9969743ae86058f625b8b14d9": 716631, "890398e9a925f0b34874f89b50266a8bbe4bb7655e4f966d56dcb9f0876b3da5": 716631, "9212e701146e3d69ce133190bcdec961a3783a583e546ae42b7ad43adab06a84": 803307, "94d6b605666a97ec8d9ed8ecb556487d1ec85f0f61d4f7a8aebfe64a75aaad53": 716631, "960b7ddc8ead20ef925e0e6ceedba3fcc8a872cf3e7c6b354620455014dd487a": 14, "9987a3fd68c18b60624b344bb4c9ff835fe2336cb0c4777924c07ea6665c51cb": 716631, "9a57ef36da1f7db754e639bb1fd08717efdd53b15dd719d2e31aba4d146abbd6": 803307, "a0258b66602b53d83632e84a43115aa119b7becbb4a1fd37e4a245afeb4160bd": 803307, "a6533652c6a1a8d690173e6ddd8bbccb2066b32e2b82a2559ff1646e5ca52289": 716631, "a791ecc36b36d77f90504f91a4a77d2ad94d4dd8b69b6ed0d2f5380114ae56af": 716631, "ae7e4d5cf29a792095f705b5a7fef5c0c66c3b5ab5f92b0632069078e90b3236": 803307, "b2ccd1e5dce9d0f70923c21fa49ccaf2350cf829a96752d07d0cb42c9965a16b": 716631, "b5790e766ca2dfce9f63f9b1917a7acc7027f7a809ae23df263efcae03203d4d": 716631, "b5957f685b191c918449a4bc514e44823cf2981aa7a9f6037c643e097e3437a1": 803307, "b9220dfba3278fe6648bf1fdf6acfb2ed69d14f95f7704a654486567db7d953b": 803307, "cf85f65ef26eddbfd67f14a87d94f169fa26f511b11b984e9fc1d34101ba6cad": 803307, "d45d4831830f1e06b22594856b5b2d3c9c62769108ba95721de927217daff9ad": 716631, "db431e718d55cb6c0920bbf1ac5f4ac388af78f97e1c590774c655aa6653b10a": 803307, "dd085698e3a53b2121105af9917dc91540865ca3287f5242ba1d1846cad59245": 803307, "dd4fd99184f4bbc1fb20d9c0690b73e3459eeb0d9f47ec2fe8af2498e8ee10ea": 716631, "f1260b0fd1170ef0b8410d203ad7f892fc30e6d5d43519c503debe88cfb92cc2": 803307, "fbcebd941c7c97972797db5063eacadb3d74a467bc39f95929ae7b6c1e3763b7": 716631, "fe15861d3d31b5cbfda9b88dcfcded9b4920ce5ccdd1f291f5bc0ed3ff759931": 803307} }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    valid_meaning_plus_default_structural_budget_failure_publishes_no_records_or_cas
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 214.38s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --test derived_graph_mixed_budget`
+     Running tests\derived_graph_preparation.rs (target\debug\deps\derived_graph_preparation-f4e273a0e37b1f12.exe)
+
+running 6 tests
+test manifest_preparation_keeps_authentic_v8_v9_released_bytes_without_publication ... FAILED
+test config_preparation_keeps_authentic_v8_v9_released_bytes_without_publication ... FAILED
+test markdown_preparation_keeps_authentic_v8_v9_released_bytes_without_publication ... FAILED
+test three_prepared_graphs_publish_in_one_caller_transaction_without_nested_transactions ... FAILED
+test rolling_back_caller_transaction_removes_all_three_graph_registrations ... FAILED
+test foreign_connection_is_refused_before_any_cas_or_record_write ... FAILED
+
+failures:
+
+---- manifest_preparation_keeps_authentic_v8_v9_released_bytes_without_publication stdout ----
+
+thread 'manifest_preparation_keeps_authentic_v8_v9_released_bytes_without_publication' (13084) panicked at native\tests\derived_graph_preparation.rs:177:14:
+Pure structural preparation is required: Manifest graph preparation is unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- config_preparation_keeps_authentic_v8_v9_released_bytes_without_publication stdout ----
+
+thread 'config_preparation_keeps_authentic_v8_v9_released_bytes_without_publication' (99072) panicked at native\tests\derived_graph_preparation.rs:177:14:
+Pure structural preparation is required: Configuration graph preparation is unavailable
+
+---- markdown_preparation_keeps_authentic_v8_v9_released_bytes_without_publication stdout ----
+
+thread 'markdown_preparation_keeps_authentic_v8_v9_released_bytes_without_publication' (60448) panicked at native\tests\derived_graph_preparation.rs:177:14:
+Pure structural preparation is required: Markdown graph preparation is unavailable
+
+---- three_prepared_graphs_publish_in_one_caller_transaction_without_nested_transactions stdout ----
+
+thread 'three_prepared_graphs_publish_in_one_caller_transaction_without_nested_transactions' (63544) panicked at native\tests\derived_graph_preparation.rs:226:36:
+called `Result::unwrap()` on an `Err` value: Manifest graph preparation is unavailable
+
+---- rolling_back_caller_transaction_removes_all_three_graph_registrations stdout ----
+
+thread 'rolling_back_caller_transaction_removes_all_three_graph_registrations' (94448) panicked at native\tests\derived_graph_preparation.rs:260:36:
+called `Result::unwrap()` on an `Err` value: Manifest graph preparation is unavailable
+
+---- foreign_connection_is_refused_before_any_cas_or_record_write stdout ----
+
+thread 'foreign_connection_is_refused_before_any_cas_or_record_write' (33724) panicked at native\tests\derived_graph_preparation.rs:284:49:
+called `Result::unwrap()` on an `Err` value: Manifest graph preparation is unavailable
+
+
+failures:
+    config_preparation_keeps_authentic_v8_v9_released_bytes_without_publication
+    foreign_connection_is_refused_before_any_cas_or_record_write
+    manifest_preparation_keeps_authentic_v8_v9_released_bytes_without_publication
+    markdown_preparation_keeps_authentic_v8_v9_released_bytes_without_publication
+    rolling_back_caller_transaction_removes_all_three_graph_registrations
+    three_prepared_graphs_publish_in_one_caller_transaction_without_nested_transactions
+
+test result: FAILED. 0 passed; 6 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.81s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --test derived_graph_preparation`
+     Running tests\facade_file_delete.rs (target\debug\deps\facade_file_delete-10f76ec2ac5264c5.exe)
+
+running 10 tests
+test forced_file_delete_materializes_the_plan_without_removing_the_original_or_its_callers ... ok
+test forced_file_delete_permission_and_external_context_denials_have_zero_change_effects ... ok
+test forced_file_delete_omitted_and_null_selectors_create_one_exact_delete_for_v8_v9 ... ok
+test default_safe_mode_and_propagation_are_distinct_unsupported_file_intents ... ok
+test forced_file_delete_stale_workspace_preflight_preserves_changed_sources_for_v8_v9 ... ok
+test forced_file_delete_workspace_apply_keeps_host_approval_and_verification_gates ... ok
+test public_forced_file_delete_accepts_generated_null_and_false_defaults ... ok
+test source_symlink_cannot_redirect_a_forced_file_deletion ... ok
+test readonly_ignored_excluded_and_uncaptured_binary_sources_cannot_be_force_deleted ... ok
+test empty_malformed_directory_missing_and_unsafe_file_selectors_never_prepare_deletions ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.78s
+
+     Running tests\facade_file_move.rs (target\debug\deps\facade_file_move-6144897cf260e5ee.exe)
+
+running 7 tests
+test move_permissions_and_external_project_refusal_precede_provider_start ... ok
+test move_target_parent_must_be_explicit_and_must_not_be_an_existing_file ... ok
+test occupied_final_child_and_same_parent_moves_refuse_without_change_objects ... ok
+test omitted_binary_host_destination_is_still_occupied_before_provider_and_plan ... ok
+test directory_symbol_parent_and_malformed_file_selectors_are_explicit_refusals ... ok
+test unsafe_target_parents_and_captured_readonly_or_excluded_scopes_never_prepare_plans ... ok
+test file_move_omitted_null_and_empty_selectors_preserve_basename_in_the_target_parent_for_v8_v9 ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.04s
+
+     Running tests\meaning_view.rs (target\debug\deps\meaning_view-b5b38a8d4ebfefd0.exe)
+
+running 11 tests
+test archived_snapshot_rows_reject_unrecognized_manifest_properties ... ok
+test archived_unknown_reports_remain_unknown_without_fresh_accounting_or_provider_attestation ... ok
+test archived_replay_uses_frozen_original_and_rebound_sources_after_live_source_and_worker_removal ... ok
+test empty_meaning_selection_stays_absent_and_never_resolves_a_worker ... ok
+test explicit_no_claims_keeps_source_bindings_and_complete_packet_coverage ... ok
+test later_task_accounting_cannot_change_a_published_layer_or_upgrade_unknown_receipts ... ok
+test archived_proof_rederives_claims_and_rejects_missing_receipts_cycles_and_policy_drift ... ok
+test published_rebind_retains_original_snapshot_request_and_accounting_lineage ... ok
+test published_selection_preserves_multifile_quotes_roles_parallel_claims_and_original_receipts ... ok
+test validation_replays_quotes_roles_provenance_scope_and_real_closure_budget ... ok
+test selection_order_is_deterministic_shared_dependencies_are_charged_once_and_models_stay_distinct ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.39s
+
+error: 2 targets failed:
+    `-p yoke-code-intelligence --test derived_graph_mixed_budget`
+    `-p yoke-code-intelligence --test derived_graph_preparation`

@@ -1,0 +1,15 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 6.86s
+     Running tests\session_collections_admission.rs (target\debug\deps\session_collections_admission-845ce530900379fe.exe)
+oversized_collection_invocation_is_rejected_before_serialization_allocation: test
+
+1 test, 0 benchmarks
+     Running tests\session_epoch_selection.rs (target\debug\deps\session_epoch_selection-dd56743ad0b1b890.exe)
+default_v8_preserves_the_original_session_record_and_can_resume_saved_bytes: test
+mutable_engine_handles_cannot_silently_change_a_pinned_session_epoch: test
+same_epoch_resume_keeps_project_selection_and_cross_epoch_resume_cannot_mutate_records: test
+session_v9_keeps_federation_receiver_receipts_and_current_grants_separate: test
+session_v9_propagates_to_default_registered_readonly_and_query_only_projects: test
+session_v9_reads_old_native_archives_without_recapture_or_registration_authority: test
+
+6 tests, 0 benchmarks

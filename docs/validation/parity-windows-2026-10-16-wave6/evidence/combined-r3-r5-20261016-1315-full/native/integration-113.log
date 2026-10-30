@@ -1,0 +1,22 @@
+    Finished `test` profile [unoptimized] target(s) in 0.67s
+     Running tests\workspace.rs (target\debug\deps\workspace-c7e87e907ce0c02f.exe)
+
+running 4 tests
+test syntax_only_verification_does_not_authorize_workspace_writes ... ok
+test rollback_restores_deleted_sources_and_keeps_foreign_writes ... ok
+test executed_verification_deadline_includes_descendants_holding_output_pipes ... ok
+test real_rustc_verification_approval_apply_and_rollback_preserve_original ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.74s
+
+     Running tests\yaml_admission_review.rs (target\debug\deps\yaml_admission_review-91453fd17d0712c3.exe)
+
+running 5 tests
+test container_aliases_include_nested_scalar_bytes ... ok
+test scalar_aliases_are_admitted_before_total_clone_allocation ... ok
+test retained_nested_anchor_copies_are_charged_without_aliases ... ok
+test expanded_scalar_byte_budget_is_shared_across_documents ... ok
+test small_unicode_aliases_and_independent_documents_remain_supported ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.73s
+

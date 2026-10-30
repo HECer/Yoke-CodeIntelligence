@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T02:10:56.827939+00:00",
+  "baseCommit": "bf6471a9ac2a1d6f060b67a5dc65ca4de67798a6",
+  "kind": "actual_pinned_optional_structural_bridge_compatibility",
+  "application": "Code Intelligence 0.3.0 optional TypeScript bridges; native Rust 0.5.0 unchanged",
+  "acceptedWholeNative": false,
+  "host": "EVY Windows, Node24.21.0, Python3.14.7, MSVC18",
+  "checks": {
+    "finalTypecheck": "passed",
+    "finalDefaultTypeScript": {
+      "passed": 260,
+      "failed": 0,
+      "skipped": 3
+    },
+    "finalDefaultRunUsesActualWindowsShortTemp": true,
+    "actualInstalledStructuralGates": {
+      "passed": 2,
+      "failed": 0,
+      "providers": [
+        "@nanonets/graft0.21.1",
+        "graphifyy0.9.87"
+      ],
+      "fixture": "non-BMP UTF-8 comment, CRLF, original byte anchors and both original files unchanged"
+    },
+    "copiedFinalSourceAndDistInputs": 165,
+    "typescriptSourceInputsVerified": 109,
+    "unchangedNativeInputsVerified": 510,
+    "sixNewDefaultContractTests": "passed; protocol fixtures are separately labeled and never counted as installed-provider evidence",
+    "sourceUnchangedWithinFinalRuns": true
+  },
+  "repairs": [
+    "A host-owned temporary cache is passed separately to Graphify with its original scan root unchanged; Windows cache paths use the namespaced spelling. This removes the reproduced deep source-workspace cache-path failure without global OS changes.",
+    "Parent-owned materialization and cache roots are checked against their allocated absolute parents before cleanup. Both are attempted on failure, and cleanup failures remain errors.",
+    "Source verification uses the same ordinary safe-path versus admitted read-only dependency policy as materialization. The previous unconditional dependency-only lookup refused ordinary files. Every captured input, including files omitted from provider output, remains hash checked before graph import.",
+    "New contract fixtures prove successful ordinary/dependency import, refusal of mutated omitted source/dependency files, independent cache/root API arguments, relative-cache rejection and cleanup after spawn failure.",
+    "Actual package payload checks match620 published Graft files and95 Graphify Python source files to the verified archives. No upstream application source is patched or copied into the own core."
+  ],
+  "setup": [
+    "Both providers are installed only in an isolated validation environment; project package dependencies and global assistant configuration remain unchanged.",
+    "npm lifecycle scripts were initially disabled. Only reviewed tree-sitter-kotlin@0.3.8 received a pinned local npm script approval; Graft postinstall/assistant registration and other pending scripts were not approved.",
+    "Missing Kotlin native binding first prevented Graft loading. npm rebuild could report success while scripts stayed blocked; that was not accepted as a build.",
+    "The normal native build then failed on MSVC discovery and MSBuild FileTracker. The same three unmodified binding.gyp source inputs were compiled and linked directly with installed MSVC and matching Node24 headers/import library. The actual resulting binding hash is preserved. No FileTracker/permission setting was disabled.",
+    "An initial build-receipt write hit ENOSPC. Three explicitly named disposable project test executables were removed; source, evidence and ZIP/VSIX packages were preserved."
+  ],
+  "boundaries": [
+    "Two small actual installed-provider extraction fixtures do not certify all languages, API methods, full upstream export equivalence or universal parity.",
+    "The six default contract fixtures use a separately labeled fake provider; the two optional live tests use verified unmodified published provider payloads. Their counts are separate and overlapping runs are not summed.",
+    "The final r3 run repeats default tests with actual8.3 TEMP after test ownership comparisons were made canonical; r2 only strengthened the live UTF-8/CRLF fixture. Source deltas are preserved.",
+    "Source-copy checks and explicit llm:false/lsp:false requests do not establish network isolation or a malicious-binary sandbox. No model enrichment, assistant hooks or live GitHub App installation is requested.",
+    "No configured installed Serena, paid cloud/IDE feature, release, main merge or deployment is claimed. Native/R1-R9/remaining CI work stays open."
+  ],
+  "proofs": {
+    "sourceDelta": "source-delta.json",
+    "packageProvenance": "package-provenance.json",
+    "finalFreeze": "r3/source-freeze.json",
+    "documentationWrittenAfterRuntimeValidation": true
+  },
+  "artifacts": [
+    {
+      "path": "package-provenance.json",
+      "bytes": 3118,
+      "sha256": "9861b57286aaa763f2d412cfee890c42c62e7d67ab2ee2cd23177d2731b841c4"
+    },
+    {
+      "path": "preparation/copied-inputs-r2.json",
+      "bytes": 16218,
+      "sha256": "63c8bb95ecc6de32874dd7883c7665eb8b2c64369e0e6bf45366fb2cbda698cf"
+    },
+    {
+      "path": "preparation/copied-inputs.json",
+      "bytes": 16218,
+      "sha256": "77776c522fd9fd4d240976f1810ef373d4f169d3d2b3000b092932ca74e4a0e9"
+    },
+    {
+      "path": "preparation/graft-install.log",
+      "bytes": 26,
+      "sha256": "aaa49aadf1c1eeed73532b4b093d8d72bb955e6215c9e83590c58fc2d0861605"
+    },
+    {
+      "path": "preparation/graft-kotlin-build-r2-receipt.json",
+      "bytes": 670,
+      "sha256": "6ba32b5183734420423f5a28c9078cb6fb75993b4e85e7e9084b8b25227a076e"
+    },
+    {
+      "path": "preparation/graft-kotlin-build-r2.log",
+      "bytes": 316,
+      "sha256": "4a703d548551c68d516622733db5d2986a159e7c6b1dd1fde04abf83bc461908"
+    },
+    {
+      "path": "preparation/graft-kotlin-build-r3-receipt.json",
+      "bytes": 680,
+      "sha256": "2bc2d4c67d4c6cf560b006fa7d5e30761c7713d9691f8c4ff16566bfd17e053c"
+    },
+    {
+      "path": "preparation/graft-kotlin-build-r3.log",
+      "bytes": 4371,
+      "sha256": "599d1bd75e6e96f35263213a7fef6039cd11322aae6c2c50f6704b4b28112173"
+    },
+    {
+      "path": "preparation/graft-kotlin-build-r4-receipt.json",
+      "bytes": 870,
+      "sha256": "c13dbc4f594361f77b9a3f6d111801272fde7f18fba57e53c1561ecebbb8eb2f"
+    },
+    {
+      "path": "preparation/graft-kotlin-build-r4.log",
+      "bytes": 14024,
+      "sha256": "79efd7da2c9418dbbb0a6863d066a00136933023c2ff10a3464211d9f32bf59b"
+    },
+    {
+      "path": "preparation/graft-kotlin-direct-build-receipt.json",
+      "bytes": 5347,
+      "sha256": "4ee28f513416815caf9acba08ec0ae9cbaf8726e94e18f0ca0257094b0cc6f5f"
+    },
+    {
+      "path": "preparation/graft-kotlin-direct-build.log",
+      "bytes": 444,
+      "sha256": "02241e6dbaa94baff997aae8e3c0b954b391b3f72a616602403b11b06ace0fb4"
+    },
+    {
+      "path": "preparation/graphify-install.log",
+      "bytes": 8061,
+      "sha256": "2e2c252807054726321663e61215a8c0b564013214bbf1ff5d9e62c8977b0902"
+    },
+    {
+      "path": "preparation/install-receipts.json",
+      "bytes": 1105,
+      "sha256": "66e3630b138442efa7442095623f86a059f15565b0ba81dcdda390c135bfee7f"
+    },
+    {
+      "path": "preparation/installed-payload-integrity.json",
+      "bytes": 333,
+      "sha256": "78630e15e80262c0e0f62efa046d0d5d58ef38ad56e8176355614b5e29d25c38"
+    },
+    {
+      "path": "preparation/live-graphify-r2-receipt.json",
+      "bytes": 430,
+      "sha256": "0512b2d7f9c618f95c2f014a6bb2fada26a02daba4cfea58db3926c973807927"
+    },
+    {
+      "path": "preparation/live-graphify-r2.log",
+      "bytes": 1196,
+      "sha256": "cb4b150fcbfb24669a7ece0b8535c9a52b1fd4b25fe0f571fe8842c1190ca6c0"
+    },
+    {
+      "path": "preparation/live-receipt.json",
+      "bytes": 1162,
+      "sha256": "51dd6e5ce937cbc0fde31b428cea829956ee7450653eda7b4673180f25e87c08"
+    },
+    {
+      "path": "preparation/live-upstreams.log",
+      "bytes": 5520,
+      "sha256": "a9c8e4682488bc0c5dd4ed706b64117695977e4c745666059a4830c493e4a1d6"
+    },
+    {
+      "path": "r1/actual-installed-upstreams.log",
+      "bytes": 252,
+      "sha256": "48ce7746fa08217024e2d3e78ae383320555bbb0ed0c534fc99d364b3897678c"
+    },
+    {
+      "path": "r1/copied-inputs.json",
+      "bytes": 16417,
+      "sha256": "c321aaa11286d0f75a8eb2069b8b2c5adbddb6c3e273c0a0ca9bde66021c04b1"
+    },
+    {
+      "path": "r1/installed-node-package-lock.json",
+      "bytes": 22083,
+      "sha256": "ca9db83f945102b69a44e99907e7e0af603ca40be4dee73b0580a9ee4c24ea4a"
+    },
+    {
+      "path": "r1/installed-node-package.json",
+      "bytes": 267,
+      "sha256": "65205565eb9f0729bdf9757b853021378177481e58cb77647d6579604e8a6859"
+    },
+    {
+      "path": "r1/python-packages.json",
+      "bytes": 1548,
+      "sha256": "f34ba5d827b3fb52dac5a7002e44e1c397a9ae615258a4957870bba39d549c5d"
+    },
+    {
+      "path": "r1/receipts.json",
+      "bytes": 823,
+      "sha256": "3baf8379f261f4323e24edd977d1d6bc561d87b5351c3912ce7962890b190966"
+    },
+    {
+      "path": "r1/source-freeze.json",
+      "bytes": 10776,
+      "sha256": "935aea8253f7272031abc66c2879626145b258ecba390cc678737768bff87a92"
+    },
+    {
+      "path": "r1/summary.json",
+      "bytes": 1188,
+      "sha256": "9fca54ad36cd68b7499213f9733c5793ba2bba031edde63981150a9713510d8e"
+    },
+    {
+      "path": "r1/typescript-tests.log",
+      "bytes": 25025,
+      "sha256": "7ef56ab47178337c78d080f71dc86b36f3b9e5f45f0cba340412fe1a1ae5ee5e"
+    },
+    {
+      "path": "r1/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "r1/unchanged-native-inputs.json",
+      "bytes": 55257,
+      "sha256": "c199b181cf3e61741c339ac96898c85e2bcb11de41161af531a967f69762b660"
+    },
+    {
+      "path": "r2-utf8/actual-installed-upstreams.log",
+      "bytes": 250,
+      "sha256": "6b5adfcb2a722b9c16124d9a14897f6579242bfa83dc1c5e98eea88668615bef"
+    },
+    {
+      "path": "r2-utf8/copied-inputs.json",
+      "bytes": 16417,
+      "sha256": "9aad223e8fcb3b25020a63917e9f1c5ba76f97c62e38814f5c2ffaf6393570df"
+    },
+    {
+      "path": "r2-utf8/source-delta.json",
+      "bytes": 207,
+      "sha256": "43e4661468142535810a8c47188afd75040c554c79d839f0fb9d53e58f74429f"
+    },
+    {
+      "path": "r2-utf8/summary.json",
+      "bytes": 507,
+      "sha256": "2a6e1f2c546a093dc9f717dee3806822871ca7cf9b2c503dd309176f45784c4a"
+    },
+    {
+      "path": "r3/actual-installed-upstreams.log",
+      "bytes": 251,
+      "sha256": "a4ee30bb3af8d68e593309947a5179a03bb40cd4bbfd95a0d8a26b6ff38d4bdd"
+    },
+    {
+      "path": "r3/copied-inputs.json",
+      "bytes": 16417,
+      "sha256": "5ca32792293afdc7653c712295b5fe3e9d7072c290ba66a9b3b0d4978193e95e"
+    },
+    {
+      "path": "r3/installed-node-package-lock.json",
+      "bytes": 22083,
+      "sha256": "ca9db83f945102b69a44e99907e7e0af603ca40be4dee73b0580a9ee4c24ea4a"
+    },
+    {
+      "path": "r3/installed-node-package.json",
+      "bytes": 267,
+      "sha256": "65205565eb9f0729bdf9757b853021378177481e58cb77647d6579604e8a6859"
+    },
+    {
+      "path": "r3/python-packages.json",
+      "bytes": 1548,
+      "sha256": "f34ba5d827b3fb52dac5a7002e44e1c397a9ae615258a4957870bba39d549c5d"
+    },
+    {
+      "path": "r3/receipts.json",
+      "bytes": 822,
+      "sha256": "2884a83f1d17b254b55937c01946c307921e35d318d98a6dc42d771b0bded05e"
+    },
+    {
+      "path": "r3/short-temp.json",
+      "bytes": 254,
+      "sha256": "f7b24206f6ba082d2de0fd7a81ed1a318d5dd624cbb8a9bc06bcaeebdc370f72"
+    },
+    {
+      "path": "r3/source-freeze.json",
+      "bytes": 10776,
+      "sha256": "5f4e8e2fdf818abc34ba26583d44ed1c6d2ffe5ff937d494ba6248bfb010ff60"
+    },
+    {
+      "path": "r3/summary.json",
+      "bytes": 1187,
+      "sha256": "f37f29a2ce7b1560c4be4c2f034aa0bbe9ac5d9826bb7c61547de41fa4aba4b1"
+    },
+    {
+      "path": "r3/typescript-tests.log",
+      "bytes": 25076,
+      "sha256": "2d20e1431ab7228b199e6aba0c34126f3ee03dc43526be7ed250752a31058dee"
+    },
+    {
+      "path": "r3/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "r3/unchanged-native-inputs.json",
+      "bytes": 55257,
+      "sha256": "c199b181cf3e61741c339ac96898c85e2bcb11de41161af531a967f69762b660"
+    },
+    {
+      "path": "source-delta.json",
+      "bytes": 412,
+      "sha256": "c40dd45d51ff1d1e237e9bb03d102025b5e97d7308a3566f7f6b0e5ceb8faf7c"
+    }
+  ]
+}

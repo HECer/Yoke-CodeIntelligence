@@ -1,0 +1,13 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.61s
+     Running tests\artifacts.rs (target\debug\deps\artifacts-adcf4496e341070d.exe)
+binary_artifacts_page_with_explicit_base64_without_loss_or_budget_overflow: test
+cas_artifact_pages_cannot_claim_an_unrelated_snapshot: test
+foreign_source_and_unpublished_blobs_cannot_bypass_explicit_read_grants: test
+published_response_artifacts_remain_roots_during_explicit_maintenance: test
+
+4 tests, 0 benchmarks
+     Running tests\blob_bounds.rs (target\debug\deps\blob_bounds-26361ac4fc7198b8.exe)
+corrupted_tiny_cas_objects_are_rejected_before_large_allocation_on_write_and_artifact_read: test
+
+1 test, 0 benchmarks

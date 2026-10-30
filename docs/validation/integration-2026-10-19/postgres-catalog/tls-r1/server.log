@@ -1,0 +1,9 @@
+2026-10-19 21:19:50.004 CEST [22604] LOG:  starting PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit
+2026-10-19 21:19:50.005 CEST [22604] LOG:  listening on IPv4 address "127.0.0.1", port 56432
+2026-10-19 21:19:50.061 CEST [21692] LOG:  database system was shut down at 2026-10-19 21:19:47 CEST
+2026-10-19 21:19:50.195 CEST [22596] FATAL:  the database system is starting up
+2026-10-19 21:19:50.228 CEST [22604] LOG:  received fast shutdown request
+2026-10-19 21:19:50.509 CEST [9568] LOG:  shutting down
+2026-10-19 21:19:50.510 CEST [9568] LOG:  checkpoint starting: shutdown immediate
+2026-10-19 21:19:50.519 CEST [9568] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.003 s, total=0.010 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/17E85D8, redo lsn=0/17E85D8
+2026-10-19 21:19:50.531 CEST [22604] LOG:  database system is shut down

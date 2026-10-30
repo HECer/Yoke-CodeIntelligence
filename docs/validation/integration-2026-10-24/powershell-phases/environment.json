@@ -1,0 +1,136 @@
+{
+  "nativeYokeImageReadOrExecuted": false,
+  "diagnosticOnly": true,
+  "admission": {
+    "specificJobMembershipConfirmed": true,
+    "queryHandleClosedBeforeNativeRead": true
+  },
+  "results": [
+    {
+      "name": "plain-filtered",
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 0.1890445000026375,
+      "stdout": "owned-shell-test\r\n",
+      "stderr": "",
+      "environmentNames": [
+        "CI",
+        "DO_NOT_TRACK",
+        "LANG",
+        "NO_COLOR",
+        "PATH",
+        "SystemDrive",
+        "SystemRoot",
+        "TEMP",
+        "TMP",
+        "USERPROFILE",
+        "WINDIR"
+      ]
+    },
+    {
+      "name": "folder-filtered",
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 0.20230169990099967,
+      "stdout": "owned-windows-runtime\r\n",
+      "stderr": "",
+      "environmentNames": [
+        "CI",
+        "DO_NOT_TRACK",
+        "LANG",
+        "NO_COLOR",
+        "PATH",
+        "SystemDrive",
+        "SystemRoot",
+        "TEMP",
+        "TMP",
+        "USERPROFILE",
+        "WINDIR"
+      ]
+    },
+    {
+      "name": "phase-filtered",
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 0.21690759994089603,
+      "stdout": "owned-windows-runtime\r\n",
+      "stderr": "owned-entry\r\nowned-before-folder\r\nowned-after-folder\r\nowned-before-output\r\nowned-script-end\r\n",
+      "environmentNames": [
+        "CI",
+        "DO_NOT_TRACK",
+        "LANG",
+        "NO_COLOR",
+        "PATH",
+        "SystemDrive",
+        "SystemRoot",
+        "TEMP",
+        "TMP",
+        "USERPROFILE",
+        "WINDIR"
+      ]
+    },
+    {
+      "name": "folder-managed-additions",
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 0.18838790000882,
+      "stdout": "owned-windows-runtime\r\n",
+      "stderr": "",
+      "environmentNames": [
+        "APPDATA",
+        "CI",
+        "ComSpec",
+        "DO_NOT_TRACK",
+        "LANG",
+        "LOCALAPPDATA",
+        "NO_COLOR",
+        "NUMBER_OF_PROCESSORS",
+        "OS",
+        "PATH",
+        "PROCESSOR_ARCHITECTURE",
+        "ProgramData",
+        "ProgramFiles",
+        "ProgramFiles(x86)",
+        "ProgramW6432",
+        "SystemDrive",
+        "SystemRoot",
+        "TEMP",
+        "TMP",
+        "USERPROFILE",
+        "WINDIR"
+      ]
+    },
+    {
+      "name": "plain-filtered-repeat",
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 0.17481209989637136,
+      "stdout": "owned-shell-test\r\n",
+      "stderr": "",
+      "environmentNames": [
+        "CI",
+        "DO_NOT_TRACK",
+        "LANG",
+        "NO_COLOR",
+        "PATH",
+        "SystemDrive",
+        "SystemRoot",
+        "TEMP",
+        "TMP",
+        "USERPROFILE",
+        "WINDIR"
+      ]
+    }
+  ],
+  "outerJob": {
+    "startedSuspended": true,
+    "assignedBeforeResume": true,
+    "complete": true,
+    "pid": 61588,
+    "exitCode": 0,
+    "activeAtParentExit": 1,
+    "activeBeforeCleanup": 0,
+    "treeExitedBeforeCleanup": true,
+    "activeAfterCleanup": 0
+  }
+}

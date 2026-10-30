@@ -1,0 +1,52 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 9.13s
+     Running tests\parity_view_review.rs (target\debug\deps\parity_view_review-5885658842c4425e.exe)
+resealed_view_cannot_invent_canonical_labels_or_parent_claims: test
+resealed_view_cannot_relabel_a_selected_overlay_or_upgrade_its_precision: test
+resealed_view_cannot_remove_canonical_observations: test
+
+3 tests, 0 benchmarks
+     Running tests\parser_epoch9.rs (target\debug\deps\parser_epoch9-683ec3da72b69dcb.exe)
+commonlisp9_extracts_local_functions_without_treating_binding_lists_as_calls: test
+commonlisp9_function_namespace_and_flet_labels_visibility_are_distinct: test
+commonlisp9_local_function_designators_use_the_function_namespace: test
+commonlisp9_preserves_escaped_symbol_case: test
+commonlisp9_rejects_known_impossible_arity_but_keeps_optional_and_rest_candidates: test
+powershell9_function_drive_reference_is_distinct_from_value_and_literal_text: test
+powershell9_matches_command_case_without_binding_dynamic_command_variables: test
+verilog9_retains_task_declaration_and_task_function_scope: test
+
+8 tests, 0 benchmarks
+     Running tests\platform_credentials.rs (target\debug\deps\platform_credentials-40235d1fc0b3fd5d.exe)
+rejects_empty_and_oversized_binary_secrets_before_backend_access: test
+rejects_foreign_ambiguous_and_traversing_targets_before_backend_access: test
+valid_native_targets_do_not_use_mock_or_windows_fallback: test
+
+3 tests, 0 benchmarks
+     Running tests\process.rs (target\debug\deps\process-c08c3527bf584b4b.exe)
+capture_transfers_exact_unicode_bytes_and_independent_streams: test
+descendant_held_stdio_cannot_extend_the_shared_deadline: test
+output_overflow_is_a_failure_with_bounded_retained_bytes: test
+source_selected_defaults_and_oversized_stdin_are_rejected_before_spawn: test
+windows_host_fixture_does_not_allocate_a_console_window: test
+
+5 tests, 0 benchmarks
+     Running tests\project_session.rs (target\debug\deps\project_session-a0bbbade20e03be1.exe)
+external_project_queries_cannot_mutate_or_activate_query_only_roots: test
+external_queries_cannot_publish_semantic_plans_through_find: test
+global_note_host_identity_is_bound_to_canonical_directory: test
+modes_onboarding_and_named_notes_are_persistent_without_granting_execution: test
+registered_projects_inherit_explicit_host_capture_and_provider_defaults: test
+session_activation_and_resume_use_only_host_registered_projects: test
+
+6 tests, 0 benchmarks
+     Running tests\projects.rs (target\debug\deps\projects-8f94e632183a0e8f.exe)
+changed_trusted_standard_library_changes_context_identity_for_unchanged_source: test
+compiler_output_outside_snapshot_and_overwriting_inputs_are_denied: test
+compiler_requires_host_trust_and_captured_config_cannot_enable_plugins: test
+configured_compiler_uses_historical_sources_extends_and_exact_unicode_bindings: test
+missing_references_cycles_and_empty_solution_never_become_successful_builds: test
+overlapping_projects_keep_distinct_compiler_contexts_and_report_binding_conflicts: test
+solution_build_consumes_referenced_declarations_without_source_tree_writes: test
+
+7 tests, 0 benchmarks

@@ -1,0 +1,19 @@
+    Finished `test` profile [unoptimized] target(s) in 1.16s
+     Running tests\model_bedrock_cli.rs (target\debug\deps\model_bedrock_cli-2a5523af827e1e38.exe)
+
+running 4 tests
+test bedrock_parent_requires_network_trust_before_profile_or_source_state ... ok
+test changed_bedrock_worker_profile_fails_before_stdin_credentials_or_source_state ... ok
+test embedding_batch_host_limits_are_validated_before_source_or_credential_access ... ok
+test incompatible_bedrock_operation_is_denied_before_opening_source_or_reserving_cost ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests\model_bedrock_cli_actual.rs (target\debug\deps\model_bedrock_cli_actual-0bfd6a33f71dc038.exe)
+
+running 2 tests
+test actual_cli_bedrock_batch_has_three_accounted_attempts_and_one_complete_corpus ... ignored, Actual Windows credentials and three owned TCP Bedrock attempts; cleans only fake generation
+test actual_cli_bedrock_summary_uses_chunked_session_and_one_accounted_attempt ... ignored, Actual Windows Credential Manager and owned loopback HTTP; creates and removes one unique fake AWS credential generation
+
+test result: ok. 0 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

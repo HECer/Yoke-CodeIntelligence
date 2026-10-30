@@ -1,0 +1,31 @@
+{
+  "scope": "Cause excerpts supplement the byte-preserved failed root/job receipts; they do not change raw failure or lifecycle status.",
+  "causes": [
+    {
+      "retainedFailure": "package-license",
+      "observation": "parent-observed bounded excerpt from local cause log; source log is private and not included in evidence.zip",
+      "source": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yp-e66d33df000e\\j\\native-package.stderr",
+      "excerpts": [
+        {
+          "byteOffset": 405,
+          "bytes": 83,
+          "sha256": "3077d8a6c5e94fa7bae2a07b60b32ad6fe1ac852fd482acc1e58b93389228454",
+          "text": "RuntimeError: License text missing for base64-simd; review --fetch-missing-licenses"
+        }
+      ]
+    },
+    {
+      "retainedFailure": "visual-expiry",
+      "observation": "parent-observed bounded excerpt from local cause log; source log is private and not included in evidence.zip",
+      "source": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yp-dc1f11fc33e6\\z\\yoke-vscode-85b3e613ba104407962ed11300cb912d\\stderr.log",
+      "excerpts": [
+        {
+          "byteOffset": 4606,
+          "bytes": 33,
+          "sha256": "57218e5ff02bccd0f07b69f8d70d82482dc33be9f433d98ccde6db6b47066dd2",
+          "text": "Error: Visual inspection deadline"
+        }
+      ]
+    }
+  ]
+}

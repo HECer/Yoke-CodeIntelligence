@@ -1,0 +1,273 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: multiple fields are never read
+   --> native\src\host_install.rs:624:5
+    |
+623 | pub(super) struct DurableOutputRegistration {
+    |                   ------------------------- fields in this struct
+624 |     plan_id: String,
+    |     ^^^^^^^
+625 |     journal_id: String,
+    |     ^^^^^^^^^^
+626 |     root_index: usize,
+    |     ^^^^^^^^^^
+627 |     attempt: u8,
+    |     ^^^^^^^
+628 |     path: PathBuf,
+    |     ^^^^
+629 |     identity: String,
+    |     ^^^^^^^^
+630 |     after_hash: String,
+    |     ^^^^^^^^^^
+631 |     security_hash: String,
+    |     ^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `path`, `identity`, `after_hash`, `security_hash`, and `matches` are never used
+   --> native\src\host_install.rs:634:19
+    |
+633 | impl DurableOutputRegistration {
+    | ------------------------------ methods in this implementation
+634 |     pub(super) fn path(&self) -> &Path {
+    |                   ^^^^
+...
+637 |     pub(super) fn identity(&self) -> &str {
+    |                   ^^^^^^^^
+...
+640 |     pub(super) fn after_hash(&self) -> &str {
+    |                   ^^^^^^^^^^
+...
+643 |     pub(super) fn security_hash(&self) -> &str {
+    |                   ^^^^^^^^^^^^^
+...
+646 |     pub(super) fn matches(&self, path: &Path, id: &str) -> bool {
+    |                   ^^^^^^^
+
+warning: fields `path` and `byte_length` are never read
+  --> native\src\host_install_io.rs:32:16
+   |
+31 | pub(super) struct OutputBinding {
+   |                   ------------- fields in this struct
+32 |     pub(super) path: PathBuf,
+   |                ^^^^
+33 |     pub(super) identity: String,
+34 |     pub(super) byte_length: usize,
+   |                ^^^^^^^^^^^
+
+warning: fields `file`, `after_hash`, and `security_hash` are never read
+  --> native\src\host_install_io.rs:46:5
+   |
+45 | pub(super) struct RegisteredOutput {
+   |                   ---------------- fields in this struct
+46 |     file: HeldFile,
+   |     ^^^^
+47 |     after_hash: String,
+   |     ^^^^^^^^^^
+48 |     security_hash: String,
+   |     ^^^^^^^^^^^^^
+
+warning: methods `identity`, `len`, and `is_empty` are never used
+  --> native\src\host_install_io.rs:91:19
+   |
+81 | impl ArmedOutput {
+   | ---------------- methods in this implementation
+...
+91 |     pub(super) fn identity(&self) -> &str {
+   |                   ^^^^^^^^
+...
+94 |     pub(super) fn len(&self) -> usize {
+   |                   ^^^
+...
+97 |     pub(super) fn is_empty(&self) -> bool {
+   |                   ^^^^^^^^
+
+warning: methods `binding`, `identity`, `len`, and `is_empty` are never used
+   --> native\src\host_install_io.rs:112:19
+    |
+111 | impl RegisteredOutput {
+    | --------------------- methods in this implementation
+112 |     pub(super) fn binding(&self) -> OutputBinding {
+    |                   ^^^^^^^
+...
+121 |     pub(super) fn identity(&self) -> &str {
+    |                   ^^^^^^^^
+...
+124 |     pub(super) fn len(&self) -> usize {
+    |                   ^^^
+...
+127 |     pub(super) fn is_empty(&self) -> bool {
+    |                   ^^^^^^^^
+
+warning: function `security_fingerprint` is never used
+   --> native\src\host_install_io.rs:147:15
+    |
+147 | pub(super) fn security_fingerprint(file: &HeldFile, d: &Deadline) -> Result<String> {
+    |               ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `create_armed_file_at_with_security` is never used
+  --> native\src\host_install_namespace.rs:83:22
+   |
+83 | pub(super) unsafe fn create_armed_file_at_with_security(
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `clear_creation_delete_on_close` is never used
+  --> native\src\host_install_namespace.rs:96:15
+   |
+96 | pub(super) fn clear_creation_delete_on_close(file: &File, d: &Deadline) -> Result<()> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `handle_security_fingerprint` is never used
+    --> native\src\host_install_io.rs:1104:8
+     |
+1104 |     fn handle_security_fingerprint(handle: &File) -> Result<String> {
+     |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `security_fingerprint` is never used
+    --> native\src\host_install_io.rs:1118:19
+     |
+1118 |     pub(super) fn security_fingerprint(file: &HeldFile, d: &Deadline) -> Result<String> {
+     |                   ^^^^^^^^^^^^^^^^^^^^
+
+warning: field `model_key` is never read
+    --> native\src\meaning_build.rs:1531:9
+     |
+1521 | pub(crate) struct CheckedPublishedGraph {
+     |                   --------------------- field in this struct
+...
+1531 |     pub model_key: String,
+     |         ^^^^^^^^^
+     |
+     = note: `CheckedPublishedGraph` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: field `source_scopes` is never read
+    --> native\src\meaning_build.rs:1539:9
+     |
+1536 | pub(crate) struct CheckedPublishedSet {
+     |                   ------------------- field in this struct
+...
+1539 |     pub source_scopes: Vec<MeaningSourceScope>,
+     |         ^^^^^^^^^^^^^
+
+warning: method `source_scopes` is never used
+    --> native\src\meaning_build.rs:1552:19
+     |
+1545 | impl CheckedPublishedSet {
+     | ------------------------ method in this implementation
+...
+1552 |     pub(crate) fn source_scopes(&self) -> &[MeaningSourceScope] {
+     |                   ^^^^^^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib) generated 14 warnings
+    Finished `test` profile [unoptimized] target(s) in 1m 05s
+     Running tests\facade_file_rename.rs (target\debug\deps\facade_file_rename-26aacd7ab6c8a3a1.exe)
+
+running 9 tests
+test file_rename_permissions_and_external_context_refusal_precede_provider_start ... ok
+test directory_missing_excluded_and_readonly_sources_have_no_file_rename_authority ... ok
+test guarded_file_rename_plan_refuses_stale_source_before_any_workspace_write ... ok
+test empty_selectors_and_true_or_malformed_file_occurrence_options_refuse_before_provider ... ok
+test file_rename_new_name_is_a_portable_single_basename_and_never_a_destination_path ... ok
+test occupied_file_directory_uncaptured_binary_and_source_alias_refuse_before_provider ... ok
+test root_file_rename_uses_the_supplied_unicode_basename_without_creating_a_parent ... ok
+test nullable_file_rename_omitted_and_null_selectors_preserve_parent_for_v8_v9 ... ok
+test public_file_rename_accepts_generated_false_defaults_and_explicit_false_options ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.06s
+
+     Running tests\graphify_selected_queries.rs (target\debug\deps\graphify_selected_queries-b3254669bd3c17dc.exe)
+
+running 8 tests
+test mismatched_published_view_scope_cannot_fall_back_to_live_capture ... ok
+test selected_get_node_resolves_only_members_of_the_published_nondefault_view ... ok
+test selected_neighbors_preserve_parallel_directions_and_exact_utf8_evidence ... ok
+test omitted_selector_keeps_the_default_view_after_a_nondefault_view_was_published ... ok
+test unknown_and_malformed_view_ids_refuse_before_first_capture ... ok
+test selected_query_graph_traverses_the_selected_document_and_induced_parallel_edges ... ok
+test selected_shortest_path_keeps_stored_direction_and_an_explicit_undirected_option ... ok
+test selected_queries_replay_historical_views_after_new_index_and_unsaved_host_changes ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.65s
+
+     Running tests\meaning_graph_views.rs (target\debug\deps\meaning_graph_views-6f736190f27f413b.exe)
+
+running 11 tests
+test inferred_support_and_hyperedge_roles_never_become_directed_or_exact_bindings ... ok
+test invalid_meaning_selection_is_admitted_before_default_structural_artifact_publication ... ok
+test explicit_meaning_view_finds_alias_candidates_and_source_without_merging_claims ... ok
+test every_untyped_graphify_tool_and_resource_refuses_a_genuine_meaning_view_without_side_effects ... ok
+test meaning_read_and_context_return_historic_quote_citations_without_declaration_anchors ... ok
+test meaning_trace_preserves_direction_and_ordered_hyperedge_incidence_without_a_clique ... ok
+test published_view_queries_and_archived_meaning_keep_identity_after_later_ledger_changes ... ok
+test multi_file_relation_and_hyperedge_reads_preserve_all_citations_and_shared_context_budget ... ok
+test unselected_views_keep_the_released_schema_identity_and_artifact_bytes ... ok
+test source_only_projection_consumers_refuse_meaning_before_report_or_archive_publication ... ok
+test two_published_meaning_graphs_keep_equal_local_claims_in_separate_namespaces ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.82s
+
+     Running tests\meaning_view.rs (target\debug\deps\meaning_view-b5b38a8d4ebfefd0.exe)
+
+running 11 tests
+test archived_unknown_reports_remain_unknown_without_fresh_accounting_or_provider_attestation ... ok
+test archived_snapshot_rows_reject_unrecognized_manifest_properties ... FAILED
+test archived_replay_uses_frozen_original_and_rebound_sources_after_live_source_and_worker_removal ... ok
+test empty_meaning_selection_stays_absent_and_never_resolves_a_worker ... ok
+test explicit_no_claims_keeps_source_bindings_and_complete_packet_coverage ... ok
+test later_task_accounting_cannot_change_a_published_layer_or_upgrade_unknown_receipts ... ok
+test published_rebind_retains_original_snapshot_request_and_accounting_lineage ... ok
+test archived_proof_rederives_claims_and_rejects_missing_receipts_cycles_and_policy_drift ... ok
+test published_selection_preserves_multifile_quotes_roles_parallel_claims_and_original_receipts ... ok
+test validation_replays_quotes_roles_provenance_scope_and_real_closure_budget ... ok
+test selection_order_is_deterministic_shared_dependencies_are_charged_once_and_models_stay_distinct ... ok
+
+failures:
+
+---- archived_snapshot_rows_reject_unrecognized_manifest_properties stdout ----
+
+thread 'archived_snapshot_rows_reject_unrecognized_manifest_properties' (55404) panicked at native\tests\meaning_view.rs:930:5:
+Unknown manifest properties were ignored in schema locations [0, 1, 2]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    archived_snapshot_rows_reject_unrecognized_manifest_properties
+
+test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.45s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --test meaning_view`
+     Running tests\refactor_intents.rs (target\debug\deps\refactor_intents-e45b8130e18e3e90.exe)
+
+running 15 tests
+test flagged_refactoring_obeys_session_plan_permissions_before_querying_a_provider ... ok
+test inline_keep_definition_preserves_exact_declaration_bytes_while_replacing_a_call ... ok
+test flagged_rename_rejects_unrelated_and_wholefile_provider_changes_before_publication ... ok
+test invalid_later_inline_candidate_cannot_leave_an_earlier_hidden_plan_or_derivative ... ok
+test deterministic_later_noop_nul_or_secret_candidate_is_rejected_before_any_publication ... ok
+test keeping_an_inline_definition_requires_a_real_source_bound_call_replacement ... ok
+test amplified_candidate_contents_are_bounded_before_any_publication ... ok
+test native_text_occurrences_refuse_potentially_interpolated_strings_before_publication ... ok
+test native_occurrences_distinguish_string_comment_markers_and_unicode_word_boundaries ... ok
+test keep_definition_rejects_broad_ambiguous_and_command_candidates_without_plans ... ok
+test native_unicode_rename_refuses_byte_string_occurrences_before_publication ... ok
+test native_text_rename_never_rewrites_rust_raw_string_delimiters ... ok
+test requested_false_occurrence_flags_also_constrain_provider_supplied_edits ... ok
+test requested_comment_and_text_rename_options_change_only_their_own_occurrence_classes ... ok
+test projected_refactors_keep_v8_v9_source_proofs_and_never_edit_readonly_or_ignored_sources ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.25s
+
+     Running tests\semantic_refactor.rs (target\debug\deps\semantic_refactor-f66dd7e99dc076bb.exe)
+
+running 7 tests
+test file_move_negotiates_will_rename_and_combines_pre_rename_edits_into_one_guarded_plan ... ok
+test indexed_symbol_refactoring_selects_the_same_source_order_overload_as_the_facade ... ok
+test explicit_force_delete_keeps_verified_usage_context_and_still_refuses_foreign_or_stale_sources ... ok
+test unused_semantic_delete_requires_registered_source_proof_and_only_prepares_a_guarded_plan ... ok
+test inspection_equivalent_uses_actual_registered_diagnostics_and_declared_kind_registry ... ok
+test inline_refactoring_accepts_only_the_requested_kind_and_explicit_workspace_edits ... ok
+test semantic_delete_refuses_actual_candidate_unresolved_foreign_and_stale_uses_without_publishing_plans ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.83s
+
+error: 1 target failed:
+    `-p yoke-code-intelligence --test meaning_view`

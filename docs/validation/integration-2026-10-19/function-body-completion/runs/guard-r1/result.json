@@ -1,0 +1,69 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 809,
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--no-run",
+        "--lib",
+        "--test",
+        "compiler_inline",
+        "--test",
+        "compiler_inline_body",
+        "--test",
+        "compiler_move",
+        "--test",
+        "projects",
+        "--test",
+        "project_session",
+        "--test",
+        "agent_repl",
+        "--test",
+        "refactor_intents",
+        "--test",
+        "session_refactor"
+      ],
+      "exitCode": 0,
+      "seconds": 145.79550999999628
+    },
+    {
+      "name": "units",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--lib",
+        "compiler_inline::body",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 6.428519299981417,
+      "totals": {
+        "passed": 9,
+        "failed": 1,
+        "ignored": 0
+      },
+      "groups": 1,
+      "failures": [
+        "compiler_inline::body::tests::return_type_witnesses_keep_comment_ownership_original_bytes_and_bounds"
+      ]
+    }
+  ],
+  "allChecksPassed": false,
+  "wholeNativeRerun": false
+}

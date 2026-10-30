@@ -1,0 +1,239 @@
+{
+  "sourceCommit": "75e9b410529fd0636ccb0bb1e6b4e015fe596842",
+  "newIntegrationTotals": {
+    "passed": 6,
+    "failed": 0,
+    "ignored": 0
+  },
+  "existingRegressionTotals": {
+    "passed": 65,
+    "failed": 0,
+    "ignored": 0
+  },
+  "distinctRustCases": 71,
+  "frozenAuxiliaryInputs": 993,
+  "all993PrimaryInputsByteExact": true,
+  "sourceBaselineCopiedInputs": 990,
+  "primaryBuildArtifacts": [
+    {
+      "target": "yoke",
+      "kind": [
+        "lib"
+      ],
+      "srcPath": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\native\\src\\lib.rs",
+      "packageId": "path+file:///C:/Users/Lomi/Documents/NN-Developed/Yoke-CodeIntelligence/native#yoke-code-intelligence@0.5.0",
+      "fresh": false
+    },
+    {
+      "target": "yoke",
+      "kind": [
+        "bin"
+      ],
+      "srcPath": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\native\\src\\main.rs",
+      "packageId": "path+file:///C:/Users/Lomi/Documents/NN-Developed/Yoke-CodeIntelligence/native#yoke-code-intelligence@0.5.0",
+      "fresh": false
+    }
+  ],
+  "primaryFmtBuildTypecheckPassed": true,
+  "auxiliaryFmtAllTargetClippyPassed": true,
+  "retainedPassed": 260,
+  "retainedSkipped": 3,
+  "primaryActualCli": {
+    "cliSha256": "fa2dc99b32aeeb62bd35fb312683c703d512e8b85767cf0706c2f291facbe3a7",
+    "legacyOwnersRawStdoutExact": true,
+    "ownerChangesRepeatedRawStdoutExact": true,
+    "unchangedSourceDeclaredCandidatesChanged": true,
+    "originalFileHashPreserved": true,
+    "exactNewlineOutputBudgetPassed": true,
+    "allOwnedSourceStoreAndGitFilesUnchanged": true,
+    "sourceUnchanged": true,
+    "networkGitAndModelOperations": 0,
+    "analyzedSourceExecuted": false,
+    "resultId": "895beb20391bd6998c945454ff3d7d8506b84a935e65108fe31c0ea8ecd951e3",
+    "commands": [
+      {
+        "name": "owners",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-owner-changes-x6fam8_0",
+          "--max-bytes",
+          "4000000",
+          "--timeout",
+          "30000",
+          "git",
+          "owners",
+          "20d48368ac51a759705a191576434f12b896e0b1861ff6e64d223f019ceaae5e"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "owner-changes",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-owner-changes-x6fam8_0",
+          "--max-bytes",
+          "4000000",
+          "--timeout",
+          "30000",
+          "git",
+          "owner-changes",
+          "20d48368ac51a759705a191576434f12b896e0b1861ff6e64d223f019ceaae5e"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "owner-changes-repeat",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-owner-changes-x6fam8_0",
+          "--max-bytes",
+          "4000000",
+          "--timeout",
+          "30000",
+          "git",
+          "owner-changes",
+          "20d48368ac51a759705a191576434f12b896e0b1861ff6e64d223f019ceaae5e"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "owner-changes-exact-budget",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-owner-changes-x6fam8_0",
+          "--max-bytes",
+          "21400",
+          "--timeout",
+          "30000",
+          "git",
+          "owner-changes",
+          "20d48368ac51a759705a191576434f12b896e0b1861ff6e64d223f019ceaae5e"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "owner-changes-short-budget",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-owner-changes-x6fam8_0",
+          "--max-bytes",
+          "21399",
+          "--timeout",
+          "30000",
+          "git",
+          "owner-changes",
+          "20d48368ac51a759705a191576434f12b896e0b1861ff6e64d223f019ceaae5e"
+        ],
+        "exitCode": 1
+      }
+    ],
+    "fullStatusCertified": false
+  },
+  "secondaryActualCli": {
+    "cliSha256": "d22013cbae1bcc245c74348f14149f6e2344fa90b42d35754a12ae68184a304d",
+    "legacyOwnersRawStdoutExact": true,
+    "ownerChangesRepeatedRawStdoutExact": true,
+    "unchangedSourceDeclaredCandidatesChanged": true,
+    "originalFileHashPreserved": true,
+    "exactNewlineOutputBudgetPassed": true,
+    "allOwnedSourceStoreAndGitFilesUnchanged": true,
+    "sourceUnchanged": true,
+    "networkGitAndModelOperations": 0,
+    "analyzedSourceExecuted": false,
+    "resultId": "895beb20391bd6998c945454ff3d7d8506b84a935e65108fe31c0ea8ecd951e3",
+    "commands": [
+      {
+        "name": "owners",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-owner-changes-x6fam8_0",
+          "--max-bytes",
+          "4000000",
+          "--timeout",
+          "30000",
+          "git",
+          "owners",
+          "20d48368ac51a759705a191576434f12b896e0b1861ff6e64d223f019ceaae5e"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "owner-changes",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-owner-changes-x6fam8_0",
+          "--max-bytes",
+          "4000000",
+          "--timeout",
+          "30000",
+          "git",
+          "owner-changes",
+          "20d48368ac51a759705a191576434f12b896e0b1861ff6e64d223f019ceaae5e"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "owner-changes-repeat",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-owner-changes-x6fam8_0",
+          "--max-bytes",
+          "4000000",
+          "--timeout",
+          "30000",
+          "git",
+          "owner-changes",
+          "20d48368ac51a759705a191576434f12b896e0b1861ff6e64d223f019ceaae5e"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "owner-changes-exact-budget",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-owner-changes-x6fam8_0",
+          "--max-bytes",
+          "21400",
+          "--timeout",
+          "30000",
+          "git",
+          "owner-changes",
+          "20d48368ac51a759705a191576434f12b896e0b1861ff6e64d223f019ceaae5e"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "owner-changes-short-budget",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-owner-changes-x6fam8_0",
+          "--max-bytes",
+          "21399",
+          "--timeout",
+          "30000",
+          "git",
+          "owner-changes",
+          "20d48368ac51a759705a191576434f12b896e0b1861ff6e64d223f019ceaae5e"
+        ],
+        "exitCode": 1
+      }
+    ],
+    "fullStatusCertified": false
+  },
+  "crossCheckoutNewRawStdoutExact": true,
+  "rustTestsRepeatedInPrimary": false,
+  "fullCurrentNativeSuiteExecuted": false,
+  "fullR5Certified": false,
+  "fullWindowsCertified": false,
+  "fullStatusCertified": false
+}

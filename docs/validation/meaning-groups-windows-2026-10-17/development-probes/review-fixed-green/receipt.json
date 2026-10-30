@@ -1,0 +1,60 @@
+{
+  "checkedAtUtc": "2026-10-17T00:57:13.101715+00:00",
+  "label": "review-fixed-green",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "--offline",
+    "-j",
+    "1",
+    "--no-fail-fast",
+    "--lib",
+    "--test",
+    "meaning_cli",
+    "--test",
+    "meaning_groups_admission",
+    "meaning_group",
+    "--",
+    "--test-threads=1"
+  ],
+  "exitCode": 0,
+  "seconds": 344.312,
+  "sourceBefore": {
+    "native/src/lib.rs": "ae910707d4d7fa1cde5d992b4859ee615bd1e62b4d130cfc1bd66909c135fdd2",
+    "native/src/meaning_groups.rs": "b160fb744a61c882614bf9cf911534925fb3cea90b20ffd717ecb2c9a1a8e78b",
+    "native/src/meaning_groups_tests.rs": "a6707cf51a8fd39a0e92ddb1692d95dd5b0b3142f2a30bf00865d27d736a0f53",
+    "native/src/meaning_cli.rs": "e381edd6b88ce023a019392b72b8356c41123f81af66869520ce9f3f96e05749",
+    "native/tests/meaning_cli.rs": "2260b4ebefe403c7d14a2cdda19c7eae4b84fd398479a7be75b76b5a88dea75c",
+    "native/tests/meaning_groups_admission.rs": "a8bf1b5dee5187f57b0ceb2e245068ef61d19ea4488ec3bf3e90caec9c9f8d38"
+  },
+  "sourceAfter": {
+    "native/src/lib.rs": "ae910707d4d7fa1cde5d992b4859ee615bd1e62b4d130cfc1bd66909c135fdd2",
+    "native/src/meaning_groups.rs": "b160fb744a61c882614bf9cf911534925fb3cea90b20ffd717ecb2c9a1a8e78b",
+    "native/src/meaning_groups_tests.rs": "a6707cf51a8fd39a0e92ddb1692d95dd5b0b3142f2a30bf00865d27d736a0f53",
+    "native/src/meaning_cli.rs": "e381edd6b88ce023a019392b72b8356c41123f81af66869520ce9f3f96e05749",
+    "native/tests/meaning_cli.rs": "2260b4ebefe403c7d14a2cdda19c7eae4b84fd398479a7be75b76b5a88dea75c",
+    "native/tests/meaning_groups_admission.rs": "a8bf1b5dee5187f57b0ceb2e245068ef61d19ea4488ec3bf3e90caec9c9f8d38"
+  },
+  "sourceUnchanged": true,
+  "logSha256": "48d37d88698c6a60a62148c26b489b85b17dad8c63832daba98ac0d475fad877",
+  "rustTestSummaries": [
+    [
+      15,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0
+    ],
+    [
+      7,
+      0,
+      0
+    ]
+  ],
+  "interpretation": "Scoped probe only. Not a new full-project acceptance and not additive to Wave8 totals."
+}

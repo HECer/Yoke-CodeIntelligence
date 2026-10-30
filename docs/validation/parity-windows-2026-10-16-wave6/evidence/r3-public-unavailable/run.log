@@ -1,0 +1,107 @@
+   Compiling yoke-r3-public-unavailable v0.0.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\parity-validation-20261015\next-historical-view-comparison\revisions\execution-prep\public-red-harness)
+warning: unused import: `serde_json::json`
+ --> tests\support\meaning_comparison_fixture.rs:2:5
+  |
+2 | use serde_json::json;
+  |     ^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-r3-public-unavailable` (test "historical_view_comparison") generated 1 warning (run `cargo fix --test "historical_view_comparison" -p yoke-r3-public-unavailable` to apply 1 suggestion)
+    Finished `test` profile [unoptimized] target(s) in 2.96s
+     Running tests\historical_view_comparison.rs (target\debug\deps\historical_view_comparison-36a679b0a5431211.exe)
+
+running 8 tests
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+
+thread 'error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling' (58236) panicked at tests\support\comparison_error_redaction.rs:19:13:
+Comparison error exposed an owned fixture source sentinel
+test error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+
+thread 'directed_parallel_delta_does_not_infer_which_identical_occurrence_survived' (62920) panicked at tests\historical_view_comparison.rs:215:61:
+called `Result::unwrap()` on an `Err` value: comparison_implementation_unavailable
+test directed_parallel_delta_does_not_infer_which_identical_occurrence_survived ... FAILED
+
+thread 'all_output_or_deadline_failures_publish_nothing' (17880) panicked at tests\historical_view_comparison.rs:282:48:
+Valid pair control before tight caps: comparison_implementation_unavailable
+test all_output_or_deadline_failures_publish_nothing ... FAILED
+
+thread 'explicit_pair_replays_historical_bytes_and_is_deterministic_without_publication' (23504) panicked at tests\historical_view_comparison.rs:189:60:
+called `Result::unwrap()` on an `Err` value: comparison_implementation_unavailable
+test explicit_pair_replays_historical_bytes_and_is_deterministic_without_publication ... FAILED
+
+thread 'identical_bytes_across_paths_do_not_manufacture_rename_lineage' (29232) panicked at tests\historical_view_comparison.rs:318:145:
+called `Result::unwrap()` on an `Err` value: comparison_implementation_unavailable
+test identical_bytes_across_paths_do_not_manufacture_rename_lineage ... FAILED
+
+thread 'stale_snapshot_artifact_and_graph_pins_refuse_without_mutation' (12372) panicked at tests\historical_view_comparison.rs:244:48:
+Valid pair control before stale pins: comparison_implementation_unavailable
+test stale_snapshot_artifact_and_graph_pins_refuse_without_mutation ... FAILED
+
+thread 'wrong_store_and_cross_workspace_pins_do_not_fall_back_to_equal_paths' (42740) panicked at tests\historical_view_comparison.rs:269:48:
+Valid first Store control: comparison_implementation_unavailable
+test wrong_store_and_cross_workspace_pins_do_not_fall_back_to_equal_paths ... FAILED
+
+thread 'checked_archives_compare_after_live_store_and_worker_are_gone_without_quote_leaks' (63908) panicked at tests\historical_view_comparison.rs:371:151:
+called `Result::unwrap()` on an `Err` value: comparison_implementation_unavailable
+test checked_archives_compare_after_live_store_and_worker_are_gone_without_quote_leaks ... FAILED
+
+failures:
+
+failures:
+    all_output_or_deadline_failures_publish_nothing
+    checked_archives_compare_after_live_store_and_worker_are_gone_without_quote_leaks
+    directed_parallel_delta_does_not_infer_which_identical_occurrence_survived
+    explicit_pair_replays_historical_bytes_and_is_deterministic_without_publication
+    identical_bytes_across_paths_do_not_manufacture_rename_lineage
+    stale_snapshot_artifact_and_graph_pins_refuse_without_mutation
+    wrong_store_and_cross_workspace_pins_do_not_fall_back_to_equal_paths
+
+test result: FAILED. 1 passed; 7 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.10s
+
+error: test failed, to rerun pass `--test historical_view_comparison`

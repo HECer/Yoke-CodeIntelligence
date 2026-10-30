@@ -1,0 +1,17 @@
+    Finished `test` profile [unoptimized] target(s) in 0.77s
+     Running tests\session_mcp.rs (target\debug\deps\session_mcp-4c7677e22357ce4a.exe)
+
+running 3 tests
+test session_profile_exposes_persistent_steering_without_host_authority_arguments ... ok
+test session_mcp_retrieval_uses_exact_source_bodies_and_rejects_authority_options ... ok
+test session_graph_tool_builds_an_explicit_source_bound_view ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.37s
+
+     Running tests\session_review.rs (target\debug\deps\session_review-bfdd3ba5950201a7.exe)
+
+running 1 test
+test nested_native_failure_is_an_mcp_tool_error ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+

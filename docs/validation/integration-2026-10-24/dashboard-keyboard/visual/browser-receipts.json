@@ -1,0 +1,77 @@
+[
+  {
+    "actualNativeDOM": true,
+    "focus": "Skip to dashboard content",
+    "nativeScreenshot": false,
+    "overflow": false,
+    "step": "skip-focused-after-browser-activation",
+    "visible": true
+  },
+  {
+    "capabilityStaysInTab": true,
+    "focus": "main-content",
+    "hash": "#main-content",
+    "step": "skip-enter"
+  },
+  {
+    "step": "keyboard-navigation",
+    "focus": "page-title",
+    "title": "Project memories"
+  },
+  {
+    "draftRetained": true,
+    "focusBeforeSetup": "memory-content",
+    "footerChanged": true,
+    "scriptStayedInert": true,
+    "step": "automatic-refresh"
+  },
+  {
+    "cancelFocused": true,
+    "description": "Discard the current draft and start a new memory?",
+    "dialogOpen": true,
+    "step": "confirmation-open"
+  },
+  {
+    "dialogClosed": true,
+    "draftRetained": true,
+    "focus": "new-memory",
+    "step": "escape-cancel"
+  },
+  {
+    "content": [
+      {
+        "type": "text",
+        "text": "Preview automation evaluate failed: Error: Mobile dialog focus/bounds\n    at <anonymous>:1:253\n    at <anonymous>:1:606"
+      }
+    ],
+    "isError": true
+  },
+  {
+    "cancelFocused": true,
+    "description": "End this MCP Session and close its owned runtime? Runtime variables in this connection will be lost. Unsaved browser drafts are not saved by this action. Other Sessions and the HTTP service remain active.",
+    "dialogBounds": {
+      "bottom": 552.984375,
+      "height": 261.984375,
+      "left": 16,
+      "right": 359,
+      "top": 291,
+      "width": 343,
+      "x": 16,
+      "y": 291
+    },
+    "draftRetained": true,
+    "noHorizontalOverflow": true,
+    "step": "mobile-own-shutdown-dialog",
+    "viewport": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "draftReadOnly": true,
+    "draftRetained": true,
+    "shutdownDisabled": true,
+    "status": "End request accepted. This MCP Session is closing; exit is not yet confirmed. Other Sessions and the HTTP service remain active.",
+    "step": "after-own-shutdown"
+  }
+]

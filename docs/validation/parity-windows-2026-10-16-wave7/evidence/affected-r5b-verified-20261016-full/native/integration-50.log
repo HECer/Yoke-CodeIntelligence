@@ -1,0 +1,23 @@
+    Finished `test` profile [unoptimized] target(s) in 0.72s
+     Running tests\historical_view_comparison.rs (target\debug\deps\historical_view_comparison-9338980b82f50dc0.exe)
+
+running 8 tests
+test error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test directed_parallel_delta_does_not_infer_which_identical_occurrence_survived ... ok
+test identical_bytes_across_paths_do_not_manufacture_rename_lineage ... ok
+test explicit_pair_replays_historical_bytes_and_is_deterministic_without_publication ... ok
+test all_output_or_deadline_failures_publish_nothing ... ok
+test stale_snapshot_artifact_and_graph_pins_refuse_without_mutation ... ok
+test wrong_store_and_cross_workspace_pins_do_not_fall_back_to_equal_paths ... ok
+test checked_archives_compare_after_live_store_and_worker_are_gone_without_quote_leaks ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.87s
+
+     Running tests\historical_view_fixture_qualification.rs (target\debug\deps\historical_view_fixture_qualification-51cfbc36f26879ae.exe)
+
+running 2 tests
+test genuine_source_only_views_qualify_epoch8_and_epoch9_and_the_mutation_oracle ... ok
+test genuine_original_and_rebound_typed_archives_qualify_both_epochs_without_a_live_store ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.56s
+

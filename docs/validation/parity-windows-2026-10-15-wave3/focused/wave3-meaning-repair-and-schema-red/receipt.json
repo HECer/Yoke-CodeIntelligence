@@ -1,0 +1,40 @@
+{
+  "checkedAtUtc": "2026-10-15T16:23:22.130816+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-p",
+    "yoke-code-intelligence",
+    "--locked",
+    "-j",
+    "2",
+    "--no-fail-fast",
+    "--test",
+    "meaning_view",
+    "--test",
+    "meaning_graph_views",
+    "--test",
+    "graphify_selected_queries",
+    "--test",
+    "facade_file_rename",
+    "--test",
+    "refactor_intents",
+    "--test",
+    "semantic_refactor",
+    "--",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 107.906,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave3-meaning-repair-and-schema-red",
+  "logSha256": "923e7f70639eb113e10541a22594025455e674bb148d440544c9e2e23f318002",
+  "groups": 6,
+  "passed": 60,
+  "failed": 1,
+  "ignored": 0,
+  "sourceChanges": [
+    "native/tests/derived_graph_mixed_budget.rs",
+    "native/tests/derived_graph_preparation.rs"
+  ]
+}

@@ -1,0 +1,46 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+error[E0463]: can't find crate for `yoke`
+ --> native\tests\capture_analyzer8_fixture.rs:4:5
+  |
+4 | use yoke::{Engine, capture::Deadline, graph_collections::Registry};
+  |     ^^^^ can't find crate
+
+error[E0282]: type annotations needed
+  --> native\tests\capture_analyzer8_fixture.rs:15:59
+   |
+15 |     engine.store.db.prepare(&sql).unwrap().query_map([], |row| {
+   |                                                           ^^^
+16 |         if table == "records" {
+17 |             Ok(json!({"kind":row.get::<_,String>(0)?,"id":row.get::<_,String>(1)?,"value":row.get::<_,String>(2)?}))
+   |                              --- type must be known at this point
+   |
+help: consider giving this closure parameter an explicit type
+   |
+15 |     engine.store.db.prepare(&sql).unwrap().query_map([], |row: /* Type */| {
+   |                                                              ++++++++++++
+
+error[E0282]: type annotations needed for `(_, _)`
+   --> native\tests\capture_analyzer8_fixture.rs:207:15
+    |
+207 |         .map(|(path, bytes)| (path.clone(), String::from_utf8(bytes.clone()).unwrap()))
+    |               ^^^^^^^^^^^^^   ---- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type, where the placeholders `_` are specified
+    |
+207 |         .map(|(path, bytes): (_, _)| (path.clone(), String::from_utf8(bytes.clone()).unwrap()))
+    |                            ++++++++
+
+error[E0282]: type annotations needed for `({type error}, _)`
+   --> native\tests\capture_analyzer8_fixture.rs:207:15
+    |
+207 |         .map(|(path, bytes)| (path.clone(), String::from_utf8(bytes.clone()).unwrap()))
+    |               ^^^^^^^^^^^^^                                   ----- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type, where the placeholders `_` are specified
+    |
+207 |         .map(|(path, bytes): (_, _)| (path.clone(), String::from_utf8(bytes.clone()).unwrap()))
+    |                            ++++++++
+
+Some errors have detailed explanations: E0282, E0463.
+For more information about an error, try `rustc --explain E0282`.
+error: could not compile `yoke-code-intelligence` (test "capture_analyzer8_fixture") due to 4 previous errors

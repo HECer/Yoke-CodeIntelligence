@@ -1,0 +1,37 @@
+{
+  "scope": "sequential_orchestration_only_use_individual_phase_receipts",
+  "tag": "wave5-frozen-20261016-0654",
+  "stages": [
+    {
+      "stage": "format",
+      "exitCode": 0
+    },
+    {
+      "stage": "clippy",
+      "exitCode": 0
+    },
+    {
+      "stage": "python",
+      "exitCode": 0
+    },
+    {
+      "stage": "typescript",
+      "exitCode": 0
+    },
+    {
+      "stage": "native",
+      "exitCode": 0
+    },
+    {
+      "stage": "finalize",
+      "exitCode": 0
+    }
+  ],
+  "exitCode": 0,
+  "runnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+  "pipelineSha256": "c8432150d24b9a35c0c38a14525d07b546f55faefb89c647529138a8afe87b27",
+  "pipelineLogSha256": "d178490df50dd11ea75f20a64ceef1788c59e6da65b2146a07f02787a4626b93",
+  "previousFailedTag": "wave5-frozen-20261016-0605",
+  "sourceManifestSha256": "0373cf52584645b8a81d0fe3d9624b8073c9d15748f1db26a4ff53ca167a4863",
+  "qualifiedCapacityRuns": "separate_nonadditive_receipts_not_reexecuted_by_this_wrapper"
+}

@@ -1,0 +1,88 @@
+{
+  "lsp": {
+    "executable": "target\\debug\\deps\\lsp-ad376eb03f90ca87.exe",
+    "ignored": [],
+    "registered": [
+      "host_registered_semantic_rename_uses_the_requested_mcp_snapshot",
+      "lsp_deadline_includes_a_server_that_refuses_to_read_didopen",
+      "lsp_shutdown_grace_uses_the_remaining_request_deadline",
+      "protocol_fixture_locations_bind_to_exact_immutable_source",
+      "protocol_fixture_rename_prepares_a_plan_without_touching_source",
+      "protocol_fixture_unsafe_workspace_edits_fail_closed",
+      "repeated_large_lsp_locations_remain_exact_anchors_with_bounded_body_bytes",
+      "semantic_calls_refuse_rebound_source_under_a_published_snapshot_id",
+      "semantic_location_link_selection_must_be_inside_its_target_range",
+      "semantic_positions_preserve_cr_crlf_lf_and_unicode_boundaries"
+    ]
+  },
+  "lsp_action_resolve": {
+    "executable": "target\\debug\\deps\\lsp_action_resolve-53fe1341ce53a403.exe",
+    "ignored": [
+      "actual_typescript_lazy_fix_all_preserves_the_unexecuted_auxiliary_command_boundary"
+    ],
+    "registered": [
+      "action_context_preserves_validated_provider_diagnostic_data_and_refuses_outside_ranges",
+      "actual_typescript_lazy_fix_all_preserves_the_unexecuted_auxiliary_command_boundary",
+      "deferred_edit_with_a_follow_up_command_is_resolved_but_cannot_prepare_a_partial_action",
+      "lazy_code_actions_preserve_opaque_identity_and_prepare_checked_edits_before_owned_shutdown",
+      "resolution_refuses_changed_action_identity_foreign_ranges_and_materialized_source_mutation",
+      "unavailable_disabled_command_and_unrequested_actions_do_not_invoke_resolution"
+    ]
+  },
+  "lsp_dependency_scope": {
+    "executable": "target\\debug\\deps\\lsp_dependency_scope-c5f769ee5acdbb3b.exe",
+    "ignored": [],
+    "registered": [
+      "captured_readonly_dependency_uris_are_readable_but_cannot_be_workspace_edit_targets"
+    ]
+  },
+  "lsp_enrichment": {
+    "executable": "target\\debug\\deps\\lsp_enrichment-48c225064c76c69a.exe",
+    "ignored": [],
+    "registered": [
+      "canonical_symbols_have_checked_anchors_and_refuse_escaped_selections",
+      "code_actions_prepare_immutable_plans_and_do_not_execute_server_commands",
+      "completion_insert_replace_edits_require_nested_ranges_and_string_replacements",
+      "configuration_callbacks_are_bounded_before_host_settings_are_replicated",
+      "diagnostic_notifications_have_a_cumulative_retention_budget",
+      "diagnostic_ranges_and_completion_edits_are_source_checked",
+      "existing_loopback_tcp_provider_is_used_without_launching_or_stopping_its_process",
+      "hierarchy_rounds_retain_each_providers_data_and_stop_cycles",
+      "incoming_calls_preserve_parallel_call_evidence_and_opaque_provider_data",
+      "normalized_symbols_refuse_selection_ranges_outside_the_symbol",
+      "prepare_rename_validates_the_providers_exact_anchor",
+      "published_diagnostic_uri_drive_spelling_preserves_the_captured_file_identity",
+      "push_only_diagnostics_preserve_actual_publication_and_reject_stale_versions",
+      "resource_rename_creates_a_guarded_delete_and_create_plan",
+      "semantic_options_reject_unknown_authority_and_configured_settings_reach_the_server",
+      "semantic_profiles_distinguish_host_settings_for_identical_source_results",
+      "semantic_rename_resource_operations_and_following_text_edits_share_one_guarded_plan",
+      "type_definition_binds_the_requested_snapshot_and_utf8_name",
+      "type_hierarchies_return_checked_source_ranges"
+    ]
+  },
+  "lsp_lifecycle": {
+    "executable": "target\\debug\\deps\\lsp_lifecycle-6843554963ada3d4.exe",
+    "ignored": [],
+    "registered": [
+      "failed_health_does_not_publish_status_generation_or_claim_restart",
+      "restart_performs_new_real_provider_handshakes_and_advances_only_owned_status"
+    ]
+  },
+  "lsp_source_execution": {
+    "executable": "target\\debug\\deps\\lsp_source_execution-72fe99b4b2ad15da.exe",
+    "ignored": [
+      "actual_jedi_source_auto_import_module_does_not_execute_without_host_authority",
+      "actual_rust_source_selected_rustc_requires_explicit_host_execution_authority"
+    ],
+    "registered": [
+      "actual_jedi_source_auto_import_module_does_not_execute_without_host_authority",
+      "actual_rust_source_selected_rustc_requires_explicit_host_execution_authority",
+      "passive_host_redirect_settings_are_refused_before_a_provider_is_started",
+      "passive_rust_keeps_proven_nested_workspace_and_dependency_paths_available",
+      "passive_rust_manifest_and_host_tool_redirects_are_refused_before_provider_start",
+      "passive_rust_omits_selectors_only_from_provider_copy_and_reports_original_hashes",
+      "unknown_passive_backend_contract_is_unavailable_before_process_start"
+    ]
+  }
+}

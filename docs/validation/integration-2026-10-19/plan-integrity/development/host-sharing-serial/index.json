@@ -1,0 +1,42 @@
+{
+  "recordedAt": "2026-10-19T12:17:16.323977+00:00",
+  "scope": "Separate serial replay of complete Windows host-install targets after actual error32 failures in the two-thread whole run. Same executable bytes, unchanged source, default TEMP/TMP and original test deadlines; only test concurrency differs. No namespace/sharing/permission policy or test assertion is weakened. Counts are nonadditive and original whole-run failures remain recorded.",
+  "allCasesPassed": true,
+  "sourceUnchanged": true,
+  "receipts": [
+    {
+      "target": "host_install",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\host_install-b0be2380faf85667.exe",
+        "--test-threads=1"
+      ],
+      "executableSha256": "de0e00f2196f95744395dfb4f54c9f9042cd22a39d78f358e2ff68726f158f61",
+      "exitCode": 0,
+      "elapsedSeconds": 4.548,
+      "resultGroups": [
+        {
+          "passed": 9,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "target": "host_install_cli",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\host_install_cli-907e784034de3223.exe",
+        "--test-threads=1"
+      ],
+      "executableSha256": "39ee12c494212e3f5d6eb5bce7f7d6e29f9d5889372d6e2d64aac09df81e5d75",
+      "exitCode": 0,
+      "elapsedSeconds": 3.604,
+      "resultGroups": [
+        {
+          "passed": 11,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    }
+  ]
+}

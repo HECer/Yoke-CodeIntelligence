@@ -1,0 +1,37 @@
+{
+  "parentIndexSha256": "4de65fbe19220356f19fcdddb079542f9475490dcb790265d38a565a2b985ee3",
+  "paths": {
+    "native/docs/meaning-cli.md": {
+      "after": "815e1e4f36a56fc982238bc41ea8e1d40668fc1dcaaafee604bc60dd59d334af",
+      "before": "78c220465567db18109b05fe361e1a3eeb4e80b91852c13d56caff1a1ea8c617"
+    },
+    "native/docs/meaning-join.md": {
+      "after": "6c70db6973f901fc9a725a8a52769e96181363fe537b6bcbefade80c393598f5",
+      "before": null
+    },
+    "native/src/lib.rs": {
+      "after": "efbacb16c2b6844c95b93d8ccc3be05d208e96acd8f82c7320e1a62f197900e5",
+      "before": "ae910707d4d7fa1cde5d992b4859ee615bd1e62b4d130cfc1bd66909c135fdd2"
+    },
+    "native/src/meaning_cli.rs": {
+      "after": "eb782f2c69f235687a9fde5e0ca152c8f343efd0795a7ca2f2c26f6f978c82e2",
+      "before": "e381edd6b88ce023a019392b72b8356c41123f81af66869520ce9f3f96e05749"
+    },
+    "native/src/meaning_join.rs": {
+      "after": "f7588d2882a9b2be9b548e4a7a5a28a530b83d5c93a4aaf6f6c4572fc898cd1f",
+      "before": null
+    },
+    "native/src/meaning_join_query.rs": {
+      "after": "d631876d5728bf6b775c2463b9c43a34565c7aa5d0015f9fc8d8aeea07c96b43",
+      "before": null
+    },
+    "native/src/meaning_join_query_tests.rs": {
+      "after": "32cf9d432584247a26ec603d06c9e17c5cc1b591151047676e1480c92b7c0241",
+      "before": null
+    },
+    "native/tests/meaning_join_cli.rs": {
+      "after": "ce46166d8dd55b65d17b9ecb236f49ae027c54e088de70625a61d7fc21104e8c",
+      "before": null
+    }
+  }
+}

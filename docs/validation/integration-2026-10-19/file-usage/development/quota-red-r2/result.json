@@ -1,0 +1,28 @@
+{
+  "exitCode": 101,
+  "elapsedSeconds": 43.948,
+  "command": [
+    "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+    "test",
+    "--locked",
+    "-j1",
+    "--target-dir",
+    "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+    "--test",
+    "facade_file_usage",
+    "actual_file_inventory_quota_admits2000_and_refuses2001_before_provider_start",
+    "--",
+    "--exact",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "sourceBefore": {
+    "native/src/semantic_file_delete.rs": "40b9e97a892ff92a971a908bbcd4b263ca11b0a979d701525c9fae623c469f7e",
+    "native/tests/facade_file_usage.rs": "a9ca61fef523f5e58d4133cc38aaba42c778da4d81416e19ae539ad02cb1a08a"
+  },
+  "sourceAfter": {
+    "native/src/semantic_file_delete.rs": "40b9e97a892ff92a971a908bbcd4b263ca11b0a979d701525c9fae623c469f7e",
+    "native/tests/facade_file_usage.rs": "a9ca61fef523f5e58d4133cc38aaba42c778da4d81416e19ae539ad02cb1a08a"
+  },
+  "sourceUnchanged": true
+}

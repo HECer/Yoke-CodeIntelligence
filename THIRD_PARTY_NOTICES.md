@@ -6,6 +6,10 @@ Code Intelligence source, workers and tests in this repository are licensed unde
 
 ## Runtime and development dependencies
 
+The native Rust build links the exact dependency graph pinned in `Cargo.lock`, including Tree-sitter grammars, SQLite through rusqlite, Leiden, PDF extraction and cryptographic/protocol utilities. `scripts/package-native.py` produces a host-target dependency inventory and copies the full license texts into every portable native archive. The inventory includes build dependencies and must not be interpreted as a list of separately installed runtime programs. Packaging refuses missing required notices; exact-revision retrieval is opt-in. Own Rust source is MIT, and no upstream application source is vendored.
+
+The TypeScript runtime dependencies below are retained separately. A native-only VSIX contains the native inventory/license directory; adding `--include-typescript` also includes the TypeScript runtime and its notices.
+
 | Component | Version | License | Distribution |
 |---|---|---|---|
 | TypeScript | 5.8.3 | Apache-2.0 | npm runtime dependency; copied with its LICENSE.txt and ThirdPartyNoticeText.txt in the portable runtime archive |

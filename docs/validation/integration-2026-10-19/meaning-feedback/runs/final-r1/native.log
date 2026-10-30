@@ -1,0 +1,119 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 32.51s
+     Running tests\feedback_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\feedback_cli-25e01215a6b90f09.exe)
+
+running 21 tests
+test a_resealed_event_record_cannot_invent_an_original_source_quote ... ok
+test an_authored_successor_requires_its_snapshot_in_the_explicit_checked_selection ... ok
+test an_observed_authored_successor_makes_the_old_knowledge_ineligible_without_claiming_truth ... ok
+test every_source_view_pin_and_original_quote_remain_binding_without_publication ... ok
+test exact_rank_input_source_pair_and_output_limits_admit_boundary_then_refuse_below ... ok
+test explicit_transcript_import_preserves_utf8_crlf_and_mining_never_creates_events ... ok
+test feedback_cli_records_one_source_bound_event_then_ranks_without_source_changes ... ok
+test feedback_host_flags_and_protected_inputs_refuse_before_missing_store_access ... ok
+test historical_meaning_receipts_remain_proofs_without_becoming_new_quote_authority ... ok
+test historical_ranking_uses_checked_snapshots_after_live_sources_change_or_disappear ... ok
+test identical_replay_is_idempotent_and_a_conflicting_sequence_cannot_rewrite_history ... ok
+test integer_decay_future_exclusion_and_label_corroboration_have_an_independent_numeric_oracle ... ok
+test mining_and_transcript_quote_tampering_fail_without_changing_any_state ... ok
+test output_admission_happens_before_transcript_sql_or_cas_publication ... ok
+test permission_and_strict_host_input_admission_precede_missing_workspace_creation ... ok
+test read_transactions_and_sqlite_limits_survive_both_success_and_refusal ... ok
+test resealed_successor_metadata_cannot_disable_knowledge_without_its_original_source_proof ... ok
+test retention_recognizes_transcript_roots_and_refuses_a_corrupt_feedback_registration ... ok
+test sequence_timestamps_are_monotone_even_when_events_arrive_out_of_order ... ok
+test windows_host_aliases_cannot_read_protected_files_or_alternate_streams ... 
+thread 'windows_host_aliases_cannot_read_protected_files_or_alternate_streams' (27792) panicked at native\tests\feedback_cli.rs:1100:59:
+called `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: "Dem Client fehlt ein erforderliches Recht." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test zero_resource_capacities_and_expired_or_cancelled_requests_publish_nothing ... ok
+
+failures:
+
+failures:
+    windows_host_aliases_cannot_read_protected_files_or_alternate_streams
+
+test result: FAILED. 20 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.45s
+
+error: test failed, to rerun pass `--test feedback_cli`
+     Running tests\meaning_feedback.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\meaning_feedback-94a55a818c953b0d.exe)
+
+running 13 tests
+test cases::actual_cli_record_rank_and_lost_stdout_retries_use_explicit_writes_and_no_provider ... ok
+test cases::cli_permission_and_closed_input_refusals_precede_missing_workspace_initialization ... ok
+test cases::closed_shapes_subject_uniqueness_limit_counts_and_ordering_do_not_create_an_empty_complete_result ... ok
+test cases::input_source_pair_event_and_output_limits_refuse_before_any_publication ... ok
+test cases::missing_meaning_selection_missing_source_and_corrupt_event_refuse_retention_and_ranking ... ok
+test cases::parallel_and_reverse_relation_targets_keep_independent_subjects_and_scores ... ok
+test cases::sql_publication_failure_read_transaction_and_expired_deadline_preserve_state_and_limits ... ok
+test changed_evaluated_crlf_source_retains_historical_events_without_claiming_semantic_identity ... ok
+test exact_unicode_ranges_and_path_admission_cannot_be_forged_by_rehashing_events ... ok
+test independent_label_sessions_latest_sequences_future_events_and_integer_decay_are_visible ... ok
+test origin_support_membership_refuses_other_claim_paths_foreign_kinds_and_unselected_graphs ... ok
+test out_of_order_timestamp_conflicts_and_other_subjects_never_rewrite_original_outcomes ... ok
+test three_typed_targets_preserve_original_packets_parallel_directions_roles_and_receipt_unknowns ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 32.09s
+
+     Running tests\meaning_view.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\meaning_view-a8d36911c647732c.exe)
+
+running 11 tests
+test archived_proof_rederives_claims_and_rejects_missing_receipts_cycles_and_policy_drift ... ok
+test archived_replay_uses_frozen_original_and_rebound_sources_after_live_source_and_worker_removal ... ok
+test archived_snapshot_rows_reject_unrecognized_manifest_properties ... ok
+test archived_unknown_reports_remain_unknown_without_fresh_accounting_or_provider_attestation ... ok
+test empty_meaning_selection_stays_absent_and_never_resolves_a_worker ... ok
+test explicit_no_claims_keeps_source_bindings_and_complete_packet_coverage ... ok
+test later_task_accounting_cannot_change_a_published_layer_or_upgrade_unknown_receipts ... ok
+test published_rebind_retains_original_snapshot_request_and_accounting_lineage ... ok
+test published_selection_preserves_multifile_quotes_roles_parallel_claims_and_original_receipts ... ok
+test selection_order_is_deterministic_shared_dependencies_are_charged_once_and_models_stay_distinct ... ok
+test validation_replays_quotes_roles_provenance_scope_and_real_closure_budget ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.64s
+
+     Running tests\plan_feedback.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\plan_feedback-49826affaaf26377.exe)
+
+running 14 tests
+test altered_saved_plan_and_missing_source_cannot_reuse_an_event ... ok
+test cli_record_rank_and_closed_stdout_keep_one_immutable_recoverable_event ... ok
+test create_delete_plan_quotes_keep_the_original_side_and_byte_identity ... ok
+test every_budget_refuses_the_whole_publication_and_rank_without_mutation ... ok
+test existing_read_transaction_is_preserved_and_cannot_receive_a_feedback_write ... ok
+test forged_verification_and_approval_rows_do_not_become_outcome_authority ... ok
+test host_json_protocol_refusals_precede_store_creation ... ok
+test ordered_session_history_is_idempotent_and_cannot_rewrite_or_backdate_a_slot ... ok
+test oversized_plan_registration_and_expired_deadline_publish_nothing_and_restore_sql_limits ... ok
+test planned_result_views_replay_exact_unicode_crlf_without_application_or_execution ... ok
+test ranking_uses_latest_eligible_session_and_independently_expected_integer_decay ... ok
+test retention_protects_original_plan_sources_and_refuses_a_forged_event ... ok
+test target_selection_reports_outside_events_and_does_not_duplicate_a_plan_vote ... ok
+test wrong_plan_views_paths_hashes_utf8_boundaries_and_unchanged_quotes_refuse_without_writes ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.17s
+
+     Running tests\retention.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\retention-2ad77774f6345e40.exe)
+
+running 16 tests
+test committed_retirement_can_feed_conservative_cas_quarantine_and_purge_without_losing_receipts ... ok
+test future_opaque_json_artifact_schema_is_not_inferred_to_be_dependency_free ... ok
+test labeled_uncommitted_history_journal_restores_missing_rows_without_changing_current_source ... ok
+test labeled_uncommitted_history_journal_restores_only_hash_bound_rows ... ok
+test missing_history_age_and_corrupt_metadata_never_become_retirement_permission ... ok
+test multiply_linked_quarantine_content_is_unknown_physical_reclamation_and_is_preserved ... ok
+test newly_rooted_quarantine_and_tampered_plan_refuse_purge_without_deleting_bytes ... ok
+test opaque_published_artifacts_defer_history ... ok
+test partial_purge_reports_actual_removed_bytes_and_can_resume_only_its_exact_intent ... ok
+test pin_and_every_source_bound_workflow_record_protect_history ... ok
+test purge_reclaims_only_exact_committed_unreachable_quarantine_bytes_after_confirmation ... ok
+test reviewed_history_retirement_removes_only_unrooted_rows_and_preserves_original_source ... ok
+test source_bindings_inside_published_json_artifacts_protect_history ... ok
+test stale_plan_and_concurrent_client_leave_history_intact ... ok
+test unknown_nested_snapshot_fields_defer_history ... ok
+test unknown_record_blocks_retirement_even_without_explicit_hash_fields ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.41s
+
+error: 1 target failed:
+    `--test feedback_cli`

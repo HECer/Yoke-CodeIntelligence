@@ -1,0 +1,45 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 745,
+  "commands": [
+    {
+      "name": "native",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--no-fail-fast",
+        "--test",
+        "mixed_meaning_provider",
+        "--test",
+        "mixed_meaning_claims",
+        "--test",
+        "meaning_build",
+        "--test",
+        "meaning_retention_review",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 144.49258940000436,
+      "totals": {
+        "passed": 39,
+        "failed": 3,
+        "ignored": 0
+      },
+      "groups": 4,
+      "failures": [
+        "bound_invalid_fragment_error_or_usage_retains_reported_bill_without_graph_or_secret_echo",
+        "cli_build_requires_separate_trust_and_reads_replay_without_provider_configuration",
+        "explicit_mixed_provider_preserves_original_claims_and_replays_without_provider_or_live_files"
+      ]
+    }
+  ],
+  "allChecksPassed": false,
+  "wholeNativeRerun": false
+}

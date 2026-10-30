@@ -1,0 +1,55 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 2.59s
+     Running tests\facade_file_delete.rs (target\debug\deps\facade_file_delete-10f76ec2ac5264c5.exe)
+
+running 10 tests
+test forced_file_delete_materializes_the_plan_without_removing_the_original_or_its_callers ... FAILED
+test forced_file_delete_omitted_and_null_selectors_create_one_exact_delete_for_v8_v9 ... FAILED
+test forced_file_delete_stale_workspace_preflight_preserves_changed_sources_for_v8_v9 ... FAILED
+test forced_file_delete_permission_and_external_context_denials_have_zero_change_effects ... ok
+test forced_file_delete_workspace_apply_keeps_host_approval_and_verification_gates ... FAILED
+test public_forced_file_delete_accepts_generated_null_and_false_defaults ... FAILED
+test source_symlink_cannot_redirect_a_forced_file_deletion ... ok
+test readonly_ignored_excluded_and_uncaptured_binary_sources_cannot_be_force_deleted ... ok
+test default_safe_mode_and_propagation_are_distinct_unsupported_file_intents ... ok
+test empty_malformed_directory_missing_and_unsafe_file_selectors_never_prepare_deletions ... ok
+
+failures:
+
+---- forced_file_delete_materializes_the_plan_without_removing_the_original_or_its_callers stdout ----
+
+thread 'forced_file_delete_materializes_the_plan_without_removing_the_original_or_its_callers' (45740) panicked at native\tests\facade_file_delete.rs:189:6:
+called `Result::unwrap()` on an `Err` value: Symbol name path required
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- forced_file_delete_omitted_and_null_selectors_create_one_exact_delete_for_v8_v9 stdout ----
+
+thread 'forced_file_delete_omitted_and_null_selectors_create_one_exact_delete_for_v8_v9' (67460) panicked at native\tests\facade_file_delete.rs:213:18:
+Explicit file force must not require a symbol selector: Symbol name path required
+
+---- forced_file_delete_stale_workspace_preflight_preserves_changed_sources_for_v8_v9 stdout ----
+
+thread 'forced_file_delete_stale_workspace_preflight_preserves_changed_sources_for_v8_v9' (17612) panicked at native\tests\facade_file_delete.rs:189:6:
+called `Result::unwrap()` on an `Err` value: Symbol name path required
+
+---- forced_file_delete_workspace_apply_keeps_host_approval_and_verification_gates stdout ----
+
+thread 'forced_file_delete_workspace_apply_keeps_host_approval_and_verification_gates' (45668) panicked at native\tests\facade_file_delete.rs:189:6:
+called `Result::unwrap()` on an `Err` value: Symbol name path required
+
+---- public_forced_file_delete_accepts_generated_null_and_false_defaults stdout ----
+
+thread 'public_forced_file_delete_accepts_generated_null_and_false_defaults' (53988) panicked at native\tests\facade_file_delete.rs:229:6:
+called `Result::unwrap()` on an `Err` value: Symbol name path required
+
+
+failures:
+    forced_file_delete_materializes_the_plan_without_removing_the_original_or_its_callers
+    forced_file_delete_omitted_and_null_selectors_create_one_exact_delete_for_v8_v9
+    forced_file_delete_stale_workspace_preflight_preserves_changed_sources_for_v8_v9
+    forced_file_delete_workspace_apply_keeps_host_approval_and_verification_gates
+    public_forced_file_delete_accepts_generated_null_and_false_defaults
+
+test result: FAILED. 5 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.08s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --test facade_file_delete`

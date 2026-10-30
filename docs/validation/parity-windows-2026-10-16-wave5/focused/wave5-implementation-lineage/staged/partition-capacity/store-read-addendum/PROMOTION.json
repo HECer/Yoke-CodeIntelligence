@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "status": "ignored_saved_row_addendum_uncompiled_unexecuted",
+  "parentCapacityManifest": "369292a4411180dfd9f4fdbaed8c112902cdb28b4b259baff15a070a3be9234a",
+  "parentPartitionManifest": "18e8d83be0a8985bb0d711e6321e26d6a6e410961f08d3df698a80b3caf0c2d4",
+  "action": "act_mva0w19b_ed935c0ac58d",
+  "normalEditsAuthorized": false,
+  "rootRegistration": "mod retrieval_saved_graph;",
+  "files": [
+    {
+      "draft": "retrieval_saved_graph.rs",
+      "destination": "native/src/retrieval_saved_graph.rs",
+      "kind": "private transaction-bound unavailable verifier"
+    },
+    {
+      "draft": "retrieval_saved_graph_tests.rs",
+      "destination": "native/src/retrieval_saved_graph_tests.rs",
+      "ordinaryDraftTests": 7,
+      "qualifiedIgnoredDraftTests": 1
+    }
+  ],
+  "rootCommands": [
+    "cargo test --manifest-path native/Cargo.toml --lib retrieval_saved_graph::tests",
+    "cargo test --manifest-path native/Cargo.toml --lib retrieval_saved_graph::tests::oversized_saved_row_refuses_before_raw_payload_read_and_auto_fallback -- --exact --ignored --test-threads=1"
+  ],
+  "requiredCoupling": [
+    "Only new checked Run invokes verifier using same relevant read transaction and original deadline.",
+    "Bound stored bytes/type BEFORE raw String fetch/decode; preserve lower host SQLite limits and restore on all exits.",
+    "No unbounded generic Store::graph load occurs first on new Run path.",
+    "Generic Store/global/absent retrieval remain unchanged.",
+    "Saved authority corruption is never malformed-MANIFEST-source policy fallback.",
+    "Compatibility-auto integration errors stay typed; no fresh run, cache, source budget or deadline."
+  ]
+}

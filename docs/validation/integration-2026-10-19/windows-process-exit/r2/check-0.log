@@ -1,0 +1,30 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 49s
+     Running unittests src\lib.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\yoke-f14d0af26d19713e.exe)
+
+running 4 tests
+test github_app::digest::history_boundary_tests::history_owned_process_tests::cancellation_and_deadline_stop_owned_git_and_restore_the_same_store ... FAILED
+test github_app::digest::history_boundary_tests::history_owned_process_tests::history_group_tests::dropping_the_owned_child_reaps_its_descendant_within_the_cleanup_budget ... ok
+test github_app::digest::history_boundary_tests::history_owned_process_tests::history_group_tests::explicit_termination_proves_the_owned_descendant_has_exited ... ok
+test github_app::digest::history_boundary_tests::history_owned_process_tests::history_group_tests::successful_capture_reaps_the_owned_null_stdio_descendant ... ok
+
+failures:
+
+---- github_app::digest::history_boundary_tests::history_owned_process_tests::cancellation_and_deadline_stop_owned_git_and_restore_the_same_store stdout ----
+
+thread '<unnamed>' (16868) panicked at native\src\github_app_digest_history_process_tests.rs:215:17:
+assertion `left == right` failed: An owned Git process survived the digest return: pid=22792, cancel=false, elapsedMs=1962, outcome=Request deadline exceeded; cleanupUnproven=false
+  left: 258
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'github_app::digest::history_boundary_tests::history_owned_process_tests::cancellation_and_deadline_stop_owned_git_and_restore_the_same_store' (22552) panicked at native\src\github_app_digest_history_process_tests.rs:248:29:
+called `Result::unwrap()` on an `Err` value: Any { .. }
+
+
+failures:
+    github_app::digest::history_boundary_tests::history_owned_process_tests::cancellation_and_deadline_stop_owned_git_and_restore_the_same_store
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 440 filtered out; finished in 6.12s
+
+error: test failed, to rerun pass `--lib`

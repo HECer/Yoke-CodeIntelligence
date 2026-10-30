@@ -1,0 +1,29 @@
+{
+  "runs": [
+    {
+      "name": "test",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "falkor_wire",
+        "--test",
+        "falkor_publish",
+        "--test",
+        "neo4j_publish",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 84.27012300491333
+    }
+  ],
+  "sourceUnchanged": true,
+  "inputs": 715
+}

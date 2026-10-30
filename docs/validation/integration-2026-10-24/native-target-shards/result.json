@@ -1,0 +1,102 @@
+{
+  "baseline": "504963a627698157aa58a516db0e12fbcd4abc84",
+  "localControllerChecksPassed": true,
+  "schedulerTests": {
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0
+  },
+  "separateHistoryAdmissionTests": {
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0
+  },
+  "actualCargoTargetMetadataCount": 368,
+  "wholeGroups": {
+    "test": 365,
+    "build": 3,
+    "doc": 1
+  },
+  "groupTotal": 369,
+  "shardGroupCounts": [
+    43,
+    45,
+    46,
+    47,
+    47,
+    47,
+    47,
+    47
+  ],
+  "nativeYokeBuildOrExecutionAttempted": false,
+  "nativeProductionCargoProfilesAndControlledRunnerExactToBaseline": true,
+  "originalRustAssertionsAndOperationDeadlinesPreserved": true,
+  "onlyRustTestChangesAreFailureDiagnostics": true,
+  "existingLiveRustAnalyzerAndReleaseUploadHistorySuffixExact": true,
+  "originalRequiredPlatformJobIdentitiesAnd45MinuteLimitsPreserved": true,
+  "typescriptSourceScopeExactToBaseline": true,
+  "typecheckExit": 0,
+  "npmTestExit": 0,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "changedRustFileRustfmtCheckExit": 0,
+  "localYamlParserAvailable": false,
+  "hostedPartitionedExecutionVerified": false,
+  "earlierThreeWindowsShellFailuresFixed": false,
+  "fullStatusComplete": false,
+  "products": [
+    {
+      "path": ".github/workflows/rust.yml",
+      "sha256": "f9da38b882f65ab7c8973f5e372a39de9723ba86bdeca46dfca2b7266202f543",
+      "gitBlobSha": "1915c489960652daf006fbd585e63e8062dfd844"
+    },
+    {
+      "path": "scripts/native_shards.py",
+      "sha256": "9bd3b7be8e16236fabbff76aa754ff18b27735e22da1ed05c6446421c47bd669",
+      "gitBlobSha": "14ca6a156239ad5339e8c0b80f8e79c781ba4d83"
+    },
+    {
+      "path": "scripts/tests/test_native_shards.py",
+      "sha256": "eb854f8d7b704876e925f62b9c66fccc9f7a6fdb61d187c02ba50fff4d75334d",
+      "gitBlobSha": "3a3560176c321e66ac8e3e3006b018fa34c9961c"
+    },
+    {
+      "path": "native/tests/claude_source_hooks.rs",
+      "sha256": "2a1281691ca06774446d04e475f52b7d9430c84c9a15e84d883e9b9e3e51acdb",
+      "gitBlobSha": "d1ec17ea6683a09adc540ded6c70909bf24cc7c1"
+    }
+  ],
+  "logs": [
+    {
+      "path": "python-shards.txt",
+      "sha256": "033c9d8083ab38441b50fcfab7f3792b067e79bb296f6baf5e6c7624a23fe2d0",
+      "originalSha256": "2426ba241ce9552b9208f06f2220ca16233fec953965f82d272c81168087c94a",
+      "originalEncoding": "utf-16",
+      "publicRendering": "UTF-8/LF, trailing whitespace removed"
+    },
+    {
+      "path": "python-history.txt",
+      "sha256": "1b50dd00b8152c9d594ae3467173da274b92ee99bcd8abf8c43d7eac20565b51",
+      "originalSha256": "0ac175b196eda3b6671fbd07b1afd6c3905d9fd696f454e7496accba44855410",
+      "originalEncoding": "utf-16",
+      "publicRendering": "UTF-8/LF, trailing whitespace removed"
+    },
+    {
+      "path": "typecheck.txt",
+      "sha256": "92c380d328e363df2bc61623a12f7fc803e92be662865f1ef5ea39db8f78e39c",
+      "originalSha256": "952c9b11b7b439ac97262c2a95a6e55b9340c9c9487219f3004cba5129e7f220",
+      "originalEncoding": "utf-16",
+      "publicRendering": "UTF-8/LF, trailing whitespace removed"
+    },
+    {
+      "path": "npm-test.txt",
+      "sha256": "f1c366b2d7a00f64c1f6ae8f94ce9278cca056912268e953f1e626fe1d69d0bc",
+      "originalSha256": "4044ce1077eae32c64e4039f5a8d044d2d531ee02a4ece9a4786b8aa8b68e53d",
+      "originalEncoding": "utf-16",
+      "publicRendering": "UTF-8/LF, trailing whitespace removed"
+    }
+  ]
+}

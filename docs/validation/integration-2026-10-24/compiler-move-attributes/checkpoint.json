@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUtc": "2026-10-23T22:28:12.224665+00:00",
+  "nativeVersion": "0.5.0",
+  "sourceBefore": "368ec82be625945dc1dcc42d18a37ec0eb078c49",
+  "qualifiedProductCommit": "2240fadd29dbfb361f706dfc5a97be510e6cf3bb",
+  "sourceInputs": 1129,
+  "currentCliSha256": "1fe4251c52772407084f93c961317dacd8fe5c89e54039d3753c27c00032f447",
+  "previousQualifiedCliSha256": "b6557f46176014fb0bf872a727984d23f4dd93a38379f71fbed6915bcdc66c19",
+  "groups": [
+    {
+      "phase": "green2",
+      "name": "test-compiler_move_attributes",
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0,
+      "filtered": 0,
+      "logSha256": "b4b9b27ee1c9d07fdd2b46d34e863029d0bfd6054c4bcfbbdd1afb8029b16b4c"
+    },
+    {
+      "phase": "green2",
+      "name": "test-compiler_move",
+      "passed": 25,
+      "failed": 0,
+      "ignored": 0,
+      "filtered": 0,
+      "logSha256": "694e8ef1dcf084e39709235505e8c8439ea692193efbd636940280d623690087"
+    },
+    {
+      "phase": "green2",
+      "name": "test-compiler_inline_body",
+      "passed": 21,
+      "failed": 0,
+      "ignored": 0,
+      "filtered": 0,
+      "logSha256": "f8d7df175c3d0ea31d0bc1658461e4ab6e2208433b0e0b7e798e1b26ed38a18f"
+    },
+    {
+      "phase": "qualified1",
+      "name": "library-all",
+      "passed": 594,
+      "failed": 0,
+      "ignored": 7,
+      "filtered": 0,
+      "logSha256": "1857a8637d999136c3ab24d44b11f6573d297be6595e1887a54f3b37fa8af97b"
+    },
+    {
+      "phase": "qualified1",
+      "name": "main-all",
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0,
+      "filtered": 0,
+      "logSha256": "9e3f09c174e68cf35b93a6934cbb5a0ad229ed4a0102e476df7297695105132f"
+    }
+  ],
+  "totals": {
+    "passed": 651,
+    "failed": 0,
+    "ignored": 7,
+    "filtered": 0,
+    "uniqueWholeGroups": 5,
+    "addedFunctionsAlreadyIncluded": 7
+  },
+  "sourceFixtureOnlyCorrection": {
+    "changedInputs": [
+      "native/src/compiler_move_attribute_tests.rs"
+    ],
+    "allProductAndIntegrationTestInputsExact": true,
+    "previousCliSha256": "1fe4251c52772407084f93c961317dacd8fe5c89e54039d3753c27c00032f447",
+    "reusedUniqueWholeGroups": [
+      "compiler_move_attributes",
+      "compiler_move",
+      "compiler_inline_body"
+    ],
+    "previousAllTargetCheckPassed": true
+  },
+  "requiredGatesPassed": [
+    "clippy-all-targets",
+    "format-complete",
+    "debug-build",
+    "cli-version",
+    "npm-typecheck",
+    "npm-test"
+  ],
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkips": 3
+  },
+  "legacyCompatibility": {
+    "complete": true,
+    "comparisons": [
+      {
+        "allResultFieldsExactExceptFreshPlanIdCreatedAtExpiresAt": true,
+        "effectDigestExact": true,
+        "planDiffFilesAndSnapshotIdsExact": true,
+        "oldRepeatShowsSameClockDerivedDifference": true,
+        "eachExistingSavedPlanIdActuallyAdmittedByCurrentCli": true,
+        "rawOldAndNewWarmResultExact": false
+      }
+    ],
+    "verifiedExistingPlans": [
+      {
+        "planId": "5f908399499b9b4e5bb718621a1287b67287760c36ab7f2d23a02ddf0a9c72f2",
+        "createdAt": 1792794354,
+        "expiresAt": 1792880754,
+        "currentNativePlanIdentityAdmissionAndCopiedTscPassed": true
+      },
+      {
+        "planId": "6824f3c6e31776e7c04e70f890dd45cb53fb6d738fe4be4a0010350960e21e9e",
+        "createdAt": 1792794357,
+        "expiresAt": 1792880757,
+        "currentNativePlanIdentityAdmissionAndCopiedTscPassed": true
+      },
+      {
+        "planId": "1b4c9558310b3bf7d25cc7afefef077ae6f641602b6dd5a2394346068a84c971",
+        "createdAt": 1792794360,
+        "expiresAt": 1792880760,
+        "currentNativePlanIdentityAdmissionAndCopiedTscPassed": true
+      }
+    ],
+    "sourceInputsUnchanged": true,
+    "originalSourcesExact": true,
+    "allJobsEmpty": true,
+    "currentCliSha256": "1fe4251c52772407084f93c961317dacd8fe5c89e54039d3753c27c00032f447",
+    "previousCliSha256": "b6557f46176014fb0bf872a727984d23f4dd93a38379f71fbed6915bcdc66c19",
+    "reusedOriginalOldNewApplicationParents": 3,
+    "additionalCurrentNativeVerificationParents": 3,
+    "originalRawPhase": "move-attributes-20261023-368ec82b-compatibility1",
+    "modelCalls": 0,
+    "analyzedSourceExecuted": false
+  },
+  "actualCliReproduction": {
+    "complete": true,
+    "allJobsEmpty": true,
+    "sourceInputsUnchanged": true,
+    "originalOwnedFixtureBytesExact": true,
+    "currentCliSha256": "1fe4251c52772407084f93c961317dacd8fe5c89e54039d3753c27c00032f447",
+    "sameSourceFixtureBytesAsOriginalRed": true,
+    "originalAttributesActuallyRetainedInPublishedPlanDiff": true,
+    "independentTscOnCopiedResultPassed": true,
+    "ownedApplicationParents": 2,
+    "analyzedSourceExecuted": false,
+    "modelCalls": 0
+  },
+  "allOwnedJobsEmpty": true,
+  "original353InventoryAndFullStatusChanged": false,
+  "fullStatusComplete": false,
+  "unixOrHostedCiQualified": false,
+  "releaseCertified": false,
+  "archive": {
+    "path": "raw-logs.zip",
+    "bytes": 656533,
+    "sha256": "d0df0a4de09ba7dbf4430b8e6972067669a95d72afc6f30080d878dda8fe7a49",
+    "members": 191
+  }
+}

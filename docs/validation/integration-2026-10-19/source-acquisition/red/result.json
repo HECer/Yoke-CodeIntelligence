@@ -1,0 +1,20 @@
+{
+  "command": [
+    "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "2",
+    "--target-dir",
+    "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+    "--test",
+    "source_acquisition",
+    "--",
+    "--test-threads=1"
+  ],
+  "exitCode": 101,
+  "seconds": 98.92990112304688,
+  "inputs": 683,
+  "sourceUnchanged": true
+}

@@ -1,0 +1,48 @@
+    Finished `test` profile [unoptimized] target(s) in 1.19s
+     Running tests\capture_policy.rs (target\debug\deps\capture_policy-b99a3d9405396fbe.exe)
+
+running 6 tests
+test arbitrary_derived_id_preserves_proven_v9_capture_policy_without_claiming_extraction ... FAILED
+test canonical_derived_v9_from_disk_v8_retains_v8_source_acquisition_policy ... FAILED
+test capture_policy_traversal_is_bounded_and_honors_the_callers_expired_deadline ... FAILED
+test overlay_v9_from_disk_v8_retains_the_base_capture_policy ... FAILED
+test unproven_or_tampered_capture_lineage_cannot_authorize_disk_recapture ... ok
+test exact_git_capture_receipts_select_their_own_policy_and_never_fall_back_on_corruption ... ok
+
+failures:
+
+---- arbitrary_derived_id_preserves_proven_v9_capture_policy_without_claiming_extraction stdout ----
+
+thread 'arbitrary_derived_id_preserves_proven_v9_capture_policy_without_claiming_extraction' (89872) panicked at native\tests\capture_policy.rs:60:79:
+called `Result::unwrap()` on an `Err` value: Derived source epoch is not proven; Git/custom historical graphs require their own producer receipt
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- canonical_derived_v9_from_disk_v8_retains_v8_source_acquisition_policy stdout ----
+
+thread 'canonical_derived_v9_from_disk_v8_retains_v8_source_acquisition_policy' (81224) panicked at native\tests\capture_policy.rs:109:5:
+assertion `left == right` failed
+  left: "ba2f2874170942012c3fd685a2f8af9b11d2d6b2c3da0b5a9a7ee345ab74966d"
+ right: "dd3265923de3f20bef6191f26bec223e605549322f6aaa0b044eded448a98283"
+
+---- capture_policy_traversal_is_bounded_and_honors_the_callers_expired_deadline stdout ----
+
+thread 'capture_policy_traversal_is_bounded_and_honors_the_callers_expired_deadline' (80096) panicked at native\tests\capture_policy.rs:60:79:
+called `Result::unwrap()` on an `Err` value: Derived source epoch is not proven; Git/custom historical graphs require their own producer receipt
+
+---- overlay_v9_from_disk_v8_retains_the_base_capture_policy stdout ----
+
+thread 'overlay_v9_from_disk_v8_retains_the_base_capture_policy' (59240) panicked at native\tests\capture_policy.rs:138:5:
+assertion `left == right` failed
+  left: "27c6aaf49e06e50fdd7fb6c2de309828fcdd3dea78e65354d7c808164c985ff1"
+ right: "a7c6b28f4e90d995de698fb26bef96de552af10a591523d9ce1784f7fac78b54"
+
+
+failures:
+    arbitrary_derived_id_preserves_proven_v9_capture_policy_without_claiming_extraction
+    canonical_derived_v9_from_disk_v8_retains_v8_source_acquisition_policy
+    capture_policy_traversal_is_bounded_and_honors_the_callers_expired_deadline
+    overlay_v9_from_disk_v8_retains_the_base_capture_policy
+
+test result: FAILED. 2 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.18s
+
+error: test failed, to rerun pass `--test capture_policy`

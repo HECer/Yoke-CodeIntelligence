@@ -1,0 +1,67 @@
+{
+  "ownedDirectory": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\shell-environment-k6cl_it5",
+  "results": [
+    {
+      "case": "native-minimal",
+      "probe": "framework-folders",
+      "exitCode": 0,
+      "elapsedSeconds": 0.101,
+      "nonAbsoluteOrErrors": [
+        "MyComputer|empty",
+        "CommonApplicationData|ArgumentException",
+        "CommonOemLinks|ArgumentException"
+      ],
+      "ownedMarker": null,
+      "stderrBytes": 0
+    },
+    {
+      "case": "native-minimal",
+      "probe": "powershell",
+      "exitCode": 0,
+      "elapsedSeconds": 0.212,
+      "nonAbsoluteOrErrors": [],
+      "ownedMarker": true,
+      "stderrBytes": 0
+    },
+    {
+      "case": "drive-public",
+      "probe": "framework-folders",
+      "exitCode": 0,
+      "elapsedSeconds": 0.047,
+      "nonAbsoluteOrErrors": [
+        "MyComputer|empty"
+      ],
+      "ownedMarker": null,
+      "stderrBytes": 0
+    },
+    {
+      "case": "drive-public",
+      "probe": "powershell",
+      "exitCode": 0,
+      "elapsedSeconds": 0.23,
+      "nonAbsoluteOrErrors": [],
+      "ownedMarker": true,
+      "stderrBytes": 0
+    },
+    {
+      "case": "standard-windows",
+      "probe": "framework-folders",
+      "exitCode": 0,
+      "elapsedSeconds": 0.046,
+      "nonAbsoluteOrErrors": [
+        "MyComputer|empty"
+      ],
+      "ownedMarker": null,
+      "stderrBytes": 0
+    },
+    {
+      "case": "standard-windows",
+      "probe": "powershell",
+      "exitCode": 0,
+      "elapsedSeconds": 0.238,
+      "nonAbsoluteOrErrors": [],
+      "ownedMarker": true,
+      "stderrBytes": 0
+    }
+  ]
+}

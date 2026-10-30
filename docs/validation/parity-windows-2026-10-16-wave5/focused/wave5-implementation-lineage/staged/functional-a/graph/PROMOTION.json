@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "status": "ignored_unavailable_stubs_waiting_for_root_causal_red",
+  "parentAction": "act_mva5a5mg_773f4cecd8d3",
+  "normalEditsAuthorizedForThisAgent": false,
+  "functionalBodiesAuthorized": false,
+  "files": [
+    {
+      "draft": "retrieval_capacity.rs",
+      "destination": "native/src/retrieval_capacity.rs"
+    },
+    {
+      "draft": "retrieval_capacity_tests.rs",
+      "destination": "native/src/retrieval_capacity_tests.rs",
+      "ordinaryTests": 7,
+      "ignoredTests": 0
+    },
+    {
+      "draft": "retrieval_saved_graph.rs",
+      "destination": "native/src/retrieval_saved_graph.rs"
+    },
+    {
+      "draft": "retrieval_saved_graph_tests.rs",
+      "destination": "native/src/retrieval_saved_graph_tests.rs",
+      "ordinaryTests": 7,
+      "ignoredTests": 1
+    },
+    {
+      "draft": "retrieval_saved_graph_schema_tests.rs",
+      "destination": "native/src/retrieval_saved_graph_schema_tests.rs",
+      "ordinaryTests": 6,
+      "ignoredTests": 0
+    }
+  ],
+  "totals": {
+    "ordinaryTests": 20,
+    "qualifiedIgnoredTests": 1
+  },
+  "rootRegistrations": [
+    "mod retrieval_capacity;",
+    "mod retrieval_saved_graph;"
+  ],
+  "rootCommands": [
+    "cargo test --manifest-path native/Cargo.toml --lib retrieval_capacity::tests",
+    "cargo test --manifest-path native/Cargo.toml --lib retrieval_saved_graph::tests",
+    "cargo test --manifest-path native/Cargo.toml --lib retrieval_saved_graph::schema_tests"
+  ],
+  "api": [
+    "read_graph_in(&Store,&rusqlite::Transaction<'_>,snapshot_id:&str,&Deadline)->RetrievalResult<Option<Graph>>",
+    "read_graph(&Store,snapshot_id:&str,&Deadline)->RetrievalResult<Option<Graph>>",
+    "verify_saved_graph_in(&Store,&rusqlite::Transaction<'_>,snapshot_id:&str,expected_graph_fingerprint:&str,&Deadline)->RetrievalResult<()>"
+  ],
+  "preservedPackages": [
+    "18e8d83be0a8985bb0d711e6321e26d6a6e410961f08d3df698a80b3caf0c2d4",
+    "369292a4411180dfd9f4fdbaed8c112902cdb28b4b259baff15a070a3be9234a",
+    "cccfe018c3a1dc1cdcc2539f536451ca213c11f0347088e224cce52589483960",
+    "bce1016a038a2db92a65579354982311730ed37a8ce77f5199641ae2e57dce3a"
+  ],
+  "executed": {
+    "cargo": false,
+    "node": false,
+    "fixtures": false,
+    "featureTests": false
+  },
+  "limitations": [
+    "Unavailable positive-baseline failures do not prove deeper schema, transaction, allocation, or cancellation guards.",
+    "Two capacity controls can already pass independently of unavailable helpers; passing those controls is not missing-feature RED.",
+    "Separate partition-capacity fixture file and its one ordinary plus five ignored tests are not part of this helper-only promotion package.",
+    "New read_graph/read_graph_in stubs are integration seams; existing verifier oracles alone do not directly certify their missing-row semantics."
+  ]
+}

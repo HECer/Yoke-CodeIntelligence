@@ -1,0 +1,32 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.64s
+     Running tests\vector_admission_review.rs (target\debug\deps\vector_admission_review-e93b61cc8239ca76.exe)
+corrupt_source_blob_is_size_admitted_before_vector_reader_allocation: test
+explicit_readonly_dependency_vectors_import_and_search_without_write_authority: test
+oversized_escaped_import_is_counted_before_allocating_encoded_json: test
+oversized_persisted_vector_cell_is_bounded_before_string_copy: test
+prepared_collection_preserves_legacy_vector_identity_and_serialized_bytes: test
+prepared_vector_admission_checks_global_capacity_without_publishing_a_record: test
+prepared_vector_admission_rejects_unpublishable_plans_before_vectors_exist: test
+prepared_vectors_reject_changed_source_model_count_dimensions_and_zero_norm: test
+
+8 tests, 0 benchmarks
+     Running tests\workflow_cli.rs (target\debug\deps\workflow_cli-927186d3a166e179.exe)
+actual_native_cli_tls_service_and_client_load_os_credentials: test
+ambiguous_json_rpc_ids_and_nested_lsp_results_are_refused: test
+host_only_execution_and_retention_never_inherit_authority_from_config_json: test
+host_profiles_reject_duplicate_keys_instead_of_replacing_policy: test
+malformed_host_profile_values_are_not_repeated_in_cli_errors: test
+model_worker_deadline_includes_an_input_pipe_that_never_closes: test
+native_runtime_cli_preserves_state_across_authorized_repl_commands: test
+readonly_mcp_dataflow_and_native_cli_share_exact_snapshot_evidence: test
+runtime_cli_preserves_failed_program_evidence_and_returns_failure: test
+
+9 tests, 0 benchmarks

@@ -1,0 +1,59 @@
+    Finished `test` profile [unoptimized] target(s) in 0.49s
+     Running tests\session_mcp.rs (target\debug\deps\session_mcp-4c7677e22357ce4a.exe)
+
+running 3 tests
+test session_profile_exposes_persistent_steering_without_host_authority_arguments ... ok
+test session_mcp_retrieval_uses_exact_source_bodies_and_rejects_authority_options ... ok
+test session_graph_tool_builds_an_explicit_source_bound_view ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+
+     Running tests\session_review.rs (target\debug\deps\session_review-bfdd3ba5950201a7.exe)
+
+running 1 test
+test nested_native_failure_is_an_mcp_tool_error ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests\skill_takeaways.rs (target\debug\deps\skill_takeaways-d3aed8fbfd582689.exe)
+
+running 6 tests
+test failed_publication_retains_a_recoverable_plan_and_refuses_foreign_file_changes ... ok
+test host_argument_preflight_is_readonly_and_never_overrides_explicit_expectations ... ok
+test authored_skill_lifecycle_preserves_history_and_guarded_repository_bytes ... ok
+test fold_without_a_skill_selects_each_checked_skill_once ... ok
+test repo_frontmatter_is_preserved_and_readonly_discovery_creates_no_state ... ok
+test a_successful_learning_never_makes_its_default_skill_view_unreadable ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 57.27s
+
+     Running tests\skill_takeaways_batch_review.rs (target\debug\deps\skill_takeaways_batch_review-81407239cf5a1828.exe)
+
+running 1 test
+test predictable_later_fold_capacity_failure_is_admitted_before_the_first_skill_changes ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.18s
+
+     Running tests\skill_takeaways_contract_review.rs (target\debug\deps\skill_takeaways_contract_review-28e43c35279ec703.exe)
+
+running 7 tests
+test confirmed_only_fold_with_no_ready_takeaways_keeps_version_revision_and_empty_sections ... ok
+test confirm_accepts_the_known_absolute_takeaway_path_without_arbitrary_file_authority ... ok
+test confirm_accepts_an_existing_takeaway_filename_suffix ... ok
+test folded_result_takeaways_report_the_same_version_as_the_published_state ... ok
+test unknown_confirm_and_fold_succeed_without_creating_a_skill_or_operation ... ok
+test show_orders_waiting_takeaways_by_newest_date_then_filename_and_renders_short_dates ... ok
+test unicode_lowercase_teacher_and_duplicate_confirmations_are_noops ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.44s
+
+     Running tests\skill_takeaways_review.rs (target\debug\deps\skill_takeaways_review-0d15ce095fce6336.exe)
+
+running 4 tests
+test deeply_nested_skill_frontmatter_is_admitted_before_yaml_materialization ... ok
+test malformed_recovery_is_rejected_before_any_prepared_publication ... ok
+test resealed_pending_operation_cannot_redirect_the_revision_to_another_skill ... ok
+test oversized_fold_is_rejected_before_publishing_an_unrecoverable_plan ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.19s
+

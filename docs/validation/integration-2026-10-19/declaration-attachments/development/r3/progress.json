@@ -1,0 +1,121 @@
+[
+  {
+    "name": "format",
+    "exitCode": 0,
+    "elapsedSeconds": 5.745,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ]
+  },
+  {
+    "name": "actual-rust-python",
+    "exitCode": 0,
+    "elapsedSeconds": 136.07,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "declaration_attachments_live",
+      "--",
+      "--ignored",
+      "--nocapture",
+      "--test-threads=1"
+    ]
+  },
+  {
+    "name": "ranges",
+    "exitCode": 0,
+    "elapsedSeconds": 21.455,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "declaration_attachment_ranges",
+      "--test",
+      "symbol_delete_ranges",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ]
+  },
+  {
+    "name": "clippy",
+    "exitCode": 0,
+    "elapsedSeconds": 228.883,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ]
+  },
+  {
+    "name": "native",
+    "exitCode": 0,
+    "elapsedSeconds": 371.56,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--lib",
+      "--test",
+      "semantic_refactor",
+      "--test",
+      "agent_symbol_contracts",
+      "--test",
+      "agent_facade_semantics",
+      "--test",
+      "capture_changes",
+      "--test",
+      "plan_integrity",
+      "--test",
+      "symbol_move_own_v1",
+      "--test",
+      "symbol_move_effect_admission",
+      "--test",
+      "symbol_move_declarations",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ]
+  },
+  {
+    "name": "actual-typescript",
+    "exitCode": 0,
+    "elapsedSeconds": 23.125,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "symbol_delete_live",
+      "--",
+      "--ignored",
+      "--nocapture",
+      "--test-threads=1"
+    ]
+  }
+]

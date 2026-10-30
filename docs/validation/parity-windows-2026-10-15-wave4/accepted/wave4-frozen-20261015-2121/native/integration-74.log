@@ -1,0 +1,36 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+    Finished `test` profile [unoptimized] target(s) in 0.75s
+     Running tests\operations.rs (target\debug\deps\operations-ed9395c3e80089b9.exe)
+
+running 8 tests
+test binary_resource_reads_cannot_abort_the_next_mcp_request ... ok
+test cross_file_imports_are_recomputed_after_dependency_changes ... ok
+test lsp_unicode_position_roundtrip_rejects_split_surrogates ... ok
+test additional_real_grammars_extract_symbols_without_running_source ... ok
+test additional_grammar_call_sites_have_exact_evidence_and_labeled_candidates ... ok
+test mcp_stdio_initialization_lists_exactly_eight_tools_and_rejects_host_authority ... ok
+test real_grammars_extract_multilingual_symbols_and_diagnostics ... ok
+test symbol_insertions_and_overlaps_use_immutable_exact_ranges ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.86s
+
+     Running tests\parity_cli.rs (target\debug\deps\parity_cli-c7f5b814c46c6b5e.exe)
+
+running 8 tests
+test public_named_notes_cli_is_persistent_and_global_store_is_explicit ... ok
+test public_graph_view_cli_combines_manifest_nodes_and_reads_historical_view ... ok
+test public_graph_cli_analyzes_and_exports_without_overwriting_human_cards ... ok
+test public_retrieval_cli_ranks_task_words_in_source_bodies ... ok
+test public_session_stdio_cli_serves_the_extended_profile_and_exits_on_eof ... ok
+test public_agent_repl_cli_executes_persistent_cells_only_with_host_trust ... ok
+test public_session_cli_resumes_host_registered_project_and_notes ... ok
+test public_serena_stdio_cli_preserves_cells_and_reports_errors_under_host_authority ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.26s
+

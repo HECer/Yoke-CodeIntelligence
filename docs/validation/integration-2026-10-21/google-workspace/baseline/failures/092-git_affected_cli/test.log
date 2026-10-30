@@ -1,0 +1,30 @@
+    Finished `test` profile [unoptimized] target(s) in 0.65s
+     Running tests\git_affected_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\git_affected_cli-11e3b8916c943a1a.exe)
+
+running 8 tests
+test affected_default_and_explicit_depth_options_match_complete_library_canonical_bytes ... ok
+test affected_options_are_closed_duplicate_safe_and_admitted_at_exact_raw_byte_boundary ... ok
+test affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success ... FAILED
+test affected_replays_selected_history_without_git_live_source_or_latest_capture_fallback ... ok
+test affected_routing_refuses_a_meta_only_wal_store_before_any_physical_initialization ... ok
+test affected_static_domain_zero_deadline_and_zero_stdout_capacity_do_not_initialize_a_missing_store ... ok
+test affected_stdout_cap_includes_lf_and_refuses_one_byte_below_without_clamping ... ok
+test affected_zero_depths_are_preserved_while_zero_required_credits_refuse_without_partial_bytes ... ok
+
+failures:
+
+---- affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success stdout ----
+
+thread 'affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success' (12376) panicked at native\tests\git_affected_cli.rs:505:10:
+Real Windows file reparse fixture prerequisite: Os { code: 1314, kind: Uncategorized, message: "Dem Client fehlt ein erforderliches Recht." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success
+
+test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.56s
+
+error: test failed, to rerun pass `--test git_affected_cli`
+error: 1 target failed:
+    `--test git_affected_cli`

@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "exitCode": 0,
+      "error": "",
+      "protectedDocDeletion": true,
+      "beforeTypes": [
+        "() => Promise<number>",
+        "number"
+      ],
+      "afterTypes": [
+        "() => Promise<number>",
+        "number"
+      ],
+      "callerTypesExact": true
+    },
+    {
+      "case": 1,
+      "exitCode": 0,
+      "error": "",
+      "protectedDocDeletion": true,
+      "beforeTypes": [
+        "() => Generator<number, number, number>",
+        "number"
+      ],
+      "afterTypes": [
+        "() => Generator<number, number, number>",
+        "number"
+      ],
+      "callerTypesExact": true
+    },
+    {
+      "case": 2,
+      "exitCode": 0,
+      "error": "",
+      "protectedDocDeletion": true,
+      "beforeTypes": [
+        "() => { n: number; }",
+        "number"
+      ],
+      "afterTypes": [
+        "() => { n: number; }",
+        "number"
+      ],
+      "callerTypesExact": true
+    }
+  ],
+  "allChecksPassed": true,
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "prototypeWorkerPatch": true
+}

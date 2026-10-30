@@ -1,0 +1,19 @@
+
+running 1 test
+test host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work ... FAILED
+
+failures:
+
+---- host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work stdout ----
+host-output-capacity prefix_ms=9357
+host-output-capacity remaining_prepare_ms=9318
+host-output-capacity profile={"elapsedMicros":30014512,"inclusiveSpans":[{"calls":50,"inclusiveMicros":10080450,"maxMicros":417997,"phase":"load"},{"calls":50,"inclusiveMicros":2137992,"maxMicros":311004,"phase":"loadNames"},{"calls":5613,"inclusiveMicros":2796968,"maxMicros":3489,"phase":"eventRead"},{"calls":50,"inclusiveMicros":1275552,"maxMicros":31122,"phase":"planRead"},{"calls":5612,"inclusiveMicros":2082390,"maxMicros":23266,"phase":"eventValidate"},{"calls":49,"inclusiveMicros":104150,"maxMicros":5051,"phase":"chain"},{"calls":49,"inclusiveMicros":29421971,"maxMicros":1256471,"phase":"append"},{"calls":0,"inclusiveMicros":0,"maxMicros":0,"phase":"prepare"},{"calls":5838,"inclusiveMicros":4997049,"maxMicros":18150,"phase":"metadata"},{"calls":105,"inclusiveMicros":4006784,"maxMicros":310978,"phase":"names"},{"calls":51,"inclusiveMicros":2596396,"maxMicros":72513,"phase":"reserve"},{"calls":49,"inclusiveMicros":18109302,"maxMicros":1066291,"phase":"immutable"},{"calls":128,"inclusiveMicros":13792,"maxMicros":301,"phase":"sourceSecurity"},{"calls":0,"inclusiveMicros":0,"maxMicros":0,"phase":"freshSecurity"}]}
+host-output-capacity recover_ms=30014 success=false
+Error: Host installation recovery required; journal 1a1322438076ebefa4217be2c762694fb75306f82fe16639232ce095a9ff1c22. Request deadline exceeded. Matching originals and foreign files are preserved
+
+
+failures:
+    host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 373 filtered out; finished in 51.77s
+

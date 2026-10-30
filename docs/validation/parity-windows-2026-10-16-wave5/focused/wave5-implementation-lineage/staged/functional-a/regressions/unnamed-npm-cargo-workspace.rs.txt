@@ -1,0 +1,26 @@
+// Append inside retrieval_scopes::tests after the helpers admit genuine inputs.
+#[test]
+fn unnamed_npm_root_is_virtual_at_a_supported_cargo_workspace_boundary() {
+    let named = fixture(&[
+        ("package.json", r#"{"name":"root"}"#),
+        ("Cargo.toml", "[workspace]\nmembers=['a','b']\n"),
+        ("a/Cargo.toml", "[package]\nname='a'\n"),
+        ("b/Cargo.toml", "[package]\nname='b'\n"),
+    ]);
+    let d = Deadline::new(20_000);
+    let (_, named_partition) = checked(&named, &d);
+    assert_eq!(named_partition.physical_package_count(), 3);
+    assert_eq!(scope(&named_partition, ".").kind(), ScopeKind::Package);
+    let unnamed = fixture(&[
+        ("package.json", "{}"),
+        ("Cargo.toml", "[workspace]\nmembers=['a','b']\n"),
+        ("a/Cargo.toml", "[package]\nname='a'\n"),
+        ("b/Cargo.toml", "[package]\nname='b'\n"),
+    ]);
+    let (_, partition) = checked(&unnamed, &d);
+    assert_eq!(partition.physical_package_count(), 2);
+    assert_eq!(
+        scope(&partition, ".").kind(),
+        ScopeKind::WorkspaceUnassigned
+    );
+}

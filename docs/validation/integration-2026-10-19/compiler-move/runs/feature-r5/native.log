@@ -1,0 +1,42 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 29.37s
+     Running tests\compiler_move.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\compiler_move-25835ff4cf375f5e.exe)
+
+running 12 tests
+test actual_cli_move_requires_independent_tsc_approval_and_conditional_recovery ... ok
+test actual_declaration_matrix_keeps_original_graph_identity_and_explicit_ast_origin ... ok
+test actual_exported_function_move_repairs_split_consumer_imports_without_source_writes ... ok
+test actual_jsdoc_class_move_repairs_namespace_consumer_and_keeps_unrelated_member ... ok
+test actual_jsx_component_moves_keep_intrinsic_properties_and_typed_props ... ok
+test actual_language_matrix_keeps_bom_unicode_crlf_and_repository_plugins_inert ... ok
+test actual_private_free_dependency_preserves_same_offset_compiler_insertion_order ... ok
+test actual_reexports_and_imported_free_bindings_survive_existing_target_name_collisions ... FAILED
+test compiler_profile_rejects_tools_in_analyzed_roots_and_detects_changed_module_bytes ... ok
+test invalid_paths_stale_selection_trust_context_and_directives_publish_no_plan ... ok
+test move_profile_is_optional_host_bound_and_routed_through_the_existing_facade ... ok
+test readonly_consumer_and_ambiguous_context_cannot_publish_compiler_move_plans ... FAILED
+
+failures:
+
+---- actual_reexports_and_imported_free_bindings_survive_existing_target_name_collisions stdout ----
+
+thread 'actual_reexports_and_imported_free_bindings_survive_existing_target_name_collisions' (7404) panicked at native\tests\compiler_move.rs:204:87:
+called `Result::unwrap()` on an `Err` value: Compiler worker failed, exceeded bounds or timed out: Move compiler context has errors after refactoring
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- readonly_consumer_and_ambiguous_context_cannot_publish_compiler_move_plans stdout ----
+
+thread 'readonly_consumer_and_ambiguous_context_cannot_publish_compiler_move_plans' (26472) panicked at native\tests\compiler_move.rs:267:5:
+assertion failed: yoke::compiler_move::prepare(&mut engine, &compiler(), &args("helper"),
+        &d()).is_err()
+
+
+failures:
+    actual_reexports_and_imported_free_bindings_survive_existing_target_name_collisions
+    readonly_consumer_and_ambiguous_context_cannot_publish_compiler_move_plans
+
+test result: FAILED. 10 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 55.96s
+
+error: test failed, to rerun pass `--test compiler_move`
+error: 1 target failed:
+    `--test compiler_move`

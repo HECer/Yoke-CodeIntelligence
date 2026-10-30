@@ -1,0 +1,433 @@
+{
+  "schema": 1,
+  "headCommit": "f41e56136b1704ff3c3742445f2b0138c78fdc6c",
+  "testedMerge": "6af15e69e1f4b28e1cc9296c23ae82f9105460f9",
+  "testedTree": "65dde1f434636caee2209309576375fd0c365ef7",
+  "run": {
+    "id": 41030808968,
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "failure",
+    "headSha": "f41e56136b1704ff3c3742445f2b0138c78fdc6c",
+    "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41030808968"
+  },
+  "scope": "Complete default Cargo target inventory; not individual test totals or all features",
+  "zipDigestsReverified": 24,
+  "rawLogHashesPreviouslyReverified": 2226,
+  "selectedSourceMapsBoundToPinnedGitProofs": true,
+  "sourceScope": "Selected tracked inputs only, not all build inputs",
+  "platforms": {
+    "Windows": {
+      "groupsObserved": 371,
+      "groupsPassed": 371,
+      "groupsFailed": 0,
+      "logHashesReverified": 742,
+      "inventorySha256": "3eca79c29cf21d8946cf4a5ce56fa9e919ebeb2610de37083ebec68d05e9b7cd",
+      "selectedSourceFiles": 1101,
+      "allDefaultTargetsExitZero": true,
+      "shards": [
+        {
+          "index": 0,
+          "artifactId": 12972105959,
+          "zipSha256": "a345db00240d8d482a34c8beb82f5cbb1a8068532f14fa65dd57f8fb364384d6",
+          "groups": 44,
+          "passed": 44
+        },
+        {
+          "index": 1,
+          "artifactId": 12967423990,
+          "zipSha256": "01e1acda3451f600cae1a0adf4a17ba43ecc6ad53d9994a68784dfb91e19ea1c",
+          "groups": 45,
+          "passed": 45
+        },
+        {
+          "index": 2,
+          "artifactId": 12969599049,
+          "zipSha256": "bb17dd48b133477a9c144c809cc235874e37fea52369dc9b5d91d628d857bfde",
+          "groups": 46,
+          "passed": 46
+        },
+        {
+          "index": 3,
+          "artifactId": 12970177176,
+          "zipSha256": "dad7f1f2345796204e3c621f2fbacd1ee9b9ae83cb37b6dd6e4588d09e7480a3",
+          "groups": 46,
+          "passed": 46
+        },
+        {
+          "index": 4,
+          "artifactId": 12970560480,
+          "zipSha256": "801886991b54dcde199a14ff00945dbb08dd44d50846207ea3ed67a29c4f2e48",
+          "groups": 47,
+          "passed": 47
+        },
+        {
+          "index": 5,
+          "artifactId": 12968882829,
+          "zipSha256": "5a1790a355159117a922514baba237f991b33f97441623eb620e6305489788ef",
+          "groups": 47,
+          "passed": 47
+        },
+        {
+          "index": 6,
+          "artifactId": 12970352828,
+          "zipSha256": "97b302401096b11a41b66dcad2ae7ed85ebc084c5618d180f8b7e26f0bbb7641",
+          "groups": 48,
+          "passed": 48
+        },
+        {
+          "index": 7,
+          "artifactId": 12971103404,
+          "zipSha256": "1ab2f64bb534d64cd2d9e570922eedafc8a1e6507988ef3187d5834877d80d19",
+          "groups": 48,
+          "passed": 48
+        }
+      ]
+    },
+    "Linux": {
+      "groupsObserved": 371,
+      "groupsPassed": 371,
+      "groupsFailed": 0,
+      "logHashesReverified": 742,
+      "inventorySha256": "340b0d381c2001cb3d5e10badb51ef02c2c518dea7543faeeb03654ff102b55f",
+      "selectedSourceFiles": 1101,
+      "allDefaultTargetsExitZero": true,
+      "shards": [
+        {
+          "index": 0,
+          "artifactId": 12969709166,
+          "zipSha256": "21f052e251f55e02f6e193ebf4e7050a265f271d83d2e131f5f469239587e817",
+          "groups": 43,
+          "passed": 43
+        },
+        {
+          "index": 1,
+          "artifactId": 12971176697,
+          "zipSha256": "6eb9431331151759ded0f540d42bc540f2064708865e55a0cf3585b864409907",
+          "groups": 46,
+          "passed": 46
+        },
+        {
+          "index": 2,
+          "artifactId": 12966668581,
+          "zipSha256": "c4de8b311af7937869f45ca0cb75ff5cefd0403ec1b22bb03fb07bd18f237b9d",
+          "groups": 47,
+          "passed": 47
+        },
+        {
+          "index": 3,
+          "artifactId": 12967216495,
+          "zipSha256": "01ceab3d1cc397f864d2274952b6a20900ad73bd49216f53aeb317f570bfef71",
+          "groups": 46,
+          "passed": 46
+        },
+        {
+          "index": 4,
+          "artifactId": 12967970022,
+          "zipSha256": "92e402a046eac1f5f44d025e95b1a90d95071c942c76c1ef226b9b9820fa744a",
+          "groups": 47,
+          "passed": 47
+        },
+        {
+          "index": 5,
+          "artifactId": 12969687200,
+          "zipSha256": "f599292cd40c22c77866bcd388370316c92475fcd743d3b0b5e581de05b10696",
+          "groups": 48,
+          "passed": 48
+        },
+        {
+          "index": 6,
+          "artifactId": 12968768622,
+          "zipSha256": "a2d5647a2db2ed7f173a6d1c2872939772bc0e88ccacd80476bf2f613b236f8b",
+          "groups": 47,
+          "passed": 47
+        },
+        {
+          "index": 7,
+          "artifactId": 12966643617,
+          "zipSha256": "0051082f4fed255499a4b4423af93f08d667ef132f30e313c700fd7628aa1266",
+          "groups": 47,
+          "passed": 47
+        }
+      ]
+    },
+    "macOS": {
+      "groupsObserved": 371,
+      "groupsPassed": 360,
+      "groupsFailed": 11,
+      "logHashesReverified": 742,
+      "inventorySha256": "340b0d381c2001cb3d5e10badb51ef02c2c518dea7543faeeb03654ff102b55f",
+      "selectedSourceFiles": 1101,
+      "allDefaultTargetsExitZero": false,
+      "shards": [
+        {
+          "index": 0,
+          "artifactId": 12970050988,
+          "zipSha256": "e8d4ff31d91264707e621cbcbf5841de62a46cd92b9859d81dd8736865233faf",
+          "groups": 43,
+          "passed": 41
+        },
+        {
+          "index": 1,
+          "artifactId": 12976444421,
+          "zipSha256": "30062ec13c43ccc29c1930afad803efd83830e91c663c20afac924dd50d191de",
+          "groups": 46,
+          "passed": 45
+        },
+        {
+          "index": 2,
+          "artifactId": 12972947320,
+          "zipSha256": "b7aaddccfcc7adff8e63ad22e547ded68d64d7a734e0347812337cbd02e15cb5",
+          "groups": 47,
+          "passed": 47
+        },
+        {
+          "index": 3,
+          "artifactId": 12973644181,
+          "zipSha256": "ddb4bc88fed28d6cc28a7de9dd7710092cb82f9a581c40d80d4d3a6e0bbfe6da",
+          "groups": 46,
+          "passed": 45
+        },
+        {
+          "index": 4,
+          "artifactId": 12971638083,
+          "zipSha256": "412602e04a390a4d497d880d070eedb0e6f49c577f78b9f3b84442f89e67f4ca",
+          "groups": 47,
+          "passed": 42
+        },
+        {
+          "index": 5,
+          "artifactId": 12974715742,
+          "zipSha256": "33feadb1d06afd32308e03731feae980f9733632ce00b2c41ba282c04671576a",
+          "groups": 48,
+          "passed": 48
+        },
+        {
+          "index": 6,
+          "artifactId": 12977207097,
+          "zipSha256": "0874186d5d27a8b0c6f5fef26f3a9e2653a69578af97e5617b62610a59f65d10",
+          "groups": 47,
+          "passed": 45
+        },
+        {
+          "index": 7,
+          "artifactId": 12976976796,
+          "zipSha256": "3e73c01f1c7fd9db5b15376f21489b13b290c60a2f052927a751dd935ffb64a5",
+          "groups": 47,
+          "passed": 47
+        }
+      ],
+      "diagnosticMatches": {
+        "phase: ResourceLimits": 43,
+        "RLIMIT_AS installation failed": 4,
+        "Host executable unavailable": 17,
+        "Initialize first": 2,
+        "Option::unwrap()": 2
+      },
+      "diagnosticCountLimit": "Recorded diagnostic matches, not independent test totals; generic errors do not establish individual causes",
+      "failed": [
+        {
+          "group": "yoke-code-intelligence:test:media:test",
+          "shard": 6,
+          "artifactId": 12977207097,
+          "exitCode": 101,
+          "logs": [
+            {
+              "name": "0027.stdout",
+              "bytes": 4501,
+              "sha256": "4a63889d5a99a54fc29ea74f2ad7a53a9e664ccb25b46314ead2e57903584557"
+            },
+            {
+              "name": "0027.stderr",
+              "bytes": 456,
+              "sha256": "d16edd7d5a9a0995731c3f57e44bed7ef3f2e498c2b7bcf2e4ce0899b9afd21a"
+            }
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:mixed_meaning_queries:test",
+          "shard": 6,
+          "artifactId": 12977207097,
+          "exitCode": 101,
+          "logs": [
+            {
+              "name": "0028.stdout",
+              "bytes": 5028,
+              "sha256": "e32d010280afe53d4e3ee304a500f6ce7d609a34d75144201c06747d2a86a00e"
+            },
+            {
+              "name": "0028.stderr",
+              "bytes": 520,
+              "sha256": "2d35f2daa03d1cfd6a0f43f54db208265e0a02ab7a544f2c64c76e54ec39d70c"
+            }
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_config_prompt_catalogs:test",
+          "shard": 1,
+          "artifactId": 12976444421,
+          "exitCode": 101,
+          "logs": [
+            {
+              "name": "0039.stdout",
+              "bytes": 5032,
+              "sha256": "17389535bb925101e48d7c4b86929a3dc7634a0087894bbd0c956cf63b822df2"
+            },
+            {
+              "name": "0039.stderr",
+              "bytes": 556,
+              "sha256": "2a6d1f3d375db0994c9ffe37122fdd62db2a1c9eb99560aca7e82b6bf76a3de0"
+            }
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_prompt_memory:test",
+          "shard": 3,
+          "artifactId": 12973644181,
+          "exitCode": 101,
+          "logs": [
+            {
+              "name": "0040.stdout",
+              "bytes": 2900,
+              "sha256": "ba8d8975f1e5046665c3e669196aba09ba60303f88aace85e53dc4f4d84c6153"
+            },
+            {
+              "name": "0040.stderr",
+              "bytes": 520,
+              "sha256": "de8f24f98a06df3a77a221c72e1c4fbf96bb3a914f5f7d9c6836cc7e3a602ccd"
+            }
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:mixed_meaning_claims:test",
+          "shard": 4,
+          "artifactId": 12971638083,
+          "exitCode": 101,
+          "logs": [
+            {
+              "name": "0027.stdout",
+              "bytes": 4128,
+              "sha256": "9af48e24e7e28eeba4e448ba5621359c5996418804c5c0582099b92c295712d0"
+            },
+            {
+              "name": "0027.stderr",
+              "bytes": 516,
+              "sha256": "674a4685cb3fa35fd2d173ad79922b036513c27d66c172548f78bade846ff47e"
+            }
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:mixed_meaning_provider:test",
+          "shard": 4,
+          "artifactId": 12971638083,
+          "exitCode": 101,
+          "logs": [
+            {
+              "name": "0028.stdout",
+              "bytes": 8686,
+              "sha256": "75c47e7f0831fb9cd57a4a25aed87f8e3e9db865086adc467ae8e8dfa60dd2fd"
+            },
+            {
+              "name": "0028.stderr",
+              "bytes": 524,
+              "sha256": "01ea3dfe1cf6428b5b3fa180bb81a3e732bb2efdd31e2d89b5fa0f60fa56df1c"
+            }
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_config_templates:test",
+          "shard": 4,
+          "artifactId": 12971638083,
+          "exitCode": 101,
+          "logs": [
+            {
+              "name": "0038.stdout",
+              "bytes": 3789,
+              "sha256": "3cdea21c7eaf2ce2e1db0655f0017116b2061e6cb3b8c40602426498b3cd1404"
+            },
+            {
+              "name": "0038.stderr",
+              "bytes": 532,
+              "sha256": "cb5b3d9f2b0d0dc3b560cc3aa133e811b8681decedcce25d2b176b29b98ca673"
+            }
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_prompt_runtime:test",
+          "shard": 4,
+          "artifactId": 12971638083,
+          "exitCode": 101,
+          "logs": [
+            {
+              "name": "0041.stdout",
+              "bytes": 3876,
+              "sha256": "469c53b3c0c4a6bc90267461b07f1b007527932098dc8123ac46735c4b192345"
+            },
+            {
+              "name": "0041.stderr",
+              "bytes": 524,
+              "sha256": "80c55af797832034bb448746f64cf3c0249b1133398862ea8be0b650985e6871"
+            }
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:source_acquisition_cli:test",
+          "shard": 4,
+          "artifactId": 12971638083,
+          "exitCode": 101,
+          "logs": [
+            {
+              "name": "0043.stdout",
+              "bytes": 1191,
+              "sha256": "4b3a45fbf888ffba80d6c52a80a4b7dcfc05471af4fb8712fc568759f9352ddc"
+            },
+            {
+              "name": "0043.stderr",
+              "bytes": 524,
+              "sha256": "acbe5f2aa9307fd998683baf3582b01ca7e2b668e94b803b644ce008d404a7a7"
+            }
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:mixed_meaning_composition:test",
+          "shard": 0,
+          "artifactId": 12970050988,
+          "exitCode": 101,
+          "logs": [
+            {
+              "name": "0022.stdout",
+              "bytes": 6051,
+              "sha256": "ccc3ae1929201afecdafdae602f0ee2286d994879e772beb010a01bc23167827"
+            },
+            {
+              "name": "0022.stderr",
+              "bytes": 536,
+              "sha256": "5faf557b77f774377f69187667511d1081b2345b958b4b1fc422ddd3714ff2a6"
+            }
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:mixed_pdf_view:test",
+          "shard": 0,
+          "artifactId": 12970050988,
+          "exitCode": 101,
+          "logs": [
+            {
+              "name": "0023.stdout",
+              "bytes": 6302,
+              "sha256": "a657e6e2f787cdf7a40c0bb267f0a0736a9095c26debc7f70980924eb81a7da4"
+            },
+            {
+              "name": "0023.stderr",
+              "bytes": 492,
+              "sha256": "d25b4756fc52c49014c9115e128cd0b93f6a54c6b9f952f4a7935f807e1257ac"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "releaseAcceptance": false,
+  "mainAcceptance": false,
+  "originalIgnoresAndBuildOnlyExampleScopePreserved": true
+}

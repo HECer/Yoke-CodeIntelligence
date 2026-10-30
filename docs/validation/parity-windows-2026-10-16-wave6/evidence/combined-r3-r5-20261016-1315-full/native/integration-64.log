@@ -1,0 +1,33 @@
+    Finished `test` profile [unoptimized] target(s) in 0.72s
+     Running tests\maintenance.rs (target\debug\deps\maintenance-112cf785bcf63746.exe)
+
+running 12 tests
+test dry_run_counts_orphans_without_mutating_source_or_state_files ... ok
+test corrupt_unknown_record_refuses_collection_before_any_blob_moves ... ok
+test blob_links_are_refused_and_external_targets_are_preserved ... ok
+test dry_run_distinguishes_unreferenced_blobs_from_age_eligible_candidates ... ok
+test expired_deadlines_and_irreversible_purge_requests_leave_orphans_intact ... ok
+test all_generic_records_and_history_preserve_workflow_editor_vector_and_media_roots ... ok
+test foreign_store_client_blocks_mutation_until_its_lifecycle_lease_closes ... ok
+test interrupted_quarantine_restores_originals_before_a_new_mark ... ok
+test malformed_snapshot_shape_is_refused_before_an_orphan_is_moved ... ok
+test later_blob_hash_failure_restores_earlier_moves_and_rolls_back_metadata ... ok
+test opaque_record_ids_and_map_keys_are_conservative_blob_roots ... ok
+test raw_sqlite_writer_contention_does_not_extend_failed_maintenance_cleanup ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.31s
+
+     Running tests\manifest_graph.rs (target\debug\deps\manifest_graph-51f2ce9c74f5c644.exe)
+
+running 8 tests
+test apm_yaml_manifest_dependencies_are_not_treated_as_npm ... ok
+test cargo_workspace_inherits_renamed_path_dependencies_without_merging_packages ... ok
+test cargo_path_link_must_match_declared_package_identity ... ok
+test cargo_inheritance_uses_the_nearest_declared_workspace ... ok
+test invalid_xml_or_expired_capture_cannot_publish_derived_graph ... ok
+test derived_publication_refuses_an_existing_record_with_different_scope ... ok
+test package_json_graph_preserves_aliases_and_never_stores_credentials ... ok
+test pyproject_go_and_pom_declarations_have_distinct_ecosystems ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.73s
+

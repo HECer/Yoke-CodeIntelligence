@@ -1,0 +1,38 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: {\"afterDiagnostics\":[{\"config\":\"tsconfig.json\",\"code\":7027,\"severity\":\"error\",\"message\":\"Unreachable code detected.\",\"path\":\"main.ts\",\"startByte\":231,\"endByte\":254,\"text\":\"__ci_inline_1 = void 0;\"}],\"projected\":\"let __ci_inline_1;\\n{\\n\\n{\\n__ci_inline_2: {\\nlet row: typeof __ci_inline_3 = void 0 as any;\\n{\\nif (void 0 !== void 0) {\\nvar __ci_inline_3={n:3};void __ci_inline_3;\\n}\\n( row= ({n:3}));\\n}{ __ci_inline_1 = ( row.n);; break __ci_inline_2; }\\n__ci_inline_1 = void 0;\\n}\\n}\\n}\\nconst result=(__ci_inline_1 as (number));export const observed=result;\"}"
+    },
+    {
+      "case": 1,
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: {\"afterDiagnostics\":[{\"config\":\"tsconfig.json\",\"code\":7028,\"severity\":\"error\",\"message\":\"Unused label.\",\"path\":\"main.ts\",\"startByte\":30,\"endByte\":43,\"text\":\"__ci_inline_2\"},{\"config\":\"tsconfig.json\",\"code\":7027,\"severity\":\"error\",\"message\":\"Unreachable code detected.\",\"path\":\"main.ts\",\"startByte\":72,\"endByte\":95,\"text\":\"__ci_inline_1 = void 0;\"},{\"config\":\"tsconfig.json\",\"code\":7027,\"severity\":\"error\",\"message\":\"Unreachable code detected.\",\"path\":\"main.ts\",\"startByte\":102,\"endByte\":130,\"text\":\"(__ci_inline_1 as (number));\"}],\"projected\":\"try{{\\nlet __ci_inline_1;\\n{\\n\\n{\\n__ci_inline_2: {throw new Error(\\\"owned\\\");\\n__ci_inline_1 = void 0;\\n}\\n}\\n}\\n(__ci_inline_1 as (number));\\n}}catch(e){}export const observed=1;\"}"
+    },
+    {
+      "case": 2,
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: {\"afterDiagnostics\":[{\"config\":\"tsconfig.json\",\"code\":7027,\"severity\":\"error\",\"message\":\"Unreachable code detected.\",\"path\":\"main.ts\",\"startByte\":150,\"endByte\":173,\"text\":\"__ci_inline_1 = void 0;\"}],\"projected\":\"const opaque=(()=>{return 4;}) as unknown as ()=>never;let __ci_inline_1;\\n{\\n\\n{\\n__ci_inline_2: {{ __ci_inline_1 = ( opaque());; break __ci_inline_2; }\\n__ci_inline_1 = void 0;\\n}\\n}\\n}\\nconst result=(__ci_inline_1 as (number));export const observed=result;\"}"
+    },
+    {
+      "case": 3,
+      "exitCode": 0,
+      "error": ""
+    },
+    {
+      "case": 4,
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: {\"afterDiagnostics\":[{\"config\":\"tsconfig.json\",\"code\":7027,\"severity\":\"error\",\"message\":\"Unreachable code detected.\",\"path\":\"main.ts\",\"startByte\":149,\"endByte\":172,\"text\":\"__ci_inline_1 = void 0;\"}],\"projected\":\"let __ci_inline_1;\\n{\\n\\n{\\n__ci_inline_2: {try{{ __ci_inline_1 = ( 1);; break __ci_inline_2; }}finally{{ __ci_inline_1 = ( 2);; break __ci_inline_2; }}\\n__ci_inline_1 = void 0;\\n}\\n}\\n}\\nconst result=(__ci_inline_1 as (number));export const observed=result;\"}"
+    },
+    {
+      "case": 5,
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: {\"afterDiagnostics\":[{\"config\":\"tsconfig.json\",\"code\":7028,\"severity\":\"error\",\"message\":\"Unused label.\",\"path\":\"main.ts\",\"startByte\":51,\"endByte\":64,\"text\":\"__ci_inline_2\"}],\"projected\":\"const events:number[]=[];{\\nlet __ci_inline_1;\\n{\\n\\n{\\n__ci_inline_2: {\\nlet row: typeof __ci_inline_3 = void 0 as any;\\n{\\nif (void 0 !== void 0) {\\nvar __ci_inline_3={n:3};void __ci_inline_3;\\n}\\n( row= ({n:3}));\\n}events.push(row.n);\\n__ci_inline_1 = void 0;\\n}\\n}\\n}\\n(__ci_inline_1 as (void));\\n}export const observed=events;\"}"
+    }
+  ],
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "diagnosticOnlyWorkerPatch": true
+}

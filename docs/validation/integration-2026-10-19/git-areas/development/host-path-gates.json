@@ -1,0 +1,461 @@
+{
+  "recordedAt": "2026-10-19T10:30:58.977150+00:00",
+  "nativeBinary": "target/debug/yoke.exe",
+  "nativeBinarySha256": "c9b9c5e344299ff7d742191915c3f82f3b953eceabeeed9940e23a6f2e5ea9f2",
+  "casesPassed": 24,
+  "allCasesPassed": true,
+  "scope": "Actual native CLI host-input/protocol admission, positive controls and exact byte-cap boundary on exclusively owned fixtures. Real Windows junction needs no privilege changes. No source Store, credential/provider lookup, Git/network/model call or system setting change. Separate from Cargo totals.",
+  "cases": [
+    {
+      "case": "host-options-positive",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\options.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_store_unavailable",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-default-positive",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_store_unavailable",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-options-relative",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "relative.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-options-parent",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\..\\host\\options.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-options-device-prefix",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "\\\\?\\C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\options.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-options-ads",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\options.json:fixture_private_marker"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-options-real-junction",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host-junction\\options.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-unknown-root",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-unknown-details",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-unknown-limits",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-duplicate-root",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-duplicate-nested",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-missing-limit",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-detail-hard-max",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_capacity_exceeded",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-limit-hard-max",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_capacity_exceeded",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-options-exact-byte-cap",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_store_unavailable",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-options-over-byte-cap",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-unknown-value-not-echoed",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-duplicate-meaning-selection",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\options.json",
+        "--meaning",
+        "1111111111111111111111111111111111111111111111111111111111111111",
+        "--meaning",
+        "1111111111111111111111111111111111111111111111111111111111111111"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-too-many-meaning-selections",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\options.json",
+        "--meaning",
+        "1111111111111111111111111111111111111111111111111111111111111111",
+        "--meaning",
+        "2222222222222222222222222222222222222222222222222222222222222222",
+        "--meaning",
+        "3333333333333333333333333333333333333333333333333333333333333333",
+        "--meaning",
+        "4444444444444444444444444444444444444444444444444444444444444444",
+        "--meaning",
+        "5555555555555555555555555555555555555555555555555555555555555555"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-unused-write-authority",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "--allow-writes",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\options.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-unused-snapshot-authority",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "--snapshot",
+        "1111111111111111111111111111111111111111111111111111111111111111",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\options.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-zero-timeout",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "--timeout",
+        "0",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\options.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_input_invalid",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-zero-output",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\source",
+        "--max-bytes",
+        "0",
+        "git",
+        "areas",
+        "7777777777777777777777777777777777777777777777777777777777777777",
+        "--options",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-area-host-dhvo3bch\\host\\options.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "git_areas_capacity_exceeded",
+      "stdoutEmpty": true,
+      "stateNotInitialized": true,
+      "hostSentinelUnchanged": true
+    }
+  ]
+}

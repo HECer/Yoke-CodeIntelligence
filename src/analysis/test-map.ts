@@ -73,7 +73,7 @@ export async function collectNodeTestCoverage(engine: CodeIntelligence, s: Snaps
             const root = join(directory, String(n), 'tree'), coverage = join(directory, String(n), 'coverage');
             engine.workspace.materialize(s, root);
             mkdirSync(coverage, { recursive: true });
-            const out = await runProcess(process.execPath, ['--test', '--test-reporter', fileURLToPath(new URL('../../workers/test_reporter.mjs', import.meta.url)), ...(typeof spec === 'string' ? [] : ['--test-name-pattern', spec.namePattern]), path], { cwd: root, deadline, maxBytes: 1000000, env: { NODE_V8_COVERAGE: coverage } });
+            const out = await runProcess(process.execPath, ['--test', '--test-reporter', new URL('../../workers/test_reporter.mjs', import.meta.url).href, ...(typeof spec === 'string' ? [] : ['--test-name-pattern', spec.namePattern]), path], { cwd: root, deadline, maxBytes: 1000000, env: { NODE_V8_COVERAGE: coverage } });
             const hits = new Map<string, Set<number>>();
             for (const name of readdirSync(coverage).filter(p => p.endsWith('.json'))) {
                 const parsed = JSON.parse(readFileSync(join(coverage, name), 'utf8'));

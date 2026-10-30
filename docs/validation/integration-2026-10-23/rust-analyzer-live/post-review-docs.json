@@ -1,0 +1,32 @@
+{
+  "sourceCommit": "41d66b04accd89277ca2ae13a6247f82c0ce286c",
+  "nativeProductionAndTestsAndProfilesUnchanged": true,
+  "changedFrozenInputs": {
+    "docs/REMAINING_WORK.md": {
+      "before": "b64502dc63f2d40c43bd267a0730347dc6ebed40bfe88a369aba3bc399449c3e",
+      "after": "9b48a484828332c55b7b45d874b2e3bc23dd2178bb81c3b8924e46754478503e"
+    },
+    "docs/STATUS.md": {
+      "before": "ecf484d54f1b0d974d0aae60caa680be16a6db110305a96342b4670170f68330",
+      "after": "be2c4d03f9edbec47decc745309ec9cab891a8f39415156c60e3c187cb62895d"
+    },
+    "docs/parity/native-reconciliation-2026-10-15.json": {
+      "before": "578e9b60387760ef3d97009f58b0d704db67256018cedf47ac7ae50892c5abad",
+      "after": "5d0d293147a68d28738d79e9d42788f644c3259bd78bf9f402532db4a8bffa9f"
+    },
+    "native/README.md": {
+      "before": "c5769e92d51498eb90a034385171527566162072fd4b87fae14422466215f2d2",
+      "after": "e6552a1cc53c98ee37d5c895d54f14be811415ab243478a449d62a5f8bbba417"
+    }
+  },
+  "newEvidenceOnly": [
+    "README.md",
+    "index.json",
+    "post-review-docs.json",
+    "raw.zip"
+  ],
+  "noNewProductTestClaimedAfterDocumentation": true,
+  "reconciliationExactlyOneAdditiveKey": "nativeRustAnalyzerLiveAcceptance20261023",
+  "priorReconciliationOtherwiseDeepEqual": true,
+  "everyArchiveMemberLengthAndSha256Reopened": true
+}

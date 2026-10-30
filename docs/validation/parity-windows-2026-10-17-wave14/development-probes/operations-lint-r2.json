@@ -1,0 +1,31 @@
+{
+  "command": [
+    "C:\\Users\\HEC_e\\AppData\\Local\\Programs\\Miniconda3\\Scripts\\ruff.EXE",
+    "check",
+    "--no-cache",
+    "--select",
+    "F821",
+    "--output-format",
+    "concise",
+    "E:\\Yoke-Build-Cache\\pdf-mixed-view-20261017\\integrate.py",
+    "E:\\Yoke-Build-Cache\\pdf-mixed-view-20261017\\preserve_checkpoint.py",
+    "E:\\Yoke-Build-Cache\\pdf-mixed-view-20261017\\verify_checkpoint.py",
+    "E:\\Yoke-Build-Cache\\pdf-mixed-view-20261017\\run_acceptance.py",
+    "E:\\Yoke-Build-Cache\\pdf-mixed-view-20261017\\prepare_checkpoint_helpers.py",
+    "E:\\Yoke-Build-Cache\\pdf-mixed-view-20261017\\prepare_integration_helper.py",
+    "E:\\Yoke-Build-Cache\\pdf-mixed-view-20261017\\collect_scoped_validation.py"
+  ],
+  "version": "ruff 0.12.10",
+  "exitCode": 0,
+  "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+  "checkedScripts": {
+    "integrate.py": "cc042dd8ff6342c2e37ed79b1e953122d7fc9700dc6bd95a21d218b887768832",
+    "preserve_checkpoint.py": "9808fb387569019fe466cfd4cf2aff45bdeffbfd9f7116c8fb78c910b71a896e",
+    "verify_checkpoint.py": "77da790bb69092e7993c4c9b13333e35b82cbf865366a6b2218ed9c077dde7a8",
+    "run_acceptance.py": "9302f122a64c0924cbdf88424206f827b2ff060a9f8f17f2f8215a6643c0aac5",
+    "prepare_checkpoint_helpers.py": "c65289afa015be887e18e10d8b1cfc9da42f6ade6003eea59b7a63d8e24e3aef",
+    "prepare_integration_helper.py": "77129db71a2a1c54d338ca5daa1d1cfaf86aa52cc230a367e7ad7070fec06e1e",
+    "collect_scoped_validation.py": "eb7b5f775b9afdb847014f8b82578dc381d2bda334dc5e21d81eb31c36d6874c"
+  },
+  "operationalHelpersExecuted": false
+}

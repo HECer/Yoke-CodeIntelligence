@@ -1,0 +1,35 @@
+{
+  "artifact": {
+    "id": 12613828166,
+    "run": 40231599084,
+    "bytes": 98937,
+    "sha256": "52e813998612bc11628eb8364ec8dabcb6ac235b1454ee065912fe5381459dfa"
+  },
+  "sourceRevision": "553e5dc162a0352b05e0be3abe91860924b4f922",
+  "failedGroups": [
+    {
+      "group": "yoke-code-intelligence:test:mixed_meaning_claims:test",
+      "logs": [
+        {
+          "name": "0026.stdout",
+          "bytes": 4128,
+          "sha256": "72d6a0411b61f60222eb94d52291df5e04f2b516f491a1511e680a5d869d6427"
+        },
+        {
+          "name": "0026.stderr",
+          "bytes": 516,
+          "sha256": "bd80246359a8a3454c165b6e5c1fdbff5b261560742c3f5d2f5ef11c68d3f881"
+        }
+      ],
+      "failedNames": [
+        "test mixed_claims_empty_coverage_is_explicit_and_exact_output_deadlines_remain_bounded ... FAILED",
+        "test mixed_claims_cli_requires_checked_inputs_and_closed_data_before_store_initialization ... FAILED",
+        "test mixed_claims_preserve_parallel_directions_role_slots_and_exact_frozen_quote_spaces ... FAILED",
+        "test mixed_claims_quotation_capacity_counts_distinct_unit_observations_without_deduplication ... FAILED",
+        "test mixed_claims_refuse_foreign_supports_coverage_endpoints_roles_and_split_utf8 ... FAILED"
+      ],
+      "closedPdfLimitErrors": 5
+    }
+  ],
+  "rawArtifactIncludedInMainArchive": false
+}

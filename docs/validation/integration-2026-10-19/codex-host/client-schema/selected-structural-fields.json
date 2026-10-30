@@ -1,0 +1,268 @@
+{
+  "InitializeParams": {
+    "properties": {
+      "capabilities": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/InitializeCapabilities"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "clientInfo": {
+        "$ref": "#/definitions/ClientInfo"
+      }
+    },
+    "required": [
+      "clientInfo"
+    ]
+  },
+  "McpServerToolCallParams": {
+    "properties": {
+      "_meta": true,
+      "arguments": true,
+      "server": {
+        "type": "string"
+      },
+      "threadId": {
+        "type": "string"
+      },
+      "tool": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "server",
+      "threadId",
+      "tool"
+    ]
+  },
+  "McpServerToolCallResponse": {
+    "properties": {
+      "_meta": true,
+      "content": {
+        "items": true,
+        "type": "array"
+      },
+      "isError": {
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "structuredContent": true
+    },
+    "required": [
+      "content"
+    ]
+  },
+  "ThreadStartParams": {
+    "properties": {
+      "allowProviderModelFallback": {
+        "type": "boolean"
+      },
+      "approvalPolicy": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/AskForApproval"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "approvalsReviewer": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/ApprovalsReviewer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "baseInstructions": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "config": {
+        "additionalProperties": true,
+        "type": [
+          "object",
+          "null"
+        ]
+      },
+      "cwd": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "daybreakEnabled": {
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "developerInstructions": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "dynamicTools": {
+        "default": null,
+        "items": {
+          "$ref": "#/definitions/DynamicToolSpec"
+        },
+        "type": [
+          "array",
+          "null"
+        ]
+      },
+      "environments": {
+        "items": {
+          "$ref": "#/definitions/TurnEnvironmentParams"
+        },
+        "type": [
+          "array",
+          "null"
+        ]
+      },
+      "ephemeral": {
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "experimentalRawEvents": {
+        "type": "boolean"
+      },
+      "historyMode": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/ThreadHistoryMode"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "mockExperimentalField": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "model": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "modelProvider": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "multiAgentMode": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/MultiAgentMode"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "permissions": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "personality": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/Personality"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "projectId": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "runtimeWorkspaceRoots": {
+        "items": {
+          "$ref": "#/definitions/AbsolutePathBuf"
+        },
+        "type": [
+          "array",
+          "null"
+        ]
+      },
+      "sandbox": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/SandboxMode"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "selectedCapabilityRoots": {
+        "items": {
+          "$ref": "#/definitions/SelectedCapabilityRoot"
+        },
+        "type": [
+          "array",
+          "null"
+        ]
+      },
+      "serviceName": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "serviceTier": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "sessionStartSource": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/ThreadStartSource"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "threadSource": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/ThreadSource"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": []
+  }
+}

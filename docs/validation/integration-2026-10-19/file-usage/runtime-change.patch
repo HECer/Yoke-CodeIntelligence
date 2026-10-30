@@ -1,0 +1,958 @@
+diff --git a/native/src/agent_repl.rs b/native/src/agent_repl.rs
+index b2a4c31..5c84d5c 100644
+--- a/native/src/agent_repl.rs
++++ b/native/src/agent_repl.rs
+@@ -1017,15 +1017,21 @@ fn dispatch_unbounded(
+                     }
+                     _ => bail!("File deletion propagate must be boolean"),
+                 }
+-                match args.get("delete_even_if_used") {
+-                    Some(Value::Bool(true)) => {}
+-                    None | Some(Value::Bool(false)) => bail!(
+-                        "Safe file deletion requires a file usage proof; only explicit delete_even_if_used=true is supported"
+-                    ),
++                let forced = match args.get("delete_even_if_used") {
++                    Some(Value::Bool(true)) => true,
++                    None | Some(Value::Bool(false)) => false,
+                     _ => bail!("File deletion delete_even_if_used must be boolean"),
+-                }
++                };
+                 let path = crate::paths::normalized_syntax(text(args, "relative_path")?)?;
+                 let engine = session.active_engine_at(deadline)?;
++                if !forced {
++                    return crate::semantic_refactor::invoke(
++                        engine,
++                        "safeDelete",
++                        &json!({"relativePath":path,"deleteEvenIfUsed":false,"propagate":false}),
++                        deadline,
++                    );
++                }
+                 let (snapshot, graph, _, _) = engine.index(deadline)?;
+                 let source_hash = {
+                     let scope = crate::capture::source_scope_policy(&engine.store, &snapshot)?;
+diff --git a/native/src/semantic_file_delete.rs b/native/src/semantic_file_delete.rs
+new file mode 100644
+index 0000000..d441e08
+--- /dev/null
++++ b/native/src/semantic_file_delete.rs
+@@ -0,0 +1,318 @@
++//! Conservative captured ES-module file usage admission, before one guarded deletion plan.
++use super::provider;
++use crate::{
++    Engine, analysis,
++    capture::Deadline,
++    changes,
++    model::{Entity, Graph, Snapshot},
++};
++use anyhow::{Context, Result, ensure};
++use serde_json::{Value, json};
++use std::collections::{BTreeMap, BTreeSet};
++
++const CAPACITY: &str = "file_usage_proof_capacity";
++const UNSUPPORTED: &str = "Safe file usage proof requires a captured TypeScript/JavaScript ES module containing only named function declarations";
++const MAX_FILES: usize = 2000;
++const MAX_BYTES: usize = 16_000_000;
++const MAX_DECLARATIONS: usize = 8;
++
++fn provider_context(value: &Value) -> Result<Value> {
++    ensure!(
++        value["serverProfileHash"].is_string() && value["providerSourceOmissions"].is_array(),
++        "File usage proof provider/source context absent"
++    );
++    Ok(
++        json!({"serverProfileHash":value["serverProfileHash"],"serverProfileBinding":value["serverProfileBinding"],"providerSourceOmissions":value["providerSourceOmissions"],"providerSourcePolicy":value["providerSourcePolicy"],"sourceExecutionAuthorized":value["sourceExecutionAuthorized"]}),
++    )
++}
++
++fn targets(
++    graph: &Graph,
++    language: &str,
++    path: &str,
++    source: &str,
++    d: &Deadline,
++) -> Result<Vec<Entity>> {
++    ensure!(source.len() <= 256_000, CAPACITY);
++    let mut parser = tree_sitter::Parser::new();
++    parser.set_language(&analysis::grammar(language).context(UNSUPPORTED)?)?;
++    let mut cancelled = |_: &tree_sitter::ParseState| d.check().is_err();
++    let tree = parser
++        .parse_with_options(
++            &mut |offset, _| &source.as_bytes()[offset.min(source.len())..],
++            None,
++            Some(tree_sitter::ParseOptions::new().progress_callback(&mut cancelled)),
++        )
++        .context("File usage proof parser cancelled")?;
++    d.check()?;
++    ensure!(!tree.root_node().has_error(), UNSUPPORTED);
++    let mut result = Vec::new();
++    let mut exported = false;
++    let mut cursor = tree.root_node().walk();
++    for child in tree.root_node().named_children(&mut cursor) {
++        d.check()?;
++        if child.kind() == "comment" {
++            continue;
++        }
++        let declaration = if child.kind() == "export_statement" {
++            exported = true;
++            child
++                .child_by_field_name("declaration")
++                .context(UNSUPPORTED)?
++        } else {
++            child
++        };
++        ensure!(
++            declaration.kind() == "function_declaration"
++                && declaration.child_by_field_name("body").is_some(),
++            UNSUPPORTED
++        );
++        let name = declaration
++            .child_by_field_name("name")
++            .context(UNSUPPORTED)?;
++        let matches: Vec<_> = graph
++            .entities
++            .iter()
++            .filter(|entity| {
++                entity.path == path
++                    && entity.kind == "function"
++                    && entity.start_byte == declaration.start_byte()
++                    && entity.end_byte == declaration.end_byte()
++                    && entity.name_start_byte == Some(name.start_byte())
++                    && entity.name_end_byte == Some(name.end_byte())
++                    && entity.name == source[name.byte_range()]
++            })
++            .take(2)
++            .collect();
++        ensure!(
++            matches.len() == 1,
++            "File usage proof declaration/source binding unavailable"
++        );
++        ensure!(result.len() < MAX_DECLARATIONS, CAPACITY);
++        result.push((*matches[0]).clone());
++    }
++    ensure!(exported && !result.is_empty(), UNSUPPORTED);
++    Ok(result)
++}
++
++pub(super) fn prepare(
++    engine: &mut Engine,
++    snapshot: &Snapshot,
++    graph: &Graph,
++    args: &Value,
++    d: &Deadline,
++) -> Result<Value> {
++    d.check()?;
++    ensure!(
++        args["propagate"] != true,
++        "File deletion propagation is unavailable"
++    );
++    ensure!(
++        args["deleteEvenIfUsed"] != true,
++        "Forced file deletion uses the explicit source-policy facade path"
++    );
++    let path = crate::paths::normalized(
++        args["relativePath"]
++            .as_str()
++            .context("File deletion source required")?,
++    )?;
++    let file = {
++        let scope = crate::capture::source_scope_policy(&engine.store, snapshot)?;
++        let file = scope.file(&path).context(UNSUPPORTED)?;
++        scope.check_host_write_scope(&path)?;
++        file.clone()
++    };
++    ensure!(
++        matches!(file.language.as_str(), "typescript" | "javascript")
++            && (path.ends_with(".ts") || path.ends_with(".js")),
++        UNSUPPORTED
++    );
++    let host = crate::paths::scoped(&engine.root, &path)?;
++    let metadata = std::fs::symlink_metadata(&host)?;
++    ensure!(
++        metadata.is_file() && !crate::paths::is_link(&metadata),
++        UNSUPPORTED
++    );
++    ensure!(
++        snapshot.files.len() <= MAX_FILES && file.size <= 256_000,
++        CAPACITY
++    );
++    let total = snapshot.files.iter().try_fold(0usize, |bytes, next| {
++        d.check()?;
++        let bytes = bytes.checked_add(next.size).context(CAPACITY)?;
++        ensure!(bytes <= MAX_BYTES, CAPACITY);
++        Ok::<_, anyhow::Error>(bytes)
++    })?;
++    ensure!(
++        crate::verify::file_integrity(&file, &host, d)?,
++        "File deletion source is stale"
++    );
++    let (source, hash) = crate::query::source(&engine.store, snapshot, &path)?;
++    let declarations = targets(graph, &file.language, &path, &source, d)?;
++    let server = engine
++        .servers
++        .get(&file.language)
++        .context("File usage proof requires a host-registered semantic provider")?;
++    ensure!(
++        server.trust,
++        "File usage proof requires explicit provider trust"
++    );
++    // Empty answers from a provider with no source binding cannot prove absence.
++    // Captured path/name candidates are independently conservative denials.
++    let ids: BTreeSet<_> = graph
++        .entities
++        .iter()
++        .filter(|entity| entity.path == path)
++        .map(|entity| entity.id.as_str())
++        .collect();
++    let entities: BTreeMap<_, _> = graph
++        .entities
++        .iter()
++        .map(|entity| (entity.id.as_str(), entity))
++        .collect();
++    let basename = path.rsplit('/').next().context(UNSUPPORTED)?;
++    let stem = basename.rsplit_once('.').context(UNSUPPORTED)?.0;
++    let mut candidates: BTreeSet<String> = declarations
++        .iter()
++        .map(|entity| entity.name.to_lowercase())
++        .collect();
++    candidates.insert(stem.to_lowercase());
++    candidates.insert(path.to_lowercase());
++    candidates.insert(basename.to_lowercase());
++    for observation in &graph.observations {
++        d.check()?;
++        if observation.relation == "contains" {
++            continue;
++        }
++        let origin = entities
++            .get(observation.source.as_str())
++            .context("File usage observation origin missing")?;
++        if origin.path == path {
++            continue;
++        }
++        ensure!(
++            !observation
++                .target
++                .as_deref()
++                .is_some_and(|id| ids.contains(id))
++                && !candidates.contains(&observation.target_label.to_lowercase()),
++            "Captured exact, candidate or unresolved references prevent file deletion"
++        );
++    }
++    let mut bindings = BTreeMap::new();
++    {
++        let scope = crate::capture::source_scope_policy(&engine.store, snapshot)?;
++        for member in &snapshot.files {
++            d.check()?;
++            let (text, hash) = crate::query::source_in_scope(&engine.store, &scope, &member.path)?;
++            bindings.insert(member.path.clone(), hash);
++            if member.path == path {
++                continue;
++            }
++            let lowered = text.to_lowercase();
++            ensure!(
++                !candidates
++                    .iter()
++                    .any(|candidate| lowered.contains(candidate)),
++                "Captured path/name occurrence prevents file deletion"
++            );
++        }
++    }
++    let mut checked = Vec::new();
++    let mut context: Option<Value> = None;
++    for declaration in &declarations {
++        d.check()?;
++        let definition = provider(
++            engine,
++            snapshot,
++            graph,
++            declaration,
++            "definition",
++            &json!({"maxItems":32}),
++            d,
++        )?;
++        let definitions = definition["locations"]
++            .as_array()
++            .context("File usage proof definition capability unavailable")?;
++        let start = declaration.name_start_byte.context(UNSUPPORTED)?;
++        let end = declaration.name_end_byte.context(UNSUPPORTED)?;
++        ensure!(
++            definition["truncated"] != true
++                && definitions.len() == 1
++                && definitions[0]["path"] == path
++                && definitions[0]["contentHash"] == hash
++                && definitions[0]["startByte"] == start
++                && definitions[0]["endByte"] == end
++                && definitions[0]["text"] == declaration.name,
++            "File usage proof requires one exact provider-bound declaration"
++        );
++        let references = provider(
++            engine,
++            snapshot,
++            graph,
++            declaration,
++            "references",
++            &json!({"includeDeclaration":true,"maxItems":2000}),
++            d,
++        )?;
++        let locations = references["locations"]
++            .as_array()
++            .context("File usage proof reference capability unavailable")?;
++        ensure!(
++            references["truncated"] != true && !locations.is_empty() && locations.len() <= 2000,
++            "File usage proof requires complete bounded responses including the selected declaration"
++        );
++        ensure!(
++            locations.iter().any(|location| location["path"] == path
++                && location["startByte"] == start
++                && location["endByte"] == end),
++            "File usage proof reference response omitted the selected declaration"
++        );
++        for location in locations {
++            d.check()?;
++            ensure!(
++                location["path"] == path && location["contentHash"] == hash,
++                "Registered provider reports an external file usage"
++            );
++            let begin = usize::try_from(
++                location["startByte"]
++                    .as_u64()
++                    .context("File usage start missing")?,
++            )?;
++            let finish = usize::try_from(
++                location["endByte"]
++                    .as_u64()
++                    .context("File usage end missing")?,
++            )?;
++            ensure!(
++                crate::paths::utf8_range(&source, begin, finish)? == declaration.name
++                    && location["text"] == declaration.name,
++                "File usage proof reference/source binding mismatch"
++            );
++        }
++        let bound = provider_context(&definition)?;
++        ensure!(
++            provider_context(&references)? == bound
++                && context.as_ref().is_none_or(|previous| previous == &bound),
++            "File usage proof provider/source policy changed"
++        );
++        context = Some(bound);
++        checked.push(json!({"entityId":declaration.id,"path":path,"contentHash":hash,"name":declaration.name,"startByte":start,"endByte":end,"inFileReferenceCount":locations.len()}));
++    }
++    d.check()?;
++    ensure!(
++        crate::verify::file_integrity(&file, &host, d)?,
++        "File deletion source became stale during usage checks"
++    );
++    let context = context.context("File usage proof provider context absent")?;
++    let plan = changes::prepare(
++        &mut engine.store,
++        snapshot,
++        graph,
++        &json!({"edits":[{"kind":"delete","path":path,"expectedHash":hash}]}),
++        d,
++    )?;
++    Ok(
++        json!({"snapshotId":snapshot.id,"plan":plan,"sourceBinding":{"snapshotId":snapshot.id,"path":path,"contentHash":hash},"provider":"host_selected_lsp","equivalent":"independent_captured_es_module_file_usage_check","forced":false,"propagate":false,"referencesRewritten":false,"remainingUsagesMayBreak":true,"providerSourceOmissions":context["providerSourceOmissions"],"providerSourcePolicy":context["providerSourcePolicy"],"usageCheck":{"performed":true,"policy":"captured_es_module_functions_v1","declarations":checked,"providerRequestCount":declarations.len()*2,"serverProfileHash":context["serverProfileHash"],"providerContext":context,"sourceBindings":bindings,"sourceFileCount":snapshot.files.len(),"sourceBytes":total,"exhaustiveCompilerProof":false},"coverage":{"omissions":snapshot.omissions,"exhaustive":false,"limitations":["Only captured conservative path/name candidates and selected provider references are checked; dynamic, external or omitted consumers remain unknown."]},"complete":false,"commandsExecuted":false}),
++    )
++}
+diff --git a/native/src/semantic_refactor.rs b/native/src/semantic_refactor.rs
+index f29a2dd..db74637 100644
+--- a/native/src/semantic_refactor.rs
++++ b/native/src/semantic_refactor.rs
+@@ -9,6 +9,8 @@ use anyhow::{Context, Result, bail, ensure};
+ use serde_json::{Value, json};
+ #[path = "semantic_directory_move.rs"]
+ mod directory_moves;
++#[path = "semantic_file_delete.rs"]
++mod file_delete;
+ #[path = "semantic_refactor_intents.rs"]
+ mod intents;
+ #[path = "semantic_move_intents.rs"]
+@@ -343,6 +345,9 @@ pub fn invoke(
+         staged.value["commandsExecuted"] = json!(false);
+         return Ok(staged.value);
+     }
++    if operation == "safeDelete" && args.get("namePath").is_none_or(Value::is_null) {
++        return file_delete::prepare(engine, &snapshot, &graph, args, deadline);
++    }
+     let symbol = symbol(engine, &snapshot, &graph, args, deadline)?;
+     match operation {
+         "rename" => {
+diff --git a/native/tests/facade_file_usage.rs b/native/tests/facade_file_usage.rs
+new file mode 100644
+index 0000000..8f3b2dd
+--- /dev/null
++++ b/native/tests/facade_file_usage.rs
+@@ -0,0 +1,400 @@
++//! Conservative file usage proof fixtures, without proprietary IDE or actual compiler claims.
++use serde_json::{Value, json};
++use std::{fs, path::Path};
++use yoke::{
++    Engine,
++    analysis::AnalyzerEpoch,
++    capture::Deadline,
++    changes, lsp,
++    project_session::{HostProfile, Session},
++};
++const SOURCE: &str = "// owned café 🦀\r\nexport function unusedCafé(): number { return 42; }\r\n";
++fn d() -> Deadline {
++    Deadline::new(30_000)
++}
++struct Fixture {
++    session: Session,
++    log: tempfile::TempDir,
++    root: tempfile::TempDir,
++}
++fn fixture(epoch: AnalyzerEpoch, mode: &str) -> Fixture {
++    let root = tempfile::tempdir().unwrap();
++    let log = tempfile::tempdir().unwrap();
++    fs::write(root.path().join("spare_module.ts"), SOURCE).unwrap();
++    fs::write(
++        root.path().join("other.ts"),
++        "export const untouched = 7;\r\n",
++    )
++    .unwrap();
++    fs::write(
++        root.path().join("tsconfig.json"),
++        "{\"compilerOptions\":{\"strict\":true},\"include\":[\"*.ts\"]}",
++    )
++    .unwrap();
++    let mut engine = Engine::open(root.path()).unwrap();
++    engine.capture_epoch = epoch;
++    engine
++        .register_configured_server(lsp::ConfiguredServer {
++            server: lsp::Server {
++                command: "node".into(),
++                args: vec![
++                    Path::new(env!("CARGO_MANIFEST_DIR"))
++                        .join("tests/fixtures/file-usage-lsp.mjs")
++                        .display()
++                        .to_string(),
++                    log.path().join("protocol.log").display().to_string(),
++                    mode.into(),
++                ],
++                language: "typescript".into(),
++                trust: true,
++            },
++            configuration: lsp::HostConfiguration {
++                passive_profile: Some(lsp::PassiveProfile::ContractFixture),
++                ..Default::default()
++            },
++        })
++        .unwrap();
++    let session = Session::open(
++        engine,
++        HostProfile::default(),
++        Some("owned-file-usage"),
++        &d(),
++    )
++    .unwrap();
++    Fixture { session, log, root }
++}
++fn invoke(f: &mut Fixture, args: Value) -> anyhow::Result<Value> {
++    yoke::agent_repl::invoke_facade(&mut f.session, "jb.safe_delete", args, None, &d())
++}
++fn unpublished(f: &Fixture) {
++    assert_eq!(f.session.engine.store.db.query_row("SELECT COUNT(*) FROM records WHERE kind IN ('plan','approval','receipt','journal')",[],|r|r.get::<_,u64>(0)).unwrap(),0);
++    assert_eq!(
++        f.session
++            .engine
++            .store
++            .db
++            .query_row(
++                "SELECT COUNT(*) FROM snapshots WHERE json_extract(value,'$.kind')='derived'",
++                [],
++                |r| r.get::<_, u64>(0)
++            )
++            .unwrap(),
++        0
++    );
++    assert!(f.root.path().join("spare_module.ts").is_file());
++}
++fn transcript(f: &Fixture) -> Vec<Value> {
++    let p = f.log.path().join("protocol.log");
++    if !p.exists() {
++        return vec![];
++    }
++    fs::read_to_string(p)
++        .unwrap()
++        .lines()
++        .map(|line| serde_json::from_str(line).unwrap())
++        .collect()
++}
++#[test]
++fn omitted_and_null_file_selectors_require_self_bound_compiler_queries_for_both_epochs() {
++    for epoch in [AnalyzerEpoch::V8, AnalyzerEpoch::V9] {
++        for selector in [None, Some(Value::Null)] {
++            for forced in [None, Some(Value::Bool(false))] {
++                let mut f = fixture(epoch, "ok");
++                let mut args = json!({"relative_path":"spare_module.ts"});
++                if let Some(selector) = &selector {
++                    args["name_path"] = selector.clone();
++                }
++                if let Some(forced) = forced {
++                    args["delete_even_if_used"] = forced;
++                }
++                let value = invoke(&mut f, args).unwrap();
++                assert_eq!(value["forced"], false);
++                assert_eq!(value["usageCheck"]["performed"], true);
++                assert_eq!(value["usageCheck"]["providerRequestCount"], 2);
++                assert_eq!(value["usageCheck"]["exhaustiveCompilerProof"], false);
++                assert_eq!(value["complete"], false);
++                assert_eq!(value["commandsExecuted"], false);
++                assert_eq!(value["plan"]["files"].as_array().unwrap().len(), 1);
++                assert_eq!(value["plan"]["files"][0]["path"], "spare_module.ts");
++                assert!(value["plan"]["files"][0]["afterHash"].is_null());
++                let snap = f
++                    .session
++                    .engine
++                    .store
++                    .snapshot(value["plan"]["resultSnapshotId"].as_str().unwrap())
++                    .unwrap();
++                assert_eq!(
++                    yoke::capture::analyzer_epoch_for_snapshot(&f.session.engine.store, &snap)
++                        .unwrap(),
++                    epoch
++                );
++                assert!(!snap.files.iter().any(|file| file.path == "spare_module.ts"));
++                assert_eq!(
++                    fs::read(f.root.path().join("spare_module.ts")).unwrap(),
++                    SOURCE.as_bytes()
++                );
++                let calls = transcript(&f);
++                assert!(
++                    calls
++                        .iter()
++                        .any(|call| call["method"] == "textDocument/definition")
++                );
++                assert!(
++                    calls
++                        .iter()
++                        .any(|call| call["method"] == "textDocument/references"
++                            && call["params"]["context"]["includeDeclaration"] == true)
++                );
++                assert!(
++                    !calls
++                        .iter()
++                        .any(|call| call["method"] == "workspace/executeCommand")
++                );
++            }
++        }
++    }
++}
++#[test]
++fn missing_empty_foreign_and_truncated_provider_responses_cannot_be_absence_proofs() {
++    for mode in [
++        "missing-references",
++        "empty-definition",
++        "empty-references",
++        "foreign-reference",
++        "overflow-references",
++    ] {
++        let mut f = fixture(AnalyzerEpoch::V9, mode);
++        assert!(
++            invoke(&mut f, json!({"relative_path":"spare_module.ts"})).is_err(),
++            "{mode}"
++        );
++        unpublished(&f);
++        assert!(!transcript(&f).is_empty());
++    }
++}
++
++#[test]
++fn eight_declarations_are_checked_and_the_ninth_refuses_before_provider_start() {
++    for count in [8, 9] {
++        let mut f = fixture(AnalyzerEpoch::V9, "ok");
++        let source: String = (0..count)
++            .map(|i| format!("export function unusedCafé{i}(): number {{ return {i}; }}\r\n"))
++            .collect();
++        fs::write(f.root.path().join("spare_module.ts"), source).unwrap();
++        let result = invoke(&mut f, json!({"relative_path":"spare_module.ts"}));
++        if count == 8 {
++            let value = result.unwrap();
++            assert_eq!(
++                value["usageCheck"]["declarations"]
++                    .as_array()
++                    .unwrap()
++                    .len(),
++                8
++            );
++            assert_eq!(value["usageCheck"]["providerRequestCount"], 16);
++        } else {
++            assert!(result.is_err());
++            unpublished(&f);
++            assert!(transcript(&f).is_empty());
++        }
++    }
++}
++
++#[test]
++fn actual_file_inventory_quota_admits2000_and_refuses2001_before_provider_start() {
++    for count in [2000, 2001] {
++        let mut f = fixture(AnalyzerEpoch::V9, "empty-definition");
++        for i in 3..count {
++            fs::write(f.root.path().join(format!("entry_{i:04}.txt")), b"").unwrap();
++        }
++        let result = invoke(&mut f, json!({"relative_path":"spare_module.ts"}));
++        let error = result.expect_err("The owned fixture supplies no definition");
++        unpublished(&f);
++        assert_eq!(
++            transcript(&f).is_empty(),
++            count == 2001,
++            "{count}: {error:#}"
++        );
++    }
++}
++
++#[test]
++fn actual_source_byte_quota_counts_each_captured_file_before_provider_start() {
++    for count in [16_000_000usize, 16_000_001] {
++        let mut f = fixture(AnalyzerEpoch::V9, "empty-definition");
++        let existing: usize = ["spare_module.ts", "other.ts", "tsconfig.json"]
++            .iter()
++            .map(|path| fs::metadata(f.root.path().join(path)).unwrap().len() as usize)
++            .sum();
++        let mut left = count - existing;
++        for i in 0..4 {
++            let size = left.min(4_000_000);
++            fs::write(
++                f.root.path().join(format!("payload_{i}.txt")),
++                vec![b'x'; size],
++            )
++            .unwrap();
++            left -= size;
++        }
++        assert_eq!(left, 0);
++        assert!(invoke(&mut f, json!({"relative_path":"spare_module.ts"})).is_err());
++        unpublished(&f);
++        assert_eq!(transcript(&f).is_empty(), count == 16_000_001);
++    }
++}
++
++#[test]
++fn javascript_module_syntax_uses_the_registered_javascript_provider() {
++    let mut f = fixture(AnalyzerEpoch::V8, "ok");
++    fs::rename(
++        f.root.path().join("spare_module.ts"),
++        f.root.path().join("spare_module.js"),
++    )
++    .unwrap();
++    fs::write(
++        f.root.path().join("spare_module.js"),
++        SOURCE.replace(": number", ""),
++    )
++    .unwrap();
++    let mut server = f.session.engine.servers["typescript"].clone();
++    server.language = "javascript".into();
++    f.session
++        .engine
++        .register_configured_server(lsp::ConfiguredServer {
++            server,
++            configuration: lsp::HostConfiguration {
++                passive_profile: Some(lsp::PassiveProfile::ContractFixture),
++                ..Default::default()
++            },
++        })
++        .unwrap();
++    let value = invoke(&mut f, json!({"relative_path":"spare_module.js"})).unwrap();
++    assert_eq!(value["plan"]["files"][0]["path"], "spare_module.js");
++    assert_eq!(value["usageCheck"]["performed"], true);
++    assert!(f.root.path().join("spare_module.js").is_file());
++}
++#[test]
++fn path_name_and_graph_usage_candidates_refuse_before_provider_start() {
++    for source in [
++        "import './spare_module';\r\nexport const untouched = 7;\r\n",
++        "export const untouched = 'unusedCafé';\r\n",
++        "export const untouched = 'SPARE_MODULE.ts';\r\n",
++    ] {
++        let mut f = fixture(AnalyzerEpoch::V8, "ok");
++        fs::write(f.root.path().join("other.ts"), source).unwrap();
++        assert!(invoke(&mut f, json!({"relative_path":"spare_module.ts"})).is_err());
++        unpublished(&f);
++        assert!(transcript(&f).is_empty());
++    }
++}
++#[test]
++fn unsupported_source_shapes_paths_permissions_and_capacity_do_not_start_a_provider() {
++    for case in [
++        "side-effect",
++        "anonymous",
++        "variable",
++        "syntax",
++        "source-budget",
++        "traversal",
++        "empty-selector",
++        "permission",
++        "missing-provider",
++        "untrusted-provider",
++        "missing-passive-policy",
++        "case-alias",
++        "propagation",
++    ] {
++        let mut f = fixture(AnalyzerEpoch::V9, "ok");
++        let mut args = json!({"relative_path":"spare_module.ts"});
++        match case {
++            "side-effect" => fs::write(
++                f.root.path().join("spare_module.ts"),
++                format!("{SOURCE}console.log('owned');\r\n"),
++            )
++            .unwrap(),
++            "anonymous" => fs::write(
++                f.root.path().join("spare_module.ts"),
++                "export default function() { return 1; }\n",
++            )
++            .unwrap(),
++            "variable" => fs::write(
++                f.root.path().join("spare_module.ts"),
++                "export const callable = () => 1;\n",
++            )
++            .unwrap(),
++            "syntax" => fs::write(
++                f.root.path().join("spare_module.ts"),
++                "export function broken( {\n",
++            )
++            .unwrap(),
++            "source-budget" => fs::write(
++                f.root.path().join("spare_module.ts"),
++                format!("{SOURCE}{}", " ".repeat(256_001)),
++            )
++            .unwrap(),
++            "traversal" => args["relative_path"] = json!("../spare_module.ts"),
++            "empty-selector" => args["name_path"] = json!(""),
++            "permission" => {
++                f.session
++                    .invoke("switchModes", &json!({"modes":["planning"]}), &d())
++                    .unwrap();
++            }
++            "missing-provider" => f.session.engine.servers.clear(),
++            "untrusted-provider" => {
++                f.session
++                    .engine
++                    .servers
++                    .get_mut("typescript")
++                    .unwrap()
++                    .trust = false
++            }
++            "missing-passive-policy" => f.session.engine.server_configurations.clear(),
++            "case-alias" => args["relative_path"] = json!("SPARE_MODULE.ts"),
++            _ => args["propagate"] = json!(true),
++        }
++        assert!(invoke(&mut f, args).is_err(), "{case}");
++        unpublished(&f);
++        assert!(transcript(&f).is_empty(), "{case}");
++    }
++}
++#[test]
++fn real_owned_copied_verification_and_existing_approval_stale_and_recovery_gates_remain() {
++    let mut f = fixture(AnalyzerEpoch::V9, "ok");
++    let value = invoke(&mut f, json!({"relative_path":"spare_module.ts"})).unwrap();
++    let id = value["plan"]["id"].as_str().unwrap();
++    let args = json!({"planId":id,"idempotencyKey":"owned-file-usage","mode":"workspace"});
++    assert!(changes::apply(&f.session.engine.store, f.root.path(), &args, true, &d()).is_err());
++    let verification=yoke::verify::execute(&f.session.engine,id,"node",&["-e".into(),"const fs=require('fs');process.exit(!fs.existsSync('spare_module.ts')&&fs.readFileSync('other.ts','utf8')==='export const untouched = 7;\\r\\n'?0:1)".into()],true,&d()).unwrap();
++    assert_eq!(verification["status"], "passed", "{verification}");
++    assert!(changes::apply(&f.session.engine.store, f.root.path(), &args, true, &d()).is_err());
++    changes::approve(&f.session.engine.store, id, false).unwrap();
++    assert!(changes::apply(&f.session.engine.store, f.root.path(), &args, false, &d()).is_err());
++    fs::write(
++        f.root.path().join("spare_module.ts"),
++        format!("{SOURCE}// newer owned bytes\r\n"),
++    )
++    .unwrap();
++    assert!(changes::apply(&f.session.engine.store, f.root.path(), &args, true, &d()).is_err());
++    assert_eq!(
++        f.session
++            .engine
++            .store
++            .db
++            .query_row(
++                "SELECT COUNT(*) FROM records WHERE kind='journal'",
++                [],
++                |row| row.get::<_, usize>(0)
++            )
++            .unwrap(),
++        0
++    );
++    fs::write(f.root.path().join("spare_module.ts"), SOURCE).unwrap();
++    let receipt =
++        changes::apply(&f.session.engine.store, f.root.path(), &args, true, &d()).unwrap();
++    assert!(!f.root.path().join("spare_module.ts").exists());
++    changes::recover(&f.session.engine.store, f.root.path(), &receipt.id, true).unwrap();
++    assert_eq!(
++        fs::read(f.root.path().join("spare_module.ts")).unwrap(),
++        SOURCE.as_bytes()
++    );
++}
+diff --git a/native/tests/file_usage_live.rs b/native/tests/file_usage_live.rs
+new file mode 100644
+index 0000000..d5396fd
+--- /dev/null
++++ b/native/tests/file_usage_live.rs
+@@ -0,0 +1,137 @@
++//! Explicit real TypeScript language-server and compiler gate, without fixture fallback.
++use serde_json::json;
++use std::{fs, path::Path};
++use yoke::{Engine, capture::Deadline, changes, lsp};
++
++#[test]
++#[ignore = "requires YOKE_TS_LSP and YOKE_TSC selecting actual installed TypeScript tools"]
++fn actual_typescript_and_javascript_unused_modules_are_checked_compiled_applied_and_recovered() {
++    let cli =
++        std::env::var("YOKE_TS_LSP").expect("Select the actual TypeScript language-server CLI");
++    let compiler = std::env::var("YOKE_TSC").expect("Select the actual TypeScript compiler CLI");
++    for path in [&cli, &compiler] {
++        assert!(Path::new(path).is_absolute() && Path::new(path).is_file());
++    }
++    for (language, extension) in [("typescript", "ts"), ("javascript", "js")] {
++        let selected = format!("spare_module.{extension}");
++        let other = format!("other.{extension}");
++        let root = tempfile::tempdir().unwrap();
++        let source = if language == "typescript" {
++            "// actual provider fixture: café 🦀\r\nexport function unusedCafé(): number { return 42; }\r\n"
++        } else {
++            "// actual provider fixture: café 🦀\r\nexport function unusedCafé() { return 42; }\r\n"
++        };
++        fs::write(root.path().join(&selected), source).unwrap();
++        fs::write(root.path().join(&other), "export const untouched = 7;\r\n").unwrap();
++        fs::write(root.path().join("tsconfig.json"),serde_json::to_vec(&json!({"compilerOptions":{"strict":true,"module":"esnext","target":"es2022","allowJs":language=="javascript","checkJs":language=="javascript"},"include":[format!("*.{extension}")]})).unwrap()).unwrap();
++        let mut engine = Engine::open(root.path()).unwrap();
++        engine
++            .register_configured_server(lsp::ConfiguredServer {
++                server: lsp::Server {
++                    command: "node".into(),
++                    args: vec![cli.clone(), "--stdio".into()],
++                    language: language.into(),
++                    trust: true,
++                },
++                configuration: lsp::HostConfiguration {
++                    passive_profile: Some(lsp::PassiveProfile::TypescriptLanguageServer),
++                    ..Default::default()
++                },
++            })
++            .unwrap();
++        let value = yoke::semantic_refactor::invoke(
++            &mut engine,
++            "safeDelete",
++            &json!({"relativePath":selected}),
++            &Deadline::new(90_000),
++        )
++        .unwrap_or_else(|error| panic!("Actual TypeScript file usage gate: {error:#}"));
++        println!("actual-{language}-file-usage-plan={value}");
++        assert_eq!(value["forced"], false);
++        assert_eq!(value["usageCheck"]["performed"], true);
++        assert_eq!(value["usageCheck"]["providerRequestCount"], 2);
++        assert_eq!(
++            value["usageCheck"]["declarations"]
++                .as_array()
++                .unwrap()
++                .len(),
++            1
++        );
++        assert_eq!(value["complete"], false);
++        assert_eq!(
++            fs::read(root.path().join(&selected)).unwrap(),
++            source.as_bytes()
++        );
++        let id = value["plan"]["id"].as_str().unwrap();
++        let verification = yoke::verify::execute(
++            &engine,
++            id,
++            "node",
++            &[
++                compiler.clone(),
++                "--noEmit".into(),
++                "--project".into(),
++                "tsconfig.json".into(),
++            ],
++            true,
++            &Deadline::new(60_000),
++        )
++        .unwrap();
++        println!("actual-{language}-verification={verification}");
++        assert_eq!(verification["status"], "passed", "{verification}");
++        changes::approve(&engine.store, id, false).unwrap();
++        let receipt = changes::apply(
++        &engine.store,
++        root.path(),
++        &json!({"planId":id,"idempotencyKey":"actual-typescript-file-usage","mode":"workspace"}),
++        true,
++        &Deadline::new(30_000),
++    )
++    .unwrap();
++        assert!(!root.path().join(&selected).exists());
++        changes::recover(&engine.store, root.path(), &receipt.id, true).unwrap();
++        assert_eq!(
++            fs::read(root.path().join(&selected)).unwrap(),
++            source.as_bytes()
++        );
++        let count: usize = engine
++            .store
++            .db
++            .query_row(
++                "SELECT COUNT(*) FROM records WHERE kind='plan'",
++                [],
++                |row| row.get(0),
++            )
++            .unwrap();
++        fs::write(
++            root.path().join(&other),
++            "import { unusedCafé } from './spare_module';\nexport const retained = unusedCafé();\n",
++        )
++        .unwrap();
++        assert!(
++            yoke::semantic_refactor::invoke(
++                &mut engine,
++                "safeDelete",
++                &json!({"relativePath":selected}),
++                &Deadline::new(30_000)
++            )
++            .is_err()
++        );
++        assert_eq!(
++            engine
++                .store
++                .db
++                .query_row(
++                    "SELECT COUNT(*) FROM records WHERE kind='plan'",
++                    [],
++                    |row| row.get::<_, usize>(0)
++                )
++                .unwrap(),
++            count
++        );
++        assert_eq!(
++            fs::read(root.path().join(&selected)).unwrap(),
++            source.as_bytes()
++        );
++    }
++}
+diff --git a/native/tests/fixtures/file-usage-lsp.mjs b/native/tests/fixtures/file-usage-lsp.mjs
+new file mode 100644
+index 0000000..4c071d9
+--- /dev/null
++++ b/native/tests/fixtures/file-usage-lsp.mjs
+@@ -0,0 +1,24 @@
++// Owned protocol fixture only; it is not a compiler or production language server.
++import fs from 'node:fs';
++import path from 'node:path';
++import {pathToFileURL} from 'node:url';
++const [log,mode='ok']=process.argv.slice(2);
++let input=Buffer.alloc(0), uri, source;
++function reply(message,result){const body=Buffer.from(JSON.stringify({jsonrpc:'2.0',id:message.id,result}));process.stdout.write(`Content-Length: ${body.length}\r\n\r\n`);process.stdout.write(body);}
++function range(message){const {line,character}=message.params.position;const name=/^[$_\p{ID_Start}][$\u200c\u200d_\p{ID_Continue}]*/u.exec(source.split('\n')[line].slice(character))[0];return {start:{line,character},end:{line,character:character+name.length}};}
++function handle(message){
++ fs.appendFileSync(log,JSON.stringify(message)+'\n');
++ if(message.method==='initialize'){reply(message,{capabilities:{positionEncoding:'utf-16',textDocumentSync:1,definitionProvider:true,referencesProvider:mode!=='missing-references'}});return;}
++ if(message.method==='textDocument/didOpen'){uri=message.params.textDocument.uri;source=message.params.textDocument.text;return;}
++ if(message.method==='textDocument/definition'){reply(message,mode==='empty-definition'?[]:[{uri,range:range(message)}]);return;}
++ if(message.method==='textDocument/references'){
++  if(mode==='empty-references'){reply(message,[]);return;}
++  if(mode==='foreign-reference'){reply(message,[{uri,range:range(message)},{uri:pathToFileURL(path.resolve(process.cwd(),'other.ts')).href,range:{start:{line:0,character:13},end:{line:0,character:22}}}]);return;}
++  if(mode==='overflow-references'){reply(message,Array.from({length:2001},()=>({uri,range:range(message)})));return;}
++  reply(message,[{uri,range:range(message)}]);return;
++ }
++ if(message.method==='shutdown'){reply(message,null);return;}
++ if(message.method==='exit'){process.exit(0);}
++ if(message.id!==undefined)reply(message,null);
++}
++process.stdin.on('data',chunk=>{input=Buffer.concat([input,chunk]);if(input.length>4_000_000)process.exit(2);for(;;){const header=input.indexOf('\r\n\r\n');if(header<0)return;const length=Number(/Content-Length: (\d+)/i.exec(input.subarray(0,header).toString())[1]);if(input.length<header+4+length)return;const message=JSON.parse(input.subarray(header+4,header+4+length));input=input.subarray(header+4+length);handle(message);}});

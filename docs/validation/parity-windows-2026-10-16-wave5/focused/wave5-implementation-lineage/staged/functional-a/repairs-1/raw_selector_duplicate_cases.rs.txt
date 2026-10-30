@@ -1,0 +1,158 @@
+// Append to retrieval_scopes_tests.rs to reuse genuine capture helpers.
+// Test-only draft: no compilation or execution is claimed here.
+
+#[test]
+fn raw_selector_duplicate_cases_json_workspace_objects() {
+    let positive = fixture(&[
+        ("package.json", r#"{"workspaces":{"packages":["p/*"]}}"#),
+        ("p/a/package.json", r#"{"name":"a"}"#),
+        ("p/b/package.json", r#"{"name":"b"}"#),
+    ]);
+    let deadline = Deadline::new(20_000);
+    let (_, partition) = checked(&positive, &deadline);
+    assert_eq!(partition.physical_package_count(), 2);
+
+    for nested in [true, false] {
+        for (first, second) in [(1usize, 0usize), (2_049, 0), (1_025, 1_024)] {
+            let left = vec![r#""p/*""#; first].join(",");
+            let right = vec![r#""p/*""#; second].join(",");
+            let marker = if nested {
+                format!("{{\"workspaces\":{{\"packages\":[{left}],\"packages\":[{right}]}}}}")
+            } else {
+                format!(
+                    "{{\"workspaces\":{{\"packages\":[{left}]}},\"workspaces\":{{\"packages\":[{right}]}}}}"
+                )
+            };
+            assert!(marker.len() < 1_000_000);
+            let f = fixture(&[
+                ("package.json", &marker),
+                ("p/a/package.json", r#"{"name":"a"}"#),
+                ("p/b/package.json", r#"{"name":"b"}"#),
+            ]);
+            captured(&f, "package.json", &marker);
+            if first == 1 {
+                unsupported(&f, "source_schema");
+            } else {
+                assert_eq!(first + second, 2_049);
+                let deadline = Deadline::new(20_000);
+                let mut run =
+                    begin(&f.engine.store, &f.snapshot, &f.graph, &deadline, 4_000_000).unwrap();
+                assert_eq!(
+                    hard(probe(&mut run)),
+                    RetrievalHardError::Capacity("selectors")
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn raw_selector_duplicate_cases_toml() {
+    let positive = fixture(&[
+        ("Cargo.toml", "[workspace]\nmembers=['p/*']\n"),
+        ("p/a/Cargo.toml", "[package]\nname='a'\n"),
+        ("p/b/Cargo.toml", "[package]\nname='b'\n"),
+    ]);
+    let deadline = Deadline::new(20_000);
+    let (_, partition) = checked(&positive, &deadline);
+    assert_eq!(partition.physical_package_count(), 2);
+
+    for field in ["members", "exclude"] {
+        for (first, second) in [(1usize, 0usize), (2_049, 0), (1_025, 1_024)] {
+            let left = vec!["'p/*'"; first].join(",");
+            let right = vec!["'p/*'"; second].join(",");
+            let marker = format!("[workspace]\n{field}=[{left}]\n{field}=[{right}]\n");
+            assert!(marker.len() < 1_000_000);
+            let f = fixture(&[
+                ("Cargo.toml", &marker),
+                ("p/a/Cargo.toml", "[package]\nname='a'\n"),
+                ("p/b/Cargo.toml", "[package]\nname='b'\n"),
+            ]);
+            captured(&f, "Cargo.toml", &marker);
+            if first == 1 {
+                unsupported(&f, "source_syntax");
+            } else {
+                assert_eq!(first + second, 2_049);
+                let deadline = Deadline::new(20_000);
+                let mut run =
+                    begin(&f.engine.store, &f.snapshot, &f.graph, &deadline, 4_000_000).unwrap();
+                assert_eq!(
+                    hard(probe(&mut run)),
+                    RetrievalHardError::Capacity("selectors")
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn raw_selector_duplicate_cases_yaml() {
+    let positive = fixture(&[
+        ("pnpm-workspace.yaml", "packages: ['p/*']\n"),
+        ("p/a/package.json", r#"{"name":"a"}"#),
+        ("p/b/package.json", r#"{"name":"b"}"#),
+    ]);
+    let deadline = Deadline::new(20_000);
+    let (_, partition) = checked(&positive, &deadline);
+    assert_eq!(partition.physical_package_count(), 2);
+
+    for (first, second) in [(1usize, 0usize), (2_049, 0), (1_025, 1_024)] {
+        let left = vec!["'p/*'"; first].join(",");
+        let right = vec!["'p/*'"; second].join(",");
+        let marker = format!("packages: [{left}]\npackages: [{right}]\n");
+        assert!(marker.len() < 1_000_000);
+        let f = fixture(&[
+            ("pnpm-workspace.yaml", &marker),
+            ("p/a/package.json", r#"{"name":"a"}"#),
+            ("p/b/package.json", r#"{"name":"b"}"#),
+        ]);
+        captured(&f, "pnpm-workspace.yaml", &marker);
+        if first == 1 {
+            unsupported(&f, "source_schema");
+        } else {
+            assert_eq!(first + second, 2_049);
+            let deadline = Deadline::new(20_000);
+            let mut run =
+                begin(&f.engine.store, &f.snapshot, &f.graph, &deadline, 4_000_000).unwrap();
+            assert_eq!(
+                hard(probe(&mut run)),
+                RetrievalHardError::Capacity("selectors")
+            );
+        }
+    }
+}
+
+#[test]
+fn raw_selector_role_controls_cargo_quoted_dotted() {
+    for form in ["dotted", "table", "inline"] {
+        for count in [2_048usize, 2_049] {
+            let entries = vec!["'p/*'"; count].join(",");
+            let marker = match form {
+                "dotted" => format!("\"workspace\".\"members\"=[{entries}]\n"),
+                "table" => format!("[\"workspace\"]\n\"members\"=[{entries}]\n"),
+                "inline" => format!("workspace={{\"members\"=[{entries}]}}\n"),
+                _ => unreachable!(),
+            };
+            assert!(marker.len() < 1_000_000);
+            let f = fixture(&[
+                ("Cargo.toml", &marker),
+                ("p/a/Cargo.toml", "[package]\nname='a'\n"),
+                ("p/b/Cargo.toml", "[package]\nname='b'\n"),
+            ]);
+            captured(&f, "Cargo.toml", &marker);
+            let deadline = Deadline::new(20_000);
+            if count == 2_048 {
+                let (_, partition) = checked(&f, &deadline);
+                assert_eq!(partition.physical_package_count(), 2, "{form}");
+            } else {
+                let mut run =
+                    begin(&f.engine.store, &f.snapshot, &f.graph, &deadline, 4_000_000).unwrap();
+                assert_eq!(
+                    hard(probe(&mut run)),
+                    RetrievalHardError::Capacity("selectors"),
+                    "{form}"
+                );
+            }
+        }
+    }
+}

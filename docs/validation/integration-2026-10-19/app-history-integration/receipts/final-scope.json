@@ -1,0 +1,15 @@
+{
+  "sourceCommit": "8fa410f380f384cb736babd7a3814758ec71be56",
+  "base": "a6bbe2c4d6cae58f6ce3118d0f0fdb34ff01ea34",
+  "nativeGroups": 14,
+  "nativePassed": 300,
+  "nativeFailed": 0,
+  "nativeDefaultIgnored": 6,
+  "nativeInputs": 758,
+  "retainedInputs": 759,
+  "nativeSourceUnchangedAcrossFinalChecks": true,
+  "allRetainedInputsStillMatch": true,
+  "actualWindowsCliGate": "passed; source and binaries unchanged, temporary credential removal and absence verified",
+  "wholeNativeRerun": false,
+  "qualification": "13 normal Cargo groups plus unchanged history-job target built with explicit test profile and separate output suffix due held crashed-linker lock. Previous failures preserved."
+}

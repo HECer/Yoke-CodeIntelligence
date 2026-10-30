@@ -1,0 +1,21 @@
+    Finished `test` profile [unoptimized] target(s) in 0.59s
+     Running tests\selected_view_analysis_review.rs (target\debug\deps\selected_view_analysis_review-ad14a7cd287a04cc.exe)
+
+running 2 tests
+test retention_plan_recognizes_selected_report_and_preserves_exact_history_and_cas_roots ... ok
+test retention_plan_refuses_forged_selected_report_scope_before_retiring_any_history ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.90s
+
+     Running tests\selected_view_review.rs (target\debug\deps\selected_view_review-c84228a655575662.exe)
+
+running 6 tests
+test selected_library_queries_reject_mutated_in_memory_views ... ok
+test selected_queries_reject_same_length_view_cas_corruption ... ok
+test selected_context_reports_wholly_omitted_source_when_budget_is_exhausted ... ok
+test selected_queries_reject_replaced_base_graph_without_republishing ... ok
+test selected_trace_visit_budget_includes_initial_entities ... ok
+test selected_queries_replay_exact_source_after_files_disappear_and_engine_reopens ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.78s
+

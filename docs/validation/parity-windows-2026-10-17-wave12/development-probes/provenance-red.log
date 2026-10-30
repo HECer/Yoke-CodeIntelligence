@@ -1,0 +1,24 @@
+   Compiling yoke-code-intelligence v0.5.0 (E:\Yoke-Worktrees\mixed-document-view-20261017\native)
+    Finished `test` profile [unoptimized] target(s) in 8.66s
+     Running tests\mixed_view_cli.rs (E:/Yoke-Build-Cache/mixed-document-view-20261017\debug\deps\mixed_view_cli-ffc3fea888a9b7f2.exe)
+
+running 1 test
+test mixed_source_provenance_retains_exact_meaning_packets_coverage_and_search_scope_roles ... FAILED
+
+failures:
+
+---- mixed_source_provenance_retains_exact_meaning_packets_coverage_and_search_scope_roles stdout ----
+
+thread 'mixed_source_provenance_retains_exact_meaning_packets_coverage_and_search_scope_roles' (36408) panicked at native\tests\mixed_view_cli.rs:672:5:
+assertion `left == right` failed
+  left: Null
+ right: false
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    mixed_source_provenance_retains_exact_meaning_packets_coverage_and_search_scope_roles
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 13 filtered out; finished in 6.97s
+
+error: test failed, to rerun pass `--test mixed_view_cli`

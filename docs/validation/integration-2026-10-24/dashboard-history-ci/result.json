@@ -1,0 +1,34 @@
+{
+  "complete": true,
+  "pythonPureAdmissionTests": 11,
+  "failed": 0,
+  "nativeExecutionAttempted": false,
+  "actualCiLiveAcceptanceComplete": false,
+  "allNineNativeProductInputsExact": true,
+  "previousNative694NotReassigned": true,
+  "previousTypescript260NotRerunOrReassigned": true,
+  "sourceInventoryEntries": 1071,
+  "originalWorkflowPrefixExact": true,
+  "normalReleaseUploadOrderPreserved": true,
+  "allExistingRustTestsAndLimitsUnchanged": true,
+  "files": [
+    {
+      "path": ".github/workflows/rust.yml",
+      "sha256": "0b4359825226493666b891288b2e67445f89db04ef68a4c2df9ebffa0da61b24",
+      "gitBlobSha": "be404efa136e17f3771c44348ea1ba47b628f0e6",
+      "bytes": 3323
+    },
+    {
+      "path": "scripts/host_history_live.py",
+      "sha256": "7118b0bfb6a7aa2b7144869b6496c40ab8ec38c287ada1b51a68aeb7a37f73ca",
+      "gitBlobSha": "d0fbcbe5c41c4d741b86dbcc98d129adeb0a8542",
+      "bytes": 39128
+    },
+    {
+      "path": "scripts/tests/test_host_history_live.py",
+      "sha256": "a149c0b01a685cf6ec45b2d673560780336bddd12cd5af05760e39d87b41d789",
+      "gitBlobSha": "046be6d6ddcf811cb7b3a5b4c01b35f9800a02ec",
+      "bytes": 7687
+    }
+  ]
+}

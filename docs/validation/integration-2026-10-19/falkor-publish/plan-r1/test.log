@@ -1,0 +1,43 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 23s
+     Running tests\falkor_publish.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\falkor_publish-e48cdac81ebd00ab.exe)
+
+running 4 tests
+test bootstrap_and_publication_operations_remain_separate_closed_programs ... FAILED
+test changed_source_or_tampered_preconditions_cannot_reuse_a_plan_identity ... FAILED
+test offline_plans_keep_exact_saved_graph_rows_and_grant_no_host_authority ... FAILED
+test target_binding_rejects_remote_plaintext_paths_credentials_unknown_grants_and_wrong_ips ... FAILED
+
+failures:
+
+---- bootstrap_and_publication_operations_remain_separate_closed_programs stdout ----
+
+thread 'bootstrap_and_publication_operations_remain_separate_closed_programs' (8708) panicked at native\tests\falkor_publish.rs:63:51:
+called `Result::unwrap()` on an `Err` value: falkor_publish_plaintext_requires_literal_loopback
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- changed_source_or_tampered_preconditions_cannot_reuse_a_plan_identity stdout ----
+
+thread 'changed_source_or_tampered_preconditions_cannot_reuse_a_plan_identity' (19696) panicked at native\tests\falkor_publish.rs:133:6:
+called `Result::unwrap()` on an `Err` value: falkor_publish_plaintext_requires_literal_loopback
+
+---- offline_plans_keep_exact_saved_graph_rows_and_grant_no_host_authority stdout ----
+
+thread 'offline_plans_keep_exact_saved_graph_rows_and_grant_no_host_authority' (22356) panicked at native\tests\falkor_publish.rs:39:6:
+called `Result::unwrap()` on an `Err` value: falkor_publish_plaintext_requires_literal_loopback
+
+---- target_binding_rejects_remote_plaintext_paths_credentials_unknown_grants_and_wrong_ips stdout ----
+
+thread 'target_binding_rejects_remote_plaintext_paths_credentials_unknown_grants_and_wrong_ips' (23896) panicked at native\tests\falkor_publish.rs:109:34:
+called `Result::unwrap()` on an `Err` value: falkor_publish_plaintext_requires_literal_loopback
+
+
+failures:
+    bootstrap_and_publication_operations_remain_separate_closed_programs
+    changed_source_or_tampered_preconditions_cannot_reuse_a_plan_identity
+    offline_plans_keep_exact_saved_graph_rows_and_grant_no_host_authority
+    target_binding_rejects_remote_plaintext_paths_credentials_unknown_grants_and_wrong_ips
+
+test result: FAILED. 0 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+error: test failed, to rerun pass `--test falkor_publish`

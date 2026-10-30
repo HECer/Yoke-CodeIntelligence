@@ -1,0 +1,24 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 12.66s
+     Running tests\knowledge_cli.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\knowledge_cli-cd250fcd9ca5d2aa.exe)
+cli_builds_vectors_and_mcp_queries_them_without_a_model_or_source_writes: test
+native_context_includes_labeled_source_knowledge_only_when_requested: test
+
+2 tests, 0 benchmarks
+     Running tests\language_constructs.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\language_constructs-4f3985b025df7217.exe)
+commonlisp_function_invocations_keep_the_exact_original_call_span: test
+explicit_erlang_fun_references_point_to_the_named_function_without_becoming_calls: test
+explicit_lisp_function_designators_are_references_and_quoted_data_stays_literal: test
+fortran_parameter_bindings_do_not_escape_to_another_procedure: test
+lisp_class_superclasses_and_slot_headers_are_not_calls_but_initforms_are: test
+lisp_lexical_declaration_headers_are_not_calls_but_bodies_and_initializers_are: test
+literal_lisp_vectors_do_not_emit_executable_calls_or_function_references: test
+new_language_procedure_nodes_have_actual_function_scopes: test
+objc_message_calls_are_distinct_from_plain_identifier_references: test
+objc_untyped_foreign_receiver_does_not_resolve_to_callers_own_method: test
+powershell_nested_functions_do_not_leak_into_a_sibling_function_scope: test
+quoted_lisp_lists_and_lambda_lists_do_not_become_function_calls: test
+vb_invocations_and_address_of_references_keep_distinct_relations: test
+vb_local_declarations_block_an_unrelated_same_named_module_method: test
+
+14 tests, 0 benchmarks

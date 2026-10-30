@@ -1,0 +1,26 @@
+{
+  "checkedAtUtc": "2026-10-16T00:11:16.831884+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--lib",
+    "logical_envelope_counter",
+    "--",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 0,
+  "seconds": 2.015,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-envelope-counter-green",
+  "logSha256": "67179f191a6ae3c25c104bb8045dc291aa8d98ed664d36e61138f24f0a1eb600",
+  "groups": 1,
+  "passed": 4,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

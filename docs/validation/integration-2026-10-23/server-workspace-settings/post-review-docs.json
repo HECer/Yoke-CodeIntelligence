@@ -1,0 +1,27 @@
+{
+  "sourceCommit": "61a1313fe60d18d31eeadd491e90a548a6804eb5",
+  "productionFilesUnchangedAfterQualification": true,
+  "changedFrozenInputs": {
+    "docs/REMAINING_WORK.md": {
+      "before": "1c0783d9c9e8e5b6f7fa37416ce5334252f6638cb6d2cb4593dba7a9ed71b6cd",
+      "after": "8f3d3083d1d4ca1d8d0137f936a817dae6ade2fb30b969e6e45a31aee1b99755"
+    },
+    "docs/STATUS.md": {
+      "before": "11cecc1adfee63f1bcc9e857c149a3024579a8e863316e372e8e2c70b6436752",
+      "after": "443b079601aeecedfa6e6dac11a28aea9c1b6124c4eed48e13e9e80da6c9cd9b"
+    },
+    "docs/parity/native-reconciliation-2026-10-15.json": {
+      "before": "4a456d3ae4207fa83d8c5bfeb10cef15928e80669f3ec18ff5724c96ca3d7b4d",
+      "after": "6f1e1e75ff0e49c72bf9ad23a6f9ced4c3e0e97ef076e40b96b4b409edc699fa"
+    },
+    "native/docs/session-config.md": {
+      "before": "3833760076228ab773608c6420f0ff93bcad0bea51abb3de3f590766f2551543",
+      "after": "9c5deac0f221b6bc76b30cb46bf53141f3b3a06ea3e8c632989c78fb30fd9bc1"
+    }
+  },
+  "updatedContractBeforeSha256": "3833760076228ab773608c6420f0ff93bcad0bea51abb3de3f590766f2551543",
+  "newContract": "native/docs/server-workspace-settings.md",
+  "newProductTestsClaimedAfterDocumentation": false,
+  "originalInventoryLedgerAndSummaryUnchanged": true,
+  "nativeCountersMatchRawGroupSums": true
+}

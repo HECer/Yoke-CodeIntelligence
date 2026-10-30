@@ -1,0 +1,19 @@
+--- a/native/docs/workflows.md
++++ b/native/docs/workflows.md
+@@ -4,6 +4,7 @@
+ 
+ | Workflow | CLI | Detailed contract |
+ |---|---|---|
++| Manifest-balanced source retrieval | Session MCP `ci_retrieve` with optional `scopeMode`; private auto in `trail_find_code` / `graft_find_code` | [Retrieval](manifest-balanced-retrieval.md) |
+ | Structural intraprocedural taint candidates | `yoke dataflow [--policy policy.json]`; MCP `ci_status` with `mode: dataflow` | [Dataflow](dataflow.md) |
+ | Configured TS/JS bindings and virtual solution builds | `yoke compiler --node <absolute> --typescript <absolute> --trust-compiler [--build]` | [Compiler](compiler.md) |
+ | Supplied test observations | `yoke test-map import --input map.json` | [Test mapping](test-map.md) |
+@@ -26,7 +27,7 @@
+ 
+ Retention plans are data for review. Development of this capability does not authorize deleting an existing user's history. State-deletion authorization applies only to the exact confirmed plan supplied by the host. Unknown age or dependencies defer retirement. Current snapshots, pins, editors, change/recovery plans, verification, knowledge, vector/media records and artifacts are protected. Purge applies only to previously committed CAS quarantine and rechecks current reachability.
+ 
+-Every command supports the common root, immutable snapshot, deadline and output budget flags where relevant. Oversized results become registered immutable artifacts accessible through `ci_read`. Actual collection or execution with any failed/skipped-only/zero-executed job returns a failing CLI exit code. Imported observations are labeled supplied data and do not authenticate execution.
++Every command supports the common root, immutable snapshot, deadline and output budget flags where relevant. Artifact-capable workflows expose oversized registered immutable artifacts through `ci_read`. Manifest-balanced retrieval and compatibility `find_code` instead fail at their hard output ceiling. Actual collection or execution with any failed/skipped-only/zero-executed job returns a failing CLI exit code. Imported observations are labeled supplied data and do not authenticate execution.
+ 
+ Host JSON inputs reject duplicate keys at every nesting depth and enforce byte, depth and node limits. Typed schema failures use fixed errors without quoting input values. Runtime evaluation/REPL requires its own host flag; session commands cannot grant it. Executed programs retain host privileges and may have effects outside the copied source tree. Runtime reports therefore distinguish the host's source-copy behavior from unmonitored program effects.
+ 

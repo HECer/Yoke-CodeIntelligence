@@ -1,0 +1,19 @@
+    Finished `test` profile [unoptimized] target(s) in 0.54s
+     Running tests\replacement.rs (target\debug\deps\replacement-4678ddb3fc91b625.exe)
+
+running 2 tests
+test capture_templates_preserve_numeric_named_unicode_escaped_and_missing_references ... ok
+test multiplicative_templates_are_rejected_with_bounded_memory_and_shared_deadline ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\resource_paging.rs (target\debug\deps\resource_paging-a420510022e74047.exe)
+
+running 4 tests
+test generic_resource_pages_reach_large_artifacts_under_the_original_eight_tool_profile ... ok
+test streaming_pages_verify_bytes_outside_the_page_and_preserve_unicode_boundaries ... ok
+test project_resource_pages_use_only_registered_roots_without_activation ... ok
+test large_graphify_resources_preserve_the_complete_original_body_in_paged_storage ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.98s
+

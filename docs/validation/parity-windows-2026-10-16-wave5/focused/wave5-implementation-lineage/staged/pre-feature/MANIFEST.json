@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "status": "ignored_only_uncompiled_unexecuted",
+  "actionId": "act_mva2xse3_29c94c86e404",
+  "sequence": "OLD global golden capture+GREEN and OLD compatibility_envelope causalRED before ANY ABC stub/wiring/source promotion",
+  "normalDestination": "native/tests/monorepo_pre_feature_envelope.rs",
+  "cargoPackage": "yoke-code-intelligence",
+  "cargoTarget": "monorepo_pre_feature_envelope",
+  "exactSelector": "full_definition_envelope_overflow_is_an_error_without_an_artifact_fallback",
+  "supportPaths": [],
+  "testCount": 1,
+  "existingPublicApisOnly": true,
+  "sourceProfileTestSha256": "e8e9502236377be9b7ac465299e62c0ee1768ff5e2b3c8f6e0a0567fe8314c20",
+  "unchangedCProfileManifestSha256": "4fa161403aac3c5f73c15a436ff0953148a2d97505d48e00620d920613293529",
+  "lineage": {
+    "originalFunctionSha256": "bdac95e8f27075ffe6f62b5e2084dbae3be2895222e25d593bb16f1a4e7e2402",
+    "verbatimSourceConstructionSha256": "31494431cc9d7164e578b0d54f42c10405b01a0aae77808e8f382d55bdc28b19",
+    "verbatimHelperSha256": {
+      "session": "1f5313c67811bc7773faca2062db0d5a104204d103363f93a3b5d4bef5e8c9f4",
+      "rpc": "24da2845dc24ebe01423ff9dafc67e9c45a99a8637f92994e902af7231274cca",
+      "call": "e5cbfd7345ecbfaac1f9297351e63a33db0c81ea88bb9cd3376ed1614bbe5d38",
+      "counts": "d041271bfb99cd1a5c80caf8365e764af3eecfe477cb291d461725a413a5b8e3",
+      "write": "01badc606aa07215aa8e118e4ccd7c7ba96269fa733f978bdc425665f19864a8"
+    },
+    "aggregateArgumentsVerbatim": "json!({\"query\":\"payment\",\"limit\":2,\"full\":true})"
+  },
+  "fixture": {
+    "files": 2,
+    "bytesPerFile": 2000000,
+    "fullDefinitionControls": 2,
+    "full": true,
+    "logicalEnvelopeBytes": 4000000
+  },
+  "diagnostics": {
+    "maximumJsonBytes": 2048,
+    "containsSourceOrBody": false
+  },
+  "artifacts": [
+    {
+      "path": "native/tests/monorepo_pre_feature_envelope.rs",
+      "sha256": "c1563216c4d2c78f26fadadc62ffd68a4ff5f391df3396e32485f17aa5014103",
+      "bytes": 8624,
+      "promote": true
+    },
+    {
+      "path": "source-full-definition-test.rs.txt",
+      "sha256": "21e1b9a78426d8decadb24e760220ed4aa4d40014e0fcef8573600a27718e80f",
+      "bytes": 1181,
+      "promote": false
+    },
+    {
+      "path": "README.md",
+      "sha256": "0a42ffbe4747067e4900c7bf8d15474f0a9eb8c7d9e518b001edc46958f5a847",
+      "bytes": 3767,
+      "promote": false
+    }
+  ],
+  "normalFilesChanged": [],
+  "execution": {
+    "cargo": false,
+    "node": false,
+    "providers": 0
+  }
+}

@@ -1,0 +1,94 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+error[E0282]: type annotations needed for `std::collections::BTreeMap<_, std::string::String>`
+   --> native\src\meaning_view.rs:551:17
+    |
+551 |             let mut concept_ids = BTreeMap::new();
+    |                 ^^^^^^^^^^^^^^^   --------------- type must be known at this point
+    |
+help: consider giving `concept_ids` an explicit type, where the type for type parameter `K` is specified
+    |
+551 |             let mut concept_ids: std::collections::BTreeMap<K, _> = BTreeMap::new();
+    |                                ++++++++++++++++++++++++++++++++++
+
+error[E0283]: type annotations needed for `std::collections::BTreeMap<_, std::string::String>`
+   --> native\src\meaning_view.rs:551:17
+    |
+551 |             let mut concept_ids = BTreeMap::new();
+    |                 ^^^^^^^^^^^^^^^
+...
+557 |                     concept_ids.insert(original.into(), id.clone()).is_none(),
+    |                                                 ---- type must be known at this point
+    |
+    = note: multiple `impl`s satisfying `_: From<&str>` found in the following crates: `aws_smithy_runtime_api`, `aws_smithy_types`, `bytes`, `reqwest`:
+            - impl From<&'static str> for aws_smithy_runtime_api::client::auth::AuthSchemeId;
+            - impl From<&'static str> for aws_smithy_types::str_bytes::StrBytes;
+            - impl From<&'static str> for bytes::bytes::Bytes;
+            - impl From<&'static str> for reqwest::Body;
+            - impl From<&'static str> for reqwest::blocking::Body;
+    = note: required for `&str` to implement `Into<_>`
+help: consider giving `concept_ids` an explicit type, where the type for type parameter `U` is specified
+    |
+551 |             let mut concept_ids: std::collections::BTreeMap<K, _> = BTreeMap::new();
+    |                                ++++++++++++++++++++++++++++++++++
+
+error[E0283]: type annotations needed for `std::collections::BTreeMap<_, std::string::String>`
+   --> native\src\meaning_view.rs:551:17
+    |
+551 |             let mut concept_ids = BTreeMap::new();
+    |                 ^^^^^^^^^^^^^^^
+...
+578 |                     concept_ids
+    |                     ----------- type must be known at this point
+579 |                         .get(string(raw, "source")?)
+    |                          --- required by a bound introduced by this call
+    |
+    = note: multiple `impl`s satisfying `_: Borrow<str>` found in the following crates: `alloc`, `http`, `rusqlite`, `serde_spanned`:
+            - impl Borrow<str> for Spanned<std::string::String>;
+            - impl Borrow<str> for reqwest::header::HeaderName;
+            - impl Borrow<str> for rusqlite::util::small_cstr::SmallCString;
+            - impl Borrow<str> for std::string::String;
+note: required by a bound in `std::collections::BTreeMap::<K, V, A>::get`
+   --> C:\Users\HEC_e\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\alloc\src\collections\btree\map.rs:720:12
+    |
+718 |     pub fn get<Q: ?Sized>(&self, key: &Q) -> Option<&V>
+    |            --- required by a bound in this associated function
+719 |     where
+720 |         K: Borrow<Q> + Ord,
+    |            ^^^^^^^^^ required by this bound in `BTreeMap::<K, V, A>::get`
+help: consider giving `concept_ids` an explicit type, where the type for type parameter `K` is specified
+    |
+551 |             let mut concept_ids: std::collections::BTreeMap<K, _> = BTreeMap::new();
+    |                                ++++++++++++++++++++++++++++++++++
+
+error[E0283]: type annotations needed for `std::collections::BTreeMap<_, std::string::String>`
+   --> native\src\meaning_view.rs:551:17
+    |
+551 |             let mut concept_ids = BTreeMap::new();
+    |                 ^^^^^^^^^^^^^^^
+...
+584 |                     concept_ids
+    |                     ----------- type must be known at this point
+585 |                         .get(string(raw, "target")?)
+    |                          --- required by a bound introduced by this call
+    |
+    = note: multiple `impl`s satisfying `_: Borrow<str>` found in the following crates: `alloc`, `http`, `rusqlite`, `serde_spanned`:
+            - impl Borrow<str> for Spanned<std::string::String>;
+            - impl Borrow<str> for reqwest::header::HeaderName;
+            - impl Borrow<str> for rusqlite::util::small_cstr::SmallCString;
+            - impl Borrow<str> for std::string::String;
+note: required by a bound in `std::collections::BTreeMap::<K, V, A>::get`
+   --> C:\Users\HEC_e\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\alloc\src\collections\btree\map.rs:720:12
+    |
+718 |     pub fn get<Q: ?Sized>(&self, key: &Q) -> Option<&V>
+    |            --- required by a bound in this associated function
+719 |     where
+720 |         K: Borrow<Q> + Ord,
+    |            ^^^^^^^^^ required by this bound in `BTreeMap::<K, V, A>::get`
+help: consider giving `concept_ids` an explicit type, where the type for type parameter `K` is specified
+    |
+551 |             let mut concept_ids: std::collections::BTreeMap<K, _> = BTreeMap::new();
+    |                                ++++++++++++++++++++++++++++++++++
+
+Some errors have detailed explanations: E0282, E0283.
+For more information about an error, try `rustc --explain E0282`.
+error: could not compile `yoke-code-intelligence` (lib test) due to 4 previous errors

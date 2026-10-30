@@ -1,0 +1,6 @@
+* -text
+README.md text eol=lf
+*.py text eol=lf
+# Captured streams retain original CRLF and terminal blank lines byte-for-byte.
+*.stdout whitespace=-blank-at-eof,cr-at-eol
+*.stderr whitespace=-blank-at-eof,cr-at-eol

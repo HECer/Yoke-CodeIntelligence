@@ -1,0 +1,40 @@
+{
+  "job": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-claude-help-clsq3lwz",
+  "commands": [
+    {
+      "name": "root",
+      "args": [
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "mcp",
+      "args": [
+        "mcp",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "mcp-list",
+      "args": [
+        "mcp",
+        "list",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "mcp-get",
+      "args": [
+        "mcp",
+        "get",
+        "--help"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "modelTurnRequested": false,
+  "accountLoginRequested": false
+}

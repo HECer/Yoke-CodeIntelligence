@@ -1,0 +1,16 @@
+    Finished `test` profile [unoptimized] target(s) in 0.52s
+     Running tests\model_bedrock.rs (target\debug\deps\model_bedrock-f9c29e631b53577c.exe)
+0 tests, 0 benchmarks
+     Running tests\model_bedrock_batch_cli_review.rs (target\debug\deps\model_bedrock_batch_cli_review-83f2c165a7f1f553.exe)
+0 tests, 0 benchmarks
+     Running tests\model_bedrock_cli.rs (target\debug\deps\model_bedrock_cli-2a5523af827e1e38.exe)
+0 tests, 0 benchmarks
+     Running tests\model_bedrock_cli_actual.rs (target\debug\deps\model_bedrock_cli_actual-0bfd6a33f71dc038.exe)
+actual_cli_bedrock_batch_has_three_accounted_attempts_and_one_complete_corpus: test
+actual_cli_bedrock_summary_uses_chunked_session_and_one_accounted_attempt: test
+
+2 tests, 0 benchmarks
+     Running tests\model_bedrock_review.rs (target\debug\deps\model_bedrock_review-bf263af38b3aa1ee.exe)
+0 tests, 0 benchmarks
+     Running tests\model_http.rs (target\debug\deps\model_http-68d161d3020e979e.exe)
+0 tests, 0 benchmarks

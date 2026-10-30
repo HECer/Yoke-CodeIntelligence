@@ -1,0 +1,17 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 5.43s
+     Running tests\deadlines.rs (target\debug\deps\deadlines-7e944d9e9fcce6f9.exe)
+snapshot_publication_rolls_back_when_document_indexing_expires: test
+
+1 test, 0 benchmarks
+     Running tests\debug_adapter.rs (target\debug\deps\debug_adapter-b0106548c278352b.exe)
+active_debugger_evaluation_observes_host_cancellation_before_its_original_deadline: test
+actual_windows_debugpy_persistent_evaluation_has_exact_captured_source: test
+dap_accepts_no_configuration_phase_and_discovers_optional_stopped_thread_ids: test
+invalid_evaluation_input_is_rejected_before_launching_an_authorized_target: test
+persistent_dap_evaluates_only_stopped_source_bound_frames_and_closes_owned_target: test
+reverse_launch_authority_and_foreign_stale_or_unstopped_frames_are_refused: test
+runtime_and_evaluation_permissions_are_checked_before_adapter_or_target_start: test
+session_facades_use_only_host_profiles_preserve_namespaces_and_reject_changed_source: test
+
+8 tests, 0 benchmarks

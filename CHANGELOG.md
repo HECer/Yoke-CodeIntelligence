@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.5.0 native Rust — 2026-10-14
+
+- Complete independent Rust CLI/library paths for configured TypeScript analysis and virtual solution builds, bounded intraprocedural dataflow, and source-bound per-test Node coverage and conservative impact selection.
+- Add explicit executable-model protocols, immutable embedding/summary/ranking bindings and integer currency accounting that retains reservations when billing is unknown. Supply a Rust local Ollama worker; actual embedding, reranking and concise-summary integrations passed with verified local models.
+- Add persistent main-thread Python debugging, breakpoints, stepping, bounded variable/stack inspection and explicitly authorized REPL/evaluation through our own isolated worker. Preserve source hashes and failed program/operation status.
+- Add authenticated TLS 1.3 signed source transport, fixed host grants, scoped roles, credential-backed CLI service/client operations and socket-level shared deadlines. Store private credentials in native Windows, macOS and Linux OS stores; live non-Windows broker validation remains separate.
+- Add reviewed snapshot retirement, durable audits, recoverable quarantine and separately confirmed orphan purge. Add digest-pinned offline Linux Docker verification with restrictive execution policy and exact owned-container cleanup.
+- Harden host-input JSON against duplicate keys and value-leaking schema errors, copied-source integrity against oversized files, and LSP snapshot/graph identities and Unicode document URI handling. Validate four actual rust-analyzer, TypeScript and Jedi workflows.
+- Package the native executable and matching VS Code extension with exact dependency license texts and fresh validation evidence. Default indexing and retrieval require no upstream application, Node, Python, model or API key; optional compiler/runtime/model operations retain explicit host authority.
+
+This local release replaces the documented local workflows. Exhaustive upstream/commercial parity, arbitrary language servers, hosted multi-platform runs, neural quality and whole-agent cost/performance comparisons are not asserted. See `docs/validation/native-workflows.json` and `docs/RUST_REPLACEMENT.md`.
+
+## 0.4.0 native Rust — 2026-10-14
+
+- Add an independent Rust CLI/MCP runtime with 24-language Tree-sitter structure, immutable SQLite/CAS evidence, parallel parse reuse, FTS/BM25, bounded context plans, directed graph analytics and actual Leiden.
+- Add exact source-bound LSP navigation/rename planning, guarded symbolic changes, executed verification and durable recovery with process-group/job lifecycle control.
+- Expose six read-only semantic operations through the eight-tool MCP interface; validate actual rust-analyzer historical references and reject corrupted snapshot/workspace/graph attribution.
+- Add service-scoped contracts, authored knowledge, sparse/external vectors, LCOV/runtime/SARIF imports, versioned editor overlays and a native authenticated HTTP bridge.
+- Default VS Code to Rust; validate actual extension-host unsaved capture and harden startup/stop/version/exclusion races with separate regression tests.
+- Add native image/audio/video technical inspection, supplied transcript binding and resource-limited real PDF text extraction with independent Unicode code-space/page-tree validation and visible unsupported scope.
+- Add portable native/VSIX packaging with pinned full license inventories, offline graph export and cross-platform CI definitions. Retain independent TypeScript 0.3 advanced workflows and their state during migration.
+- Fix Windows TypeScript process cleanup, test reporter paths and Node 24 structured test counts. Full suite: 240 passed, 3 skipped, 0 failed.
+
+No registry/GitHub publication is implied. Native migration and external compatibility boundaries are recorded in `docs/STATUS.md` and the replacement acceptance matrix.
+
 ## 0.2.0 — 2026-10-13
 
 - Add immutable TypeScript compiler filesystem and configured `tsconfig`/`jsconfig` discovery. Honor roots, inherited settings, path aliases and source-based project references; separate globals and analysis contexts. Reference cycles and unavailable targets are explicit diagnostics, not successful empty analyses.

@@ -1,0 +1,21 @@
+{
+  "command": [
+    "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "2",
+    "--target-dir",
+    "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+    "--test",
+    "source_acquisition_http",
+    "tls_uses_explicit_roots_hostname_verification_and_literal_address_override_without_dns",
+    "--",
+    "--test-threads=1"
+  ],
+  "exitCode": 101,
+  "seconds": 3.9986376762390137,
+  "inputs": 688,
+  "sourceUnchanged": true
+}

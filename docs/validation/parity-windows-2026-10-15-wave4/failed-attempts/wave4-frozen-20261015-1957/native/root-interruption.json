@@ -1,0 +1,15 @@
+{
+    "operation":  "stop_owned_failed_test_runner_and_its_children",
+    "checkedAtUtc":  "2026-10-15T20:05:22.2483043Z",
+    "processId":  38960,
+    "reason":  "Library run has an observed 30-second recovery stress-test timeout; stop remaining native batches pending diagnosis.",
+    "libraryResult":  {
+                          "ignored":  1,
+                          "filteredOut":  3,
+                          "failed":  1,
+                          "passed":  159
+                      },
+    "libraryLogSha256":  "45b59ebd3261a3dac8a4eebd38b74be2a815a8aa13f1883a2e84ffbb327ade3c",
+    "acceptedFullRun":  false,
+    "countsInterpretation":  "Partial raw attempt only; never imported into a successful matrix."
+}

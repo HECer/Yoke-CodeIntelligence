@@ -1,0 +1,1042 @@
+{
+  "sourceCommit": "2674a2f53763a5869a57264eb8e700fea78859ea",
+  "evidence": "docs/validation/integration-2026-10-23/git-repository-http/README.md",
+  "nativePassed": 777,
+  "nativeFailed": 0,
+  "nativeExistingIgnored": 8,
+  "nativeGroups": 30,
+  "newIntegrationFunctions": 7,
+  "typescriptPassed": 260,
+  "typescriptExistingSkipped": 3,
+  "frozenInputs": 1094,
+  "formatRoots": 356,
+  "explicitPerPrincipalFixedRootGitHttp": true,
+  "allSixProfileCatalogNamesExact": true,
+  "actualPinnedClaudeHttpHealthCalls": 12,
+  "sourceCaptureAfterAuthenticationAndFullPolicy": true,
+  "multiProjectGitTarget": false,
+  "original353InventoryLedgerAndSummaryUnchanged": true,
+  "wholeNativeRerun": false,
+  "fullContractCertification": false,
+  "schemaVersion": 1,
+  "date": "2026-10-23",
+  "parentCommit": "9db26d7117e58b020e64627008ba3ef42edb7ffd",
+  "productionGitBlobs": {
+    "native/src/git_repository_host.rs": "a3e3a8370eff10d9ba5536ff73631fb0a4e34c05",
+    "native/src/git_repository_http_cli.rs": "1f763589b10a521651d3a2898567306441654a77",
+    "native/src/git_repository_preferences.rs": "9277d02cdacc7aded6dbacee3fd7822caac193b1",
+    "native/src/git_repository_scope.rs": "51fc267f4fa76b361f55f59bfba5d54b0d7d0dc9",
+    "native/src/main.rs": "476762e94978f680bdce2435a30cd1fe84ab991c",
+    "native/src/mcp_http.rs": "fb309544396393740289be589b86bd8a9cf61c40",
+    "native/tests/git_repository_http.rs": "d6f47f8e7119454906790fe982a3a14f903fef35"
+  },
+  "cliSha256": "4483d2e3f3fc93d12cb921a4360fcd0d6588e657a38fc10d52c6acc74ffe5713",
+  "clientVersion": "2.1.306",
+  "clientSha256": "f6bc9de38f507c36c9a3bb0085a59a27e32156e2208252bf1707c4e3ef309114",
+  "nativeGroupResults": [
+    {
+      "group": "git_repository_http",
+      "passed": 7,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-test2/cargo-test-git-repository-http.stdout"
+    },
+    {
+      "group": "mcp_http",
+      "passed": 18,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-test2/cargo-test-mcp-http.stdout"
+    },
+    {
+      "group": "mcp_http_cli",
+      "passed": 3,
+      "failed": 0,
+      "ignored": 1,
+      "evidence": "git-repository-http-test2/cargo-test-mcp-http-cli.stdout"
+    },
+    {
+      "group": "git_repository_profiles",
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-test2/cargo-test-git-repository-profiles.stdout"
+    },
+    {
+      "group": "project_session",
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-test2/cargo-test-project-session.stdout"
+    },
+    {
+      "group": "git_repository_host",
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-test2/cargo-test-git-repository-host.stdout"
+    },
+    {
+      "group": "git_repository_preferences",
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-test2/cargo-test-git-repository-preferences.stdout"
+    },
+    {
+      "group": "git_repository_scope",
+      "passed": 16,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-test2/cargo-test-git-repository-scope.stdout"
+    },
+    {
+      "group": "lib",
+      "passed": 578,
+      "failed": 0,
+      "ignored": 7,
+      "evidence": "git-repository-http-qualified1/cargo-test-lib.stdout"
+    },
+    {
+      "group": "mcp_http_review",
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-mcp_http_review.stdout"
+    },
+    {
+      "group": "mcp_collection_grants",
+      "passed": 2,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-mcp_collection_grants.stdout"
+    },
+    {
+      "group": "mcp_collection_grants_review",
+      "passed": 3,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-mcp_collection_grants_review.stdout"
+    },
+    {
+      "group": "source_exclusions",
+      "passed": 7,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-source_exclusions.stdout"
+    },
+    {
+      "group": "capture_policy",
+      "passed": 9,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-capture_policy.stdout"
+    },
+    {
+      "group": "ignored_capture",
+      "passed": 15,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-ignored_capture.stdout"
+    },
+    {
+      "group": "session_startup_project",
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-session_startup_project.stdout"
+    },
+    {
+      "group": "session_primary_read_only",
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-session_primary_read_only.stdout"
+    },
+    {
+      "group": "session_agent_interface",
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-session_agent_interface.stdout"
+    },
+    {
+      "group": "session_steering",
+      "passed": 12,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-session_steering.stdout"
+    },
+    {
+      "group": "session_inclusions",
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-session_inclusions.stdout"
+    },
+    {
+      "group": "session_memory_patterns",
+      "passed": 9,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-session_memory_patterns.stdout"
+    },
+    {
+      "group": "session_optional_defaults",
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-session_optional_defaults.stdout"
+    },
+    {
+      "group": "session_epoch_selection",
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-session_epoch_selection.stdout"
+    },
+    {
+      "group": "session_review",
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-session_review.stdout"
+    },
+    {
+      "group": "session_mcp",
+      "passed": 3,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-session_mcp.stdout"
+    },
+    {
+      "group": "protocol_connection",
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-protocol_connection.stdout"
+    },
+    {
+      "group": "compatibility",
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-compatibility.stdout"
+    },
+    {
+      "group": "compatibility_review",
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-compatibility_review.stdout"
+    },
+    {
+      "group": "trail_adapter",
+      "passed": 4,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-trail_adapter.stdout"
+    },
+    {
+      "group": "graphify_adapter",
+      "passed": 7,
+      "failed": 0,
+      "ignored": 0,
+      "evidence": "git-repository-http-qualified1/cargo-test-graphify_adapter.stdout"
+    }
+  ],
+  "allTargetClippyWarningsDenied": true,
+  "buildPassed": true,
+  "typecheckPassed": true,
+  "cargoFmtAllWindowsOs206Retained": true,
+  "qualificationParts": [
+    "git-repository-http-test2",
+    "git-repository-http-qualified1"
+  ],
+  "allOwnedTrialJobsEmpty": true,
+  "actualOwnedLiveParentProcessCalls": 8,
+  "nativeWorkerAndClientChildrenInheritAssignedJob": true,
+  "clientPrivateHeadersAndOutputArchived": false,
+  "firstPrototypeFailuresRetained": true,
+  "firstToFinalChangedInputs": [
+    "native/src/main.rs",
+    "native/src/mcp_http.rs",
+    "native/tests/git_repository_http.rs"
+  ],
+  "archive": {
+    "path": "raw.zip",
+    "bytes": 368017,
+    "sha256": "a91b9a9f526bda09847944d89871228191548005653c7a1d9cc7e6fb201714e8",
+    "members": [
+      {
+        "path": "git-repository-http-final-audit1/controller.py",
+        "bytes": 2972,
+        "sha256": "4bf2ca9e7a16f6a94cef8a278520f021cd6f1702243a6bf50bf2b80c6ec3b6ef"
+      },
+      {
+        "path": "git-repository-http-final-audit1/result.json",
+        "bytes": 7178,
+        "sha256": "78710607b835610f102c96f7a3c8ccccf24d69e68f9f065b210862defb44a149"
+      },
+      {
+        "path": "git-repository-http-final-audit1/source-before.json",
+        "bytes": 116489,
+        "sha256": "4d6c12b9ff9722a42d568fdad7acb8e6470209e4c11fa2bea1baa20eff448cbd"
+      },
+      {
+        "path": "git-repository-http-live1/actual-http-all-profiles-and-client.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-live1/actual-http-all-profiles-and-client.stdout",
+        "bytes": 2706,
+        "sha256": "fb6355c1620258834b9d158282f7948e160f300fd0b7692b862ca6fffdd33609"
+      },
+      {
+        "path": "git-repository-http-live1/controller.py",
+        "bytes": 5934,
+        "sha256": "7a71ff50546cc9fe54d4f8c57c01c7ab1e9247dc758f7b7ce9561304f9a0fff1"
+      },
+      {
+        "path": "git-repository-http-live1/git-add-nested.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-live1/git-add-nested.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-live1/git-add-parent.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-live1/git-add-parent.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-live1/git-commit-nested.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-live1/git-commit-nested.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-live1/git-commit-parent.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-live1/git-commit-parent.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-live1/git-init-nested.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-live1/git-init-nested.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-live1/git-init-parent.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-live1/git-init-parent.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-live1/helper-link-inputs.json",
+        "bytes": 386,
+        "sha256": "50d00f340049fac653b9245b78b7e6ef14a9524f8d19c4fe7ca7f0b7183686b6"
+      },
+      {
+        "path": "git-repository-http-live1/helper.rs",
+        "bytes": 5420,
+        "sha256": "9b36ee1463840f29cc5c078cf07872cd864263a87f9280a1d391698166570a52"
+      },
+      {
+        "path": "git-repository-http-live1/progress.json",
+        "bytes": 6063,
+        "sha256": "357c955a3a07f1135e1b4a77fed7d42d08f885ad88a02e80bf19649571325ead"
+      },
+      {
+        "path": "git-repository-http-live1/result.json",
+        "bytes": 595,
+        "sha256": "82503a790e3d37b43814e1e4c3d19f4faba7f08e2ea755816b2843b3c9f11ebb"
+      },
+      {
+        "path": "git-repository-http-live1/rustc-owned-helper.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-live1/rustc-owned-helper.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-live1/saved-source-proof.json",
+        "bytes": 6167,
+        "sha256": "20dcc333e7d37b0f14daa9a0b16d17eace1a9afae8ea3674b1bbe30cd599f6ff"
+      },
+      {
+        "path": "git-repository-http-live1/source-before.json",
+        "bytes": 116489,
+        "sha256": "4d6c12b9ff9722a42d568fdad7acb8e6470209e4c11fa2bea1baa20eff448cbd"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-build.stderr",
+        "bytes": 60,
+        "sha256": "89d8a8d58a54c0651f04ae48628c5b220177318554f8b7920e196bf9ea346c7c"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-clippy.stderr",
+        "bytes": 172,
+        "sha256": "46305e2a8f99bd656b9f4576a3a100f0268e359a33f86e98ebd4b80cc4ec42f8"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-clippy.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-fmt-all.stderr",
+        "bytes": 826,
+        "sha256": "83ff7c86ea6b852d35f71c74489f0b803e58f15987fb3150348da43f68fa3980"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-fmt-all.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-metadata.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-metadata.stdout",
+        "bytes": 104969,
+        "sha256": "9a9e2f2e49c21fcb1556361c818ec6f6166939e076a43e5bb66d0e3a3856a693"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-capture_policy.stderr",
+        "bytes": 265,
+        "sha256": "d981736de2986220a342c3b82f67baa085970b0b89a6e5189c7e4660f8e08806"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-capture_policy.stdout",
+        "bytes": 900,
+        "sha256": "940310fe4021c425810807dcaddfe7b8f10cd5cf932bf2a7f3ada6ec8867a822"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-compatibility.stderr",
+        "bytes": 263,
+        "sha256": "b8712e7059648df2c4698f5083129ee736c1ea30a0b1884ec1b17fb19a53cce2"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-compatibility.stdout",
+        "bytes": 622,
+        "sha256": "3cf013645c9e9e17d294279385824be80ee80ba19178b31537476b5bd7f1d6f9"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-compatibility_review.stderr",
+        "bytes": 277,
+        "sha256": "38593af45fffa47011bee28498664bdba918fb63a92434c9700d01a975531687"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-compatibility_review.stdout",
+        "bytes": 196,
+        "sha256": "65afa93b5cb472771d0a91e0ed924652abe9eb312bb2f1e1ff3748acd8d0e213"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-graphify_adapter.stderr",
+        "bytes": 269,
+        "sha256": "e7a6e5860d729b471c1b3070320685e10933a422d54f565747be3145d1f0ac06"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-graphify_adapter.stdout",
+        "bytes": 679,
+        "sha256": "9634f011d4af0e4e93a7d3b5ffb8bf55332a5ceb150d6809f9d3025f598df4ec"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-ignored_capture.stderr",
+        "bytes": 267,
+        "sha256": "cdd75990f88a3cabe6be948b462626dc3fe7ff3f5609f355a0c7cd12f35ccbeb"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-ignored_capture.stdout",
+        "bytes": 1510,
+        "sha256": "b7169169930ea50582dc9c37c4672ac435f7cc5acb88cb6df2e83160ce8f4c14"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-lib.stderr",
+        "bytes": 253,
+        "sha256": "c39f32c50f6aa1cd0a31549f3c62ee7088bf13ae124e4f2857e6b5d341fcea2f"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-lib.stdout",
+        "bytes": 67271,
+        "sha256": "cdc615b085ee3ff95f8d51fc089b957e60c6909930b92b437d7cece7ebdb5d39"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-mcp_collection_grants.stderr",
+        "bytes": 279,
+        "sha256": "10faa963eaf427304d844aa9989f950c326704e14707abf11120b500465d4533"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-mcp_collection_grants.stdout",
+        "bytes": 284,
+        "sha256": "3318f33fb4696323f1156a99539402df664048a9f71dfaaf30fb82d3d44e490b"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-mcp_collection_grants_review.stderr",
+        "bytes": 293,
+        "sha256": "7b848fe3aa9e65ba0651fcaac42516e7b6168ef22ee7864be439355a0de540c2"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-mcp_collection_grants_review.stdout",
+        "bytes": 385,
+        "sha256": "29a28a6618a04d552cdbef06017336858892b5c8d07f9f5dd290e1cf829fbcce"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-mcp_http_review.stderr",
+        "bytes": 268,
+        "sha256": "7ca9f8c2178dbedfc373a42aff29d0cd79d99a53703d4d0059bb1daf8acec089"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-mcp_http_review.stdout",
+        "bytes": 189,
+        "sha256": "b144fcfdea858957c9bb6d0de1b0dddea8a7ef2e797fadd69f51bbbe445ffcf6"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-protocol_connection.stderr",
+        "bytes": 275,
+        "sha256": "9fe0de9cb5873b23a46b9606ddb5ab643cb47508d40ee6e1ff12169261d015c0"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-protocol_connection.stdout",
+        "bytes": 522,
+        "sha256": "b6724fc36a3a258c1282a1c5e2aefd0dc2454cffc7e28365002e385a4291e8a4"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_agent_interface.stderr",
+        "bytes": 283,
+        "sha256": "a781bed7a7f248cd2a4b65f57d0928626ea80f30036ee86181bd15376ddc3e6e"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_agent_interface.stdout",
+        "bytes": 878,
+        "sha256": "a4f1a08fde6d70183d1069e728dac08e7683ec3f8566cdae8e06668b9fadf82e"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_epoch_selection.stderr",
+        "bytes": 283,
+        "sha256": "55149dbaae9547670ab2dde76bd1a9608df5e401d916f4709b7b0a9f728bb253"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_epoch_selection.stdout",
+        "bytes": 649,
+        "sha256": "2aac3e592fc5e8b54b98dacabc3c73318a4de05c207c231e5c1e71c956d23dfe"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_inclusions.stderr",
+        "bytes": 273,
+        "sha256": "c2a544db2c81ec2467c060b496ef8d4e2e030bb889d70386276de3d048693d69"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_inclusions.stdout",
+        "bytes": 871,
+        "sha256": "45fa603a3cf2bab4e86bad5df8db21a3bebd268e5e3e7260f8a392ddedb69183"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_mcp.stderr",
+        "bytes": 259,
+        "sha256": "53ec229148414959d0efe51b5a7f99d5c231c3d648c4180afd3ac5405d5094f8"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_mcp.stdout",
+        "bytes": 359,
+        "sha256": "ff950f2ebdb01ab7bacfe73e9eeed95ccee9b9b2624b989af71fbe9b89f17305"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_memory_patterns.stderr",
+        "bytes": 283,
+        "sha256": "045366a3bba62d442481ec072824fe0aabb8091057721edde5327f7ae18b2a74"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_memory_patterns.stdout",
+        "bytes": 926,
+        "sha256": "8bede3be144d852e65c404eb38cc9aa0b5a90ef33f4d79962de808038c4aef7a"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_optional_defaults.stderr",
+        "bytes": 287,
+        "sha256": "b5d8a7d3d8aade23b49423c1a9ec5fe79eb4ec9d9ae2facc6ce54ad8fe847055"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_optional_defaults.stdout",
+        "bytes": 893,
+        "sha256": "53a411fca9e939124be4ba8e7678123566089df0de9e72644b36736c4b700dd1"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_primary_read_only.stderr",
+        "bytes": 287,
+        "sha256": "2b6cb47215e88479833d4e3099855f2664c71c536e1a7cc90fe724bea700879a"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_primary_read_only.stdout",
+        "bytes": 807,
+        "sha256": "beb695acd8f0245a4eab3b0a0a8d375bcbfbe6d1cd1f870815f56f3c4af9e5ef"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_review.stderr",
+        "bytes": 265,
+        "sha256": "2d624974e6efd6afba9a88bd86bf1b794443d41e6762374fd8c2e12cc43a0e5c"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_review.stdout",
+        "bytes": 167,
+        "sha256": "3a39ddbb658a5e5f713a6fcf4c014badff09130cd8e0cdb4496aa849a0513fe3"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_startup_project.stderr",
+        "bytes": 283,
+        "sha256": "75f8d249bd321bae79933937600f08dfa2ad797b979ec3f4dee6a68bc94ad733"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_startup_project.stdout",
+        "bytes": 808,
+        "sha256": "5eeba196919475e2f17a995ecf1ccfca699e176ef84f13990cc5cfca0b85ea05"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_steering.stderr",
+        "bytes": 269,
+        "sha256": "c55bfead6da071845e5db22d053291824e717ba799ab28100dbd0a78e2a3e351"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-session_steering.stdout",
+        "bytes": 1141,
+        "sha256": "b533df456a6a796dc71cbb4604d2f5ff66b795cecdaded1dc4b711c029e52ec7"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-source_exclusions.stderr",
+        "bytes": 271,
+        "sha256": "92b87a03d501f9633ecac7041130c71ae9222176ebb9beb092636e55c52a5e66"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-source_exclusions.stdout",
+        "bytes": 754,
+        "sha256": "a462e0897434f98587535441d9b8830fa04581c81dfd57037e43fcdb7a27389c"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-trail_adapter.stderr",
+        "bytes": 263,
+        "sha256": "3819d4aee216ecf47ff2f81efefa17918c3e060337f84c4926f82f4d8d3bdb91"
+      },
+      {
+        "path": "git-repository-http-qualified1/cargo-test-trail_adapter.stdout",
+        "bytes": 448,
+        "sha256": "9dd8a5859e21c072021c6fc4c9b461fc63b1379643226b5f5530f950a332a959"
+      },
+      {
+        "path": "git-repository-http-qualified1/controller.py",
+        "bytes": 4784,
+        "sha256": "127fff229c4afb7a14dfbc634111e7d86dac85974622c40e6f5b3432db25cb3f"
+      },
+      {
+        "path": "git-repository-http-qualified1/format-roots.json",
+        "bytes": 37907,
+        "sha256": "6aad39bfeb114fa919fbf90f46e9c7cb049e4bb35141d5260442ce2616eaabb1"
+      },
+      {
+        "path": "git-repository-http-qualified1/npm-test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/npm-test.stdout",
+        "bytes": 25131,
+        "sha256": "ad8443a0fa55ad337d3f4e57ed40d3321a5b9bb65862cf48b107daae6b55f22b"
+      },
+      {
+        "path": "git-repository-http-qualified1/npm-typecheck.stderr",
+        "bytes": 209,
+        "sha256": "0c5e2568b4c79c13debcc497cf347b98e7a01e636ae2bed42cf3faa742048c94"
+      },
+      {
+        "path": "git-repository-http-qualified1/npm-typecheck.stdout",
+        "bytes": 77,
+        "sha256": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5"
+      },
+      {
+        "path": "git-repository-http-qualified1/progress.json",
+        "bytes": 58806,
+        "sha256": "6b0a525c73cae7d93153e41b3ee7d280ba99848fd6fe75dce31c1179504fc053"
+      },
+      {
+        "path": "git-repository-http-qualified1/result.json",
+        "bytes": 791,
+        "sha256": "6be0105da7fe24fb1eb53bf62daca4f75b5eec98d3f48aa67b2aa3dc537d3985"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-000.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-000.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-020.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-020.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-040.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-040.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-060.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-060.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-080.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-080.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-100.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-100.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-120.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-120.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-140.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-140.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-160.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-160.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-180.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-180.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-200.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-200.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-220.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-220.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-240.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-240.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-260.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-260.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-280.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-280.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-300.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-300.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-320.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-320.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-340.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/rustfmt-roots-340.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-qualified1/source-before.json",
+        "bytes": 116489,
+        "sha256": "4d6c12b9ff9722a42d568fdad7acb8e6470209e4c11fa2bea1baa20eff448cbd"
+      },
+      {
+        "path": "git-repository-http-test1/cargo-test-git-repository-http.stderr",
+        "bytes": 339,
+        "sha256": "2eeab3b810a2a509a25c76bed78ce1fcd18fba286c1507fb9b87e87cbe37b24c"
+      },
+      {
+        "path": "git-repository-http-test1/cargo-test-git-repository-http.stdout",
+        "bytes": 3089,
+        "sha256": "9eba2fd3aeee7e7144789668087dd98225c4c042c8ddfb60b6762d6171e01490"
+      },
+      {
+        "path": "git-repository-http-test1/controller.py",
+        "bytes": 4013,
+        "sha256": "d2f0491550aa404d72ca69133a3578ca10ce093c9b18e0b3582a1c3779ee8efb"
+      },
+      {
+        "path": "git-repository-http-test1/progress.json",
+        "bytes": 921,
+        "sha256": "85291c5dba9ca72d68751a4e7e2aaba55bae8b09b5220c7aefd5b064d5cfac3c"
+      },
+      {
+        "path": "git-repository-http-test1/result.json",
+        "bytes": 248,
+        "sha256": "56231cb6eb70e3e3bba5c12848e3dfb1fd8e3f1dd213ab46051baaf04a8d4a86"
+      },
+      {
+        "path": "git-repository-http-test1/rustfmt-changed.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-test1/rustfmt-changed.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-test1/source-before.json",
+        "bytes": 117585,
+        "sha256": "48142490f0e5065a37c9ffbba40497949d8a709ac593280cb9b11f58dca6931d"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-git-repository-host.stderr",
+        "bytes": 275,
+        "sha256": "c04998ff3deb0c9e35ad36b99cb618a960cdd1af270562ba5ee24602321e0bf7"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-git-repository-host.stdout",
+        "bytes": 534,
+        "sha256": "9de6d481e0e610da069d1ecacac2a018366dde504d6e48e1f9b55582aa38532c"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-git-repository-http.stderr",
+        "bytes": 276,
+        "sha256": "461db0c352eb2171a7e55c0be5e47153f92df6992df8734bd27f32018b093535"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-git-repository-http.stdout",
+        "bytes": 707,
+        "sha256": "e2c675143979b81e95af512bb9fb1aac76ea67af611c0d913d0bc96cd4b66e6e"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-git-repository-preferences.stderr",
+        "bytes": 289,
+        "sha256": "df45ae1914ea804ee44473a31a784e468c3dcbcf0b2b5d319b0f67ce2cd0a7ff"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-git-repository-preferences.stdout",
+        "bytes": 748,
+        "sha256": "1826e629cf99d7a9d55cc156d4ddccdf3e0a5e5d83db3f539fc7c0a086bfe5b2"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-git-repository-profiles.stderr",
+        "bytes": 283,
+        "sha256": "c2bfd65f5753659592ca9a790a4509b75a166067db98fa6e4aafda8bc1f6c78f"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-git-repository-profiles.stdout",
+        "bytes": 532,
+        "sha256": "bd28e134e4556589e0b4f4b03419532275fbba334f91ef26684b695252be95e3"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-git-repository-scope.stderr",
+        "bytes": 277,
+        "sha256": "bf8a8e209a354439032a724c0da9053c94110b8206c2018b03710cd3b747921d"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-git-repository-scope.stdout",
+        "bytes": 1523,
+        "sha256": "9cf43f01c41fdb9bccab9822a19ca775de648cef08bda4e81802af147c8e08d6"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-mcp-http-cli.stderr",
+        "bytes": 261,
+        "sha256": "011b966d936916cb94bd1e43159c3b605c5f948953da5fca24cb0076f2bee6af"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-mcp-http-cli.stdout",
+        "bytes": 540,
+        "sha256": "77dd823d1bc3fbcb0cf778428c030905ebed15c78e69a144a9fbda7a6d4dc1ae"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-mcp-http.stderr",
+        "bytes": 253,
+        "sha256": "e95aff165a549cdae0f8fcebd850389b24ca3eccfdb3cac9af34a4cbfe1fe80c"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-mcp-http.stdout",
+        "bytes": 1653,
+        "sha256": "570607da66bf468088363615d0491c1f0eac4fd9da7ecda3192335c1234bb3ea"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-project-session.stderr",
+        "bytes": 267,
+        "sha256": "49320fa6d7b5e397eeb27e13a47aef58aa461eb88b6d9d20aaf9105ff9598be1"
+      },
+      {
+        "path": "git-repository-http-test2/cargo-test-project-session.stdout",
+        "bytes": 582,
+        "sha256": "aceb2bf0ee094ddcc0b24add1a15769fbedd7f16435cbeb3d668ad5ead895bb2"
+      },
+      {
+        "path": "git-repository-http-test2/controller.py",
+        "bytes": 4063,
+        "sha256": "544b34d62bbd12d52dce82c00fdfa4d24286cf906babe316ee7c84cc09e6c373"
+      },
+      {
+        "path": "git-repository-http-test2/progress.json",
+        "bytes": 4164,
+        "sha256": "e463881f0d18533a6f4e65842135de11573f9401c8b1e8cbc682e9aa8bf25a02"
+      },
+      {
+        "path": "git-repository-http-test2/result.json",
+        "bytes": 247,
+        "sha256": "599145c227372655e4dc479ef99cc144765ee51c95d60b74fbc034720e334c34"
+      },
+      {
+        "path": "git-repository-http-test2/rustfmt-changed.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-test2/rustfmt-changed.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "git-repository-http-test2/source-before.json",
+        "bytes": 117585,
+        "sha256": "afb51ad7d102782f5081d7cfac2ee99696ce7ac4577ace76931eeb69e2c05f86"
+      }
+    ]
+  },
+  "archiveExclusions": [
+    "Owned temporary source trees, compiled artifacts and private credential/client files remain local",
+    "No personal configuration, tokens or unrelated repositories collected"
+  ]
+}

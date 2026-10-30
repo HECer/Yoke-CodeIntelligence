@@ -1,0 +1,225 @@
+{
+  "schema": 1,
+  "runId": 41030808968,
+  "headCommit": "f41e56136b1704ff3c3742445f2b0138c78fdc6c",
+  "testedMerge": "6af15e69e1f4b28e1cc9296c23ae82f9105460f9",
+  "testedAndCandidateTree": "65dde1f434636caee2209309576375fd0c365ef7",
+  "remoteRunStatus": {
+    "id": 41030808968,
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "failure",
+    "headSha": "f41e56136b1704ff3c3742445f2b0138c78fdc6c",
+    "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41030808968"
+  },
+  "artifactMetadataReverified": [
+    {
+      "id": 12966643617,
+      "name": "native-shard-ubuntu-latest-7",
+      "bytes": 108213,
+      "digest": "sha256:0051082f4fed255499a4b4423af93f08d667ef132f30e313c700fd7628aa1266",
+      "expired": false
+    },
+    {
+      "id": 12966668581,
+      "name": "native-shard-ubuntu-latest-2",
+      "bytes": 107750,
+      "digest": "sha256:c4de8b311af7937869f45ca0cb75ff5cefd0403ec1b22bb03fb07bd18f237b9d",
+      "expired": false
+    },
+    {
+      "id": 12967216495,
+      "name": "native-shard-ubuntu-latest-3",
+      "bytes": 108547,
+      "digest": "sha256:01ceab3d1cc397f864d2274952b6a20900ad73bd49216f53aeb317f570bfef71",
+      "expired": false
+    },
+    {
+      "id": 12967423990,
+      "name": "native-shard-windows-latest-1",
+      "bytes": 106472,
+      "digest": "sha256:01e1acda3451f600cae1a0adf4a17ba43ecc6ad53d9994a68784dfb91e19ea1c",
+      "expired": false
+    },
+    {
+      "id": 12967970022,
+      "name": "native-shard-ubuntu-latest-4",
+      "bytes": 109811,
+      "digest": "sha256:92e402a046eac1f5f44d025e95b1a90d95071c942c76c1ef226b9b9820fa744a",
+      "expired": false
+    },
+    {
+      "id": 12968768622,
+      "name": "native-shard-ubuntu-latest-6",
+      "bytes": 106498,
+      "digest": "sha256:a2d5647a2db2ed7f173a6d1c2872939772bc0e88ccacd80476bf2f613b236f8b",
+      "expired": false
+    },
+    {
+      "id": 12968882829,
+      "name": "native-shard-windows-latest-5",
+      "bytes": 127428,
+      "digest": "sha256:5a1790a355159117a922514baba237f991b33f97441623eb620e6305489788ef",
+      "expired": false
+    },
+    {
+      "id": 12969599049,
+      "name": "native-shard-windows-latest-2",
+      "bytes": 105524,
+      "digest": "sha256:bb17dd48b133477a9c144c809cc235874e37fea52369dc9b5d91d628d857bfde",
+      "expired": false
+    },
+    {
+      "id": 12969687200,
+      "name": "native-shard-ubuntu-latest-5",
+      "bytes": 122007,
+      "digest": "sha256:f599292cd40c22c77866bcd388370316c92475fcd743d3b0b5e581de05b10696",
+      "expired": false
+    },
+    {
+      "id": 12969709166,
+      "name": "native-shard-ubuntu-latest-0",
+      "bytes": 100422,
+      "digest": "sha256:21f052e251f55e02f6e193ebf4e7050a265f271d83d2e131f5f469239587e817",
+      "expired": false
+    },
+    {
+      "id": 12970050988,
+      "name": "native-shard-macos-latest-0",
+      "bytes": 99625,
+      "digest": "sha256:e8d4ff31d91264707e621cbcbf5841de62a46cd92b9859d81dd8736865233faf",
+      "expired": false
+    },
+    {
+      "id": 12970177176,
+      "name": "native-shard-windows-latest-3",
+      "bytes": 105819,
+      "digest": "sha256:dad7f1f2345796204e3c621f2fbacd1ee9b9ae83cb37b6dd6e4588d09e7480a3",
+      "expired": false
+    },
+    {
+      "id": 12970352828,
+      "name": "native-shard-windows-latest-6",
+      "bytes": 107114,
+      "digest": "sha256:97b302401096b11a41b66dcad2ae7ed85ebc084c5618d180f8b7e26f0bbb7641",
+      "expired": false
+    },
+    {
+      "id": 12970560480,
+      "name": "native-shard-windows-latest-4",
+      "bytes": 107427,
+      "digest": "sha256:801886991b54dcde199a14ff00945dbb08dd44d50846207ea3ed67a29c4f2e48",
+      "expired": false
+    },
+    {
+      "id": 12971103404,
+      "name": "native-shard-windows-latest-7",
+      "bytes": 106015,
+      "digest": "sha256:1ab2f64bb534d64cd2d9e570922eedafc8a1e6507988ef3187d5834877d80d19",
+      "expired": false
+    },
+    {
+      "id": 12971176697,
+      "name": "native-shard-ubuntu-latest-1",
+      "bytes": 105642,
+      "digest": "sha256:6eb9431331151759ded0f540d42bc540f2064708865e55a0cf3585b864409907",
+      "expired": false
+    },
+    {
+      "id": 12971638083,
+      "name": "native-shard-macos-latest-4",
+      "bytes": 110023,
+      "digest": "sha256:412602e04a390a4d497d880d070eedb0e6f49c577f78b9f3b84442f89e67f4ca",
+      "expired": false
+    },
+    {
+      "id": 12972105959,
+      "name": "native-shard-windows-latest-0",
+      "bytes": 98751,
+      "digest": "sha256:a345db00240d8d482a34c8beb82f5cbb1a8068532f14fa65dd57f8fb364384d6",
+      "expired": false
+    },
+    {
+      "id": 12972947320,
+      "name": "native-shard-macos-latest-2",
+      "bytes": 105345,
+      "digest": "sha256:b7aaddccfcc7adff8e63ad22e547ded68d64d7a734e0347812337cbd02e15cb5",
+      "expired": false
+    },
+    {
+      "id": 12973644181,
+      "name": "native-shard-macos-latest-3",
+      "bytes": 106697,
+      "digest": "sha256:ddb4bc88fed28d6cc28a7de9dd7710092cb82f9a581c40d80d4d3a6e0bbfe6da",
+      "expired": false
+    },
+    {
+      "id": 12974715742,
+      "name": "native-shard-macos-latest-5",
+      "bytes": 119757,
+      "digest": "sha256:33feadb1d06afd32308e03731feae980f9733632ce00b2c41ba282c04671576a",
+      "expired": false
+    },
+    {
+      "id": 12975754006,
+      "name": "host-document-history-windows",
+      "bytes": 297674,
+      "digest": "sha256:c6d7fc9f71353c4b214a5f123c46c88a6e1f838f8a6df71cbaec83397bdc3097",
+      "expired": false
+    },
+    {
+      "id": 12976093755,
+      "name": "host-document-history-browser-http-windows",
+      "bytes": 528514,
+      "digest": "sha256:752d941351ec86430474d2f299cb61e2b14de8225135e7a47698e9c2da705ab7",
+      "expired": false
+    },
+    {
+      "id": 12976408765,
+      "name": "host-document-history-browser-persistent-python-windows",
+      "bytes": 528441,
+      "digest": "sha256:5cb6d0f924fe06867d2dad9d01880bc4c0f07f5c81e571b8662665f92930f9db",
+      "expired": false
+    },
+    {
+      "id": 12976444421,
+      "name": "native-shard-macos-latest-1",
+      "bytes": 103805,
+      "digest": "sha256:30062ec13c43ccc29c1930afad803efd83830e91c663c20afac924dd50d191de",
+      "expired": false
+    },
+    {
+      "id": 12976563183,
+      "name": "host-document-history-browser-serena-windows",
+      "bytes": 528579,
+      "digest": "sha256:a437ce9ab407289ac131b7c12e0a3c5562a12fca296f7705ba8eafa3435f43a4",
+      "expired": false
+    },
+    {
+      "id": 12976976796,
+      "name": "native-shard-macos-latest-7",
+      "bytes": 105836,
+      "digest": "sha256:3e73c01f1c7fd9db5b15376f21489b13b290c60a2f052927a751dd935ffb64a5",
+      "expired": false
+    },
+    {
+      "id": 12977175140,
+      "name": "host-document-history-browser-windows",
+      "bytes": 528938,
+      "digest": "sha256:e1881411eb1d0eab851daba867ce97eee5ab539d03a5a403378dcd1d0228a107",
+      "expired": false
+    },
+    {
+      "id": 12977207097,
+      "name": "native-shard-macos-latest-6",
+      "bytes": 105212,
+      "digest": "sha256:0874186d5d27a8b0c6f5fef26f3a9e2653a69578af97e5617b62610a59f65d10",
+      "expired": false
+    }
+  ],
+  "nativeAuditSha256": "ce36983bbdc0b58d0391dd1bdab431d2e32dbbff2e8dc9de81fb16789a2098b6",
+  "browserAcceptanceSha256": "5f433d43989ba16ba50c662aab0ac93ac8b73e70fba00c4aa7a51385de2b1db8",
+  "priorIndividualVisualReviewSha256": "a3872d6e8c18cc45b37498e316df28fa9f9098d34c371fce10a6c8177a7ad3fb",
+  "proofLimit": "Source-bound artifact and local consistency evidence, not an independent signature or full release certificate",
+  "nativeImagePayloadsReadOrExecutedLocallyForThisPublication": false
+}

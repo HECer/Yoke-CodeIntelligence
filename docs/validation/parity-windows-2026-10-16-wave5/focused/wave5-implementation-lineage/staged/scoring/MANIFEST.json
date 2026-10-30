@@ -1,0 +1,30 @@
+{
+  "status": "ignored_drafts_only_not_executed",
+  "normalRetrievalSha256": "c209e6da3dc36e09613066ea1031d3174067675d8ac97e235f887de4e6cc633b",
+  "legacyGlobalBodyTextEqualAfterSoleRename": true,
+  "testDraftCounts": {
+    "legacy_retrieval_oracle.rs": 1,
+    "monorepo_retrieval.rs": 7,
+    "retrieval_balanced_tests.rs": 15,
+    "retrieval_driver_tests.rs": 4
+  },
+  "parentInputs": {
+    "CONTRACT.md": "4dc1105faa6731076dde6f0d3e5003624049a3392a4a7c1dafd1ba94f6fad53e",
+    "API.md": "f94a6cde51979e4cc5e740eb39561533d0095e22360280d1e7158b0d7045b5f5",
+    "FIXTURES.json": "39f875158543e9bc64046d2144ea82480f275cc3ef2c0fd4c4cce2c5f449a1f7"
+  },
+  "draftFiles": {
+    "generate_drafts.py": "e1b3534f6cbc19cc67e408872858e4905305ab91f2f4516e9a9a43e59f231f9c",
+    "legacy_retrieval_oracle.rs": "86ceca5c42c2dea13f1e061e05e6dac490cf3d6f895d185cc0335a2d8e226c3a",
+    "monorepo_retrieval.rs": "98adf6fc761122feab5b7626a0842820d6e4b35ae3ba5c4bf02a8753c8078336",
+    "PROMOTION.json": "249c0638bfff2110d22382e8e22f07224b352fb34fce77c27644be332e81f8de",
+    "README.md": "23060d30f6571a5a4884032948164d902147e4cef154c4f2ab8d00db3455579a",
+    "retrieval.rs": "7eef0e6e2ded89fa5722f0746b9771f22184c52cc8c0c391a4afa6fa1bd1d517",
+    "retrieval_balanced.rs": "96d53a83cf345e2fb15d38e9c7096150616962fc0a40f3e264438242e70ba4a9",
+    "retrieval_balanced_tests.rs": "7707539fcf77174b13d5114fd88a87a5ac8e68cf7cd3375c44321c9e886bf6ab",
+    "retrieval_driver_tests.rs": "64e23e81b84e7e1d073abca372a3035e3de900c02cdce291a70b762484d78df5",
+    "support/monorepo_retrieval_fixture.rs": "e0b9c6dd69e9c185f43ad4eaddd7c8910affa75dd8cd5a8244602a2d26d4b222"
+  },
+  "pending": "root OLD-production golden capture then later promotion and actual RED; no implementation authorization",
+  "revision": "review driver/raw/Unicode/cancellation +metadata prefixes/output ceiling +scheduler permutation; ignored-only, unexecuted"
+}

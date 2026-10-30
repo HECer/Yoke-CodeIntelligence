@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "recordedAt": "2026-10-19T08:46:27.431458+00:00",
+  "sourceManifest": "docs/validation/integration-2026-10-19/history-jobs/final/source-before.json",
+  "sourceManifestSha256": "271dadaf47c2fc5c71a24578478b0083de2f6b21a49538a68625af1c3fc5e737",
+  "applicationBinary": "target/debug/yoke.exe",
+  "applicationBinarySha256": "7aaf4f7aa4586e1ddb0a753cd6f7c065e6204b5ec3691481804702f0afe30033",
+  "cases": [
+    {
+      "testName": "sqlite_sidecar_links_cannot_rewrite_files_outside_state",
+      "binary": "target/debug/deps/adversarial-e141ea943895bbba.exe",
+      "binarySha256": "57e96f6a283eaf5f31df757aceda08069c7e5caee737dd26674122369ef4e278",
+      "observedFailure": "Windows error1314 during native symbolic-link fixture creation; product safety assertion not reached"
+    },
+    {
+      "testName": "source_symlink_cannot_redirect_a_forced_file_deletion",
+      "binary": "target/debug/deps/facade_file_delete-45e18baa4c56fda6.exe",
+      "binarySha256": "303f6bb73c0e9a1993990abfa5512f83380d82712d3964052a7fa5d3873b649b",
+      "observedFailure": "Windows error1314 during native symbolic-link fixture creation; product safety assertion not reached"
+    },
+    {
+      "testName": "receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority",
+      "binary": "target/debug/deps/federation-8ec3ad22b53c7a03.exe",
+      "binarySha256": "3ec3c0a417b1657617c5dde2385ecf8583df86e9c2ced0903f233a8fb571427f",
+      "observedFailure": "Windows error1314 during native symbolic-link fixture creation; product safety assertion not reached"
+    },
+    {
+      "testName": "windows_host_aliases_cannot_read_protected_files_or_alternate_streams",
+      "binary": "target/debug/deps/feedback_cli-ee0317d99370d772.exe",
+      "binarySha256": "3501b908ee4b5c9b42e16d2f47ee0a4245990a4432c01b20faa5f82faeb74776",
+      "observedFailure": "Windows error1314 during native symbolic-link fixture creation; product safety assertion not reached"
+    },
+    {
+      "testName": "affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success",
+      "binary": "target/debug/deps/git_affected_cli-8bd34e65d21add4b.exe",
+      "binarySha256": "59c3f15dff084b4bcf876caae834ca30ca190c7ccf686c5070b4a782c36d074f",
+      "observedFailure": "Windows error1314 during native symbolic-link fixture creation; product safety assertion not reached"
+    },
+    {
+      "testName": "windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive",
+      "binary": "target/debug/deps/git_impact_details_cli-21d011653ec3ca4b.exe",
+      "binarySha256": "e8e6a8f9be711b923962125eb4ea3ad56fd506d9db8e91b4131ae532d2ec52f4",
+      "observedFailure": "Windows error1314 during native symbolic-link fixture creation; product safety assertion not reached"
+    },
+    {
+      "testName": "collection_sqlite_sidecars_cannot_write_through_links",
+      "binary": "target/debug/deps/graph_collections-c158b0bd03a3bf11.exe",
+      "binarySha256": "d19c1c7531acb38f5a17823e131e53a7384a35edaf12c8beb98d83f566387e8e",
+      "observedFailure": "Windows error1314 during native symbolic-link fixture creation; product safety assertion not reached"
+    },
+    {
+      "testName": "blob_links_are_refused_and_external_targets_are_preserved",
+      "binary": "target/debug/deps/maintenance-fd767dc63421bf21.exe",
+      "binarySha256": "4375938e8faee539df331862c3d9ae161f2ec872baea202f5fe10fccdeb83acc",
+      "observedFailure": "Windows error1314 during native symbolic-link fixture creation; product safety assertion not reached"
+    },
+    {
+      "testName": "existing_output_file_directory_and_hardlink_are_never_overwritten",
+      "binary": "target/debug/deps/meaning_archive_cli-6b0740a70c15a6fa.exe",
+      "binarySha256": "80e64b22fdfc04df66cb2f607362c1ed0db8b1a041c8deba144649a4d26b9d69",
+      "observedFailure": "Windows error1314 during native symbolic-link fixture creation; product safety assertion not reached"
+    },
+    {
+      "testName": "media_cannot_bypass_source_scope_links_ignore_or_protected_paths",
+      "binary": "target/debug/deps/media-9ea45771a6bcc370.exe",
+      "binarySha256": "67975b95a05ce15fa15517d07fe6178d87cf2237e11932fbb3273a3a24d52f3e",
+      "observedFailure": "Windows error1314 during native symbolic-link fixture creation; product safety assertion not reached"
+    }
+  ],
+  "requires": "Explicit manually elevated PowerShell7 process; script does not elevate itself or change Windows privileges/developer mode",
+  "executed": false
+}

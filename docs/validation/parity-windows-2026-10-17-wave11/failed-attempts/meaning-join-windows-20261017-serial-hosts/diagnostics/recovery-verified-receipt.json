@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "kind": "separate_nonadditive_recovery_diagnostic",
+  "checkedAtUtc": "2026-10-17T17:33:08.944738+00:00",
+  "runnerSha256": "13ecc5179c9bc9e6f9587d7480b705dff627f0c7d951724c1244be17cb04015b",
+  "command": [
+    "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\yoke-35b101204e4eb110.exe",
+    "--exact",
+    "host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work",
+    "--test-threads=1"
+  ],
+  "exitCode": 101,
+  "executable": "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\yoke-35b101204e4eb110.exe",
+  "executableSha256": "9bb343e1047080890b317e370b2eaf75c79eb95d63d5a1259888d788826e6d0f",
+  "libraryInventorySha256": "24a1228f8177d6f76379caeb43dadca901dd4a912f0afcb2fcc31797def7148d",
+  "sourceManifestSha256": "47ecb688e6a3beb16f7a638a93b31f3725b05a948440bbcf44715081b2dee4ec",
+  "sourceChanges": [],
+  "tempRoot": "E:\\Yoke-Test-Scratch\\recovery-diagnostic-20261017",
+  "seconds": 53.422,
+  "log": "recovery-exact-verified.log",
+  "logSha256": "6e496e73c47ce3b1722ea4d10b2ae17435f8c3c313a41eb54710420c16933c12",
+  "contributesToAcceptedTotals": false
+}

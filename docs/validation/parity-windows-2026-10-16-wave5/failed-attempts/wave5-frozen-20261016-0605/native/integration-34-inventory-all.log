@@ -1,0 +1,11 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.49s
+     Running tests\freshness_epoch.rs (target\debug\deps\freshness_epoch-82901587d2a56894.exe)
+freshness_refuses_a_new_host_epoch_until_it_is_explicitly_indexed: test
+freshness_reuses_the_proven_disk_epoch_and_does_not_publish_new_source: test
+
+2 tests, 0 benchmarks
+     Running tests\git_cli.rs (target\debug\deps\git_cli-e30b12c3158d0146.exe)
+public_git_cli_analyzes_and_reloads_immutable_reports_with_explicit_host_execution: test
+
+1 test, 0 benchmarks

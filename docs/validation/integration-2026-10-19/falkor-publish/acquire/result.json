@@ -1,0 +1,203 @@
+{
+  "cache": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm",
+  "image": {
+    "tag": "6.0.2",
+    "indexDigest": "sha256:107455e862a824e45e8e9f5a7fbfdf5e00a08b14e13eae2577c72fd9e3f59ba6",
+    "manifestDigest": "sha256:288aaa7d0583c7c15fb28509544c0418186ef064f551bfb477f3df26b1a892fb",
+    "config": {
+      "mediaType": "application/vnd.oci.image.config.v1+json",
+      "digest": "sha256:cff9d4d2963c113d04a972b0d1bead89e98d4953e05dd2283e492fa7b75e267a",
+      "size": 8204
+    },
+    "compressedBytes": 176732921,
+    "layers": [
+      {
+        "digest": "sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e",
+        "bytes": 29843350
+      },
+      {
+        "digest": "sha256:a9f12e007e4c3851b225a0afa7f72d066562e4580a8448b68dbc61f4fd06a0b4",
+        "bytes": 2143764
+      },
+      {
+        "digest": "sha256:7bc7408174f281b0589997ac82c5ef808ae71b8590212e9ee94433e587248b48",
+        "bytes": 2141520
+      },
+      {
+        "digest": "sha256:aa833c2c8ccda805b5e253bb87020814dc95146d58d841c405629efdd5a5eb0a",
+        "bytes": 510310
+      },
+      {
+        "digest": "sha256:45a076a9be1f64d5773271c810f7141bd2c49fe7702dcd155a437339bfeaafaf",
+        "bytes": 209
+      },
+      {
+        "digest": "sha256:08e376a6df98cd61ea61d9b3fa46ec39c9cd89add3dbf99c8886fdb2e55909ca",
+        "bytes": 238
+      },
+      {
+        "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+        "bytes": 32
+      },
+      {
+        "digest": "sha256:4499f12fe6d1b177c2e8147fca406807d439556208f795ee0c1179d3d03d532a",
+        "bytes": 2096
+      },
+      {
+        "digest": "sha256:b15dc42b6b6ed09273da84dcc02d1501d2604a607f0be2b71a0da17447440d6c",
+        "bytes": 904
+      },
+      {
+        "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+        "bytes": 32
+      },
+      {
+        "digest": "sha256:6c11c298608011dfeb77a91598799a97939bed5dbe17a80e7997356d6e81846b",
+        "bytes": 21745876
+      },
+      {
+        "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+        "bytes": 32
+      },
+      {
+        "digest": "sha256:455ae168abe58b7382cdf494922b89e376a069008ffed382b20ecd5c5c69d413",
+        "bytes": 56423
+      },
+      {
+        "digest": "sha256:5b32323f7b73090847572cb21d9a16688947c57d8efa08fe80915efd06657a94",
+        "bytes": 50794403
+      },
+      {
+        "digest": "sha256:a98139535402460a2ef8802768c7bf0074b70330375be402a7e67b9e2e354d73",
+        "bytes": 69492216
+      },
+      {
+        "digest": "sha256:c295801872df27ae2129ad498d24d907b32ec39a84f98019082bad19a266062b",
+        "bytes": 1396
+      },
+      {
+        "digest": "sha256:b62c6fb91ab8e8a80255f97fa6b14a427dc84ac2fdf1bd79a713fac8bdbafd01",
+        "bytes": 120
+      }
+    ]
+  },
+  "qemuInstallerSource": "https://qemu.weilnetz.de/w64/qemu-w64-setup-20260811.exe",
+  "records": [
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\7bc7408174f281b0589997ac82c5ef808ae71b8590212e9ee94433e587248b48.blob",
+      "bytes": 2141520,
+      "sha256": "7bc7408174f281b0589997ac82c5ef808ae71b8590212e9ee94433e587248b48",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\aa833c2c8ccda805b5e253bb87020814dc95146d58d841c405629efdd5a5eb0a.blob",
+      "bytes": 510310,
+      "sha256": "aa833c2c8ccda805b5e253bb87020814dc95146d58d841c405629efdd5a5eb0a",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\a9f12e007e4c3851b225a0afa7f72d066562e4580a8448b68dbc61f4fd06a0b4.blob",
+      "bytes": 2143764,
+      "sha256": "a9f12e007e4c3851b225a0afa7f72d066562e4580a8448b68dbc61f4fd06a0b4",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\45a076a9be1f64d5773271c810f7141bd2c49fe7702dcd155a437339bfeaafaf.blob",
+      "bytes": 209,
+      "sha256": "45a076a9be1f64d5773271c810f7141bd2c49fe7702dcd155a437339bfeaafaf",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\08e376a6df98cd61ea61d9b3fa46ec39c9cd89add3dbf99c8886fdb2e55909ca.blob",
+      "bytes": 238,
+      "sha256": "08e376a6df98cd61ea61d9b3fa46ec39c9cd89add3dbf99c8886fdb2e55909ca",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e.blob",
+      "bytes": 29843350,
+      "sha256": "ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1.blob",
+      "bytes": 32,
+      "sha256": "4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\4499f12fe6d1b177c2e8147fca406807d439556208f795ee0c1179d3d03d532a.blob",
+      "bytes": 2096,
+      "sha256": "4499f12fe6d1b177c2e8147fca406807d439556208f795ee0c1179d3d03d532a",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\b15dc42b6b6ed09273da84dcc02d1501d2604a607f0be2b71a0da17447440d6c.blob",
+      "bytes": 904,
+      "sha256": "b15dc42b6b6ed09273da84dcc02d1501d2604a607f0be2b71a0da17447440d6c",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\455ae168abe58b7382cdf494922b89e376a069008ffed382b20ecd5c5c69d413.blob",
+      "bytes": 56423,
+      "sha256": "455ae168abe58b7382cdf494922b89e376a069008ffed382b20ecd5c5c69d413",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\6c11c298608011dfeb77a91598799a97939bed5dbe17a80e7997356d6e81846b.blob",
+      "bytes": 21745876,
+      "sha256": "6c11c298608011dfeb77a91598799a97939bed5dbe17a80e7997356d6e81846b",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\c295801872df27ae2129ad498d24d907b32ec39a84f98019082bad19a266062b.blob",
+      "bytes": 1396,
+      "sha256": "c295801872df27ae2129ad498d24d907b32ec39a84f98019082bad19a266062b",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\a98139535402460a2ef8802768c7bf0074b70330375be402a7e67b9e2e354d73.blob",
+      "bytes": 69492216,
+      "sha256": "a98139535402460a2ef8802768c7bf0074b70330375be402a7e67b9e2e354d73",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\b62c6fb91ab8e8a80255f97fa6b14a427dc84ac2fdf1bd79a713fac8bdbafd01.blob",
+      "bytes": 120,
+      "sha256": "b62c6fb91ab8e8a80255f97fa6b14a427dc84ac2fdf1bd79a713fac8bdbafd01",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\5b32323f7b73090847572cb21d9a16688947c57d8efa08fe80915efd06657a94.blob",
+      "bytes": 50794403,
+      "sha256": "5b32323f7b73090847572cb21d9a16688947c57d8efa08fe80915efd06657a94",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\vmlinuz-virt",
+      "bytes": 11813888,
+      "sha256": "6b58e5d779e44e57c9efa20232da18650415eceb9d4f544e5c165c1f392c5d51",
+      "expectedDigestMatched": false
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\image\\cff9d4d2963c113d04a972b0d1bead89e98d4953e05dd2283e492fa7b75e267a.blob",
+      "bytes": 8204,
+      "sha256": "cff9d4d2963c113d04a972b0d1bead89e98d4953e05dd2283e492fa7b75e267a",
+      "expectedDigestMatched": true
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\initramfs-virt",
+      "bytes": 9139707,
+      "sha256": "1f878a079d9c2260765e89b227b16f06747965deb612f2cc265b28941561a992",
+      "expectedDigestMatched": false
+    },
+    {
+      "file": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\falkor-6.0.2-owned-vm\\qemu-installer.exe",
+      "bytes": 206615928,
+      "sha256": "f98a8aeb5f7faea9765b6dee28316c266cd179d80354a2fed8e50176f9a2e59f",
+      "expectedDigestMatched": false
+    }
+  ],
+  "globalInstallationPerformed": false,
+  "serverStarted": false
+}

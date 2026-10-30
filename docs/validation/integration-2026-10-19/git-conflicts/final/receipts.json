@@ -1,0 +1,281 @@
+[
+  {
+    "gate": "format",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 6.934,
+    "recordedAt": "2026-10-19T09:50:07.582095+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "clippy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--keep-going",
+      "-j1",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 204.899,
+    "recordedAt": "2026-10-19T09:53:32.481820+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "library",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j1",
+      "--lib",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 189.355,
+    "recordedAt": "2026-10-19T09:56:41.837611+00:00",
+    "resultGroups": [
+      {
+        "passed": 413,
+        "failed": 0,
+        "ignored": 7
+      }
+    ]
+  },
+  {
+    "gate": "native-selected",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "--no-fail-fast",
+      "-j1",
+      "--test",
+      "git_conflicts",
+      "--test",
+      "git_workflows",
+      "--test",
+      "git_cli",
+      "--test",
+      "git_epochs",
+      "--test",
+      "git_epoch_selection",
+      "--test",
+      "git_review",
+      "--test",
+      "git_affected_cli",
+      "--test",
+      "git_affected_details",
+      "--test",
+      "git_affected_qualification",
+      "--test",
+      "git_impact_details",
+      "--test",
+      "git_impact_details_cli",
+      "--test",
+      "git_impact_details_no_git",
+      "--test",
+      "git_impact_details_qualification",
+      "--test",
+      "git_impact_details_sqlite_limits",
+      "--test",
+      "capture_options",
+      "--test",
+      "capture_policy",
+      "--test",
+      "ignored_capture",
+      "--test",
+      "editor",
+      "--test",
+      "process",
+      "--test",
+      "deadline_scope",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 101,
+    "timedOut": false,
+    "elapsedSeconds": 311.056,
+    "recordedAt": "2026-10-19T10:01:52.893716+00:00",
+    "resultGroups": [
+      {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 1,
+        "ignored": 0
+      },
+      {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 29,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 14,
+        "failed": 1,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 17,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  {
+    "gate": "doctests",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--doc",
+      "--locked",
+      "-j1"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 21.128,
+    "recordedAt": "2026-10-19T10:02:14.022909+00:00",
+    "resultGroups": [
+      {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  {
+    "gate": "python-contracts",
+    "command": [
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts/tests",
+      "-v"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 1.16,
+    "recordedAt": "2026-10-19T10:02:15.183391+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "typescript-typecheck",
+    "command": [
+      "npm.cmd",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 4.647,
+    "recordedAt": "2026-10-19T10:02:19.830603+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "typescript-tests",
+    "command": [
+      "npm.cmd",
+      "test"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 58.647,
+    "recordedAt": "2026-10-19T10:03:18.477929+00:00",
+    "resultGroups": []
+  }
+]

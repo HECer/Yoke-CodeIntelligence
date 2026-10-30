@@ -1,0 +1,79 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 05s
+     Running tests\github.rs (target\debug\deps\github-2033ae671fdb3bae.exe)
+
+running 12 tests
+test deletion_point_patch_has_a_valid_empty_source_line_range ... ok
+test actual_http_redirect_foreign_pagination_and_response_caps_fail_closed ... ok
+test explicit_loopback_http_reads_observed_ci_review_and_scope_without_commands ... ok
+test invalid_operation_arguments_are_rejected_before_any_hosted_request ... ok
+test fixture_waits_for_delayed_complete_request_after_accept ... ok
+test missing_ci_and_global_request_exhaustion_never_report_green_or_invent_empty_coverage ... ok
+test nonmatching_working_source_never_claims_exact_pr_hunk_or_empty_impact ... ok
+test repositories_credentials_and_global_request_response_budgets_are_validated ... ok
+test pr_hunks_bind_exact_local_unicode_blob_and_incoming_structural_candidates ... ok
+test triage_excludes_stale_wrong_base_and_future_metadata_with_explicit_reasons ... ok
+test typed_host_scope_defaults_deny_network_and_reject_url_or_token_fields ... ok
+test unchanged_patch_context_is_not_reported_as_changed_symbols ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.39s
+
+     Running tests\github_discussions.rs (target\debug\deps\github_discussions-ecd057bb99c496f2.exe)
+
+running 8 tests
+test captures_all_channels_exact_unicode_reply_edges_and_rechecks_the_closed_head ... FAILED
+test closed_listing_cannot_lose_its_state_filter_in_pagination ... ok
+test changed_head_and_cross_pull_comment_never_become_a_capture ... ok
+test missing_text_grant_and_zero_budget_refuse_before_network ... ok
+test partial_discovery_keeps_unacquired_pull_numbers_explicit ... ok
+test provider_null_description_is_known_absence_not_missing_page_coverage ... FAILED
+test replay_rejects_rehashed_coverage_and_text_claims ... FAILED
+test replay_rejects_rehashed_foreign_receipts_and_omitted_requested_pulls ... FAILED
+
+failures:
+
+---- captures_all_channels_exact_unicode_reply_edges_and_rechecks_the_closed_head stdout ----
+
+thread 'captures_all_channels_exact_unicode_reply_edges_and_rechecks_the_closed_head' (5184) panicked at native\tests\github_discussions.rs:162:86:
+called `Result::unwrap()` on an `Err` value: github_discussions_input_invalid
+
+Caused by:
+    unknown field `issue_comment`, expected one of `issueComment`, `review`, `reviewComment`
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- provider_null_description_is_known_absence_not_missing_page_coverage stdout ----
+
+thread 'provider_null_description_is_known_absence_not_missing_page_coverage' (13296) panicked at native\tests\github_discussions.rs:162:86:
+called `Result::unwrap()` on an `Err` value: github_discussions_input_invalid
+
+Caused by:
+    unknown field `issue_comment`, expected one of `issueComment`, `review`, `reviewComment`
+
+---- replay_rejects_rehashed_coverage_and_text_claims stdout ----
+
+thread 'replay_rejects_rehashed_coverage_and_text_claims' (19952) panicked at native\tests\github_discussions.rs:162:86:
+called `Result::unwrap()` on an `Err` value: github_discussions_input_invalid
+
+Caused by:
+    unknown field `issue_comment`, expected one of `issueComment`, `review`, `reviewComment`
+
+---- replay_rejects_rehashed_foreign_receipts_and_omitted_requested_pulls stdout ----
+
+thread 'replay_rejects_rehashed_foreign_receipts_and_omitted_requested_pulls' (20072) panicked at native\tests\github_discussions.rs:162:86:
+called `Result::unwrap()` on an `Err` value: github_discussions_input_invalid
+
+Caused by:
+    unknown field `issue_comment`, expected one of `issueComment`, `review`, `reviewComment`
+
+
+failures:
+    captures_all_channels_exact_unicode_reply_edges_and_rechecks_the_closed_head
+    provider_null_description_is_known_absence_not_missing_page_coverage
+    replay_rejects_rehashed_coverage_and_text_claims
+    replay_rejects_rehashed_foreign_receipts_and_omitted_requested_pulls
+
+test result: FAILED. 4 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+error: test failed, to rerun pass `--test github_discussions`
+error: 1 target failed:
+    `--test github_discussions`

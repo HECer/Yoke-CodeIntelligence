@@ -1,0 +1,19 @@
+{
+  "expectedControlDifference": true,
+  "originalObserved": {
+    "result": 3,
+    "events": []
+  },
+  "destructuredCollectorObserved": {
+    "result": 99,
+    "events": [
+      "iterator"
+    ]
+  },
+  "indexedCollectorPhase": "signature-capture-r4",
+  "indexedCollectorRetainsOriginalObservation": true,
+  "nativeAdmission": false,
+  "prototypeOnly": true,
+  "ownedLiteralFixturesExecuted": true,
+  "analyzedCodeExecuted": false
+}

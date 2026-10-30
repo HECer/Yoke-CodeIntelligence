@@ -1,0 +1,1 @@
+function helper(): {run:(n:number)=>number} {return {run:n=>n+1};}const result=helper();export const observed=result.run(3);

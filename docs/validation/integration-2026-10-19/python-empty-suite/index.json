@@ -1,0 +1,1173 @@
+{
+  "schemaVersion": 1,
+  "kind": "native_python_explicit_empty_suite_deletion",
+  "asOf": "2026-10-20T02:22:46.368489+00:00",
+  "sourceCommit": "d37abc179208b02c46ae1998689963a9be935eb6",
+  "runtimeCommit": "0ce017ab212953bc9a705961f74ace297a9dc31b",
+  "parentCommit": "87e7cfb276c481d3692b4e142dd39f9f22e81b5e",
+  "paths": [
+    "native/README.md",
+    "native/docs/semantic-refactor-intents.md",
+    "native/docs/symbol-deletion.md",
+    "native/src/changes.rs",
+    "native/src/changes_symbol_delete.rs",
+    "native/src/mcp_http_rejection_tests.rs",
+    "native/src/protocol.rs",
+    "native/src/validation.rs",
+    "native/tests/python_empty_suite.rs"
+  ],
+  "newCases": {
+    "unitAdmission": 1,
+    "defaultIntegration": 8,
+    "actualPythonAstOnly": 1
+  },
+  "nativeGroups": 10,
+  "nativeTotals": {
+    "passed": 559,
+    "failed": 0,
+    "ignored": 8
+  },
+  "nativeInputsMatched": 732,
+  "nativeBinarySha256": "95791c456b0db2ea3734b424e501f8d15df8e97cfec16b4755f193a94411c64f",
+  "actualPython": {
+    "path": "C:\\Python314\\python.exe",
+    "sha256": "4942b86a6597e5aee0128daa00050ed79bc21f6e709a78eb19cbfeb0c2f39ac9",
+    "version": "Python 3.14.7"
+  },
+  "productionBinaryUnchangedFromPriorBroadNativeTests": true,
+  "testOnlyCorrection": [
+    "native/src/mcp_http_rejection_tests.rs"
+  ],
+  "wholeNativeRerun": false,
+  "platform": "Windows",
+  "nativeInputs": 732,
+  "integratedInputs": 738,
+  "finalNative": {
+    "sourceUnchanged": true,
+    "inputs": 732,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--lib",
+          "--test",
+          "python_empty_suite",
+          "--test",
+          "declaration_attachment_ranges",
+          "--test",
+          "symbol_delete_ranges",
+          "--test",
+          "protocol_connection",
+          "--test",
+          "plan_integrity",
+          "--test",
+          "plan_feedback",
+          "--test",
+          "semantic_refactor",
+          "--test",
+          "refactor_intents",
+          "--test",
+          "propagated_delete_contract",
+          "--",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "seconds": 287.4613563000021,
+        "totals": {
+          "passed": 559,
+          "failed": 0,
+          "ignored": 8
+        },
+        "groups": 10,
+        "failures": []
+      },
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 5.032663099991623
+      },
+      {
+        "name": "build",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "build",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--bin",
+          "yoke"
+        ],
+        "exitCode": 0,
+        "seconds": 7.286434900001041
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--all-targets",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "seconds": 40.83934250001039
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "actualPythonAstOnly": {
+    "sourceUnchanged": true,
+    "inputs": 732,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--test",
+          "python_empty_suite",
+          "--",
+          "--test-threads=1",
+          "--ignored",
+          "--nocapture"
+        ],
+        "exitCode": 0,
+        "seconds": 0.8207292999868514,
+        "totals": {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        },
+        "groups": 1,
+        "failures": []
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "integrated": {
+    "sourceUnchanged": true,
+    "frozenInputs": 738,
+    "commands": [
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 4.93
+      },
+      {
+        "name": "python-contracts",
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "seconds": 0.94
+      },
+      {
+        "name": "typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "seconds": 4.32
+      },
+      {
+        "name": "tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "seconds": 54.97
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "priorEvidenceReadme": {
+    "bytes": 28359,
+    "sha256": "259bdfe30a6f3aaa84b852fe63a3e1d4533e899f803c5d1c3fdf4140ccd4e020"
+  },
+  "nativeDefaultDeletionPolicyChanged": false,
+  "semanticProviderFacadePolicyChanged": false,
+  "legacyPlanSchemaOrIdentityChanged": false,
+  "analyzedModuleOrDecoratorExecuted": false,
+  "fullUpstreamContractCertified": false,
+  "nonWindowsRuntimeValidated": false,
+  "mainOrReleaseVerified": false,
+  "notes": [
+    "Own MIT native extension without new dependencies. Native ci_change_prepare.deleteSymbol has an optional closed emptyPythonBody enum reject/pass. Absent/reject preserves released refusal for an otherwise empty required Python suite. The option is Python-only and singleton: mixed explicit edits, other symbolic operations, rename/bulk and invalid values/types refuse. Eight-tool MCP and ordinary independent approval/write/verification/stale/recovery authority remain unchanged.",
+    "Exact original error-free AST declaration/name/kind/path/language/ranges and owning decorator selection precede a literal pass only when the required parent block has no other non-comment statement. Existing docstrings, assignments, siblings and module-level deletion need no filler. The same bounded parser checks the entire resulting text under the original deadline and4MBsource/200000node bounds. Entity/evidence coordinates, BOM/Unicode/CRLF/indentation and neighboring comment bytes remain original. This is a source-edit/syntax contract, not exhaustive consumer, compiler or runtime semantics.",
+    "The new policy is not forwarded by semantic-provider/facade deletion; those callers retain strict defaults. Saved Plan shape and identity formula are unchanged and exact canonical plan/delta/review replay remains mandatory. NativeMCPConnection initialization/tool dispatch prepares the exact planned edit with modelCalls0 and no application/verification/approval/journal authority. Other languages, ambiguous/forged binding, malformed/null/oversized source, expired deadline, unknown JSON and mixed intents refuse.",
+    "New distinct cases:1unit source/AST-admission test,8default integration tests and1explicit actual Python gate. Variant tables cover analyzer8/9, async/nested functions/classes, decorators, comments, BOM/CRLF/Unicode/tabs, docstrings/siblings, module/control-flow suites, strict defaults and protocol/authority refusals. Cases are not multiplied by table variants and actual gates are not added to default whole-run totals.",
+    "Actual selected Python3.14.7 executable4942b86a6597e5aee0128daa00050ed79bc21f6e709a78eb19cbfeb0c2f39ac9 runs stdlib ast.parse on copied original bytes under explicit verification authority. Unknown parent decorators remain and unknown removed decorators never execute; importing/executing this module would fail those names. The gate checks independent pre-verification/pre-approval/write denials, exact approved application and byte recovery. It proves selected syntax/structure and observed verifier execution, not analyzed-program runtime behavior or an OS sandbox.",
+    "R1selected22/1/1 exposes a new test assumption: Engine.invoke returns status:error inside a successful Rust Result. Corrected admission tests inspect public validation, response error status and unchanged snapshot/plan counts. A positive full nativeMCP request is added. R2selected24/0/1 and the first explicit actual Python gate pass. Raw logs and original full source-hash manifests remain nonadditive.",
+    "The first broad10groups records558/1/8; all new cases pass. The sole failure is an unchanged HTTP idle-cleanup fixture asserting that its20ms request budget must be fully exhausted. finish_rejection may return early on transport timeout and already caps every read by the original remaining budget. Only the test changes: configured positive OS read timeout must be<=the original20ms (or the original deadline has expired when no timeout is present), with its existing250ms upper wall-clock bound retained. HTTP runtime source is unchanged. No claim is made about the exact OS scheduling/rounding cause of that particular early return.",
+    "Final identical10group selection records559/0/8, including466/0/7 library and8/0/1 default new integration. Format/build/alltargetClippy-Dwarnings pass. Native732inputs remain unchanged in each frozen run. The only source difference from prior broadfinal is native/src/mcp_http_rejection_tests.rs; the159089152byte production binary95791c456b0db2ea3734b424e501f8d15df8e97cfec16b4755f193a94411c64f stays identical after build, final live gate and integrated checks. The explicit final actual-Python gate passes with the exact same732-source freeze. No inferred merged totals or whole-native rerun follows.",
+    "Initial runner invocations recorded all732input hashes but inherited a generic feedback raw-source selection. Available R1 raw bodies were backfilled only where their complete hash matched the originally recorded manifest; source-backfill receipts identify hash-only historical variants, including the first wrong new test file. No unavailable original raw bytes are invented. Final corrected runner and final actual gate contain all nine changed source/doc/test bodies, checked against their frozen hashes. Initial command logs/manifests and the copied unrelated prior feedback files remain intact.",
+    "Raw-or-CRLF-only integration materialization is checked for all732native inputs. The PostgreSQL response remains exactly2779bytes/f67a05349a6cedf55222afd3bb3231c169d382dd4b078d76544daac517530b47. Integrated format/Python17/typecheck/TS260+3skips pass with738inputs unchanged. Historical353inventory/73unreconciled/77backendunknown/falsefull-contract flags and previous evidence README bytes remain. Earlier unchanged OS1314 prerequisites are outside this finite selection; nonWindows/full-native/whole-platform/upstream/main/release and broaderR1-R9 remain open. The full task/actions remain active."
+  ],
+  "artifacts": [
+    {
+      "path": "documentation-proof.json",
+      "bytes": 283,
+      "sha256": "2e0d5a4cdb02c2fa2bb7ed1fc9677d51af92fcf69944489c73f82b8e64d4ac5d"
+    },
+    {
+      "path": "final/build.log",
+      "bytes": 60,
+      "sha256": "bf03cb7102c48175e5c27ed88977d11da2b3be71a18fc5bda9663faa83f02189"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 168,
+      "sha256": "f4479b6b095a10a603c3f5cc41e7451314b478621160daabf88c7e08246cdbd4"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native-test-binary.json",
+      "bytes": 360,
+      "sha256": "c2675af9741fec7057c5a8aad51fd7ae9d91961439d4211b0d24225dbf370364"
+    },
+    {
+      "path": "final/native.log",
+      "bytes": 65547,
+      "sha256": "7ac88ace9010b40246d103f7650003b041a364edd32c8c214e4c09fffa3cd49a"
+    },
+    {
+      "path": "final/result.json",
+      "bytes": 2408,
+      "sha256": "a7f4e1e25fafce4f62cde3784b83d49cae989b13656bcb7f2bf3c0b16dc32d6f"
+    },
+    {
+      "path": "final/runner.py",
+      "bytes": 3620,
+      "sha256": "aa20bb4ae6100fce417d52999abfa806fd178997e1fa90865e2bba3270b1b411"
+    },
+    {
+      "path": "final/source/native/docs/outcome-feedback.md",
+      "bytes": 11492,
+      "sha256": "28f637eeeaac18b0c460ac7709c9b0da95a86d35a8f2fc97b7f49f3758cf0f66"
+    },
+    {
+      "path": "final/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 17298,
+      "sha256": "196a4591ddbaa4e5a87b2f2bc702508b97011249c733e98db467240d9312ae5f"
+    },
+    {
+      "path": "final/source/native/docs/symbol-deletion.md",
+      "bytes": 5163,
+      "sha256": "ad052cb82d70a52ebfdeb003e22f8768f92278d61ae650ef967a7ca8ea983c4c"
+    },
+    {
+      "path": "final/source/native/README.md",
+      "bytes": 24329,
+      "sha256": "3732d8b4080b3b43be9b6efdc2062c8d42948d830aaa87857358fab5826cc50b"
+    },
+    {
+      "path": "final/source/native/src/changes.rs",
+      "bytes": 32239,
+      "sha256": "f065d83fffe9f8f82b6f2994e454bdb88afe2a757d28535a961ac348d68d4cf8"
+    },
+    {
+      "path": "final/source/native/src/changes_symbol_delete.rs",
+      "bytes": 16599,
+      "sha256": "9fa634ce415e8d5c92d102186009a0164ebd6b0fd7a2a7d700e8a125ce0e9f34"
+    },
+    {
+      "path": "final/source/native/src/feedback_cli.rs",
+      "bytes": 9025,
+      "sha256": "581347bbdd23b2b583b5c33309a04e2c2db5d96a6a517b849b5cc5ef7b24d915"
+    },
+    {
+      "path": "final/source/native/src/knowledge_feedback.rs",
+      "bytes": 10818,
+      "sha256": "876624529b16e6725e106c08e64da928eecf3fdc6d8ea4ba596884ef32ea50f4"
+    },
+    {
+      "path": "final/source/native/src/knowledge_feedback_provenance.rs",
+      "bytes": 4600,
+      "sha256": "d4c046ce8054d88c273f369b4a32fea556a80ac49b74600944a108be403ae68d"
+    },
+    {
+      "path": "final/source/native/src/knowledge_feedback_rank.rs",
+      "bytes": 9916,
+      "sha256": "03d27372eba856c0c0177119823155a682457ee3835b43de0959434248fe9c82"
+    },
+    {
+      "path": "final/source/native/src/knowledge_feedback_store.rs",
+      "bytes": 21411,
+      "sha256": "5a5d2939464dd73263db2bc53e6a8a6c09e6171fa4ce5562dea7a6cd0cc453d0"
+    },
+    {
+      "path": "final/source/native/src/knowledge_feedback_transcript.rs",
+      "bytes": 9023,
+      "sha256": "e356063d5bc48fc423e88079e6e7aea765dd9f66af7775c4caf606b05f65b82e"
+    },
+    {
+      "path": "final/source/native/src/mcp_http_rejection_tests.rs",
+      "bytes": 2659,
+      "sha256": "9188a83a75d1cac8db5c20d626c38246fb369ab9a7ed9fea485cb9649a53af58"
+    },
+    {
+      "path": "final/source/native/src/plan_feedback.rs",
+      "bytes": 9563,
+      "sha256": "6a689e2de9e4b5b07cefd78556fc0a7c45e4d27bbe82ff7cbce4e840f9baedcc"
+    },
+    {
+      "path": "final/source/native/src/plan_feedback_rank.rs",
+      "bytes": 4454,
+      "sha256": "1b6416078d3640dc94504df60326a3f0b75ff737b31c38c08ceb3e3da074b563"
+    },
+    {
+      "path": "final/source/native/src/plan_feedback_store.rs",
+      "bytes": 4449,
+      "sha256": "933e69e478e3416c23e88a2d4aa7312744278be71cff3ea6723715a38691f56b"
+    },
+    {
+      "path": "final/source/native/src/protocol.rs",
+      "bytes": 50434,
+      "sha256": "8a4d2a5663151298fb3c18a30fa19091c87b3748591480ecd12d1a61b7398d9d"
+    },
+    {
+      "path": "final/source/native/src/retention.rs",
+      "bytes": 82692,
+      "sha256": "363192275f162f602e062403a6cb0d608056be7da08e9b2a3686c59c4dc7c906"
+    },
+    {
+      "path": "final/source/native/src/validation.rs",
+      "bytes": 20926,
+      "sha256": "80fbb852f6c47ac6a1530d81d1604dee33070a6ed6060dd24df9b8d43b6a6788"
+    },
+    {
+      "path": "final/source/native/tests/decision_retention.rs",
+      "bytes": 3127,
+      "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f"
+    },
+    {
+      "path": "final/source/native/tests/feedback_cli.rs",
+      "bytes": 39437,
+      "sha256": "7e195c04031a7ea7a754c184256f72ad1f5c3858473a2bb1ba6a42ddbae15ea6"
+    },
+    {
+      "path": "final/source/native/tests/parity_retention.rs",
+      "bytes": 14268,
+      "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2"
+    },
+    {
+      "path": "final/source/native/tests/plan_feedback.rs",
+      "bytes": 24218,
+      "sha256": "7e20432f62631b1b593d459de6e5aee52a8a111d6c388cd6df7d954c4940237c"
+    },
+    {
+      "path": "final/source/native/tests/python_empty_suite.rs",
+      "bytes": 16370,
+      "sha256": "f75a65ed9396ffcba7ada50dcec322ba16824ae0bacd4fdf20149434487684c2"
+    },
+    {
+      "path": "final/source/native/tests/retention.rs",
+      "bytes": 15382,
+      "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 79125,
+      "sha256": "83fa9fff043e692275ac7e7c5bae9b89fdee2b4673e9fc846e9766df18cf191a"
+    },
+    {
+      "path": "final/source-backfill.json",
+      "bytes": 2254,
+      "sha256": "17e7420270233161ad02200b919323e8697b8f36ccbb9afeed6c682fa7ee4bfc"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 79125,
+      "sha256": "83fa9fff043e692275ac7e7c5bae9b89fdee2b4673e9fc846e9766df18cf191a"
+    },
+    {
+      "path": "final-r2/build.log",
+      "bytes": 60,
+      "sha256": "231ac85ba52db8677dc5f42566bb64eff76b24faf9cd53bcd4194915ebef4bf1"
+    },
+    {
+      "path": "final-r2/clippy.log",
+      "bytes": 168,
+      "sha256": "8145edb37e97e05d3817a24d9f8ae47779f0e3f8284260f7f0eaba88a78fbba4"
+    },
+    {
+      "path": "final-r2/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final-r2/native.log",
+      "bytes": 65051,
+      "sha256": "827fa6d649d53228ce4b4ab1a6a1faf78565b927b60d8a3102e3b15349a4ce3f"
+    },
+    {
+      "path": "final-r2/result.json",
+      "bytes": 2305,
+      "sha256": "61c2a758b254b0f07b60d4fc9b5e8a15a4350a5843dd395afb1ce511d6442172"
+    },
+    {
+      "path": "final-r2/runner.py",
+      "bytes": 3726,
+      "sha256": "4fd64c46f2ce8bed47f9915867f57f104c690a37711d8e1e5fe7b75db15b32af"
+    },
+    {
+      "path": "final-r2/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 17298,
+      "sha256": "196a4591ddbaa4e5a87b2f2bc702508b97011249c733e98db467240d9312ae5f"
+    },
+    {
+      "path": "final-r2/source/native/docs/symbol-deletion.md",
+      "bytes": 5163,
+      "sha256": "ad052cb82d70a52ebfdeb003e22f8768f92278d61ae650ef967a7ca8ea983c4c"
+    },
+    {
+      "path": "final-r2/source/native/README.md",
+      "bytes": 24329,
+      "sha256": "3732d8b4080b3b43be9b6efdc2062c8d42948d830aaa87857358fab5826cc50b"
+    },
+    {
+      "path": "final-r2/source/native/src/changes.rs",
+      "bytes": 32239,
+      "sha256": "f065d83fffe9f8f82b6f2994e454bdb88afe2a757d28535a961ac348d68d4cf8"
+    },
+    {
+      "path": "final-r2/source/native/src/changes_symbol_delete.rs",
+      "bytes": 16599,
+      "sha256": "9fa634ce415e8d5c92d102186009a0164ebd6b0fd7a2a7d700e8a125ce0e9f34"
+    },
+    {
+      "path": "final-r2/source/native/src/mcp_http_rejection_tests.rs",
+      "bytes": 3262,
+      "sha256": "f0ab115a6d3fd0f58ede9c48e657ff53cdff38b2ac595512071ff65463909116"
+    },
+    {
+      "path": "final-r2/source/native/src/model_protocol.rs",
+      "bytes": 35314,
+      "sha256": "28b698bd9ee83674ad27ad22087a182ca4de85960b73fcf120b4d41954047cb1"
+    },
+    {
+      "path": "final-r2/source/native/src/protocol.rs",
+      "bytes": 50434,
+      "sha256": "8a4d2a5663151298fb3c18a30fa19091c87b3748591480ecd12d1a61b7398d9d"
+    },
+    {
+      "path": "final-r2/source/native/src/validation.rs",
+      "bytes": 20926,
+      "sha256": "80fbb852f6c47ac6a1530d81d1604dee33070a6ed6060dd24df9b8d43b6a6788"
+    },
+    {
+      "path": "final-r2/source/native/tests/capture_changes.rs",
+      "bytes": 2269,
+      "sha256": "49e5c1d7db01ebf6f546b436ea53602c79e07f3892f4234bc509a51a12d84a6a"
+    },
+    {
+      "path": "final-r2/source/native/tests/meaning_protocol.rs",
+      "bytes": 9918,
+      "sha256": "f84b22eecd19f431dd9cc7ae62853c5efdcc0a7aed7187cdfc8ef66019a87158"
+    },
+    {
+      "path": "final-r2/source/native/tests/python_empty_suite.rs",
+      "bytes": 16370,
+      "sha256": "f75a65ed9396ffcba7ada50dcec322ba16824ae0bacd4fdf20149434487684c2"
+    },
+    {
+      "path": "final-r2/source-after.json",
+      "bytes": 79125,
+      "sha256": "eaa2d6fd66cdd571b2d00b6b68b170f6c65bdcffca61b45181082ea598890325"
+    },
+    {
+      "path": "final-r2/source-before.json",
+      "bytes": 79125,
+      "sha256": "eaa2d6fd66cdd571b2d00b6b68b170f6c65bdcffca61b45181082ea598890325"
+    },
+    {
+      "path": "frozen-tracker.json",
+      "bytes": 545286,
+      "sha256": "6b41a9b91b1705a663cbbf6c2f5d8e369284c80835925d7ee7c856e4c560676a"
+    },
+    {
+      "path": "integrated/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "integrated/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "385c68ec115e661229dcd6c8dc835a98db33ae416d5965259c5846aaeef39c1b"
+    },
+    {
+      "path": "integrated/result.json",
+      "bytes": 958,
+      "sha256": "584597507bb14dc48e9f239105a14f5df9b67ae9847ef741fc39a4d5ff660275"
+    },
+    {
+      "path": "integrated/source-after.json",
+      "bytes": 79084,
+      "sha256": "442911529cdda4b62f6d695d813dfdc7ac8a5324069a03d411725300a30fbc97"
+    },
+    {
+      "path": "integrated/source-before.json",
+      "bytes": 79084,
+      "sha256": "442911529cdda4b62f6d695d813dfdc7ac8a5324069a03d411725300a30fbc97"
+    },
+    {
+      "path": "integrated/tests.log",
+      "bytes": 25027,
+      "sha256": "a6122777e8d5930a06e704c3c931adad1e4ff92feeb67eb6c2a546ae238ffdcd"
+    },
+    {
+      "path": "integrated/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "live-final-r2/native.log",
+      "bytes": 2108,
+      "sha256": "bdf729bb7532e4e75d7de3f6bd7305eb2deb7a1ea92cb6799d626da009834278"
+    },
+    {
+      "path": "live-final-r2/python-runtime.json",
+      "bytes": 157,
+      "sha256": "591597e1868903c4d55e429357d887bb7f748a5180ee75263413fc9cebba7d6c"
+    },
+    {
+      "path": "live-final-r2/result.json",
+      "bytes": 816,
+      "sha256": "2bedc8d928c4a905d4043bad969d524036107668667d7423cae7196c9240612a"
+    },
+    {
+      "path": "live-final-r2/runner.py",
+      "bytes": 3738,
+      "sha256": "e884ed6de48d7764e8b8bc9e50d116d1f0567d619f38446c749ad04fb6276c16"
+    },
+    {
+      "path": "live-final-r2/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 17298,
+      "sha256": "196a4591ddbaa4e5a87b2f2bc702508b97011249c733e98db467240d9312ae5f"
+    },
+    {
+      "path": "live-final-r2/source/native/docs/symbol-deletion.md",
+      "bytes": 5163,
+      "sha256": "ad052cb82d70a52ebfdeb003e22f8768f92278d61ae650ef967a7ca8ea983c4c"
+    },
+    {
+      "path": "live-final-r2/source/native/README.md",
+      "bytes": 24329,
+      "sha256": "3732d8b4080b3b43be9b6efdc2062c8d42948d830aaa87857358fab5826cc50b"
+    },
+    {
+      "path": "live-final-r2/source/native/src/changes.rs",
+      "bytes": 32239,
+      "sha256": "f065d83fffe9f8f82b6f2994e454bdb88afe2a757d28535a961ac348d68d4cf8"
+    },
+    {
+      "path": "live-final-r2/source/native/src/changes_symbol_delete.rs",
+      "bytes": 16599,
+      "sha256": "9fa634ce415e8d5c92d102186009a0164ebd6b0fd7a2a7d700e8a125ce0e9f34"
+    },
+    {
+      "path": "live-final-r2/source/native/src/mcp_http_rejection_tests.rs",
+      "bytes": 3262,
+      "sha256": "f0ab115a6d3fd0f58ede9c48e657ff53cdff38b2ac595512071ff65463909116"
+    },
+    {
+      "path": "live-final-r2/source/native/src/model_protocol.rs",
+      "bytes": 35314,
+      "sha256": "28b698bd9ee83674ad27ad22087a182ca4de85960b73fcf120b4d41954047cb1"
+    },
+    {
+      "path": "live-final-r2/source/native/src/protocol.rs",
+      "bytes": 50434,
+      "sha256": "8a4d2a5663151298fb3c18a30fa19091c87b3748591480ecd12d1a61b7398d9d"
+    },
+    {
+      "path": "live-final-r2/source/native/src/validation.rs",
+      "bytes": 20926,
+      "sha256": "80fbb852f6c47ac6a1530d81d1604dee33070a6ed6060dd24df9b8d43b6a6788"
+    },
+    {
+      "path": "live-final-r2/source/native/tests/capture_changes.rs",
+      "bytes": 2269,
+      "sha256": "49e5c1d7db01ebf6f546b436ea53602c79e07f3892f4234bc509a51a12d84a6a"
+    },
+    {
+      "path": "live-final-r2/source/native/tests/meaning_protocol.rs",
+      "bytes": 9918,
+      "sha256": "f84b22eecd19f431dd9cc7ae62853c5efdcc0a7aed7187cdfc8ef66019a87158"
+    },
+    {
+      "path": "live-final-r2/source/native/tests/python_empty_suite.rs",
+      "bytes": 16370,
+      "sha256": "f75a65ed9396ffcba7ada50dcec322ba16824ae0bacd4fdf20149434487684c2"
+    },
+    {
+      "path": "live-final-r2/source-after.json",
+      "bytes": 79125,
+      "sha256": "eaa2d6fd66cdd571b2d00b6b68b170f6c65bdcffca61b45181082ea598890325"
+    },
+    {
+      "path": "live-final-r2/source-before.json",
+      "bytes": 79125,
+      "sha256": "eaa2d6fd66cdd571b2d00b6b68b170f6c65bdcffca61b45181082ea598890325"
+    },
+    {
+      "path": "live-r1/native.log",
+      "bytes": 2108,
+      "sha256": "caa16cacf0cee034c11e7935e4df4250d8a52570ab22503f9ff3bfc308fcc9f2"
+    },
+    {
+      "path": "live-r1/python-runtime.json",
+      "bytes": 157,
+      "sha256": "591597e1868903c4d55e429357d887bb7f748a5180ee75263413fc9cebba7d6c"
+    },
+    {
+      "path": "live-r1/result.json",
+      "bytes": 816,
+      "sha256": "c2198df51ce56627f98ebaeefae29069706fb8f05c2d1b04159ce3f46a3cd715"
+    },
+    {
+      "path": "live-r1/runner.py",
+      "bytes": 3620,
+      "sha256": "aa20bb4ae6100fce417d52999abfa806fd178997e1fa90865e2bba3270b1b411"
+    },
+    {
+      "path": "live-r1/source/native/docs/outcome-feedback.md",
+      "bytes": 11492,
+      "sha256": "28f637eeeaac18b0c460ac7709c9b0da95a86d35a8f2fc97b7f49f3758cf0f66"
+    },
+    {
+      "path": "live-r1/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 17298,
+      "sha256": "196a4591ddbaa4e5a87b2f2bc702508b97011249c733e98db467240d9312ae5f"
+    },
+    {
+      "path": "live-r1/source/native/src/changes.rs",
+      "bytes": 32239,
+      "sha256": "f065d83fffe9f8f82b6f2994e454bdb88afe2a757d28535a961ac348d68d4cf8"
+    },
+    {
+      "path": "live-r1/source/native/src/changes_symbol_delete.rs",
+      "bytes": 16599,
+      "sha256": "9fa634ce415e8d5c92d102186009a0164ebd6b0fd7a2a7d700e8a125ce0e9f34"
+    },
+    {
+      "path": "live-r1/source/native/src/feedback_cli.rs",
+      "bytes": 9025,
+      "sha256": "581347bbdd23b2b583b5c33309a04e2c2db5d96a6a517b849b5cc5ef7b24d915"
+    },
+    {
+      "path": "live-r1/source/native/src/knowledge_feedback.rs",
+      "bytes": 10818,
+      "sha256": "876624529b16e6725e106c08e64da928eecf3fdc6d8ea4ba596884ef32ea50f4"
+    },
+    {
+      "path": "live-r1/source/native/src/knowledge_feedback_provenance.rs",
+      "bytes": 4600,
+      "sha256": "d4c046ce8054d88c273f369b4a32fea556a80ac49b74600944a108be403ae68d"
+    },
+    {
+      "path": "live-r1/source/native/src/knowledge_feedback_rank.rs",
+      "bytes": 9916,
+      "sha256": "03d27372eba856c0c0177119823155a682457ee3835b43de0959434248fe9c82"
+    },
+    {
+      "path": "live-r1/source/native/src/knowledge_feedback_store.rs",
+      "bytes": 21411,
+      "sha256": "5a5d2939464dd73263db2bc53e6a8a6c09e6171fa4ce5562dea7a6cd0cc453d0"
+    },
+    {
+      "path": "live-r1/source/native/src/knowledge_feedback_transcript.rs",
+      "bytes": 9023,
+      "sha256": "e356063d5bc48fc423e88079e6e7aea765dd9f66af7775c4caf606b05f65b82e"
+    },
+    {
+      "path": "live-r1/source/native/src/mcp_http_rejection_tests.rs",
+      "bytes": 2659,
+      "sha256": "9188a83a75d1cac8db5c20d626c38246fb369ab9a7ed9fea485cb9649a53af58"
+    },
+    {
+      "path": "live-r1/source/native/src/plan_feedback.rs",
+      "bytes": 9563,
+      "sha256": "6a689e2de9e4b5b07cefd78556fc0a7c45e4d27bbe82ff7cbce4e840f9baedcc"
+    },
+    {
+      "path": "live-r1/source/native/src/plan_feedback_rank.rs",
+      "bytes": 4454,
+      "sha256": "1b6416078d3640dc94504df60326a3f0b75ff737b31c38c08ceb3e3da074b563"
+    },
+    {
+      "path": "live-r1/source/native/src/plan_feedback_store.rs",
+      "bytes": 4449,
+      "sha256": "933e69e478e3416c23e88a2d4aa7312744278be71cff3ea6723715a38691f56b"
+    },
+    {
+      "path": "live-r1/source/native/src/protocol.rs",
+      "bytes": 50434,
+      "sha256": "8a4d2a5663151298fb3c18a30fa19091c87b3748591480ecd12d1a61b7398d9d"
+    },
+    {
+      "path": "live-r1/source/native/src/retention.rs",
+      "bytes": 82692,
+      "sha256": "363192275f162f602e062403a6cb0d608056be7da08e9b2a3686c59c4dc7c906"
+    },
+    {
+      "path": "live-r1/source/native/src/validation.rs",
+      "bytes": 20926,
+      "sha256": "80fbb852f6c47ac6a1530d81d1604dee33070a6ed6060dd24df9b8d43b6a6788"
+    },
+    {
+      "path": "live-r1/source/native/tests/decision_retention.rs",
+      "bytes": 3127,
+      "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f"
+    },
+    {
+      "path": "live-r1/source/native/tests/feedback_cli.rs",
+      "bytes": 39437,
+      "sha256": "7e195c04031a7ea7a754c184256f72ad1f5c3858473a2bb1ba6a42ddbae15ea6"
+    },
+    {
+      "path": "live-r1/source/native/tests/parity_retention.rs",
+      "bytes": 14268,
+      "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2"
+    },
+    {
+      "path": "live-r1/source/native/tests/plan_feedback.rs",
+      "bytes": 24218,
+      "sha256": "7e20432f62631b1b593d459de6e5aee52a8a111d6c388cd6df7d954c4940237c"
+    },
+    {
+      "path": "live-r1/source/native/tests/python_empty_suite.rs",
+      "bytes": 16370,
+      "sha256": "f75a65ed9396ffcba7ada50dcec322ba16824ae0bacd4fdf20149434487684c2"
+    },
+    {
+      "path": "live-r1/source/native/tests/retention.rs",
+      "bytes": 15382,
+      "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068"
+    },
+    {
+      "path": "live-r1/source-after.json",
+      "bytes": 79125,
+      "sha256": "c860961ee69b5c52c428988c5d783e28513aa64de4772b446d950d8d43306bb7"
+    },
+    {
+      "path": "live-r1/source-backfill.json",
+      "bytes": 2256,
+      "sha256": "bab06f75f8be6c9b2de1460157ab0ccdac396ac1628d410122667d85a1c6363d"
+    },
+    {
+      "path": "live-r1/source-before.json",
+      "bytes": 79125,
+      "sha256": "c860961ee69b5c52c428988c5d783e28513aa64de4772b446d950d8d43306bb7"
+    },
+    {
+      "path": "r1/native.log",
+      "bytes": 4138,
+      "sha256": "79a65d79d7980fed2ff930c0f77b21ec473ff9976fc76a86551773da72057613"
+    },
+    {
+      "path": "r1/result.json",
+      "bytes": 1035,
+      "sha256": "c66cfee058c632123336a965de082f5e876b6364d9b8bdbe77355bd9ab18f8d6"
+    },
+    {
+      "path": "r1/runner.py",
+      "bytes": 3620,
+      "sha256": "aa20bb4ae6100fce417d52999abfa806fd178997e1fa90865e2bba3270b1b411"
+    },
+    {
+      "path": "r1/source/native/docs/outcome-feedback.md",
+      "bytes": 11492,
+      "sha256": "28f637eeeaac18b0c460ac7709c9b0da95a86d35a8f2fc97b7f49f3758cf0f66"
+    },
+    {
+      "path": "r1/source/native/src/changes.rs",
+      "bytes": 32239,
+      "sha256": "f065d83fffe9f8f82b6f2994e454bdb88afe2a757d28535a961ac348d68d4cf8"
+    },
+    {
+      "path": "r1/source/native/src/changes_symbol_delete.rs",
+      "bytes": 16599,
+      "sha256": "9fa634ce415e8d5c92d102186009a0164ebd6b0fd7a2a7d700e8a125ce0e9f34"
+    },
+    {
+      "path": "r1/source/native/src/feedback_cli.rs",
+      "bytes": 9025,
+      "sha256": "581347bbdd23b2b583b5c33309a04e2c2db5d96a6a517b849b5cc5ef7b24d915"
+    },
+    {
+      "path": "r1/source/native/src/knowledge_feedback.rs",
+      "bytes": 10818,
+      "sha256": "876624529b16e6725e106c08e64da928eecf3fdc6d8ea4ba596884ef32ea50f4"
+    },
+    {
+      "path": "r1/source/native/src/knowledge_feedback_provenance.rs",
+      "bytes": 4600,
+      "sha256": "d4c046ce8054d88c273f369b4a32fea556a80ac49b74600944a108be403ae68d"
+    },
+    {
+      "path": "r1/source/native/src/knowledge_feedback_rank.rs",
+      "bytes": 9916,
+      "sha256": "03d27372eba856c0c0177119823155a682457ee3835b43de0959434248fe9c82"
+    },
+    {
+      "path": "r1/source/native/src/knowledge_feedback_store.rs",
+      "bytes": 21411,
+      "sha256": "5a5d2939464dd73263db2bc53e6a8a6c09e6171fa4ce5562dea7a6cd0cc453d0"
+    },
+    {
+      "path": "r1/source/native/src/knowledge_feedback_transcript.rs",
+      "bytes": 9023,
+      "sha256": "e356063d5bc48fc423e88079e6e7aea765dd9f66af7775c4caf606b05f65b82e"
+    },
+    {
+      "path": "r1/source/native/src/mcp_http_rejection_tests.rs",
+      "bytes": 2659,
+      "sha256": "9188a83a75d1cac8db5c20d626c38246fb369ab9a7ed9fea485cb9649a53af58"
+    },
+    {
+      "path": "r1/source/native/src/plan_feedback.rs",
+      "bytes": 9563,
+      "sha256": "6a689e2de9e4b5b07cefd78556fc0a7c45e4d27bbe82ff7cbce4e840f9baedcc"
+    },
+    {
+      "path": "r1/source/native/src/plan_feedback_rank.rs",
+      "bytes": 4454,
+      "sha256": "1b6416078d3640dc94504df60326a3f0b75ff737b31c38c08ceb3e3da074b563"
+    },
+    {
+      "path": "r1/source/native/src/plan_feedback_store.rs",
+      "bytes": 4449,
+      "sha256": "933e69e478e3416c23e88a2d4aa7312744278be71cff3ea6723715a38691f56b"
+    },
+    {
+      "path": "r1/source/native/src/protocol.rs",
+      "bytes": 50434,
+      "sha256": "8a4d2a5663151298fb3c18a30fa19091c87b3748591480ecd12d1a61b7398d9d"
+    },
+    {
+      "path": "r1/source/native/src/retention.rs",
+      "bytes": 82692,
+      "sha256": "363192275f162f602e062403a6cb0d608056be7da08e9b2a3686c59c4dc7c906"
+    },
+    {
+      "path": "r1/source/native/src/validation.rs",
+      "bytes": 20926,
+      "sha256": "80fbb852f6c47ac6a1530d81d1604dee33070a6ed6060dd24df9b8d43b6a6788"
+    },
+    {
+      "path": "r1/source/native/tests/decision_retention.rs",
+      "bytes": 3127,
+      "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f"
+    },
+    {
+      "path": "r1/source/native/tests/feedback_cli.rs",
+      "bytes": 39437,
+      "sha256": "7e195c04031a7ea7a754c184256f72ad1f5c3858473a2bb1ba6a42ddbae15ea6"
+    },
+    {
+      "path": "r1/source/native/tests/parity_retention.rs",
+      "bytes": 14268,
+      "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2"
+    },
+    {
+      "path": "r1/source/native/tests/plan_feedback.rs",
+      "bytes": 24218,
+      "sha256": "7e20432f62631b1b593d459de6e5aee52a8a111d6c388cd6df7d954c4940237c"
+    },
+    {
+      "path": "r1/source/native/tests/retention.rs",
+      "bytes": 15382,
+      "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068"
+    },
+    {
+      "path": "r1/source-after.json",
+      "bytes": 79125,
+      "sha256": "d2dd0d119d9d4382d3a2ba278a0781de4024c4757a475630dea77c0ed6614626"
+    },
+    {
+      "path": "r1/source-backfill.json",
+      "bytes": 2258,
+      "sha256": "c8966068206b0a2a3e812dc0b5cfcf6063f22d55e1121566db1e49d33ed3a28d"
+    },
+    {
+      "path": "r1/source-before.json",
+      "bytes": 79125,
+      "sha256": "d2dd0d119d9d4382d3a2ba278a0781de4024c4757a475630dea77c0ed6614626"
+    },
+    {
+      "path": "r2/native.log",
+      "bytes": 3522,
+      "sha256": "8652c05ed47663974fa71e9e0076300b0d70e6ae1c13d26d1bf008668d8be9c0"
+    },
+    {
+      "path": "r2/result.json",
+      "bytes": 935,
+      "sha256": "3f96baab02963fbd84f7afcc7ac19f0a800eddab627f5db5538082ed430d7716"
+    },
+    {
+      "path": "r2/runner.py",
+      "bytes": 3620,
+      "sha256": "aa20bb4ae6100fce417d52999abfa806fd178997e1fa90865e2bba3270b1b411"
+    },
+    {
+      "path": "r2/source/native/docs/outcome-feedback.md",
+      "bytes": 11492,
+      "sha256": "28f637eeeaac18b0c460ac7709c9b0da95a86d35a8f2fc97b7f49f3758cf0f66"
+    },
+    {
+      "path": "r2/source/native/src/changes.rs",
+      "bytes": 32239,
+      "sha256": "f065d83fffe9f8f82b6f2994e454bdb88afe2a757d28535a961ac348d68d4cf8"
+    },
+    {
+      "path": "r2/source/native/src/changes_symbol_delete.rs",
+      "bytes": 16599,
+      "sha256": "9fa634ce415e8d5c92d102186009a0164ebd6b0fd7a2a7d700e8a125ce0e9f34"
+    },
+    {
+      "path": "r2/source/native/src/feedback_cli.rs",
+      "bytes": 9025,
+      "sha256": "581347bbdd23b2b583b5c33309a04e2c2db5d96a6a517b849b5cc5ef7b24d915"
+    },
+    {
+      "path": "r2/source/native/src/knowledge_feedback.rs",
+      "bytes": 10818,
+      "sha256": "876624529b16e6725e106c08e64da928eecf3fdc6d8ea4ba596884ef32ea50f4"
+    },
+    {
+      "path": "r2/source/native/src/knowledge_feedback_provenance.rs",
+      "bytes": 4600,
+      "sha256": "d4c046ce8054d88c273f369b4a32fea556a80ac49b74600944a108be403ae68d"
+    },
+    {
+      "path": "r2/source/native/src/knowledge_feedback_rank.rs",
+      "bytes": 9916,
+      "sha256": "03d27372eba856c0c0177119823155a682457ee3835b43de0959434248fe9c82"
+    },
+    {
+      "path": "r2/source/native/src/knowledge_feedback_store.rs",
+      "bytes": 21411,
+      "sha256": "5a5d2939464dd73263db2bc53e6a8a6c09e6171fa4ce5562dea7a6cd0cc453d0"
+    },
+    {
+      "path": "r2/source/native/src/knowledge_feedback_transcript.rs",
+      "bytes": 9023,
+      "sha256": "e356063d5bc48fc423e88079e6e7aea765dd9f66af7775c4caf606b05f65b82e"
+    },
+    {
+      "path": "r2/source/native/src/mcp_http_rejection_tests.rs",
+      "bytes": 2659,
+      "sha256": "9188a83a75d1cac8db5c20d626c38246fb369ab9a7ed9fea485cb9649a53af58"
+    },
+    {
+      "path": "r2/source/native/src/plan_feedback.rs",
+      "bytes": 9563,
+      "sha256": "6a689e2de9e4b5b07cefd78556fc0a7c45e4d27bbe82ff7cbce4e840f9baedcc"
+    },
+    {
+      "path": "r2/source/native/src/plan_feedback_rank.rs",
+      "bytes": 4454,
+      "sha256": "1b6416078d3640dc94504df60326a3f0b75ff737b31c38c08ceb3e3da074b563"
+    },
+    {
+      "path": "r2/source/native/src/plan_feedback_store.rs",
+      "bytes": 4449,
+      "sha256": "933e69e478e3416c23e88a2d4aa7312744278be71cff3ea6723715a38691f56b"
+    },
+    {
+      "path": "r2/source/native/src/protocol.rs",
+      "bytes": 50434,
+      "sha256": "8a4d2a5663151298fb3c18a30fa19091c87b3748591480ecd12d1a61b7398d9d"
+    },
+    {
+      "path": "r2/source/native/src/retention.rs",
+      "bytes": 82692,
+      "sha256": "363192275f162f602e062403a6cb0d608056be7da08e9b2a3686c59c4dc7c906"
+    },
+    {
+      "path": "r2/source/native/src/validation.rs",
+      "bytes": 20926,
+      "sha256": "80fbb852f6c47ac6a1530d81d1604dee33070a6ed6060dd24df9b8d43b6a6788"
+    },
+    {
+      "path": "r2/source/native/tests/decision_retention.rs",
+      "bytes": 3127,
+      "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f"
+    },
+    {
+      "path": "r2/source/native/tests/feedback_cli.rs",
+      "bytes": 39437,
+      "sha256": "7e195c04031a7ea7a754c184256f72ad1f5c3858473a2bb1ba6a42ddbae15ea6"
+    },
+    {
+      "path": "r2/source/native/tests/parity_retention.rs",
+      "bytes": 14268,
+      "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2"
+    },
+    {
+      "path": "r2/source/native/tests/plan_feedback.rs",
+      "bytes": 24218,
+      "sha256": "7e20432f62631b1b593d459de6e5aee52a8a111d6c388cd6df7d954c4940237c"
+    },
+    {
+      "path": "r2/source/native/tests/python_empty_suite.rs",
+      "bytes": 16370,
+      "sha256": "f75a65ed9396ffcba7ada50dcec322ba16824ae0bacd4fdf20149434487684c2"
+    },
+    {
+      "path": "r2/source/native/tests/retention.rs",
+      "bytes": 15382,
+      "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068"
+    },
+    {
+      "path": "r2/source-after.json",
+      "bytes": 79125,
+      "sha256": "4ae9dbf637ab944b16a9339ee7b22c10341d52436c53c08c24c43d007223509d"
+    },
+    {
+      "path": "r2/source-backfill.json",
+      "bytes": 2257,
+      "sha256": "8d09513ede7b5424a7eee223a95614a22a9ede145189653b8fb10c7d7589f47a"
+    },
+    {
+      "path": "r2/source-before.json",
+      "bytes": 79125,
+      "sha256": "4ae9dbf637ab944b16a9339ee7b22c10341d52436c53c08c24c43d007223509d"
+    },
+    {
+      "path": "runners/ci-python-body-backfill.py",
+      "bytes": 1399,
+      "sha256": "e68490707e4be210f2141c65270fa3aeb7b6e788cdd44d4078ded495e2af80e0"
+    },
+    {
+      "path": "runners/ci-python-body-binary.py",
+      "bytes": 882,
+      "sha256": "404f17c3b052a3948048c28573c03063838e6d9cf17912b0867506f1adea427f"
+    },
+    {
+      "path": "runners/ci-python-body-check.py",
+      "bytes": 3726,
+      "sha256": "4fd64c46f2ce8bed47f9915867f57f104c690a37711d8e1e5fe7b75db15b32af"
+    },
+    {
+      "path": "runners/ci-python-body-commit.py",
+      "bytes": 4823,
+      "sha256": "9eb4861b908be1ba22ce6bb4709af6d00e556cd5b4e32f6b0234abcfb98a5111"
+    },
+    {
+      "path": "runners/ci-python-body-docs.py",
+      "bytes": 8649,
+      "sha256": "e0329f71abfbe761b251c2ebb53bb591091ae375a1a4aa59509dfdff7519cf20"
+    },
+    {
+      "path": "runners/ci-python-body-integrated-setup.py",
+      "bytes": 408,
+      "sha256": "079387380cb09c9876b6881871dcacb8da72582619f2ffdc31e5df7fd6516741"
+    },
+    {
+      "path": "runners/ci-python-body-integrated.py",
+      "bytes": 2182,
+      "sha256": "4fa51aa6af775a5040492244e49aa40caa13f7a0b37feca7dcea67fd91b7ba65"
+    },
+    {
+      "path": "runners/ci-python-body-live-final-setup.py",
+      "bytes": 355,
+      "sha256": "473c539c298459dac5efe90cbe65398e063191794842c11698f366df25e0c6b0"
+    },
+    {
+      "path": "runners/ci-python-body-live-final.py",
+      "bytes": 3738,
+      "sha256": "e884ed6de48d7764e8b8bc9e50d116d1f0567d619f38446c749ad04fb6276c16"
+    },
+    {
+      "path": "runners/ci-python-body-pr.py",
+      "bytes": 5320,
+      "sha256": "82de550a762ac4d1bc9a605c93c10ace15897325a4fb467cf8a603c2d37fa681"
+    },
+    {
+      "path": "runners/ci-python-body-preserve.py",
+      "bytes": 10136,
+      "sha256": "4b2af6ac5574f08d232d9cc4910584b29d57b5a392339f805e75268b37d363e3"
+    },
+    {
+      "path": "runners/ci-python-body-runner-setup.py",
+      "bytes": 1348,
+      "sha256": "69dc7faa5c33cebb1567d7c41d7e0fb6d48496de0ef6dea2356b72da530dcb54"
+    },
+    {
+      "path": "runners/ci-python-body-stage.py",
+      "bytes": 4053,
+      "sha256": "e4accb6271e08d62405350b8226a06a2bbd71d450bec6d5a6f7f93e43449130d"
+    },
+    {
+      "path": "source-commit.json",
+      "bytes": 429,
+      "sha256": "112b6445c682564f34422780cfef13f79e512192ca45f463cb0718ec3e31ae29"
+    },
+    {
+      "path": "source-integration.json",
+      "bytes": 1249,
+      "sha256": "726d9bd1459f8620f8a207baa4081fdde764aaf9ab5db8f18b2ec70cef56db46"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 208447,
+      "sha256": "25cb0d5ab8a5e3ccfa3f88d481538e60d766e4952812b8b0830acd4310d9589f"
+    }
+  ]
+}

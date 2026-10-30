@@ -1,0 +1,18 @@
+{
+  "sourceCommit": "a1e6d4076ad20df223bec2f1d32c8d60f06aba02",
+  "actualScope": "Anonymous class-expression constructor-property owner behind captured named heritage; legacy type-alias log labels retained.",
+  "currentReportSha256": "ab55761d02d38c806972eac16bdb1d036670b274947a88c3cb87be17c1e90993",
+  "oldReportSha256": "eceebb0e7adeb170ecb7e8eb85f411b1b1c03550d9eaf7efb413203964e03cac",
+  "exactCoverage": [
+    {
+      "anchor": {
+        "endByte": 258,
+        "path": "src/\u03c0-\ud83d\ude00.ts",
+        "startByte": 239,
+        "text": "public value:string"
+      },
+      "reason": "parameter_property_contract_owner_not_captured"
+    }
+  ],
+  "legacyRedLabel": "generic-getter-red logs record the field-override counterexample in captured controller.py"
+}

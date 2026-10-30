@@ -1,0 +1,1 @@
+function helper(n){const inner=()=>{return n+1;};return inner();}const result=helper(3);globalThis.observed=result;

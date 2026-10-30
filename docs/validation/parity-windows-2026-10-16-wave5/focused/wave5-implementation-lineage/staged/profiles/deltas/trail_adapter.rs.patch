@@ -1,0 +1,52 @@
+--- a/native/src/trail_adapter.rs
++++ b/native/src/trail_adapter.rs
+@@ -15,7 +15,7 @@
+     vec![
+         (
+             "find_code",
+-            "Rank captured source bodies and structural graph relevance; exact source anchors accompany heuristic scores.",
++            "Rank captured source bodies using automatic manifest-balanced package scopes when usable, with observable bounded global fallback; exact source anchors accompany heuristic scores.",
+             json!({"query":{"type":"string"},"limit":{"type":"number","default":5},"full":{"type":"boolean","default":false},"in":{"type":"string"}}),
+         ),
+         (
+@@ -110,8 +110,23 @@
+         "find_code" => {
+             let limit = count(&args["limit"], 200)?;
+             let options = json!({"query":args["query"],"limit":limit,"relativePath":args["in"].as_str().unwrap_or(""),"includeBody":true});
+-            let mut result =
+-                crate::retrieval::find(&engine.store, &snapshot, &graph, &options, deadline)?;
++            // Wiring draft: the B-owned auto driver is explicitly unavailable
++            // until root releases the checked run/partition/scoring implementation.
++            let envelope_overhead =
++                serde_json::to_vec(&json!({"status":"ok","data":null}))?.len() - 4;
++            let output_limit = 4_000_000usize.checked_sub(envelope_overhead).ok_or(
++                crate::retrieval_scopes::RetrievalHardError::OutputCapacity(
++                    "compatibility_envelope",
++                ),
++            )?;
++            let mut result = crate::retrieval::find_compatibility_auto(
++                &engine.store,
++                &snapshot,
++                &graph,
++                &options,
++                deadline,
++                output_limit,
++            )?;
+             let scope = crate::capture::source_scope_policy(&engine.store, &snapshot)?;
+             let mut sources = BTreeMap::new();
+             let mut source_bytes = 0usize;
+@@ -203,6 +218,14 @@
+             result["fullDefinitionRequested"] = args["full"].clone();
+             result["definitionOutputBytes"] = json!(output_bytes);
+             result["adapterLimitations"] = json!([]);
++            // Definitions can grow after ranking's16k excerpts. Admit the exact
++            // final logical envelope before the existing protocol artifact branch.
++            if serde_json::to_vec(&json!({"status":"ok","data":&result}))?.len() > 4_000_000 {
++                return Err(crate::retrieval_scopes::RetrievalHardError::OutputCapacity(
++                    "compatibility_envelope",
++                )
++                .into());
++            }
+             Ok(result)
+         }
+         "find_all" => {

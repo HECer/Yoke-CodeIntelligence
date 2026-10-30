@@ -1,0 +1,40 @@
+{
+  "files": [
+    {
+      "name": "serena-failed-artifact.zip",
+      "bytes": 51663,
+      "sha256": "d6724c4e6b46f7d22ade4df59653926953a5a7ac5d23977fc9ac2dc365d62fa9"
+    },
+    {
+      "name": "persistent-python-failed-artifact.zip",
+      "bytes": 51670,
+      "sha256": "d448d40bc853b818d18c3d2552578198803f3b7af0fdbe9f1efa608c3279ff62"
+    },
+    {
+      "name": "native-browser-artifact.zip",
+      "bytes": 529232,
+      "sha256": "0b04922157e33cb7ac4e09e8815d43f0b74ac7c2aee3be311db3caa2e6f7d2d9"
+    },
+    {
+      "name": "artifact-audit.json",
+      "bytes": 606,
+      "sha256": "48945016857e5a6655492ad1fdba993c0939d4acdddb5016c1b5109af20deb80"
+    },
+    {
+      "name": "start-admission-proof.cjs",
+      "bytes": 3973,
+      "sha256": "0c72a89a1a312843082364cee7768598bd2c1dcfa70676383fd43e5c9424510d"
+    },
+    {
+      "name": "start-admission-proof.json",
+      "bytes": 714,
+      "sha256": "186f8b4bd03096dfb1a4d8cc5a455d17f1af11fba753a5b4a86ee476cf880a2a"
+    }
+  ],
+  "sourceRevision": "d6b9da55be23f3c7810292bc3412d67884b664cc",
+  "run": 41004163411,
+  "job": 123895143425,
+  "nativeArtifact": 12955289387,
+  "serenaArtifact": 12955722000,
+  "persistentPythonArtifact": 12955274407
+}

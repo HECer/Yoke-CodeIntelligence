@@ -1,0 +1,37 @@
+[
+  {
+    "provider": "graft",
+    "exitCode": 0,
+    "elapsedSeconds": 17.008,
+    "command": [
+      "npm.cmd",
+      "install",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "--registry=https://registry.npmjs.org",
+      "--userconfig=C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\user.npmrc",
+      "--globalconfig=C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\global.npmrc",
+      "--cache=C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\npm-cache",
+      "@nanonets/graft@0.21.1"
+    ]
+  },
+  {
+    "provider": "graphify",
+    "exitCode": 0,
+    "elapsedSeconds": 25.42,
+    "command": [
+      "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\python\\Scripts\\python.exe",
+      "-m",
+      "pip",
+      "--isolated",
+      "install",
+      "--only-binary=:all:",
+      "--no-input",
+      "--disable-pip-version-check",
+      "--index-url",
+      "https://pypi.org/simple",
+      "graphifyy==0.9.87"
+    ]
+  }
+]

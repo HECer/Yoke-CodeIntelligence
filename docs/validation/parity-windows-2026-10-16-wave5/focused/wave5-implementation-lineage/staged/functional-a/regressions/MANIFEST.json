@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "status": "ignored_test_only_deep_red_proposals_uncompiled_unexecuted",
+  "preservedBuggyCheckpoint": "f00cd71304668f3d33feca86e832c4cfff5366b23378badaaf56e0933377eb82",
+  "files": [
+    {
+      "path": "own-root-exclusion.rs",
+      "sha256": "6b211fa4b284192656494ed51a44af89e3890496957b9aba96e8a3f79731042c",
+      "bytes": 845,
+      "tests": 1
+    },
+    {
+      "path": "unnamed-npm-cargo-workspace.rs",
+      "sha256": "20119d5e5f0c34d2d292f429ce2dd45f0165676fc78a5e9abe211b9a1ebed668",
+      "bytes": 1067,
+      "tests": 1
+    },
+    {
+      "path": "raw-duplicate-selector-budget.rs",
+      "sha256": "3f0a51f2d3ea20eb35d9b5774463d4e511097068dc622e3dd744145c614af4c6",
+      "bytes": 1188,
+      "tests": 1
+    }
+  ],
+  "causalRequirement": "Genuine helper+constructor/package/schema controls must pass before final deep-policy/capacity assertion failures count. Constructor-unavailable is not evidence for these guards.",
+  "repair": "All three buggy guards remain unchanged pending root actual deep RED.",
+  "normalChanges": []
+}

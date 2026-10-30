@@ -1,0 +1,11 @@
+    Finished `test` profile [unoptimized] target(s) in 0.83s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 4 tests
+test trail_adapter::envelope_tests::logical_envelope_counter_uses_the_original_expired_deadline ... ok
+test trail_adapter::envelope_tests::logical_envelope_counter_observes_cancellation_between_writes ... ok
+test trail_adapter::envelope_tests::logical_envelope_counter_matches_escaped_utf8_at_the_exact_boundary ... ok
+test trail_adapter::envelope_tests::logical_envelope_counter_refuses_a_large_body_without_exposing_content ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 274 filtered out; finished in 0.14s
+

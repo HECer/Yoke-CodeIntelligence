@@ -1,0 +1,32 @@
+    Finished `test` profile [unoptimized] target(s) in 0.72s
+     Running tests\monorepo_profiles.rs (target\debug\deps\monorepo_profiles-3140cc2d5d82f41f.exe)
+
+running 12 tests
+test compatibility_auto_is_host_selected_and_not_a_new_public_argument ... ok
+test corrupted_saved_marker_and_cancelled_host_deadline_never_return_a_fallback_success ... ok
+test explicit_native_balanced_uses_the_saved_snapshot_despite_live_manifest_changes ... ok
+test auto_fallback_is_observable_and_manifest_source_diagnostics_do_not_leak_bytes ... ok
+test full_definition_envelope_overflow_is_an_error_without_an_artifact_fallback ... ok
+test native_absent_and_global_keep_an_independent_literal_legacy_golden ... ok
+test native_eight_and_compatibility_six_tool_inventories_remain_exact ... ok
+test invalid_native_modes_refuse_before_select_index_or_probe ... ok
+test session_scope_mode_schema_is_a_strict_native_enum_without_auto_or_new_tools ... ok
+test ready_filter_fallback_retains_the_partition_and_does_not_replace_explicit_balanced ... ok
+test real_trail_and_graft_auto_select_the_small_package_and_keep_definition_conversion ... ok
+test malformed_manifest_fallback_keeps_the_four_megabytes_already_spent ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.92s
+
+     Running tests\monorepo_retrieval.rs (target\debug\deps\monorepo_retrieval-1854e2c8b48665bf.exe)
+
+running 7 tests
+test balanced_unicode_normalization_preserves_actual_crlf_utf8_body_coordinates ... ok
+test actual_parallel_calls_propagate_into_seedless_packages_and_weight_zero_skips_graph_work ... ok
+test balanced_ownership_and_bodies_use_the_historic_capture_after_live_marker_and_source_change ... ok
+test explicit_balanced_keeps_zero_and_one_query_scope_as_valid_degenerate_results ... ok
+test same_31_source_corpus_has_literal_global_control_and_one_head_per_package ... ok
+test actual_nested_declarations_charge_overlap_under_the_independent_32m_document_budget ... ok
+test real_32m_source_admission_is_protected_before_ranking_and_releases_unused_marker_reserve ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.01s
+

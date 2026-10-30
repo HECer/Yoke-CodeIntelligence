@@ -1,0 +1,9 @@
+yoke_owned-json-fixture:
+  Scope: Project config (shared via .mcp.json)
+  Status: √ Connected
+  Type: stdio
+  Command: C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\yoke.exe
+  Args: --root C:\Users\Lomi\AppData\Local\Temp\yoke-owned-claude-mcp-a8egyb52\source 🌍 serve-session --id owned-json-fixture --host-profile C:\Users\Lomi\AppData\Local\Temp\yoke-owned-claude-mcp-a8egyb52\policy.json --profile native
+  Environment:
+
+To remove this server, run: claude mcp remove yoke_owned-json-fixture -s project

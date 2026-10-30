@@ -1,0 +1,48 @@
+{
+  "checkedAtUtc": "2026-10-15T14:07:33.894777+00:00",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "versions": [
+    {
+      "command": [
+        "rustc",
+        "--version"
+      ],
+      "output": "rustc 1.94.1 (e408947bf 2026-03-25)"
+    },
+    {
+      "command": [
+        "cargo",
+        "--version"
+      ],
+      "output": "cargo 1.94.1 (29ea6fb6a 2026-03-24)"
+    },
+    {
+      "command": [
+        "node",
+        "--version"
+      ],
+      "output": "v24.13.0"
+    },
+    {
+      "command": [
+        "python",
+        "--version"
+      ],
+      "output": "Python 3.12.9"
+    },
+    {
+      "command": [
+        "git",
+        "--version"
+      ],
+      "output": "git version 2.51.2.windows.1"
+    },
+    {
+      "command": [
+        "rtk",
+        "--version"
+      ],
+      "output": "rtk 0.50.0"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling yoke-code-intelligence v0.4.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: unused import: `scoped`
+ --> native\src\runtime.rs:5:38
+  |
+5 |     paths::{line_starts, normalized, scoped},
+  |                                      ^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: fields `id`, `token_hash`, `roles`, `imports`, and `exports` are never read
+  --> native\src\federation_http.rs:21:5
+   |
+20 | pub struct Principal {
+   |            --------- fields in this struct
+21 |     id:String,token_hash:[u8;32],roles:BTreeSet<Role>,imports:BTreeSet<String>,exports:BTreeSet<String>,
+   |     ^^        ^^^^^^^^^^         ^^^^^                ^^^^^^^                  ^^^^^^^
+   |
+   = note: `Principal` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (lib) generated 2 warnings (run `cargo fix --lib -p yoke-code-intelligence` to apply 1 suggestion)
+    Finished `test` profile [unoptimized] target(s) in 31.76s
+     Running tests\lsp.rs (target\debug\deps\lsp-7b9120e33ef71f58.exe)
+
+running 9 tests
+test host_registered_semantic_rename_uses_the_requested_mcp_snapshot ... ok
+test lsp_deadline_includes_a_server_that_refuses_to_read_didopen ... ok
+test lsp_shutdown_grace_uses_the_remaining_request_deadline ... ok
+test protocol_fixture_locations_bind_to_exact_immutable_source ... ok
+test protocol_fixture_rename_prepares_a_plan_without_touching_source ... ok
+test protocol_fixture_unsafe_workspace_edits_fail_closed ... ok
+test repeated_large_lsp_locations_remain_exact_anchors_with_bounded_body_bytes ... ok
+test semantic_positions_preserve_cr_crlf_lf_and_unicode_boundaries ... ok
+test semantic_location_link_selection_must_be_inside_its_target_range ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.14s
+
+     Running tests\semantic_mcp.rs (target\debug\deps\semantic_mcp-bede6aac9bbf8a61.exe)
+
+running 7 tests
+test ci_find_requires_one_search_mode_and_keeps_eight_advertised_tools ... ok
+test explicit_vector_search_without_a_query_keeps_its_existing_local_mode ... ok
+test captured_path_language_and_utf8_offset_are_checked_before_execution ... ok
+test mutating_authority_mixed_and_malformed_requests_never_start_a_provider ... ok
+test registered_stdio_navigation_binds_old_requested_snapshot_after_disk_changes ... ok
+test unconfigured_semantic_navigation_fails_explicitly_without_execution ... ok
+test tsx_navigation_can_use_an_explicitly_registered_typescript_provider ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.02s
+

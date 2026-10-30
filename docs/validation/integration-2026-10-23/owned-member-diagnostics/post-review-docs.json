@@ -1,0 +1,23 @@
+{
+  "qualifiedCodeCommit": "dfa068c709e1b40e93ce1eec6a97469d0b34fdc9",
+  "productionAndTestBytesExactAfterQualification": true,
+  "changedFrozenInputs": {
+    "docs/REMAINING_WORK.md": {
+      "before": "9b48a484828332c55b7b45d874b2e3bc23dd2178bb81c3b8924e46754478503e",
+      "after": "0a8c4a46277889f0bbaf0a7802c434211ac94fca9f09d1f1639dab01d1899043"
+    },
+    "docs/STATUS.md": {
+      "before": "be2c4d03f9edbec47decc745309ec9cab891a8f39415156c60e3c187cb62895d",
+      "after": "5f464ac239a707248a70ad464d05cdd39ed835bb61dc4ed71f45c3d800f8ecf5"
+    },
+    "docs/parity/native-reconciliation-2026-10-15.json": {
+      "before": "5d0d293147a68d28738d79e9d42788f644c3259bd78bf9f402532db4a8bffa9f",
+      "after": "04d2b2a5fda0179fd190fdba8541fb63b537a07a94c7113c16e98be1dff9abf6"
+    }
+  },
+  "newContract": "native/docs/windows-process-cleanup.md",
+  "reconciliationExactlyOneAdditiveKey": "nativeOwnedMemberDiagnostics20261023",
+  "priorReconciliationOtherwiseDeepEqual": true,
+  "everyArchiveMemberLengthAndSha256Reopened": true,
+  "noNewProductTestClaimedAfterDocumentation": true
+}

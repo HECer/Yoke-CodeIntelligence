@@ -1,0 +1,13 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r7-google\native)
+    Finished `test` profile [unoptimized] target(s) in 3.01s
+     Running tests\source_acquisition.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\source_acquisition-06ff9ff9009be4d7.exe)
+
+running 5 tests
+test body_and_archive_quotas_are_independent_and_missing_interpretation_is_explicit ... ok
+test byte_ranges_preserve_multibyte_boundaries_and_never_replace_invalid_utf8 ... ok
+test forged_capture_claims_remain_data_and_mismatched_archive_bytes_are_refused ... ok
+test frozen_http_representation_preserves_unicode_and_crlf_without_source_or_fetch_authority ... ok
+test metadata_is_closed_and_noncanonical_credentialed_or_non_http_urls_are_invalid ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

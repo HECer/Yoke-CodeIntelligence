@@ -1,0 +1,31 @@
+{
+  "sourceUnchangedAfterFormat": true,
+  "inputCount": 545,
+  "resultGroups": [
+    [
+      "ok",
+      "420",
+      "0",
+      "7"
+    ],
+    [
+      "ok",
+      "6",
+      "0",
+      "0"
+    ],
+    [
+      "FAILED",
+      "6",
+      "1",
+      "0"
+    ],
+    [
+      "ok",
+      "13",
+      "0",
+      "0"
+    ]
+  ],
+  "scope": "Full library and three integration targets. One retained legacy expectation failure: folder capability negotiation now requires initialization; no directory effect is published without folder support."
+}

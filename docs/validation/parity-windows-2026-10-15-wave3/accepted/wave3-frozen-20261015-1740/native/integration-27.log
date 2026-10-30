@@ -1,0 +1,86 @@
+    Finished `test` profile [unoptimized] target(s) in 0.49s
+     Running tests\publication.rs (target\debug\deps\publication-48dca67002c9b393.exe)
+
+running 1 test
+test first_publication_time_is_durable_and_never_refreshed_by_republication ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests\query_parity.rs (target\debug\deps\query_parity-fd60f1161151b971.exe)
+
+running 12 tests
+test body_retrieval_in_file_mode_never_returns_symbol_rows ... ok
+test clipped_single_line_context_keeps_the_match_and_exact_unicode_bytes ... ok
+test bulk_edit_selection_is_atomic_and_conflicting_modes_are_rejected ... ok
+test advertised_native_protocol_reaches_advanced_semantic_operations ... ok
+test exact_name_path_symbol_query_has_source_bound_body_and_depth ... ok
+test multiline_case_insensitive_search_exposes_exact_occurrences_and_symbol_owners ... ok
+test relative_directory_scope_is_segment_aware_and_globs_are_explicit ... ok
+test selected_occurrences_and_count_guards_prepare_an_atomic_reviewable_bulk_plan ... ok
+test task_words_inside_multiline_bodies_are_searchable_without_becoming_fact ... ok
+test public_engine_semantics_preserve_host_configuration_callbacks ... ok
+test text_search_pages_past_the_first_ten_thousand_occurrences ... ok
+test text_search_streams_the_captured_corpus_beyond_the_symbol_body_cache_budget ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.93s
+
+     Running tests\read_only_dependencies.rs (target\debug\deps\read_only_dependencies-652ca9b7d8ea27bc.exe)
+
+running 11 tests
+test dependency_sources_retain_file_size_binary_and_secret_content_omissions ... ok
+test an_unknown_capture_epoch_cannot_grant_dependency_source_authority ... ok
+test empty_dependency_option_preserves_version_one_identity_and_rejects_other_protected_scopes ... ok
+test authentic_legacy_overlay_receipt_proves_readonly_source_without_a_live_session ... ok
+test derived_dependency_members_require_exact_origin_proof_and_remain_virtual ... ok
+test explicit_readonly_dependency_capture_keeps_secret_state_and_size_protections ... ok
+test materialized_language_server_tree_reads_proven_dependency_members_only ... ok
+test editor_overlay_inherits_native_capture_scope_without_dependency_write_access ... ok
+test passive_provider_materialization_can_omit_exact_source_selectors_without_changing_capture ... ok
+test prospective_read_admission_is_scoped_metadata_and_cannot_read_uncaptured_bytes ... ok
+test real_git_ignored_dependencies_stay_ignored_under_the_readonly_host_scope ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.71s
+
+     Running tests\refactor_intents.rs (target\debug\deps\refactor_intents-e45b8130e18e3e90.exe)
+
+running 15 tests
+test flagged_refactoring_obeys_session_plan_permissions_before_querying_a_provider ... ok
+test inline_keep_definition_preserves_exact_declaration_bytes_while_replacing_a_call ... ok
+test flagged_rename_rejects_unrelated_and_wholefile_provider_changes_before_publication ... ok
+test invalid_later_inline_candidate_cannot_leave_an_earlier_hidden_plan_or_derivative ... ok
+test deterministic_later_noop_nul_or_secret_candidate_is_rejected_before_any_publication ... ok
+test keeping_an_inline_definition_requires_a_real_source_bound_call_replacement ... ok
+test native_text_occurrences_refuse_potentially_interpolated_strings_before_publication ... ok
+test amplified_candidate_contents_are_bounded_before_any_publication ... ok
+test native_occurrences_distinguish_string_comment_markers_and_unicode_word_boundaries ... ok
+test keep_definition_rejects_broad_ambiguous_and_command_candidates_without_plans ... ok
+test native_unicode_rename_refuses_byte_string_occurrences_before_publication ... ok
+test native_text_rename_never_rewrites_rust_raw_string_delimiters ... ok
+test requested_false_occurrence_flags_also_constrain_provider_supplied_edits ... ok
+test requested_comment_and_text_rename_options_change_only_their_own_occurrence_classes ... ok
+test projected_refactors_keep_v8_v9_source_proofs_and_never_edit_readonly_or_ignored_sources ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.24s
+
+     Running tests\registry_replay_review.rs (target\debug\deps\registry_replay_review-8390e9e4e28b3782.exe)
+
+running 8 tests
+test historical4_keeps_its_identity_and_reports_unreplayed_claims ... ok
+test native8_retarget_is_rejected_after_origin_deleted ... ok
+test native9_archive_selects_proven_epoch_without_global_activation ... ok
+test native8_relabel_is_rejected_after_origin_deleted ... ok
+test view8_relabel_is_rejected_after_origin_deleted ... ok
+test view8_retarget_is_rejected_after_origin_deleted ... ok
+test unchanged_native8_and_view8_remain_standalone ... ok
+test producer_labels_cannot_change_a_proven_capture_epoch ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.98s
+
+     Running tests\replacement.rs (target\debug\deps\replacement-4678ddb3fc91b625.exe)
+
+running 2 tests
+test capture_templates_preserve_numeric_named_unicode_escaped_and_missing_references ... ok
+test multiplicative_templates_are_rejected_with_bounded_memory_and_shared_deadline ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

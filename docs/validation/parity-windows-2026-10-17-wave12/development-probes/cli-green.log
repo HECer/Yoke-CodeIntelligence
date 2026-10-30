@@ -1,0 +1,28 @@
+   Compiling yoke-code-intelligence v0.5.0 (E:\Yoke-Worktrees\mixed-document-view-20261017\native)
+warning: field `end` is never read
+   --> native\src\document_mixed_input.rs:234:9
+    |
+231 | pub(crate) struct DecodedSegment<'a> {
+    |                   -------------- field in this struct
+...
+234 |     pub end: usize,
+    |         ^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (lib) generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 3m 12s
+     Running tests\mixed_view_cli.rs (E:/Yoke-Build-Cache/mixed-document-view-20261017\debug\deps\mixed_view_cli-ffc3fea888a9b7f2.exe)
+
+running 8 tests
+test malformed_mixed_selection_and_query_are_rejected_before_missing_store_initialization ... ok
+test mixed_find_replays_code_docx_and_xlsx_without_live_files_or_writes ... ok
+test later_document_pin_denial_precedes_any_bulk_native_source_read ... ok
+test exact_mixed_output_and_capacity_refusals_never_publish_partial_results ... ok
+test mixed_read_global_capture_and_execution_flags_refuse_with_actual_valid_parents ... ok
+test global_mixed_pagination_and_case_match_oracles_are_independent_of_source_spaces ... ok
+test every_explicit_source_and_document_pin_is_checked_before_results_or_writes ... ok
+test mixed_typed_reads_preserve_utf8_and_xml_origins_and_refuse_container_offsets ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.86s
+

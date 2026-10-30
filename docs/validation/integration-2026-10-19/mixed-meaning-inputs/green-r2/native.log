@@ -1,0 +1,44 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 54s
+     Running tests\mixed_pdf_view.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\mixed_pdf_view-ba31753476eaa5fe.exe)
+
+running 10 tests
+test caller_read_transaction_sqlite_limits_and_inherited_cancel_are_preserved ... ok
+test exact_combined_reservations_and_output_limits_refuse_whole_results ... ok
+test host_cancellation_after_pdf_spawn_refuses_and_original_process_handle_observes_exit ... ok
+test mixed_meaning_pdf_inputs_replay_frozen_original_pages_and_require_explicit_worker_permission ... ok
+test native_office_and_pdf_search_pages_and_typed_reads_survive_live_deletions ... ok
+test non_bmp_pdf_page_references_use_original_decoded_utf8_not_glyph_or_container_offsets ... ok
+test pdf_pin_and_row_capacity_denials_precede_corrupt_native_source_reads ... ok
+test pdf_read_refs_reject_foreign_pages_hashes_and_split_utf8_boundaries ... ok
+test saved_inspection_text_is_ignored_and_corrupt_original_pdf_is_refused ... ok
+test schema2_cli_permission_and_unknown_worker_authority_refuse_before_missing_store ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.88s
+
+     Running tests\mixed_view_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\mixed_view_cli-277fd01b1767afe4.exe)
+
+running 20 tests
+test artifact_registration_bytes_participate_in_the_exact_aggregate_metadata_budget ... ok
+test every_explicit_source_and_document_pin_is_checked_before_results_or_writes ... ok
+test exact_aggregate_source_reservation_refuses_before_corrupt_source_access_and_sorts_documents ... ok
+test exact_mixed_output_and_capacity_refusals_never_publish_partial_results ... ok
+test global_mixed_pagination_and_case_match_oracles_are_independent_of_source_spaces ... ok
+test historical_receipt_scope_is_retained_but_never_searched_as_current_source ... ok
+test later_document_pin_denial_precedes_any_bulk_native_source_read ... ok
+test malformed_mixed_selection_and_query_are_rejected_before_missing_store_initialization ... ok
+test mixed_find_replays_code_docx_and_xlsx_without_live_files_or_writes ... ok
+test mixed_library_capability_retains_frozen_bytes_after_transaction_rollback_and_cas_loss ... ok
+test mixed_library_search_admission_bounds_bytes_before_whitespace_normalization ... ok
+test mixed_load_and_query_honor_expired_and_shared_cancelled_deadlines_without_writes ... ok
+test mixed_meaning_context_budget_counts_repeated_occurrences_and_library_deadlines ... ok
+test mixed_meaning_exact_output_budget_and_cli_conflicts_refuse_without_partial_stdout ... ok
+test mixed_meaning_inputs_preserve_exact_spaces_repetitions_and_frozen_sources_without_writes ... ok
+test mixed_meaning_labels_select_observations_without_deduplicating_or_asserting_identity ... ok
+test mixed_meaning_rejects_closed_protocol_labels_counts_refs_and_unicode_splits ... ok
+test mixed_read_global_capture_and_execution_flags_refuse_with_actual_valid_parents ... ok
+test mixed_source_provenance_retains_exact_meaning_packets_coverage_and_search_scope_roles ... ok
+test mixed_typed_reads_preserve_utf8_and_xml_origins_and_refuse_container_offsets ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.73s
+

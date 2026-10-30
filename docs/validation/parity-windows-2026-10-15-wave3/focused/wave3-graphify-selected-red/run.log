@@ -1,0 +1,53 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.08s
+     Running tests\graphify_selected_queries.rs (target\debug\deps\graphify_selected_queries-b3254669bd3c17dc.exe)
+
+running 8 tests
+test selected_get_node_resolves_only_members_of_the_published_nondefault_view ... FAILED
+test selected_neighbors_preserve_parallel_directions_and_exact_utf8_evidence ... FAILED
+test mismatched_published_view_scope_cannot_fall_back_to_live_capture ... ok
+test omitted_selector_keeps_the_default_view_after_a_nondefault_view_was_published ... ok
+test unknown_and_malformed_view_ids_refuse_before_first_capture ... ok
+test selected_query_graph_traverses_the_selected_document_and_induced_parallel_edges ... FAILED
+test selected_shortest_path_keeps_stored_direction_and_an_explicit_undirected_option ... FAILED
+test selected_queries_replay_historical_views_after_new_index_and_unsaved_host_changes ... FAILED
+
+failures:
+
+---- selected_get_node_resolves_only_members_of_the_published_nondefault_view stdout ----
+
+thread 'selected_get_node_resolves_only_members_of_the_published_nondefault_view' (98716) panicked at native\tests\graphify_selected_queries.rs:86:13:
+get_node rejected a genuine published selected view: Unknown public tool argument
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- selected_neighbors_preserve_parallel_directions_and_exact_utf8_evidence stdout ----
+
+thread 'selected_neighbors_preserve_parallel_directions_and_exact_utf8_evidence' (94464) panicked at native\tests\graphify_selected_queries.rs:86:13:
+get_neighbors rejected a genuine published selected view: Unknown public tool argument
+
+---- selected_query_graph_traverses_the_selected_document_and_induced_parallel_edges stdout ----
+
+thread 'selected_query_graph_traverses_the_selected_document_and_induced_parallel_edges' (96956) panicked at native\tests\graphify_selected_queries.rs:86:13:
+query_graph rejected a genuine published selected view: Unknown public tool argument
+
+---- selected_shortest_path_keeps_stored_direction_and_an_explicit_undirected_option stdout ----
+
+thread 'selected_shortest_path_keeps_stored_direction_and_an_explicit_undirected_option' (97420) panicked at native\tests\graphify_selected_queries.rs:86:13:
+shortest_path rejected a genuine published selected view: Unknown public tool argument
+
+---- selected_queries_replay_historical_views_after_new_index_and_unsaved_host_changes stdout ----
+
+thread 'selected_queries_replay_historical_views_after_new_index_and_unsaved_host_changes' (84584) panicked at native\tests\graphify_selected_queries.rs:86:13:
+get_node rejected a genuine published selected view: Unknown public tool argument
+
+
+failures:
+    selected_get_node_resolves_only_members_of_the_published_nondefault_view
+    selected_neighbors_preserve_parallel_directions_and_exact_utf8_evidence
+    selected_queries_replay_historical_views_after_new_index_and_unsaved_host_changes
+    selected_query_graph_traverses_the_selected_document_and_induced_parallel_edges
+    selected_shortest_path_keeps_stored_direction_and_an_explicit_undirected_option
+
+test result: FAILED. 3 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.19s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --test graphify_selected_queries`

@@ -1,0 +1,545 @@
+{
+  "schemaVersion": 1,
+  "kind": "checked_mixed_interpretation_claims",
+  "asOf": "2026-10-20T06:24:15.185737+00:00",
+  "sourceCommit": "a8982d4b8d7e5434e08df81f952a6378f5abf2ed",
+  "runtimeCommit": "0fb15f82f66c3ebc0659ab2790158ca919238012",
+  "parentCommit": "da45d2591cfb9f208e87d742eadc17a65fc8f50a",
+  "paths": [
+    "native/README.md",
+    "native/docs/mixed-meaning-claims.md",
+    "native/src/meaning_graph.rs",
+    "native/src/mixed_meaning_claims.rs",
+    "native/src/mixed_meaning_input.rs",
+    "native/src/mixed_view.rs",
+    "native/src/mixed_view_cli.rs",
+    "native/tests/mixed_meaning_claims.rs"
+  ],
+  "nativeInputsMatched": 742,
+  "nativeGroups": 14,
+  "nativeTotals": {
+    "passed": 593,
+    "failed": 0,
+    "ignored": 7
+  },
+  "newCases": {
+    "defaultIntegration": 5,
+    "actualNativeCliIncludedInDefault": 1
+  },
+  "nativeBinarySha256": "b35c7e1b97078ac3f194e1cc3303d9898072be944b1bd6c6158ecdd7c7f9916c",
+  "nativeBinaryBytes": 159477760,
+  "binaryHashObservedAt": "2026-10-20T06:22:33.964007+00:00",
+  "wholeNativeRerun": false,
+  "fullR4Complete": false,
+  "platform": "Windows",
+  "firstGreen": {
+    "sourceUnchanged": true,
+    "inputs": 742,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--test",
+          "mixed_meaning_claims",
+          "--test",
+          "meaning_graph",
+          "--test",
+          "mixed_view_cli",
+          "--test",
+          "mixed_pdf_view",
+          "--",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "seconds": 150.6228721999796,
+        "totals": {
+          "passed": 43,
+          "failed": 0,
+          "ignored": 0
+        },
+        "groups": 4,
+        "failures": []
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "finalNative": {
+    "sourceUnchanged": true,
+    "inputs": 742,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--lib",
+          "--test",
+          "mixed_meaning_claims",
+          "--test",
+          "mixed_view_cli",
+          "--test",
+          "mixed_pdf_view",
+          "--test",
+          "document_graph",
+          "--test",
+          "document_graph_review",
+          "--test",
+          "derived_graph_mixed_budget",
+          "--test",
+          "view_comparison_cli",
+          "--test",
+          "historical_view_comparison",
+          "--test",
+          "meaning_build",
+          "--test",
+          "meaning_graph",
+          "--test",
+          "meaning_protocol",
+          "--test",
+          "meaning_view",
+          "--test",
+          "meaning_join_cli",
+          "--",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "seconds": 431.1522190000105,
+        "totals": {
+          "passed": 593,
+          "failed": 0,
+          "ignored": 7
+        },
+        "groups": 14,
+        "failures": []
+      },
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 13.21420320001198
+      },
+      {
+        "name": "build",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "build",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--bin",
+          "yoke"
+        ],
+        "exitCode": 0,
+        "seconds": 2.0845161999750417
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--all-targets",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "seconds": 95.05126589999418
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "integrated": {
+    "sourceUnchanged": true,
+    "frozenInputs": 747,
+    "commands": [
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 6.02
+      },
+      {
+        "name": "python-contracts",
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "seconds": 1.14
+      },
+      {
+        "name": "typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "seconds": 4.99
+      },
+      {
+        "name": "tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "seconds": 61.61
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "priorEvidenceReadme": {
+    "bytes": 34464,
+    "sha256": "17d0449f7515c24e655a3b7148899b963714f1bb7c33dd6ceab8ac2df032106f"
+  },
+  "priorPRBodyArchive": {
+    "path": "prior-pr-body.md",
+    "bytes": 6576,
+    "sha256": "d3a1d6980320031465eb0e2c29e83f0f875e2e66fc5b5a7bacfe481edf4524ee"
+  },
+  "legacyNativeBindingAdmissionChanged": false,
+  "originalQuerySchemaOrIdentityChanged": false,
+  "decodedSpacePromotedToNativeSource": false,
+  "providerOrModelCallAdded": false,
+  "providerReceiptInvented": false,
+  "persistenceAdded": false,
+  "nonWindowsRuntimeValidated": false,
+  "mainOrReleaseVerified": false,
+  "notes": [
+    "Five default tests include actual native PDF helpers and one actual CLI case. No ignored gate/model-quality/live provider qualification is claimed. The first four groups43/0/0 and final14groups are overlapping and nonadditive; all native phases use exactly the same frozen source.",
+    "Range-only shared shape checking constructs no native path/Binding/SourceSnapshot. The legacy native wrapper retains original native binding validation first. Mixed supports are privately bound to already checked units and exact original typed reader quotations, including enclosing XML origins and explicit PDF pins.",
+    "Original fragment keys/order/aliases, directed parallel/self observations and ordered hyperedge roles remain intact. Unique quote lookup does not merge claim occurrences or concept identity. Exact quote text capacity128000 passes and128001 refuses without writes; no-claim coverage is an explicit unverified host observation.",
+    "No semantic provider execution, durable mixed graph publication/replay/general consumers, complete R4/R1-R9 or whole-native/platform/main/release acceptance follows. Ledger inventories and historical evidence remain."
+  ],
+  "artifacts": [
+    {
+      "path": "final/build.log",
+      "bytes": 60,
+      "sha256": "938d572d5ff61d4dfd56810b730450503f4c29dbd1af7597413f9977a6a82500"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 168,
+      "sha256": "b818075d2b5c8fc525777994f12dfee0a48fb62260a57604d5c462d0fd89abac"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native.log",
+      "bytes": 68973,
+      "sha256": "772a5c8f53096388bb22f014f78f5f1d3f842f5814412c1970a438deb6b824d1"
+    },
+    {
+      "path": "final/result.json",
+      "bytes": 2486,
+      "sha256": "20ec7b11a30f22df3856f5942912acca90b5b2917ed93fb40f6b825b3d8fa2ac"
+    },
+    {
+      "path": "final/runner.py",
+      "bytes": 4553,
+      "sha256": "f4dcf277068d41ad3cb0517c03717ee2a87efaf17c3f3dc97ce2efc689139d38"
+    },
+    {
+      "path": "final/source/native/docs/mixed-meaning-claims.md",
+      "bytes": 3294,
+      "sha256": "03afdd7fa9bfdbf55bad1606d882de4d72ee0161619f3c4e9d75cd74818a0360"
+    },
+    {
+      "path": "final/source/native/README.md",
+      "bytes": 26533,
+      "sha256": "076c3bfa418d79bcb6d53f0d38b9fe9eb0bbffe8ee42c79bceee687b613238d5"
+    },
+    {
+      "path": "final/source/native/src/meaning_graph.rs",
+      "bytes": 18983,
+      "sha256": "abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d"
+    },
+    {
+      "path": "final/source/native/src/mixed_meaning_claims.rs",
+      "bytes": 7212,
+      "sha256": "d6c32472014c7d2572e497a5530bbdea71f585e71e51f984cbf7d4c7fad0bb58"
+    },
+    {
+      "path": "final/source/native/src/mixed_meaning_input.rs",
+      "bytes": 8890,
+      "sha256": "ad3b4ab8cde15ec0d792dcf70cea89eb70b5899cc92151220807ebeb2c3ab151"
+    },
+    {
+      "path": "final/source/native/src/mixed_view.rs",
+      "bytes": 12616,
+      "sha256": "c8f4334587fba84143c07e2993f4b7071a3a8d1dd9393266cbe148d82983b1aa"
+    },
+    {
+      "path": "final/source/native/src/mixed_view_cli.rs",
+      "bytes": 6877,
+      "sha256": "28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6"
+    },
+    {
+      "path": "final/source/native/tests/meaning_graph.rs",
+      "bytes": 11336,
+      "sha256": "3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f"
+    },
+    {
+      "path": "final/source/native/tests/mixed_meaning_claims.rs",
+      "bytes": 15154,
+      "sha256": "ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42"
+    },
+    {
+      "path": "final/source/native/tests/mixed_pdf_view.rs",
+      "bytes": 19950,
+      "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0"
+    },
+    {
+      "path": "final/source/native/tests/mixed_view_cli.rs",
+      "bytes": 42529,
+      "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 80232,
+      "sha256": "951823a23ca89d4175829d4e278e1514f1c12cf0fe30c16d9f2bb4931a5cbe17"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 80232,
+      "sha256": "951823a23ca89d4175829d4e278e1514f1c12cf0fe30c16d9f2bb4931a5cbe17"
+    },
+    {
+      "path": "frozen-tracker.json",
+      "bytes": 576353,
+      "sha256": "bd1e135634586017b7fcb965c3e8f4eefd654233a98d6df4713c79b3dd5799f4"
+    },
+    {
+      "path": "green-r1/native.log",
+      "bytes": 5138,
+      "sha256": "0a75204ff81cf4bf17e2e0ce387424bcfab918b88f0b13b566c5b8794281ff05"
+    },
+    {
+      "path": "green-r1/result.json",
+      "bytes": 909,
+      "sha256": "15ebc10cc1671c0cc42a6e56d5422fab2eec414cf3adf3a70cd5285e4ccd0eb9"
+    },
+    {
+      "path": "green-r1/runner.py",
+      "bytes": 4553,
+      "sha256": "f4dcf277068d41ad3cb0517c03717ee2a87efaf17c3f3dc97ce2efc689139d38"
+    },
+    {
+      "path": "green-r1/source/native/docs/mixed-meaning-claims.md",
+      "bytes": 3294,
+      "sha256": "03afdd7fa9bfdbf55bad1606d882de4d72ee0161619f3c4e9d75cd74818a0360"
+    },
+    {
+      "path": "green-r1/source/native/README.md",
+      "bytes": 26533,
+      "sha256": "076c3bfa418d79bcb6d53f0d38b9fe9eb0bbffe8ee42c79bceee687b613238d5"
+    },
+    {
+      "path": "green-r1/source/native/src/meaning_graph.rs",
+      "bytes": 18983,
+      "sha256": "abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_meaning_claims.rs",
+      "bytes": 7212,
+      "sha256": "d6c32472014c7d2572e497a5530bbdea71f585e71e51f984cbf7d4c7fad0bb58"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_meaning_input.rs",
+      "bytes": 8890,
+      "sha256": "ad3b4ab8cde15ec0d792dcf70cea89eb70b5899cc92151220807ebeb2c3ab151"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_view.rs",
+      "bytes": 12616,
+      "sha256": "c8f4334587fba84143c07e2993f4b7071a3a8d1dd9393266cbe148d82983b1aa"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_view_cli.rs",
+      "bytes": 6877,
+      "sha256": "28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6"
+    },
+    {
+      "path": "green-r1/source/native/tests/meaning_graph.rs",
+      "bytes": 11336,
+      "sha256": "3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f"
+    },
+    {
+      "path": "green-r1/source/native/tests/mixed_meaning_claims.rs",
+      "bytes": 15154,
+      "sha256": "ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42"
+    },
+    {
+      "path": "green-r1/source/native/tests/mixed_pdf_view.rs",
+      "bytes": 19950,
+      "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0"
+    },
+    {
+      "path": "green-r1/source/native/tests/mixed_view_cli.rs",
+      "bytes": 42529,
+      "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0"
+    },
+    {
+      "path": "green-r1/source-after.json",
+      "bytes": 80232,
+      "sha256": "951823a23ca89d4175829d4e278e1514f1c12cf0fe30c16d9f2bb4931a5cbe17"
+    },
+    {
+      "path": "green-r1/source-before.json",
+      "bytes": 80232,
+      "sha256": "951823a23ca89d4175829d4e278e1514f1c12cf0fe30c16d9f2bb4931a5cbe17"
+    },
+    {
+      "path": "integrated/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "integrated/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "5445bc18cc0bdbbde6b8539fa8b706e9d1cdd9dee33111bfe2635d88cdf209fa"
+    },
+    {
+      "path": "integrated/result.json",
+      "bytes": 958,
+      "sha256": "d345303348d361ebd924c961e4ad0078eec778b78d9385792a58326fe0f4eef7"
+    },
+    {
+      "path": "integrated/source-after.json",
+      "bytes": 80081,
+      "sha256": "6b3172c6fed6276477862d714b2efaece1a8782e11d84c7aab7d59abc068e3f9"
+    },
+    {
+      "path": "integrated/source-before.json",
+      "bytes": 80081,
+      "sha256": "6b3172c6fed6276477862d714b2efaece1a8782e11d84c7aab7d59abc068e3f9"
+    },
+    {
+      "path": "integrated/tests.log",
+      "bytes": 25043,
+      "sha256": "f27cb11ce977d40e2c60fd163bbd7a64a68edf37bf3e333d25b89b60357a7c79"
+    },
+    {
+      "path": "integrated/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "pr-description-correction-after.md",
+      "bytes": 6576,
+      "sha256": "d3a1d6980320031465eb0e2c29e83f0f875e2e66fc5b5a7bacfe481edf4524ee"
+    },
+    {
+      "path": "pr-description-correction-before.md",
+      "bytes": 6420,
+      "sha256": "c3e5ae3573094073ee6791153608fa92fe13d6988c94bd602c05d92c0d618432"
+    },
+    {
+      "path": "pr-description-correction.json",
+      "bytes": 560,
+      "sha256": "ead1794009bdaa7c543663ab5bd4f025c0c03effd69b9e086b17c9982bcaa2e5"
+    },
+    {
+      "path": "prior-pr-body.md",
+      "bytes": 6576,
+      "sha256": "d3a1d6980320031465eb0e2c29e83f0f875e2e66fc5b5a7bacfe481edf4524ee"
+    },
+    {
+      "path": "runners/ci-claims-check.py",
+      "bytes": 4553,
+      "sha256": "f4dcf277068d41ad3cb0517c03717ee2a87efaf17c3f3dc97ce2efc689139d38"
+    },
+    {
+      "path": "runners/ci-claims-integrate.py",
+      "bytes": 3844,
+      "sha256": "ee268cf7650b37cf843ae18c55c4124237131cd3e46464b27fe27657c20761ef"
+    },
+    {
+      "path": "runners/ci-claims-integrated.py",
+      "bytes": 2192,
+      "sha256": "2aeac523af39b83bb2740fb81a489fd5787c6a1ba6d2287ae0cadb492983abec"
+    },
+    {
+      "path": "runners/ci-claims-integration-setup.py",
+      "bytes": 1715,
+      "sha256": "e0e7e7800cb1de57c77a3b63c66fe2ab09f42ad612d885c23d6622e4714979b5"
+    },
+    {
+      "path": "runners/ci-claims-pr-correction.py",
+      "bytes": 2343,
+      "sha256": "6f60e8ecc489862f968103786c09094670a64929e0b6a05c4490862d6aae0bce"
+    },
+    {
+      "path": "runners/ci-claims-publish.py",
+      "bytes": 6122,
+      "sha256": "5d0f8d6133f0c3c59fcfbc38a46af6dbe9728490031f3128634a95ede5907a41"
+    },
+    {
+      "path": "runners/ci-claims-record.py",
+      "bytes": 11934,
+      "sha256": "18f68fb075e2f2c32a8bdbcf9b3949a2a4b4de3babe33f60381a2e4b28383460"
+    },
+    {
+      "path": "runners/ci-claims-setup.py",
+      "bytes": 798,
+      "sha256": "1b3894d4718e913f3fbf88657835cd9abe8b68c2883b1ab518d7c5db2a7f91e8"
+    },
+    {
+      "path": "source-integration.json",
+      "bytes": 1001,
+      "sha256": "fbfa08c051c70c7fb943e0da1b7d7584e9f6b70363d805c4564845df62f2d99c"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 211664,
+      "sha256": "2ea20c7353b56bbce1bf23babf2567a412c3b408425e79ce3fbd0e9e28e3b03e"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+error[E0603]: function `markdown` is private
+   --> native\tests\graph_analysis_policy.rs:107:45
+    |
+107 |                 .artifact(graph_extensions::markdown(&report).as_bytes())
+    |                                             ^^^^^^^^ private function
+    |
+note: the function `markdown` is defined here
+   --> native\src\graph_extensions.rs:606:1
+    |
+606 | pub(crate) fn markdown(report: &Value) -> String {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0603`.
+error: could not compile `yoke-code-intelligence` (test "graph_analysis_policy") due to 1 previous error

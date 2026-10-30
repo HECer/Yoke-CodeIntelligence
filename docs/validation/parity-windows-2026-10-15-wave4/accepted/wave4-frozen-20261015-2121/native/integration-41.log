@@ -1,0 +1,26 @@
+    Finished `test` profile [unoptimized] target(s) in 0.96s
+     Running tests\graph_root_review.rs (target\debug\deps\graph_root_review-63fbcb7ba6cc9403.exe)
+
+running 2 tests
+test artifact_resource_page_respects_byte_budget_after_json_control_escaping ... ok
+test trail_exact_file_selector_can_trace_more_than_two_hundred_declarations ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+
+     Running tests\graph_view.rs (target\debug\deps\graph_view-97c800a70b6f82cc.exe)
+
+running 11 tests
+test default_view_exposes_structural_relationships_without_replacing_canonical_graph ... ok
+test newly_derived_view_omits_legacy_config_file_signature_values_without_rewriting_history ... ok
+test context_omits_environment_values_and_clips_unicode_at_byte_budget ... ok
+test captured_readonly_dependency_proof_allows_view_and_collection_reads ... ok
+test registered_view_rejects_corrupt_cas_and_foreign_overlay_scope ... ok
+test selected_structural_artifacts_reject_forged_node_scope_lines_and_schema ... ok
+test semantic_and_structural_overlays_have_distinct_namespaces_and_provider_trust ... ok
+test source_view_remains_historical_and_rejects_forged_scope_options_and_deadlines ... ok
+test view_find_trace_context_and_export_preserve_source_and_parallel_calls ... ok
+test source_bound_view_exports_all_seven_formats ... ok
+test selected_overlay_inputs_have_an_aggregate_byte_budget ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.92s
+

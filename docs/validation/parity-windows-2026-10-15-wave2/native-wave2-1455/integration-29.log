@@ -1,0 +1,62 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 7.88s
+     Running tests\session_collections.rs (target\debug\deps\session_collections-729062ee8f2bd3cf.exe)
+
+running 7 tests
+test empty_collections_preserve_legacy_host_serialization ... ok
+test collection_policy_changes_invalidate_resume_but_empty_policy_keeps_original_fingerprint ... ok
+test native_registry_read_wrapper_uses_exact_archived_membership ... ok
+test native_archived_queries_never_open_original_or_active_source ... ok
+test configured_query_only_project_can_register_current_checked_view_without_activation ... ok
+test registration_requires_host_write_authority_and_explicit_binding_expectation ... ok
+test transient_current_foreign_grants_authorize_only_the_registered_receiver_and_call ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.31s
+
+     Running tests\session_collections_admission.rs (target\debug\deps\session_collections_admission-845ce530900379fe.exe)
+
+running 1 test
+test oversized_collection_invocation_is_rejected_before_serialization_allocation ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+     Running tests\session_epoch_selection.rs (target\debug\deps\session_epoch_selection-dd56743ad0b1b890.exe)
+
+running 6 tests
+test default_v8_preserves_the_original_session_record_and_can_resume_saved_bytes ... ok
+test mutable_engine_handles_cannot_silently_change_a_pinned_session_epoch ... ok
+test session_v9_keeps_federation_receiver_receipts_and_current_grants_separate ... ok
+test session_v9_reads_old_native_archives_without_recapture_or_registration_authority ... ok
+test same_epoch_resume_keeps_project_selection_and_cross_epoch_resume_cannot_mutate_records ... ok
+test session_v9_propagates_to_default_registered_readonly_and_query_only_projects ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.51s
+
+     Running tests\session_mcp.rs (target\debug\deps\session_mcp-4c7677e22357ce4a.exe)
+
+running 3 tests
+test session_profile_exposes_persistent_steering_without_host_authority_arguments ... ok
+test session_mcp_retrieval_uses_exact_source_bodies_and_rejects_authority_options ... ok
+test session_graph_tool_builds_an_explicit_source_bound_view ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
+
+     Running tests\session_review.rs (target\debug\deps\session_review-bfdd3ba5950201a7.exe)
+
+running 1 test
+test nested_native_failure_is_an_mcp_tool_error ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+     Running tests\skill_takeaways.rs (target\debug\deps\skill_takeaways-d3aed8fbfd582689.exe)
+
+running 6 tests
+test failed_publication_retains_a_recoverable_plan_and_refuses_foreign_file_changes ... ok
+test host_argument_preflight_is_readonly_and_never_overrides_explicit_expectations ... ok
+test authored_skill_lifecycle_preserves_history_and_guarded_repository_bytes ... ok
+test fold_without_a_skill_selects_each_checked_skill_once ... ok
+test repo_frontmatter_is_preserved_and_readonly_discovery_creates_no_state ... ok
+test a_successful_learning_never_makes_its_default_skill_view_unreadable ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 59.88s
+

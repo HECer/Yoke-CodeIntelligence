@@ -1,0 +1,28 @@
+    Checking yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> native\src\git_conflicts_tests.rs:85:5
+   |
+85 |     l.max_paths = 0;
+   |     ^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `git_workflows::conflicts::Limits { max_paths: 0, ..Default::default() }` and removing relevant reassignments
+  --> native\src\git_conflicts_tests.rs:84:5
+   |
+84 |     let mut l = Limits::default();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+   = note: `-D clippy::field-reassign-with-default` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::field_reassign_with_default)]`
+
+error: could not compile `yoke-code-intelligence` (lib test) due to 1 previous error
+error: this call to `clone` can be replaced with `std::slice::from_ref`
+   --> native\tests\git_conflicts.rs:775:9
+    |
+775 |         &[ls.id.clone()],
+    |         ^^^^^^^^^^^^^^^^ help: try: `std::slice::from_ref(&ls.id)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#cloned_ref_to_slice_refs
+    = note: `-D clippy::cloned-ref-to-slice-refs` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::cloned_ref_to_slice_refs)]`
+
+error: could not compile `yoke-code-intelligence` (test "git_conflicts") due to 1 previous error

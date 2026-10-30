@@ -1,0 +1,26 @@
+{
+  "checkedAtUtc": "2026-10-15T15:46:17.927884+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-p",
+    "yoke-code-intelligence",
+    "--locked",
+    "-j",
+    "2",
+    "--test",
+    "facade_file_delete",
+    "--",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 7.156,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave3-facade-file-delete-red",
+  "logSha256": "1a7a370abb604214d8d8d6a257cf637ca9952cd4bda2c0ec818f16749c052721",
+  "groups": 1,
+  "passed": 5,
+  "failed": 5,
+  "ignored": 0,
+  "sourceChanges": []
+}

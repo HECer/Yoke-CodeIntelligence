@@ -1,0 +1,36 @@
+{
+  "sourceCommit": "7ce36b5f96842442874dec43d2ae7b99f83eab63",
+  "runtimeCommit": "efec81bd0d387031a4c270a1a447379a1ca070d0",
+  "parentCommit": "9d6968637fdde5ac556af9eae8c07c2c07c2d3a7",
+  "paths": [
+    "native/README.md",
+    "native/docs/mixed-meaning-claims.md",
+    "native/docs/mixed-meaning-provider.md",
+    "native/docs/mixed-views.md",
+    "native/src/main.rs",
+    "native/src/meaning_build.rs",
+    "native/src/mixed_meaning_claims.rs",
+    "native/src/mixed_meaning_cli.rs",
+    "native/src/mixed_meaning_input.rs",
+    "native/src/mixed_meaning_provider.rs",
+    "native/src/mixed_view.rs",
+    "native/src/retention.rs",
+    "native/tests/mixed_meaning_provider.rs"
+  ],
+  "nativeInputsMatched": 746,
+  "nativeGroups": 18,
+  "nativeTotals": {
+    "passed": 614,
+    "failed": 0,
+    "ignored": 7
+  },
+  "newCases": {
+    "defaultIntegration": 11,
+    "actualNativeCliIncludedInDefault": 1
+  },
+  "nativeBinarySha256": "463182a8200d0eff4e1862cb10c11344546dbb2d85f5859edeebe1d57eb68319",
+  "nativeBinaryBytes": 160196608,
+  "binaryHashObservedAt": "2026-10-20T08:02:13.909222+00:00",
+  "wholeNativeRerun": false,
+  "fullR4Complete": false
+}

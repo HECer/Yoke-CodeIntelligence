@@ -1,0 +1,34 @@
+from pathlib import Path
+import json,hashlib,shutil,datetime
+root=Path(r'C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence');base=root/'validation/integration-20261018/arxiv-source';out=root/'docs/validation/integration-2026-10-19/arxiv-source';out.mkdir(exist_ok=False);sha=lambda b:hashlib.sha256(b).hexdigest();read=lambda n:json.loads((base/n).read_bytes())
+source=read('source-integration.json');native=read('final/result.json');quality=read('quality-r2/result.json');integrated=read('integrated/result.json');live=read('live-final/result.json');assert native['sourceUnchanged'] and quality['sourceUnchanged'] and integrated['sourceUnchanged'] and integrated['allChecksPassed'] and all(x['exitCode']==0 for x in quality['checks'])
+materialized=read('integrated/source-materialization.json');assert next(x for x in materialized if x['path']=='native/tests/fixtures/postgres-catalog-response.jsonl')['materialization']=='raw_equal'
+assert sha((root/'native/tests/fixtures/postgres-catalog-response.jsonl').read_bytes())=='f67a05349a6cedf55222afd3bb3231c169d382dd4b078d76544daac517530b47'
+unpublished=[]
+for file in sorted(base.rglob('*')):
+ if not file.is_file():continue
+ relative=file.relative_to(base).as_posix()
+ if relative.startswith('live-') and (relative.endswith('-archive.json') or relative.endswith('frozen-metadata.stdout')):
+  raw=file.read_bytes();unpublished.append({'path':relative,'bytes':len(raw),'sha256':sha(raw),'storage':'ignored_local_validation_only'});continue
+ target=out/relative;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(file,target)
+temp=Path(__file__).parent
+for name in ['red','r2','r3','r4','check','fix-r5','live-final','cache-failure','commit','integrated','preserve','update-docs','stage','pr']:
+ file=temp/('ci-arxiv-'+name+'.py');assert file.is_file(),file;target=out/'runners'/file.name;target.parent.mkdir(exist_ok=True);shutil.copyfile(file,target)
+shutil.copyfile(root/'docs/parity/native-reconciliation-2026-10-15.json',out/'frozen-tracker.json')
+prior_readme=(root/'docs/validation/integration-2026-10-19/README.md').read_bytes()
+index={'schemaVersion':1,'kind':'native_received_arxiv_source_scoped_evidence','asOf':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sourceCommit':source['sourceCommit'],'runtimeCommit':source['runtimeCommit'],'parentCommit':source['parentCommit'],'nativeTotals':source['nativeTotals'],'failedCases':source['failedCases'],'nativeResultGroups':len(source['nativeGroups']),'newContractCases':{'rateJournal':4,'metadata':5,'tlsHttp':4,'cli':3},'frozenNativeInputs':native['inputs'],'frozenIntegratedInputs':integrated['frozenInputs'],'nativeActualBackend':live,'unpublishedExternalPayloads':unpublished,'priorEvidenceReadme':{'bytes':len(prior_readme),'sha256':sha(prior_readme)},'wholeNativeRerun':False,'fullUpstreamContractCertified':False,'notes':[
+'Independent host-only arxiv.org abstract/PDF routes use literal addresses, arxiv.org TLS names, static roots and separate network/output/rate-state grants. No legacy export API, proxy, redirect, retry, credential lookup, default model call, source instruction or project execution is added. Generic HTTP still refuses arxiv domains.',
+'The same host-selected fixed-leaf shared file holds an exclusive OS lock from durable pending admission through owned request termination. Completion starts a three-second cooldown. Single-file/coherent-clock coordination does not globally control other apps, different files, incoherent distributed locks or clock skew.',
+'The bounded two-slot checksum journal refuses corrupt/partial/reordered/all-zero nonempty records, pending requests, hardlinks, linked parents/leaves, regressed clocks and busy locks. Explicit exact-hash recovery only completes valid pending state and starts a fresh cooldown without network. No silent reset or corrupt-state repair is performed.',
+'Frozen metadata retains each selected received META occurrence and exact original whole-tag body-byte ranges. Repeated author labels are parallel observations. XML/numeric attribute decoding is not character-level mapping, publication/version/author/server truth, a canonical code snapshot, browser DOM or semantic paper graph. Missing fields stay absent and complete remains false.',
+'The initial unavailable API RED, pure parser stages, genuine comment-boundary slice panic RED4/1 and its fix are preserved. R4 full-library434/3/7 includes two new test fixture mistakes (Windows byte-range lock prevents the test extra read; an allegedly invalid consecutive slot pair was valid) and an unchanged Git-process termination test failure. These attempts are nonadditive; later results do not erase them or establish a cause.',
+'The first all-target Clippy attempt found one unnecessary borrow in a new CLI test; the corrected all-target Clippy and format run is retained. No dependency or lockfile changes are added.',
+'A post-test disposable cache cleanup failed while serializing ordered dictionaries after its deletion loop. The failed receipt preserves the exact scope, candidate limit, seven previously listed files confirmed absent and unchanged694 frozen source inputs; per-file hashes lost from the child memory and an exact successful deletion count are not claimed. No repeat deletion was performed. The original helper and failure receipt are retained.',
+'Owned TLS fixtures cover exact metadata/PDF routes, independent permissions, matching/mismatched IDs, redirect/name refusal, original deadline and completed rate state. CLI fixtures cover storeless replay, conflicting modes, closed configuration, existing output, grants/CAS and committed recovery identity after lost stdout.',
+'Actual Windows native arxiv.org metadata and PDF captures share one coordination journal, verified completion sequences2/4, six distinct author occurrences and frozen body/archive hashes. The host resolves the literal IP once. Public page/PDF archives and the full abstract metadata output remain ignored/local; hashes/receipts and project-owned fixtures are published. Arxiv PDF text extraction is not claimed.',
+'Historical full-native/platform failures and all original inventory/ledger identities remain. This scoped checkpoint does not certify full upstream parity, maximum-size behavior, other platforms, all HTML/PDF interpretation, remaining R1-R9, main merge or release.'
+],'artifacts':[]}
+for file in sorted(out.rglob('*')):
+ if file.is_file():
+  raw=file.read_bytes();index['artifacts'].append({'path':file.relative_to(out).as_posix(),'bytes':len(raw),'sha256':sha(raw)})
+(out/'index.json').write_bytes((json.dumps(index,indent=2,ensure_ascii=False)+'\n').encode());print(json.dumps({'artifacts':len(index['artifacts']),'indexSha256':sha((out/'index.json').read_bytes()),'nativeTotals':index['nativeTotals'],'unpublishedExternalPayloads':len(unpublished),'frozenIntegratedInputs':integrated['frozenInputs']}))

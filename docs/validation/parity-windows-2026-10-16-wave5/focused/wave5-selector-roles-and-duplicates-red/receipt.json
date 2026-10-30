@@ -1,0 +1,26 @@
+{
+  "checkedAtUtc": "2026-10-16T00:18:20.359610+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--lib",
+    "raw_selector",
+    "--",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 62.563,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-selector-roles-and-duplicates-red",
+  "logSha256": "b3f4c08cfd7051d24ed9ed0dcb08b68a33af3bf8c085fe2879f194ca9042dabf",
+  "groups": 1,
+  "passed": 5,
+  "failed": 7,
+  "ignored": 0,
+  "sourceChanges": []
+}

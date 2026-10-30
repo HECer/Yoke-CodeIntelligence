@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.03s
+     Running tests\ignored_facades.rs (target\debug\deps\ignored_facades-bab6ae9f0bc7c054.exe)
+
+running 1 test
+test public_external_directory_queries_share_ignored_scope_without_activation_and_honor_removal ... FAILED
+
+failures:
+
+---- public_external_directory_queries_share_ignored_scope_without_activation_and_honor_removal stdout ----
+
+thread 'public_external_directory_queries_share_ignored_scope_without_activation_and_honor_removal' (11548) panicked at native\tests\ignored_facades.rs:314:6:
+called `Result::unwrap()` on an `Err` value: Project root is not host-registered
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    public_external_directory_queries_share_ignored_scope_without_activation_and_honor_removal
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 9 filtered out; finished in 0.10s
+
+error: test failed, to rerun pass `--test ignored_facades`

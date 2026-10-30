@@ -1,0 +1,9 @@
+{"kind":"actual-vscode-extension-host","passed":true,"runtime":"rust","bundledRuntime":false,"vscodeVersion":"1.140.0","unsavedSourceBound":true,"workspaceExecutableIgnored":true,"protectedOpenBufferExcluded":true,"savedSourceUnchanged":true}
+
+taskkill.exe : FEHLER: Der Prozess "95928" wurde nicht gefunden.
+In G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\scripts\test-vscode.ps1:78 Zeichen:9
++         & taskkill.exe /PID $taskProcess.Id /T /F 2>$null | Out-Null
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FEHLER: Der Pro...nicht gefunden.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

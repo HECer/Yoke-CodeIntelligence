@@ -1,0 +1,14 @@
+2026-10-19 21:29:15.781 CEST [20388] LOG:  starting PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit
+2026-10-19 21:29:15.782 CEST [20388] LOG:  listening on IPv4 address "127.0.0.1", port 57566
+2026-10-19 21:29:15.832 CEST [23024] LOG:  database system was shut down at 2026-10-19 21:29:13 CEST
+2026-10-19 21:29:15.838 CEST [20388] LOG:  database system is ready to accept connections
+2026-10-19 21:29:16.238 CEST [20388] LOG:  received SIGHUP, reloading configuration files
+2026-10-19 21:29:16.907 CEST [3700] FATAL:  password authentication failed for user "yoke_reader"
+2026-10-19 21:29:16.907 CEST [3700] DETAIL:  Connection matched file "C:/Users/Lomi/AppData/Local/Temp/yoke-native-pg-live-7jf1eopk/data/pg_hba.conf" line 1: "hostssl all yoke_reader 127.0.0.1/32 scram-sha-256"
+2026-10-19 21:29:16.946 CEST [20388] LOG:  received fast shutdown request
+2026-10-19 21:29:16.949 CEST [20388] LOG:  aborting any active transactions
+2026-10-19 21:29:16.953 CEST [20388] LOG:  background worker "logical replication launcher" (PID 22072) exited with exit code 1
+2026-10-19 21:29:16.953 CEST [13728] LOG:  shutting down
+2026-10-19 21:29:16.954 CEST [13728] LOG:  checkpoint starting: shutdown immediate
+2026-10-19 21:29:17.009 CEST [13728] LOG:  checkpoint complete: wrote 77 buffers (0.5%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.039 s, total=0.056 s; sync files=59, longest=0.002 s, average=0.001 s; distance=376 kB, estimate=376 kB; lsn=0/1846640, redo lsn=0/1846640
+2026-10-19 21:29:17.112 CEST [20388] LOG:  database system is shut down

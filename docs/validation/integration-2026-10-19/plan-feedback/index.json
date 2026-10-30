@@ -1,0 +1,1090 @@
+{
+  "schemaVersion": 1,
+  "kind": "native_saved_plan_outcome_feedback",
+  "asOf": "2026-10-20T01:52:55.612079+00:00",
+  "sourceCommit": "8948144aab9fad21fe2944318b84936d255f93e7",
+  "runtimeCommit": "95111a342fdd6e7297105e1fca09de33916f7bc2",
+  "parentCommit": "afb37a3e46e7563ee9975de181b7be18733e5cad",
+  "paths": [
+    "native/README.md",
+    "native/docs/outcome-feedback.md",
+    "native/src/feedback_cli.rs",
+    "native/src/knowledge_feedback.rs",
+    "native/src/plan_feedback.rs",
+    "native/src/plan_feedback_rank.rs",
+    "native/src/plan_feedback_store.rs",
+    "native/src/retention.rs",
+    "native/tests/plan_feedback.rs"
+  ],
+  "newCases": 14,
+  "broadNativeGroups": 14,
+  "broadNativeTotals": {
+    "passed": 585,
+    "failed": 3,
+    "ignored": 7
+  },
+  "finalSelectedGroups": 4,
+  "finalSelectedTotals": {
+    "passed": 63,
+    "failed": 1,
+    "ignored": 0
+  },
+  "nativeInputsMatched": 731,
+  "nativeBinarySha256": "d6c11e8ee3f7d3a5967c84bc94428e0cda5c08a908be390bb1b458256ffab046",
+  "productionBinaryUnchangedFromBroadNativeTests": true,
+  "wholeNativeRerun": false,
+  "testOnlyBridge": [
+    "native/tests/plan_feedback.rs"
+  ],
+  "platform": "Windows",
+  "nativeInputs": 731,
+  "integratedInputs": 737,
+  "newContractCases": 14,
+  "broadAttempt": {
+    "sourceUnchanged": true,
+    "inputs": 731,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--lib",
+          "--test",
+          "plan_feedback",
+          "--test",
+          "feedback_cli",
+          "--test",
+          "plan_integrity",
+          "--test",
+          "retention",
+          "--test",
+          "knowledge",
+          "--test",
+          "knowledge_cli",
+          "--test",
+          "capture_changes",
+          "--test",
+          "maintenance",
+          "--test",
+          "decision_retention",
+          "--test",
+          "meaning_retention_review",
+          "--test",
+          "parity_retention",
+          "--test",
+          "view_comparison_cli",
+          "--test",
+          "historical_view_comparison",
+          "--",
+          "--test-threads=1"
+        ],
+        "exitCode": 101,
+        "seconds": 295.7323071999999,
+        "totals": {
+          "passed": 585,
+          "failed": 3,
+          "ignored": 7
+        },
+        "groups": 14,
+        "failures": [
+          "windows_host_aliases_cannot_read_protected_files_or_alternate_streams",
+          "blob_links_are_refused_and_external_targets_are_preserved",
+          "planned_result_views_replay_exact_unicode_crlf_without_application_or_execution"
+        ]
+      },
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 11.285099000000628
+      },
+      {
+        "name": "build",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "build",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--bin",
+          "yoke"
+        ],
+        "exitCode": 0,
+        "seconds": 8.459398599996348
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--all-targets",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "seconds": 90.00465370000165
+      }
+    ],
+    "allChecksPassed": false,
+    "wholeNativeRerun": false
+  },
+  "finalSelectedRun": {
+    "sourceUnchanged": true,
+    "inputs": 731,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--test",
+          "plan_feedback",
+          "--test",
+          "feedback_cli",
+          "--test",
+          "plan_integrity",
+          "--test",
+          "retention",
+          "--",
+          "--test-threads=1"
+        ],
+        "exitCode": 101,
+        "seconds": 16.79174950000015,
+        "totals": {
+          "passed": 63,
+          "failed": 1,
+          "ignored": 0
+        },
+        "groups": 4,
+        "failures": [
+          "windows_host_aliases_cannot_read_protected_files_or_alternate_streams"
+        ]
+      },
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 4.907291700001224
+      },
+      {
+        "name": "build",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "build",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--bin",
+          "yoke"
+        ],
+        "exitCode": 0,
+        "seconds": 0.5894301000080304
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--all-targets",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "seconds": 1.4576106000022264
+      }
+    ],
+    "allChecksPassed": false,
+    "wholeNativeRerun": false
+  },
+  "integrated": {
+    "sourceUnchanged": true,
+    "frozenInputs": 737,
+    "commands": [
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 4.91
+      },
+      {
+        "name": "python-contracts",
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "seconds": 1.05
+      },
+      {
+        "name": "typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "seconds": 4.23
+      },
+      {
+        "name": "tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "seconds": 55.73
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "priorEvidenceReadme": {
+    "bytes": 27525,
+    "sha256": "3f292aea6fec00466a2118e1adc6bf5167f38b121aaaecf597dea5625e0486b8"
+  },
+  "legacyKnowledgeEventSchemaAndIdentityUnchanged": true,
+  "executionObserved": false,
+  "workspaceApplicationObserved": false,
+  "independentCorroborationEstablished": false,
+  "currentApplicabilityEstablished": false,
+  "mainOrReleaseVerified": false,
+  "fullUpstreamContractCertified": false,
+  "notes": [
+    "Own MIT separate native_plan_feedback_event_v1 namespace under knowledge::feedback::plans. No dependencies or model/provider calls added. Released knowledge-event/transcript schemas, IDs and existing ranking semantics remain unchanged. CLIplan-record requires independent global--allow-writes, and plan-rank refuses that write flag. Both require an existing Store; host JSON/permission admission precedes source state access.",
+    "Bounded128000byte raw stored plan admission precedes full native base/derived View replay and canonical saved-plan replay. Exact plan identity, base/result snapshots, review text, modes and fixed expiry relation are checked. Historical loading supplies no approval or expired-plan application authority. Every source quote identifies original/evaluated side, exact changed-file hash, UTF8 byte boundaries and original CRLF/Unicode bytes. Unchanged and receipt-only source files cannot become plan quote authority.",
+    "Opaque checked native pairs carry original overlays, Meaning selections/packets, provider-unverified provenance, coverage and source-scope roles into the bounded result. The evaluated primary scope is a derived planned result; historical disk scopes may also exist as receipt_replay_only. No array position establishes primary authority. Planned bytes and host outcomes/actor/session/time labels prove neither correctness nor authenticated identity, independent corroboration, current applicability, actual application or observed execution. Mutable verification and approval rows are not consumed as execution proof.",
+    "Separate immutable event IDs canonicalize ordered quote sets. Perplan/actor/session, sequence slots are unique and timestamps nondecreasing even on out-of-order arrival. Retrospective ranking selects highest eligible sequence once perselectedtarget/actor/session, exposes all older/future events and their dispositions, and uses overflow-safe integer hyperbolic age decay. Explicit targets retain exact View representations; outside events are counted. Selected-plan limit omissions are visible, while budget overflow refuses whole output. No automatic promotion, source edit, capture, project execution or overflow artifact occurs.",
+    "Immediate SQLite transactions reject caller transactions on writes and pre-admit source proofs, sequences, quotas and complete output before insertion. Reads preserve pinned caller transactions and SQLite limits. Lost stdout leaves exactly one durable event; retry returns original ID/insertedfalse. Default separateplan quotas10000events/32MBJSON, draft64KB/32quotes/32KBquoteaggregate, source/replay64MB/32pairs and output4MB are independently lowerable. Retention validates all registered plan events and replays their canonicalplan/quote/proof closure before recognizing original snapshots/artifacts/sourceblobs as roots; corrupt records refuse maintenance.",
+    "R1 has real compile errors from the local Context name shadowing the anyhow trait import; explicit trait admission fixes compilation. R2 first behavior case passes. R3 has12newcases passing and selected61/1/0; the existing feedback symlink fixture fails at creation withOS1314. R4 has14newcases passing after two additional target/capacity cases. These runs are nonadditive and preserved.",
+    "The broad14group finalattempt records585/3/7 with731inputs unchanged:465/0/7library, two unchanged feedback/maintenance symlink setupOS1314 failures, and a new test incorrectly assuming sourceScopes[0] must be primary. The code already uses opaque primary_snapshot binding. Only that test changes to select the explicit primary_evidence role and snapshot ID while preserving historical receipt-only roles. The final4group corrective run records63/1/0 with all14newcases passing; the existing feedbackOS1314failure remains. Both attempts and exact source manifests remain, with no inferred merged totals or whole-native pass.",
+    "Format/build/alltargetClippy-Dwarnings pass for both broad and corrected source freezes. Runtime bytes are unchanged across the test-only bridge, as is the exact159080960byte native binary d6c11e8ee3f7d3a5967c84bc94428e0cda5c08a908be390bb1b458256ffab046 observed after native test compilation and again after final build/integrated checks. The731native inputs materialize exactly or CRLF-only in integration, with the2779byte PostgreSQL captured response exactly f67a05349a6cedf55222afd3bb3231c169d382dd4b078d76544daac517530b47. Integrated format/Python17/typecheck/TS260+3skip pass with737inputs unchanged.",
+    "An earlier commentary transiently stated13newcases forR3; the actual retained log has12. The final new suite has14 and is reported from the log. No raw counts are rewritten. Historical inventory353/73unreconciled/77backendunknown, false full-contract flags and prior evidence README bytes remain. Additional object targets, semantic transcript learning, independent execution/corroboration, broaderR1-R9, whole-native/platform acceptance, main and release remain open. The full task and coordination actions remain active."
+  ],
+  "artifacts": [
+    {
+      "path": "documentation-proof.json",
+      "bytes": 283,
+      "sha256": "5ef04ce2afc8a8c7d92a8e7251e3545176cf74ca20648264b5423a2e89b21e68"
+    },
+    {
+      "path": "final/build.log",
+      "bytes": 60,
+      "sha256": "c9782d8e5a3806b0779b3f6a77dced7e4a78e30bf1773ebb55a2a27b3a6ed26e"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 168,
+      "sha256": "0cc72ddb99dfbc0874cfb277c2577053463e0858e6b95438844338995a71d6fc"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native-test-binary.json",
+      "bytes": 360,
+      "sha256": "dc395b74db209a2bde80d001f35fa9dee25752c17ef5fc0880065e71a7303d56"
+    },
+    {
+      "path": "final/native.log",
+      "bytes": 69898,
+      "sha256": "cb54626f1f4966027ed68e66b522b052e6215dbcbf454d8184d243dccf5c29db"
+    },
+    {
+      "path": "final/result.json",
+      "bytes": 2715,
+      "sha256": "cc1774026902124901938f9e0c469092008a8187c1d8ccb3b560a88673962be4"
+    },
+    {
+      "path": "final/runner.py",
+      "bytes": 3108,
+      "sha256": "ef6249bad11ca72b157a8d3253d1aa2b3bb29f7666d6adeacf17de25c631de7f"
+    },
+    {
+      "path": "final/source/native/docs/outcome-feedback.md",
+      "bytes": 11492,
+      "sha256": "28f637eeeaac18b0c460ac7709c9b0da95a86d35a8f2fc97b7f49f3758cf0f66"
+    },
+    {
+      "path": "final/source/native/src/feedback_cli.rs",
+      "bytes": 9025,
+      "sha256": "581347bbdd23b2b583b5c33309a04e2c2db5d96a6a517b849b5cc5ef7b24d915"
+    },
+    {
+      "path": "final/source/native/src/knowledge_feedback.rs",
+      "bytes": 10818,
+      "sha256": "876624529b16e6725e106c08e64da928eecf3fdc6d8ea4ba596884ef32ea50f4"
+    },
+    {
+      "path": "final/source/native/src/knowledge_feedback_provenance.rs",
+      "bytes": 4600,
+      "sha256": "d4c046ce8054d88c273f369b4a32fea556a80ac49b74600944a108be403ae68d"
+    },
+    {
+      "path": "final/source/native/src/knowledge_feedback_rank.rs",
+      "bytes": 9916,
+      "sha256": "03d27372eba856c0c0177119823155a682457ee3835b43de0959434248fe9c82"
+    },
+    {
+      "path": "final/source/native/src/knowledge_feedback_store.rs",
+      "bytes": 21411,
+      "sha256": "5a5d2939464dd73263db2bc53e6a8a6c09e6171fa4ce5562dea7a6cd0cc453d0"
+    },
+    {
+      "path": "final/source/native/src/knowledge_feedback_transcript.rs",
+      "bytes": 9023,
+      "sha256": "e356063d5bc48fc423e88079e6e7aea765dd9f66af7775c4caf606b05f65b82e"
+    },
+    {
+      "path": "final/source/native/src/plan_feedback.rs",
+      "bytes": 9563,
+      "sha256": "6a689e2de9e4b5b07cefd78556fc0a7c45e4d27bbe82ff7cbce4e840f9baedcc"
+    },
+    {
+      "path": "final/source/native/src/plan_feedback_rank.rs",
+      "bytes": 4454,
+      "sha256": "1b6416078d3640dc94504df60326a3f0b75ff737b31c38c08ceb3e3da074b563"
+    },
+    {
+      "path": "final/source/native/src/plan_feedback_store.rs",
+      "bytes": 4449,
+      "sha256": "933e69e478e3416c23e88a2d4aa7312744278be71cff3ea6723715a38691f56b"
+    },
+    {
+      "path": "final/source/native/src/retention.rs",
+      "bytes": 82692,
+      "sha256": "363192275f162f602e062403a6cb0d608056be7da08e9b2a3686c59c4dc7c906"
+    },
+    {
+      "path": "final/source/native/tests/decision_retention.rs",
+      "bytes": 3127,
+      "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f"
+    },
+    {
+      "path": "final/source/native/tests/feedback_cli.rs",
+      "bytes": 39437,
+      "sha256": "7e195c04031a7ea7a754c184256f72ad1f5c3858473a2bb1ba6a42ddbae15ea6"
+    },
+    {
+      "path": "final/source/native/tests/parity_retention.rs",
+      "bytes": 14268,
+      "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2"
+    },
+    {
+      "path": "final/source/native/tests/plan_feedback.rs",
+      "bytes": 23786,
+      "sha256": "59d34306e027cd68b368ef4e60e1d5b409e2ad5eeab4b5d1d33d98f9a4dd1854"
+    },
+    {
+      "path": "final/source/native/tests/retention.rs",
+      "bytes": 15382,
+      "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 79016,
+      "sha256": "e5b84e93f62bf0f9b9471dad93b4c20bea29f76416306d06bec20ba93f586059"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 79016,
+      "sha256": "e5b84e93f62bf0f9b9471dad93b4c20bea29f76416306d06bec20ba93f586059"
+    },
+    {
+      "path": "final-r2/build.log",
+      "bytes": 60,
+      "sha256": "afb5e4c62a9a33554d8c9d5e5eb2459ac5468f91c2e743d623f39fa1355368a2"
+    },
+    {
+      "path": "final-r2/clippy.log",
+      "bytes": 167,
+      "sha256": "c4c01660ba67499ba7d655a1291b5fa2bae44a0cdceeae12d5e08f0dd70714eb"
+    },
+    {
+      "path": "final-r2/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final-r2/native.log",
+      "bytes": 7317,
+      "sha256": "ab874e915303e9e93295ea7927f99eefb7fd2611376d254417a9e2cf373e208f"
+    },
+    {
+      "path": "final-r2/result.json",
+      "bytes": 2095,
+      "sha256": "ba2c345a2e58e18a2f00877f13857ce726e675d9b4b7a2e1c367132198140b2b"
+    },
+    {
+      "path": "final-r2/runner.py",
+      "bytes": 3130,
+      "sha256": "4fcec24de20318846270b920f57701d875cbe919c2343c47a549e7109d3c2893"
+    },
+    {
+      "path": "final-r2/source/native/docs/outcome-feedback.md",
+      "bytes": 11492,
+      "sha256": "28f637eeeaac18b0c460ac7709c9b0da95a86d35a8f2fc97b7f49f3758cf0f66"
+    },
+    {
+      "path": "final-r2/source/native/src/feedback_cli.rs",
+      "bytes": 9025,
+      "sha256": "581347bbdd23b2b583b5c33309a04e2c2db5d96a6a517b849b5cc5ef7b24d915"
+    },
+    {
+      "path": "final-r2/source/native/src/knowledge_feedback.rs",
+      "bytes": 10818,
+      "sha256": "876624529b16e6725e106c08e64da928eecf3fdc6d8ea4ba596884ef32ea50f4"
+    },
+    {
+      "path": "final-r2/source/native/src/knowledge_feedback_provenance.rs",
+      "bytes": 4600,
+      "sha256": "d4c046ce8054d88c273f369b4a32fea556a80ac49b74600944a108be403ae68d"
+    },
+    {
+      "path": "final-r2/source/native/src/knowledge_feedback_rank.rs",
+      "bytes": 9916,
+      "sha256": "03d27372eba856c0c0177119823155a682457ee3835b43de0959434248fe9c82"
+    },
+    {
+      "path": "final-r2/source/native/src/knowledge_feedback_store.rs",
+      "bytes": 21411,
+      "sha256": "5a5d2939464dd73263db2bc53e6a8a6c09e6171fa4ce5562dea7a6cd0cc453d0"
+    },
+    {
+      "path": "final-r2/source/native/src/knowledge_feedback_transcript.rs",
+      "bytes": 9023,
+      "sha256": "e356063d5bc48fc423e88079e6e7aea765dd9f66af7775c4caf606b05f65b82e"
+    },
+    {
+      "path": "final-r2/source/native/src/plan_feedback.rs",
+      "bytes": 9563,
+      "sha256": "6a689e2de9e4b5b07cefd78556fc0a7c45e4d27bbe82ff7cbce4e840f9baedcc"
+    },
+    {
+      "path": "final-r2/source/native/src/plan_feedback_rank.rs",
+      "bytes": 4454,
+      "sha256": "1b6416078d3640dc94504df60326a3f0b75ff737b31c38c08ceb3e3da074b563"
+    },
+    {
+      "path": "final-r2/source/native/src/plan_feedback_store.rs",
+      "bytes": 4449,
+      "sha256": "933e69e478e3416c23e88a2d4aa7312744278be71cff3ea6723715a38691f56b"
+    },
+    {
+      "path": "final-r2/source/native/src/retention.rs",
+      "bytes": 82692,
+      "sha256": "363192275f162f602e062403a6cb0d608056be7da08e9b2a3686c59c4dc7c906"
+    },
+    {
+      "path": "final-r2/source/native/tests/decision_retention.rs",
+      "bytes": 3127,
+      "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f"
+    },
+    {
+      "path": "final-r2/source/native/tests/feedback_cli.rs",
+      "bytes": 39437,
+      "sha256": "7e195c04031a7ea7a754c184256f72ad1f5c3858473a2bb1ba6a42ddbae15ea6"
+    },
+    {
+      "path": "final-r2/source/native/tests/parity_retention.rs",
+      "bytes": 14268,
+      "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2"
+    },
+    {
+      "path": "final-r2/source/native/tests/plan_feedback.rs",
+      "bytes": 24218,
+      "sha256": "7e20432f62631b1b593d459de6e5aee52a8a111d6c388cd6df7d954c4940237c"
+    },
+    {
+      "path": "final-r2/source/native/tests/retention.rs",
+      "bytes": 15382,
+      "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068"
+    },
+    {
+      "path": "final-r2/source-after.json",
+      "bytes": 79016,
+      "sha256": "0bd22212ae887c5b065ce1e47a7e7fdaaabe88493b38734193f5eb1d54e81261"
+    },
+    {
+      "path": "final-r2/source-before.json",
+      "bytes": 79016,
+      "sha256": "0bd22212ae887c5b065ce1e47a7e7fdaaabe88493b38734193f5eb1d54e81261"
+    },
+    {
+      "path": "frozen-tracker.json",
+      "bytes": 530720,
+      "sha256": "2535759a09983f2896038c1eca9dbd77a9ecfd0144021647e4bdefd213b97e27"
+    },
+    {
+      "path": "integrated/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "integrated/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "94c4a4276841dee1bb1b393c31f21d331b2a8cbfa7db8660f1e10fd5ab37bee5"
+    },
+    {
+      "path": "integrated/result.json",
+      "bytes": 958,
+      "sha256": "1b957abd160ffa9c238a7ad083e45bcbcd43dfe0b65f02ea4bd02b9bc60747a3"
+    },
+    {
+      "path": "integrated/source-after.json",
+      "bytes": 78975,
+      "sha256": "f1f6cb9fee18d03aad16ab1d9828d90fdd4626a0e341d07d943f3b795d2714b4"
+    },
+    {
+      "path": "integrated/source-before.json",
+      "bytes": 78975,
+      "sha256": "f1f6cb9fee18d03aad16ab1d9828d90fdd4626a0e341d07d943f3b795d2714b4"
+    },
+    {
+      "path": "integrated/tests.log",
+      "bytes": 25040,
+      "sha256": "7eca0169ff707aa3c16f7338ecfdca40f9aa4fbf014ed93a6da215156c6fd0db"
+    },
+    {
+      "path": "integrated/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "r1/native.log",
+      "bytes": 3959,
+      "sha256": "9bd2e361504f6e4cf48565155444102c48632dd72865ba2c556e01b2dc1c8129"
+    },
+    {
+      "path": "r1/result.json",
+      "bytes": 767,
+      "sha256": "990bca25ed16fd38b522009b6b61d3bbc525097e848ebbbb38001172239b3f55"
+    },
+    {
+      "path": "r1/runner.py",
+      "bytes": 2922,
+      "sha256": "a2bcf276097ed7d5e2dc729dead1940b4eb43a9d640347f267115178dcc9c9b1"
+    },
+    {
+      "path": "r1/source/native/docs/outcome-feedback.md",
+      "bytes": 7334,
+      "sha256": "8e6d9f04da75d93a8b2e2350b825438717f76de182d22f47aa2ad5ac5d1d90f0"
+    },
+    {
+      "path": "r1/source/native/src/feedback_cli.rs",
+      "bytes": 9025,
+      "sha256": "581347bbdd23b2b583b5c33309a04e2c2db5d96a6a517b849b5cc5ef7b24d915"
+    },
+    {
+      "path": "r1/source/native/src/knowledge_feedback.rs",
+      "bytes": 10818,
+      "sha256": "876624529b16e6725e106c08e64da928eecf3fdc6d8ea4ba596884ef32ea50f4"
+    },
+    {
+      "path": "r1/source/native/src/knowledge_feedback_provenance.rs",
+      "bytes": 4600,
+      "sha256": "d4c046ce8054d88c273f369b4a32fea556a80ac49b74600944a108be403ae68d"
+    },
+    {
+      "path": "r1/source/native/src/knowledge_feedback_rank.rs",
+      "bytes": 9916,
+      "sha256": "03d27372eba856c0c0177119823155a682457ee3835b43de0959434248fe9c82"
+    },
+    {
+      "path": "r1/source/native/src/knowledge_feedback_store.rs",
+      "bytes": 21411,
+      "sha256": "5a5d2939464dd73263db2bc53e6a8a6c09e6171fa4ce5562dea7a6cd0cc453d0"
+    },
+    {
+      "path": "r1/source/native/src/knowledge_feedback_transcript.rs",
+      "bytes": 9023,
+      "sha256": "e356063d5bc48fc423e88079e6e7aea765dd9f66af7775c4caf606b05f65b82e"
+    },
+    {
+      "path": "r1/source/native/src/plan_feedback.rs",
+      "bytes": 9201,
+      "sha256": "6e707b9ba102b11f855ca567bdd2459427da391d24c1ec0a4d0b3aefa1bf331e"
+    },
+    {
+      "path": "r1/source/native/src/plan_feedback_rank.rs",
+      "bytes": 4454,
+      "sha256": "1b6416078d3640dc94504df60326a3f0b75ff737b31c38c08ceb3e3da074b563"
+    },
+    {
+      "path": "r1/source/native/src/plan_feedback_store.rs",
+      "bytes": 4305,
+      "sha256": "5a19528eeada44e7192f67c4f3ac95ef4b52c9c167993bd06160f7b38b3cbaba"
+    },
+    {
+      "path": "r1/source/native/src/retention.rs",
+      "bytes": 82692,
+      "sha256": "363192275f162f602e062403a6cb0d608056be7da08e9b2a3686c59c4dc7c906"
+    },
+    {
+      "path": "r1/source/native/tests/decision_retention.rs",
+      "bytes": 3127,
+      "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f"
+    },
+    {
+      "path": "r1/source/native/tests/feedback_cli.rs",
+      "bytes": 39437,
+      "sha256": "7e195c04031a7ea7a754c184256f72ad1f5c3858473a2bb1ba6a42ddbae15ea6"
+    },
+    {
+      "path": "r1/source/native/tests/parity_retention.rs",
+      "bytes": 14268,
+      "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2"
+    },
+    {
+      "path": "r1/source/native/tests/plan_feedback.rs",
+      "bytes": 4665,
+      "sha256": "51814164724c37dd54782476bd5b8c2a08f5e2f2c80200434721440541620d33"
+    },
+    {
+      "path": "r1/source/native/tests/retention.rs",
+      "bytes": 15382,
+      "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068"
+    },
+    {
+      "path": "r1/source-after.json",
+      "bytes": 79016,
+      "sha256": "e0009b042342036fa26b051122d0ea5c9439dd9645b63e373bfdd0ab17b5ff1d"
+    },
+    {
+      "path": "r1/source-before.json",
+      "bytes": 79016,
+      "sha256": "e0009b042342036fa26b051122d0ea5c9439dd9645b63e373bfdd0ab17b5ff1d"
+    },
+    {
+      "path": "r2/native.log",
+      "bytes": 1217,
+      "sha256": "3cc1a801f46adde01e597aea6ef2f9cc2ed030134581fffa62d5eae8e069e97f"
+    },
+    {
+      "path": "r2/result.json",
+      "bytes": 764,
+      "sha256": "ad6641924e9b14a775f53c788b445808da49183544d6d2e37c8276004ba1e08a"
+    },
+    {
+      "path": "r2/runner.py",
+      "bytes": 2922,
+      "sha256": "a2bcf276097ed7d5e2dc729dead1940b4eb43a9d640347f267115178dcc9c9b1"
+    },
+    {
+      "path": "r2/source/native/docs/outcome-feedback.md",
+      "bytes": 7334,
+      "sha256": "8e6d9f04da75d93a8b2e2350b825438717f76de182d22f47aa2ad5ac5d1d90f0"
+    },
+    {
+      "path": "r2/source/native/src/feedback_cli.rs",
+      "bytes": 9025,
+      "sha256": "581347bbdd23b2b583b5c33309a04e2c2db5d96a6a517b849b5cc5ef7b24d915"
+    },
+    {
+      "path": "r2/source/native/src/knowledge_feedback.rs",
+      "bytes": 10818,
+      "sha256": "876624529b16e6725e106c08e64da928eecf3fdc6d8ea4ba596884ef32ea50f4"
+    },
+    {
+      "path": "r2/source/native/src/knowledge_feedback_provenance.rs",
+      "bytes": 4600,
+      "sha256": "d4c046ce8054d88c273f369b4a32fea556a80ac49b74600944a108be403ae68d"
+    },
+    {
+      "path": "r2/source/native/src/knowledge_feedback_rank.rs",
+      "bytes": 9916,
+      "sha256": "03d27372eba856c0c0177119823155a682457ee3835b43de0959434248fe9c82"
+    },
+    {
+      "path": "r2/source/native/src/knowledge_feedback_store.rs",
+      "bytes": 21411,
+      "sha256": "5a5d2939464dd73263db2bc53e6a8a6c09e6171fa4ce5562dea7a6cd0cc453d0"
+    },
+    {
+      "path": "r2/source/native/src/knowledge_feedback_transcript.rs",
+      "bytes": 9023,
+      "sha256": "e356063d5bc48fc423e88079e6e7aea765dd9f66af7775c4caf606b05f65b82e"
+    },
+    {
+      "path": "r2/source/native/src/plan_feedback.rs",
+      "bytes": 9227,
+      "sha256": "df6b6a9d5499fd318b3b2b0d44ddd9fa729afd24434da7def20d7fdbb0242b58"
+    },
+    {
+      "path": "r2/source/native/src/plan_feedback_rank.rs",
+      "bytes": 4454,
+      "sha256": "1b6416078d3640dc94504df60326a3f0b75ff737b31c38c08ceb3e3da074b563"
+    },
+    {
+      "path": "r2/source/native/src/plan_feedback_store.rs",
+      "bytes": 4331,
+      "sha256": "801925c7ba32497d38b4cc8bdfd931691ab18b2fb8b82802405d8e5d018523c1"
+    },
+    {
+      "path": "r2/source/native/src/retention.rs",
+      "bytes": 82692,
+      "sha256": "363192275f162f602e062403a6cb0d608056be7da08e9b2a3686c59c4dc7c906"
+    },
+    {
+      "path": "r2/source/native/tests/decision_retention.rs",
+      "bytes": 3127,
+      "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f"
+    },
+    {
+      "path": "r2/source/native/tests/feedback_cli.rs",
+      "bytes": 39437,
+      "sha256": "7e195c04031a7ea7a754c184256f72ad1f5c3858473a2bb1ba6a42ddbae15ea6"
+    },
+    {
+      "path": "r2/source/native/tests/parity_retention.rs",
+      "bytes": 14268,
+      "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2"
+    },
+    {
+      "path": "r2/source/native/tests/plan_feedback.rs",
+      "bytes": 4665,
+      "sha256": "51814164724c37dd54782476bd5b8c2a08f5e2f2c80200434721440541620d33"
+    },
+    {
+      "path": "r2/source/native/tests/retention.rs",
+      "bytes": 15382,
+      "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068"
+    },
+    {
+      "path": "r2/source-after.json",
+      "bytes": 79016,
+      "sha256": "82de4b4b0b962990a0d89c8d94c4abba75225463743bec4f7c9091167afc5787"
+    },
+    {
+      "path": "r2/source-before.json",
+      "bytes": 79016,
+      "sha256": "82de4b4b0b962990a0d89c8d94c4abba75225463743bec4f7c9091167afc5787"
+    },
+    {
+      "path": "r3/native.log",
+      "bytes": 7131,
+      "sha256": "125021fd45e2141076cf85dc4250073516feb7e20aea60a08f4b3f18dc256d32"
+    },
+    {
+      "path": "r3/result.json",
+      "bytes": 988,
+      "sha256": "d94bbafa89ed123d7a851d09f4345bfeea336c09e414abe727706c4997f0a17c"
+    },
+    {
+      "path": "r3/runner.py",
+      "bytes": 2922,
+      "sha256": "a2bcf276097ed7d5e2dc729dead1940b4eb43a9d640347f267115178dcc9c9b1"
+    },
+    {
+      "path": "r3/source/native/docs/outcome-feedback.md",
+      "bytes": 7334,
+      "sha256": "8e6d9f04da75d93a8b2e2350b825438717f76de182d22f47aa2ad5ac5d1d90f0"
+    },
+    {
+      "path": "r3/source/native/src/feedback_cli.rs",
+      "bytes": 9025,
+      "sha256": "581347bbdd23b2b583b5c33309a04e2c2db5d96a6a517b849b5cc5ef7b24d915"
+    },
+    {
+      "path": "r3/source/native/src/knowledge_feedback.rs",
+      "bytes": 10818,
+      "sha256": "876624529b16e6725e106c08e64da928eecf3fdc6d8ea4ba596884ef32ea50f4"
+    },
+    {
+      "path": "r3/source/native/src/knowledge_feedback_provenance.rs",
+      "bytes": 4600,
+      "sha256": "d4c046ce8054d88c273f369b4a32fea556a80ac49b74600944a108be403ae68d"
+    },
+    {
+      "path": "r3/source/native/src/knowledge_feedback_rank.rs",
+      "bytes": 9916,
+      "sha256": "03d27372eba856c0c0177119823155a682457ee3835b43de0959434248fe9c82"
+    },
+    {
+      "path": "r3/source/native/src/knowledge_feedback_store.rs",
+      "bytes": 21411,
+      "sha256": "5a5d2939464dd73263db2bc53e6a8a6c09e6171fa4ce5562dea7a6cd0cc453d0"
+    },
+    {
+      "path": "r3/source/native/src/knowledge_feedback_transcript.rs",
+      "bytes": 9023,
+      "sha256": "e356063d5bc48fc423e88079e6e7aea765dd9f66af7775c4caf606b05f65b82e"
+    },
+    {
+      "path": "r3/source/native/src/plan_feedback.rs",
+      "bytes": 9563,
+      "sha256": "6a689e2de9e4b5b07cefd78556fc0a7c45e4d27bbe82ff7cbce4e840f9baedcc"
+    },
+    {
+      "path": "r3/source/native/src/plan_feedback_rank.rs",
+      "bytes": 4454,
+      "sha256": "1b6416078d3640dc94504df60326a3f0b75ff737b31c38c08ceb3e3da074b563"
+    },
+    {
+      "path": "r3/source/native/src/plan_feedback_store.rs",
+      "bytes": 4400,
+      "sha256": "be393c709c6345635173f15122cbb1ff6d5412ee7761a32fe529cdf699f113a7"
+    },
+    {
+      "path": "r3/source/native/src/retention.rs",
+      "bytes": 82692,
+      "sha256": "363192275f162f602e062403a6cb0d608056be7da08e9b2a3686c59c4dc7c906"
+    },
+    {
+      "path": "r3/source/native/tests/decision_retention.rs",
+      "bytes": 3127,
+      "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f"
+    },
+    {
+      "path": "r3/source/native/tests/feedback_cli.rs",
+      "bytes": 39437,
+      "sha256": "7e195c04031a7ea7a754c184256f72ad1f5c3858473a2bb1ba6a42ddbae15ea6"
+    },
+    {
+      "path": "r3/source/native/tests/parity_retention.rs",
+      "bytes": 14268,
+      "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2"
+    },
+    {
+      "path": "r3/source/native/tests/plan_feedback.rs",
+      "bytes": 20988,
+      "sha256": "d615a2699e1510435b0c74639e9994e9778a32419e1b536ac51dd276b144a82e"
+    },
+    {
+      "path": "r3/source/native/tests/retention.rs",
+      "bytes": 15382,
+      "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068"
+    },
+    {
+      "path": "r3/source-after.json",
+      "bytes": 79016,
+      "sha256": "5eb69f1f4324975c92fe471b3d81e2fa740dccea6755c4052116717bea8bb1c4"
+    },
+    {
+      "path": "r3/source-before.json",
+      "bytes": 79016,
+      "sha256": "5eb69f1f4324975c92fe471b3d81e2fa740dccea6755c4052116717bea8bb1c4"
+    },
+    {
+      "path": "r4/native.log",
+      "bytes": 1618,
+      "sha256": "2f4e3a46e5181265dbd9190ed6429c6bffa8639a539cfc9c7693d4ba151c1446"
+    },
+    {
+      "path": "r4/result.json",
+      "bytes": 765,
+      "sha256": "a2d7189f87aea1a672845592ffe3276f73e55192bb7a8c5c6b30ea5bd6398502"
+    },
+    {
+      "path": "r4/runner.py",
+      "bytes": 2922,
+      "sha256": "a2bcf276097ed7d5e2dc729dead1940b4eb43a9d640347f267115178dcc9c9b1"
+    },
+    {
+      "path": "r4/source/native/docs/outcome-feedback.md",
+      "bytes": 11492,
+      "sha256": "28f637eeeaac18b0c460ac7709c9b0da95a86d35a8f2fc97b7f49f3758cf0f66"
+    },
+    {
+      "path": "r4/source/native/src/feedback_cli.rs",
+      "bytes": 9025,
+      "sha256": "581347bbdd23b2b583b5c33309a04e2c2db5d96a6a517b849b5cc5ef7b24d915"
+    },
+    {
+      "path": "r4/source/native/src/knowledge_feedback.rs",
+      "bytes": 10818,
+      "sha256": "876624529b16e6725e106c08e64da928eecf3fdc6d8ea4ba596884ef32ea50f4"
+    },
+    {
+      "path": "r4/source/native/src/knowledge_feedback_provenance.rs",
+      "bytes": 4600,
+      "sha256": "d4c046ce8054d88c273f369b4a32fea556a80ac49b74600944a108be403ae68d"
+    },
+    {
+      "path": "r4/source/native/src/knowledge_feedback_rank.rs",
+      "bytes": 9916,
+      "sha256": "03d27372eba856c0c0177119823155a682457ee3835b43de0959434248fe9c82"
+    },
+    {
+      "path": "r4/source/native/src/knowledge_feedback_store.rs",
+      "bytes": 21411,
+      "sha256": "5a5d2939464dd73263db2bc53e6a8a6c09e6171fa4ce5562dea7a6cd0cc453d0"
+    },
+    {
+      "path": "r4/source/native/src/knowledge_feedback_transcript.rs",
+      "bytes": 9023,
+      "sha256": "e356063d5bc48fc423e88079e6e7aea765dd9f66af7775c4caf606b05f65b82e"
+    },
+    {
+      "path": "r4/source/native/src/plan_feedback.rs",
+      "bytes": 9563,
+      "sha256": "6a689e2de9e4b5b07cefd78556fc0a7c45e4d27bbe82ff7cbce4e840f9baedcc"
+    },
+    {
+      "path": "r4/source/native/src/plan_feedback_rank.rs",
+      "bytes": 4454,
+      "sha256": "1b6416078d3640dc94504df60326a3f0b75ff737b31c38c08ceb3e3da074b563"
+    },
+    {
+      "path": "r4/source/native/src/plan_feedback_store.rs",
+      "bytes": 4400,
+      "sha256": "be393c709c6345635173f15122cbb1ff6d5412ee7761a32fe529cdf699f113a7"
+    },
+    {
+      "path": "r4/source/native/src/retention.rs",
+      "bytes": 82692,
+      "sha256": "363192275f162f602e062403a6cb0d608056be7da08e9b2a3686c59c4dc7c906"
+    },
+    {
+      "path": "r4/source/native/tests/decision_retention.rs",
+      "bytes": 3127,
+      "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f"
+    },
+    {
+      "path": "r4/source/native/tests/feedback_cli.rs",
+      "bytes": 39437,
+      "sha256": "7e195c04031a7ea7a754c184256f72ad1f5c3858473a2bb1ba6a42ddbae15ea6"
+    },
+    {
+      "path": "r4/source/native/tests/parity_retention.rs",
+      "bytes": 14268,
+      "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2"
+    },
+    {
+      "path": "r4/source/native/tests/plan_feedback.rs",
+      "bytes": 23786,
+      "sha256": "59d34306e027cd68b368ef4e60e1d5b409e2ad5eeab4b5d1d33d98f9a4dd1854"
+    },
+    {
+      "path": "r4/source/native/tests/retention.rs",
+      "bytes": 15382,
+      "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068"
+    },
+    {
+      "path": "r4/source-after.json",
+      "bytes": 79016,
+      "sha256": "68d47e59f65275b04d89d16c98762be4ed290b138e4dcfd9af87fb6bc9913747"
+    },
+    {
+      "path": "r4/source-before.json",
+      "bytes": 79016,
+      "sha256": "68d47e59f65275b04d89d16c98762be4ed290b138e4dcfd9af87fb6bc9913747"
+    },
+    {
+      "path": "runners/ci-r9-check.py",
+      "bytes": 3130,
+      "sha256": "4fcec24de20318846270b920f57701d875cbe919c2343c47a549e7109d3c2893"
+    },
+    {
+      "path": "runners/ci-r9-commit.py",
+      "bytes": 4954,
+      "sha256": "ccd04fa83d3fbccf28fd0c8a4d54580ba4769d6c3f1030e91f84a037a2bd7e0d"
+    },
+    {
+      "path": "runners/ci-r9-docs.py",
+      "bytes": 8469,
+      "sha256": "c2908495e7ff2ac420f77ae28c5e40c30f4964b1e477fe4e68339cf966465ea9"
+    },
+    {
+      "path": "runners/ci-r9-extra-tests.rs",
+      "bytes": 13429,
+      "sha256": "906eb85575802958952c4c76c0ff7676de22fb26a56a81453e608162a2a5513d"
+    },
+    {
+      "path": "runners/ci-r9-integrated.py",
+      "bytes": 2144,
+      "sha256": "9ceef83342b65f7acaabfb5e511beb231b8794ce2ab99b611e17ea64424b4ce3"
+    },
+    {
+      "path": "runners/ci-r9-native-binary.py",
+      "bytes": 883,
+      "sha256": "6518be246905f04a537413b199193cd49504562a12e48a43d092d89802773e47"
+    },
+    {
+      "path": "runners/ci-r9-pr.py",
+      "bytes": 5136,
+      "sha256": "c508ac673525ed916da33b2270fdcbab3f5fe320f7d0f9871fea1e07a217fb8b"
+    },
+    {
+      "path": "runners/ci-r9-preserve.py",
+      "bytes": 9665,
+      "sha256": "159c3396a5e05c0056b3e624ab1e51538b90968b008210944f1218a22c7d0a63"
+    },
+    {
+      "path": "runners/ci-r9-stage.py",
+      "bytes": 3791,
+      "sha256": "1e0072a343ba3e0861590e717787954925661e18385535bf8c81a8595484817b"
+    },
+    {
+      "path": "source-commit.json",
+      "bytes": 418,
+      "sha256": "f2b588e6bd046d56fdb05c67df37b76b642d02540ef5839a6ff18579d4880b1b"
+    },
+    {
+      "path": "source-integration.json",
+      "bytes": 1075,
+      "sha256": "2713b07728ac15aa2e3742eb08d067a6f78a5e43ae42c8e224ea0dd136a8fc56"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 208117,
+      "sha256": "51cfd1b5444e46fbf0355402e12828c41ae7f87025de66a68ddce7a20bf91135"
+    }
+  ]
+}

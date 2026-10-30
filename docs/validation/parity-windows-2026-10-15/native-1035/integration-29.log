@@ -1,0 +1,87 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 20.73s
+     Running tests\trail_adapter.rs (target\debug\deps\trail_adapter-26b9a5c2ec70b6a1.exe)
+
+running 4 tests
+test six_public_trail_tools_preserve_freshness_and_exact_file_api_contracts ... ok
+test public_trail_mcp_profile_lists_six_tools_and_accepts_legacy_query_aliases ... ok
+test named_call_trace_accepts_full_closure_without_the_native_depth_eight_limit ... ok
+test task_retrieval_regex_hits_and_repo_orientation_use_captured_source ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+
+     Running tests\trail_bodies.rs (target\debug\deps\trail_bodies-b68b4cc4940ea540.exe)
+
+running 4 tests
+test full_definitions_exceed_old_excerpt_limit_and_default_crux_has_eight_lines ... ok
+test find_all_returns_more_than_two_hundred_source_occurrences ... ok
+test public_file_api_returns_all_three_hundred_and_fifty_headers_in_one_projection ... ok
+test large_full_definition_results_are_published_as_readable_artifacts ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.02s
+
+     Running tests\trail_review.rs (target\debug\deps\trail_review-246e5c99a4fc09cd.exe)
+
+running 4 tests
+test trail_qualified_symbol_selection_matches_the_declared_container_suffix ... ok
+test trail_incoming_coupling_does_not_count_the_containing_file_as_a_dependency ... ok
+test trail_dependency_trace_excludes_source_containment_edges ... ok
+test trail_file_trace_seeds_the_files_symbols_for_incoming_dependency_closure ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+
+     Running tests\universal_languages.rs (target\debug\deps\universal_languages-746feac12a53433c.exe)
+
+running 20 tests
+test composite_scripts_skip_html_comments_and_non_executable_data ... ok
+test added_grammars_extract_declarations_from_real_source ... ok
+test blade_php_and_razor_code_blocks_keep_template_byte_anchors ... ok
+test ejs_comment_and_escaped_tags_do_not_become_code ... ok
+test astro_frontmatter_svelte_scripts_and_ejs_blocks_are_source_bound ... ok
+test dreammaker_call_lines_cannot_be_mislabeled_as_function_declarations ... ok
+test file_metadata_does_not_copy_configuration_values_into_graph_signatures ... ok
+test duplicate_script_types_keep_the_first_authored_attribute ... ok
+test newly_supported_extensions_are_not_silently_plain_text ... ok
+test language_specific_calls_keep_the_call_expression_anchor ... ok
+test harmless_html_attribute_ampersands_do_not_abort_script_extraction ... ok
+test r6_named_methods_and_s7_method_assignments_are_distinct_declarations ... ok
+test object_and_module_declarations_keep_named_method_owners ... ok
+test r_object_system_declarations_preserve_literal_names_and_methods ... ok
+test razor_raw_strings_and_interpolations_do_not_close_the_outer_code_block ... ok
+test separate_vue_scripts_cannot_repair_each_others_syntax_or_span_markup ... ok
+test unsupported_embedded_language_is_explicit_and_quoted_tag_attributes_are_respected ... ok
+test structural_fallbacks_extract_named_declarations_with_exact_ranges ... ok
+test vue_scripts_keep_original_utf8_offsets_and_ignore_markup_calls ... ok
+test large_robot_keyword_sets_respect_the_shared_deadline_without_quadratic_section_scans ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
+
+     Running tests\vector_admission_review.rs (target\debug\deps\vector_admission_review-e93b61cc8239ca76.exe)
+
+running 8 tests
+test corrupt_source_blob_is_size_admitted_before_vector_reader_allocation ... ok
+test explicit_readonly_dependency_vectors_import_and_search_without_write_authority ... ok
+test oversized_escaped_import_is_counted_before_allocating_encoded_json ... ok
+test oversized_persisted_vector_cell_is_bounded_before_string_copy ... ok
+test prepared_collection_preserves_legacy_vector_identity_and_serialized_bytes ... ok
+test prepared_vector_admission_checks_global_capacity_without_publishing_a_record ... ok
+test prepared_vector_admission_rejects_unpublishable_plans_before_vectors_exist ... ok
+test prepared_vectors_reject_changed_source_model_count_dimensions_and_zero_norm ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.88s
+
+     Running tests\workflow_cli.rs (target\debug\deps\workflow_cli-927186d3a166e179.exe)
+
+running 9 tests
+test actual_native_cli_tls_service_and_client_load_os_credentials ... ignored, Actual native CLI TLS service/client and Windows credential store; creates/removes only unique test credentials
+test ambiguous_json_rpc_ids_and_nested_lsp_results_are_refused ... ok
+test host_profiles_reject_duplicate_keys_instead_of_replacing_policy ... ok
+test malformed_host_profile_values_are_not_repeated_in_cli_errors ... ok
+test model_worker_deadline_includes_an_input_pipe_that_never_closes ... ok
+test host_only_execution_and_retention_never_inherit_authority_from_config_json ... ok
+test readonly_mcp_dataflow_and_native_cli_share_exact_snapshot_evidence ... ok
+test runtime_cli_preserves_failed_program_evidence_and_returns_failure ... ok
+test native_runtime_cli_preserves_state_across_authorized_repl_commands ... ok
+
+test result: ok. 8 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 1.47s
+

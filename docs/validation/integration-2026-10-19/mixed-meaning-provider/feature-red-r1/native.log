@@ -1,0 +1,28 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 36s
+     Running tests\mixed_meaning_provider.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\mixed_meaning_provider-7761ca0ba0193bdf.exe)
+
+running 5 tests
+test bound_invalid_fragment_error_or_usage_retains_reported_bill_without_graph_or_secret_echo ... ok
+test explicit_mixed_provider_preserves_original_claims_and_replays_without_provider_or_live_files ... ok
+test saved_quote_tampering_refuses_both_source_load_and_retention_before_history_changes ... FAILED
+test trust_source_permission_and_capacity_refuse_before_accounting_or_process ... ok
+test unbound_reply_keeps_unknown_reservation_and_status_performs_no_retry ... ok
+
+failures:
+
+---- saved_quote_tampering_refuses_both_source_load_and_retention_before_history_changes stdout ----
+
+thread 'saved_quote_tampering_refuses_both_source_load_and_retention_before_history_changes' (27192) panicked at native\tests\mixed_meaning_provider.rs:339:5:
+assertion failed: retention::plan(&f.engine.store, &Default::default(), &d).is_err()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    saved_quote_tampering_refuses_both_source_load_and_retention_before_history_changes
+
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.94s
+
+error: test failed, to rerun pass `--test mixed_meaning_provider`
+error: 1 target failed:
+    `--test mixed_meaning_provider`

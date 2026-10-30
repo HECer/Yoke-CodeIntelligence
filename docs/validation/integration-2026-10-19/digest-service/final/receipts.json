@@ -1,0 +1,255 @@
+[
+  {
+    "gate": "format",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 5.818,
+    "recordedAt": "2026-10-19T04:49:13.178173+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "clippy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--keep-going",
+      "-j2",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 92.266,
+    "recordedAt": "2026-10-19T04:50:45.445294+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "native-service-and-regressions",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "--no-fail-fast",
+      "-j2",
+      "--lib",
+      "--test",
+      "github",
+      "--test",
+      "github_discussions",
+      "--test",
+      "github_app_digest",
+      "--test",
+      "github_app_digest_cli",
+      "--test",
+      "github_app_digest_mapping",
+      "--test",
+      "github_app_digest_handoff",
+      "--test",
+      "github_app_cli",
+      "--test",
+      "github_app_auth_cli",
+      "--test",
+      "github_app_publication",
+      "--test",
+      "github_app_publication_cli",
+      "--test",
+      "github_app_worker",
+      "--test",
+      "github_app_worker_run",
+      "--test",
+      "retention",
+      "--test",
+      "parity_retention",
+      "--test",
+      "decision_retention",
+      "--test",
+      "meaning_retention_review",
+      "--test",
+      "store_read_only",
+      "--test",
+      "store_open_deadline",
+      "--test",
+      "store_cancellation",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 313.976,
+    "recordedAt": "2026-10-19T04:55:59.422532+00:00",
+    "resultGroups": [
+      {
+        "passed": 404,
+        "failed": 0,
+        "ignored": 7
+      },
+      {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 35,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 38,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 18,
+        "failed": 0,
+        "ignored": 1
+      },
+      {
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 102,
+        "failed": 0,
+        "ignored": 4
+      },
+      {
+        "passed": 14,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 33,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 28,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 14,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 16,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  {
+    "gate": "python-contracts",
+    "command": [
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts/tests",
+      "-v"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 1.549,
+    "recordedAt": "2026-10-19T04:56:00.972557+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "typescript-typecheck",
+    "command": [
+      "npm.cmd",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 5.967,
+    "recordedAt": "2026-10-19T04:56:06.940520+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "typescript-tests",
+    "command": [
+      "npm.cmd",
+      "test"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 60.979,
+    "recordedAt": "2026-10-19T04:57:07.920455+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "actual-os-credential-cli",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--test",
+      "github_app_digest_handoff",
+      "actual_cli_send_status_and_lost_response_recovery_use_os_key_without_retry",
+      "--",
+      "--exact",
+      "--ignored",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 8.073,
+    "recordedAt": "2026-10-19T04:57:15.994455+00:00",
+    "resultGroups": [
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  }
+]

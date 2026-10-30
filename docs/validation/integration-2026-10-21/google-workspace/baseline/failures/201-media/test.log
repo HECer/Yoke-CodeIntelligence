@@ -1,0 +1,35 @@
+    Finished `test` profile [unoptimized] target(s) in 0.75s
+     Running tests\media.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\media-c3510bf242d2afd5.exe)
+
+running 13 tests
+test explicitly_captured_binary_assets_are_published_with_exact_ids_and_paged_bytes ... ok
+test malformed_and_truncated_containers_fail_without_fabricated_metadata ... ok
+test media_cannot_bypass_source_scope_links_ignore_or_protected_paths ... FAILED
+test media_persistence_refreshes_the_remaining_deadline_after_asset_capture ... ok
+test native_media_metadata_is_technical_and_binary_capture_is_explicit ... ok
+test native_pdf_worker_extracts_actual_text_without_opening_a_source_index ... ok
+test pdf_worker_deadline_and_malformed_input_fail_closed ... ok
+test strict_pdf_visitor_decodes_nonbmp_tounicode_and_text_array_line_operators ... ok
+test strict_pdf_visitor_discloses_form_text_exclusion_and_enforces_page_text_cap ... ok
+test strict_pdf_visitor_refuses_unknown_fonts_malformed_encodings_and_content ... ok
+test strict_pdf_visitor_respects_code_spaces_and_rejects_ambiguous_or_invalid_unicode ... ok
+test strict_pdf_visitor_validates_every_page_tree_child_count_and_parent ... ok
+test supplied_unicode_transcript_binds_asset_digest_and_discloses_unverified_authorship ... ok
+
+failures:
+
+---- media_cannot_bypass_source_scope_links_ignore_or_protected_paths stdout ----
+
+thread 'media_cannot_bypass_source_scope_links_ignore_or_protected_paths' (29312) panicked at native\tests\media.rs:284:6:
+called `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: "Dem Client fehlt ein erforderliches Recht." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    media_cannot_bypass_source_scope_links_ignore_or_protected_paths
+
+test result: FAILED. 12 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.83s
+
+error: test failed, to rerun pass `--test media`
+error: 1 target failed:
+    `--test media`

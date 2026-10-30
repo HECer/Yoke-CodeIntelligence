@@ -1,0 +1,11 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 43s
+     Running tests\compiler_move.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\compiler_move-25835ff4cf375f5e.exe)
+
+running 3 tests
+test actual_exported_function_move_repairs_split_consumer_imports_without_source_writes ... ok
+test actual_jsdoc_class_move_repairs_namespace_consumer_and_keeps_unrelated_member ... ok
+test actual_private_free_dependency_preserves_same_offset_compiler_insertion_order ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.83s
+

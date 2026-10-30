@@ -1,0 +1,83 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 5.35s
+     Running tests\symbol_move_declarations.rs (E:/Yoke-Build-Cache/meaning-aliases-20261016\debug\deps\symbol_move_declarations-a99000b0174e1718.exe)
+
+running 10 tests
+test const_moves_preserve_initializer ... FAILED
+test enum_moves_preserve_variants ... FAILED
+test declaration_moves_still_require_an_exact_cut_and_unchanged_insert_at_the_selected_parent ... FAILED
+test same_file_and_inline_source_moves_use_original_coordinates ... FAILED
+test struct_moves_preserve_generic_fields ... FAILED
+test nonfunction_moves_cannot_leave_or_add_a_comment_wrapped_ast_copy ... FAILED
+test trait_moves_preserve_associated_signatures ... FAILED
+test unrelated_identical_declarations_keep_their_original_provenance ... FAILED
+test type_alias_moves_preserve_generic_target ... FAILED
+test attached_and_nonfree_declarations_refuse_before_provider_work ... ok
+
+failures:
+
+---- const_moves_preserve_initializer stdout ----
+
+thread 'const_moves_preserve_initializer' (48844) panicked at native\tests\symbol_move_declarations.rs:119:37:
+constant, V8, parent=false: Selected symbol is not the required actual Rust AST declaration
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- enum_moves_preserve_variants stdout ----
+
+thread 'enum_moves_preserve_variants' (61240) panicked at native\tests\symbol_move_declarations.rs:119:37:
+enum, V8, parent=false: Selected symbol is not the required actual Rust AST declaration
+
+---- declaration_moves_still_require_an_exact_cut_and_unchanged_insert_at_the_selected_parent stdout ----
+
+thread 'declaration_moves_still_require_an_exact_cut_and_unchanged_insert_at_the_selected_parent' (4068) panicked at native\tests\symbol_move_declarations.rs:109:5:
+assertion `left == right` failed
+  left: 0
+ right: 1
+
+---- same_file_and_inline_source_moves_use_original_coordinates stdout ----
+
+thread 'same_file_and_inline_source_moves_use_original_coordinates' (17384) panicked at native\tests\symbol_move_declarations.rs:203:73:
+called `Result::unwrap()` on an `Err` value: Selected symbol is not the required actual Rust AST declaration
+
+---- struct_moves_preserve_generic_fields stdout ----
+
+thread 'struct_moves_preserve_generic_fields' (53132) panicked at native\tests\symbol_move_declarations.rs:119:37:
+struct, V8, parent=false: Selected symbol is not the required actual Rust AST declaration
+
+---- nonfunction_moves_cannot_leave_or_add_a_comment_wrapped_ast_copy stdout ----
+
+thread 'nonfunction_moves_cannot_leave_or_add_a_comment_wrapped_ast_copy' (61016) panicked at native\tests\symbol_move_declarations.rs:109:5:
+assertion `left == right` failed
+  left: 0
+ right: 1
+
+---- trait_moves_preserve_associated_signatures stdout ----
+
+thread 'trait_moves_preserve_associated_signatures' (4144) panicked at native\tests\symbol_move_declarations.rs:119:37:
+interface, V8, parent=false: Selected symbol is not the required actual Rust AST declaration
+
+---- unrelated_identical_declarations_keep_their_original_provenance stdout ----
+
+thread 'unrelated_identical_declarations_keep_their_original_provenance' (63248) panicked at native\tests\symbol_move_declarations.rs:217:72:
+called `Result::unwrap()` on an `Err` value: Selected symbol is not the required actual Rust AST declaration
+
+---- type_alias_moves_preserve_generic_target stdout ----
+
+thread 'type_alias_moves_preserve_generic_target' (66016) panicked at native\tests\symbol_move_declarations.rs:119:37:
+type, V8, parent=false: Selected symbol is not the required actual Rust AST declaration
+
+
+failures:
+    const_moves_preserve_initializer
+    declaration_moves_still_require_an_exact_cut_and_unchanged_insert_at_the_selected_parent
+    enum_moves_preserve_variants
+    nonfunction_moves_cannot_leave_or_add_a_comment_wrapped_ast_copy
+    same_file_and_inline_source_moves_use_original_coordinates
+    struct_moves_preserve_generic_fields
+    trait_moves_preserve_associated_signatures
+    type_alias_moves_preserve_generic_target
+    unrelated_identical_declarations_keep_their_original_provenance
+
+test result: FAILED. 1 passed; 9 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.48s
+
+error: test failed, to rerun pass `--test symbol_move_declarations`

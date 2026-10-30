@@ -1,0 +1,16 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.04s
+     Running tests\explorer_export.rs (target\debug\deps\explorer_export-c9a7185de16e2409.exe)
+community_metadata_requires_exact_canonical_source_and_preserves_graph: test
+graphml_dynamic_attributes_are_xml_values_not_markup: test
+native_markdown_metadata_unrepresentable_in_xml_is_refused_without_changing_graph: test
+offline_html_preserves_canonical_graph_and_inert_hostile_labels: test
+source_bound_html_writer_is_create_only_and_idempotent: test
+template_markers_inside_source_metadata_are_preserved_verbatim: test
+
+6 tests, 0 benchmarks
+     Running tests\explorer_runtime.rs (target\debug\deps\explorer_runtime-5350e133bfddf44b.exe)
+first_throttled_timer_finishes_bounded_layout_and_preserves_all_observations: test
+frame_scheduler_completes_once_when_animation_frames_starve_or_race: test
+
+2 tests, 0 benchmarks

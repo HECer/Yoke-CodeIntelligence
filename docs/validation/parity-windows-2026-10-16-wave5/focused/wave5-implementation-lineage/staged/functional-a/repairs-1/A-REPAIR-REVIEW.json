@@ -1,0 +1,24 @@
+{
+  "action": "act_mva5a5mg_773f4cecd8d3",
+  "actualDeepRedLog": "cbc97eaca1f38f7aedf4ce7409221571fe68e8b45ff47a9c974a89936852ae09",
+  "files": [
+    {
+      "path": "retrieval_scopes.rs",
+      "before": "e631930e4b98050313afd1ab9469fc6f0c6c4c2e3370591b9ccb556b0a72273e",
+      "after": "f7652274180fe6ac7dbe36b2590e12851a6c1944e508fdca532ecb53dd8ca165"
+    },
+    {
+      "path": "retrieval_partition.rs",
+      "before": "1f69e992c4e69a037387e9e5e1821f83871ff97a821c327fa70d0ffad390bae8",
+      "after": "02062490f3cbb8317da2cc95f215574ed74b7a860d19f86eb5eb86a615117440"
+    },
+    {
+      "path": "retrieval_scopes_tests.rs",
+      "before": "40a086e518e2995f43b7dd4b551c5dde7cde84e4397940fb657a4ad09ca9f696",
+      "after": "ba485d4f64def18ee7fdbb4e4af9e727349020099df9d61855ec26fa1a0eb0ca"
+    }
+  ],
+  "parser": "unchangedcac84322untilnew3syntaxactualRED",
+  "publicApi": "Retains accepted declarations/path descriptor methods; single-method allow_dead_code only. Testobserver cfg_attr precise; no blanket allowance.",
+  "normalChangedByThisScript": []
+}

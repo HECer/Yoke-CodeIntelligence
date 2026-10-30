@@ -1,0 +1,26 @@
+{
+  "scope": "focused_node_gate_not_frozen_suite",
+  "checkedAtUtc": "2026-10-15T20:31:44.902830+00:00",
+  "command": [
+    "node",
+    "--test",
+    "target/parity-validation-20261015/next-process-deadline/process-spawn-failure.test.mjs"
+  ],
+  "exitCode": 0,
+  "seconds": 0.562,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-process-spawn-failure-controls",
+  "logSha256": "294335f57202580497bdb3e94336c18783aa00dc10c4a09d8606cdef31b516c4",
+  "frameworkCounts": {
+    "tests": 2,
+    "pass": 2,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "groups": 1,
+  "passed": 2,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

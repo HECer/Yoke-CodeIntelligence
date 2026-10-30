@@ -1,0 +1,20 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 12.36s
+     Running tests\agent_symbol_contracts.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\agent_symbol_contracts-361051c1602db6e8.exe)
+excluded_root_kinds_cannot_seed_descendants_beyond_a_zero_root_match_threshold: test
+full_bodies_suppress_descendant_depth_and_hover_provider_queries: test
+jb_wildcard_only_queries_require_the_overview_facade: test
+max_matches_is_a_permitted_match_threshold_and_unlimited_does_not_mean_native_default_thirty: test
+overloaded_symbol_paths_have_stable_zero_based_indices_and_resolve_back_to_the_same_source: test
+overview_depth_defaults_are_language_specific_and_explicit_depth_limits_descendants: test
+requested_hover_is_attached_to_root_matches_and_never_descendants: test
+substring_matching_expands_only_the_last_name_segment_and_absolute_paths_stay_rooted: test
+
+8 tests, 0 benchmarks
+     Running tests\analyzer_cli.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\analyzer_cli-0170f59877ad504c.exe)
+analyzer_epoch_is_host_configuration_and_not_an_mcp_argument: test
+explicit_cli_epoch_changes_new_capture_semantics_and_default_eight_is_stable: test
+explicit_cli_session_epoch_survives_restart_and_rejects_an_unpinned_resume: test
+invalid_cli_epoch_fails_before_creating_source_state: test
+
+4 tests, 0 benchmarks

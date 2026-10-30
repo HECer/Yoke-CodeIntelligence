@@ -1,0 +1,502 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "{ run: (n: number) => number; }"
+      ],
+      "afterTypes": [
+        "{ run: (n: number) => number; }"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 1,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "[4,\"\"]",
+      "after": "[4,\"\"]",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "(n: number) => number"
+      ],
+      "afterTypes": [
+        "(n: number) => number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 2,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "5",
+      "after": "5",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "{ run(n: number): number; }"
+      ],
+      "afterTypes": [
+        "{ run(n: number): number; }"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 3,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "[4,\"owned\"]",
+      "after": "[4,\"owned\"]",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "[(n: number) => number, string]"
+      ],
+      "afterTypes": [
+        "[(n: number) => number, string]"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 4,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "Result"
+      ],
+      "afterTypes": [
+        "Result"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 5,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "() => void"
+      ],
+      "afterTypes": [
+        "() => void"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 6,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "[\"\",3]",
+      "after": "[\"\",3]",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "() => number"
+      ],
+      "afterTypes": [
+        "() => number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 7,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "typeof (Anonymous class)"
+      ],
+      "afterTypes": [
+        "typeof (Anonymous class)"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 8,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "() => void"
+      ],
+      "afterTypes": [
+        "() => void"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 9,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "[\"\",3]",
+      "after": "[\"\",3]",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "() => number"
+      ],
+      "afterTypes": [
+        "() => number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 10,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "typeof (Anonymous class)"
+      ],
+      "afterTypes": [
+        "typeof (Anonymous class)"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 11,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "[\"\",5]",
+      "after": "[\"\",5]",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "(n: number) => number"
+      ],
+      "afterTypes": [
+        "(n: number) => number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 12,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "[\"\",3]",
+      "after": "[\"\",3]",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "() => void"
+      ],
+      "afterTypes": [
+        "() => void"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 13,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "true",
+      "after": "true",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "{ value: number; } | undefined"
+      ],
+      "afterTypes": [
+        "{ value: number; } | undefined"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 14,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "true",
+      "after": "true",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "((n: number) => number) | undefined"
+      ],
+      "afterTypes": [
+        "((n: number) => number) | undefined"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 15,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "[\"owned\",4]",
+      "after": "[\"owned\",4]",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "(n: number) => number"
+      ],
+      "afterTypes": [
+        "(n: number) => number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 16,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "[4,\"é\"]",
+      "after": "[4,\"é\"]",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "readonly [(n: number) => number, \"é\"]"
+      ],
+      "afterTypes": [
+        "readonly [(n: number) => number, \"é\"]"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 17,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "{ run: (n: number) => number; }"
+      ],
+      "afterTypes": [
+        "{ run: (n: number) => number; }"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 18,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "{ run: (n: number) => number; }"
+      ],
+      "afterTypes": [
+        "{ run: (n: number) => number; }"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 19,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "[\"\",\"\",4,5]",
+      "after": "[\"\",\"\",4,5]",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [],
+      "afterTypes": [],
+      "resultTypesExact": true
+    },
+    {
+      "case": 20,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 21,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "never"
+      ],
+      "afterTypes": [
+        "never"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 22,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "void"
+      ],
+      "afterTypes": [
+        "void"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 23,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "never"
+      ],
+      "afterTypes": [
+        "never"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 24,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "() => void"
+      ],
+      "afterTypes": [
+        "() => void"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 25,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "() => number"
+      ],
+      "afterTypes": [
+        "() => number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 26,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "() => number"
+      ],
+      "afterTypes": [
+        "() => number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 27,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "() => number"
+      ],
+      "afterTypes": [
+        "() => number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 28,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "() => void"
+      ],
+      "afterTypes": [
+        "() => void"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 29,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "\"\"",
+      "after": "\"\"",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "(n: number) => number"
+      ],
+      "afterTypes": [
+        "(n: number) => number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 30,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "[\"\",3]",
+      "after": "[\"\",3]",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "() => number"
+      ],
+      "afterTypes": [
+        "() => number"
+      ],
+      "resultTypesExact": true
+    }
+  ],
+  "allChecksPassed": true,
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "ownedLiteralFixturesExecuted": true,
+  "diagnosticOnlyWorkerPatch": true
+}

@@ -1,0 +1,28 @@
+{
+  "checkedAtUtc": "2026-10-15T22:40:22.227827+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--test",
+    "monorepo_pre_feature_envelope",
+    "--",
+    "--exact",
+    "full_definition_envelope_overflow_is_an_error_without_an_artifact_fallback",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 12.594,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-old-envelope-red",
+  "logSha256": "62c5b523c73a422bbebc77193c57268f195f8db108054a6f6854ec799cae1b2a",
+  "groups": 1,
+  "passed": 0,
+  "failed": 1,
+  "ignored": 0,
+  "sourceChanges": []
+}

@@ -1,0 +1,21 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 12.90s
+     Running tests\live_enrichment.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\live_enrichment-fe0b6210f3ac9031.exe)
+actual_python_server_normalized_symbols_and_signature_help: test
+actual_rust_server_expanded_call_symbols_completion_signature_diagnostics_and_prepare_rename: test
+actual_typescript_server_expanded_type_call_symbols_signature_and_published_diagnostics: test
+
+3 tests, 0 benchmarks
+     Running tests\lsp.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\lsp-ad376eb03f90ca87.exe)
+host_registered_semantic_rename_uses_the_requested_mcp_snapshot: test
+lsp_deadline_includes_a_server_that_refuses_to_read_didopen: test
+lsp_shutdown_grace_uses_the_remaining_request_deadline: test
+protocol_fixture_locations_bind_to_exact_immutable_source: test
+protocol_fixture_rename_prepares_a_plan_without_touching_source: test
+protocol_fixture_unsafe_workspace_edits_fail_closed: test
+repeated_large_lsp_locations_remain_exact_anchors_with_bounded_body_bytes: test
+semantic_calls_refuse_rebound_source_under_a_published_snapshot_id: test
+semantic_location_link_selection_must_be_inside_its_target_range: test
+semantic_positions_preserve_cr_crlf_lf_and_unicode_boundaries: test
+
+10 tests, 0 benchmarks

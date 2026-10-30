@@ -1,0 +1,67 @@
+    native=root/'target/debug/yoke.exe';commands=[];created_credentials=[];native_hash=sha(native.read_bytes());owned_source=folder/'owned-source';owned_source.mkdir();source_bytes=('// owned '+chr(0x1f4a1)+'\r\nfn alpha(){beta();beta();missing();}\r\nfn beta(){alpha();}\r\n').encode();(owned_source/'owned.rs').write_bytes(source_bytes);(out/'owned-fixture.rs').write_bytes(source_bytes)
+    def cli(name,args,private=None,success=True,lost_stdout=False):
+     argv=[str(native),'--timeout','60000','--max-bytes','200000']+[str(a) for a in args];started=time.monotonic()
+     if lost_stdout:
+      p=subprocess.Popen(argv,stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE,creationflags=subprocess.CREATE_NO_WINDOW);p.stdout.close();p.stdout=None;_,stderr=p.communicate(timeout=75);stdout=b'';code=p.returncode
+     else:
+      p=subprocess.run(argv,input=private,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=75,creationflags=subprocess.CREATE_NO_WINDOW);stdout=p.stdout;stderr=p.stderr;code=p.returncode
+     assert password.encode() not in stdout+stderr and password_hash.encode() not in stdout+stderr
+     (out/(name+'.stdout')).write_bytes(stdout);(out/(name+'.stderr')).write_bytes(stderr);commands.append({'name':name,'command':argv,'exitCode':code,'seconds':time.monotonic()-started,'privateStdin':private is not None,'stdoutDiscarded':lost_stdout})
+     if success is not None:assert (code==0)==success,(name,code,'see local bounded stderr')
+     return json.loads(stdout) if code==0 else stderr.decode(errors='replace')
+    def run(label,args,success=True):
+     try:value=command(stream,args);okay=True
+     except ReplyError as error:value={'error':str(error)};okay=False
+     assert password not in json.dumps(value,ensure_ascii=False) and password_hash not in json.dumps(value);responses[label]=value
+     if success is not None:assert okay==success,label
+     return value
+    def do_apply(name,mode,path,plan,journal,connect,success=True,extra=None):
+     return cli(name,['falkor-publish',mode,'--plan',path,'--expected-plan-id',plan['planId'],'--journal',journal,'--allow-journal']+(['--allow-write'] if mode=='apply' else ['--allow-recovery'])+connect+(extra or []),success=success)
+    def approval(name,path,plan,journal,lost_stdout=False):
+     return cli(name,['falkor-publish','approve','--plan',path,'--expected-plan-id',plan['planId'],'--journal',journal,'--allow-approval','--allow-journal'],lost_stdout=lost_stdout,success=not lost_stdout)
+    snapshot=cli('source-index',['--root',owned_source,'index'])['snapshotId']
+    try:
+     workflows=[]
+     for prefix,selected_port,encrypted in [('plain',port,False),('tls',tls_port,True)]:
+      dest=out/prefix;dest.mkdir();target={'baseUrl':f'redis://127.0.0.1:{selected_port}/','address':f'127.0.0.1:{selected_port}','namespace':'owned native '+prefix+' '+chr(0x1f4a1),'user':'default','useSystemRoots':False}
+      if encrypted:target.update({'baseUrl':f'rediss://localhost:{selected_port}/','rootCertificatesDerBase64':[root_der_base64]})
+      config=dest/'target.json';config.write_text(json.dumps(target),encoding='utf-8');bootstrap_path=dest/'bootstrap.json';cli(prefix+'-bootstrap-plan',['falkor-publish','bootstrap-plan','--config',config,'--output',bootstrap_path,'--allow-output']);bootstrap=json.loads(bootstrap_path.read_bytes());inspection=cli(prefix+'-offline-inspect',['falkor-publish','inspect','--plan',bootstrap_path]);binding=inspection['credentialBinding']
+      cli(prefix+'-credential-import',['falkor-publish','import-password','--config',config,'--allow-credential-create'],private=password.encode());created_credentials.append('yoke-code-intelligence/service/falkor/'+binding)
+      connect=['--allow-network','--allow-credential-lookup']+([] if encrypted else ['--allow-loopback-plaintext']);probe=cli(prefix+'-empty-probe',['falkor-publish','probe','--plan',bootstrap_path]+connect);assert not probe['graphExists']
+      bootstrap_journal=dest/('falkor-'+bootstrap['planId']+'.jsonl');approval(prefix+'-bootstrap-approve',bootstrap_path,bootstrap,bootstrap_journal)
+      denied=do_apply(prefix+'-schema-grant-denied','apply',bootstrap_path,bootstrap,bootstrap_journal,connect,False);assert 'schema_permission_required' in denied
+      do_apply(prefix+'-bootstrap-apply','apply',bootstrap_path,bootstrap,bootstrap_journal,connect,extra=['--allow-schema']);state=cli(prefix+'-bootstrap-journal',['falkor-publish','journal','--plan',bootstrap_path,'--journal',bootstrap_journal,'--allow-journal']);assert state['completedOperations']==9 and state['eventCount']==19
+      probe=cli(prefix+'-ready-probe',['falkor-publish','probe','--plan',bootstrap_path]+connect);assert probe['schema']['allRequiredPresent'] and probe['schema']['allObservedOperational']
+      path=dest/'publication.json';cli(prefix+'-publication-prepare',['falkor-publish','prepare','--config',config,'--source-root',owned_source,'--snapshot-id',snapshot,'--expected-revision','absent','--output',path,'--allow-output','--allow-source-coordination']);plan=json.loads(path.read_bytes());journal=dest/('falkor-'+plan['planId']+'.jsonl');approval(prefix+'-publication-approve',path,plan,journal,lost_stdout=True)
+      do_apply(prefix+'-publication-apply','apply',path,plan,journal,connect);do_apply(prefix+'-publication-idempotent-journal','apply',path,plan,journal,connect)
+      state=cli(prefix+'-publication-journal',['falkor-publish','journal','--plan',path,'--journal',journal,'--allow-journal']);assert state['completedOperations']==1 and state['eventCount']==3
+      key=plan['graphKey'];payload=plan['payload'];revision=plan['revisionId'];scope=plan['scopeKey'];params='CYPHER revision='+json.dumps(revision)+' scope='+json.dumps(scope)+' '
+      elements=run(prefix+'-original-elements',['GRAPH.RO_QUERY',key,params+'MATCH (n:YokeNativeElement {scopeKey:$scope,revisionId:$revision}) RETURN n.category,n.rowJson'])
+      for category,field in [('entity','entities'),('evidence','evidence')]:assert {json.loads(r[1])['id']:json.loads(r[1]) for r in elements[1] if r[0]==category}=={r['id']:r for r in payload[field]}
+      header=next(json.loads(r[1]) for r in elements[1] if r[0]=='revision')
+      for field in ['sourceFiles','coverage','diagnostics','graphHash','payloadHash']:assert header[field]==payload[field]
+      observed=run(prefix+'-original-observations',['GRAPH.RO_QUERY',key,params+'MATCH (a:YokeNativeElement)-[r:YOKE_NATIVE_OBSERVATION {scopeKey:$scope,revisionId:$revision}]->(b:YokeNativeElement) RETURN a.sourceId,b.sourceId,b.sourceTargetWasNull,r.rowJson ORDER BY r.key'])
+      assert {json.loads(r[3])['id']:json.loads(r[3]) for r in observed[1]}=={r['id']:r for r in payload['observations']}
+      for row in observed[1]:
+       raw=json.loads(row[3]);assert row[0]==raw['source'];assert (row[1]==raw['target'] and row[2] is None) if raw['target'] is not None else (row[1] is None and row[2]=='true')
+      counter=run(prefix+'-same-journal-no-resend',['GRAPH.RO_QUERY',key,'MATCH (s:YokeNativeScope) RETURN s.lockCounter']);assert counter[1]==[[1]]
+      # An independent reviewed journal tests actual same-revision replay and count guards.
+      replay=dest/'replay';replay.mkdir();replay_journal=replay/('falkor-'+plan['planId']+'.jsonl');approval(prefix+'-replay-approve',path,plan,replay_journal);do_apply(prefix+'-same-revision-replay','apply',path,plan,replay_journal,connect)
+      extra=secrets.token_hex(32);run(prefix+'-insert-owned-count-conflict',['GRAPH.QUERY',key,'CYPHER key='+json.dumps(extra)+' revision='+json.dumps(revision)+' scope='+json.dumps(scope)+' CREATE (:YokeNativeElement {key:$key,scopeKey:$scope,revisionId:$revision})'])
+      conflict=dest/'count-conflict';conflict.mkdir();conflict_journal=conflict/('falkor-'+plan['planId']+'.jsonl');approval(prefix+'-count-conflict-approve',path,plan,conflict_journal)
+      denied=do_apply(prefix+'-count-conflict-denied','apply',path,plan,conflict_journal,connect,False);assert 'query_refused' in denied
+      denied=do_apply(prefix+'-pending-resend-blocked','apply',path,plan,conflict_journal,connect,False);assert 'previous_result_unknown_recovery_required' in denied
+      denied=do_apply(prefix+'-count-conflict-recovery-denied','recover',path,plan,conflict_journal,connect,False);assert 'outcome_unconfirmed_no_automatic_resend' in denied
+      counter=run(prefix+'-count-conflict-counter-unchanged',['GRAPH.RO_QUERY',key,'MATCH (s:YokeNativeScope) RETURN s.lockCounter']);assert counter[1]==[[2]]
+      run(prefix+'-remove-only-owned-count-extra',['GRAPH.QUERY',key,'CYPHER key='+json.dumps(extra)+' MATCH (n:YokeNativeElement {key:$key}) DELETE n']);do_apply(prefix+'-positive-recovery-after-restored-postcondition','recover',path,plan,conflict_journal,connect)
+      workflows.append({'tls':encrypted,'planId':plan['planId'],'revisionId':revision,'allOriginalRowsAndEvidenceExact':True,'sameJournalNoResend':True,'sameRevisionReplay':True,'countGuardRolledBackCounter':True,'readOnlyRecoveryRefusedUntilPostconditionRestored':True})
+     for label,hostname,root_der in [('wrong-host','untrusted.invalid',root_der_base64),('wrong-root','localhost',wrong_root_der_base64)]:
+      dest=out/label;dest.mkdir();target={'baseUrl':f'rediss://{hostname}:{tls_port}/','address':f'127.0.0.1:{tls_port}','namespace':'owned native tls '+chr(0x1f4a1),'user':'default','useSystemRoots':False,'rootCertificatesDerBase64':[root_der]};config=dest/'target.json';config.write_text(json.dumps(target),encoding='utf-8');path=dest/'plan.json';cli(label+'-plan',['falkor-publish','bootstrap-plan','--config',config,'--output',path,'--allow-output']);binding=cli(label+'-inspect',['falkor-publish','inspect','--plan',path])['credentialBinding'];cli(label+'-import',['falkor-publish','import-password','--config',config,'--allow-credential-create'],private=password.encode());created_credentials.append('yoke-code-intelligence/service/falkor/'+binding)
+      cli(label+'-tls-refused',['falkor-publish','probe','--plan',path,'--allow-network','--allow-credential-lookup'],success=False)
+     result={'actualImageTag':'6.0.2','manifestDigest':json.loads((base/'acquire/result.json').read_bytes())['image']['manifestDigest'],'ownedQemuPid':child.pid,'listenerPidVerified':True,'nativeTransportTested':True,'nativeBinarySha256':native_hash,'nativeTlsStaticCa':True,'wrongHostnameRefused':True,'wrongStaticRootRefused':True,'privateUnicodePassword':True,'schemaGrantIndependent':True,'bootstrapOperations':9,'bootstrapJournalEvents':19,'lostStdoutIdentityRetained':True,'workflows':workflows,'qemuUserNetworkRestricted':True,'hostForwardsLoopbackOnly':True,'projectCodeExecuted':False,'defaultModelOrBrowserStarted':False}
+    finally:
+     removed=0;advapi=ctypes.WinDLL('Advapi32',use_last_error=True);advapi.CredDeleteW.argtypes=[ctypes.c_wchar_p,ctypes.c_uint32,ctypes.c_uint32];advapi.CredDeleteW.restype=ctypes.c_int
+     for name in created_credentials:assert advapi.CredDeleteW(name,1,0),'Owned fixture credential removal failed';removed+=1
+     (out/'commands.json').write_text(json.dumps(commands,indent=2)+'\n',encoding='utf-8');(out/'credential-cleanup.json').write_text(json.dumps({'created':len(created_credentials),'removed':removed})+'\n',encoding='utf-8')
+     assert sha(native.read_bytes())==native_hash
+    result['ownedCredentialsRemoved']=removed

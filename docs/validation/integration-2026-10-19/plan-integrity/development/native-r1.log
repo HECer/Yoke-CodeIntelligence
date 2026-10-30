@@ -1,0 +1,13 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 57s
+     Running tests\plan_integrity.rs (target\debug\deps\plan_integrity-ca8ba141e3d85d01.exe)
+
+running 5 tests
+test clearing_saved_test_warnings_cannot_remove_the_host_test_change_gate ... ok
+test approved_plan_cannot_change_applied_bytes_after_its_record_is_modified ... ok
+test record_key_and_fixed_expiry_cannot_be_changed_without_changing_the_plan_identity ... ok
+test recovery_cannot_restore_different_bytes_from_a_modified_saved_plan ... ok
+test saved_review_text_must_describe_the_exact_captured_effect_before_approval ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+

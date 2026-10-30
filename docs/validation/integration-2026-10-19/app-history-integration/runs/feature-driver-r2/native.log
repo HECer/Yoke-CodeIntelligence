@@ -1,0 +1,40 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 3.79s
+     Running tests\github_app_history_bridge.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_history_bridge-8ed3bfb891b4baaa.exe)
+
+running 11 tests
+test a_disk_snapshot_or_an_unrelated_worker_record_cannot_become_history_authority ... ok
+test actual_cli_lost_stdout_status_pause_resume_and_run_use_the_owned_os_key ... ignored, Requires an outer controller owning one temporary Windows signing credential
+test authenticated_original_plan_and_native_job_must_survive_every_retry ... ok
+test changed_queue_blocks_acquisition_but_allows_historical_pause_and_status ... ok
+test checked_completion_creates_one_signed_job_and_offline_status_uses_read_only_store ... ok
+test closed_selection_rejects_duplicate_fields_unknown_flags_and_unbounded_ids ... ok
+test driver_denials_precede_http_and_cannot_create_worker_completions_or_history ... ok
+test permissions_output_and_sql_failure_cannot_leave_half_an_app_job ... ok
+test resumable_batches_use_exact_revisions_and_never_update_checkout_or_latest ... ok
+test retention_validates_typed_bindings_and_rejects_foreign_source_substitution ... ok
+test worker_execution_drives_resumable_history_without_repeating_http_or_adopting_revision ... ok
+
+test result: ok. 10 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 6.17s
+
+     Running tests\github_app_history_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_history_cli-0443c4f0aced00c6.exe)
+
+running 4 tests
+test budgets_and_read_only_scope_refuse_before_profiles_keys_or_store ... ok
+test closed_selection_and_plan_errors_precede_credential_resolution_and_missing_source ... ok
+test every_operation_requires_explicit_app_and_job_permission_before_host_files ... ok
+test worker_history_switches_require_their_separate_grants_before_files_or_credentials ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.78s
+
+     Running tests\github_app_worker_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_worker_cli-81c8c16e00e25432.exe)
+
+running 5 tests
+test read_only_worker_commands_refuse_network_and_write_authority ... ok
+test worker_inherited_zero_queue_limits_precede_missing_host_files_and_keys ... ok
+test worker_mutation_permissions_precede_missing_request_profiles_and_source ... ok
+test worker_zero_history_and_output_limits_precede_all_host_files ... ok
+test worker_zero_remote_limits_precede_auth_files_credentials_and_source ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.43s
+

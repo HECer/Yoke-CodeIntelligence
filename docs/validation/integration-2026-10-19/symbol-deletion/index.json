@@ -1,0 +1,460 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T15:30:05.389419+00:00",
+  "parentCommit": "f2c2aac611076e8815019f8ee44ae91defb851a1",
+  "implementationCommit": "b5ad2ace47a827f04af19aefca822be54316295d",
+  "integratedRuntimeCommit": "d83512c3b4bfdd6a1dd1c43b8b95cf6991a5f6ca",
+  "accepted": false,
+  "wholeNativeRerun": false,
+  "allScopedChecksPassed": true,
+  "finalScopedTotals": {
+    "passed": 466,
+    "failed": 0,
+    "ignored": 7
+  },
+  "finalScopedResultGroups": [
+    {
+      "passed": 428,
+      "failed": 0,
+      "ignored": 7
+    },
+    {
+      "passed": 4,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 13,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 7,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0
+    }
+  ],
+  "defaultNewTestsPassed": 8,
+  "actualCompositeGateRustTestsPassed": 1,
+  "actualOwnedFixtureCount": 4,
+  "actualOwnedLanguages": [
+    "typescript",
+    "javascript"
+  ],
+  "countsAreNonadditive": true,
+  "frozenNativeInputCount": 556,
+  "frozenIntegratedInputCount": 668,
+  "integrationSummary": {
+    "checks": [
+      {
+        "gate": "format",
+        "exitCode": 0,
+        "elapsedSeconds": 4.896,
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ]
+      },
+      {
+        "gate": "python-contracts",
+        "exitCode": 0,
+        "elapsedSeconds": 1.354,
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ]
+      },
+      {
+        "gate": "typecheck",
+        "exitCode": 0,
+        "elapsedSeconds": 5.781,
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ]
+      },
+      {
+        "gate": "tests",
+        "exitCode": 0,
+        "elapsedSeconds": 60.859,
+        "command": [
+          "npm.cmd",
+          "test"
+        ]
+      }
+    ],
+    "sourceUnchanged": true,
+    "scopedInputsMatched": 556,
+    "allIntegrationChecksPassed": true,
+    "runtimeCommit": "d83512c3b4bfdd6a1dd1c43b8b95cf6991a5f6ca",
+    "wholeNativeRerun": false
+  },
+  "findings": [
+    "RED real TypeScript named-export deletion left export; tsc exited2/TS1030. Later RED loop cases were not reached.",
+    "Checked AST deletion ranges preserve stored entities and usage anchors, include only owning export/ambient/single-declarator syntax, and refuse unsupported consumers or sibling declarations.",
+    "Actual final TypeScript/JavaScript named/default export fixtures pass copied tsc verification, approved apply and exact CRLF/Unicode recovery.",
+    "Initial R2 scoped/native and four actual compiler fixtures passed, but all-target Clippy refused a nonminimal boolean; final R3 simplifies that predicate and repeats the entire selected suite and actual gate.",
+    "Other language wrappers, decorated members, multi-declarators and general propagation remain outside this finite contract.",
+    "Earlier whole-native Windows OS1314 and historical product/regression observations remain preserved; this selected run does not replace them or establish hosted/IDE parity, release or main merge."
+  ],
+  "inventoryPreserved": {
+    "historicalInventory": {
+      "path": "docs/parity/public-contracts-2026-10-14.json",
+      "sha256": "993eb15143bf61a1cf64c80ff53d491ee13f7faeecf2ff4b53a6975de9972c3e",
+      "treatment": "Preserve unchanged as the pinned historical public-contract inventory. Its baseline05Boundary, state=open and empty windowsAcceptance values are not current implementation verdicts."
+    },
+    "ledgerSummary": {
+      "allBackendRuntimeReviewsRetained": true,
+      "assessmentCounts": {
+        "catalog_declared_runtime_review_required": 77,
+        "explicitly_unavailable": 2,
+        "mapped_partial_contract": 179,
+        "measurement_not_transferable": 1,
+        "outside_pinned_public_production_scope": 1,
+        "product_choice_review_required": 1,
+        "reference_metadata_only": 12,
+        "unreconciled_review_required": 73,
+        "unverified_hosted_contract_requires_review": 1,
+        "upstream_boundary_retained": 6
+      },
+      "categoryCounts": {
+        "graphifyCapabilities": 32,
+        "graphifyMcpSurface": 19,
+        "metadataAndScope": 11,
+        "serenaConfigurationEntries": 6,
+        "serenaConfigurationMembers": 56,
+        "serenaLanguageServerIds": 77,
+        "serenaReplFacadeMethods": 50,
+        "serenaTools": 53,
+        "serenaUpstreamBoundaries": 6,
+        "trailCapabilities": 37,
+        "trailPublicTools": 6
+      },
+      "explicitUnavailableRefs": [
+        "serena:tool:open_dashboard",
+        "serena:repl:cfg.open_dashboard"
+      ],
+      "rootIntegrityCheck": "Read-only admission rehashed 1650 prior artifact pins and 1677 new pins, replayed the complete new tree and all five raw phases against the unchanged freeze; this is local consistency evidence, not a signature.",
+      "totalEnumeratedEntries": 353,
+      "unreconciledReviewRequiredRefs": [
+        "trail:Session cold-start mining",
+        "trail:Prompt/edit/session hooks and statusline",
+        "trail:Self-hosted GitHub App",
+        "trail:History digest / brain onboarding",
+        "trail:Cloud workspace/client/team UI",
+        "graphify:postgres_catalog",
+        "graphify:google_shortcuts",
+        "graphify:url_ingest",
+        "graphify:asr",
+        "graphify:affected",
+        "graphify:db_push",
+        "graphify:git_lifecycle",
+        "graphify:diagnostics_benchmark",
+        "serena:configuration:layers",
+        "serena:configuration:projectKeys",
+        "serena:configuration:modeNames",
+        "serena:configuration:contextNames",
+        "serena:configuration:layers:0",
+        "serena:configuration:layers:1",
+        "serena:configuration:layers:2",
+        "serena:configuration:layers:3",
+        "serena:configuration:layers:4",
+        "serena:configuration:layers:5",
+        "serena:configuration:projectKeys:0",
+        "serena:configuration:projectKeys:1",
+        "serena:configuration:projectKeys:2",
+        "serena:configuration:projectKeys:3",
+        "serena:configuration:projectKeys:4",
+        "serena:configuration:projectKeys:5",
+        "serena:configuration:projectKeys:6",
+        "serena:configuration:projectKeys:7",
+        "serena:configuration:projectKeys:8",
+        "serena:configuration:projectKeys:9",
+        "serena:configuration:projectKeys:10",
+        "serena:configuration:projectKeys:11",
+        "serena:configuration:projectKeys:12",
+        "serena:configuration:projectKeys:13",
+        "serena:configuration:projectKeys:14",
+        "serena:configuration:projectKeys:15",
+        "serena:configuration:projectKeys:16",
+        "serena:configuration:projectKeys:17",
+        "serena:configuration:projectKeys:18",
+        "serena:configuration:projectKeys:19",
+        "serena:configuration:projectKeys:20",
+        "serena:configuration:projectKeys:21",
+        "serena:configuration:projectKeys:22",
+        "serena:configuration:projectKeys:23",
+        "serena:configuration:projectKeys:24",
+        "serena:configuration:modeNames:0",
+        "serena:configuration:modeNames:1",
+        "serena:configuration:modeNames:2",
+        "serena:configuration:modeNames:3",
+        "serena:configuration:modeNames:4",
+        "serena:configuration:modeNames:5",
+        "serena:configuration:modeNames:6",
+        "serena:configuration:modeNames:7",
+        "serena:configuration:modeNames:8",
+        "serena:configuration:contextNames:0",
+        "serena:configuration:contextNames:1",
+        "serena:configuration:contextNames:2",
+        "serena:configuration:contextNames:3",
+        "serena:configuration:contextNames:4",
+        "serena:configuration:contextNames:5",
+        "serena:configuration:contextNames:6",
+        "serena:configuration:contextNames:7",
+        "serena:configuration:contextNames:8",
+        "serena:configuration:contextNames:9",
+        "serena:configuration:contextNames:10",
+        "serena:configuration:contextNames:11",
+        "serena:configuration:contextNames:12",
+        "serena:configuration:contextNames:13",
+        "serena:configuration:contextNames:14",
+        "serena:configuration:contextNames:15"
+      ],
+      "validation": "All 353 original identities and false full-contract certifications plus 77 backend runtime unknowns are retained; bounded Windows development acceptance only."
+    }
+  },
+  "artifacts": [
+    {
+      "path": "ci-symbol-delete-r2.py",
+      "bytes": 2421,
+      "sha256": "5d6a30ad46bb341f07a33fcae98ddfc724317585a6691fffb33b50b8e24d3fc3"
+    },
+    {
+      "path": "ci-symbol-delete-r3-setup.py",
+      "bytes": 1532,
+      "sha256": "64b61e94a259ede667cf985c6c17f61765e7ad70c335d43d99a0d44093e5a6f7"
+    },
+    {
+      "path": "ci-symbol-delete-r3.py",
+      "bytes": 2421,
+      "sha256": "fe261553f51f2134cf1820f321e106f1cc393d79c4e4007510a9ab785dfd092d"
+    },
+    {
+      "path": "ci-symbol-delete-red.py",
+      "bytes": 1751,
+      "sha256": "f2494ec80ec4b66df3882a86916b4539a1ab0b31a7540bc4c3f22308ebe4dc98"
+    },
+    {
+      "path": "development/r2/actual.log",
+      "bytes": 8529,
+      "sha256": "b6bfb15b7dd2ac30f5953b00b59f201a9623f51a7551e6f06784d32a82211d58"
+    },
+    {
+      "path": "development/r2/clippy.log",
+      "bytes": 804,
+      "sha256": "b2524779f0f6664e276fe01b883b2d1c0747274c6eb15151322c15ffdb440700"
+    },
+    {
+      "path": "development/r2/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/r2/native.log",
+      "bytes": 70492,
+      "sha256": "7f65b157d3beae4cfef3efb2b4671d923ab16cebfd6eb33e731ed57b942749e6"
+    },
+    {
+      "path": "development/r2/progress.json",
+      "bytes": 1627,
+      "sha256": "0ac9d2fe35f3af2b985c55af79c29e104795ece1d2af3b05ed49c8c4ca360d38"
+    },
+    {
+      "path": "development/r2/result.json",
+      "bytes": 123633,
+      "sha256": "f9956e9f6af8034b9fca532a6bbb624c6fb0baa29042b024907e8a2eeadd73fd"
+    },
+    {
+      "path": "development/r2/source/native/src/changes_symbol_delete.rs",
+      "bytes": 8759,
+      "sha256": "500e4f157aca3e7460fd59fd90e3ef2c234108ee7b8cfd9e0c52670d4075170d"
+    },
+    {
+      "path": "development/r3/actual.log",
+      "bytes": 8528,
+      "sha256": "4e280882443c5041b98635d805a94692290632c6fca92056f05a58fd226f06dc"
+    },
+    {
+      "path": "development/r3/clippy.log",
+      "bytes": 189,
+      "sha256": "c785d5987a5f1f09609fb695908106afbd0c850f8eacf44579234a7252e36d32"
+    },
+    {
+      "path": "development/r3/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/r3/native.log",
+      "bytes": 70507,
+      "sha256": "c277fc759bf18272cb826de0010a17fa1ac2baf29993b74865f4a7d26872db19"
+    },
+    {
+      "path": "development/r3/progress.json",
+      "bytes": 1626,
+      "sha256": "6cfcfc63082791d385d41534e0d205c9a20733df3f5c57467315c48e9a871ca7"
+    },
+    {
+      "path": "development/r3/result.json",
+      "bytes": 123632,
+      "sha256": "31b18818cffd3c0a70bae8925995aed09a9f826c23d715c21e40bff689964d35"
+    },
+    {
+      "path": "development/r3/source/native/src/changes.rs",
+      "bytes": 30539,
+      "sha256": "69d195d6aba7730599a26c6001d766b6101420d2a9f45cbe91a89083867fefa8"
+    },
+    {
+      "path": "development/r3/source/native/src/changes_symbol_delete.rs",
+      "bytes": 8757,
+      "sha256": "d84c2fae89067204fe4b0d03b02e86293c458b529f5be830c2f0ff0cecb9ffaa"
+    },
+    {
+      "path": "development/r3/source/native/tests/symbol_delete_live.rs",
+      "bytes": 4186,
+      "sha256": "317af0a0f554e0c98825daff845d080c18fc29f8350cc1608798d5a99cf0f816"
+    },
+    {
+      "path": "development/r3/source/native/tests/symbol_delete_ranges.rs",
+      "bytes": 6481,
+      "sha256": "0ff94e10f832e243fa71c00583395a02ee9f593431cc8d5d9df8881e39a8a1fa"
+    },
+    {
+      "path": "development/red-r1/native.log",
+      "bytes": 3852,
+      "sha256": "c7ff6909a6017705d2c906c144b24eae8276fce264bc4065416adb3537a8ed37"
+    },
+    {
+      "path": "development/red-r1/result.json",
+      "bytes": 121753,
+      "sha256": "d64bf862d7d8fdcde6b7e811c6bcf305e9637dc686962a1c016ef7427bf29dfe"
+    },
+    {
+      "path": "development/red-r1/source/native/src/changes.rs",
+      "bytes": 30933,
+      "sha256": "7ab1d0366f3177ffd4a5c2dd67426fc813fdfa1050ab7e5e283f2e3456b986fd"
+    },
+    {
+      "path": "development/red-r1/source/native/tests/symbol_delete_live.rs",
+      "bytes": 3310,
+      "sha256": "b5f48aac5a9ddd98f6bdf9d81be7b84244fe4f1084d4cbd62368e6b3734325b2"
+    },
+    {
+      "path": "frozen-tracker.json",
+      "bytes": 485797,
+      "sha256": "f97cfc727431adf6e4318668e0a4f57e5a36260d40475871a8cbc0717c05b873"
+    },
+    {
+      "path": "integrated/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "integrated/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "71c6f40358ce579d8aafb4609fe13c155f0b20199a21a4d00038231ad40714de"
+    },
+    {
+      "path": "integrated/scoped-source-materialization.json",
+      "bytes": 160769,
+      "sha256": "79566941d26e3c9718decce7e0f9a2c8eb5940ff88351af0f1e5feffe1d8c43d"
+    },
+    {
+      "path": "integrated/source-after.json",
+      "bytes": 70758,
+      "sha256": "d569763c7cff330eaac9daa4ff2c3a36d71ea10cd9615d9e019e5a5882b6e3a0"
+    },
+    {
+      "path": "integrated/source-before.json",
+      "bytes": 70758,
+      "sha256": "d569763c7cff330eaac9daa4ff2c3a36d71ea10cd9615d9e019e5a5882b6e3a0"
+    },
+    {
+      "path": "integrated/summary.json",
+      "bytes": 998,
+      "sha256": "db74f1febd26f5b5f8fd62062458cdef8be219222b3765a8b15895c8f9f797b2"
+    },
+    {
+      "path": "integrated/tests.log",
+      "bytes": 25039,
+      "sha256": "2ec807ac6f6c760f1a9338c916bc168661f8bada45057a3b369e925e109ceda4"
+    },
+    {
+      "path": "integrated/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "preserve-symbol-delete.py",
+      "bytes": 6093,
+      "sha256": "e2b0c9ec6fbe4f7d28bf44a5d8097977067c3b319088f661d7f2e02544372178"
+    },
+    {
+      "path": "run-symbol-delete-integrated.py",
+      "bytes": 3144,
+      "sha256": "ee577832c73d45a307ada749f0674c1380d5e16e5fbbbaf4596cc1dad39de070"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 260201,
+      "sha256": "b547457eecaa9da93ab3d44f9b2f9bc828ff88680358308e7428bd583499d286"
+    },
+    {
+      "path": "tool-versions.json",
+      "bytes": 1019,
+      "sha256": "cc0e351e2ee70ad3af162c36ef7a1c7646d1f8f49e82ce6e539e2efbae6503ac"
+    },
+    {
+      "path": "update-symbol-delete-docs.py",
+      "bytes": 7298,
+      "sha256": "d1b267dcdca7cebc924348420caaf6a2c8f09d2317dd31352eb4c0e1496f5cfa"
+    },
+    {
+      "path": "verify-symbol-delete-staged.py",
+      "bytes": 1322,
+      "sha256": "355de62846eb53e8ae45fcbee65549ae9fe592439c8005b8a558b7ba27f8f84e"
+    }
+  ],
+  "initialToFinalScopedInputChanges": [
+    "native/src/changes_symbol_delete.rs"
+  ],
+  "sourceMaterialization": {
+    "path": "source-materialization.json",
+    "counts": {
+      "raw_equal": 98,
+      "crlf_only_checkout_materialization": 569,
+      "thematic_status_metadata_after_freeze": 1
+    },
+    "inputCount": 668
+  },
+  "metadataAfterFreeze": {
+    "path": "docs/parity/native-reconciliation-2026-10-15.json",
+    "beforeSha256": "f97cfc727431adf6e4318668e0a4f57e5a36260d40475871a8cbc0717c05b873",
+    "afterSha256": "7f9b3e1b58c9ef6fcaa01a23970ed2e99f68e84ca73f7d84d2bc4a51318f62a8",
+    "scope": "Thematic R1 status/evidence only; original inventoryLedger, historicalInventory and ledgerSummary preserved."
+  }
+}

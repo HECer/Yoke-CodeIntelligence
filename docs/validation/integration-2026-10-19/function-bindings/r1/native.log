@@ -1,0 +1,53 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 18s
+     Running tests\propagated_delete_contract.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\propagated_delete_contract-e5e3858a7938ce91.exe)
+
+running 30 tests
+test actual_owned_byte_verification_permission_approval_stale_and_recovery_gates_remain ... ok
+test argument_dependencies_become_unused_without_sweeping_unrelated_unused_functions ... ok
+test bom_and_utf16_provider_positions_preserve_multibyte_bytes_before_the_removed_call ... ok
+test captured_byte_quota_counts_physical_duplicate_cas_members ... ok
+test captured_file_quota_admits2000_and_refuses2001_before_provider_start ... ok
+test declaration_quota_admits_sixteen_and_refuses_seventeen_before_provider_start ... ok
+test duplicate_provider_observations_and_nested_target_calls_emit_one_physical_statement_edit ... ok
+test exported_and_captured_external_dependencies_keep_their_own_dependencies ... ok
+test facade_propagation_preserves_both_epochs_force_flags_and_original_byte_anchors ... ok
+test function_binding_policy_removes_function_values_with_exact_original_entities ... ok
+test missing_edit_or_provider_authority_and_invalid_selectors_refuse_before_provider_start ... ok
+test missing_empty_omitted_truncated_foreign_and_malformed_proofs_do_not_publish ... ok
+test private_cycles_are_pruned_together_and_surviving_consumers_keep_the_cycle ... ok
+test reported_non_reference_tokens_cannot_seed_deletion_of_an_unrelated_unused_function ... ok
+test selected_module_byte_quota_is_exact_and_checked_before_provider_start ... ok
+test source_changes_during_provider_work_are_preserved_and_refused_before_publication ... ok
+test stalled_provider_cannot_publish_after_the_original_deadline ... ok
+test unreported_identifier_and_literal_target_candidates_cannot_be_disguised_as_no_uses ... ok
+test unsupported_module_shapes_refuse_before_provider_start ... ok
+test usage_statement_quota_admits128_and_refuses129_without_publication ... ok
+test value_return_constructor_and_other_expression_consumers_refuse_without_a_plan ... ok
+test wrapped_policy_bounds_combined_surviving_ast_work_before_publishing ... ok
+test wrapped_policy_bounds_wrapper_depth_without_clipping_the_whole_usage ... ok
+test wrapped_policy_deduplicates_nested_calls_and_keeps_surviving_dependencies ... ok
+test wrapped_policy_is_opt_in_and_explicit_v1_keeps_the_original_effects ... ok
+test wrapped_policy_preserves_surviving_statement_boundaries ... ok
+test wrapped_policy_refuses_value_consumers_optional_calls_and_unowned_statement_slots ... ok
+test wrapped_policy_rejects_invalid_native_selectors_before_starting_a_provider ... ok
+test wrapped_policy_removes_only_complete_parenthesized_await_and_void_statements ... ok
+test wrapped_policy_requires_the_same_complete_bound_provider_proofs ... ok
+
+test result: ok. 30 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 102.94s
+
+     Running tests\sibling_declarators.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\sibling_declarators-b65363f7d2ffa240.exe)
+
+running 9 tests
+test actual_typescript_compiles_preserved_ts_js_tsx_jsx_siblings_then_recovers_exact_source ... ignored, requires YOKE_NODE and YOKE_TSC selecting actual Node/TypeScript compiler
+test ambiguous_comment_attachments_loop_bindings_and_named_expressions_refuse_without_publication ... ok
+test closed_policy_types_and_combinations_fail_before_implicit_capture ... ok
+test default_and_explicit_reject_keep_the_original_multi_declaration_refusal ... ok
+test first_middle_and_last_declarators_keep_all_unrelated_bytes ... ok
+test forged_paths_names_kinds_offsets_and_deadline_cannot_select_another_declaration ... ok
+test native_mcp_advertises_and_prepares_the_same_checked_pair_of_byte_edits ... ok
+test nested_commas_and_owned_initializer_comments_are_not_separators ... ok
+test sibling_policy_is_language_scoped_and_cannot_grant_application ... ok
+
+test result: ok. 8 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 3.79s
+

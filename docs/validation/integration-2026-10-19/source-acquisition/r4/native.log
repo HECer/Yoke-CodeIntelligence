@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 3.32s
+     Running tests\source_acquisition_http.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\source_acquisition_http-764f2dd641f5f707.exe)
+
+running 1 test
+test tls_uses_explicit_roots_hostname_verification_and_literal_address_override_without_dns ... FAILED
+
+failures:
+
+---- tls_uses_explicit_roots_hostname_verification_and_literal_address_override_without_dns stdout ----
+
+thread 'tls_uses_explicit_roots_hostname_verification_and_literal_address_override_without_dns' (17840) panicked at native\tests\source_acquisition_http.rs:181:9:
+owned capture=source_acquisition_transport_failed; requestBytes=0; direct=Err(reqwest::Error { kind: Request, url: "https://fixture.invalid:61404/fixture.txt", source: hyper_util::client::legacy::Error(SendRequest, hyper::Error(Io, Os { code: 10053, kind: ConnectionAborted, message: "Eine bestehende Verbindung wurde softwaregesteuert\r\ndurch den Hostcomputer abgebrochen." })) })
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    tls_uses_explicit_roots_hostname_verification_and_literal_address_override_without_dns
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `--test source_acquisition_http`

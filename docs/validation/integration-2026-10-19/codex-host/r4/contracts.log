@@ -1,0 +1,103 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 18s
+     Running tests\codex_host_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\codex_host_cli-30e493c532153888.exe)
+
+running 3 tests
+test branded_write_grants_and_foreign_source_flags_refuse_before_state_or_configuration ... ok
+test closed_adapter_selection_refuses_unknown_profile_extra_grants_and_duplicate_roots ... ok
+test lost_stdout_retains_codex_receipt_identity_and_installed_configuration ... FAILED
+
+failures:
+
+---- lost_stdout_retains_codex_receipt_identity_and_installed_configuration stdout ----
+
+thread 'lost_stdout_retains_codex_receipt_identity_and_installed_configuration' (3604) panicked at native\tests\codex_host_cli.rs:167:5:
+assertion failed: status.contains(plan["id"].as_str().unwrap()) && status.contains("installed")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    lost_stdout_retains_codex_receipt_identity_and_installed_configuration
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.64s
+
+error: test failed, to rerun pass `--test codex_host_cli`
+     Running tests\host_config.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\host_config-6f5b88c83ad58897.exe)
+
+running 22 tests
+test agents_and_patch_work_are_bounded_before_output ... ok
+test agents_empty_existing_file_round_trips_without_phantom_bytes ... ok
+test agents_install_update_remove_preserve_bom_unicode_and_crlf_bytes ... ok
+test agents_marker_presence_never_grants_ownership ... ok
+test agents_reject_changed_receipts_owned_bytes_duplicate_and_nested_markers ... ok
+test agents_removal_preserves_later_human_prefix_and_append ... ok
+test jsonc_accepts_only_json_whitespace_outside_comments_and_strings ... ok
+test jsonc_decoded_duplicate_keys_unowned_entries_and_ambiguous_parents_fail ... ok
+test jsonc_empty_and_trailing_comma_parents_restore_original_punctuation ... ok
+test jsonc_human_append_is_preserved_or_rejected_when_unrecorded_punctuation_would_be_removed ... ok
+test jsonc_named_entry_preserves_comments_bom_crlf_and_literal_unowned_bytes ... ok
+test jsonc_oversized_receipt_selector_is_rejected_before_unbounded_decoding ... ok
+test patch_application_checks_entire_input_fragments_ranges_and_output_hash ... ok
+test receipts_are_strict_serialized_data_and_do_not_include_human_prefix ... ok
+test serialized_empty_owned_fragment_returns_error_instead_of_panicking ... ok
+test structured_formats_reject_stale_selectors_body_capacity_and_deadlines ... ok
+test toml_inverse_preserves_an_existing_appendix_newline_and_updates_retain_the_owned_separator ... ok
+test toml_inverse_refuses_to_join_an_unterminated_human_comment_with_a_later_table_header ... ok
+test toml_managed_table_preserves_human_comments_and_round_trips_crlf ... ok
+test toml_quoted_aliases_dotted_conflicts_and_body_headers_fail_without_claiming_ownership ... ok
+test toml_scanner_ignores_fake_headers_in_multiline_strings_and_arrays_with_quote_runs ... ok
+test toml_table_removal_never_reparents_later_human_keys ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\host_install.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\host_install-1d5236e1b87b43a0.exe)
+
+running 9 tests
+test dry_run_is_deterministic_and_creates_no_source_engine_or_host_state ... ok
+test every_target_and_host_binding_is_checked_before_first_write ... ok
+test install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence ... ok
+test internal_volume_guid_binding_launches_the_real_binary_and_is_not_a_user_path_grant ... ok
+test private_state_never_contains_unrelated_human_config_or_policy_contents ... ok
+test receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths ... ok
+test state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed ... ok
+test uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block ... ok
+test windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_change ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.64s
+
+     Running tests\host_install_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\host_install_cli-f67168e47a3f8f73.exe)
+
+running 11 tests
+test host_install_cli_initialization_admits_a_valid_output_budget_before_writing_state ... ok
+test host_install_cli_initialization_output_failure_identifies_its_durable_result ... ok
+test host_install_cli_initialization_permission_precedes_selection_and_plan_reads ... ok
+test host_install_cli_initialization_refuses_foreign_scaffold_bytes_without_disclosing_them ... ok
+test host_install_cli_initialization_repairs_an_owned_scaffold_and_replays_without_source_changes ... ok
+test host_install_cli_installs_and_uninstalls_only_its_owned_fragment ... ok
+test host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried ... ok
+test host_install_cli_planning_and_status_are_pure_and_keep_human_text_private ... ok
+test host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation ... ok
+test host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write ... ok
+test host_install_cli_write_permission_precedes_selection_or_plan_reads ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.51s
+
+     Running tests\host_output_disposition.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\host_output_disposition-20f37d66909de6cd.exe)
+
+running 11 tests
+test armed_empty_output_is_deleted_after_real_process_exit ... ok
+test armed_empty_output_is_deleted_after_real_process_kill ... ok
+test disarmed_output_can_be_explicitly_deleted_by_extended_delete_on_the_same_handle ... ok
+test disarmed_output_can_be_explicitly_deleted_by_legacy_boolean_on_the_same_handle ... ok
+test disposition_probe_worker ... ignored, spawned only by owned-temp disposition capability tests
+test extended_zero_flags_are_characterized_after_exit_and_kill ... ok
+test legacy_false_does_not_disarm_creation_time_delete_on_close ... ok
+test required_same_handle_disarm_preserves_subsequent_bytes_after_real_process_exit ... ok
+test required_same_handle_disarm_preserves_subsequent_bytes_after_real_process_kill ... ok
+test required_same_handle_disarm_survives_real_process_exit ... ok
+test required_same_handle_disarm_survives_real_process_kill ... ok
+
+test result: ok. 10 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.21s
+
+error: 1 target failed:
+    `--test codex_host_cli`

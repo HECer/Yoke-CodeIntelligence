@@ -1,0 +1,50 @@
+{
+  "actualServer": "Neo4j Community2026.09.0",
+  "nativeCliTransport": true,
+  "fixedSchemaAndNamespaceBootstrap": true,
+  "separateSchemaPermissionEnforced": true,
+  "existingSnapshotUsed": true,
+  "osCredentialBindingUsed": true,
+  "sameJournalConfirmedOperationNotResent": true,
+  "lostStdoutConfirmedJournalRetained": true,
+  "responseLostAfterActualCommitLeavesPending": true,
+  "pendingApplyBlockedWithoutRequest": true,
+  "recoveryOnlyReadsAndNoWriteReplay": true,
+  "direct": {
+    "scopeKey": "96a8748fdc48925b769516947d35059a5f26631d2d36607acc9488de86f3ac2e",
+    "planId": "10456d18b914d245d3218d978201c5e9891d5463fbb584b80d6a2d9b8275d9f3",
+    "revisionId": "9cc145b06ad2a132222e5ff6fcba51603bd075cbfa4f2c28c2312a7ce232dc85",
+    "completedOperations": 1
+  },
+  "recovered": {
+    "scopeKey": "4cb909c6e60afe840787b940d8bf5c95c0a4b68d4051e7fd1ef87d78ab10c6c3",
+    "planId": "9f9ecfef38cfbca8dbdbc2337b23695d79fe412a5d86dd9a968a806e1702aea0",
+    "revisionId": "424fab81463d80aa46feb75fa2f6a58cbe56e80bef0681204163cf7f83414431",
+    "completedOperations": 1
+  },
+  "nativeBinarySha256": "370b7fbbb0d6ea68e55661115e220a748cafc535469ab8581c71263d5f5d3042",
+  "fleetDiscoveryConfiguredDisabled": true,
+  "ownedPid": 27628,
+  "listenerPidVerified": true,
+  "java": "JBR25.0.3",
+  "vendorJvmQualificationClaimed": false,
+  "nativeTlsTested": true,
+  "allOriginalEntityEvidenceObservationJsonExact": true,
+  "parallelDirectionsAndUnresolvedTargetsExact": true,
+  "forcedTwoNativeUpdatesExactlyOneCommitted": true,
+  "losingTransactionCreatedNoRowsAndCounterUnchanged": true,
+  "historicalRecoveryAfterLaterActiveRevision": true,
+  "actualCountConflictRolledBackAndReadRecoveryRefusedUntilRestored": true,
+  "wrongExistingSchemaRefusedWithoutRepair": true,
+  "nativeTlsWrongHostnameRefused": true,
+  "nativeTlsWrongStaticRootRefused": true,
+  "unicodePasswordViaPrivateStdin": true,
+  "tls": {
+    "scopeKey": "5c3816abda0393922d37e3c07f3e2bebf4f576464e159a275d232bc2b53ad363",
+    "planId": "f6c8adcb2fcb485cd24327b968194b8a803427e250625d184ab6108d8be1101b",
+    "revisionId": "7003b5845ace1e3ad162f3821febce495a2bf5d2af6243847450081ac68fe615",
+    "completedOperations": 1
+  },
+  "ownedCredentialsRemoved": 5,
+  "ownedServerStopped": true
+}

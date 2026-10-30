@@ -1,0 +1,28 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native)
+    Finished `test` profile [unoptimized] target(s) in 7.49s
+     Running tests\git_impact_details_cli.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\git_impact_details_cli-469a41b44fa7fa24.exe)
+
+running 1 test
+test public_impact_details_cli_returns_complete_canonical_library_result_and_literal_sources ... FAILED
+
+failures:
+
+---- public_impact_details_cli_returns_complete_canonical_library_result_and_literal_sources stdout ----
+
+thread 'public_impact_details_cli_returns_complete_canonical_library_result_and_literal_sources' (93252) panicked at native\tests\git_impact_details_cli.rs:104:5:
+error: invalid value 'impact-details' for '<KIND>'
+  [possible values: report, history, file]
+
+For more information, try '--help'.
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    public_impact_details_cli_returns_complete_canonical_library_result_and_literal_sources
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 12 filtered out; finished in 5.04s
+
+error: test failed, to rerun pass `--test git_impact_details_cli`
+error: 1 target failed:
+    `--test git_impact_details_cli`

@@ -1,0 +1,90 @@
+warning: fields `plan_id`, `journal_id`, `root_index`, and `attempt` are never read
+   --> native\src\host_install.rs:624:5
+    |
+623 | pub(super) struct DurableOutputRegistration {
+    |                   ------------------------- fields in this struct
+624 |     plan_id: String,
+    |     ^^^^^^^
+625 |     journal_id: String,
+    |     ^^^^^^^^^^
+626 |     root_index: usize,
+    |     ^^^^^^^^^^
+627 |     attempt: u8,
+    |     ^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `path`, `identity`, `after_hash`, `security_hash`, and `matches` are never used
+   --> native\src\host_install.rs:634:19
+    |
+633 | impl DurableOutputRegistration {
+    | ------------------------------ methods in this implementation
+634 |     pub(super) fn path(&self) -> &Path {
+    |                   ^^^^
+...
+637 |     pub(super) fn identity(&self) -> &str {
+    |                   ^^^^^^^^
+...
+640 |     pub(super) fn after_hash(&self) -> &str {
+    |                   ^^^^^^^^^^
+...
+643 |     pub(super) fn security_hash(&self) -> &str {
+    |                   ^^^^^^^^^^^^^
+...
+646 |     pub(super) fn matches(&self, path: &Path, id: &str) -> bool {
+    |                   ^^^^^^^
+
+warning: field `after_hash` is never read
+  --> native\src\host_install_io.rs:47:5
+   |
+45 | pub(super) struct RegisteredOutput {
+   |                   ---------------- field in this struct
+46 |     file: HeldFile,
+47 |     after_hash: String,
+   |     ^^^^^^^^^^
+
+warning: field `model_key` is never read
+    --> native\src\meaning_build.rs:1531:9
+     |
+1521 | pub(crate) struct CheckedPublishedGraph {
+     |                   --------------------- field in this struct
+...
+1531 |     pub model_key: String,
+     |         ^^^^^^^^^
+     |
+     = note: `CheckedPublishedGraph` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: field `source_scopes` is never read
+    --> native\src\meaning_build.rs:1539:9
+     |
+1536 | pub(crate) struct CheckedPublishedSet {
+     |                   ------------------- field in this struct
+...
+1539 |     pub source_scopes: Vec<MeaningSourceScope>,
+     |         ^^^^^^^^^^^^^
+
+warning: method `source_scopes` is never used
+    --> native\src\meaning_build.rs:1552:19
+     |
+1545 | impl CheckedPublishedSet {
+     | ------------------------ method in this implementation
+...
+1552 |     pub(crate) fn source_scopes(&self) -> &[MeaningSourceScope] {
+     |                   ^^^^^^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib test) generated 6 warnings
+    Finished `test` profile [unoptimized] target(s) in 1.09s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 1 test
+Error: Strict v2 rollback admitted an output identity absent from every allocation attempt
+test host_install::output_recovery_tests::strict_v2_rollback_rejects_an_output_identity_that_was_never_registered ... FAILED
+
+failures:
+
+failures:
+    host_install::output_recovery_tests::strict_v2_rollback_rejects_an_output_identity_that_was_never_registered
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 142 filtered out; finished in 0.26s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --lib`

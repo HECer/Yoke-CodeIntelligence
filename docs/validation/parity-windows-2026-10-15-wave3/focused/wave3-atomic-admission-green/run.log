@@ -1,0 +1,88 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 16s
+     Running tests\derived_graph_mixed_budget.rs (target\debug\deps\derived_graph_mixed_budget-ac1f60fdd7a1b900.exe)
+
+running 1 test
+test valid_meaning_plus_default_structural_budget_failure_publishes_no_records_or_cas has been running for over 60 seconds
+test valid_meaning_plus_default_structural_budget_failure_publishes_no_records_or_cas ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 104.72s
+
+     Running tests\derived_graph_preparation.rs (target\debug\deps\derived_graph_preparation-f4e273a0e37b1f12.exe)
+
+running 7 tests
+test manifest_preparation_keeps_authentic_v8_v9_released_bytes_without_publication ... ok
+test config_preparation_keeps_authentic_v8_v9_released_bytes_without_publication ... ok
+test foreign_connection_is_refused_before_any_cas_or_record_write ... ok
+test conflicting_existing_derived_rows_refuse_before_cas_in_caller_and_standalone_publication ... ok
+test rolling_back_caller_transaction_removes_all_three_graph_registrations ... ok
+test three_prepared_graphs_publish_in_one_caller_transaction_without_nested_transactions ... ok
+test markdown_preparation_keeps_authentic_v8_v9_released_bytes_without_publication ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.98s
+
+     Running tests\graph_view.rs (target\debug\deps\graph_view-97c800a70b6f82cc.exe)
+
+running 11 tests
+test default_view_exposes_structural_relationships_without_replacing_canonical_graph ... ok
+test newly_derived_view_omits_legacy_config_file_signature_values_without_rewriting_history ... ok
+test context_omits_environment_values_and_clips_unicode_at_byte_budget ... ok
+test captured_readonly_dependency_proof_allows_view_and_collection_reads ... ok
+test registered_view_rejects_corrupt_cas_and_foreign_overlay_scope ... ok
+test selected_structural_artifacts_reject_forged_node_scope_lines_and_schema ... ok
+test semantic_and_structural_overlays_have_distinct_namespaces_and_provider_trust ... ok
+test source_view_remains_historical_and_rejects_forged_scope_options_and_deadlines ... ok
+test view_find_trace_context_and_export_preserve_source_and_parallel_calls ... ok
+test source_bound_view_exports_all_seven_formats ... ok
+test selected_overlay_inputs_have_an_aggregate_byte_budget ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.76s
+
+     Running tests\meaning_graph_views.rs (target\debug\deps\meaning_graph_views-6f736190f27f413b.exe)
+
+running 13 tests
+test conflicting_view_registration_is_refused_before_any_prepared_or_view_cas_write ... ok
+test invalid_meaning_selection_is_admitted_before_default_structural_artifact_publication ... ok
+test explicit_meaning_view_finds_alias_candidates_and_source_without_merging_claims ... ok
+test inferred_support_and_hyperedge_roles_never_become_directed_or_exact_bindings ... ok
+test every_untyped_graphify_tool_and_resource_refuses_a_genuine_meaning_view_without_side_effects ... ok
+test later_semantic_selection_failure_leaves_prepared_defaults_unpublished ... ok
+test meaning_read_and_context_return_historic_quote_citations_without_declaration_anchors ... ok
+test meaning_trace_preserves_direction_and_ordered_hyperedge_incidence_without_a_clique ... ok
+test multi_file_relation_and_hyperedge_reads_preserve_all_citations_and_shared_context_budget ... ok
+test unselected_views_keep_the_released_schema_identity_and_artifact_bytes ... ok
+test published_view_queries_and_archived_meaning_keep_identity_after_later_ledger_changes ... ok
+test two_published_meaning_graphs_keep_equal_local_claims_in_separate_namespaces ... ok
+test source_only_projection_consumers_refuse_meaning_before_report_or_archive_publication ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.36s
+
+     Running tests\selected_view_analysis.rs (target\debug\deps\selected_view_analysis-4bdd1f0c8eb0e5b6.exe)
+
+running 11 tests
+test canonical_report_bytes_and_registration_match_frozen_golden ... ok
+test existing_graphify_hubs_include_parallel_citations_and_count_self_loops_twice ... ok
+test existing_graphify_hubs_preserve_file_level_manifest_source_precision ... ok
+test existing_graphify_community_tools_assign_default_view_overlay_nodes ... ok
+test selected_report_keeps_multiple_source_bindings_without_choosing_a_fabricated_exact_anchor ... ok
+test explicit_selected_analysis_and_resources_replay_historic_views_and_reject_unsupported_scope ... ok
+test selected_report_preparation_validation_and_admission_have_no_publication_side_effects ... ok
+test selected_report_publication_rechecks_cas_after_preparation ... ok
+test selected_report_preserves_provider_claims_and_every_original_anchor_family ... ok
+test selected_report_retention_replays_exact_bytes_and_rejects_scope_and_cas_tampering ... ok
+test selected_report_resource_admission_precedes_publication_of_a_large_formatted_body ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.26s
+
+     Running tests\selected_view_review.rs (target\debug\deps\selected_view_review-c84228a655575662.exe)
+
+running 6 tests
+test selected_context_reports_wholly_omitted_source_when_budget_is_exhausted ... ok
+test selected_queries_reject_same_length_view_cas_corruption ... ok
+test selected_library_queries_reject_mutated_in_memory_views ... ok
+test selected_queries_reject_replaced_base_graph_without_republishing ... ok
+test selected_queries_replay_exact_source_after_files_disappear_and_engine_reopens ... ok
+test selected_trace_visit_budget_includes_initial_entities ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.78s
+

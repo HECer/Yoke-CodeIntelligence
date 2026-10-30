@@ -1,0 +1,14 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.32s
+     Running tests\ledger.rs (target\debug\deps\ledger-dcddb849694983a4.exe)
+concurrent_reservations_cannot_overspend: test
+reported_cost_above_reservation_stays_charged_and_blocks_task: test
+reservations_survive_reopen_and_refuse_overspend: test
+unknown_billing_retains_reservation_and_only_unsent_attempts_cancel: test
+usage_is_monotone_deduplicated_and_policy_is_immutable: test
+
+5 tests, 0 benchmarks
+     Running tests\ledger_admission_review.rs (target\debug\deps\ledger_admission_review-8a6bcc31976b0106.exe)
+oversized_accounting_cells_are_rejected_before_rust_materialization_and_restore_sql_limit: test
+
+1 test, 0 benchmarks

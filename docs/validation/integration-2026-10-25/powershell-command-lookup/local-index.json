@@ -1,0 +1,50 @@
+{
+  "source-before.json": {
+    "bytes": 167250,
+    "sha256": "2e61a9a17239682eb7700f5638c1efa8937a46187a6d847d3a3131a5b6933501"
+  },
+  "source-after.json": {
+    "bytes": 167250,
+    "sha256": "2e61a9a17239682eb7700f5638c1efa8937a46187a6d847d3a3131a5b6933501"
+  },
+  "typecheck.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "typecheck.stderr": {
+    "bytes": 101,
+    "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+  },
+  "npm-test.stdout": {
+    "bytes": 24837,
+    "sha256": "b95481e010b5f7008d593312cb48fba96b949b379f88a0db32983bbd60d582d0"
+  },
+  "npm-test.stderr": {
+    "bytes": 198,
+    "sha256": "bbc4d35239676184ccfbb9082fb652fdb8bad4d05b7ab394fdda5154eec6e27b"
+  },
+  "python.stdout": {
+    "bytes": 912,
+    "sha256": "f46aeea09fce7d31c92b0e02fd455559d1c319485229e9d053a9dbd8115b741c"
+  },
+  "python.stderr": {
+    "bytes": 28054,
+    "sha256": "5eae08933ac4fb566196981221c99b8a781a88f8df8fc1a54b7eda3db6965ce0"
+  },
+  "actionlint.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "actionlint.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "local-command-probe.stdout": {
+    "bytes": 199,
+    "sha256": "0f186f2e1d949c9ca66dfc417788f31a676077bbf46dfb77c2b7e958f42621d9"
+  },
+  "local-command-probe.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

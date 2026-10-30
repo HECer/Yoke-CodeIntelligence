@@ -1,0 +1,32 @@
+{
+  "revision": "42b94aca25fc5ba7f2760061ab53b5ae2a714aa8",
+  "sourceFiles": 1099,
+  "rawMatches": 45,
+  "lfToCrlfOnlyMatches": 1054,
+  "browserFailureStage": "browser-pending",
+  "owningSessionVariantsPassed": 3,
+  "originalOperationsAndAssertionsPreserved": true,
+  "dashboardOriginalHarnessAndWorkflowUnchanged": true,
+  "beforeVisuals": [
+    {
+      "viewport": "desktop",
+      "width": 1440,
+      "height": 1612,
+      "sha256": "15002e5447e112789e887138f74e2f4d7159244eb4802dff5ff852cc5e64fdc7",
+      "bytes": 92556,
+      "visuallyInspected": true,
+      "scope": "before-review only"
+    },
+    {
+      "viewport": "mobile",
+      "width": 390,
+      "height": 2110,
+      "sha256": "95fb78ed52213219d3f2999b0b35681e4069243c7e74cdf4ad45a44f7bef3c41",
+      "bytes": 80941,
+      "visuallyInspected": true,
+      "scope": "before-review only"
+    }
+  ],
+  "nativeImagePayloadReadOrExecuted": false,
+  "fullBrowserAcceptance": false
+}

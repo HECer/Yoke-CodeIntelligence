@@ -1,0 +1,91 @@
+{
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "complete": true,
+  "nativeSha256": "6faab17d5f9568007e63a37bf0c93b8e6756e05fd06d49d7b52c3dfa69daad29",
+  "variants": [
+    {
+      "variant": "native",
+      "complete": true,
+      "packages": 2,
+      "originalRecords": 42,
+      "allOriginalsReadBack": true,
+      "oldAndCurrentAuthorityRefusedDuringPending": true,
+      "configurationAndOwnerExactDuringArchival": true,
+      "freshSameHostSaveAfterArchival": true,
+      "actualJournalCurrentGeneration": true,
+      "bothArchiveFramesRemainExact": true,
+      "persistent45Retained": false,
+      "runtimeExitBeforeJobCleanup": false,
+      "currentExit": {
+        "nativeExitCode": 0,
+        "stdinWasStillOpen": true,
+        "beforeJobCleanup": true
+      },
+      "oldExit": {
+        "nativeExitCode": 0,
+        "stdinWasStillOpen": true,
+        "beforeJobCleanup": true
+      },
+      "analyzedSourceUnchanged": true
+    },
+    {
+      "variant": "serena",
+      "complete": true,
+      "packages": 2,
+      "originalRecords": 42,
+      "allOriginalsReadBack": true,
+      "oldAndCurrentAuthorityRefusedDuringPending": true,
+      "configurationAndOwnerExactDuringArchival": true,
+      "freshSameHostSaveAfterArchival": true,
+      "actualJournalCurrentGeneration": true,
+      "bothArchiveFramesRemainExact": true,
+      "persistent45Retained": false,
+      "runtimeExitBeforeJobCleanup": false,
+      "currentExit": {
+        "nativeExitCode": 0,
+        "stdinWasStillOpen": true,
+        "beforeJobCleanup": true
+      },
+      "oldExit": {
+        "nativeExitCode": 0,
+        "stdinWasStillOpen": true,
+        "beforeJobCleanup": true
+      },
+      "analyzedSourceUnchanged": true
+    },
+    {
+      "variant": "persistent-python",
+      "complete": true,
+      "packages": 2,
+      "originalRecords": 42,
+      "allOriginalsReadBack": true,
+      "oldAndCurrentAuthorityRefusedDuringPending": true,
+      "configurationAndOwnerExactDuringArchival": true,
+      "freshSameHostSaveAfterArchival": true,
+      "actualJournalCurrentGeneration": true,
+      "bothArchiveFramesRemainExact": true,
+      "persistent45Retained": true,
+      "runtimeExitBeforeJobCleanup": true,
+      "currentExit": {
+        "nativeExitCode": 0,
+        "stdinWasStillOpen": true,
+        "beforeJobCleanup": true
+      },
+      "oldExit": {
+        "nativeExitCode": 0,
+        "stdinWasStillOpen": true,
+        "beforeJobCleanup": true
+      },
+      "analyzedSourceUnchanged": true
+    }
+  ],
+  "workerJobAdmission": {
+    "specificJobMembershipConfirmed": true,
+    "queryHandleClosedBeforeNativeRead": true
+  },
+  "modelCalls": 0,
+  "analyzedSourceExecuted": false,
+  "existingCredentialsSelected": false,
+  "nativeBrowserAcceptanceClaimed": false
+}

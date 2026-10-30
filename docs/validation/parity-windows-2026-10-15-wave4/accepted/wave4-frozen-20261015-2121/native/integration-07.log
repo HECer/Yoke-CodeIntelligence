@@ -1,0 +1,18 @@
+    Finished `test` profile [unoptimized] target(s) in 0.84s
+     Running tests\artifacts.rs (target\debug\deps\artifacts-adcf4496e341070d.exe)
+
+running 4 tests
+test published_response_artifacts_remain_roots_during_explicit_maintenance ... ok
+test binary_artifacts_page_with_explicit_base64_without_loss_or_budget_overflow ... ok
+test cas_artifact_pages_cannot_claim_an_unrelated_snapshot ... ok
+test foreign_source_and_unpublished_blobs_cannot_bypass_explicit_read_grants ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.43s
+
+     Running tests\blob_bounds.rs (target\debug\deps\blob_bounds-26361ac4fc7198b8.exe)
+
+running 1 test
+test corrupted_tiny_cas_objects_are_rejected_before_large_allocation_on_write_and_artifact_read ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+

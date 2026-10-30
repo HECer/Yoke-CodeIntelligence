@@ -1,0 +1,36 @@
+npm notice run @hecer/code-intelligence@0.3.0 bench
+npm notice run npm run build && node benchmarks/run.mjs
+npm notice run @hecer/code-intelligence@0.3.0 build
+npm notice run tsc -p tsconfig.json
+{
+  "version": "0.3.0",
+  "measuredAt": "2026-10-18T22:20:57.424Z",
+  "kind": "local_microbenchmark",
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD Ryzen 5 3600 6-Core Processor              "
+  },
+  "fixture": {
+    "files": 101,
+    "typeScriptModules": 100,
+    "queries": 60
+  },
+  "results": {
+    "coldIndexMs": 1642.76,
+    "warmExplicitSnapshotP50Ms": 1.14,
+    "warmExplicitSnapshotP95Ms": 2.02,
+    "meanEnvelopeBytes": 8057,
+    "exactNameHits": 60,
+    "entities": 502,
+    "observations": 801,
+    "rssBytes": 242196480,
+    "modelCalls": 0
+  },
+  "limitations": [
+    "Warm queries reuse an explicit immutable snapshot; a fresh disk capture still reads source bytes.",
+    "No agent reasoning, API token billing, independent patch tasks or upstream systems were benchmarked.",
+    "A small synthetic fixture on this host is not a production latency guarantee."
+  ]
+}

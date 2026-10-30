@@ -1,0 +1,86 @@
+{
+  "sourceCommit": "f552be5f30615402dd73a622d03542d712769839",
+  "runtimeCommit": "d5fad122117fef21328d1b143d6c4ebe62248c8b",
+  "parentCommit": "f26f6b7e03d5bd011353cbeeb5203c9121da8c70",
+  "paths": [
+    "Cargo.lock",
+    "native/Cargo.toml",
+    "native/docs/source-acquisition.md",
+    "native/src/lib.rs",
+    "native/src/main.rs",
+    "native/src/source_acquisition.rs",
+    "native/src/source_acquisition_cli.rs",
+    "native/src/source_acquisition_http.rs",
+    "native/tests/source_acquisition.rs",
+    "native/tests/source_acquisition_cli.rs",
+    "native/tests/source_acquisition_http.rs"
+  ],
+  "nativeGroups": [
+    [
+      433,
+      0,
+      7
+    ],
+    [
+      16,
+      0,
+      0
+    ],
+    [
+      12,
+      1,
+      0
+    ],
+    [
+      16,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      1
+    ],
+    [
+      3,
+      0,
+      0
+    ],
+    [
+      8,
+      0,
+      0
+    ],
+    [
+      4,
+      0,
+      0
+    ],
+    [
+      7,
+      0,
+      0
+    ],
+    [
+      5,
+      0,
+      0
+    ],
+    [
+      4,
+      0,
+      0
+    ],
+    [
+      5,
+      0,
+      0
+    ]
+  ],
+  "nativeTotals": {
+    "passed": 516,
+    "failed": 1,
+    "ignored": 8
+  },
+  "wholeNativeRerun": false
+}

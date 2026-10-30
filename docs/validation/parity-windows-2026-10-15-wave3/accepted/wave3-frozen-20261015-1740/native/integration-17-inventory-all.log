@@ -1,0 +1,42 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 7.03s
+     Running tests\ledger.rs (target\debug\deps\ledger-dcddb849694983a4.exe)
+concurrent_reservations_cannot_overspend: test
+reported_cost_above_reservation_stays_charged_and_blocks_task: test
+reservations_survive_reopen_and_refuse_overspend: test
+unknown_billing_retains_reservation_and_only_unsent_attempts_cancel: test
+usage_is_monotone_deduplicated_and_policy_is_immutable: test
+
+5 tests, 0 benchmarks
+     Running tests\ledger_admission_review.rs (target\debug\deps\ledger_admission_review-8a6bcc31976b0106.exe)
+oversized_accounting_cells_are_rejected_before_rust_materialization_and_restore_sql_limit: test
+
+1 test, 0 benchmarks
+     Running tests\ledger_batches.rs (target\debug\deps\ledger_batches-f3f296587db86e74.exe)
+a_late_sqlite_insert_failure_rolls_back_every_batch_reservation_and_task: test
+batch_admission_is_atomic_and_preserves_individual_unknown_billing: test
+batch_status_can_be_validated_inside_the_existing_retention_transaction: test
+competing_whole_batches_cannot_spend_partial_or_overlapping_budgets: test
+first_overrun_blocks_a_previously_reserved_later_send_without_releasing_sent_cost: test
+reservation_tokens_are_workspace_bound_and_cannot_send_an_already_sent_attempt: test
+
+6 tests, 0 benchmarks
+     Running tests\ledger_batches_review.rs (target\debug\deps\ledger_batches_review-e3f6d3e72c9aa0b7.exe)
+late_batch_insert_failure_preserves_an_existing_task_and_all_old_reservations: test
+original_response_usage_stays_distinct_from_later_maxima_and_reconciled_cost: test
+sealed_reservation_rejects_changed_durable_bindings_without_ledger_side_effects: test
+
+3 tests, 0 benchmarks
+     Running tests\live.rs (target\debug\deps\live-d84dde654b404e7d.exe)
+actual_python_server_cross_file_unicode_historical_navigation_and_rename: test
+actual_rust_analyzer_definition_references_and_rename: test
+actual_rust_analyzer_mcp_references_bind_immutable_snapshot: test
+actual_typescript_server_cross_file_definition_and_rename: test
+
+4 tests, 0 benchmarks
+     Running tests\live_enrichment.rs (target\debug\deps\live_enrichment-fe0b6210f3ac9031.exe)
+actual_python_server_normalized_symbols_and_signature_help: test
+actual_rust_server_expanded_call_symbols_completion_signature_diagnostics_and_prepare_rename: test
+actual_typescript_server_expanded_type_call_symbols_signature_and_published_diagnostics: test
+
+3 tests, 0 benchmarks

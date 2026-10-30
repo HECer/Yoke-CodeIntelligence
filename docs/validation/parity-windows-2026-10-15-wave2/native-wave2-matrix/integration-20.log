@@ -1,0 +1,80 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 11.88s
+     Running tests\meaning_protocol.rs (target\debug\deps\meaning_protocol-883198981305159f.exe)
+
+running 4 tests
+test meaning_ollama_accounting_keeps_invalid_usage_unknown_in_bound_error ... ok
+test meaning_ollama_success_keeps_exact_no_claims_and_reported_usage ... ok
+test meaning_ollama_accounting_preserves_usage_after_postcall_digest_change ... ok
+test meaning_ollama_accounting_preserves_usage_after_invalid_shape_and_duplicate_json ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests\meaning_retention_review.rs (target\debug\deps\meaning_retention_review-22514ce83193a930.exe)
+
+running 3 tests
+test supplied_job_cache_and_graph_metadata_cannot_override_the_persisted_retention_proof ... ok
+test corrupted_job_cache_and_graph_rows_refuse_retirement_and_purge_before_deleting_history ... ok
+test original_and_rebound_meaning_roots_survive_retirement_quarantine_and_purge_with_controls ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.71s
+
+     Running tests\media.rs (target\debug\deps\media-96dd54905e72b0ab.exe)
+
+running 13 tests
+test media_cannot_bypass_source_scope_links_ignore_or_protected_paths ... ok
+test malformed_and_truncated_containers_fail_without_fabricated_metadata ... ok
+test explicitly_captured_binary_assets_are_published_with_exact_ids_and_paged_bytes ... ok
+test native_media_metadata_is_technical_and_binary_capture_is_explicit ... ok
+test pdf_worker_deadline_and_malformed_input_fail_closed ... ok
+test native_pdf_worker_extracts_actual_text_without_opening_a_source_index ... ok
+test media_persistence_refreshes_the_remaining_deadline_after_asset_capture ... ok
+test strict_pdf_visitor_decodes_nonbmp_tounicode_and_text_array_line_operators ... ok
+test strict_pdf_visitor_discloses_form_text_exclusion_and_enforces_page_text_cap ... ok
+test supplied_unicode_transcript_binds_asset_digest_and_discloses_unverified_authorship ... ok
+test strict_pdf_visitor_refuses_unknown_fonts_malformed_encodings_and_content ... ok
+test strict_pdf_visitor_respects_code_spaces_and_rejects_ambiguous_or_invalid_unicode ... ok
+test strict_pdf_visitor_validates_every_page_tree_child_count_and_parent ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.38s
+
+     Running tests\model_bedrock.rs (target\debug\deps\model_bedrock-f9c29e631b53577c.exe)
+
+running 12 tests
+test independent_signature_oracle_matches_official_aws_post_vanilla_vector ... ok
+test converse_signs_one_source_bound_request_and_preserves_unknown_cost ... ok
+test actual_wire_signature_binds_arn_body_host_port_date_region_and_session_token ... ok
+test network_authority_input_integrity_deadline_and_cohere_batch_precede_credentials ... ok
+test non_200_status_is_one_attempt_with_unknown_billing_and_no_service_body ... ok
+test oversized_titan_batch_and_invalid_authority_never_read_credentials ... ok
+test session_admission_refuses_expiry_header_injection_and_partial_temporary_identity ... ok
+test refusals_preserve_valid_usage_and_decoded_secret_echo_is_never_returned ... ok
+test malformed_vectors_usage_and_tool_blocks_never_become_success ... ok
+test titan_and_cohere_each_use_exactly_one_wire_batch_and_ordered_float_vectors ... ok
+test tls_uses_owned_roots_and_never_accepts_untrusted_fixture_certificate ... ok
+test converse_refuses_overlarge_image_before_credential_read ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.47s
+
+     Running tests\model_bedrock_batch_cli_review.rs (target\debug\deps\model_bedrock_batch_cli_review-83f2c165a7f1f553.exe)
+
+running 6 tests
+test invalid_batch_output_budget_rejects_before_creating_source_state ... ok
+test batch_status_unknown_root_or_invalid_identity_does_not_create_state ... ok
+test batch_status_does_not_initialize_an_empty_database_placeholder ... ok
+test host_batch_authority_fields_and_aggregate_overbudget_reject_without_workers ... ok
+test small_cli_status_is_a_recoverable_typed_reference_without_new_artifacts_or_execution ... ok
+test valid_batch_retention_is_typed_and_future_fields_or_response_rebinding_fail_closed ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.46s
+
+     Running tests\model_bedrock_cli.rs (target\debug\deps\model_bedrock_cli-2a5523af827e1e38.exe)
+
+running 4 tests
+test bedrock_parent_requires_network_trust_before_profile_or_source_state ... ok
+test changed_bedrock_worker_profile_fails_before_stdin_credentials_or_source_state ... ok
+test embedding_batch_host_limits_are_validated_before_source_or_credential_access ... ok
+test incompatible_bedrock_operation_is_denied_before_opening_source_or_reserving_cost ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+

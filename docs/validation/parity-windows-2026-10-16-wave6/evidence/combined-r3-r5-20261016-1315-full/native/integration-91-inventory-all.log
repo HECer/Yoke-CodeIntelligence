@@ -1,0 +1,20 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.20s
+     Running tests\providers.rs (target\debug\deps\providers-4a75185b5a986379.exe)
+complete_bound_failed_replies_still_account_for_reported_costs: test
+corpus_excerpts_stop_at_exact_utf8_boundaries_and_report_omissions: test
+embeddings_and_query_search_use_versioned_source_bound_collections: test
+host_trust_and_exact_reply_binding_fail_closed: test
+invalid_requests_and_missing_capabilities_fail_before_model_attempts: test
+media_descriptions_bind_captured_bytes_without_source_writes: test
+query_vector_dimension_must_match_indexed_corpus_before_settlement: test
+reranking_and_vectors_reject_invalid_exact_candidates: test
+successful_unknown_billing_and_known_overrun_keep_budget_conservative: test
+summaries_use_immutable_utf8_source_and_remain_inferences: test
+unavailable_timeout_and_output_cap_keep_unknown_reservations: test
+
+11 tests, 0 benchmarks
+     Running tests\publication.rs (target\debug\deps\publication-48dca67002c9b393.exe)
+first_publication_time_is_durable_and_never_refreshed_by_republication: test
+
+1 test, 0 benchmarks

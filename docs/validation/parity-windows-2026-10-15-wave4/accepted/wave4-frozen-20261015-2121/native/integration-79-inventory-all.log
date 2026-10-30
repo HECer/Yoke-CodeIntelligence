@@ -1,0 +1,27 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.01s
+     Running tests\projects.rs (target\debug\deps\projects-8f94e632183a0e8f.exe)
+changed_trusted_standard_library_changes_context_identity_for_unchanged_source: test
+compiler_output_outside_snapshot_and_overwriting_inputs_are_denied: test
+compiler_requires_host_trust_and_captured_config_cannot_enable_plugins: test
+configured_compiler_uses_historical_sources_extends_and_exact_unicode_bindings: test
+missing_references_cycles_and_empty_solution_never_become_successful_builds: test
+overlapping_projects_keep_distinct_compiler_contexts_and_report_binding_conflicts: test
+solution_build_consumes_referenced_declarations_without_source_tree_writes: test
+
+7 tests, 0 benchmarks
+     Running tests\protocol_connection.rs (target\debug\deps\protocol_connection-6f45346f06f41a07.exe)
+host_selected_profiles_keep_their_public_surface_across_messages: test
+incomplete_stdio_frames_are_rejected_before_dispatch_or_publication: test
+legal_request_ids_and_escaped_source_fit_the_complete_response_envelope: test
+owned_transport_state_retains_initialization_and_refuses_profile_switches: test
+separate_transport_messages_preserve_initialization_and_profile_state: test
+
+5 tests, 0 benchmarks

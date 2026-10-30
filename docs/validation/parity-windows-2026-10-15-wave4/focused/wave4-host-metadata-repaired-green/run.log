@@ -1,0 +1,26 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 58.64s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 18 tests
+test host_install::io::tests::metadata_directory_expired_calls_fail_without_mutation_or_empty_success ... ok
+test host_install::io::tests::metadata_directory_entry_info_queries_current_size_on_every_pass ... ok
+test host_install::io::tests::metadata_directory_byte_bounds_are_raw_bytes_and_empty_files_can_use_zero ... ok
+test host_install::io::tests::metadata_directory_enumeration_preserves_count_bounds_and_direct_names ... ok
+test host_install::io::tests::metadata_directory_hardlinked_rows_are_refused_without_changing_either_name ... ok
+test host_install::io::tests::metadata_directory_held_parent_retag_never_reads_a_foreign_row ... ok
+test host_install::io::tests::metadata_directory_held_parent_retag_never_enumerates_foreign_names ... ok
+test host_install::io::tests::metadata_directory_held_parent_retag_never_stats_a_foreign_leaf ... ok
+test host_install::io::tests::metadata_directory_leaf_methods_refuse_noncanonical_or_multiple_components ... ok
+test host_install::io::tests::metadata_directory_names_reenumerate_added_and_removed_foreign_leaves ... ok
+test host_install::io::tests::metadata_directory_read_bytes_rereads_changed_content_on_the_same_reader ... ok
+test host_install::io::tests::metadata_directory_names_reject_non_utf8_leaf_names_without_silent_omission ... ok
+test host_install::io::tests::metadata_directory_read_refuses_a_preexisting_foreign_data_writer ... ok
+test host_install::io::tests::metadata_directory_read_bytes_observes_a_new_physical_file_at_the_same_leaf ... ok
+test host_install::io::tests::metadata_directory_read_rechecks_access_after_a_fixture_acl_revocation ... ok
+test host_install::io::tests::metadata_directory_rereads_bytes_changed_by_a_preexisting_writable_mapping ... ok
+test host_install::io::tests::metadata_directory_reparse_child_is_an_error_not_missing_or_ordinary ... ok
+test host_install::io::tests::metadata_directory_stat_remains_compatible_with_a_live_exclusive_state_lock ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 167 filtered out; finished in 0.02s
+

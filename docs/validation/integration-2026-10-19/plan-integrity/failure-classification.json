@@ -1,0 +1,173 @@
+{
+  "failures": [
+    {
+      "testName": "sqlite_sidecar_links_cannot_rewrite_files_outside_state",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "failure": "thread 'sqlite_sidecar_links_cannot_rewrite_files_outside_state' (15312) panicked at native\\tests\\adversarial.rs:20:60:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "source_symlink_cannot_redirect_a_forced_file_deletion",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "failure": "thread 'source_symlink_cannot_redirect_a_forced_file_deletion' (20356) panicked at native\\tests\\facade_file_delete.rs:487:81:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "failure": "thread 'receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority' (19564) panicked at native\\tests\\federation.rs:303:6:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "windows_host_aliases_cannot_read_protected_files_or_alternate_streams",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "failure": "thread 'windows_host_aliases_cannot_read_protected_files_or_alternate_streams' (17940) panicked at native\\tests\\feedback_cli.rs:1100:59:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "failure": "thread 'affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success' (15944) panicked at native\\tests\\git_affected_cli.rs:505:10:\nReal Windows file reparse fixture prerequisite: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "failure": "thread 'windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive' (20912) panicked at native\\tests\\git_impact_details_cli.rs:698:10:\nreal Windows file reparse prerequisite: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "collection_sqlite_sidecars_cannot_write_through_links",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "failure": "thread 'collection_sqlite_sidecars_cannot_write_through_links' (20452) panicked at native\\tests\\graph_collections.rs:612:60:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "dry_run_is_deterministic_and_creates_no_source_engine_or_host_state",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'dry_run_is_deterministic_and_creates_no_source_engine_or_host_state' (7264) panicked at native\\tests\\host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Cannot guard host directory ancestor\n\nCaused by:\n    0: Anchored host namespace open failed\n    1: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "every_target_and_host_binding_is_checked_before_first_write",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'every_target_and_host_binding_is_checked_before_first_write' (5568) panicked at native\\tests\\host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Cannot guard host directory ancestor\n\nCaused by:\n    0: Anchored host namespace open failed\n    1: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "internal_volume_guid_binding_launches_the_real_binary_and_is_not_a_user_path_grant",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'internal_volume_guid_binding_launches_the_real_binary_and_is_not_a_user_path_grant' (11860) panicked at native\\tests\\host_install.rs:80:6:\ncalled `Result::unwrap()` on an `Err` value: Cannot guard host directory ancestor\n\nCaused by:\n    0: Anchored host namespace open failed\n    1: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence' (15312) panicked at native\\tests\\host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Cannot guard host directory ancestor\n\nCaused by:\n    0: Anchored host namespace open failed\n    1: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "private_state_never_contains_unrelated_human_config_or_policy_contents",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'private_state_never_contains_unrelated_human_config_or_policy_contents' (18076) panicked at native\\tests\\host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Cannot guard host directory ancestor\n\nCaused by:\n    0: Anchored host namespace open failed\n    1: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths' (22488) panicked at native\\tests\\host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Cannot guard host directory ancestor\n\nCaused by:\n    0: Anchored host namespace open failed\n    1: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed' (7248) panicked at native\\tests\\host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Cannot guard host directory ancestor\n\nCaused by:\n    0: Anchored host namespace open failed\n    1: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block' (21100) panicked at native\\tests\\host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Cannot guard host directory ancestor\n\nCaused by:\n    0: Anchored host namespace open failed\n    1: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_change",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_change' (9212) panicked at native\\tests\\host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Cannot guard host directory ancestor\n\nCaused by:\n    0: Anchored host namespace open failed\n    1: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "host_install_cli_initialization_output_failure_identifies_its_durable_result",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'host_install_cli_initialization_output_failure_identifies_its_durable_result' (22460) panicked at native\\tests\\host_install_cli.rs:75:5:\nyoke: Cannot guard host directory ancestor: Anchored host namespace open failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)\n\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "host_install_cli_initialization_admits_a_valid_output_budget_before_writing_state",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'host_install_cli_initialization_admits_a_valid_output_budget_before_writing_state' (21680) panicked at native\\tests\\host_install_cli.rs:75:5:\nyoke: Cannot guard host directory ancestor: Anchored host namespace open failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "host_install_cli_initialization_refuses_foreign_scaffold_bytes_without_disclosing_them",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'host_install_cli_initialization_refuses_foreign_scaffold_bytes_without_disclosing_them' (10700) panicked at native\\tests\\host_install_cli.rs:75:5:\nyoke: Cannot guard host directory ancestor: Anchored host namespace open failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "host_install_cli_initialization_repairs_an_owned_scaffold_and_replays_without_source_changes",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'host_install_cli_initialization_repairs_an_owned_scaffold_and_replays_without_source_changes' (22916) panicked at native\\tests\\host_install_cli.rs:75:5:\nyoke: Cannot guard host directory ancestor: Anchored host namespace open failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "host_install_cli_installs_and_uninstalls_only_its_owned_fragment",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'host_install_cli_installs_and_uninstalls_only_its_owned_fragment' (17772) panicked at native\\tests\\host_install_cli.rs:75:5:\nyoke: Cannot guard host directory ancestor: Anchored host namespace open failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried' (20452) panicked at native\\tests\\host_install_cli.rs:75:5:\nyoke: Cannot guard host directory ancestor: Anchored host namespace open failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "host_install_cli_planning_and_status_are_pure_and_keep_human_text_private",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'host_install_cli_planning_and_status_are_pure_and_keep_human_text_private' (21584) panicked at native\\tests\\host_install_cli.rs:75:5:\nyoke: Cannot guard host directory ancestor: Anchored host namespace open failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation' (21984) panicked at native\\tests\\host_install_cli.rs:75:5:\nyoke: Cannot guard host directory ancestor: Anchored host namespace open failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write",
+      "windowsError1314": false,
+      "windowsSharingError32": true,
+      "failure": "thread 'host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write' (19836) panicked at native\\tests\\host_install_cli.rs:75:5:\nyoke: Cannot guard host directory ancestor: Anchored host namespace open failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)"
+    },
+    {
+      "testName": "blob_links_are_refused_and_external_targets_are_preserved",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "failure": "thread 'blob_links_are_refused_and_external_targets_are_preserved' (6472) panicked at native\\tests\\maintenance.rs:213:56:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "existing_output_file_directory_and_hardlink_are_never_overwritten",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "failure": "thread 'existing_output_file_directory_and_hardlink_are_never_overwritten' (2480) panicked at native\\tests\\meaning_archive_cli.rs:381:60:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "media_cannot_bypass_source_scope_links_ignore_or_protected_paths",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "failure": "thread 'media_cannot_bypass_source_scope_links_ignore_or_protected_paths' (23060) panicked at native\\tests\\media.rs:284:6:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    }
+  ],
+  "allObservedFailuresAreFixturePrerequisite1314": false
+}

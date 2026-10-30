@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "status": "ignored_functional_checkpoint_uncompiled_unexecuted_review_pending",
+  "action": "act_mva5a5mg_773f4cecd8d3",
+  "normalChanges": [],
+  "files": [
+    {
+      "path": "retrieval_scopes.rs",
+      "sha256": "f805f8f6aff8ba1ac6309d6542d06910775a4f8fb1805a722a787ec60454d0b9",
+      "bytes": 21407
+    },
+    {
+      "path": "retrieval_partition.rs",
+      "sha256": "1f69e992c4e69a037387e9e5e1821f83871ff97a821c327fa70d0ffad390bae8",
+      "bytes": 19177
+    },
+    {
+      "path": "retrieval_marker_decode.rs",
+      "sha256": "cac84322709379946d79a39cf6c59c0d157d982cd6edf1693293fc861692e10f",
+      "bytes": 31639
+    },
+    {
+      "path": "retrieval_scopes_tests.rs",
+      "sha256": "c7834f7e954317c7cadb2e4b5e64de2e8a4ea531365f29d68f1e1d732f67f6c2",
+      "bytes": 39722
+    }
+  ],
+  "helperBodies": "unavailable; await root actual causal RED",
+  "testDelta": "explicit drop(old_run) before next transaction; clear cancellation flag only after all inner exact assertions before run_bounded exit",
+  "validation": "rustfmt only; no Cargo/Node/tests"
+}

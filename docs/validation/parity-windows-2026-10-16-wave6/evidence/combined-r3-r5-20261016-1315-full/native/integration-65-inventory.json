@@ -1,0 +1,18 @@
+{
+  "markdown_graph": {
+    "executable": "target\\debug\\deps\\markdown_graph-773ed0b86310e621.exe",
+    "ignored": [],
+    "registered": [
+      "commonmark_nested_labels_multiline_definitions_and_indented_code_have_correct_links",
+      "markdown_wiki_reference_frontmatter_and_symbol_citations_are_source_bound"
+    ]
+  },
+  "mcp_collection_grants": {
+    "executable": "target\\debug\\deps\\mcp_collection_grants-9bfb327d46861f6e.exe",
+    "ignored": [],
+    "registered": [
+      "current_principal_grants_are_injected_per_http_call_and_removed_on_upsert",
+      "native_archive_does_not_open_a_configured_but_unused_federation_receiver"
+    ]
+  }
+}

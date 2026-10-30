@@ -1,0 +1,45 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 30s
+     Running unittests src\lib.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 4 tests
+test git_workflows::impact_details::scope_tests::shared_host_cancellation_stops_pair_work_and_preserves_read_transaction_state ... FAILED
+test git_workflows::impact_details::scope_tests::both_real_side_policies_precede_inherited_load_source_cas_reads ... FAILED
+test git_workflows::impact_details::scope_tests::actual_invalid_head_capture_policy_refuses_before_extra_policy_observer ... FAILED
+test git_workflows::impact_details::scope_tests::candidate_capacity_is_admitted_before_any_large_cross_product_expansion ... FAILED
+
+failures:
+
+---- git_workflows::impact_details::scope_tests::shared_host_cancellation_stops_pair_work_and_preserves_read_transaction_state stdout ----
+
+thread 'git_workflows::impact_details::scope_tests::shared_host_cancellation_stops_pair_work_and_preserves_read_transaction_state' (85044) panicked at native\src\git_impact_details_scope_tests.rs:176:6:
+genuine feature before cancellation: git_impact_details_implementation_unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- git_workflows::impact_details::scope_tests::both_real_side_policies_precede_inherited_load_source_cas_reads stdout ----
+
+thread 'git_workflows::impact_details::scope_tests::both_real_side_policies_precede_inherited_load_source_cas_reads' (83508) panicked at native\src\git_impact_details_scope_tests.rs:21:6:
+genuine admitted feature before the ordering tripwire: git_impact_details_implementation_unavailable
+
+---- git_workflows::impact_details::scope_tests::actual_invalid_head_capture_policy_refuses_before_extra_policy_observer stdout ----
+
+thread 'git_workflows::impact_details::scope_tests::actual_invalid_head_capture_policy_refuses_before_extra_policy_observer' (64900) panicked at native\src\git_impact_details_scope_tests.rs:61:6:
+genuine admitted feature before the policy corruption: git_impact_details_implementation_unavailable
+
+---- git_workflows::impact_details::scope_tests::candidate_capacity_is_admitted_before_any_large_cross_product_expansion stdout ----
+
+thread 'git_workflows::impact_details::scope_tests::candidate_capacity_is_admitted_before_any_large_cross_product_expansion' (77988) panicked at native\src\git_impact_details_scope_tests.rs:132:6:
+genuine complete 40 by 40 candidate qualification: git_impact_details_implementation_unavailable
+
+
+failures:
+    git_workflows::impact_details::scope_tests::actual_invalid_head_capture_policy_refuses_before_extra_policy_observer
+    git_workflows::impact_details::scope_tests::both_real_side_policies_precede_inherited_load_source_cas_reads
+    git_workflows::impact_details::scope_tests::candidate_capacity_is_admitted_before_any_large_cross_product_expansion
+    git_workflows::impact_details::scope_tests::shared_host_cancellation_stops_pair_work_and_preserves_read_transaction_state
+
+test result: FAILED. 0 passed; 4 failed; 0 ignored; 0 measured; 307 filtered out; finished in 10.52s
+
+error: test failed, to rerun pass `--lib`
+error: 1 target failed:
+    `--lib`

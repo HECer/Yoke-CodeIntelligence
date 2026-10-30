@@ -1,0 +1,361 @@
+{
+  "qualifiedCodeCommit": "ced3f2d2867bb7c3eb973217f46855246a33adfe",
+  "baseCommit": "f7176df00c025bd119e9431108948e76e3b30504",
+  "sourceInputs": 1106,
+  "sourceInputsExactThroughQualification": true,
+  "summary": {
+    "complete": true,
+    "formatRoots": 361,
+    "canonicalVerboseRootsExactlyEqual": true,
+    "allTargetKindsAndModuleRecursionRetained": true,
+    "canonicalAggregateStillOs206": true,
+    "aggregateCommandUtf16Units": 33872,
+    "newCompleteGatePassed": true,
+    "pythonPassed": 47,
+    "originalPythonTestFilesExact": [
+      "scripts/tests/test_native_test_runner.py",
+      "scripts/tests/test_package_native.py",
+      "scripts/tests/test_package_vscode.py"
+    ],
+    "typecheckPassed": true,
+    "npmPassed": 260,
+    "npmFailed": 0,
+    "npmExistingSkipped": 3,
+    "sourceInputCount": 1106,
+    "sourceInputsUnchanged": true,
+    "nativeCliSha256": "aa391752ae06896894e0610e65f7a006ac8757dccf32eb19428882e5cf72f7c7",
+    "nativeProductionAndOriginalTestsUnchanged": true,
+    "formatter": {
+      "version": "rustfmt 1.8.0-stable (e408947bfd 2026-03-25)",
+      "path": "C:\\Users\\Lomi\\.rustup\\toolchains\\1.94.1-x86_64-pc-windows-msvc\\bin\\rustfmt.exe",
+      "sha256": "0491ddaa5d29cbbfc85c1a112358b8f2c7306a7d2a6d8acc81f8829025844a67",
+      "RUSTFMTOverridePresent": false
+    },
+    "allJobsEmpty": true,
+    "noRustCompilationOrNativeTestRerun": true,
+    "wholeWindowsOrHostedAcceptance": false,
+    "fullStatusComplete": false
+  },
+  "archive": {
+    "path": "raw.zip",
+    "bytes": 350526,
+    "sha256": "ce27b7264ed5d465e0021f19daa0bf6f47ea1695a22ea0548db6f080947fa1b3",
+    "members": [
+      {
+        "path": "native-format-20261023-f7176df0-red1/cargo-fmt-all-overflow.stderr",
+        "bytes": 826,
+        "sha256": "83ff7c86ea6b852d35f71c74489f0b803e58f15987fb3150348da43f68fa3980"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-red1/cargo-fmt-all-overflow.stdout",
+        "bytes": 80215,
+        "sha256": "e8aad80dec4b3c8869fba7a9bcf860ad972caebbf1b04d2d11fa932e5fe040b3"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-red1/cargo-metadata.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-red1/cargo-metadata.stdout",
+        "bytes": 106219,
+        "sha256": "a055ff7955d450eaff9c7e8bf2c1cc0c4eb715d593f0b8c168fc04a2cc239869"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-red1/controller.py",
+        "bytes": 3606,
+        "sha256": "89bf66a1e23487f2c8a8a0858dc0db973202d3a30687c3b9144c6b2a1beb64aa"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-red1/format-roots.json",
+        "bytes": 46409,
+        "sha256": "68ddab228b9db848c07099a480d2d03fde996404af1fbbd591d5f11f0f4d0a4b"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-red1/new-format-tests-red.stderr",
+        "bytes": 1311,
+        "sha256": "23b29d1e6e64040cd11e74d778f35cb0c00ba492df4b00a6acf2fa95e48f102c"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-red1/new-format-tests-red.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-red1/progress.json",
+        "bytes": 1272,
+        "sha256": "47ab40c75d70a33f3f11c48e9d2f4fd3f184509759ebfc3f215b9c39e17a7515"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-red1/result.json",
+        "bytes": 189,
+        "sha256": "85e5daa31adc2a02dbf1f1bb4130e160f7262666fa1e2af5adad241fb7e48c72"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-red1/source-before.json",
+        "bytes": 117733,
+        "sha256": "e06aac29df235301a29a5033c65194c785e54cf0676c410a74acbf823b56f2a8"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green1/controller.py",
+        "bytes": 3606,
+        "sha256": "89bf66a1e23487f2c8a8a0858dc0db973202d3a30687c3b9144c6b2a1beb64aa"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green1/progress.json",
+        "bytes": 420,
+        "sha256": "448f144ecea5becb5f3d63fae693b4b4cdb4a3868ab32da8433bc97c3e720e4b"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green1/python-all.stderr",
+        "bytes": 14079,
+        "sha256": "1c2eea1ccfb0d83647a8b069f109d516d9f28b47113bf2664c64939ad213b858"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green1/python-all.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green1/result.json",
+        "bytes": 192,
+        "sha256": "2083f769ae710041a24468c3d70028da52db21f1881d588029ec556c7142ffc4"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green1/source-before.json",
+        "bytes": 117828,
+        "sha256": "c732859b38e1c89716726b40bf45cae33b2557c190ef35e617d36084af07d900"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green2/cargo-metadata.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green2/cargo-metadata.stdout",
+        "bytes": 106219,
+        "sha256": "a055ff7955d450eaff9c7e8bf2c1cc0c4eb715d593f0b8c168fc04a2cc239869"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green2/complete-format-check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green2/complete-format-check.stdout",
+        "bytes": 46701,
+        "sha256": "ea675166e1a27055699ed5bff725f8e21c4f2bcfc89478b6421edf624b84f381"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green2/complete-format-list.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green2/complete-format-list.stdout",
+        "bytes": 48213,
+        "sha256": "cee124486284d387740fd375f68190c79b72bdf49833e735a16d0b1924e0ac49"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green2/controller.py",
+        "bytes": 3606,
+        "sha256": "89bf66a1e23487f2c8a8a0858dc0db973202d3a30687c3b9144c6b2a1beb64aa"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green2/format-roots.json",
+        "bytes": 53268,
+        "sha256": "45a7fcf06370dd40ef6069d9ddcbd00dabd13ffd00d571d60fb2c1f9896c53b1"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green2/progress.json",
+        "bytes": 1589,
+        "sha256": "cba7c4495b3e92392f38121956432bc7b39d6ba97ea9bc54e95db5af92b96026"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green2/python-all.stderr",
+        "bytes": 8802,
+        "sha256": "775ce47d35d617153294115cce8d052b222138628ebc4730cfcb59ed7d9c04cd"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green2/python-all.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green2/result.json",
+        "bytes": 192,
+        "sha256": "cbbbece9e1c3ac9541fb036e7a7d01519a357afa076e2bc4fb3c3713b19a81b6"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-green2/source-before.json",
+        "bytes": 117828,
+        "sha256": "1effa31fa594d8829770863fe3663c398deda960f6b93a3642d0a31c841fd8d3"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/cargo-metadata.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/cargo-metadata.stdout",
+        "bytes": 106219,
+        "sha256": "a055ff7955d450eaff9c7e8bf2c1cc0c4eb715d593f0b8c168fc04a2cc239869"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/complete-format-check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/complete-format-check.stdout",
+        "bytes": 46701,
+        "sha256": "ea675166e1a27055699ed5bff725f8e21c4f2bcfc89478b6421edf624b84f381"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/complete-format-list.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/complete-format-list.stdout",
+        "bytes": 48213,
+        "sha256": "cee124486284d387740fd375f68190c79b72bdf49833e735a16d0b1924e0ac49"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/controller.py",
+        "bytes": 3653,
+        "sha256": "e3808a063f7e9b3a59820dddc016b88e4d8487fd5fb60fa96dd7908e6bcd065e"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/format-roots.json",
+        "bytes": 53268,
+        "sha256": "45a7fcf06370dd40ef6069d9ddcbd00dabd13ffd00d571d60fb2c1f9896c53b1"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/npm-test.stderr",
+        "bytes": 198,
+        "sha256": "bbc4d35239676184ccfbb9082fb652fdb8bad4d05b7ab394fdda5154eec6e27b"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/npm-test.stdout",
+        "bytes": 24846,
+        "sha256": "2bff64c34c8acbf8a335d84ff95c70a4fd7b39805eec33e7f87f6367164cfd3a"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/npm-typecheck.stderr",
+        "bytes": 101,
+        "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/npm-typecheck.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/progress.json",
+        "bytes": 2365,
+        "sha256": "85b44ead01d5499c7d65978911e1545b3374aa76294a41b32727bae0098cc71f"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/python-all.stderr",
+        "bytes": 8802,
+        "sha256": "f692e000b7aacefe2e982c25e76229b6a0e4c91e737bb20e6c517b0e5af891ce"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/python-all.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/result.json",
+        "bytes": 195,
+        "sha256": "2f2f1d5d66d5ac3adfa64febb580e6b1c48bd290a408da0dd5339dbb2f33e323"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-qualified1/source-before.json",
+        "bytes": 117828,
+        "sha256": "686eae353b1d31fb24a68a5c0f1e041d0c675dd22e4278c100fdf69ef0e93c96"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-audit1/cargo-version.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-audit1/cargo-version.stdout",
+        "bytes": 36,
+        "sha256": "f53c9c2502e421a5a8d0c7948809c3de6e6d41a0189ddc23dfe4c661b11f7806"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-audit1/controller.py",
+        "bytes": 5049,
+        "sha256": "6c3a3984ca494658d2256080703efe380ad55d91f2915d0392f256e0c436fc1a"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-audit1/node-version.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-audit1/node-version.stdout",
+        "bytes": 10,
+        "sha256": "44ce64f1806e1aa8fa0bdd85b10e0413acd78557c88a8d52e94a0eb70f40b7ee"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-audit1/progress.json",
+        "bytes": 1637,
+        "sha256": "dab5784b55104cf1a335913b4bf3313f0a27159d97444ed47e6e5f05da375b48"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-audit1/python-version.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-audit1/python-version.stdout",
+        "bytes": 15,
+        "sha256": "9fc9968e3ae8d82284d7426a87e1426e07246027c7706b0803a1c8d9c60c7a4d"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-audit1/result.json",
+        "bytes": 1195,
+        "sha256": "5707b5952aba437b065e544538540846f7eb7ba56dd40c85bedc1c2f7e1ca135"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-audit1/rustfmt-selected.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-audit1/rustfmt-selected.stdout",
+        "bytes": 79,
+        "sha256": "3fc526ee54fc2cd60f18b56b7a6c5aeee4732a7a128b33aca5d8d8433ab1c8f7"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-audit1/rustfmt-version.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-audit1/rustfmt-version.stdout",
+        "bytes": 45,
+        "sha256": "705e13f875a7770beb65565d9d84b8ed95eeb7184c88b14f480d21680871ab50"
+      },
+      {
+        "path": "native-format-20261023-f7176df0-audit1/source-before.json",
+        "bytes": 117828,
+        "sha256": "686eae353b1d31fb24a68a5c0f1e041d0c675dd22e4278c100fdf69ef0e93c96"
+      }
+    ]
+  },
+  "preservedAttempts": {
+    "red1": "New helper absent; actual Cargo aggregate fails OS206 with all 361 roots enumerated.",
+    "green1": "Two missing-file errors need typed admission errors; newly authored canary build script has one additional formatting diff. Failed attempt preserved.",
+    "green2": "All 47 Python tests and all 361 format roots pass; controller then fails SystemRoot key lookup before npm starts. Source exact and Jobs empty.",
+    "qualified1": "Final source: Python47, exact Cargo/list equality, all361 format roots, typecheck and npm260/0/3Skip pass; Jobs empty.",
+    "audit1": "Original canonical verbose roots exactly equal the admitted complete root set; tool versions and source preservation verified."
+  },
+  "nativeTestRerun": false,
+  "hostedOrWholeWindowsAcceptance": false,
+  "fullStatusComplete": false
+}

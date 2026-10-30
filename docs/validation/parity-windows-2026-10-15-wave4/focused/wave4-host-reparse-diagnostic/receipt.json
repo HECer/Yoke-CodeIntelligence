@@ -1,0 +1,27 @@
+{
+  "checkedAtUtc": "2026-10-15T20:54:11.902170+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "-j",
+    "2",
+    "--lib",
+    "host_install::io::tests::metadata_directory_reparse_child_is_an_error_not_missing_or_ordinary",
+    "--",
+    "--exact",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 1.562,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-host-reparse-diagnostic",
+  "logSha256": "651bcf9a55a118410293dd46175d1914d4c790a8516744fdf258fd608b2d52c9",
+  "groups": 1,
+  "passed": 0,
+  "failed": 1,
+  "ignored": 0,
+  "sourceChanges": []
+}

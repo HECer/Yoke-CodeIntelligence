@@ -1,0 +1,49 @@
+[
+  {
+    "i": 0,
+    "source": "let result: ({run:(n:number)=>number}) | undefined; result=({run:n=>n+1});export const observed=result.run(3);",
+    "diagnostics": [],
+    "observed": 4
+  },
+  {
+    "i": 1,
+    "source": "let result: ((n:number)=>number)|undefined; result=(void 0,n=>n+1);export const observed=[result(3),result.name];",
+    "diagnostics": [],
+    "observed": [
+      4,
+      ""
+    ]
+  },
+  {
+    "i": 2,
+    "source": "let result: ((n:number)=>number)|undefined; result=(0,n=>n+1);export const observed=[result(3),result.name];",
+    "diagnostics": [
+      {
+        "code": 2695,
+        "message": "Left side of comma operator is unused and has no side effects."
+      }
+    ],
+    "observed": [
+      4,
+      ""
+    ]
+  },
+  {
+    "i": 3,
+    "source": "let result;result=(void 0,function(){});export const observed=result.name;",
+    "diagnostics": [],
+    "observed": ""
+  },
+  {
+    "i": 4,
+    "source": "let result;result=(void 0,class{});export const observed=result.name;",
+    "diagnostics": [],
+    "observed": ""
+  },
+  {
+    "i": 5,
+    "source": "let result;result=(function(){});export const observed=result.name;",
+    "diagnostics": [],
+    "observed": "result"
+  }
+]

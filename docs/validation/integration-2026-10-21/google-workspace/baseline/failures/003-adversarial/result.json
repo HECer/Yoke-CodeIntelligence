@@ -1,0 +1,79 @@
+{
+  "group": "adversarial",
+  "index": 3,
+  "freeBytesBefore": 3846057984,
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "adversarial",
+        "--no-run",
+        "--message-format=json-render-diagnostics"
+      ],
+      "exitCode": 0,
+      "seconds": 6.9587807999923825
+    },
+    {
+      "name": "test",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "adversarial",
+        "--no-fail-fast",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 2.1393883999844547
+    }
+  ],
+  "deletedNewTestArtifacts": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\adversarial-68010fc6cded6364.exe",
+      "bytes": 108633088,
+      "sha256": "81074514bba2e282a52e29d366dccc18b278d18df4eb5779358f8d55c7003b2b",
+      "deleted": true
+    },
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\adversarial-68010fc6cded6364.pdb",
+      "bytes": 15241216,
+      "sha256": "c68261777673d39a209792682404c858562318ec3c189e72ddcc80d2b9865d78",
+      "deleted": true
+    }
+  ],
+  "testExecutables": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\adversarial-68010fc6cded6364.exe",
+      "sha256": "81074514bba2e282a52e29d366dccc18b278d18df4eb5779358f8d55c7003b2b",
+      "existedBefore": false
+    }
+  ],
+  "totals": {
+    "passed": 13,
+    "failed": 1,
+    "ignored": 0
+  },
+  "resultGroups": 1,
+  "failures": [
+    "sqlite_sidecar_links_cannot_rewrite_files_outside_state"
+  ],
+  "allChecksPassed": false,
+  "sourceUnchanged": true,
+  "freeBytesAfter": 3844526080
+}

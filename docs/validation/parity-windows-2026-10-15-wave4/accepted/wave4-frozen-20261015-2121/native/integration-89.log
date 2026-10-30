@@ -1,0 +1,26 @@
+    Finished `test` profile [unoptimized] target(s) in 0.59s
+     Running tests\selected_view_analysis.rs (target\debug\deps\selected_view_analysis-4bdd1f0c8eb0e5b6.exe)
+
+running 11 tests
+test canonical_report_bytes_and_registration_match_frozen_golden ... ok
+test existing_graphify_hubs_include_parallel_citations_and_count_self_loops_twice ... ok
+test existing_graphify_hubs_preserve_file_level_manifest_source_precision ... ok
+test existing_graphify_community_tools_assign_default_view_overlay_nodes ... ok
+test selected_report_keeps_multiple_source_bindings_without_choosing_a_fabricated_exact_anchor ... ok
+test selected_report_preparation_validation_and_admission_have_no_publication_side_effects ... ok
+test explicit_selected_analysis_and_resources_replay_historic_views_and_reject_unsupported_scope ... ok
+test selected_report_publication_rechecks_cas_after_preparation ... ok
+test selected_report_preserves_provider_claims_and_every_original_anchor_family ... ok
+test selected_report_retention_replays_exact_bytes_and_rejects_scope_and_cas_tampering ... ok
+test selected_report_resource_admission_precedes_publication_of_a_large_formatted_body ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.27s
+
+     Running tests\selected_view_analysis_review.rs (target\debug\deps\selected_view_analysis_review-ad14a7cd287a04cc.exe)
+
+running 2 tests
+test retention_plan_recognizes_selected_report_and_preserves_exact_history_and_cas_roots ... ok
+test retention_plan_refuses_forged_selected_report_scope_before_retiring_any_history ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.88s
+

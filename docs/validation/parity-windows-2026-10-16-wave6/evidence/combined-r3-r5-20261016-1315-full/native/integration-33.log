@@ -1,0 +1,18 @@
+    Finished `test` profile [unoptimized] target(s) in 0.85s
+     Running tests\file_api.rs (target\debug\deps\file_api-434f6c438855712a.exe)
+
+running 3 tests
+test exact_multiline_api_headers_exclude_bodies_and_preserve_source_byte_bindings ... ok
+test composite_api_headers_keep_parent_offsets_without_script_bodies ... ok
+test basename_resolution_is_unique_and_paging_remains_exact_file_scoped ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+
+     Running tests\freshness.rs (target\debug\deps\freshness-d4cbab680707e392.exe)
+
+running 2 tests
+test unindexed_freshness_is_explicit_and_does_not_create_index ... ok
+test freshness_observes_drift_without_publishing_or_moving_latest ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+

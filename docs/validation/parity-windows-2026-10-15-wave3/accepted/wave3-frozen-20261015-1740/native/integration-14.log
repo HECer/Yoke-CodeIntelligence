@@ -1,0 +1,78 @@
+    Finished `test` profile [unoptimized] target(s) in 0.53s
+     Running tests\graphify_adapter.rs (target\debug\deps\graphify_adapter-e1d8de0958eea3b6.exe)
+
+running 7 tests
+test foreign_roots_unknown_arguments_and_ambiguous_names_fail_closed ... ok
+test filters_depth_and_conservative_token_byte_budget_are_real ... ok
+test parallel_neighbors_exact_evidence_and_directed_shortest_path_are_preserved ... ok
+test shortest_path_bounds_are_consistent_for_missing_and_ambiguous_endpoints ... ok
+test question_context_inference_is_labeled_and_explicit_filter_takes_precedence ... ok
+test ten_pinned_schemas_six_resources_and_pr_unavailability_are_explicit ... ok
+test community_and_ambiguous_neighbor_responses_honor_the_requested_budget ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.05s
+
+     Running tests\graphify_cli.rs (target\debug\deps\graphify_cli-2f3cad2bee8ea6cb.exe)
+
+running 1 test
+test public_graphify_cli_exposes_ten_tools_six_resources_and_real_graph_stats ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.29s
+
+     Running tests\graphify_selected_queries.rs (target\debug\deps\graphify_selected_queries-b3254669bd3c17dc.exe)
+
+running 8 tests
+test selected_neighbors_preserve_parallel_directions_and_exact_utf8_evidence ... ok
+test mismatched_published_view_scope_cannot_fall_back_to_live_capture ... ok
+test selected_get_node_resolves_only_members_of_the_published_nondefault_view ... ok
+test omitted_selector_keeps_the_default_view_after_a_nondefault_view_was_published ... ok
+test unknown_and_malformed_view_ids_refuse_before_first_capture ... ok
+test selected_query_graph_traverses_the_selected_document_and_induced_parallel_edges ... ok
+test selected_shortest_path_keeps_stored_direction_and_an_explicit_undirected_option ... ok
+test selected_queries_replay_historical_views_after_new_index_and_unsaved_host_changes ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.62s
+
+     Running tests\historical_publication.rs (target\debug\deps\historical_publication-45cd239aba97d211.exe)
+
+running 1 test
+test historical_publication_is_atomic_without_repointing_latest_or_disk_checkpoint ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+     Running tests\host_cli.rs (target\debug\deps\host_cli-571e33e0142ac8d1.exe)
+
+running 2 tests
+test explicit_maintenance_cli_preserves_issued_artifacts_and_changes_no_source ... ok
+test signed_source_cli_requires_a_host_grant_and_queries_a_separate_namespace ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.79s
+
+     Running tests\host_config.rs (target\debug\deps\host_config-7659402ec860ad5b.exe)
+
+running 22 tests
+test agents_marker_presence_never_grants_ownership ... ok
+test agents_and_patch_work_are_bounded_before_output ... ok
+test agents_install_update_remove_preserve_bom_unicode_and_crlf_bytes ... ok
+test agents_reject_changed_receipts_owned_bytes_duplicate_and_nested_markers ... ok
+test agents_removal_preserves_later_human_prefix_and_append ... ok
+test agents_empty_existing_file_round_trips_without_phantom_bytes ... ok
+test jsonc_decoded_duplicate_keys_unowned_entries_and_ambiguous_parents_fail ... ok
+test jsonc_accepts_only_json_whitespace_outside_comments_and_strings ... ok
+test jsonc_empty_and_trailing_comma_parents_restore_original_punctuation ... ok
+test jsonc_human_append_is_preserved_or_rejected_when_unrecorded_punctuation_would_be_removed ... ok
+test patch_application_checks_entire_input_fragments_ranges_and_output_hash ... ok
+test jsonc_oversized_receipt_selector_is_rejected_before_unbounded_decoding ... ok
+test jsonc_named_entry_preserves_comments_bom_crlf_and_literal_unowned_bytes ... ok
+test serialized_empty_owned_fragment_returns_error_instead_of_panicking ... ok
+test receipts_are_strict_serialized_data_and_do_not_include_human_prefix ... ok
+test structured_formats_reject_stale_selectors_body_capacity_and_deadlines ... ok
+test toml_inverse_refuses_to_join_an_unterminated_human_comment_with_a_later_table_header ... ok
+test toml_quoted_aliases_dotted_conflicts_and_body_headers_fail_without_claiming_ownership ... ok
+test toml_managed_table_preserves_human_comments_and_round_trips_crlf ... ok
+test toml_inverse_preserves_an_existing_appendix_newline_and_updates_retain_the_owned_separator ... ok
+test toml_table_removal_never_reparents_later_human_keys ... ok
+test toml_scanner_ignores_fake_headers_in_multiline_strings_and_arrays_with_quote_runs ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

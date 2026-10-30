@@ -1,0 +1,21 @@
+    Checking ring v0.17.14
+    Checking rustls-webpki v0.103.15
+    Checking rcgen v0.13.2
+    Checking rustls v0.23.46
+    Checking tokio-rustls v0.26.6
+    Checking rustls-platform-verifier v0.7.1
+    Checking hyper-rustls v0.27.10
+    Checking reqwest v0.13.5
+    Checking yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r7-google\native)
+error: the borrowed expression implements the required traits
+   --> native\tests\google_workspace_process.rs:115:50
+    |
+115 |             executable_sha256: yoke::model::hash(&fs::read(&program).unwrap()),
+    |                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: change this to: `fs::read(&program).unwrap()`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_borrows_for_generic_args
+    = note: `-D clippy::needless-borrows-for-generic-args` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_borrows_for_generic_args)]`
+
+error: could not compile `yoke-code-intelligence` (test "google_workspace_process") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

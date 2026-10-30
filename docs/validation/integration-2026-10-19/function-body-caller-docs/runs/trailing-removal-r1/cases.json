@@ -1,0 +1,1 @@
+[{"language": "js", "source": "function helper(){return 3;}/** @type {3} */ const result=helper();export const observed=result;"}, {"language": "js", "source": "function helper(){return 3;}/* gap */\n/** @type {number} */ const result=helper();export const observed=result;"}]

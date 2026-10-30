@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T00:35:47.527905+00:00",
+  "headCommit": "d4edf7d7f7fcdfe2351fac7f2eab84d9fd781ad7",
+  "kind": "actual_hosted_platform_follow_up",
+  "accepted": false,
+  "platforms": {
+    "linux": {
+      "jobId": 117824956236,
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39178127938/job/117824956236",
+      "groups": 256,
+      "passed": 1944,
+      "failed": 38,
+      "ignored": 23,
+      "accepted": false
+    },
+    "windows": {
+      "jobId": 117824956197,
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39178127938/job/117824956197",
+      "groups": 256,
+      "passed": 2283,
+      "failed": 6,
+      "ignored": 37,
+      "accepted": false
+    },
+    "macos": {
+      "jobId": 117824956257,
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39178127938/job/117824956257",
+      "groups": 256,
+      "passed": 1912,
+      "failed": 70,
+      "ignored": 23,
+      "accepted": false
+    }
+  },
+  "findings": [
+    "All complete runs remain failed; duplicate push/PR events are not summed.",
+    "Linux improves to 38 failures: 36 Windows-only host-install backend refusals, one collection CLI fixture missing explicit coordination opt-in, one initial SQL deadline observation.",
+    "Windows executes the real symlink fixtures without OS1314; six other runtime/fixture failures remain: two REPL/provider deadlines, React provider sibling binding, external-root registration, HTTP session lifecycle, and console-window ownership.",
+    "macOS retains genuine PDF worker and runtime-group cleanup failures plus SQLite/deadline and fixture issues; strict guards and tests remain active.",
+    "No platform certification, release, main merge or deployment claimed."
+  ],
+  "artifacts": [
+    {
+      "path": "linux.json",
+      "bytes": 14991,
+      "sha256": "6a50f74da6caef1909f3c068e2cc98b415ba3b58ececff8e4726e0226508b3ad"
+    },
+    {
+      "path": "linux.log",
+      "bytes": 477083,
+      "sha256": "449b18d51330504e5d9c27e6d943fc97e8fa6029aa35bb60415d2e2805d8f966"
+    },
+    {
+      "path": "macos.json",
+      "bytes": 27235,
+      "sha256": "7b53e624ba0826b08dc123d974f70abc6f7748bf75c6447950c151b548d15da4"
+    },
+    {
+      "path": "macos.log",
+      "bytes": 495510,
+      "sha256": "e3c711d8d44abb9bbadab11e8f0b2a816e6ac7785693b676c66efd97f108a4d1"
+    },
+    {
+      "path": "windows.json",
+      "bytes": 2842,
+      "sha256": "b8bca53338e8025700b2f08e62edd7b035af6ddd1bc798f7bf8fc24c277805ac"
+    },
+    {
+      "path": "windows.log",
+      "bytes": 503393,
+      "sha256": "fbb570c4b08bb33136d05041d8b8c0ddbc338b6503e115c974c9f0a6143a502a"
+    }
+  ]
+}

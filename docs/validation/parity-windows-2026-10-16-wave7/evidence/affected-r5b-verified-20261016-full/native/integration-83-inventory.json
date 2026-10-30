@@ -1,0 +1,23 @@
+{
+  "office": {
+    "executable": "target\\debug\\deps\\office-dd16d7ee5a8a673a.exe",
+    "ignored": [],
+    "registered": [
+      "forbidden_xml_scalars_cannot_enter_persisted_office_text",
+      "native_docx_inspection_decodes_source_bound_unicode_paragraphs_and_tables",
+      "native_xlsx_keeps_shared_inline_values_and_formula_cache_distinct",
+      "office_refuses_wrong_main_root_instead_of_extracting_fake_document_text",
+      "package_paths_bounds_entities_secrets_and_crc_fail_before_persistence",
+      "public_cli_reads_office_without_starting_office_or_a_worker",
+      "public_office_cli_retains_large_results_as_artifacts_within_its_output_budget",
+      "unicode_zip_extra_fields_cannot_replace_admitted_part_identity"
+    ]
+  },
+  "office_bounds": {
+    "executable": "target\\debug\\deps\\office_bounds-9fc912b3f32f0c6c.exe",
+    "ignored": [],
+    "registered": [
+      "rejected_office_text_is_admitted_before_dom_and_extraction_copies"
+    ]
+  }
+}

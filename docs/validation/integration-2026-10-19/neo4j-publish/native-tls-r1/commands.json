@@ -1,0 +1,156 @@
+[
+  {
+    "name": "native-index-owned-fixture",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--timeout",
+      "60000",
+      "--max-bytes",
+      "200000",
+      "--root",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-neo4j-baseline-2uniybbe\\owned-source",
+      "index"
+    ],
+    "exitCode": 0,
+    "seconds": 0.06608229999255855,
+    "privateStdinUsed": false,
+    "stdoutDiscarded": false
+  },
+  {
+    "name": "direct-native-bootstrap-plan",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--timeout",
+      "60000",
+      "--max-bytes",
+      "200000",
+      "neo4j-publish",
+      "bootstrap-plan",
+      "--config",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\neo4j-publish\\native-tls-r1\\direct-native\\target.json",
+      "--output",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\neo4j-publish\\native-tls-r1\\direct-native\\bootstrap.json",
+      "--allow-output"
+    ],
+    "exitCode": 0,
+    "seconds": 0.05308539999532513,
+    "privateStdinUsed": false,
+    "stdoutDiscarded": false
+  },
+  {
+    "name": "direct-native-offline-inspect",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--timeout",
+      "60000",
+      "--max-bytes",
+      "200000",
+      "neo4j-publish",
+      "inspect",
+      "--plan",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\neo4j-publish\\native-tls-r1\\direct-native\\bootstrap.json"
+    ],
+    "exitCode": 0,
+    "seconds": 0.04004370000620838,
+    "privateStdinUsed": false,
+    "stdoutDiscarded": false
+  },
+  {
+    "name": "direct-native-credential-import",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--timeout",
+      "60000",
+      "--max-bytes",
+      "200000",
+      "neo4j-publish",
+      "import-password",
+      "--config",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\neo4j-publish\\native-tls-r1\\direct-native\\target.json",
+      "--allow-credential-create"
+    ],
+    "exitCode": 0,
+    "seconds": 0.0334424000029685,
+    "privateStdinUsed": true,
+    "stdoutDiscarded": false
+  },
+  {
+    "name": "direct-native-bootstrap-approve",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--timeout",
+      "60000",
+      "--max-bytes",
+      "200000",
+      "neo4j-publish",
+      "approve",
+      "--plan",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\neo4j-publish\\native-tls-r1\\direct-native\\bootstrap.json",
+      "--expected-plan-id",
+      "786e8e2bf6de0667fb1b26cc8dcebcf0121a6dd7f1acf0b655a7a61732fd7298",
+      "--journal",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\neo4j-publish\\native-tls-r1\\direct-native\\neo4j-786e8e2bf6de0667fb1b26cc8dcebcf0121a6dd7f1acf0b655a7a61732fd7298.jsonl",
+      "--allow-approval",
+      "--allow-journal"
+    ],
+    "exitCode": 0,
+    "seconds": 0.04857389999961015,
+    "privateStdinUsed": false,
+    "stdoutDiscarded": false
+  },
+  {
+    "name": "direct-native-schema-gate",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--timeout",
+      "60000",
+      "--max-bytes",
+      "200000",
+      "neo4j-publish",
+      "apply",
+      "--plan",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\neo4j-publish\\native-tls-r1\\direct-native\\bootstrap.json",
+      "--expected-plan-id",
+      "786e8e2bf6de0667fb1b26cc8dcebcf0121a6dd7f1acf0b655a7a61732fd7298",
+      "--journal",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\neo4j-publish\\native-tls-r1\\direct-native\\neo4j-786e8e2bf6de0667fb1b26cc8dcebcf0121a6dd7f1acf0b655a7a61732fd7298.jsonl",
+      "--allow-write",
+      "--allow-journal",
+      "--allow-network",
+      "--allow-credential-lookup",
+      "--allow-loopback-http"
+    ],
+    "exitCode": 1,
+    "seconds": 0.036828199998126365,
+    "privateStdinUsed": false,
+    "stdoutDiscarded": false
+  },
+  {
+    "name": "direct-native-bootstrap-apply",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--timeout",
+      "60000",
+      "--max-bytes",
+      "200000",
+      "neo4j-publish",
+      "apply",
+      "--plan",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\neo4j-publish\\native-tls-r1\\direct-native\\bootstrap.json",
+      "--expected-plan-id",
+      "786e8e2bf6de0667fb1b26cc8dcebcf0121a6dd7f1acf0b655a7a61732fd7298",
+      "--journal",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\neo4j-publish\\native-tls-r1\\direct-native\\neo4j-786e8e2bf6de0667fb1b26cc8dcebcf0121a6dd7f1acf0b655a7a61732fd7298.jsonl",
+      "--allow-write",
+      "--allow-schema",
+      "--allow-journal",
+      "--allow-network",
+      "--allow-credential-lookup",
+      "--allow-loopback-http"
+    ],
+    "exitCode": 1,
+    "seconds": 0.1245346000068821,
+    "privateStdinUsed": false,
+    "stdoutDiscarded": false
+  }
+]

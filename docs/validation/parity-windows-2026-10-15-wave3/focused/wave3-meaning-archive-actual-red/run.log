@@ -1,0 +1,148 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 57.63s
+     Running tests\graphify_selected_queries.rs (target\debug\deps\graphify_selected_queries-b3254669bd3c17dc.exe)
+
+running 8 tests
+test mismatched_published_view_scope_cannot_fall_back_to_live_capture ... ok
+test selected_get_node_resolves_only_members_of_the_published_nondefault_view ... ok
+test selected_neighbors_preserve_parallel_directions_and_exact_utf8_evidence ... ok
+test omitted_selector_keeps_the_default_view_after_a_nondefault_view_was_published ... ok
+test unknown_and_malformed_view_ids_refuse_before_first_capture ... ok
+test selected_query_graph_traverses_the_selected_document_and_induced_parallel_edges ... ok
+test selected_shortest_path_keeps_stored_direction_and_an_explicit_undirected_option ... ok
+test selected_queries_replay_historical_views_after_new_index_and_unsaved_host_changes ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.69s
+
+     Running tests\host_output_disposition.rs (target\debug\deps\host_output_disposition-9c7bbb14919ba5e0.exe)
+
+running 11 tests
+disposition capability Armed/Kill/populate=false: {"nonce":"yoke-output-disposition-C5urzJ","action":"armed","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationCompletionStatus":null,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:a1740800000045000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:a1740800000045000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=None
+test armed_empty_output_is_deleted_after_real_process_kill ... ok
+test disposition_probe_worker ... ignored, spawned only by owned-temp disposition capability tests
+disposition capability Armed/Exit/populate=false: {"nonce":"yoke-output-disposition-QmF0P5","action":"armed","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationCompletionStatus":null,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:a1740800000046000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:a1740800000046000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=None
+Error: Probe output is not a single-link ordinary file
+test armed_empty_output_is_deleted_after_real_process_exit ... ok
+Error: Probe input line is missing or too large
+Error: Probe output is not a single-link ordinary file
+test disarmed_output_can_be_explicitly_deleted_by_legacy_boolean_on_the_same_handle ... FAILED
+Error: Probe input line is missing or too large
+test disarmed_output_can_be_explicitly_deleted_by_extended_delete_on_the_same_handle ... FAILED
+disposition capability ExZero/Exit/populate=false: {"nonce":"yoke-output-disposition-8sc15C","action":"exZero","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationCompletionStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:a1740800000048000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:a1740800000048000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=None
+disposition capability LegacyFalse/Exit/populate=false: {"nonce":"yoke-output-disposition-flgS3m","action":"legacyFalse","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationCompletionStatus":null,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:a1740800000049000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:a1740800000049000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=None
+disposition capability ExZero/Kill/populate=false: {"nonce":"yoke-output-disposition-Wc72OQ","action":"exZero","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationCompletionStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:a5740800000047000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:a5740800000047000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=None
+test extended_zero_flags_are_characterized_after_exit_and_kill ... ok
+disposition capability LegacyFalse/Kill/populate=false: {"nonce":"yoke-output-disposition-sm6xtN","action":"legacyFalse","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationCompletionStatus":null,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:a5740800000048000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:a5740800000048000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=None
+disposition capability ExOnCloseOnly/Exit/populate=true: {"nonce":"yoke-output-disposition-SOiIkA","action":"exOnCloseOnly","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationCompletionStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:a174080000004a000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:a174080000004a000000000000000000","length":31,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=Some(Facts { identity: "58bed981bed95858:a174080000004a000000000000000000", length: 31, delete_pending: false, native_mode_status: 0, native_mode: 32 })
+test legacy_false_does_not_disarm_creation_time_delete_on_close ... ok
+test required_same_handle_disarm_preserves_subsequent_bytes_after_real_process_exit ... ok
+disposition capability ExOnCloseOnly/Kill/populate=true: {"nonce":"yoke-output-disposition-1sbNkZ","action":"exOnCloseOnly","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationCompletionStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:a4740800000046000000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:a4740800000046000000000000000000","length":31,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=Some(Facts { identity: "58bed981bed95858:a4740800000046000000000000000000", length: 31, delete_pending: false, native_mode_status: 0, native_mode: 32 })
+test required_same_handle_disarm_preserves_subsequent_bytes_after_real_process_kill ... ok
+disposition capability ExOnCloseOnly/Exit/populate=false: {"nonce":"yoke-output-disposition-mAhibv","action":"exOnCloseOnly","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationCompletionStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:93740800000022010000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:93740800000022010000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=Some(Facts { identity: "58bed981bed95858:93740800000022010000000000000000", length: 0, delete_pending: false, native_mode_status: 0, native_mode: 32 })
+test required_same_handle_disarm_survives_real_process_exit ... ok
+disposition capability ExOnCloseOnly/Kill/populate=false: {"nonce":"yoke-output-disposition-zPTyxS","action":"exOnCloseOnly","windowsVersion":[10,0,26300],"filesystem":"NTFS","operationStatus":0,"operationCompletionStatus":0,"operationSucceeded":true,"before":{"identity":"58bed981bed95858:9e740800000007010000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32},"after":{"identity":"58bed981bed95858:9e740800000007010000000000000000","length":0,"deletePending":false,"nativeModeStatus":0,"nativeMode":32}} survivor=Some(Facts { identity: "58bed981bed95858:9e740800000007010000000000000000", length: 0, delete_pending: false, native_mode_status: 0, native_mode: 32 })
+test required_same_handle_disarm_survives_real_process_kill ... ok
+
+failures:
+
+failures:
+    disarmed_output_can_be_explicitly_deleted_by_extended_delete_on_the_same_handle
+    disarmed_output_can_be_explicitly_deleted_by_legacy_boolean_on_the_same_handle
+
+test result: FAILED. 8 passed; 2 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --test host_output_disposition`
+     Running tests\meaning_archive_primitives.rs (target\debug\deps\meaning_archive_primitives-c5256081a2ec240f.exe)
+
+running 10 tests
+
+thread 'archived_attempt_keeps_response_usage_distinct_from_later_reconciled_usage' (76784) panicked at native\tests\meaning_archive_primitives.rs:56:90:
+called `Result::unwrap()` on an `Err` value: Archived accounting replay is unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'archived_attempt_preserves_unknown_cost_original_currency_and_response_usage' (39516) panicked at native\tests\meaning_archive_primitives.rs:28:90:
+called `Result::unwrap()` on an `Err` value: Archived accounting replay is unavailable
+test archived_attempt_requires_exact_hashed_task_record_key_and_row_pairing ... ok
+test archived_attempt_preserves_unknown_cost_original_currency_and_response_usage ... FAILED
+test archived_attempt_keeps_response_usage_distinct_from_later_reconciled_usage ... FAILED
+test archived_attempt_reuses_state_event_and_task_total_validation ... ok
+
+thread 'archived_capture_overlay_uses_its_exact_base_scope_and_checked_revision' (2660) panicked at native\tests\meaning_archive_primitives.rs:265:74:
+called `Result::unwrap()` on an `Err` value: Archived capture option replay is unavailable
+
+thread 'archived_capture_recovers_exact_v8_and_v9_default_and_configured_options' (83500) panicked at native\tests\meaning_archive_primitives.rs:212:82:
+called `Result::unwrap()` on an `Err` value: Archived capture option replay is unavailable
+test archived_capture_overlay_uses_its_exact_base_scope_and_checked_revision ... FAILED
+test archived_capture_recovers_exact_v8_and_v9_default_and_configured_options ... FAILED
+test archived_capture_rejects_resealed_protected_paths_unknown_policy_and_noncanonical_envelopes ... ok
+
+thread 'archived_capture_scope_only_derived_lineage_returns_acquisition_policy_without_an_epoch_upgrade' (95172) panicked at native\tests\meaning_archive_primitives.rs:235:74:
+called `Result::unwrap()` on an `Err` value: Archived capture option replay is unavailable
+test archived_capture_deadline_and_lineage_capacity_are_checked_before_replay ... ok
+test archived_capture_scope_only_derived_lineage_returns_acquisition_policy_without_an_epoch_upgrade ... FAILED
+test archived_attempt_byte_budget_and_deadline_fail_without_replaying_live_state ... ok
+
+failures:
+
+failures:
+    archived_attempt_keeps_response_usage_distinct_from_later_reconciled_usage
+    archived_attempt_preserves_unknown_cost_original_currency_and_response_usage
+    archived_capture_overlay_uses_its_exact_base_scope_and_checked_revision
+    archived_capture_recovers_exact_v8_and_v9_default_and_configured_options
+    archived_capture_scope_only_derived_lineage_returns_acquisition_policy_without_an_epoch_upgrade
+
+test result: FAILED. 5 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --test meaning_archive_primitives`
+     Running tests\meaning_view.rs (target\debug\deps\meaning_view-b5b38a8d4ebfefd0.exe)
+
+running 8 tests
+test empty_meaning_selection_stays_absent_and_never_resolves_a_worker ... ok
+
+thread 'archived_unknown_reports_remain_unknown_without_fresh_accounting_or_provider_attestation' (98748) panicked at native\tests\meaning_view.rs:112:6:
+checked published meaning selection: Published meaning view composition unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test archived_unknown_reports_remain_unknown_without_fresh_accounting_or_provider_attestation ... FAILED
+
+thread 'explicit_no_claims_keeps_source_bindings_and_complete_packet_coverage' (40300) panicked at native\tests\meaning_view.rs:112:6:
+checked published meaning selection: Published meaning view composition unavailable
+test explicit_no_claims_keeps_source_bindings_and_complete_packet_coverage ... FAILED
+
+thread 'published_rebind_retains_original_snapshot_request_and_accounting_lineage' (93100) panicked at native\tests\meaning_view.rs:112:6:
+checked published meaning selection: Published meaning view composition unavailable
+
+thread 'archived_replay_uses_frozen_original_and_rebound_sources_after_live_source_and_worker_removal' (82528) panicked at native\tests\meaning_view.rs:112:6:
+checked published meaning selection: Published meaning view composition unavailable
+test published_rebind_retains_original_snapshot_request_and_accounting_lineage ... FAILED
+test archived_replay_uses_frozen_original_and_rebound_sources_after_live_source_and_worker_removal ... FAILED
+
+thread 'published_selection_preserves_multifile_quotes_roles_parallel_claims_and_original_receipts' (90316) panicked at native\tests\meaning_view.rs:112:6:
+checked published meaning selection: Published meaning view composition unavailable
+test published_selection_preserves_multifile_quotes_roles_parallel_claims_and_original_receipts ... FAILED
+
+thread 'validation_replays_quotes_roles_provenance_scope_and_real_closure_budget' (4196) panicked at native\tests\meaning_view.rs:112:6:
+checked published meaning selection: Published meaning view composition unavailable
+test validation_replays_quotes_roles_provenance_scope_and_real_closure_budget ... FAILED
+
+thread 'selection_order_is_deterministic_shared_dependencies_are_charged_once_and_models_stay_distinct' (56996) panicked at native\tests\meaning_view.rs:266:10:
+called `Result::unwrap()` on an `Err` value: Published meaning view composition unavailable
+test selection_order_is_deterministic_shared_dependencies_are_charged_once_and_models_stay_distinct ... FAILED
+
+failures:
+
+failures:
+    archived_replay_uses_frozen_original_and_rebound_sources_after_live_source_and_worker_removal
+    archived_unknown_reports_remain_unknown_without_fresh_accounting_or_provider_attestation
+    explicit_no_claims_keeps_source_bindings_and_complete_packet_coverage
+    published_rebind_retains_original_snapshot_request_and_accounting_lineage
+    published_selection_preserves_multifile_quotes_roles_parallel_claims_and_original_receipts
+    selection_order_is_deterministic_shared_dependencies_are_charged_once_and_models_stay_distinct
+    validation_replays_quotes_roles_provenance_scope_and_real_closure_budget
+
+test result: FAILED. 1 passed; 7 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.72s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --test meaning_view`
+error: 3 targets failed:
+    `-p yoke-code-intelligence --test host_output_disposition`
+    `-p yoke-code-intelligence --test meaning_archive_primitives`
+    `-p yoke-code-intelligence --test meaning_view`

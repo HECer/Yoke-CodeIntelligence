@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "observedAtUtc": "2026-10-27T13:37:49.118484+00:00",
+  "sourceCommit": "d6cd3b4a6041544792e0f8df4e71c931ea34062c",
+  "runId": "unit-lib-test-d6cd3b4a-after-cache-eviction-reviewed",
+  "execSessionId": 61152,
+  "sessionObservation": "Unknown process id after turn interruption",
+  "missingFinalReceipts": [
+    "result.json",
+    "outer.job.json",
+    "source-after.json",
+    "source-final.json"
+  ],
+  "exactControllerMutex": "Local\\YokeValidation-800bcb6a31e9e0407e667e19",
+  "openMutexObserved": false,
+  "openMutexError": 2,
+  "rootExitReceiptAvailable": false,
+  "treeCleanupProofAvailable": false,
+  "wholeSuiteAcceptance": false,
+  "bundles": [
+    {
+      "archive": "cache-eviction.zip",
+      "bytes": 127645,
+      "sha256": "f31981cd5c7901980afc9ae87f9b398899167731ff8810e9707fa35926541744",
+      "members": [
+        {
+          "path": "cache_eviction.py",
+          "bytes": 12678,
+          "sha256": "25c18dc1f03ced6ced8f81b0a949803a24e4ca873ef283df42b08cfc474f6c95"
+        },
+        {
+          "path": "plan.json",
+          "bytes": 1279142,
+          "sha256": "d81777084bdef84bc587678ef42962cd7162c1b25b2229e9246bef2dfded42f9"
+        },
+        {
+          "path": "events.jsonl",
+          "bytes": 387867,
+          "sha256": "e17886017ac56cb9a7d0277f4b916d72582e318c6f3c839fa769ee715f99f911"
+        },
+        {
+          "path": "result.json",
+          "bytes": 281,
+          "sha256": "fbba0e321b2ff7efbda17d8f9f91df292b730cc116b4d11b7c8aa8cf672706e6"
+        }
+      ],
+      "payloadsAreTextOnly": true
+    },
+    {
+      "archive": "interrupted-consumer.zip",
+      "bytes": 66601,
+      "sha256": "e0968ccf66c5a05b5623bbd069ef5a76423b5782fdb0007b29eab686eb4e843a",
+      "members": [
+        {
+          "path": "request.json",
+          "bytes": 1302,
+          "sha256": "bca6032a098a5d28a40264a5ba7b73d54485f2120ff44bbda0c709ef534e9b76"
+        },
+        {
+          "path": "source-before.json",
+          "bytes": 157573,
+          "sha256": "4e283ff52e665277fe1d3e91985990673dbe888406d5882dde6fc8ea096a66ce"
+        },
+        {
+          "path": "outer.stdout",
+          "bytes": 39134,
+          "sha256": "56d4b1db3f8664f618613e63b1cfd1f4d253f81453a379d06e89d187a17dbab3"
+        },
+        {
+          "path": "outer.stderr",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "payloadsAreTextOnly": true
+    }
+  ]
+}

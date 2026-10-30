@@ -1,0 +1,2 @@
+Test native Windows protected namespaces | runner.os == 'Windows' | cargo test --workspace --locked --no-fail-fast -j 2 -- --test-threads=1
+Test native Unix targets | runner.os != 'Windows' | cargo test --workspace --locked --no-fail-fast -j 2 -- --test-threads=2

@@ -1,0 +1,50 @@
+[
+  {
+    "gate": "format",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 6.013,
+    "recordedAt": "2026-10-19T00:24:02.235204+00:00"
+  },
+  {
+    "gate": "clippy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--keep-going",
+      "-j2",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 120.4,
+    "recordedAt": "2026-10-19T00:26:02.637402+00:00"
+  },
+  {
+    "gate": "row-budget-and-mapping",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--no-fail-fast",
+      "--lib",
+      "--test",
+      "github_app_digest_mapping",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 190.687,
+    "recordedAt": "2026-10-19T00:29:13.326235+00:00"
+  }
+]

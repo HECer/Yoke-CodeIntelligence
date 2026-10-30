@@ -1,0 +1,754 @@
+{
+  "process-build": {
+    "ownerReceipt": {
+      "schema": 1,
+      "sourceRevision": "6b9a60dda07d546ce09108cf40018a4fe29e3099",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--test",
+        "process",
+        "--no-run",
+        "--locked",
+        "-j",
+        "1",
+        "--message-format=json"
+      ],
+      "versions": {
+        "cargo": "cargo 1.94.1 (29ea6fb6a 2026-03-24)",
+        "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: x86_64-pc-windows-msvc\nrelease: 1.94.1\nLLVM version: 21.1.8"
+      },
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "nativeYokeImageReadOrExecuted": false,
+      "testExecution": false,
+      "minimumFreeObserved": 1516240896,
+      "completed": true,
+      "metadataOnly": false,
+      "scope": "process integration test binary build only; no test execution requested",
+      "pid": 53400,
+      "exitCode": 0,
+      "membersAtRootExit": [
+        {
+          "pid": 60432,
+          "imageBytesRead": false,
+          "membershipConfirmed": true,
+          "imageQueryError": 5
+        }
+      ],
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "inputsUnchanged": true,
+      "inputCount": 1003,
+      "freeAfter": 1816784896
+    },
+    "cargoNativeArtifactMetadata": [
+      {
+        "target": "yoke",
+        "kind": [
+          "lib"
+        ],
+        "testProfile": false,
+        "fresh": false,
+        "executable": null,
+        "files": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\libyoke-12d978df8734a96b.rlib",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\libyoke-12d978df8734a96b.rmeta"
+        ]
+      },
+      {
+        "target": "yoke",
+        "kind": [
+          "bin"
+        ],
+        "testProfile": false,
+        "fresh": false,
+        "executable": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "files": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.pdb"
+        ]
+      },
+      {
+        "target": "process",
+        "kind": [
+          "test"
+        ],
+        "testProfile": true,
+        "fresh": false,
+        "executable": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\process-bb4aecb482f54758.exe",
+        "files": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\process-bb4aecb482f54758.exe",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\process-bb4aecb482f54758.pdb"
+        ]
+      }
+    ],
+    "unselectedExecutableByproductsAdoptedOrExecuted": false
+  },
+  "agent-repl-build": {
+    "ownerReceipt": {
+      "schema": 1,
+      "sourceRevision": "6b9a60dda07d546ce09108cf40018a4fe29e3099",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--test",
+        "agent_repl",
+        "--no-run",
+        "--locked",
+        "-j",
+        "1",
+        "--message-format=json"
+      ],
+      "versions": {
+        "cargo": "cargo 1.94.1 (29ea6fb6a 2026-03-24)",
+        "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: x86_64-pc-windows-msvc\nrelease: 1.94.1\nLLVM version: 21.1.8"
+      },
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "nativeYokeImageReadOrExecuted": false,
+      "testExecution": false,
+      "minimumFreeObserved": 1619632128,
+      "completed": true,
+      "metadataOnly": false,
+      "scope": "agent_repl integration test binary build only; no test execution requested",
+      "pid": 62540,
+      "exitCode": 0,
+      "membersAtRootExit": [
+        {
+          "pid": 63500,
+          "imageBytesRead": false,
+          "membershipConfirmed": true,
+          "imageQueryError": 5
+        }
+      ],
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "inputsUnchanged": true,
+      "inputCount": 1003,
+      "freeAfter": 1737797632
+    },
+    "cargoNativeArtifactMetadata": [
+      {
+        "target": "yoke",
+        "kind": [
+          "lib"
+        ],
+        "testProfile": false,
+        "fresh": true,
+        "executable": null,
+        "files": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\libyoke-12d978df8734a96b.rlib",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\libyoke-12d978df8734a96b.rmeta"
+        ]
+      },
+      {
+        "target": "agent_repl",
+        "kind": [
+          "test"
+        ],
+        "testProfile": true,
+        "fresh": false,
+        "executable": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\agent_repl-10fb918f43249624.exe",
+        "files": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\agent_repl-10fb918f43249624.exe",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\agent_repl-10fb918f43249624.pdb"
+        ]
+      },
+      {
+        "target": "yoke",
+        "kind": [
+          "bin"
+        ],
+        "testProfile": false,
+        "fresh": true,
+        "executable": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "files": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.pdb"
+        ]
+      }
+    ],
+    "unselectedExecutableByproductsAdoptedOrExecuted": false
+  },
+  "inline-body-build": {
+    "ownerReceipt": {
+      "schema": 1,
+      "sourceRevision": "6b9a60dda07d546ce09108cf40018a4fe29e3099",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--test",
+        "compiler_inline_body",
+        "--no-run",
+        "--locked",
+        "-j",
+        "1",
+        "--message-format=json"
+      ],
+      "versions": {
+        "cargo": "cargo 1.94.1 (29ea6fb6a 2026-03-24)",
+        "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: x86_64-pc-windows-msvc\nrelease: 1.94.1\nLLVM version: 21.1.8"
+      },
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "nativeYokeImageReadOrExecuted": false,
+      "testExecution": false,
+      "minimumFreeObserved": 1351061504,
+      "completed": true,
+      "metadataOnly": false,
+      "scope": "compiler_inline_body integration test binary build only; no test execution requested",
+      "pid": 53268,
+      "exitCode": 0,
+      "membersAtRootExit": [
+        {
+          "pid": 60628,
+          "imageBytesRead": false,
+          "membershipConfirmed": true,
+          "imageQueryError": 5
+        }
+      ],
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "inputsUnchanged": true,
+      "inputCount": 1003,
+      "freeAfter": 1462480896
+    },
+    "cargoNativeArtifactMetadata": [
+      {
+        "target": "yoke",
+        "kind": [
+          "lib"
+        ],
+        "testProfile": false,
+        "fresh": true,
+        "executable": null,
+        "files": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\libyoke-12d978df8734a96b.rlib",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\libyoke-12d978df8734a96b.rmeta"
+        ]
+      },
+      {
+        "target": "compiler_inline_body",
+        "kind": [
+          "test"
+        ],
+        "testProfile": true,
+        "fresh": false,
+        "executable": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\compiler_inline_body-dc8427a9ff504fce.exe",
+        "files": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\compiler_inline_body-dc8427a9ff504fce.exe",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\compiler_inline_body-dc8427a9ff504fce.pdb"
+        ]
+      },
+      {
+        "target": "yoke",
+        "kind": [
+          "bin"
+        ],
+        "testProfile": false,
+        "fresh": true,
+        "executable": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "files": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.pdb"
+        ]
+      }
+    ],
+    "unselectedExecutableByproductsAdoptedOrExecuted": false
+  },
+  "library-build": {
+    "ownerReceipt": {
+      "schema": 1,
+      "sourceRevision": "6b9a60dda07d546ce09108cf40018a4fe29e3099",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--lib",
+        "--no-run",
+        "--locked",
+        "-j",
+        "1",
+        "--message-format=json"
+      ],
+      "versions": {
+        "cargo": "cargo 1.94.1 (29ea6fb6a 2026-03-24)",
+        "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: x86_64-pc-windows-msvc\nrelease: 1.94.1\nLLVM version: 21.1.8"
+      },
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "nativeYokeImageReadOrExecuted": false,
+      "testExecution": false,
+      "minimumFreeObserved": 1743360000,
+      "completed": true,
+      "metadataOnly": false,
+      "scope": "library test binary build only; no test execution requested",
+      "pid": 40860,
+      "exitCode": 0,
+      "membersAtRootExit": [
+        {
+          "pid": 61460,
+          "imageBytesRead": false,
+          "membershipConfirmed": true,
+          "imageQueryError": 5
+        }
+      ],
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "inputsUnchanged": true,
+      "inputCount": 1003,
+      "freeAfter": 2129080320
+    },
+    "cargoNativeArtifactMetadata": [
+      {
+        "target": "yoke",
+        "kind": [
+          "lib"
+        ],
+        "testProfile": true,
+        "fresh": false,
+        "executable": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.exe",
+        "files": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.exe",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.pdb"
+        ]
+      }
+    ],
+    "unselectedExecutableByproductsAdoptedOrExecuted": false
+  },
+  "process": {
+    "ownerReceipt": {
+      "schema": 1,
+      "sourceRevision": "6b9a60dda07d546ce09108cf40018a4fe29e3099",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\process-bb4aecb482f54758.exe",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "versions": {
+        "cargo": "cargo 1.94.1 (29ea6fb6a 2026-03-24)",
+        "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: x86_64-pc-windows-msvc\nrelease: 1.94.1\nLLVM version: 21.1.8"
+      },
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "nativeYokeImageReadOrExecuted": true,
+      "testExecution": true,
+      "minimumFreeObserved": 1852592128,
+      "completed": true,
+      "metadataOnly": false,
+      "scope": "whole process integration test group, serial, no name filter",
+      "pid": 62236,
+      "exitCode": 0,
+      "membersAtRootExit": [
+        {
+          "pid": 63276,
+          "imageBytesRead": false,
+          "membershipConfirmed": true,
+          "imageQueryError": 5
+        }
+      ],
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "inputsUnchanged": true,
+      "inputCount": 1003,
+      "freeAfter": 1853878272
+    },
+    "selectedImage": {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\process-bb4aecb482f54758.exe",
+      "bytes": 91957248,
+      "sha256": "9f4216a326277e0572cd51ff25ea95da9d568f8895720c08494a624cb544f6c9",
+      "fileIdentity": [
+        5078471845122615367,
+        8162774328029163
+      ],
+      "links": 1,
+      "noReparse": true,
+      "writersAndDeletionDeniedThroughExecution": true,
+      "producerCompleted": true,
+      "producerArtifactFresh": false
+    },
+    "actualLibtestSummary": {
+      "passed": 7,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filteredOut": 0,
+      "wholeGroup": true
+    }
+  },
+  "agent-repl": {
+    "ownerReceipt": {
+      "schema": 1,
+      "sourceRevision": "6b9a60dda07d546ce09108cf40018a4fe29e3099",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\agent_repl-10fb918f43249624.exe",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "versions": {
+        "cargo": "cargo 1.94.1 (29ea6fb6a 2026-03-24)",
+        "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: x86_64-pc-windows-msvc\nrelease: 1.94.1\nLLVM version: 21.1.8"
+      },
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "nativeYokeImageReadOrExecuted": true,
+      "testExecution": true,
+      "minimumFreeObserved": 1576665088,
+      "completed": true,
+      "metadataOnly": false,
+      "scope": "whole agent_repl integration test group, serial, no name filter",
+      "pid": 54544,
+      "exitCode": 0,
+      "membersAtRootExit": [],
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "inputsUnchanged": true,
+      "inputCount": 1003,
+      "freeAfter": 1576947712
+    },
+    "selectedImage": {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\agent_repl-10fb918f43249624.exe",
+      "bytes": 120782848,
+      "sha256": "6f8309b9a0ebf81947eec735498c8b742e0e1f9a6f82f7cb74a29b7db456c08f",
+      "fileIdentity": [
+        5078471845122615367,
+        4503599630868130
+      ],
+      "links": 1,
+      "noReparse": true,
+      "writersAndDeletionDeniedThroughExecution": true,
+      "producerCompleted": true,
+      "producerArtifactFresh": false
+    },
+    "actualLibtestSummary": {
+      "passed": 22,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filteredOut": 0,
+      "wholeGroup": true
+    }
+  },
+  "namespace-bindings": {
+    "ownerReceipt": {
+      "schema": 1,
+      "sourceRevision": "6b9a60dda07d546ce09108cf40018a4fe29e3099",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\compiler_inline_body-dc8427a9ff504fce.exe",
+        "--exact",
+        "body_free_references_keep_separate_type_value_and_namespace_bindings",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "versions": {
+        "cargo": "cargo 1.94.1 (29ea6fb6a 2026-03-24)",
+        "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: x86_64-pc-windows-msvc\nrelease: 1.94.1\nLLVM version: 21.1.8"
+      },
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "nativeYokeImageReadOrExecuted": true,
+      "testExecution": true,
+      "minimumFreeObserved": 1518579712,
+      "completed": true,
+      "metadataOnly": false,
+      "scope": "one exact compiler_inline_body regression: body_free_references_keep_separate_type_value_and_namespace_bindings; full group not claimed",
+      "pid": 57756,
+      "exitCode": 0,
+      "membersAtRootExit": [],
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "inputsUnchanged": true,
+      "inputCount": 1003,
+      "freeAfter": 1545404416
+    },
+    "selectedImage": {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\compiler_inline_body-dc8427a9ff504fce.exe",
+      "bytes": 112345088,
+      "sha256": "97661fb7731475d5f25ed2c939801d8178bff96646db14ac5a79a1b2c39195d0",
+      "fileIdentity": [
+        5078471845122615367,
+        3659174700850957
+      ],
+      "links": 1,
+      "noReparse": true,
+      "writersAndDeletionDeniedThroughExecution": true,
+      "producerCompleted": true,
+      "producerArtifactFresh": false
+    },
+    "actualLibtestSummary": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filteredOut": 24,
+      "wholeGroup": false
+    }
+  },
+  "namespace-refusals": {
+    "ownerReceipt": {
+      "schema": 1,
+      "sourceRevision": "6b9a60dda07d546ce09108cf40018a4fe29e3099",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\compiler_inline_body-dc8427a9ff504fce.exe",
+        "--exact",
+        "body_namespace_classification_still_refuses_actual_lexical_shadows",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "versions": {
+        "cargo": "cargo 1.94.1 (29ea6fb6a 2026-03-24)",
+        "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: x86_64-pc-windows-msvc\nrelease: 1.94.1\nLLVM version: 21.1.8"
+      },
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "nativeYokeImageReadOrExecuted": true,
+      "testExecution": true,
+      "minimumFreeObserved": 1579692032,
+      "completed": true,
+      "metadataOnly": false,
+      "scope": "one exact compiler_inline_body regression: body_namespace_classification_still_refuses_actual_lexical_shadows; full group not claimed",
+      "pid": 55460,
+      "exitCode": 0,
+      "membersAtRootExit": [],
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "inputsUnchanged": true,
+      "inputCount": 1003,
+      "freeAfter": 1755791360
+    },
+    "selectedImage": {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\compiler_inline_body-dc8427a9ff504fce.exe",
+      "bytes": 112345088,
+      "sha256": "97661fb7731475d5f25ed2c939801d8178bff96646db14ac5a79a1b2c39195d0",
+      "fileIdentity": [
+        5078471845122615367,
+        3659174700850957
+      ],
+      "links": 1,
+      "noReparse": true,
+      "writersAndDeletionDeniedThroughExecution": true,
+      "producerCompleted": true,
+      "producerArtifactFresh": false
+    },
+    "actualLibtestSummary": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filteredOut": 24,
+      "wholeGroup": false
+    }
+  },
+  "assignment-bindings": {
+    "ownerReceipt": {
+      "schema": 1,
+      "sourceRevision": "6b9a60dda07d546ce09108cf40018a4fe29e3099",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\compiler_inline_body-dc8427a9ff504fce.exe",
+        "--exact",
+        "complete_identifier_assignments_keep_write_order_completion_and_branch_ownership",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "versions": {
+        "cargo": "cargo 1.94.1 (29ea6fb6a 2026-03-24)",
+        "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: x86_64-pc-windows-msvc\nrelease: 1.94.1\nLLVM version: 21.1.8"
+      },
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "nativeYokeImageReadOrExecuted": true,
+      "testExecution": true,
+      "minimumFreeObserved": 1754927104,
+      "completed": true,
+      "metadataOnly": false,
+      "scope": "one exact compiler_inline_body regression: complete_identifier_assignments_keep_write_order_completion_and_branch_ownership; full group not claimed",
+      "pid": 64160,
+      "exitCode": 0,
+      "membersAtRootExit": [
+        {
+          "pid": 57216,
+          "imageBytesRead": false,
+          "membershipConfirmed": true,
+          "imageQueryError": 5
+        }
+      ],
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "inputsUnchanged": true,
+      "inputCount": 1003,
+      "freeAfter": 2171105280
+    },
+    "selectedImage": {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\compiler_inline_body-dc8427a9ff504fce.exe",
+      "bytes": 112345088,
+      "sha256": "97661fb7731475d5f25ed2c939801d8178bff96646db14ac5a79a1b2c39195d0",
+      "fileIdentity": [
+        5078471845122615367,
+        3659174700850957
+      ],
+      "links": 1,
+      "noReparse": true,
+      "writersAndDeletionDeniedThroughExecution": true,
+      "producerCompleted": true,
+      "producerArtifactFresh": false
+    },
+    "actualLibtestSummary": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filteredOut": 24,
+      "wholeGroup": false
+    }
+  },
+  "assignment-refusals": {
+    "ownerReceipt": {
+      "schema": 1,
+      "sourceRevision": "6b9a60dda07d546ce09108cf40018a4fe29e3099",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\compiler_inline_body-dc8427a9ff504fce.exe",
+        "--exact",
+        "effectful_targets_and_compound_or_consumed_assignments_refuse_without_publication",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "versions": {
+        "cargo": "cargo 1.94.1 (29ea6fb6a 2026-03-24)",
+        "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: x86_64-pc-windows-msvc\nrelease: 1.94.1\nLLVM version: 21.1.8"
+      },
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "nativeYokeImageReadOrExecuted": true,
+      "testExecution": true,
+      "minimumFreeObserved": 2167042048,
+      "completed": true,
+      "metadataOnly": false,
+      "scope": "one exact compiler_inline_body regression: effectful_targets_and_compound_or_consumed_assignments_refuse_without_publication; full group not claimed",
+      "pid": 52964,
+      "exitCode": 0,
+      "membersAtRootExit": [],
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "inputsUnchanged": true,
+      "inputCount": 1003,
+      "freeAfter": 2165870592
+    },
+    "selectedImage": {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\compiler_inline_body-dc8427a9ff504fce.exe",
+      "bytes": 112345088,
+      "sha256": "97661fb7731475d5f25ed2c939801d8178bff96646db14ac5a79a1b2c39195d0",
+      "fileIdentity": [
+        5078471845122615367,
+        3659174700850957
+      ],
+      "links": 1,
+      "noReparse": true,
+      "writersAndDeletionDeniedThroughExecution": true,
+      "producerCompleted": true,
+      "producerArtifactFresh": false
+    },
+    "actualLibtestSummary": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filteredOut": 24,
+      "wholeGroup": false
+    }
+  },
+  "library": {
+    "ownerReceipt": {
+      "schema": 1,
+      "sourceRevision": "6b9a60dda07d546ce09108cf40018a4fe29e3099",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.exe",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "versions": {
+        "cargo": "cargo 1.94.1 (29ea6fb6a 2026-03-24)",
+        "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: x86_64-pc-windows-msvc\nrelease: 1.94.1\nLLVM version: 21.1.8"
+      },
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "nativeYokeImageReadOrExecuted": true,
+      "testExecution": true,
+      "minimumFreeObserved": 1997193216,
+      "completed": true,
+      "metadataOnly": false,
+      "scope": "whole default-feature library test group, serial, no name filter",
+      "pid": 45900,
+      "exitCode": 0,
+      "membersAtRootExit": [],
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "inputsUnchanged": true,
+      "inputCount": 1003,
+      "freeAfter": 2209718272
+    },
+    "selectedImage": {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.exe",
+      "bytes": 155195392,
+      "sha256": "1a331d2bbc96e14faefba1f27859cb79f2052c858747d306ced99c32e1b13816",
+      "fileIdentity": [
+        5078471845122615367,
+        2814749770673045
+      ],
+      "links": 1,
+      "noReparse": true,
+      "writersAndDeletionDeniedThroughExecution": true,
+      "producerCompleted": true,
+      "producerArtifactFresh": false
+    },
+    "actualLibtestSummary": {
+      "passed": 703,
+      "failed": 0,
+      "ignored": 7,
+      "measured": 0,
+      "filteredOut": 0,
+      "wholeGroup": true
+    },
+    "unchangedDefaultIgnoredTests": [
+      "test host_install::output_recovery_tests::output_recovery_worker ... ignored, spawned only with an explicitly selected parent-owned temp fixture",
+      "test retrieval_saved_graph::tests::oversized_saved_row_refuses_before_raw_payload_read_and_auto_fallback ... ignored, qualified SQLite64MB row fixture:reserve>=512MB RAM/1GB disk; not executed",
+      "test retrieval_scopes::capacity_tests::genuine_4096_utf8_path_is_captured_and_4097_is_refused_by_existing_capture_boundary ... ignored, qualified Windows long-path job; creation/capture failure is setup failure, never skip-as-pass",
+      "test retrieval_scopes::capacity_tests::genuine_one_million_observations_is_byte_dominated_then_plus_one_refuses_before_graph_loading ... ignored, optional very large job:qualify>=8GB RAM/12GB disk, no runtime guarantee; may hit earlier constructor limit",
+      "test retrieval_scopes::capacity_tests::real_100k_files_pass_then_one_real_function_rejects_entity_100001_before_graph_reload ... ignored, qualified root job:100K real files, estimated<=2GB RAM/3GB disk; no SLA",
+      "test retrieval_scopes::capacity_tests::real_graph_exact_64mb_passes_and_plus_one_refuses_before_saved_graph_loading ... ignored, qualified root job:64K real files/two64MB graphs, estimated<=2GB RAM/3GB disk",
+      "test retrieval_scopes::capacity_tests::real_ownership_exact_16mb_passes_and_next_byte_refuses_before_body_scoring ... ignored, qualified root job:38277 real paths/two~53MB graphs, estimated<=2GB RAM/3GB disk"
+    ]
+  }
+}

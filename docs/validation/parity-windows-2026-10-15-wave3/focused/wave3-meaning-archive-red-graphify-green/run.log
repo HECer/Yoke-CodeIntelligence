@@ -1,0 +1,37 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: unused import: `json`
+ --> native\tests\meaning_view.rs:2:25
+  |
+2 | use serde_json::{Value, json};
+  |                         ^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0609]: no field `root` on type `Store`
+   --> native\tests\meaning_view.rs:299:24
+    |
+299 |         f.engine.store.root.join("history.rs"),
+    |                        ^^^^ unknown field
+    |
+    = note: available fields are: `dir`, `db`, `workspace_id`
+
+error[E0609]: no field `root` on type `Store`
+   --> native\tests\meaning_view.rs:450:24
+    |
+450 |         f.engine.store.root.join("history.rs"),
+    |                        ^^^^ unknown field
+    |
+    = note: available fields are: `dir`, `db`, `workspace_id`
+
+error[E0609]: no field `root` on type `Store`
+   --> native\tests\meaning_view.rs:491:38
+    |
+491 |     let source_root = f.engine.store.root.clone();
+    |                                      ^^^^ unknown field
+    |
+    = note: available fields are: `dir`, `db`, `workspace_id`
+
+For more information about this error, try `rustc --explain E0609`.
+warning: `yoke-code-intelligence` (test "meaning_view") generated 1 warning
+error: could not compile `yoke-code-intelligence` (test "meaning_view") due to 3 previous errors; 1 warning emitted
+warning: build failed, waiting for other jobs to finish...

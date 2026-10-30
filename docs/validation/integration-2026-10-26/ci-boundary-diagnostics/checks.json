@@ -1,0 +1,159 @@
+{
+  "project": "HECer/Yoke-CodeIntelligence",
+  "version": "0.5.0",
+  "sourceCommit": "34068f537295d966997f1747127ce62c396c20bc",
+  "result": {
+    "completed": true,
+    "scope": "exact-clean-test-boundary-diagnostic-source",
+    "parentHead": "34068f537295d966997f1747127ce62c396c20bc",
+    "nativeImageRead": false,
+    "nativeImageExecuted": false,
+    "releaseQualification": false,
+    "checks": [
+      {
+        "name": "typecheck",
+        "exitCode": 0,
+        "naturalTreeExit": true
+      },
+      {
+        "name": "npm-test",
+        "exitCode": 0,
+        "naturalTreeExit": true
+      }
+    ],
+    "mutexAbandoned": false,
+    "sourceFiles": 1135,
+    "sourcesUnchanged": true,
+    "controlsUnchanged": true,
+    "driverSha256": "a666d1098276b28b1e326638c1af6252f01704985674cc61208e686c5c9546f0",
+    "npmTestsPassed": 260,
+    "npmTestsSkipped": 3,
+    "cleanHeadVerified": true
+  },
+  "jobs": {
+    "typecheck": {
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+        "run",
+        "typecheck"
+      ],
+      "deadlineSeconds": 180,
+      "logCapBytes": 16000000,
+      "stdinClosed": true,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "completed": true,
+      "treeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 3936059392,
+      "cleanupErrors": [],
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerErrors": [
+        false,
+        false
+      ],
+      "pid": 27216,
+      "resumePreviousSuspendCount": 1,
+      "exitCode": 0,
+      "membersAtRootObservation": [],
+      "rootExitedAtObservation": true,
+      "activeAtRootObservation": 0,
+      "originalDrainSeconds": 1,
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "cleanupSeconds": 2,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 2.188894300001266,
+      "capturedLogBytes": 77,
+      "outputExceeded": false,
+      "cleanupUnproven": false
+    },
+    "npm-test": {
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+        "test"
+      ],
+      "deadlineSeconds": 180,
+      "logCapBytes": 16000000,
+      "stdinClosed": true,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "completed": true,
+      "treeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 3930550272,
+      "cleanupErrors": [],
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerErrors": [
+        false,
+        false
+      ],
+      "pid": 30636,
+      "resumePreviousSuspendCount": 1,
+      "exitCode": 0,
+      "membersAtRootObservation": [],
+      "rootExitedAtObservation": true,
+      "activeAtRootObservation": 0,
+      "originalDrainSeconds": 1,
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "cleanupSeconds": 2,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 56.44968250000238,
+      "capturedLogBytes": 25010,
+      "outputExceeded": false,
+      "cleanupUnproven": false
+    }
+  },
+  "retainedLocalReceiptHashes": {
+    "source-before.json": {
+      "bytes": 167414,
+      "sha256": "ec3c4bdbba63b32a2f465a88fa77902d782932aa3e3e9280f13377657a28aae5"
+    },
+    "source-after.json": {
+      "bytes": 167414,
+      "sha256": "ec3c4bdbba63b32a2f465a88fa77902d782932aa3e3e9280f13377657a28aae5"
+    },
+    "control-before.json": {
+      "bytes": 914,
+      "sha256": "204b543d9df10fd8058cf11b87fc27292d5412296334a42cb9712ed8dbaa7f71"
+    },
+    "control-after.json": {
+      "bytes": 914,
+      "sha256": "204b543d9df10fd8058cf11b87fc27292d5412296334a42cb9712ed8dbaa7f71"
+    },
+    "typecheck.stdout": {
+      "bytes": 77,
+      "sha256": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5"
+    },
+    "typecheck.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "npm-test.stdout": {
+      "bytes": 24922,
+      "sha256": "ab35a6f5dd222d5298de35bea3257bdfe5e7df9e59c927b340cf2125f52b74b9"
+    },
+    "npm-test.stderr": {
+      "bytes": 88,
+      "sha256": "27a2bfb851e2511bf3904f42c8dc49bac46eaface89c1b184e881d61bfba5a97"
+    }
+  },
+  "staticChecks": {
+    "scopedRustfmt1_94_1": true,
+    "gitDiffCheck": true,
+    "allOriginalTestsAndAssertionsOutsideHelpersUnchanged": true,
+    "originalDeadlineAnd503AssertionsRetained": true
+  },
+  "affectedRustIntegrationTestsRunLocally": false,
+  "currentAllTargetsClippyRunLocally": false,
+  "scope": "Source/control maps and raw Node streams remain local; these hashes are a compact summary, not a complete offline replay. Historical Windows source704 acceptance remains separately scoped."
+}

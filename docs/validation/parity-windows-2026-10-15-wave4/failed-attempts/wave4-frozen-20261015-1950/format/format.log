@@ -1,0 +1,10 @@
+Diff in \\?\G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native\src\lib.rs:59:
+ pub mod provider_batches;
+ pub mod providers;
+ pub mod query;
+-mod refactor_contract;
+ pub mod query_features;
++mod refactor_contract;
+ pub mod replacement;
+ pub mod resolution;
+ pub mod retention;

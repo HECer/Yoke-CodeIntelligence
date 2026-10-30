@@ -1,0 +1,41 @@
+{
+  "gates": [
+    {
+      "gate": "facade-r4",
+      "exitCode": 0,
+      "elapsedSeconds": 124.816,
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j1",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "facade_directory_move",
+        "--",
+        "--test-threads=1"
+      ]
+    },
+    {
+      "gate": "actual-provider-r4",
+      "exitCode": 0,
+      "elapsedSeconds": 33.406,
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j1",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "directory_move_live",
+        "--",
+        "--ignored",
+        "--nocapture",
+        "--test-threads=1"
+      ]
+    }
+  ],
+  "sourceUnchanged": true
+}

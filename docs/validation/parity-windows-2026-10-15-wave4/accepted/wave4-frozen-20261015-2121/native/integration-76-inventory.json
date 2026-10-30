@@ -1,0 +1,18 @@
+{
+  "parity_source_review": {
+    "executable": "target\\debug\\deps\\parity_source_review-223360b1f37f3121.exe",
+    "ignored": [],
+    "registered": [
+      "corrupted_oversized_cas_is_rejected_before_an_unbounded_source_buffer_allocation"
+    ]
+  },
+  "parity_view_review": {
+    "executable": "target\\debug\\deps\\parity_view_review-5885658842c4425e.exe",
+    "ignored": [],
+    "registered": [
+      "resealed_view_cannot_invent_canonical_labels_or_parent_claims",
+      "resealed_view_cannot_relabel_a_selected_overlay_or_upgrade_its_precision",
+      "resealed_view_cannot_remove_canonical_observations"
+    ]
+  }
+}

@@ -1,0 +1,274 @@
+{
+  "baseCommit": "0d0b43e3ac41cf25c8f2d6e57ec3100df7a68d4d",
+  "cleanHeadClaimed": false,
+  "sourceInputs": 1134,
+  "inputsUnchanged": true,
+  "nativeCompileOrTestClaimed": false,
+  "phases": {
+    "typecheck": {
+      "command": [
+        "C:\\WINDOWS\\System32\\cmd.exe",
+        "/d",
+        "/c",
+        "npm run typecheck"
+      ],
+      "deadlineSeconds": 1200,
+      "logCapBytes": 16000000,
+      "stdinClosed": true,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "completed": true,
+      "treeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 5235204096,
+      "cleanupErrors": [],
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerErrors": [
+        false,
+        false
+      ],
+      "pid": 16452,
+      "resumePreviousSuspendCount": 1,
+      "exitCode": 0,
+      "membersAtRootObservation": [
+        {
+          "pid": 18004,
+          "imageBytesRead": false,
+          "imageIdentityKnown": false,
+          "membershipConfirmed": true,
+          "imagePathMetadata": "C:\\Windows\\System32\\conhost.exe"
+        }
+      ],
+      "rootExitedAtObservation": true,
+      "activeAtRootObservation": 1,
+      "originalDrainSeconds": 1,
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "cleanupSeconds": 2,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 2.5949194000004354,
+      "capturedLogBytes": 101,
+      "outputExceeded": false,
+      "cleanupUnproven": false
+    },
+    "npm-test": {
+      "command": [
+        "C:\\WINDOWS\\System32\\cmd.exe",
+        "/d",
+        "/c",
+        "npm test"
+      ],
+      "deadlineSeconds": 1200,
+      "logCapBytes": 16000000,
+      "stdinClosed": true,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "completed": true,
+      "treeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 5231689728,
+      "cleanupErrors": [],
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerErrors": [
+        false,
+        false
+      ],
+      "pid": 21708,
+      "resumePreviousSuspendCount": 1,
+      "exitCode": 0,
+      "membersAtRootObservation": [
+        {
+          "pid": 3060,
+          "imageBytesRead": false,
+          "imageIdentityKnown": false,
+          "membershipConfirmed": true,
+          "imagePathMetadata": "C:\\Windows\\System32\\conhost.exe"
+        }
+      ],
+      "rootExitedAtObservation": true,
+      "activeAtRootObservation": 1,
+      "originalDrainSeconds": 1,
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "cleanupSeconds": 2,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 57.085549999999785,
+      "capturedLogBytes": 25035,
+      "outputExceeded": false,
+      "cleanupUnproven": false
+    },
+    "python": {
+      "command": [
+        "C:\\Python314\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts/tests",
+        "-v"
+      ],
+      "deadlineSeconds": 1200,
+      "logCapBytes": 16000000,
+      "stdinClosed": true,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "completed": false,
+      "treeExitedBeforeCleanup": false,
+      "minimumFreeObserved": 5233020928,
+      "cleanupErrors": [],
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerErrors": [
+        false,
+        false
+      ],
+      "pid": 21432,
+      "resumePreviousSuspendCount": 1,
+      "exitCode": 0,
+      "membersAtRootObservation": [
+        {
+          "pid": 14376,
+          "imageBytesRead": false,
+          "imageIdentityKnown": false,
+          "membershipConfirmed": true,
+          "imageQueryError": 5
+        },
+        {
+          "pid": 16940,
+          "imageBytesRead": false,
+          "imageIdentityKnown": false,
+          "membershipConfirmed": true,
+          "imagePathMetadata": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\vctip.exe"
+        }
+      ],
+      "rootExitedAtObservation": true,
+      "activeAtRootObservation": 2,
+      "originalDrainSeconds": 1,
+      "activeBeforeCleanup": 1,
+      "membersAfterOriginalDrain": [
+        {
+          "pid": 16940,
+          "imageBytesRead": false,
+          "imageIdentityKnown": false,
+          "membershipConfirmed": true,
+          "imagePathMetadata": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\vctip.exe"
+        }
+      ],
+      "cleanupSeconds": 2,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 11.958494000000428,
+      "capturedLogBytes": 28966,
+      "outputExceeded": false,
+      "cleanupUnproven": false
+    },
+    "actionlint": {
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\platform-ci-dependencies\\actionlint.exe",
+        "-color",
+        ".github/workflows/rust.yml"
+      ],
+      "deadlineSeconds": 1200,
+      "logCapBytes": 16000000,
+      "stdinClosed": true,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "completed": true,
+      "treeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 5236498432,
+      "cleanupErrors": [],
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerErrors": [
+        false,
+        false
+      ],
+      "pid": 18672,
+      "resumePreviousSuspendCount": 1,
+      "exitCode": 0,
+      "membersAtRootObservation": [
+        {
+          "pid": 14084,
+          "imageBytesRead": false,
+          "imageIdentityKnown": false,
+          "membershipConfirmed": true,
+          "imageQueryError": 5
+        }
+      ],
+      "rootExitedAtObservation": true,
+      "activeAtRootObservation": 1,
+      "originalDrainSeconds": 1,
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "cleanupSeconds": 2,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 0.3427940999999919,
+      "capturedLogBytes": 0,
+      "outputExceeded": false,
+      "cleanupUnproven": false
+    },
+    "local-command-probe": {
+      "command": [
+        "C:\\Python314\\python.exe",
+        "-B",
+        "scripts/host_powershell_probe.py",
+        "--fixed-import-original",
+        "--output",
+        "validation/integration-20261025/platform-repairs/local-fixed-import-original-r1"
+      ],
+      "deadlineSeconds": 60,
+      "logCapBytes": 16000000,
+      "stdinClosed": true,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "completed": true,
+      "treeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 5236469760,
+      "cleanupErrors": [],
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerErrors": [
+        false,
+        false
+      ],
+      "pid": 15628,
+      "resumePreviousSuspendCount": 1,
+      "exitCode": 0,
+      "membersAtRootObservation": [
+        {
+          "pid": 5348,
+          "imageBytesRead": false,
+          "imageIdentityKnown": false,
+          "membershipConfirmed": true,
+          "imageQueryError": 5
+        }
+      ],
+      "rootExitedAtObservation": true,
+      "activeAtRootObservation": 1,
+      "originalDrainSeconds": 1,
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "cleanupSeconds": 2,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 0.38766320000013366,
+      "capturedLogBytes": 199,
+      "outputExceeded": false,
+      "cleanupUnproven": false
+    }
+  }
+}

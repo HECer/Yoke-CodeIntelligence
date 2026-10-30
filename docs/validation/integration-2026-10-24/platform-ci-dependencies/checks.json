@@ -1,0 +1,131 @@
+{
+  "baselineRevision": "d80c6c784f462d5ad60c0f553986b2b4895108d4",
+  "yamlParser": {
+    "name": "PyYAML",
+    "version": "6.0.3"
+  },
+  "oldWorkflowSha256": "2c7c4a9b84cc4ecef9e05f029f13a2c673f9793cf11c0c999d0b77a1f8e6f45b",
+  "newWorkflowSha256": "41f446a66179c2edcfbb4326eb230d5095f51d927990657910148e5b72fec713",
+  "oldWorkflowSource": "exact Git blob; before.yml",
+  "newWorkflowSource": "working-copy bytes; after.yml",
+  "shards": 24,
+  "platformAcceptanceJobs": 3,
+  "unchangedExpandedCheckNames": [
+    "native-rust (macos-latest)",
+    "native-rust (ubuntu-latest)",
+    "native-rust (windows-latest)",
+    "native-shards (macos-latest, 0)",
+    "native-shards (macos-latest, 1)",
+    "native-shards (macos-latest, 2)",
+    "native-shards (macos-latest, 3)",
+    "native-shards (macos-latest, 4)",
+    "native-shards (macos-latest, 5)",
+    "native-shards (macos-latest, 6)",
+    "native-shards (macos-latest, 7)",
+    "native-shards (ubuntu-latest, 0)",
+    "native-shards (ubuntu-latest, 1)",
+    "native-shards (ubuntu-latest, 2)",
+    "native-shards (ubuntu-latest, 3)",
+    "native-shards (ubuntu-latest, 4)",
+    "native-shards (ubuntu-latest, 5)",
+    "native-shards (ubuntu-latest, 6)",
+    "native-shards (ubuntu-latest, 7)",
+    "native-shards (windows-latest, 0)",
+    "native-shards (windows-latest, 1)",
+    "native-shards (windows-latest, 2)",
+    "native-shards (windows-latest, 3)",
+    "native-shards (windows-latest, 4)",
+    "native-shards (windows-latest, 5)",
+    "native-shards (windows-latest, 6)",
+    "native-shards (windows-latest, 7)"
+  ],
+  "allOriginalParsedStepsAndOtherJobPoliciesExact": true,
+  "negativeCases": [
+    {
+      "name": "missing platform",
+      "refused": true
+    },
+    {
+      "name": "missing shard",
+      "refused": true
+    },
+    {
+      "name": "duplicate shard",
+      "refused": true
+    },
+    {
+      "name": "wrong runner",
+      "refused": true
+    },
+    {
+      "name": "cross-platform dependency",
+      "refused": true
+    },
+    {
+      "name": "all-platform barrier restored",
+      "refused": true
+    },
+    {
+      "name": "missing own dependency",
+      "refused": true
+    },
+    {
+      "name": "changed final check name",
+      "refused": true
+    },
+    {
+      "name": "fail-fast enabled",
+      "refused": true
+    },
+    {
+      "name": "timeout changed",
+      "refused": true
+    },
+    {
+      "name": "failure evidence skipped",
+      "refused": true
+    },
+    {
+      "name": "wider permissions",
+      "refused": true
+    },
+    {
+      "name": "removed native_shards.py check",
+      "refused": true
+    },
+    {
+      "name": "removed actual_rust_analyzer",
+      "refused": true
+    },
+    {
+      "name": "removed cargo build --workspace --release",
+      "refused": true
+    },
+    {
+      "name": "removed host_history_live.py",
+      "refused": true
+    },
+    {
+      "name": "changed native test command",
+      "refused": true
+    },
+    {
+      "name": "dropped release upload",
+      "refused": true
+    }
+  ],
+  "dependencyReadinessModelCases": 6144,
+  "modelIsHostedExecution": false,
+  "nativeYokeImagesReadOrExecuted": false,
+  "hostedNativeAcceptance": false,
+  "actionlint": {
+    "version": "v1.7.12",
+    "asset": "actionlint_1.7.12_windows_amd64.zip",
+    "size": 2479065,
+    "officialAssetDigest": "sha256:6e7241b51e6817ea6a047693d8e6fed13b31819c9a0dd6c5a726e1592d22f6e9",
+    "localAssetSha256": "6e7241b51e6817ea6a047693d8e6fed13b31819c9a0dd6c5a726e1592d22f6e9",
+    "executableSha256": "54ca21be3de4c7cfa26914aa8b61bd76bf573ef3caac5f80d110558cdf241718",
+    "exitCode": 0,
+    "shellcheckAndPyflakesDisabled": true
+  }
+}

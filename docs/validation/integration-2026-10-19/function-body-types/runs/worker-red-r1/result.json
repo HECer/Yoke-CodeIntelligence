@@ -1,0 +1,43 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7034,\"severity\":\"error\",\"message\":\"Variable 'row' implicitly has type 'any' in some locations where its type cannot be determined.\",\"path\":\"main.ts\",\"startByte\":45,\"endByte\":48,\"text\":\"row\"},{\"config\":\"tsconfig.json\",\"code\":7005,\"severity\":\"error\",\"message\":\"Variable 'row' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":118,\"endByte\":121,\"text\":\"row\"}]"
+    },
+    {
+      "case": 1,
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7034,\"severity\":\"error\",\"message\":\"Variable 'row' implicitly has type 'any' in some locations where its type cannot be determined.\",\"path\":\"main.ts\",\"startByte\":45,\"endByte\":48,\"text\":\"row\"},{\"config\":\"tsconfig.json\",\"code\":7005,\"severity\":\"error\",\"message\":\"Variable 'row' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":114,\"endByte\":117,\"text\":\"row\"}]"
+    },
+    {
+      "case": 2,
+      "exitCode": 1,
+      "error": "Body free binding would change at consumer"
+    },
+    {
+      "case": 3,
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7034,\"severity\":\"error\",\"message\":\"Variable 'fn' implicitly has type 'any' in some locations where its type cannot be determined.\",\"path\":\"main.ts\",\"startByte\":45,\"endByte\":47,\"text\":\"fn\"},{\"config\":\"tsconfig.json\",\"code\":7005,\"severity\":\"error\",\"message\":\"Variable 'fn' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":136,\"endByte\":138,\"text\":\"fn\"}]"
+    },
+    {
+      "case": 4,
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7034,\"severity\":\"error\",\"message\":\"Variable 'row' implicitly has type 'any' in some locations where its type cannot be determined.\",\"path\":\"main.ts\",\"startByte\":45,\"endByte\":48,\"text\":\"row\"},{\"config\":\"tsconfig.json\",\"code\":7005,\"severity\":\"error\",\"message\":\"Variable 'row' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":117,\"endByte\":120,\"text\":\"row\"}]"
+    },
+    {
+      "case": 5,
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7034,\"severity\":\"error\",\"message\":\"Variable 'row' implicitly has type 'any' in some locations where its type cannot be determined.\",\"path\":\"main.ts\",\"startByte\":78,\"endByte\":81,\"text\":\"row\"},{\"config\":\"tsconfig.json\",\"code\":7005,\"severity\":\"error\",\"message\":\"Variable 'row' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":174,\"endByte\":177,\"text\":\"row\"}]"
+    },
+    {
+      "case": 6,
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7034,\"severity\":\"error\",\"message\":\"Variable 'row' implicitly has type 'any' in some locations where its type cannot be determined.\",\"path\":\"main.ts\",\"startByte\":55,\"endByte\":58,\"text\":\"row\"},{\"config\":\"tsconfig.json\",\"code\":7005,\"severity\":\"error\",\"message\":\"Variable 'row' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":73,\"endByte\":76,\"text\":\"row\"}]"
+    }
+  ],
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "diagnosticOnlyWorkerPatch": true
+}

@@ -1,0 +1,18 @@
+{
+  "complete": true,
+  "sourceCommit": "3806f7099abab7e188cedf609dd40747ee68469e",
+  "sourceFile": "native/src/process.rs",
+  "workingSha256": "4c5f87cb4d97b8cac38d9f2614f2eb390096a497658eca10ce46edf1a8ad7ee3",
+  "original8feeGitSha256": "b8b81a9c43e5495612ee37858e5c8ce9d5d5d1aabe43acbf690a817e260f60e3",
+  "currentGitSha256": "b8b81a9c43e5495612ee37858e5c8ce9d5d5d1aabe43acbf690a817e260f60e3",
+  "sourceAlreadyHadWindowsCheckedCleanupBeforeSuccessBreak": true,
+  "checkedCleanupUsesQuestionMarkToPropagateError": true,
+  "originalWindowsConcernWasIncorrect": true,
+  "rootExitPrecedesCleanupThenCompletedStreamSuccess": true,
+  "dropRemainsBestEffortFallback": true,
+  "unixSuccessBehaviorNotCertifiedByWindowsProof": true,
+  "productionOrTestSourceChanged": false,
+  "newTestsRunForDocumentationCorrection": false,
+  "firstCheckedLine": 227,
+  "block": "        #[cfg(windows)]\n        if exit.is_some() && !group_cleaned {\n            // Descendants can keep inherited pipe handles open even after the\n            // root exits. Terminate the owned job before waiting for pipe EOF;\n            // otherwise a completed root can incorrectly consume the deadline.\n            child.cleanup_checked(Duration::from_secs(2))?;\n            group_cleaned = true;\n        }\n"
+}

@@ -1,0 +1,21 @@
+{
+  "session_collections_admission": {
+    "executable": "target\\debug\\deps\\session_collections_admission-845ce530900379fe.exe",
+    "ignored": [],
+    "registered": [
+      "oversized_collection_invocation_is_rejected_before_serialization_allocation"
+    ]
+  },
+  "session_epoch_selection": {
+    "executable": "target\\debug\\deps\\session_epoch_selection-dd56743ad0b1b890.exe",
+    "ignored": [],
+    "registered": [
+      "default_v8_preserves_the_original_session_record_and_can_resume_saved_bytes",
+      "mutable_engine_handles_cannot_silently_change_a_pinned_session_epoch",
+      "same_epoch_resume_keeps_project_selection_and_cross_epoch_resume_cannot_mutate_records",
+      "session_v9_keeps_federation_receiver_receipts_and_current_grants_separate",
+      "session_v9_propagates_to_default_registered_readonly_and_query_only_projects",
+      "session_v9_reads_old_native_archives_without_recapture_or_registration_authority"
+    ]
+  }
+}

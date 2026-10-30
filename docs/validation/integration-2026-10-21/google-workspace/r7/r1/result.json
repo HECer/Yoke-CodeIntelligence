@@ -1,0 +1,130 @@
+{
+  "scope": "R7 Google export and existing source acquisition regressions",
+  "sourceUnchanged": true,
+  "allChecksPassed": false,
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 6.200813000003109,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": []
+    },
+    {
+      "name": "units",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--lib",
+        "google_workspace::",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 83.0573378999834,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": []
+    },
+    {
+      "name": "google_workspace_cli",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "google_workspace_cli",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 95.23317899997346,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\google_workspace_cli-ffeb63a663969375.exe",
+          "bytes": 94999552,
+          "sha256": "b32e28cc69f3a62e76649b091656bfdce92a183189a10c2e7849564254a98920"
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\google_workspace_cli-ffeb63a663969375.pdb",
+          "bytes": 6795264,
+          "sha256": "3f1ce409050e7296c00d6c4c47ed2931f188d4efaec3f515a27e9c2557a80b16"
+        }
+      ]
+    },
+    {
+      "name": "google_workspace_process",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "google_workspace_process",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 4.403031399997417,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 0,
+        "failed": 1,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\google_workspace_process-fa4e405b3aa72d5d.exe",
+          "bytes": 96020480,
+          "sha256": "dcb794ac7cb54de3d70ddae9d5e3eb5056f0f3cc8b6f64611539f41370b08bea"
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\google_workspace_process-fa4e405b3aa72d5d.pdb",
+          "bytes": 7671808,
+          "sha256": "fe40ce9e5ae5c26dd66ae315a88ec1e080027a551da1fe0af29d213fc7ec2a35"
+        }
+      ]
+    }
+  ],
+  "fullWindowsCertified": false,
+  "liveGoogleExportValidated": false,
+  "resourceKeyTransportAvailable": false,
+  "cliSha256": "989c2bbce725aa22dbfd2efdfd5bb341994e5dffb29d56515fa3068eb96fedaf"
+}

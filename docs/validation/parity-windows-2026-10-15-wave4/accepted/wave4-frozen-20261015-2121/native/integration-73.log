@@ -1,0 +1,33 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+    Finished `test` profile [unoptimized] target(s) in 0.60s
+     Running tests\office_bounds.rs (target\debug\deps\office_bounds-9fc912b3f32f0c6c.exe)
+
+running 1 test
+test rejected_office_text_is_admitted_before_dom_and_extraction_copies ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.92s
+
+     Running tests\ollama.rs (target\debug\deps\ollama-01f2a21a87bcee8f.exe)
+
+running 12 tests
+test actual_local_installed_embedding_model_gate ... ignored, Actual running local Ollama endpoint and explicitly selected installed embedding model digest required; never auto-start or pull
+test actual_http_summary_request_is_concise_for_single_and_multiple_sources ... ok
+test invalid_protocol_hashes_and_authority_fields_are_rejected ... ok
+test actual_http_summary_replies_cannot_exceed_concise_generation_bounds ... ok
+test labeled_http_chat_fixture_maps_source_citations_and_reported_usage ... ok
+test labeled_http_embedding_fixture_maps_exact_native_protocol_binding ... ok
+test labeled_vision_fixture_receives_hash_bound_image_bytes ... ok
+test labeled_model_reranking_is_exact_and_scores_are_bounded_inferences ... ok
+test summary_unicode_characters_cannot_exceed_the_utf8_byte_budget ... ok
+test endpoint_identity_capability_and_http_failures_never_become_successes ... ok
+test chunked_query_vectors_are_bounded_and_a_stalled_backend_times_out ... ok
+test native_executable_worker_drives_http_adapter_and_durable_unknown_billing ... ok
+
+test result: ok. 11 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.50s
+

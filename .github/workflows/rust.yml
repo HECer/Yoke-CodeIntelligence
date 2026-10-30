@@ -1,0 +1,434 @@
+name: Rust core
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  native-shards-linux:
+    name: native-shards (${{ matrix.os }}, ${{ matrix.shard }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps: &native-shard-steps
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.94.1
+        with:
+          components: clippy, rustfmt, rust-analyzer
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Use the same Windows temporary directory by its canonical long path
+        if: runner.os == 'Windows'
+        run: python scripts/ci_windows_temp.py
+      - name: Use a canonical macOS temporary root
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const os = require('node:os');
+          const path = require('node:path');
+          const root = fs.realpathSync(os.tmpdir());
+          if (!path.isAbsolute(root) || /[\x00-\x1f\x7f]/.test(root) || !fs.statSync(root).isDirectory()) {
+            throw new Error('Canonical temporary root must be an ordinary absolute directory');
+          }
+          fs.appendFileSync(process.env.GITHUB_ENV, `TMPDIR=${root}\n`, 'utf8');
+          console.log(`Canonical temporary root: ${root}`);
+          NODE
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: native-shard-${{ matrix.shard }}
+      - run: npm ci
+      - run: python -m unittest discover -s scripts/tests -v
+        id: python_tests
+        if: matrix.shard == 0
+      - name: Observe Unix memory APIs without native acceptance claims
+        if: matrix.shard == 0 && runner.os != 'Windows'
+        run: python scripts/host_memory_probe.py
+      - name: Preserve Unix memory API diagnostics (JSON and logs only)
+        if: always() && matrix.shard == 0 && runner.os != 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-memory-diagnostic-${{ matrix.os }}
+          path: validation/ci-host-memory
+          if-no-files-found: warn
+      - name: Check all native format roots on Windows
+        if: matrix.shard == 0 && runner.os == 'Windows'
+        run: python scripts/native_fmt.py --check
+      - name: Check native formatting on Unix
+        if: matrix.shard == 0 && runner.os != 'Windows'
+        run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets --locked --keep-going -j 2 -- -D warnings
+        if: matrix.shard == 0
+      # Each original Cargo target stays whole. Windows fixtures remain serial;
+      # concurrency adversaries retain their original internal threads.
+      - name: Test complete default Cargo target groups
+        id: native_tests
+        run: python scripts/native_shards.py run --index ${{ matrix.shard }}
+      - name: Observe raw PowerShell startup independently of prepared fixtures
+        id: powershell_probe
+        if: always() && runner.os == 'Windows' && (matrix.shard == 0 || steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        timeout-minutes: 2
+        run: python scripts/host_powershell_probe.py --output validation/ci-host-powershell
+      - name: Preserve separate PowerShell diagnostics (never native acceptance)
+        if: always() && runner.os == 'Windows' && (matrix.shard == 0 || steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-powershell-diagnostic-${{ matrix.shard }}
+          path: validation/ci-host-powershell/result.json
+          if-no-files-found: warn
+      - name: Isolate captured PowerShell output in a separate bounded trial
+        if: failure() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        timeout-minutes: 1
+        run: python scripts/host_powershell_probe.py --captured-write-output --output validation/ci-host-powershell-captured
+      - name: Preserve captured-output boundary diagnostics
+        if: always() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-powershell-captured-diagnostic-${{ matrix.shard }}
+          path: validation/ci-host-powershell-captured/result.json
+          if-no-files-found: warn
+      - name: Isolate host LocalAppData in an unchanged PowerShell folder trial
+        if: failure() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        timeout-minutes: 1
+        run: python scripts/host_powershell_probe.py --local-app-data --output validation/ci-host-powershell-local-app-data
+      - name: Preserve LocalAppData boundary diagnostics
+        if: always() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-powershell-local-app-data-diagnostic-${{ matrix.shard }}
+          path: validation/ci-host-powershell-local-app-data/result.json
+          if-no-files-found: warn
+      - name: Separate PowerShell command lookup from fixed module import
+        if: failure() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        timeout-minutes: 1
+        run: python scripts/host_powershell_probe.py --command-boundary --output validation/ci-host-powershell-command-boundary
+      - name: Preserve command lookup and import phase diagnostics
+        if: always() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-powershell-command-boundary-diagnostic-${{ matrix.shard }}
+          path: validation/ci-host-powershell-command-boundary/result.json
+          if-no-files-found: warn
+      - name: Observe the original PowerShell folder command after fixed Utility import
+        if: failure() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        timeout-minutes: 1
+        run: python scripts/host_powershell_probe.py --fixed-import-original --output validation/ci-host-powershell-fixed-import-original
+      - name: Preserve fixed-import original-command diagnostics
+        if: always() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-powershell-fixed-import-original-diagnostic-${{ matrix.shard }}
+          path: validation/ci-host-powershell-fixed-import-original/result.json
+          if-no-files-found: warn
+      - name: Preserve complete or partial shard receipts and raw group logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-shard-${{ matrix.os }}-${{ matrix.shard }}
+          path: validation/ci-native-shard
+          if-no-files-found: warn
+  native-shards-windows:
+    name: native-shards (${{ matrix.os }}, ${{ matrix.shard }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps: *native-shard-steps
+  native-shards-macos:
+    name: native-shards (${{ matrix.os }}, ${{ matrix.shard }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps: *native-shard-steps
+  native-rust-linux:
+    name: native-rust (${{ matrix.os }})
+    needs: native-shards-linux
+    # A different platform's failure cannot replace this platform's evidence.
+    if: always() && !cancelled()
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps: &native-acceptance-steps
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.94.1
+        with:
+          components: clippy, rustfmt, rust-analyzer
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Use the same Windows temporary directory by its canonical long path
+        if: runner.os == 'Windows'
+        run: python scripts/ci_windows_temp.py
+      - name: Use a canonical macOS temporary root
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const os = require('node:os');
+          const path = require('node:path');
+          const root = fs.realpathSync(os.tmpdir());
+          if (!path.isAbsolute(root) || /[\x00-\x1f\x7f]/.test(root) || !fs.statSync(root).isDirectory()) {
+            throw new Error('Canonical temporary root must be an ordinary absolute directory');
+          }
+          fs.appendFileSync(process.env.GITHUB_ENV, `TMPDIR=${root}\n`, 'utf8');
+          console.log(`Canonical temporary root: ${root}`);
+          NODE
+      - uses: Swatinem/rust-cache@v2
+      - run: npm ci
+      - name: Download this platform's evidence from this workflow run
+        uses: actions/download-artifact@v4
+        with:
+          pattern: native-shard-${{ matrix.os }}-*
+          path: validation/ci-native-shards-download
+      - name: Require every default target exactly once on identical selected inputs
+        run: python scripts/native_shards.py check --artifacts validation/ci-native-shards-download
+      - name: Preserve target coverage proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-coverage-${{ matrix.os }}
+          path: validation/ci-native-coverage.json
+          if-no-files-found: warn
+      - run: python scripts/run_native_tests.py --controlled-test-runner --locked --test live actual_rust_analyzer -- --ignored
+      - name: Record selected inputs before the existing Windows release build (metadata only)
+        if: runner.os == 'Windows'
+        # A marker failure is enforced by the later browser gate, never by
+        # skipping the original build/history acceptance.
+        continue-on-error: true
+        run: python scripts/host_history_browser.py --mark-build start
+      - run: cargo build --workspace --release --locked
+        id: release_build
+      - name: Bind successful Windows release build to unchanged inputs (metadata only)
+        if: runner.os == 'Windows' && steps.release_build.outcome == 'success'
+        continue-on-error: true
+        run: python scripts/host_history_browser.py --mark-build complete
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yoke-${{ matrix.os }}
+          path: |
+            target/release/yoke
+            target/release/yoke.exe
+      - name: Exercise global document history through the release CLI and owning Sessions
+        id: host_history
+        if: runner.os == 'Windows'
+        timeout-minutes: 5
+        run: python scripts/host_history_live.py --native target/release/yoke.exe --output validation/ci-host-document-history
+      - name: Preserve owned host-history acceptance evidence
+        if: always() && runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-document-history-windows
+          path: validation/ci-host-document-history
+          if-no-files-found: warn
+      - name: Exercise the real installed Edge DOM on the owning native dashboard
+        id: host_history_browser
+        if: success() && runner.os == 'Windows' && steps.host_history.outcome == 'success' && steps.release_build.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $nodeMatchClass = if ($nodeMatches.Count -eq 1) { 'one' } else { 'multiple' }
+          Write-Host "Owned browser node matches: $nodeMatchClass"
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser
+      - name: Preserve real browser automation and PNGs (human visual review unclaimed)
+        if: always() && runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-document-history-browser-windows
+          path: validation/ci-host-document-history-browser
+          if-no-files-found: error
+      - name: Exercise the real browser on both owning serena Sessions
+        if: always() && !cancelled() && runner.os == 'Windows' && steps.host_history.outcome == 'success' && steps.release_build.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --variant serena --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser-serena
+      - name: Preserve serena browser automation and six PNGs
+        if: always() && runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-document-history-browser-serena-windows
+          path: validation/ci-host-document-history-browser-serena
+          if-no-files-found: error
+      - name: Exercise the real browser on both owning persistent-python Sessions
+        if: always() && !cancelled() && runner.os == 'Windows' && steps.host_history.outcome == 'success' && steps.release_build.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --variant persistent-python --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser-persistent-python
+      - name: Preserve persistent-python browser automation and six PNGs
+        if: always() && runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-document-history-browser-persistent-python-windows
+          path: validation/ci-host-document-history-browser-persistent-python
+          if-no-files-found: error
+      - name: Exercise the real browser on both owning HTTP Sessions
+        if: always() && !cancelled() && runner.os == 'Windows' && steps.host_history.outcome == 'success' && steps.release_build.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --variant http --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser-http
+      - name: Preserve HTTP browser automation and six PNGs
+        if: always() && runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-document-history-browser-http-windows
+          path: validation/ci-host-document-history-browser-http
+          if-no-files-found: error
+  native-rust-windows:
+    name: native-rust (${{ matrix.os }})
+    needs: native-shards-windows
+    if: always() && !cancelled()
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps: *native-acceptance-steps
+  native-rust-macos:
+    name: native-rust (${{ matrix.os }})
+    needs: native-shards-macos
+    if: always() && !cancelled()
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps: *native-acceptance-steps
+  history-browser-diagnostic:
+    name: Windows history browser diagnostic (not full native acceptance)
+    # Explicit diagnostic invocation; the original shard/acceptance jobs remain
+    # mandatory and this job cannot supply their coverage receipts.
+    if: github.event_name == 'push' && contains(github.event.head_commit.message, '[browser-evidence]')
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.94.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Use the same Windows temporary directory by its canonical long path
+        run: python scripts/ci_windows_temp.py
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: history-browser-diagnostic
+      - run: npm ci
+      - name: Verify browser and owning-Session harness admission
+        run: python -m unittest scripts.tests.test_host_history_browser scripts.tests.test_host_history_live -v
+      - name: Verify the mocked HTTP browser actor admission and lifecycle
+        timeout-minutes: 1
+        run: python -m unittest scripts.tests.test_host_history_browser_http -v
+      - name: Record release inputs before the diagnostic build
+        run: python scripts/host_history_browser.py --mark-build start
+      - name: Build the same release CLI for the diagnostic
+        id: diagnostic_release
+        run: cargo build --workspace --release --locked
+      - name: Bind the successful diagnostic build to unchanged inputs
+        run: python scripts/host_history_browser.py --mark-build complete
+      - name: Exercise the original three owning-Session history variants
+        id: diagnostic_history
+        timeout-minutes: 5
+        run: python scripts/host_history_live.py --native target/release/yoke.exe --output validation/ci-host-document-history
+      - name: Preserve diagnostic owning-Session evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostic-host-document-history-windows
+          path: validation/ci-host-document-history
+          if-no-files-found: warn
+      - name: Exercise the unchanged guarded real-browser harness
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser
+      - name: Preserve diagnostic browser automation and PNGs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostic-host-document-history-browser-windows
+          path: validation/ci-host-document-history-browser
+          if-no-files-found: error
+      - name: Exercise the real browser on both owning serena Sessions
+        if: always() && !cancelled() && steps.diagnostic_history.outcome == 'success' && steps.diagnostic_release.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --variant serena --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser-serena
+      - name: Preserve serena browser automation and six PNGs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostic-host-document-history-browser-serena-windows
+          path: validation/ci-host-document-history-browser-serena
+          if-no-files-found: error
+      - name: Exercise the real browser on both owning persistent-python Sessions
+        if: always() && !cancelled() && steps.diagnostic_history.outcome == 'success' && steps.diagnostic_release.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --variant persistent-python --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser-persistent-python
+      - name: Preserve persistent-python browser automation and six PNGs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostic-host-document-history-browser-persistent-python-windows
+          path: validation/ci-host-document-history-browser-persistent-python
+          if-no-files-found: error
+      - name: Exercise the real browser on both owning HTTP Sessions
+        if: always() && !cancelled() && steps.diagnostic_history.outcome == 'success' && steps.diagnostic_release.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --variant http --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser-http
+      - name: Preserve HTTP browser automation and six PNGs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostic-host-document-history-browser-http-windows
+          path: validation/ci-host-document-history-browser-http
+          if-no-files-found: error

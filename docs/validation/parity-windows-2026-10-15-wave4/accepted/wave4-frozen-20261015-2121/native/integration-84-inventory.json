@@ -1,0 +1,37 @@
+{
+  "refactor_intents": {
+    "executable": "target\\debug\\deps\\refactor_intents-e45b8130e18e3e90.exe",
+    "ignored": [],
+    "registered": [
+      "amplified_candidate_contents_are_bounded_before_any_publication",
+      "deterministic_later_noop_nul_or_secret_candidate_is_rejected_before_any_publication",
+      "flagged_refactoring_obeys_session_plan_permissions_before_querying_a_provider",
+      "flagged_rename_rejects_unrelated_and_wholefile_provider_changes_before_publication",
+      "inline_keep_definition_preserves_exact_declaration_bytes_while_replacing_a_call",
+      "invalid_later_inline_candidate_cannot_leave_an_earlier_hidden_plan_or_derivative",
+      "keep_definition_rejects_broad_ambiguous_and_command_candidates_without_plans",
+      "keeping_an_inline_definition_requires_a_real_source_bound_call_replacement",
+      "native_occurrences_distinguish_string_comment_markers_and_unicode_word_boundaries",
+      "native_text_occurrences_refuse_potentially_interpolated_strings_before_publication",
+      "native_text_rename_never_rewrites_rust_raw_string_delimiters",
+      "native_unicode_rename_refuses_byte_string_occurrences_before_publication",
+      "projected_refactors_keep_v8_v9_source_proofs_and_never_edit_readonly_or_ignored_sources",
+      "requested_comment_and_text_rename_options_change_only_their_own_occurrence_classes",
+      "requested_false_occurrence_flags_also_constrain_provider_supplied_edits"
+    ]
+  },
+  "registry_replay_review": {
+    "executable": "target\\debug\\deps\\registry_replay_review-8390e9e4e28b3782.exe",
+    "ignored": [],
+    "registered": [
+      "historical4_keeps_its_identity_and_reports_unreplayed_claims",
+      "native8_relabel_is_rejected_after_origin_deleted",
+      "native8_retarget_is_rejected_after_origin_deleted",
+      "native9_archive_selects_proven_epoch_without_global_activation",
+      "producer_labels_cannot_change_a_proven_capture_epoch",
+      "unchanged_native8_and_view8_remain_standalone",
+      "view8_relabel_is_rejected_after_origin_deleted",
+      "view8_retarget_is_rejected_after_origin_deleted"
+    ]
+  }
+}

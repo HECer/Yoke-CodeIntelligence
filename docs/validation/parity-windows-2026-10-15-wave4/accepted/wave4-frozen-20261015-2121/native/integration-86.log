@@ -1,0 +1,34 @@
+    Finished `test` profile [unoptimized] target(s) in 0.65s
+     Running tests\retention.rs (target\debug\deps\retention-c9716eb52673495e.exe)
+
+running 16 tests
+test future_opaque_json_artifact_schema_is_not_inferred_to_be_dependency_free ... ok
+test labeled_uncommitted_history_journal_restores_only_hash_bound_rows ... ok
+test labeled_uncommitted_history_journal_restores_missing_rows_without_changing_current_source ... ok
+test committed_retirement_can_feed_conservative_cas_quarantine_and_purge_without_losing_receipts ... ok
+test missing_history_age_and_corrupt_metadata_never_become_retirement_permission ... ok
+test multiply_linked_quarantine_content_is_unknown_physical_reclamation_and_is_preserved ... ok
+test opaque_published_artifacts_defer_history ... ok
+test newly_rooted_quarantine_and_tampered_plan_refuse_purge_without_deleting_bytes ... ok
+test partial_purge_reports_actual_removed_bytes_and_can_resume_only_its_exact_intent ... ok
+test purge_reclaims_only_exact_committed_unreachable_quarantine_bytes_after_confirmation ... ok
+test reviewed_history_retirement_removes_only_unrooted_rows_and_preserves_original_source ... ok
+test stale_plan_and_concurrent_client_leave_history_intact ... ok
+test source_bindings_inside_published_json_artifacts_protect_history ... ok
+test unknown_nested_snapshot_fields_defer_history ... ok
+test unknown_record_blocks_retirement_even_without_explicit_hash_fields ... ok
+test pin_and_every_source_bound_workflow_record_protect_history ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.11s
+
+     Running tests\retrieval.rs (target\debug\deps\retrieval-1eb097bf0ffff17d.exe)
+
+running 5 tests
+test context_plan_rejects_execution_unknown_fields_and_over_budget_steps ... ok
+test document_fts_normalization_keeps_exact_diacritic_and_punctuation_evidence ... ok
+test context_plan_find_references_read_select_preserves_exact_old_source ... ok
+test common_document_terms_cannot_amplify_unbounded_highlight_work ... ok
+test identifier_components_and_document_body_are_retrievable_from_the_snapshot ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.73s
+

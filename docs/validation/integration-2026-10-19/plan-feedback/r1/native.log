@@ -1,0 +1,92 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+error[E0599]: no method named `context` found for enum `std::option::Option<T>` in the current scope
+   --> native\src\plan_feedback_store.rs:13:14
+    |
+ 10 |           let raw = context
+    |  ___________________-
+ 11 | |             .source
+ 12 | |             .raw(EVENT_KIND, &id)?
+ 13 | |             .context("feedback_binding_invalid")?;
+    | |_____________-^^^^^^^
+    |
+   ::: C:\Users\Lomi\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\anyhow-1.0.104\src\lib.rs:618:8
+    |
+618 |       fn context<C>(self, context: C) -> Result<T, Error>
+    |          ------- the method is available for `std::option::Option<std::string::String>` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: trait `Context` which provides `context` is implemented but not in scope; perhaps you want to import it
+    |
+  2 + use anyhow::Context;
+    |
+help: there is a method `with_context` with a similar name
+    |
+ 13 |             .with_context("feedback_binding_invalid")?;
+    |              +++++
+
+error[E0599]: no method named `context` found for enum `std::option::Option<T>` in the current scope
+   --> native\src\plan_feedback.rs:157:18
+    |
+154 |               let raw = self
+    |  _______________________-
+155 | |                 .source
+156 | |                 .raw("plan", &target.plan_id)?
+157 | |                 .context("feedback_binding_invalid")?;
+    | |_________________-^^^^^^^
+    |
+   ::: C:\Users\Lomi\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\anyhow-1.0.104\src\lib.rs:618:8
+    |
+618 |       fn context<C>(self, context: C) -> Result<T, Error>
+    |          ------- the method is available for `std::option::Option<std::string::String>` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: trait `Context` which provides `context` is implemented but not in scope; perhaps you want to import it
+    |
+  3 + use anyhow::Context;
+    |
+help: there is a method `with_context` with a similar name
+    |
+157 |                 .with_context("feedback_binding_invalid")?;
+    |                  +++++
+
+error[E0599]: no method named `context` found for enum `std::option::Option<T>` in the current scope
+   --> native\src\plan_feedback.rs:195:18
+    |
+191 |               let file = plan
+    |  ________________________-
+192 | |                 .files
+193 | |                 .iter()
+194 | |                 .find(|f| f.path == q.path)
+195 | |                 .context("feedback_binding_invalid")?;
+    | |_________________-^^^^^^^
+    |
+   ::: C:\Users\Lomi\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\anyhow-1.0.104\src\lib.rs:618:8
+    |
+618 |       fn context<C>(self, context: C) -> Result<T, Error>
+    |          ------- the method is available for `std::option::Option<&changes::PlannedFile>` here
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: trait `Context` which provides `context` is implemented but not in scope; perhaps you want to import it
+    |
+  3 + use anyhow::Context;
+    |
+help: there is a method `with_context` with a similar name
+    |
+195 |                 .with_context("feedback_binding_invalid")?;
+    |                  +++++
+
+error[E0282]: type annotations needed
+   --> native\src\plan_feedback.rs:201:17
+    |
+201 |                 expected.as_ref() == Some(&q.content_hash),
+    |                 ^^^^^^^^ cannot infer type
+
+error[E0282]: type annotations needed
+   --> native\src\plan_feedback.rs:204:25
+    |
+204 |             let scope = side.bind_named_scope(&side.primary_snapshot().id, self.source.deadline)?;
+    |                         ^^^^ cannot infer type
+
+Some errors have detailed explanations: E0282, E0599.
+For more information about an error, try `rustc --explain E0282`.
+error: could not compile `yoke-code-intelligence` (lib) due to 5 previous errors
