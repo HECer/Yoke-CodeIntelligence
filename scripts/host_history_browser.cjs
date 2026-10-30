@@ -425,7 +425,7 @@ async function run(value) {
       await until(p, `document.getElementById('updated').textContent!==${JSON.stringify(prior)}`);
       const since = p.receipts.length;
       checkpoint = 'pending-click';
-      await click(p, '#pending-documents', 'pending-documents');
+      await click(p, '#pending-documents');
       checkpoint = 'pending-receipt';
       const pending = await receipt(p, 'pending', since);
       checkpoint = 'pending-admission';
@@ -434,6 +434,11 @@ async function run(value) {
         && pending.fileChanged === false && pending.metadataChanged === false && pending.sourceWritten === false);
       checkpoint = 'pending-disabled';
       await until(p, `document.getElementById('document-content').readOnly && document.getElementById('plan-document').disabled && document.getElementById('apply-document').disabled`);
+      // manage() temporarily disables this clicked control, which can blur it
+      // before the input acknowledgement. Verify focus through real keyboard
+      // input after the reply, then exercise skipping the disabled actions.
+      checkpoint = 'pending-keyboard-focus';
+      await focusPendingControlWithKeyboard(p);
       // Keyboard navigation must skip disabled Review/Save controls.
       const count = p.receipts.length;
       checkpoint = 'pending-tab';
@@ -441,7 +446,7 @@ async function run(value) {
       await cdp.send('Input.dispatchKeyEvent', {type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9}, p.session);
       need(!['plan-document', 'apply-document'].includes(await evaluate(p, `document.activeElement?.id`)));
       checkpoint = 'pending-repeat-click';
-      await click(p, '#pending-documents', 'pending-documents');
+      await click(p, '#pending-documents');
       checkpoint = 'pending-repeat-receipt';
       await receipt(p, 'pending', count);
       checkpoint = 'pending-keyboard-focus';

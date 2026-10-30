@@ -1,5 +1,14 @@
 # Owned Windows host-history browser harness
 
+At `abdbdb03`, [diagnostic run 41013033443](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41013033443/job/123922975632)
+passes the native, Serena and HTTP browser invocations and the original
+three-variant history harness. All six PNGs for each successful browser profile
+were individually reviewed, with independent worker/tree/browser exits. HTTP
+also proves its actual credential/authentication, Session revocation, peer
+survival, natural service lifetime and owned-credential cleanup gates.
+Persistent Python fails at the mobile pending click and has three images only.
+It remains unaccepted. [Source-bound evidence and focus correction](../docs/validation/integration-2026-10-30/browser-abdb-checkpoint/README.md).
+
 The native owning stdio browser flow passed at `ed92e9f8` in
 [Windows diagnostic run 40995799274](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/40995799274/job/123868515540).
 All six actual desktop/mobile before, pending and after PNGs were visually
@@ -13,10 +22,10 @@ HTTP, visible-shell, human or release acceptance.
 release build and successful `host_history_live.py` step. The default `native`
 invocation and its evidence directory remain. Separate explicit `--variant
 serena` and `--variant persistent-python` invocations now exercise both old and
-current owning Sessions through the selected Serena protocol. **These two new
-browser variants remain unrun until fresh guarded CI and all twelve new PNGs
-are reviewed.** A separate HTTP variant is now also implemented and awaits its
-own actual run and six-image review. The original three-variant protocol/history gate, launcher,
+current owning Sessions through the selected Serena protocol. Serena has a
+successful six-image run at `abdbdb03`; persistent Python still requires its
+complete successful browser run and all six images. HTTP has its own successful
+six-image run at the same source. The original three-variant protocol/history gate, launcher,
 budgets, tests and claims remain unchanged. Its old Serena/Python actors did
 not make its destination dashboard a Serena/Python browser flow.
 
@@ -211,8 +220,9 @@ bounded service lifetimes. Early service exit is not Session isolation proof.
 The HTTP helper and 21 adversarial unit tests use only Python standard-library
 APIs. Focused suites pass 79 tests with mocked HTTP/native/credential peers and
 inert Job fixtures. Actual Credential Manager, public CLI/MCP/dashboard behavior,
-natural service lifetime, browser run and all six HTTP screenshots remain
-unqualified until fresh CI. [Candidate review scope](../docs/validation/integration-2026-10-30/browser-http-candidate/README.md).
+natural service lifetime and all six HTTP screenshots subsequently pass at
+`abdbdb03`, with the separate source-bound visual review linked above.
+[Original candidate review scope](../docs/validation/integration-2026-10-30/browser-http-candidate/README.md).
 
 ## Variant-bound driver startup correction
 

@@ -1,5 +1,33 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Native, Serena and HTTP browser evidence; Python focus correction (2026-10-30)
+
+At source `abdbdb03`, diagnostic run `41013033443` completes the native, Serena
+and HTTP browser flows, each with all six desktop/mobile before/pending/after
+PNG/DOM pairs. All 18 successful images were individually inspected; the draft,
+disabled writes, archival explanation, keyboard focus and fresh saves are
+readable without blocking layout defects. Both authorities, browser/driver and
+worker exit before forced cleanup. HTTP additionally proves principal/auth/origin
+refusal, owning-Session revocation with the peer preserved, natural 120-second
+service exits, EOF and deletion of its two fresh logon-scoped credentials.
+The original three-variant history harness also passes, including all 42 original
+records per variant and retained Python value/runtime exit checks. All five
+artifact source maps agree: 1,101 selected Git inputs, 45 raw and 1,056 explicitly
+identified LF/CRLF-only matches. This evidence qualifies those tested flows at
+`abdbdb03`, not a later source or whole-project release.
+
+Persistent-Python browser execution fails at `pending-click` on mobile, retaining
+only three images and a failed worker exit. It remains unaccepted. A controlled
+actual-driver-phase reproduction identifies a focus race consistent with that
+checkpoint: the app can disable and blur the clicked control before its input
+acknowledgement. The correction checks focus through real bounded Tab input after
+the actual pending reply. It retains both exact response checks, disabled-write
+assertions, keyboard skipping and final focus/screenshot requirements. The old
+driver fails the regression; the correction passes all 13 protocol tests, 80
+focused Python tests, typecheck and npm tests (266 passed, three skipped).
+Fresh hosted qualification of this correction, full macOS memory enforcement,
+VSIX/extension host, main and release remain open. [Artifacts, visual review and causal scope](validation/integration-2026-10-30/browser-abdb-checkpoint/README.md).
+
 ## Closed browser variant startup repair (2026-10-30)
 
 At `d6b9da55`, run `41004163411`, native automation passes with all six PNG/DOM
