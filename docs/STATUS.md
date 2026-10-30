@@ -1,5 +1,26 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Windows REPL and Explorer fixture failure context (2026-10-30)
+
+At `6c8bd90b`, [Windows shard 6](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41031531780/job/123982157572)
+passes 46 of 48 target groups. A declaration-bridge REPL case exceeds its
+20-second cell deadline without identifying which of four cells failed. Two
+Explorer cases report readiness-channel disconnection before their HTTP
+assertions; the underlying server-thread result is not retained. These logs do
+not establish a receiver-verification defect or a precise startup cause.
+
+The REPL fixture now reports a failed authored cell's SHA-256 and elapsed and
+remaining time without printing its code. The Explorer fixture reuses the
+reviewed PR9 startup-error forwarding, distinguishing engine opening from
+serving failures through its existing channel. The original 20-second cell
+deadline, five-second readiness wait, functional assertions and production
+sources remain unchanged.
+
+Rust 1.94.1 formatting/source parsing, source-preservation checks, typecheck and
+npm tests pass (266 passed, three skipped). Changed native targets and Clippy
+were not run locally. These diagnostics require fresh native CI qualification;
+they do not establish a production fix or platform/release acceptance.
+
 ## Native, Serena and HTTP browser evidence; Python focus correction (2026-10-30)
 
 At source `abdbdb03`, diagnostic run `41013033443` completes the native, Serena
