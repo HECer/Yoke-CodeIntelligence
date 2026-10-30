@@ -19,10 +19,11 @@ pub enum Codec {
     Utf16Be,
     Latin1,
     Ascii,
+    Windows1252,
 }
 impl Codec {
     /// Deliberately finite, documented Python 3.11 standard aliases. No registry,
-    /// platform defaults, heuristic detection, Windows-1252 or replacement mode.
+    /// platform defaults, heuristic detection or replacement mode.
     pub fn parse(value: &str) -> Result<Self> {
         ensure!(
             value.len() <= 32 && value.is_ascii(),
@@ -38,6 +39,7 @@ impl Codec {
             "utf_16_be" | "utf_16be" => Self::Utf16Be,
             "latin_1" | "latin1" | "iso_8859_1" | "iso8859_1" | "8859" | "cp819" | "latin"
             | "l1" => Self::Latin1,
+            "cp1252" | "windows_1252" => Self::Windows1252,
             _ => bail!("source_encoding_unsupported"),
         })
     }
@@ -173,6 +175,10 @@ impl View {
                         "source_encoding_invalid_ascii"
                     );
                     let c = char::from(raw[i]);
+                    i += 1;
+                    c
+                } else if codec == Codec::Windows1252 {
+                    let c = cp1252_decode(raw[i])?;
                     i += 1;
                     c
                 } else {
@@ -345,6 +351,62 @@ fn checked_hash(bytes: &[u8], check: &impl Fn() -> Result<()>) -> Result<String>
     Ok(hex::encode(hash.finalize()))
 }
 
+// Python 3.11 cp1252 strict mapping: undefined entries are rejected, not
+// mapped to C1 controls as in the WHATWG web encoding.
+const CP1252_HIGH: [Option<char>; 32] = [
+    Some('\u{20ac}'),
+    None,
+    Some('\u{201a}'),
+    Some('\u{0192}'),
+    Some('\u{201e}'),
+    Some('\u{2026}'),
+    Some('\u{2020}'),
+    Some('\u{2021}'),
+    Some('\u{02c6}'),
+    Some('\u{2030}'),
+    Some('\u{0160}'),
+    Some('\u{2039}'),
+    Some('\u{0152}'),
+    None,
+    Some('\u{017d}'),
+    None,
+    None,
+    Some('\u{2018}'),
+    Some('\u{2019}'),
+    Some('\u{201c}'),
+    Some('\u{201d}'),
+    Some('\u{2022}'),
+    Some('\u{2013}'),
+    Some('\u{2014}'),
+    Some('\u{02dc}'),
+    Some('\u{2122}'),
+    Some('\u{0161}'),
+    Some('\u{203a}'),
+    Some('\u{0153}'),
+    None,
+    Some('\u{017e}'),
+    Some('\u{0178}'),
+];
+fn cp1252_decode(byte: u8) -> Result<char> {
+    if (0x80..=0x9f).contains(&byte) {
+        CP1252_HIGH[(byte - 0x80) as usize]
+            .ok_or_else(|| anyhow::anyhow!("source_encoding_undefined_windows1252_byte"))
+    } else {
+        Ok(char::from(byte))
+    }
+}
+fn cp1252_encode(ch: char) -> Result<u8> {
+    let n = u32::from(ch);
+    if n <= 0x7f || (0xa0..=0xff).contains(&n) {
+        return Ok(n as u8);
+    }
+    CP1252_HIGH
+        .iter()
+        .position(|&entry| entry == Some(ch))
+        .map(|i| i as u8 + 0x80)
+        .ok_or_else(|| anyhow::anyhow!("source_encoding_unrepresentable_windows1252"))
+}
+
 fn encode(text: &str, codec: Codec, check: &impl Fn() -> Result<()>) -> Result<Vec<u8>> {
     check()?;
     ensure!(text.len() <= MAX_TEXT, "source_encoding_decoded_budget");
@@ -365,6 +427,10 @@ fn encode(text: &str, codec: Codec, check: &impl Fn() -> Result<()>) -> Result<V
                 );
                 1
             }
+            Codec::Windows1252 => {
+                cp1252_encode(ch)?;
+                1
+            }
             Codec::Utf16Le | Codec::Utf16Be => ch.len_utf16() * 2,
             Codec::Utf8 | Codec::Utf8Sig => ch.len_utf8(),
             Codec::Utf16 => bail!("source_encoding_utf16_bom_required"),
@@ -381,6 +447,7 @@ fn encode(text: &str, codec: Codec, check: &impl Fn() -> Result<()>) -> Result<V
         }
         match codec {
             Codec::Latin1 | Codec::Ascii => bytes.push(ch as u8),
+            Codec::Windows1252 => bytes.push(cp1252_encode(ch)?),
             Codec::Utf8 | Codec::Utf8Sig => {
                 bytes.extend_from_slice(ch.encode_utf8(&mut [0; 4]).as_bytes())
             }

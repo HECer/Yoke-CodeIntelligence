@@ -2,13 +2,14 @@
 
 This is a bounded native codec increment, not certification of the complete
 encoding identity, all standard codecs, all language servers or the project.
-Source `b55064b9` has compiled and executed codec targets with 14/1 core and 4/1
-transport pass/fail counts. The reserved-basename and approval-schema fixture
-defects are corrected; their fresh execution and full functional acceptance
-remain pending. The parent owns serial guarded native/CLI/stdio/HTTP/compatibility,
-typecheck and npm acceptance.
-The later strict ASCII increment has source and transport fixtures; native
-execution and runtime qualification of that increment remain pending.
+Earlier source `272ec171` has source-bound macOS results for all 19 core and
+eight transport cases in [run 41031519894](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41031519894),
+tested merge `79872a66` with an identical Git tree. Those results include ASCII
+and UTF-8-SIG and retain that source identity; they do not qualify Windows-1252.
+The Windows-1252 increment is integrated afterward, with 21 core and ten
+transport declarations. Native compilation and execution of the new increment
+remain unrun pending guarded hosted qualification. The parent owns serial
+native/CLI/stdio/HTTP/compatibility and full functional acceptance.
 Shared release status, the original 353-entry inventory and certification flags
 are intentionally outside this change.
 
@@ -42,12 +43,13 @@ underscores. These are the admitted spellings (plus those case/separator forms):
 | BOM-selected UTF-16 | `utf_16`, `utf16`, `u16` |
 | Explicit little endian | `utf_16_le`, `utf-16le` |
 | Explicit big endian | `utf_16_be`, `utf-16be` |
+| Windows-1252 | `cp1252`, `windows-1252` |
 | True ISO-8859-1 | `latin_1`, `latin1`, `iso-8859-1`, `iso8859-1`, `8859`, `cp819`, `latin`, `L1` |
 
 The [Python 3.11 standard encoding table](https://docs.python.org/3.11/library/codecs.html#standard-encodings)
 is the alias reference, not a promise to implement its entire codec registry or
 additional registry normalization. Whitespace aliases, arbitrary punctuation,
-Windows-1252, UTF-32 and every other codec are unsupported.
+UTF-32 and every other codec are unsupported.
 Unknown codecs and invalid setting types refuse explicitly. Latin1 maps each
 byte directly to the same numbered Unicode scalar, including C1 controls;
 byte `80` is U+0080, not the Windows-1252 euro sign. Explicit ASCII rejects
@@ -60,7 +62,7 @@ signature when the file is read again. Existing signatures are preserved.
 
 The resolved host profile uses `sourceEncodings` with `global` and
 `projects.<registered-name>.project/local`, with canonical enum values `utf8`,
-`utf8_sig`, `utf16`, `utf16_le`, `utf16_be`, `latin1`, `ascii`. Example:
+`utf8_sig`, `utf16`, `utf16_le`, `utf16_be`, `latin1`, `ascii`, `windows1252`. Example:
 
 ```json
 {"sourceEncodings":{"global":"latin1","projects":{"default":{"local":"utf16"},"secondary":{"project":"utf8"}}}}
@@ -98,7 +100,10 @@ inherited by native derived snapshots.
 checked monotonic scalar-boundary map. It never applies Unicode normalization,
 replacement characters or newline conversion. For the new policies, decoding
 is a strict two-pass operation: sizes are checked before allocating text/maps.
-Odd UTF-16 input and unpaired high/low surrogates refuse.
+Odd UTF-16 input and unpaired high/low surrogates refuse. Windows-1252 follows the
+[Python 3.11 strict cp1252 codec](https://github.com/python/cpython/blob/3.11/Lib/encodings/cp1252.py):
+bytes `81`, `8D`, `8F`, `90` and `9D` are undefined and refuse; they are not mapped
+to C1 controls. Unrepresentable characters refuse on write.
 
 `utf8_sig` consumes an optional initial `EF BB BF` signature and keeps it as an immutable raw prefix; without one the decoded text starts at raw byte zero. New files use a signature; existing files preserve its presence. Invalid UTF-8 refuses. Legacy UTF-8 continues to expose U+FEFF as text.
 
@@ -294,3 +299,23 @@ native/src/store_read_only.rs
 native/src/test_map.rs
 native/src/trail_adapter.rs
 ```
+
+## Windows-1252 increment
+
+The Windows-1252 implementation from source-only candidate `4995fe20` is
+integrated after ASCII and UTF-8-SIG at `272ec171`, retaining both codec variants,
+their aliases, byte mappings, capability entries and original fixtures.
+The original undefined-codec assertions now exclude only the newly supported
+Windows-1252 names. Native execution of this combined increment remains pending
+guarded qualification; earlier codec results retain their own source identity.
+
+The added core fixture pins the independent UTF-8 hash of all 251 defined byte
+values and checks every scalar boundary in both directions. Expansion/cancellation
+cases refuse before publication. The new stdio fixture checks decoded reads,
+raw-byte create plans, request-codec override refusal and unrepresentable edits
+without writing source. A separate actual verification/approval/writer fixture
+requires a failed wrong-byte verification, refusal to apply it, a successful
+exact-byte verification, a checked journal and retention of original CAS bytes.
+These fixtures are authored for the unchanged guarded CI; they have not run
+locally. No selected-codec compiler/runtime proof or semantic edit capability is
+enabled by adding this codec.

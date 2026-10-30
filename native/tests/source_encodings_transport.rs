@@ -484,6 +484,77 @@ fn actual_executed_raw_byte_verification_approval_and_writer_journal_preserve_se
 }
 
 #[test]
+fn windows1252_stdio_host_selection_reads_and_prepares_raw_bytes_without_request_override() {
+    let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+    let root = tempfile::tempdir().unwrap();
+    let config = tempfile::tempdir().unwrap();
+    let raw = b"// \x80 \x93caf\xe9\x94\r\nfn target() {}\r\n";
+    fs::write(root.path().join("main.rs"), raw).unwrap();
+    let capture = config.path().join("capture.json");
+    fs::write(
+        &capture,
+        r#"{"sourceEncoding":{"kind":"strict_v1","codec":"windows1252"}}"#,
+    )
+    .unwrap();
+    let messages = [
+        json!({"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"windows1252-fixture","version":"1"}}}),
+        json!({"jsonrpc":"2.0","method":"notifications/initialized"}),
+        json!({"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"ci_read","arguments":{"path":"main.rs"}}}),
+        json!({"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"ci_change_prepare","arguments":{"edits":[{"kind":"create","path":"new.rs","text":"const PRICE: &str = \"caf\u{e9} \u{20ac}\";\r\n"}]}}}),
+        json!({"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"ci_read","arguments":{"path":"main.rs","sourceEncoding":"latin1"}}}),
+        json!({"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"ci_change_prepare","arguments":{"edits":[{"kind":"create","path":"bad.rs","text":"\u{1f4a1}"}]}}}),
+    ];
+    let input = messages
+        .iter()
+        .map(|m| format!("{m}\n"))
+        .collect::<String>();
+    let output = run(
+        config.path(),
+        &[
+            "--root",
+            root.path().to_str().unwrap(),
+            "--capture-config",
+            capture.to_str().unwrap(),
+            "serve",
+        ],
+        input.as_bytes(),
+    );
+    let replies: Vec<Value> = String::from_utf8(output)
+        .unwrap()
+        .lines()
+        .map(|s| serde_json::from_str(s).unwrap())
+        .collect();
+    let read = tool(replies.iter().find(|m| m["id"] == 2).unwrap());
+    assert_eq!(read["status"], "ok", "{read}");
+    assert_eq!(
+        read["data"]["text"],
+        "// \u{20ac} \u{201c}caf\u{e9}\u{201d}\r\nfn target() {}\r\n"
+    );
+    assert_eq!(read["data"]["sourceView"]["rawContentHash"], hash(raw));
+    let prepared = tool(replies.iter().find(|m| m["id"] == 3).unwrap());
+    assert_eq!(prepared["status"], "ok", "{prepared}");
+    let plan: changes::Plan = serde_json::from_value(prepared["data"]["plan"].clone()).unwrap();
+    assert_eq!(plan.source_encoding, Codec::Windows1252.policy());
+    let engine = Engine::open(root.path()).unwrap();
+    assert_eq!(
+        engine
+            .store
+            .read_blob(plan.files[0].after_hash.as_ref().unwrap())
+            .unwrap(),
+        b"const PRICE: &str = \"caf\xe9 \x80\";\r\n"
+    );
+    for id in [4, 5] {
+        assert_eq!(
+            tool(replies.iter().find(|m| m["id"] == id).unwrap())["status"],
+            "error"
+        );
+    }
+    assert!(!root.path().join("new.rs").exists());
+    assert!(!root.path().join("bad.rs").exists());
+    assert_eq!(fs::read(root.path().join("main.rs")).unwrap(), raw);
+}
+
+#[test]
 fn ascii_stdio_host_selection_preserves_offsets_and_rejects_unicode_edits() {
     let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
     let root = tempfile::tempdir().unwrap();
@@ -691,6 +762,93 @@ fn utf8_sig_executed_verification_and_writer_preserve_signature() {
             .unwrap()
             .source_encoding,
         Codec::Utf8Sig.policy()
+    );
+    assert_eq!(e.store.read_blob(&s.files[0].hash).unwrap(), raw);
+}
+
+#[test]
+fn windows1252_executed_raw_byte_verification_and_writer_preserve_source_codec() {
+    let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+    let root = tempfile::tempdir().unwrap();
+    let raw = b"// \x80 \x93caf\xe9\x94\r\nfn target() {}\r\n";
+    fs::write(root.path().join("main.rs"), raw).unwrap();
+    let mut e = Engine::open(root.path()).unwrap();
+    e.capture_options.source_encoding = Codec::Windows1252.policy();
+    e.allow_writes = true;
+    let (s, g, _, _) = e.index(&d()).unwrap();
+    let v = yoke::query::source_view(&e.store, &s, "main.rs").unwrap();
+    let start = v.to_raw(v.text().find("target").unwrap()).unwrap();
+    let p=changes::prepare(&mut e.store,&s,&g,&json!({"edits":[{"kind":"replace","path":"main.rs","expectedHash":hash(raw),"startByte":start,"endByte":start+6,"text":"café"}]}),&d()).unwrap();
+    let expected = b"// \x80 \x93caf\xe9\x94\r\nfn caf\xe9() {}\r\n";
+    let verification = |expected: &[u8]| {
+        #[cfg(windows)]
+        {
+            let exe = std::path::PathBuf::from(std::env::var_os("SystemRoot").unwrap())
+                .join("System32/WindowsPowerShell/v1.0/powershell.exe");
+            let script = format!(
+                "$b=[IO.File]::ReadAllBytes('main.rs'); $h=[Security.Cryptography.SHA256]::Create(); if ([BitConverter]::ToString($h.ComputeHash($b)).Replace('-','').ToLowerInvariant() -ne '{}') {{ exit 19 }}",
+                hash(expected)
+            );
+            (
+                exe,
+                vec![
+                    "-NoProfile".into(),
+                    "-NonInteractive".into(),
+                    "-Command".into(),
+                    script,
+                ],
+            )
+        }
+        #[cfg(not(windows))]
+        {
+            (
+                std::path::PathBuf::from("/bin/sh"),
+                vec![
+                    "-c".into(),
+                    format!(
+                        "test \"$(od -An -tx1 main.rs | tr -d ' \\n')\" = '{}'",
+                        hex::encode(expected)
+                    ),
+                ],
+            )
+        }
+    };
+    changes::approve(&e.store, &p.id, false).unwrap();
+    let (command, args) = verification(raw);
+    let wrong =
+        yoke::verify::execute(&e, &p.id, command.to_str().unwrap(), &args, true, &d()).unwrap();
+    assert_eq!(wrong["status"], "failed");
+    assert!(
+        changes::apply(
+            &e.store,
+            root.path(),
+            &json!({"planId":p.id,"idempotencyKey":"unverified","mode":"workspace"}),
+            true,
+            &d()
+        )
+        .is_err()
+    );
+    let (command, args) = verification(expected);
+    let checked =
+        yoke::verify::execute(&e, &p.id, command.to_str().unwrap(), &args, true, &d()).unwrap();
+    assert_eq!(checked["status"], "passed", "{checked}");
+    let receipt = changes::apply(
+        &e.store,
+        root.path(),
+        &json!({"planId":p.id,"idempotencyKey":"verified","mode":"workspace"}),
+        true,
+        &d(),
+    )
+    .unwrap();
+    assert_eq!(receipt.status, "applied");
+    assert_eq!(fs::read(root.path().join("main.rs")).unwrap(), expected);
+    let journal: Value = e.store.get_record("journal", &receipt.id).unwrap();
+    assert_eq!(journal["planId"], p.id);
+    assert_eq!(
+        changes::load_checked_plan(&e.store, &p.id, &d())
+            .unwrap()
+            .source_encoding,
+        Codec::Windows1252.policy()
     );
     assert_eq!(e.store.read_blob(&s.files[0].hash).unwrap(), raw);
 }
