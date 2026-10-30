@@ -6,7 +6,7 @@ The `9d0c4c72` macOS PR run's queued-revocation case fails in the already-runnin
 reader's client exchange, before its expected 503 result. Existing artifacts lack
 prefix length and timing, so the cause remains unestablished. Failure-only scalar
 observations now preserve those values while every original request, assertion
-and budget remains. The new formatter adversary and complete 14-case target need
+and budget remains. The formatter/owned-TCP adversaries and complete 15-case target need
 guarded native execution. A successful sibling run is not a causal repair.
 
 ## Remaining Python browser and strict platform gates (2026-10-30)

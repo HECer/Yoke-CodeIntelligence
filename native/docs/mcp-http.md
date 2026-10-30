@@ -75,6 +75,9 @@ and whether a complete header declared an expected frame size. These distinguish
 an empty EOF from a partial frame without recording request/response bytes,
 headers, session IDs, addresses or paths. The original ten-second client read
 timeout, framing assertions, server budgets and revocation checks remain.
+An owned TCP peer fixture deliberately closes an empty response and an incomplete
+declared frame. It requires the original client failure, exact scalar progress,
+and exclusion of a synthetic header/body canary from that failure message.
 Instrumentation can affect scheduling; a later observation must be interpreted
 at its recorded source and does not by itself establish a timeout's cause.
 

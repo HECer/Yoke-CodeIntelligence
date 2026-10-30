@@ -13,8 +13,9 @@ reserve, ten-second client read timeout and all test bodies remain unchanged.
 
 The test client now retains closed scalar connect/send/read timings, read count,
 prefix length and declared frame size on failure. An added formatter adversary
-covers maximum integer values and absent/zero/maximum expected sizes. Native
-compilation and all 14 current target declarations require guarded hosted CI;
+covers maximum integer values and absent/zero/maximum expected sizes. An owned
+TCP peer additionally exercises empty/partial EOF and response-content exclusion.
+Native compilation and all 15 current target declarations require guarded hosted CI;
 the observations are source-only until that execution and do not repair or
 reclassify the earlier failure. Local Rust 1.94.1 formatting/source parsing and
 source-preservation checks pass, as do typecheck and npm tests (266 passed,

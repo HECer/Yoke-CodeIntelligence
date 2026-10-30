@@ -182,6 +182,63 @@ fn incomplete_response_observations_are_bounded_ascii_for_extreme_scalars() {
 }
 
 #[test]
+fn incomplete_tcp_eof_reports_scalar_progress_without_response_content() {
+    let _gate = HTTP_TEST
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner());
+    let header = b"HTTP/1.1 503 Service Unavailable\r\nContent-Length: 128\r\nX-Owned: owned-response-canary\r\n\r\n";
+    let body = b"owned-response-canary";
+    for partial in [false, true] {
+        let mut response = vec![];
+        if partial {
+            response.extend_from_slice(header);
+            response.extend_from_slice(body);
+        }
+        let prefix_bytes = response.len();
+        let expected_bytes = if partial { header.len() + 128 } else { 0 };
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        listener.set_nonblocking(true).unwrap();
+        let address = listener.local_addr().unwrap();
+        let peer = std::thread::spawn(move || -> std::io::Result<()> {
+            let end = Instant::now() + Duration::from_secs(5);
+            let mut stream = loop {
+                match listener.accept() {
+                    Ok((stream, _)) => break stream,
+                    Err(error) if error.kind() == std::io::ErrorKind::WouldBlock => {
+                        if Instant::now() >= end {
+                            return Err(std::io::ErrorKind::TimedOut.into());
+                        }
+                        std::thread::sleep(Duration::from_millis(5));
+                    }
+                    Err(error) => return Err(error),
+                }
+            };
+            stream.set_read_timeout(Some(Duration::from_secs(5)))?;
+            stream.set_write_timeout(Some(Duration::from_secs(5)))?;
+            let mut request = [0; 1];
+            stream.read_exact(&mut request)?;
+            stream.write_all(&response)?;
+            stream.shutdown(std::net::Shutdown::Write)
+        });
+        let failure = std::panic::catch_unwind(|| exchange(address, b"!"));
+        assert!(peer.join().unwrap().is_ok());
+        let payload = failure
+            .err()
+            .expect("Incomplete frames must remain failures");
+        let message = payload
+            .downcast_ref::<String>()
+            .map(String::as_str)
+            .or_else(|| payload.downcast_ref::<&str>().copied())
+            .unwrap();
+        assert!(message.contains("HTTP connection closed before a complete framed response"));
+        assert!(message.contains(&format!("prefix_bytes={prefix_bytes} ")));
+        assert!(message.contains(&format!("frame_declared={partial} ")));
+        assert!(message.contains(&format!("expected_frame_bytes={expected_bytes}")));
+        assert!(!message.contains("owned-response-canary"));
+    }
+}
+
+#[test]
 fn real_tcp_session_preserves_profile_initialization_and_closes_without_sse() {
     let _gate = HTTP_TEST
         .lock()
