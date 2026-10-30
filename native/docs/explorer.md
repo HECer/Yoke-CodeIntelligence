@@ -108,3 +108,28 @@ The [live Windows evidence](../../docs/validation/integration-2026-10-21/explore
 preserves the actual browser-found idle-connection defect and failing/passing
 regression, all guard scopes, exact legacy HTML and final functional/visual checks.
 Private test capabilities and process/profile files are excluded from publication.
+
+## Receive-failure observations in the native integration fixture
+
+At source `85d0893d`, Windows push run `41096155077` fails the existing
+rebuild/reload test at its missing HTTP header-delimiter assertion. Its five
+other cases and the six-case Linux/macOS targets pass at that source. The
+received prefix and timing were not recorded, so neither an empty response nor
+an underlying cause is established by that failure.
+
+The fixture's receive helper now preserves only scalar elapsed microseconds,
+received byte count, read-failure status, presence/value of a raw OS error code
+and header-delimiter presence on failure. The formatter holds no response,
+header, token, snapshot identifier, URL, path or address. Its static maximum is
+169 ASCII bytes on 64-bit targets; this does not bound Rust's ordinary panic
+prefix/location text. The successful read-to-EOF parser and all original server,
+socket, request, assertion and timeout behavior remain unchanged.
+
+Two new native test functions exercise extreme scalar combinations and a
+bounded owned loopback peer returning empty, partial and complete responses.
+The complete-response control preserves the original parser, and the failure
+checks exclude synthetic response canaries. These fixtures are authored, not
+executed native evidence. The full target now declares eight cases and awaits
+guarded hosted execution; the original Windows cause and broader platform
+qualification remain open. Observation overhead can affect scheduling and
+passing a later run would not establish a causal repair.
