@@ -25,7 +25,7 @@ pub struct Arguments {
 enum Operation {
     Local(Local),
     Remote(Remote),
-    Verify(LocalVerification),
+    Verify(Verify),
     Interpret(LocalInterpretation),
 }
 #[derive(Args)]
@@ -82,6 +82,19 @@ struct LocalVerification {
     max_source_bytes: usize,
 }
 #[derive(Args)]
+struct Verify {
+    #[command(flatten)]
+    source: LocalVerification,
+    #[arg(long)]
+    source_preview: Option<PathBuf>,
+    #[arg(long)]
+    allow_source_preview: bool,
+    #[arg(long, default_value_t = 4_000_000)]
+    max_preview_bytes: usize,
+    #[arg(long, default_value_t = 4_000_000)]
+    max_preview_encoded_bytes: usize,
+}
+#[derive(Args)]
 struct LocalInterpretation {
     #[command(flatten)]
     source: LocalVerification,
@@ -125,7 +138,21 @@ impl Arguments {
                     "github_app_digest_interpretation_capacity_exceeded"
                 );
             }
-            Operation::Verify(a) => verification_flags(a)?,
+            Operation::Verify(a) => {
+                verification_flags(&a.source)?;
+                if a.source_preview.is_some() {
+                    ensure!(
+                        a.allow_source_preview,
+                        "github_app_digest_verification_permission_required"
+                    );
+                    ensure!(
+                        a.source_preview.as_ref().is_some_and(|p| p.is_absolute())
+                            && (1..=16_000_000).contains(&a.max_preview_bytes)
+                            && (1..=16_000_000).contains(&a.max_preview_encoded_bytes),
+                        "github_app_digest_verification_input_invalid"
+                    );
+                }
+            }
             Operation::Local(a) => {
                 ensure!(a.allow_query, "github_app_digest_query_permission_required")
             }
@@ -198,6 +225,8 @@ impl Arguments {
                 .export(max_bytes as usize, &d)?
             }
             Operation::Verify(a) => {
+                let v = a;
+                let a = &v.source;
                 let profile = receiver::Profile::parse(&bytes(&a.profile, 32_000, &d)?)?;
                 let source_profile = HostProfile::parse(&bytes(&a.source_profile, 32_000, &d)?)?;
                 let request = verification::Request::parse(&bytes(&a.request, 8192, &d)?)?;
@@ -224,7 +253,7 @@ impl Arguments {
                 source_options.validate()?;
                 let receiver = Store::open_existing_read_only(root, &d)?;
                 let source = Store::open_existing_read_only(&a.source_root, &d)?;
-                verification::verify(
+                let mut checked = verification::verify(
                     &verification::Context {
                         receiver_store: &receiver,
                         receiver_profile: &profile,
@@ -236,8 +265,18 @@ impl Arguments {
                     },
                     &request,
                     &d,
-                )?
-                .export(max_bytes as usize, &d)?
+                )?;
+                if let Some(path) = &v.source_preview {
+                    let raw = bytes(path, v.max_preview_bytes, &d)?;
+                    checked.bind_source_preview(
+                        &raw,
+                        v.allow_source_preview,
+                        v.max_preview_bytes,
+                        v.max_preview_encoded_bytes,
+                        &d,
+                    )?;
+                }
+                checked.export(max_bytes as usize, &d)?
             }
             Operation::Local(a) => {
                 let profile = receiver::Profile::parse(&bytes(&a.profile, 32_000, &d)?)?;
