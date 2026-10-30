@@ -32,3 +32,25 @@ jobs:
       - run: node scripts/configured-smoke.mjs
       - run: node scripts/publish-github.mjs --dry-run
       - run: npm pack --dry-run
+  vscode-owned-job:
+    name: Windows VS Code launcher Job lifecycle (no VSIX acceptance)
+    runs-on: windows-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Check inert launcher admission adversaries
+        timeout-minutes: 1
+        run: python -m unittest scripts.tests.test_vscode_owned_job -v
+      - name: Probe only owned Python process trees and passed-marker refusal
+        timeout-minutes: 2
+        run: python scripts/vscode_owned_job.py --ci-probe
+      - name: Preserve separate launcher lifecycle receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vscode-owned-job-windows
+          path: validation/ci-vscode-owned-job
+          if-no-files-found: warn

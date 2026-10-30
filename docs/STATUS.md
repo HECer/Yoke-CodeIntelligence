@@ -1,5 +1,18 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Owned VS Code launcher lifecycle candidate (2026-10-31)
+
+The extension-host launcher now requires suspended Windows Job assignment,
+natural zero root/tree exit before forced cleanup, and checked empty-tree/handle
+cleanup before reading its result. A passed marker alone cannot establish
+success. Original extension test assertions, workspace/profile fixture and
+180-second ceiling remain; no PID/taskkill fallback or policy bypass is used.
+Pure admission checks pass. A separate Python-only hosted lifecycle probe must
+still qualify the actual kernel paths. Fresh matching native/combined VSIX,
+explicit and bundled real editor execution, combined-source parity, main and
+release acceptance remain open. No local Yoke/native/editor execution ran.
+See [the lifecycle contract](../scripts/vscode_owned_job.md).
+
 ## Scoped f41 Windows/Linux and four-profile browser acceptance (2026-10-30)
 
 At candidate `f41e5613`, run `41030808968`, all 371 default Cargo groups exit zero
