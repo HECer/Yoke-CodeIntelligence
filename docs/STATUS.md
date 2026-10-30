@@ -1,5 +1,16 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Strict UTF-32 source candidate (2026-10-30)
+
+The existing selected-codec stack now admits explicit BOM-selected UTF-32 and
+UTF-32LE/BE source views, raw byte offsets and strict scalar/unit validation.
+Existing source identities and all preceding codec behavior remain. New authored
+core/stdio/HTTP/LSP/verified-writer fixtures preserve the original authority,
+verification, approval, journal, deadline and cleanup requirements. Native
+compilation and execution are pending; no native runtime or full encoding/parity
+certificate is claimed. See [the exact contract](../native/docs/source-encodings.md#utf-32-source-candidate-2026-10-30).
+
+
 ## Strict Windows-1252 integration candidate (2026-10-30)
 
 The selected Windows-1252 codec is integrated after the ASCII/UTF-8-SIG stack

@@ -1,5 +1,16 @@
 # Remaining implementation and acceptance
 
+## Strict UTF-32 source candidate (2026-10-30)
+
+The existing selected-codec stack now admits explicit BOM-selected UTF-32 and
+UTF-32LE/BE source views, raw byte offsets and strict scalar/unit validation.
+Existing source identities and all preceding codec behavior remain. New authored
+core/stdio/HTTP/LSP/verified-writer fixtures preserve the original authority,
+verification, approval, journal, deadline and cleanup requirements. Native
+compilation and execution are pending; no native runtime or full encoding/parity
+certificate is claimed. See [the exact contract](../native/docs/source-encodings.md#utf-32-source-candidate-2026-10-30).
+
+
 ## Windows-1252 integration requires native qualification (2026-10-30)
 
 The Windows-1252 source-only candidate is combined with ASCII and UTF-8-SIG after

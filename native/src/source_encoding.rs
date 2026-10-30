@@ -17,6 +17,9 @@ pub enum Codec {
     Utf16,
     Utf16Le,
     Utf16Be,
+    Utf32,
+    Utf32Le,
+    Utf32Be,
     Latin1,
     Ascii,
     Windows1252,
@@ -37,6 +40,9 @@ impl Codec {
             "utf_16" | "utf16" | "u16" => Self::Utf16,
             "utf_16_le" | "utf_16le" => Self::Utf16Le,
             "utf_16_be" | "utf_16be" => Self::Utf16Be,
+            "utf_32" | "utf32" | "u32" => Self::Utf32,
+            "utf_32_le" | "utf_32le" => Self::Utf32Le,
+            "utf_32_be" | "utf_32be" => Self::Utf32Be,
             "latin_1" | "latin1" | "iso_8859_1" | "iso8859_1" | "8859" | "cp819" | "latin"
             | "l1" => Self::Latin1,
             "cp1252" | "windows_1252" => Self::Windows1252,
@@ -142,6 +148,13 @@ impl View {
                 _ => bail!("source_encoding_utf16_bom_required"),
             };
             2
+        } else if codec == Codec::Utf32 {
+            codec = match raw.get(..4) {
+                Some([0xff, 0xfe, 0x00, 0x00]) => Codec::Utf32Le,
+                Some([0x00, 0x00, 0xfe, 0xff]) => Codec::Utf32Be,
+                _ => bail!("source_encoding_utf32_bom_required"),
+            };
+            4
         } else if codec == Codec::Utf8Sig && raw.starts_with(&[0xef, 0xbb, 0xbf]) {
             3
         } else {
@@ -181,6 +194,19 @@ impl View {
                     let c = cp1252_decode(raw[i])?;
                     i += 1;
                     c
+                } else if matches!(codec, Codec::Utf32Le | Codec::Utf32Be) {
+                    let unit = raw.get(i..i + 4).ok_or_else(|| {
+                        anyhow::anyhow!("source_encoding_utf32_incomplete_code_unit")
+                    })?;
+                    let bytes = [unit[0], unit[1], unit[2], unit[3]];
+                    let scalar = if codec == Codec::Utf32Le {
+                        u32::from_le_bytes(bytes)
+                    } else {
+                        u32::from_be_bytes(bytes)
+                    };
+                    i += 4;
+                    char::from_u32(scalar)
+                        .ok_or_else(|| anyhow::anyhow!("source_encoding_utf32_invalid_scalar"))?
                 } else {
                     let unit = |at: usize| -> Result<u16> {
                         let pair = raw
@@ -432,8 +458,10 @@ fn encode(text: &str, codec: Codec, check: &impl Fn() -> Result<()>) -> Result<V
                 1
             }
             Codec::Utf16Le | Codec::Utf16Be => ch.len_utf16() * 2,
+            Codec::Utf32Le | Codec::Utf32Be => 4,
             Codec::Utf8 | Codec::Utf8Sig => ch.len_utf8(),
             Codec::Utf16 => bail!("source_encoding_utf16_bom_required"),
+            Codec::Utf32 => bail!("source_encoding_utf32_bom_required"),
         };
         size = size
             .checked_add(add)
@@ -448,6 +476,13 @@ fn encode(text: &str, codec: Codec, check: &impl Fn() -> Result<()>) -> Result<V
         match codec {
             Codec::Latin1 | Codec::Ascii => bytes.push(ch as u8),
             Codec::Windows1252 => bytes.push(cp1252_encode(ch)?),
+            Codec::Utf32Le | Codec::Utf32Be => {
+                bytes.extend_from_slice(&if codec == Codec::Utf32Le {
+                    u32::from(ch).to_le_bytes()
+                } else {
+                    u32::from(ch).to_be_bytes()
+                });
+            }
             Codec::Utf8 | Codec::Utf8Sig => {
                 bytes.extend_from_slice(ch.encode_utf8(&mut [0; 4]).as_bytes())
             }
@@ -481,6 +516,16 @@ pub(crate) fn encode_new(text: &str, policy: Option<Policy>, d: &Deadline) -> Re
         ensure!(body.len() <= MAX_RAW - 3, "source_encoding_raw_budget");
         let mut raw = Vec::with_capacity(body.len() + 3);
         raw.extend_from_slice(&[0xef, 0xbb, 0xbf]);
+        raw.extend_from_slice(&body);
+        return Ok(raw);
+    }
+    // As with UTF-16, new BOM-selected files use deterministic little endian;
+    // existing UTF-32 files retain their exact captured order and prefix.
+    if policy.is_some_and(|p| p.codec() == Codec::Utf32) {
+        let body = encode(text, Codec::Utf32Le, &|| d.check())?;
+        ensure!(body.len() <= MAX_RAW - 4, "source_encoding_raw_budget");
+        let mut raw = Vec::with_capacity(body.len() + 4);
+        raw.extend_from_slice(&[0xff, 0xfe, 0x00, 0x00]);
         raw.extend_from_slice(&body);
         return Ok(raw);
     }

@@ -1,5 +1,41 @@
 # Selected source encodings (qualification in progress)
 
+## UTF-32 source candidate (2026-10-30)
+
+Explicit utf32, utf32_le and utf32_be policies extend the existing codec stack.
+UTF-32 uses one four-byte code unit per Unicode scalar; surrogate values,
+values above U+10FFFF and incomplete units refuse without replacement.
+Original raw bytes/hashes remain authoritative and all returned ranges use
+their original byte offsets. The existing two-pass allocation admission,
+4,000,000-byte raw/text limits, mapping bounds and cancellation checks remain.
+
+Finite YAML aliases add utf_32/utf32/U32, utf_32_le/UTF-32LE and
+utf_32_be/UTF-32BE, with the existing ASCII case and hyphen handling.
+Capture/profile JSON uses the canonical enum spellings above.
+The alias and invalid-scalar references are the
+[Python codec table](https://docs.python.org/3.11/library/codecs.html#standard-encodings)
+and [Unicode UTF/BOM reference](https://www.unicode.org/faq/utf_bom.html).
+
+The portable native utf32 policy requires a four-byte LE or BE BOM, including
+for an otherwise empty existing file. It consumes that signature only in the
+analysis view; edits preserve its bytes and order. It deliberately refuses an
+unmarked stream instead of guessing a platform default. Explicit LE/BE does
+not consume a signature: matching U+FEFF remains text, while opposite-order
+signature bytes are invalid scalars. New utf32 files get a deterministic LE
+signature; new explicit LE/BE files get none. CR, LF, noncharacters and non-BMP
+scalars are preserved without normalization.
+
+Three new core fixtures cover boundaries, malformed units, BOMs, capacity,
+cancellation, configuration, capture, plans and immutable replay. Four new
+transport fixtures cover real CLI/stdio, authenticated HTTP, a labeled Node LSP
+fixture with raw offsets and rename refusal, and executed raw-byte verification
+followed by approval/workspace journals. These are authored fixtures, **not
+executed native evidence**. Core/transport targets now declare 24/14 cases.
+Existing proof-consumer, permission, source, stale and cleanup restrictions
+remain. No general codec registry, automatic detection, optional proof capability
+or full Python/Unicode/project certification is introduced. Native compilation,
+fixtures and full qualification remain pending the guarded hosted pipeline.
+
 This is a bounded native codec increment, not certification of the complete
 encoding identity, all standard codecs, all language servers or the project.
 Earlier source `272ec171` has source-bound macOS results for all 19 core and
@@ -44,12 +80,15 @@ underscores. These are the admitted spellings (plus those case/separator forms):
 | Explicit little endian | `utf_16_le`, `utf-16le` |
 | Explicit big endian | `utf_16_be`, `utf-16be` |
 | Windows-1252 | `cp1252`, `windows-1252` |
+| BOM-selected UTF-32 | `utf_32`, `utf32`, `u32` |
+| Explicit UTF-32LE | `utf_32_le`, `utf-32le` |
+| Explicit UTF-32BE | `utf_32_be`, `utf-32be` |
 | True ISO-8859-1 | `latin_1`, `latin1`, `iso-8859-1`, `iso8859-1`, `8859`, `cp819`, `latin`, `L1` |
 
 The [Python 3.11 standard encoding table](https://docs.python.org/3.11/library/codecs.html#standard-encodings)
 is the alias reference, not a promise to implement its entire codec registry or
-additional registry normalization. Whitespace aliases, arbitrary punctuation,
-UTF-32 and every other codec are unsupported.
+additional registry normalization. Whitespace aliases, arbitrary punctuation and
+other codecs are unsupported.
 Unknown codecs and invalid setting types refuse explicitly. Latin1 maps each
 byte directly to the same numbered Unicode scalar, including C1 controls;
 byte `80` is U+0080, not the Windows-1252 euro sign. Explicit ASCII rejects
@@ -62,7 +101,7 @@ signature when the file is read again. Existing signatures are preserved.
 
 The resolved host profile uses `sourceEncodings` with `global` and
 `projects.<registered-name>.project/local`, with canonical enum values `utf8`,
-`utf8_sig`, `utf16`, `utf16_le`, `utf16_be`, `latin1`, `ascii`, `windows1252`. Example:
+`utf8_sig`, `utf16`, `utf16_le`, `utf16_be`, `latin1`, `ascii`, `windows1252`, `utf32`, `utf32_le`, `utf32_be`. Example:
 
 ```json
 {"sourceEncodings":{"global":"latin1","projects":{"default":{"local":"utf16"},"secondary":{"project":"utf8"}}}}
