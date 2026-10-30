@@ -1,5 +1,26 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## MCP HTTP incomplete-response observations (2026-10-30)
+
+At PR9 source `9d0c4c72`, tested merge `0dc3f536`, run `41031494443`,
+the MCP HTTP target passes 12 of 13 cases. The already-running reader in the
+queued-principal revocation case receives EOF before a complete framed response;
+the received prefix length and elapsed time were not retained. The queued
+exchange's result and later authorization assertions are not established;
+memory, socket and scheduling causes remain unproven.
+The original 2,000 ms physical budget, 1,900 ms work ceiling, 100 ms delivery
+reserve, ten-second client read timeout and all test bodies remain unchanged.
+
+The test client now retains closed scalar connect/send/read timings, read count,
+prefix length and declared frame size on failure. An added formatter adversary
+covers maximum integer values and absent/zero/maximum expected sizes. An owned
+TCP peer additionally exercises empty/partial EOF and response-content exclusion.
+Native compilation and all 15 current target declarations require guarded hosted CI;
+the observations are source-only until that execution and do not repair or
+reclassify the earlier failure. Local Rust 1.94.1 formatting/source parsing and
+source-preservation checks pass, as do typecheck and npm tests (266 passed,
+three skipped). Full platform and release gates remain open.
+
 ## Native, Serena and HTTP browser evidence; Python focus correction (2026-10-30)
 
 At source `abdbdb03`, diagnostic run `41013033443` completes the native, Serena

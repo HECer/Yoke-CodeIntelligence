@@ -1,5 +1,14 @@
 # Remaining implementation and acceptance
 
+## MCP HTTP revocation failure still needs source-bound observations (2026-10-30)
+
+The `9d0c4c72` macOS PR run's queued-revocation case fails in the already-running
+reader's client exchange, before its expected 503 result. Existing artifacts lack
+prefix length and timing, so the cause remains unestablished. Failure-only scalar
+observations now preserve those values while every original request, assertion
+and budget remains. The formatter/owned-TCP adversaries and complete 15-case target need
+guarded native execution. A successful sibling run is not a causal repair.
+
 ## Remaining Python browser and strict platform gates (2026-10-30)
 
 Source `abdbdb03`, run `41013033443`, now has successful native, Serena and HTTP
