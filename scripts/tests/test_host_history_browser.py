@@ -22,6 +22,96 @@ SPEC.loader.exec_module(BROWSER)
 
 
 class WorkerAdmission(unittest.TestCase):
+    def test_exercise_failure_reports_only_closed_labels_and_tolerates_a_closed_sink(self):
+        for phase, expected in (("browser-before", "browser-before"),
+                                ("before-integrity", "before-integrity"),
+                                ("history-selection", "history-selection"),
+                                ("https://private.invalid/#private-capability", "other"),
+                                ({"private": "capability"}, "other"), (None, "other")):
+            with self.subTest(phase=phase), mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                BROWSER.report_exercise_failure(phase)
+                self.assertEqual(log.getvalue(), "Owned browser exercise failed: " + expected + "\n")
+        for error in (OSError("private unavailable sink"), ValueError("private closed sink")):
+            with mock.patch.object(BROWSER.sys, "stderr") as log:
+                log.write.side_effect = error
+                BROWSER.report_exercise_failure("browser-before")
+
+    def test_before_review_failures_preserve_refusal_owned_bytes_and_teardown(self):
+        # Mock actors/CLI/browser only. This exercises refusal and diagnosis;
+        # it cannot provide live browser, worker or native-image acceptance.
+        for mode in ("driver-error", "tree-mutation", "unavailable-sink"):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory(prefix="owned-browser-stage-") as directory:
+                fixture = Path(directory).resolve()
+                target = fixture / "host/settings-\u03c0.yaml"
+                owner = fixture / ("host/.yoke-doc-owner-" + "b" * 64 + ".json")
+                foreign = fixture / "new/foreign-kept.json"
+                closed, commands = [], []
+                failure = RuntimeError("private endpoint and capability")
+
+                class Actor:
+                    def __init__(self, native, source, profile, output, label):
+                        self.label = label
+
+                    def plan(self, document, content):
+                        return {"id": "a" * 64, "content": content}
+
+                    def apply(self, document, plan):
+                        target.write_bytes(plan["content"].encode())
+
+                    def close(self):
+                        closed.append(self.label)
+
+                class Browser:
+                    def __init__(self, *arguments):
+                        pass
+
+                    def call(self, request):
+                        if mode != "tree-mutation":
+                            raise failure
+                        foreign.write_bytes(b"retained owned mutation witness")
+                        return {"lastPlanId": "a" * 64}
+
+                    def close(self):
+                        closed.append("browser")
+
+                def cli(command, **options):
+                    if "binding-plan" in command:
+                        commands.append("binding-plan")
+                        result = {"target": "b" * 64, "fromAccess": "c" * 64, "nonce": "d" * 64}
+                    elif "binding-apply" in command:
+                        commands.append("binding-apply")
+                        owner.write_bytes(b"retained owner")
+                        result = {"outcome": "committed", "fileChanged": False}
+                    else:
+                        raise AssertionError("No later CLI operation may run after refusal")
+                    options["stdout"].write(json.dumps(result).encode())
+                    return subprocess.CompletedProcess(command, 0)
+
+                with mock.patch.object(BROWSER.LIVE, "require_worker_job"), \
+                     mock.patch.object(BROWSER.LIVE, "Actor", Actor), \
+                     mock.patch.object(BROWSER, "Browser", Browser), \
+                     mock.patch.object(BROWSER.subprocess, "run", side_effect=cli), \
+                     mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                    if mode == "unavailable-sink":
+                        log.write = mock.Mock(side_effect=OSError("private sink failure"))
+                    with self.assertRaises(RuntimeError) as caught:
+                        BROWSER.exercise(fixture / "unused-native", fixture / "unused-node",
+                                         fixture / "unused-browser", fixture, fixture / "evidence",
+                                         "unused-job", {"native/src/session_dashboard.html": "e" * 64})
+                    if mode == "tree-mutation":
+                        self.assertEqual(str(caught.exception), "Browser draft/review changed owned file state")
+                        self.assertEqual(foreign.read_bytes(), b"retained owned mutation witness")
+                        self.assertEqual(log.getvalue(), "Owned browser exercise failed: before-integrity\n")
+                    else:
+                        self.assertIs(caught.exception, failure)
+                        if mode != "unavailable-sink":
+                            self.assertEqual(log.getvalue(), "Owned browser exercise failed: browser-before\n")
+                self.assertEqual(closed, ["browser", "browser-current", "browser-old"])
+                self.assertEqual(commands, ["binding-plan", "binding-apply"])
+                self.assertEqual(owner.read_bytes(), b"retained owner")
+                self.assertEqual(target.read_bytes(),
+                                 "\ufeff# owned global \u03c0\r\nvalue: preserved\r\n# original saved history 1 \U0001f980\r\n".encode())
+
     def test_link_diagnostic_emits_closed_labels_without_private_paths(self):
         root = Path(tempfile.gettempdir()).resolve() / "yoke-owned-history-browser-private"
         error = BROWSER.LIVE.EvidenceLinkRefusal(root, root / "private-capability" / "private-target", "junction")

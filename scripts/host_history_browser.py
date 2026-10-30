@@ -332,6 +332,22 @@ class Browser:
         self.closed = True
 
 
+def report_exercise_failure(phase):
+    # Labels only: exceptions, CLI bodies and driver frames can contain private
+    # capabilities or endpoints. An unavailable diagnostic sink cannot replace
+    # the original failure.
+    allowed = {"old-session", "seed-history", "migration", "current-session", "browser-start",
+               "browser-before", "before-integrity", "history-plan", "history-selection",
+               "pending-archive", "pending-frame", "browser-pending", "pending-authorities",
+               "pending-integrity", "history-resume", "archive-read", "save-desktop", "save-mobile",
+               "browser-shutdown", "native-shutdown", "final-integrity"}
+    label = phase if type(phase) is str and phase in allowed else "other"
+    try:
+        print("Owned browser exercise failed: " + label, file=sys.stderr)
+    except (OSError, ValueError):
+        pass
+
+
 def exercise(native, node, edge, fixture, output, job_name, inputs):
     LIVE.require_worker_job(job_name)
     source, old, new, archive, host = [fixture / name for name in ("source-İ", "old", "new", "archive-π", "host")]
@@ -374,14 +390,17 @@ def exercise(native, node, edge, fixture, output, job_name, inputs):
         return [operation, "--plan", str(plan), "--archive-root", str(archive), *extra]
 
     actors, browser = [], None
+    phase = "old-session"
     try:
         previous = LIVE.Actor(native, source, fixture / "old-host.json", output, "browser-old")
         actors.append(previous)
+        phase = "seed-history"
         for saved in range(2):
             text = original.decode() + "# original saved history " + str(saved) + " 🦀\r\n"
             previous.apply("old", previous.plan("old", text))
             require(target.read_bytes() == text.encode(), "Seeded history target differs")
         old_cached = previous.plan("old", "# retired cached draft\r\n")
+        phase = "migration"
         migration = cli("migration-plan", ["binding-plan", "--from-document", "old", "--to-document", "new"])
         migration_path = fixture / "migration.json"
         write_json(migration_path, migration)
@@ -390,34 +409,44 @@ def exercise(native, node, edge, fixture, output, job_name, inputs):
         owner = host / (".yoke-doc-owner-" + migration["target"] + ".json")
         owner_hash, before_bytes = sha(owner), target.read_bytes()
         require(before_bytes == text.encode(), "Migration changed target bytes")
+        phase = "current-session"
         current = LIVE.Actor(native, source, fixture / "new-host.json", output, "browser-current")
         actors.append(current)
+        phase = "browser-start"
         browser = Browser(node, edge, fixture, output, current, job_name, inputs["native/src/session_dashboard.html"])
         baseline = LIVE.tree_hashes(old, new, archive, host)
+        phase = "browser-before"
         ready = browser.call({"phase": "before"})
+        phase = "before-integrity"
         require(LIVE.tree_hashes(old, new, archive, host) == baseline
                 and target.read_bytes() == before_bytes and sha(owner) == owner_hash,
                 "Browser draft/review changed owned file state")
         current_cached = {"id": ready["lastPlanId"]}
         originals = {path.name: path.read_bytes() for path in old.iterdir()
                      if path.name.startswith("yoke-doc-" + migration["fromAccess"] + "-")}
+        phase = "history-plan"
         plan = cli("history-plan", ["history-plan", "--migration", str(migration_path), "--archive-root", str(archive)])
+        phase = "history-selection"
         require(set(row["name"] for row in plan["records"]) == set(originals)
                 and len(originals) > 0 and plan["unselectedClosedJournalsAtReview"] == 0, "Original package differs")
         plan_path = fixture / "history.json"
         write_json(plan_path, plan)
+        phase = "pending-archive"
         occupant = host / (".yoke-doc-history-" + plan["id"] + ".complete.json")
         occupant.write_bytes(b"owned foreign completion")
         cli("blocked-completion", history("history-apply", plan_path, "--allow-host-writes"), False)
         pending = cli("pending-inspect", history("history-inspect", plan_path))
         require(pending["phase"] == "committed" and pending["markerPresent"] is True
                 and pending["complete"] is False and pending["immutableArchiveVerified"] is True, "Real pending condition absent")
+        phase = "pending-frame"
         frame = archive / ("yoke-doc-history-" + plan["id"] + ".bin")
         require(frame.stat().st_size <= LIVE.MAX_FRAME, "Frame capacity")
         rows = LIVE.admitted_frame(frame.read_bytes(), plan, originals)
         frame_hash = sha(frame)
         unchanged = LIVE.tree_hashes(old, new, archive, host)
+        phase = "browser-pending"
         pending_ui = browser.call({"phase": "pending"})
+        phase = "pending-authorities"
         for actor, document, cached in ((previous, "old", old_cached), (current, "new", current_cached)):
             observed = actor.document({"kind": "pending", "documentId": document})
             require(observed["complete"] is False and observed["blockedByHistoryArchive"] is True
@@ -425,18 +454,22 @@ def exercise(native, node, edge, fixture, output, job_name, inputs):
             actor.apply(document, cached, 422)
             actor.document({"kind": "recover", "documentId": document, "journalId": "a" * 64,
                             "expectedEvent": "b" * 64, "direction": "resume"}, 422)
+        phase = "pending-integrity"
         require(unchanged == LIVE.tree_hashes(old, new, archive, host)
                 and target.read_bytes() == before_bytes and sha(owner) == owner_hash, "Blocked UI/server mutated owned state")
+        phase = "history-resume"
         LIVE.retain_foreign(occupant, host / "retained-foreign-completion.json", b"owned foreign completion")
         resumed = cli("history-resume", history("history-recover", plan_path, "--expected-event", pending["eventId"],
                          "--direction", "resume", "--allow-host-writes"))
         require(resumed["complete"] is True and resumed["markerPresent"] is False, "Original host resume incomplete")
+        phase = "archive-read"
         for index, record in enumerate(plan["records"]):
             read = cli("read-" + str(index), history("history-read", plan_path, "--record", record["name"]))
             require(base64.b64decode(read["bytesBase64"], validate=True) == originals[record["name"]]
                     and read["sha256"] == record["hash"] and read["immutableRecordEvidenceOnly"] is True, "Exact archive read differs")
         saves = []
         for viewport in ("desktop", "mobile"):
+            phase = "save-desktop" if viewport == "desktop" else "save-mobile"
             fresh = DRAFT + "# fresh explicit " + viewport + " save after host resume\r\n"
             result = browser.call({"phase": "after", "viewport": viewport, "draft": fresh})
             header = read_json(new / ("yoke-doc-" + migration["toAccess"] + "-" + result["planId"] + ".plan.json"), 512000)
@@ -445,8 +478,11 @@ def exercise(native, node, edge, fixture, output, job_name, inputs):
                     and header["plan"]["afterHash"] == sha(target), "UI guarded save bytes/generation differ")
             saves.append({"viewport": viewport, "targetSha256": sha(target), "ownerSha256": owner_hash,
                           "planId": result["planId"], "ownerGeneration": migration["nonce"], "browser": result})
+        phase = "browser-shutdown"
         browser_exit = browser.shutdown()
+        phase = "native-shutdown"
         exits = [actor.shutdown() for actor in reversed(actors)]
+        phase = "final-integrity"
         require((source / "main.rs").read_bytes() == source_bytes
                 and sha(frame) == frame_hash and sha(owner) == owner_hash, "Final immutable evidence differs")
         return {"automationComplete": True, "scope": "one native owning stdio Session dashboard; original host CLI",
@@ -454,6 +490,9 @@ def exercise(native, node, edge, fixture, output, job_name, inputs):
                 "archive": {"sha256": frame_hash, "records": rows, "allOriginalsReadBack": True},
                 "blockedBothAuthorities": True, "blockedActionsNoMutation": True, "sourceUnchanged": True,
                 "browserExit": browser_exit, "nativeExits": exits, "cli": cli_rows}
+    except Exception:
+        report_exercise_failure(phase)
+        raise
     finally:
         if browser:
             browser.close()

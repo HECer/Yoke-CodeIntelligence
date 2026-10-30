@@ -1,0 +1,113 @@
+{
+  "width": 390,
+  "scrollWidth": 390,
+  "focus": "",
+  "recoveryButtons": 0,
+  "nodes": [
+    {
+      "id": "document-choice",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "selected": "new",
+      "x": 33,
+      "y": -97.21875,
+      "width": 324,
+      "height": 41
+    },
+    {
+      "id": "load-document",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "x": 33,
+      "y": -42.21875,
+      "width": 152.96875,
+      "height": 39
+    },
+    {
+      "id": "pending-documents",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "x": 194.96875,
+      "y": -42.21875,
+      "width": 162.03125,
+      "height": 39
+    },
+    {
+      "id": "document-content",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "x": 33,
+      "y": 359.90625,
+      "width": 324,
+      "height": 290,
+      "textSha256": "3f07d1451fd87350a899397f24749c73db5df80770fecb7d95bfbda8556841b3"
+    },
+    {
+      "id": "plan-document",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "x": 33,
+      "y": 663.90625,
+      "width": 324,
+      "height": 39
+    },
+    {
+      "id": "apply-document",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "x": 33,
+      "y": 711.90625,
+      "width": 324,
+      "height": 39
+    },
+    {
+      "id": "document-review",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "x": 33,
+      "y": 764.90625,
+      "width": 324,
+      "height": 615.3125
+    },
+    {
+      "id": "document-state",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "text": "Proposal ready for review. Saving affects the selected file only.",
+      "x": 33,
+      "y": 153.5625,
+      "width": 324,
+      "height": 40.78125
+    },
+    {
+      "id": "document-journal-list",
+      "visible": false,
+      "disabled": false,
+      "readOnly": false,
+      "text": "",
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0
+    },
+    {
+      "id": "management-status",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "text": "Review the saved and proposed content. No file has been changed.",
+      "x": 16,
+      "y": -351,
+      "width": 358,
+      "height": 72.1875
+    }
+  ]
+}
