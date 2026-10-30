@@ -305,8 +305,9 @@ def verify_artifacts(output, proof):
 
 class Browser:
     """Private bounded control channel; never transcribes URLs or raw CDP."""
-    def __init__(self, node, browser, fixture, output, actor, job_name, dashboard_hash):
+    def __init__(self, node, browser, fixture, output, actor, job_name, dashboard_hash, variant="native"):
         LIVE.require_worker_job(job_name)
+        variant_contract(variant)
         self.frames = queue.Queue(maxsize=4)
         self.error = None
         self.closed = False
@@ -317,9 +318,14 @@ class Browser:
             creationflags=subprocess.CREATE_NO_WINDOW)
         self.reader = threading.Thread(target=self._read, daemon=True)
         self.reader.start()
-        self.start = self.call({"phase": "start", "browser": str(browser), "profile": str(fixture / "edge-profile"),
-            "output": str(output), "url": "http://127.0.0.1:" + str(actor.port) + "/#" + actor.capability,
-            "document": "new", "draft": DRAFT, "dashboardSha256": dashboard_hash})
+        try:
+            self.start = self.call({"phase": "start", "browser": str(browser), "profile": str(fixture / "edge-profile"),
+                "output": str(output), "url": "http://127.0.0.1:" + str(actor.port) + "/#" + actor.capability,
+                "document": "new", "draft": DRAFT, "dashboardSha256": dashboard_hash, "variant": variant})
+            require(self.start.get("variant") == variant, "Selected driver variant receipt differs")
+        except BaseException:
+            self.close()
+            raise
 
     def _read(self):
         try:
@@ -476,6 +482,8 @@ def admit_variant_result(result, variant):
     protocol, _ = variant_contract(variant)
     require(result.get("variant") == variant and result.get("owningProtocol") == protocol
             and result.get("automationComplete") is True, "Selected browser result differs")
+    require(type(result.get("browserStart")) is dict and result["browserStart"].get("variant") == variant,
+            "Selected browser startup receipt required")
     rows = result.get("profileObservations")
     require(type(rows) is list, "Owning profile observations required")
     if variant == "native":
@@ -617,7 +625,7 @@ def exercise(native, node, edge, fixture, output, job_name, inputs, variant="nat
             phase = "http-isolation"
             http_authorities = [previous.require_peer_isolated(current), current.require_peer_isolated(previous)]
         phase = "browser-start"
-        browser = Browser(node, edge, fixture, output, current, job_name, inputs["native/src/session_dashboard.html"])
+        browser = Browser(node, edge, fixture, output, current, job_name, inputs["native/src/session_dashboard.html"], variant)
         baseline = LIVE.tree_hashes(old, new, archive, host)
         phase = "browser-before"
         ready = browser.call({"phase": "before"})

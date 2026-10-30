@@ -23,6 +23,32 @@ SPEC.loader.exec_module(BROWSER)
 
 
 class WorkerAdmission(unittest.TestCase):
+    def test_failed_driver_start_retains_and_closes_its_owned_process_and_channel_handles(self):
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Path(directory).resolve()
+            process, reader, actor = mock.Mock(), mock.Mock(), mock.Mock(capability="c" * 64, port=1234)
+            process.poll.return_value = None
+            reader.is_alive.return_value = False
+            failure = RuntimeError("Owned startup refused")
+            with mock.patch.object(BROWSER.LIVE, "require_worker_job"), \
+                 mock.patch.object(BROWSER.subprocess, "CREATE_NO_WINDOW", 0x08000000, create=True), \
+                 mock.patch.object(BROWSER.subprocess, "Popen", return_value=process), \
+                 mock.patch.object(BROWSER.threading, "Thread", return_value=reader) as thread, \
+                 mock.patch.object(BROWSER.Browser, "call", side_effect=failure) as call:
+                with self.assertRaises(RuntimeError) as caught:
+                    BROWSER.Browser(fixture / "inert-node", fixture / "inert-browser", fixture,
+                                    fixture / "evidence", actor, "inert-job", "d" * 64, "serena")
+                self.assertIs(caught.exception, failure)
+                self.assertEqual(call.call_args.args[0]["variant"], "serena")
+                owner = thread.call_args.kwargs["target"].__self__
+                self.assertTrue(owner.closed)
+                self.assertTrue(owner.stderr.closed)
+            process.kill.assert_called_once()
+            process.wait.assert_called_once_with(timeout=5)
+            reader.join.assert_called_once_with(timeout=2)
+            process.stdin.close.assert_called_once()
+            process.stdout.close.assert_called_once()
+
     def test_driver_failure_checkpoints_are_closed_and_never_admit_success(self):
         original = {"phase": "pending", "ok": False, "reason": "real-browser-failed",
                     "checkpoint": "pending-snapshot", "viewport": "mobile"}
@@ -719,10 +745,8 @@ class OwningVariants(unittest.TestCase):
                         events.append((self.label, "close"))
 
                 class Browser:
-                    start = {"ownedInMemoryObservation": True}
-
                     def __init__(self, *args):
-                        pass
+                        self.start = {"ownedInMemoryObservation": True, "variant": variant}
 
                     def call(self, request):
                         if request["phase"] == "before":
@@ -907,6 +931,7 @@ class OwningVariants(unittest.TestCase):
                    "persistentToolObserved": True, "toolCount": 3}
         runtime = {"marker45Retained": True, "imageIdentityVerified": True, "exitBeforeJobCleanup": True}
         valid = {"automationComplete": True, "variant": "persistent-python", "owningProtocol": "serena",
+                 "browserStart": {"variant": "persistent-python"},
                  "profileObservations": [{**profile, "role": role} for role in ("old", "current")],
                  "persistentRuntimes": [{**runtime, "role": role} for role in ("current", "old")]}
         BROWSER.admit_variant_result(valid, "persistent-python")
@@ -926,6 +951,7 @@ class OwningVariants(unittest.TestCase):
             with self.subTest(changed=changed), self.assertRaises(RuntimeError):
                 BROWSER.admit_variant_result(changed, "persistent-python")
         native = {"automationComplete": True, "variant": "native", "owningProtocol": "native",
+                  "browserStart": {"variant": "native"},
                   "profileObservations": [], "persistentRuntimes": []}
         BROWSER.admit_variant_result(native, "native")
         with self.assertRaises(RuntimeError):

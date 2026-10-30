@@ -65,3 +65,9 @@ Typecheck and npm tests also pass on integrated source `5b5bb369` (266 passed,
 three skipped, zero failed). The receipt retains hashes of the original local
 PowerShell captures; these checks do not execute the Yoke native service or
 qualify the new browser transport.
+
+The subsequent [driver startup correction](../browser-driver-variant-checkpoint/README.md)
+changes its closed variant/path admission and startup receipt, and retains Python
+startup handles on refusal. The driver/history preservation statements above
+refer to the `5b5bb369` candidate. All browser interactions, image/network/deadline
+and shutdown checks remain; fresh runtime qualification is still required.

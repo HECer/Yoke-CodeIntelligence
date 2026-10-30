@@ -322,6 +322,7 @@ class HttpOwnership(unittest.TestCase):
                    "naturalHostDurationMs": 120000, "observedElapsedMs": 120100,
                    "beforeJobCleanup": True, "logonScopedCredential": True, "ownedCredentialRemoved": True}
         valid = {"automationComplete": True, "variant": "http", "owningProtocol": "session", "owningTransport": "http",
+                 "browserStart": {"variant": "http"},
                  "profileObservations": [{**profile, "role": role} for role in ("old", "current")],
                  "httpAuthorities": [{**authority, "role": role} for role in ("old", "current")],
                  "httpSessionExits": [{**session, "role": role} for role in ("current", "old")],

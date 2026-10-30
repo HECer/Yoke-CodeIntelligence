@@ -323,10 +323,14 @@ async function snapshot(p, state) {
     actualScreenshotCapture: true, humanVisualReviewComplete: false};
 }
 
-async function start(value) {
+function admitStart(value) {
   need(process.platform === 'win32' && process.env.GITHUB_ACTIONS === 'true'
     && /^[0-9a-f]{64}$/.test(process.env.YOKE_BROWSER_WORKER_NONCE || ''));
-  need(Object.keys(value).sort().join(',') === 'browser,dashboardSha256,document,draft,output,phase,profile,url');
+  need(Object.keys(value).sort().join(',') === 'browser,dashboardSha256,document,draft,output,phase,profile,url,variant');
+  const outputs = {native: 'ci-host-document-history-browser', serena: 'ci-host-document-history-browser-serena',
+    'persistent-python': 'ci-host-document-history-browser-persistent-python', http: 'ci-host-document-history-browser-http'};
+  need(typeof value.variant === 'string' && Object.hasOwn(outputs, value.variant)
+    && value.variant === process.env.YOKE_BROWSER_WORKER_VARIANT && value.phase === 'start');
   const url = new URL(value.url);
   need(url.protocol === 'http:' && url.hostname === '127.0.0.1' && /^[0-9]+$/.test(url.port)
     && url.pathname === '/' && !url.search && !url.username && !url.password && /^#[a-f0-9]{64}$/.test(url.hash));
@@ -335,8 +339,13 @@ async function start(value) {
   need(candidates.some(p => p.toLowerCase() === value.browser.toLowerCase())
     && /^[a-f0-9]{64}$/.test(value.dashboardSha256) && value.document === 'new'
     && value.profile === path.join(process.cwd(), 'edge-profile')
-    && path.isAbsolute(value.output) && path.basename(value.output) === 'ci-host-document-history-browser'
+    && path.isAbsolute(value.output) && value.output === path.join(__dirname, '..', 'validation', outputs[value.variant])
     && !fs.existsSync(value.profile));
+  return url;
+}
+
+async function start(value) {
+  const url = admitStart(value);
   config = value;
   fs.mkdirSync(config.profile);
   browser = spawn(config.browser, ['--headless=new', '--remote-debugging-pipe', '--no-first-run',
@@ -381,7 +390,7 @@ async function start(value) {
     await click(p, '#documents-tab', 'page-title');
     need(await evaluate(p, `document.getElementById('document-choice').value==='new'`));
   }
-  return {engine: version.product, reportedBrowserVersions: reportedBrowser,
+  return {variant: config.variant, engine: version.product, reportedBrowserVersions: reportedBrowser,
     protocolVersion: version.protocolVersion, nodeVersion: process.version,
     trustedBrowserPath: config.browser, headless: true, freshProfile: true, cdpTransport: 'inherited-pipes',
     visibleDesktopShellInteraction: false};
@@ -511,5 +520,5 @@ process.on('uncaughtException', fail);
 process.on('unhandledRejection', fail);
 } else {
   // Importing the protocol class starts no driver, browser or input listener.
-  module.exports = {CDP, CdpPipeEOF};
+  module.exports = {CDP, CdpPipeEOF, admitStart};
 }

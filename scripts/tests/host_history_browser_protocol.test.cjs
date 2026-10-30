@@ -7,6 +7,64 @@ const {CDP, CdpPipeEOF} = require('../host_history_browser.cjs');
 const fs = require('node:fs');
 const vm = require('node:vm');
 
+function startFixture(variant = 'native', environment = {}, occupied = false) {
+  const source = fs.readFileSync(require.resolve('../host_history_browser.cjs'), 'utf8');
+  const helper = source.slice(source.indexOf('function admitStart('), source.indexOf('async function start('));
+  const path = require('node:path').win32, probes = [];
+  const context = {path, URL, __dirname: 'C:\\owned-repository\\scripts',
+    need: value => { if (!value) throw Error('admission-or-assertion'); },
+    fs: {existsSync: name => { probes.push(name); return occupied; }},
+    process: {platform: 'win32', cwd: () => 'C:\\owned-fixture', env: {GITHUB_ACTIONS: 'true',
+      YOKE_BROWSER_WORKER_NONCE: 'a'.repeat(64), YOKE_BROWSER_WORKER_VARIANT: variant, ...environment}}};
+  vm.createContext(context);
+  vm.runInContext(helper + '\nthis.admit = admitStart;', context);
+  const suffix = {native: '', serena: '-serena', 'persistent-python': '-persistent-python', http: '-http'}[variant];
+  const input = {phase: 'start', variant, browser: 'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
+    profile: 'C:\\owned-fixture\\edge-profile', output: 'C:\\owned-repository\\validation\\ci-host-document-history-browser' + suffix,
+    url: 'http://127.0.0.1:1234/#' + 'b'.repeat(64), document: 'new', draft: '\ufeffπ 🦀 e\u0301\r\n',
+    dashboardSha256: 'c'.repeat(64)};
+  return {input, context, probes, admit: value => context.admit(value)};
+}
+
+test('start admits every fixed variant only at its exact repository evidence path', () => {
+  for (const variant of ['native', 'serena', 'persistent-python', 'http']) {
+    const f = startFixture(variant);
+    assert.equal(f.admit(f.input).href, f.input.url);
+    assert.deepEqual(f.probes, ['C:\\owned-fixture\\edge-profile']);
+  }
+});
+
+test('start refuses unbound variants, occupied profiles and all alternate evidence paths before browser work', () => {
+  for (const variant of ['native', 'serena', 'persistent-python', 'http']) {
+    const cases = [{variant: '__proto__'}, {variant: 'foreign'}, {variant: ['native']},
+      {variant: variant === 'native' ? 'serena' : 'native'}, {phase: 'before'}, {extra: 'unadmitted'},
+      {output: 'C:\\foreign\\ci-host-document-history-browser' + (variant === 'native' ? '' : '-' + variant)},
+      {output: 'C:\\owned-repository\\validation\\foreign\\..\\' + require('node:path').win32.basename(startFixture(variant).input.output)},
+      {output: 'relative'}, {profile: 'C:\\foreign\\edge-profile'},
+      {browser: 'C:\\owned-repository\\msedge.exe'}, {url: 'https://127.0.0.1:1234/#' + 'b'.repeat(64)}];
+    for (const changed of cases) {
+      const f = startFixture(variant);
+      assert.throws(() => f.admit({...f.input, ...changed}), /admission-or-assertion/);
+      assert.deepEqual(f.probes, []);
+    }
+    const occupied = startFixture(variant, {}, true);
+    assert.throws(() => occupied.admit(occupied.input), /admission-or-assertion/);
+    assert.equal(occupied.probes.length, 1);
+  }
+});
+
+test('start retains Windows CI and nonce guards before any path observation', () => {
+  for (const environment of [{GITHUB_ACTIONS: 'false'}, {YOKE_BROWSER_WORKER_NONCE: 'invalid'},
+    {YOKE_BROWSER_WORKER_VARIANT: 'serena'}]) {
+    const f = startFixture('native', environment);
+    assert.throws(() => f.admit(f.input), /admission-or-assertion/);
+    assert.deepEqual(f.probes, []);
+  }
+  const f = startFixture(); f.context.process.platform = 'linux';
+  assert.throws(() => f.admit(f.input), /admission-or-assertion/);
+  assert.deepEqual(f.probes, []);
+});
+
 function focusFixture(sequence, blocked = false) {
   const source = fs.readFileSync(require.resolve('../host_history_browser.cjs'), 'utf8');
   const helper = source.slice(source.indexOf('async function focusPendingControlWithKeyboard('),

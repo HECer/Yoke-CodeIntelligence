@@ -1,5 +1,28 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Closed browser variant startup repair (2026-10-30)
+
+At `d6b9da55`, run `41004163411`, native automation passes with all six PNG/DOM
+pairs and independent zero exits/EOF/empty Job before force. The 1,099 selected
+source hashes match (45 raw, 1,054 LF/CRLF-only). These new screenshots have not
+been visually re-reviewed; the earlier `ed92e9f8` review retains its own scope.
+Serena and persistent Python both fail before screenshots at driver startup.
+Their failed Jobs require force cleanup and cannot establish independent exit.
+
+The driver still admitted only the native evidence basename. The correction
+binds a fixed payload variant to the worker environment and its exact repository
+output path before creating a browser profile. A controlled old/new guard test
+reproduces rejection of the three new variants and acceptance of all four exact
+corrected mappings. Startup echoes the admitted variant and both Python receipt
+checks require it. Failed startup closes its owned Node/channel handles.
+
+All original browser interactions, assertions, image bounds, network admission,
+waits and shutdown logic remain, as do the original history gate and copied Job
+runner. Focused checks pass 80 Python and 11 Node tests; typecheck and npm tests
+pass (266 passed, three skipped). These are mocked/guarded diagnostic checks,
+not corrected browser runtime acceptance. Fresh four-profile CI and six-image
+inspection per profile remain required. [Original failed/successful artifacts and causal scope](validation/integration-2026-10-30/browser-driver-variant-checkpoint/README.md).
+
 ## HTTP browser actor candidate and qualified ingress source integration (2026-10-30)
 
 The opt-in HTTP browser fixture now uses two real public `serve-http` services

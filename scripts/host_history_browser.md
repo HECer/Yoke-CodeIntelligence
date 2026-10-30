@@ -214,6 +214,28 @@ inert Job fixtures. Actual Credential Manager, public CLI/MCP/dashboard behavior
 natural service lifetime, browser run and all six HTTP screenshots remain
 unqualified until fresh CI. [Candidate review scope](../docs/validation/integration-2026-10-30/browser-http-candidate/README.md).
 
+## Variant-bound driver startup correction
+
+At `d6b9da55`, native automation passes again, but both new Serena/Python runs
+fail at `browser-start` / driver `phase-entry` before screenshots. The driver
+still admitted only the native output basename. A controlled actual-guard
+comparison reproduces that rejection without launching a browser. The corrected
+closed start payload includes its selected variant, bound to the private worker
+environment and the exact repository evidence path. Unknown, cross-profile,
+relative, foreign and traversal outputs refuse before filesystem observation
+or Edge launch. Existing Windows/CI/nonce, URL, system-browser and fresh-profile
+checks remain. The startup receipt echoes the variant; constructor and parent
+both require that binding. Startup refusal now closes the constructor's owned
+Node/process/channel handles using the original bounds.
+
+All original behavior after driver configuration remains, except that additive
+startup receipt field and the pure test helper export. The full browser
+interactions, requests, pending/save assertions, image bounds, waits and shutdown
+proof remain. The correction passes 80 focused Python and 11 in-memory Node
+tests plus causal guard RED/GREEN, typecheck and npm gates (266 passed, three
+skipped). Fresh corrected live runs and all six visual inspections per selected
+profile remain open. [Retained source-bound evidence](../docs/validation/integration-2026-10-30/browser-driver-variant-checkpoint/README.md).
+
 ## Evidence and remaining gates
 
 At `42b94aca`, diagnostic run `40983256567` builds the release CLI and passes
