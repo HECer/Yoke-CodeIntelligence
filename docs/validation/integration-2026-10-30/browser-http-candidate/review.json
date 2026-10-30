@@ -56,5 +56,17 @@
     "credentialPersistSession": 1,
     "x64CredentialBytes": 80,
     "runtimeQualification": false
+  },
+  "integratedChecks": {
+    "sourceRevision": "5b5bb369454ef3eb94d5cb2aff6eff7878d65acd",
+    "typecheckExitCode": 0,
+    "npmTestExitCode": 0,
+    "npmPassed": 266,
+    "npmSkipped": 3,
+    "npmFailed": 0,
+    "powerShellCaptureSha256": {
+      "typecheck.log": "b7409419606e5cc1f6babbff1010bd8956d298b99be885f96e5c9b615a7a1092",
+      "npm-test.log": "4cec31c9373137153ed093dda53a295d61a04289eb98b7bbf751f0b33becccea"
+    }
   }
 }

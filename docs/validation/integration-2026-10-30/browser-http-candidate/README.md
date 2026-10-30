@@ -60,3 +60,8 @@ That evidence retains its original identity and does not qualify this combined
 source. Fresh whole-pipeline CI, real HTTP credentials/lifecycle and all six
 screenshots require independent review. No native production build/test was run
 locally for this candidate; scoped ingress rustfmt/source checks pass.
+
+Typecheck and npm tests also pass on integrated source `5b5bb369` (266 passed,
+three skipped, zero failed). The receipt retains hashes of the original local
+PowerShell captures; these checks do not execute the Yoke native service or
+qualify the new browser transport.

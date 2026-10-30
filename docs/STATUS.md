@@ -13,7 +13,8 @@ profiles, history harness, CDP driver, 180-second worker, disk/output/image
 bounds and existing CI commands/limits remain.
 
 Focused Python suites pass 79 tests, including 21 HTTP parser/authentication,
-credential and lifecycle adversaries. Six in-memory erasure checks fail as
+credential and lifecycle adversaries. Typecheck and npm tests pass on the
+integrated source (266 passed, three skipped). Six in-memory erasure checks fail as
 expected. These are mocked protocol/native/credential tests, not actual Windows
 Credential Manager, Yoke HTTP or browser qualification. New hosted execution
 and six HTTP screenshot inspections remain open. [Candidate contract and review](validation/integration-2026-10-30/browser-http-candidate/README.md).
