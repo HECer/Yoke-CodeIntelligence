@@ -1,5 +1,20 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Complete while-condition body inlining candidate (2026-10-30)
+
+The classic function-body inliner now prepares a source-reconstructed repeated
+while-condition recipe. Each condition test reevaluates the original arguments
+and expanded body before checking the result; labels and the original loop body
+retain their ownership. Rust independently checks condition delimiters and call
+ownership. Existing type/binding proofs, capacities, executed verification,
+approval and recovery remain mandatory. Adversarial native fixtures are authored
+for control flow, effects, predicates, byte preservation and the original writer
+gates. Native compilation and fixture execution remain unrun locally; this is a
+source candidate awaiting guarded CI, not new runtime or release acceptance.
+Local typecheck and npm tests pass (266 passed, three skipped), as do Rust
+formatting, worker syntax and source-only type checks of owned fixture inputs.
+[Scope and remaining qualification](../native/docs/compiler-inline.md#complete-while-conditions-candidate-native-qualification-pending).
+
 ## Scoped f41 Windows/Linux and four-profile browser acceptance (2026-10-30)
 
 At candidate `f41e5613`, run `41030808968`, all 371 default Cargo groups exit zero

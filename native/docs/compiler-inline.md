@@ -20,7 +20,7 @@ One owning strict ES module can select a nonasync function declaration without a
 TypeScript type-parameter list and complete direct calls in that captured file.
 A call must occupy one whole
 single-declarator lexical initializer, return expression, expression statement,
-throw expression, if condition or switch discriminant. A complete call may also
+throw expression, if/while condition or switch discriminant. A complete call may also
 be the right side of a plain identifier assignment occupying one whole expression
 statement, such as `result = helper(2)`. Parentheses around that call or the whole
 assignment are retained; the assignment wrapper depth is limited to 2,000.
@@ -34,11 +34,11 @@ additional sequencing and refuse. See the
 [direct assignment qualification](../../docs/validation/integration-2026-10-24/inline-assignment-heads/README.md);
 independent native execution is still pending for this extension.
 Other parentheses are retained too.
-Non-declaration statements receive a block so unbraced branches retain their
+Non-declaration statements other than while loops receive a block so unbraced branches retain their
 control scope. Direct if/switch/throw heads evaluate the selected call once before
 the original statement. The worker and independent Rust reconstruction require
 the exact original AST field; original branches, cases, labels and comments remain
-source copies. Loop tests, compound/short-circuit/nested expression contexts and
+source copies. For/do loop tests, compound/short-circuit/nested expression contexts and
 overlapping statement frames remain unavailable. See the
 [statement-head qualification](../../docs/validation/integration-2026-10-23/inline-statement-heads/README.md).
 
@@ -214,6 +214,40 @@ nominal private classes and broader declaration/context/runtime equivalence
 remain open. Such inputs fail visibly. Body expansion remains `complete=false`
 and preserves all independent verification, approval, application and recovery
 gates below. The broader STATUS/R1 requirements are not completed by this route.
+
+### Complete while conditions (candidate; native qualification pending)
+
+A direct call occupying the complete while condition has a separate repeated
+recipe. The original loop header becomes `while (true)` and its fresh iteration
+block contains the argument captures and body expansion, followed by
+`if (!(result)) break;` and the exact original loop body. Original condition
+parentheses and comments surround the result at that break test. The call and
+every argument run once per condition test, including the final false test;
+normal body completion and `continue` reach a fresh evaluation. A label stays
+attached to the while statement, so labelled continue/break retain their loop.
+The original body remains a separate exact source copy, including an unbraced
+if/else. This follows the evaluation and completion order in
+[ECMAScript WhileLoopEvaluation](https://tc39.es/ecma262/multipage/ecmascript-language-statements-and-declarations.html#sec-runtime-semantics-whileloopevaluation).
+
+The worker admits only the owning while AST field and its outer delimiter
+tokens. Rust independently requires the complete condition, exact parenthesis
+bytes, call ownership and original body end before reconstructing the same
+recipe. Ordinary binding/type comparisons, predicate relays, before/after
+diagnostics, finite capacities and the existing write/recovery gates still
+apply. The literal true header permits the compiler to retain eligible predicate
+narrowing after the false-result break; an incompatible type flow still refuses.
+For/do tests, compound while conditions and overlapping selected call frames
+remain unavailable. No new host grant, protocol field or default execution is
+introduced; `complete=false` and executed verification remain required.
+
+Authored native fixtures cover per-test side effects, extra arguments, fresh
+closure captures, initial false, finally/throw, labelled control, explicit and
+inferred predicate flow inside/after the loop, JSDoc, unbraced else, comments,
+Unicode and LF/CRLF. The existing CLI verification/approval/foreign-preserving
+recovery table gains a while case. Only obsolete direct-while refusal inputs
+change to reflect the new scope; their assertions and other refusal cases stay.
+These fixtures have not been compiled or executed locally. Guarded native CI
+must qualify this candidate before runtime acceptance can be claimed.
 
 ## Host registration and requests
 
