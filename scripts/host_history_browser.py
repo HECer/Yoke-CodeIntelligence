@@ -25,16 +25,32 @@ ROOT = Path(__file__).resolve().parents[1]
 _loader = importlib.util.spec_from_file_location("owned_history_live", ROOT / "scripts/host_history_live.py")
 LIVE = importlib.util.module_from_spec(_loader)
 _loader.loader.exec_module(LIVE)
+_http_loader = importlib.util.spec_from_file_location("owned_history_browser_http", ROOT / "scripts/host_history_browser_http.py")
+HTTP = importlib.util.module_from_spec(_http_loader)
+_http_loader.loader.exec_module(HTTP)
 require, sha, read_json, write_json = LIVE.require, LIVE.sha, LIVE.read_json, LIVE.write_json
 worker_job_name = LIVE.worker_job_name
 MAX_JSON, MAX_OUTPUT, MIN_FREE = LIVE.MAX_JSON, LIVE.MAX_OUTPUT, LIVE.MIN_FREE
-SCHEMA = "owned_history_browser_v1"
+SCHEMA = "owned_history_browser_v2"
 AGENT = "Code Intelligence"
 VERSION = "0.5.0"
 DRIVER = ROOT / "scripts/host_history_browser.cjs"
 EDGES = (Path("C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"),
          Path("C:/Program Files/Microsoft/Edge/Application/msedge.exe"))
 DRAFT = "\ufeff# owned browser draft π 🦀 e\u0301 İ\r\nvalue: reviewed\r\n"
+VARIANTS = {"native": ("native", "ci-host-document-history-browser"),
+            "serena": ("serena", "ci-host-document-history-browser-serena"),
+            "persistent-python": ("serena", "ci-host-document-history-browser-persistent-python"),
+            "http": ("session", "ci-host-document-history-browser-http")}
+
+
+def variant_contract(variant):
+    require(type(variant) is str and variant in VARIANTS, "Fixed browser variant required")
+    return VARIANTS[variant]
+
+
+def variant_output(variant):
+    return ROOT / "validation" / variant_contract(variant)[1]
 
 
 def output_size(root):
@@ -42,7 +58,7 @@ def output_size(root):
         return LIVE.output_size(root)
     except Exception as error:
         name = Path(root).name
-        role = ("evidence" if name == "ci-host-document-history-browser" else
+        role = ("evidence" if name in {row[1] for row in VARIANTS.values()} else
                 "fixture" if name.startswith("yoke-owned-history-browser-") else "other")
         reasons = {"Unexpected evidence link": "link", "Evidence entry capacity exceeded": "entries",
                    "Evidence byte capacity exceeded": "bytes"}
@@ -198,15 +214,17 @@ def preflight_node_path(path):
 
 def validate_spec(spec, spec_path):
     require(type(spec) is dict and set(spec) == {"schema", "workerJobName", "nonce", "native", "fixture",
-            "output", "node", "producer", "inputs", "ci"}, "Closed worker schema required")
+            "output", "node", "producer", "inputs", "ci", "variant"}, "Closed worker schema required")
     require(spec["schema"] == SCHEMA and isinstance(spec["nonce"], str)
             and re.fullmatch(r"[0-9a-f]{64}", spec["nonce"])
             and spec["nonce"] == os.environ.get("YOKE_BROWSER_WORKER_NONCE"), "Owned worker nonce required")
+    variant_contract(spec["variant"])
+    require(spec["variant"] == os.environ.get("YOKE_BROWSER_WORKER_VARIANT"), "Owned worker variant required")
     worker_job_name(spec["workerJobName"])
     fixture, output = (plain_path(spec[key]) for key in ("fixture", "output"))
     require(spec_path == fixture / "spec.json" and fixture.name.startswith("yoke-owned-history-browser-")
             and fixture.parent == plain_path(Path(os.environ["RUNNER_TEMP"]))
-            and output == ROOT / "validation/ci-host-document-history-browser", "Owned worker layout required")
+            and output == variant_output(spec["variant"]), "Owned worker layout required")
     native = native_path(spec["native"])
     node = plain_path(spec["node"])
     require(node.name.lower() == "node.exe" and node.is_file() and not node.is_relative_to(ROOT)
@@ -230,6 +248,24 @@ def admit_driver_reply(value, phase, capability):
             and not re.search(r"(?:https?|wss?)://|Bearer\s", encoded, re.IGNORECASE),
             "Private driver data cannot enter evidence")
     return value
+
+
+def report_driver_failure(value, phase):
+    if type(value) is not dict or value.get("ok") is not False:
+        return
+    allowed = {"phase-entry", "pending-refresh", "pending-click", "pending-receipt", "pending-admission",
+               "pending-disabled", "pending-tab", "pending-repeat-click", "pending-repeat-receipt",
+               "pending-keyboard-focus", "pending-repeat-admission", "pending-snapshot"}
+    shape = (set(value) == {"phase", "ok", "reason", "checkpoint", "viewport"}
+             and value.get("phase") == phase and value.get("reason") == "real-browser-failed")
+    checkpoint = value.get("checkpoint")
+    viewport = value.get("viewport")
+    checkpoint = checkpoint if shape and type(checkpoint) is str and checkpoint in allowed else "other"
+    viewport = viewport if shape and type(viewport) is str and viewport in {"none", "desktop", "mobile"} else "other"
+    try:
+        sys.stderr.write(f"Owned browser driver failed: checkpoint={checkpoint}; viewport={viewport}\n")
+    except (OSError, ValueError):
+        pass
 
 
 def verify_artifacts(output, proof):
@@ -269,8 +305,9 @@ def verify_artifacts(output, proof):
 
 class Browser:
     """Private bounded control channel; never transcribes URLs or raw CDP."""
-    def __init__(self, node, browser, fixture, output, actor, job_name, dashboard_hash):
+    def __init__(self, node, browser, fixture, output, actor, job_name, dashboard_hash, variant="native"):
         LIVE.require_worker_job(job_name)
+        variant_contract(variant)
         self.frames = queue.Queue(maxsize=4)
         self.error = None
         self.closed = False
@@ -281,9 +318,14 @@ class Browser:
             creationflags=subprocess.CREATE_NO_WINDOW)
         self.reader = threading.Thread(target=self._read, daemon=True)
         self.reader.start()
-        self.start = self.call({"phase": "start", "browser": str(browser), "profile": str(fixture / "edge-profile"),
-            "output": str(output), "url": "http://127.0.0.1:" + str(actor.port) + "/#" + actor.capability,
-            "document": "new", "draft": DRAFT, "dashboardSha256": dashboard_hash})
+        try:
+            self.start = self.call({"phase": "start", "browser": str(browser), "profile": str(fixture / "edge-profile"),
+                "output": str(output), "url": "http://127.0.0.1:" + str(actor.port) + "/#" + actor.capability,
+                "document": "new", "draft": DRAFT, "dashboardSha256": dashboard_hash, "variant": variant})
+            require(self.start.get("variant") == variant, "Selected driver variant receipt differs")
+        except BaseException:
+            self.close()
+            raise
 
     def _read(self):
         try:
@@ -303,6 +345,7 @@ class Browser:
         self.process.stdin.flush()
         value = self.frames.get(timeout=35)
         require(self.error is None, "Private driver reader failed")
+        report_driver_failure(value, request["phase"])
         return admit_driver_reply(value, request["phase"], self.capability)
 
     def shutdown(self):
@@ -332,8 +375,177 @@ class Browser:
         self.closed = True
 
 
-def exercise(native, node, edge, fixture, output, job_name, inputs):
+def report_exercise_failure(phase):
+    # Labels only: exceptions, CLI bodies and driver frames can contain private
+    # capabilities or endpoints. An unavailable diagnostic sink cannot replace
+    # the original failure.
+    allowed = {"old-session", "seed-history", "migration", "current-session", "browser-start",
+               "browser-before", "before-integrity", "history-plan", "history-selection",
+               "pending-archive", "pending-frame", "browser-pending", "pending-authorities",
+               "pending-integrity", "history-resume", "archive-read", "save-desktop", "save-mobile",
+               "browser-shutdown", "native-shutdown", "final-integrity", "profile-admission",
+               "runtime-start", "runtime-retained", "runtime-exit", "http-isolation",
+               "http-session-shutdown", "http-service-exit"}
+    label = phase if type(phase) is str and phase in allowed else "other"
+    try:
+        print("Owned browser exercise failed: " + label, file=sys.stderr)
+    except (OSError, ValueError):
+        pass
+
+
+def trusted_runtime_python(fixture):
+    # This is the already selected CI worker interpreter, never analyzed input.
+    path = plain_path(Path(sys.executable))
+    require(path.is_file() and path.name.lower() == "python.exe"
+            and not path.is_relative_to(ROOT) and not path.is_relative_to(fixture),
+            "Explicit trusted host Python required")
+    return path
+
+
+def owning_actor(native, source, profile, output, label, variant, python, job_name=None):
+    protocol, _ = variant_contract(variant)
+    require((python is not None) == (variant == "persistent-python"), "Independent Python selection required")
+    if variant == "http":
+        require(type(job_name) is str, "Specific HTTP worker Job required")
+        return HTTP.HttpActor(native, source, profile, output, label, job_name)
+    if variant == "native":
+        return LIVE.Actor(native, source, profile, output, label)
+    return LIVE.Actor(native, source, profile, output, label, protocol, python)
+
+
+def profile_observation(actor, variant, role):
+    protocol, _ = variant_contract(variant)
+    require(role in ("old", "current") and actor.protocol == protocol, "Owning protocol differs")
+    catalog = actor.rpc("tools/list", {})
+    tools = catalog.get("tools")
+    require(type(tools) is list and 0 < len(tools) <= 512, "Bounded owning tool catalog required")
+    names = [tool.get("name") for tool in tools if type(tool) is dict]
+    require(len(names) == len(tools) and all(type(name) is str and re.fullmatch(r"[a-z][a-z0-9_]{0,95}", name)
+            for name in names) and len(set(names)) == len(names), "Canonical owning tool names required")
+    if variant == "http":
+        require("ci_session" in names and not {"get_current_config", "open_dashboard", "serena_repl"}.intersection(names),
+                "Selected HTTP Session tool contract differs")
+        return {"role": role, "protocol": protocol, "toolCount": len(names),
+                "sessionDashboardToolObserved": True, "serenaDashboardToolsAbsent": True}
+    require({"get_current_config", "open_dashboard"}.issubset(names) and "ci_session" not in names
+            and (variant != "persistent-python" or "serena_repl" in names), "Selected Serena tool contract differs")
+    return {"role": role, "protocol": protocol, "toolCount": len(names),
+            "serenaDashboardToolsObserved": True, "nativeSessionToolAbsent": True,
+            "persistentToolObserved": "serena_repl" in names}
+
+
+class PersistentRuntime:
+    def __init__(self, actor, python, role):
+        require(role in ("old", "current"), "Fixed runtime role required")
+        self.actor, self.role = actor, role
+        self.retained = False
+        self.session = actor.tool("get_current_config")["sessionId"]
+        require(type(self.session) is str and 0 < len(self.session) <= 128, "Owned Session identifier required")
+        require(self.call("owned_marker = 45\nprint(owned_marker)") == "45\n", "Persistent initialization differs")
+        pid = self.call("import os\nprint(os.getpid())").strip()
+        require(re.fullmatch(r"[1-9][0-9]{0,9}", pid), "Bounded owned runtime process required")
+        self.handle = LIVE.RuntimeHandle(int(pid), python)
+
+    def call(self, code):
+        return self.actor.tool("serena_repl", {"session_id": self.session, "code": code})["stdout"]
+
+    def require_retained(self):
+        self.retained = False
+        require(self.call("print(owned_marker)") == "45\n", "Persistent runtime value changed")
+        self.retained = True
+
+    def require_exited(self):
+        require(self.retained, "Retained runtime value must precede exit proof")
+        self.handle.require_exited()
+        return {"role": self.role, "marker45Retained": True, "imageIdentityVerified": True,
+                "exitBeforeJobCleanup": True}
+
+    def close(self):
+        self.handle.close()
+
+
+def close_owned_resources(browser, actors, runtimes):
+    # Attempt every owned teardown even when one cleanup refuses. No cleanup
+    # exception can manufacture a successful automation receipt.
+    failure = None
+    for resource in ([browser] if browser else []) + list(reversed(actors)) + list(reversed(runtimes)):
+        try:
+            resource.close()
+        except BaseException as error:
+            if failure is None:
+                failure = error
+    if failure is not None:
+        raise failure
+
+
+def admit_variant_result(result, variant):
+    protocol, _ = variant_contract(variant)
+    require(result.get("variant") == variant and result.get("owningProtocol") == protocol
+            and result.get("automationComplete") is True, "Selected browser result differs")
+    require(type(result.get("browserStart")) is dict and result["browserStart"].get("variant") == variant,
+            "Selected browser startup receipt required")
+    rows = result.get("profileObservations")
+    require(type(rows) is list, "Owning profile observations required")
+    if variant == "native":
+        require(rows == [], "Native default observations differ")
+    elif variant == "http":
+        require(len(rows) == 2 and all(type(row) is dict for row in rows)
+                and [row.get("role") for row in rows] == ["old", "current"]
+                and all(row.get("protocol") == "session" and row.get("sessionDashboardToolObserved") is True
+                        and row.get("serenaDashboardToolsAbsent") is True and type(row.get("toolCount")) is int
+                        and 0 < row["toolCount"] <= 512 for row in rows), "Both owning HTTP profiles required")
+    else:
+        require(len(rows) == 2 and all(type(row) is dict for row in rows)
+                and [row.get("role") for row in rows] == ["old", "current"]
+                and all(row.get("protocol") == protocol and row.get("serenaDashboardToolsObserved") is True
+                        and row.get("nativeSessionToolAbsent") is True and type(row.get("toolCount")) is int
+                        and 0 < row["toolCount"] <= 512
+                        and (variant != "persistent-python" or row.get("persistentToolObserved") is True)
+                        for row in rows), "Both owning Serena profiles required")
+    runtimes = result.get("persistentRuntimes")
+    if variant == "persistent-python":
+        require(type(runtimes) is list and len(runtimes) == 2
+                and all(type(row) is dict for row in runtimes)
+                and [row.get("role") for row in runtimes] == ["current", "old"]
+                and all(row.get("marker45Retained") is True and row.get("imageIdentityVerified") is True
+                        and row.get("exitBeforeJobCleanup") is True for row in runtimes),
+                "Both retained runtime values and independent exits required")
+    else:
+        require(runtimes == [], "Unselected runtime claim refused")
+    if variant == "http":
+        require(result.get("owningTransport") == "http" and result.get("nativeExits") == [],
+                "Distinct HTTP service/Session proof required")
+        authority = result.get("httpAuthorities")
+        require(type(authority) is list and len(authority) == 2 and all(type(row) is dict for row in authority)
+                and [row.get("role") for row in authority] == ["old", "current"]
+                and all(row.get("foreignSessionRefused") is True and row.get("authenticationRefusals") == [401, 401, 403]
+                        for row in authority), "Both HTTP authorization refusals required")
+        sessions, services = result.get("httpSessionExits"), result.get("httpServiceExits")
+        require(type(sessions) is list and len(sessions) == 2 and all(type(row) is dict for row in sessions)
+                and [row.get("role") for row in sessions] == ["current", "old"]
+                and all(row.get("scope") == "owning_http_mcp_session" and row.get("revokedSessionStatus") == 404
+                        and row.get("serviceStillRunning") is True and row.get("beforeJobCleanup") is True
+                        for row in sessions), "HTTP Session isolation/closure required")
+        require(type(services) is list and len(services) == 2 and all(type(row) is dict for row in services)
+                and [row.get("role") for row in services] == ["current", "old"]
+                and all(type(row.get("nativeExitCode")) is int and row["nativeExitCode"] == 0
+                        and row.get("stdinWasStillOpen") is True and row.get("stdoutEOF") is True
+                        and row.get("naturalHostDurationMs") == HTTP.SERVICE_MS
+                        and type(row.get("observedElapsedMs")) is int
+                        and HTTP.SERVICE_MS <= row["observedElapsedMs"] <= HTTP.SERVICE_MS + 18000
+                        and row.get("beforeJobCleanup") is True and row.get("logonScopedCredential") is True
+                        and row.get("ownedCredentialRemoved") is True for row in services),
+                "Both natural HTTP service exits and credential cleanup required")
+        require(result.get("peerHttpSessionSurvived") is True, "Independent HTTP Session survival required")
+    else:
+        require(all(result.get(key, []) == [] for key in ("httpAuthorities", "httpSessionExits", "httpServiceExits")),
+                "Unselected HTTP claim refused")
+
+
+def exercise(native, node, edge, fixture, output, job_name, inputs, variant="native"):
     LIVE.require_worker_job(job_name)
+    protocol, _ = variant_contract(variant)
+    python = trusted_runtime_python(fixture) if variant == "persistent-python" else None
     source, old, new, archive, host = [fixture / name for name in ("source-İ", "old", "new", "archive-π", "host")]
     for path in (source, old, new, archive, host):
         path.mkdir()
@@ -373,15 +585,24 @@ def exercise(native, node, edge, fixture, output, job_name, inputs):
     def history(operation, plan, *extra):
         return [operation, "--plan", str(plan), "--archive-root", str(archive), *extra]
 
-    actors, browser = [], None
+    actors, browser, runtimes, profiles = [], None, [], []
+    phase = "old-session"
     try:
-        previous = LIVE.Actor(native, source, fixture / "old-host.json", output, "browser-old")
+        previous = owning_actor(native, source, fixture / "old-host.json", output, "browser-old", variant, python, job_name)
         actors.append(previous)
+        if variant != "native":
+            phase = "profile-admission"
+            profiles.append(profile_observation(previous, variant, "old"))
+        if python:
+            phase = "runtime-start"
+            runtimes.append(PersistentRuntime(previous, python, "old"))
+        phase = "seed-history"
         for saved in range(2):
             text = original.decode() + "# original saved history " + str(saved) + " 🦀\r\n"
             previous.apply("old", previous.plan("old", text))
             require(target.read_bytes() == text.encode(), "Seeded history target differs")
         old_cached = previous.plan("old", "# retired cached draft\r\n")
+        phase = "migration"
         migration = cli("migration-plan", ["binding-plan", "--from-document", "old", "--to-document", "new"])
         migration_path = fixture / "migration.json"
         write_json(migration_path, migration)
@@ -390,34 +611,54 @@ def exercise(native, node, edge, fixture, output, job_name, inputs):
         owner = host / (".yoke-doc-owner-" + migration["target"] + ".json")
         owner_hash, before_bytes = sha(owner), target.read_bytes()
         require(before_bytes == text.encode(), "Migration changed target bytes")
-        current = LIVE.Actor(native, source, fixture / "new-host.json", output, "browser-current")
+        phase = "current-session"
+        current = owning_actor(native, source, fixture / "new-host.json", output, "browser-current", variant, python, job_name)
         actors.append(current)
-        browser = Browser(node, edge, fixture, output, current, job_name, inputs["native/src/session_dashboard.html"])
+        if variant != "native":
+            phase = "profile-admission"
+            profiles.append(profile_observation(current, variant, "current"))
+        if python:
+            phase = "runtime-start"
+            runtimes.append(PersistentRuntime(current, python, "current"))
+        http_authorities = []
+        if variant == "http":
+            phase = "http-isolation"
+            http_authorities = [previous.require_peer_isolated(current), current.require_peer_isolated(previous)]
+        phase = "browser-start"
+        browser = Browser(node, edge, fixture, output, current, job_name, inputs["native/src/session_dashboard.html"], variant)
         baseline = LIVE.tree_hashes(old, new, archive, host)
+        phase = "browser-before"
         ready = browser.call({"phase": "before"})
+        phase = "before-integrity"
         require(LIVE.tree_hashes(old, new, archive, host) == baseline
                 and target.read_bytes() == before_bytes and sha(owner) == owner_hash,
                 "Browser draft/review changed owned file state")
         current_cached = {"id": ready["lastPlanId"]}
         originals = {path.name: path.read_bytes() for path in old.iterdir()
                      if path.name.startswith("yoke-doc-" + migration["fromAccess"] + "-")}
+        phase = "history-plan"
         plan = cli("history-plan", ["history-plan", "--migration", str(migration_path), "--archive-root", str(archive)])
+        phase = "history-selection"
         require(set(row["name"] for row in plan["records"]) == set(originals)
                 and len(originals) > 0 and plan["unselectedClosedJournalsAtReview"] == 0, "Original package differs")
         plan_path = fixture / "history.json"
         write_json(plan_path, plan)
+        phase = "pending-archive"
         occupant = host / (".yoke-doc-history-" + plan["id"] + ".complete.json")
         occupant.write_bytes(b"owned foreign completion")
         cli("blocked-completion", history("history-apply", plan_path, "--allow-host-writes"), False)
         pending = cli("pending-inspect", history("history-inspect", plan_path))
         require(pending["phase"] == "committed" and pending["markerPresent"] is True
                 and pending["complete"] is False and pending["immutableArchiveVerified"] is True, "Real pending condition absent")
+        phase = "pending-frame"
         frame = archive / ("yoke-doc-history-" + plan["id"] + ".bin")
         require(frame.stat().st_size <= LIVE.MAX_FRAME, "Frame capacity")
         rows = LIVE.admitted_frame(frame.read_bytes(), plan, originals)
         frame_hash = sha(frame)
         unchanged = LIVE.tree_hashes(old, new, archive, host)
+        phase = "browser-pending"
         pending_ui = browser.call({"phase": "pending"})
+        phase = "pending-authorities"
         for actor, document, cached in ((previous, "old", old_cached), (current, "new", current_cached)):
             observed = actor.document({"kind": "pending", "documentId": document})
             require(observed["complete"] is False and observed["blockedByHistoryArchive"] is True
@@ -425,18 +666,22 @@ def exercise(native, node, edge, fixture, output, job_name, inputs):
             actor.apply(document, cached, 422)
             actor.document({"kind": "recover", "documentId": document, "journalId": "a" * 64,
                             "expectedEvent": "b" * 64, "direction": "resume"}, 422)
+        phase = "pending-integrity"
         require(unchanged == LIVE.tree_hashes(old, new, archive, host)
                 and target.read_bytes() == before_bytes and sha(owner) == owner_hash, "Blocked UI/server mutated owned state")
+        phase = "history-resume"
         LIVE.retain_foreign(occupant, host / "retained-foreign-completion.json", b"owned foreign completion")
         resumed = cli("history-resume", history("history-recover", plan_path, "--expected-event", pending["eventId"],
                          "--direction", "resume", "--allow-host-writes"))
         require(resumed["complete"] is True and resumed["markerPresent"] is False, "Original host resume incomplete")
+        phase = "archive-read"
         for index, record in enumerate(plan["records"]):
             read = cli("read-" + str(index), history("history-read", plan_path, "--record", record["name"]))
             require(base64.b64decode(read["bytesBase64"], validate=True) == originals[record["name"]]
                     and read["sha256"] == record["hash"] and read["immutableRecordEvidenceOnly"] is True, "Exact archive read differs")
         saves = []
         for viewport in ("desktop", "mobile"):
+            phase = "save-desktop" if viewport == "desktop" else "save-mobile"
             fresh = DRAFT + "# fresh explicit " + viewport + " save after host resume\r\n"
             result = browser.call({"phase": "after", "viewport": viewport, "draft": fresh})
             header = read_json(new / ("yoke-doc-" + migration["toAccess"] + "-" + result["planId"] + ".plan.json"), 512000)
@@ -445,20 +690,59 @@ def exercise(native, node, edge, fixture, output, job_name, inputs):
                     and header["plan"]["afterHash"] == sha(target), "UI guarded save bytes/generation differ")
             saves.append({"viewport": viewport, "targetSha256": sha(target), "ownerSha256": owner_hash,
                           "planId": result["planId"], "ownerGeneration": migration["nonce"], "browser": result})
+        phase = "browser-shutdown"
         browser_exit = browser.shutdown()
-        exits = [actor.shutdown() for actor in reversed(actors)]
+        runtime_exits = []
+        if runtimes:
+            phase = "runtime-retained"
+            for runtime in runtimes:
+                runtime.require_retained()
+        phase = "native-shutdown"
+        http_sessions, http_services, peer_http_survived = [], [], False
+        if variant == "http":
+            phase = "http-session-shutdown"
+            http_sessions.append(current.shutdown())
+            require(previous.state()["view"]["management"]["sessionStateSha256"] == previous.fingerprint,
+                    "Ending HTTP destination ended another Session")
+            profile_observation(previous, variant, "old")
+            peer_http_survived = True
+            http_sessions.append(previous.shutdown())
+            phase = "http-service-exit"
+            http_services = [actor.require_service_exit() for actor in reversed(actors)]
+            exits = []
+        elif runtimes:
+            exits = [current.shutdown()]
+            phase = "runtime-exit"
+            runtime_exits.append(runtimes[1].require_exited())
+            require(previous.state()["view"]["management"]["sessionStateSha256"] == previous.fingerprint,
+                    "Ending destination ended another Session")
+            phase = "runtime-retained"
+            runtimes[0].require_retained()
+            phase = "native-shutdown"
+            exits.append(previous.shutdown())
+            phase = "runtime-exit"
+            runtime_exits.append(runtimes[0].require_exited())
+        else:
+            exits = [actor.shutdown() for actor in reversed(actors)]
+        phase = "final-integrity"
         require((source / "main.rs").read_bytes() == source_bytes
                 and sha(frame) == frame_hash and sha(owner) == owner_hash, "Final immutable evidence differs")
-        return {"automationComplete": True, "scope": "one native owning stdio Session dashboard; original host CLI",
+        return {"automationComplete": True,
+                "scope": "one selected owning MCP Session dashboard; original host CLI",
+                "variant": variant, "owningProtocol": protocol, "profileObservations": profiles,
+                "owningTransport": "http" if variant == "http" else "stdio",
+                "persistentRuntimes": runtime_exits,
+                "httpAuthorities": http_authorities, "httpSessionExits": http_sessions,
+                "httpServiceExits": http_services, "peerHttpSessionSurvived": peer_http_survived,
                 "browserStart": browser.start, "before": ready, "pending": pending_ui, "saves": saves,
                 "archive": {"sha256": frame_hash, "records": rows, "allOriginalsReadBack": True},
                 "blockedBothAuthorities": True, "blockedActionsNoMutation": True, "sourceUnchanged": True,
                 "browserExit": browser_exit, "nativeExits": exits, "cli": cli_rows}
+    except Exception:
+        report_exercise_failure(phase)
+        raise
     finally:
-        if browser:
-            browser.close()
-        for actor in reversed(actors):
-            actor.close()
+        close_owned_resources(browser, actors, runtimes)
 
 
 def bounded_worker(spec_path, fixture, output, environment, job_name):
@@ -575,9 +859,11 @@ def worker(spec_path):
     digest = sha(native)  # First native payload read: producer + exact named Job already admitted.
     edge = next((plain_path(path) for path in EDGES if path.is_file()), None)
     require(edge is not None, "Installed system Microsoft Edge required; no download/fallback")
-    result = exercise(native, node, edge, fixture, output, spec["workerJobName"], inputs)
+    result = exercise(native, node, edge, fixture, output, spec["workerJobName"], inputs, spec["variant"])
+    admit_variant_result(result, spec["variant"])
     require(sha(native) == digest and LIVE.source_inputs() == inputs, "Producer or selected inputs changed")
     write_json(output / "automation.json", {"schema": SCHEMA, "product": AGENT, "version": VERSION,
+        "variant": spec["variant"],
         "nativeSha256": digest, "workerJobAdmission": admission, "result": result,
         "producer": {key: spec["producer"][key] for key in
                      ("ci", "startedNs", "finishedNs", "nativeSize", "nativeMtimeNs")},
@@ -594,8 +880,10 @@ def main(arguments=None):
     parser.add_argument("--native", type=Path)
     parser.add_argument("--node", type=Path)
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--variant", choices=tuple(VARIANTS), default="native")
     options = parser.parse_args(arguments)
     if options.mark_build:
+        require(options.variant == "native", "Build marker does not select a browser variant")
         return mark_producer(options.mark_build)
     if options.worker:
         return worker(options.worker)
@@ -611,7 +899,7 @@ def main(arguments=None):
     preflight("producer-admission", lambda: validate_producer(producer, identity, inputs, native, time.time_ns()))
     def admit_output():
         path = plain_path(options.output.absolute(), exists=False)
-        require(path == ROOT / "validation/ci-host-document-history-browser", "Exact browser evidence destination required")
+        require(path == variant_output(options.variant), "Exact browser evidence destination required")
         return path
     output = preflight("output-path", admit_output)
     preflight("output-create", lambda: output.mkdir(parents=True, exist_ok=False))
@@ -620,10 +908,11 @@ def main(arguments=None):
         "GITHUB_ACTIONS", "RUNNER_OS", "RUNNER_TEMP", "GITHUB_SHA", "GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT")}
     environment.update(preflight("private-profile", lambda: private_profile_environment(fixture)))
     environment.update(PYTHONUTF8="1", PYTHONDONTWRITEBYTECODE="1", DO_NOT_TRACK="1",
-                       YOKE_BROWSER_WORKER_NONCE=os.urandom(32).hex())
+                       YOKE_BROWSER_WORKER_NONCE=os.urandom(32).hex(), YOKE_BROWSER_WORKER_VARIANT=options.variant)
     job_name = "Local\\YokeHistoryCI-" + os.urandom(32).hex()
     spec_path = fixture / "spec.json"
     write_json(spec_path, {"schema": SCHEMA, "workerJobName": job_name,
+        "variant": options.variant,
         "nonce": environment["YOKE_BROWSER_WORKER_NONCE"], "native": str(native), "fixture": str(fixture),
         "output": str(output), "node": str(node), "producer": producer, "inputs": inputs, "ci": identity})
     write_json(output / "source-inputs.json", {"sourceRevision": identity["GITHUB_SHA"], "sha256": inputs,
@@ -632,6 +921,8 @@ def main(arguments=None):
     try:
         bounded_worker(spec_path, fixture, output, environment, job_name)
         proof = read_json(output / "automation.json")
+        require(proof["schema"] == SCHEMA and proof["variant"] == options.variant, "Owned browser proof variant differs")
+        admit_variant_result(proof["result"], options.variant)
         require(proof["result"]["automationComplete"] is True and success_proof(read_json(output / "job.json"))
                 and LIVE.source_inputs() == inputs, "Browser automation proof incomplete")
         verify_artifacts(output, proof)
@@ -640,12 +931,14 @@ def main(arguments=None):
         complete = True
     finally:
         write_json(output / "result.json", {"product": AGENT, "version": VERSION, "automationComplete": complete,
+            "variant": options.variant, "owningProtocol": variant_contract(options.variant)[0],
             "sourceRevision": identity["GITHUB_SHA"], "validatorSha256": sha(Path(__file__)),
             "driverSha256": sha(DRIVER), "workerAllowanceSeconds": 180, "diskStopBytes": MIN_FREE,
             "privateAndEvidenceTreeLimitBytesEach": MAX_OUTPUT, "visualReviewComplete": False,
             "humanAcceptanceClaimed": False, "visibleDesktopShellInteraction": False,
-            "serenaBrowserClaimed": False, "persistentPythonBrowserClaimed": False,
-            "httpTransportBrowserClaimed": False, "releaseAcceptanceClaimed": False})
+            "serenaBrowserClaimed": complete and options.variant == "serena",
+            "persistentPythonBrowserClaimed": complete and options.variant == "persistent-python",
+            "httpTransportBrowserClaimed": complete and options.variant == "http", "releaseAcceptanceClaimed": False})
     print(json.dumps({"product": AGENT, "version": VERSION, "automationComplete": complete,
                       "visualReviewComplete": False}))
     return 0

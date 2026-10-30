@@ -1,0 +1,60 @@
+{
+  "baseline": "ed92e9f818ef5662f7c597bb4809f631bad15d0e",
+  "testsAreMockedNotNativeAcceptance": true,
+  "mutationChecks": [
+    {
+      "mutation": "profile-selection-erased",
+      "testsRun": 1,
+      "failures": 1,
+      "errors": 0,
+      "expectedRefusal": true
+    },
+    {
+      "mutation": "runtime-exit-erased",
+      "testsRun": 1,
+      "failures": 1,
+      "errors": 0,
+      "expectedRefusal": true
+    },
+    {
+      "mutation": "retained-value-erased",
+      "testsRun": 1,
+      "failures": 1,
+      "errors": 0,
+      "expectedRefusal": true
+    },
+    {
+      "mutation": "variant-result-admission-erased",
+      "testsRun": 1,
+      "failures": 13,
+      "errors": 0,
+      "expectedRefusal": true
+    },
+    {
+      "mutation": "owned-teardown-erased",
+      "testsRun": 1,
+      "failures": 1,
+      "errors": 0,
+      "expectedRefusal": true
+    }
+  ],
+  "unchangedAst": [
+    "bounded_worker",
+    "Browser",
+    "verify_artifacts",
+    "validate_producer",
+    "native_path",
+    "ci_identity",
+    "private_profile_environment",
+    "preflight_node_path"
+  ],
+  "originalHistoryAndCdpDriverGitBlobsUnchanged": true,
+  "files": {
+    "scripts/host_history_browser.py": "2c71785cf48b2655072716525c99073c2d45c55c596be43b08bcb1934f33b57d",
+    "scripts/tests/test_host_history_browser.py": "5ea9c204ebb0ae0dc29a1327433ced5df21177b3d79c77b8a61ea99885a59365",
+    ".github/workflows/rust.yml": "aab5a039e6970e8c0b85271720503f7cfbfd5186f8de0500cd0fb401bbb0756c",
+    "scripts/host_history_browser.md": "bab9680c224f89fc7fb8ff862e4a25432a591892d196e3125486031bb208e413"
+  },
+  "focusedPythonTestsPassed": 58,
+  "unixSubprocessConstantAbsentRegressionPassed": true
+}
