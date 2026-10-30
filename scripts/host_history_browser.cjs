@@ -21,6 +21,7 @@ let config, browser, cdp, pages = [], closing = false, fatal = false, finished =
 let input = Buffer.alloc(0), serial = Promise.resolve(), commands = 0, commandBytes = 0;
 let browserLogs = 0, eventCount = 0, scriptErrors = 0, consoleErrors = 0, pngTotal = 0;
 let closeExit, pipeEOF = false, browserOutputEOF = 0, phase = 'start';
+let checkpoint = 'phase-entry', observedViewport = 'none';
 
 function safe(value) {
   const text = JSON.stringify(value);
@@ -33,7 +34,8 @@ function fail() {
   if (fatal) return;
   fatal = true;
   // Fixed public failure only; raw protocol errors/URLs never escape memory.
-  process.stdout.write(JSON.stringify({phase, ok: false, reason: 'real-browser-failed'}) + '\n');
+  process.stdout.write(JSON.stringify({phase, ok: false, reason: 'real-browser-failed',
+    checkpoint, viewport: observedViewport}) + '\n');
   process.exitCode = 1;
   // The outer named Job is the only forced tree cleanup owner.
   setTimeout(() => process.exit(1), 1500);
@@ -222,6 +224,19 @@ async function click(p, selector, focused) {
   await cdp.send('Input.dispatchMouseEvent', {type: 'mouseReleased', button: 'left', clickCount: 1, ...rect}, p.session);
   if (focused) await until(p, `document.activeElement?.id===${JSON.stringify(focused)}`);
 }
+async function focusPendingControlWithKeyboard(p) {
+  // Disabling the initiating button during a real request can move focus to
+  // the body after click() has already observed it. Return through actual Tab
+  // input after the reply; never assign DOM focus or alter disabled controls.
+  await until(p, `!document.getElementById('pending-documents').disabled`);
+  for (let attempt = 0; attempt < 12; attempt++) {
+    if (await evaluate(p, `document.activeElement?.id==='pending-documents'`)) return;
+    await cdp.send('Input.dispatchKeyEvent', {type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9}, p.session);
+    await cdp.send('Input.dispatchKeyEvent', {type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9}, p.session);
+  }
+  if (await evaluate(p, `document.activeElement?.id==='pending-documents'`)) return;
+  throw Error('keyboard-focus-deadline');
+}
 async function confirm(p, prefix) {
   await until(p, `document.getElementById('confirm-dialog').open`);
   need(await evaluate(p, `document.getElementById('confirm-message').textContent.startsWith(${JSON.stringify(prefix)})`));
@@ -375,6 +390,7 @@ async function start(value) {
 async function run(value) {
   need(!fatal && !finished && value && typeof value === 'object' && !Array.isArray(value));
   phase = value.phase;
+  checkpoint = 'phase-entry'; observedViewport = 'none';
   if (phase === 'start') { need(!config); return start(value); }
   need(config && pages.length === 2);
   if (phase === 'before') {
@@ -392,25 +408,38 @@ async function run(value) {
     need(commands === 3);
     const states = [];
     for (const p of pages) {
+      observedViewport = p.name;
+      checkpoint = 'pending-refresh';
       // Wait for an actual automatic state refresh, without reloading the page
       // or discarding the existing reviewed draft.
       const prior = await evaluate(p, `document.getElementById('updated').textContent`);
       await until(p, `document.getElementById('updated').textContent!==${JSON.stringify(prior)}`);
       const since = p.receipts.length;
+      checkpoint = 'pending-click';
       await click(p, '#pending-documents', 'pending-documents');
+      checkpoint = 'pending-receipt';
       const pending = await receipt(p, 'pending', since);
+      checkpoint = 'pending-admission';
       need(pending.complete === false && pending.blockedByHistoryArchive === true
         && Array.isArray(pending.journals) && pending.journals.length === 0
         && pending.fileChanged === false && pending.metadataChanged === false && pending.sourceWritten === false);
+      checkpoint = 'pending-disabled';
       await until(p, `document.getElementById('document-content').readOnly && document.getElementById('plan-document').disabled && document.getElementById('apply-document').disabled`);
       // Keyboard navigation must skip disabled Review/Save controls.
       const count = p.receipts.length;
+      checkpoint = 'pending-tab';
       await cdp.send('Input.dispatchKeyEvent', {type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9}, p.session);
       await cdp.send('Input.dispatchKeyEvent', {type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9}, p.session);
       need(!['plan-document', 'apply-document'].includes(await evaluate(p, `document.activeElement?.id`)));
+      checkpoint = 'pending-repeat-click';
       await click(p, '#pending-documents', 'pending-documents');
+      checkpoint = 'pending-repeat-receipt';
       await receipt(p, 'pending', count);
+      checkpoint = 'pending-keyboard-focus';
+      await focusPendingControlWithKeyboard(p);
+      checkpoint = 'pending-repeat-admission';
       need(p.receipts.slice(since).length === 2 && p.receipts.slice(since).every(item => item.kind === 'pending'));
+      checkpoint = 'pending-snapshot';
       states.push({...await snapshot(p, 'pending'), serverComplete: false, blockedByHistoryArchive: true,
         supportedRecoveryActions: 0, exactDraftRetained: true});
     }

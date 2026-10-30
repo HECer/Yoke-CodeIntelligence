@@ -22,6 +22,32 @@ SPEC.loader.exec_module(BROWSER)
 
 
 class WorkerAdmission(unittest.TestCase):
+    def test_driver_failure_checkpoints_are_closed_and_never_admit_success(self):
+        original = {"phase": "pending", "ok": False, "reason": "real-browser-failed",
+                    "checkpoint": "pending-snapshot", "viewport": "mobile"}
+        secret = "http://private.invalid/#private-capability"
+        for change, expected in (({}, "checkpoint=pending-snapshot; viewport=mobile"),
+                                 ({"checkpoint": secret}, "checkpoint=other; viewport=mobile"),
+                                 ({"viewport": {"private": secret}}, "checkpoint=pending-snapshot; viewport=other"),
+                                 ({"phase": secret}, "checkpoint=other; viewport=other"),
+                                 ({"extra": secret}, "checkpoint=other; viewport=other")):
+            with self.subTest(change=change), mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                value = {**original, **change}
+                BROWSER.report_driver_failure(value, "pending")
+                self.assertEqual(log.getvalue(), "Owned browser driver failed: " + expected + "\n")
+                self.assertNotIn(secret, log.getvalue())
+                with self.assertRaises(RuntimeError):
+                    BROWSER.admit_driver_reply(value, "pending", "private-capability")
+        for error in (OSError("private unavailable sink"), ValueError("private closed sink")):
+            with mock.patch.object(BROWSER.sys, "stderr") as log:
+                log.write.side_effect = error
+                BROWSER.report_driver_failure(original, "pending")
+                with self.assertRaises(RuntimeError):
+                    BROWSER.admit_driver_reply(original, "pending", "private-capability")
+        with mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+            BROWSER.report_driver_failure({"phase": "pending", "ok": True}, "pending")
+            self.assertEqual(log.getvalue(), "")
+
     def test_exercise_failure_reports_only_closed_labels_and_tolerates_a_closed_sink(self):
         for phase, expected in (("browser-before", "browser-before"),
                                 ("before-integrity", "before-integrity"),

@@ -132,6 +132,26 @@ driver exit/EOF receipts remain independent requirements.
 
 ## Evidence and remaining gates
 
+At `42b94aca`, diagnostic run `40983256567` builds the release CLI and passes
+all three original owning-Session history variants. The real-browser worker
+then fails at the closed `browser-pending` exercise stage after capturing both
+before-review states. Those two new desktop/mobile PNGs were inspected and are
+readable without horizontal overflow; four later states remain absent.
+[Exact pending-stage checkpoint and original history receipts](../docs/validation/integration-2026-10-30/browser-pending-checkpoint/README.md)
+retain those earlier-source outcomes and their selected-source comparisons.
+
+An owned Edge-only diagnostic demonstrates that the original click can observe
+the recovery button focused while its real request has disabled it, followed by
+focus moving to the body when the request completes. The candidate waits for
+the control to be enabled after the second real pending receipt and returns to
+it with at most twelve actual Tab key pairs. It never assigns DOM focus or
+changes the application, disabled controls, response data or pending assertions.
+All original write/draft/recovery, request-count, screenshot and shutdown gates
+remain. Fixed internal pending checkpoints and viewport labels are emitted on
+failure only; malformed labels and unavailable diagnostic output cannot admit
+success or disclose private data. The precise hosted failure assertion remains
+unproven until the new real-browser run supplies its result.
+
 At `76333e2e`, diagnostic run `40974744304` reaches both actual desktop/mobile
 before-review captures, without reporting the earlier junction refusal. Both
 images were visually inspected and remain readable without horizontal overflow.
@@ -166,16 +186,20 @@ false. The parent must actually run the guarded CI step, inspect **all six PNGs*
 fix visible issues and regenerate/inspect again before recording visual acceptance
 in a separate reviewed handoff. The harness cannot self-certify human review.
 
-The parent ran all 15 pure/mocked Python cases in
-`tests/test_host_history_browser.py`, including six in-memory Node CDP shutdown
+The parent ran all 27 pure/mocked Python cases in
+`tests/test_host_history_browser.py`, including eight in-memory Node CDP/focus
 regressions in `tests/host_history_browser_protocol.test.cjs`. They passed. The
 checks cover malformed/oversized/duplicate specs, producer freshness and exact
 identity, admission order before image access, capability redaction, paths,
 cleanup-to-success forgery, handler draining and strict close-error handling.
-No native build/test, browser, live Node driver or worker was executed by these
-focused checks. npm typecheck/test, original three-variant history gate, new actual
-Edge/CDP integration, screenshot/visual review, broader Serena/persistent-Python/
-HTTP browser transports, native whole-project CI and release gates remain open.
+No native build/test, browser, live Node driver or worker was executed by those
+focused checks. A separate fresh owned Edge about:blank focus experiment passes
+with the copied keyboard helper, raw browser exit zero and pipe EOF before
+forced cleanup. It uses a fixed diagnostic page, not the product or a substituted
+application server, and provides no native/dashboard acceptance. npm typecheck
+and tests pass (266 passed, three skipped). New exact-source real-browser
+automation and all six visuals, broader Serena/persistent-Python/HTTP browser
+transports, native whole-project CI and release gates remain open.
 
 Protocol design references: [CDP domains](https://github.com/ChromeDevTools/devtools-protocol/tree/master/pdl/domains)
 and [upstream pipe stdio launch contract](https://github.com/puppeteer/puppeteer/blob/main/packages/browsers/src/launch.ts).

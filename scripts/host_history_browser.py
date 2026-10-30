@@ -232,6 +232,24 @@ def admit_driver_reply(value, phase, capability):
     return value
 
 
+def report_driver_failure(value, phase):
+    if type(value) is not dict or value.get("ok") is not False:
+        return
+    allowed = {"phase-entry", "pending-refresh", "pending-click", "pending-receipt", "pending-admission",
+               "pending-disabled", "pending-tab", "pending-repeat-click", "pending-repeat-receipt",
+               "pending-keyboard-focus", "pending-repeat-admission", "pending-snapshot"}
+    shape = (set(value) == {"phase", "ok", "reason", "checkpoint", "viewport"}
+             and value.get("phase") == phase and value.get("reason") == "real-browser-failed")
+    checkpoint = value.get("checkpoint")
+    viewport = value.get("viewport")
+    checkpoint = checkpoint if shape and type(checkpoint) is str and checkpoint in allowed else "other"
+    viewport = viewport if shape and type(viewport) is str and viewport in {"none", "desktop", "mobile"} else "other"
+    try:
+        sys.stderr.write(f"Owned browser driver failed: checkpoint={checkpoint}; viewport={viewport}\n")
+    except (OSError, ValueError):
+        pass
+
+
 def verify_artifacts(output, proof):
     """Independently admit all six uploaded images/DOM files, never empty proof."""
     result = proof["result"]
@@ -303,6 +321,7 @@ class Browser:
         self.process.stdin.flush()
         value = self.frames.get(timeout=35)
         require(self.error is None, "Private driver reader failed")
+        report_driver_failure(value, request["phase"])
         return admit_driver_reply(value, request["phase"], self.capability)
 
     def shutdown(self):

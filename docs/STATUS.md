@@ -1,5 +1,23 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Pending-state browser input candidate (2026-10-30)
+
+At `42b94aca`, diagnostic run `40983256567` passes the release build and all
+three original owning-Session history variants. The real-browser worker fails
+at `browser-pending` after both before-review captures. Both new PNGs were
+inspected and remain readable without horizontal overflow. Four later states,
+successful browser automation/shutdown and full visual acceptance remain open.
+
+An isolated owned Edge diagnostic confirms focus can leave a temporarily
+disabled recovery button after the original click already observed it. The
+candidate returns through bounded actual Tab input after the real pending reply;
+it preserves the product and every original pending/write/recovery assertion.
+Closed internal failure checkpoints retain no private endpoints or capabilities.
+The actual hosted failure assertion and corrected native-browser behavior still
+require fresh CI. Focused Python/Node checks, the separate copied-helper Edge
+diagnostic and npm gates pass; none substitutes for the missing product states.
+[Exact current checkpoint, archive/member hashes and inspection limits](validation/integration-2026-10-30/browser-pending-checkpoint/README.md).
+
 ## Partial actual desktop/mobile browser evidence (2026-10-30)
 
 At `76333e2e`, diagnostic run `40974744304` captures both actual before-review
