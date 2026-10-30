@@ -23,6 +23,8 @@ pub(super) struct Names {
     result: String,
     exit: String,
     arguments: Vec<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    do_first: Option<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     var_parameters: Vec<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
@@ -282,7 +284,7 @@ fn statement_for(call: Node<'_>) -> Result<Node<'_>> {
         return Ok(statement);
     }
     let complete_value = match parent.kind() {
-        "if_statement" | "while_statement" | "for_statement" => {
+        "if_statement" | "while_statement" | "for_statement" | "do_statement" => {
             parent.child_by_field_name("condition")
         }
         "switch_statement" => parent.child_by_field_name("value"),
@@ -366,6 +368,57 @@ fn for_parts<'a>(
         "Function-body for separator or call ownership mismatch"
     );
     Ok(Some((condition, body)))
+}
+#[derive(Clone, Copy)]
+struct DoParts<'a> {
+    condition: Node<'a>,
+    body: Node<'a>,
+    do_keyword: Node<'a>,
+    while_keyword: Node<'a>,
+}
+fn do_parts<'a>(statement: Node<'a>, call: Node<'a>, source: &str) -> Result<Option<DoParts<'a>>> {
+    if statement.kind() != "do_statement" {
+        return Ok(None);
+    }
+    let condition = statement
+        .child_by_field_name("condition")
+        .context("Function-body do condition absent")?;
+    let body = statement
+        .child_by_field_name("body")
+        .context("Function-body do body absent")?;
+    let mut cursor = statement.walk();
+    let keywords: Vec<_> = statement
+        .children(&mut cursor)
+        .filter(|n| matches!(n.kind(), "do" | "while"))
+        .collect();
+    ensure!(keywords.len() == 2, "Function-body do keywords absent");
+    let do_keyword = keywords[0];
+    let while_keyword = keywords[1];
+    ensure!(
+        do_keyword.kind() == "do"
+            && while_keyword.kind() == "while"
+            && do_keyword.start_byte() == statement.start_byte()
+            && source.as_bytes().get(do_keyword.byte_range()) == Some(&b"do"[..])
+            && source.as_bytes().get(while_keyword.byte_range()) == Some(&b"while"[..])
+            && do_keyword.end_byte() <= body.start_byte()
+            && body.end_byte() <= while_keyword.start_byte()
+            && while_keyword.end_byte() <= condition.start_byte()
+            && condition.kind() == "parenthesized_expression"
+            && condition.end_byte() >= condition.start_byte() + 2
+            && source.as_bytes().get(condition.start_byte()) == Some(&b'(')
+            && source.as_bytes().get(condition.end_byte() - 1) == Some(&b')')
+            && condition.start_byte() < call.start_byte()
+            && call.end_byte() < condition.end_byte()
+            && condition.end_byte() <= statement.end_byte()
+            && statement_for(call)?.id() == statement.id(),
+        "Function-body do delimiter, keyword or call ownership mismatch"
+    );
+    Ok(Some(DoParts {
+        condition,
+        body,
+        do_keyword,
+        while_keyword,
+    }))
 }
 fn scope_forms(body: Node<'_>, source: &str, d: &Deadline) -> Result<()> {
     let mut stack = vec![body];
@@ -721,6 +774,11 @@ pub(super) fn render(
     );
     let repeated = while_parts(statement, call, source)?;
     let for_repeated = for_parts(statement, call, source)?;
+    let do_repeated = do_parts(statement, call, source)?;
+    ensure!(
+        frame.names.do_first.is_some() == do_repeated.is_some(),
+        "Function-body do first-iteration name ownership mismatch"
+    );
     scope_forms(declaration, source, d)?;
     let return_nodes = returns(body, d)?;
     documentation_pieces(source, declaration, frame, d)?;
@@ -780,6 +838,7 @@ pub(super) fn render(
         .chain(&frame.names.var_seeds)
         .chain(&frame.names.return_type)
         .chain(&frame.names.argument_capture)
+        .chain(&frame.names.do_first)
         .chain(&frame.predicate_names)
         .collect();
     let name_set: BTreeSet<_> = names.iter().map(|n| n.as_str()).collect();
@@ -820,7 +879,28 @@ pub(super) fn render(
             | "if_statement"
             | "switch_statement"
     );
-    if let Some((condition, loop_body)) = for_repeated {
+    if let Some(parts) = do_repeated {
+        // Continue performs the for update before entering the original test.
+        // The first iteration skips that test and enters the untouched body.
+        let first = frame.names.do_first.as_ref().unwrap();
+        out.generated(&format!(
+            "for (let {first} = true; ; {first} = false) {{{line}if (!{first}) {{{line}"
+        ))?;
+        out.original(
+            source,
+            parts.body.end_byte(),
+            parts.while_keyword.start_byte(),
+            "caller",
+        )?;
+        out.generated(line)?;
+        out.original(
+            source,
+            parts.while_keyword.end_byte(),
+            parts.condition.start_byte(),
+            "caller",
+        )?;
+        out.generated(line)?;
+    } else if let Some((condition, loop_body)) = for_repeated {
         // Preserve the actual for initializer/update and its per-iteration
         // environment. Continue still performs that update before the next test.
         out.original(
@@ -954,7 +1034,15 @@ pub(super) fn render(
     out.generated(&format!("}}{line}}}{line}"))?;
     predicates::finish(&mut out, frame, line)?;
     out.generated(&format!("}}{line}"))?;
-    if let Some((condition, _)) = for_repeated {
+    if let Some(parts) = do_repeated {
+        out.generated("if (!")?;
+        out.original(
+            source,
+            parts.condition.start_byte(),
+            call.start_byte(),
+            "caller",
+        )?;
+    } else if let Some((condition, _)) = for_repeated {
         out.generated("if (!(")?;
         out.original(source, condition.start_byte(), call.start_byte(), "caller")?;
     } else if let Some((condition, _)) = repeated {
@@ -1030,7 +1118,35 @@ pub(super) fn render(
             format!("({} as unknown as ({hint}))", frame.names.result)
         })?;
     }
-    if let Some((condition, loop_body)) = for_repeated {
+    if let Some(parts) = do_repeated {
+        out.original(
+            source,
+            call.end_byte(),
+            parts.condition.end_byte(),
+            "caller",
+        )?;
+        out.generated(&format!(") break;{line}"))?;
+        out.original(
+            source,
+            parts.condition.end_byte(),
+            statement.end_byte(),
+            "caller",
+        )?;
+        out.generated(&format!("{line}}}{line}"))?;
+        out.original(
+            source,
+            parts.do_keyword.end_byte(),
+            parts.body.start_byte(),
+            "caller",
+        )?;
+        out.original(
+            source,
+            parts.body.start_byte(),
+            parts.body.end_byte(),
+            "caller",
+        )?;
+        out.generated(&format!("{line}}}"))?;
+    } else if let Some((condition, loop_body)) = for_repeated {
         out.original(source, call.end_byte(), condition.end_byte(), "caller")?;
         out.generated(&format!(")) break;{line}"))?;
         out.original(
@@ -1097,7 +1213,9 @@ mod tests {
             ("while(helper()){}", Some("while_statement")),
             ("while(((helper()))){}", Some("while_statement")),
             ("while(helper()&&flag){}", None),
-            ("do{}while(helper());", None),
+            ("do{}while(helper());", Some("do_statement")),
+            ("do{}while(((helper())));", Some("do_statement")),
+            ("do{}while(helper()&&flag);", None),
             ("for(;helper();){}", Some("for_statement")),
             ("for(;((helper()));tick()){}", Some("for_statement")),
             ("for(;helper()&&flag;){}", None),
@@ -1274,8 +1392,126 @@ mod tests {
         }
     }
     #[test]
+    fn do_reconstruction_owns_keywords_delimiters_body_and_the_complete_condition() {
+        let d = Deadline::new(10_000);
+        for language in ["typescript", "tsx", "javascript", "jsx"] {
+            for newline in ["\n", "\r\n"] {
+                for body in [
+                    "{continue outer;}",
+                    "if(flag)continue outer;else break outer;",
+                    ";",
+                ] {
+                    for tail in [";", ""] {
+                        let source = format!("export {{}};\nouter:do /* café 🦀 before */ {body} /* after body */ while /* before test */ (/* test */((helper()))/* tail */){tail}\n").replace('\n', newline);
+                        let tree = parse(language, &source, &d).unwrap();
+                        let start = source.find("helper()").unwrap();
+                        let call = node_at(&tree, start, start + "helper()".len(), &d).unwrap();
+                        let statement = statement_for(call).unwrap();
+                        let parts = do_parts(statement, call, &source).unwrap().unwrap();
+                        assert_eq!(&source[parts.body.byte_range()], body);
+                        assert_eq!(
+                            &source[parts.condition.byte_range()],
+                            "(/* test */((helper()))/* tail */)"
+                        );
+                        assert_eq!(&source[parts.do_keyword.byte_range()], "do");
+                        assert_eq!(&source[parts.while_keyword.byte_range()], "while");
+                        for (start, end, replacement) in [
+                            (
+                                parts.do_keyword.start_byte(),
+                                parts.do_keyword.end_byte(),
+                                "if",
+                            ),
+                            (
+                                parts.while_keyword.start_byte(),
+                                parts.while_keyword.end_byte(),
+                                "whilX",
+                            ),
+                            (
+                                parts.condition.start_byte(),
+                                parts.condition.start_byte() + 1,
+                                "[",
+                            ),
+                            (
+                                parts.condition.end_byte() - 1,
+                                parts.condition.end_byte(),
+                                "]",
+                            ),
+                        ] {
+                            let mut altered = source.clone();
+                            altered.replace_range(start..end, replacement);
+                            assert!(do_parts(statement, call, &altered).is_err());
+                        }
+                    }
+                }
+            }
+        }
+        for source in [
+            "do{helper();}while(flag);",
+            "do{}while(helper()&&flag);",
+            "do{do{}while(helper());}while(flag);",
+        ] {
+            let tree = parse("typescript", source, &d).unwrap();
+            let statement = tree.root_node().named_child(0).unwrap();
+            let start = source.find("helper()").unwrap();
+            let call = node_at(&tree, start, start + "helper()".len(), &d).unwrap();
+            assert!(do_parts(statement, call, source).is_err(), "{source}");
+        }
+    }
+    #[test]
+    fn do_first_iteration_names_are_required_fresh_and_absent_from_legacy_witnesses() {
+        let source = "function helper():boolean{return false;}do{}while(helper());";
+        let d = Deadline::new(10_000);
+        let tree = parse("typescript", source, &d).unwrap();
+        let declaration = tree.root_node().named_child(0).unwrap();
+        let start = source.rfind("helper()").unwrap();
+        let call = node_at(&tree, start, start + "helper()".len(), &d).unwrap();
+        let statement = statement_for(call).unwrap();
+        let mut frame: Frame = serde_json::from_value(serde_json::json!({
+            "statementStart": statement.start_byte(), "statementEnd": statement.end_byte(),
+            "callStart": call.start_byte(), "callEnd": call.end_byte(),
+            "names": {"result":"__ci_inline_1","exit":"__ci_inline_2","arguments":[]}
+        }))
+        .unwrap();
+        assert!(
+            serde_json::to_value(&frame).unwrap()["names"]
+                .get("doFirst")
+                .is_none()
+        );
+        assert!(render(&tree, source, "typescript", declaration, &frame, &d).is_err());
+        frame.names.do_first = Some("__ci_inline_3".into());
+        let out = render(&tree, source, "typescript", declaration, &frame, &d).unwrap();
+        assert!(
+            out.text
+                .starts_with("for (let __ci_inline_3 = true; ; __ci_inline_3 = false) {")
+        );
+        parse("typescript", &out.text, &d).unwrap();
+        for copy in &out.copies {
+            assert_eq!(
+                &source[copy.original_start..copy.original_end],
+                &out.text[copy.output_start..copy.output_end]
+            );
+        }
+        frame.names.do_first = Some(frame.names.result.clone());
+        assert!(render(&tree, source, "typescript", declaration, &frame, &d).is_err());
+        frame.names.do_first = Some("first".into());
+        assert!(render(&tree, source, "typescript", declaration, &frame, &d).is_err());
+        frame.names.do_first = Some("__ci_inline_3".into());
+        assert!(
+            render(
+                &tree,
+                source,
+                "typescript",
+                declaration,
+                &frame,
+                &Deadline::new(0)
+            )
+            .is_err()
+        );
+    }
+    #[test]
     fn return_type_witnesses_keep_comment_ownership_original_bytes_and_bounds() {
         let names = Names {
+            do_first: None,
             result: "__ci_inline_1".into(),
             exit: "__ci_inline_2".into(),
             arguments: vec![],
@@ -1526,6 +1762,7 @@ mod tests {
                     v
                 };
                 let mut names = Names {
+                    do_first: None,
                     return_type: vec![],
                     argument_capture: vec![],
                     var_parameters: vec![],
@@ -1640,6 +1877,7 @@ mod tests {
             call_start,
             call_end: source.len() - 1,
             names: Names {
+                do_first: None,
                 return_type: vec!["__ci_inline_5".into(), "__ci_inline_6".into()],
                 argument_capture: (7..=13).map(|n| format!("__ci_inline_{n}")).collect(),
                 var_parameters: vec![],

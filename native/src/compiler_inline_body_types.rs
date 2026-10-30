@@ -277,6 +277,7 @@ mod tests {
             result: "__ci_inline_1".into(),
             exit: "__ci_inline_2".into(),
             arguments: vec![],
+            do_first: None,
             var_parameters: vec![],
             var_seeds: seeds,
         }

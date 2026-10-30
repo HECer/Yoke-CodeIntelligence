@@ -20,7 +20,7 @@ One owning strict ES module can select a nonasync function declaration without a
 TypeScript type-parameter list and complete direct calls in that captured file.
 A call must occupy one whole
 single-declarator lexical initializer, return expression, expression statement,
-throw expression, if/while/ordinary-for condition or switch discriminant. A complete call may also
+throw expression, if/while/do/ordinary-for condition or switch discriminant. A complete call may also
 be the right side of a plain identifier assignment occupying one whole expression
 statement, such as `result = helper(2)`. Parentheses around that call or the whole
 assignment are retained; the assignment wrapper depth is limited to 2,000.
@@ -34,11 +34,11 @@ additional sequencing and refuse. See the
 [direct assignment qualification](../../docs/validation/integration-2026-10-24/inline-assignment-heads/README.md);
 independent native execution is still pending for this extension.
 Other parentheses are retained too.
-Non-declaration statements other than while/for loops receive a block so unbraced branches retain their
+Non-declaration statements other than while/for/do loops receive a block so unbraced branches retain their
 control scope. Direct if/switch/throw heads evaluate the selected call once before
 the original statement. The worker and independent Rust reconstruction require
 the exact original AST field; original branches, cases, labels and comments remain
-source copies. Do tests, unsupported for-header positions, compound/short-circuit/nested expression contexts and
+source copies. Unsupported for-header positions, compound/short-circuit/nested expression contexts and
 overlapping statement frames remain unavailable. See the
 [statement-head qualification](../../docs/validation/integration-2026-10-23/inline-statement-heads/README.md).
 
@@ -236,7 +236,7 @@ recipe. Ordinary binding/type comparisons, predicate relays, before/after
 diagnostics, finite capacities and the existing write/recovery gates still
 apply. The literal true header permits the compiler to retain eligible predicate
 narrowing after the false-result break; an incompatible type flow still refuses.
-Do tests, for initializer/update positions, compound loop conditions and overlapping selected call frames
+For initializer/update positions, compound loop conditions and overlapping selected call frames
 remain unavailable. No new host grant, protocol field or default execution is
 introduced; `complete=false` and executed verification remain required.
 
@@ -279,10 +279,54 @@ Unicode and LF/CRLF. The original CLI writer-gate table gains a for case; only
 the obsolete direct-for negative input changes to a compound-for input, while
 its original assertions remain. New wrong-header/overlap cases still refuse.
 These fixtures are uncompiled and unrun locally. Native qualification of both
-loop candidates remains pending. Do/in/of/await-of and compound conditions,
+loop candidates remains pending. In/of/await-of and compound conditions,
 selected calls in initializer/update positions and overlapping frames remain
 outside scope. No schema, host grant or default execution changes; results
 remain `complete=false`.
+
+### Complete do conditions (candidate; native qualification pending)
+
+A complete direct call in a do-while condition uses a fresh first-iteration
+flag and an ordinary for loop:
+
+```text
+for (let first = true; ; first = false) {
+    if (!first) { expansion; if (!(result)) break; }
+    originalBody
+}
+```
+
+The flag starts true, so the original body runs before the first condition.
+Normal completion and continue perform the generated update before the next
+test; break, return, throw and continue to an enclosing loop leave without that
+test. Existing finally blocks keep their original position and completion
+behavior. Labels still name the loop. Each condition has fresh argument/body
+storage, while the original caller body remains an exact separate source copy.
+This follows [ECMAScript DoWhileLoopEvaluation](https://tc39.es/ecma262/multipage/ecmascript-language-statements-and-declarations.html#sec-runtime-semantics-dowhileloopevaluation).
+
+The compiler worker requires the complete do condition and its owning do/while
+keywords, parentheses and body. Rust independently reads and checks those AST
+fields, original keyword/delimiter bytes and ordering before reconstructing the
+same recipe. Original trivia is copied exactly once, including an omitted final
+semicolon and comments around an unbraced body. The new optional private witness
+name is mandatory only for do frames, participates in every existing freshness
+and collision check, and remains absent from prior frame serialization.
+
+Authored native fixtures cover first-body execution and an initially false
+condition, empty/unbraced bodies, arguments and extra arguments, fresh closures,
+caller/callee finally and throws, break/return/continue and enclosing labels,
+explicit/inferred predicate false-exit flow, JSDoc, automatic semicolon insertion,
+Unicode and LF/CRLF. The existing CLI verification/approval/recovery table gains
+a do case. Two unit cases cover keyword/delimiter/field ownership and forged or
+missing first-iteration names. Only the obsolete direct-do refusal input changes;
+compound do tests and overlapping selected frames still refuse.
+
+These native cases have not been compiled or executed locally. Native typing,
+compiler/native reconstruction equality and runtime acceptance remain pending
+guarded hosted CI. Existing bindings, types, diagnostics, capacities, deadlines,
+permissions and writer/recovery gates remain mandatory; results stay
+`complete=false`. Wider expression/loop/header forms and full R1 acceptance are
+still open.
 
 ## Host registration and requests
 
