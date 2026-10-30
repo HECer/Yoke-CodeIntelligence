@@ -1,0 +1,448 @@
+{
+  "schemaVersion": 1,
+  "recordedDate": "2026-10-29",
+  "native": {
+    "sourceRevision": "76035e4be3d9a9f9984364190eae9b49764a4209",
+    "runId": 40858654238,
+    "platforms": [
+      {
+        "platform": "Windows",
+        "shards": 8,
+        "wholeGroups": 371,
+        "verifiedLogFiles": 742,
+        "inventorySha256": "a6d2b7f2f1650e382f853716abbef5478ffc5598d68de5746c52098435abea8f",
+        "selectedSources": 1099,
+        "rawGitMatches": 45,
+        "newlineOnlyMatches": 1054
+      },
+      {
+        "platform": "Linux",
+        "shards": 8,
+        "wholeGroups": 371,
+        "verifiedLogFiles": 742,
+        "inventorySha256": "a8900f03dbd8a47acab77b2f9d2383c1624dbd83f985fadb758327b8a7ac2b0d",
+        "selectedSources": 1099,
+        "rawGitMatches": 1099,
+        "newlineOnlyMatches": 0
+      }
+    ],
+    "scope": "Default Cargo group coverage, including build-only examples; function totals and ignored gates are not inferred"
+  },
+  "history": {
+    "sourceRevision": "8f6878ae0da9197df268cac45f24fed4b24b2891",
+    "runId": 40864175630,
+    "jobId": 123414606506,
+    "complete": true,
+    "variants": [
+      {
+        "variant": "native",
+        "complete": true,
+        "packages": 2,
+        "originalRecords": 42,
+        "allOriginalsReadBack": true,
+        "oldAndCurrentAuthorityRefusedDuringPending": true,
+        "configurationAndOwnerExactDuringArchival": true,
+        "freshSameHostSaveAfterArchival": true,
+        "actualJournalCurrentGeneration": true,
+        "bothArchiveFramesRemainExact": true,
+        "persistent45Retained": false,
+        "runtimeExitBeforeJobCleanup": false,
+        "currentExit": {
+          "nativeExitCode": 0,
+          "stdinWasStillOpen": true,
+          "beforeJobCleanup": true
+        },
+        "oldExit": {
+          "nativeExitCode": 0,
+          "stdinWasStillOpen": true,
+          "beforeJobCleanup": true
+        },
+        "analyzedSourceUnchanged": true
+      },
+      {
+        "variant": "serena",
+        "complete": true,
+        "packages": 2,
+        "originalRecords": 42,
+        "allOriginalsReadBack": true,
+        "oldAndCurrentAuthorityRefusedDuringPending": true,
+        "configurationAndOwnerExactDuringArchival": true,
+        "freshSameHostSaveAfterArchival": true,
+        "actualJournalCurrentGeneration": true,
+        "bothArchiveFramesRemainExact": true,
+        "persistent45Retained": false,
+        "runtimeExitBeforeJobCleanup": false,
+        "currentExit": {
+          "nativeExitCode": 0,
+          "stdinWasStillOpen": true,
+          "beforeJobCleanup": true
+        },
+        "oldExit": {
+          "nativeExitCode": 0,
+          "stdinWasStillOpen": true,
+          "beforeJobCleanup": true
+        },
+        "analyzedSourceUnchanged": true
+      },
+      {
+        "variant": "persistent-python",
+        "complete": true,
+        "packages": 2,
+        "originalRecords": 42,
+        "allOriginalsReadBack": true,
+        "oldAndCurrentAuthorityRefusedDuringPending": true,
+        "configurationAndOwnerExactDuringArchival": true,
+        "freshSameHostSaveAfterArchival": true,
+        "actualJournalCurrentGeneration": true,
+        "bothArchiveFramesRemainExact": true,
+        "persistent45Retained": true,
+        "runtimeExitBeforeJobCleanup": true,
+        "currentExit": {
+          "nativeExitCode": 0,
+          "stdinWasStillOpen": true,
+          "beforeJobCleanup": true
+        },
+        "oldExit": {
+          "nativeExitCode": 0,
+          "stdinWasStillOpen": true,
+          "beforeJobCleanup": true
+        },
+        "analyzedSourceUnchanged": true
+      }
+    ],
+    "ownerJob": {
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "complete": true,
+      "pid": 6820,
+      "exitCode": 0,
+      "activeAtParentExit": 0,
+      "activeBeforeCleanup": 0,
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": 0
+    },
+    "successfulBuildAndHistorySteps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:17:03Z",
+        "completed_at": "2026-10-29T11:17:06Z"
+      },
+      {
+        "name": "Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:17:06Z",
+        "completed_at": "2026-10-29T11:17:22Z"
+      },
+      {
+        "name": "Run dtolnay/rust-toolchain@1.94.1",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:17:22Z",
+        "completed_at": "2026-10-29T11:17:34Z"
+      },
+      {
+        "name": "Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:17:34Z",
+        "completed_at": "2026-10-29T11:17:41Z"
+      },
+      {
+        "name": "Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:17:41Z",
+        "completed_at": "2026-10-29T11:17:41Z"
+      },
+      {
+        "name": "Use the same Windows temporary directory by its canonical long path",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:17:41Z",
+        "completed_at": "2026-10-29T11:17:43Z"
+      },
+      {
+        "name": "Run Swatinem/rust-cache@v2",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:17:43Z",
+        "completed_at": "2026-10-29T11:17:53Z"
+      },
+      {
+        "name": "Run npm ci",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:17:53Z",
+        "completed_at": "2026-10-29T11:17:57Z"
+      },
+      {
+        "name": "Verify browser and owning-Session harness admission",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:17:57Z",
+        "completed_at": "2026-10-29T11:18:01Z"
+      },
+      {
+        "name": "Record release inputs before the diagnostic build",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:18:01Z",
+        "completed_at": "2026-10-29T11:18:03Z"
+      },
+      {
+        "name": "Build the same release CLI for the diagnostic",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:18:03Z",
+        "completed_at": "2026-10-29T11:41:02Z"
+      },
+      {
+        "name": "Bind the successful diagnostic build to unchanged inputs",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:41:02Z",
+        "completed_at": "2026-10-29T11:41:03Z"
+      },
+      {
+        "name": "Exercise the original three owning-Session history variants",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:41:03Z",
+        "completed_at": "2026-10-29T11:41:23Z"
+      },
+      {
+        "name": "Preserve diagnostic owning-Session evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:41:23Z",
+        "completed_at": "2026-10-29T11:41:25Z"
+      },
+      {
+        "name": "Exercise the unchanged guarded real-browser harness",
+        "status": "completed",
+        "conclusion": "failure",
+        "started_at": "2026-10-29T11:41:25Z",
+        "completed_at": "2026-10-29T11:41:31Z"
+      },
+      {
+        "name": "Preserve diagnostic browser automation and PNGs",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:41:31Z",
+        "completed_at": "2026-10-29T11:41:33Z"
+      },
+      {
+        "name": "Post Run Swatinem/rust-cache@v2",
+        "status": "completed",
+        "conclusion": "skipped",
+        "started_at": "2026-10-29T11:41:33Z",
+        "completed_at": "2026-10-29T11:41:33Z"
+      },
+      {
+        "name": "Post Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "skipped",
+        "started_at": "2026-10-29T11:41:33Z",
+        "completed_at": "2026-10-29T11:41:33Z"
+      },
+      {
+        "name": "Post Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "skipped",
+        "started_at": "2026-10-29T11:41:33Z",
+        "completed_at": "2026-10-29T11:41:33Z"
+      },
+      {
+        "name": "Post Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:41:33Z",
+        "completed_at": "2026-10-29T11:41:35Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T11:41:35Z",
+        "completed_at": "2026-10-29T11:41:35Z"
+      }
+    ],
+    "sourceAudit": {
+      "selectedSources": 1099,
+      "rawGitMatches": 45,
+      "newlineOnlyMatches": 1054,
+      "validatorMatchesSelectedCommit": true
+    }
+  },
+  "githubArtifacts": [
+    {
+      "id": 12891084200,
+      "name": "native-coverage-ubuntu-latest",
+      "size_in_bytes": 400,
+      "digest": "sha256:f81ee625e2bedac733f73a9e8feafdc4f94419692791b87545a408b9c3fedc0d",
+      "created_at": "2026-10-29T10:56:12Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12892176864,
+      "name": "native-coverage-windows-latest",
+      "size_in_bytes": 401,
+      "digest": "sha256:13b50e77461ba2c645c038e56611202c2b319824e97359be18e1ce6ae120bff2",
+      "created_at": "2026-10-29T11:04:44Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12891073983,
+      "name": "native-shard-ubuntu-latest-0",
+      "size_in_bytes": 101267,
+      "digest": "sha256:b862f3917c2dceada3ef730a6821e38464fa6dfbc870c1c32fea659b36a08e61",
+      "created_at": "2026-10-29T10:55:34Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12891845583,
+      "name": "native-shard-ubuntu-latest-1",
+      "size_in_bytes": 106724,
+      "digest": "sha256:30feafacf4d05be22c35850b6f4e1e4fa5f9438fd4ebc7ea8d0073c6ea089e33",
+      "created_at": "2026-10-29T10:50:32Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12890707974,
+      "name": "native-shard-ubuntu-latest-2",
+      "size_in_bytes": 106194,
+      "digest": "sha256:5a71ba20c09d616c1d45955f33127caaf07361d541c0bd67e3669d4aa7a8702b",
+      "created_at": "2026-10-29T10:43:23Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12891222392,
+      "name": "native-shard-ubuntu-latest-3",
+      "size_in_bytes": 103956,
+      "digest": "sha256:9de5ee3532363c1389a1ae823723ff54de0692d9593d67f00a1a5d6e7b14c15b",
+      "created_at": "2026-10-29T10:53:29Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12890138713,
+      "name": "native-shard-ubuntu-latest-4",
+      "size_in_bytes": 108796,
+      "digest": "sha256:35bad52380fd4abe123ce140ddf2df3092b1b81bea98649a419ee2fca95be228",
+      "created_at": "2026-10-29T10:41:30Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12890547550,
+      "name": "native-shard-ubuntu-latest-5",
+      "size_in_bytes": 116692,
+      "digest": "sha256:8e465a489595368834a434b2642088d9df7b68e4cc3c89f8a3e0e025b1c04c6f",
+      "created_at": "2026-10-29T10:41:44Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12890872031,
+      "name": "native-shard-ubuntu-latest-6",
+      "size_in_bytes": 106826,
+      "digest": "sha256:16251686fcb726102878edf2442dc8c9d058e584f549e5a4137e16de63b55fb7",
+      "created_at": "2026-10-29T10:42:11Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12889964451,
+      "name": "native-shard-ubuntu-latest-7",
+      "size_in_bytes": 108101,
+      "digest": "sha256:064637eb498b8696bdcafd3700dc9514d1ba082f52269e40ebb03dcd48b7c38d",
+      "created_at": "2026-10-29T10:41:12Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12891730701,
+      "name": "native-shard-windows-latest-0",
+      "size_in_bytes": 97359,
+      "digest": "sha256:64e0076ce3139f283d1e3a7f2ec48f28e7a8b1ffa7e9adbcb0527749d4fdfb52",
+      "created_at": "2026-10-29T10:48:41Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12890504089,
+      "name": "native-shard-windows-latest-1",
+      "size_in_bytes": 103015,
+      "digest": "sha256:44cb485664af713578377916d142723030905169f0f1303ac0cbe36a5dfe5fa9",
+      "created_at": "2026-10-29T10:45:15Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12891262081,
+      "name": "native-shard-windows-latest-2",
+      "size_in_bytes": 104422,
+      "digest": "sha256:6d9e2047f86ca45107bcbbc43ae46f3dd37d7bb602b18d241dc4752db7cf5da3",
+      "created_at": "2026-10-29T10:52:42Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12892191947,
+      "name": "native-shard-windows-latest-3",
+      "size_in_bytes": 105091,
+      "digest": "sha256:a4eedacedc0e0b8c8fb8c1d146e3d822a77fdb1c94938bafcb1c7bfc697ed071",
+      "created_at": "2026-10-29T11:03:07Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12890504344,
+      "name": "native-shard-windows-latest-4",
+      "size_in_bytes": 103166,
+      "digest": "sha256:a4c203544f1ff12f0a9f6a820883f2ea942faa96cefbc796721170f5f71e344b",
+      "created_at": "2026-10-29T10:46:33Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12891417606,
+      "name": "native-shard-windows-latest-5",
+      "size_in_bytes": 123330,
+      "digest": "sha256:2c0d5155dd373f0b0520892a513441cd4af39ff71c7e9c1b5b695547cb3b5b0c",
+      "created_at": "2026-10-29T10:54:22Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12890668149,
+      "name": "native-shard-windows-latest-6",
+      "size_in_bytes": 101841,
+      "digest": "sha256:94bfe288b6deaf82880c6bd265d15f7fea3cd287c29c9e970867c73924b89300",
+      "created_at": "2026-10-29T10:44:46Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12891631181,
+      "name": "native-shard-windows-latest-7",
+      "size_in_bytes": 101390,
+      "digest": "sha256:caa2dda54e5f1d692731abc94a2ebd476e1562257b56b6f00e1c408fba02f617",
+      "created_at": "2026-10-29T10:49:11Z",
+      "runId": 40858654238
+    },
+    {
+      "id": 12893877826,
+      "name": "diagnostic-host-document-history-windows",
+      "size_in_bytes": 297592,
+      "digest": "sha256:d8b34868f178dbcaa93dca9b684f34c7556cc139a13acbc25f0847f4352187ed",
+      "created_at": "2026-10-29T11:41:24Z",
+      "runId": 40864175630
+    }
+  ],
+  "archive": {
+    "schemaVersion": 1,
+    "archive": "raw-text-evidence.zip",
+    "archiveBytes": 2096251,
+    "archiveSha256": "66678b3b471e5f86faf4096f18f807a57a0c652eb5e0054988b76f64144b1870"
+  },
+  "limits": {
+    "nativeExecutedDuringAudit": false,
+    "nativeImagePayloadReadDuringAudit": false,
+    "browserAccepted": false,
+    "macosAccepted": false,
+    "releaseAccepted": false,
+    "fullProjectComplete": false
+  }
+}

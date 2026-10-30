@@ -1,5 +1,57 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Scoped macOS cleanup evidence and fixture candidates (2026-10-30)
+
+PR8 run `40950941727` at tested merge `788913c0` covers all 372 default macOS
+Cargo groups: 360 exit zero and 12 fail. All 744 logs and 1,109 raw source hashes
+match their receipts and candidate Git bytes. The actual library passes 506
+tests with six original ignores, including all 12 strict cleanup regressions.
+Process and runtime targets pass five and 15 tests respectively. This is scoped
+evidence at that exact tree; the remaining failures prevent macOS acceptance.
+
+One ingress failure has a 25 ms writer sleep that wakes after about 169 ms,
+after the server closes at 134 ms. The candidate qualifies continuous traffic
+and admits at most three sequential stimulus attempts within the original total
+750 ms bound and unchanged 120 ms request deadline. A guarded std-only comparison
+passes normal and delayed pacing and refuses renewed deadlines and invalid
+stimuli. This does not execute the modified application target.
+
+A local guarded comparison also identifies a private `INetCache/Content.IE5`
+junction. The browser profile candidate precreates that exact role as an ordinary
+directory; all later links still refuse. Its actual hosted route, repair and six
+visual states remain unverified. Python passes 180 tests; typecheck and npm tests
+pass (266 passed, three skipped). Strict macOS memory enforcement, full new-source
+native CI, integrated PRs and release/main acceptance remain open.
+[Source-bound receipts and 787 checked text members](validation/integration-2026-10-30/platform-stimulus-checkpoint/README.md).
+
+## Source-bound Windows/Ubuntu native and owning-Session history confirmation (2026-10-29)
+
+Run `40858654238` at `76035e4be3d9a9f9984364190eae9b49764a4209` passes
+complete default Cargo group coverage on Windows and Ubuntu: eight complete
+shards and 371 unique groups per platform, with every group exiting zero and
+all 742 referenced logs per platform matching their byte counts and hashes.
+Build-only examples and original ignored gates retain their own scope; group
+counts do not establish individual test totals or nondefault-feature coverage.
+The 1,099 source hashes match Git exactly on Ubuntu; Windows retains 45 exact
+and 1,054 explicitly identified LF/CRLF-only matches.
+
+Separate source `8f6878ae0da9197df268cac45f24fed4b24b2891` in run `40864175630`
+passes the unchanged release build and all three original owning-Session history
+variants, each with two packages and 42 original records read back. Root, native
+authority and persistent-runtime exits precede forced cleanup. The later browser
+gate still fails at private-fixture link refusal, with no accepted PNG/visual
+results. At `43fc1b73`, the closed-label diagnostic confirms a junction beneath
+the private home. The coherent profile at `83227913` still refuses a home junction
+at depth seven. Its exact entry and origin remain unknown. Bounded route categories
+and opaque component fingerprints are prepared for diagnosis; all targets remain
+unread and all links still refuse. The six visual inspections remain pending.
+
+[Retained source-bound receipts, all 2,000 text members and limits](validation/integration-2026-10-29/native-history-checkpoint/README.md).
+Strict macOS memory enforcement, current-head browser/visual qualification,
+integrated PRs, matching VSIX/extension host, main/publication and complete
+project/release acceptance remain open. Earlier failures remain historical;
+no assertion, deadline, memory ceiling, ignore or permission is relaxed.
+
 ## Owned overlay/publication admission corrected after platform CI (2026-10-27)
 
 At published `b55064b9`, actual platform evidence identifies two construction

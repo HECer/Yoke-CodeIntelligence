@@ -600,110 +600,222 @@ fn inherited_host_cancellation_retires_listener_before_explicit_shutdown() {
     f.stop();
     assert!(f.records().is_empty());
 }
+fn continuously_paced_partial_headers(
+    successes: &[Option<Duration>; 60],
+    connected_at: Duration,
+    closed_at: Duration,
+    maximum_gap: Duration,
+) -> bool {
+    let mut previous = connected_at;
+    let mut count = 0;
+    for &success in successes.iter().flatten() {
+        if success > closed_at {
+            break;
+        }
+        let Some(gap) = success.checked_sub(previous) else {
+            return false;
+        };
+        if gap >= maximum_gap {
+            return false;
+        }
+        previous = success;
+        count += 1;
+    }
+    count >= 2
+        && closed_at
+            .checked_sub(previous)
+            .is_some_and(|gap| gap < maximum_gap)
+}
+
+#[test]
+fn partial_header_stimulus_requires_live_pacing_through_peer_close() {
+    let samples = |times: &[u64]| {
+        let mut result = [None; 60];
+        for (slot, micros) in result.iter_mut().zip(times) {
+            *slot = Some(Duration::from_micros(*micros));
+        }
+        result
+    };
+    let closed_at = Duration::from_micros(134_255);
+    let gap = Duration::from_millis(60);
+    assert!(continuously_paced_partial_headers(
+        &samples(&[214, 25_000, 50_000, 75_000, 100_000]),
+        Duration::from_micros(105),
+        closed_at,
+        gap,
+    ));
+    // Retained Darwin trace: the first 25 ms sleep woke at 168.9 ms, after
+    // the peer had already closed at 134.3 ms. It proves no continuous peer.
+    for times in [
+        vec![],
+        vec![214],
+        vec![214, 168_899],
+        vec![214, 25_000, 50_000],
+        vec![214, 25_000, 100_000],
+        vec![214, 25_000, 85_000, 100_000],
+        vec![214, 50_000, 25_000, 100_000],
+        vec![70_000, 100_000],
+    ] {
+        assert!(
+            !continuously_paced_partial_headers(
+                &samples(&times),
+                Duration::from_micros(105),
+                closed_at,
+                gap,
+            ),
+            "unproved partial-header pacing: {times:?}"
+        );
+    }
+}
+
 #[test]
 fn absolute_request_deadline_stops_a_peer_which_keeps_sending_partial_headers() {
     use std::sync::{
         Arc,
         atomic::{AtomicBool, AtomicUsize, Ordering},
     };
+    let request_timeout = Duration::from_millis(120);
+    let acceptance_bound = Duration::from_millis(750);
     let mut c = config();
     c.request_timeout_ms = 120;
     let mut f = Fixture::new(c, options());
-    // Diagnostic phases share this pre-connect epoch; the acceptance timer
-    // and server deadline still start in their original places.
-    let observed_from = Instant::now();
-    let mut read = TcpStream::connect(f.address()).unwrap();
-    let connected_at = observed_from.elapsed();
-    read.set_read_timeout(Some(Duration::from_secs(2))).unwrap();
-    let mut write = read.try_clone().unwrap();
-    let stop = Arc::new(AtomicBool::new(false));
-    let stopping = stop.clone();
-    let sent = Arc::new(AtomicUsize::new(0));
-    let count = sent.clone();
-    let spawn_started_at = observed_from.elapsed();
-    let drip = std::thread::spawn(move || {
-        // Owned by this thread until join; no observer mutex or shared log.
-        let entered_at = observed_from.elapsed();
-        let mut first_two_writes = [(None, None, None); 2];
-        // Error and stop observations use one-based attempt numbers.
-        let mut write_error = None;
-        let mut stop_observed = None;
-        let mut last_wake_at = None;
-        for attempt in 0..60 {
-            if stopping.load(Ordering::SeqCst) {
-                stop_observed = Some((attempt + 1, observed_from.elapsed()));
-                break;
-            }
-            if let Some((attempt_at, _, _)) = first_two_writes.get_mut(attempt) {
-                *attempt_at = Some(observed_from.elapsed());
-            }
-            if let Err(error) = write.write_all(b"P") {
-                write_error = Some((attempt + 1, observed_from.elapsed(), error.kind()));
-                break;
-            }
-            count.fetch_add(1, Ordering::SeqCst);
-            if let Some((_, success_at, _)) = first_two_writes.get_mut(attempt) {
-                *success_at = Some(observed_from.elapsed());
-            }
-            std::thread::sleep(Duration::from_millis(25));
-            let woke_at = observed_from.elapsed();
-            last_wake_at = Some(woke_at);
-            if let Some((_, _, wake)) = first_two_writes.get_mut(attempt) {
-                *wake = Some(woke_at);
-            }
-        }
-        (
-            ("entry", entered_at),
-            ("first-two-attempt-success-wake", first_two_writes),
-            ("write-error-attempt-time-kind", write_error),
-            ("stop-attempt-time", stop_observed),
-            ("last-wake", last_wake_at),
-            ("return", observed_from.elapsed()),
-        )
-    });
+    // One total acceptance timer covers every connection, writer and join.
+    // It starts earlier than the old single-attempt timer and never resets.
     let now = Instant::now();
-    let mut wire = Vec::new();
-    let read_started_at = observed_from.elapsed();
-    let read_outcome = read.read_to_end(&mut wire).map_err(|error| error.kind());
-    let read_completed_at = observed_from.elapsed();
-    stop.store(true, Ordering::SeqCst);
-    let stop_requested_at = observed_from.elapsed();
-    let join_started_at = observed_from.elapsed();
-    let joined = drip.join();
-    let join_completed_at = observed_from.elapsed();
-    let client_phases = [
-        ("connect-return", connected_at),
-        ("spawn-entry", spawn_started_at),
-        ("read-entry", read_started_at),
-        ("read-return", read_completed_at),
-        ("stop-request", stop_requested_at),
-        ("join-entry", join_started_at),
-        ("join-return", join_completed_at),
-    ];
-    assert!(
-        joined.is_ok(),
-        "writer panicked; elapsed={:?}; response_bytes={}; read_outcome={read_outcome:?}; client_phases={client_phases:?}",
-        now.elapsed(),
-        wire.len()
-    );
-    let writer = joined.unwrap();
-    assert!(
-        sent.load(Ordering::SeqCst) >= 2,
-        "sent={}; elapsed={:?}; response_bytes={}; read_outcome={read_outcome:?}; client_phases={client_phases:?}; writer={writer:?}",
-        sent.load(Ordering::SeqCst),
-        now.elapsed(),
-        wire.len()
-    );
-    assert!(
-        now.elapsed() < Duration::from_millis(750),
-        "elapsed={:?}; response_bytes={}; read_outcome={read_outcome:?}; client_phases={client_phases:?}; writer={writer:?}",
-        now.elapsed(),
-        wire.len()
-    );
+    let observed_from = now;
+    let mut attempts = Vec::with_capacity(3);
+    let mut proved = false;
+    for attempt in 0..3 {
+        let mut read = TcpStream::connect(f.address()).unwrap();
+        let connected_at = observed_from.elapsed();
+        let remaining = acceptance_bound.saturating_sub(now.elapsed());
+        assert!(
+            !remaining.is_zero(),
+            "acceptance budget exhausted: {attempts:?}"
+        );
+        read.set_read_timeout(Some(remaining)).unwrap();
+        let mut write = read.try_clone().unwrap();
+        let stop = Arc::new(AtomicBool::new(false));
+        let stopping = stop.clone();
+        let sent = Arc::new(AtomicUsize::new(0));
+        let count = sent.clone();
+        let spawn_started_at = observed_from.elapsed();
+        let drip = std::thread::spawn(move || {
+            // Fixed thread-owned observations; no observer lock or I/O.
+            let entered_at = observed_from.elapsed();
+            let mut first_two_writes = [(None, None, None); 2];
+            let mut successes = [None; 60];
+            let mut write_error = None;
+            let mut stop_observed = None;
+            let mut last_wake_at = None;
+            for (write_attempt, success_slot) in successes.iter_mut().enumerate() {
+                if stopping.load(Ordering::SeqCst) {
+                    stop_observed = Some((write_attempt + 1, observed_from.elapsed()));
+                    break;
+                }
+                if let Some((attempt_at, _, _)) = first_two_writes.get_mut(write_attempt) {
+                    *attempt_at = Some(observed_from.elapsed());
+                }
+                if let Err(error) = write.write_all(b"P") {
+                    write_error = Some((write_attempt + 1, observed_from.elapsed(), error.kind()));
+                    break;
+                }
+                count.fetch_add(1, Ordering::SeqCst);
+                let success_at = observed_from.elapsed();
+                *success_slot = Some(success_at);
+                if let Some((_, first_success_at, _)) = first_two_writes.get_mut(write_attempt) {
+                    *first_success_at = Some(success_at);
+                }
+                std::thread::sleep(Duration::from_millis(25));
+                let woke_at = observed_from.elapsed();
+                last_wake_at = Some(woke_at);
+                if let Some((_, _, wake)) = first_two_writes.get_mut(write_attempt) {
+                    *wake = Some(woke_at);
+                }
+            }
+            (
+                successes,
+                (
+                    ("entry", entered_at),
+                    ("first-two-attempt-success-wake", first_two_writes),
+                    ("write-error-attempt-time-kind", write_error),
+                    ("stop-attempt-time", stop_observed),
+                    ("last-wake", last_wake_at),
+                    ("return", observed_from.elapsed()),
+                ),
+            )
+        });
+        let mut wire = Vec::new();
+        let read_started_at = observed_from.elapsed();
+        let read_outcome = read.read_to_end(&mut wire).map_err(|error| error.kind());
+        let read_completed_at = observed_from.elapsed();
+        stop.store(true, Ordering::SeqCst);
+        let stop_requested_at = observed_from.elapsed();
+        let join_started_at = observed_from.elapsed();
+        let joined = drip.join();
+        let join_completed_at = observed_from.elapsed();
+        let client_phases = [
+            ("connect-return", connected_at),
+            ("spawn-entry", spawn_started_at),
+            ("read-entry", read_started_at),
+            ("read-return", read_completed_at),
+            ("stop-request", stop_requested_at),
+            ("join-entry", join_started_at),
+            ("join-return", join_completed_at),
+        ];
+        assert!(
+            joined.is_ok(),
+            "writer panicked; elapsed={:?}; response_bytes={}; read_outcome={read_outcome:?}; client_phases={client_phases:?}; attempts={attempts:?}",
+            now.elapsed(),
+            wire.len()
+        );
+        let (successes, writer) = joined.unwrap();
+        let sent = sent.load(Ordering::SeqCst);
+        let stimulated = continuously_paced_partial_headers(
+            &successes,
+            connected_at,
+            read_completed_at,
+            request_timeout / 2,
+        );
+        let clean_close = read_outcome == Ok(0) && wire.is_empty();
+        let request_age = read_completed_at.saturating_sub(connected_at);
+        attempts.push((
+            sent,
+            read_outcome,
+            wire.len(),
+            client_phases,
+            writer,
+            successes,
+        ));
+        // Retry only a clean, non-early close whose writer failed to provide
+        // continuous traffic. No functional failure or exhausted wall budget
+        // can retry. At most one writer exists at a time; all joins count.
+        if !stimulated
+            && clean_close
+            && request_age >= request_timeout
+            && attempt < 2
+            && now.elapsed() + request_timeout < acceptance_bound
+        {
+            continue;
+        }
+        assert!(clean_close, "partial-header close failed: {attempts:?}");
+        assert!(sent >= 2, "insufficient writes: {attempts:?}");
+        assert!(
+            stimulated,
+            "continuous peer was not established: {attempts:?}"
+        );
+        assert!(
+            now.elapsed() < acceptance_bound,
+            "elapsed={:?}; attempts={attempts:?}",
+            now.elapsed()
+        );
+        proved = true;
+        break;
+    }
+    assert!(proved, "no qualified partial-header attempt: {attempts:?}");
     assert!(
         f.records().is_empty(),
-        "response_bytes={}; read_outcome={read_outcome:?}; client_phases={client_phases:?}; writer={writer:?}",
-        wire.len()
+        "unexpected durable ingress: {attempts:?}"
     );
     f.stop();
 }
