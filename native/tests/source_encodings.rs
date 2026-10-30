@@ -18,6 +18,9 @@ use yoke::{
     source_encoding::{Codec, View},
 };
 
+#[path = "support/source_encodings_utf32.rs"]
+mod utf32;
+
 fn d() -> Deadline {
     Deadline::new(30_000)
 }
@@ -162,7 +165,7 @@ fn true_latin1_is_bijective_and_cannot_encode_windows1252_or_lossy_replacements(
                 .contains("unrepresentable_latin1")
         );
     }
-    for name in ["utf-32", "shift_jis", " utf-16", "utf 16", "UTF–16"] {
+    for name in ["utf-7", "shift_jis", " utf-16", "utf 16", "UTF–16"] {
         assert!(Codec::parse(name).is_err(), "{name}");
     }
     for (names, codec) in [
@@ -713,7 +716,7 @@ fn strict_configuration_protocol_types_unknown_fields_and_host_scopes_do_not_gra
         json!(2),
         json!([]),
         json!({}),
-        json!("utf-32"),
+        json!("utf-7"),
         json!("owned_private_canary"),
     ] {
         let yaml = format!("encoding: {}\n", value);

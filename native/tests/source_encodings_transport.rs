@@ -14,6 +14,9 @@ use yoke::{
     source_encoding::Codec,
 };
 
+#[path = "support/source_encodings_utf32_transport.rs"]
+mod utf32;
+
 static SERIAL: std::sync::Mutex<()> = std::sync::Mutex::new(());
 fn d() -> Deadline {
     Deadline::new(30_000)
