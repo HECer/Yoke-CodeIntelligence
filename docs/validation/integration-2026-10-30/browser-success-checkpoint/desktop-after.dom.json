@@ -1,0 +1,113 @@
+{
+  "width": 1440,
+  "scrollWidth": 1425,
+  "focus": "",
+  "recoveryButtons": 0,
+  "nodes": [
+    {
+      "id": "document-choice",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "selected": "new",
+      "x": 293,
+      "y": 12.890625,
+      "width": 1065,
+      "height": 41
+    },
+    {
+      "id": "load-document",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "x": 293,
+      "y": 67.890625,
+      "width": 121.65625,
+      "height": 39
+    },
+    {
+      "id": "pending-documents",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "x": 423.65625,
+      "y": 67.890625,
+      "width": 130.71875,
+      "height": 39
+    },
+    {
+      "id": "document-content",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "x": 293,
+      "y": 366.859375,
+      "width": 1065,
+      "height": 290,
+      "textSha256": "22dd037ad6d11559b4433e5eba44d8e52febea0a77c472dddc85fd505e2eac12"
+    },
+    {
+      "id": "plan-document",
+      "visible": true,
+      "disabled": true,
+      "readOnly": false,
+      "x": 293,
+      "y": 670.859375,
+      "width": 184.734375,
+      "height": 39
+    },
+    {
+      "id": "apply-document",
+      "visible": true,
+      "disabled": true,
+      "readOnly": false,
+      "x": 486.734375,
+      "y": 670.859375,
+      "width": 166.5625,
+      "height": 39
+    },
+    {
+      "id": "document-review",
+      "visible": false,
+      "disabled": false,
+      "readOnly": false,
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0
+    },
+    {
+      "id": "document-state",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "text": "Saved file loaded.",
+      "x": 293,
+      "y": 251.28125,
+      "width": 1065,
+      "height": 20.390625
+    },
+    {
+      "id": "document-journal-list",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "text": "No pending journal for this selected file.",
+      "x": 293,
+      "y": 866.25,
+      "width": 1065,
+      "height": 20.390625
+    },
+    {
+      "id": "management-status",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "text": "Selected file saved. Running services retain their current configuration.",
+      "x": 268,
+      "y": -199,
+      "width": 1115,
+      "height": 50.09375
+    }
+  ]
+}
