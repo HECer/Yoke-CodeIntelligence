@@ -1,5 +1,17 @@
 # Remaining implementation and acceptance
 
+## Complete do-condition inlining candidate (2026-10-30)
+
+The finite classic function-body route now admits complete do-while condition
+calls with independent compiler/Rust ownership checks and a fresh first-iteration
+loop recipe. The original body runs before the first test; continue reaches the
+test after finally, while earlier break/return/throw leave without it. Original
+source copies, labels, type checks, budgets and writer/recovery gates remain.
+Three integration cases and two unit cases are authored, with an additional
+CLI verification/approval/recovery fixture. Native compilation and execution
+remain unrun locally; guarded hosted qualification and wider R1/full parity,
+platform, VSIX/main and release acceptance remain open.
+
 ## For-condition inlining qualification (2026-10-30)
 
 The complete ordinary-for-condition source recipe now retains the original
