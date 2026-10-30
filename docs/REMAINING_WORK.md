@@ -1,5 +1,16 @@
 # Remaining implementation and acceptance
 
+## While-condition inlining qualification (2026-10-30)
+
+The source candidate extends classic body expansion to complete direct calls in
+while conditions, with independent Rust reconstruction and authored native
+runtime/type/byte/control and verification/approval/recovery fixtures. Guarded
+native compilation and fixture execution remain required. For/do tests,
+compound/short-circuit conditions, nested expressions and overlapping selected
+frames still refuse. This does not close the broader R1 semantic-refactoring
+requirement or change any earlier source-bound CI/release checkpoint.
+[Candidate contract](../native/docs/compiler-inline.md#complete-while-conditions-candidate-native-qualification-pending).
+
 ## Gates remaining after scoped f41 acceptance (2026-10-30)
 
 Source `f41e5613` in run `41030808968` now has complete default-target coverage

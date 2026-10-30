@@ -276,7 +276,7 @@ fn statement_for(call: Node<'_>) -> Result<Node<'_>> {
         return Ok(statement);
     }
     let complete_value = match parent.kind() {
-        "if_statement" => parent.child_by_field_name("condition"),
+        "if_statement" | "while_statement" => parent.child_by_field_name("condition"),
         "switch_statement" => parent.child_by_field_name("value"),
         "expression_statement" | "return_statement" | "throw_statement" => {
             children(parent).first().copied()
@@ -288,6 +288,34 @@ fn statement_for(call: Node<'_>) -> Result<Node<'_>> {
         "Function-body expression context needs sequencing"
     );
     Ok(parent)
+}
+fn while_parts<'a>(
+    statement: Node<'a>,
+    call: Node<'a>,
+    source: &str,
+) -> Result<Option<(Node<'a>, Node<'a>)>> {
+    if statement.kind() != "while_statement" {
+        return Ok(None);
+    }
+    let condition = statement
+        .child_by_field_name("condition")
+        .context("Function-body while condition absent")?;
+    let body = statement
+        .child_by_field_name("body")
+        .context("Function-body while body absent")?;
+    ensure!(
+        condition.kind() == "parenthesized_expression"
+            && condition.end_byte() >= condition.start_byte() + 2
+            && source.as_bytes().get(condition.start_byte()) == Some(&b'(')
+            && source.as_bytes().get(condition.end_byte() - 1) == Some(&b')')
+            && condition.start_byte() < call.start_byte()
+            && call.end_byte() < condition.end_byte()
+            && condition.end_byte() <= body.start_byte()
+            && body.end_byte() == statement.end_byte()
+            && statement_for(call)?.id() == statement.id(),
+        "Function-body while delimiter or call ownership mismatch"
+    );
+    Ok(Some((condition, body)))
 }
 fn scope_forms(body: Node<'_>, source: &str, d: &Deadline) -> Result<()> {
     let mut stack = vec![body];
@@ -641,6 +669,7 @@ pub(super) fn render(
         call.kind() == "call_expression" && statement_for(call)?.id() == statement.id(),
         "Function-body statement ownership mismatch"
     );
+    let repeated = while_parts(statement, call, source)?;
     scope_forms(declaration, source, d)?;
     let return_nodes = returns(body, d)?;
     documentation_pieces(source, declaration, frame, d)?;
@@ -740,7 +769,24 @@ pub(super) fn render(
             | "if_statement"
             | "switch_statement"
     );
-    if wrap {
+    if let Some((condition, loop_body)) = repeated {
+        // A caller label must still name this loop. Captures belong to each
+        // condition test, including tests reached by an original continue.
+        out.original(
+            source,
+            statement.start_byte(),
+            condition.start_byte() + 1,
+            "caller",
+        )?;
+        out.generated("true")?;
+        out.original(
+            source,
+            condition.end_byte() - 1,
+            loop_body.start_byte(),
+            "caller",
+        )?;
+        out.generated(&format!("{{{line}"))?;
+    } else if wrap {
         out.generated(&format!("{{{line}"))?;
     }
     let predicate = predicates::begin(&mut out, source, declaration, frame, language, line, d)?;
@@ -840,12 +886,17 @@ pub(super) fn render(
     out.generated(&format!("}}{line}}}{line}"))?;
     predicates::finish(&mut out, frame, line)?;
     out.generated(&format!("}}{line}"))?;
-    out.original(
-        source,
-        caller_start(source, statement, d)?,
-        call.start_byte(),
-        "caller",
-    )?;
+    if let Some((condition, _)) = repeated {
+        out.generated("if (!")?;
+        out.original(source, condition.start_byte(), call.start_byte(), "caller")?;
+    } else {
+        out.original(
+            source,
+            caller_start(source, statement, d)?,
+            call.start_byte(),
+            "caller",
+        )?;
+    }
     let annotated = declaration.child_by_field_name("return_type");
     ensure!(
         annotated.is_none() || frame.result_type.is_none(),
@@ -908,7 +959,19 @@ pub(super) fn render(
             format!("({} as unknown as ({hint}))", frame.names.result)
         })?;
     }
-    out.original(source, call.end_byte(), statement.end_byte(), "caller")?;
+    if let Some((condition, loop_body)) = repeated {
+        out.original(source, call.end_byte(), condition.end_byte(), "caller")?;
+        out.generated(&format!(") break;{line}"))?;
+        out.original(
+            source,
+            loop_body.start_byte(),
+            loop_body.end_byte(),
+            "caller",
+        )?;
+        out.generated(&format!("{line}}}"))?;
+    } else {
+        out.original(source, call.end_byte(), statement.end_byte(), "caller")?;
+    }
     if wrap {
         out.generated(&format!("{line}}}"))?;
     }
@@ -919,7 +982,7 @@ pub(super) fn render(
 mod tests {
     use super::*;
     #[test]
-    fn statement_heads_require_the_exact_once_only_original_ast_field() {
+    fn statement_heads_require_the_exact_original_ast_field() {
         let d = Deadline::new(10_000);
         for (statement, expected) in [
             ("if(((helper()))){}else{}", Some("if_statement")),
@@ -950,7 +1013,9 @@ mod tests {
             ("if(flag&&helper()){}", None),
             ("switch(1+helper()){}", None),
             ("throw other(helper());", None),
-            ("while(helper()){}", None),
+            ("while(helper()){}", Some("while_statement")),
+            ("while(((helper()))){}", Some("while_statement")),
+            ("while(helper()&&flag){}", None),
             ("do{}while(helper());", None),
             ("for(;helper();){}", None),
             ("for(const x of helper()){}", None),
@@ -969,6 +1034,50 @@ mod tests {
             let start = source.find("helper()").unwrap();
             let call = node_at(&tree, start, start + "helper()".len(), &d).unwrap();
             assert_eq!(statement_for(call).is_ok(), depth <= 2000, "{depth}");
+        }
+    }
+    #[test]
+    fn while_reconstruction_requires_owned_condition_delimiters_and_preserves_body_boundaries() {
+        let d = Deadline::new(10_000);
+        for language in ["typescript", "tsx", "javascript", "jsx"] {
+            for newline in ["\n", "\r\n"] {
+                let source = "export {};\nouter:while /* café 🦀 header */ (/* test */((helper()))/* tail */) /* between */ {continue outer;}\n".replace('\n', newline);
+                let tree = parse(language, &source, &d).unwrap();
+                let start = source.find("helper()").unwrap();
+                let call = node_at(&tree, start, start + "helper()".len(), &d).unwrap();
+                let statement = statement_for(call).unwrap();
+                let (condition, body) = while_parts(statement, call, &source).unwrap().unwrap();
+                assert_eq!(
+                    &source[condition.start_byte()..condition.end_byte()],
+                    "(/* test */((helper()))/* tail */)"
+                );
+                assert_eq!(
+                    &source[body.start_byte()..body.end_byte()],
+                    "{continue outer;}"
+                );
+                assert_eq!(statement.end_byte(), body.end_byte());
+                assert_eq!(
+                    &source[statement.start_byte()..condition.start_byte() + 1],
+                    "while /* café 🦀 header */ ("
+                );
+                let mut altered = source.clone();
+                altered.replace_range(condition.start_byte()..condition.start_byte() + 1, "[");
+                assert!(while_parts(statement, call, &altered).is_err());
+                let mut altered = source.clone();
+                altered.replace_range(condition.end_byte() - 1..condition.end_byte(), "]");
+                assert!(while_parts(statement, call, &altered).is_err());
+            }
+        }
+        for source in [
+            "while(flag){helper();}",
+            "while(helper()&&flag){}",
+            "while(flag){while(helper())break;}",
+        ] {
+            let tree = parse("typescript", source, &d).unwrap();
+            let statement = tree.root_node().named_child(0).unwrap();
+            let start = source.find("helper()").unwrap();
+            let call = node_at(&tree, start, start + "helper()".len(), &d).unwrap();
+            assert!(while_parts(statement, call, source).is_err(), "{source}");
         }
     }
     #[test]
