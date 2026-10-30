@@ -623,9 +623,10 @@ class OwningVariants(unittest.TestCase):
     def test_complete_exercise_selects_both_owners_and_checks_live_values_before_independent_exits(self):
         # Real Python orchestration against in-memory actors and private fixture
         # files, never a native/browser success substitute.
-        for variant, fault in (("native", None), ("serena", None), ("persistent-python", None),
+        for variant, fault in (("native", None), ("serena", None), ("persistent-python", None), ("http", None),
                                ("persistent-python", "current-value"), ("persistent-python", "old-value"),
-                               ("persistent-python", "current-exit"), ("persistent-python", "old-exit")):
+                               ("persistent-python", "current-exit"), ("persistent-python", "old-exit"),
+                               ("http", "peer-isolation"), ("http", "session-close"), ("http", "service-exit")):
             with self.subTest(variant=variant, fault=fault), tempfile.TemporaryDirectory() as directory:
                 fixture = Path(directory).resolve()
                 source, old, new, host, archive = [fixture / name for name in
@@ -648,6 +649,9 @@ class OwningVariants(unittest.TestCase):
                     def rpc(self, method, params):
                         if method != "tools/list":
                             raise AssertionError("Only the real profile catalog is expected")
+                        if self.protocol == "session":
+                            events.append((self.label, "tools/list"))
+                            return {"tools": [{"name": "ci_session"}]}
                         return {"tools": [{"name": name} for name in
                                           ("get_current_config", "open_dashboard", "serena_repl")]}
 
@@ -688,7 +692,28 @@ class OwningVariants(unittest.TestCase):
 
                     def shutdown(self):
                         events.append((self.label, "shutdown"))
+                        if self.protocol == "session":
+                            if fault == "session-close":
+                                raise RuntimeError("Owned Session still active")
+                            return {"role": "old" if self.pid == 123 else "current", "scope": "owning_http_mcp_session",
+                                    "revokedSessionStatus": 404, "serviceStillRunning": True, "beforeJobCleanup": True}
                         return {"nativeExitCode": 0, "stdinWasStillOpen": True, "beforeJobCleanup": True}
+
+                    def require_peer_isolated(self, peer):
+                        events.append((self.label, "peer-isolation"))
+                        if fault == "peer-isolation":
+                            raise RuntimeError("Foreign Session admitted")
+                        return {"role": "old" if self.pid == 123 else "current", "foreignSessionRefused": True,
+                                "authenticationRefusals": [401, 401, 403]}
+
+                    def require_service_exit(self):
+                        events.append((self.label, "service-exit"))
+                        if fault == "service-exit":
+                            raise RuntimeError("Owned service still active")
+                        return {"role": "old" if self.pid == 123 else "current", "nativeExitCode": 0,
+                                "stdinWasStillOpen": True, "stdoutEOF": True, "naturalHostDurationMs": 120000,
+                                "observedElapsedMs": 120100, "beforeJobCleanup": True,
+                                "logonScopedCredential": True, "ownedCredentialRemoved": True}
 
                     def close(self):
                         events.append((self.label, "close"))
@@ -764,6 +789,10 @@ class OwningVariants(unittest.TestCase):
                             (BROWSER.LIVE, "require_worker_job", lambda _: None),
                             (BROWSER.LIVE, "admitted_frame", lambda *_: [])):
                         stack.enter_context(mock.patch.object(parent, name, replacement))
+                    def http_actor(native, source, profile, output, label, job_name):
+                        self.assertEqual(job_name, "inert-job")
+                        return Actor(native, source, profile, output, label, "session")
+                    stack.enter_context(mock.patch.object(BROWSER.HTTP, "HttpActor", side_effect=http_actor))
                     stack.enter_context(mock.patch.object(BROWSER.subprocess, "run", side_effect=cli))
                     stack.enter_context(mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO))
                     call = lambda: BROWSER.exercise(Path("inert-native"), Path("inert-node"), Path("inert-edge"),
@@ -774,11 +803,18 @@ class OwningVariants(unittest.TestCase):
                             call()
                     else:
                         BROWSER.admit_variant_result(call(), variant)
-                self.assertEqual(actors, [(label, "native" if variant == "native" else "serena",
+                self.assertEqual(actors, [(label, "native" if variant == "native" else "session" if variant == "http" else "serena",
                                           Path("owned-python") if variant == "persistent-python" else None)
                                          for label in ("browser-old", "browser-current")])
                 self.assertIn(("browser-old", "close"), events)
                 self.assertIn(("browser-current", "close"), events)
+                if variant == "http" and not fault:
+                    self.assertLess(events.index(("browser-current", "shutdown")), events.index(("browser-old", "shutdown")))
+                    self.assertLess(events.index(("browser-old", "shutdown")), events.index(("browser-current", "service-exit")))
+                    old_catalogs = [index for index, event in enumerate(events) if event == ("browser-old", "tools/list")]
+                    self.assertEqual(len(old_catalogs), 2)
+                    self.assertLess(events.index(("browser-current", "shutdown")), old_catalogs[-1])
+                    self.assertLess(old_catalogs[-1], events.index(("browser-old", "shutdown")))
                 if variant == "persistent-python":
                     self.assertIn(("browser-old", "handle-close"), events)
                     self.assertIn(("browser-current", "handle-close"), events)
@@ -792,13 +828,13 @@ class OwningVariants(unittest.TestCase):
 
     def test_fixed_variants_have_distinct_exact_outputs_and_explicit_python_selection(self):
         outputs = {BROWSER.variant_output(variant) for variant in BROWSER.VARIANTS}
-        self.assertEqual(len(outputs), 3)
+        self.assertEqual(len(outputs), 4)
         self.assertEqual(BROWSER.variant_output("native"),
                          BROWSER.ROOT / "validation/ci-host-document-history-browser")
-        for variant in ("http", "../escape", "SERENA", None, ["native"]):
+        for variant in ("unknown", "../escape", "SERENA", None, ["native"]):
             with self.subTest(variant=variant), self.assertRaises(RuntimeError):
                 BROWSER.variant_contract(variant)
-        for variant in BROWSER.VARIANTS:
+        for variant in ("native", "serena", "persistent-python"):
             python = Path("selected-python") if variant == "persistent-python" else None
             with mock.patch.object(BROWSER.LIVE, "Actor") as actor:
                 BROWSER.owning_actor(1, 2, 3, 4, "current", variant, python)

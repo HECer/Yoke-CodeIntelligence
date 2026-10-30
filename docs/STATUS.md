@@ -1,5 +1,31 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## HTTP browser actor candidate and qualified ingress source integration (2026-10-30)
+
+The opt-in HTTP browser fixture now uses two real public `serve-http` services
+with fixed Session-profile principals and ephemeral CI-only logon credentials.
+It preserves the original UI/archive/source assertions and distinguishes
+owning-Session revocation from natural service exit. The old HTTP Session must
+survive destination closure. Both roots must exit at their fixed 120-second
+host lifetime with EOF and checked credential removal before Job cleanup.
+No token enters arguments, fixture files or artifacts. The original stdio
+profiles, history harness, CDP driver, 180-second worker, disk/output/image
+bounds and existing CI commands/limits remain.
+
+Focused Python suites pass 79 tests, including 21 HTTP parser/authentication,
+credential and lifecycle adversaries. Six in-memory erasure checks fail as
+expected. These are mocked protocol/native/credential tests, not actual Windows
+Credential Manager, Yoke HTTP or browser qualification. New hosted execution
+and six HTTP screenshot inspections remain open. [Candidate contract and review](validation/integration-2026-10-30/browser-http-candidate/README.md).
+
+The monotonic ingress stimulus repair is now integrated byte-exact from the
+native target that passes all 22 tests on Windows, Linux and macOS in PR8 run
+`40986285723`, source `99b73b3f`. It preserves the 120 ms server deadline,
+750 ms total fixture bound, three-attempt maximum and durable-state assertions.
+Scoped Rust 1.94.1 formatting and source comparison pass. The combined source
+still requires fresh whole-pipeline CI; strict macOS worker memory, broader
+browser/backend coverage and release/main acceptance remain open.
+
 ## Guarded owning Serena and persistent-Python browser candidates (2026-10-30)
 
 The browser harness now has separate explicit Serena and persistent-Python

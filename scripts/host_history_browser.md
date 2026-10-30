@@ -15,14 +15,15 @@ invocation and its evidence directory remain. Separate explicit `--variant
 serena` and `--variant persistent-python` invocations now exercise both old and
 current owning Sessions through the selected Serena protocol. **These two new
 browser variants remain unrun until fresh guarded CI and all twelve new PNGs
-are reviewed.** The original three-variant protocol/history gate, launcher,
+are reviewed.** A separate HTTP variant is now also implemented and awaits its
+own actual run and six-image review. The original three-variant protocol/history gate, launcher,
 budgets, tests and claims remain unchanged. Its old Serena/Python actors did
 not make its destination dashboard a Serena/Python browser flow.
 
 Each invocation retains the original independent 180-second worker and
-four-minute CI step limits. There are three distinct fixed fresh output roots:
+four-minute CI step limits. There are four distinct fixed fresh output roots:
 `validation/ci-host-document-history-browser`, the `-serena` suffix, and the
-`-persistent-python` suffix. Each requires all six original image/DOM pairs and
+`-persistent-python` and `-http` suffixes. Each requires all six original image/DOM pairs and
 the original independent lifecycle proofs; one variant cannot borrow another's
 receipt or output directory. Added variant steps can collect evidence after a
 sibling browser failure, but still require successful original history and
@@ -101,7 +102,7 @@ native; both other variants select Serena for **both** actors. The real bounded
 `tools/list` response must expose Serena's dashboard/configuration tools and
 exclude the native `ci_session` tool. Persistent Python additionally requires
 `serena_repl`. These are private owning protocol observations, not substituted
-browser responses. No variant here uses `serve-http`.
+browser responses. These three stdio variants do not use `serve-http`.
 
 The persistent variant alone grants the already running CI worker's canonical,
 unlinked host `python.exe` via the existing explicit `--python`/`--trust-python`
@@ -158,6 +159,61 @@ the transport's typed clean EOF may precede its acknowledgement; protocol
 refusal, timeout, partial frames and write errors still fail. Raw browser and
 driver exit/EOF receipts remain independent requirements.
 
+## Explicit HTTP owning-Session variant
+
+`--variant http` alone starts the existing public `serve-http --trust-service`
+CLI, twice, with separate fixed loopback listeners, private host configurations
+and Session-profile principals. It grants no Python runtime or source writes.
+The two actor APIs select the same original global-document host authority as the
+stdio fixtures. The real Session tool catalogs must expose `ci_session` and omit
+Serena aliases. All original browser requests, HTML hashes, draft/pending/save
+assertions, archive readbacks and six PNG/DOM checks are retained.
+
+The admitted worker creates two fresh **logon-scoped** Windows generic
+credentials. Names use a fixed owned prefix and 192 random bits; token bytes
+contain 256 random bits. Creation shares the native credential store's named
+mutex and refuses occupied names. Readback checks exact name, type, scope,
+capacity and bytes. Only reference names enter private host configuration;
+credentials never enter arguments, fixture files, source snapshots or artifacts.
+Deletion rechecks exact bytes under the same mutex and verifies absence.
+Mutable copies and native read buffers are cleared; CPython and OS temporary
+copies are not claimed to have independently verified secure erasure.
+
+These credential APIs run only inside the already admitted Windows CI worker
+Job, after producer/source/native-image admission. No user credential is selected
+or enumerated. Handled failure cleanup attempts every owned service, reader,
+pipe and credential even if an earlier operation fails. A failed deletion or
+identity/absence check cannot yield successful automation. A forcibly killed
+worker may leave a logon-scoped entry until the ephemeral runner logs off;
+that run remains failed. The harness does not claim physical/atomic erasure or
+containment against another hostile process under the same OS account.
+
+The actual HTTP client uses fixed IPv4 loopback `/mcp`, mandatory bearer/SID and
+negotiated-version headers, bounded JSON or finite notification SSE, exact
+Content-Length plus EOF, 16 KiB/48 header limits, and one ten-second absolute
+request deadline. New bytes cannot renew it. No redirect, remote bind, TLS
+fallback, response substitution or caller-supplied endpoint is available.
+Missing/wrong bearer and foreign Origin must refuse; each valid principal must
+also refuse the other service's transport Session ID.
+
+HTTP dashboard shutdown acknowledges only the **owning MCP Session**. The client
+requires its SID to return 404 within eight seconds while its service remains
+alive. The old Session and its actual tool catalog must still work after the
+destination closes. Both Sessions close before either service exit is admitted.
+Each service has the fixed public CLI lifetime of 120,000 ms. The harness then
+requires actual raw exit zero, unclosed input, stdout EOF and the final stopped
+receipt before Job cleanup. Parent receipt admission distinguishes these two
+Session closures from two natural service exits and checked credential removal.
+The original eight-second stdio exit waits, 180-second worker and four-minute
+step are unchanged. Only this selected HTTP fixture waits for its independently
+bounded service lifetimes. Early service exit is not Session isolation proof.
+
+The HTTP helper and 21 adversarial unit tests use only Python standard-library
+APIs. Focused suites pass 79 tests with mocked HTTP/native/credential peers and
+inert Job fixtures. Actual Credential Manager, public CLI/MCP/dashboard behavior,
+natural service lifetime, browser run and all six HTTP screenshots remain
+unqualified until fresh CI. [Candidate review scope](../docs/validation/integration-2026-10-30/browser-http-candidate/README.md).
+
 ## Evidence and remaining gates
 
 At `42b94aca`, diagnostic run `40983256567` builds the release CLI and passes
@@ -200,7 +256,7 @@ failure cannot hide browser startup evidence. It supplies no shard coverage
 receipt and does not replace the full native acceptance jobs or their merge
 and release requirements. No diagnostic success establishes visual review.
 
-Only the three fixed browser evidence directories are uploaded, as separate artifacts. Source maps,
+Only the four fixed browser evidence directories are uploaded, as separate artifacts. Source maps,
 validator/driver/native hashes, producer metadata, installed browser/engine/Node
 versions, selected DOM states, real screenshot hashes, CLI outcome summaries and
 raw lifecycle proofs are retained. Capabilities, URLs, endpoints, headers, storage,
