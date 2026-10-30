@@ -1,0 +1,67 @@
+{
+  "sourceRevision": "ed92e9f818ef5662f7c597bb4809f631bad15d0e",
+  "reviewedAtUtc": "2026-10-30T04:00:10.208614+00:00",
+  "inspector": "assistant",
+  "agentVisualInspectionComplete": true,
+  "scope": "One native owning stdio Session dashboard; actual installed headless Edge desktop/mobile before/pending/after, explicit host CLI recovery and guarded saves. Exact source only.",
+  "humanAcceptanceClaimed": false,
+  "visibleDesktopShellInteraction": false,
+  "allTransportsQualified": false,
+  "releaseAcceptanceClaimed": false,
+  "images": [
+    {
+      "image": "desktop-before.png",
+      "sha256": "988f61e1c692161678b9b734863911990f1edb84013825b57ff808d6f146d2b0",
+      "phase": "before",
+      "viewport": "desktop",
+      "agentInspected": true,
+      "finding": "Readable content and controls, no horizontal overflow, expected state and no visible defect."
+    },
+    {
+      "image": "desktop-pending.png",
+      "sha256": "f9ae8ca18ee175fa0eb7396bfff22b86016c5d6da897ee3c00b380bbf6557021",
+      "phase": "pending",
+      "viewport": "desktop",
+      "agentInspected": true,
+      "finding": "Readable content and controls, no horizontal overflow, expected state and no visible defect."
+    },
+    {
+      "image": "desktop-after.png",
+      "sha256": "7b6f2cd85f671b3bb82a1514571151b34927a3a2f6de2ec5ff452b44cc980195",
+      "phase": "after",
+      "viewport": "desktop",
+      "agentInspected": true,
+      "finding": "Readable content and controls, no horizontal overflow, expected state and no visible defect."
+    },
+    {
+      "image": "mobile-before.png",
+      "sha256": "4f1420b18d6a433d5893bdb388a0cd3fc6f5a2546aa4d0906b21c4ef23830373",
+      "phase": "before",
+      "viewport": "mobile",
+      "agentInspected": true,
+      "finding": "Readable content and controls, no horizontal overflow, expected state and no visible defect."
+    },
+    {
+      "image": "mobile-pending.png",
+      "sha256": "f62f5300be70acfd0220ea0d01b9ecb1d718bfe96729395c8e1b1a932d5a6bfe",
+      "phase": "pending",
+      "viewport": "mobile",
+      "agentInspected": true,
+      "finding": "Readable content and controls, no horizontal overflow, expected state and no visible defect."
+    },
+    {
+      "image": "mobile-after.png",
+      "sha256": "8a3bf5315dea30edd8303faabf1d4ab0c073ec0a3718034a747aebf34e582d3b",
+      "phase": "after",
+      "viewport": "mobile",
+      "agentInspected": true,
+      "finding": "Readable content and controls, no horizontal overflow, expected state and no visible defect."
+    }
+  ],
+  "findings": {
+    "before": "Both viewports show the original saved content and reviewed draft clearly; original review/save controls are available and long mobile paths/hashes wrap.",
+    "pending": "Both viewports retain the exact draft and reviewed original; Review/Save are disabled and Inspect recovery has a visible keyboard focus ring. The host archival blocker is readable with no recovery buttons.",
+    "after": "Both viewports show the fresh explicitly saved content and success notice. Review/Save are disabled for the clean saved content; recovery lists report no pending journal.",
+    "layout": "All six actual PNGs were inspected; no visible clipping, overlap or horizontal overflow requires a layout correction."
+  }
+}

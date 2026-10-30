@@ -1,6 +1,27 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
-## Pending-state browser input candidate (2026-10-30)
+## Native stdio browser automation and agent visual review passed (2026-10-30)
+
+At `ed92e9f8`, diagnostic run `40995799274`, job `123868515540`, passes the
+release producer binding, all three original owning-Session history variants
+and the actual installed Edge/CDP browser exercise. All six desktop/mobile
+before/pending/after PNG/DOM pairs were verified and visually inspected by the
+assistant. Draft retention, disabled writes during archival, readable blockers,
+explicit host recovery and fresh guarded saves match their actual observations;
+there is no horizontal overflow or visible layout defect requiring correction.
+
+Browser/driver raw exit zero and EOF, both native authority exits, and an empty
+worker Job precede forced cleanup. All 1,099 selected source hashes match the
+recorded Git revision (45 raw, 1,054 LF/CRLF-only). The separate agent review
+does not rewrite automated human/visual flags or claim visible-shell interaction.
+[Exact successful artifacts, source/exit audit and six-image review](validation/integration-2026-10-30/browser-success-checkpoint/README.md).
+
+This completes the single native owning stdio dashboard browser flow at that
+source. Broader Serena/persistent-Python/HTTP browser flows, complete native and
+macOS resource qualification, matching release/VSIX/extension host and main/
+publication acceptance remain open. Nothing has merged.
+
+## Earlier pending-state browser input candidate (2026-10-30)
 
 At `42b94aca`, diagnostic run `40983256567` passes the release build and all
 three original owning-Session history variants. The real-browser worker fails
