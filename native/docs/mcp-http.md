@@ -68,6 +68,16 @@ and reports failure if cleanup cannot be proven. A non-cooperative native call
 can outlive cancellation and requires host recovery; no hard-kill guarantee is
 made.
 
+On read errors or premature EOF, the integration-test HTTP client retains scalar
+observations:
+connect/send/read monotonic durations, read-call count, received prefix length,
+and whether a complete header declared an expected frame size. These distinguish
+an empty EOF from a partial frame without recording request/response bytes,
+headers, session IDs, addresses or paths. The original ten-second client read
+timeout, framing assertions, server budgets and revocation checks remain.
+Instrumentation can affect scheduling; a later observation must be interpreted
+at its recorded source and does not by itself establish a timeout's cause.
+
 Native, Session, Serena, Graphify, Trail and Graft profiles use the shared
 initialized protocol dispatcher. For Serena only, the host can set
 `Target.agent_repl: Some(ReplSpec)`. This type has no deserializer and tool
