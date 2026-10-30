@@ -1292,6 +1292,12 @@ fn wrapped_eval_in_the_body_or_caller_cannot_publish_a_plan() {
 fn body_cli_plans_require_independent_verification_approval_and_foreign_preserving_recovery() {
     for (source, keep, strict, language) in [
         (
+            "function helper(n:number):boolean{return n<3;}const values:number[]=[];for(let n=0;helper(n);n++){values.push(n);if(n>6)break;}export const observed=values;\n",
+            false,
+            true,
+            "ts",
+        ),
+        (
             "function helper(n:number):boolean{return n<3;}let n=0;while(helper(n++)){if(n>6)break;}export const observed=n;\n",
             false,
             true,
@@ -1625,6 +1631,81 @@ fn while_heads_keep_jsdoc_unbraced_else_ownership_and_the_original_label() {
     );
 }
 #[test]
+fn for_heads_preserve_initializer_update_iteration_bindings_and_abrupt_completions() {
+    for source in [
+        "const events:string[]=[];function helper(n:number,...extra:number[]):boolean{try{events.push('call:'+n+':'+extra.length);return n<5;}finally{events.push('callee-finally');}}export function run(){let turns=0;outer:for /* café 🦀 header */ (let i=(events.push('init'),0);/* condition */(helper((events.push('arg:'+i),i),(events.push('extra'),7)))/* tail */;events.push('update:'+i),i++)/* between */{try{events.push('body:'+i);if(++turns>6)break outer;if(i===1)continue outer;if(i===3)break outer;}finally{events.push('caller-finally');}}return events;}export const observed=run();\n",
+        "const closures:Array<()=>number>=[];const seen:number[]=[];function helper(read:()=>number):boolean{const n=read();seen.push(n);closures.push(read);return n<3;}const bodies:number[]=[];for(let i=0;helper(()=>i);i++){bodies.push(i);if(i>6)break;}for(var j=0;helper(()=>j);j++){bodies.push(j);if(j>6)break;}for(const box={value:0};helper(()=>box.value);box.value++){bodies.push(box.value);if(box.value>6)break;}export const observed={seen,bodies,values:closures.map(read=>read()),j};\n",
+        "let calls=0,updates=0;function helper(n:number):number{calls++;return n;}export function run(start:number){let n=start;for(;helper(n);updates++,n--);return n;}export const observed=[run(0),run(2),calls,updates];\n",
+        "const events:string[]=[];function helper(n:number):boolean{try{events.push('test:'+n);if(n===2)throw 'owned';return true;}finally{events.push('callee-finally');}}export function run(){try{for(let n=(events.push('init'),0);helper(n);events.push('update:'+n),n++){try{events.push('body:'+n);if(n>6)break;}finally{events.push('caller-finally');}}}catch(error){events.push(String(error));}return events;}export const observed=run();\n",
+        "const events:string[]=[];function helper(n:number):boolean{events.push('test:'+n);return n<3;}export function run(){outer:for(let n=0;helper(n);events.push('update:'+n),n++){try{if(n>6)break outer;if(n===0)throw 'cancelled';events.push('body:'+n);}finally{events.push('finally:'+n);if(n===0)continue outer;if(n===2)break outer;}}return events;}export const observed=run();\n",
+        "const events:string[]=[];function helper(n:number):boolean{events.push('test:'+n);return n<3;}export function run(){outer:for(let j=0;j<2;j++){for(let i=0;helper(i);events.push('inner-update:'+i),i++){events.push('body:'+j+':'+i);if(i>6)break;if(i===1)continue outer;}}return events;}export const observed=run();\n",
+    ] {
+        for newline in ["\n", "\r\n"] {
+            let source = source.replace('\n', newline);
+            let (root, mut engine) = fixture(&source, "ts");
+            let r =
+                yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+                    .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+            let after = planned(&engine, &r, "ts");
+            assert!(!after.contains("function helper"), "{after}");
+            assert_eq!(r["complete"], false);
+            assert_eq!(r["sourceExecuted"], false);
+            assert_eq!(r["sourceTreeWritten"], false);
+            assert_eq!(r["verificationRequired"], true);
+            same_execution(&source, &after);
+            for comment in [
+                "/* café 🦀 header */",
+                "/* condition */",
+                "/* tail */",
+                "/* between */",
+            ] {
+                if source.contains(comment) {
+                    assert_eq!(after.matches(comment).count(), 1, "{after}");
+                }
+            }
+            if newline == "\r\n" {
+                assert!(!after.replace("\r\n", "").contains('\n'), "{after}");
+            }
+            assert_eq!(
+                fs::read(root.path().join("main.ts")).unwrap(),
+                source.as_bytes()
+            );
+        }
+    }
+}
+#[test]
+fn for_heads_preserve_predicate_narrowing_in_the_body_update_and_after_exit() {
+    for annotation in [":value is string", ""] {
+        let source = format!(
+            "function helper(value:string|number){annotation}{{return typeof value==='string';}}export function run(value:string|number){{let seen=0;for(;helper(value);value=value.length){{seen+=value.length;}}const numberAfter=value;return [seen,numberAfter.toFixed(0)];}}export const observed=[run('π🦀'),run(7)];\n"
+        );
+        let (root, mut engine) = fixture(&source, "ts");
+        let r = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+            .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        let after = planned(&engine, &r, "ts");
+        same_execution(&source, &after);
+        assert_eq!(r["complete"], false);
+        assert_eq!(
+            fs::read(root.path().join("main.ts")).unwrap(),
+            source.as_bytes()
+        );
+    }
+}
+#[test]
+fn for_heads_keep_jsdoc_and_unbraced_else_ownership() {
+    let source = "/** @param {number} n @returns {boolean} */\nfunction helper(n){return n<3;}\n/** @param {boolean} flag */\nexport function run(flag){const events=[];if(flag)outer:for(let n=0;(helper(n));n++)if(n>6)break outer;else if(n===1)continue outer;else events.push(n);else events.push(-1);return events;}export const observed=[run(false),run(true)];\n";
+    let (root, mut engine) = fixture(source, "js");
+    let r = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "js"), &d())
+        .unwrap_or_else(|e| panic!("{e:#}"));
+    let after = planned(&engine, &r, "js");
+    assert!(after.contains("outer:for(let n=0;true;n++)"), "{after}");
+    same_execution(source, &after);
+    assert_eq!(
+        fs::read(root.path().join("main.js")).unwrap(),
+        source.as_bytes()
+    );
+}
+#[test]
 fn statement_heads_keep_javascript_jsdoc_and_unbraced_else_ownership() {
     let source = "/** @param {number} n */\nfunction helper(n){return n>0;}\n/** @param {number} n */\nexport function run(n){if(n<0)return 'negative';else if(helper(n))return 'positive';else return 'zero';}\nexport const observed=[run(-1),run(0),run(2)];\n";
     let (root, mut engine) = fixture(source, "js");
@@ -1641,12 +1722,15 @@ fn repeated_conditional_and_overlapping_statement_heads_refuse_without_publicati
     for consumer in [
         "while(helper()&&true)break;",
         "do{}while(helper());",
-        "for(;helper();)break;",
+        "for(;helper()&&true;)break;",
         "if(true&&helper()){}",
         "switch(1+Number(helper())){}",
         "throw String(helper());",
         "if(helper()){if(helper())return true;}return false;",
         "while(helper()){if(helper())break;}",
+        "for(;helper();){if(helper())break;}",
+        "for(let value=helper();;){break;}",
+        "for(;true;helper()){break;}",
     ] {
         let source =
             format!("function helper(){{return true;}}export function run(){{{consumer}}}\n");

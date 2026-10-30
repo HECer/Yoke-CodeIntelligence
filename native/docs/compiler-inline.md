@@ -20,7 +20,7 @@ One owning strict ES module can select a nonasync function declaration without a
 TypeScript type-parameter list and complete direct calls in that captured file.
 A call must occupy one whole
 single-declarator lexical initializer, return expression, expression statement,
-throw expression, if/while condition or switch discriminant. A complete call may also
+throw expression, if/while/ordinary-for condition or switch discriminant. A complete call may also
 be the right side of a plain identifier assignment occupying one whole expression
 statement, such as `result = helper(2)`. Parentheses around that call or the whole
 assignment are retained; the assignment wrapper depth is limited to 2,000.
@@ -34,11 +34,11 @@ additional sequencing and refuse. See the
 [direct assignment qualification](../../docs/validation/integration-2026-10-24/inline-assignment-heads/README.md);
 independent native execution is still pending for this extension.
 Other parentheses are retained too.
-Non-declaration statements other than while loops receive a block so unbraced branches retain their
+Non-declaration statements other than while/for loops receive a block so unbraced branches retain their
 control scope. Direct if/switch/throw heads evaluate the selected call once before
 the original statement. The worker and independent Rust reconstruction require
 the exact original AST field; original branches, cases, labels and comments remain
-source copies. For/do loop tests, compound/short-circuit/nested expression contexts and
+source copies. Do tests, unsupported for-header positions, compound/short-circuit/nested expression contexts and
 overlapping statement frames remain unavailable. See the
 [statement-head qualification](../../docs/validation/integration-2026-10-23/inline-statement-heads/README.md).
 
@@ -236,7 +236,7 @@ recipe. Ordinary binding/type comparisons, predicate relays, before/after
 diagnostics, finite capacities and the existing write/recovery gates still
 apply. The literal true header permits the compiler to retain eligible predicate
 narrowing after the false-result break; an incompatible type flow still refuses.
-For/do tests, compound while conditions and overlapping selected call frames
+Do tests, for initializer/update positions, compound loop conditions and overlapping selected call frames
 remain unavailable. No new host grant, protocol field or default execution is
 introduced; `complete=false` and executed verification remain required.
 
@@ -248,6 +248,41 @@ recovery table gains a while case. Only obsolete direct-while refusal inputs
 change to reflect the new scope; their assertions and other refusal cases stay.
 These fixtures have not been compiled or executed locally. Guarded native CI
 must qualify this candidate before runtime acceptance can be claimed.
+
+### Complete for conditions (candidate; native qualification pending)
+
+A complete direct call in an ordinary for condition uses
+`for (originalInitializer; true; originalUpdate) { expansion; if (!(result)) break; originalBody }`.
+The original header outside the condition expression, its semicolons, labels
+and body remain exact source copies. Keeping the actual for statement retains
+the initializer's scope, per-iteration lexical environments and update behavior:
+normal completion or continue to this loop performs its original update, while
+break, throw and continue to an enclosing loop keep their original abrupt flow.
+The expansion runs once per test, including the first and final false tests;
+an initial false result does not perform the update. This recipe follows
+[ECMAScript ForBodyEvaluation](https://tc39.es/ecma262/multipage/ecmascript-language-statements-and-declarations.html#sec-forbodyevaluation).
+
+The worker requires the exact TypeScript for-condition field. Rust independently
+reads the pinned grammar's two condition-field nodes: the original expression
+and its separate semicolon. It checks the separator byte, initializer/condition/
+body ordering and exact selected-call ownership. The separator remains in the
+header. Parentheses around the original condition stay with its result gate;
+header trivia and initializer/update expressions are never reevaluated by an
+additional recipe. Existing bindings, types, diagnostics, freshness, capacity,
+deadline, verification, approval and writer/recovery gates remain mandatory.
+
+Authored native fixtures cover labelled continue/break, update/argument/finally
+order, exceptions and finally overrides, initial false and numeric truthiness,
+empty bodies, let/var/const closure capture, enclosing-loop continue, explicit/
+inferred predicate flow in body/update/after-exit, JSDoc, unbraced else, comments,
+Unicode and LF/CRLF. The original CLI writer-gate table gains a for case; only
+the obsolete direct-for negative input changes to a compound-for input, while
+its original assertions remain. New wrong-header/overlap cases still refuse.
+These fixtures are uncompiled and unrun locally. Native qualification of both
+loop candidates remains pending. Do/in/of/await-of and compound conditions,
+selected calls in initializer/update positions and overlapping frames remain
+outside scope. No schema, host grant or default execution changes; results
+remain `complete=false`.
 
 ## Host registration and requests
 

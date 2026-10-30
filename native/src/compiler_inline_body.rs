@@ -219,6 +219,12 @@ fn statement_for(call: Node<'_>) -> Result<Node<'_>> {
             .parent()
             .context("Function-body variable statement absent")?;
         ensure!(
+            !declaration
+                .parent()
+                .is_some_and(|n| n.kind() == "for_statement"),
+            "Function-body for initializer needs separate sequencing"
+        );
+        ensure!(
             declaration.kind() == "lexical_declaration"
                 && children(declaration)
                     .iter()
@@ -276,7 +282,9 @@ fn statement_for(call: Node<'_>) -> Result<Node<'_>> {
         return Ok(statement);
     }
     let complete_value = match parent.kind() {
-        "if_statement" | "while_statement" => parent.child_by_field_name("condition"),
+        "if_statement" | "while_statement" | "for_statement" => {
+            parent.child_by_field_name("condition")
+        }
         "switch_statement" => parent.child_by_field_name("value"),
         "expression_statement" | "return_statement" | "throw_statement" => {
             children(parent).first().copied()
@@ -314,6 +322,48 @@ fn while_parts<'a>(
             && body.end_byte() == statement.end_byte()
             && statement_for(call)?.id() == statement.id(),
         "Function-body while delimiter or call ownership mismatch"
+    );
+    Ok(Some((condition, body)))
+}
+fn for_parts<'a>(
+    statement: Node<'a>,
+    call: Node<'a>,
+    source: &str,
+) -> Result<Option<(Node<'a>, Node<'a>)>> {
+    if statement.kind() != "for_statement" {
+        return Ok(None);
+    }
+    // The pinned grammar gives the expression AND its semicolon this field.
+    // Read exactly those two nodes; the separator stays in the original header.
+    let mut cursor = statement.walk();
+    let mut fields = statement.children_by_field_name("condition", &mut cursor);
+    let condition = fields
+        .next()
+        .context("Function-body for condition absent")?;
+    let separator = fields
+        .next()
+        .context("Function-body for separator absent")?;
+    let initializer = statement
+        .child_by_field_name("initializer")
+        .context("Function-body for initializer absent")?;
+    let body = statement
+        .child_by_field_name("body")
+        .context("Function-body for body absent")?;
+    ensure!(
+        fields.next().is_none()
+            && condition.is_named()
+            && condition.kind() != "empty_statement"
+            && separator.kind() == ";"
+            && separator.end_byte() == separator.start_byte() + 1
+            && source.as_bytes().get(separator.start_byte()) == Some(&b';')
+            && initializer.end_byte() <= condition.start_byte()
+            && condition.start_byte() <= call.start_byte()
+            && call.end_byte() <= condition.end_byte()
+            && condition.end_byte() <= separator.start_byte()
+            && separator.end_byte() < body.start_byte()
+            && body.end_byte() == statement.end_byte()
+            && statement_for(call)?.id() == statement.id(),
+        "Function-body for separator or call ownership mismatch"
     );
     Ok(Some((condition, body)))
 }
@@ -670,6 +720,7 @@ pub(super) fn render(
         "Function-body statement ownership mismatch"
     );
     let repeated = while_parts(statement, call, source)?;
+    let for_repeated = for_parts(statement, call, source)?;
     scope_forms(declaration, source, d)?;
     let return_nodes = returns(body, d)?;
     documentation_pieces(source, declaration, frame, d)?;
@@ -769,7 +820,24 @@ pub(super) fn render(
             | "if_statement"
             | "switch_statement"
     );
-    if let Some((condition, loop_body)) = repeated {
+    if let Some((condition, loop_body)) = for_repeated {
+        // Preserve the actual for initializer/update and its per-iteration
+        // environment. Continue still performs that update before the next test.
+        out.original(
+            source,
+            statement.start_byte(),
+            condition.start_byte(),
+            "caller",
+        )?;
+        out.generated("true")?;
+        out.original(
+            source,
+            condition.end_byte(),
+            loop_body.start_byte(),
+            "caller",
+        )?;
+        out.generated(&format!("{{{line}"))?;
+    } else if let Some((condition, loop_body)) = repeated {
         // A caller label must still name this loop. Captures belong to each
         // condition test, including tests reached by an original continue.
         out.original(
@@ -886,7 +954,10 @@ pub(super) fn render(
     out.generated(&format!("}}{line}}}{line}"))?;
     predicates::finish(&mut out, frame, line)?;
     out.generated(&format!("}}{line}"))?;
-    if let Some((condition, _)) = repeated {
+    if let Some((condition, _)) = for_repeated {
+        out.generated("if (!(")?;
+        out.original(source, condition.start_byte(), call.start_byte(), "caller")?;
+    } else if let Some((condition, _)) = repeated {
         out.generated("if (!")?;
         out.original(source, condition.start_byte(), call.start_byte(), "caller")?;
     } else {
@@ -959,7 +1030,17 @@ pub(super) fn render(
             format!("({} as unknown as ({hint}))", frame.names.result)
         })?;
     }
-    if let Some((condition, loop_body)) = repeated {
+    if let Some((condition, loop_body)) = for_repeated {
+        out.original(source, call.end_byte(), condition.end_byte(), "caller")?;
+        out.generated(&format!(")) break;{line}"))?;
+        out.original(
+            source,
+            loop_body.start_byte(),
+            loop_body.end_byte(),
+            "caller",
+        )?;
+        out.generated(&format!("{line}}}"))?;
+    } else if let Some((condition, loop_body)) = repeated {
         out.original(source, call.end_byte(), condition.end_byte(), "caller")?;
         out.generated(&format!(") break;{line}"))?;
         out.original(
@@ -1017,7 +1098,11 @@ mod tests {
             ("while(((helper()))){}", Some("while_statement")),
             ("while(helper()&&flag){}", None),
             ("do{}while(helper());", None),
-            ("for(;helper();){}", None),
+            ("for(;helper();){}", Some("for_statement")),
+            ("for(;((helper()));tick()){}", Some("for_statement")),
+            ("for(;helper()&&flag;){}", None),
+            ("for(let value=helper();;){}", None),
+            ("for(;true;helper()){}", None),
             ("for(const x of helper()){}", None),
             ("switch(flag){case helper():break;}", None),
         ] {
@@ -1078,6 +1163,51 @@ mod tests {
             let start = source.find("helper()").unwrap();
             let call = node_at(&tree, start, start + "helper()".len(), &d).unwrap();
             assert!(while_parts(statement, call, source).is_err(), "{source}");
+        }
+    }
+    #[test]
+    fn for_reconstruction_owns_the_condition_and_separator_without_accepting_other_header_fields() {
+        let d = Deadline::new(10_000);
+        for language in ["typescript", "tsx", "javascript", "jsx"] {
+            for initializer in ["let n=0", "var n=0", "const n=0", ""] {
+                for newline in ["\n", "\r\n"] {
+                    let source = format!("export {{}};\nouter:for /* café 🦀 header */ ({initializer};/* before */((helper()))/* after */;tick())/* between */{{continue outer;}}\n").replace('\n', newline);
+                    let tree = parse(language, &source, &d).unwrap();
+                    let start = source.find("helper()").unwrap();
+                    let call = node_at(&tree, start, start + "helper()".len(), &d).unwrap();
+                    let statement = statement_for(call).unwrap();
+                    let (condition, body) = for_parts(statement, call, &source).unwrap().unwrap();
+                    assert_eq!(
+                        &source[condition.start_byte()..condition.end_byte()],
+                        "((helper()))"
+                    );
+                    assert_eq!(
+                        &source[condition.end_byte()..body.start_byte()],
+                        "/* after */;tick())/* between */"
+                    );
+                    assert_eq!(
+                        &source[body.start_byte()..body.end_byte()],
+                        "{continue outer;}"
+                    );
+                    let separator = source.find("/* after */;").unwrap() + "/* after */".len();
+                    let mut altered = source.clone();
+                    altered.replace_range(separator..separator + 1, ":");
+                    assert!(for_parts(statement, call, &altered).is_err());
+                }
+            }
+        }
+        for source in [
+            "for(let value=helper();true;tick()){}",
+            "for(;true;helper()){}",
+            "for(;flag;){helper();}",
+            "for(;helper()&&flag;){}",
+            "for(;flag;){for(;helper();)break;}",
+        ] {
+            let tree = parse("typescript", source, &d).unwrap();
+            let statement = tree.root_node().named_child(0).unwrap();
+            let start = source.find("helper()").unwrap();
+            let call = node_at(&tree, start, start + "helper()".len(), &d).unwrap();
+            assert!(for_parts(statement, call, source).is_err(), "{source}");
         }
     }
     #[test]
