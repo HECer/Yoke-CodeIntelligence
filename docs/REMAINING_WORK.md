@@ -1,5 +1,19 @@
 # Remaining implementation and acceptance
 
+## Remaining Python browser and strict platform gates (2026-10-30)
+
+Source `abdbdb03`, run `41013033443`, now has successful native, Serena and HTTP
+browser evidence and six individually reviewed PNGs per flow. The original
+three-variant history harness passes separately. Persistent-Python browser
+execution still fails during the mobile pending click and retains only three
+images; its success and independent root exit are not established. A driver-only
+focus-order correction passes causal RED/GREEN and 13 protocol/80 focused Python
+tests; fresh guarded hosted execution and all six Python images remain required.
+The three successful profiles retain their original tested source scope.
+Strict macOS memory enforcement, combined current-head platform acceptance,
+matching VSIX/extension host, main/publication and release are still open.
+[Exact artifacts and limitations](validation/integration-2026-10-30/browser-abdb-checkpoint/README.md).
+
 ## Scoped macOS cleanup evidence and fixture candidates (2026-10-30)
 
 PR8 run `40950941727` proves the strict cleanup cases at exact tested merge
