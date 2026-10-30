@@ -1,5 +1,21 @@
 # Remaining implementation and acceptance
 
+## Gates remaining after scoped f41 acceptance (2026-10-30)
+
+Source `f41e5613` in run `41030808968` now has complete default-target coverage
+on Windows/Linux and successful native, Serena, persistent-Python and HTTP
+browser flows. All 24 PNGs were individually reviewed. This supersedes the
+earlier Python-pending statement below only for that later recorded source;
+the old failed artifacts remain unchanged.
+
+Strict macOS address-space enforcement, individual generic startup causes,
+later combined source/stack CI, all 77 backend runtime profiles, broader original
+353/R1-R9 requirements, matching VSIX/extension host, authorized Google live
+qualification, main integration, public publisher and release remain open.
+No whole-project or release acceptance is claimed.
+[Exact scope, receipts and screenshots](validation/integration-2026-10-30/f41-ci-checkpoint/README.md).
+
+
 ## Remaining Python browser and strict platform gates (2026-10-30)
 
 Source `abdbdb03`, run `41013033443`, now has successful native, Serena and HTTP

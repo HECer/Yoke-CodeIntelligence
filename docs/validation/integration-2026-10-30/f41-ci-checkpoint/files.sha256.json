@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "scope": "Every checkpoint file except this manifest itself",
+  "files": {
+    "browser-evidence.json": {
+      "bytes": 11435,
+      "sha256": "206d9ec264a4bcc3af86a9b82aef2e79460cd66df74b965a8d70b0e65cb1a64a"
+    },
+    "images/http/desktop-after.png": {
+      "bytes": 77078,
+      "sha256": "fd62e278bacbf616f08d8fd3b28a54f156d41e8eab3d70ad0044632c2324aff8"
+    },
+    "images/http/desktop-before.png": {
+      "bytes": 92357,
+      "sha256": "96b950a6d936887e1365e1c2c8a760223d4b999f4a51e041469c965e44432470"
+    },
+    "images/http/desktop-pending.png": {
+      "bytes": 106185,
+      "sha256": "89998bfdcaf0fa91695e1664e11bd64d0472399951359681137d6f02691bd2e8"
+    },
+    "images/http/mobile-after.png": {
+      "bytes": 64758,
+      "sha256": "8b41ec6118b743b3b6077eaa5689484dc2857640618d8c29d4749cc512ba9984"
+    },
+    "images/http/mobile-before.png": {
+      "bytes": 80845,
+      "sha256": "6fa9573f37d3bb1f8e2aa421760aac66e9a8e546fd2f5d33d23b95e62692e470"
+    },
+    "images/http/mobile-pending.png": {
+      "bytes": 92813,
+      "sha256": "507ea36e5b19ed5171924c1c37f9c1d81314010c11d48aeca2cbc5bcc65e9de2"
+    },
+    "images/native/desktop-after.png": {
+      "bytes": 77110,
+      "sha256": "c62c0d893b17a38ff1a3b4a6b1b4e2903088b948170e395227030a30af209e68"
+    },
+    "images/native/desktop-before.png": {
+      "bytes": 92457,
+      "sha256": "c024bc8d6758f538b3bc2d8c82b953c5ba2592e8de7c8eb5d4c4d069468bb88d"
+    },
+    "images/native/desktop-pending.png": {
+      "bytes": 106352,
+      "sha256": "18d43edbb61f870369bc7683883b8360f24674fc585a3598102aeb5356cfb24e"
+    },
+    "images/native/mobile-after.png": {
+      "bytes": 65053,
+      "sha256": "b5fdadfe89862ab5ed27ca471cd85ba61cae86a14749b9f136b193b6bb288b72"
+    },
+    "images/native/mobile-before.png": {
+      "bytes": 81398,
+      "sha256": "0b99824d5291fdd09e51a9ef3c190792946e5d1e744270c6fee7ba5eb6dd8a31"
+    },
+    "images/native/mobile-pending.png": {
+      "bytes": 93408,
+      "sha256": "d31ed197d2eacf77cef743d79c7a6a1967a6f3663d5ac09e29a6bfd8c5b1ad7e"
+    },
+    "images/persistent-python/desktop-after.png": {
+      "bytes": 77000,
+      "sha256": "ff9730a14293d05e2b8beaed31c96951157c9c03fe4f8ada07cf372f8049f050"
+    },
+    "images/persistent-python/desktop-before.png": {
+      "bytes": 92386,
+      "sha256": "f008cd36bee942c285fca6fe29a8552865ee0e3d597146003f7218203f65f2ee"
+    },
+    "images/persistent-python/desktop-pending.png": {
+      "bytes": 106325,
+      "sha256": "690d8d470717240ef695bae7f6764e934063da882fd6bc4a74dc5a41392885ba"
+    },
+    "images/persistent-python/mobile-after.png": {
+      "bytes": 64482,
+      "sha256": "6a5ff6c68e203d3ad2a22c43624a42690c6e7409c89349f9719a9d918ff7c42c"
+    },
+    "images/persistent-python/mobile-before.png": {
+      "bytes": 80899,
+      "sha256": "2008522ea85710ce234eff7b19b0c580d6be95658e114963c5e2f5ded18b1d97"
+    },
+    "images/persistent-python/mobile-pending.png": {
+      "bytes": 92973,
+      "sha256": "3ecf85c7ca8cd64b0271a8093e4b1fd9af215717ee9d1712dcff8570a7730dd9"
+    },
+    "images/serena/desktop-after.png": {
+      "bytes": 76940,
+      "sha256": "0b582f6c71b1242496c6ceae27fbc718a667182bcdec9e09486e88395d0eb08e"
+    },
+    "images/serena/desktop-before.png": {
+      "bytes": 92277,
+      "sha256": "4e510f7956db664993934769c44c05a53a62d28a641aee2c53cfc07dcca602b6"
+    },
+    "images/serena/desktop-pending.png": {
+      "bytes": 106132,
+      "sha256": "eb84b3c0c10615016ee1576ec913d015189413de57c12a5e5449f1c8a2264705"
+    },
+    "images/serena/mobile-after.png": {
+      "bytes": 64828,
+      "sha256": "3414074d757bf34cfa953a5f3f6956ad0b64d909a8b6f5df2de66965065fa5b7"
+    },
+    "images/serena/mobile-before.png": {
+      "bytes": 81013,
+      "sha256": "c1073b3bfdc8b8e71b7dff0dfae72d6ae65271892cc8ed35676e7a8ce84553b1"
+    },
+    "images/serena/mobile-pending.png": {
+      "bytes": 93029,
+      "sha256": "f194f9e0f31752d44b2afe2f3d59702318faff6dfda63ac378175b4705a8bfcf"
+    },
+    "native-targets.json": {
+      "bytes": 13960,
+      "sha256": "a2376391f13d14defb1171ddc49416b2ff10775a9492b766566ca50607fc98c8"
+    },
+    "provenance.json": {
+      "bytes": 7523,
+      "sha256": "300863268350f6784c02dd246a04fa57f195689c077be1deece735881be3c987"
+    },
+    "README.md": {
+      "bytes": 6055,
+      "sha256": "81e880e59671eca906d1b8d7b9764ad343a8940beaecac7f3b6167a69e87934d"
+    }
+  }
+}

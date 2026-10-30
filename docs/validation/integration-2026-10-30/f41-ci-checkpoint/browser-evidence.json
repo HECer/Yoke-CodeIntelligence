@@ -1,0 +1,361 @@
+{
+  "schema": 1,
+  "headCommit": "f41e56136b1704ff3c3742445f2b0138c78fdc6c",
+  "testedMerge": "6af15e69e1f4b28e1cc9296c23ae82f9105460f9",
+  "testedTree": "65dde1f434636caee2209309576375fd0c365ef7",
+  "runId": 41030808968,
+  "windowsJob": {
+    "id": 124024122346,
+    "runId": 41030808968,
+    "name": "native-rust (windows-latest)",
+    "status": "completed",
+    "conclusion": "success",
+    "verification": "Exact authenticated gh api job GET after connector job endpoint was unavailable/timed out"
+  },
+  "sourceMap": {
+    "files": 1101,
+    "gitBlobBytes": 18088958,
+    "rawMatches": 45,
+    "LFCRLFOnlyMatches": 1056,
+    "allFiveMapsEqual": true
+  },
+  "artifactMembersRehashed": 570,
+  "originalArchiveReadbacksIndependentlyChecked": 126,
+  "profiles": [
+    {
+      "variant": "native",
+      "artifactId": 12977175140,
+      "zipSha256": "e1881411eb1d0eab851daba867ce97eee5ab539d03a5a403378dcd1d0228a107",
+      "complete": true,
+      "pngDomPairs": 6,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "workerExitCode": 0,
+      "treeExitedBeforeCleanup": true,
+      "activeBeforeCleanup": 0,
+      "activeAfterCleanup": 0,
+      "images": [
+        {
+          "path": "images/native/desktop-before.png",
+          "bytes": 92457,
+          "sha256": "c024bc8d6758f538b3bc2d8c82b953c5ba2592e8de7c8eb5d4c4d069468bb88d",
+          "width": 1440,
+          "height": 1612
+        },
+        {
+          "path": "images/native/mobile-before.png",
+          "bytes": 81398,
+          "sha256": "0b99824d5291fdd09e51a9ef3c190792946e5d1e744270c6fee7ba5eb6dd8a31",
+          "width": 390,
+          "height": 2110
+        },
+        {
+          "path": "images/native/desktop-pending.png",
+          "bytes": 106352,
+          "sha256": "18d43edbb61f870369bc7683883b8360f24674fc585a3598102aeb5356cfb24e",
+          "width": 1440,
+          "height": 1796
+        },
+        {
+          "path": "images/native/mobile-pending.png",
+          "bytes": 93408,
+          "sha256": "d31ed197d2eacf77cef743d79c7a6a1967a6f3663d5ac09e29a6bfd8c5b1ad7e",
+          "width": 390,
+          "height": 2347
+        },
+        {
+          "path": "images/native/desktop-after.png",
+          "bytes": 77110,
+          "sha256": "c62c0d893b17a38ff1a3b4a6b1b4e2903088b948170e395227030a30af209e68",
+          "width": 1440,
+          "height": 1327
+        },
+        {
+          "path": "images/native/mobile-after.png",
+          "bytes": 65053,
+          "sha256": "b5fdadfe89862ab5ed27ca471cd85ba61cae86a14749b9f136b193b6bb288b72",
+          "width": 390,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "variant": "serena",
+      "artifactId": 12976563183,
+      "zipSha256": "a437ce9ab407289ac131b7c12e0a3c5562a12fca296f7705ba8eafa3435f43a4",
+      "complete": true,
+      "pngDomPairs": 6,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "workerExitCode": 0,
+      "treeExitedBeforeCleanup": true,
+      "activeBeforeCleanup": 0,
+      "activeAfterCleanup": 0,
+      "images": [
+        {
+          "path": "images/serena/desktop-before.png",
+          "bytes": 92277,
+          "sha256": "4e510f7956db664993934769c44c05a53a62d28a641aee2c53cfc07dcca602b6",
+          "width": 1440,
+          "height": 1612
+        },
+        {
+          "path": "images/serena/mobile-before.png",
+          "bytes": 81013,
+          "sha256": "c1073b3bfdc8b8e71b7dff0dfae72d6ae65271892cc8ed35676e7a8ce84553b1",
+          "width": 390,
+          "height": 2110
+        },
+        {
+          "path": "images/serena/desktop-pending.png",
+          "bytes": 106132,
+          "sha256": "eb84b3c0c10615016ee1576ec913d015189413de57c12a5e5449f1c8a2264705",
+          "width": 1440,
+          "height": 1796
+        },
+        {
+          "path": "images/serena/mobile-pending.png",
+          "bytes": 93029,
+          "sha256": "f194f9e0f31752d44b2afe2f3d59702318faff6dfda63ac378175b4705a8bfcf",
+          "width": 390,
+          "height": 2347
+        },
+        {
+          "path": "images/serena/desktop-after.png",
+          "bytes": 76940,
+          "sha256": "0b582f6c71b1242496c6ceae27fbc718a667182bcdec9e09486e88395d0eb08e",
+          "width": 1440,
+          "height": 1327
+        },
+        {
+          "path": "images/serena/mobile-after.png",
+          "bytes": 64828,
+          "sha256": "3414074d757bf34cfa953a5f3f6956ad0b64d909a8b6f5df2de66965065fa5b7",
+          "width": 390,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "variant": "persistent-python",
+      "artifactId": 12976408765,
+      "zipSha256": "5cb6d0f924fe06867d2dad9d01880bc4c0f07f5c81e571b8662665f92930f9db",
+      "complete": true,
+      "pngDomPairs": 6,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "workerExitCode": 0,
+      "treeExitedBeforeCleanup": true,
+      "activeBeforeCleanup": 0,
+      "activeAfterCleanup": 0,
+      "images": [
+        {
+          "path": "images/persistent-python/desktop-before.png",
+          "bytes": 92386,
+          "sha256": "f008cd36bee942c285fca6fe29a8552865ee0e3d597146003f7218203f65f2ee",
+          "width": 1440,
+          "height": 1612
+        },
+        {
+          "path": "images/persistent-python/mobile-before.png",
+          "bytes": 80899,
+          "sha256": "2008522ea85710ce234eff7b19b0c580d6be95658e114963c5e2f5ded18b1d97",
+          "width": 390,
+          "height": 2110
+        },
+        {
+          "path": "images/persistent-python/desktop-pending.png",
+          "bytes": 106325,
+          "sha256": "690d8d470717240ef695bae7f6764e934063da882fd6bc4a74dc5a41392885ba",
+          "width": 1440,
+          "height": 1796
+        },
+        {
+          "path": "images/persistent-python/mobile-pending.png",
+          "bytes": 92973,
+          "sha256": "3ecf85c7ca8cd64b0271a8093e4b1fd9af215717ee9d1712dcff8570a7730dd9",
+          "width": 390,
+          "height": 2347
+        },
+        {
+          "path": "images/persistent-python/desktop-after.png",
+          "bytes": 77000,
+          "sha256": "ff9730a14293d05e2b8beaed31c96951157c9c03fe4f8ada07cf372f8049f050",
+          "width": 1440,
+          "height": 1327
+        },
+        {
+          "path": "images/persistent-python/mobile-after.png",
+          "bytes": 64482,
+          "sha256": "6a5ff6c68e203d3ad2a22c43624a42690c6e7409c89349f9719a9d918ff7c42c",
+          "width": 390,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "variant": "http",
+      "artifactId": 12976093755,
+      "zipSha256": "752d941351ec86430474d2f299cb61e2b14de8225135e7a47698e9c2da705ab7",
+      "complete": true,
+      "pngDomPairs": 6,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "workerExitCode": 0,
+      "treeExitedBeforeCleanup": true,
+      "activeBeforeCleanup": 0,
+      "activeAfterCleanup": 0,
+      "images": [
+        {
+          "path": "images/http/desktop-before.png",
+          "bytes": 92357,
+          "sha256": "96b950a6d936887e1365e1c2c8a760223d4b999f4a51e041469c965e44432470",
+          "width": 1440,
+          "height": 1612
+        },
+        {
+          "path": "images/http/mobile-before.png",
+          "bytes": 80845,
+          "sha256": "6fa9573f37d3bb1f8e2aa421760aac66e9a8e546fd2f5d33d23b95e62692e470",
+          "width": 390,
+          "height": 2110
+        },
+        {
+          "path": "images/http/desktop-pending.png",
+          "bytes": 106185,
+          "sha256": "89998bfdcaf0fa91695e1664e11bd64d0472399951359681137d6f02691bd2e8",
+          "width": 1440,
+          "height": 1796
+        },
+        {
+          "path": "images/http/mobile-pending.png",
+          "bytes": 92813,
+          "sha256": "507ea36e5b19ed5171924c1c37f9c1d81314010c11d48aeca2cbc5bcc65e9de2",
+          "width": 390,
+          "height": 2347
+        },
+        {
+          "path": "images/http/desktop-after.png",
+          "bytes": 77078,
+          "sha256": "fd62e278bacbf616f08d8fd3b28a54f156d41e8eab3d70ad0044632c2324aff8",
+          "width": 1440,
+          "height": 1327
+        },
+        {
+          "path": "images/http/mobile-after.png",
+          "bytes": 64758,
+          "sha256": "8b41ec6118b743b3b6077eaa5689484dc2857640618d8c29d4749cc512ba9984",
+          "width": 390,
+          "height": 1650
+        }
+      ]
+    }
+  ],
+  "originalUploadedAcceptanceFlags": [
+    {
+      "variant": "native",
+      "visualReviewComplete": false,
+      "humanAcceptanceClaimed": false,
+      "visibleDesktopShellInteraction": false,
+      "releaseAcceptanceClaimed": false
+    },
+    {
+      "variant": "serena",
+      "visualReviewComplete": false,
+      "humanAcceptanceClaimed": false,
+      "visibleDesktopShellInteraction": false,
+      "releaseAcceptanceClaimed": false
+    },
+    {
+      "variant": "persistent-python",
+      "visualReviewComplete": false,
+      "humanAcceptanceClaimed": false,
+      "visibleDesktopShellInteraction": false,
+      "releaseAcceptanceClaimed": false
+    },
+    {
+      "variant": "http",
+      "visualReviewComplete": false,
+      "humanAcceptanceClaimed": false,
+      "visibleDesktopShellInteraction": false,
+      "releaseAcceptanceClaimed": false
+    }
+  ],
+  "rawBomCrlfAndDomChecks": [
+    {
+      "variant": "native",
+      "viewport": "desktop",
+      "rawBomCrlfTargetHashMatches": true,
+      "domTextHashMatchesLfNormalizedTarget": true,
+      "domOmitsBom": false
+    },
+    {
+      "variant": "native",
+      "viewport": "mobile",
+      "rawBomCrlfTargetHashMatches": true,
+      "domTextHashMatchesLfNormalizedTarget": true,
+      "domOmitsBom": false
+    },
+    {
+      "variant": "serena",
+      "viewport": "desktop",
+      "rawBomCrlfTargetHashMatches": true,
+      "domTextHashMatchesLfNormalizedTarget": true,
+      "domOmitsBom": false
+    },
+    {
+      "variant": "serena",
+      "viewport": "mobile",
+      "rawBomCrlfTargetHashMatches": true,
+      "domTextHashMatchesLfNormalizedTarget": true,
+      "domOmitsBom": false
+    },
+    {
+      "variant": "persistent-python",
+      "viewport": "desktop",
+      "rawBomCrlfTargetHashMatches": true,
+      "domTextHashMatchesLfNormalizedTarget": true,
+      "domOmitsBom": false
+    },
+    {
+      "variant": "persistent-python",
+      "viewport": "mobile",
+      "rawBomCrlfTargetHashMatches": true,
+      "domTextHashMatchesLfNormalizedTarget": true,
+      "domOmitsBom": false
+    },
+    {
+      "variant": "http",
+      "viewport": "desktop",
+      "rawBomCrlfTargetHashMatches": true,
+      "domTextHashMatchesLfNormalizedTarget": true,
+      "domOmitsBom": false
+    },
+    {
+      "variant": "http",
+      "viewport": "mobile",
+      "rawBomCrlfTargetHashMatches": true,
+      "domTextHashMatchesLfNormalizedTarget": true,
+      "domOmitsBom": false
+    }
+  ],
+  "allFourProtocolsComplete": true,
+  "agentVisualReview": {
+    "complete": true,
+    "individuallyReviewedImages": 24,
+    "publicationReinspectionComplete": true,
+    "blockingVisualFindings": [],
+    "unexpectedCredentialOrPrivateContentFindings": [],
+    "originalReviewManifestSha256": "a3872d6e8c18cc45b37498e316df28fa9f9098d34c371fce10a6c8177a7ad3fb"
+  },
+  "humanAcceptance": false,
+  "visibleDesktopShellInteraction": false,
+  "releaseAcceptance": false,
+  "nativeImagePayloadsRehashedLocally": false,
+  "originalThreeVariantHistory": {
+    "artifactId": 12975754006,
+    "zipSha256": "c6d7fc9f71353c4b214a5f123c46c88a6e1f838f8a6df71cbaec83397bdc3097",
+    "complete": true,
+    "treeExitedBeforeCleanup": true
+  }
+}

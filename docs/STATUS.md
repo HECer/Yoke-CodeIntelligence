@@ -1,5 +1,25 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Scoped f41 Windows/Linux and four-profile browser acceptance (2026-10-30)
+
+At candidate `f41e5613`, run `41030808968`, all 371 default Cargo groups exit zero
+on Windows and Linux. macOS has 360 zero-exit groups and 11 failures; strict
+memory enforcement and unrelated generic startup causes remain open. All 24
+shard ZIP digests, 2,226 referenced log hashes and selected source proofs were
+verified. Group coverage does not imply individual test totals or every feature.
+
+The Windows job also completes native, Serena, persistent-Python and HTTP browser
+flows with all 24 original desktop/mobile before/pending/after screenshots.
+Individual visual inspection confirms retained drafts, disabled pending writes,
+keyboard focus and fresh post-resume saves. Independent original archive
+readbacks, source/DOM hashes and owned-process exit/EOF precede cleanup.
+Uploaded human/visual/visible-shell/release flags stay false; the agent review is
+separate. Matching VSIX/extension host, later combined source, full parity,
+main/publication and release remain open. Earlier checkpoints below retain
+their original tested source and failures.
+[Source-bound receipts and all 24 PNGs](validation/integration-2026-10-30/f41-ci-checkpoint/README.md).
+
+
 ## Native, Serena and HTTP browser evidence; Python focus correction (2026-10-30)
 
 At source `abdbdb03`, diagnostic run `41013033443` completes the native, Serena
