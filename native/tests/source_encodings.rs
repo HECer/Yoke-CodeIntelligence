@@ -716,7 +716,7 @@ fn strict_configuration_protocol_types_unknown_fields_and_host_scopes_do_not_gra
         json!(2),
         json!([]),
         json!({}),
-        json!("utf-32"),
+        json!("utf-7"),
         json!("owned_private_canary"),
     ] {
         let yaml = format!("encoding: {}\n", value);

@@ -171,23 +171,29 @@ fn utf32_selection_capacity_and_cancellation_do_not_relax_existing_admission() {
         ("utf_32_be", Codec::Utf32Be),
     ] {
         assert_eq!(Codec::parse(alias).unwrap(), codec);
-        let yaml = format!("encoding: {alias}\n");
-        let projected = project(
-            &HostProfile::default(),
-            &[Target::Global],
-            &[yaml.as_bytes()],
-            &[0],
-        );
-        assert_eq!(
-            projected
-                .profile()
-                .source_encodings
-                .as_ref()
-                .unwrap()
-                .select("default"),
-            Some(codec)
-        );
+        for selection in [alias.to_string(), serde_json::to_string(alias).unwrap()] {
+            let yaml = format!("encoding: {selection}\n");
+            let projected = project(
+                &HostProfile::default(),
+                &[Target::Global],
+                &[yaml.as_bytes()],
+                &[0],
+            );
+            assert_eq!(
+                projected
+                    .profile()
+                    .source_encodings
+                    .as_ref()
+                    .unwrap()
+                    .select("default"),
+                Some(codec)
+            );
+        }
+        let policy = serde_json::json!({"sourceEncoding":{"kind":"strict_v1","codec":codec}});
+        let options: CaptureOptions = serde_json::from_value(policy).unwrap();
+        assert_eq!(options.source_encoding, codec.policy());
     }
+    assert!(serde_json::from_value::<Codec>(serde_json::json!("utf-32")).is_err());
     for codec in [Codec::Utf32, Codec::Utf32Le, Codec::Utf32Be] {
         let raw = raw32("x", codec == Codec::Utf32Be, codec == Codec::Utf32);
         let view = View::decode(raw, codec.policy(), &|| Ok(())).unwrap();

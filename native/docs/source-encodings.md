@@ -11,6 +11,7 @@ their original byte offsets. The existing two-pass allocation admission,
 
 Finite YAML aliases add utf_32/utf32/U32, utf_32_le/UTF-32LE and
 utf_32_be/UTF-32BE, with the existing ASCII case and hyphen handling.
+Plain and JSON-style quoted YAML strings use the same alias parser.
 Capture/profile JSON uses the canonical enum spellings above.
 The alias and invalid-scalar references are the
 [Python codec table](https://docs.python.org/3.11/library/codecs.html#standard-encodings)
@@ -29,12 +30,20 @@ Three new core fixtures cover boundaries, malformed units, BOMs, capacity,
 cancellation, configuration, capture, plans and immutable replay. Four new
 transport fixtures cover real CLI/stdio, authenticated HTTP, a labeled Node LSP
 fixture with raw offsets and rename refusal, and executed raw-byte verification
-followed by approval/workspace journals. These are authored fixtures, **not
-executed native evidence**. Core/transport targets now declare 24/14 cases.
+followed by approval/workspace journals. At source `38322c7`, all seven new
+fixtures pass on hosted Windows, Linux and macOS in
+[run 41125931169](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41125931169).
+The whole transport target passes 14/14 on each platform. The core target passes
+23/24: its remaining failure is an obsolete rejection input that still expects
+the newly supported quoted `utf-32` YAML selection to refuse. This correction
+uses unsupported `utf-7` for that negative input without changing its assertions,
+and adds positive plain/quoted alias and canonical-JSON-policy checks while
+retaining JSON enum alias refusal. Corrected whole-core execution remains
+pending; production codec/authority code is unchanged. Targets declare 24/14 cases.
 Existing proof-consumer, permission, source, stale and cleanup restrictions
 remain. No general codec registry, automatic detection, optional proof capability
-or full Python/Unicode/project certification is introduced. Native compilation,
-fixtures and full qualification remain pending the guarded hosted pipeline.
+or full Python/Unicode/project certification is introduced. Corrected-source
+native compilation, fixtures and full qualification await the guarded hosted pipeline.
 
 This is a bounded native codec increment, not certification of the complete
 encoding identity, all standard codecs, all language servers or the project.

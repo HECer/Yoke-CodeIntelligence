@@ -1,5 +1,16 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## UTF-32 hosted checkpoint and quoted-YAML fixture correction (2026-10-30)
+
+At source `38322c7`, all seven new UTF-32 cases and the entire 14-case transport
+target pass on Windows/Linux/macOS. The 24-case core target passes 23 and fails
+only a stale negative input expecting the newly supported quoted UTF-32 YAML
+selection to refuse. This correction substitutes unsupported UTF-7 and adds
+positive plain/quoted YAML and canonical JSON policy checks, retaining strict
+JSON enum alias refusal and all original assertions/permissions/budgets.
+Corrected full-core execution remains pending. Production codec code is unchanged;
+strict macOS memory, full platform/VSIX/main/release acceptance remain open.
+
 ## Strict UTF-32 source candidate (2026-10-30)
 
 The existing selected-codec stack now admits explicit BOM-selected UTF-32 and
