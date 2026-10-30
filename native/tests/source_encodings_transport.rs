@@ -484,6 +484,60 @@ fn actual_executed_raw_byte_verification_approval_and_writer_journal_preserve_se
 }
 
 #[test]
+fn ascii_stdio_host_selection_preserves_offsets_and_rejects_unicode_edits() {
+    let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+    let root = tempfile::tempdir().unwrap();
+    let config = tempfile::tempdir().unwrap();
+    let raw = b"fn target() {}\r\n";
+    fs::write(root.path().join("main.rs"), raw).unwrap();
+    let capture = config.path().join("capture.json");
+    fs::write(
+        &capture,
+        r#"{"sourceEncoding":{"kind":"strict_v1","codec":"ascii"}}"#,
+    )
+    .unwrap();
+    let messages = [
+        json!({"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"ascii-fixture","version":"1"}}}),
+        json!({"jsonrpc":"2.0","method":"notifications/initialized"}),
+        json!({"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"ci_read","arguments":{"path":"main.rs"}}}),
+        json!({"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"ci_change_prepare","arguments":{"edits":[{"kind":"create","path":"new.rs","text":"\u{e9}"}]}}}),
+        json!({"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"ci_read","arguments":{"path":"main.rs","sourceEncoding":"utf8"}}}),
+    ];
+    let input = messages
+        .iter()
+        .map(|m| format!("{m}\n"))
+        .collect::<String>();
+    let output = run(
+        config.path(),
+        &[
+            "--root",
+            root.path().to_str().unwrap(),
+            "--capture-config",
+            capture.to_str().unwrap(),
+            "serve",
+        ],
+        input.as_bytes(),
+    );
+    let replies: Vec<Value> = String::from_utf8(output)
+        .unwrap()
+        .lines()
+        .map(|s| serde_json::from_str(s).unwrap())
+        .collect();
+    let read = tool(replies.iter().find(|m| m["id"] == 2).unwrap());
+    assert_eq!(read["status"], "ok", "{read}");
+    assert_eq!(read["data"]["text"], "fn target() {}\r\n");
+    assert_eq!(read["data"]["sourceView"]["rawContentHash"], hash(raw));
+    for id in [3, 4] {
+        assert_eq!(
+            tool(replies.iter().find(|m| m["id"] == id).unwrap())["status"],
+            "error"
+        );
+    }
+    assert_eq!(fs::read(root.path().join("main.rs")).unwrap(), raw);
+    assert!(!root.path().join("new.rs").exists());
+}
+
+#[test]
 fn utf8_sig_registered_lsp_maps_raw_anchors_and_refuses_rename() {
     use yoke::lsp::{
         self, ConfiguredServer, HostConfiguration, PassiveProfile, SemanticRequest, Server,

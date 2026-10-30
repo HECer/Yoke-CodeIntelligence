@@ -18,6 +18,7 @@ pub enum Codec {
     Utf16Le,
     Utf16Be,
     Latin1,
+    Ascii,
 }
 impl Codec {
     /// Deliberately finite, documented Python 3.11 standard aliases. No registry,
@@ -29,6 +30,7 @@ impl Codec {
         );
         let name = value.to_ascii_lowercase().replace('-', "_");
         Ok(match name.as_str() {
+            "ascii" | "us_ascii" | "646" => Self::Ascii,
             "utf_8" | "utf8" | "u8" | "utf" | "cp65001" => Self::Utf8,
             "utf_8_sig" => Self::Utf8Sig,
             "utf_16" | "utf16" | "u16" => Self::Utf16,
@@ -165,7 +167,11 @@ impl View {
                 if i % 8192 <= 3 {
                     check()?;
                 }
-                let ch = if codec == Codec::Latin1 {
+                let ch = if matches!(codec, Codec::Latin1 | Codec::Ascii) {
+                    ensure!(
+                        codec != Codec::Ascii || raw[i] < 0x80,
+                        "source_encoding_invalid_ascii"
+                    );
                     let c = char::from(raw[i]);
                     i += 1;
                     c
@@ -348,6 +354,10 @@ fn encode(text: &str, codec: Codec, check: &impl Fn() -> Result<()>) -> Result<V
             check()?;
         }
         let add = match codec {
+            Codec::Ascii => {
+                ensure!(ch.is_ascii(), "source_encoding_unrepresentable_ascii");
+                1
+            }
             Codec::Latin1 => {
                 ensure!(
                     u32::from(ch) <= 255,
@@ -370,7 +380,7 @@ fn encode(text: &str, codec: Codec, check: &impl Fn() -> Result<()>) -> Result<V
             check()?;
         }
         match codec {
-            Codec::Latin1 => bytes.push(ch as u8),
+            Codec::Latin1 | Codec::Ascii => bytes.push(ch as u8),
             Codec::Utf8 | Codec::Utf8Sig => {
                 bytes.extend_from_slice(ch.encode_utf8(&mut [0; 4]).as_bytes())
             }

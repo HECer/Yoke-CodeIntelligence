@@ -7,6 +7,8 @@ transport pass/fail counts. The reserved-basename and approval-schema fixture
 defects are corrected; their fresh execution and full functional acceptance
 remain pending. The parent owns serial guarded native/CLI/stdio/HTTP/compatibility,
 typecheck and npm acceptance.
+The later strict ASCII increment has source and transport fixtures; native
+execution and runtime qualification of that increment remain pending.
 Shared release status, the original 353-entry inventory and certification flags
 are intentionally outside this change.
 
@@ -35,6 +37,7 @@ underscores. These are the admitted spellings (plus those case/separator forms):
 | Codec | Canonical and documented aliases |
 | --- | --- |
 | UTF-8 | `utf_8`, `utf8`, `u8`, `utf`, `cp65001` |
+| Strict ASCII | `ascii`, `us_ascii`, `646` |
 | UTF-8 with optional signature | `utf_8_sig` |
 | BOM-selected UTF-16 | `utf_16`, `utf16`, `u16` |
 | Explicit little endian | `utf_16_le`, `utf-16le` |
@@ -44,17 +47,20 @@ underscores. These are the admitted spellings (plus those case/separator forms):
 The [Python 3.11 standard encoding table](https://docs.python.org/3.11/library/codecs.html#standard-encodings)
 is the alias reference, not a promise to implement its entire codec registry or
 additional registry normalization. Whitespace aliases, arbitrary punctuation,
-ASCII, Windows-1252, UTF-32 and every other codec are unsupported.
+Windows-1252, UTF-32 and every other codec are unsupported.
 Unknown codecs and invalid setting types refuse explicitly. Latin1 maps each
 byte directly to the same numbered Unicode scalar, including C1 controls;
-byte `80` is U+0080, not the Windows-1252 euro sign.
+byte `80` is U+0080, not the Windows-1252 euro sign. Explicit ASCII rejects
+every byte at or above `80` and rejects edits containing non-ASCII characters;
+it never replaces or transliterates them. ASCII is a selected policy, not
+automatic detection.
 For an existing UTF-8-SIG file without a signature, an edit that would place
 U+FEFF at the start is refused: its bytes would otherwise be consumed as a
 signature when the file is read again. Existing signatures are preserved.
 
 The resolved host profile uses `sourceEncodings` with `global` and
 `projects.<registered-name>.project/local`, with canonical enum values `utf8`,
-`utf8_sig`, `utf16`, `utf16_le`, `utf16_be`, `latin1`. Example:
+`utf8_sig`, `utf16`, `utf16_le`, `utf16_be`, `latin1`, `ascii`. Example:
 
 ```json
 {"sourceEncodings":{"global":"latin1","projects":{"default":{"local":"utf16"},"secondary":{"project":"utf8"}}}}

@@ -23,7 +23,7 @@ fn d() -> Deadline {
 }
 fn bytes(text: &str, codec: Codec, bom: bool) -> Vec<u8> {
     match codec {
-        Codec::Utf8 => text.as_bytes().to_vec(),
+        Codec::Utf8 | Codec::Ascii => text.as_bytes().to_vec(),
         Codec::Utf8Sig => {
             let mut out = if bom {
                 vec![0xef, 0xbb, 0xbf]
@@ -166,7 +166,6 @@ fn true_latin1_is_bijective_and_cannot_encode_windows1252_or_lossy_replacements(
         "cp1252",
         "windows-1252",
         "utf-32",
-        "ascii",
         "shift_jis",
         " utf-16",
         "utf 16",
@@ -179,6 +178,7 @@ fn true_latin1_is_bijective_and_cannot_encode_windows1252_or_lossy_replacements(
             vec!["utf-8", "utf_8", "UTF8", "u8", "UTF", "cp65001"],
             Codec::Utf8,
         ),
+        (vec!["ascii", "US-ASCII", "646"], Codec::Ascii),
         (vec!["utf-8-sig", "UTF_8_SIG"], Codec::Utf8Sig),
         (vec!["utf-16", "utf_16", "UTF16", "u16"], Codec::Utf16),
         (vec!["utf_16_le", "UTF-16LE", "utf-16-le"], Codec::Utf16Le),
@@ -975,6 +975,67 @@ fn optional_utf8_piece_consumers_refuse_without_starting_tools_or_creating_overl
         serde_json::to_vec(&null).unwrap(),
         serde_json::to_vec(&HostProfile::default()).unwrap()
     );
+}
+
+#[test]
+fn ascii_strictly_preserves_bytes_offsets_and_rejects_non_ascii() {
+    let raw: Vec<u8> = (0..=127).collect();
+    let view = View::decode(raw.clone(), Codec::Ascii.policy(), &|| Ok(())).unwrap();
+    assert_eq!(view.raw(), raw);
+    assert_eq!(view.encode_like(view.text(), &|| Ok(())).unwrap(), raw);
+    for i in 0..=128 {
+        assert_eq!(view.to_raw(i).unwrap(), i);
+        assert_eq!(view.to_decoded(i).unwrap(), i);
+    }
+    assert!(view.to_raw(129).is_err());
+    for byte in 128..=255 {
+        assert!(View::decode(vec![b'a', byte], Codec::Ascii.policy(), &|| Ok(())).is_err());
+    }
+    for text in ["\u{e9}", "\u{20ac}", "\u{1f4a1}", "e\u{301}", "\u{fffd}"] {
+        assert!(
+            view.encode_like(text, &|| Ok(()))
+                .unwrap_err()
+                .to_string()
+                .contains("unrepresentable_ascii")
+        );
+    }
+    assert!(
+        View::decode(
+            vec![b'x'; yoke::source_encoding::MAX_RAW + 1],
+            Codec::Ascii.policy(),
+            &|| Ok(())
+        )
+        .is_err()
+    );
+    assert!(
+        View::decode(vec![b'x'; 16384], Codec::Ascii.policy(), &|| Deadline::new(
+            0
+        )
+        .check())
+        .is_err()
+    );
+}
+
+#[test]
+fn ascii_plans_preserve_original_bytes_and_refuse_unrepresentable_edits() {
+    let (root, mut e, raw) = engine(Codec::Ascii, "fn target() {}\r\n", false);
+    let (snapshot, graph, _, _) = e.index(&d()).unwrap();
+    let edits = |text: &str| json!({"edits":[{"kind":"replace","path":"main.rs","expectedHash":hash(&raw),"startByte":3,"endByte":9,"text":text}]});
+    let p = changes::prepare(&mut e.store, &snapshot, &graph, &edits("renamed"), &d()).unwrap();
+    assert_eq!(after(&e, &p), b"fn renamed() {}\r\n");
+    assert!(changes::prepare(&mut e.store, &snapshot, &graph, &edits("\u{e9}"), &d()).is_err());
+    assert!(
+        changes::prepare(
+            &mut e.store,
+            &snapshot,
+            &graph,
+            &json!({"edits":[{"kind":"create","path":"new.rs","text":"\u{e9}"}]}),
+            &d()
+        )
+        .is_err()
+    );
+    assert_eq!(fs::read(root.path().join("main.rs")).unwrap(), raw);
+    assert!(!root.path().join("new.rs").exists());
 }
 
 #[test]
