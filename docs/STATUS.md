@@ -1,5 +1,16 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Partial actual desktop/mobile browser evidence (2026-10-30)
+
+At `76333e2e`, diagnostic run `40974744304` captures both actual before-review
+desktop/mobile states. Both PNGs were inspected: readable controls and content,
+with no horizontal overflow. The worker then exits 1 without the earlier junction
+diagnostic; its later failure phase remains unresolved. Four states, complete
+automation, successful natural shutdown and full browser/visual acceptance remain
+open. The next controller adds failure-only closed stage labels while preserving
+all original operations, assertions, budgets and admission/cleanup requirements.
+[Exact partial artifacts, source-byte checks and inspection limits](validation/integration-2026-10-30/browser-before-checkpoint/README.md).
+
 ## Scoped macOS cleanup evidence and fixture candidates (2026-10-30)
 
 PR8 run `40950941727` at tested merge `788913c0` covers all 372 default macOS

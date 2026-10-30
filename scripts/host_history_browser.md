@@ -132,6 +132,16 @@ driver exit/EOF receipts remain independent requirements.
 
 ## Evidence and remaining gates
 
+At `76333e2e`, diagnostic run `40974744304` reaches both actual desktop/mobile
+before-review captures, without reporting the earlier junction refusal. Both
+images were visually inspected and remain readable without horizontal overflow.
+The worker then exits 1; four states and complete automation remain absent.
+[Exact partial artifacts and inspection limits](../docs/validation/integration-2026-10-30/browser-before-checkpoint/README.md)
+retain the failed result. Failure-only closed exercise-stage labels now identify
+the next failing stage without exposing raw exceptions, CLI/protocol bodies,
+paths, capabilities or endpoints. Observer-output failure preserves the original
+exception. No original operation, assertion, deadline or acceptance gate changes.
+
 For focused CI diagnosis, a pushed commit whose message contains
 `[browser-evidence]` also starts the separate Windows history-browser diagnostic
 job. It uses the same release producer markers, original three owning-Session
