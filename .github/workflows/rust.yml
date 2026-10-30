@@ -261,6 +261,51 @@ jobs:
           name: host-document-history-browser-windows
           path: validation/ci-host-document-history-browser
           if-no-files-found: error
+      - name: Exercise the real browser on both owning serena Sessions
+        if: always() && !cancelled() && runner.os == 'Windows' && steps.host_history.outcome == 'success' && steps.release_build.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --variant serena --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser-serena
+      - name: Preserve serena browser automation and six PNGs
+        if: always() && runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-document-history-browser-serena-windows
+          path: validation/ci-host-document-history-browser-serena
+          if-no-files-found: error
+      - name: Exercise the real browser on both owning persistent-python Sessions
+        if: always() && !cancelled() && runner.os == 'Windows' && steps.host_history.outcome == 'success' && steps.release_build.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --variant persistent-python --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser-persistent-python
+      - name: Preserve persistent-python browser automation and six PNGs
+        if: always() && runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-document-history-browser-persistent-python-windows
+          path: validation/ci-host-document-history-browser-persistent-python
+          if-no-files-found: error
+      - name: Exercise the real browser on both owning HTTP Sessions
+        if: always() && !cancelled() && runner.os == 'Windows' && steps.host_history.outcome == 'success' && steps.release_build.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --variant http --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser-http
+      - name: Preserve HTTP browser automation and six PNGs
+        if: always() && runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-document-history-browser-http-windows
+          path: validation/ci-host-document-history-browser-http
+          if-no-files-found: error
   native-rust-windows:
     name: native-rust (${{ matrix.os }})
     needs: native-shards-windows
@@ -307,13 +352,18 @@ jobs:
       - run: npm ci
       - name: Verify browser and owning-Session harness admission
         run: python -m unittest scripts.tests.test_host_history_browser scripts.tests.test_host_history_live -v
+      - name: Verify the mocked HTTP browser actor admission and lifecycle
+        timeout-minutes: 1
+        run: python -m unittest scripts.tests.test_host_history_browser_http -v
       - name: Record release inputs before the diagnostic build
         run: python scripts/host_history_browser.py --mark-build start
       - name: Build the same release CLI for the diagnostic
+        id: diagnostic_release
         run: cargo build --workspace --release --locked
       - name: Bind the successful diagnostic build to unchanged inputs
         run: python scripts/host_history_browser.py --mark-build complete
       - name: Exercise the original three owning-Session history variants
+        id: diagnostic_history
         timeout-minutes: 5
         run: python scripts/host_history_live.py --native target/release/yoke.exe --output validation/ci-host-document-history
       - name: Preserve diagnostic owning-Session evidence
@@ -336,4 +386,49 @@ jobs:
         with:
           name: diagnostic-host-document-history-browser-windows
           path: validation/ci-host-document-history-browser
+          if-no-files-found: error
+      - name: Exercise the real browser on both owning serena Sessions
+        if: always() && !cancelled() && steps.diagnostic_history.outcome == 'success' && steps.diagnostic_release.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --variant serena --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser-serena
+      - name: Preserve serena browser automation and six PNGs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostic-host-document-history-browser-serena-windows
+          path: validation/ci-host-document-history-browser-serena
+          if-no-files-found: error
+      - name: Exercise the real browser on both owning persistent-python Sessions
+        if: always() && !cancelled() && steps.diagnostic_history.outcome == 'success' && steps.diagnostic_release.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --variant persistent-python --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser-persistent-python
+      - name: Preserve persistent-python browser automation and six PNGs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostic-host-document-history-browser-persistent-python-windows
+          path: validation/ci-host-document-history-browser-persistent-python
+          if-no-files-found: error
+      - name: Exercise the real browser on both owning HTTP Sessions
+        if: always() && !cancelled() && steps.diagnostic_history.outcome == 'success' && steps.diagnostic_release.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --variant http --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-host-document-history-browser-http
+      - name: Preserve HTTP browser automation and six PNGs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostic-host-document-history-browser-http-windows
+          path: validation/ci-host-document-history-browser-http
           if-no-files-found: error

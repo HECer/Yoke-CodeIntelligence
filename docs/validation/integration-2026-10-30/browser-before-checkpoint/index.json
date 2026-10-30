@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "sourceRevision": "76333e2e74727d546c432b8da10dbb010091d091",
+  "run": 40974744304,
+  "job": 123799884303,
+  "artifact": 12944921471,
+  "scope": "Partial failed browser run; two actually inspected before states only",
+  "automationComplete": false,
+  "fullVisualAcceptance": false,
+  "files": [
+    {
+      "path": "desktop-before.png",
+      "bytes": 92574,
+      "sha256": "be3cd39627103421c46dec246b9399c33b341f6e63e66f2305b8bac8db92a241"
+    },
+    {
+      "path": "mobile-before.png",
+      "bytes": 80924,
+      "sha256": "27ed1b3d0c4a52611863c103da22fbcee22009e2d9f303f41bdfef3c20e615d8"
+    },
+    {
+      "path": "desktop-before.dom.json",
+      "bytes": 2393,
+      "sha256": "3fab7b0b6b4c699eecf2449b72d50de7fc37673506c44e63b4ddd65116d591e7"
+    },
+    {
+      "path": "mobile-before.dom.json",
+      "bytes": 2348,
+      "sha256": "26af253bb46a84e59660173444eb87794c2a1f88ab2fcffea9e4b7ef42a01dd5"
+    },
+    {
+      "path": "job.json",
+      "bytes": 233,
+      "sha256": "b5f3edb3d69e48c784500830a3272c188347a972b62a13b8429e3a6f5a50e83d"
+    },
+    {
+      "path": "result.json",
+      "bytes": 708,
+      "sha256": "5643fcd864ca6fcf4aa38bdb0f163453cf4805757b59f41e0ad40fab40436bd3"
+    },
+    {
+      "path": "source-inputs.json",
+      "bytes": 120649,
+      "sha256": "a991286ea0220895ceb470b550722ba9dac5d5f6ef8b614c48c3de9d241599af"
+    },
+    {
+      "path": "partial-audit.json",
+      "bytes": 1817,
+      "sha256": "23de004e16105d21e2ed0b338ed6e89b3572067872cedd312b9b86fd88b4344d"
+    }
+  ]
+}
