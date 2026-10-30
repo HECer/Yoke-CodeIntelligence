@@ -209,9 +209,28 @@ impl Engine {
         Self::open_with_timeout(root, std::time::Duration::from_secs(10))
     }
     pub fn open_with_timeout(root: impl AsRef<Path>, timeout: std::time::Duration) -> Result<Self> {
-        let root = root.as_ref().canonicalize()?;
+        Self::open_with_timeout_inner(root.as_ref(), timeout, None)
+    }
+    /// Host-only Store setup observations, with no change to opening authority.
+    pub fn open_with_timeout_observed(
+        root: impl AsRef<Path>,
+        timeout: std::time::Duration,
+        observations: &mut store::OpeningObservations,
+    ) -> Result<Self> {
+        *observations = store::OpeningObservations::default();
+        Self::open_with_timeout_inner(root.as_ref(), timeout, Some(observations))
+    }
+    fn open_with_timeout_inner(
+        root: &Path,
+        timeout: std::time::Duration,
+        observations: Option<&mut store::OpeningObservations>,
+    ) -> Result<Self> {
+        let root = root.canonicalize()?;
         ensure!(root.is_dir(), "Workspace root must be a directory");
-        let store = Store::open_with_timeout(&root, timeout)?;
+        let store = match observations {
+            Some(observations) => Store::open_with_timeout_observed(&root, timeout, observations)?,
+            None => Store::open_with_timeout(&root, timeout)?,
+        };
         Ok(Self {
             git_repository_host: None,
             backend_servers: BTreeMap::new(),

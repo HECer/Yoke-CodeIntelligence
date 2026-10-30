@@ -16,8 +16,11 @@ use std::{
 
 #[path = "store_busy.rs"]
 mod busy;
+#[path = "store_open_observations.rs"]
+mod opening;
 #[path = "store_read_only.rs"]
 mod read_only;
+pub use opening::{OpeningObservations, OpeningPhase};
 
 pub struct Store {
     pub dir: PathBuf,
@@ -165,13 +168,32 @@ impl Store {
         Self::open_with_timeout(root, Duration::from_secs(10))
     }
     pub fn open_with_timeout(root: &Path, timeout: Duration) -> Result<Self> {
+        Self::open_with_timeout_inner(root, timeout, None)
+    }
+    /// Opt-in phase entries only; the original opening policy and errors remain.
+    pub fn open_with_timeout_observed(
+        root: &Path,
+        timeout: Duration,
+        observations: &mut OpeningObservations,
+    ) -> Result<Self> {
+        observations.reset();
+        Self::open_with_timeout_inner(root, timeout, Some(observations))
+    }
+    fn open_with_timeout_inner(
+        root: &Path,
+        timeout: Duration,
+        mut observations: Option<&mut OpeningObservations>,
+    ) -> Result<Self> {
         let deadline = crate::capture::Deadline::from_duration(timeout);
+        opening::enter(&mut observations, OpeningPhase::Budget);
         deadline.check()?;
+        opening::enter(&mut observations, OpeningPhase::StateDirectory);
         let dir = root.join(".yoke");
         if let Ok(meta) = fs::symlink_metadata(&dir) {
             ensure!(!is_link(&meta), "State directory must not be a link");
         }
         fs::create_dir_all(&dir)?;
+        opening::enter(&mut observations, OpeningPhase::StateSubdirectories);
         for name in ["blobs", "trees"] {
             deadline.check()?;
             let path = dir.join(name);
@@ -181,12 +203,18 @@ impl Store {
             fs::create_dir_all(path)?;
         }
         deadline.check()?;
+        opening::enter(&mut observations, OpeningPhase::MaintenanceFile);
         let admission_gate = state_lock(&dir, "maintenance.lock")?;
+        opening::enter(&mut observations, OpeningPhase::ClientFile);
         let client_lock = state_lock(&dir, "clients.lock")?;
         let end = Instant::now() + deadline.remaining();
+        opening::enter(&mut observations, OpeningPhase::AdmissionLock);
         lock_until(&admission_gate, false, end, Some(&deadline))?;
+        opening::enter(&mut observations, OpeningPhase::ClientLock);
         lock_until(&client_lock, false, end, Some(&deadline))?;
+        opening::enter(&mut observations, OpeningPhase::AdmissionUnlock);
         fs2::FileExt::unlock(&admission_gate)?;
+        opening::enter(&mut observations, OpeningPhase::DatabaseFiles);
         let db_path = dir.join("index.sqlite");
         for name in [
             "index.sqlite",
@@ -203,10 +231,13 @@ impl Store {
             }
         }
         deadline.check()?;
+        opening::enter(&mut observations, OpeningPhase::Connection);
         let db = Connection::open(db_path)?;
+        opening::enter(&mut observations, OpeningPhase::SqlPolicy);
         busy::install(&db, Some(&deadline))?;
         let bounded = deadline.clone();
         db.progress_handler(1000, Some(move || bounded.check().is_err()));
+        opening::enter(&mut observations, OpeningPhase::SqlSetup);
         db.execute_batch("PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA synchronous=FULL;
             CREATE TABLE IF NOT EXISTS meta(key TEXT PRIMARY KEY,value TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS snapshots(id TEXT PRIMARY KEY,value TEXT NOT NULL);
@@ -216,6 +247,7 @@ impl Store {
             CREATE VIRTUAL TABLE IF NOT EXISTS symbols USING fts5(snapshot UNINDEXED,id UNINDEXED,name,path UNINDEXED,signature);
             CREATE VIRTUAL TABLE IF NOT EXISTS documents USING fts5(snapshot UNINDEXED,path UNINDEXED,text);")?;
         deadline.check()?;
+        opening::enter(&mut observations, OpeningPhase::WorkspaceIdentity);
         let workspace_id: Option<String> = db
             .query_row("SELECT value FROM meta WHERE key='workspace'", [], |r| {
                 r.get(0)
@@ -241,10 +273,12 @@ impl Store {
             }
         };
         deadline.check()?;
+        opening::enter(&mut observations, OpeningPhase::ClearPolicy);
         // The setup budget bounds this opening, not future unrelated operations
         // on the returned Store. Those select their own checked request policy.
         db.progress_handler(0, None::<fn() -> bool>);
         busy::install(&db, None)?;
+        opening::enter(&mut observations, OpeningPhase::Ready);
         Ok(Self {
             dir,
             db,
