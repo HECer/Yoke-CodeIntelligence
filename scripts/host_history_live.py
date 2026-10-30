@@ -519,7 +519,7 @@ class RuntimeHandle:
 
 
 class EvidenceLinkRefusal(RuntimeError):
-    """Closed link metadata; never retains a private path or reads its target."""
+    """Bounded categories/fingerprints; never publishes path spellings or reads targets."""
     def __init__(self, root, path, kind):
         super().__init__("Unexpected evidence link")
         parts = path.relative_to(root).parts
@@ -528,8 +528,32 @@ class EvidenceLinkRefusal(RuntimeError):
                      "host": "host-documents", "source-İ": "source", "archive-π": "archive"}.get(parts[0], "other")
         self.entry = {"SingletonLock": "browser-singleton-lock", "SingletonCookie": "browser-singleton-cookie",
                       "SingletonSocket": "browser-singleton-socket", "Application Data": "profile-compatibility",
-                      "Local Settings": "profile-compatibility", "My Documents": "profile-compatibility"}.get(path.name, "other")
+                      "Local Settings": "profile-compatibility", "My Documents": "profile-compatibility",
+                      "AppData": "profile-appdata", "Local": "profile-local", "Roaming": "profile-roaming",
+                      "LocalLow": "profile-local-low", "Temp": "profile-temp", "Desktop": "profile-desktop",
+                      "Documents": "profile-documents", "Downloads": "profile-downloads",
+                      "Cookies": "profile-cookies", "History": "profile-history", "Recent": "profile-recent",
+                      "NetHood": "profile-network", "PrintHood": "profile-printers", "SendTo": "profile-send-to",
+                      "Start Menu": "profile-start-menu", "Templates": "profile-templates"}.get(path.name, "other")
         self.kind = kind
+        self.depth = min(len(parts), 16)
+        labels = {"home": "home", "appdata": "appdata", "local": "local", "locallow": "local-low",
+                  "roaming": "roaming", "temp": "temporary", "microsoft": "microsoft", "windows": "windows",
+                  "edge": "edge", "user data": "user-data", "default": "default-profile",
+                  "crashpad": "browser-crashes", "inetcache": "internet-cache",
+                  "content.ie5": "internet-content-cache", "low": "low-integrity", "packages": "packages",
+                  "ac": "app-container", "localcache": "local-cache", "cache": "cache",
+                  "browsermetrics": "browser-metrics", "widevinecdm": "widevine", "hyphen-data": "hyphenation-data",
+                  "component_crx_cache": "component-cache", "shadercache": "shader-cache", "gpucache": "gpu-cache",
+                  "code cache": "code-cache", "dawncache": "dawn-cache", "dictionaries": "dictionaries",
+                  "trusttokenkeycommitments": "trust-token-keys", "certificaterevocation": "certificate-revocation",
+                  ".yoke": "yoke-state", ".cache": "cache"}
+        def label(part):
+            known = labels.get(part.casefold())
+            return known or ("version" if re.fullmatch(r"[0-9]{1,10}(?:\.[0-9]{1,10}){1,3}", part) else "other")
+        self.route = tuple(label(part) for part in parts[:16])
+        self.component_sha256 = tuple(hashlib.sha256(b"owned-browser-link-component-v1\0"
+            + part.encode("utf-8", errors="surrogatepass")).hexdigest() for part in parts[:16])
 
 
 def output_size(root):
