@@ -1,5 +1,19 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Strict Windows-1252 integration candidate (2026-10-30)
+
+The selected Windows-1252 codec is integrated after the ASCII/UTF-8-SIG stack
+at `272ec171`. It preserves all existing codec policies and refuses undefined
+bytes and unrepresentable edits, while retaining original source hashes and byte
+offsets. The source table matches all 256 Python strict-codec entries. New native
+fixtures cover every defined scalar boundary, decoded expansion and cancellation,
+YAML/capture selection, actual stdio reads/plans and the verified raw-byte writer.
+Local Rust 1.94.1 formatting/source parsing, source-preservation comparisons and
+whitespace checks pass. Typecheck and npm tests pass (266 passed, three skipped).
+Those native fixtures have not run locally and require guarded hosted validation.
+This source-only increment does not qualify other codec combinations, broader
+encoding identity, macOS memory enforcement, VSIX/extension host, release or main.
+
 ## Native, Serena and HTTP browser evidence; Python focus correction (2026-10-30)
 
 At source `abdbdb03`, diagnostic run `41013033443` completes the native, Serena

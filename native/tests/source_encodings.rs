@@ -162,15 +162,7 @@ fn true_latin1_is_bijective_and_cannot_encode_windows1252_or_lossy_replacements(
                 .contains("unrepresentable_latin1")
         );
     }
-    for name in [
-        "cp1252",
-        "windows-1252",
-        "utf-32",
-        "shift_jis",
-        " utf-16",
-        "utf 16",
-        "UTF–16",
-    ] {
+    for name in ["utf-32", "shift_jis", " utf-16", "utf 16", "UTF–16"] {
         assert!(Codec::parse(name).is_err(), "{name}");
     }
     for (names, codec) in [
@@ -201,6 +193,109 @@ fn true_latin1_is_bijective_and_cannot_encode_windows1252_or_lossy_replacements(
             assert_eq!(Codec::parse(name).unwrap(), codec);
         }
     }
+}
+
+#[test]
+fn windows1252_strict_mapping_and_raw_change_replay() {
+    assert_eq!(Codec::parse("CP1252").unwrap(), Codec::Windows1252);
+    assert_eq!(Codec::parse("windows-1252").unwrap(), Codec::Windows1252);
+    let allowed: Vec<u8> = (0..=255)
+        .filter(|b| ![0x81, 0x8d, 0x8f, 0x90, 0x9d].contains(b))
+        .collect();
+    let v = View::decode(allowed.clone(), Codec::Windows1252.policy(), &|| Ok(())).unwrap();
+    assert_eq!(v.text().chars().nth(0x80), Some('\u{20ac}'));
+    // Independent strict-codec oracle: UTF-8 of all 251 defined bytes, in order.
+    assert_eq!(v.text().len(), 391);
+    assert_eq!(
+        hash(v.text()),
+        "5b2df34bc5cd434e2fe59bf5935a028fa57782eda471de70c0dc0ce0d3de7913"
+    );
+    assert_eq!(v.encode_like(v.text(), &|| Ok(())).unwrap(), allowed);
+    for (raw, (decoded, ch)) in v.text().char_indices().enumerate() {
+        assert_eq!(v.to_raw(decoded).unwrap(), raw);
+        assert_eq!(v.to_decoded(raw).unwrap(), decoded);
+        for inside in 1..ch.len_utf8() {
+            assert!(v.to_raw(decoded + inside).is_err());
+        }
+    }
+    assert_eq!(v.to_raw(v.text().len()).unwrap(), allowed.len());
+    assert_eq!(v.to_decoded(allowed.len()).unwrap(), v.text().len());
+    let capture: CaptureOptions = serde_json::from_value(json!({
+        "sourceEncoding":{"kind":"strict_v1","codec":"windows1252"}
+    }))
+    .unwrap();
+    assert_eq!(capture.source_encoding, Codec::Windows1252.policy());
+    let projected = project(
+        &HostProfile::default(),
+        &[Target::Global],
+        &[b"encoding: windows-1252\n"],
+        &[0],
+    );
+    assert_eq!(
+        serde_json::to_value(projected.profile()).unwrap()["sourceEncodings"]["global"],
+        "windows1252"
+    );
+    for byte in [0x81, 0x8d, 0x8f, 0x90, 0x9d] {
+        assert!(
+            View::decode(vec![byte], Codec::Windows1252.policy(), &|| Ok(()))
+                .err()
+                .unwrap()
+                .to_string()
+                .contains("undefined_windows1252")
+        );
+    }
+    for ch in ['\u{80}', '\u{81}', '\u{fffd}', '\u{1f4a1}', '\u{301}'] {
+        assert!(
+            v.encode_like(&ch.to_string(), &|| Ok(()))
+                .unwrap_err()
+                .to_string()
+                .contains("unrepresentable_windows1252")
+        );
+    }
+    let root = tempfile::tempdir().unwrap();
+    let raw = b"// \x80\r\nfn target() {}\r\n";
+    fs::write(root.path().join("main.rs"), raw).unwrap();
+    let mut e = Engine::open(root.path()).unwrap();
+    e.capture_options.source_encoding = Codec::Windows1252.policy();
+    let (snapshot, _, _, _) = e.index(&d()).unwrap();
+    let view = query::source_view(&e.store, &snapshot, "main.rs").unwrap();
+    assert_eq!(view.text(), "// \u{20ac}\r\nfn target() {}\r\n");
+    assert_eq!(view.to_raw("// \u{20ac}\r\nfn ".len()).unwrap(), 9);
+    assert!(view.to_raw(4).is_err());
+    let p = plan(
+        &mut e,
+        json!([{"kind":"replace","path":"main.rs","expectedHash":hash(raw),"startByte":9,"endByte":15,"text":"\u{20ac}"}]),
+    );
+    assert_eq!(after(&e, &p), b"// \x80\r\nfn \x80() {}\r\n");
+    changes::load_checked_plan(&e.store, &p.id, &d()).unwrap();
+    assert_eq!(fs::read(root.path().join("main.rs")).unwrap(), raw);
+    let bad = e.invoke("ci_change_prepare", json!({"edits":[{"kind":"replace","path":"main.rs","expectedHash":hash(raw),"startByte":9,"endByte":15,"text":"\u{1f4a1}"}]})).unwrap();
+    assert_eq!(bad["status"], "error");
+    assert!(bad.to_string().contains("unrepresentable_windows1252"));
+}
+
+#[test]
+fn windows1252_decoded_expansion_and_cancellation_refuse_before_publication() {
+    let expanded = vec![0x80; yoke::source_encoding::MAX_TEXT / 3 + 1];
+    assert!(
+        View::decode(expanded, Codec::Windows1252.policy(), &|| Ok(()))
+            .err()
+            .unwrap()
+            .to_string()
+            .contains("decoded_budget")
+    );
+    let checks = std::cell::Cell::new(0);
+    let error = View::decode(vec![0x80; 16384], Codec::Windows1252.policy(), &|| {
+        checks.set(checks.get() + 1);
+        if checks.get() == 4 {
+            anyhow::bail!("owned_windows1252_cancel");
+        }
+        Ok(())
+    })
+    .err()
+    .unwrap();
+    assert!(error.to_string().contains("owned_windows1252_cancel"));
+    assert_eq!(checks.get(), 4);
 }
 
 #[test]
@@ -618,7 +713,6 @@ fn strict_configuration_protocol_types_unknown_fields_and_host_scopes_do_not_gra
         json!(2),
         json!([]),
         json!({}),
-        json!("cp1252"),
         json!("utf-32"),
         json!("owned_private_canary"),
     ] {

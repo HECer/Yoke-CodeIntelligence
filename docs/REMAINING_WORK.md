@@ -1,5 +1,16 @@
 # Remaining implementation and acceptance
 
+## Windows-1252 integration requires native qualification (2026-10-30)
+
+The Windows-1252 source-only candidate is combined with ASCII and UTF-8-SIG after
+`272ec171`. Original bytes/offsets, all preceding codec fixtures, unsupported proof
+consumer refusals, and the existing verification/approval/writer gates remain.
+The complete byte table matches Python's strict codec; this comparison reads
+source constants and does not compile or execute Rust. New core and real-transport
+fixtures require guarded hosted execution. Full selected-encoding identity,
+remaining codecs/LSP combinations, strict platform memory, VSIX/release and main
+remain open. See the [codec contract](../native/docs/source-encodings.md).
+
 ## Remaining Python browser and strict platform gates (2026-10-30)
 
 Source `abdbdb03`, run `41013033443`, now has successful native, Serena and HTTP
