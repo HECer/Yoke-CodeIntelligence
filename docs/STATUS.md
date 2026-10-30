@@ -1,5 +1,121 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Closed browser variant startup repair (2026-10-30)
+
+At `d6b9da55`, run `41004163411`, native automation passes with all six PNG/DOM
+pairs and independent zero exits/EOF/empty Job before force. The 1,099 selected
+source hashes match (45 raw, 1,054 LF/CRLF-only). These new screenshots have not
+been visually re-reviewed; the earlier `ed92e9f8` review retains its own scope.
+Serena and persistent Python both fail before screenshots at driver startup.
+Their failed Jobs require force cleanup and cannot establish independent exit.
+
+The driver still admitted only the native evidence basename. The correction
+binds a fixed payload variant to the worker environment and its exact repository
+output path before creating a browser profile. A controlled old/new guard test
+reproduces rejection of the three new variants and acceptance of all four exact
+corrected mappings. Startup echoes the admitted variant and both Python receipt
+checks require it. Failed startup closes its owned Node/channel handles.
+
+All original browser interactions, assertions, image bounds, network admission,
+waits and shutdown logic remain, as do the original history gate and copied Job
+runner. Focused checks pass 80 Python and 11 Node tests; typecheck and npm tests
+pass (266 passed, three skipped). These are mocked/guarded diagnostic checks,
+not corrected browser runtime acceptance. Fresh four-profile CI and six-image
+inspection per profile remain required. [Original failed/successful artifacts and causal scope](validation/integration-2026-10-30/browser-driver-variant-checkpoint/README.md).
+
+## HTTP browser actor candidate and qualified ingress source integration (2026-10-30)
+
+The opt-in HTTP browser fixture now uses two real public `serve-http` services
+with fixed Session-profile principals and ephemeral CI-only logon credentials.
+It preserves the original UI/archive/source assertions and distinguishes
+owning-Session revocation from natural service exit. The old HTTP Session must
+survive destination closure. Both roots must exit at their fixed 120-second
+host lifetime with EOF and checked credential removal before Job cleanup.
+No token enters arguments, fixture files or artifacts. The original stdio
+profiles, history harness, CDP driver, 180-second worker, disk/output/image
+bounds and existing CI commands/limits remain.
+
+Focused Python suites pass 79 tests, including 21 HTTP parser/authentication,
+credential and lifecycle adversaries. Typecheck and npm tests pass on the
+integrated source (266 passed, three skipped). Six in-memory erasure checks fail as
+expected. These are mocked protocol/native/credential tests, not actual Windows
+Credential Manager, Yoke HTTP or browser qualification. New hosted execution
+and six HTTP screenshot inspections remain open. [Candidate contract and review](validation/integration-2026-10-30/browser-http-candidate/README.md).
+
+The monotonic ingress stimulus repair is now integrated byte-exact from the
+native target that passes all 22 tests on Windows, Linux and macOS in PR8 run
+`40986285723`, source `99b73b3f`. It preserves the 120 ms server deadline,
+750 ms total fixture bound, three-attempt maximum and durable-state assertions.
+Scoped Rust 1.94.1 formatting and source comparison pass. The combined source
+still requires fresh whole-pipeline CI; strict macOS worker memory, broader
+browser/backend coverage and release/main acceptance remain open.
+
+## Guarded owning Serena and persistent-Python browser candidates (2026-10-30)
+
+The browser harness now has separate explicit Serena and persistent-Python
+variants. Both old and destination actors use the selected Serena protocol;
+the real tool catalogs must match. The persistent variant also requires both
+runtimes to retain 45 through the full browser/archive/save sequence, and to
+exit independently before Job cleanup. The old Session must survive destination
+shutdown. Variant/nonce/output and final receipt admission cannot borrow the
+native flow's proof. The original history harness, CDP driver, native default
+operations, six-image gate, producer guard and 180-second worker remain.
+
+The focused Python suites pass 58 tests. The mocked exercise tests also supply
+the Windows-only subprocess flag inside their mocked scope; removing that host
+constant reproduces the Unix environment and now passes without skipping cases.
+Actual Unix CI previously stopped before shard zero at that missing attribute. Five in-memory erasure checks fail as
+expected when profile selection, runtime exit, retained value, receipt admission
+or owned teardown checks are removed. Workflow YAML parsing confirms every
+original job/step/command/limit is preserved; added profile invocations each have
+their own original four-minute ceiling. Typecheck and npm tests pass on unchanged
+TypeScript/package inputs (266 passed, three skipped). No local Yoke build or
+execution was used for these new checks. [Scope and source review](validation/integration-2026-10-30/browser-profile-candidate/README.md).
+
+New guarded hosted execution and all twelve Serena/Python screenshot inspections
+remain open. HTTP browser transport, full platform qualification and release/main
+acceptance remain open. The native browser result below retains its tested
+`ed92e9f8` identity; this candidate does not retroactively extend it.
+
+## Native stdio browser automation and agent visual review passed (2026-10-30)
+
+At `ed92e9f8`, diagnostic run `40995799274`, job `123868515540`, passes the
+release producer binding, all three original owning-Session history variants
+and the actual installed Edge/CDP browser exercise. All six desktop/mobile
+before/pending/after PNG/DOM pairs were verified and visually inspected by the
+assistant. Draft retention, disabled writes during archival, readable blockers,
+explicit host recovery and fresh guarded saves match their actual observations;
+there is no horizontal overflow or visible layout defect requiring correction.
+
+Browser/driver raw exit zero and EOF, both native authority exits, and an empty
+worker Job precede forced cleanup. All 1,099 selected source hashes match the
+recorded Git revision (45 raw, 1,054 LF/CRLF-only). The separate agent review
+does not rewrite automated human/visual flags or claim visible-shell interaction.
+[Exact successful artifacts, source/exit audit and six-image review](validation/integration-2026-10-30/browser-success-checkpoint/README.md).
+
+This completes the single native owning stdio dashboard browser flow at that
+source. Broader Serena/persistent-Python/HTTP browser flows, complete native and
+macOS resource qualification, matching release/VSIX/extension host and main/
+publication acceptance remain open. Nothing has merged.
+
+## Earlier pending-state browser input candidate (2026-10-30)
+
+At `42b94aca`, diagnostic run `40983256567` passes the release build and all
+three original owning-Session history variants. The real-browser worker fails
+at `browser-pending` after both before-review captures. Both new PNGs were
+inspected and remain readable without horizontal overflow. Four later states,
+successful browser automation/shutdown and full visual acceptance remain open.
+
+An isolated owned Edge diagnostic confirms focus can leave a temporarily
+disabled recovery button after the original click already observed it. The
+candidate returns through bounded actual Tab input after the real pending reply;
+it preserves the product and every original pending/write/recovery assertion.
+Closed internal failure checkpoints retain no private endpoints or capabilities.
+The actual hosted failure assertion and corrected native-browser behavior still
+require fresh CI. Focused Python/Node checks, the separate copied-helper Edge
+diagnostic and npm gates pass; none substitutes for the missing product states.
+[Exact current checkpoint, archive/member hashes and inspection limits](validation/integration-2026-10-30/browser-pending-checkpoint/README.md).
+
 ## Partial actual desktop/mobile browser evidence (2026-10-30)
 
 At `76333e2e`, diagnostic run `40974744304` captures both actual before-review

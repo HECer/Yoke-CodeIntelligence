@@ -4,6 +4,7 @@ Authored source-only. Running these later does not establish live acceptance.
 """
 import ast
 import copy
+from contextlib import ExitStack
 import importlib.util
 import io
 import json
@@ -22,6 +23,58 @@ SPEC.loader.exec_module(BROWSER)
 
 
 class WorkerAdmission(unittest.TestCase):
+    def test_failed_driver_start_retains_and_closes_its_owned_process_and_channel_handles(self):
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Path(directory).resolve()
+            process, reader, actor = mock.Mock(), mock.Mock(), mock.Mock(capability="c" * 64, port=1234)
+            process.poll.return_value = None
+            reader.is_alive.return_value = False
+            failure = RuntimeError("Owned startup refused")
+            with mock.patch.object(BROWSER.LIVE, "require_worker_job"), \
+                 mock.patch.object(BROWSER.subprocess, "CREATE_NO_WINDOW", 0x08000000, create=True), \
+                 mock.patch.object(BROWSER.subprocess, "Popen", return_value=process), \
+                 mock.patch.object(BROWSER.threading, "Thread", return_value=reader) as thread, \
+                 mock.patch.object(BROWSER.Browser, "call", side_effect=failure) as call:
+                with self.assertRaises(RuntimeError) as caught:
+                    BROWSER.Browser(fixture / "inert-node", fixture / "inert-browser", fixture,
+                                    fixture / "evidence", actor, "inert-job", "d" * 64, "serena")
+                self.assertIs(caught.exception, failure)
+                self.assertEqual(call.call_args.args[0]["variant"], "serena")
+                owner = thread.call_args.kwargs["target"].__self__
+                self.assertTrue(owner.closed)
+                self.assertTrue(owner.stderr.closed)
+            process.kill.assert_called_once()
+            process.wait.assert_called_once_with(timeout=5)
+            reader.join.assert_called_once_with(timeout=2)
+            process.stdin.close.assert_called_once()
+            process.stdout.close.assert_called_once()
+
+    def test_driver_failure_checkpoints_are_closed_and_never_admit_success(self):
+        original = {"phase": "pending", "ok": False, "reason": "real-browser-failed",
+                    "checkpoint": "pending-snapshot", "viewport": "mobile"}
+        secret = "http://private.invalid/#private-capability"
+        for change, expected in (({}, "checkpoint=pending-snapshot; viewport=mobile"),
+                                 ({"checkpoint": secret}, "checkpoint=other; viewport=mobile"),
+                                 ({"viewport": {"private": secret}}, "checkpoint=pending-snapshot; viewport=other"),
+                                 ({"phase": secret}, "checkpoint=other; viewport=other"),
+                                 ({"extra": secret}, "checkpoint=other; viewport=other")):
+            with self.subTest(change=change), mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                value = {**original, **change}
+                BROWSER.report_driver_failure(value, "pending")
+                self.assertEqual(log.getvalue(), "Owned browser driver failed: " + expected + "\n")
+                self.assertNotIn(secret, log.getvalue())
+                with self.assertRaises(RuntimeError):
+                    BROWSER.admit_driver_reply(value, "pending", "private-capability")
+        for error in (OSError("private unavailable sink"), ValueError("private closed sink")):
+            with mock.patch.object(BROWSER.sys, "stderr") as log:
+                log.write.side_effect = error
+                BROWSER.report_driver_failure(original, "pending")
+                with self.assertRaises(RuntimeError):
+                    BROWSER.admit_driver_reply(original, "pending", "private-capability")
+        with mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+            BROWSER.report_driver_failure({"phase": "pending", "ok": True}, "pending")
+            self.assertEqual(log.getvalue(), "")
+
     def test_exercise_failure_reports_only_closed_labels_and_tolerates_a_closed_sink(self):
         for phase, expected in (("browser-before", "browser-before"),
                                 ("before-integrity", "before-integrity"),
@@ -332,12 +385,16 @@ class WorkerAdmission(unittest.TestCase):
 
     def test_closed_schema_and_nonce_are_admitted_before_paths(self):
         valid = {key: "inert" for key in ("schema", "workerJobName", "nonce", "native", "fixture", "output",
-                                         "node", "producer", "inputs", "ci")}
-        valid.update(schema=BROWSER.SCHEMA, nonce="a" * 64, workerJobName="Local\\YokeHistoryCI-" + "b" * 64)
+                                         "node", "producer", "inputs", "ci", "variant")}
+        valid.update(schema=BROWSER.SCHEMA, variant="native", nonce="a" * 64,
+                     workerJobName="Local\\YokeHistoryCI-" + "b" * 64)
         for changed in ({}, {**valid, "unexpected": True}, {**valid, "nonce": "wrong"},
-                        {**valid, "schema": "foreign"}, {**valid, "workerJobName": "Local\\foreign"}):
+                        {**valid, "schema": "foreign"}, {**valid, "workerJobName": "Local\\foreign"},
+                        {**valid, "variant": "http"}, {**valid, "variant": "serena"},
+                        {**valid, "variant": ["native"]}):
             with self.subTest(spec=changed), \
-                 mock.patch.dict(BROWSER.os.environ, {"YOKE_BROWSER_WORKER_NONCE": "a" * 64}), \
+                 mock.patch.dict(BROWSER.os.environ, {"YOKE_BROWSER_WORKER_NONCE": "a" * 64,
+                                                     "YOKE_BROWSER_WORKER_VARIANT": "native"}), \
                  mock.patch.object(BROWSER, "plain_path", side_effect=AssertionError("Must not inspect paths")), \
                  mock.patch.object(BROWSER, "sha") as digest:
                 with self.assertRaises(RuntimeError):
@@ -537,6 +594,393 @@ class PrivateEvidenceAndCleanup(unittest.TestCase):
                          "Runtime.exceptionThrown", "Browser.close", "PNG_LIMIT = 2_000_000", "headless: true",
                          "visualReviewComplete: false", "humanVisualReviewComplete: false"):
             self.assertIn(required, source)
+
+
+class OwningVariants(unittest.TestCase):
+    def test_mocked_exercise_cases_run_without_a_windows_subprocess_constant(self):
+        with mock.patch.dict(BROWSER.subprocess.__dict__):
+            BROWSER.subprocess.__dict__.pop("CREATE_NO_WINDOW", None)
+            cases = unittest.TestSuite([
+                WorkerAdmission("test_before_review_failures_preserve_refusal_owned_bytes_and_teardown"),
+                OwningVariants("test_complete_exercise_selects_both_owners_and_checks_live_values_before_independent_exits")])
+            result = unittest.TextTestRunner(stream=io.StringIO()).run(cases)
+            self.assertTrue(result.wasSuccessful(), (result.failures, result.errors))
+            self.assertNotIn("CREATE_NO_WINDOW", BROWSER.subprocess.__dict__)
+
+    def test_worker_variant_is_nonce_bound_and_cannot_use_another_variants_output(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            repository, fixture = root / "repository", root / "yoke-owned-history-browser-inert"
+            repository.mkdir()
+            fixture.mkdir()
+            (repository / "validation").mkdir()
+            for _, name in BROWSER.VARIANTS.values():
+                (repository / "validation" / name).mkdir()
+            node = root / "node.exe"
+            node.write_bytes(b"inert host path; never executed")
+            for variant in BROWSER.VARIANTS:
+                with mock.patch.object(BROWSER, "ROOT", repository):
+                    output = BROWSER.variant_output(variant)
+                    spec = {"schema": BROWSER.SCHEMA, "workerJobName": "Local\\YokeHistoryCI-" + "b" * 64,
+                            "nonce": "a" * 64, "variant": variant, "native": "inert-native",
+                            "fixture": str(fixture), "output": str(output), "node": str(node),
+                            "producer": {}, "inputs": {}, "ci": {}}
+                    with mock.patch.dict(BROWSER.os.environ, {"RUNNER_TEMP": str(root),
+                            "YOKE_BROWSER_WORKER_NONCE": "a" * 64, "YOKE_BROWSER_WORKER_VARIANT": variant}), \
+                         mock.patch.object(BROWSER, "native_path", return_value="owned-native"), \
+                         mock.patch.object(BROWSER, "sha", side_effect=AssertionError("No image payload admission")):
+                        self.assertEqual(BROWSER.validate_spec(spec, fixture / "spec.json"),
+                                         ("owned-native", fixture, output, node))
+                        for foreign in BROWSER.VARIANTS:
+                            if foreign != variant:
+                                with self.subTest(variant=variant, output=foreign), self.assertRaises(RuntimeError):
+                                    BROWSER.validate_spec({**spec, "output": str(BROWSER.variant_output(foreign))},
+                                                          fixture / "spec.json")
+
+    def test_workflow_adds_separate_profiles_with_original_worker_and_step_bounds(self):
+        source = (SCRIPTS.parent / ".github/workflows/rust.yml").read_text(encoding="utf-8")
+        for variant in BROWSER.VARIANTS:
+            flag = "" if variant == "native" else "--variant " + variant + " "
+            command = ('python scripts/host_history_browser.py ' + flag
+                       + '--native target/release/yoke.exe --node "$selectedNode" --output validation/'
+                       + BROWSER.VARIANTS[variant][1])
+            self.assertEqual(source.count(command + "\n"), 2)
+        for step in source.split("      - name: ")[1:]:
+            if step.startswith("Exercise the real browser on both owning "):
+                self.assertIn("timeout-minutes: 4\n", step)
+                self.assertIn("if: always() && !cancelled() && ", step)
+                self.assertIn(".outcome == 'success'", step)
+        live = (SCRIPTS / "host_history_live.py").read_text(encoding="utf-8")
+        browser = (SCRIPTS / "host_history_browser.py").read_text(encoding="utf-8")
+        function = lambda text: next(node for node in ast.parse(text).body
+                                    if isinstance(node, ast.FunctionDef) and node.name == "bounded_worker")
+        self.assertEqual(ast.dump(function(live)), ast.dump(function(browser)))
+
+    def test_complete_exercise_selects_both_owners_and_checks_live_values_before_independent_exits(self):
+        # Real Python orchestration against in-memory actors and private fixture
+        # files, never a native/browser success substitute.
+        for variant, fault in (("native", None), ("serena", None), ("persistent-python", None), ("http", None),
+                               ("persistent-python", "current-value"), ("persistent-python", "old-value"),
+                               ("persistent-python", "current-exit"), ("persistent-python", "old-exit"),
+                               ("http", "peer-isolation"), ("http", "session-close"), ("http", "service-exit")):
+            with self.subTest(variant=variant, fault=fault), tempfile.TemporaryDirectory() as directory:
+                fixture = Path(directory).resolve()
+                source, old, new, host, archive = [fixture / name for name in
+                                                  ("source-İ", "old", "new", "host", "archive-π")]
+                target = host / "settings-π.yaml"
+                owner = host / (".yoke-doc-owner-" + "b" * 64 + ".json")
+                frame = archive / ("yoke-doc-history-" + "a" * 64 + ".bin")
+                events, actors, originals = [], [], {}
+                migration = {"target": "b" * 64, "fromAccess": "c" * 64,
+                             "toAccess": "d" * 64, "nonce": "e" * 64}
+                plan = {"id": "a" * 64, "records": [], "unselectedClosedJournalsAtReview": 0}
+
+                class Actor:
+                    def __init__(self, native, root, profile, output, label, protocol="native", python=None):
+                        self.protocol, self.label, self.fingerprint = protocol, label, "owned-state"
+                        self.writes, self.prints = 0, 0
+                        self.pid = 123 if label == "browser-old" else 124
+                        actors.append((label, protocol, python))
+
+                    def rpc(self, method, params):
+                        if method != "tools/list":
+                            raise AssertionError("Only the real profile catalog is expected")
+                        if self.protocol == "session":
+                            events.append((self.label, "tools/list"))
+                            return {"tools": [{"name": "ci_session"}]}
+                        return {"tools": [{"name": name} for name in
+                                          ("get_current_config", "open_dashboard", "serena_repl")]}
+
+                    def tool(self, name, arguments=None):
+                        if name == "get_current_config":
+                            return {"sessionId": self.label}
+                        code = arguments["code"]
+                        events.append((self.label, code))
+                        if code == "import os\nprint(os.getpid())":
+                            return {"stdout": str(self.pid) + "\n"}
+                        if code == "print(owned_marker)":
+                            self.prints += 1
+                            bad = ((fault == "current-value" and self.pid == 124)
+                                   or (fault == "old-value" and self.pid == 123 and self.prints == 2))
+                            return {"stdout": "46\n" if bad else "45\n"}
+                        if code != "owned_marker = 45\nprint(owned_marker)":
+                            raise AssertionError("Unexpected runtime code")
+                        return {"stdout": "45\n"}
+
+                    def plan(self, document, content):
+                        return {"id": "f" * 64, "content": content}
+
+                    def apply(self, document, proposal, expected=200):
+                        if expected == 422:
+                            return None
+                        target.write_bytes(proposal["content"].encode())
+                        path = old / ("yoke-doc-" + "c" * 64 + "-" + str(self.writes) + ".json")
+                        path.write_bytes(b"owned-original-" + str(self.writes).encode())
+                        originals[path.name] = path.read_bytes()
+                        self.writes += 1
+
+                    def document(self, request, expected=200):
+                        return None if expected == 422 else {"complete": False,
+                                    "blockedByHistoryArchive": True, "journals": []}
+
+                    def state(self):
+                        return {"view": {"management": {"sessionStateSha256": self.fingerprint}}}
+
+                    def shutdown(self):
+                        events.append((self.label, "shutdown"))
+                        if self.protocol == "session":
+                            if fault == "session-close":
+                                raise RuntimeError("Owned Session still active")
+                            return {"role": "old" if self.pid == 123 else "current", "scope": "owning_http_mcp_session",
+                                    "revokedSessionStatus": 404, "serviceStillRunning": True, "beforeJobCleanup": True}
+                        return {"nativeExitCode": 0, "stdinWasStillOpen": True, "beforeJobCleanup": True}
+
+                    def require_peer_isolated(self, peer):
+                        events.append((self.label, "peer-isolation"))
+                        if fault == "peer-isolation":
+                            raise RuntimeError("Foreign Session admitted")
+                        return {"role": "old" if self.pid == 123 else "current", "foreignSessionRefused": True,
+                                "authenticationRefusals": [401, 401, 403]}
+
+                    def require_service_exit(self):
+                        events.append((self.label, "service-exit"))
+                        if fault == "service-exit":
+                            raise RuntimeError("Owned service still active")
+                        return {"role": "old" if self.pid == 123 else "current", "nativeExitCode": 0,
+                                "stdinWasStillOpen": True, "stdoutEOF": True, "naturalHostDurationMs": 120000,
+                                "observedElapsedMs": 120100, "beforeJobCleanup": True,
+                                "logonScopedCredential": True, "ownedCredentialRemoved": True}
+
+                    def close(self):
+                        events.append((self.label, "close"))
+
+                class Browser:
+                    def __init__(self, *args):
+                        self.start = {"ownedInMemoryObservation": True, "variant": variant}
+
+                    def call(self, request):
+                        if request["phase"] == "before":
+                            return {"lastPlanId": "f" * 64}
+                        if request["phase"] == "pending":
+                            return {}
+                        target.write_bytes(request["draft"].encode())
+                        identifier = ("f" if request["viewport"] == "desktop" else "9") * 64
+                        BROWSER.write_json(new / ("yoke-doc-" + "d" * 64 + "-" + identifier + ".plan.json"),
+                                           {"plan": {"ownerGeneration": "e" * 64, "afterHash": BROWSER.sha(target)}})
+                        return {"planId": identifier}
+
+                    def shutdown(self):
+                        events.append(("browser", "shutdown"))
+                        return {"ownedInMemoryObservation": True}
+
+                    def close(self):
+                        events.append(("browser", "close"))
+
+                class Handle:
+                    def __init__(self, pid, python):
+                        self.label = "browser-old" if pid == 123 else "browser-current"
+
+                    def require_exited(self):
+                        events.append((self.label, "runtime-exit"))
+                        if fault == ("old-exit" if self.label == "browser-old" else "current-exit"):
+                            raise RuntimeError("Owned runtime still live")
+
+                    def close(self):
+                        events.append((self.label, "handle-close"))
+
+                def cli(command, **options):
+                    code = 0
+                    if "binding-plan" in command:
+                        value = migration
+                    elif "binding-apply" in command:
+                        owner.write_bytes(b"unchanged-owned-generation")
+                        value = {"outcome": "committed", "fileChanged": False}
+                    elif "history-plan" in command:
+                        plan["records"] = [{"name": name, "hash": BROWSER.sha(old / name)} for name in originals]
+                        value = plan
+                    elif "history-apply" in command:
+                        frame.write_bytes(b"inert-owned-frame")
+                        value, code = {}, 1
+                    elif "history-inspect" in command:
+                        value = {"phase": "committed", "markerPresent": True, "complete": False,
+                                 "immutableArchiveVerified": True, "eventId": "9" * 64}
+                    elif "history-recover" in command:
+                        value = {"complete": True, "markerPresent": False}
+                    elif "history-read" in command:
+                        name = command[command.index("--record") + 1]
+                        value = {"bytesBase64": BROWSER.base64.b64encode(originals[name]).decode(),
+                                 "sha256": BROWSER.sha(old / name), "immutableRecordEvidenceOnly": True}
+                    else:
+                        raise AssertionError("Unexpected host CLI operation")
+                    options["stdout"].write(json.dumps(value).encode())
+                    return subprocess.CompletedProcess(command, code)
+
+                with ExitStack() as stack:
+                    stack.enter_context(mock.patch.object(BROWSER.subprocess, "CREATE_NO_WINDOW", 0x08000000, create=True))
+                    for parent, name, replacement in ((BROWSER.LIVE, "Actor", Actor),
+                            (BROWSER, "Browser", Browser), (BROWSER.LIVE, "RuntimeHandle", Handle),
+                            (BROWSER, "trusted_runtime_python", lambda _: Path("owned-python")),
+                            (BROWSER.LIVE, "require_worker_job", lambda _: None),
+                            (BROWSER.LIVE, "admitted_frame", lambda *_: [])):
+                        stack.enter_context(mock.patch.object(parent, name, replacement))
+                    def http_actor(native, source, profile, output, label, job_name):
+                        self.assertEqual(job_name, "inert-job")
+                        return Actor(native, source, profile, output, label, "session")
+                    stack.enter_context(mock.patch.object(BROWSER.HTTP, "HttpActor", side_effect=http_actor))
+                    stack.enter_context(mock.patch.object(BROWSER.subprocess, "run", side_effect=cli))
+                    stack.enter_context(mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO))
+                    call = lambda: BROWSER.exercise(Path("inert-native"), Path("inert-node"), Path("inert-edge"),
+                                                    fixture, fixture / "evidence", "inert-job",
+                                                    {"native/src/session_dashboard.html": "0" * 64}, variant)
+                    if fault:
+                        with self.assertRaises(RuntimeError):
+                            call()
+                    else:
+                        BROWSER.admit_variant_result(call(), variant)
+                self.assertEqual(actors, [(label, "native" if variant == "native" else "session" if variant == "http" else "serena",
+                                          Path("owned-python") if variant == "persistent-python" else None)
+                                         for label in ("browser-old", "browser-current")])
+                self.assertIn(("browser-old", "close"), events)
+                self.assertIn(("browser-current", "close"), events)
+                if variant == "http" and not fault:
+                    self.assertLess(events.index(("browser-current", "shutdown")), events.index(("browser-old", "shutdown")))
+                    self.assertLess(events.index(("browser-old", "shutdown")), events.index(("browser-current", "service-exit")))
+                    old_catalogs = [index for index, event in enumerate(events) if event == ("browser-old", "tools/list")]
+                    self.assertEqual(len(old_catalogs), 2)
+                    self.assertLess(events.index(("browser-current", "shutdown")), old_catalogs[-1])
+                    self.assertLess(old_catalogs[-1], events.index(("browser-old", "shutdown")))
+                if variant == "persistent-python":
+                    self.assertIn(("browser-old", "handle-close"), events)
+                    self.assertIn(("browser-current", "handle-close"), events)
+                    if not fault:
+                        self.assertLess(events.index(("browser-current", "shutdown")),
+                                        events.index(("browser-current", "runtime-exit")))
+                        self.assertLess(events.index(("browser-current", "runtime-exit")),
+                                        events.index(("browser-old", "shutdown")))
+                        self.assertLess(events.index(("browser-old", "shutdown")),
+                                        events.index(("browser-old", "runtime-exit")))
+
+    def test_fixed_variants_have_distinct_exact_outputs_and_explicit_python_selection(self):
+        outputs = {BROWSER.variant_output(variant) for variant in BROWSER.VARIANTS}
+        self.assertEqual(len(outputs), 4)
+        self.assertEqual(BROWSER.variant_output("native"),
+                         BROWSER.ROOT / "validation/ci-host-document-history-browser")
+        for variant in ("unknown", "../escape", "SERENA", None, ["native"]):
+            with self.subTest(variant=variant), self.assertRaises(RuntimeError):
+                BROWSER.variant_contract(variant)
+        for variant in ("native", "serena", "persistent-python"):
+            python = Path("selected-python") if variant == "persistent-python" else None
+            with mock.patch.object(BROWSER.LIVE, "Actor") as actor:
+                BROWSER.owning_actor(1, 2, 3, 4, "current", variant, python)
+                expected = (1, 2, 3, 4, "current")
+                if variant != "native":
+                    expected += ("serena", python)
+                actor.assert_called_once_with(*expected)
+            with mock.patch.object(BROWSER.LIVE, "Actor") as actor, self.assertRaises(RuntimeError):
+                BROWSER.owning_actor(1, 2, 3, 4, "current", variant, None if python else Path("unselected"))
+            actor.assert_not_called()
+
+    def test_python_selection_uses_only_the_running_host_interpreter(self):
+        path = mock.Mock()
+        path.name = "python.exe"
+        path.is_file.return_value = True
+        path.is_relative_to.return_value = False
+        with mock.patch.object(BROWSER, "plain_path", return_value=path) as plain:
+            self.assertIs(BROWSER.trusted_runtime_python(Path("fixture")), path)
+            plain.assert_called_once_with(Path(BROWSER.sys.executable))
+            for change in ("analyzed", "fixture", "wrong-name", "missing"):
+                path.name = "foreign.exe" if change == "wrong-name" else "python.exe"
+                path.is_file.return_value = change != "missing"
+                path.is_relative_to.side_effect = [True] if change == "analyzed" else [False, change == "fixture"]
+                with self.subTest(change=change), self.assertRaises(RuntimeError):
+                    BROWSER.trusted_runtime_python(Path("fixture"))
+
+    def test_profile_catalog_refuses_wrong_surface_duplicates_and_unavailable_runtime(self):
+        names = ["get_current_config", "open_dashboard", "serena_repl"]
+        for variant in ("serena", "persistent-python"):
+            actor = mock.Mock(protocol="serena")
+            actor.rpc.return_value = {"tools": [{"name": name} for name in names]}
+            row = BROWSER.profile_observation(actor, variant, "current")
+            self.assertTrue(row["serenaDashboardToolsObserved"])
+            actor.rpc.assert_called_once_with("tools/list", {})
+        for names in (["ci_session", "get_current_config", "open_dashboard"],
+                      ["get_current_config", "open_dashboard"],
+                      ["get_current_config", "open_dashboard", "serena_repl", "serena_repl"],
+                      ["get_current_config", "open_dashboard", "private://capability"],
+                      [], ["x"] * 513):
+            actor = mock.Mock(protocol="serena")
+            actor.rpc.return_value = {"tools": [{"name": name} for name in names]}
+            with self.subTest(names=names[:4]), self.assertRaises(RuntimeError):
+                BROWSER.profile_observation(actor, "persistent-python", "current")
+        with self.assertRaises(RuntimeError):
+            BROWSER.profile_observation(mock.Mock(protocol="native"), "serena", "current")
+
+    def test_runtime_cannot_claim_retention_or_exit_from_a_failed_observation(self):
+        actor = mock.Mock()
+        actor.tool.side_effect = [{"sessionId": "current"}, {"stdout": "45\n"}, {"stdout": "123\n"},
+                                  {"stdout": "46\n"}, {"stdout": "45\n"}]
+        with mock.patch.object(BROWSER.LIVE, "RuntimeHandle") as handle:
+            runtime = BROWSER.PersistentRuntime(actor, Path("selected-python"), "current")
+            handle.assert_called_once_with(123, Path("selected-python"))
+            with self.assertRaises(RuntimeError):
+                runtime.require_exited()
+            handle.return_value.require_exited.assert_not_called()
+            with self.assertRaises(RuntimeError):
+                runtime.require_retained()
+            with self.assertRaises(RuntimeError):
+                runtime.require_exited()
+            runtime.require_retained()
+            handle.return_value.require_exited.side_effect = RuntimeError("Owned exit absent")
+            with self.assertRaisesRegex(RuntimeError, "Owned exit absent"):
+                runtime.require_exited()
+            runtime.close()
+            handle.return_value.close.assert_called_once()
+
+    def test_result_cannot_substitute_a_native_session_or_cleanup_for_selected_profile_proof(self):
+        profile = {"protocol": "serena", "serenaDashboardToolsObserved": True, "nativeSessionToolAbsent": True,
+                   "persistentToolObserved": True, "toolCount": 3}
+        runtime = {"marker45Retained": True, "imageIdentityVerified": True, "exitBeforeJobCleanup": True}
+        valid = {"automationComplete": True, "variant": "persistent-python", "owningProtocol": "serena",
+                 "browserStart": {"variant": "persistent-python"},
+                 "profileObservations": [{**profile, "role": role} for role in ("old", "current")],
+                 "persistentRuntimes": [{**runtime, "role": role} for role in ("current", "old")]}
+        BROWSER.admit_variant_result(valid, "persistent-python")
+        variants = [{**valid, "variant": "native"}, {**valid, "owningProtocol": "native"},
+                    {**valid, "automationComplete": False}, {**valid, "profileObservations": []},
+                    {**valid, "persistentRuntimes": []}, {**valid, "profileObservations": [1, 2]}]
+        for section, key in (("profileObservations", "serenaDashboardToolsObserved"),
+                             ("profileObservations", "nativeSessionToolAbsent"),
+                             ("profileObservations", "persistentToolObserved"),
+                             ("persistentRuntimes", "marker45Retained"),
+                             ("persistentRuntimes", "imageIdentityVerified"),
+                             ("persistentRuntimes", "exitBeforeJobCleanup")):
+            changed = copy.deepcopy(valid)
+            changed[section][0][key] = False
+            variants.append(changed)
+        for changed in variants:
+            with self.subTest(changed=changed), self.assertRaises(RuntimeError):
+                BROWSER.admit_variant_result(changed, "persistent-python")
+        native = {"automationComplete": True, "variant": "native", "owningProtocol": "native",
+                  "browserStart": {"variant": "native"},
+                  "profileObservations": [], "persistentRuntimes": []}
+        BROWSER.admit_variant_result(native, "native")
+        with self.assertRaises(RuntimeError):
+            BROWSER.admit_variant_result({**native, "persistentRuntimes": valid["persistentRuntimes"]}, "native")
+
+    def test_cleanup_attempts_all_owned_resources_and_never_suppresses_a_refusal(self):
+        resources = [mock.Mock() for _ in range(5)]
+        order = []
+        failure = RuntimeError("Owned teardown refused")
+        for index, resource in enumerate(resources):
+            def close(index=index):
+                order.append(index)
+                if index in (0, 2):
+                    raise failure
+            resource.close.side_effect = close
+        with self.assertRaises(RuntimeError) as caught:
+            BROWSER.close_owned_resources(resources[0], resources[1:3], resources[3:])
+        self.assertIs(caught.exception, failure)
+        self.assertEqual(order, [0, 2, 1, 4, 3])
 
 
 if __name__ == "__main__":
