@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: start admits every fixed variant only at its exact repository evidence path
+ok 1 - start admits every fixed variant only at its exact repository evidence path
+  ---
+  duration_ms: 8.4276
+  type: 'test'
+  ...
+# Subtest: start refuses unbound variants, occupied profiles and all alternate evidence paths before browser work
+ok 2 - start refuses unbound variants, occupied profiles and all alternate evidence paths before browser work
+  ---
+  duration_ms: 48.5798
+  type: 'test'
+  ...
+# Subtest: start retains Windows CI and nonce guards before any path observation
+ok 3 - start retains Windows CI and nonce guards before any path observation
+  ---
+  duration_ms: 4.0466
+  type: 'test'
+  ...
+# Subtest: pending focus follows actual Tab input after a completed transiently disabled request
+ok 4 - pending focus follows actual Tab input after a completed transiently disabled request
+  ---
+  duration_ms: 1.6841
+  type: 'test'
+  ...
+# Subtest: pending focus refuses disabled and unreachable controls within twelve Tab pairs
+ok 5 - pending focus refuses disabled and unreachable controls within twelve Tab pairs
+  ---
+  duration_ms: 5.2518
+  type: 'test'
+  ...
+# Subtest: pending phase verifies real-input focus after the request reply even when the click immediately blurs
+ok 6 - pending phase verifies real-input focus after the request reply even when the click immediately blurs
+  ---
+  duration_ms: 8.6578
+  type: 'test'
+  ...
+# Subtest: pending phase still refuses missing targets, replies, blocking state and usable keyboard focus
+ok 7 - pending phase still refuses missing targets, replies, blocking state and usable keyboard focus
+  ---
+  duration_ms: 14.5849
+  type: 'test'
+  ...
+# Subtest: close drains a previously admitted request handler before Browser.close
+ok 8 - close drains a previously admitted request handler before Browser.close
+  ---
+  duration_ms: 5.9652
+  type: 'test'
+  ...
+# Subtest: failure of an in-flight handler refuses close rather than hiding it as teardown
+ok 9 - failure of an in-flight handler refuses close rather than hiding it as teardown
+  ---
+  duration_ms: 0.9471
+  type: 'test'
+  ...
+# Subtest: a close acknowledgement succeeds without a fabricated EOF receipt
+ok 10 - a close acknowledgement succeeds without a fabricated EOF receipt
+  ---
+  duration_ms: 0.6615
+  type: 'test'
+  ...
+# Subtest: only typed transport EOF is permitted before the close acknowledgement
+ok 11 - only typed transport EOF is permitted before the close acknowledgement
+  ---
+  duration_ms: 0.7482
+  type: 'test'
+  ...
+# Subtest: Browser.close protocol refusal and pipe write failure remain failures
+ok 12 - Browser.close protocol refusal and pipe write failure remain failures
+  ---
+  duration_ms: 0.443
+  type: 'test'
+  ...
+# Subtest: partial EOF and preexisting unowned pending requests cannot become successful close
+ok 13 - partial EOF and preexisting unowned pending requests cannot become successful close
+  ---
+  duration_ms: 0.3082
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 206.457
