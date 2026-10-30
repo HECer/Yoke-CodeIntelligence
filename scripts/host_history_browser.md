@@ -1,20 +1,32 @@
 # Owned Windows host-history browser harness
 
-Live Windows CI has reached this harness, but **browser runtime and visual
-acceptance remain unproven**. At `43fc1b73` and the coherent-profile candidate
-`83227913`, the separate browser guard refuses a junction beneath its private
-home before producing screenshots. The latter observation has depth seven;
-the profile change does not resolve it. Its exact hosted entry and origin remain
-unknown. A separate guarded local comparison now reproduces a junction at
-`home/AppData/Local/Microsoft/Windows/INetCache/Content.IE5` without launching
-Edge or Yoke. The candidate precreates that exact private role as an ordinary
-directory. All link refusals remain. This still requires hosted confirmation;
-the local comparison also changes its linker and is not isolated causal proof.
+The native owning stdio browser flow passed at `ed92e9f8` in
+[Windows diagnostic run 40995799274](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/40995799274/job/123868515540).
+All six actual desktop/mobile before, pending and after PNGs were visually
+inspected. Exact source/producer, archive readback, guarded save and independent
+browser/driver/native/Job exit evidence is retained in the
+[browser success checkpoint](../docs/validation/integration-2026-10-30/browser-success-checkpoint/README.md).
+This qualifies that native stdio flow. It supplies no Serena, persistent-Python,
+HTTP, visible-shell, human or release acceptance.
+
 `host_history_browser.py` is an additional Windows CI gate after the existing
-release build and successful `host_history_live.py` step. It neither replaces nor
-extends the original three-variant gate, its budgets, tests, or claims. No product
-UI or automatic browser behavior changes. The parent owns global status/release
-claims.
+release build and successful `host_history_live.py` step. The default `native`
+invocation and its evidence directory remain. Separate explicit `--variant
+serena` and `--variant persistent-python` invocations now exercise both old and
+current owning Sessions through the selected Serena protocol. **These two new
+browser variants remain unrun until fresh guarded CI and all twelve new PNGs
+are reviewed.** The original three-variant protocol/history gate, launcher,
+budgets, tests and claims remain unchanged. Its old Serena/Python actors did
+not make its destination dashboard a Serena/Python browser flow.
+
+Each invocation retains the original independent 180-second worker and
+four-minute CI step limits. There are three distinct fixed fresh output roots:
+`validation/ci-host-document-history-browser`, the `-serena` suffix, and the
+`-persistent-python` suffix. Each requires all six original image/DOM pairs and
+the original independent lifecycle proofs; one variant cannot borrow another's
+receipt or output directory. Added variant steps can collect evidence after a
+sibling browser failure, but still require successful original history and
+release-build steps. They cannot make a failed native gate pass.
 
 The shared acceptance-step YAML anchor includes Windows conditions; Linux and
 macOS do not invoke this Windows harness. The new step has a four-minute Actions
@@ -38,7 +50,7 @@ Cargo may legitimately reuse an unchanged cached image; these are host-owned CI
 build receipts and metadata checks, not independent compiler attestation.
 
 The internal worker requires the CI identity, closed bounded spec, private
-random nonce, exact fixture layout and membership in the parent's specific named
+random nonce and selected variant, exact fixture layout and membership in the parent's specific named
 Job before its first native payload hash/read. It rechecks producer metadata and
 source hashes first. All native, Node and browser children inherit that Job; no
 breakaway flag or process discovery is used. Native diagnostics, fixture specs,
@@ -83,8 +95,24 @@ path authority or proof of a target's safety. Targets remain unread and all link
 still refuse. Actual browser execution and all six visual inspections remain
 required before acceptance.
 The original host CLI migrates the binding without changing settings bytes. One
-native owning destination stdio Session supplies the actual dashboard; a second
-old owning Session verifies the retired authority. This is not `serve-http`.
+selected owning destination stdio Session supplies the actual dashboard; a second
+old owning Session verifies the retired authority. The default variant selects
+native; both other variants select Serena for **both** actors. The real bounded
+`tools/list` response must expose Serena's dashboard/configuration tools and
+exclude the native `ci_session` tool. Persistent Python additionally requires
+`serena_repl`. These are private owning protocol observations, not substituted
+browser responses. No variant here uses `serve-http`.
+
+The persistent variant alone grants the already running CI worker's canonical,
+unlinked host `python.exe` via the existing explicit `--python`/`--trust-python`
+arguments. No analyzed source chooses an executable. Both owning Sessions start
+a real persistent runtime, set a marker to 45, report their PID and retain an
+independent identity-checked process handle. Both must return 45 after the full
+browser/archive/save flow. Ending the destination must leave the old Session and
+its value intact. Each runtime must independently signal exit after its owning
+native process exits and before Job cleanup. Missing values, unavailable handles,
+wrong images and live runtimes refuse acceptance. All owned teardown attempts
+run even if an earlier cleanup refuses; no cleanup can create success.
 
 The real desktop (1440×1000) and mobile (390×844, mobile metrics) pages load the
 selected settings, enter an exact BOM/Unicode/CRLF draft with real browser input,
@@ -172,7 +200,7 @@ failure cannot hide browser startup evidence. It supplies no shard coverage
 receipt and does not replace the full native acceptance jobs or their merge
 and release requirements. No diagnostic success establishes visual review.
 
-Only `validation/ci-host-document-history-browser` is uploaded. Source maps,
+Only the three fixed browser evidence directories are uploaded, as separate artifacts. Source maps,
 validator/driver/native hashes, producer metadata, installed browser/engine/Node
 versions, selected DOM states, real screenshot hashes, CLI outcome summaries and
 raw lifecycle proofs are retained. Capabilities, URLs, endpoints, headers, storage,
@@ -186,20 +214,14 @@ false. The parent must actually run the guarded CI step, inspect **all six PNGs*
 fix visible issues and regenerate/inspect again before recording visual acceptance
 in a separate reviewed handoff. The harness cannot self-certify human review.
 
-The parent ran all 27 pure/mocked Python cases in
-`tests/test_host_history_browser.py`, including eight in-memory Node CDP/focus
-regressions in `tests/host_history_browser_protocol.test.cjs`. They passed. The
-checks cover malformed/oversized/duplicate specs, producer freshness and exact
-identity, admission order before image access, capability redaction, paths,
-cleanup-to-success forgery, handler draining and strict close-error handling.
-No native build/test, browser, live Node driver or worker was executed by those
-focused checks. A separate fresh owned Edge about:blank focus experiment passes
-with the copied keyboard helper, raw browser exit zero and pipe EOF before
-forced cleanup. It uses a fixed diagnostic page, not the product or a substituted
-application server, and provides no native/dashboard acceptance. npm typecheck
-and tests pass (266 passed, three skipped). New exact-source real-browser
-automation and all six visuals, broader Serena/persistent-Python/HTTP browser
-transports, native whole-project CI and release gates remain open.
+The focused browser and original-history Python suites pass locally, including
+in-memory Node CDP/focus regressions, complete Python fixture orchestration for
+all selected profiles, retained-value and runtime-exit refusal, wrong-profile
+and wrong-output admission, and teardown failures. These use mocked native and
+browser peers plus inert Job fixtures; they establish no new browser or Yoke
+runtime acceptance. Fresh hosted runs and visual review remain required for each
+new profile. The original native acceptance, HTTP browser transport, whole-project
+CI, strict macOS worker memory and release gates remain separate.
 
 Protocol design references: [CDP domains](https://github.com/ChromeDevTools/devtools-protocol/tree/master/pdl/domains)
 and [upstream pipe stdio launch contract](https://github.com/puppeteer/puppeteer/blob/main/packages/browsers/src/launch.ts).

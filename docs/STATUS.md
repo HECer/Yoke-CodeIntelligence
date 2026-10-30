@@ -1,5 +1,32 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Guarded owning Serena and persistent-Python browser candidates (2026-10-30)
+
+The browser harness now has separate explicit Serena and persistent-Python
+variants. Both old and destination actors use the selected Serena protocol;
+the real tool catalogs must match. The persistent variant also requires both
+runtimes to retain 45 through the full browser/archive/save sequence, and to
+exit independently before Job cleanup. The old Session must survive destination
+shutdown. Variant/nonce/output and final receipt admission cannot borrow the
+native flow's proof. The original history harness, CDP driver, native default
+operations, six-image gate, producer guard and 180-second worker remain.
+
+The focused Python suites pass 58 tests. The mocked exercise tests also supply
+the Windows-only subprocess flag inside their mocked scope; removing that host
+constant reproduces the Unix environment and now passes without skipping cases.
+Actual Unix CI previously stopped before shard zero at that missing attribute. Five in-memory erasure checks fail as
+expected when profile selection, runtime exit, retained value, receipt admission
+or owned teardown checks are removed. Workflow YAML parsing confirms every
+original job/step/command/limit is preserved; added profile invocations each have
+their own original four-minute ceiling. Typecheck and npm tests pass on unchanged
+TypeScript/package inputs (266 passed, three skipped). No local Yoke build or
+execution was used for these new checks. [Scope and source review](validation/integration-2026-10-30/browser-profile-candidate/README.md).
+
+New guarded hosted execution and all twelve Serena/Python screenshot inspections
+remain open. HTTP browser transport, full platform qualification and release/main
+acceptance remain open. The native browser result below retains its tested
+`ed92e9f8` identity; this candidate does not retroactively extend it.
+
 ## Native stdio browser automation and agent visual review passed (2026-10-30)
 
 At `ed92e9f8`, diagnostic run `40995799274`, job `123868515540`, passes the
