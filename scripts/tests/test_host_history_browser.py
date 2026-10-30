@@ -88,6 +88,7 @@ class WorkerAdmission(unittest.TestCase):
                     return subprocess.CompletedProcess(command, 0)
 
                 with mock.patch.object(BROWSER.LIVE, "require_worker_job"), \
+                     mock.patch.object(BROWSER.subprocess, "CREATE_NO_WINDOW", 0x08000000, create=True), \
                      mock.patch.object(BROWSER.LIVE, "Actor", Actor), \
                      mock.patch.object(BROWSER, "Browser", Browser), \
                      mock.patch.object(BROWSER.subprocess, "run", side_effect=cli), \
@@ -111,6 +112,16 @@ class WorkerAdmission(unittest.TestCase):
                 self.assertEqual(owner.read_bytes(), b"retained owner")
                 self.assertEqual(target.read_bytes(),
                                  "\ufeff# owned global \u03c0\r\nvalue: preserved\r\n# original saved history 1 \U0001f980\r\n".encode())
+
+    def test_mocked_before_review_case_does_not_require_a_windows_subprocess_constant(self):
+        # All actors and subprocesses are already mocked by this test. Supply
+        # the Windows flag only in that scope; production still requires Windows.
+        with mock.patch.dict(BROWSER.subprocess.__dict__):
+            BROWSER.subprocess.__dict__.pop("CREATE_NO_WINDOW", None)
+            result = WorkerAdmission(
+                "test_before_review_failures_preserve_refusal_owned_bytes_and_teardown").run(unittest.TestResult())
+            self.assertTrue(result.wasSuccessful(), (result.failures, result.errors))
+            self.assertNotIn("CREATE_NO_WINDOW", BROWSER.subprocess.__dict__)
 
     def test_link_diagnostic_emits_closed_labels_without_private_paths(self):
         root = Path(tempfile.gettempdir()).resolve() / "yoke-owned-history-browser-private"
