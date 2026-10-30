@@ -600,6 +600,53 @@ fn inherited_host_cancellation_retires_listener_before_explicit_shutdown() {
     f.stop();
     assert!(f.records().is_empty());
 }
+fn wait_for_partial_header_tick(
+    started: Instant,
+    acceptance_bound: Duration,
+    stopped: &std::sync::atomic::AtomicBool,
+) -> bool {
+    // A coalesced 25 ms sleep can return after the entire 120 ms request has
+    // closed. Pace this small active peer by the monotonic clock instead. The
+    // original shared acceptance ceiling bounds all spinning across attempts;
+    // cancellation is observed while waiting, without a new timer or thread.
+    let next = started.elapsed().saturating_add(Duration::from_millis(25));
+    loop {
+        if stopped.load(std::sync::atomic::Ordering::SeqCst) {
+            return false;
+        }
+        let elapsed = started.elapsed();
+        if elapsed >= acceptance_bound {
+            return false;
+        }
+        if elapsed >= next {
+            return true;
+        }
+        std::hint::spin_loop();
+    }
+}
+
+#[test]
+fn partial_header_pacing_refuses_stopped_and_expired_write_opportunities() {
+    use std::sync::atomic::AtomicBool;
+    let stopped = AtomicBool::new(true);
+    assert!(!wait_for_partial_header_tick(
+        Instant::now(),
+        Duration::from_millis(750),
+        &stopped,
+    ));
+    let running = AtomicBool::new(false);
+    assert!(!wait_for_partial_header_tick(
+        Instant::now().checked_sub(Duration::from_secs(1)).unwrap(),
+        Duration::from_millis(750),
+        &running,
+    ));
+    assert!(!wait_for_partial_header_tick(
+        Instant::now(),
+        Duration::ZERO,
+        &running,
+    ));
+}
+
 fn continuously_paced_partial_headers(
     successes: &[Option<Duration>; 60],
     connected_at: Duration,
@@ -708,6 +755,7 @@ fn absolute_request_deadline_stops_a_peer_which_keeps_sending_partial_headers() 
             let mut write_error = None;
             let mut stop_observed = None;
             let mut last_wake_at = None;
+            let mut pacing_stopped = None;
             for (write_attempt, success_slot) in successes.iter_mut().enumerate() {
                 if stopping.load(Ordering::SeqCst) {
                     stop_observed = Some((write_attempt + 1, observed_from.elapsed()));
@@ -726,11 +774,16 @@ fn absolute_request_deadline_stops_a_peer_which_keeps_sending_partial_headers() 
                 if let Some((_, first_success_at, _)) = first_two_writes.get_mut(write_attempt) {
                     *first_success_at = Some(success_at);
                 }
-                std::thread::sleep(Duration::from_millis(25));
+                let next_write_due =
+                    wait_for_partial_header_tick(observed_from, acceptance_bound, &stopping);
                 let woke_at = observed_from.elapsed();
                 last_wake_at = Some(woke_at);
                 if let Some((_, _, wake)) = first_two_writes.get_mut(write_attempt) {
                     *wake = Some(woke_at);
+                }
+                if !next_write_due {
+                    pacing_stopped = Some((woke_at, stopping.load(Ordering::SeqCst)));
+                    break;
                 }
             }
             (
@@ -741,6 +794,7 @@ fn absolute_request_deadline_stops_a_peer_which_keeps_sending_partial_headers() 
                     ("write-error-attempt-time-kind", write_error),
                     ("stop-attempt-time", stop_observed),
                     ("last-wake", last_wake_at),
+                    ("pacing-stop-time-and-cancelled", pacing_stopped),
                     ("return", observed_from.elapsed()),
                 ),
             )
