@@ -31,7 +31,73 @@ class WorkerAdmission(unittest.TestCase):
                 BROWSER.output_size(root)
             self.assertIs(caught.exception, error)
             self.assertEqual(log.getvalue(), "Owned browser output scan failed: fixture link\n"
-                             "Owned browser refused link: area=other; entry=other; kind=junction\n")
+                             "Owned browser refused link: area=other; entry=other; kind=junction; depth=2\n"
+                             "Owned browser link route: other/other; componentSha256="
+                             + ",".join(error.component_sha256) + "\n")
+            self.assertNotIn("private-capability", log.getvalue())
+            self.assertNotIn("private-target", log.getvalue())
+            self.assertNotIn(str(root), log.getvalue())
+
+    def test_private_profile_paths_share_one_unlinked_unicode_home(self):
+        with tempfile.TemporaryDirectory(prefix="owned-browser-profile-π-") as directory:
+            fixture = Path(directory).resolve()
+            with mock.patch.dict(BROWSER.os.environ, {"HOME": "foreign-user", "APPDATA": "foreign-roaming"}):
+                environment = BROWSER.private_profile_environment(fixture)
+            home = fixture / "home"
+            expected = {"HOME": home, "USERPROFILE": home, "APPDATA": home / "AppData/Roaming",
+                        "LOCALAPPDATA": home / "AppData/Local", "TEMP": home / "AppData/Local/Temp",
+                        "TMP": home / "AppData/Local/Temp"}
+            self.assertEqual(environment, {key: str(path) for key, path in expected.items()})
+            for path in set(expected.values()) | {home / "AppData/LocalLow", home / "Desktop",
+                                                  home / "Documents", home / "Downloads"}:
+                self.assertEqual(BROWSER.plain_path(path), path)
+                self.assertTrue(path.is_dir())
+            self.assertEqual({path.name for path in fixture.iterdir()}, {"home"})
+            self.assertLess(BROWSER.output_size(fixture), BROWSER.MAX_OUTPUT)
+
+    def test_private_internet_cache_compatibility_role_is_an_ordinary_owned_directory(self):
+        with tempfile.TemporaryDirectory(prefix="owned-browser-cache-\u03c0-") as directory:
+            fixture = Path(directory).resolve()
+            BROWSER.private_profile_environment(fixture)
+            cache = fixture / "home/AppData/Local/Microsoft/Windows/INetCache/Content.IE5"
+            self.assertTrue(cache.is_dir())
+            self.assertFalse(cache.is_symlink())
+            self.assertFalse(cache.is_junction())
+            self.assertEqual(BROWSER.plain_path(cache), cache)
+            self.assertEqual(list(cache.iterdir()), [])
+            self.assertLess(BROWSER.output_size(fixture), BROWSER.MAX_OUTPUT)
+
+    def test_known_cache_name_never_exempts_a_later_junction_from_the_original_scan(self):
+        with tempfile.TemporaryDirectory(prefix="owned-browser-cache-refusal-") as directory:
+            fixture = Path(directory).resolve()
+            BROWSER.private_profile_environment(fixture)
+            cache = fixture / "home/AppData/Local/Microsoft/Windows/INetCache/Content.IE5"
+            original = Path.is_junction
+            with mock.patch.object(Path, "is_junction", lambda path: path == cache or original(path)), \
+                 mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO):
+                with self.assertRaises(BROWSER.LIVE.EvidenceLinkRefusal) as caught:
+                    BROWSER.output_size(fixture)
+            self.assertEqual(caught.exception.kind, "junction")
+            self.assertEqual(caught.exception.depth, 7)
+            self.assertEqual(caught.exception.route[-2:], ("internet-cache", "internet-content-cache"))
+
+    def test_private_profile_refuses_occupied_or_linked_roots_before_reuse(self):
+        with tempfile.TemporaryDirectory(prefix="owned-browser-profile-refusal-") as directory:
+            fixture = Path(directory).resolve()
+            home = fixture / "home"
+            home.mkdir()
+            foreign = home / "foreign.txt"
+            foreign.write_bytes(b"retained foreign bytes")
+            with self.assertRaises(FileExistsError):
+                BROWSER.private_profile_environment(fixture)
+            self.assertEqual(foreign.read_bytes(), b"retained foreign bytes")
+            self.assertEqual({path.name for path in home.iterdir()}, {"foreign.txt"})
+            for method in ("is_symlink", "is_junction"):
+                with self.subTest(method=method), mock.patch.object(Path, method, return_value=True), \
+                     mock.patch.object(Path, "mkdir") as mkdir:
+                    with self.assertRaises(RuntimeError):
+                        BROWSER.private_profile_environment(fixture)
+                    mkdir.assert_not_called()
 
     def test_output_scan_reports_only_fixed_role_and_preserves_failure(self):
         for root, role in [(Path('ci-host-document-history-browser'), 'evidence'),
@@ -58,7 +124,8 @@ class WorkerAdmission(unittest.TestCase):
         for phase in ("ci-identity", "arguments", "disk-reserve", "native-path", "node-path",
                       "node-path-absolute", "node-path-links", "node-path-resolve",
                       "node-path-resolved-links", "node-path-canonical",
-                      "source-inputs", "producer-marker", "producer-admission", "output-path", "output-create"):
+                      "source-inputs", "producer-marker", "producer-admission", "output-path", "output-create",
+                      "private-profile"):
             with self.subTest(phase=phase), mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
                 error = RuntimeError("private capability and path")
                 with self.assertRaises(RuntimeError) as caught:
