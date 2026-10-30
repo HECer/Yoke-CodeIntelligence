@@ -1,5 +1,16 @@
 # Remaining implementation and acceptance
 
+## For-condition inlining qualification (2026-10-30)
+
+The complete ordinary-for-condition source recipe now retains the original
+initializer, update and per-iteration environment while placing a fresh call
+expansion at each test. Guarded compilation, native reconstruction, runtime,
+predicate-flow and writer/recovery fixture execution remain required. The prior
+while candidate remains unqualified separately. Do/in/of/await-of, selected
+initializer/update calls, compound conditions and overlapping frames still
+refuse. Broader R1/full parity/Windows/VSIX/main/release gates remain open.
+[Candidate contract](../native/docs/compiler-inline.md#complete-for-conditions-candidate-native-qualification-pending).
+
 ## While-condition inlining qualification (2026-10-30)
 
 The source candidate extends classic body expansion to complete direct calls in

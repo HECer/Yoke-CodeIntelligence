@@ -1,5 +1,20 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Complete for-condition body inlining candidate (2026-10-30)
+
+The classic body inliner has a separate ordinary-for-condition candidate atop
+the while candidate. The original initializer/update header and loop body remain
+source copies, preserving update/continue order and per-iteration bindings.
+Rust independently checks the condition-expression and its semicolon field;
+existing type/binding/source, resource and write/recovery gates remain.
+Adversarial native fixtures are authored but uncompiled and unrun locally.
+Both loop candidates still require guarded native qualification; full semantic
+parity and release acceptance are not established by this source extension.
+Local typecheck and npm tests pass (266 passed, three skipped), along with
+Rust formatting, worker syntax and 20 source-only owned-fixture checks. These
+checks do not compile or execute the native implementation or compiler worker.
+[Candidate scope](../native/docs/compiler-inline.md#complete-for-conditions-candidate-native-qualification-pending).
+
 ## Complete while-condition body inlining candidate (2026-10-30)
 
 The classic function-body inliner now prepares a source-reconstructed repeated

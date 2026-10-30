@@ -10,7 +10,10 @@ also have a repeated-loop candidate: the original argument effects run once per
 condition test, and the checked result relay preserves narrowing inside and after
 the loop when the complete compiler proof succeeds. Native qualification is still
 pending; see the [while candidate contract](compiler-inline.md#complete-while-conditions-candidate-native-qualification-pending).
-For/do tests and compound/short-circuit/nested
+Complete ordinary for-condition calls also have a separately reconstructed
+[for candidate](compiler-inline.md#complete-for-conditions-candidate-native-qualification-pending),
+with authored predicate-flow checks for the body, update and false exit. Native
+qualification remains pending. Do tests, other for-header positions and compound/short-circuit/nested
 conditions remain outside this finite scope. See the
 [statement-head qualification](../../docs/validation/integration-2026-10-23/inline-statement-heads/README.md).
 
