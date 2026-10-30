@@ -85,6 +85,10 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
     #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub activation_commands: Option<crate::project_activation::Config>,
+    #[serde(skip)]
+    pub activation_runtime: Option<crate::project_activation::Runtime>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub prompt_templates: Option<crate::session_prompt::Config>,
     #[serde(skip)]
     pub prompt_runtime: Option<crate::session_prompt::Runtime>,
@@ -139,6 +143,8 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            activation_commands: None,
+            activation_runtime: None,
             prompt_templates: None,
             prompt_runtime: None,
             dashboard: None,
@@ -232,6 +238,13 @@ pub(crate) fn validate_retention_record(
     Ok(())
 }
 pub struct Session {
+    activation_diagnostic: Option<crate::project_activation::Diagnostic>,
+    inspection_only: bool,
+    inspection_source_read: bool,
+    unpublished_inspection: bool,
+    activation_ready_projects: BTreeSet<String>,
+    activation_receipt_witness: Option<String>,
+    activation_blocked: bool,
     prompt_profile: crate::session_prompt::Profile,
     git_repository_projects: Option<crate::git_workflows::repository_projects::Hosts>,
     dashboard: Option<crate::session_dashboard::Handle>,
@@ -259,6 +272,8 @@ pub struct Session {
     debug_adapters: BTreeMap<String, crate::debug_adapter::DebugAdapter>,
     process_cleanup_unproven: bool,
 }
+#[path = "project_activation_session.rs"]
+mod activation;
 #[path = "session_dashboard_documents.rs"]
 mod dashboard_documents;
 #[path = "session_dashboard_languages.rs"]
@@ -336,6 +351,28 @@ fn fields(a: &Value, allowed: &[&str]) -> Result<()> {
     Ok(())
 }
 impl Session {
+    /// Passive batch operations never implicitly enter a shell lifecycle. A
+    /// selected-hook inspection handle additionally rejects semantic backends.
+    pub fn passive_operation(operation: &str) -> bool {
+        matches!(
+            operation,
+            "configuration"
+                | "listProjects"
+                | "checkOnboarding"
+                | "activationReceipt"
+                | "initialInstructions"
+                | "fs.read"
+                | "fs.list"
+                | "fs.glob"
+                | "fs.search"
+                | "symbols.fileApi"
+                | "symbols.find"
+                | "symbols.references"
+                | "notes.read"
+                | "notes.list"
+                | "queryProject"
+        )
+    }
     /// Host-only, invocation-scoped grant injection. The caller must keep its
     /// current principal policy read lock held until this operation returns.
     /// Receiver roots come exclusively from the validated Session host profile.
@@ -923,7 +960,17 @@ impl Session {
         session_id: Option<&str>,
         deadline: &Deadline,
     ) -> Result<Self> {
-        Self::open_inner(engine, host, session_id, None, deadline)
+        Self::open_inner(engine, host, session_id, None, false, deadline)
+    }
+    /// Passive host inspection. Hooks never execute through this constructor.
+    /// A new selected session stays unpublished and cannot start a backend.
+    pub fn inspect(
+        engine: Engine,
+        host: HostProfile,
+        session_id: Option<&str>,
+        deadline: &Deadline,
+    ) -> Result<Self> {
+        Self::open_inner(engine, host, session_id, None, true, deadline)
     }
     /// Explicit typed Git authorities for every already registered project.
     pub fn open_with_git_projects(
@@ -933,15 +980,48 @@ impl Session {
         projects: crate::git_workflows::repository_projects::Hosts,
         deadline: &Deadline,
     ) -> Result<Self> {
-        Self::open_inner(engine, host, session_id, Some(projects), deadline)
+        Self::open_inner(engine, host, session_id, Some(projects), false, deadline)
+    }
+    pub(crate) fn inspect_with_git_projects(
+        engine: Engine,
+        host: HostProfile,
+        session_id: Option<&str>,
+        projects: crate::git_workflows::repository_projects::Hosts,
+        deadline: &Deadline,
+    ) -> Result<Self> {
+        Self::open_inner(engine, host, session_id, Some(projects), true, deadline)
+    }
+    pub(crate) fn has_activation_policy(&self) -> bool {
+        self.host.activation_commands.is_some()
+    }
+    pub(crate) fn check_activation_start(&self, deadline: &Deadline) -> Result<()> {
+        activation::check_selected(
+            &self.engine,
+            &self.host,
+            &self.state,
+            if self.unpublished_inspection {
+                None
+            } else {
+                Some(&self.persisted)
+            },
+            deadline,
+        )
     }
     fn open_inner(
         mut engine: Engine,
         mut host: HostProfile,
         session_id: Option<&str>,
         git_repository_projects: Option<crate::git_workflows::repository_projects::Hosts>,
+        inspection_only: bool,
         deadline: &Deadline,
     ) -> Result<Self> {
+        if let Some(config) = &host.activation_commands {
+            config.validate(&host, deadline)?;
+        }
+        ensure!(
+            host.activation_runtime.is_none() || host.activation_commands.is_some(),
+            "activation_selection_required"
+        );
         match (&host.prompt_templates, &host.prompt_runtime) {
             (None, None) => {}
             (Some(config), Some(runtime)) => runtime.check(config, deadline)?,
@@ -1481,6 +1561,15 @@ impl Session {
             fingerprint
         };
         engine.backend_registry_sealed = true;
+        let fingerprint = if let Some(config) = &host.activation_commands {
+            identity(&(
+                fingerprint,
+                crate::project_activation::VERSION,
+                config.fingerprint(),
+            ))
+        } else {
+            fingerprint
+        };
         let owned_label = if let Some(id) = session_id {
             label(id)?;
             id.to_owned()
@@ -1598,14 +1687,88 @@ impl Session {
             )?;
         }
         let serialized = serde_json::to_string(&state)?;
-        if raw.is_none() {
-            let inserted = engine.store.db.execute(
-                "INSERT OR IGNORE INTO records(kind,id,value) VALUES(?1,?2,?3)",
-                params![RECORD_KIND, state.id, serialized],
-            )?;
-            ensure!(inserted == 1, "Concurrent session creation; retry");
-        }
+        let activation_attempt = if inspection_only {
+            None
+        } else {
+            activation::run(
+                &engine,
+                &host,
+                &state,
+                raw.as_deref(),
+                &state.active_project,
+                deadline,
+            )?
+        };
+        let activation_witness_before_publication = if activation_attempt.is_none()
+            && host.activation_commands.is_some()
+            && !inspection_only
+        {
+            activation::activated_witness(&engine, &state.id, deadline)?
+        } else {
+            None
+        };
+        let unpublished_inspection =
+            inspection_only && host.activation_commands.is_some() && raw.is_none();
+        let publication = (|| -> Result<()> {
+            if raw.is_none() && !unpublished_inspection {
+                let inserted = engine.store.db.execute(
+                    "INSERT OR IGNORE INTO records(kind,id,value) VALUES(?1,?2,?3)",
+                    params![RECORD_KIND, state.id, serialized],
+                )?;
+                ensure!(inserted == 1, "Concurrent session creation; retry");
+            }
+            if activation_attempt.is_some() && raw.is_some() {
+                ensure!(
+                    engine.store.db.execute(
+                        "UPDATE records SET value=?1 WHERE kind=?2 AND id=?3 AND value=?1",
+                        params![
+                            raw.as_deref().context("activation_resume_state_required")?,
+                            RECORD_KIND,
+                            state.id
+                        ],
+                    )? == 1,
+                    "activation_session_changed"
+                );
+            }
+            if activation_attempt.is_some() {
+                activation::check_selected(
+                    &engine,
+                    &host,
+                    &state,
+                    Some(raw.as_deref().unwrap_or(&serialized)),
+                    deadline,
+                )?;
+            }
+            deadline.check()?;
+            Ok(())
+        })();
+        let (activation_diagnostic, activation_receipt_witness) =
+            match (publication, activation_attempt) {
+                (Ok(()), Some((attempt, diagnostic))) => {
+                    let witness = attempt.activated(&engine, deadline)?;
+                    (Some(diagnostic), Some(witness))
+                }
+                (Err(error), Some((attempt, _))) => {
+                    attempt.uncertain(&engine, deadline);
+                    return Err(error.context(
+                        "activation_publication_outcome_unknown_external_effects_possible",
+                    ));
+                }
+                (Err(error), None) => return Err(error),
+                (Ok(()), None) => (None, activation_witness_before_publication),
+            };
         Ok(Self {
+            activation_ready_projects: if activation_diagnostic.is_some() {
+                BTreeSet::from([state.active_project.clone()])
+            } else {
+                BTreeSet::new()
+            },
+            activation_blocked: false,
+            activation_receipt_witness,
+            activation_diagnostic,
+            inspection_only,
+            inspection_source_read: false,
+            unpublished_inspection,
             git_repository_projects,
             dashboard: None,
             dashboard_management: None,
@@ -1738,6 +1901,7 @@ impl Session {
         if self.git_repository_projects.is_some()
             || self.engine.git_repository_host.is_some()
             || self.host.prompt_templates.is_some()
+            || self.host.activation_commands.is_some()
             || self.host.dashboard.is_some()
             || self.host.git_ignore.is_some()
             || self.host.additional_workspace_folders.is_some()
@@ -1824,6 +1988,15 @@ impl Session {
     fn check_current_state(&self, deadline: &Deadline, message: &str) -> Result<()> {
         deadline.check()?;
         self.engine.store.set_deadline(deadline)?;
+        if self.unpublished_inspection {
+            let exists: bool = self.engine.store.db.query_row(
+                "SELECT EXISTS(SELECT 1 FROM records WHERE kind=?1 AND id=?2)",
+                params![RECORD_KIND, self.state.id],
+                |r| r.get(0),
+            )?;
+            ensure!(!exists, "{message}");
+            return Ok(());
+        }
         let current: bool = self.engine.store.db.query_row(
             "SELECT EXISTS(SELECT 1 FROM records WHERE kind=?1 AND id=?2 AND value=?3)",
             params![RECORD_KIND, self.state.id, self.persisted],
@@ -2064,6 +2237,10 @@ impl Session {
     fn update(&mut self, mut next: State, deadline: &Deadline) -> Result<()> {
         deadline.check()?;
         ensure!(
+            !self.inspection_only || self.host.activation_commands.is_none(),
+            "activation_inspection_session_read_only"
+        );
+        ensure!(
             crate::session_steering::single_project_startup(&self.host)
                 .is_none_or(|project| next.active_project == project),
             "Session update violates the fixed startup project"
@@ -2088,6 +2265,7 @@ impl Session {
     }
     fn project_engine(&mut self, name: &str, deadline: &Deadline) -> Result<&mut Engine> {
         self.check_tool_state(deadline)?;
+        self.admit_activation_engine(name, deadline)?;
         ensure!(
             self.engine.capture_epoch == self.capture_epoch,
             "Session source analyzer differs from its pinned host policy"
@@ -2307,7 +2485,10 @@ impl Session {
             .as_ref()
             .filter(|_| operation != "openDashboard")
             .and_then(|handle| handle.begin(operation));
+        let previous_inspection = self.inspection_source_read;
+        self.inspection_source_read = self.inspection_only && Self::passive_operation(operation);
         let result = self.invoke_inner(operation, args, deadline);
+        self.inspection_source_read = previous_inspection;
         self.finish_dashboard_activity(activity, &result);
         result
     }
@@ -2436,6 +2617,27 @@ impl Session {
     ) -> Result<Value> {
         deadline.check()?;
         self.check_tool_state(deadline)?;
+        if self.inspection_only && self.host.activation_commands.is_some() {
+            ensure!(
+                Self::passive_operation(operation),
+                "activation_inspection_operation_unavailable"
+            );
+            ensure!(
+                args.get("languageServer").is_none(),
+                "activation_inspection_backend_unavailable"
+            );
+            if operation == "queryProject" {
+                ensure!(
+                    args["tool"] == "ci_read"
+                        || (args["tool"] == "ci_status"
+                            && args["arguments"].get("mode").is_none_or(|mode| matches!(
+                                mode.as_str(),
+                                Some("status" | "freshness")
+                            ))),
+                    "activation_inspection_backend_unavailable"
+                );
+            }
+        }
         if operation.starts_with("collections.") {
             return self.collection_invoke(operation, args, None, deadline);
         }
@@ -2451,6 +2653,13 @@ impl Session {
             "configuration" => {
                 fields(args, &[])?;
                 let mut value = json!({"sessionId":self.state.label,"sessionKey":self.state.id,"activeProject":self.state.active_project,"context":self.state.context,"modes":self.state.modes,"revision":self.state.revision,"registeredProjects":self.host.projects.iter().filter(|p|!self.state.removed_projects.contains(&p.name)).map(|p|&p.name).collect::<Vec<_>>(),"executionAuthority":"explicit_host_configuration_only"});
+                if let Some(activation) = self.activation_view(deadline)? {
+                    value["projectActivation"] = activation;
+                    if self.unpublished_inspection {
+                        value["activeProject"] = Value::Null;
+                        value["selectedProject"] = json!(self.state.active_project);
+                    }
+                }
                 if let Some(config) = &self.host.dashboard {
                     value["dashboard"] = json!({"enabled":true,"scope":"read_only_native_session_and_structured_activity","browserOpening":"client_managed","lifetimeMs":config.lifetime_ms});
                     if config.management.is_some() {
@@ -2557,9 +2766,12 @@ impl Session {
                 let mut next = self.state.clone();
                 next.active_project = name.into();
                 self.resolve_next_modes(&mut next)?;
-                self.project_engine(name, deadline)?;
-                self.update(next, deadline)?;
+                self.activate_selected(next, deadline)?;
                 self.invoke("configuration", &json!({}), deadline)
+            }
+            "activationReceipt" => {
+                fields(args, &[])?;
+                Ok(json!({"projectActivation":self.activation_view(deadline)?}))
             }
             "removeProject" => {
                 fields(args, &["project"])?;
@@ -2578,7 +2790,11 @@ impl Session {
                     next.active_project = "default".into();
                 }
                 self.resolve_next_modes(&mut next)?;
-                self.update(next, deadline)?;
+                if next.active_project != self.state.active_project {
+                    self.activate_selected(next, deadline)?;
+                } else {
+                    self.update(next, deadline)?;
+                }
                 self.others.remove(name);
                 Ok(json!({"removedProject":name,"sourceDeleted":false}))
             }

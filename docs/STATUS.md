@@ -312,6 +312,12 @@ original 20-second source-bound provider query, preventing release/history;
 macOS still has original memory/timing failures. New integration platform,
 encoding/browser/visual, matching VSIX and full release acceptance remain open.
 
+The separate combined activation check at `dc9a4f0f` has Cargo/Clippy exit zero
+without diagnostics, but remains failed under the unchanged owner guard: a
+membership-confirmed MSVC `vctip.exe` helper survives the original drain until
+forced cleanup. No native image is read and no tests execute.
+[Incomplete combined receipt](validation/integration-2026-10-27/encoding-browser-review/activation-combined-clippy.json).
+
 ## Page-capacity fixture preparation batched; Rust acceptance pending (2026-10-26)
 
 Source `33dfe1db` seeds the existing 999/1000 signed foreign page revisions in
