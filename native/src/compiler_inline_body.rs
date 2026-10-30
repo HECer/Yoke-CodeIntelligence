@@ -221,9 +221,9 @@ fn statement_for(call: Node<'_>) -> Result<Node<'_>> {
             .parent()
             .context("Function-body variable statement absent")?;
         ensure!(
-            !declaration
+            declaration
                 .parent()
-                .is_some_and(|n| n.kind() == "for_statement"),
+                .is_none_or(|n| n.kind() != "for_statement"),
             "Function-body for initializer needs separate sequencing"
         );
         ensure!(
