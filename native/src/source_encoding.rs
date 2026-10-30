@@ -13,6 +13,7 @@ pub const VERSION: &str = "source_encoding_v1";
 #[serde(rename_all = "snake_case")]
 pub enum Codec {
     Utf8,
+    Utf8Sig,
     Utf16,
     Utf16Le,
     Utf16Be,
@@ -29,6 +30,7 @@ impl Codec {
         let name = value.to_ascii_lowercase().replace('-', "_");
         Ok(match name.as_str() {
             "utf_8" | "utf8" | "u8" | "utf" | "cp65001" => Self::Utf8,
+            "utf_8_sig" => Self::Utf8Sig,
             "utf_16" | "utf16" | "u16" => Self::Utf16,
             "utf_16_le" | "utf_16le" => Self::Utf16Le,
             "utf_16_be" | "utf_16be" => Self::Utf16Be,
@@ -136,11 +138,13 @@ impl View {
                 _ => bail!("source_encoding_utf16_bom_required"),
             };
             2
+        } else if codec == Codec::Utf8Sig && raw.starts_with(&[0xef, 0xbb, 0xbf]) {
+            3
         } else {
             0
         };
-        if codec == Codec::Utf8 {
-            let text = std::str::from_utf8(&raw)?;
+        if matches!(codec, Codec::Utf8 | Codec::Utf8Sig) {
+            let text = std::str::from_utf8(&raw[prefix..])?;
             ensure!(text.len() <= MAX_TEXT, "source_encoding_decoded_budget");
             let text = text.to_owned();
             let text_hash = checked_hash(text.as_bytes(), check)?;
@@ -247,9 +251,9 @@ impl View {
         self.raw.len() + self.text.len() + self.boundaries.len() * 8
     }
     pub fn to_raw(&self, decoded: usize) -> Result<usize> {
-        if self.codec == Codec::Utf8 {
+        if matches!(self.codec, Codec::Utf8 | Codec::Utf8Sig) {
             crate::paths::utf8_range(&self.text, 0, decoded)?;
-            return Ok(decoded);
+            return Ok(decoded + self.prefix);
         }
         let value = u32::try_from(decoded)?;
         let i = self
@@ -259,9 +263,12 @@ impl View {
         Ok(self.boundaries[i].1 as usize)
     }
     pub fn to_decoded(&self, original: usize) -> Result<usize> {
-        if self.codec == Codec::Utf8 {
-            crate::paths::utf8_range(&self.text, 0, original)?;
-            return Ok(original);
+        if matches!(self.codec, Codec::Utf8 | Codec::Utf8Sig) {
+            let decoded = original
+                .checked_sub(self.prefix)
+                .ok_or_else(|| anyhow::anyhow!("source_encoding_invalid_raw_boundary"))?;
+            crate::paths::utf8_range(&self.text, 0, decoded)?;
+            return Ok(decoded);
         }
         // The consumed BOM is immutable prefix data. A whole-file read may
         // include it, but edits must begin at the first actual text boundary.
@@ -293,6 +300,10 @@ impl View {
         Ok(&self.text[a..b])
     }
     pub fn encode_like(&self, text: &str, check: &impl Fn() -> Result<()>) -> Result<Vec<u8>> {
+        ensure!(
+            self.codec != Codec::Utf8Sig || self.prefix != 0 || !text.starts_with('\u{feff}'),
+            "source_encoding_utf8_sig_ambiguous_leading_bom"
+        );
         let mut bytes = encode(text, self.codec, check)?;
         if self.prefix != 0 {
             ensure!(
@@ -345,7 +356,7 @@ fn encode(text: &str, codec: Codec, check: &impl Fn() -> Result<()>) -> Result<V
                 1
             }
             Codec::Utf16Le | Codec::Utf16Be => ch.len_utf16() * 2,
-            Codec::Utf8 => ch.len_utf8(),
+            Codec::Utf8 | Codec::Utf8Sig => ch.len_utf8(),
             Codec::Utf16 => bail!("source_encoding_utf16_bom_required"),
         };
         size = size
@@ -360,7 +371,9 @@ fn encode(text: &str, codec: Codec, check: &impl Fn() -> Result<()>) -> Result<V
         }
         match codec {
             Codec::Latin1 => bytes.push(ch as u8),
-            Codec::Utf8 => bytes.extend_from_slice(ch.encode_utf8(&mut [0; 4]).as_bytes()),
+            Codec::Utf8 | Codec::Utf8Sig => {
+                bytes.extend_from_slice(ch.encode_utf8(&mut [0; 4]).as_bytes())
+            }
             _ => {
                 for unit in ch.encode_utf16(&mut [0; 2]) {
                     bytes.extend_from_slice(&if codec == Codec::Utf16Le {
@@ -383,6 +396,14 @@ pub(crate) fn encode_new(text: &str, policy: Option<Policy>, d: &Deadline) -> Re
         ensure!(body.len() <= MAX_RAW - 2, "source_encoding_raw_budget");
         let mut raw = Vec::with_capacity(body.len() + 2);
         raw.extend_from_slice(&[0xff, 0xfe]);
+        raw.extend_from_slice(&body);
+        return Ok(raw);
+    }
+    if policy.is_some_and(|p| p.codec() == Codec::Utf8Sig) {
+        let body = encode(text, Codec::Utf8, &|| d.check())?;
+        ensure!(body.len() <= MAX_RAW - 3, "source_encoding_raw_budget");
+        let mut raw = Vec::with_capacity(body.len() + 3);
+        raw.extend_from_slice(&[0xef, 0xbb, 0xbf]);
         raw.extend_from_slice(&body);
         return Ok(raw);
     }

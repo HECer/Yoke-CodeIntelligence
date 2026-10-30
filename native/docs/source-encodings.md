@@ -35,6 +35,7 @@ underscores. These are the admitted spellings (plus those case/separator forms):
 | Codec | Canonical and documented aliases |
 | --- | --- |
 | UTF-8 | `utf_8`, `utf8`, `u8`, `utf`, `cp65001` |
+| UTF-8 with optional signature | `utf_8_sig` |
 | BOM-selected UTF-16 | `utf_16`, `utf16`, `u16` |
 | Explicit little endian | `utf_16_le`, `utf-16le` |
 | Explicit big endian | `utf_16_be`, `utf-16be` |
@@ -43,14 +44,17 @@ underscores. These are the admitted spellings (plus those case/separator forms):
 The [Python 3.11 standard encoding table](https://docs.python.org/3.11/library/codecs.html#standard-encodings)
 is the alias reference, not a promise to implement its entire codec registry or
 additional registry normalization. Whitespace aliases, arbitrary punctuation,
-UTF-8-SIG, ASCII, Windows-1252, UTF-32 and every other codec are unsupported.
+ASCII, Windows-1252, UTF-32 and every other codec are unsupported.
 Unknown codecs and invalid setting types refuse explicitly. Latin1 maps each
 byte directly to the same numbered Unicode scalar, including C1 controls;
 byte `80` is U+0080, not the Windows-1252 euro sign.
+For an existing UTF-8-SIG file without a signature, an edit that would place
+U+FEFF at the start is refused: its bytes would otherwise be consumed as a
+signature when the file is read again. Existing signatures are preserved.
 
 The resolved host profile uses `sourceEncodings` with `global` and
 `projects.<registered-name>.project/local`, with canonical enum values `utf8`,
-`utf16`, `utf16_le`, `utf16_be`, `latin1`. Example:
+`utf8_sig`, `utf16`, `utf16_le`, `utf16_be`, `latin1`. Example:
 
 ```json
 {"sourceEncodings":{"global":"latin1","projects":{"default":{"local":"utf16"},"secondary":{"project":"utf8"}}}}
@@ -89,6 +93,8 @@ checked monotonic scalar-boundary map. It never applies Unicode normalization,
 replacement characters or newline conversion. For the new policies, decoding
 is a strict two-pass operation: sizes are checked before allocating text/maps.
 Odd UTF-16 input and unpaired high/low surrogates refuse.
+
+`utf8_sig` consumes an optional initial `EF BB BF` signature and keeps it as an immutable raw prefix; without one the decoded text starts at raw byte zero. New files use a signature; existing files preserve its presence. Invalid UTF-8 refuses. Legacy UTF-8 continues to expose U+FEFF as text.
 
 `utf16` requires an initial `FF FE` or `FE FF` BOM. That BOM selects byte order
 and is consumed from analysis text; it remains an immutable raw prefix. This
