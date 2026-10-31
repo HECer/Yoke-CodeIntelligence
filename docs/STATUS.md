@@ -1,5 +1,47 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Source-claim admission: Windows default-profile evidence (2026-10-31)
+
+Exact source [08e6acddb889e0d6567e68ac65d56a93760f2274](https://github.com/HECer/Yoke-CodeIntelligence/commit/08e6acddb889e0d6567e68ac65d56a93760f2274)
+passes all eight default Windows Cargo target partitions: **379 complete target
+groups, 3,978 observed test passes, zero failures, 53 existing ignored cases,
+zero measured or filtered cases**. The independent text-artifact audit checks
+all 1,182 selected source hashes against exact Git bytes or the permitted
+Windows checkout form (42 exact Git files and 1,140 CRLF files), independently
+derives all 379 targets and weights, and verifies each partition and raw log.
+All eight source/target inventories agree and every target is covered once.
+Receipt SHA-256:
+`fd883a6d643c47d703f257e5904b9ef6ad697a784a403d44c391ea13d4dcad8e`.
+Original artifacts remain in [Rust core run 41234224060](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41234224060).
+This source map covers the declared selected inputs; it does not assert every
+possible build input or certify every backend.
+
+The Windows library has 873 passes, zero failures and seven original ignores.
+Its four new source-claim units pass, including the actual Windows test that
+denies writes, leaf renames and parent renames while name pins are held, then
+successfully writes and rereads after release. The bounded JSON grammar,
+storeless original/corrupt-input replay and exact integer/float comparison
+units also pass. These cases are included in the totals above. The nine public
+source-claim cases pass on Windows, Linux and macOS, including the paired
+weakest-hop-position control and real 256/257-route counterexample. The
+original Windows/Linux parent RED remains separately recorded. Windows and
+Linux all-target Clippy with `-D warnings` and the Windows format roots pass.
+
+The selected policy retains original numeric tokens, directed parallel
+observations, evidence and captured source bytes. Declarations remain
+unverified source claims. Host admission, immutable View selection and the
+existing ten-tool Graphify transport do not establish Graphify node-link file
+interoperability or full current upstream equivalence.
+
+The local follow-up adds three public path/direction/provenance/output guard
+cases and a deterministic first-route cancellation unit. Those additional
+cases are still unrun and unpublished at this checkpoint. Matching current
+Windows VSIX, vendor-tool and browser/release evidence is still being
+qualified. Full R4, R1-R9, backend, main and release acceptance remain open.
+Linux/macOS runtime certification remains deferred; their original separate
+resource-limit and HTTP failures are preserved. The earlier candidate sections
+below retain their historical source-specific status.
+
 ## Distinct-node shortest-path prefix candidate (2026-10-31)
 
 The selected `weakest_source_categories_v1` candidate now ranks the first 256
