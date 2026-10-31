@@ -1,5 +1,60 @@
 # Source-bound history browser and combined VSIX follow-up
 
+## Fresh browser and VSIX confirmation at 45323315
+
+Source `4532331512fd8be7ab1b50c4aa438f2577a92e02` passes the actual
+[Windows browser diagnostic](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41190268811/job/124505454951).
+Five separately bounded artifacts cover native, Serena, persistent Python,
+authenticated HTTP and tool-usage statistics. Their complete original PNG/DOM
+inventories, six source-control hashes, shared fresh CLI identity, worker/driver/
+browser exits and natural Job cleanup were independently checked. The parent
+agent viewed all 30 original desktop/mobile before/pending/after screenshots.
+The statistics flow visibly refuses a stale reset and empties the counters after
+a fresh confirmation; pending history retains the draft and disables saving.
+
+- [Artifact verification](browser-45323315-artifact-verification.json), SHA256
+  `06691db750e8f5d2c164dc190b71bb9238536ca568179aeb62690a1854480bb9`.
+- [Separate agent visual review](browser-45323315-visual-review.json), SHA256
+  `3f6fef630467403c0952a4ef5ae58837d7e0a27addc115ac8a3a41388321fc9d`.
+- [Combined VSIX verification](vsix-45323315-artifact-verification.json), SHA256
+  `e1428bebccd77570b9531e392cce6fbf5fa3fc3d5b68f96fb96f398486ac68b1`.
+
+The separate [VSIX/TSGo job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41190268865/job/124505874030)
+is failed overall. Its completed VSIX stages nevertheless qualify fresh combined
+package bytes and both actual explicit/bundled Rust extension-host assertions
+in VS Code 1.143.1. Artifact `13040140943` is 135217 bytes, ZIP SHA256
+`0fe0401b5f7d2f1ea07787fb3d19636c798611ec09f5f1ec6def55e40247f2cb`.
+All 33 text members, nine controls, 1836-entry source map, 277-entry built map,
+fresh matching Cargo role and four natural worker exits were checked. Source
+and built inventories are declared hashes; this audit independently compares
+the nine selected controls, not all source/built payloads. TypeScript is bundled
+and byte-verified; its extension mode was not executed.
+
+The subsequent real TSGo stage still fails: all three navigation replies report
+`InvalidParams: expected no params, got null`, just as in the preceding `53a28014`
+run. Artifacts `13039917105` and `13039116133` preserve the two observations;
+they are nonadditive and provide no successful navigation qualification.
+The source candidate omits the `params` member on `shutdown` and `exit`, as
+specified by [LSP shutdown](https://raw.githubusercontent.com/microsoft/language-server-protocol/gh-pages/_includes/messages/3.17/shutdown.md)
+and [exit](https://raw.githubusercontent.com/microsoft/language-server-protocol/gh-pages/_includes/messages/3.17/exit.md).
+Other explicit-null request/notification values remain unchanged. Two new native
+fixtures check a strict lifecycle and explicit-null preservation; they remain
+unrun locally and require fresh hosted compilation and execution.
+
+The older `53a28014` VSIX run refused with `api_error` despite an editor log
+showing root exit zero. Its absent pre-cleanup tree proof remains a failure;
+the precise exception was not recorded. The source follow-up adds only fixed
+phase/error categories to future refusal receipts. It changes no deadline,
+resource limit, natural-exit requirement or cleanup/admission condition.
+
+These browser/VSIX checkpoints are scoped to `45323315`. Original CI flags
+remain untouched. They do not qualify the later Session budget/LSP candidates,
+human review, motion/visible-shell interaction, every backend or full Windows/
+platform/main/release acceptance. No local native images or VSIX payloads were
+read or executed.
+
+## Earlier source-specific observations
+
 These observations qualify the named source and scopes only:
 `3ceb66ced10bacda9cd024d0f84a5345ea8cf80c`, Code Intelligence native 0.5.0,
 retained TypeScript 0.3.0. Later repairs need their own fresh CI. Neither an

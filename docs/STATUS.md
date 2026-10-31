@@ -1,5 +1,24 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Fresh browser/VSIX proof and strict LSP lifecycle candidate (2026-10-31)
+
+At `45323315`, five Windows browser profiles pass independent artifact checks;
+the parent visually inspected all 30 original screenshots. Native, Serena,
+persistent Python, HTTP and statistics before/pending/after states pass the
+scoped agent visual checkpoint. The same source's combined VSIX passes both
+actual explicit/bundled Rust extension-host assertions in VS Code 1.143.1.
+The enclosing VSIX/TSGo job fails later because all three TSGo replies reject
+`params: null` on the no-parameter lifecycle. The candidate omits that member
+only for shutdown/exit and retains explicit-null custom calls, protocol ordering,
+deadlines, ownership and cleanup. Two strict native fixtures remain unrun locally.
+The older VSIX `api_error` lacks a precise exception; future refusals now record
+fixed phase/error categories without private details or admission relaxation.
+[Source-bound receipts and limits](validation/integration-2026-10-31/history-vsix-followup/README.md#fresh-browser-and-vsix-confirmation-at-45323315)
+preserve the failed overall job and original broader flags. Human/motion/visible-
+shell review, subsequent-candidate, full Windows/platform/main/release acceptance
+remain open. Local typecheck, 266 npm passes/three skips and 34 inert Python
+admission tests pass; these do not execute or qualify the new native code.
+
 ## Session CLI answer-budget repair candidate (2026-10-31)
 
 The Session batch path previously ignored the global `--max-bytes` selection,
@@ -20,6 +39,12 @@ without a later write. An exactly full successful prefix refuses the next
 operation before invocation. Native compilation and execution remain unrun locally;
 this is an unqualified source candidate, without Windows/platform/main/release
 acceptance. Existing PR28's browser/VSIX qualification continues independently.
+
+The first hosted candidate `512d026d` fails compilation with E0423 because an
+accumulator update still refers to the removed local variable `used`.
+`2c803a93` restores accumulation of prior rows, the next comma and the admitted
+serialized value. This is a source correction awaiting fresh native compilation
+and all eight fixtures; no failed producer supplies runtime acceptance.
 
 ## Corrected reset target and fresh TLS source confirmation (2026-10-31)
 
