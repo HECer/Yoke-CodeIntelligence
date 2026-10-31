@@ -576,6 +576,51 @@ fn disabling_required_memory_reads_refuses_before_mode_state_publication() {
 }
 
 #[test]
+fn confirmed_required_notes_do_not_bypass_mode_tool_api_or_ignored_read_policy() {
+    for case in 0..4 {
+        let f = Fixture::new();
+        let unopened_global = tempfile::tempdir().unwrap();
+        let mut host = f.host.clone();
+        host.global_notes_root = Some(unopened_global.path().canonicalize().unwrap());
+        host.prompt_templates.as_mut().unwrap().memory_embeddings =
+            Some(vec![NAME.into(), "global/unavailable".into()]);
+        host.prompt_runtime = Some(renderer(host.prompt_templates.as_ref().unwrap()));
+        let expected = match case {
+            0 => {
+                host.modes = vec!["no-memories".into()];
+                "Notes disabled"
+            }
+            1 => {
+                host.steering = Some(
+                    serde_json::from_value(json!({"global":{"excludedTools":["read_memory"]}}))
+                        .unwrap(),
+                );
+                "Tool excluded"
+            }
+            2 => {
+                host.steering = Some(
+                    serde_json::from_value(json!({"global":{"excludedApis":["mem.read_memory"]}}))
+                        .unwrap(),
+                );
+                "API excluded"
+            }
+            _ => {
+                host.steering = Some(
+                    serde_json::from_value(json!({"global":{"ignoredMemoryPatterns":["^guide"]}}))
+                        .unwrap(),
+                );
+                "Note unavailable"
+            }
+        };
+        host.required_prompt_memory_runtime = Some(Confirmation::confirm(&host, &d()).unwrap());
+        let failure = f.open(host, "read-policy").err().unwrap();
+        assert!(format!("{failure:#}").contains(expected), "{failure:#}");
+        assert!(!unopened_global.path().join(".yoke").exists());
+        f.unchanged();
+    }
+}
+
+#[test]
 fn global_and_project_required_notes_keep_distinct_stores_and_original_revisions() {
     let f = Fixture::new();
     let global = tempfile::tempdir().unwrap();
