@@ -1292,6 +1292,24 @@ fn wrapped_eval_in_the_body_or_caller_cannot_publish_a_plan() {
 fn body_cli_plans_require_independent_verification_approval_and_foreign_preserving_recovery() {
     for (source, keep, strict, language) in [
         (
+            "function helper(n:number):boolean{return n<3;}const values:number[]=[];let n=0;do{values.push(n);if(++n>6)break;}while(helper(n));export const observed=values;\n",
+            false,
+            true,
+            "ts",
+        ),
+        (
+            "function helper(n:number):boolean{return n<3;}const values:number[]=[];for(let n=0;helper(n);n++){values.push(n);if(n>6)break;}export const observed=values;\n",
+            false,
+            true,
+            "ts",
+        ),
+        (
+            "function helper(n:number):boolean{return n<3;}let n=0;while(helper(n++)){if(n>6)break;}export const observed=n;\n",
+            false,
+            true,
+            "ts",
+        ),
+        (
             "function helper(){return 3;}/** @type {3} */ const result=helper();export const observed=result;",
             false,
             true,
@@ -1536,6 +1554,253 @@ fn direct_if_heads_keep_explicit_and_inferred_predicate_flow() {
     }
 }
 #[test]
+fn while_heads_repeat_arguments_body_effects_closures_finally_and_labelled_control() {
+    for source in [
+        "let n=3;function helper():number{return n--;}while(helper());export const observed=n;\n",
+        "const events:string[]=[];function helper(n:number,...extra:number[]):boolean{try{events.push('call:'+n+':'+extra.length);return n<5;}finally{events.push('callee-finally');}}export function run(){let n=0;outer:while /* café 🦀 header */ (/* condition */((helper((events.push('arg:'+n),n++),(events.push('extra'),7))))/* tail */) /* between */ {try{events.push('body:'+n);if(n>6)break outer;if(n===2)continue outer;if(n===4)break outer;}finally{events.push('caller-finally');}}return {n,events};}export const observed=run();\n",
+        "const closures:Array<()=>number>=[];const calls:number[]=[];function helper(n:number):boolean{calls.push(n);closures.push(()=>n);return n<3;}export function run(start:number){let n=start,bodies=0;while(helper(n++)){if(++bodies>6)break;}return [n,bodies];}const runs=[run(0),run(5)];export const observed={runs,calls,values:closures.map(read=>read())};\n",
+        "const events:string[]=[];function helper(n:number):boolean{try{events.push('call:'+n);if(n===2)throw 'owned';return true;}finally{events.push('callee-finally');}}export function run(){let n=0;try{while(helper(n++)){events.push('body:'+n);if(n>6)break;}}catch(error){events.push(String(error));}finally{events.push('caller-finally');}return {n,events};}export const observed=run();\n",
+        "function helper(n:number):boolean|undefined{exit:while(true){try{return n<3;}finally{if(n===2)break exit;}}}export function run(){let n=0,bodies=0;while(helper(n++)){if(++bodies>6)break;}return [n,bodies];}export const observed=run();\n",
+    ] {
+        for newline in ["\n", "\r\n"] {
+            let source = source.replace('\n', newline);
+            let (root, mut engine) = fixture(&source, "ts");
+            let r =
+                yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+                    .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+            let after = planned(&engine, &r, "ts");
+            assert!(!after.contains("function helper"), "{after}");
+            assert!(after.contains("while"), "{after}");
+            assert_eq!(r["complete"], false);
+            assert_eq!(r["sourceExecuted"], false);
+            assert_eq!(r["sourceTreeWritten"], false);
+            assert_eq!(r["verificationRequired"], true);
+            same_execution(&source, &after);
+            for comment in [
+                "/* café 🦀 header */",
+                "/* condition */",
+                "/* tail */",
+                "/* between */",
+            ] {
+                if source.contains(comment) {
+                    assert_eq!(after.matches(comment).count(), 1, "{after}");
+                }
+            }
+            if newline == "\r\n" {
+                assert!(!after.replace("\r\n", "").contains('\n'), "{after}");
+            }
+            assert_eq!(
+                fs::read(root.path().join("main.ts")).unwrap(),
+                source.as_bytes()
+            );
+        }
+    }
+}
+#[test]
+fn while_heads_preserve_explicit_and_inferred_predicate_flow_inside_and_after_the_loop() {
+    for annotation in [":value is string", ""] {
+        let source = format!(
+            "function helper(value:string|number){annotation}{{return typeof value==='string';}}export function run(value:string|number){{while((helper(value))){{value=value.length;}}const numberAfter=value;return numberAfter.toFixed(0);}}export const observed=[run('π🦀'),run(7)];\n"
+        );
+        let (root, mut engine) = fixture(&source, "ts");
+        let r = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+            .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        let after = planned(&engine, &r, "ts");
+        same_execution(&source, &after);
+        assert_eq!(r["complete"], false);
+        assert_eq!(
+            fs::read(root.path().join("main.ts")).unwrap(),
+            source.as_bytes()
+        );
+    }
+}
+#[test]
+fn while_heads_keep_jsdoc_unbraced_else_ownership_and_the_original_label() {
+    let source = "/** @param {number} n @returns {boolean} */\nfunction helper(n){return n<3;}\n/** @param {boolean} flag */\nexport function run(flag){let n=0,turns=0;const events=[];if(flag)outer:while /* header */ (/* condition */(helper(n++))/* tail */) /* between */ if(turns++>6||n>3)break outer;else if(n===1)continue outer;else events.push(n);else events.push(-1);return [n,events];}\nexport const observed=[run(false),run(true)];\n";
+    let (root, mut engine) = fixture(source, "js");
+    let r = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "js"), &d())
+        .unwrap_or_else(|e| panic!("{e:#}"));
+    let after = planned(&engine, &r, "js");
+    assert!(after.contains("outer:while /* header */ (true)"), "{after}");
+    same_execution(source, &after);
+    for comment in [
+        "/* header */",
+        "/* condition */",
+        "/* tail */",
+        "/* between */",
+    ] {
+        assert_eq!(after.matches(comment).count(), 1, "{after}");
+    }
+    assert_eq!(
+        fs::read(root.path().join("main.js")).unwrap(),
+        source.as_bytes()
+    );
+}
+#[test]
+fn for_heads_preserve_initializer_update_iteration_bindings_and_abrupt_completions() {
+    for source in [
+        "const events:string[]=[];function helper(n:number,...extra:number[]):boolean{try{events.push('call:'+n+':'+extra.length);return n<5;}finally{events.push('callee-finally');}}export function run(){let turns=0;outer:for /* café 🦀 header */ (let i=(events.push('init'),0);/* condition */(helper((events.push('arg:'+i),i),(events.push('extra'),7)))/* tail */;events.push('update:'+i),i++)/* between */{try{events.push('body:'+i);if(++turns>6)break outer;if(i===1)continue outer;if(i===3)break outer;}finally{events.push('caller-finally');}}return events;}export const observed=run();\n",
+        "const closures:Array<()=>number>=[];const seen:number[]=[];function helper(read:()=>number):boolean{const n=read();seen.push(n);closures.push(read);return n<3;}const bodies:number[]=[];for(let i=0;helper(()=>i);i++){bodies.push(i);if(i>6)break;}for(var j=0;helper(()=>j);j++){bodies.push(j);if(j>6)break;}for(const box={value:0};helper(()=>box.value);box.value++){bodies.push(box.value);if(box.value>6)break;}export const observed={seen,bodies,values:closures.map(read=>read()),j};\n",
+        "let calls=0,updates=0;function helper(n:number):number{calls++;return n;}export function run(start:number){let n=start;for(;helper(n);updates++,n--);return n;}export const observed=[run(0),run(2),calls,updates];\n",
+        "const events:string[]=[];function helper(n:number):boolean{try{events.push('test:'+n);if(n===2)throw 'owned';return true;}finally{events.push('callee-finally');}}export function run(){try{for(let n=(events.push('init'),0);helper(n);events.push('update:'+n),n++){try{events.push('body:'+n);if(n>6)break;}finally{events.push('caller-finally');}}}catch(error){events.push(String(error));}return events;}export const observed=run();\n",
+        "const events:string[]=[];function helper(n:number):boolean{events.push('test:'+n);return n<3;}export function run(){outer:for(let n=0;helper(n);events.push('update:'+n),n++){try{if(n>6)break outer;if(n===0)throw 'cancelled';events.push('body:'+n);}finally{events.push('finally:'+n);if(n===0)continue outer;if(n===2)break outer;}}return events;}export const observed=run();\n",
+        "const events:string[]=[];function helper(n:number):boolean{events.push('test:'+n);return n<3;}export function run(){outer:for(let j=0;j<2;j++){for(let i=0;helper(i);events.push('inner-update:'+i),i++){events.push('body:'+j+':'+i);if(i>6)break;if(i===1)continue outer;}}return events;}export const observed=run();\n",
+    ] {
+        for newline in ["\n", "\r\n"] {
+            let source = source.replace('\n', newline);
+            let (root, mut engine) = fixture(&source, "ts");
+            let r =
+                yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+                    .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+            let after = planned(&engine, &r, "ts");
+            assert!(!after.contains("function helper"), "{after}");
+            assert_eq!(r["complete"], false);
+            assert_eq!(r["sourceExecuted"], false);
+            assert_eq!(r["sourceTreeWritten"], false);
+            assert_eq!(r["verificationRequired"], true);
+            same_execution(&source, &after);
+            for comment in [
+                "/* café 🦀 header */",
+                "/* condition */",
+                "/* tail */",
+                "/* between */",
+            ] {
+                if source.contains(comment) {
+                    assert_eq!(after.matches(comment).count(), 1, "{after}");
+                }
+            }
+            if newline == "\r\n" {
+                assert!(!after.replace("\r\n", "").contains('\n'), "{after}");
+            }
+            assert_eq!(
+                fs::read(root.path().join("main.ts")).unwrap(),
+                source.as_bytes()
+            );
+        }
+    }
+}
+#[test]
+fn for_heads_preserve_predicate_narrowing_in_the_body_update_and_after_exit() {
+    for annotation in [":value is string", ""] {
+        let source = format!(
+            "function helper(value:string|number){annotation}{{return typeof value==='string';}}export function run(value:string|number){{let seen=0;for(;helper(value);value=value.length){{seen+=value.length;}}const numberAfter=value;return [seen,numberAfter.toFixed(0)];}}export const observed=[run('π🦀'),run(7)];\n"
+        );
+        let (root, mut engine) = fixture(&source, "ts");
+        let r = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+            .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        let after = planned(&engine, &r, "ts");
+        same_execution(&source, &after);
+        assert_eq!(r["complete"], false);
+        assert_eq!(
+            fs::read(root.path().join("main.ts")).unwrap(),
+            source.as_bytes()
+        );
+    }
+}
+#[test]
+fn for_heads_keep_jsdoc_and_unbraced_else_ownership() {
+    let source = "/** @param {number} n @returns {boolean} */\nfunction helper(n){return n<3;}\n/** @param {boolean} flag */\nexport function run(flag){const events=[];if(flag)outer:for(let n=0;(helper(n));n++)if(n>6)break outer;else if(n===1)continue outer;else events.push(n);else events.push(-1);return events;}export const observed=[run(false),run(true)];\n";
+    let (root, mut engine) = fixture(source, "js");
+    let r = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "js"), &d())
+        .unwrap_or_else(|e| panic!("{e:#}"));
+    let after = planned(&engine, &r, "js");
+    assert!(after.contains("outer:for(let n=0;true;n++)"), "{after}");
+    same_execution(source, &after);
+    assert_eq!(
+        fs::read(root.path().join("main.js")).unwrap(),
+        source.as_bytes()
+    );
+}
+#[test]
+fn do_heads_preserve_first_body_test_order_fresh_captures_and_abrupt_completions() {
+    for source in [
+        "let calls=0;function helper():boolean{calls++;return false;}let bodies=0;do{bodies++;}while(helper());export const observed={bodies,calls};\n",
+        "const events:string[]=[];function helper(n:number,...extra:number[]):boolean{try{events.push('test:'+n+':'+extra.length);return n<4;}finally{events.push('callee-finally');}}export function run(){let n=0;outer:do /* café 🦀 before */ {try{events.push('body:'+n);if(++n>6)break outer;if(n===1)continue outer;if(n===3)break outer;}finally{events.push('caller-finally');}} /* after body */ while /* before test */ (/* condition */((helper((events.push('arg:'+n),n),(events.push('extra'),7))))/* tail */);return {n,events};}export const observed=run();\n",
+        "const closures:Array<()=>number>=[];const tests:number[]=[];function helper(n:number):boolean{closures.push(()=>n);tests.push(n);return n<3;}export function run(start:number){let n=start,bodies=0;do{if(++bodies>6)break;n++;}while(helper(n));return [n,bodies];}const runs=[run(0),run(5)];export const observed={runs,tests,values:closures.map(read=>read())};\n",
+        "const events:string[]=[];function helper():boolean{events.push('test');return false;}export function run(mode:number){try{do{try{events.push('body:'+mode);if(mode===0)break;if(mode===1)throw 'owned';if(mode===2)return 'returned';continue;}finally{events.push('body-finally');}}while(helper());}catch(error){events.push(String(error));}return 'done';}export const observed={runs:[run(0),run(1),run(2),run(3)],events};\n",
+        "const events:string[]=[];function helper(n:number):boolean{try{events.push('test:'+n);if(n===2)throw 'owned';return true;}finally{events.push('callee-finally');}}export function run(){let n=0;try{do{events.push('body:'+n);if(++n>6)break;}while(helper(n));}catch(error){events.push(String(error));}finally{events.push('caller-finally');}return events;}export const observed=run();\n",
+        "const events:string[]=[];function helper(n:number):boolean|undefined{exit:while(true){try{events.push('test:'+n);return n<3;}finally{if(n===2)break exit;}}}export function run(){let n=0;outer:for(let j=0;j<3;j++){do{try{events.push('body:'+j+':'+n);if(++n>6)break;if(j===1)continue outer;continue;}finally{events.push('body-finally');}}while(helper(n));}return {n,events};}export const observed=run();\n",
+        "let n=3;const __ci_inline_1=7;function helper():number{return n--;}do;while((helper()));export const observed=[n,__ci_inline_1];\n",
+    ] {
+        for newline in ["\n", "\r\n"] {
+            let source = source.replace('\n', newline);
+            let (root, mut engine) = fixture(&source, "ts");
+            let r =
+                yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+                    .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+            let after = planned(&engine, &r, "ts");
+            assert!(!after.contains("function helper"), "{after}");
+            assert!(after.contains("for (let __ci_inline_"), "{after}");
+            assert_eq!(r["complete"], false);
+            assert_eq!(r["sourceExecuted"], false);
+            assert_eq!(r["sourceTreeWritten"], false);
+            assert_eq!(r["verificationRequired"], true);
+            same_execution(&source, &after);
+            for comment in [
+                "/* café 🦀 before */",
+                "/* after body */",
+                "/* before test */",
+                "/* condition */",
+                "/* tail */",
+            ] {
+                if source.contains(comment) {
+                    assert_eq!(after.matches(comment).count(), 1, "{after}");
+                }
+            }
+            if newline == "\r\n" {
+                assert!(!after.replace("\r\n", "").contains('\n'), "{after}");
+            }
+            assert_eq!(
+                fs::read(root.path().join("main.ts")).unwrap(),
+                source.as_bytes()
+            );
+        }
+    }
+}
+#[test]
+fn do_heads_preserve_predicate_condition_and_false_exit_flow() {
+    for annotation in [":value is string", ""] {
+        let source = format!(
+            "function helper(value:string|number){annotation}{{return typeof value==='string';}}export function run(value:string|number){{let turns=0;const seen:string[]=[];do{{seen.push(typeof value);if(++turns===2||typeof value==='number')value=7;}}while(helper(value));const numberAfter=value;return [seen,numberAfter.toFixed(0)];}}export const observed=[run('π🦀'),run(7)];\n"
+        );
+        let (root, mut engine) = fixture(&source, "ts");
+        let r = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "ts"), &d())
+            .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        same_execution(&source, &planned(&engine, &r, "ts"));
+        assert_eq!(r["complete"], false);
+        assert_eq!(
+            fs::read(root.path().join("main.ts")).unwrap(),
+            source.as_bytes()
+        );
+    }
+}
+#[test]
+fn do_heads_keep_jsdoc_comments_unbraced_else_and_automatic_semicolon_insertion() {
+    let source = "/** @param {number} n @returns {boolean} */\nfunction helper(n){return n<3;}\n/** @param {boolean} flag */\nexport function run(flag){let n=0;const events=[];if(flag)outer:do /* before body */ if(++n>6)break outer;else if(n===1)continue outer;else events.push(n); /* after body */ while /* before test */ (/* condition */(helper(n))/* tail */)\nelse events.push(-1);return [n,events];}\nexport const observed=[run(false),run(true)];\n";
+    for newline in ["\n", "\r\n"] {
+        let source = source.replace('\n', newline);
+        let (root, mut engine) = fixture(&source, "js");
+        let r = yoke::compiler_inline::prepare(&mut engine, &compiler(), &args(false, "js"), &d())
+            .unwrap_or_else(|e| panic!("{source}: {e:#}"));
+        let after = planned(&engine, &r, "js");
+        assert!(after.contains("outer:for (let __ci_inline_"), "{after}");
+        same_execution(&source, &after);
+        for comment in [
+            "/* before body */",
+            "/* after body */",
+            "/* before test */",
+            "/* condition */",
+            "/* tail */",
+        ] {
+            assert_eq!(after.matches(comment).count(), 1, "{after}");
+        }
+        assert_eq!(
+            fs::read(root.path().join("main.js")).unwrap(),
+            source.as_bytes()
+        );
+    }
+}
+#[test]
 fn statement_heads_keep_javascript_jsdoc_and_unbraced_else_ownership() {
     let source = "/** @param {number} n */\nfunction helper(n){return n>0;}\n/** @param {number} n */\nexport function run(n){if(n<0)return 'negative';else if(helper(n))return 'positive';else return 'zero';}\nexport const observed=[run(-1),run(0),run(2)];\n";
     let (root, mut engine) = fixture(source, "js");
@@ -1550,13 +1815,18 @@ fn statement_heads_keep_javascript_jsdoc_and_unbraced_else_ownership() {
 #[test]
 fn repeated_conditional_and_overlapping_statement_heads_refuse_without_publication() {
     for consumer in [
-        "while(helper())break;",
-        "do{}while(helper());",
-        "for(;helper();)break;",
+        "while(helper()&&true)break;",
+        "do{}while(helper()&&true);",
+        "do{if(helper())break;}while(helper());",
+        "for(;helper()&&true;)break;",
         "if(true&&helper()){}",
         "switch(1+Number(helper())){}",
         "throw String(helper());",
         "if(helper()){if(helper())return true;}return false;",
+        "while(helper()){if(helper())break;}",
+        "for(;helper();){if(helper())break;}",
+        "for(let value=helper();;){break;}",
+        "for(;true;helper()){break;}",
     ] {
         let source =
             format!("function helper(){{return true;}}export function run(){{{consumer}}}\n");

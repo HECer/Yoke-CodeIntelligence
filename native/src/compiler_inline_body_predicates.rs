@@ -361,6 +361,7 @@ mod tests {
                 result: "__ci_inline_1".into(),
                 exit: "__ci_inline_2".into(),
                 arguments: vec!["__ci_inline_3".into()],
+                do_first: None,
                 var_parameters: vec![],
                 var_seeds: vec![],
                 return_type: vec![],

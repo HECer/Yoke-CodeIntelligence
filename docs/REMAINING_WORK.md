@@ -25,6 +25,39 @@ still qualify the actual kernel paths. Fresh matching native/combined VSIX,
 explicit and bundled real editor execution, combined-source parity, main and
 release acceptance remain open. No local Yoke/native/editor execution ran.
 See [the lifecycle contract](../scripts/vscode_owned_job.md).
+## Complete do-condition inlining candidate (2026-10-30)
+
+The finite classic function-body route now admits complete do-while condition
+calls with independent compiler/Rust ownership checks and a fresh first-iteration
+loop recipe. The original body runs before the first test; continue reaches the
+test after finally, while earlier break/return/throw leave without it. Original
+source copies, labels, type checks, budgets and writer/recovery gates remain.
+Three integration cases and two unit cases are authored, with an additional
+CLI verification/approval/recovery fixture. Native compilation and execution
+remain unrun locally; guarded hosted qualification and wider R1/full parity,
+platform, VSIX/main and release acceptance remain open.
+
+## For-condition inlining qualification (2026-10-30)
+
+The complete ordinary-for-condition source recipe now retains the original
+initializer, update and per-iteration environment while placing a fresh call
+expansion at each test. Guarded compilation, native reconstruction, runtime,
+predicate-flow and writer/recovery fixture execution remain required. The prior
+while candidate remains unqualified separately. Do/in/of/await-of, selected
+initializer/update calls, compound conditions and overlapping frames still
+refuse. Broader R1/full parity/Windows/VSIX/main/release gates remain open.
+[Candidate contract](../native/docs/compiler-inline.md#complete-for-conditions-candidate-native-qualification-pending).
+
+## While-condition inlining qualification (2026-10-30)
+
+The source candidate extends classic body expansion to complete direct calls in
+while conditions, with independent Rust reconstruction and authored native
+runtime/type/byte/control and verification/approval/recovery fixtures. Guarded
+native compilation and fixture execution remain required. For/do tests,
+compound/short-circuit conditions, nested expressions and overlapping selected
+frames still refuse. This does not close the broader R1 semantic-refactoring
+requirement or change any earlier source-bound CI/release checkpoint.
+[Candidate contract](../native/docs/compiler-inline.md#complete-while-conditions-candidate-native-qualification-pending).
 
 ## Gates remaining after scoped f41 acceptance (2026-10-30)
 

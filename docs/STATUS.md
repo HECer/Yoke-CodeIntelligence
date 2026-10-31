@@ -25,6 +25,47 @@ still qualify the actual kernel paths. Fresh matching native/combined VSIX,
 explicit and bundled real editor execution, combined-source parity, main and
 release acceptance remain open. No local Yoke/native/editor execution ran.
 See [the lifecycle contract](../scripts/vscode_owned_job.md).
+## Complete do-condition inlining candidate (2026-10-30)
+
+The finite classic function-body route now admits complete do-while condition
+calls with independent compiler/Rust ownership checks and a fresh first-iteration
+loop recipe. The original body runs before the first test; continue reaches the
+test after finally, while earlier break/return/throw leave without it. Original
+source copies, labels, type checks, budgets and writer/recovery gates remain.
+Three integration cases and two unit cases are authored, with an additional
+CLI verification/approval/recovery fixture. Native compilation and execution
+remain unrun locally; guarded hosted qualification and wider R1/full parity,
+platform, VSIX/main and release acceptance remain open.
+
+## Complete for-condition body inlining candidate (2026-10-30)
+
+The classic body inliner has a separate ordinary-for-condition candidate atop
+the while candidate. The original initializer/update header and loop body remain
+source copies, preserving update/continue order and per-iteration bindings.
+Rust independently checks the condition-expression and its semicolon field;
+existing type/binding/source, resource and write/recovery gates remain.
+Adversarial native fixtures are authored but uncompiled and unrun locally.
+Both loop candidates still require guarded native qualification; full semantic
+parity and release acceptance are not established by this source extension.
+Local typecheck and npm tests pass (266 passed, three skipped), along with
+Rust formatting, worker syntax and 20 source-only owned-fixture checks. These
+checks do not compile or execute the native implementation or compiler worker.
+[Candidate scope](../native/docs/compiler-inline.md#complete-for-conditions-candidate-native-qualification-pending).
+
+## Complete while-condition body inlining candidate (2026-10-30)
+
+The classic function-body inliner now prepares a source-reconstructed repeated
+while-condition recipe. Each condition test reevaluates the original arguments
+and expanded body before checking the result; labels and the original loop body
+retain their ownership. Rust independently checks condition delimiters and call
+ownership. Existing type/binding proofs, capacities, executed verification,
+approval and recovery remain mandatory. Adversarial native fixtures are authored
+for control flow, effects, predicates, byte preservation and the original writer
+gates. Native compilation and fixture execution remain unrun locally; this is a
+source candidate awaiting guarded CI, not new runtime or release acceptance.
+Local typecheck and npm tests pass (266 passed, three skipped), as do Rust
+formatting, worker syntax and source-only type checks of owned fixture inputs.
+[Scope and remaining qualification](../native/docs/compiler-inline.md#complete-while-conditions-candidate-native-qualification-pending).
 
 ## Scoped f41 Windows/Linux and four-profile browser acceptance (2026-10-30)
 
