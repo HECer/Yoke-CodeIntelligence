@@ -1,5 +1,17 @@
 # Remaining implementation and acceptance
 
+## Corrected reset project-binding fixture qualification (2026-10-31)
+
+Rerun the complete 20-test `session_dashboard_management` target with separate
+400 malformed-label and 409 valid-foreign-project refusal assertions. Both must
+preserve exact counters, and the binding refusal must attest `notApplied`.
+The actual `3ceb66ce` run was 19 passed and one failed; source checks do not
+replace this runtime gate. Do not relax the existing project-label grammar.
+
+The selected Windows credential-backed TLS case is now independently confirmed
+for `3ceb66ce` (one passed, 49 filtered). This does not combine target counts or
+supply subsequent candidates' fresh Windows/native/browser/VSIX/release gates.
+
 ## Dashboard reset compiler repair qualification (2026-10-31)
 
 Recompile the explicit post-reset HTTP-failure conversion on fresh hosted

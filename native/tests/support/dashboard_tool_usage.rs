@@ -162,24 +162,32 @@ fn malformed_numeric_unicode_extra_path_and_foreign_project_requests_refuse() {
     let mut action = reset(&before["view"]["toolUsageStatisticsDisplay"]["revision"]);
     action["sourcePath"] = json!("../../foreign");
     assert_eq!(call(&mut session, address, &token, action).0, 400);
-    let mut body = request(
-        &before,
-        reset(&before["view"]["toolUsageStatisticsDisplay"]["revision"]),
-    );
-    body["project"] = json!("other🌍");
-    let bytes = wire(address, &token, body);
-    let client = thread::spawn(move || raw(address, bytes));
-    let until = Instant::now() + Duration::from_secs(10);
-    while !client.is_finished() {
-        session.poll_dashboard_management(&d()).unwrap();
-        assert!(Instant::now() < until);
-        thread::sleep(Duration::from_millis(1));
+    // Project labels have an existing ASCII grammar. Keep malformed Unicode
+    // refusal separate from a valid label bound to another project.
+    for (project, expected_status) in [("other🌍", 400u16), ("other", 409)] {
+        let mut body = request(
+            &before,
+            reset(&before["view"]["toolUsageStatisticsDisplay"]["revision"]),
+        );
+        body["project"] = json!(project);
+        let bytes = wire(address, &token, body);
+        let client = thread::spawn(move || raw(address, bytes));
+        let until = Instant::now() + Duration::from_secs(10);
+        while !client.is_finished() {
+            session.poll_dashboard_management(&d()).unwrap();
+            assert!(Instant::now() < until);
+            thread::sleep(Duration::from_millis(1));
+        }
+        let (status, reply) = client.join().unwrap();
+        assert_eq!(status, expected_status);
+        if expected_status == 409 {
+            assert_eq!(reply["notApplied"], true);
+        }
+        assert_eq!(
+            view(address, &token)["view"]["toolUsageStatisticsDisplay"],
+            before["view"]["toolUsageStatisticsDisplay"]
+        );
     }
-    assert_eq!(client.join().unwrap().0, 409);
-    assert_eq!(
-        view(address, &token)["view"]["toolUsageStatisticsDisplay"],
-        before["view"]["toolUsageStatisticsDisplay"]
-    );
 }
 
 #[test]

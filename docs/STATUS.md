@@ -1,5 +1,29 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Reset project-binding fixture correction (2026-10-31)
+
+At `3ceb66ce`, the actual Ubuntu `session_dashboard_management` target reaches
+19 passing tests and one failure: its Unicode foreign-project label expected
+HTTP 409, although the existing ASCII label validator correctly returns 400.
+The fixture now separately requires malformed `other🌍` to return 400 and valid
+foreign `other` to return 409 with `notApplied: true`. Both must preserve the
+exact statistics snapshot. Product validation and permissions are unchanged;
+the corrected fixture still requires fresh native execution.
+
+## Source-specific Windows credential TLS confirmation (2026-10-31)
+
+At `3ceb66ced10bacda9cd024d0f84a5345ea8cf80c`, the
+[Windows credential-backed TLS job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41184768572/job/124489341264)
+passes its explicitly selected existing receiver/sender recovery case using OS
+credentials and the selected CA: one passed, zero failed/ignored, 49 filtered
+out. Artifact `13036678194` has SHA-256
+`b0c175b2c6cf9b631d388ca002a34670f8b27976dfabb0190bfd9ad065731a3f`.
+Independent text-artifact checks bind the successful paired CLI/test producer,
+source revision, case/log hashes, named Job membership, natural worker/tree
+exit and cleanup. No native image was read or executed locally. This is one
+source-specific case, without whole-target, platform, VSIX or release acceptance;
+subsequent candidates retain their own fresh-source qualification gates.
+
 ## Dashboard reset compilation repair candidate (2026-10-31)
 
 Hosted `b5acd974` Windows Clippy, credential-TLS and VSIX producers, plus three
@@ -10,7 +34,9 @@ including 143 shard group logs; these are compile failures, not executed test
 failures. The unchanged binding check now explicitly maps refusal to a fixed
 internal error. Its position after the reset, outer unconfirmed-outcome reply,
 permissions and source/state checks remain. Fresh hosted compilation and full
-runtime qualification are still required; local native compilation is unrun.
+runtime qualification remain required for subsequent candidates. The selected
+`3ceb66ce` Windows TLS producer above now confirms one successful paired CLI/test
+build; local native compilation remains unrun.
 
 ## Real tool statistics browser CI candidate (2026-10-31)
 
