@@ -80,15 +80,9 @@ pub(crate) fn milliseconds(value: &Value) -> Result<Option<u64>> {
     if value.is_null() {
         return Ok(None);
     }
-    let seconds = value
-        .as_f64()
-        .filter(|s| s.is_finite() && *s >= 0.0 && *s <= 600.0)
+    let milliseconds = crate::decimal_duration::milliseconds_ceil(value, MAX_MILLISECONDS)
         .ok_or_else(|| anyhow::anyhow!("session_config_symbol_info_budget_invalid"))?;
-    Ok(Some(if seconds == 0.0 {
-        0
-    } else {
-        (seconds * 1000.0).ceil().max(1.0) as u64
-    }))
+    Ok(Some(milliseconds))
 }
 
 #[derive(Default)]

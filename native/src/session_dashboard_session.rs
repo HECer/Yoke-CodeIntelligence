@@ -42,13 +42,16 @@ impl Session {
         if let Some(steering) = &self.host.steering {
             choices.extend(steering.modes.keys().cloned());
         }
-        Some(
-            json!({"enabled":self.dashboard_management.is_some(),"sessionControls":config.session_controls,
+        let mut value = json!({"enabled":self.dashboard_management.is_some(),"sessionControls":config.session_controls,
             "memories":config.memories,"configurationFiles":self.dashboard_documents_view().unwrap_or(json!(false)),"languageSelection":self.dashboard_language_view().unwrap_or(json!(false)),"rawLogs":self.dashboard_logs_view().unwrap_or(json!(false)),"shutdown":self.dashboard_shutdown_view().unwrap_or(json!(false)),
             "operationTimeoutMs":config.operation_timeout_ms,"sessionStateSha256":crate::model::hash(&self.persisted),
             "modeChoices":choices,"modeResetAvailable":self.steering_enabled(),"memoryWritesGranted":self.host.notes_policy.writable,
-            "noMemoriesMode":self.state.modes.iter().any(|m|m=="no-memories")}),
-        )
+            "noMemoriesMode":self.state.modes.iter().any(|m|m=="no-memories")});
+        if config.tool_usage_reset {
+            value["toolUsageReset"] =
+                json!(self.tool_usage.is_some() && self.tool_allowed("ci_session"));
+        }
+        Some(value)
     }
     /// Returns whether the actual selected tool catalog changed. At most four
     /// tickets are admitted per poll; their original deadlines never restart.
@@ -135,6 +138,15 @@ impl Session {
             ));
         }
         let (operation, args, tool, api, write) = match &request.action {
+            Action::ResetToolUsage {
+                expected_statistics_revision,
+            } => {
+                return self.dashboard_tool_usage_reset(
+                    request,
+                    expected_statistics_revision,
+                    deadline,
+                );
+            }
             Action::Shutdown {} => return self.dashboard_shutdown_action(request, deadline),
             Action::ReadLog { log_id, max_bytes } => {
                 return self.dashboard_log_action(request, log_id, *max_bytes, deadline);

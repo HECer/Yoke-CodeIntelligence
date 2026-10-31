@@ -2,6 +2,136 @@
 use super::*;
 
 #[test]
+fn do_first_effects_retain_fresh_frame_names_and_reject_foreign_or_unexplained_bindings() {
+    let root = tempfile::tempdir().unwrap();
+    let source = "// owned \u{03c0} e\u{301}\r\nfunction helper(n:number):boolean{return n<2;}\r\nlet turns=0;do{turns++;}while(helper(turns));do{turns++;}while(helper(turns));\r\nexport const observed=turns;\r\n";
+    fs::write(root.path().join("main.ts"), source).unwrap();
+    fs::write(root.path().join("tsconfig.json"),r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true},"files":["main.ts"]}"#).unwrap();
+    let mut engine = Engine::open(root.path()).unwrap();
+    let d = Deadline::new(60000);
+    let (snapshot, graph, _, _) = engine.index(&d).unwrap();
+    let symbol =
+        crate::agent_repl::source_symbol(&engine.store, &snapshot, &graph, "helper", "main.ts", &d)
+            .unwrap();
+    let tree = parse("typescript", source, &d).unwrap();
+    let declaration = classic(&tree, &symbol, source, &d).unwrap().unwrap();
+    let spec = CompilerSpec {
+        node: std::env::split_paths(&std::env::var_os("PATH").unwrap())
+            .map(|p| p.join(if cfg!(windows) { "node.exe" } else { "node" }))
+            .find(|p| p.is_file())
+            .unwrap()
+            .canonicalize()
+            .unwrap(),
+        typescript: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("../node_modules/typescript/lib/typescript.js")
+            .canonicalize()
+            .unwrap(),
+        trusted: true,
+    };
+    let intent = json!({"path":symbol.path,"name":symbol.name,"startByte":symbol.start_byte,"endByte":symbol.end_byte,"nameStartByte":symbol.name_start_byte,"nameEndByte":symbol.name_end_byte,"keepDefinition":false});
+    let report = crate::projects::execute(
+        &engine.store,
+        &snapshot,
+        &spec,
+        "inlineBody",
+        Some(intent),
+        &d,
+    )
+    .unwrap();
+    let baseline = report["bodyInline"].clone();
+    let admit = |value: Value| -> Result<String> {
+        let effect: Effect = crate::json::decode(value)?;
+        Ok(check(
+            &engine,
+            &spec,
+            &snapshot,
+            &symbol,
+            source,
+            &tree,
+            declaration,
+            false,
+            &effect,
+            &report,
+            &d,
+        )?
+        .1)
+    };
+    assert_eq!(baseline["frames"].as_array().unwrap().len(), 2);
+    let first = baseline["frames"][0]["names"]["doFirst"]
+        .as_str()
+        .unwrap()
+        .to_owned();
+    assert_ne!(baseline["frames"][1]["names"]["doFirst"], first);
+    let result = admit(baseline.clone()).unwrap();
+    assert!(result.contains(&format!("for (let {first} = true; ; {first} = false)")));
+    assert!(!result.contains("function helper"));
+
+    let mut missing = baseline.clone();
+    missing["frames"][0]["names"]
+        .as_object_mut()
+        .unwrap()
+        .remove("doFirst");
+    assert!(admit(missing).is_err());
+    for (frame, name) in [
+        (0, baseline["frames"][0]["names"]["result"].clone()),
+        (1, json!(first)),
+    ] {
+        let mut reused = baseline.clone();
+        reused["frames"][frame]["names"]["doFirst"] = name;
+        let error = admit(reused).unwrap_err();
+        assert!(
+            error.to_string().contains("Body name reused across frames"),
+            "{error:#}"
+        );
+    }
+
+    let bindings = baseline["after"]["bindings"].as_array().unwrap();
+    let selected = bindings
+        .iter()
+        .position(|b| b["span"]["text"] == first && b["resolution"] == "resolved")
+        .unwrap();
+    let foreign = bindings
+        .iter()
+        .find(|b| b["span"]["text"] == "turns")
+        .unwrap()["span"]
+        .clone();
+    let mut retargeted = baseline.clone();
+    retargeted["after"]["bindings"][selected]["targets"] =
+        json!([{"kind":"captured","span":foreign}]);
+    let error = admit(retargeted).unwrap_err();
+    assert!(
+        error
+            .to_string()
+            .contains("Body synthetic binding has foreign targets"),
+        "{error:#}"
+    );
+
+    // Exact result bytes do not authorize an extra compiler observation.
+    let start = result.find(" = true").unwrap() + 3;
+    assert_eq!(&result[start..start + 4], "true");
+    let mut unknown = baseline.clone();
+    unknown["after"]["bindings"]
+        .as_array_mut()
+        .unwrap()
+        .push(json!({
+            "span":{"path":"main.ts","startByte":start,"endByte":start+4,"text":"true"},
+            "resolution":"no_declarations","targets":[]
+        }));
+    let error = admit(unknown).unwrap_err();
+    assert!(
+        error
+            .to_string()
+            .contains("Body unexplained new identifier observation"),
+        "{error:#}"
+    );
+    assert_eq!(
+        fs::read(root.path().join("main.ts")).unwrap(),
+        source.as_bytes()
+    );
+    assert_eq!(engine.store.db.query_row("SELECT COUNT(*) FROM records WHERE kind IN ('plan','approval','receipt','journal','native_compiler_report_v1')",[],|r|r.get::<_,usize>(0)).unwrap(),0);
+}
+
+#[test]
 fn assignment_effects_cannot_retarget_compound_or_inject_a_coherently_rehashed_write() {
     let root = tempfile::tempdir().unwrap();
     let source = "// 🧪\r\nfunction helper(n:number):number{return n+1;}\r\nlet target=0,other=0;\r\ntarget /* keep */ = /* call */ ((helper(2)));\r\nexport const observed={target,other};\r\n";

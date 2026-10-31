@@ -328,6 +328,17 @@ permissions and writer/recovery gates remain mandatory; results stay
 `complete=false`. Wider expression/loop/header forms and full R1 acceptance are
 still open.
 
+Completed Windows and Linux CI on source `b630f89f` each passed 30 of the 34 body
+integration cases and rejected the same four do/CLI cases with an unexplained
+new-identifier observation. The native renderer already validated the private
+first-iteration marker; the later publication inventory omitted that name. A
+source correction includes only that independently reconstructed fresh marker.
+Global frame-name uniqueness, exact observations and foreign-target refusal
+remain active. An additional native compiler-witness fixture covers two do
+frames, missing/reused names, a foreign target, an extra exact-byte observation
+and absence of source changes or plan/journal publication. That new fixture and
+the corrected integration cases remain unrun locally and require fresh CI.
+
 ## Host registration and requests
 
 A session host profile can explicitly opt in:

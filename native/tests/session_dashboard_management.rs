@@ -1,4 +1,6 @@
 //! Same-thread management over actual private HTTP; no Session crosses threads.
+#[path = "support/dashboard_tool_usage.rs"]
+mod tool_usage_cases;
 use serde_json::{Value, json};
 use std::{
     fs,

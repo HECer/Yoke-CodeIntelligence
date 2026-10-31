@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "upstreamRevision": "ede329aaf0c824bea75455a2926f01420d7aa620",
+  "sourceBlobs": {
+    "src/serena/analytics.py": "e12ae2ef9427964e2bd6b3130cf073fa886ad3bb",
+    "src/serena/agent.py": "e27fc397b850338f268f095706ef8d1fc242e649",
+    "src/serena/tools/tools_base.py": "123d390ac4230c049c5b4d81edc940c2f1e0ed48",
+    "src/serena/resources/serena_config.template.yml": "047955195f5fcf50d9fb061ca3e0bbd1e5d5ee3c"
+  },
+  "field": "token_count_estimator",
+  "scope": "global",
+  "publicDefault": "CHAR_COUNT",
+  "estimators": {
+    "CHAR_COUNT": {"unit": "unicode_scalars", "divisor": 4, "rounding": "floor"},
+    "TIKTOKEN_GPT4O": {"encoding": "o200k_base", "specialTokens": "ordinary_text"},
+    "ANTHROPIC_CLAUDE_SONNET_4": {"model": "claude-sonnet-4-6", "path": "/v1/messages/count_tokens", "messageRole": "user", "responseField": "input_tokens"}
+  },
+  "nativePolicy": {
+    "selectionRequired": true,
+    "inputRepresentation": "canonical_json_arguments",
+    "outputRepresentation": "canonical_json_native_tool_result",
+    "storedText": false,
+    "sourceRetentionAuthority": false,
+    "nativeByteEstimateChanged": false,
+    "providerBillingChanged": false,
+    "remoteTextDisclosureRequiresIndependentHostGrant": true
+  }
+}

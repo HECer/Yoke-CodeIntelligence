@@ -82,6 +82,14 @@ overrides and all host backend registration settings into the Session
 fingerprint. Current-state checks cover tools and persistent REPL APIs. An
 inspection-only open cannot initialize a missing automatic choice.
 
+HTTP host startup validation is separate from public Session inspection. Before
+listening, it validates the original host, registration, policy and activation
+preconditions without publishing a Session or computing an automatic choice.
+The validation returns no usable Session. The authenticated MCP `initialize`
+then uses the normal Session constructor, including activation, captured-filename
+selection and current-state publication. Existing explicit Git host preparation
+is unchanged. Public inspection still refuses an uninitialized automatic choice.
+
 ## Evidence and bounded scope
 
 Configuration reports the selected policy, per-project `automaticLanguageServers`
@@ -111,3 +119,15 @@ host refusal, dashboard override/reset, metadata validation, secondary activatio
 stdio and authenticated HTTP. They have not been compiled or executed locally.
 No native runtime, real vendor, Windows kernel cleanup, combined platform,
 browser/VSIX, main or release acceptance follows from these source checks.
+
+Completed Linux CI on source `6b5a3da4` compiled the seven integration fixtures:
+six passed and authenticated HTTP failed during host startup, before a listener
+or client initialization. The PR merge used the identical source tree. The
+startup separation above addresses that observed ordering error. Three additional
+fixtures cover passive-inspection refusal, invalid HTTP host policy and a missing
+activation runtime grant combined with automatic selection; the
+existing HTTP fixture now checks zero snapshots/Session rows before startup and
+exactly one Session after authenticated initialization. These corrections have
+not yet received native runtime qualification. The unrelated public catalog CLI
+fixture now checks 80 declared backends, including the three current additions;
+its live-certification field remains unavailable.

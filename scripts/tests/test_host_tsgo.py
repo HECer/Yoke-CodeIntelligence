@@ -6,6 +6,8 @@ import json
 from pathlib import Path, PureWindowsPath
 import re
 import unittest
+import tempfile
+from types import SimpleNamespace
 
 
 def functions():
@@ -14,13 +16,49 @@ def functions():
     if path.is_file():
         tree = ast.parse(path.read_bytes())
         names = {"require", "admit_members", "admit_package", "fixture_sources", "token_spans",
-                 "utf16_range", "admit_reply", "admit_state", "admit_result"}
+                 "utf16_range", "admit_reply", "admit_state", "admit_result", "query"}
         selected = [n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name in names]
         exec(compile(ast.Module(body=selected, type_ignores=[]), "<inert-tsgo-admission>", "exec"), namespace)
     return namespace
 
 
 class VendorAdmission(unittest.TestCase):
+    def test_actual_query_orchestration_uses_scoped_lsp_route_and_native_byte_budget(self):
+        namespace = functions()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture, tool = root / "fixture", root / "tool"
+            fixture.mkdir()
+            tool.mkdir()
+
+            def write_json(path, value):
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(json.dumps(value), encoding="utf-8")
+
+            def command(argv, workspace, logs, name, timeout):
+                self.assertEqual(timeout, 120)
+                self.assertEqual(argv[argv.index("--max-bytes") + 1], "64000")
+                self.assertEqual(argv[argv.index("--timeout") + 1], "100000")
+                requests = json.loads((fixture / "requests.json").read_text(encoding="utf-8"))
+                self.assertEqual(len(requests), 3)
+                self.assertEqual([r["args"]["arguments"]["languageServer"]["operation"] for r in requests],
+                                 ["hover", "definition", "references"])
+                for request in requests:
+                    self.assertEqual(request["operation"], "queryProject")
+                    self.assertEqual(set(request["args"]), {"project", "tool", "arguments"})
+                    self.assertEqual(request["args"]["project"], "default")
+                    self.assertEqual(request["args"]["tool"], "ci_find")
+                    arguments = request["args"]["arguments"]
+                    self.assertEqual(set(arguments), {"languageServer", "maxBytes"})
+                    self.assertEqual(arguments["maxBytes"], 64000)
+                return b"{}"
+
+            namespace.update(V=SimpleNamespace(write_json=write_json, decode=json.loads,
+                read_bytes=lambda path, limit: path.read_bytes()), command=command,
+                OUTPUT=root / "output", admit_reply=lambda *args: {"hoverRangeChecked": True})
+            result = namespace["query"](tool, fixture, root / "inert-native.exe", "a" * 64)
+            self.assertTrue(result["savedFixtureSourceUnchanged"])
+
     def call(self, name, *args):
         self.assertIn(name, functions(), "Real TSGo admission is not implemented")
         return functions()[name](*args)

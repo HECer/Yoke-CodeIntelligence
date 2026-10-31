@@ -272,10 +272,9 @@ fn custom_single_project_uses_only_the_host_startup_and_existing_resume_guards()
     let d = Deadline::new(20000);
     let host = profile(Some(json!(false)), true, true);
     let (_temp, mut session) = setup(host.clone(), "fixed", &d);
-    assert_eq!(
-        session.invoke("configuration", &json!({}), &d).unwrap()["singleProject"],
-        true
-    );
+    let configuration = session.invoke("configuration", &json!({}), &d).unwrap();
+    assert_eq!(configuration["startupProject"], "default");
+    assert_eq!(configuration["projectActivationLocked"], true);
     assert!(
         session
             .invoke("activate", &json!({"project":"default"}), &d)

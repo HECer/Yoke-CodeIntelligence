@@ -313,8 +313,9 @@ def query(tool, fixture, native, vendor_hash):
         "args": ["--lsp", "--stdio"], "configuration": {"allowSourceExecution": True}}])
     V.write_json(fixture / "host.json", {"languageServers": {"global": ["typescript_tsgo"]}})
     offset = token_spans(sources)["entry.ts"][-1][0]
-    V.write_json(fixture / "requests.json", [{"operation": "symbols.find", "args": {
-        "languageServer": {"path": "entry.ts", "offset": offset, "operation": operation}, "maxBytes": 64000}}
+    V.write_json(fixture / "requests.json", [{"operation": "queryProject", "args": {
+        "project": "default", "tool": "ci_find", "arguments": {
+            "languageServer": {"path": "entry.ts", "offset": offset, "operation": operation}, "maxBytes": 64000}}}
         for operation in ("hover", "definition", "references")])
     raw = command([native, "--root", workspace, "--timeout", "100000", "--max-bytes", "64000",
         "--language-server-config", fixture / "servers.json", "--trust-servers", "session", "--host-profile", fixture / "host.json",
