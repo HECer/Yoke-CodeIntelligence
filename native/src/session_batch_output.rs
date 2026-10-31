@@ -70,7 +70,7 @@ impl Batch {
     ) -> Result<()> {
         let remaining = self.remaining(external_effects, deadline)?;
         let bytes = encode(&value, remaining, deadline)?;
-        self.result_bytes = used + bytes.len();
+        self.result_bytes += usize::from(!self.results.is_empty()) + bytes.len();
         self.results.push(value);
         Ok(())
     }
