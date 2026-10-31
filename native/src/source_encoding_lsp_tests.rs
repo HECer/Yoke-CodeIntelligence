@@ -96,3 +96,43 @@ fn optional_copy_mapping_capacity_refuses_before_a_provider_can_start() {
     assert!(error.contains("source_encoding_capability_unavailable"));
     assert_eq!(std::fs::read(root.path().join("data.txt")).unwrap(), raw);
 }
+
+#[test]
+fn utf8_sig_private_copy_and_lsp_positions_preserve_raw_bom_offsets() {
+    for bom in [false, true] {
+        let root = tempfile::tempdir().unwrap();
+        let text = "// \u{e9}\u{1f4a1}\r\nfn target() {}\r\n";
+        let mut raw = if bom {
+            vec![0xef, 0xbb, 0xbf]
+        } else {
+            Vec::new()
+        };
+        raw.extend_from_slice(text.as_bytes());
+        std::fs::write(root.path().join("main.rs"), &raw).unwrap();
+        let mut e = Engine::open(root.path()).unwrap();
+        e.capture_options.source_encoding = Codec::Utf8Sig.policy();
+        let d = Deadline::new(30000);
+        let (s, _, _, _) = e.index(&d).unwrap();
+        let tree = tempfile::tempdir().unwrap();
+        changes::materialize_source_views(&e.store, &s, tree.path(), &Default::default(), &d)
+            .unwrap();
+        assert_eq!(
+            std::fs::read(tree.path().join("main.rs")).unwrap(),
+            text.as_bytes()
+        );
+        check_copy_verified(&e.store, &s, tree.path(), &Default::default(), &d).unwrap();
+        let mut n = Normalizer::new(&e.store, &s, tree.path(), "fixture", &d).unwrap();
+        let anchor = n
+            .anchor(
+                "main.rs",
+                &json!({"start":{"line":1,"character":3},"end":{"line":1,"character":9}}),
+                true,
+            )
+            .unwrap();
+        assert_eq!(
+            anchor["startByte"],
+            text.find("target").unwrap() + if bom { 3 } else { 0 }
+        );
+        assert_eq!(anchor["contentHash"], crate::model::hash(&raw));
+    }
+}

@@ -42,6 +42,39 @@ No whole-project or release acceptance is claimed.
 [Exact scope, receipts and screenshots](validation/integration-2026-10-30/f41-ci-checkpoint/README.md).
 
 
+## UTF-32 hosted checkpoint and quoted-YAML fixture correction (2026-10-30)
+
+At source `38322c7`, all seven new UTF-32 cases and the entire 14-case transport
+target pass on Windows/Linux/macOS. The 24-case core target passes 23 and fails
+only a stale negative input expecting the newly supported quoted UTF-32 YAML
+selection to refuse. This correction substitutes unsupported UTF-7 and adds
+positive plain/quoted YAML and canonical JSON policy checks, retaining strict
+JSON enum alias refusal and all original assertions/permissions/budgets.
+Corrected full-core execution remains pending. Production codec code is unchanged;
+strict macOS memory, full platform/VSIX/main/release acceptance remain open.
+
+## Strict UTF-32 source candidate (2026-10-30)
+
+The existing selected-codec stack now admits explicit BOM-selected UTF-32 and
+UTF-32LE/BE source views, raw byte offsets and strict scalar/unit validation.
+Existing source identities and all preceding codec behavior remain. New authored
+core/stdio/HTTP/LSP/verified-writer fixtures preserve the original authority,
+verification, approval, journal, deadline and cleanup requirements. Native
+compilation and execution are pending; no native runtime or full encoding/parity
+certificate is claimed. See [the exact contract](../native/docs/source-encodings.md#utf-32-source-candidate-2026-10-30).
+
+
+## Windows-1252 integration requires native qualification (2026-10-30)
+
+The Windows-1252 source-only candidate is combined with ASCII and UTF-8-SIG after
+`272ec171`. Original bytes/offsets, all preceding codec fixtures, unsupported proof
+consumer refusals, and the existing verification/approval/writer gates remain.
+The complete byte table matches Python's strict codec; this comparison reads
+source constants and does not compile or execute Rust. New core and real-transport
+fixtures require guarded hosted execution. Full selected-encoding identity,
+remaining codecs/LSP combinations, strict platform memory, VSIX/release and main
+remain open. See the [codec contract](../native/docs/source-encodings.md).
+
 ## Remaining Python browser and strict platform gates (2026-10-30)
 
 Source `abdbdb03`, run `41013033443`, now has successful native, Serena and HTTP

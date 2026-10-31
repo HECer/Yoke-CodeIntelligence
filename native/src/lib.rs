@@ -594,7 +594,7 @@ impl Engine {
                     status["capabilities"]["backendRuntimeCertification"] = json!(false);
                 }
                 if let Some(policy) = self.capture_options.source_encoding {
-                    status["capabilities"]["sourceEncoding"] = json!({"schema":source_encoding::VERSION,"selected":policy,"supported":["utf8","utf16_bom_required","utf16_le","utf16_be","latin1"],"otherCodecs":"unsupported","offsets":"original_source_bytes","semanticWorkspaceEdits":false,"compilerPieceRefactors":false,"runtimeTraceMapping":false,"manifestBalancedRetrieval":false,"fullEncodingIdentityCertified":false});
+                    status["capabilities"]["sourceEncoding"] = json!({"schema":source_encoding::VERSION,"selected":policy,"supported":["utf8","utf8_sig","utf16_bom_required","utf16_le","utf16_be","latin1","ascii","windows1252","utf32_bom_required","utf32_le","utf32_be"],"otherCodecs":"unsupported","offsets":"original_source_bytes","semanticWorkspaceEdits":false,"compilerPieceRefactors":false,"runtimeTraceMapping":false,"manifestBalancedRetrieval":false,"fullEncodingIdentityCertified":false});
                 }
                 return Ok(status);
             }
