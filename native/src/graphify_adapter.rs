@@ -548,7 +548,7 @@ fn shortest(view: &View, args: &Value, deadline: &Deadline) -> Result<Value> {
     let category_policy = args["path_policy"] == "weakest_source_categories_v1";
     let mut weakest_category = None;
     if found && category_policy {
-        use crate::graph_analysis_policy::{Category, SourceCategoryPolicy};
+        use crate::graph_extensions::{AnalysisCategory as Category, SourceCategoryPolicy};
         let policy = SourceCategoryPolicy::default();
         // The shortest-route DAG has increasing BFS distance, including in
         // explicitly undirected traversal. Keep each of the four possible

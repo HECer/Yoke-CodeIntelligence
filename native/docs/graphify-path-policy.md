@@ -52,3 +52,11 @@ and public argument fixture await fresh guarded hosted compilation and execution
 They have not run locally. No native payload has been read or executed locally;
 no runtime, upstream, full Windows, main or release acceptance follows from this
 source candidate.
+
+The first implementation at `23a9d8a7` fails compilation with `E0432` in
+[Ubuntu shard 0](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41203888247/job/124544946118):
+`graph_analysis_policy.rs` is the private `graph_extensions::policy` module,
+not a crate-root module. The import now uses its existing public re-exports,
+`graph_extensions::AnalysisCategory` and `SourceCategoryPolicy`. This import
+correction awaits fresh compilation and the original causal/companion cases;
+the failed producer supplies no native GREEN or runtime acceptance.

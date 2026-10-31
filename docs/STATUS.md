@@ -15,6 +15,12 @@ native runtime checks remain pending. Parallel-hop presentation, numeric claim
 semantics, route count/caps and full current upstream equivalence remain open.
 See the [selector contract and causal RED evidence](../native/docs/graphify-path-policy.md).
 
+The first implementation at `23a9d8a7` fails native compilation with `E0432`:
+the policy file is a private child of `graph_extensions`, whose existing public
+exports are `AnalysisCategory` and `SourceCategoryPolicy`. The candidate now
+imports those exports. Fresh compilation and all native fixtures remain pending;
+the failed build provides no runtime acceptance.
+
 ## Current-source Windows aggregate checkpoint (2026-10-31)
 
 At `002024f4`, all eight Windows default shards independently verify 378 exact
