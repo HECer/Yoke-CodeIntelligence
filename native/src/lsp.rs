@@ -234,7 +234,9 @@ pub fn restart_registered(engine: &mut Engine, deadline: &Deadline) -> Result<Va
             .selected_backends
             .as_ref()
             .is_some_and(|ids| !ids.is_empty() && ids.len() <= 32)
-            || (!engine.servers.is_empty() && engine.servers.len() <= 100),
+            || (!engine.automatic_backend_selection
+                && !engine.servers.is_empty()
+                && engine.servers.len() <= 100),
         "Restart requires bounded host-registered providers"
     );
     let (snapshot, graph, _, _) = engine.index(deadline)?;
@@ -2023,6 +2025,10 @@ fn run_at_internal(
 ) -> Result<Value> {
     check_semantic_manifests(engine, snapshot, graph, deadline)?;
     let selected = engine.selected_provider(request.path)?;
+    ensure!(
+        !engine.automatic_backend_selection || selected.is_some(),
+        "language_auto_no_selected_provider_for_path"
+    );
     let host = selected
         .as_ref()
         .map(|(_, p)| (&p.server, Some(&p.configuration)))

@@ -1497,7 +1497,16 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
                 out.unknown.insert("artifact:unknown-shape".into());
             }
         }
-        let value = if kind == "journal" {
+        let value = if kind == crate::project_session::RECORD_KIND {
+            // Creation choices are inert filename metadata, never source/CAS roots.
+            // Keep every preexisting Session reference in the generic projection.
+            let mut projected = value;
+            projected
+                .as_object_mut()
+                .context("Invalid retained session object")?
+                .remove("automaticLanguageServers");
+            projected
+        } else if kind == "journal" {
             crate::changes::journal_retention_projection(&value)?
         } else {
             value

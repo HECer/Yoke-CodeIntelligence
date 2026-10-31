@@ -84,6 +84,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub language_server_auto_selection: Option<crate::server_autoselection::Config>,
     #[serde(default, skip_serializing_if = "crate::tool_budgets::unselected")]
     pub tool_budgets: Option<crate::tool_budgets::Config>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -145,6 +147,7 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            language_server_auto_selection: None,
             tool_budgets: None,
             activation_commands: None,
             activation_runtime: None,
@@ -185,6 +188,8 @@ impl Default for HostProfile {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct State {
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    automatic_language_servers: BTreeMap<String, crate::server_autoselection::Decision>,
     id: String,
     label: String,
     workspace_id: String,
@@ -226,6 +231,7 @@ pub(crate) fn validate_retention_record(
         crate::session_steering::retained_modes(modes, true)?;
     }
     dashboard_languages::validate_retained(&state.language_server_overrides)?;
+    crate::server_autoselection::validate_retained(&state.automatic_language_servers)?;
     for name in state
         .onboarded_projects
         .iter()
@@ -277,6 +283,8 @@ pub struct Session {
 }
 #[path = "project_activation_session.rs"]
 mod activation;
+#[path = "server_autoselection_session.rs"]
+mod automatic_languages;
 #[path = "session_dashboard_documents.rs"]
 mod dashboard_documents;
 #[path = "session_dashboard_languages.rs"]
@@ -1024,6 +1032,9 @@ impl Session {
         inspection_only: bool,
         deadline: &Deadline,
     ) -> Result<Self> {
+        if let Some(selection) = &host.language_server_auto_selection {
+            selection.validate()?;
+        }
         if let Some(budgets) = &host.tool_budgets {
             budgets.validate()?;
         }
@@ -1521,6 +1532,17 @@ impl Session {
             fingerprint
         };
         engine.sync_source_exclusions(deadline)?;
+        let fingerprint = if let Some(selection) = &host.language_server_auto_selection {
+            identity(&(
+                fingerprint,
+                crate::server_autoselection::VERSION,
+                crate::server_autoselection::contract_binding(),
+                selection,
+                crate::server_selection::bindings(&engine.backend_servers)?,
+            ))
+        } else {
+            fingerprint
+        };
         let fingerprint = if let Some(budgets) = &host.tool_budgets {
             identity(&(fingerprint, crate::tool_budgets::VERSION, budgets))
         } else {
@@ -1649,6 +1671,7 @@ impl Session {
             state
         } else {
             State {
+                automatic_language_servers: BTreeMap::new(),
                 id,
                 label: owned_label,
                 workspace_id: engine.store.workspace_id.clone(),
@@ -1698,15 +1721,33 @@ impl Session {
             "Query-only project cannot be activated"
         );
         dashboard_languages::validate_overrides(&host, &state.language_server_overrides)?;
+        automatic_languages::validate_choices(&host, &state.automatic_language_servers)?;
+        ensure!(
+            !inspection_only
+                || host.language_server_auto_selection.is_none()
+                || state.automatic_language_servers.contains_key("default")
+                || host
+                    .language_servers
+                    .as_ref()
+                    .and_then(|s| s.select("default"))
+                    .is_some()
+                || state.language_server_overrides.contains_key("default"),
+            "language_auto_inspection_requires_initialized_selection"
+        );
         if let Some(registry) = &dashboard_language_registry {
             registry.apply(
                 &mut engine,
                 &host,
                 "default",
                 state.language_server_overrides.get("default"),
+                state.automatic_language_servers.get("default"),
             )?;
         }
         let serialized = serde_json::to_string(&state)?;
+        ensure!(
+            serialized.len() <= 64000,
+            "Stored session capacity exceeded"
+        );
         let activation_attempt = if inspection_only {
             None
         } else {
@@ -1777,7 +1818,7 @@ impl Session {
                 (Err(error), None) => return Err(error),
                 (Ok(()), None) => (None, activation_witness_before_publication),
             };
-        Ok(Self {
+        let mut session = Self {
             activation_ready_projects: if activation_diagnostic.is_some() {
                 BTreeSet::from([state.active_project.clone()])
             } else {
@@ -1813,7 +1854,9 @@ impl Session {
             global_notes: None,
             debug_adapters: BTreeMap::new(),
             process_cleanup_unproven: false,
-        })
+        };
+        session.ensure_automatic_language("default", deadline)?;
+        Ok(session)
     }
     pub fn steering_enabled(&self) -> bool {
         crate::session_steering::enabled(&self.host)
@@ -1901,6 +1944,7 @@ impl Session {
                 &self.host,
                 "default",
                 self.state.language_server_overrides.get("default"),
+                self.state.automatic_language_servers.get("default"),
             )?;
             for (name, engine) in &self.others {
                 deadline.check()?;
@@ -1909,6 +1953,7 @@ impl Session {
                     &self.host,
                     name,
                     self.state.language_server_overrides.get(name),
+                    self.state.automatic_language_servers.get(name),
                 )?;
             }
         }
@@ -1930,6 +1975,7 @@ impl Session {
             || self.host.symbol_workspace_folders.is_some()
             || self.host.symbol_info_budgets.is_some()
             || self.host.tool_budgets.is_some()
+            || self.host.language_server_auto_selection.is_some()
             || self.host.primary_read_only
             || !crate::source_exclusions::unselected(&self.host.source_exclusions)
             || self.host.source_line_endings.is_some()
@@ -1994,6 +2040,7 @@ impl Session {
     pub(crate) fn check_repl_state(&self, deadline: &Deadline) -> Result<()> {
         deadline.check()?;
         if self.host.optional_defaults.is_some()
+            || self.host.language_server_auto_selection.is_some()
             || self.agent_interface().is_some()
             || self.host.steering.as_ref().is_some_and(|s| {
                 s.has_api_exclusions() || s.has_memory_patterns() || s.has_inclusions()
@@ -2272,6 +2319,7 @@ impl Session {
             .checked_add(1)
             .context("Session revision overflow")?;
         let text = serde_json::to_string(&next)?;
+        ensure!(text.len() <= 64000, "Stored session capacity exceeded");
         let changed = self.engine.store.db.execute(
             "UPDATE records SET value=?1 WHERE kind=?2 AND id=?3 AND value=?4",
             params![text, RECORD_KIND, next.id, self.persisted],
@@ -2389,6 +2437,7 @@ impl Session {
                     &self.host,
                     name,
                     self.state.language_server_overrides.get(name),
+                    self.state.automatic_language_servers.get(name),
                 )?;
             }
             if self.git_repository_projects.is_some() {
@@ -2396,6 +2445,7 @@ impl Session {
             }
             self.others.insert(name.into(), engine);
         }
+        self.ensure_automatic_language(name, deadline)?;
         let engine = self
             .others
             .get_mut(name)
@@ -2578,6 +2628,19 @@ impl Session {
             "symbolWorkspaceFolders":self.host.symbol_workspace_folders.as_ref().and_then(|p| p.select(&self.state.active_project)),
             "additionalWorkspaceFolders":self.host.additional_workspace_folders.as_ref().and_then(|p| p.select(&self.state.active_project)),
             "executionAuthority":"independent_host_grants","sourceWrittenByDashboard":false});
+        if self.host.language_server_auto_selection.is_some() {
+            let active = self.automatic_language_applies(&self.state.active_project);
+            value["automaticLanguageSelectionActive"] = json!(active);
+            if active {
+                let choice = self
+                    .state
+                    .automatic_language_servers
+                    .get(&self.state.active_project);
+                value["automaticLanguageSelectionInitialized"] = json!(choice.is_some());
+                value["selectedBackends"] =
+                    json!(choice.map(|v| v.backend_id.iter().collect::<Vec<_>>()));
+            }
+        }
         if let Some(management) = self.dashboard_management_view() {
             value["management"] = management;
         }
@@ -2741,6 +2804,16 @@ impl Session {
                     value["symbolWorkspaceFolders"] = serde_json::to_value(folders)?;
                     value["symbolWorkspaceFoldersResolved"] =
                         json!(folders.select(&self.state.active_project));
+                }
+                if let Some(selection) = &self.host.language_server_auto_selection {
+                    value["languageServerAutoSelection"] = serde_json::to_value(selection)?;
+                    value["automaticLanguageServers"] =
+                        serde_json::to_value(&self.state.automatic_language_servers)?;
+                    value["automaticSelectionScope"] =
+                        json!("creation_time_captured_filenames_only");
+                    value["automaticSelectionExhaustiveProjectCoverage"] = json!(false);
+                    value["automaticLanguageSelectionActive"] =
+                        json!(self.automatic_language_applies(&self.state.active_project));
                 }
                 if let Some(budgets) = &self.host.tool_budgets {
                     value["toolBudgets"] = serde_json::to_value(budgets)?;

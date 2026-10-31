@@ -1,5 +1,21 @@
 # Remaining implementation and acceptance
 
+## Creation-time language-server selection candidate (2026-10-31)
+
+The selected global ls_priorities setting now has a native source candidate
+for one creation-time backend choice from captured filenames, with all 80
+public matcher/default/order declarations pinned. Host registrations and
+execution grants remain independent; explicit selections supersede detection.
+The reviewed delta closes legacy fallback paths, bounds combined Session state
+before publication, and keeps filename metadata out of retention roots.
+Twelve authored native unit and seven integration fixtures, exact hosted
+compilation/transport/cleanup/regression and real-provider behavior remain
+unrun locally. Capture-limited selection is not exhaustive project detection;
+public interactive creation prompts are not implemented. Token estimators and
+full upstream/backend/platform/browser/VSIX/main/release gates remain open.
+Earlier entries below retain their historical source scope and pending gates.
+[Contract, exact defaults and remaining evidence](../native/docs/server-autoselection.md).
+
 ## Explicit global tool-budget candidate (2026-10-31)
 
 A selected numeric policy now has actual configuration, Session binding and

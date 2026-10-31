@@ -1,0 +1,854 @@
+{
+  "schemaVersion": 1,
+  "upstreamRevision": "ede329aaf0c824bea75455a2926f01420d7aa620",
+  "sourceBlobs": {
+    "src/solidlsp/ls_config.py": "d98e0a9d516b398c6b89fa4b1b38ed33fbde3cb9",
+    "src/serena/resources/serena_config.template.yml": "047955195f5fcf50d9fb061ca3e0bbd1e5d5ee3c"
+  },
+  "scope": "creation_time",
+  "selection": "filename_count_then_priority_then_public_order",
+  "backends": [
+    {
+      "id": "csharp",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".cs"
+      ]
+    },
+    {
+      "id": "vbnet",
+      "priority": 1,
+      "caseSensitive": true,
+      "suffixes": [
+        ".cs",
+        ".vb"
+      ]
+    },
+    {
+      "id": "python",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".py",
+        ".pyi"
+      ]
+    },
+    {
+      "id": "rust",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".rs"
+      ]
+    },
+    {
+      "id": "java",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".java"
+      ]
+    },
+    {
+      "id": "kotlin",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".kt",
+        ".kts"
+      ]
+    },
+    {
+      "id": "typescript",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".cjs",
+        ".cjsx",
+        ".cts",
+        ".ctsx",
+        ".js",
+        ".jsx",
+        ".mjs",
+        ".mjsx",
+        ".mts",
+        ".mtsx",
+        ".ts",
+        ".tsx"
+      ]
+    },
+    {
+      "id": "go",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".go"
+      ]
+    },
+    {
+      "id": "ruby",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".erb",
+        ".rb"
+      ]
+    },
+    {
+      "id": "dart",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".dart"
+      ]
+    },
+    {
+      "id": "cpp",
+      "priority": 2,
+      "caseSensitive": false,
+      "suffixes": [
+        ".c",
+        ".c++",
+        ".c++m",
+        ".cc",
+        ".cl",
+        ".clcpp",
+        ".cp",
+        ".cpp",
+        ".cppm",
+        ".cu",
+        ".cxx",
+        ".cxxm",
+        ".h",
+        ".hh",
+        ".hip",
+        ".hpp",
+        ".hxx",
+        ".inl",
+        ".ino",
+        ".ipp",
+        ".ixx",
+        ".m",
+        ".mm",
+        ".tpp",
+        ".txx"
+      ]
+    },
+    {
+      "id": "cpp_ccls",
+      "priority": 0,
+      "caseSensitive": false,
+      "suffixes": [
+        ".c",
+        ".c++",
+        ".cc",
+        ".cp",
+        ".cpp",
+        ".cxx",
+        ".h",
+        ".hh",
+        ".hpp",
+        ".hxx",
+        ".inl",
+        ".ino",
+        ".ipp",
+        ".m",
+        ".mm",
+        ".tpp",
+        ".txx"
+      ]
+    },
+    {
+      "id": "php",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".php",
+        ".phtml"
+      ]
+    },
+    {
+      "id": "php_devsense",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".php",
+        ".phtml"
+      ]
+    },
+    {
+      "id": "r",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".R",
+        ".Rmd",
+        ".Rnw",
+        ".r"
+      ]
+    },
+    {
+      "id": "perl",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".pl",
+        ".pm",
+        ".t"
+      ]
+    },
+    {
+      "id": "clojure",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".clj",
+        ".cljc",
+        ".cljs",
+        ".edn"
+      ]
+    },
+    {
+      "id": "elixir",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".ex",
+        ".exs"
+      ]
+    },
+    {
+      "id": "elm",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".elm"
+      ]
+    },
+    {
+      "id": "terraform",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".tf",
+        ".tfstate",
+        ".tfvars"
+      ]
+    },
+    {
+      "id": "swift",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".swift"
+      ]
+    },
+    {
+      "id": "bash",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".bash",
+        ".sh"
+      ]
+    },
+    {
+      "id": "crystal",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".cr"
+      ]
+    },
+    {
+      "id": "cue",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".cue"
+      ]
+    },
+    {
+      "id": "zig",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".zig",
+        ".zon"
+      ]
+    },
+    {
+      "id": "lua",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".lua"
+      ]
+    },
+    {
+      "id": "lua_emmylua",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".lua"
+      ]
+    },
+    {
+      "id": "luau",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".luau"
+      ]
+    },
+    {
+      "id": "nix",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".nix"
+      ]
+    },
+    {
+      "id": "erlang",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".app",
+        ".app.src",
+        ".config",
+        ".erl",
+        ".escript",
+        ".hrl"
+      ]
+    },
+    {
+      "id": "ocaml",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".ml",
+        ".mli",
+        ".re",
+        ".rei"
+      ]
+    },
+    {
+      "id": "al",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".al",
+        ".dal"
+      ]
+    },
+    {
+      "id": "fsharp",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".fs",
+        ".fsi",
+        ".fsx"
+      ]
+    },
+    {
+      "id": "rego",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".rego"
+      ]
+    },
+    {
+      "id": "scala",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".sbt",
+        ".scala"
+      ]
+    },
+    {
+      "id": "julia",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".jl"
+      ]
+    },
+    {
+      "id": "fortran",
+      "priority": 2,
+      "caseSensitive": false,
+      "suffixes": [
+        ".f",
+        ".f03",
+        ".f08",
+        ".f90",
+        ".f95",
+        ".for",
+        ".fpp"
+      ]
+    },
+    {
+      "id": "haskell",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".hs",
+        ".lhs"
+      ]
+    },
+    {
+      "id": "haxe",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".hx"
+      ]
+    },
+    {
+      "id": "lean4",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".lean"
+      ]
+    },
+    {
+      "id": "groovy",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".groovy",
+        ".gvy"
+      ]
+    },
+    {
+      "id": "vue",
+      "priority": 1,
+      "caseSensitive": true,
+      "suffixes": [
+        ".cjs",
+        ".cjsx",
+        ".cts",
+        ".ctsx",
+        ".js",
+        ".jsx",
+        ".mjs",
+        ".mjsx",
+        ".mts",
+        ".mtsx",
+        ".ts",
+        ".tsx",
+        ".vue"
+      ]
+    },
+    {
+      "id": "svelte",
+      "priority": 1,
+      "caseSensitive": true,
+      "suffixes": [
+        ".cjs",
+        ".cts",
+        ".js",
+        ".mjs",
+        ".mts",
+        ".svelte",
+        ".ts"
+      ]
+    },
+    {
+      "id": "astro",
+      "priority": 1,
+      "caseSensitive": true,
+      "suffixes": [
+        ".astro",
+        ".cjs",
+        ".cts",
+        ".js",
+        ".mjs",
+        ".mts",
+        ".ts"
+      ]
+    },
+    {
+      "id": "powershell",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".ps1",
+        ".psd1",
+        ".psm1"
+      ]
+    },
+    {
+      "id": "pascal",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".dpk",
+        ".dpr",
+        ".inc",
+        ".lpr",
+        ".pas",
+        ".pp"
+      ]
+    },
+    {
+      "id": "matlab",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".m",
+        ".mlapp",
+        ".mlx"
+      ]
+    },
+    {
+      "id": "msl",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".mrc"
+      ]
+    },
+    {
+      "id": "bsl",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".bsl",
+        ".os"
+      ]
+    },
+    {
+      "id": "ada",
+      "priority": 2,
+      "caseSensitive": false,
+      "suffixes": [
+        ".ada",
+        ".adb",
+        ".ads"
+      ]
+    },
+    {
+      "id": "gdscript",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".gd",
+        ".gdscript"
+      ]
+    },
+    {
+      "id": "qml",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".qml"
+      ]
+    },
+    {
+      "id": "gleam",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".gleam"
+      ]
+    },
+    {
+      "id": "nextflow",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".nf"
+      ]
+    },
+    {
+      "id": "wolfram",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".wl",
+        ".wls"
+      ]
+    },
+    {
+      "id": "typescript_vts",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".cjs",
+        ".cjsx",
+        ".cts",
+        ".ctsx",
+        ".js",
+        ".jsx",
+        ".mjs",
+        ".mjsx",
+        ".mts",
+        ".mtsx",
+        ".ts",
+        ".tsx"
+      ]
+    },
+    {
+      "id": "typescript_tsgo",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".cjs",
+        ".cjsx",
+        ".cts",
+        ".ctsx",
+        ".js",
+        ".jsx",
+        ".mjs",
+        ".mjsx",
+        ".mts",
+        ".mtsx",
+        ".ts",
+        ".tsx"
+      ]
+    },
+    {
+      "id": "python_jedi",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".py",
+        ".pyi"
+      ]
+    },
+    {
+      "id": "python_ty",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".py",
+        ".pyi"
+      ]
+    },
+    {
+      "id": "python_pyrefly",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".py",
+        ".pyi"
+      ]
+    },
+    {
+      "id": "python_basedpyright",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".py",
+        ".pyi"
+      ]
+    },
+    {
+      "id": "csharp_omnisharp",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".cs"
+      ]
+    },
+    {
+      "id": "ruby_solargraph",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".rb"
+      ]
+    },
+    {
+      "id": "php_phpactor",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".php",
+        ".phtml"
+      ]
+    },
+    {
+      "id": "php_phpantom",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".php",
+        ".phtml"
+      ]
+    },
+    {
+      "id": "julia_fatou",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".jl"
+      ]
+    },
+    {
+      "id": "markdown",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".markdown",
+        ".md"
+      ]
+    },
+    {
+      "id": "latex",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".bib",
+        ".cls",
+        ".sty",
+        ".tex"
+      ]
+    },
+    {
+      "id": "yaml",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".yaml",
+        ".yml"
+      ]
+    },
+    {
+      "id": "json",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".json",
+        ".jsonc"
+      ]
+    },
+    {
+      "id": "toml",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".toml"
+      ]
+    },
+    {
+      "id": "hlsl",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".cginc",
+        ".comp",
+        ".compute",
+        ".frag",
+        ".fx",
+        ".fxh",
+        ".geom",
+        ".glsl",
+        ".hlsl",
+        ".hlsli",
+        ".shader",
+        ".tesc",
+        ".tese",
+        ".vert",
+        ".wgsl"
+      ]
+    },
+    {
+      "id": "systemverilog",
+      "priority": 2,
+      "caseSensitive": true,
+      "suffixes": [
+        ".sv",
+        ".svh",
+        ".v",
+        ".vh"
+      ]
+    },
+    {
+      "id": "solidity",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".sol"
+      ]
+    },
+    {
+      "id": "ansible",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".yaml",
+        ".yml"
+      ]
+    },
+    {
+      "id": "html",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".htm",
+        ".html"
+      ]
+    },
+    {
+      "id": "scss",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".css",
+        ".sass",
+        ".scss"
+      ]
+    },
+    {
+      "id": "angular",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".cts",
+        ".ctsx",
+        ".htm",
+        ".html",
+        ".mts",
+        ".mtsx",
+        ".ts",
+        ".tsx"
+      ]
+    },
+    {
+      "id": "deno",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".cjs",
+        ".cjsx",
+        ".cts",
+        ".ctsx",
+        ".js",
+        ".jsx",
+        ".mjs",
+        ".mjsx",
+        ".mts",
+        ".mtsx",
+        ".ts",
+        ".tsx"
+      ]
+    },
+    {
+      "id": "graphql",
+      "priority": 0,
+      "caseSensitive": true,
+      "suffixes": [
+        ".gql",
+        ".graphql"
+      ]
+    }
+  ]
+}
