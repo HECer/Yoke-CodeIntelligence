@@ -366,7 +366,11 @@ mod tests {
     use super::*;
     use std::fs;
     #[cfg(unix)]
-    fn state(store: &Store) -> (Vec<(String, String, String)>, BTreeMap<String, String>) {
+    type StoreRow = (String, String, String);
+    #[cfg(unix)]
+    type StoreState = (Vec<StoreRow>, BTreeMap<String, String>);
+    #[cfg(unix)]
+    fn state(store: &Store) -> StoreState {
         let mut statement=store.db.prepare("SELECT 'snapshot',id,value FROM snapshots UNION ALL SELECT 'graph',id,value FROM graphs UNION ALL SELECT 'record:'||kind,id,value FROM records ORDER BY 1,2,3").unwrap();
         let rows = statement
             .query_map([], |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?)))

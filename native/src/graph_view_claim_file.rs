@@ -69,7 +69,7 @@ fn open(parent: Option<&File>, path: &Path, directory: bool) -> Result<File> {
             fd >= 0,
             "Declared selected handle could not be opened without links"
         );
-        return Ok(unsafe { File::from_raw_fd(fd) });
+        Ok(unsafe { File::from_raw_fd(fd) })
     }
     #[cfg(windows)]
     {
@@ -81,7 +81,7 @@ fn open(parent: Option<&File>, path: &Path, directory: bool) -> Result<File> {
             .read(true)
             .share_mode(1)
             .custom_flags(0x0020_0000 | if directory { 0x0200_0000 } else { 0 });
-        return Ok(options.open(path)?);
+        Ok(options.open(path)?)
     }
     #[cfg(not(any(unix, windows)))]
     {
@@ -130,7 +130,7 @@ fn identity(file: &File, directory: bool) -> Result<(u64, u64)> {
             directory || meta.nlink() == 1,
             "Declared host input has multiple links"
         );
-        return Ok((meta.dev(), meta.ino()));
+        Ok((meta.dev(), meta.ino()))
     }
     #[cfg(windows)]
     {
@@ -164,10 +164,10 @@ fn identity(file: &File, directory: bool) -> Result<(u64, u64)> {
                 && (info.index_high != 0 || info.index_low != 0),
             "Declared selected reparse, multiply linked or unidentified file refused"
         );
-        return Ok((
+        Ok((
             u64::from(info.volume),
             (u64::from(info.index_high) << 32) | u64::from(info.index_low),
-        ));
+        ))
     }
     #[cfg(not(any(unix, windows)))]
     {

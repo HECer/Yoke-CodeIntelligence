@@ -118,7 +118,7 @@ fn string(raw: &RawValue) -> Option<String> {
     serde_json::from_str::<String>(raw.get()).ok()
 }
 fn rank(data: &Object) -> Rank {
-    let confidence = data.0.get("confidence").and_then(|v| string(v));
+    let confidence = data.0.get("confidence").and_then(string);
     let category = match confidence.as_deref() {
         Some("EXTRACTED") => 3,
         Some("INFERRED") => 2,

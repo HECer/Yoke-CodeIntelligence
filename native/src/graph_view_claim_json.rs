@@ -38,7 +38,7 @@ impl<'a> Parser<'a> {
             .at
             .checked_add(1)
             .context("Declared JSON cursor overflow")?;
-        if self.at % 4096 == 0 {
+        if self.at.is_multiple_of(4096) {
             self.deadline.check()?;
         }
         Ok(())
