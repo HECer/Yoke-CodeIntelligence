@@ -10,16 +10,36 @@ checks bind all 1,175 selected source hashes, the exact target partition and
 raw log hashes. The candidate adds explicit `weakest_source_categories_v1`
 selection through a bounded four-state shortest-route DAG while retaining the
 omitted/default first-observation behavior. Categories are declared source
-projections, never probability or execution attestation. Fresh compilation and
-native runtime checks remain pending. Parallel-hop presentation, numeric claim
-semantics, route count/caps and full current upstream equivalence remain open.
+projections, never probability or execution attestation. At corrected source
+`cf1d0671`, Ubuntu shard 4 passes all six selector units within the whole
+library target (564 passed, six original ignored, no filters), and the complete
+public adapter target passes eight cases without ignores or filters. Independent
+receipt `a514b525c3499182df4cd53f198ec9c3738389f32526250001b9ef2316feb262`
+checks all 1,176 selected raw source hashes directly against Git, the independently
+derived 378-target inventory, exact partitions and all text logs for that shard
+and two separately failed macOS shards. This is scoped selector/public-adapter
+evidence, not full Linux, Windows or macOS acceptance. Parallel-hop presentation,
+numeric claim semantics, route count/caps and full current upstream equivalence
+remain open.
 See the [selector contract and causal RED evidence](../native/docs/graphify-path-policy.md).
 
 The first implementation at `23a9d8a7` fails native compilation with `E0432`:
 the policy file is a private child of `graph_extensions`, whose existing public
 exports are `AnalysisCategory` and `SourceCategoryPolicy`. The candidate now
-imports those exports. Fresh compilation and all native fixtures remain pending;
-the failed build provides no runtime acceptance.
+imports those exports. The corrected source also passes fresh Windows paired
+compilation and exactly one credential-backed TLS case (49 filtered); that
+separate proof does not execute the selector cases. The failed original build
+provides no runtime acceptance.
+
+The current test-first follow-up specifies derived `pathHops` for the explicit
+selected policy through genuine published Views. Two authored public tests cover
+all parallel original observations and exact UTF-8/CRLF evidence per hop,
+historical replay without capture or mutation, and directed versus explicitly
+undirected opposite stored claims. Production behavior is unchanged from
+`cf1d0671`; the hop presentation is not implemented. These new native tests
+await guarded hosted compilation and the intended causal RED, not acceptance.
+macOS PDF resource-limit and template EINVAL failures remain recorded; no limits
+were relaxed and no tests were skipped.
 
 ## Current-source Windows aggregate checkpoint (2026-10-31)
 

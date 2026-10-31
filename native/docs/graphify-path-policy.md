@@ -47,16 +47,48 @@ All 97 text members/log hashes, the exact whole-target partition and all 1,175
 selected source hashes are bound to Git. Causal audit receipt SHA256:
 `501d657353ac2ffa199cadb298397630ddf69a26afe9c89bea2e3136c62a565d`.
 
-The corrected selector, additional legacy/unmapped/direction/self-path cases
-and public argument fixture await fresh guarded hosted compilation and execution.
-They have not run locally. No native payload has been read or executed locally;
-no runtime, upstream, full Windows, main or release acceptance follows from this
-source candidate.
+At corrected source `cf1d0671`,
+[Ubuntu shard 4](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41204955065/job/124548044700)
+passes all six selector units, including the unchanged causal test, within the
+whole library target (564 passed, six original ignored, zero filtered). The
+complete public adapter target passes eight cases, including explicit/omitted
+policy behavior and invalid-policy refusal, without ignores or filters.
+Independent receipt SHA256
+`a514b525c3499182df4cd53f198ec9c3738389f32526250001b9ef2316feb262`
+checks all 1,176 selected raw Git source hashes, reconstructs all 378 default
+targets without Cargo, and checks exact partitions and every text-log digest for
+that shard and two separately failed macOS shards. This is scoped native
+selector evidence. Windows selector, full platform, upstream, main and release
+acceptance remain open. No native payload has been read or executed locally.
 
 The first implementation at `23a9d8a7` fails compilation with `E0432` in
 [Ubuntu shard 0](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41203888247/job/124544946118):
 `graph_analysis_policy.rs` is the private `graph_extensions::policy` module,
 not a crate-root module. The import now uses its existing public re-exports,
 `graph_extensions::AnalysisCategory` and `SourceCategoryPolicy`. This import
-correction awaits fresh compilation and the original causal/companion cases;
-the failed producer supplies no native GREEN or runtime acceptance.
+correction subsequently passes the scoped Ubuntu cases above and separate fresh
+Windows paired compilation with exactly one credential-backed TLS case
+(49 filtered). The failed producer supplies no runtime acceptance; the TLS
+consumer supplies no selector-case execution.
+
+## Parallel-hop provenance: test-first follow-up
+
+The authored public View fixtures now specify `pathHops` for the explicitly
+selected policy. Each hop must identify its traversal endpoints and the chosen
+original observation, retain every traversable original parallel observation
+and its ID, and return their exact original evidence. Stored edge directions
+must remain unchanged. Directed queries exclude opposite claims; explicitly
+undirected queries include both stored directions. Omitted and explicit legacy
+selection must retain their existing shape.
+
+The fixture has two original `α -> beta` calls, one `beta -> α` call and one
+`beta -> gamma` call in a 71-byte UTF-8/CRLF source. Expected source SHA256 and
+byte ranges are independently pinned. Historical selected-View queries must
+return identical provenance after a new index and an unsaved host edit, without
+capturing or publishing state. These are genuine Session/archived-View paths,
+not private forged View metadata.
+
+Production behavior is unchanged from `cf1d0671`; the new presentation is not
+implemented. The two new native tests await guarded hosted compilation and an
+actual causal RED. Numeric source-claim admission, contradictory claim fixtures,
+distinct-node 256/257 counting and full current CLI/MCP equivalence remain open.
