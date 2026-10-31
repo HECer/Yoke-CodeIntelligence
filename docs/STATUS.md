@@ -33,9 +33,9 @@ unverified source claims. Host admission, immutable View selection and the
 existing ten-tool Graphify transport do not establish Graphify node-link file
 interoperability or full current upstream equivalence.
 
-The local follow-up adds three public path/direction/provenance/output guard
+The follow-up adds three public path/direction/provenance/output guard
 cases and a deterministic first-route cancellation unit. Those additional
-cases are still unrun and unpublished at this checkpoint. Matching current
+cases are outside this qualified source and still unrun at this checkpoint. Matching current
 Windows VSIX, vendor-tool and browser/release evidence is still being
 qualified. Full R4, R1-R9, backend, main and release acceptance remain open.
 Linux/macOS runtime certification remains deferred; their original separate

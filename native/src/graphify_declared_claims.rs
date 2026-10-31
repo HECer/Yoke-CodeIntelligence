@@ -638,7 +638,15 @@ mod tests {
         let control = shortest(&engine.store, &view, &args, &deadline).unwrap();
         assert_eq!(control["found"], true);
         assert_eq!(control["hops"], 2);
-        assert_eq!(control["shortestNodePathsConsidered"], 2);
+        assert_eq!(
+            base.observations
+                .iter()
+                .filter(|e| e["relation"] == "contains")
+                .count(),
+            4,
+        );
+        // The two call routes and the implied containing-file route are real.
+        assert_eq!(control["shortestNodePathsConsidered"], 3);
         assert_eq!(control["shortestNodePathsCapped"], false);
         assert_eq!(control["pathSourceCategory"], "inferred");
         let baseline = published_state(&engine.store);

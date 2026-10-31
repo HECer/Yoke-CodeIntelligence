@@ -227,7 +227,8 @@ The public source-claim test target also contains these authored controls:
   data. A primary marker naming a third genuine node refuses at query time
   without changing published snapshots, graphs, registrations or CAS blobs.
   Separate controls distinguish an insufficient hop limit, an unreachable
-  reverse route, an absent label and two genuinely ambiguous label matches.
+  function in a second captured file, an absent label and two genuinely
+  ambiguous label matches. The containing-file reverse arcs remain intact.
 - Real Unicode/CRLF source produces two parallel calls, an opposite call and a
   self-call. Both query directions retain every original hop observation and
   evidence object, while ranking uses forward declarations before backward
@@ -249,7 +250,8 @@ resource or release acceptance.
 
 A separate authored library fixture covers cancellation during enumeration.
 It imports declarations for the real 111-byte Unicode/CRLF source, publishes an
-ordinary View and first proves that both complete shortest routes are visited.
+ordinary View and first proves that all three complete shortest routes are
+visited, including the implied containing-file route.
 A test-build-only thread-local probe then sets the inherited host cancellation
 flag immediately after the first complete route is reached. The ordinary
 deadline checks must refuse before visiting the second route. The probe is

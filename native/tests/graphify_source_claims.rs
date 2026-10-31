@@ -1009,7 +1009,7 @@ fn admitted_equal_numeric_routes_rank_the_original_weakest_hop_before_prefix_ord
 
 #[test]
 fn admitted_root_direction_and_undirected_controls_keep_nested_markers_as_data() {
-    let mut f = fixture();
+    let mut f = disconnected_fixture();
     let start = node(&f, "\u{3b1}");
     let branch = node(&f, "weaker");
     let end = node(&f, "omega");
@@ -1089,7 +1089,8 @@ fn admitted_root_direction_and_undirected_controls_keep_nested_markers_as_data()
     assert_eq!(bounded_result["complete"], false);
     let mut reversed = arguments(&f, &control);
     reversed["source"] = json!(end);
-    reversed["target"] = json!(start);
+    reversed["target"] = json!(node(&f, "island"));
+    reversed["max_hops"] = json!(64);
     let unreachable = yoke::graphify_adapter::invoke(
         &mut f.session,
         "shortest_path",
@@ -1127,6 +1128,51 @@ fn admitted_root_direction_and_undirected_controls_keep_nested_markers_as_data()
         fs::read(f.root.path().join("main.rs")).unwrap(),
         SOURCE.as_bytes()
     );
+    assert_eq!(
+        fs::read(f.root.path().join("isolated.rs")).unwrap(),
+        b"fn island(){}\r\n"
+    );
+}
+
+fn disconnected_fixture() -> Fixture {
+    let root = TempDir::new().unwrap();
+    let host = TempDir::new().unwrap();
+    fs::write(root.path().join("main.rs"), SOURCE).unwrap();
+    fs::write(root.path().join("isolated.rs"), b"fn island(){}\r\n").unwrap();
+    let mut engine = Engine::open(root.path()).unwrap();
+    let (snapshot, graph, _, _) = engine.index(&Deadline::new(30000)).unwrap();
+    let base = graph_view::build(
+        &engine.store,
+        &snapshot,
+        &graph,
+        &BuildOptions {
+            structural_kinds: vec![],
+            ..BuildOptions::default()
+        },
+        &Deadline::new(30000),
+    )
+    .unwrap();
+    assert_eq!(
+        base.observations
+            .iter()
+            .filter(|e| e["relation"] == "calls")
+            .count(),
+        4
+    );
+    assert_eq!(snapshot.files.len(), 2);
+    let session = Session::open(
+        engine,
+        HostProfile::default(),
+        Some("source-claim-disconnected"),
+        &Deadline::new(30000),
+    )
+    .unwrap();
+    Fixture {
+        session,
+        base,
+        root,
+        host,
+    }
 }
 
 fn parallel_cycle_fixture(parallel_calls: usize) -> Fixture {
