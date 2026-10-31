@@ -154,6 +154,44 @@ Rust 1.94.1 formatting/source parsing, source-preservation checks, typecheck and
 npm tests pass (266 passed, three skipped). Changed native targets and Clippy
 were not run locally. These diagnostics require fresh native CI qualification;
 they do not establish a production fix or platform/release acceptance.
+## Explorer HTTP receive observations await hosted execution (2026-10-30)
+
+At source `85d0893d`, completed push run `41096155077` passes five of six
+Windows Explorer HTTP cases; the rebuild/reload case fails because its received
+bytes lack a complete HTTP header delimiter. The retained artifact cannot
+distinguish empty from partial response bytes or establish the failing request,
+receive duration or cause. Linux/macOS pass all six at that same source.
+
+This candidate retains scalar receive elapsed time, byte count, read-failure and
+raw OS-error flags/code, and delimiter presence in a closed formatter (maximum
+169 bytes on 64-bit targets). It keeps the original read-to-EOF operation, success
+parser, all six test bodies, requests, timeouts and production code unchanged.
+Two added tests cover scalar extremes and an owned bounded TCP peer with empty,
+partial and valid responses plus synthetic-content exclusion. Those native tests
+and the eight-case target remain unrun locally and require guarded hosted CI.
+Instrumentation may affect scheduling; no cause or repair is established.
+Full platform, strict macOS memory, VSIX, main and release gates remain open.
+
+## MCP HTTP incomplete-response observations (2026-10-30)
+
+At PR9 source `9d0c4c72`, tested merge `0dc3f536`, run `41031494443`,
+the MCP HTTP target passes 12 of 13 cases. The already-running reader in the
+queued-principal revocation case receives EOF before a complete framed response;
+the received prefix length and elapsed time were not retained. The queued
+exchange's result and later authorization assertions are not established;
+memory, socket and scheduling causes remain unproven.
+The original 2,000 ms physical budget, 1,900 ms work ceiling, 100 ms delivery
+reserve, ten-second client read timeout and all test bodies remain unchanged.
+
+The test client now retains closed scalar connect/send/read timings, read count,
+prefix length and declared frame size on failure. An added formatter adversary
+covers maximum integer values and absent/zero/maximum expected sizes. An owned
+TCP peer additionally exercises empty/partial EOF and response-content exclusion.
+Native compilation and all 15 current target declarations require guarded hosted CI;
+the observations are source-only until that execution and do not repair or
+reclassify the earlier failure. Local Rust 1.94.1 formatting/source parsing and
+source-preservation checks pass, as do typecheck and npm tests (266 passed,
+three skipped). Full platform and release gates remain open.
 
 ## Native, Serena and HTTP browser evidence; Python focus correction (2026-10-30)
 

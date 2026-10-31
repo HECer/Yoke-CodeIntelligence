@@ -118,6 +118,32 @@ Synthetic admission tests pass; actual OS credentials, TLS/recovery/query
 execution and cleanup still require hosted qualification. No local native
 build/tests or credential access ran. Full platform/VSIX/main/release stays open.
 See [the profile contract](../scripts/host_credential_tls.md).
+## Explorer HTTP receive observations await hosted execution (2026-10-30)
+
+At source `85d0893d`, completed push run `41096155077` passes five of six
+Windows Explorer HTTP cases; the rebuild/reload case fails because its received
+bytes lack a complete HTTP header delimiter. The retained artifact cannot
+distinguish empty from partial response bytes or establish the failing request,
+receive duration or cause. Linux/macOS pass all six at that same source.
+
+This candidate retains scalar receive elapsed time, byte count, read-failure and
+raw OS-error flags/code, and delimiter presence in a closed formatter (maximum
+169 bytes on 64-bit targets). It keeps the original read-to-EOF operation, success
+parser, all six test bodies, requests, timeouts and production code unchanged.
+Two added tests cover scalar extremes and an owned bounded TCP peer with empty,
+partial and valid responses plus synthetic-content exclusion. Those native tests
+and the eight-case target remain unrun locally and require guarded hosted CI.
+Instrumentation may affect scheduling; no cause or repair is established.
+Full platform, strict macOS memory, VSIX, main and release gates remain open.
+
+## MCP HTTP revocation failure still needs source-bound observations (2026-10-30)
+
+The `9d0c4c72` macOS PR run's queued-revocation case fails in the already-running
+reader's client exchange, before its expected 503 result. Existing artifacts lack
+prefix length and timing, so the cause remains unestablished. Failure-only scalar
+observations now preserve those values while every original request, assertion
+and budget remains. The formatter/owned-TCP adversaries and complete 15-case target need
+guarded native execution. A successful sibling run is not a causal repair.
 
 ## Remaining Python browser and strict platform gates (2026-10-30)
 
