@@ -4,12 +4,32 @@ import path from 'node:path';
 const adversary = process.argv[2];
 let buffer = Buffer.alloc(0), root, current;
 const opened = new Map();
+let shutdownReceived = false;
 function documentKey(uri) {
   const value=path.normalize(fileURLToPath(uri));
   return process.platform==='win32'?value.replace(/^[A-Z]:/, drive=>drive.toLowerCase()):value;
 }
 function send(value) { const bytes=Buffer.from(JSON.stringify(value)); process.stdout.write(`Content-Length: ${bytes.length}\r\n\r\n`); process.stdout.write(bytes); }
 function handle(message) {
+  if(adversary==='strict-lifecycle' && message.method==='fixture/echoParams') {
+    const result={hasParams:Object.hasOwn(message,'params'),params:message.params};
+    if(Object.hasOwn(message,'id')) send({jsonrpc:'2.0',id:message.id,result});
+    else send({jsonrpc:'2.0',method:'fixture/echoed',params:result});
+    return;
+  }
+  if(adversary==='strict-lifecycle' && message.method==='shutdown') {
+    if(Object.hasOwn(message,'params')) send({jsonrpc:'2.0',id:message.id,error:{code:-32602,message:'InvalidParams: expected no params'}});
+    else {shutdownReceived=true;send({jsonrpc:'2.0',id:message.id,result:null});}
+    return;
+  }
+  if(adversary==='strict-lifecycle' && message.method==='exit') {
+    const valid=shutdownReceived && !Object.hasOwn(message,'params') && !Object.hasOwn(message,'id');
+    const bytes=Buffer.from(JSON.stringify({jsonrpc:'2.0',method:'fixture/lifecycle',params:{valid}}));
+    process.stdout.end(Buffer.concat([Buffer.from(`Content-Length: ${bytes.length}\r\n\r\n`),bytes]));
+    process.stdin.destroy();
+    process.exitCode=valid?0:97;
+    return;
+  }
   if(message.method==='initialize') {root=message.params.rootUri;send({jsonrpc:'2.0',id:message.id,result:{capabilities:{positionEncoding:'utf-16',definitionProvider:true,referencesProvider:true,implementationProvider:true,hoverProvider:true,renameProvider:true,textDocumentSync:1}}});if(adversary==='blocked'){process.stdin.pause();send({jsonrpc:'2.0',method:'fixture/blocked',params:{paused:true}});setTimeout(()=>process.exit(0),3000);}return;}
   if(message.method==='textDocument/didOpen') {current=message.params.textDocument.uri;opened.set(current,message.params.textDocument.languageId);return;}
   if(message.method==='textDocument/references' && adversary==='many-large-locations') {const range={start:{line:0,character:0},end:{line:1,character:0}};send({jsonrpc:'2.0',id:message.id,result:Array.from({length:128},()=>({uri:current,range}))});return;}

@@ -11,7 +11,7 @@ def pure_functions():
     if not path.is_file():
         return {}
     tree = ast.parse(path.read_text(encoding="utf-8"))
-    names = {"require", "unique_object", "reject_constant", "decode", "windows_path", "admit_spec", "code_arguments", "admit_receipt", "close_handles"}
+    names = {"require", "unique_object", "reject_constant", "decode", "windows_path", "admit_spec", "code_arguments", "admit_receipt", "close_handles", "failure_reason"}
     selected = [node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name in names]
     namespace = {"json": json, "PureWindowsPath": PureWindowsPath, "re": re}
     exec(compile(ast.Module(body=selected, type_ignores=[]), "<pure-owned-fixtures>", "exec"), namespace)
@@ -43,6 +43,25 @@ class Admission(unittest.TestCase):
         value.update(activeBeforeCleanup=1, treeExitedBeforeCleanup=False)
         with self.assertRaises(ValueError):
             self.call("admit_receipt", value)
+
+    def test_failure_categories_exclude_exception_and_unknown_phase_content(self):
+        marker = "private path, argument or exception text"
+        for phase in ("launch", "job_limits", "job_assignment", "resume", "wait",
+                      "disk_reserve", "output_inventory", "exit_code", "accounting"):
+            for error, category in ((FileNotFoundError(marker), "missing_entry"),
+                                    (PermissionError(marker), "access_denied"),
+                                    (OSError(marker), "os_error"),
+                                    (ValueError(marker), "refused"),
+                                    (RuntimeError(marker), "exception")):
+                with self.subTest(phase=phase, category=category):
+                    reason = self.call("failure_reason", phase, error)
+                    self.assertEqual(reason, phase + "_" + category)
+                    self.assertNotIn(marker, reason)
+                    proof = self.receipt()
+                    proof.update(reason=reason, complete=False)
+                    with self.assertRaises(ValueError):
+                        self.call("admit_receipt", proof)
+        self.assertEqual(self.call("failure_reason", marker, ValueError(marker)), "api_error")
 
     def test_natural_success_requires_complete_independent_proofs(self):
         self.call("admit_receipt", self.receipt())

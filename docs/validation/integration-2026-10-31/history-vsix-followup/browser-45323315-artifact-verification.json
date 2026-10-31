@@ -1,0 +1,481 @@
+{
+  "sourceRevision": "4532331512fd8be7ab1b50c4aa438f2577a92e02",
+  "runId": 41190268811,
+  "jobId": 124505454951,
+  "profiles": [
+    {
+      "variant": "persistent-python",
+      "artifactId": 13039331331,
+      "zipSHA256": "d0a26b85ef91d92e89ee1831a69e93ddc46c0719a69f512dbc3eec42edcb9087",
+      "nativeSha256": "2f9930e268047c2e82297e2f1c7a87e8bac2f0971d6e22d5fda9cd719752558a",
+      "controls": [
+        {
+          "path": "scripts/host_history_browser.py",
+          "sha256": "39e2fee7e0a2fc86be6b404aabf26f3baad53d5e9119b0cb7fdc56d08c5e66e9",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser.cjs",
+          "sha256": "6f5c42790699349335961e73143922c3f8d4a827d10267bac5745be897203a1b",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_live.py",
+          "sha256": "690a7ca66c42fb0a358355f9d099bade7dd1d471eb2faa63bee0ccfdd52a2543",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser_http.py",
+          "sha256": "0fc2da425a713a5bc4e55440c067f1d3945ea936cc5b3ef78636c8cd59a54af4",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_tool_usage_browser.py",
+          "sha256": "460579e4b401b3b8daa125f67ae62bdcbe990d345b7443cfe7c6218afdbb8a18",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "native/src/session_dashboard.html",
+          "sha256": "8520ec8513fbd1318b010cacaf4f9c71c61e6ae07a0e92f8bb5961617a75cf75",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        }
+      ],
+      "states": [
+        {
+          "file": "persistent-python-desktop-before.png",
+          "sha256": "2d567cd7a1265bfd7c9ed424721bf4e1ff62f3718fa68dedc005037770465dc2",
+          "domSha256": "3fab7b0b6b4c699eecf2449b72d50de7fc37673506c44e63b4ddd65116d591e7",
+          "width": 1440,
+          "height": 1612
+        },
+        {
+          "file": "persistent-python-mobile-before.png",
+          "sha256": "3698fec8a7c432437437b65456b3b9b452ff24f6b7fff3e1e53ad54f59c16265",
+          "domSha256": "26af253bb46a84e59660173444eb87794c2a1f88ab2fcffea9e4b7ef42a01dd5",
+          "width": 390,
+          "height": 2110
+        },
+        {
+          "file": "persistent-python-desktop-pending.png",
+          "sha256": "b4c4b3b7492e9b313b1d59bdad2b28b9390fb10265ed347e3da34c15fe3d73c4",
+          "domSha256": "29f3d51a8268af2bf28e346935bf44b5387b50049f8fa0af82223a451f430db1",
+          "width": 1440,
+          "height": 1796
+        },
+        {
+          "file": "persistent-python-mobile-pending.png",
+          "sha256": "a0f7523575ff0e35b0104c0d6b9d77fbd3d86b0edfcc69c22c47a0d1f312a5c9",
+          "domSha256": "52470f3904e376f1fcfd47046281f48ac5a273ad7ed8c19cb097347ffacb4c4f",
+          "width": 390,
+          "height": 2347
+        },
+        {
+          "file": "persistent-python-desktop-after.png",
+          "sha256": "93a66cd54d2a3aaa290c059e33ce07d5f5089f04f23b443803ef17e699669fbd",
+          "domSha256": "18db04ed13913722dd326530791e1bf229a67b1be489381f4f1e34eec5b03cd9",
+          "width": 1440,
+          "height": 1327
+        },
+        {
+          "file": "persistent-python-mobile-after.png",
+          "sha256": "2c706587314645380b4880a7469ca45ac927147a73fcf1607a70f8ca9b91c19f",
+          "domSha256": "3e8d87c28dfe6cc2658a15cc8f4b8fed461f4c52fa203bdb9510fce17a232750",
+          "width": 390,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "variant": "serena",
+      "artifactId": 13039091770,
+      "zipSHA256": "9cb7433107a7a5058a0cda5e2e716f8657b6008a3e4147d75be0645d649d9628",
+      "nativeSha256": "2f9930e268047c2e82297e2f1c7a87e8bac2f0971d6e22d5fda9cd719752558a",
+      "controls": [
+        {
+          "path": "scripts/host_history_browser.py",
+          "sha256": "39e2fee7e0a2fc86be6b404aabf26f3baad53d5e9119b0cb7fdc56d08c5e66e9",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser.cjs",
+          "sha256": "6f5c42790699349335961e73143922c3f8d4a827d10267bac5745be897203a1b",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_live.py",
+          "sha256": "690a7ca66c42fb0a358355f9d099bade7dd1d471eb2faa63bee0ccfdd52a2543",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser_http.py",
+          "sha256": "0fc2da425a713a5bc4e55440c067f1d3945ea936cc5b3ef78636c8cd59a54af4",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_tool_usage_browser.py",
+          "sha256": "460579e4b401b3b8daa125f67ae62bdcbe990d345b7443cfe7c6218afdbb8a18",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "native/src/session_dashboard.html",
+          "sha256": "8520ec8513fbd1318b010cacaf4f9c71c61e6ae07a0e92f8bb5961617a75cf75",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        }
+      ],
+      "states": [
+        {
+          "file": "serena-desktop-before.png",
+          "sha256": "92de21bd86cb2ee35502840347d8ebe481ca5c3ad1efc1f178adc5a4e5082b91",
+          "domSha256": "3fab7b0b6b4c699eecf2449b72d50de7fc37673506c44e63b4ddd65116d591e7",
+          "width": 1440,
+          "height": 1612
+        },
+        {
+          "file": "serena-mobile-before.png",
+          "sha256": "5b7dcc7f0f10665ae8c06e5930cc73edf07e6b977bac8abd7816d583d73dd366",
+          "domSha256": "26af253bb46a84e59660173444eb87794c2a1f88ab2fcffea9e4b7ef42a01dd5",
+          "width": 390,
+          "height": 2110
+        },
+        {
+          "file": "serena-desktop-pending.png",
+          "sha256": "b38525866a2691f359467c7a5351a7ba6b375e6bdf4123d3837550a8828a3aeb",
+          "domSha256": "29f3d51a8268af2bf28e346935bf44b5387b50049f8fa0af82223a451f430db1",
+          "width": 1440,
+          "height": 1796
+        },
+        {
+          "file": "serena-mobile-pending.png",
+          "sha256": "62f0cfef442c2c3e0093889638ca9a257d2e8949a4ec8617fcac00681402b5eb",
+          "domSha256": "52470f3904e376f1fcfd47046281f48ac5a273ad7ed8c19cb097347ffacb4c4f",
+          "width": 390,
+          "height": 2347
+        },
+        {
+          "file": "serena-desktop-after.png",
+          "sha256": "7756d5213caf91a55df3b6b4e025305d5cf69b6b7f8cbd6e669c46371a0733c9",
+          "domSha256": "18db04ed13913722dd326530791e1bf229a67b1be489381f4f1e34eec5b03cd9",
+          "width": 1440,
+          "height": 1327
+        },
+        {
+          "file": "serena-mobile-after.png",
+          "sha256": "e485bbd66a0812f9d2c46bc74fa77ee131b3e1b85d06df6460ea845d2be99976",
+          "domSha256": "3e8d87c28dfe6cc2658a15cc8f4b8fed461f4c52fa203bdb9510fce17a232750",
+          "width": 390,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "variant": "native",
+      "artifactId": 13038997070,
+      "zipSHA256": "7e18a2185dccc3423e92996a87f3814bbb07f5f1530f932d7797f0b36a175ae3",
+      "nativeSha256": "2f9930e268047c2e82297e2f1c7a87e8bac2f0971d6e22d5fda9cd719752558a",
+      "controls": [
+        {
+          "path": "scripts/host_history_browser.py",
+          "sha256": "39e2fee7e0a2fc86be6b404aabf26f3baad53d5e9119b0cb7fdc56d08c5e66e9",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser.cjs",
+          "sha256": "6f5c42790699349335961e73143922c3f8d4a827d10267bac5745be897203a1b",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_live.py",
+          "sha256": "690a7ca66c42fb0a358355f9d099bade7dd1d471eb2faa63bee0ccfdd52a2543",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser_http.py",
+          "sha256": "0fc2da425a713a5bc4e55440c067f1d3945ea936cc5b3ef78636c8cd59a54af4",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_tool_usage_browser.py",
+          "sha256": "460579e4b401b3b8daa125f67ae62bdcbe990d345b7443cfe7c6218afdbb8a18",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "native/src/session_dashboard.html",
+          "sha256": "8520ec8513fbd1318b010cacaf4f9c71c61e6ae07a0e92f8bb5961617a75cf75",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        }
+      ],
+      "states": [
+        {
+          "file": "native-desktop-before.png",
+          "sha256": "ffd2fa2ba2ceb87e5044def915cd5f122ddf3b1bde2187c8d8a2dd34459004ca",
+          "domSha256": "3fab7b0b6b4c699eecf2449b72d50de7fc37673506c44e63b4ddd65116d591e7",
+          "width": 1440,
+          "height": 1612
+        },
+        {
+          "file": "native-mobile-before.png",
+          "sha256": "dce63b56f97fb253b83f1e6d9a138663efcc1f491fac147d68963785def07b87",
+          "domSha256": "26af253bb46a84e59660173444eb87794c2a1f88ab2fcffea9e4b7ef42a01dd5",
+          "width": 390,
+          "height": 2110
+        },
+        {
+          "file": "native-desktop-pending.png",
+          "sha256": "4db122bfb12fcdfcf64a286b1023c856b38c473c2534f9e88befef57e2db0f5a",
+          "domSha256": "29f3d51a8268af2bf28e346935bf44b5387b50049f8fa0af82223a451f430db1",
+          "width": 1440,
+          "height": 1796
+        },
+        {
+          "file": "native-mobile-pending.png",
+          "sha256": "9f52c601cc998b0aed0216031c98e9fddef0e6cef9f9cce64852228fa85aa3c7",
+          "domSha256": "52470f3904e376f1fcfd47046281f48ac5a273ad7ed8c19cb097347ffacb4c4f",
+          "width": 390,
+          "height": 2347
+        },
+        {
+          "file": "native-desktop-after.png",
+          "sha256": "8ff176df475c5e5d1069e4389effd3b48d5c187edffc5c3b068d29a088833fe7",
+          "domSha256": "18db04ed13913722dd326530791e1bf229a67b1be489381f4f1e34eec5b03cd9",
+          "width": 1440,
+          "height": 1327
+        },
+        {
+          "file": "native-mobile-after.png",
+          "sha256": "b430e0b7e2135383215071a36d06e527422319f92592e581c123cfecfbc369a9",
+          "domSha256": "3e8d87c28dfe6cc2658a15cc8f4b8fed461f4c52fa203bdb9510fce17a232750",
+          "width": 390,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "variant": "tool-usage",
+      "artifactId": 13038949378,
+      "zipSHA256": "e8ff38244fa487bff5f126eaca3d8559b9e423702ae5c47b4ed3a709d43c4cb2",
+      "nativeSha256": "2f9930e268047c2e82297e2f1c7a87e8bac2f0971d6e22d5fda9cd719752558a",
+      "controls": [
+        {
+          "path": "scripts/host_history_browser.py",
+          "sha256": "39e2fee7e0a2fc86be6b404aabf26f3baad53d5e9119b0cb7fdc56d08c5e66e9",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser.cjs",
+          "sha256": "6f5c42790699349335961e73143922c3f8d4a827d10267bac5745be897203a1b",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_live.py",
+          "sha256": "690a7ca66c42fb0a358355f9d099bade7dd1d471eb2faa63bee0ccfdd52a2543",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser_http.py",
+          "sha256": "0fc2da425a713a5bc4e55440c067f1d3945ea936cc5b3ef78636c8cd59a54af4",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_tool_usage_browser.py",
+          "sha256": "460579e4b401b3b8daa125f67ae62bdcbe990d345b7443cfe7c6218afdbb8a18",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "native/src/session_dashboard.html",
+          "sha256": "8520ec8513fbd1318b010cacaf4f9c71c61e6ae07a0e92f8bb5961617a75cf75",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        }
+      ],
+      "states": [
+        {
+          "file": "tool-usage-desktop-before.png",
+          "sha256": "1d572970f1b5bee5b7ac6d66bb31121adf8abeeaeea7a025894b0a6ee7fb0d88",
+          "domSha256": "6c136d8d87f26893b6953be906519deffbaaa20a9f2630ea880eb2e13bf9df50",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "file": "tool-usage-mobile-before.png",
+          "sha256": "fe099c4754bba57bfcb532b349eae56f88846f0b93dcd35b30c17adc18c8297a",
+          "domSha256": "d895662d897eccd684412ea1a540063c371fa926a2ab365af7d79ea27a0ee6aa",
+          "width": 390,
+          "height": 1409
+        },
+        {
+          "file": "tool-usage-mobile-pending.png",
+          "sha256": "7a09cae0142962402b6a8037e77b69b0b6a4987ed2ff39da0955de2c2f25102d",
+          "domSha256": "aaee48c5423e9e110d0ed5686d1410ac5889d5978437b79c7b3a82a472b62858",
+          "width": 390,
+          "height": 1409
+        },
+        {
+          "file": "tool-usage-desktop-pending.png",
+          "sha256": "09b764735e053ddc5cc516c65b336ccb66a5c03b0d8a671a90a20a843e370365",
+          "domSha256": "f9dc013fb5b36e026205dfe64df1d2ac8e4e3be536bf85868f0d15c3807e99f4",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "file": "tool-usage-desktop-after.png",
+          "sha256": "f1fb6dba7b07f70ae04f23881d40a8344f8ac96c94f58011c4a56a8970d6ec8a",
+          "domSha256": "7196a28dd74dc1f50b54f9bda295d45f3e06a899a6a6e51d818cff5edfd7c742",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "file": "tool-usage-mobile-after.png",
+          "sha256": "84c8a84748a4e0e62ace9eb50fb4f9d2a4b7f5cacf5eb7395760e319d2edd410",
+          "domSha256": "e1c9c2218a8dd2d8d6eb300244eca0f6a447124b4329064fd1256623c7f35345",
+          "width": 390,
+          "height": 1353
+        }
+      ]
+    },
+    {
+      "variant": "http",
+      "artifactId": 13038834658,
+      "zipSHA256": "12d043296e4bf8fa3a1d2e2a9e6f75ef7c5330b9240d2fee4790b9f925b7e5cf",
+      "nativeSha256": "2f9930e268047c2e82297e2f1c7a87e8bac2f0971d6e22d5fda9cd719752558a",
+      "controls": [
+        {
+          "path": "scripts/host_history_browser.py",
+          "sha256": "39e2fee7e0a2fc86be6b404aabf26f3baad53d5e9119b0cb7fdc56d08c5e66e9",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser.cjs",
+          "sha256": "6f5c42790699349335961e73143922c3f8d4a827d10267bac5745be897203a1b",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_live.py",
+          "sha256": "690a7ca66c42fb0a358355f9d099bade7dd1d471eb2faa63bee0ccfdd52a2543",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser_http.py",
+          "sha256": "0fc2da425a713a5bc4e55440c067f1d3945ea936cc5b3ef78636c8cd59a54af4",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_tool_usage_browser.py",
+          "sha256": "460579e4b401b3b8daa125f67ae62bdcbe990d345b7443cfe7c6218afdbb8a18",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "native/src/session_dashboard.html",
+          "sha256": "8520ec8513fbd1318b010cacaf4f9c71c61e6ae07a0e92f8bb5961617a75cf75",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        }
+      ],
+      "states": [
+        {
+          "file": "http-desktop-before.png",
+          "sha256": "a365c01b88cc2fc5fa15d4666cfff559b602c01399e3477889feebb9e4cca7f2",
+          "domSha256": "3fab7b0b6b4c699eecf2449b72d50de7fc37673506c44e63b4ddd65116d591e7",
+          "width": 1440,
+          "height": 1612
+        },
+        {
+          "file": "http-mobile-before.png",
+          "sha256": "795a4edaa1e4136510b3bc93dc3ebd86ac0daa35207d629e30ee4d4cad8b1d41",
+          "domSha256": "26af253bb46a84e59660173444eb87794c2a1f88ab2fcffea9e4b7ef42a01dd5",
+          "width": 390,
+          "height": 2110
+        },
+        {
+          "file": "http-desktop-pending.png",
+          "sha256": "7fd500f740a6779a515f62bfaef5f28ad072dffad2d2d812793ae59c756177e7",
+          "domSha256": "29f3d51a8268af2bf28e346935bf44b5387b50049f8fa0af82223a451f430db1",
+          "width": 1440,
+          "height": 1796
+        },
+        {
+          "file": "http-mobile-pending.png",
+          "sha256": "64d1ac1d57472efa6080c0bdc3a7bbc4aef40043e1350a35c401b521e3c28456",
+          "domSha256": "52470f3904e376f1fcfd47046281f48ac5a273ad7ed8c19cb097347ffacb4c4f",
+          "width": 390,
+          "height": 2347
+        },
+        {
+          "file": "http-desktop-after.png",
+          "sha256": "1a9d5b2184fa67448314158ee11ca0136a0461ea7a3b10d8597050603e90f873",
+          "domSha256": "18db04ed13913722dd326530791e1bf229a67b1be489381f4f1e34eec5b03cd9",
+          "width": 1440,
+          "height": 1327
+        },
+        {
+          "file": "http-mobile-after.png",
+          "sha256": "fefe9de3e8611a310cb6400f3125b41392aa674150052b8d73517d0a2e29a443",
+          "domSha256": "3e8d87c28dfe6cc2658a15cc8f4b8fed461f4c52fa203bdb9510fce17a232750",
+          "width": 390,
+          "height": 1650
+        }
+      ]
+    }
+  ],
+  "all30OriginalPngDomPairsVerified": true,
+  "agentVisualInspectionComplete": false,
+  "nativeImagesReadLocally": false,
+  "fullPlatformOrReleaseAccepted": false
+}
