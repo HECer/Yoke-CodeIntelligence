@@ -246,3 +246,14 @@ The public source-claim test target also contains these authored controls:
 These added fixtures remain unrun until source-pinned native CI executes their
 exact commit. They do not establish full transport, archive, cancellation,
 resource or release acceptance.
+
+A separate authored library fixture covers cancellation during enumeration.
+It imports declarations for the real 111-byte Unicode/CRLF source, publishes an
+ordinary View and first proves that both complete shortest routes are visited.
+A test-build-only thread-local probe then sets the inherited host cancellation
+flag immediately after the first complete route is reached. The ordinary
+deadline checks must refuse before visiting the second route. The probe is
+restored on scope exit; production builds contain neither its state nor its
+call. Every snapshot, graph, registration, CAS blob, latest selection and source
+byte must remain unchanged. This fixture is still unrun and does not qualify
+transport-driven cancellation or arbitrary scheduler/interruption behavior.

@@ -398,6 +398,8 @@ pub(super) fn shortest(
                     break;
                 }
                 considered += 1;
+                #[cfg(test)]
+                tests::observe_complete_path(considered);
                 let path: Vec<_> = stack.iter().rev().map(|&(i, _)| i).collect();
                 let mut key: Option<Key> = None;
                 for (offset, pair) in path.windows(2).enumerate() {
@@ -483,6 +485,67 @@ pub(super) fn shortest(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::{
+        cell::RefCell,
+        rc::Rc,
+        sync::{
+            Arc,
+            atomic::{AtomicBool, Ordering as AtomicOrdering},
+        },
+    };
+
+    struct RouteProbe {
+        cancel: Arc<AtomicBool>,
+        completed: Rc<RefCell<Vec<usize>>>,
+    }
+    thread_local! {
+        static ROUTE_PROBE: RefCell<Option<RouteProbe>> = const { RefCell::new(None) };
+    }
+    struct RestoreRouteProbe(Option<RouteProbe>);
+    impl Drop for RestoreRouteProbe {
+        fn drop(&mut self) {
+            ROUTE_PROBE.with(|slot| slot.replace(self.0.take()));
+        }
+    }
+    pub(super) fn observe_complete_path(considered: usize) {
+        ROUTE_PROBE.with(|slot| {
+            if let Some(probe) = slot.borrow().as_ref() {
+                probe.completed.borrow_mut().push(considered);
+                probe.cancel.store(true, AtomicOrdering::SeqCst);
+            }
+        });
+    }
+
+    type StoredRow = (String, String, String);
+    #[derive(Debug, PartialEq, Eq)]
+    struct PublishedState {
+        rows: Vec<StoredRow>,
+        blobs: BTreeMap<String, String>,
+        latest: Option<String>,
+    }
+    fn published_state(store: &Store) -> PublishedState {
+        let rows = store.db.prepare(
+            "SELECT 'snapshot',id,value FROM snapshots UNION ALL SELECT 'graph',id,value FROM graphs UNION ALL SELECT 'record:'||kind,id,value FROM records ORDER BY 1,2,3"
+        ).unwrap().query_map([], |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?)))
+            .unwrap().collect::<rusqlite::Result<Vec<StoredRow>>>().unwrap();
+        let mut blobs = BTreeMap::new();
+        for entry in std::fs::read_dir(store.dir.join("blobs")).unwrap() {
+            let entry = entry.unwrap();
+            assert!(entry.file_type().unwrap().is_file());
+            let name = entry.file_name().into_string().unwrap();
+            assert!(crate::model::valid_id(&name));
+            let raw = std::fs::read(entry.path()).unwrap();
+            assert!(raw.len() <= 2_000_000 && blobs.len() < 1000);
+            assert_eq!(crate::model::hash(&raw), name);
+            assert!(blobs.insert(name, crate::model::hash(&raw)).is_none());
+        }
+        PublishedState {
+            rows,
+            blobs,
+            latest: store.latest().unwrap(),
+        }
+    }
+
     #[test]
     fn exact_integer_float_comparison_crosses_binary64_and_u64_boundaries() {
         for (a, b, order) in [
@@ -507,5 +570,110 @@ mod tests {
         for raw in ["true", "false", "null", "\"0.1\"", "1e999", "-1e999"] {
             assert!(Number::parse(raw).is_none());
         }
+    }
+
+    #[test]
+    fn cancellation_after_first_real_admitted_route_stops_before_the_second_route() {
+        let source = "// \u{3a9} e\u{301}\r\nfn \u{3b1}(){ stronger(); weaker(); }\r\nfn stronger(){ omega(); }\r\nfn weaker(){ omega(); }\r\nfn omega(){}\r\n";
+        assert_eq!(source.len(), 111);
+        assert_eq!(
+            crate::model::hash(source.as_bytes()),
+            "1cd640678892e21fb431a19d99b5bff3ce1b5c64b3e0828dd080169acacd4300"
+        );
+        let root = tempfile::TempDir::new().unwrap();
+        let host = tempfile::TempDir::new().unwrap();
+        std::fs::write(root.path().join("main.rs"), source).unwrap();
+        let mut engine = crate::Engine::open(root.path()).unwrap();
+        let deadline = Deadline::new(30000);
+        let (snapshot, graph, _, _) = engine.index(&deadline).unwrap();
+        let base = crate::graph_view::build(
+            &engine.store,
+            &snapshot,
+            &graph,
+            &crate::graph_view::BuildOptions {
+                structural_kinds: vec![],
+                ..crate::graph_view::BuildOptions::default()
+            },
+            &deadline,
+        )
+        .unwrap();
+        assert_eq!(
+            base.observations
+                .iter()
+                .filter(|e| e["relation"] == "calls")
+                .count(),
+            4
+        );
+        let raw = serde_json::to_vec(&json!({
+            "schemaVersion":1,"snapshotId":snapshot.id,"workspaceId":snapshot.workspace_id,
+            "baseGraphHash":base.base_graph_hash,
+            "claims":base.observations.iter().map(|e| json!({
+                "observationId":e["id"],"source":e["source"],"target":e["target"],
+                "evidenceIds":e["evidenceIds"],
+                "attributes":{"confidence":"INFERRED","confidence_score":0.4},
+            })).collect::<Vec<_>>(),
+        }))
+        .unwrap();
+        let input = host.path().join("selected.json");
+        std::fs::write(&input, &raw).unwrap();
+        let receipt =
+            source_claims::import_file(&engine.store, &snapshot, &graph, &input, &deadline)
+                .unwrap();
+        let view = crate::graph_view::build(
+            &engine.store,
+            &snapshot,
+            &graph,
+            &crate::graph_view::BuildOptions {
+                structural_kinds: vec![],
+                source_claim_overlay_ids: vec![receipt["artifactId"].as_str().unwrap().to_owned()],
+                ..crate::graph_view::BuildOptions::default()
+            },
+            &deadline,
+        )
+        .unwrap();
+        assert_eq!(view.nodes, base.nodes);
+        assert_eq!(view.observations, base.observations);
+        assert_eq!(view.evidence, base.evidence);
+        let args = json!({"source":"\u{3b1}","target":"omega","max_hops":2,"undirected":false});
+        let control = shortest(&engine.store, &view, &args, &deadline).unwrap();
+        assert_eq!(control["found"], true);
+        assert_eq!(control["hops"], 2);
+        assert_eq!(control["shortestNodePathsConsidered"], 2);
+        assert_eq!(control["shortestNodePathsCapped"], false);
+        assert_eq!(control["pathSourceCategory"], "inferred");
+        let baseline = published_state(&engine.store);
+        let cancel = Arc::new(AtomicBool::new(false));
+        let completed = Rc::new(RefCell::new(Vec::new()));
+        let previous = ROUTE_PROBE.with(|slot| {
+            slot.replace(Some(RouteProbe {
+                cancel: Arc::clone(&cancel),
+                completed: Rc::clone(&completed),
+            }))
+        });
+        let restore = RestoreRouteProbe(previous);
+        assert!(
+            restore.0.is_none(),
+            "A scoped route probe must not replace another probe"
+        );
+        assert!(!cancel.load(AtomicOrdering::SeqCst));
+        let error = Deadline::run_bounded(&deadline, Arc::clone(&cancel), || {
+            shortest(&engine.store, &view, &args, &Deadline::new(30000))
+        })
+        .unwrap_err();
+        drop(restore);
+        assert!(cancel.load(AtomicOrdering::SeqCst));
+        assert_eq!(
+            *completed.borrow(),
+            vec![1],
+            "Cancellation must be observed before visiting the second complete route"
+        );
+        assert!(error.to_string().contains("cancelled by host"), "{error:#}");
+        engine.store.set_deadline(&Deadline::new(30000)).unwrap();
+        assert_eq!(published_state(&engine.store), baseline);
+        assert_eq!(
+            std::fs::read(root.path().join("main.rs")).unwrap(),
+            source.as_bytes()
+        );
+        assert_eq!(std::fs::read(input).unwrap(), raw);
     }
 }
