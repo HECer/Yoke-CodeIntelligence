@@ -1,5 +1,40 @@
 # Owned Windows host-history browser harness
 
+## Separate tool statistics variant (source candidate)
+
+`--variant tool-usage --output validation/ci-tool-usage-browser` adds an
+independent real Serena Session flow with explicitly selected `CHAR_COUNT` and
+the separate dashboard reset grant. It uses the same fresh release producer,
+exact source, named Windows Job, private browser profile, network admission,
+180-second worker, four-minute step, image/evidence caps and natural-exit proofs.
+It neither substitutes for nor changes the four history browser variants.
+The statistics step requires the successful release producer; it can still
+collect its own evidence when an unrelated history invocation fails.
+
+Two actual owned `read_file` calls seed count-only totals. Real browser input
+opens Statistics, filters and sorts the table, and checks exact counters against
+the owning Session's display snapshot. Desktop/mobile `before` images show the
+counted table; both `pending` images show the reset confirmation. Mobile Cancel
+must send no management request. With the desktop dialog still open, another
+actual owning read advances the statistics revision. Continuing must receive
+the exact receipt-bound HTTP 409 `notApplied` refusal, preserve every counter,
+and show the fresh totals without an automatic reset retry (`desktop-after`).
+A second explicit, freshly reviewed confirmation on mobile must clear the
+totals (`mobile-after`). Source bytes and persisted Session revision/fingerprint
+stay unchanged. Browser, Node and owning native Session must exit naturally
+before the parent Job cleanup. Six distinct PNG/selected-DOM pairs are admitted
+independently before automation can be marked complete.
+Every read also checks the exact output increment against compact original
+result JSON counted as Unicode scalars divided by four. Reset POSTs are counted
+when sent, capped at one per viewport, and checked again after browser exit;
+POSTs during shutdown refuse acceptance.
+
+Local tests exercise inert counter, request/response admission and orchestration
+doubles only. No actual native/browser result is claimed for this source yet.
+`visualReviewComplete`, human, visible-shell and release acceptance remain false;
+all six fresh CI images still require visual inspection. Viewport emulation is
+not physical mobile-device qualification. No remote estimator/provider is used.
+
 At `abdbdb03`, [diagnostic run 41013033443](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41013033443/job/123922975632)
 passes the native, Serena and HTTP browser invocations and the original
 three-variant history harness. All six PNGs for each successful browser profile

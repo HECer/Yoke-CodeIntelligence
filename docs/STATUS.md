@@ -1,5 +1,19 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Real tool statistics browser CI candidate (2026-10-31)
+
+A separate guarded `tool-usage` browser variant now authors real owning Serena
+calls, desktop/mobile filter/sort and exact count checks, Cancel without a
+request, stale HTTP-409 reset refusal, and a fresh explicit reset to zero. It
+retains the original fresh-producer, Windows Job, resource, privacy, lifecycle
+and six-image admission guards; the four history variants remain independent.
+Focused inert tests pass. Actual new-source native execution and all six CI
+screenshots with visual review remain pending. This is source wiring, without
+native/browser, visible-shell, full Windows, VSIX or release acceptance.
+The local full Python suite reports 315 passed, one skipped and two failed
+Cargo-dependent checks because Cargo is absent from the selected PATH; no
+native build was attempted to bypass the current source-only qualification.
+
 ## Decimal duration projection repair candidate (2026-10-31)
 
 The preceding binary-float multiplication can widen a decoded `2.007` second

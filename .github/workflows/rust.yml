@@ -317,6 +317,21 @@ jobs:
           name: host-document-history-browser-http-windows
           path: validation/ci-host-document-history-browser-http
           if-no-files-found: error
+      - name: Exercise real native tool statistics and reviewed reset in the browser
+        if: always() && !cancelled() && runner.os == 'Windows' && steps.release_build.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --variant tool-usage --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-tool-usage-browser
+      - name: Preserve tool statistics browser automation and six PNGs
+        if: always() && runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: tool-usage-browser-windows
+          path: validation/ci-tool-usage-browser
+          if-no-files-found: error
   native-rust-windows:
     name: native-rust (${{ matrix.os }})
     needs: native-shards-windows
@@ -442,6 +457,21 @@ jobs:
         with:
           name: diagnostic-host-document-history-browser-http-windows
           path: validation/ci-host-document-history-browser-http
+          if-no-files-found: error
+      - name: Exercise real native tool statistics and reviewed reset in the browser
+        if: always() && !cancelled() && steps.diagnostic_release.outcome == 'success'
+        timeout-minutes: 4
+        shell: pwsh
+        run: |
+          $nodeMatches = @(Get-Command node.exe -CommandType Application -ErrorAction Stop)
+          $selectedNode = $nodeMatches[0].Source
+          python scripts/host_history_browser.py --variant tool-usage --native target/release/yoke.exe --node "$selectedNode" --output validation/ci-tool-usage-browser
+      - name: Preserve tool statistics browser automation and six PNGs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostic-tool-usage-browser-windows
+          path: validation/ci-tool-usage-browser
           if-no-files-found: error
   windows-credential-tls:
     name: Windows credential-backed TLS (single explicit ignored case)

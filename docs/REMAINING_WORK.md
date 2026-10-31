@@ -1,5 +1,16 @@
 # Remaining implementation and acceptance
 
+## Real statistics browser qualification (2026-10-31)
+
+Run the new independent `tool-usage` Windows CI browser variant against its
+fresh same-run native producer. Require exact counted rows/totals, real Cancel,
+the stale reset refusal without retry, explicit fresh clear, immutable source
+and persisted identity, all six distinct PNG/DOM artifacts and independent
+natural browser/driver/Session and Job exits. Inspect every actual desktop/mobile
+image and iterate on visible defects before claiming browser qualification.
+Local inert tests and previously inspected mocked-data HTML do not satisfy this
+gate. The full native/Windows/VSIX/main/release requirements remain open.
+
 ## Decimal duration projection qualification (2026-10-31)
 
 The selected tool-timeout and symbol-information projections now avoid the
