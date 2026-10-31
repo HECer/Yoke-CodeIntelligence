@@ -168,12 +168,16 @@ fn actual_standard_native_defaults_export_same_profile_and_report_unavailable_ex
         )],
     );
     let result = invoke(root.path(), &config_args("plan", &selection_reduced));
-    assert!(!result.status.success() && result.stdout.is_empty());
-    let error = String::from_utf8_lossy(&result.stderr);
     assert!(
-        error.contains("session_config_activation_command_unavailable")
-            && !error.contains("owned_private_canary")
+        result.status.success(),
+        "{}",
+        String::from_utf8_lossy(&result.stderr)
     );
+    let plan: Value = serde_json::from_slice(&result.stdout).unwrap();
+    assert_eq!(plan["activationCommandsExecuted"], false);
+    assert_eq!(plan["activationExecutionAuthorityRequired"], true);
+    assert!(!String::from_utf8_lossy(&result.stdout).contains("owned_private_canary"));
+    assert!(!root.path().join("owned_private_canary").exists());
     assert!(!root.path().join(".yoke").exists());
 }
 
@@ -306,8 +310,16 @@ fn grants_stale_sources_unknown_settings_and_foreign_outputs_refuse_without_effe
         vec![selected(&input, json!({"kind":"global"}))],
     );
     let r = invoke(root.path(), &args);
-    assert!(!r.status.success() && r.stdout.is_empty() && !output.exists());
+    assert!(
+        r.status.success() && output.exists(),
+        "{}",
+        String::from_utf8_lossy(&r.stderr)
+    );
+    let profile: Value = serde_json::from_slice(&fs::read(&output).unwrap()).unwrap();
+    assert!(profile.get("activationCommands").is_some());
+    assert!(profile.get("activationRuntime").is_none());
     assert!(!String::from_utf8_lossy(&r.stderr).contains("owned_private_canary"));
+    assert!(!root.path().join("owned_private_canary").exists());
     assert!(!root.path().join(".yoke").exists());
 }
 

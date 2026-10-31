@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "result": {
+    "owner": "integration-20261025-platform-repairs-control-v1",
+    "schema": 1,
+    "runId": "combined-dc9a4f0f-clippy-reviewed",
+    "mode": "clippy",
+    "target": null,
+    "sourceCommit": "dc9a4f0f401e8eaf638e29a5e253e0a94b2227ef",
+    "completed": false,
+    "inputsUnchanged": true,
+    "nativeImageRead": false,
+    "testExecutionRequested": false,
+    "nativeImageReadAttempted": false,
+    "metadataOnly": true,
+    "qualification": "Selected tracked source bytes and private controls are mapped before/after. External dependency/tool binaries, caches, all environment values and the entire host are not frozen. No broader platform, hosted CI, release or universal acceptance is implied. The host must execute these controllers serially and exclude other target-directory producers.",
+    "serialMutexAbandoned": false,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--keep-going",
+      "-j2",
+      "--message-format=json",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "commandOwnerCompleted": false,
+    "sourceInputCount": 1071,
+    "errorType": "RuntimeError",
+    "error": "Owned command incomplete; no image adoption or acceptance",
+    "failureByteInputsUnchanged": true,
+    "failureByteRecheckIsNotCleanHeadProof": true,
+    "freeAfter": 7753977856
+  },
+  "job": {
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--keep-going",
+      "-j2",
+      "--message-format=json",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "deadlineSeconds": 1200,
+    "logCapBytes": 16000000,
+    "stdinClosed": true,
+    "startedSuspended": true,
+    "assignedBeforeResume": true,
+    "completed": false,
+    "treeExitedBeforeCleanup": false,
+    "minimumFreeObserved": 3527065600,
+    "cleanupErrors": [],
+    "streamEOF": [
+      true,
+      true
+    ],
+    "readerErrors": [
+      false,
+      false
+    ],
+    "pid": 13804,
+    "resumePreviousSuspendCount": 1,
+    "exitCode": 0,
+    "membersAtRootObservation": [
+      {
+        "pid": 50460,
+        "imageBytesRead": false,
+        "imageIdentityKnown": false,
+        "membershipConfirmed": true,
+        "imagePathMetadata": "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\vctip.exe"
+      }
+    ],
+    "rootExitedAtObservation": true,
+    "activeAtRootObservation": 1,
+    "originalDrainSeconds": 1,
+    "activeBeforeCleanup": 1,
+    "membersAfterOriginalDrain": [
+      {
+        "pid": 50460,
+        "imageBytesRead": false,
+        "imageIdentityKnown": false,
+        "membershipConfirmed": true,
+        "imagePathMetadata": "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\vctip.exe"
+      }
+    ],
+    "cleanupSeconds": 2,
+    "activeAfterCleanup": 0,
+    "rootExitedAfterCleanup": true,
+    "elapsedSeconds": 364.636660499993,
+    "capturedLogBytes": 672091,
+    "outputExceeded": false,
+    "cleanupUnproven": false
+  },
+  "logs": {
+    "command.stdout": {
+      "bytes": 662177,
+      "sha256": "4956655f022b9a2b0d71f5c473a00563c0bc6f19e46d64a7c526e72813992994"
+    },
+    "command.stderr": {
+      "bytes": 9914,
+      "sha256": "95e7887cda0c5db69596e05816b2fcb446274500827bdd0b7ee1fadff45d5a00"
+    },
+    "source-before.json": {
+      "bytes": 158940,
+      "sha256": "e2c35abaae38bc61a294b713cfb5005572388819578d8744af06834f74a35f3f"
+    },
+    "source-after.json": {
+      "bytes": 158940,
+      "sha256": "e2c35abaae38bc61a294b713cfb5005572388819578d8744af06834f74a35f3f"
+    },
+    "control-before.json": {
+      "bytes": 656,
+      "sha256": "0050da654223f3302fee8961dd2ba9057709606e49da99bab3c176af33ca14d1"
+    },
+    "control-after.json": {
+      "bytes": 656,
+      "sha256": "0050da654223f3302fee8961dd2ba9057709606e49da99bab3c176af33ca14d1"
+    }
+  },
+  "acceptance": false,
+  "nativeImageRead": false,
+  "qualification": "Cargo typing/lint exit zero; retained Job member survives original drain. Forced cleanup does not establish acceptance. No native test or release qualification."
+}

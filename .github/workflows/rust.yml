@@ -129,6 +129,17 @@ jobs:
           name: host-powershell-fixed-import-original-diagnostic-${{ matrix.shard }}
           path: validation/ci-host-powershell-fixed-import-original/result.json
           if-no-files-found: warn
+      - name: Isolate the Management cmdlets used by activation commands
+        if: failure() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        timeout-minutes: 1
+        run: python scripts/host_powershell_probe.py --activation-command-boundary --output validation/ci-host-powershell-activation-boundary
+      - name: Preserve activation command boundary diagnostics
+        if: always() && runner.os == 'Windows' && (steps.python_tests.outcome == 'failure' || steps.native_tests.outcome == 'failure')
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-powershell-activation-boundary-diagnostic-${{ matrix.shard }}
+          path: validation/ci-host-powershell-activation-boundary/result.json
+          if-no-files-found: warn
       - name: Preserve complete or partial shard receipts and raw group logs
         if: always()
         uses: actions/upload-artifact@v4
