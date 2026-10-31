@@ -1,5 +1,17 @@
 # Remaining implementation and acceptance
 
+## Decimal duration projection qualification (2026-10-31)
+
+The selected tool-timeout and symbol-information projections now avoid the
+binary `2.007 * 1000` rounding artifact with one checked canonical-decimal
+conversion. Fractional milliseconds still round upward; zero policy, native
+integer selections, source bytes, original host ceilings and stale bindings
+retain their own semantics. Three authored shared-unit functions and one YAML
+integration fixture need fresh native compilation/execution. The independent
+arithmetic reproducer and source checks are not Rust runtime proof. Current
+native/Windows/VSIX/main/release qualification and full upstream parity remain
+open; no historical validation record is rewritten.
+
 ## Selected dashboard statistics qualification (2026-10-31)
 
 The selected-estimator dashboard now has exact decimal display counters,

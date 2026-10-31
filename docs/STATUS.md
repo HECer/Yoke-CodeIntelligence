@@ -1,5 +1,19 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Decimal duration projection repair candidate (2026-10-31)
+
+The preceding binary-float multiplication can widen a decoded `2.007` second
+budget to 2,008 ms. Tool timeout and symbol-information policy now share checked
+decimal scaling of the canonical decoded number, yielding 2,007 ms while still
+rounding genuine fractional milliseconds upward. Existing positive/zero/null,
+600,000 ms, host-deadline and persisted integer-policy semantics remain separate.
+An independent IEEE754/Decimal reproducer confirms the old arithmetic mismatch;
+it does not execute Rust. Three shared native unit functions cover 20,000 exact
+millisecond grid inputs, exponent/subnormal/fractional/overflow/type boundaries.
+One new YAML integration fixture checks both projected policies. Those native
+fixtures remain uncompiled/unrun locally; fresh guarded native qualification is
+required. Full Windows/VSIX/main/release acceptance remains open.
+
 ## Selected dashboard tool statistics candidate (2026-10-31)
 
 An explicitly selected estimator now adds a Statistics page with exact decimal

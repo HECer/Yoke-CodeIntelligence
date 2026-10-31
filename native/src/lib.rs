@@ -15,6 +15,7 @@ pub mod contracts;
 pub mod credentials;
 pub mod dataflow;
 pub mod debug_adapter;
+mod decimal_duration;
 pub mod decision_records;
 pub mod document_graph;
 pub mod editor;

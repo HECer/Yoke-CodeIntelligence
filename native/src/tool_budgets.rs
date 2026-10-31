@@ -50,11 +50,10 @@ fn field_value(key: &str, value: &Value) -> Result<Option<u64>> {
     }
     match contract()["fields"][key]["target"].as_str() {
         Some("timeoutMs") => {
-            let seconds = value
-                .as_f64()
-                .filter(|s| s.is_finite() && *s > 0.0 && *s <= 600.0)
+            let milliseconds = crate::decimal_duration::milliseconds_ceil(value, MAX_TIMEOUT_MS)
+                .filter(|ms| *ms > 0)
                 .context("session_config_tool_timeout_invalid")?;
-            Ok(Some((seconds * 1000.0).ceil().max(1.0) as u64))
+            Ok(Some(milliseconds))
         }
         Some("defaultAnswerChars") => Ok(Some(
             value
