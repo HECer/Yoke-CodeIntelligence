@@ -597,3 +597,13 @@ creates plain UTF-8 at a fresh destination. Neither form grants runtime, policy
 or source execution rights. Catalog sources and policy sources share the 2MB raw
 budget; named/catalog protocol 2 retains the same bounded engine and memory guard.
 See [catalog schema, order, receipts and exact limits](prompt-catalogs.md).
+
+## Selected context metadata and output policy
+
+Custom context definitions additionally accept description, tool_description_overrides,
+single_project and structured_tool_output. Modes accept literal description metadata;
+null context/mode prompts produce empty instructions without calling a renderer.
+The selected policy changes actual Serena discovery/output and the existing
+host-startup-only project lock. Absent fields retain preceding identities and output.
+See [the complete selected context contract](context-definition-options.md) for
+true/false/null behavior, scopes, budgets and pending native qualification.

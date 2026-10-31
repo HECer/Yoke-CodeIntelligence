@@ -528,6 +528,15 @@ impl Backend<'_> {
         self.session()
             .map_or_else(tools, |session| session_tools(session, self.profile()))
     }
+    fn structured_output(&self) -> bool {
+        match self {
+            Self::Serena(session, _) => session
+                .context_definition()
+                .and_then(|d| d.structured_tool_output)
+                .is_some_and(|v| v.enabled()),
+            _ => false,
+        }
+    }
     fn call(&mut self, name: &str, args: Value) -> Result<Value> {
         if !self.tool_allowed(name) {
             return Ok(
@@ -1046,13 +1055,17 @@ fn serve_backend_state(
                     send(error(id, -32602, "Tool name required"))?;
                     continue;
                 };
-                let result = match backend.call(
-                    name,
-                    message["params"]
-                        .get("arguments")
-                        .cloned()
-                        .unwrap_or_else(|| json!({})),
-                ) {
+                match backend
+                    .call(
+                        name,
+                        message["params"]
+                            .get("arguments")
+                            .cloned()
+                            .unwrap_or_else(|| json!({})),
+                    )
+                    .and_then(|result| {
+                        crate::context_options::tool_response(result, backend.structured_output())
+                    }) {
                     Ok(result) => result,
                     Err(_) => {
                         send(error(
@@ -1070,8 +1083,7 @@ fn serve_backend_state(
                         }
                         continue;
                     }
-                };
-                json!({"isError":result["status"]=="error","content":[{"type":"text","text":serde_json::to_string(&result)?}]})
+                }
             }
             "resources/read" => {
                 let uri = message["params"]["uri"].as_str().unwrap_or("");
