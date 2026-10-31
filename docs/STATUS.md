@@ -1,5 +1,22 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Corrected reset target and fresh TLS source confirmation (2026-10-31)
+
+At `53a280147efaf96f8bc2f443c28aadecce3abefe`, the actual Ubuntu shard 7
+passes all 20 `session_dashboard_management` tests, with zero failed, ignored,
+measured or filtered. This executes the corrected malformed-label/foreign-label
+refusals and all six selected statistics-management cases. The same source's
+single explicitly selected Windows credential-backed TLS case passes again
+(one passed, zero failed/ignored, 49 filtered). Independently verified text
+artifacts bind source/control bytes, log hashes, the exact shard partition and
+the TLS producer/Job lifecycle. [Receipts and scope](validation/integration-2026-10-31/history-vsix-followup/README.md#fresh-native-confirmation-at-53a28014)
+preserve these as separate, nonadditive observations. Other corrected targets,
+fresh Windows dashboard/statistics-browser/TSGo qualification and whole-source
+Windows/platform/main/release gates remain open. The automatic browser
+diagnostic was skipped because its explicit commit marker was absent; this
+documentation publication supplies the existing `[browser-evidence]` marker
+to request a separate fresh diagnostic without changing any workflow guard.
+
 ## Source-specific history browser and combined VSIX evidence (2026-10-31)
 
 At `3ceb66ced10bacda9cd024d0f84a5345ea8cf80c`, four real Windows history

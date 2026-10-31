@@ -6,6 +6,34 @@ retained TypeScript 0.3.0. Later repairs need their own fresh CI. Neither an
 aggregate workflow outcome nor an older successful artifact qualifies the
 current branch, full Windows parity, main, publication or release.
 
+## Fresh native confirmation at 53a28014
+
+Subsequent source `53a280147efaf96f8bc2f443c28aadecce3abefe` has two new
+independently audited observations in [run 41189561472](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41189561472):
+
+- [Ubuntu shard 7, job 124503347924](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41189561472/job/124503347924),
+  artifact `13037723627`, ZIP SHA-256
+  `414880ffeb07a48fe355f308694454864efe30ed1a0ff72c43cb5411cd821ee4`:
+  all 48 assigned whole-target group logs pass and match the exact recorded
+  inventory partition. `session_dashboard_management` passes 20 tests, zero
+  failed/ignored/measured/filtered, including all six statistics-management
+  cases and the corrected 400/409 project-binding assertions.
+- [Windows credential TLS, job 124503347935](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41189561472/job/124503347935),
+  artifact `13038790593`, ZIP SHA-256
+  `b9500ac51e7956d4a145c0f6c464dcd3aef300596e81f66e0b2c06563060692b`:
+  the single explicitly selected existing recovery case passes, with 49 other
+  cases filtered. Both CLI/test roles come from the same successful fresh
+  producer, with specific-Job admission and natural exit before cleanup.
+
+[Native follow-up receipt](native-53a28014-verification.json) records selected
+control-byte comparisons and every relevant log hash. Counts are nonadditive.
+No local executable payload was read. Windows dashboard execution, other
+corrected targets, TSGo and statistics-browser evidence, subsequent source and
+full Windows/platform/main/release acceptance remain open. The separate
+`53a28014` browser diagnostic was skipped: its existing push condition requires
+`[browser-evidence]` in the head commit message. The documentation follow-up
+supplies that marker and changes no workflow condition or original gate.
+
 ## Four real history browser profiles
 
 [Windows diagnostic job 124489341068](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41184768572/job/124489341068)

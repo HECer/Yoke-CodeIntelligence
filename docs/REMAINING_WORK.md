@@ -2,15 +2,18 @@
 
 ## Corrected reset project-binding fixture qualification (2026-10-31)
 
-Rerun the complete 20-test `session_dashboard_management` target with separate
-400 malformed-label and 409 valid-foreign-project refusal assertions. Both must
-preserve exact counters, and the binding refusal must attest `notApplied`.
-The actual `3ceb66ce` run was 19 passed and one failed; source checks do not
-replace this runtime gate. Do not relax the existing project-label grammar.
+The complete 20-test `session_dashboard_management` target now passes on Ubuntu
+at `53a28014`, including separate 400 malformed-label and 409 valid-foreign-project
+refusals that preserve counters and require `notApplied`. Its 48-group shard
+partition and all recorded logs are independently verified. The previous actual
+`3ceb66ce` result remains 19 passed and one failed. Fresh Windows execution and
+the subsequent candidate's own qualification remain open; do not relax the
+existing project-label grammar or infer whole-platform acceptance.
 
-The selected Windows credential-backed TLS case is now independently confirmed
-for `3ceb66ce` (one passed, 49 filtered). This does not combine target counts or
-supply subsequent candidates' fresh Windows/native/browser/VSIX/release gates.
+The selected Windows credential-backed TLS case is independently confirmed at
+both `3ceb66ce` and `53a28014` (one passed, 49 filtered in each separate run).
+These counts are nonadditive and do not supply whole-target or subsequent
+candidate Windows/native/browser/VSIX/release acceptance.
 
 ## Dashboard reset compiler repair qualification (2026-10-31)
 
@@ -29,7 +32,11 @@ and persisted identity, all six distinct PNG/DOM artifacts and independent
 natural browser/driver/Session and Job exits. Inspect every actual desktop/mobile
 image and iterate on visible defects before claiming browser qualification.
 Local inert tests and previously inspected mocked-data HTML do not satisfy this
-gate. The full native/Windows/VSIX/main/release requirements remain open.
+gate. The separate `53a28014` browser diagnostic was skipped because the push
+lacked its explicit `[browser-evidence]` commit marker. The documentation
+follow-up requests that existing diagnostic, retaining all original mandatory
+shard/acceptance jobs and resource/source/lifecycle gates. The full native/
+Windows/VSIX/main/release requirements remain open.
 
 ## Decimal duration projection qualification (2026-10-31)
 
