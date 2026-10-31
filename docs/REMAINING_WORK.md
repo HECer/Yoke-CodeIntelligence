@@ -1,5 +1,15 @@
 # Remaining implementation and acceptance
 
+## Explorer loopback EOF coordination repair needs hosted recheck (2026-11-01)
+
+Source `2a205ac3` passes all eight Explorer cases on Windows; macOS passes the
+six original cases and scalar test but fails the new loopback peer exchange.
+The candidate now sends request EOF before reading the response, verifies that
+EOF at the peer and preserves peer I/O errors. All four response cases and
+original assertions, receive/parser bytes and timeout values remain unchanged.
+Fresh native qualification is required for this fixture repair. The original
+Windows response failure cause, macOS memory and full release gates remain open.
+
 ## Explorer HTTP receive observations await hosted execution (2026-10-30)
 
 At source `85d0893d`, completed push run `41096155077` passes five of six
