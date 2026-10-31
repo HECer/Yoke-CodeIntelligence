@@ -4,8 +4,8 @@ The native Graphify adapter accepts `path_policy` on `shortest_path`:
 
 - Omission or `first_observation_v1` retains the existing first-observation
   BFS route and response shape.
-- `weakest_source_categories_v1` selects the weakest category among all
-  shortest observation routes in the explicitly selected traversal direction.
+- `weakest_source_categories_v1` selects the weakest category among the first
+  256 distinct shortest node paths in the explicitly selected direction.
   Stored directions and original observation/evidence IDs remain unchanged.
   `undirected: true` permits reverse traversal without reversing stored claims.
 
@@ -18,12 +18,20 @@ probabilities, compiler binding or execution proof. No score is invented for a
 missing claim. A zero-hop self path has no category.
 
 BFS still determines the minimum hop count under the existing 1..64 bound.
-The selected policy then walks the increasing-distance DAG, retaining at most
-four weakest-prefix states per node. This avoids exponential path enumeration;
-every transition checks the original deadline. Original adjacency order gives
-deterministic category ties for an identical immutable View. The result adds
-`pathPolicy`, `pathSourceCategory` and `pathCategoryMeaning` only for the
-selected policy. Existing ambiguity handling, final 256,000-byte refusal,
+The selected policy builds an increasing-distance predecessor DAG in BFS
+first-discovery order. Each predecessor node appears once for counting, while
+all original parallel claims remain available for hop provenance and the
+weakest original claim determines that hop's category. Equal-rank copies keep
+their original View order. Backward enumeration from the target ranks the first
+256 complete node paths; discovering a 257th path only sets the cap flag. This
+is a complete-path prefix, not a count of first-hop neighbors or observations.
+Category ties retain the first enumerated complete path.
+
+The implementation keeps a depth-bounded stack and only the chosen route, not
+an exponentially large route set. The admitted View's 20,000-node/100,000-edge
+bounds still apply. Each DAG transition, stack step and ranked-hop scan checks
+the original absolute deadline. The result adds `pathPolicy`,
+`pathSourceCategory` and `pathCategoryMeaning` only for the selected policy. Existing ambiguity handling, final 256,000-byte refusal,
 source admission and permission rules remain. The catalog's optional argument
 is additive; omission does not select this policy automatically.
 
@@ -122,8 +130,8 @@ The candidate adds the presentation described above and authors a further
 public fixture with 1,200 parallel source calls. Legacy selection still returns
 one original observation; complete selected hop provenance must refuse its byte
 capacity without clipping, publishing state or changing archived/host sources.
-That additional test and the corrected producer await fresh guarded native
-compilation and execution. Public assertions compare each complete evidence
+Those parallel-hop-only cases pass at `9b429f4d`, as recorded above. The
+new route-prefix producer below awaits separate fresh native qualification. Public assertions compare each complete evidence
 object and its View order. A separate explicitly synthetic rendering unit covers
 multiple-site references, opposite lexical ID ordering and one shared site
 across observations/hops; it does not establish public source admission.
@@ -132,38 +140,57 @@ source-claim admission, contradictory claim fixtures, distinct-node 256/257
 counting and full current CLI/MCP equivalence remain open.
 
 
-## Distinct-node route prefix: test-first candidate
+## Distinct-node route prefix candidate
 
-The next candidate specifies the current upstream boundary separately from
-the four coalesced category states: discover at most 257 distinct shortest
-node paths, rank only the first 256, and report whether another path exists.
-Parallel observations remain separate original claims at each hop and do not
-increase the node-path count. The selected policy is still an unmerged
-candidate; its current producer ranks all coalesced category routes and has
-not implemented this prefix behavior.
-
-The proposed selected-only fields are `shortestNodePathsConsidered` (0..256),
+The selected-only fields are `shortestNodePathsConsidered` (0..256),
 `shortestNodePathsCapped`, `shortestNodePathLimit` (256), and
 `pathSelectionScope` (`first_256_distinct_shortest_node_paths`). A 257th path
-detects the cap and cannot displace the weakest in-prefix route. Original
-deadline, max-hop, complete parallel provenance and whole-output refusal
-bounds remain. Omitted and explicit legacy selection keep their old shape.
+detects the cap and cannot displace the weakest in-prefix route. Parallel
+observations remain separate original claims and do not add node paths.
+The count is one for a resolved zero-hop self path, zero for an unreachable or
+max-hop-excluded target, and at most 256 for a found nonempty path. Cycles do
+not appear in the increasing-distance DAG. Omitted and explicit legacy
+selection retain their old route and response shape; ambiguous endpoint
+responses retain their existing candidate shape.
 
-Three explicitly synthetic category-policy tests specify the excluded weaker
-257th route, a weaker parallel copy on in-prefix route 255, and a multilevel
-reconverging graph with 257 complete routes but only two first-hop neighbors.
-The order is defined by shortest-path predecessor lists in BFS first-discovery
-order, then backward enumeration from the target. For each target predecessor,
-its predecessor choices are exhausted before the next target predecessor;
-parallel copies coalesce only for this node-path enumeration, not claim ranking
-or output. In the multilevel fixture this excludes a weak last suffix that
-forward DFS would place inside its prefix. These synthetic cases make no
-source-admission claim. Two genuine public selected-View fixtures have exactly
-256 or 257 function branches, two original first-hop calls per branch and
-independently pinned UTF-8/combining-character/CRLF source hashes. They specify
-the count/cap fields, full original hop objects/evidence, stable results and
-replay after a later index and unindexed host edit without query publication.
-These five tests are authored only; native RED remains unrun. No producer
-change for this stage has been made. Actual numeric claim admission/replay,
-contradictory admitted numeric/category claims and full current CLI/MCP
-qualification remain open.
+Predecessor lists use BFS first-discovery order. Backward enumeration exhausts
+the predecessor choices for one target predecessor before moving to the next.
+For a fixed immutable View this is deterministic. It differs from forward DFS
+on reconverging graphs; a multilevel fixture has 257 complete paths but only
+two first-hop neighbors and deliberately puts its weaker last suffix outside
+the ranked prefix. The original max-hop/deadline and complete parallel-hop
+output-refusal bounds remain.
+
+At test-first source `2037686c`, genuine public selected-View fixtures with
+exactly 256 or 257 source branches and two original entry calls per branch
+reach their intended missing-count assertions on Linux and Windows. Every
+branch, both entry observations/evidence IDs, the sole resolved branch exit,
+and absence of shorter/additional resolved routes are checked before that
+assertion. All eleven older public cases pass; the two new cases fail at line
+792 with `None` versus `Some(256)`, without ignores or filters. Independent
+receipt `91ccc39c1554b13bf0cc6e61707a08fe2a4b12f242a002eac5374cbf7676468c`
+checks each platform's 1,176 Git-bound source hashes, independently derives its
+378 targets and checks exact partitions and every text/log digest for 97 whole
+target executions. Later new cap/provenance/replay assertions are not reached
+by those RED runs.
+
+At that same source, the complete Linux library has 565 passes, three intended
+route-identity failures, six original ignores and no filters. All seven older
+policy units pass. The three new explicitly synthetic cases choose the
+excluded 257th route rather than the required in-prefix route 0 or 255.
+Receipt `2f3c7ff1105778992b6589c90ead7540987c8261b97637c26fc7d58f033b09f4`
+checks all 48 whole groups/logs with the same source/inventory binding and
+binds the public RED receipt. Synthetic category fixtures do not establish
+numeric source-claim admission.
+
+The candidate now implements this bounded predecessor-prefix selection and
+adds two authored regressions for self/unreachable/max-hop/cyclic/reverse
+paths and expired/pre-selection cancelled requests. The cancellation case
+changes its inherited flag after constructing the child deadline and asserts
+the inner operation's refusal before the outer owner's final cancellation
+check. It does not qualify interruption during prefix enumeration.
+All original ten policy units and
+thirteen public case bodies remain unchanged. Fresh native GREEN for the
+changed producer and these additional cases is pending. Source-bound numeric
+claim admission/replay, contradictory admitted numeric/category claims and
+full current CLI/MCP qualification remain required and open.

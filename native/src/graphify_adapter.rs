@@ -9,6 +9,7 @@ use anyhow::{Context, Result, bail, ensure};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 const MAX_OUTPUT: usize = 256_000;
+const MAX_SHORTEST_NODE_PATHS: usize = 256;
 fn definitions() -> Vec<(&'static str, &'static str, Value, Vec<&'static str>)> {
     vec![
         (
@@ -582,6 +583,137 @@ fn path_hops(
     Ok(result)
 }
 
+struct NodeRoutePrefix {
+    nodes: Vec<usize>,
+    edges: Vec<usize>,
+    weakest_category: Option<u8>,
+    considered: usize,
+    capped: bool,
+}
+
+fn weakest_node_route_prefix(
+    view: &View,
+    adjacency: &[Vec<(usize, usize)>],
+    distances: &BTreeMap<usize, usize>,
+    start: usize,
+    end: usize,
+    deadline: &Deadline,
+) -> Result<NodeRoutePrefix> {
+    use crate::graph_extensions::{AnalysisCategory as Category, SourceCategoryPolicy};
+    #[derive(Clone, Copy)]
+    struct Predecessor {
+        node: usize,
+        observation: usize,
+        rank: u8,
+    }
+    let policy = SourceCategoryPolicy::default();
+    let end_distance = *distances
+        .get(&end)
+        .context("Shortest path distance missing")?;
+    ensure!(end_distance <= 64, "Shortest path depth capacity");
+    let mut predecessors = vec![Vec::<Predecessor>::new(); view.nodes.len()];
+    let mut hop_positions = BTreeMap::<(usize, usize), usize>::new();
+    let mut seen = vec![false; view.nodes.len()];
+    seen[start] = true;
+    let mut pending = VecDeque::from([start]);
+    // Revisit the shortest DAG in BFS discovery order. Each predecessor node
+    // occurs once for counting; its weakest original parallel observation is
+    // retained separately, with original View order breaking equal ranks.
+    while let Some(at) = pending.pop_front() {
+        deadline.check()?;
+        let distance = distances[&at];
+        if distance >= end_distance {
+            continue;
+        }
+        for &(next, edge) in &adjacency[at] {
+            deadline.check()?;
+            if distances.get(&next).copied() != Some(distance + 1) {
+                continue;
+            }
+            let resolution = view.observations[edge]["resolution"].as_str().unwrap_or("");
+            let rank = match policy.resolution_categories.get(resolution) {
+                Some(Category::Extracted) => 3,
+                Some(Category::Inferred) => 2,
+                Some(Category::Ambiguous) => 1,
+                Some(Category::Unmapped) | None => 0,
+            };
+            match hop_positions.entry((at, next)) {
+                std::collections::btree_map::Entry::Vacant(entry) => {
+                    entry.insert(predecessors[next].len());
+                    predecessors[next].push(Predecessor {
+                        node: at,
+                        observation: edge,
+                        rank,
+                    });
+                }
+                std::collections::btree_map::Entry::Occupied(entry) => {
+                    let original = &mut predecessors[next][*entry.get()];
+                    if rank < original.rank {
+                        original.observation = edge;
+                        original.rank = rank;
+                    }
+                }
+            }
+            if !seen[next] {
+                seen[next] = true;
+                pending.push_back(next);
+            }
+        }
+    }
+    let mut result = NodeRoutePrefix {
+        nodes: vec![],
+        edges: vec![],
+        weakest_category: None,
+        considered: 0,
+        capped: false,
+    };
+    // Enumerate complete paths backwards through ordered predecessor lists.
+    // Keep only a depth-bounded stack and the chosen route, never a route set.
+    // Discovering path 257 detects the cap without ranking or returning it.
+    let mut stack = vec![(end, 0usize)];
+    let mut reverse_edges = Vec::<(usize, u8)>::new();
+    while let Some(&(at, _)) = stack.last() {
+        deadline.check()?;
+        if at == start {
+            if result.considered == MAX_SHORTEST_NODE_PATHS {
+                result.capped = true;
+                break;
+            }
+            result.considered += 1;
+            let mut weakest = 3u8;
+            for &(_, rank) in &reverse_edges {
+                deadline.check()?;
+                weakest = weakest.min(rank);
+            }
+            if result.nodes.is_empty() || weakest < result.weakest_category.unwrap_or(3) {
+                result.nodes = stack.iter().rev().map(|&(node, _)| node).collect();
+                result.edges = reverse_edges.iter().rev().map(|&(edge, _)| edge).collect();
+                result.weakest_category = (!reverse_edges.is_empty()).then_some(weakest);
+            }
+            stack.pop();
+            reverse_edges.pop();
+            continue;
+        }
+        let (_, choice) = stack.last_mut().context("Shortest path stack missing")?;
+        if *choice == predecessors[at].len() {
+            stack.pop();
+            reverse_edges.pop();
+            continue;
+        }
+        let predecessor = predecessors[at][*choice];
+        *choice += 1;
+        ensure!(stack.len() <= end_distance, "Shortest path stack capacity");
+        stack.push((predecessor.node, 0));
+        reverse_edges.push((predecessor.observation, predecessor.rank));
+    }
+    ensure!(
+        result.considered > 0 && !result.nodes.is_empty(),
+        "Shortest node route missing"
+    );
+    deadline.check()?;
+    Ok(result)
+}
+
 fn shortest(view: &View, args: &Value, deadline: &Deadline) -> Result<Value> {
     let max = bounded(args, "max_hops", 1, 64)?;
     let sources = matches(view, text(args, "source")?, deadline)?;
@@ -642,64 +774,17 @@ fn shortest(view: &View, args: &Value, deadline: &Deadline) -> Result<Value> {
     let mut edges = vec![];
     let category_policy = args["path_policy"] == "weakest_source_categories_v1";
     let mut weakest_category = None;
+    let mut paths_considered = 0;
+    let mut paths_capped = false;
     if found && category_policy {
-        use crate::graph_extensions::{AnalysisCategory as Category, SourceCategoryPolicy};
-        let policy = SourceCategoryPolicy::default();
-        // The shortest-route DAG has increasing BFS distance, including in
-        // explicitly undirected traversal. Keep each of the four possible
-        // weakest-prefix categories: a later weak hop can equalize prefixes.
-        // This visits at most four states per node, without enumerating an
-        // exponential number of paths or rewriting original observations.
-        let mut category_parent = BTreeMap::from([((start, 3u8), None::<((usize, u8), usize)>)]);
-        let mut category_queue = VecDeque::from([(start, 3u8)]);
-        let end_distance = distances[&end];
-        while let Some(state @ (at, weakest)) = category_queue.pop_front() {
-            deadline.check()?;
-            if distances[&at] >= end_distance {
-                continue;
-            }
-            for (next, edge) in &adjacency[at] {
-                deadline.check()?;
-                if distances.get(next).copied() != Some(distances[&at] + 1) {
-                    continue;
-                }
-                let resolution = view.observations[*edge]["resolution"]
-                    .as_str()
-                    .unwrap_or("");
-                let rank = match policy.resolution_categories.get(resolution) {
-                    Some(Category::Extracted) => 3,
-                    Some(Category::Inferred) => 2,
-                    Some(Category::Ambiguous) => 1,
-                    Some(Category::Unmapped) | None => 0,
-                };
-                let next_state = (*next, weakest.min(rank));
-                if let std::collections::btree_map::Entry::Vacant(entry) =
-                    category_parent.entry(next_state)
-                {
-                    entry.insert(Some((state, *edge)));
-                    category_queue.push_back(next_state);
-                }
-            }
-        }
-        let rank = (0u8..=3)
-            .find(|rank| category_parent.contains_key(&(end, *rank)))
-            .context("Shortest route category state missing")?;
-        let mut at = (end, rank);
-        nodes.push(end);
-        while at.0 != start {
-            deadline.check()?;
-            let (previous, edge) =
-                category_parent[&at].context("Shortest route category parent missing")?;
-            edges.push(edge);
-            nodes.push(previous.0);
-            at = previous;
-        }
-        nodes.reverse();
-        edges.reverse();
-        if !edges.is_empty() {
-            weakest_category =
-                Some(["unmapped", "ambiguous", "inferred", "extracted"][usize::from(rank)]);
-        }
+        let prefix = weakest_node_route_prefix(view, &adjacency, &distances, start, end, deadline)?;
+        paths_considered = prefix.considered;
+        paths_capped = prefix.capped;
+        weakest_category = prefix
+            .weakest_category
+            .map(|rank| ["unmapped", "ambiguous", "inferred", "extracted"][usize::from(rank)]);
+        nodes = prefix.nodes;
+        edges = prefix.edges;
     } else if found {
         let mut at = end;
         nodes.push(at);
@@ -733,6 +818,10 @@ fn shortest(view: &View, args: &Value, deadline: &Deadline) -> Result<Value> {
         out["pathCategoryMeaning"] =
             json!("declared_source_categories_not_probabilities_or_execution_proof");
         out["pathHops"] = path_hops(view, &nodes, &edges, &adjacency, deadline)?;
+        out["shortestNodePathsConsidered"] = json!(paths_considered);
+        out["shortestNodePathsCapped"] = json!(paths_capped);
+        out["shortestNodePathLimit"] = json!(MAX_SHORTEST_NODE_PATHS);
+        out["pathSelectionScope"] = json!("first_256_distinct_shortest_node_paths");
     }
     Ok(out)
 }

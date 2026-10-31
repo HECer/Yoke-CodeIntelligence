@@ -1,39 +1,46 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
-## Distinct-node route cap: causal fixtures pending (2026-10-31)
+## Distinct-node shortest-path prefix candidate (2026-10-31)
 
-At published source `9b429f4d`, independent Linux and Windows text/source
-audits confirm all seven selector/rendering units and eleven public selected-
-View cases, including exact parallel evidence, historical replay and the
-1,200-call whole-output refusal. Linux also passes eight adapter cases and
-the original CLI target. Receipts are
-`73a518251332532b416c7e8064e4bf393b9f31285914de09431ef92cddca4fcd`
-and `eb182a06f6fad09b2fbfe8623a643baf9d35769a780fd45a45af25f47a5b0c00`.
-This is scoped hop evidence. A separate unchanged Windows core case fails at
-its request deadline; its cause remains unestablished. The exact-job retry
-was refused while the workflow was running. Current macOS resource-limit,
-host-executable and initialization diagnostics remain recorded separately.
-Full current Windows/default/platform/main/release gates are still open.
-At the same `9b429f4d` source, the actual explicit Rust VS Code host, fresh
-package producer and three real TSGo navigation operations are independently
-checked with all 1,840 selected source hashes and four owned Job scenarios.
-The bundled Rust host fails with `output_inventory_missing_entry`: cleanup is
-confirmed, but natural exit, its worker result and final VSIX acceptance are
-absent. The exact-job diagnostic retry request was accepted after the workflow
-completed; a new execution result is not yet verified. No guard was relaxed.
-Receipts are `a0eb1fbfb17e7f6f84461af4a67014febe3eb9400582e0ebcb3c881e70606723`
-and `510490184eac4b2d6602d18feb488bc8e2e8b6793624d246d2994df5dc1d379c`.
+The selected `weakest_source_categories_v1` candidate now ranks the first 256
+distinct complete shortest node paths and discovers a 257th only to report
+the cap. BFS first-discovery predecessor lists and backward enumeration make
+the prefix deterministic, including multilevel reconvergence. Parallel claims
+do not increase node-path counts; every original hop observation/evidence
+remains retained, and the weakest original copy affects that hop. The chosen
+route and depth-bounded stack avoid materializing an exponential path set. Absolute
+deadlines, max hops, source admission and whole-output refusal remain. Omitted
+and explicit legacy policy keep their original route and response shape.
 
-The next five authored cases specify distinct shortest node-path counting and
-the first-256/257th-detection prefix boundary under the unmerged selected
-policy. Three are pure category-policy counterexamples, including a multilevel
-reconverging route-order boundary; two use genuinely
-published selected Views with 256 or 257 source branches and parallel calls.
-The production selector is unchanged, and these new native cases remain
-unrun. A four-state count is not a node-path count. Numeric source-claim
-admission/replay, contradictory admitted claims, full current CLI/MCP and the
-wider original R1-R9/backend/upstream acceptance remain outstanding.
+At test-first `2037686c`, both new public 256/257 fixtures reach the intended
+missing-count assertion on Linux and Windows after verifying all admitted
+branches/calls: eleven old cases pass, two fail at line 792 (`None` vs256), no
+ignores/filters. Receipt
+`91ccc39c1554b13bf0cc6e61707a08fe2a4b12f242a002eac5374cbf7676468c`
+checks all 1,176 source hashes against Git, independently derives all 378
+targets for each platform, and checks exact partitions and every text log
+for 97 whole target executions. The same source's
+whole Linux library has 565 passes/three intended route-identity failures/six
+original ignores/no filters; all seven old policy units pass. The new pure
+fixtures choose an excluded 257th route rather than the required prefix route.
+Receipt `2f3c7ff1105778992b6589c90ead7540987c8261b97637c26fc7d58f033b09f4`
+verifies all 48 groups and binds the public RED. Later new public provenance,
+cap and replay assertions are not exercised by those failing runs.
 
+The producer is now changed, with two additional authored regressions for
+self/unreachable/max-hop/cyclic/reverse routes and expired/pre-selection
+cancelled requests. Original ten policy units and thirteen public bodies are retained.
+Fresh native GREEN for this candidate remains pending. Numeric source-claim
+admission/replay, contradictory ADMITTED claims, full current CLI/MCP and the
+original wider R1-R9/backend/upstream/Windows/main/release gates stay open.
+
+Earlier `9b429f4d` hop-only runtime proofs remain source-specific: all seven units and
+eleven public cases pass on Linux/Windows. Its explicit Rust VS Code host and
+three actual TSGo operations are separately checked; the bundled host fails
+`output_inventory_missing_entry`, with cleanup but no natural-exit/final result
+proof. Exact old-source bundled-host and unchanged-core deadline retry requests
+were accepted; fresh outcomes remain unverified. No guard was relaxed.
+See the [full contract and qualification](../native/docs/graphify-path-policy.md).
 
 ## Shortest-path source-category selector candidate (2026-10-31)
 

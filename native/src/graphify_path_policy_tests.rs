@@ -330,3 +330,82 @@ fn complete_node_routes_use_predecessor_order_across_multilevel_reconvergence() 
     assert_eq!(result["shortestNodePathsCapped"], true);
     assert_eq!(serde_json::to_vec(&view).unwrap(), before);
 }
+
+#[test]
+fn node_route_counts_keep_self_unreachable_hop_bounds_cycles_and_reverse_traversal_distinct() {
+    let mut view = parallel_node_routes(257);
+    view.observations.push(json!({
+        "id":hash(b"cycle back to start"),"source":hash(b"branch_000"),"target":hash(b"start"),
+        "relation":"call","resolution":"syntactic","evidenceIds":[]
+    }));
+    view.observations.push(json!({
+        "id":hash(b"self cycle"),"source":hash(b"start"),"target":hash(b"start"),
+        "relation":"call","resolution":"syntactic","evidenceIds":[]
+    }));
+    let before = serde_json::to_vec(&view).unwrap();
+    let mut args = json!({"source":"start","target":"start","max_hops":2,"undirected":false,"path_policy":"weakest_source_categories_v1"});
+    let same = shortest(&view, &args, &Deadline::new(1000)).unwrap();
+    assert_eq!(same["found"], true);
+    assert_eq!(same["hops"], 0);
+    assert_eq!(same["shortestNodePathsConsidered"], 1);
+    assert_eq!(same["shortestNodePathsCapped"], false);
+    assert_eq!(same["pathSourceCategory"], Value::Null);
+    assert_eq!(same["pathHops"], json!([]));
+    args["source"] = json!("end");
+    let absent = shortest(&view, &args, &Deadline::new(1000)).unwrap();
+    assert_eq!(absent["found"], false);
+    assert_eq!(absent["shortestNodePathsConsidered"], 0);
+    assert_eq!(absent["shortestNodePathsCapped"], false);
+    assert_eq!(absent["pathHops"], json!([]));
+    args["undirected"] = json!(true);
+    args["max_hops"] = json!(1);
+    let bounded = shortest(&view, &args, &Deadline::new(1000)).unwrap();
+    assert_eq!(bounded["found"], false);
+    assert_eq!(bounded["shortestNodePathsConsidered"], 0);
+    assert_eq!(bounded["shortestNodePathsCapped"], false);
+    args["max_hops"] = json!(2);
+    let reverse = shortest(&view, &args, &Deadline::new(1000)).unwrap();
+    assert_eq!(reverse["found"], true);
+    assert_eq!(reverse["hops"], 2);
+    assert_eq!(reverse["shortestNodePathsConsidered"], 256);
+    assert_eq!(reverse["shortestNodePathsCapped"], true);
+    assert_eq!(
+        reverse["pathObservationIds"],
+        json!([hash(b"exit 0"), hash(b"entry 0 copy 0")])
+    );
+    assert_eq!(
+        reverse["pathHops"][1]["observations"],
+        json!([
+            view.observations[0],
+            view.observations[1],
+            view.observations[257 * 3]
+        ])
+    );
+    assert_eq!(serde_json::to_vec(&view).unwrap(), before);
+}
+
+#[test]
+fn path_prefix_enumeration_refuses_expired_or_live_cancelled_requests_without_partial_results() {
+    use std::sync::{
+        Arc,
+        atomic::{AtomicBool, Ordering},
+    };
+    let view = parallel_node_routes(257);
+    let before = serde_json::to_vec(&view).unwrap();
+    let args = json!({"source":"start","target":"end","max_hops":2,"undirected":false,"path_policy":"weakest_source_categories_v1"});
+    let expired = shortest(&view, &args, &Deadline::new(0)).unwrap_err();
+    assert!(expired.to_string().contains("deadline"), "{expired:#}");
+    let cancelled = Arc::new(AtomicBool::new(false));
+    let result = Deadline::run_bounded(&Deadline::new(1000), cancelled.clone(), || {
+        let inherited = Deadline::new(1000);
+        cancelled.store(true, Ordering::SeqCst);
+        let inner = shortest(&view, &args, &inherited).expect_err(
+            "The inner operation must refuse before the outer owner checks cancellation",
+        );
+        assert!(inner.to_string().contains("cancelled"), "{inner:#}");
+        Ok(())
+    });
+    let error = result.unwrap_err();
+    assert!(error.to_string().contains("cancelled"), "{error:#}");
+    assert_eq!(serde_json::to_vec(&view).unwrap(), before);
+}
