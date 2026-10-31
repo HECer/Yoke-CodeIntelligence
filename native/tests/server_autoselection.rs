@@ -473,6 +473,103 @@ fn post(
     }
 }
 
+fn stored_counts(root: &Path) -> (u64, u64) {
+    let engine = Engine::open(root).unwrap();
+    let snapshots = engine
+        .store
+        .db
+        .query_row("SELECT count(*) FROM snapshots", [], |row| row.get(0))
+        .unwrap();
+    let sessions = engine
+        .store
+        .db
+        .query_row(
+            "SELECT count(*) FROM records WHERE kind='native_agent_session_v1'",
+            [],
+            |row| row.get(0),
+        )
+        .unwrap();
+    (snapshots, sessions)
+}
+
+#[test]
+fn passive_public_inspection_still_refuses_an_uninitialized_creation_choice() {
+    let temp = tempfile::tempdir().unwrap();
+    source(temp.path());
+    let log = temp.path().join("providers.log");
+    let error = Session::inspect(
+        engine(temp.path(), &log, &["rust", "python"]),
+        automatic(json!({"python":3})),
+        Some("uninitialized-inspection"),
+        &d(),
+    )
+    .err()
+    .unwrap();
+    assert!(
+        error
+            .to_string()
+            .contains("language_auto_inspection_requires_initialized_selection")
+    );
+    assert_eq!(stored_counts(temp.path()), (0, 0));
+    assert!(!log.exists());
+}
+
+#[test]
+fn http_host_preflight_rejects_invalid_automatic_policy_without_source_or_session_creation() {
+    use yoke::mcp_http::{Principal, Target};
+    let temp = tempfile::tempdir().unwrap();
+    source(temp.path());
+    let target = Target::new(
+        temp.path(),
+        yoke::protocol::Profile::Session,
+        automatic(json!({"not_host_backend":3})),
+    );
+    let error = Principal::new(
+        "invalid-auto",
+        zeroize::Zeroizing::new(vec![51; 32]),
+        target,
+    )
+    .err()
+    .unwrap();
+    assert!(error.to_string().contains("language_auto_unknown_backend"));
+    assert_eq!(stored_counts(temp.path()), (0, 0));
+}
+
+#[test]
+fn http_automatic_selection_cannot_replace_the_activation_runtime_grant() {
+    use yoke::mcp_http::{Principal, Target};
+    let temp = tempfile::tempdir().unwrap();
+    source(temp.path());
+    let command = if cfg!(windows) {
+        "[IO.File]::WriteAllText('activation.log', 'ran')"
+    } else {
+        "printf ran > activation.log"
+    };
+    let mut host = automatic(json!({"python":3}));
+    host.activation_commands = Some(
+        serde_json::from_value(json!({
+            "global":{"activation_command":command,"activation_command_timeout":1}
+        }))
+        .unwrap(),
+    );
+    let target = Target::new(temp.path(), yoke::protocol::Profile::Session, host);
+    let error = Principal::new(
+        "ungranted-auto-hook",
+        zeroize::Zeroizing::new(vec![51; 32]),
+        target,
+    )
+    .err()
+    .unwrap();
+    assert!(
+        error
+            .to_string()
+            .contains("activation_host_permission_required")
+    );
+    assert_eq!(stored_counts(temp.path()), (0, 0));
+    assert!(!temp.path().join("activation.log").exists());
+    assert!(!temp.path().join("providers.log").exists());
+}
+
 #[test]
 fn actual_authenticated_http_uses_host_registered_creation_selection_and_revocation() {
     use yoke::mcp_http::{self, Config, Principal, Target};
@@ -490,14 +587,20 @@ fn actual_authenticated_http_uses_host_registered_creation_selection_and_revocat
     }
     let principal =
         Principal::new("owned-auto", zeroize::Zeroizing::new(vec![51; 32]), target).unwrap();
+    assert_eq!(stored_counts(temp.path()), (0, 0));
+    assert!(!log.exists());
     let server = mcp_http::serve(Config::default(), vec![principal]).unwrap();
     let address = server.local_addr();
+    assert_eq!(stored_counts(temp.path()), (0, 0));
     let (status, id, _) = post(
         address,
         None,
         json!({"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"owned-auto","version":"1"}}}),
     );
     assert_eq!(status, 200);
+    let (snapshots, sessions) = stored_counts(temp.path());
+    assert!(snapshots > 0);
+    assert_eq!(sessions, 1);
     let id = id.unwrap();
     assert_eq!(
         post(

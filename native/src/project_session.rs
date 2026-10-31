@@ -370,6 +370,13 @@ fn fields(a: &Value, allowed: &[&str]) -> Result<()> {
     );
     Ok(())
 }
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum SessionStartup {
+    Open,
+    Inspect,
+    ValidateHttp,
+}
+
 impl Session {
     pub(crate) fn context_definition(&self) -> Option<&crate::session_steering::Definition> {
         self.host
@@ -988,7 +995,14 @@ impl Session {
         session_id: Option<&str>,
         deadline: &Deadline,
     ) -> Result<Self> {
-        Self::open_inner(engine, host, session_id, None, false, deadline)
+        Self::open_inner(
+            engine,
+            host,
+            session_id,
+            None,
+            SessionStartup::Open,
+            deadline,
+        )
     }
     /// Passive host inspection. Hooks never execute through this constructor.
     /// A new selected session stays unpublished and cannot start a backend.
@@ -998,7 +1012,14 @@ impl Session {
         session_id: Option<&str>,
         deadline: &Deadline,
     ) -> Result<Self> {
-        Self::open_inner(engine, host, session_id, None, true, deadline)
+        Self::open_inner(
+            engine,
+            host,
+            session_id,
+            None,
+            SessionStartup::Inspect,
+            deadline,
+        )
     }
     /// Explicit typed Git authorities for every already registered project.
     pub fn open_with_git_projects(
@@ -1008,16 +1029,34 @@ impl Session {
         projects: crate::git_workflows::repository_projects::Hosts,
         deadline: &Deadline,
     ) -> Result<Self> {
-        Self::open_inner(engine, host, session_id, Some(projects), false, deadline)
+        Self::open_inner(
+            engine,
+            host,
+            session_id,
+            Some(projects),
+            SessionStartup::Open,
+            deadline,
+        )
     }
-    pub(crate) fn inspect_with_git_projects(
+    /// Validate the HTTP host before listening, without publishing a Session,
+    /// selecting an automatic backend or starting hooks/providers. No usable
+    /// Session escapes; existing Git host preparation remains the caller's gate.
+    pub(crate) fn validate_http_startup(
         engine: Engine,
         host: HostProfile,
         session_id: Option<&str>,
-        projects: crate::git_workflows::repository_projects::Hosts,
+        projects: Option<crate::git_workflows::repository_projects::Hosts>,
         deadline: &Deadline,
-    ) -> Result<Self> {
-        Self::open_inner(engine, host, session_id, Some(projects), true, deadline)
+    ) -> Result<()> {
+        let session = Self::open_inner(
+            engine,
+            host,
+            session_id,
+            projects,
+            SessionStartup::ValidateHttp,
+            deadline,
+        )?;
+        session.check_activation_start(deadline)
     }
     pub(crate) fn has_activation_policy(&self) -> bool {
         self.host.activation_commands.is_some()
@@ -1040,9 +1079,11 @@ impl Session {
         mut host: HostProfile,
         session_id: Option<&str>,
         git_repository_projects: Option<crate::git_workflows::repository_projects::Hosts>,
-        inspection_only: bool,
+        startup: SessionStartup,
         deadline: &Deadline,
     ) -> Result<Self> {
+        let inspection_only = startup != SessionStartup::Open;
+        let startup_validation = startup == SessionStartup::ValidateHttp;
         ensure!(
             host.token_count_runtime.is_none()
                 || host.token_count_estimator
@@ -1759,6 +1800,7 @@ impl Session {
         automatic_languages::validate_choices(&host, &state.automatic_language_servers)?;
         ensure!(
             !inspection_only
+                || startup_validation
                 || host.language_server_auto_selection.is_none()
                 || state.automatic_language_servers.contains_key("default")
                 || host
@@ -1803,8 +1845,9 @@ impl Session {
         } else {
             None
         };
-        let unpublished_inspection =
-            inspection_only && host.activation_commands.is_some() && raw.is_none();
+        let unpublished_inspection = inspection_only
+            && (host.activation_commands.is_some() || startup_validation)
+            && raw.is_none();
         let publication = (|| -> Result<()> {
             if raw.is_none() && !unpublished_inspection {
                 let inserted = engine.store.db.execute(
@@ -1891,7 +1934,9 @@ impl Session {
             debug_adapters: BTreeMap::new(),
             process_cleanup_unproven: false,
         };
-        session.ensure_automatic_language("default", deadline)?;
+        if !startup_validation {
+            session.ensure_automatic_language("default", deadline)?;
+        }
         Ok(session)
     }
     pub fn steering_enabled(&self) -> bool {

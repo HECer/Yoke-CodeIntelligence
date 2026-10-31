@@ -316,6 +316,11 @@ fn public_named_notes_cli_is_persistent_and_global_store_is_explicit() {
     let list = run(root.path(), &["notes", "list"]);
     assert_eq!(list["items"].as_array().unwrap().len(), 1);
     let catalog = run(root.path(), &["server-catalog"]);
-    assert_eq!(catalog["declaredAdapters"], 77);
+    assert_eq!(catalog["declaredAdapters"], 80);
+    let adapters = catalog["adapters"].as_array().unwrap();
+    assert_eq!(adapters.len(), 80);
+    for id in ["vbnet", "typescript_tsgo", "graphql"] {
+        assert_eq!(adapters.iter().filter(|row| row["id"] == id).count(), 1);
+    }
     assert_eq!(catalog["liveCertifiedAdapters"], Value::Null);
 }

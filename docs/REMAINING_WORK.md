@@ -1,5 +1,17 @@
 # Remaining implementation and acceptance
 
+## Hosted HTTP startup and catalog regression repair candidate (2026-10-31)
+
+The completed Linux creation-selection run exposed a preflight ordering failure
+and a stale 77-backend CLI expectation. A scoped source correction separates
+HTTP host validation from Session creation and checks the current 80 declared
+backends. Public inspection still refuses missing automatic choices. Three new
+native fixtures and strengthened authenticated HTTP assertions remain unrun
+locally; the original failing cases require fresh hosted qualification. Four
+inert declaration checks and TypeScript checks establish source-level evidence
+only. Full current-upstream, Windows/platform/browser/VSIX/main/release gates
+remain open; no live vendor certification follows from catalog declarations.
+
 ## Selected tool-usage estimator candidate (2026-10-31)
 
 The selected global token_count_estimator now has source implementations for all

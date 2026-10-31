@@ -1,5 +1,20 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Hosted HTTP startup and catalog regression repair candidate (2026-10-31)
+
+Completed Linux CI on creation-selection source `6b5a3da4` found two failures:
+authenticated HTTP host preflight required the not-yet-created automatic choice,
+and the catalog CLI fixture still expected 77 instead of 80 declarations. The
+HTTP preflight now validates host/registration/activation authority without
+publishing a Session or selecting a backend. Authenticated initialization keeps
+the original construction and selection path; public passive inspection still
+refuses an uninitialized choice. Added fixtures check policy rejection and
+absence of preflight snapshots/Session rows/provider startup. Four inert
+declaration tests and TypeScript checks passed; the corrected native fixtures
+remain uncompiled/unrun locally and require fresh hosted results. Existing Git
+host preparation, resource/permission gates and unavailable live-certification
+claims are unchanged. Combined native/VSIX/main/release acceptance remains open.
+
 ## Selected tool-usage estimator candidate (2026-10-31)
 
 Explicit global token_count_estimator now has independent native CHAR_COUNT,
