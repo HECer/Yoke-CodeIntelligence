@@ -1,5 +1,22 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Combined current-source candidate (2026-10-31)
+
+The isolated integration branch now includes the current source from PR7-20:
+trusted activation, selected encoding variants, while/for/do inlining, receipt
+verification, HTTP/Store observations and both owned Windows CI profiles.
+Five normal merges retain all constituent tips and both historical documentation
+blocks. No production/test conflict, assertion, permission, ignore, deadline,
+worker resource limit or release gate was changed during integration.
+The combined product source passes typecheck, npm 266/0/3 skips, 33 inert
+admission tests, Rust 2024 formatting/source parsing for 40 changed Rust files,
+nine Python AST parses and three JavaScript syntax checks. These are local
+source/npm results, not native compilation or combined runtime acceptance.
+Fresh whole-source platform/browser/credential/VSIX/editor qualification, strict
+macOS memory, full upstream/backend parity, main and release remain open.
+Earlier entries retain their own source-specific scope and do not certify this
+candidate. [Constituents, preserved gates and remaining acceptance](validation/integration-2026-10-31/combined-source-candidate/README.md).
+
 ## Fresh combined VSIX CI candidate (2026-10-31)
 
 A new push-only Windows job depends on the same-run owned-Job lifecycle probe.
