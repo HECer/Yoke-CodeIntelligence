@@ -1,5 +1,18 @@
 # Remaining implementation and acceptance
 
+## Fresh combined VSIX CI candidate (2026-10-31)
+
+A new push-only Windows job depends on the same-run owned-Job lifecycle probe.
+It requires fresh matching native release and TypeScript outputs, pinned editor
+procurement, unchanged native/combined VSIX packagers, complete inventory/hash
+admission, and separate real explicit/bundled Rust extension-host fixtures.
+Both workspaces are fresh runner-temp roots outside the checkout. Original
+test-host assertions, native importer caps and 180-second owned workers remain.
+Local inert admission and source checks do not qualify actual production,
+Windows kernel, package/editor execution or cleanup. Those hosted gates, full
+feature/backend/platform parity, main and release acceptance remain open.
+See [the exact profile and scope](../scripts/host_vscode.md).
+
 ## Owned VS Code launcher lifecycle candidate (2026-10-31)
 
 The extension-host launcher now requires suspended Windows Job assignment,

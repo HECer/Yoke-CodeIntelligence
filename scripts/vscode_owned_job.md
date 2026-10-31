@@ -74,3 +74,7 @@ checksums, a reviewed selected editor, and both explicit and bundled real
 extension-host executions. Their original source/authority/protected-buffer
 assertions must pass with process proof. Combined-source parity, platform,
 main/publication and release gates stay open.
+
+The [fresh VSIX CI profile](host_vscode.md) now implements that next stage behind
+the same-run lifecycle probe. Its hosted production and real-editor outcomes
+remain unqualified until their own complete receipts are verified.
