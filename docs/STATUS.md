@@ -1,5 +1,41 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Shortest-path source-category selector candidate (2026-10-31)
+
+At `b929b7b3`, the original native counterexample fails at its intended route
+assertion on Windows: the first stronger two-hop route is returned instead of
+the expected weaker two-hop route. The complete library has 857 passes, that
+one failure, seven original ignores and no filters. Independent text-artifact
+checks bind all 1,175 selected source hashes, the exact target partition and
+raw log hashes. The candidate adds explicit `weakest_source_categories_v1`
+selection through a bounded four-state shortest-route DAG while retaining the
+omitted/default first-observation behavior. Categories are declared source
+projections, never probability or execution attestation. Fresh compilation and
+native runtime checks remain pending. Parallel-hop presentation, numeric claim
+semantics, route count/caps and full current upstream equivalence remain open.
+See the [selector contract and causal RED evidence](../native/docs/graphify-path-policy.md).
+
+## Current-source Windows aggregate checkpoint (2026-10-31)
+
+At `002024f4`, all eight Windows default shards independently verify 378 exact
+whole-target groups, 3,947 observed passes, zero failures, 53 original ignores
+and no filtered tests. All 1,174 selected source hashes match their Git forms.
+The separate [Windows aggregate job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41194162604/job/124530752972)
+also succeeds through two selected real rust-analyzer cases, fresh release build,
+unchanged-input binding, upload, original owning-history fixtures and five browser
+profiles. Independent audits verify the original 162 CLI outcomes and 126 exact
+archived-record readbacks, all 30 original PNG/DOM pairs and the same fresh CLI
+identity. The parent agent actually viewed every original screenshot. The scoped
+aggregate receipt SHA256 is `2a5e13f7e831e9db5b24dda0d7164fe60600a49035c543aee3260e8086dcf769`.
+Compiled release artifact `13043070595` was checked as upload metadata only;
+its ZIP was not downloaded or read locally. Separate current VSIX/TSGo and Job
+lifecycle evidence is recorded in [PR30](https://github.com/HECer/Yoke-CodeIntelligence/pull/30).
+Original CI human/visual/release flags are unchanged; the agent's visual review
+is a separate fixture-scoped checkpoint. The overall Rust workflow still fails
+on macOS, whose runtime certification remains deferred. Broader upstream/backend,
+full Windows/main/release acceptance remain open; these source-specific results
+do not qualify subsequent candidates.
+
 ## Fresh browser/VSIX proof and strict LSP lifecycle candidate (2026-10-31)
 
 At `45323315`, five Windows browser profiles pass independent artifact checks;

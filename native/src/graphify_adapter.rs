@@ -49,8 +49,8 @@ fn definitions() -> Vec<(&'static str, &'static str, Value, Vec<&'static str>)> 
         ),
         (
             "shortest_path",
-            "Find a bounded directed shortest path; undirected is an explicit option.",
-            json!({"source":{"type":"string"},"target":{"type":"string"},"max_hops":{"type":"integer","default":8},"undirected":{"type":"boolean","default":false}}),
+            "Find a bounded directed shortest path; undirected and weakest source-category selection are explicit options.",
+            json!({"source":{"type":"string"},"target":{"type":"string"},"max_hops":{"type":"integer","default":8},"undirected":{"type":"boolean","default":false},"path_policy":{"type":"string","enum":["first_observation_v1","weakest_source_categories_v1"]}}),
             vec!["source", "target"],
         ),
         (
@@ -545,7 +545,67 @@ fn shortest(view: &View, args: &Value, deadline: &Deadline) -> Result<Value> {
     let found = distances.contains_key(&end);
     let mut nodes = vec![];
     let mut edges = vec![];
-    if found {
+    let category_policy = args["path_policy"] == "weakest_source_categories_v1";
+    let mut weakest_category = None;
+    if found && category_policy {
+        use crate::graph_analysis_policy::{Category, SourceCategoryPolicy};
+        let policy = SourceCategoryPolicy::default();
+        // The shortest-route DAG has increasing BFS distance, including in
+        // explicitly undirected traversal. Keep each of the four possible
+        // weakest-prefix categories: a later weak hop can equalize prefixes.
+        // This visits at most four states per node, without enumerating an
+        // exponential number of paths or rewriting original observations.
+        let mut category_parent = BTreeMap::from([((start, 3u8), None::<((usize, u8), usize)>)]);
+        let mut category_queue = VecDeque::from([(start, 3u8)]);
+        let end_distance = distances[&end];
+        while let Some(state @ (at, weakest)) = category_queue.pop_front() {
+            deadline.check()?;
+            if distances[&at] >= end_distance {
+                continue;
+            }
+            for (next, edge) in &adjacency[at] {
+                deadline.check()?;
+                if distances.get(next).copied() != Some(distances[&at] + 1) {
+                    continue;
+                }
+                let resolution = view.observations[*edge]["resolution"]
+                    .as_str()
+                    .unwrap_or("");
+                let rank = match policy.resolution_categories.get(resolution) {
+                    Some(Category::Extracted) => 3,
+                    Some(Category::Inferred) => 2,
+                    Some(Category::Ambiguous) => 1,
+                    Some(Category::Unmapped) | None => 0,
+                };
+                let next_state = (*next, weakest.min(rank));
+                if let std::collections::btree_map::Entry::Vacant(entry) =
+                    category_parent.entry(next_state)
+                {
+                    entry.insert(Some((state, *edge)));
+                    category_queue.push_back(next_state);
+                }
+            }
+        }
+        let rank = (0u8..=3)
+            .find(|rank| category_parent.contains_key(&(end, *rank)))
+            .context("Shortest route category state missing")?;
+        let mut at = (end, rank);
+        nodes.push(end);
+        while at.0 != start {
+            deadline.check()?;
+            let (previous, edge) =
+                category_parent[&at].context("Shortest route category parent missing")?;
+            edges.push(edge);
+            nodes.push(previous.0);
+            at = previous;
+        }
+        nodes.reverse();
+        edges.reverse();
+        if !edges.is_empty() {
+            weakest_category =
+                Some(["unmapped", "ambiguous", "inferred", "extracted"][usize::from(rank)]);
+        }
+    } else if found {
         let mut at = end;
         nodes.push(at);
         while at != start {
@@ -572,6 +632,12 @@ fn shortest(view: &View, args: &Value, deadline: &Deadline) -> Result<Value> {
             .map(|i| id(&view.observations[*i]))
             .collect::<Vec<_>>()
     );
+    if category_policy {
+        out["pathPolicy"] = json!("weakest_source_categories_v1");
+        out["pathSourceCategory"] = json!(weakest_category);
+        out["pathCategoryMeaning"] =
+            json!("declared_source_categories_not_probabilities_or_execution_proof");
+    }
     Ok(out)
 }
 fn stats(view: &View, report: &Value) -> Value {
