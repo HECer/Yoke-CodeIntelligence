@@ -1,5 +1,16 @@
 # Remaining implementation and acceptance
 
+## Windows hover phase-observation candidate (2026-10-31)
+
+The separate Windows facade hover timeout still needs measured phase evidence.
+The owned fixture now supports explicit, bounded nonblocking loopback UDP phase
+observations; failure diagnostics admit only closed labels, numeric worker/time
+fields and the selected correlation nonce, then omit the nonce from output.
+Packets can be missing or dropped and cannot certify completion or cleanup.
+Original assertions and the 20-second deadline remain. Three helper tests are
+authored but uncompiled/unrun locally. Actual hosted Windows observations and a
+supported correction remain open, along with full native/VSIX/main/release gates.
+
 ## Session host-option plumbing repair candidate (2026-10-31)
 
 The completed Linux Clippy run refused open_session, run_session and

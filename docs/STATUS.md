@@ -1,5 +1,22 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Windows hover phase-observation candidate (2026-10-31)
+
+Completed Windows facade-options CI on `ccd7a108` passed two cases and timed out
+in the requested-hover case under its original 20-second limit. That owned LSP
+fixture can now opt into bounded, nonblocking loopback UDP observations containing
+only closed phase/method labels, worker IDs and elapsed time. The test reports
+admitted observations only after failure; missing/dropped packets prove nothing.
+Unavailable observer setup leaves the original hover invocation active and is
+reported as unavailable if that invocation fails.
+Three authored helper tests cover closed decoding, malformed/foreign/Unicode and
+oversized packets, and an empty nonblocking harvest. Five pure extracted-logic
+tests pass with fake UDP, without importing or running the LSP fixture. They
+cover opt-in, closed labels, packet/byte caps, send failures and elapsed bounds.
+Production code, existing
+assertions and deadlines are unchanged. Fresh native compilation, actual Windows
+phase evidence and runtime diagnosis remain pending; this is not a timeout fix.
+
 ## Session host-option plumbing repair candidate (2026-10-31)
 
 Completed Linux Clippy on estimator source `ccd7a108` refused three Session
