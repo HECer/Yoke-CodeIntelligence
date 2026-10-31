@@ -3,7 +3,9 @@ param(
     [string]$NativeExecutable,
     [string]$ExtensionDirectory,
     [switch]$UseBundledRuntime,
-    [int]$TimeoutSeconds = 180
+    [ValidateRange(1, 180)]
+    [int]$TimeoutSeconds = 180,
+    [string]$PythonExecutable = 'python'
 )
 $ErrorActionPreference = 'Stop'
 $taskRepo = Split-Path -Parent $PSScriptRoot
@@ -41,32 +43,41 @@ $taskPreviousResult = $env:YOKE_VSCODE_RESULT
 $taskPreviousBundled = $env:YOKE_VSCODE_BUNDLED
 $taskPreviousElectron = $env:ELECTRON_RUN_AS_NODE
 $taskPreviousIpc = $env:VSCODE_IPC_HOOK_CLI
-$taskProcess = $null
+$taskPythonMatches = @(Get-Command $PythonExecutable -CommandType Application -ErrorAction Stop)
+$taskPython = $taskPythonMatches[0].Source
 try {
     $env:YOKE_VSCODE_NATIVE = $NativeExecutable
     $env:YOKE_VSCODE_RESULT = $taskResult
     $env:YOKE_VSCODE_BUNDLED = if ($UseBundledRuntime) { '1' } else { '0' }
     $env:ELECTRON_RUN_AS_NODE = $null
     $env:VSCODE_IPC_HOOK_CLI = $null
-    $taskArguments = @(
-        '--new-window', '--wait', '--disable-extensions', '--disable-updates', '--skip-welcome',
-        '--skip-release-notes', '--user-data-dir', $taskProfile, '--extensions-dir', $taskExtensions,
-        '--extensionDevelopmentPath', $ExtensionDirectory,
-        '--extensionTestsPath', (Join-Path $taskRepo 'extensions\vscode\test-host.cjs'), $taskWorkspace
-    )
-    # Quoted Windows arguments contain only resolved paths and fixed test flags.
-    $taskArgumentLine = ($taskArguments | ForEach-Object { '"' + $_.Replace('"', '\"') + '"' }) -join ' '
-    $taskProcess = Start-Process -FilePath $CodeExecutable -ArgumentList $taskArgumentLine -WindowStyle Hidden -PassThru -RedirectStandardOutput $taskOut -RedirectStandardError $taskErr
-    $taskWatch = [Diagnostics.Stopwatch]::StartNew()
-    while (!(Test-Path -LiteralPath $taskResult) -and $taskWatch.Elapsed.TotalSeconds -lt $TimeoutSeconds) {
-        if ($taskProcess.HasExited) { break }
-        Start-Sleep -Milliseconds 250
+    $taskSpec = Join-Path $taskFixture 'job-spec.json'
+    $taskSelection = @{
+        schemaVersion = 1
+        fixtureRoot = $taskFixture
+        program = $CodeExecutable
+        repositoryRoot = $taskRepo
+        extensionDirectory = $ExtensionDirectory
+        timeoutSeconds = $TimeoutSeconds
     }
+    [IO.File]::WriteAllText($taskSpec, ($taskSelection | ConvertTo-Json), $taskUtf8)
+    & $taskPython -I (Join-Path $PSScriptRoot 'vscode_owned_job.py') --spec $taskSpec | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw "VS Code owned process-tree proof failed. Inspect $(Join-Path $taskFixture 'job.json')" }
     if (!(Test-Path -LiteralPath $taskResult)) {
         throw "VS Code extension-host test produced no result. Inspect $taskOut and $taskErr"
     }
+    $taskResultMetadata = Get-Item -LiteralPath $taskResult
+    if (($taskResultMetadata.Attributes -band [IO.FileAttributes]::ReparsePoint) -or $taskResultMetadata.Length -gt 65536) {
+        throw 'VS Code extension-host result admission failed'
+    }
     $taskReport = Get-Content -Raw -LiteralPath $taskResult | ConvertFrom-Json
-    if (!$taskReport.passed) { throw 'VS Code extension-host test failed' }
+    foreach ($taskFlag in @('passed', 'unsavedSourceBound', 'workspaceExecutableIgnored', 'protectedOpenBufferExcluded', 'savedSourceUnchanged')) {
+        if ($taskReport.$taskFlag -isnot [bool] -or !$taskReport.$taskFlag) { throw 'VS Code extension-host test failed' }
+    }
+    if ($taskReport.kind -ne 'actual-vscode-extension-host' -or $taskReport.runtime -ne 'rust' -or
+        $taskReport.bundledRuntime -isnot [bool] -or $taskReport.bundledRuntime -ne [bool]$UseBundledRuntime) {
+        throw 'VS Code extension-host result scope differs'
+    }
     Get-Content -Raw -LiteralPath $taskResult | Write-Output
 } finally {
     $env:YOKE_VSCODE_NATIVE = $taskPreviousNative
@@ -74,25 +85,4 @@ try {
     $env:YOKE_VSCODE_BUNDLED = $taskPreviousBundled
     $env:ELECTRON_RUN_AS_NODE = $taskPreviousElectron
     $env:VSCODE_IPC_HOOK_CLI = $taskPreviousIpc
-    if ($taskProcess) {
-        try {
-            if (!$taskProcess.WaitForExit(5000)) {
-                $taskCleanupOut = Join-Path $taskFixture 'cleanup.stdout.log'
-                $taskCleanupErr = Join-Path $taskFixture 'cleanup.stderr.log'
-                $taskCleanup = Start-Process -FilePath 'taskkill.exe' -ArgumentList @('/PID', $taskProcess.Id, '/T', '/F') -WindowStyle Hidden -PassThru -RedirectStandardOutput $taskCleanupOut -RedirectStandardError $taskCleanupErr
-                try {
-                    if (!$taskCleanup.WaitForExit(5000)) {
-                        try { $taskCleanup.Kill() } catch { if (!$taskCleanup.HasExited) { throw } }
-                        if (!$taskCleanup.WaitForExit(5000)) { throw 'Owned cleanup helper could not be stopped' }
-                        throw 'Owned VS Code cleanup helper timed out'
-                    }
-                    if (!$taskProcess.WaitForExit(5000)) { throw 'Owned VS Code process cleanup failed' }
-                } finally {
-                    $taskCleanup.Dispose()
-                }
-            }
-        } finally {
-            $taskProcess.Dispose()
-        }
-    }
 }

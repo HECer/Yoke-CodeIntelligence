@@ -1,5 +1,31 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Fresh combined VSIX CI candidate (2026-10-31)
+
+A new push-only Windows job depends on the same-run owned-Job lifecycle probe.
+It requires fresh matching native release and TypeScript outputs, pinned editor
+procurement, unchanged native/combined VSIX packagers, complete inventory/hash
+admission, and separate real explicit/bundled Rust extension-host fixtures.
+Both workspaces are fresh runner-temp roots outside the checkout. Original
+test-host assertions, native importer caps and 180-second owned workers remain.
+Local inert admission and source checks do not qualify actual production,
+Windows kernel, package/editor execution or cleanup. Those hosted gates, full
+feature/backend/platform parity, main and release acceptance remain open.
+See [the exact profile and scope](../scripts/host_vscode.md).
+
+## Owned VS Code launcher lifecycle candidate (2026-10-31)
+
+The extension-host launcher now requires suspended Windows Job assignment,
+natural zero root/tree exit before forced cleanup, and checked empty-tree/handle
+cleanup before reading its result. A passed marker alone cannot establish
+success. Original extension test assertions, workspace/profile fixture and
+180-second ceiling remain; no PID/taskkill fallback or policy bypass is used.
+Pure admission checks pass. A separate Python-only hosted lifecycle probe must
+still qualify the actual kernel paths. Fresh matching native/combined VSIX,
+explicit and bundled real editor execution, combined-source parity, main and
+release acceptance remain open. No local Yoke/native/editor execution ran.
+See [the lifecycle contract](../scripts/vscode_owned_job.md).
+
 ## Scoped f41 Windows/Linux and four-profile browser acceptance (2026-10-30)
 
 At candidate `f41e5613`, run `41030808968`, all 371 default Cargo groups exit zero
