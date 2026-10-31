@@ -1,5 +1,13 @@
 # Remaining implementation and acceptance
 
+## Dashboard reset compiler repair qualification (2026-10-31)
+
+Recompile the explicit post-reset HTTP-failure conversion on fresh hosted
+Windows/native/TLS/VSIX producers. The prior failures were `E0277` compiler
+refusals at one shared source line, so they supply no executed runtime results.
+Keep the reset's final binding check and unconfirmed-outcome semantics intact;
+do not weaken the producer, permission, deadline, Job or acceptance gates.
+
 ## Real statistics browser qualification (2026-10-31)
 
 Run the new independent `tool-usage` Windows CI browser variant against its

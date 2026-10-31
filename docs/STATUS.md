@@ -1,5 +1,17 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Dashboard reset compilation repair candidate (2026-10-31)
+
+Hosted `b5acd974` Windows Clippy, credential-TLS and VSIX producers, plus three
+Ubuntu shards, fail at the same `E0277`: the reset's final binding check returns
+a private HTTP failure that cannot be propagated into `anyhow::Result` with
+`?`. Five digest-verified text artifacts contain the same compiler failure,
+including 143 shard group logs; these are compile failures, not executed test
+failures. The unchanged binding check now explicitly maps refusal to a fixed
+internal error. Its position after the reset, outer unconfirmed-outcome reply,
+permissions and source/state checks remain. Fresh hosted compilation and full
+runtime qualification are still required; local native compilation is unrun.
+
 ## Real tool statistics browser CI candidate (2026-10-31)
 
 A separate guarded `tool-usage` browser variant now authors real owning Serena

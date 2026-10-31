@@ -48,7 +48,8 @@ impl Session {
             &self.state.id,
             &self.persisted,
             deadline,
-        )?;
+        )
+        .map_err(|_| anyhow::anyhow!("Dashboard binding changed after tool statistics reset"))?;
         Ok(Reply {
             status: 200,
             completion: None,
