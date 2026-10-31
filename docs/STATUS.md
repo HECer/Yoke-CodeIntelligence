@@ -1,5 +1,16 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Persistent callback budget assertion repair candidate (2026-10-31)
+
+The completed Linux global-budget group passed six of seven cases; the remaining
+fixture attempted to read a Python cell's structured error as a string. It now
+checks RuntimeError/message, absent result, one callback and preserved worker
+state, followed by the original explicit answer override, whole-cell deadline
+and lost-worker assertions. The successful override additionally checks exact
+captured text. No runtime, budget, protocol or permission code changed. This
+corrected native fixture remains uncompiled/unrun locally and needs fresh hosted
+qualification; full native/Windows/VSIX/main/release acceptance remains open.
+
 ## Compiler do-first admission repair candidate (2026-10-31)
 
 Completed Windows and Linux body-inlining CI each passed 30/34 integration cases;

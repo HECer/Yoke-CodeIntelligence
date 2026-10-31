@@ -1,5 +1,14 @@
 # Remaining implementation and acceptance
 
+## Persistent callback budget assertion repair candidate (2026-10-31)
+
+The separate persistent-callback budget failure used an obsolete scalar-error
+expectation. Its assertion now follows the unchanged structured Python cell
+error contract and additionally checks no result, callback count, retained worker
+state and exact override text. The original selected whole-cell deadline and
+worker-loss checks are unchanged. No runtime guard or production code changed;
+fresh native regression and combined Windows/VSIX/main/release gates remain open.
+
 ## Compiler do-first admission repair candidate (2026-10-31)
 
 The matching four body-inline failures on Windows and Linux are addressed by a
