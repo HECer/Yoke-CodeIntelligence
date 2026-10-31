@@ -216,3 +216,33 @@ directed/undirected behavior, resource/cancellation/output refusals and full
 current CLI/MCP/backend/upstream/Windows/main/release gates remain required.
 These four examples do not replace that scope or claim Graphify node-link JSON
 file interoperability.
+
+## Additional path guard fixtures
+
+The public source-claim test target also contains these authored controls:
+
+- A primary endpoint reversal excludes the weaker route in directed mode;
+  explicitly undirected traversal restores it. Changing only the primary
+  markers restores the directed route, while nested `also_seen` markers remain
+  data. A primary marker naming a third genuine node refuses at query time
+  without changing published snapshots, graphs, registrations or CAS blobs.
+  Separate controls distinguish an insufficient hop limit, an unreachable
+  reverse route, an absent label and two genuinely ambiguous label matches.
+- Real Unicode/CRLF source produces two parallel calls, an opposite call and a
+  self-call. Both query directions retain every original hop observation and
+  evidence object, while ranking uses forward declarations before backward
+  ones. A self path has zero hops despite the stored self-call. Invalid hop
+  bounds, an expired deadline and deterministically preset cancellation refuse
+  without publication changes. This cancellation fixture does not establish
+  interruption during path enumeration.
+- A real source with 1,024 parallel calls gives one mandatory original hop
+  whose observations and evidence alone exceed the existing 256,000-byte
+  response ceiling. Admission must first succeed within its own input limit;
+  the omitted-policy query must still return its original one-observation
+  result. Selecting the declared policy must then refuse the whole response
+  rather than drop original evidence. Source bytes, latest snapshot and all
+  published state stay intact.
+
+These added fixtures remain unrun until source-pinned native CI executes their
+exact commit. They do not establish full transport, archive, cancellation,
+resource or release acceptance.

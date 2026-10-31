@@ -1006,3 +1006,376 @@ fn admitted_equal_numeric_routes_rank_the_original_weakest_hop_before_prefix_ord
         SOURCE.as_bytes()
     );
 }
+
+#[test]
+fn admitted_root_direction_and_undirected_controls_keep_nested_markers_as_data() {
+    let mut f = fixture();
+    let start = node(&f, "\u{3b1}");
+    let branch = node(&f, "weaker");
+    let end = node(&f, "omega");
+    let edge = call(&f, "\u{3b1}", "weaker")["id"]
+        .as_str()
+        .unwrap()
+        .to_owned();
+    let mut attrs = nested_claims(&f);
+    let mut marked = json!({
+        "confidence":"INFERRED", "confidence_score":0.9,
+        "_src":branch, "_tgt":start,
+        "also_seen":[{"confidence":"INFERRED", "confidence_score":0.2,
+            "_src":end, "_tgt":end}],
+    });
+    attrs.insert(edge.clone(), marked.to_string());
+    let (artifact, _) = import(&f, &document(&f, &attrs));
+    let view = selected(&f, &artifact);
+    let directed = query(&mut f, &view);
+    assert_weaker_route(&f, &directed, "stronger");
+    assert_eq!(directed["pathSourceScoreToken"], "0.5");
+
+    let mut args = arguments(&f, &view);
+    args["undirected"] = json!(true);
+    let undirected = yoke::graphify_adapter::invoke(
+        &mut f.session,
+        "shortest_path",
+        &args,
+        &Deadline::new(30000),
+    )
+    .unwrap();
+    assert_weaker_route(&f, &undirected, "weaker");
+    assert_eq!(undirected["pathSourceScoreToken"], "0.2");
+
+    // Change only the primary direction; nested markers remain out of scope.
+    marked["_src"] = json!(start);
+    marked["_tgt"] = json!(branch);
+    attrs.insert(edge.clone(), marked.to_string());
+    let (control_artifact, _) = import(&f, &document(&f, &attrs));
+    let control = selected(&f, &control_artifact);
+    let control_result = query(&mut f, &control);
+    assert_weaker_route(&f, &control_result, "weaker");
+    assert_eq!(query(&mut f, &view), directed);
+
+    // An opaque admitted claim cannot add a third endpoint to traversal.
+    marked["_src"] = json!(node(&f, "stronger"));
+    attrs.insert(edge, marked.to_string());
+    let (foreign_artifact, _) = import(&f, &document(&f, &attrs));
+    let foreign = selected(&f, &foreign_artifact);
+    let baseline = published_state(&f);
+    let args = arguments(&f, &foreign);
+    let error = yoke::graphify_adapter::invoke(
+        &mut f.session,
+        "shortest_path",
+        &args,
+        &Deadline::new(30000),
+    )
+    .unwrap_err();
+    assert!(
+        error.to_string().contains("original endpoint scope"),
+        "{error:#}"
+    );
+    assert_eq!(published_state(&f), baseline);
+    assert_eq!(query(&mut f, &control), control_result);
+    let mut bounded = arguments(&f, &control);
+    bounded["max_hops"] = json!(1);
+    let bounded_result = yoke::graphify_adapter::invoke(
+        &mut f.session,
+        "shortest_path",
+        &bounded,
+        &Deadline::new(30000),
+    )
+    .unwrap();
+    assert_eq!(bounded_result["found"], false);
+    assert_eq!(bounded_result["hops"], Value::Null);
+    assert_eq!(bounded_result["pathHops"], json!([]));
+    assert_eq!(bounded_result["shortestNodePathsConsidered"], 0);
+    assert_eq!(bounded_result["complete"], false);
+    let mut reversed = arguments(&f, &control);
+    reversed["source"] = json!(end);
+    reversed["target"] = json!(start);
+    let unreachable = yoke::graphify_adapter::invoke(
+        &mut f.session,
+        "shortest_path",
+        &reversed,
+        &Deadline::new(30000),
+    )
+    .unwrap();
+    assert_eq!(unreachable["found"], false);
+    for (label, ambiguous, expected) in [
+        ("not-a-real-source-node", false, Vec::new()),
+        ("er", true, vec![node(&f, "stronger"), node(&f, "weaker")]),
+    ] {
+        let mut args = arguments(&f, &control);
+        args["source"] = json!(label);
+        let result = yoke::graphify_adapter::invoke(
+            &mut f.session,
+            "shortest_path",
+            &args,
+            &Deadline::new(30000),
+        )
+        .unwrap();
+        assert_eq!(result["found"], false);
+        assert_eq!(result["ambiguous"], ambiguous);
+        assert_eq!(result["complete"], false);
+        let ids: BTreeSet<_> = result["sourceCandidates"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|n| n["id"].as_str().unwrap().to_owned())
+            .collect();
+        assert_eq!(ids, expected.into_iter().collect::<BTreeSet<_>>());
+    }
+    assert_eq!(published_state(&f), baseline);
+    assert_eq!(
+        fs::read(f.root.path().join("main.rs")).unwrap(),
+        SOURCE.as_bytes()
+    );
+}
+
+fn parallel_cycle_fixture(parallel_calls: usize) -> Fixture {
+    assert!((1..=1024).contains(&parallel_calls));
+    let source = format!(
+        "// \u{3a9} e\u{301}\r\nfn \u{3b1}(){{{}\u{3b1}();}}\r\nfn omega(){{ \u{3b1}(); }}\r\n",
+        "omega(); ".repeat(parallel_calls),
+    );
+    let root = TempDir::new().unwrap();
+    let host = TempDir::new().unwrap();
+    fs::write(root.path().join("main.rs"), &source).unwrap();
+    let mut engine = Engine::open(root.path()).unwrap();
+    let (snapshot, graph, _, _) = engine.index(&Deadline::new(30000)).unwrap();
+    let base = graph_view::build(
+        &engine.store,
+        &snapshot,
+        &graph,
+        &BuildOptions {
+            structural_kinds: vec![],
+            ..BuildOptions::default()
+        },
+        &Deadline::new(30000),
+    )
+    .unwrap();
+    let calls: Vec<_> = base
+        .observations
+        .iter()
+        .filter(|edge| edge["relation"] == "calls")
+        .collect();
+    assert_eq!(calls.len(), parallel_calls + 2);
+    let mut ranges = BTreeSet::new();
+    let mut ids = BTreeSet::new();
+    for edge in calls {
+        assert!(ids.insert(edge["id"].as_str().unwrap()));
+        let sites = edge["evidenceIds"].as_array().unwrap();
+        assert_eq!(sites.len(), 1);
+        let site = base.evidence.iter().find(|e| e["id"] == sites[0]).unwrap();
+        assert_eq!(site["path"], "main.rs");
+        assert_eq!(site["contentHash"], hash(source.as_bytes()));
+        let a = site["startByte"].as_u64().unwrap() as usize;
+        let b = site["endByte"].as_u64().unwrap() as usize;
+        assert!(["omega()", "\u{3b1}()"].contains(&&source[a..b]));
+        assert!(ranges.insert((a, b)));
+    }
+    assert_eq!(ranges.len(), parallel_calls + 2);
+    drop(ids);
+    let session = Session::open(
+        engine,
+        HostProfile::default(),
+        Some("source-claim-parallel-cycle"),
+        &Deadline::new(30000),
+    )
+    .unwrap();
+    Fixture {
+        session,
+        base,
+        root,
+        host,
+    }
+}
+
+#[test]
+fn admitted_parallel_and_opposite_calls_keep_forward_rank_and_all_original_evidence() {
+    let mut f = parallel_cycle_fixture(2);
+    let start = node(&f, "\u{3b1}");
+    let end = node(&f, "omega");
+    let mut attrs = BTreeMap::new();
+    for edge in &f.base.observations {
+        let raw = if edge["source"] == start && edge["target"] == end {
+            r#"{"confidence":"INFERRED","confidence_score":0.8}"#
+        } else {
+            r#"{"confidence":"AMBIGUOUS","confidence_score":0.01}"#
+        };
+        attrs.insert(edge["id"].as_str().unwrap().to_owned(), raw.to_owned());
+    }
+    let (artifact, _) = import(&f, &document(&f, &attrs));
+    let view = selected(&f, &artifact);
+    let originals: Vec<_> = view
+        .observations
+        .iter()
+        .filter(|e| {
+            (e["source"] == start && e["target"] == end)
+                || (e["source"] == end && e["target"] == start)
+        })
+        .cloned()
+        .collect();
+    assert_eq!(originals.len(), 3);
+    let expected_sites: BTreeSet<_> = originals
+        .iter()
+        .flat_map(|e| e["evidenceIds"].as_array().unwrap().iter())
+        .map(|v| v.as_str().unwrap().to_owned())
+        .collect();
+    let baseline = published_state(&f);
+    for (source, target, undirected, category, score) in [
+        (&start, &end, false, "inferred", "0.8"),
+        (&start, &end, true, "inferred", "0.8"),
+        (&end, &start, false, "ambiguous", "0.01"),
+    ] {
+        let args = json!({"graphViewId":view.id,"source":source,"target":target,
+            "max_hops":2,"undirected":undirected,"path_policy":POLICY});
+        let result = yoke::graphify_adapter::invoke(
+            &mut f.session,
+            "shortest_path",
+            &args,
+            &Deadline::new(30000),
+        )
+        .unwrap();
+        assert_eq!(result["hops"], 1);
+        assert_eq!(result["pathSourceCategory"], category);
+        assert_eq!(result["pathSourceScoreToken"], score);
+        assert_eq!(result["shortestNodePathsConsidered"], 1);
+        assert_eq!(result["shortestNodePathsCapped"], false);
+        let hop = &result["pathHops"][0];
+        assert_eq!(hop["observations"], json!(originals));
+        assert_eq!(
+            hop["observationIds"],
+            json!(originals.iter().map(|e| &e["id"]).collect::<Vec<_>>())
+        );
+        assert_eq!(hop["traversalSourceId"], *source);
+        assert_eq!(hop["traversalTargetId"], *target);
+        let selected = originals
+            .iter()
+            .find(|e| e["id"] == hop["selectedObservationId"])
+            .unwrap();
+        assert_eq!(selected["source"], *source);
+        assert_eq!(selected["target"], *target);
+        assert_eq!(
+            hop["evidence"],
+            json!(
+                view.evidence
+                    .iter()
+                    .filter(|e| expected_sites.contains(e["id"].as_str().unwrap()))
+                    .collect::<Vec<_>>()
+            )
+        );
+        assert_eq!(result["complete"], false);
+    }
+    let mut args = arguments(&f, &view);
+    args["target"] = json!(start);
+    let self_path = yoke::graphify_adapter::invoke(
+        &mut f.session,
+        "shortest_path",
+        &args,
+        &Deadline::new(30000),
+    )
+    .unwrap();
+    assert_eq!(self_path["found"], true);
+    assert_eq!(self_path["hops"], 0);
+    assert_eq!(self_path["pathHops"], json!([]));
+    assert_eq!(self_path["pathObservationIds"], json!([]));
+    assert_eq!(self_path["pathSourceCategory"], Value::Null);
+    assert_eq!(self_path["shortestNodePathsConsidered"], 1);
+
+    for max in [json!(0), json!(65), json!(true), json!("2")] {
+        let mut invalid = arguments(&f, &view);
+        invalid["max_hops"] = max;
+        assert!(
+            yoke::graphify_adapter::invoke(
+                &mut f.session,
+                "shortest_path",
+                &invalid,
+                &Deadline::new(30000),
+            )
+            .is_err()
+        );
+    }
+    let args = arguments(&f, &view);
+    assert!(
+        yoke::graphify_adapter::invoke(&mut f.session, "shortest_path", &args, &Deadline::new(0),)
+            .unwrap_err()
+            .to_string()
+            .contains("deadline exceeded")
+    );
+    let cancel = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
+    let error = Deadline::run_bounded(&Deadline::new(30000), cancel.clone(), || {
+        // Deterministic pre-query cancellation, not a mid-enumeration claim.
+        cancel.store(true, std::sync::atomic::Ordering::SeqCst);
+        yoke::graphify_adapter::invoke(
+            &mut f.session,
+            "shortest_path",
+            &args,
+            &Deadline::new(30000),
+        )
+    })
+    .unwrap_err();
+    assert!(error.to_string().contains("cancelled by host"));
+    assert_eq!(published_state(&f), baseline);
+}
+
+#[test]
+fn admitted_oversized_original_hop_refuses_whole_response_without_dropping_evidence() {
+    let mut f = parallel_cycle_fixture(1024);
+    let source = fs::read(f.root.path().join("main.rs")).unwrap();
+    let raw = document(&f, &BTreeMap::new());
+    assert!(raw.len() <= 1_000_000);
+    let (artifact, _) = import(&f, &raw);
+    let view = selected(&f, &artifact);
+    let start = node(&f, "\u{3b1}");
+    let end = node(&f, "omega");
+    let originals: Vec<_> = view
+        .observations
+        .iter()
+        .filter(|e| {
+            (e["source"] == start && e["target"] == end)
+                || (e["source"] == end && e["target"] == start)
+        })
+        .collect();
+    assert_eq!(originals.len(), 1025);
+    let sites: BTreeSet<_> = originals
+        .iter()
+        .flat_map(|e| e["evidenceIds"].as_array().unwrap().iter())
+        .map(|v| v.as_str().unwrap())
+        .collect();
+    let mandatory_hop = json!({"observations":originals,"evidence":view.evidence.iter()
+        .filter(|e| sites.contains(e["id"].as_str().unwrap())).collect::<Vec<_>>()});
+    assert!(
+        serde_json::to_vec(&mandatory_hop).unwrap().len() > 256_000,
+        "The complete original hop alone must exceed the existing response ceiling"
+    );
+    let baseline = published_state(&f);
+    let latest = f.session.engine.store.latest().unwrap();
+    let args = arguments(&f, &view);
+    let mut legacy_args = args.clone();
+    legacy_args.as_object_mut().unwrap().remove("path_policy");
+    let legacy = yoke::graphify_adapter::invoke(
+        &mut f.session,
+        "shortest_path",
+        &legacy_args,
+        &Deadline::new(30000),
+    )
+    .unwrap();
+    assert_eq!(legacy["found"], true);
+    assert_eq!(legacy["hops"], 1);
+    assert_eq!(legacy["observations"].as_array().unwrap().len(), 1);
+    assert!(legacy.get("pathHops").is_none());
+    let error = yoke::graphify_adapter::invoke(
+        &mut f.session,
+        "shortest_path",
+        &args,
+        &Deadline::new(30000),
+    )
+    .unwrap_err();
+    assert!(
+        error
+            .to_string()
+            .contains("JSON output exceeds byte capacity"),
+        "{error:#}"
+    );
+    assert_eq!(published_state(&f), baseline);
+    assert_eq!(f.session.engine.store.latest().unwrap(), latest);
+    assert_eq!(fs::read(f.root.path().join("main.rs")).unwrap(), source);
+}
