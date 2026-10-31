@@ -1,5 +1,19 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Real Windows TSGo CI candidate (2026-10-31)
+
+An additive hosted profile now selects the pinned real Microsoft TSGo preview
+through the public native Session CLI and explicit host backend registration.
+It reuses the same-run fresh release producer, private owned process trees and
+unchanged VSIX gates. Vendor procurement binds SHA-512, version, archive/file
+budgets and the complete extracted inventory. Unicode/CRLF fixtures require
+nonempty hover, exact definition and reference byte/hash anchors, unchanged
+source and natural process-tree exit. The original 353-entry ledger is unchanged.
+Eleven inert admission tests cover this profile; local source/npm checks do not
+qualify vendor execution. Exact hosted evidence, the other current backends,
+passive TSGo behavior, broader parity/platform/VSIX/main/release remain open.
+[Profile, fixed vendor and actual acceptance requirements](../scripts/host_tsgo.md).
+
 ## Current upstream backend-ID candidate (2026-10-31)
 
 The current Serena public registry adds vbnet, typescript_tsgo and graphql to
