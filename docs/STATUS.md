@@ -1,5 +1,21 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Do-condition admission repair (2026-11-01; hosted qualification pending)
+
+PR #17's hosted Ubuntu body-inline target still reports 30 passed and four
+failed cases at `60d4d2d`, all refusing the valid first-iteration flag with
+`Body unexplained new identifier observation`. Independent reconstruction
+already validates this private name; the subsequent synthetic-name inventory
+now includes it. Existing binding-target and unexplained-observation checks stay
+mandatory. A two-frame adversarial unit fixture covers valid admission, absent
+and reused names, foreign binding targets, an unexplained observation, unchanged
+source bytes and absence of persisted plan/approval/receipt/journal records.
+
+The source repair and new unit fixture are exact backports from `4f520e59`.
+Native compilation and execution remain unrun locally; this PR's new head
+requires its own guarded hosted qualification. Wider R1, platform, VSIX/main
+and release acceptance remain open.
+
 ## Complete do-condition inlining candidate (2026-10-30)
 
 The finite classic function-body route now admits complete do-while condition

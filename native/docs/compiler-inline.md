@@ -328,6 +328,18 @@ permissions and writer/recovery gates remain mandatory; results stay
 `complete=false`. Wider expression/loop/header forms and full R1 acceptance are
 still open.
 
+The hosted body-inline target at PR #17 head `60d4d2d` reports 30 passed and
+four failed tests: the three do-condition integration cases and the CLI writer
+table reject the first-iteration flag as an unexplained new identifier. The
+admission repair adds the already reconstructed and freshness-checked `doFirst`
+name to the final synthetic-name inventory. It does not admit arbitrary new
+observations or foreign binding targets. The added two-frame adversarial unit
+fixture checks successful admission and refusals for missing/reused first names,
+foreign targets and an extra exact-byte observation; it also checks unchanged
+input bytes and absence of persisted write or report records. Both changed Rust
+files are exact backports from `4f520e59`; the original integration fixture is
+unchanged. Fresh guarded hosted qualification of this PR remains pending.
+
 ## Host registration and requests
 
 A session host profile can explicitly opt in:
