@@ -443,3 +443,31 @@ jobs:
           name: diagnostic-host-document-history-browser-http-windows
           path: validation/ci-host-document-history-browser-http
           if-no-files-found: error
+  windows-credential-tls:
+    name: Windows credential-backed TLS (single explicit ignored case)
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.94.1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Use the same Windows temporary directory by its canonical long path
+        run: python scripts/ci_windows_temp.py
+      - name: Check fixed-role and result admission using synthetic fixtures
+        timeout-minutes: 1
+        run: python -m unittest scripts.tests.test_host_credential_tls -v
+      - name: Produce fresh matching CLI and receiver test images without executing them
+        timeout-minutes: 35
+        run: python scripts/host_credential_tls.py prepare
+      - name: Exercise only the owned credential-backed TLS receiver case
+        timeout-minutes: 4
+        run: python scripts/host_credential_tls.py run
+      - name: Preserve separate credential-backed TLS receipts and text logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-credential-tls-windows
+          path: validation/ci-host-credential-tls
+          if-no-files-found: warn

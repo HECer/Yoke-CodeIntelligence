@@ -122,6 +122,38 @@ whitespace checks pass. Typecheck and npm tests pass (266 passed, three skipped)
 Those native fixtures have not run locally and require guarded hosted validation.
 This source-only increment does not qualify other codec combinations, broader
 encoding identity, macOS memory enforcement, VSIX/extension host, release or main.
+## Separate Windows credential-backed TLS CI candidate (2026-10-30)
+
+A dedicated hosted-Windows profile now prepares fresh matching CLI/test images
+and explicitly selects the existing ignored receiver TLS/Credential Manager
+case inside the unchanged assigned-before-resume Job launcher. Its own filtered
+count stays separate from default shard coverage. Original Rust fixture bytes,
+ignore, assertions, deadlines and default native jobs remain unchanged.
+Synthetic admission tests pass; actual OS credentials, TLS/recovery/query
+execution and cleanup still require hosted qualification. No local native
+build/tests or credential access ran. Full platform/VSIX/main/release stays open.
+See [the profile contract](../scripts/host_credential_tls.md).
+
+## Windows REPL and Explorer fixture failure context (2026-10-30)
+
+At `6c8bd90b`, [Windows shard 6](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41031531780/job/123982157572)
+passes 46 of 48 target groups. A declaration-bridge REPL case exceeds its
+20-second cell deadline without identifying which of four cells failed. Two
+Explorer cases report readiness-channel disconnection before their HTTP
+assertions; the underlying server-thread result is not retained. These logs do
+not establish a receiver-verification defect or a precise startup cause.
+
+The REPL fixture now reports a failed authored cell's SHA-256 and elapsed and
+remaining time without printing its code. The Explorer fixture reuses the
+reviewed PR9 startup-error forwarding, distinguishing engine opening from
+serving failures through its existing channel. The original 20-second cell
+deadline, five-second readiness wait, functional assertions and production
+sources remain unchanged.
+
+Rust 1.94.1 formatting/source parsing, source-preservation checks, typecheck and
+npm tests pass (266 passed, three skipped). Changed native targets and Clippy
+were not run locally. These diagnostics require fresh native CI qualification;
+they do not establish a production fix or platform/release acceptance.
 
 ## Native, Serena and HTTP browser evidence; Python focus correction (2026-10-30)
 

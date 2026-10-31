@@ -26,7 +26,15 @@ fn fixture(source: &str, language: &str) -> (tempfile::TempDir, Engine) {
     let file = format!("main.{language}");
     fs::write(root.path().join(&file), source).unwrap();
     fs::write(root.path().join("tsconfig.json"),serde_json::to_vec(&json!({"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","allowJs":true,"checkJs":true,"noEmit":true},"files":[file]})).unwrap()).unwrap();
-    let engine = Engine::open(root.path()).unwrap();
+    let mut opening = yoke::store::OpeningObservations::default();
+    // Keep Engine::open's original ten-second Store setup budget. Observations
+    // contain only closed phase names and monotonic durations, never source.
+    let engine = Engine::open_with_timeout_observed(
+        root.path(),
+        std::time::Duration::from_secs(10),
+        &mut opening,
+    )
+    .unwrap_or_else(|error| panic!("Fixture Engine opening failed: {error}; {opening:?}"));
     (root, engine)
 }
 fn args(keep: bool, language: &str) -> Value {
