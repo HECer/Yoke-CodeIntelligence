@@ -1,5 +1,22 @@
 # Remaining implementation and acceptance
 
+## Combined current-source candidate (2026-10-31)
+
+The isolated integration branch now includes the current source from PR7-20:
+trusted activation, selected encoding variants, while/for/do inlining, receipt
+verification, HTTP/Store observations and both owned Windows CI profiles.
+Five normal merges retain all constituent tips and both historical documentation
+blocks. No production/test conflict, assertion, permission, ignore, deadline,
+worker resource limit or release gate was changed during integration.
+The combined product source passes typecheck, npm 266/0/3 skips, 33 inert
+admission tests, Rust 2024 formatting/source parsing for 40 changed Rust files,
+nine Python AST parses and three JavaScript syntax checks. These are local
+source/npm results, not native compilation or combined runtime acceptance.
+Fresh whole-source platform/browser/credential/VSIX/editor qualification, strict
+macOS memory, full upstream/backend parity, main and release remain open.
+Earlier entries retain their own source-specific scope and do not certify this
+candidate. [Constituents, preserved gates and remaining acceptance](validation/integration-2026-10-31/combined-source-candidate/README.md).
+
 ## Fresh combined VSIX CI candidate (2026-10-31)
 
 A new push-only Windows job depends on the same-run owned-Job lifecycle probe.
@@ -25,6 +42,39 @@ still qualify the actual kernel paths. Fresh matching native/combined VSIX,
 explicit and bundled real editor execution, combined-source parity, main and
 release acceptance remain open. No local Yoke/native/editor execution ran.
 See [the lifecycle contract](../scripts/vscode_owned_job.md).
+## Complete do-condition inlining candidate (2026-10-30)
+
+The finite classic function-body route now admits complete do-while condition
+calls with independent compiler/Rust ownership checks and a fresh first-iteration
+loop recipe. The original body runs before the first test; continue reaches the
+test after finally, while earlier break/return/throw leave without it. Original
+source copies, labels, type checks, budgets and writer/recovery gates remain.
+Three integration cases and two unit cases are authored, with an additional
+CLI verification/approval/recovery fixture. Native compilation and execution
+remain unrun locally; guarded hosted qualification and wider R1/full parity,
+platform, VSIX/main and release acceptance remain open.
+
+## For-condition inlining qualification (2026-10-30)
+
+The complete ordinary-for-condition source recipe now retains the original
+initializer, update and per-iteration environment while placing a fresh call
+expansion at each test. Guarded compilation, native reconstruction, runtime,
+predicate-flow and writer/recovery fixture execution remain required. The prior
+while candidate remains unqualified separately. Do/in/of/await-of, selected
+initializer/update calls, compound conditions and overlapping frames still
+refuse. Broader R1/full parity/Windows/VSIX/main/release gates remain open.
+[Candidate contract](../native/docs/compiler-inline.md#complete-for-conditions-candidate-native-qualification-pending).
+
+## While-condition inlining qualification (2026-10-30)
+
+The source candidate extends classic body expansion to complete direct calls in
+while conditions, with independent Rust reconstruction and authored native
+runtime/type/byte/control and verification/approval/recovery fixtures. Guarded
+native compilation and fixture execution remain required. For/do tests,
+compound/short-circuit conditions, nested expressions and overlapping selected
+frames still refuse. This does not close the broader R1 semantic-refactoring
+requirement or change any earlier source-bound CI/release checkpoint.
+[Candidate contract](../native/docs/compiler-inline.md#complete-while-conditions-candidate-native-qualification-pending).
 
 ## Gates remaining after scoped f41 acceptance (2026-10-30)
 
@@ -41,6 +91,76 @@ qualification, main integration, public publisher and release remain open.
 No whole-project or release acceptance is claimed.
 [Exact scope, receipts and screenshots](validation/integration-2026-10-30/f41-ci-checkpoint/README.md).
 
+
+## UTF-32 hosted checkpoint and quoted-YAML fixture correction (2026-10-30)
+
+At source `38322c7`, all seven new UTF-32 cases and the entire 14-case transport
+target pass on Windows/Linux/macOS. The 24-case core target passes 23 and fails
+only a stale negative input expecting the newly supported quoted UTF-32 YAML
+selection to refuse. This correction substitutes unsupported UTF-7 and adds
+positive plain/quoted YAML and canonical JSON policy checks, retaining strict
+JSON enum alias refusal and all original assertions/permissions/budgets.
+Corrected full-core execution remains pending. Production codec code is unchanged;
+strict macOS memory, full platform/VSIX/main/release acceptance remain open.
+
+## Strict UTF-32 source candidate (2026-10-30)
+
+The existing selected-codec stack now admits explicit BOM-selected UTF-32 and
+UTF-32LE/BE source views, raw byte offsets and strict scalar/unit validation.
+Existing source identities and all preceding codec behavior remain. New authored
+core/stdio/HTTP/LSP/verified-writer fixtures preserve the original authority,
+verification, approval, journal, deadline and cleanup requirements. Native
+compilation and execution are pending; no native runtime or full encoding/parity
+certificate is claimed. See [the exact contract](../native/docs/source-encodings.md#utf-32-source-candidate-2026-10-30).
+
+
+## Windows-1252 integration requires native qualification (2026-10-30)
+
+The Windows-1252 source-only candidate is combined with ASCII and UTF-8-SIG after
+`272ec171`. Original bytes/offsets, all preceding codec fixtures, unsupported proof
+consumer refusals, and the existing verification/approval/writer gates remain.
+The complete byte table matches Python's strict codec; this comparison reads
+source constants and does not compile or execute Rust. New core and real-transport
+fixtures require guarded hosted execution. Full selected-encoding identity,
+remaining codecs/LSP combinations, strict platform memory, VSIX/release and main
+remain open. See the [codec contract](../native/docs/source-encodings.md).
+## Separate Windows credential-backed TLS CI candidate (2026-10-30)
+
+A dedicated hosted-Windows profile now prepares fresh matching CLI/test images
+and explicitly selects the existing ignored receiver TLS/Credential Manager
+case inside the unchanged assigned-before-resume Job launcher. Its own filtered
+count stays separate from default shard coverage. Original Rust fixture bytes,
+ignore, assertions, deadlines and default native jobs remain unchanged.
+Synthetic admission tests pass; actual OS credentials, TLS/recovery/query
+execution and cleanup still require hosted qualification. No local native
+build/tests or credential access ran. Full platform/VSIX/main/release stays open.
+See [the profile contract](../scripts/host_credential_tls.md).
+## Explorer HTTP receive observations await hosted execution (2026-10-30)
+
+At source `85d0893d`, completed push run `41096155077` passes five of six
+Windows Explorer HTTP cases; the rebuild/reload case fails because its received
+bytes lack a complete HTTP header delimiter. The retained artifact cannot
+distinguish empty from partial response bytes or establish the failing request,
+receive duration or cause. Linux/macOS pass all six at that same source.
+
+This candidate retains scalar receive elapsed time, byte count, read-failure and
+raw OS-error flags/code, and delimiter presence in a closed formatter (maximum
+169 bytes on 64-bit targets). It keeps the original read-to-EOF operation, success
+parser, all six test bodies, requests, timeouts and production code unchanged.
+Two added tests cover scalar extremes and an owned bounded TCP peer with empty,
+partial and valid responses plus synthetic-content exclusion. Those native tests
+and the eight-case target remain unrun locally and require guarded hosted CI.
+Instrumentation may affect scheduling; no cause or repair is established.
+Full platform, strict macOS memory, VSIX, main and release gates remain open.
+
+## MCP HTTP revocation failure still needs source-bound observations (2026-10-30)
+
+The `9d0c4c72` macOS PR run's queued-revocation case fails in the already-running
+reader's client exchange, before its expected 503 result. Existing artifacts lack
+prefix length and timing, so the cause remains unestablished. Failure-only scalar
+observations now preserve those values while every original request, assertion
+and budget remains. The formatter/owned-TCP adversaries and complete 15-case target need
+guarded native execution. A successful sibling run is not a causal repair.
 
 ## Remaining Python browser and strict platform gates (2026-10-30)
 

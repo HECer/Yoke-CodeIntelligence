@@ -18,12 +18,24 @@ use yoke::{
     source_encoding::{Codec, View},
 };
 
+#[path = "support/source_encodings_utf32.rs"]
+mod utf32;
+
 fn d() -> Deadline {
     Deadline::new(30_000)
 }
 fn bytes(text: &str, codec: Codec, bom: bool) -> Vec<u8> {
     match codec {
-        Codec::Utf8 => text.as_bytes().to_vec(),
+        Codec::Utf8 | Codec::Ascii => text.as_bytes().to_vec(),
+        Codec::Utf8Sig => {
+            let mut out = if bom {
+                vec![0xef, 0xbb, 0xbf]
+            } else {
+                Vec::new()
+            };
+            out.extend_from_slice(text.as_bytes());
+            out
+        }
         Codec::Latin1 => text
             .chars()
             .map(|c| {
@@ -91,6 +103,8 @@ fn strict_codecs_map_only_scalar_boundaries_and_round_trip_original_bytes() {
     let text = "Aé\r\n💡e\u{301}\nend";
     for (selected, physical, bom) in [
         (Codec::Utf8, Codec::Utf8, false),
+        (Codec::Utf8Sig, Codec::Utf8Sig, false),
+        (Codec::Utf8Sig, Codec::Utf8Sig, true),
         (Codec::Utf16, Codec::Utf16Le, true),
         (Codec::Utf16, Codec::Utf16Be, true),
         (Codec::Utf16Le, Codec::Utf16Le, false),
@@ -151,17 +165,7 @@ fn true_latin1_is_bijective_and_cannot_encode_windows1252_or_lossy_replacements(
                 .contains("unrepresentable_latin1")
         );
     }
-    for name in [
-        "cp1252",
-        "windows-1252",
-        "utf-8-sig",
-        "utf-32",
-        "ascii",
-        "shift_jis",
-        " utf-16",
-        "utf 16",
-        "UTF–16",
-    ] {
+    for name in ["utf-7", "shift_jis", " utf-16", "utf 16", "UTF–16"] {
         assert!(Codec::parse(name).is_err(), "{name}");
     }
     for (names, codec) in [
@@ -169,6 +173,8 @@ fn true_latin1_is_bijective_and_cannot_encode_windows1252_or_lossy_replacements(
             vec!["utf-8", "utf_8", "UTF8", "u8", "UTF", "cp65001"],
             Codec::Utf8,
         ),
+        (vec!["ascii", "US-ASCII", "646"], Codec::Ascii),
+        (vec!["utf-8-sig", "UTF_8_SIG"], Codec::Utf8Sig),
         (vec!["utf-16", "utf_16", "UTF16", "u16"], Codec::Utf16),
         (vec!["utf_16_le", "UTF-16LE", "utf-16-le"], Codec::Utf16Le),
         (vec!["utf_16_be", "UTF-16BE", "utf-16-be"], Codec::Utf16Be),
@@ -190,6 +196,109 @@ fn true_latin1_is_bijective_and_cannot_encode_windows1252_or_lossy_replacements(
             assert_eq!(Codec::parse(name).unwrap(), codec);
         }
     }
+}
+
+#[test]
+fn windows1252_strict_mapping_and_raw_change_replay() {
+    assert_eq!(Codec::parse("CP1252").unwrap(), Codec::Windows1252);
+    assert_eq!(Codec::parse("windows-1252").unwrap(), Codec::Windows1252);
+    let allowed: Vec<u8> = (0..=255)
+        .filter(|b| ![0x81, 0x8d, 0x8f, 0x90, 0x9d].contains(b))
+        .collect();
+    let v = View::decode(allowed.clone(), Codec::Windows1252.policy(), &|| Ok(())).unwrap();
+    assert_eq!(v.text().chars().nth(0x80), Some('\u{20ac}'));
+    // Independent strict-codec oracle: UTF-8 of all 251 defined bytes, in order.
+    assert_eq!(v.text().len(), 391);
+    assert_eq!(
+        hash(v.text()),
+        "5b2df34bc5cd434e2fe59bf5935a028fa57782eda471de70c0dc0ce0d3de7913"
+    );
+    assert_eq!(v.encode_like(v.text(), &|| Ok(())).unwrap(), allowed);
+    for (raw, (decoded, ch)) in v.text().char_indices().enumerate() {
+        assert_eq!(v.to_raw(decoded).unwrap(), raw);
+        assert_eq!(v.to_decoded(raw).unwrap(), decoded);
+        for inside in 1..ch.len_utf8() {
+            assert!(v.to_raw(decoded + inside).is_err());
+        }
+    }
+    assert_eq!(v.to_raw(v.text().len()).unwrap(), allowed.len());
+    assert_eq!(v.to_decoded(allowed.len()).unwrap(), v.text().len());
+    let capture: CaptureOptions = serde_json::from_value(json!({
+        "sourceEncoding":{"kind":"strict_v1","codec":"windows1252"}
+    }))
+    .unwrap();
+    assert_eq!(capture.source_encoding, Codec::Windows1252.policy());
+    let projected = project(
+        &HostProfile::default(),
+        &[Target::Global],
+        &[b"encoding: windows-1252\n"],
+        &[0],
+    );
+    assert_eq!(
+        serde_json::to_value(projected.profile()).unwrap()["sourceEncodings"]["global"],
+        "windows1252"
+    );
+    for byte in [0x81, 0x8d, 0x8f, 0x90, 0x9d] {
+        assert!(
+            View::decode(vec![byte], Codec::Windows1252.policy(), &|| Ok(()))
+                .err()
+                .unwrap()
+                .to_string()
+                .contains("undefined_windows1252")
+        );
+    }
+    for ch in ['\u{80}', '\u{81}', '\u{fffd}', '\u{1f4a1}', '\u{301}'] {
+        assert!(
+            v.encode_like(&ch.to_string(), &|| Ok(()))
+                .unwrap_err()
+                .to_string()
+                .contains("unrepresentable_windows1252")
+        );
+    }
+    let root = tempfile::tempdir().unwrap();
+    let raw = b"// \x80\r\nfn target() {}\r\n";
+    fs::write(root.path().join("main.rs"), raw).unwrap();
+    let mut e = Engine::open(root.path()).unwrap();
+    e.capture_options.source_encoding = Codec::Windows1252.policy();
+    let (snapshot, _, _, _) = e.index(&d()).unwrap();
+    let view = query::source_view(&e.store, &snapshot, "main.rs").unwrap();
+    assert_eq!(view.text(), "// \u{20ac}\r\nfn target() {}\r\n");
+    assert_eq!(view.to_raw("// \u{20ac}\r\nfn ".len()).unwrap(), 9);
+    assert!(view.to_raw(4).is_err());
+    let p = plan(
+        &mut e,
+        json!([{"kind":"replace","path":"main.rs","expectedHash":hash(raw),"startByte":9,"endByte":15,"text":"\u{20ac}"}]),
+    );
+    assert_eq!(after(&e, &p), b"// \x80\r\nfn \x80() {}\r\n");
+    changes::load_checked_plan(&e.store, &p.id, &d()).unwrap();
+    assert_eq!(fs::read(root.path().join("main.rs")).unwrap(), raw);
+    let bad = e.invoke("ci_change_prepare", json!({"edits":[{"kind":"replace","path":"main.rs","expectedHash":hash(raw),"startByte":9,"endByte":15,"text":"\u{1f4a1}"}]})).unwrap();
+    assert_eq!(bad["status"], "error");
+    assert!(bad.to_string().contains("unrepresentable_windows1252"));
+}
+
+#[test]
+fn windows1252_decoded_expansion_and_cancellation_refuse_before_publication() {
+    let expanded = vec![0x80; yoke::source_encoding::MAX_TEXT / 3 + 1];
+    assert!(
+        View::decode(expanded, Codec::Windows1252.policy(), &|| Ok(()))
+            .err()
+            .unwrap()
+            .to_string()
+            .contains("decoded_budget")
+    );
+    let checks = std::cell::Cell::new(0);
+    let error = View::decode(vec![0x80; 16384], Codec::Windows1252.policy(), &|| {
+        checks.set(checks.get() + 1);
+        if checks.get() == 4 {
+            anyhow::bail!("owned_windows1252_cancel");
+        }
+        Ok(())
+    })
+    .err()
+    .unwrap();
+    assert!(error.to_string().contains("owned_windows1252_cancel"));
+    assert_eq!(checks.get(), 4);
 }
 
 #[test]
@@ -245,6 +354,8 @@ fn malformed_utf16_and_capacity_deadlines_refuse_without_replacement() {
 #[test]
 fn actual_capture_structural_search_quotes_parallel_edges_and_immutable_replay_use_raw_offsets() {
     for (codec, bom) in [
+        (Codec::Utf8Sig, true),
+        (Codec::Utf8Sig, false),
         (Codec::Utf16, true),
         (Codec::Utf16Le, false),
         (Codec::Utf16Be, false),
@@ -387,6 +498,8 @@ fn encoded_capture_applies_secret_path_and_decoded_secret_filters_before_publica
 #[test]
 fn replacements_creates_bulk_edits_and_plan_replay_encode_before_review_preserving_bom_and_crlf() {
     for (codec, bom) in [
+        (Codec::Utf8Sig, true),
+        (Codec::Utf8Sig, false),
         (Codec::Utf16, true),
         (Codec::Utf16Le, false),
         (Codec::Utf16Be, false),
@@ -423,7 +536,10 @@ fn replacements_creates_bulk_edits_and_plan_replay_encode_before_review_preservi
             &mut e,
             json!([{"kind":"create","path":"new.rs","text":"fn café() {}\r\n"}]),
         );
-        assert_eq!(after(&e, &create), bytes("fn café() {}\r\n", codec, bom));
+        assert_eq!(
+            after(&e, &create),
+            bytes("fn café() {}\r\n", codec, bom || codec == Codec::Utf8Sig)
+        );
         let bulk=e.invoke("ci_change_prepare",json!({"snapshotId":s.id,"bulkReplace":{"pattern":"target","replacement":"café","literal":true,"expectedCount":1}})).unwrap();
         assert_eq!(bulk["status"], "ok", "{bulk}");
         let bulk: Plan = serde_json::from_value(bulk["data"]["plan"].clone()).unwrap();
@@ -600,8 +716,7 @@ fn strict_configuration_protocol_types_unknown_fields_and_host_scopes_do_not_gra
         json!(2),
         json!([]),
         json!({}),
-        json!("cp1252"),
-        json!("utf-32"),
+        json!("utf-7"),
         json!("owned_private_canary"),
     ] {
         let yaml = format!("encoding: {}\n", value);
@@ -957,4 +1072,117 @@ fn optional_utf8_piece_consumers_refuse_without_starting_tools_or_creating_overl
         serde_json::to_vec(&null).unwrap(),
         serde_json::to_vec(&HostProfile::default()).unwrap()
     );
+}
+
+#[test]
+fn ascii_strictly_preserves_bytes_offsets_and_rejects_non_ascii() {
+    let raw: Vec<u8> = (0..=127).collect();
+    let view = View::decode(raw.clone(), Codec::Ascii.policy(), &|| Ok(())).unwrap();
+    assert_eq!(view.raw(), raw);
+    assert_eq!(view.encode_like(view.text(), &|| Ok(())).unwrap(), raw);
+    for i in 0..=128 {
+        assert_eq!(view.to_raw(i).unwrap(), i);
+        assert_eq!(view.to_decoded(i).unwrap(), i);
+    }
+    assert!(view.to_raw(129).is_err());
+    for byte in 128..=255 {
+        assert!(View::decode(vec![b'a', byte], Codec::Ascii.policy(), &|| Ok(())).is_err());
+    }
+    for text in ["\u{e9}", "\u{20ac}", "\u{1f4a1}", "e\u{301}", "\u{fffd}"] {
+        assert!(
+            view.encode_like(text, &|| Ok(()))
+                .unwrap_err()
+                .to_string()
+                .contains("unrepresentable_ascii")
+        );
+    }
+    assert!(
+        View::decode(
+            vec![b'x'; yoke::source_encoding::MAX_RAW + 1],
+            Codec::Ascii.policy(),
+            &|| Ok(())
+        )
+        .is_err()
+    );
+    assert!(
+        View::decode(vec![b'x'; 16384], Codec::Ascii.policy(), &|| Deadline::new(
+            0
+        )
+        .check())
+        .is_err()
+    );
+}
+
+#[test]
+fn ascii_plans_preserve_original_bytes_and_refuse_unrepresentable_edits() {
+    let (root, mut e, raw) = engine(Codec::Ascii, "fn target() {}\r\n", false);
+    let (snapshot, graph, _, _) = e.index(&d()).unwrap();
+    let edits = |text: &str| json!({"edits":[{"kind":"replace","path":"main.rs","expectedHash":hash(&raw),"startByte":3,"endByte":9,"text":text}]});
+    let p = changes::prepare(&mut e.store, &snapshot, &graph, &edits("renamed"), &d()).unwrap();
+    assert_eq!(after(&e, &p), b"fn renamed() {}\r\n");
+    assert!(changes::prepare(&mut e.store, &snapshot, &graph, &edits("\u{e9}"), &d()).is_err());
+    assert!(
+        changes::prepare(
+            &mut e.store,
+            &snapshot,
+            &graph,
+            &json!({"edits":[{"kind":"create","path":"new.rs","text":"\u{e9}"}]}),
+            &d()
+        )
+        .is_err()
+    );
+    assert_eq!(fs::read(root.path().join("main.rs")).unwrap(), raw);
+    assert!(!root.path().join("new.rs").exists());
+}
+
+#[test]
+fn utf8_sig_strict_prefix_boundaries_and_invalid_input() {
+    for raw in [
+        vec![0xff],
+        vec![0xef, 0xbb],
+        vec![0xef, 0xbb, 0xbf, 0xc0, 0x80],
+    ] {
+        assert!(View::decode(raw, Codec::Utf8Sig.policy(), &|| Ok(())).is_err());
+    }
+    let raw = b"\xef\xbb\xbf\xef\xbb\xbfx".to_vec();
+    let view = View::decode(raw.clone(), Codec::Utf8Sig.policy(), &|| Ok(())).unwrap();
+    assert_eq!(view.text(), "\u{feff}x");
+    assert_eq!(view.to_raw(0).unwrap(), 3);
+    for n in 0..3 {
+        assert!(view.to_decoded(n).is_err());
+    }
+    assert!(view.to_decoded(4).is_err());
+    assert_eq!(view.quote(0, raw.len()).unwrap(), "\u{feff}x");
+    assert_eq!(view.encode_like(view.text(), &|| Ok(())).unwrap(), raw);
+    assert_ne!(Codec::Utf8Sig.policy(), Codec::Utf8.policy());
+}
+
+#[test]
+fn utf8_sig_bomless_edits_refuse_ambiguous_leading_character() {
+    for raw in [b"".as_slice(), b"existing".as_slice()] {
+        let view = View::decode(raw.to_vec(), Codec::Utf8Sig.policy(), &|| Ok(())).unwrap();
+        let error = view.encode_like("\u{feff}text", &|| Ok(())).unwrap_err();
+        assert!(
+            error
+                .to_string()
+                .contains("source_encoding_utf8_sig_ambiguous_leading_bom")
+        );
+        let encoded = view.encode_like("text", &|| Ok(())).unwrap();
+        let reread = View::decode(encoded, Codec::Utf8Sig.policy(), &|| Ok(())).unwrap();
+        assert_eq!(reread.text(), "text");
+    }
+
+    let (root, mut engine, raw) = engine(Codec::Utf8Sig, "fn existing() {}\n", false);
+    let (snapshot, graph, _, _) = engine.index(&d()).unwrap();
+    let request = json!({"edits":[{"kind":"replace","path":"main.rs",
+        "expectedHash":hash(&raw),"startByte":0,"endByte":0,"text":"\u{feff}"}]});
+    let error = changes::prepare(&mut engine.store, &snapshot, &graph, &request, &d())
+        .err()
+        .expect("ambiguous edit must be refused");
+    assert!(
+        error
+            .to_string()
+            .contains("source_encoding_utf8_sig_ambiguous_leading_bom")
+    );
+    assert_eq!(fs::read(root.path().join("main.rs")).unwrap(), raw);
 }

@@ -20,6 +20,47 @@ struct Response {
     headers: std::collections::BTreeMap<String, String>,
     body: Vec<u8>,
 }
+// Fixed scalar observations only: request/response bytes, headers, session IDs,
+// addresses and paths cannot enter this formatter.
+struct ResponseObservation {
+    began: Instant,
+    connected_us: u128,
+    sent_us: u128,
+    read_start_us: u128,
+    reads: usize,
+    prefix_bytes: usize,
+    expected_bytes: Option<usize>,
+}
+impl ResponseObservation {
+    fn new() -> Self {
+        Self {
+            began: Instant::now(),
+            connected_us: 0,
+            sent_us: 0,
+            read_start_us: 0,
+            reads: 0,
+            prefix_bytes: 0,
+            expected_bytes: None,
+        }
+    }
+}
+impl std::fmt::Display for ResponseObservation {
+    fn fmt(&self, output: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let elapsed_us = self.began.elapsed().as_micros();
+        write!(
+            output,
+            "connect_us={} sent_us={} last_read_start_us={} elapsed_us={elapsed_us} last_read_us={} read_calls={} prefix_bytes={} frame_declared={} expected_frame_bytes={}",
+            self.connected_us,
+            self.sent_us,
+            self.read_start_us,
+            elapsed_us.saturating_sub(self.read_start_us),
+            self.reads,
+            self.prefix_bytes,
+            self.expected_bytes.is_some(),
+            self.expected_bytes.unwrap_or(0)
+        )
+    }
+}
 fn parse(bytes: &[u8]) -> Response {
     let end = bytes
         .windows(4)
@@ -42,21 +83,29 @@ fn parse(bytes: &[u8]) -> Response {
 }
 #[track_caller]
 fn exchange(address: SocketAddr, request: &[u8]) -> Response {
+    let mut observation = ResponseObservation::new();
     let mut tcp = TcpStream::connect(address).unwrap();
+    observation.connected_us = observation.began.elapsed().as_micros();
     tcp.set_read_timeout(Some(Duration::from_secs(10))).unwrap();
     tcp.write_all(request).unwrap();
+    observation.sent_us = observation.began.elapsed().as_micros();
     let mut bytes = vec![];
     loop {
         let mut chunk = [0; 8192];
+        observation.reads += 1;
+        observation.read_start_us = observation.began.elapsed().as_micros();
         let count = match tcp.read(&mut chunk) {
             Ok(count) => count,
-            Err(error) => panic!("HTTP response must arrive within the host deadline: {error}"),
+            Err(error) => panic!(
+                "HTTP response must arrive within the host deadline: {error}; observations: {observation}"
+            ),
         };
         assert_ne!(
             count, 0,
-            "HTTP connection closed before a complete framed response"
+            "HTTP connection closed before a complete framed response; observations: {observation}"
         );
         bytes.extend_from_slice(&chunk[..count]);
+        observation.prefix_bytes = bytes.len();
         if let Some(end) = bytes.windows(4).position(|part| part == b"\r\n\r\n") {
             let header = std::str::from_utf8(&bytes[..end]).unwrap();
             let length: usize = header
@@ -68,6 +117,7 @@ fn exchange(address: SocketAddr, request: &[u8]) -> Response {
                 })
                 .unwrap();
             assert!(length <= 16_000_000);
+            observation.expected_bytes = Some(end + 4 + length);
             if bytes.len() == end + 4 + length {
                 break;
             }
@@ -113,6 +163,79 @@ fn root() -> TempDir {
     let root = TempDir::new().unwrap();
     std::fs::write(root.path().join("main.rs"), "fn target() {}\n").unwrap();
     root
+}
+
+#[test]
+fn incomplete_response_observations_are_bounded_ascii_for_extreme_scalars() {
+    let mut observation = ResponseObservation::new();
+    observation.connected_us = u128::MAX;
+    observation.sent_us = u128::MAX;
+    observation.read_start_us = u128::MAX;
+    observation.reads = usize::MAX;
+    observation.prefix_bytes = usize::MAX;
+    for expected in [None, Some(0), Some(usize::MAX)] {
+        observation.expected_bytes = expected;
+        let text = observation.to_string();
+        assert!(text.is_ascii() && !text.is_empty() && text.len() <= 512);
+        assert!(!text.contains('\n') && !text.contains('\r'));
+    }
+}
+
+#[test]
+fn incomplete_tcp_eof_reports_scalar_progress_without_response_content() {
+    let _gate = HTTP_TEST
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner());
+    let header = b"HTTP/1.1 503 Service Unavailable\r\nContent-Length: 128\r\nX-Owned: owned-response-canary\r\n\r\n";
+    let body = b"owned-response-canary";
+    for partial in [false, true] {
+        let mut response = vec![];
+        if partial {
+            response.extend_from_slice(header);
+            response.extend_from_slice(body);
+        }
+        let prefix_bytes = response.len();
+        let expected_bytes = if partial { header.len() + 128 } else { 0 };
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        listener.set_nonblocking(true).unwrap();
+        let address = listener.local_addr().unwrap();
+        let peer = std::thread::spawn(move || -> std::io::Result<()> {
+            let end = Instant::now() + Duration::from_secs(5);
+            let mut stream = loop {
+                match listener.accept() {
+                    Ok((stream, _)) => break stream,
+                    Err(error) if error.kind() == std::io::ErrorKind::WouldBlock => {
+                        if Instant::now() >= end {
+                            return Err(std::io::ErrorKind::TimedOut.into());
+                        }
+                        std::thread::sleep(Duration::from_millis(5));
+                    }
+                    Err(error) => return Err(error),
+                }
+            };
+            stream.set_read_timeout(Some(Duration::from_secs(5)))?;
+            stream.set_write_timeout(Some(Duration::from_secs(5)))?;
+            let mut request = [0; 1];
+            stream.read_exact(&mut request)?;
+            stream.write_all(&response)?;
+            stream.shutdown(std::net::Shutdown::Write)
+        });
+        let failure = std::panic::catch_unwind(|| exchange(address, b"!"));
+        assert!(peer.join().unwrap().is_ok());
+        let payload = failure
+            .err()
+            .expect("Incomplete frames must remain failures");
+        let message = payload
+            .downcast_ref::<String>()
+            .map(String::as_str)
+            .or_else(|| payload.downcast_ref::<&str>().copied())
+            .unwrap();
+        assert!(message.contains("HTTP connection closed before a complete framed response"));
+        assert!(message.contains(&format!("prefix_bytes={prefix_bytes} ")));
+        assert!(message.contains(&format!("frame_declared={partial} ")));
+        assert!(message.contains(&format!("expected_frame_bytes={expected_bytes}")));
+        assert!(!message.contains("owned-response-canary"));
+    }
 }
 
 #[test]

@@ -1,5 +1,22 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Combined current-source candidate (2026-10-31)
+
+The isolated integration branch now includes the current source from PR7-20:
+trusted activation, selected encoding variants, while/for/do inlining, receipt
+verification, HTTP/Store observations and both owned Windows CI profiles.
+Five normal merges retain all constituent tips and both historical documentation
+blocks. No production/test conflict, assertion, permission, ignore, deadline,
+worker resource limit or release gate was changed during integration.
+The combined product source passes typecheck, npm 266/0/3 skips, 33 inert
+admission tests, Rust 2024 formatting/source parsing for 40 changed Rust files,
+nine Python AST parses and three JavaScript syntax checks. These are local
+source/npm results, not native compilation or combined runtime acceptance.
+Fresh whole-source platform/browser/credential/VSIX/editor qualification, strict
+macOS memory, full upstream/backend parity, main and release remain open.
+Earlier entries retain their own source-specific scope and do not certify this
+candidate. [Constituents, preserved gates and remaining acceptance](validation/integration-2026-10-31/combined-source-candidate/README.md).
+
 ## Fresh combined VSIX CI candidate (2026-10-31)
 
 A new push-only Windows job depends on the same-run owned-Job lifecycle probe.
@@ -25,6 +42,47 @@ still qualify the actual kernel paths. Fresh matching native/combined VSIX,
 explicit and bundled real editor execution, combined-source parity, main and
 release acceptance remain open. No local Yoke/native/editor execution ran.
 See [the lifecycle contract](../scripts/vscode_owned_job.md).
+## Complete do-condition inlining candidate (2026-10-30)
+
+The finite classic function-body route now admits complete do-while condition
+calls with independent compiler/Rust ownership checks and a fresh first-iteration
+loop recipe. The original body runs before the first test; continue reaches the
+test after finally, while earlier break/return/throw leave without it. Original
+source copies, labels, type checks, budgets and writer/recovery gates remain.
+Three integration cases and two unit cases are authored, with an additional
+CLI verification/approval/recovery fixture. Native compilation and execution
+remain unrun locally; guarded hosted qualification and wider R1/full parity,
+platform, VSIX/main and release acceptance remain open.
+
+## Complete for-condition body inlining candidate (2026-10-30)
+
+The classic body inliner has a separate ordinary-for-condition candidate atop
+the while candidate. The original initializer/update header and loop body remain
+source copies, preserving update/continue order and per-iteration bindings.
+Rust independently checks the condition-expression and its semicolon field;
+existing type/binding/source, resource and write/recovery gates remain.
+Adversarial native fixtures are authored but uncompiled and unrun locally.
+Both loop candidates still require guarded native qualification; full semantic
+parity and release acceptance are not established by this source extension.
+Local typecheck and npm tests pass (266 passed, three skipped), along with
+Rust formatting, worker syntax and 20 source-only owned-fixture checks. These
+checks do not compile or execute the native implementation or compiler worker.
+[Candidate scope](../native/docs/compiler-inline.md#complete-for-conditions-candidate-native-qualification-pending).
+
+## Complete while-condition body inlining candidate (2026-10-30)
+
+The classic function-body inliner now prepares a source-reconstructed repeated
+while-condition recipe. Each condition test reevaluates the original arguments
+and expanded body before checking the result; labels and the original loop body
+retain their ownership. Rust independently checks condition delimiters and call
+ownership. Existing type/binding proofs, capacities, executed verification,
+approval and recovery remain mandatory. Adversarial native fixtures are authored
+for control flow, effects, predicates, byte preservation and the original writer
+gates. Native compilation and fixture execution remain unrun locally; this is a
+source candidate awaiting guarded CI, not new runtime or release acceptance.
+Local typecheck and npm tests pass (266 passed, three skipped), as do Rust
+formatting, worker syntax and source-only type checks of owned fixture inputs.
+[Scope and remaining qualification](../native/docs/compiler-inline.md#complete-while-conditions-candidate-native-qualification-pending).
 
 ## Scoped f41 Windows/Linux and four-profile browser acceptance (2026-10-30)
 
@@ -45,6 +103,112 @@ main/publication and release remain open. Earlier checkpoints below retain
 their original tested source and failures.
 [Source-bound receipts and all 24 PNGs](validation/integration-2026-10-30/f41-ci-checkpoint/README.md).
 
+
+## UTF-32 hosted checkpoint and quoted-YAML fixture correction (2026-10-30)
+
+At source `38322c7`, all seven new UTF-32 cases and the entire 14-case transport
+target pass on Windows/Linux/macOS. The 24-case core target passes 23 and fails
+only a stale negative input expecting the newly supported quoted UTF-32 YAML
+selection to refuse. This correction substitutes unsupported UTF-7 and adds
+positive plain/quoted YAML and canonical JSON policy checks, retaining strict
+JSON enum alias refusal and all original assertions/permissions/budgets.
+Corrected full-core execution remains pending. Production codec code is unchanged;
+strict macOS memory, full platform/VSIX/main/release acceptance remain open.
+
+## Strict UTF-32 source candidate (2026-10-30)
+
+The existing selected-codec stack now admits explicit BOM-selected UTF-32 and
+UTF-32LE/BE source views, raw byte offsets and strict scalar/unit validation.
+Existing source identities and all preceding codec behavior remain. New authored
+core/stdio/HTTP/LSP/verified-writer fixtures preserve the original authority,
+verification, approval, journal, deadline and cleanup requirements. Native
+compilation and execution are pending; no native runtime or full encoding/parity
+certificate is claimed. See [the exact contract](../native/docs/source-encodings.md#utf-32-source-candidate-2026-10-30).
+
+
+## Strict Windows-1252 integration candidate (2026-10-30)
+
+The selected Windows-1252 codec is integrated after the ASCII/UTF-8-SIG stack
+at `272ec171`. It preserves all existing codec policies and refuses undefined
+bytes and unrepresentable edits, while retaining original source hashes and byte
+offsets. The source table matches all 256 Python strict-codec entries. New native
+fixtures cover every defined scalar boundary, decoded expansion and cancellation,
+YAML/capture selection, actual stdio reads/plans and the verified raw-byte writer.
+Local Rust 1.94.1 formatting/source parsing, source-preservation comparisons and
+whitespace checks pass. Typecheck and npm tests pass (266 passed, three skipped).
+Those native fixtures have not run locally and require guarded hosted validation.
+This source-only increment does not qualify other codec combinations, broader
+encoding identity, macOS memory enforcement, VSIX/extension host, release or main.
+## Separate Windows credential-backed TLS CI candidate (2026-10-30)
+
+A dedicated hosted-Windows profile now prepares fresh matching CLI/test images
+and explicitly selects the existing ignored receiver TLS/Credential Manager
+case inside the unchanged assigned-before-resume Job launcher. Its own filtered
+count stays separate from default shard coverage. Original Rust fixture bytes,
+ignore, assertions, deadlines and default native jobs remain unchanged.
+Synthetic admission tests pass; actual OS credentials, TLS/recovery/query
+execution and cleanup still require hosted qualification. No local native
+build/tests or credential access ran. Full platform/VSIX/main/release stays open.
+See [the profile contract](../scripts/host_credential_tls.md).
+
+## Windows REPL and Explorer fixture failure context (2026-10-30)
+
+At `6c8bd90b`, [Windows shard 6](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41031531780/job/123982157572)
+passes 46 of 48 target groups. A declaration-bridge REPL case exceeds its
+20-second cell deadline without identifying which of four cells failed. Two
+Explorer cases report readiness-channel disconnection before their HTTP
+assertions; the underlying server-thread result is not retained. These logs do
+not establish a receiver-verification defect or a precise startup cause.
+
+The REPL fixture now reports a failed authored cell's SHA-256 and elapsed and
+remaining time without printing its code. The Explorer fixture reuses the
+reviewed PR9 startup-error forwarding, distinguishing engine opening from
+serving failures through its existing channel. The original 20-second cell
+deadline, five-second readiness wait, functional assertions and production
+sources remain unchanged.
+
+Rust 1.94.1 formatting/source parsing, source-preservation checks, typecheck and
+npm tests pass (266 passed, three skipped). Changed native targets and Clippy
+were not run locally. These diagnostics require fresh native CI qualification;
+they do not establish a production fix or platform/release acceptance.
+## Explorer HTTP receive observations await hosted execution (2026-10-30)
+
+At source `85d0893d`, completed push run `41096155077` passes five of six
+Windows Explorer HTTP cases; the rebuild/reload case fails because its received
+bytes lack a complete HTTP header delimiter. The retained artifact cannot
+distinguish empty from partial response bytes or establish the failing request,
+receive duration or cause. Linux/macOS pass all six at that same source.
+
+This candidate retains scalar receive elapsed time, byte count, read-failure and
+raw OS-error flags/code, and delimiter presence in a closed formatter (maximum
+169 bytes on 64-bit targets). It keeps the original read-to-EOF operation, success
+parser, all six test bodies, requests, timeouts and production code unchanged.
+Two added tests cover scalar extremes and an owned bounded TCP peer with empty,
+partial and valid responses plus synthetic-content exclusion. Those native tests
+and the eight-case target remain unrun locally and require guarded hosted CI.
+Instrumentation may affect scheduling; no cause or repair is established.
+Full platform, strict macOS memory, VSIX, main and release gates remain open.
+
+## MCP HTTP incomplete-response observations (2026-10-30)
+
+At PR9 source `9d0c4c72`, tested merge `0dc3f536`, run `41031494443`,
+the MCP HTTP target passes 12 of 13 cases. The already-running reader in the
+queued-principal revocation case receives EOF before a complete framed response;
+the received prefix length and elapsed time were not retained. The queued
+exchange's result and later authorization assertions are not established;
+memory, socket and scheduling causes remain unproven.
+The original 2,000 ms physical budget, 1,900 ms work ceiling, 100 ms delivery
+reserve, ten-second client read timeout and all test bodies remain unchanged.
+
+The test client now retains closed scalar connect/send/read timings, read count,
+prefix length and declared frame size on failure. An added formatter adversary
+covers maximum integer values and absent/zero/maximum expected sizes. An owned
+TCP peer additionally exercises empty/partial EOF and response-content exclusion.
+Native compilation and all 15 current target declarations require guarded hosted CI;
+the observations are source-only until that execution and do not repair or
+reclassify the earlier failure. Local Rust 1.94.1 formatting/source parsing and
+source-preservation checks pass, as do typecheck and npm tests (266 passed,
+three skipped). Full platform and release gates remain open.
 
 ## Native, Serena and HTTP browser evidence; Python focus correction (2026-10-30)
 
@@ -357,6 +521,12 @@ tests on Windows and macOS and final Ubuntu acceptance. Windows still fails its
 original 20-second source-bound provider query, preventing release/history;
 macOS still has original memory/timing failures. New integration platform,
 encoding/browser/visual, matching VSIX and full release acceptance remain open.
+
+The separate combined activation check at `dc9a4f0f` has Cargo/Clippy exit zero
+without diagnostics, but remains failed under the unchanged owner guard: a
+membership-confirmed MSVC `vctip.exe` helper survives the original drain until
+forced cleanup. No native image is read and no tests execute.
+[Incomplete combined receipt](validation/integration-2026-10-27/encoding-browser-review/activation-combined-clippy.json).
 
 ## Page-capacity fixture preparation batched; Rust acceptance pending (2026-10-26)
 

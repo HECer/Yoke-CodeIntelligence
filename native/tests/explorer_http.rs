@@ -5,7 +5,7 @@ use std::{
     net::{Shutdown, TcpStream},
     sync::mpsc,
     thread::{self, JoinHandle},
-    time::Duration,
+    time::{Duration, Instant},
 };
 use yoke::{
     Engine,
@@ -15,14 +15,16 @@ use yoke::{
 
 struct Announce {
     bytes: Vec<u8>,
-    sender: mpsc::Sender<Value>,
+    sender: mpsc::Sender<Result<Value, String>>,
 }
 impl Write for Announce {
     fn write(&mut self, bytes: &[u8]) -> io::Result<usize> {
         self.bytes.extend_from_slice(bytes);
         if let Some(end) = self.bytes.iter().position(|b| *b == b'\n') {
             self.sender
-                .send(serde_json::from_slice(&self.bytes[..end]).map_err(io::Error::other)?)
+                .send(Ok(
+                    serde_json::from_slice(&self.bytes[..end]).map_err(io::Error::other)?
+                ))
                 .map_err(io::Error::other)?;
             self.bytes.drain(..=end);
         }
@@ -37,10 +39,55 @@ struct Response {
     headers: String,
     body: Vec<u8>,
 }
+// Only scalar receive observations; response content and host capabilities cannot
+// enter this formatter.
+struct ResponseReadObservation {
+    elapsed_us: u128,
+    prefix_bytes: usize,
+    read_failed: bool,
+    os_error: Option<i32>,
+    header_delimiter: bool,
+}
+impl std::fmt::Display for ResponseReadObservation {
+    fn fmt(&self, output: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            output,
+            "elapsed_us={} prefix_bytes={} read_failed={} os_error_present={} os_error={} header_delimiter={}",
+            self.elapsed_us,
+            self.prefix_bytes,
+            self.read_failed,
+            self.os_error.is_some(),
+            self.os_error.unwrap_or(0),
+            self.header_delimiter
+        )
+    }
+}
 fn read_response(mut stream: TcpStream) -> Response {
     let mut all = Vec::new();
-    stream.read_to_end(&mut all).unwrap();
-    let boundary = all.windows(4).position(|b| b == b"\r\n\r\n").unwrap();
+    let read_start = Instant::now();
+    stream.read_to_end(&mut all).unwrap_or_else(|error| {
+        let observation = ResponseReadObservation {
+            elapsed_us: read_start.elapsed().as_micros(),
+            prefix_bytes: all.len(),
+            read_failed: true,
+            os_error: error.raw_os_error(),
+            header_delimiter: all.windows(4).any(|b| b == b"\r\n\r\n"),
+        };
+        panic!("Explorer HTTP read failed; observations: {observation}");
+    });
+    let boundary = all
+        .windows(4)
+        .position(|b| b == b"\r\n\r\n")
+        .unwrap_or_else(|| {
+            let observation = ResponseReadObservation {
+                elapsed_us: read_start.elapsed().as_micros(),
+                prefix_bytes: all.len(),
+                read_failed: false,
+                os_error: None,
+                header_delimiter: false,
+            };
+            panic!("Explorer HTTP response missing header delimiter; observations: {observation}");
+        });
     let headers = String::from_utf8(all[..boundary].to_vec()).unwrap();
     let status = headers.split_whitespace().nth(1).unwrap().parse().unwrap();
     let body = all[boundary + 4..].to_vec();
@@ -48,6 +95,102 @@ fn read_response(mut stream: TcpStream) -> Response {
         status,
         headers,
         body,
+    }
+}
+
+#[test]
+fn explorer_receive_observations_are_bounded_ascii_for_extreme_scalars() {
+    for elapsed_us in [0, u128::MAX] {
+        for prefix_bytes in [0, usize::MAX] {
+            for read_failed in [false, true] {
+                for os_error in [None, Some(0), Some(i32::MIN), Some(i32::MAX)] {
+                    for header_delimiter in [false, true] {
+                        let observation = ResponseReadObservation {
+                            elapsed_us,
+                            prefix_bytes,
+                            read_failed,
+                            os_error,
+                            header_delimiter,
+                        };
+                        let text = observation.to_string();
+                        assert!(text.is_ascii() && !text.is_empty() && text.len() <= 192);
+                        assert!(!text.contains('\r') && !text.contains('\n'));
+                    }
+                }
+            }
+        }
+    }
+}
+
+#[test]
+fn explorer_incomplete_headers_report_receive_progress_without_response_content() {
+    let body = b"owned-response-body-canary";
+    let mut complete = format!(
+        "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nX-Owned: owned-response-header-canary\r\n\r\n",
+        body.len()
+    )
+    .into_bytes();
+    complete.extend_from_slice(body);
+    for (response, complete) in [
+        (vec![], false),
+        (b"HTTP/1.1 503 Serv".to_vec(), false),
+        (b"HTTP/1.1 503 Service Unavailable\r\nX-Owned: owned-response-header-canary\r\nowned-response-body-canary".to_vec(), false),
+        (complete, true),
+    ] {
+        let prefix_bytes = response.len();
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        listener.set_nonblocking(true).unwrap();
+        let address = listener.local_addr().unwrap();
+        let peer = thread::spawn(move || -> io::Result<()> {
+            let end = Instant::now() + Duration::from_secs(5);
+            let mut stream = loop {
+                match listener.accept() {
+                    Ok((stream, _)) => break stream,
+                    Err(error) if error.kind() == io::ErrorKind::WouldBlock => {
+                        if Instant::now() >= end {
+                            return Err(io::ErrorKind::TimedOut.into());
+                        }
+                        thread::sleep(Duration::from_millis(5));
+                    }
+                    Err(error) => return Err(error),
+                }
+            };
+            stream.set_read_timeout(Some(Duration::from_secs(5)))?;
+            stream.set_write_timeout(Some(Duration::from_secs(5)))?;
+            stream.read_exact(&mut [0; 1])?;
+            stream.write_all(&response)?;
+            stream.shutdown(Shutdown::Write)
+        });
+        let mut stream = TcpStream::connect(address).unwrap();
+        stream.set_read_timeout(Some(Duration::from_secs(5))).unwrap();
+        stream.set_write_timeout(Some(Duration::from_secs(2))).unwrap();
+        stream.write_all(b"!").unwrap();
+        let result = std::panic::catch_unwind(|| read_response(stream));
+        assert!(peer.join().unwrap().is_ok());
+        if complete {
+            let response = match result {
+                Ok(response) => response,
+                Err(_) => panic!("Complete owned response must retain parser behavior"),
+            };
+            assert_eq!(response.status, 200);
+            assert_eq!(response.body.as_slice(), body.as_slice());
+            assert!(response.headers.contains("X-Owned: owned-response-header-canary"));
+        } else {
+            let payload = match result {
+                Err(payload) => payload,
+                Ok(_) => panic!("Incomplete headers must remain failures"),
+            };
+            let message = payload
+                .downcast_ref::<String>()
+                .map(String::as_str)
+                .or_else(|| payload.downcast_ref::<&str>().copied())
+                .unwrap();
+            assert!(message.contains("Explorer HTTP response missing header delimiter"));
+            assert!(message.contains(&format!("prefix_bytes={prefix_bytes} ")));
+            assert!(message.contains("read_failed=false os_error_present=false os_error=0 header_delimiter=false"));
+            assert!(!message.contains("owned-response-header-canary"));
+            assert!(!message.contains("owned-response-body-canary"));
+        }
     }
 }
 struct Server {
@@ -76,10 +219,17 @@ impl Server {
         .unwrap();
         let root = dir.path().to_owned();
         let (sender, receiver) = mpsc::channel();
+        let failure_sender = sender.clone();
         let join = thread::spawn(move || {
-            let mut engine = Engine::open(root)?;
+            let mut engine = match Engine::open(root) {
+                Ok(engine) => engine,
+                Err(error) => {
+                    let _ = failure_sender.send(Err(format!("phase=open-engine; {error:#}")));
+                    return Err(error);
+                }
+            };
             engine.allow_writes = true;
-            serve(
+            let result = serve(
                 &mut engine,
                 Config {
                     port: 0,
@@ -96,12 +246,23 @@ impl Server {
                     bytes: vec![],
                     sender,
                 },
-            )?;
+            );
+            if let Err(error) = result {
+                // Preserve engine teardown before the readiness receiver fails.
+                drop(engine);
+                let _ = failure_sender.send(Err(format!("phase=serve; {error:#}")));
+                return Err(error);
+            }
             Ok(engine.allow_writes)
         });
-        let handshake = receiver
-            .recv_timeout(Duration::from_secs(5))
-            .expect("Owned Explorer did not announce readiness");
+        let handshake = match receiver.recv_timeout(Duration::from_secs(5)) {
+            Ok(Ok(handshake)) => handshake,
+            Ok(Err(error)) => panic!("Owned Explorer failed before readiness: {error}"),
+            Err(error) => panic!(
+                "Owned Explorer did not announce readiness: {error}; thread_finished={}",
+                join.is_finished()
+            ),
+        };
         let url = handshake["url"].as_str().unwrap();
         let (base, token) = url
             .strip_prefix("http://")
