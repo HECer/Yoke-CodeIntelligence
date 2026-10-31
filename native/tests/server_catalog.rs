@@ -54,3 +54,70 @@ fn registration_never_derives_execution_authority_from_a_backend_name() {
     profile.args = vec!["x".repeat(200_000)];
     assert!(profile.configured().is_err());
 }
+
+#[test]
+fn current_public_backends_preserve_explicit_host_configuration_and_file_matching() {
+    for (id, languages, suffixes) in [
+        ("vbnet", &["vbnet", "csharp"][..], &["vb", "cs"][..]),
+        (
+            "typescript_tsgo",
+            &["typescript", "javascript", "tsx", "jsx"][..],
+            &[
+                "ts", "tsx", "js", "jsx", "mts", "cts", "mjs", "cjs", "mtsx", "ctsx", "mjsx",
+                "cjsx",
+            ][..],
+        ),
+        ("graphql", &["graphql"][..], &["graphql", "gql"][..]),
+    ] {
+        let entry = server_catalog::get(id).expect("Current public backend missing");
+        assert_eq!(entry.languages, languages);
+        assert_eq!(entry.extensions, suffixes);
+        for suffix in suffixes {
+            let name = format!("owned-\u{1f4a1}/source.{}", suffix.to_ascii_uppercase());
+            assert!(entry.supports_path(std::path::Path::new(&name)));
+        }
+        assert!(!entry.supports_path(std::path::Path::new("source.rs")));
+        let mut host = registration();
+        host.backend_id = id.into();
+        host.open_languages.clear();
+        host.language_ids.insert("vbnet".into(), "vb".into());
+        let configured = host.configured().unwrap();
+        assert_eq!(configured.server.language, languages[0]);
+        assert_eq!(configured.configuration.open_languages, languages);
+        assert_eq!(configured.configuration.language_ids["vbnet"], "vb");
+        assert_eq!(configured.server.args, host.args);
+        assert!(!configured.configuration.allow_source_execution);
+        assert_eq!(configured.configuration.passive_profile, None);
+    }
+    assert_eq!(server_catalog::entries().len(), 80);
+    assert_eq!(yoke::capture::language("schema.graphql"), "text");
+    assert_eq!(yoke::capture::language("fragment.gql"), "text");
+    let mut capture = yoke::capture::CaptureOptions::default();
+    capture
+        .language_overrides
+        .insert("gql".into(), "graphql".into());
+    assert_eq!(
+        capture.validated().unwrap().language_for("fragment.gql"),
+        "graphql"
+    );
+}
+
+#[test]
+fn new_backend_names_do_not_bypass_trust_command_path_or_capacity_gates() {
+    for id in ["vbnet", "typescript_tsgo", "graphql"] {
+        let mut host = registration();
+        host.backend_id = id.into();
+        host.trust = false;
+        assert!(host.configured().is_err());
+        host.trust = true;
+        host.command = PathBuf::from("workspace-controlled.exe");
+        assert!(host.configured().is_err());
+        host.command = std::env::current_exe().unwrap();
+        host.workspace_folders = vec!["../outside".into()];
+        assert!(host.configured().is_err());
+        host.workspace_folders.clear();
+        host.args = vec!["x".repeat(200_000)];
+        assert!(host.configured().is_err());
+        assert!(server_catalog::get(&id.to_ascii_uppercase()).is_none());
+    }
+}

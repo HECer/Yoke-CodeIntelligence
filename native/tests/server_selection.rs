@@ -16,6 +16,7 @@ use yoke::{
     project_session::{HostProfile, HostProject, Session},
 };
 const RUST: &str = "// owned \u{1f4a1} e\u{301}\r\nfn visible() {}\r\n";
+const CURRENT_BACKENDS: [&str; 3] = ["vbnet", "typescript_tsgo", "graphql"];
 fn d() -> Deadline {
     Deadline::new(30000)
 }
@@ -100,6 +101,92 @@ fn rows(log: &Path) -> Vec<Value> {
         .lines()
         .map(|l| serde_json::from_str(l).unwrap())
         .collect()
+}
+
+#[test]
+fn current_backend_names_need_host_registration_before_any_process_starts() {
+    let r = tempfile::tempdir().unwrap();
+    let root = root(r.path(), "source");
+    let log = r.path().join("never-started.log");
+    for backend in CURRENT_BACKENDS {
+        let result = Session::open(
+            engine(&root, &log, false),
+            profile(json!({"languageServers":{"global":[backend]}})),
+            Some("unregistered-current"),
+            &d(),
+        );
+        assert!(
+            result
+                .err()
+                .unwrap()
+                .to_string()
+                .contains("language_server_not_host_registered")
+        );
+        assert!(!log.exists());
+    }
+    assert_eq!(fs::read(root.join("main.rs")).unwrap(), RUST.as_bytes());
+}
+
+#[test]
+fn current_backends_route_owned_unicode_source_with_explicit_graphql_capture_and_language_ids() {
+    let r = tempfile::tempdir().unwrap();
+    let root = root(r.path(), "source");
+    let log = r.path().join("current-backends.log");
+    let vb = "' owned \u{1f4a1} e\u{301}\r\nModule Owned\r\nEnd Module\r\n";
+    let graphql = "# owned \u{1f4a1} e\u{301}\r\ntype Query { visible: String }\r\n";
+    fs::write(root.join("Main.vb"), vb).unwrap();
+    fs::write(root.join("schema.graphql"), graphql).unwrap();
+    fs::write(root.join("fragment.gql"), graphql).unwrap();
+    let mut e = engine(&root, &log, false);
+    for suffix in ["graphql", "gql"] {
+        e.capture_options
+            .language_overrides
+            .insert(suffix.into(), "graphql".into());
+    }
+    for backend in CURRENT_BACKENDS {
+        let mut server = configured(backend, &log, backend, 0);
+        server
+            .configuration
+            .language_ids
+            .insert("vbnet".into(), "vb".into());
+        e.register_backend(backend, server).unwrap();
+    }
+    let mut session = Session::open(
+        e,
+        profile(json!({"languageServers":{"global":CURRENT_BACKENDS}})),
+        Some("current-backends"),
+        &d(),
+    )
+    .unwrap();
+    for (path, backend, language) in [
+        ("Main.vb", "vbnet", "vb"),
+        ("entry.ts", "typescript_tsgo", "typescript"),
+        ("schema.graphql", "graphql", "graphql"),
+        ("fragment.gql", "graphql", "graphql"),
+    ] {
+        let result = hover(&mut session, path);
+        assert_eq!(actor(&result), backend);
+        assert_eq!(result["selectedBackendId"], backend);
+        assert_eq!(result["backendSelection"]["fallback"], false);
+        assert_eq!(result["backendSelection"]["runtimeCertification"], false);
+        assert_eq!(result["sourceExecutionAuthorized"], false);
+        let observed: Value =
+            serde_json::from_str(result["response"]["contents"]["value"].as_str().unwrap())
+                .unwrap();
+        assert_eq!(observed["path"], path);
+        assert_eq!(observed["languageId"], language);
+    }
+    assert!(rows(&log).iter().all(|row| row["actor"] != "legacy"));
+    assert_eq!(fs::read(root.join("Main.vb")).unwrap(), vb.as_bytes());
+    assert_eq!(
+        fs::read(root.join("schema.graphql")).unwrap(),
+        graphql.as_bytes()
+    );
+    assert_eq!(
+        fs::read(root.join("fragment.gql")).unwrap(),
+        graphql.as_bytes()
+    );
+    assert_eq!(fs::read(root.join("main.rs")).unwrap(), RUST.as_bytes());
 }
 #[test]
 fn dormant_registrations_and_absent_null_empty_policy_keep_raw_legacy_bindings_and_source_ids() {
