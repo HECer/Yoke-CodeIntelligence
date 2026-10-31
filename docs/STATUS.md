@@ -1,5 +1,132 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Distinct-node shortest-path prefix candidate (2026-10-31)
+
+The selected `weakest_source_categories_v1` candidate now ranks the first 256
+distinct complete shortest node paths and discovers a 257th only to report
+the cap. BFS first-discovery predecessor lists and backward enumeration make
+the prefix deterministic, including multilevel reconvergence. Parallel claims
+do not increase node-path counts; every original hop observation/evidence
+remains retained, and the weakest original copy affects that hop. The chosen
+route and depth-bounded stack avoid materializing an exponential path set. Absolute
+deadlines, max hops, source admission and whole-output refusal remain. Omitted
+and explicit legacy policy keep their original route and response shape.
+
+At test-first `2037686c`, both new public 256/257 fixtures reach the intended
+missing-count assertion on Linux and Windows after verifying all admitted
+branches/calls: eleven old cases pass, two fail at line 792 (`None` vs256), no
+ignores/filters. Receipt
+`91ccc39c1554b13bf0cc6e61707a08fe2a4b12f242a002eac5374cbf7676468c`
+checks all 1,176 source hashes against Git, independently derives all 378
+targets for each platform, and checks exact partitions and every text log
+for 97 whole target executions. The same source's
+whole Linux library has 565 passes/three intended route-identity failures/six
+original ignores/no filters; all seven old policy units pass. The new pure
+fixtures choose an excluded 257th route rather than the required prefix route.
+Receipt `2f3c7ff1105778992b6589c90ead7540987c8261b97637c26fc7d58f033b09f4`
+verifies all 48 groups and binds the public RED. Later new public provenance,
+cap and replay assertions are not exercised by those failing runs.
+
+The producer is now changed, with two additional authored regressions for
+self/unreachable/max-hop/cyclic/reverse routes and expired/pre-selection
+cancelled requests. Original ten policy units and thirteen public bodies are retained.
+Fresh native GREEN for this candidate remains pending. Numeric source-claim
+admission/replay, contradictory ADMITTED claims, full current CLI/MCP and the
+original wider R1-R9/backend/upstream/Windows/main/release gates stay open.
+
+Earlier `9b429f4d` hop-only runtime proofs remain source-specific: all seven units and
+eleven public cases pass on Linux/Windows. Its explicit Rust VS Code host and
+three actual TSGo operations are separately checked; the bundled host fails
+`output_inventory_missing_entry`, with cleanup but no natural-exit/final result
+proof. Exact old-source bundled-host and unchanged-core deadline retry requests
+were accepted; fresh outcomes remain unverified. No guard was relaxed.
+See the [full contract and qualification](../native/docs/graphify-path-policy.md).
+
+## Shortest-path source-category selector candidate (2026-10-31)
+
+At `b929b7b3`, the original native counterexample fails at its intended route
+assertion on Windows: the first stronger two-hop route is returned instead of
+the expected weaker two-hop route. The complete library has 857 passes, that
+one failure, seven original ignores and no filters. Independent text-artifact
+checks bind all 1,175 selected source hashes, the exact target partition and
+raw log hashes. The candidate adds explicit `weakest_source_categories_v1`
+selection through a bounded four-state shortest-route DAG while retaining the
+omitted/default first-observation behavior. Categories are declared source
+projections, never probability or execution attestation. At corrected source
+`cf1d0671`, Ubuntu shard 4 passes all six selector units within the whole
+library target (564 passed, six original ignored, no filters), and the complete
+public adapter target passes eight cases without ignores or filters. Independent
+receipt `a514b525c3499182df4cd53f198ec9c3738389f32526250001b9ef2316feb262`
+checks all 1,176 selected raw source hashes directly against Git, the independently
+derived 378-target inventory, exact partitions and all text logs for that shard
+and two separately failed macOS shards. This is scoped selector/public-adapter
+evidence, not full Linux, Windows or macOS acceptance. Parallel-hop presentation,
+numeric claim semantics, route count/caps and full current upstream equivalence
+remain open.
+See the [selector contract and causal RED evidence](../native/docs/graphify-path-policy.md).
+
+The first implementation at `23a9d8a7` fails native compilation with `E0432`:
+the policy file is a private child of `graph_extensions`, whose existing public
+exports are `AnalysisCategory` and `SourceCategoryPolicy`. The candidate now
+imports those exports. The corrected source also passes fresh Windows paired
+compilation and exactly one credential-backed TLS case (49 filtered); that
+separate proof does not execute the selector cases. The failed original build
+provides no runtime acceptance.
+
+At `3ddf641c`, two genuine published-View cases reach the intended missing
+`pathHops` assertions on Ubuntu: eight original cases pass, the two fail, and
+none are ignored or filtered. Independent receipt
+`7d75e966ac1ae0f00b02e43aacc51342c3d114a5ebae2d144de20a6f0d0378fa`
+verifies all 95 text members, exact target partition and all 1,176 raw Git source
+hashes. The later new provenance/replay assertions are not exercised by that RED.
+The candidate now derives complete per-hop original observations and exact
+evidence for the explicit selected policy, retaining opposite stored directions
+only during explicitly undirected traversal. It serializes borrowed originals
+under the existing deadline and byte cap before constructing owned JSON.
+A further public 1,200-call fixture requires whole-request capacity refusal
+without publication or source-byte loss. Public cases compare complete original
+evidence arrays in View order; a separate explicitly synthetic rendering unit
+covers multiple references and shared-site deduplication without an admission
+claim. Fresh native GREEN for this candidate
+remains pending; numeric claim admission, contradictory-source fixtures and
+distinct-node route counting/caps remain open.
+macOS PDF resource-limit and template EINVAL failures remain recorded; no limits
+were relaxed and no tests were skipped.
+
+The earlier `cf1d0671` source independently passes all eight Windows default
+shards: 378 exact whole-target groups, 3,954 observed passes, zero failures,
+53 original ignores and no filters. All 1,176 source hashes match Git forms;
+full-shard receipt SHA256 is
+`25f307002f5d91977ce10997f07939b4373805025f614761de0f2ed3cde53af3`.
+Its separate explicit/bundled real Rust VS Code hosts, same fresh CLI, actual
+TSGo hover/definition/references and four kernel Job scenarios are independently
+checked in receipts
+`a68f33483317526870eb420531f947dddd4ca04ac30c12a6ad0d613beee8bdb4`
+and `1df6c0ac69d6924f36e87805944c4bec7f3f908944edaa2b9b960833e8035bd5`.
+Those earlier-source results do not qualify the new candidate or constitute
+full upstream, Windows/main or release acceptance.
+
+## Current-source Windows aggregate checkpoint (2026-10-31)
+
+At `002024f4`, all eight Windows default shards independently verify 378 exact
+whole-target groups, 3,947 observed passes, zero failures, 53 original ignores
+and no filtered tests. All 1,174 selected source hashes match their Git forms.
+The separate [Windows aggregate job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41194162604/job/124530752972)
+also succeeds through two selected real rust-analyzer cases, fresh release build,
+unchanged-input binding, upload, original owning-history fixtures and five browser
+profiles. Independent audits verify the original 162 CLI outcomes and 126 exact
+archived-record readbacks, all 30 original PNG/DOM pairs and the same fresh CLI
+identity. The parent agent actually viewed every original screenshot. The scoped
+aggregate receipt SHA256 is `2a5e13f7e831e9db5b24dda0d7164fe60600a49035c543aee3260e8086dcf769`.
+Compiled release artifact `13043070595` was checked as upload metadata only;
+its ZIP was not downloaded or read locally. Separate current VSIX/TSGo and Job
+lifecycle evidence is recorded in [PR30](https://github.com/HECer/Yoke-CodeIntelligence/pull/30).
+Original CI human/visual/release flags are unchanged; the agent's visual review
+is a separate fixture-scoped checkpoint. The overall Rust workflow still fails
+on macOS, whose runtime certification remains deferred. Broader upstream/backend,
+full Windows/main/release acceptance remain open; these source-specific results
+do not qualify subsequent candidates.
+
 ## Fresh browser/VSIX proof and strict LSP lifecycle candidate (2026-10-31)
 
 At `45323315`, five Windows browser profiles pass independent artifact checks;
