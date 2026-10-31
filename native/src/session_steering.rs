@@ -80,6 +80,18 @@ pub enum AgentInterface {
 #[derive(Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct Definition {
+    #[serde(default, skip_serializing_if = "String::is_empty")]
+    pub description: String,
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub tool_description_overrides: BTreeMap<String, String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub single_project: Option<bool>,
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        deserialize_with = "crate::context_options::output_option"
+    )]
+    pub structured_tool_output: Option<crate::context_options::StructuredOutput>,
     pub instructions: String,
     pub excluded_tools: Vec<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
@@ -297,7 +309,16 @@ pub(crate) fn agent_interface(host: &HostProfile) -> Option<(AgentInterface, &'s
 }
 /// Host selection only; source configuration cannot select or trust a project.
 pub(crate) fn single_project_startup(host: &HostProfile) -> Option<&str> {
-    matches!(host.context.as_str(), "ide" | "claude-code" | "grok")
+    let selected = host
+        .steering
+        .as_ref()
+        .and_then(|s| s.contexts.get(&host.context))
+        .and_then(|d| d.single_project)
+        .unwrap_or(matches!(
+            host.context.as_str(),
+            "ide" | "claude-code" | "grok"
+        ));
+    selected
         .then_some(host.startup_project.as_deref())
         .flatten()
 }
@@ -397,6 +418,7 @@ pub(crate) fn validate(host: &HostProfile) -> Result<()> {
                 !CONTEXTS.contains(&name.as_str()),
                 "Built-in context cannot be redefined"
             );
+            crate::context_options::validate(d, true)?;
             definition(&d.instructions, &d.excluded_tools, &known)?;
             fixed_selection(&d.fixed_tools, &d.excluded_tools, &known)?;
             ensure!(
@@ -417,6 +439,7 @@ pub(crate) fn validate(host: &HostProfile) -> Result<()> {
                 !MODES.contains(&name.as_str()),
                 "Built-in mode cannot be redefined"
             );
+            crate::context_options::validate(d, false)?;
             definition(&d.instructions, &d.excluded_tools, &known)?;
             fixed_selection(&d.fixed_tools, &d.excluded_tools, &known)?;
             ensure!(
