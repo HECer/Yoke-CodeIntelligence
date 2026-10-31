@@ -49,6 +49,7 @@ mod project_activation_cli;
 mod repository_discovery_cli;
 mod session_config_cli;
 mod source_acquisition_cli;
+mod tool_usage_cli;
 mod view_comparison_cli;
 struct PreparedModelProvider {
     provider: yoke::providers::ProviderSpec,
@@ -62,6 +63,8 @@ struct PreparedModelProvider {
     about = "Native local code intelligence; immutable source, evidence graphs and guarded edits"
 )]
 struct Cli {
+    #[command(flatten)]
+    tool_usage: tool_usage_cli::Arguments,
     #[command(flatten)]
     activation: project_activation_cli::Arguments,
     #[arg(long, global = true, default_value = ".")]
@@ -2310,6 +2313,7 @@ fn session_host_profile(
     host_profile: Option<&std::path::Path>,
     allow_templates: bool,
     activation: &project_activation_cli::Arguments,
+    tool_usage: &tool_usage_cli::Arguments,
     deadline: &Deadline,
 ) -> Result<yoke::project_session::HostProfile> {
     let mut host = host_profile
@@ -2319,6 +2323,7 @@ fn session_host_profile(
         .transpose()?
         .unwrap_or_default();
     session_config_cli::bind_prompt_runtime(&mut host, allow_templates, deadline)?;
+    tool_usage.bind(&mut host, deadline)?;
     activation.bind(&mut host, root, deadline)?;
     Ok(host)
 }
@@ -2329,6 +2334,7 @@ fn open_session(
     host_profile: Option<PathBuf>,
     allow_session_templates: bool,
     activation: &project_activation_cli::Arguments,
+    tool_usage: &tool_usage_cli::Arguments,
     inspection_only: bool,
     deadline: &Deadline,
 ) -> Result<yoke::project_session::Session> {
@@ -2337,6 +2343,7 @@ fn open_session(
         host_profile.as_deref(),
         allow_session_templates,
         activation,
+        tool_usage,
         deadline,
     )?;
     if inspection_only {
@@ -2352,6 +2359,7 @@ fn run_session(
     requests: PathBuf,
     allow_session_templates: bool,
     activation: &project_activation_cli::Arguments,
+    tool_usage: &tool_usage_cli::Arguments,
     deadline: &Deadline,
 ) -> Result<bool> {
     #[derive(serde::Deserialize)]
@@ -2371,6 +2379,7 @@ fn run_session(
         host_profile,
         allow_session_templates,
         activation,
+        tool_usage,
         inspection_only,
         deadline,
     )?;
@@ -2430,6 +2439,7 @@ fn prepare_git_session(
     include_ignored_dirs: &[String],
     allow_session_templates: bool,
     activation: &project_activation_cli::Arguments,
+    tool_usage: &tool_usage_cli::Arguments,
     deadline: &Deadline,
 ) -> Result<Option<PreparedGitSession>> {
     let Some(selection) = &server.git_projects else {
@@ -2473,6 +2483,7 @@ fn prepare_git_session(
         server.host_profile.as_deref(),
         allow_session_templates,
         activation,
+        tool_usage,
         deadline,
     )?;
     let selections: std::collections::BTreeMap<String, git_repository_http_cli::Selection> =
@@ -2871,6 +2882,7 @@ fn invoke_model_operation(
 struct SessionHostOptions<'a> {
     allow_templates: bool,
     activation: &'a project_activation_cli::Arguments,
+    tool_usage: &'a tool_usage_cli::Arguments,
 }
 fn run_extension(
     mut engine: Engine,
@@ -2884,6 +2896,7 @@ fn run_extension(
     let SessionHostOptions {
         allow_templates: allow_session_templates,
         activation,
+        tool_usage,
     } = host_options;
     if let ExtensionOperation::Collections(args) = operation {
         let CollectionOperation::Register {
@@ -3004,6 +3017,7 @@ fn run_extension(
             requests,
             allow_session_templates,
             activation,
+            tool_usage,
             deadline,
         );
     }
@@ -3053,6 +3067,7 @@ fn run_extension(
                 host_profile,
                 allow_session_templates,
                 activation,
+                tool_usage,
                 false,
                 deadline,
             )?
@@ -3146,6 +3161,7 @@ fn run_extension(
             host_profile,
             allow_session_templates,
             activation,
+            tool_usage,
             false,
             deadline,
         )?;
@@ -3323,6 +3339,7 @@ fn run_http(
     allow_writes: bool,
     allow_session_templates: bool,
     activation: &project_activation_cli::Arguments,
+    tool_usage: &tool_usage_cli::Arguments,
 ) -> Result<bool> {
     ensure!(
         args.trust_service,
@@ -3445,6 +3462,10 @@ fn run_http(
         }
     }
     for principal in &mut host.principals {
+        tool_usage.bind(
+            &mut principal.host_profile,
+            &Deadline::new(host.request_timeout_ms),
+        )?;
         session_config_cli::bind_prompt_runtime(
             &mut principal.host_profile,
             allow_session_templates,
@@ -3613,6 +3634,12 @@ fn validate_existing_batch_schema(db: &rusqlite::Connection, deadline: &Deadline
 fn run(cli: Cli) -> Result<bool> {
     let mut operation: Operation = cli.command.into();
     cli.activation.validate()?;
+    cli.tool_usage.validate()?;
+    ensure!(
+        !cli.tool_usage.selected()
+            || matches!(&operation,Operation::Extensions(ext) if matches!(ext.as_ref(),ExtensionOperation::Session{..}|ExtensionOperation::ServeSession(_)|ExtensionOperation::ServeHttp(_)|ExtensionOperation::AgentRepl(_))),
+        "tool_usage_host_route_required"
+    );
     ensure!(
         !cli.activation.selected()
             || matches!(&operation,Operation::Extensions(ext) if matches!(ext.as_ref(),ExtensionOperation::Session{..}|ExtensionOperation::ServeSession(_)|ExtensionOperation::ServeHttp(_)|ExtensionOperation::AgentRepl(_))),
@@ -4474,6 +4501,7 @@ fn run(cli: Cli) -> Result<bool> {
             cli.allow_writes,
             cli.allow_session_templates,
             &cli.activation,
+            &cli.tool_usage,
         );
     }
     if let Operation::Credentials { ref command } = operation {
@@ -4789,6 +4817,7 @@ fn run(cli: Cli) -> Result<bool> {
             &cli.include_ignored_dir,
             cli.allow_session_templates,
             &cli.activation,
+            &cli.tool_usage,
             &deadline,
         )?
     } else {
@@ -4844,6 +4873,7 @@ fn run(cli: Cli) -> Result<bool> {
             SessionHostOptions {
                 allow_templates: cli.allow_session_templates,
                 activation: &cli.activation,
+                tool_usage: &cli.tool_usage,
             },
             *operation,
             &arguments,

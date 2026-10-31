@@ -3,7 +3,7 @@ use crate::{capture::Deadline, project_session::Session};
 use anyhow::{Context, Result, bail, ensure};
 use serde_json::{Value, json};
 mod current_sessions;
-fn contracts() -> Value {
+pub(crate) fn contracts() -> Value {
     serde_json::from_str(include_str!("compatibility_contracts.json"))
         .expect("Built-in public contract JSON")
 }
@@ -184,7 +184,10 @@ pub fn invoke_serena(
 ) -> Result<Value> {
     let policy = session.tool_budgets();
     crate::tool_budgets::with_deadline(policy.as_ref(), deadline, |deadline| {
-        invoke_serena_inner(session, name, args, deadline)
+        session.preflight_tool_usage(name, args, deadline)?;
+        let mut result = invoke_serena_inner(session, name, args, deadline)?;
+        session.record_tool_usage(name, args, &mut result, deadline)?;
+        Ok(result)
     })
 }
 fn invoke_serena_inner(
@@ -306,7 +309,10 @@ pub fn invoke_serena_with_repl(
 ) -> Result<Value> {
     let policy = session.tool_budgets();
     crate::tool_budgets::with_deadline(policy.as_ref(), deadline, |deadline| {
-        invoke_serena_with_repl_inner(session, runtime, name, args, deadline)
+        session.preflight_tool_usage(name, args, deadline)?;
+        let mut result = invoke_serena_with_repl_inner(session, runtime, name, args, deadline)?;
+        session.record_tool_usage(name, args, &mut result, deadline)?;
+        Ok(result)
     })
 }
 fn invoke_serena_with_repl_inner(
@@ -367,5 +373,5 @@ fn invoke_serena_with_repl_inner(
         );
         return Ok(response["result"].clone());
     }
-    invoke_serena(session, name, &args, deadline)
+    invoke_serena_inner(session, name, &args, deadline)
 }

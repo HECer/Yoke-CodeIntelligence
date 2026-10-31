@@ -1,5 +1,21 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Selected tool-usage estimator candidate (2026-10-31)
+
+Explicit global token_count_estimator now has independent native CHAR_COUNT,
+compiled o200k_base TIKTOKEN_GPT4O and host-authorized count-only Anthropic paths.
+Bounded count-only aggregates cover successful public Serena operations once;
+no source text, history root or billing assertion is retained. Remote disclosure
+requires a separate revocable host grant and OS credential, with current-state
+checks before/between requests, paired atomic counters and no fallback/retry.
+Native raw-envelope disclosures are marked nonlocal; original byte estimates
+remain explicitly scoped. Passive statistics operations avoid activation hooks;
+dashboard JSON refreshes immediately. Typecheck, 266 npm tests/three skips and
+twelve inert contract tests passed. Eighteen unit and twelve integration native
+fixtures are authored but uncompiled/unrun locally. Exact native/provider,
+Windows/resource, packaging/browser/VSIX/main/release gates remain open.
+[Methods, authority and evidence limits](../native/docs/tool-usage-estimators.md).
+
 ## Creation-time language-server selection candidate (2026-10-31)
 
 An explicit global ls_priorities/host policy now chooses one of the 80 current

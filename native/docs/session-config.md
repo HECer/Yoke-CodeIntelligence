@@ -628,3 +628,13 @@ public declaration order. Explicit host/dashboard selections supersede detection
 Registrations and execution grants remain host-owned; no match has no legacy
 fallback. Choices persist per Session project instead of changing after source
 edits. See [selection data, lifecycle, bounds and pending native qualification](server-autoselection.md).
+
+## Explicit tool-usage counting
+
+Global token_count_estimator selects CHAR_COUNT, TIKTOKEN_GPT4O or
+ANTHROPIC_CLAUDE_SONNET_4. Null clears the selection; omission preserves the host
+policy. These separate statistics use native argument/result JSON and never
+replace the existing byte estimate or provider billing. Remote counting still
+requires independent host network/text-disclosure flags and an OS credential;
+the YAML declaration grants neither. See [methods, authority, lifecycle and
+unrun native gates](tool-usage-estimators.md).

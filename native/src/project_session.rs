@@ -85,6 +85,10 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
     #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub token_count_estimator: Option<crate::tool_usage::Estimator>,
+    #[serde(skip)]
+    pub token_count_runtime: Option<crate::tool_usage::http::Host>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub language_server_auto_selection: Option<crate::server_autoselection::Config>,
     #[serde(default, skip_serializing_if = "crate::tool_budgets::unselected")]
     pub tool_budgets: Option<crate::tool_budgets::Config>,
@@ -147,6 +151,8 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            token_count_estimator: None,
+            token_count_runtime: None,
             language_server_auto_selection: None,
             tool_budgets: None,
             activation_commands: None,
@@ -247,6 +253,7 @@ pub(crate) fn validate_retention_record(
     Ok(())
 }
 pub struct Session {
+    tool_usage: Option<crate::tool_usage::Stats>,
     activation_diagnostic: Option<crate::project_activation::Diagnostic>,
     inspection_only: bool,
     inspection_source_read: bool,
@@ -301,6 +308,8 @@ mod dashboard_project_recovery;
 mod dashboard_shutdown;
 #[path = "session_prompt_session.rs"]
 mod prompt_memory;
+#[path = "tool_usage_session.rs"]
+mod usage;
 fn project_root_key(path: &std::path::Path) -> Option<String> {
     Some(project_root_spelling(path.to_str()?, cfg!(windows)))
 }
@@ -374,6 +383,8 @@ impl Session {
         matches!(
             operation,
             "configuration"
+                | "toolUsage"
+                | "clearToolUsage"
                 | "listProjects"
                 | "checkOnboarding"
                 | "activationReceipt"
@@ -1032,6 +1043,18 @@ impl Session {
         inspection_only: bool,
         deadline: &Deadline,
     ) -> Result<Self> {
+        ensure!(
+            host.token_count_runtime.is_none()
+                || host.token_count_estimator
+                    == Some(crate::tool_usage::Estimator::AnthropicClaudeSonnet4),
+            "tool_usage_unselected_network_grant"
+        );
+        let tool_usage = host
+            .token_count_estimator
+            .map(|selected| {
+                crate::tool_usage::Stats::new(selected, host.token_count_runtime.as_ref(), deadline)
+            })
+            .transpose()?;
         if let Some(selection) = &host.language_server_auto_selection {
             selection.validate()?;
         }
@@ -1532,6 +1555,18 @@ impl Session {
             fingerprint
         };
         engine.sync_source_exclusions(deadline)?;
+        let fingerprint = if let Some(estimator) = host.token_count_estimator {
+            identity(&(
+                fingerprint,
+                crate::tool_usage::binding(),
+                estimator,
+                host.token_count_runtime
+                    .as_ref()
+                    .map(|runtime| runtime.fingerprint()),
+            ))
+        } else {
+            fingerprint
+        };
         let fingerprint = if let Some(selection) = &host.language_server_auto_selection {
             identity(&(
                 fingerprint,
@@ -1819,6 +1854,7 @@ impl Session {
                 (Ok(()), None) => (None, activation_witness_before_publication),
             };
         let mut session = Self {
+            tool_usage,
             activation_ready_projects: if activation_diagnostic.is_some() {
                 BTreeSet::from([state.active_project.clone()])
             } else {
@@ -1964,6 +2000,7 @@ impl Session {
             driver.check(&self.engine.store, deadline)?;
         }
         if self.git_repository_projects.is_some()
+            || self.host.token_count_estimator.is_some()
             || self.engine.git_repository_host.is_some()
             || self.host.prompt_templates.is_some()
             || self.host.activation_commands.is_some()
@@ -2040,6 +2077,7 @@ impl Session {
     pub(crate) fn check_repl_state(&self, deadline: &Deadline) -> Result<()> {
         deadline.check()?;
         if self.host.optional_defaults.is_some()
+            || self.host.token_count_estimator.is_some()
             || self.host.language_server_auto_selection.is_some()
             || self.agent_interface().is_some()
             || self.host.steering.as_ref().is_some_and(|s| {
@@ -2628,6 +2666,9 @@ impl Session {
             "symbolWorkspaceFolders":self.host.symbol_workspace_folders.as_ref().and_then(|p| p.select(&self.state.active_project)),
             "additionalWorkspaceFolders":self.host.additional_workspace_folders.as_ref().and_then(|p| p.select(&self.state.active_project)),
             "executionAuthority":"independent_host_grants","sourceWrittenByDashboard":false});
+        if let Some(stats) = &self.tool_usage {
+            value["toolUsageStatistics"] = stats.view();
+        }
         if self.host.language_server_auto_selection.is_some() {
             let active = self.automatic_language_applies(&self.state.active_project);
             value["automaticLanguageSelectionActive"] = json!(active);
@@ -2736,6 +2777,23 @@ impl Session {
             "Session input budget exceeded"
         );
         match operation {
+            "toolUsage" => {
+                fields(args, &[])?;
+                self.tool_usage
+                    .as_ref()
+                    .map(|stats| stats.view())
+                    .context("tool_usage_selection_required")
+            }
+            "clearToolUsage" => {
+                fields(args, &[])?;
+                self.tool_usage
+                    .as_mut()
+                    .context("tool_usage_selection_required")?
+                    .clear(deadline)?;
+                Ok(
+                    json!({"cleared":true,"scope":"current_session_instance_only","sourceChanged":false}),
+                )
+            }
             "openDashboard" => {
                 fields(args, &[])?;
                 self.open_dashboard(deadline)
@@ -2814,6 +2872,10 @@ impl Session {
                     value["automaticSelectionExhaustiveProjectCoverage"] = json!(false);
                     value["automaticLanguageSelectionActive"] =
                         json!(self.automatic_language_applies(&self.state.active_project));
+                }
+                if let Some(stats) = &self.tool_usage {
+                    value["tokenCountEstimator"] = json!(self.host.token_count_estimator);
+                    value["toolUsageStatistics"] = stats.view();
                 }
                 if let Some(budgets) = &self.host.tool_budgets {
                     value["toolBudgets"] = serde_json::to_value(budgets)?;

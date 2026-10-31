@@ -163,3 +163,14 @@ check that epoch too. Legacy generationless journals retain explicit original
 event-reviewed recovery to avoid stranding interrupted writes; this exception
 does not authorize ordinary proposal approval. Serialized epochs grant no rights.
 See [generation evidence](docs/validation/integration-2026-10-24/dashboard-document-generations/README.md).
+
+Explicit remote tool-usage counting additionally requires a nonserializable host
+network/text-disclosure grant; selecting token_count_estimator in configuration
+does not grant it. The shipped CLI requires both --allow-tool-token-disclosure
+and an existing OS model-token credential name. It sends complete admitted tool
+arguments and results to the fixed count-only endpoint, without environment-key
+lookup, generation, redirect or retry. Counts remain ephemeral metadata and never
+grant source retention or provider-billing authority. Stale/revoked admission,
+response limits, original source permissions and answer bounds remain enforced.
+A failure after the underlying operation is explicitly not a rollback. Local
+estimators need no network authority. See [the selected counting contract](native/docs/tool-usage-estimators.md).

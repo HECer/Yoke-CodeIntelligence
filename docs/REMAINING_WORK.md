@@ -1,5 +1,21 @@
 # Remaining implementation and acceptance
 
+## Selected tool-usage estimator candidate (2026-10-31)
+
+The selected global token_count_estimator now has source implementations for all
+three declared counting modes and actual public-tool accounting/read/reset paths.
+Local vocabulary is pinned and compiled; remote counting retains a separately
+granted count-only route. Existing byte estimates, provider billing, trust,
+source/answer/deadline bounds and history authority stay separate. Eighteen native
+unit and twelve integration fixtures, real vendor/counter resource behavior,
+exact hosted compilation/regression and dependency packaging remain unrun locally.
+Native JSON representation explicitly differs from upstream Python repr; literal
+upstream statistics/default and full application/visual equivalence are not
+established. No HTML statistics chart/control or visual acceptance was added.
+Broader current-upstream/backend/Windows/platform/browser/VSIX/main/release gates
+remain open. Historical records below retain their own source/evidence scope.
+[Selected counter contract and remaining qualification](../native/docs/tool-usage-estimators.md).
+
 ## Creation-time language-server selection candidate (2026-10-31)
 
 The selected global ls_priorities setting now has a native source candidate
