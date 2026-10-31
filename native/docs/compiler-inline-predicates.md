@@ -13,7 +13,12 @@ pending; see the [while candidate contract](compiler-inline.md#complete-while-co
 Complete ordinary for-condition calls also have a separately reconstructed
 [for candidate](compiler-inline.md#complete-for-conditions-candidate-native-qualification-pending),
 with authored predicate-flow checks for the body, update and false exit. Native
-qualification remains pending. Do tests, other for-header positions and compound/short-circuit/nested
+qualification remains pending. Complete do-condition calls have a separate
+[do candidate](compiler-inline.md#complete-do-conditions-candidate-native-qualification-pending)
+with a fresh first-iteration flag: the original body runs before its first test,
+and eligible predicate false-exit flow still needs the full compiler proof.
+No first-body narrowing is assumed. Native qualification remains pending for
+this extension. Other for-header positions and compound/short-circuit/nested
 conditions remain outside this finite scope. See the
 [statement-head qualification](../../docs/validation/integration-2026-10-23/inline-statement-heads/README.md).
 
