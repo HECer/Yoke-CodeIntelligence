@@ -1,17 +1,31 @@
 # Snapshot-bound declared source claims
 
-This contract began with four public counterexamples at `90bd77e1`. Their
-actual native Linux run compiles and fails at the absent public importer,
-after checking the real captured source/evidence premises. The current source
-candidate implements host admission, immutable View selection/archive replay
-and the separate declared-claim policy. **Native compilation and GREEN
-qualification of this implementation remain pending.** Its presence does not
-establish full Graphify compatibility.
+This contract began with four public counterexamples at `90bd77e1`. Actual
+Windows and Linux native runs compile and fail at the absent importer after
+checking the real captured source/evidence premises. The producer implements
+host admission, immutable View selection/archive replay and a separately
+selected declared-claim path policy.
 
-The selected-category/prefix producer remains published separately at
-`c41b75b7466fe7a75297f067a045ad1f9c1ce337`. This branch adds tests and this
-document only at the RED checkpoint. The parent producer's scoped Windows
-default, Rust host and browser/aggregate evidence is now qualified separately.
+At source `0e17b87a23f630752e2db8a61995a87ed36371fe`,
+[Windows partition 6](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41239700108/artifacts/13056709360)
+passes all twelve public source-claim cases. The
+[Windows library in partition 3](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41239700108/artifacts/13058180155)
+passes 874 cases with seven original ignores, including actual input-sharing
+refusal, raw JSON/numeric handling, original/corrupt storeless replay and the
+new post-first-route cancellation fixture. The public target has no failures,
+ignores or filtering. The independently audited full Windows receipt is
+`86d741f376519a5bf5945d3586e79da014d58c7350bc6368c6b788ec3c262270`.
+It binds all 1,182 selected source hashes and all eight exact target
+partitions/logs: 379 default groups, 3,982 passes, zero failures and 53 original
+ignores. This does not claim full host, transport, upstream, main or release
+acceptance.
+
+The prior exact `08e6acddb889e0d6567e68ac65d56a93760f2274` source has
+complete default Windows evidence: 379 target groups, 3,978 passes, no failures
+and 53 original ignores. Its separate host/browser proof must remain bound to
+that source. The earlier four-case RED checkpoint and the parent
+`c41b75b7466fe7a75297f067a045ad1f9c1ce337` category/prefix producer remain
+historical evidence; this is no longer a tests-only implementation checkpoint.
 
 ## Host input and authority
 
@@ -178,12 +192,13 @@ and public queries. Equal-rank and 256-prefix fixtures distinguish primary-arc
 insertion from implied reverse arcs, using genuine admitted observations.
 Authored units cover raw numeric retention, nested duplicate/depth/node refusals,
 exact signed integer-float ordering, physical input pins, deterministic concurrent
-mutation refusal and storeless original/corrupt archive replay. These
-additional tests have not yet run natively.
+mutation refusal and storeless original/corrupt archive replay. The Windows result above covers Windows-enabled cases; Unix-only name-pin and
+mutation cases require their own source/platform evidence. No scoped result
+establishes every transport or archive failure path.
 
 ## Initial fixtures and remaining requirements
 
-`native/tests/graphify_source_claims.rs` authors four cases:
+The initial `native/tests/graphify_source_claims.rs` checkpoint authored four cases:
 
 1. Actual host-CLI import and ordinary host-CLI View selection. A contradictory
    retained `also_seen` score changes the two-hop source route. Original
@@ -207,15 +222,16 @@ The real source is 111 bytes with SHA-256
 `1cd640678892e21fb431a19d99b5bff3ce1b5c64b3e0828dd080169acacd4300`.
 Before import, each fixture checks four real call observations and their
 captured UTF-8/CRLF hashes/ranges. The intended first RED is the absent public
-importer. Later numeric/reload/transport/refusal assertions remain unreached
-until admission exists; that first failure cannot qualify them.
+importer. In those RED runs, later numeric/reload/transport/refusal assertions
+remain unreached; that first failure cannot qualify them.
 
-Actual candidate compilation/GREEN, adversarial complete archive replay,
-finite/invalid-score matrices, category/score conflicts, historical markers,
-directed/undirected behavior, resource/cancellation/output refusals and full
-current CLI/MCP/backend/upstream/Windows/main/release gates remain required.
-These four examples do not replace that scope or claim Graphify node-link JSON
-file interoperability.
+The executed fixtures include finite/invalid-score matrices, category/score
+conflicts, historical direction markers, directed/undirected routes and bounded
+output/cancellation refusals. Storeless original/corrupt-input replay is a
+library fixture; it does not replace adversarial complete archive and transport
+qualification. Full current CLI/MCP/backend/upstream/Windows/main/release gates
+remain required. These examples do not claim Graphify node-link JSON file
+interoperability.
 
 ## Additional path guard fixtures
 
@@ -244,9 +260,9 @@ The public source-claim test target also contains these authored controls:
   rather than drop original evidence. Source bytes, latest snapshot and all
   published state stay intact.
 
-These added fixtures remain unrun until source-pinned native CI executes their
-exact commit. They do not establish full transport, archive, cancellation,
-resource or release acceptance.
+All three additional public fixtures pass at the named `0e17b87a` source
+above. Their passing assertions do not establish full transport, archive,
+cancellation, resource or release acceptance.
 
 A separate authored library fixture covers cancellation during enumeration.
 It imports declarations for the real 111-byte Unicode/CRLF source, publishes an
@@ -257,5 +273,6 @@ flag immediately after the first complete route is reached. The ordinary
 deadline checks must refuse before visiting the second route. The probe is
 restored on scope exit; production builds contain neither its state nor its
 call. Every snapshot, graph, registration, CAS blob, latest selection and source
-byte must remain unchanged. This fixture is still unrun and does not qualify
-transport-driven cancellation or arbitrary scheduler/interruption behavior.
+byte must remain unchanged. This fixture passes in the named `0e17b87a`
+Windows library. It does not qualify transport-driven cancellation or arbitrary
+scheduler/interruption behavior.

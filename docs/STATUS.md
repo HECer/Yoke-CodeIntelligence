@@ -1,5 +1,67 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Source-specific path guards and Windows host evidence (2026-10-31)
+
+At `0e17b87a23f630752e2db8a61995a87ed36371fe`, all eight named Windows
+partitions have 379 complete target groups, 3,982 passes, zero failures,
+53 original ignores and no measured or filtered cases. All
+twelve public source-claim cases pass, including the three new direction,
+parallel-evidence and whole-output-refusal guards. The library has 874 passes
+and seven original ignores; its new deterministic post-first-route cancellation
+case passes. The thirteen selected-query and eleven selected-View analysis
+cases also pass. These target totals are included in the aggregate, never added
+twice. Source/text receipt SHA-256:
+`86d741f376519a5bf5945d3586e79da014d58c7350bc6368c6b788ec3c262270`.
+It verifies 1,182 source pins against exact Git or explicit Windows CRLF forms,
+independently derives 379 targets/weights and checks every exact partition/log.
+All eight source and target inventory hashes agree; each target occurs once.
+Original artifacts: [run 41239700108](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41239700108).
+
+The same `0e17b87a` source's new
+[combined VSIX job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41239700091/job/124650949540)
+fails during explicit-host monitoring with `output_inventory_missing_entry`.
+Its receipt has no natural root-exit proof, reports forced cleanup to zero active
+processes, and correctly remains incomplete. The editor had started, but no
+extension-host assertion result was produced. The closed 23-text-member
+artifact is `13057059008`, ZIP SHA-256
+`53270304f631736c7eb44263b132b6498d92d2591ad08403aa737d9239d684f6`.
+The inventory enumerates names before checking file sizes; a listed leaf can
+disappear while the owned editor is running. The follow-up uses an explicit
+live-only removed-leaf mode while retaining charged entry counts and strict
+settled/final scans. No fixed limit, Job admission or success receipt is relaxed.
+Eleven authored pure inventory tests and a fresh actual Windows host run still
+require hosted execution. This is a repair candidate, not successful VSIX proof.
+
+Separately, the prior exact `08e6acddb889e0d6567e68ac65d56a93760f2274`
+[Windows combined host job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41234224148/job/124638968950)
+completes both explicit and bundled Rust VS Code modes, actual TSGo
+7.0.0-dev.20260707.2 hover/definition/references and four real owned Job lifecycle
+scenarios. The source and built-input maps remain separately bound.
+VSIX receipt: `d2618abc8081a1f2e2e552c045e33b09f48529f9fb16d4d64b19a63d6f534f89`.
+TSGo/Job receipt: `faa5572bffd8722aaf3d9c1c06afaad7d5ce1a5d0d78a662310e281b4999e0af`.
+Retained TypeScript bytes are checked in the package; TypeScript extension-host
+mode is not executed and transitive vendor execution is not attested.
+
+That same prior `08e6acdd`
+[Windows native aggregate](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41234224060/job/124644755730)
+completes release build/input binding/upload, two named actual Rust Analyzer
+cases, original history and five installed Edge profiles. Independent text
+audit checks 162 CLI outcomes and 126 exact archived-record readbacks.
+All 30 original desktop/mobile PNG/DOM pairs were hash-checked and actually
+viewed by the parent agent. Pending recovery preserves the draft and disables
+review/save; a fresh post-recovery save succeeds. Tool statistics show stale
+reset refusal and a fresh reset to zero. No visible correction is required in
+those captured states. Aggregate receipt:
+`3ae7453af71a51d997a9d3990cce985bda1a5fbcfcce72022aab7a2f59a28614`.
+Human, motion, visible desktop-shell and release-acceptance claims remain false.
+The compiled release ZIP was not read locally.
+
+These are named source/target proofs. Prior host/browser evidence does not
+qualify `0e17b87a` or later source. Full R4, R1-R9, backend, current-upstream,
+Windows, main and release acceptance remain open. Linux/macOS runtime
+certification stays deferred; original failures and unchanged limits remain.
+The older sections below retain their historical checkpoint status.
+
 ## Source-claim admission: Windows default-profile evidence (2026-10-31)
 
 Exact source [08e6acddb889e0d6567e68ac65d56a93760f2274](https://github.com/HECer/Yoke-CodeIntelligence/commit/08e6acddb889e0d6567e68ac65d56a93760f2274)
