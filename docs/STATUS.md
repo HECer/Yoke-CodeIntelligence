@@ -1,5 +1,24 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Hosted VSIX inventory and Session assertion repair candidate (2026-10-31)
+
+The completed Windows VSIX run on `6fef75be` stopped before native production:
+Git listed 19,140 paths / 1,906,519 filename bytes, including historical evidence,
+before the existing documentation filter. That exceeded the original 1MB name
+response cap. Git pathspecs now exclude those historical evidence classes before
+the same count/byte limits, preserving the exact intended selected file set.
+An inert Git-index fixture reproduces the refusal with 19,000 excluded historical
+paths and checks the selected text/Unicode inputs plus path/capacity refusals;
+the test is part of the existing hosted VSIX admission step. No producer, disk,
+payload, owned-process or package limits are raised. Two native Session fixtures
+now assert the existing status/data transport envelope and
+startupProject/projectActivationLocked metadata instead of nonexistent fields.
+Typecheck, 266 npm tests/three skips, 35 inert admission tests, Python AST and
+format checks passed; the new inventory test reproduced the prior refusal.
+Their new native runs and actual VSIX/extension-host qualification remain open.
+Four Windows compiler-inline cases also remain open after an independent
+identifier-proof refusal; no assertion or proof gate was weakened for them.
+
 ## Hosted HTTP startup and catalog regression repair candidate (2026-10-31)
 
 Completed Linux CI on creation-selection source `6b5a3da4` found two failures:

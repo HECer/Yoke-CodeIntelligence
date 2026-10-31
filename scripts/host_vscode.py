@@ -270,8 +270,11 @@ def identity():
 
 
 def source_inputs():
+    # Keep historical evidence outside the bounded Git-name response, using
+    # exactly the documentation classes admitted by the filter below.
     raw = subprocess.check_output(["git", "ls-files", "-z", "--", "Cargo.toml", "Cargo.lock", "package.json", "package-lock.json",
-        ".gitattributes", "native", "src", "python", "scripts", "workers", "extensions/vscode", "docs", "LICENSE",
+        ".gitattributes", "native", "src", "python", "scripts", "workers", "extensions/vscode",
+        ":(glob)docs/**/*.md", ":(glob)docs/validation/native-*.json", ":(glob)docs/validation/native-*.txt", "LICENSE",
         "SECURITY.md", "CHANGELOG.md", "THIRD_PARTY_NOTICES.md", "UPSTREAMS.json", ".github/workflows"], cwd=ROOT, timeout=30)
     require(len(raw) <= 1_000_000, "Source inventory capacity")
     paths = raw.decode().split("\0")

@@ -77,7 +77,7 @@ jobs:
           path: validation/ci-vscode-lifecycle-proof
       - name: Check inert lifecycle and VSIX admission adversaries
         timeout-minutes: 1
-        run: python -m unittest scripts.tests.test_vscode_owned_job scripts.tests.test_host_vscode -v
+        run: python -m unittest scripts.tests.test_vscode_owned_job scripts.tests.test_host_vscode scripts.tests.test_host_vscode_source_inventory -v
       - name: Install locked TypeScript build dependencies without lifecycle scripts
         timeout-minutes: 10
         run: npm ci --ignore-scripts

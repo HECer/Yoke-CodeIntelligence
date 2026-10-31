@@ -1,5 +1,18 @@
 # Remaining implementation and acceptance
 
+## Hosted VSIX inventory and Session assertion repair candidate (2026-10-31)
+
+A completed Windows VSIX job stopped during source-name admission, before a
+native producer. The selected Git pathspecs now omit historical evidence before
+the original name/byte bounds, while preserving the intended selected source set.
+An inert regression covers 19,000 excluded index entries, exact selected Unicode
+text files and the existing path/count/byte refusals. The fixed admission test
+step includes it. Two native test assertions were aligned with the unchanged
+transport envelope and startup-lock metadata. Fresh native/VSIX/extension-host
+execution remains pending. Four compiler-inline Windows cases independently
+refuse unexplained identifier evidence and still need investigation. Combined
+native, Windows/platform, browser/VSIX, main and release acceptance remain open.
+
 ## Hosted HTTP startup and catalog regression repair candidate (2026-10-31)
 
 The completed Linux creation-selection run exposed a preflight ordering failure
