@@ -1,5 +1,18 @@
 # Remaining implementation and acceptance
 
+## Session batch answer-budget qualification (2026-10-31)
+
+Compile and run the four new `session_batch_output` binary-unit functions and
+the complete four-case `session_batch_budget` CLI target on fresh native CI.
+Verify exact UTF-8/escaping/wrapper/separator/newline admission, activation
+metadata changes, inherited deadline refusal, successful JSON shape, no durable
+artifact fallback and no later operation after an overflowing result. The
+earlier mutation remains real and the failure must not claim atomic rollback.
+Run the existing complete Session, prompt-runtime, statistics and TSGo cases
+with the effective default 32000-byte outer cap; callers with larger legitimate
+batches must select an adequate explicit budget. No native typing/runtime or
+full Windows/release acceptance follows from source formatting or npm checks.
+
 ## Corrected reset project-binding fixture qualification (2026-10-31)
 
 The complete 20-test `session_dashboard_management` target now passes on Ubuntu

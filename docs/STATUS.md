@@ -1,5 +1,26 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Session CLI answer-budget repair candidate (2026-10-31)
+
+The Session batch path previously ignored the global `--max-bytes` selection,
+counted only accumulated result bytes against 8 MB and printed an uncharged
+outer wrapper. The candidate now applies the selected global cap (default
+32000, allowed 1024..4000000) to every byte of the complete reply plus newline.
+Wrapper, separators and changing activation metadata are charged under the
+inherited deadline; final bounded serialization precedes stdout. A refused
+result stops subsequent operations and reports that prior effects may already
+have occurred. No batch result is persisted as a transport artifact, preserving
+ephemeral statistics and private response data. Existing request/cardinality,
+permission, source/state and non-atomic mutation rules remain.
+
+Four deterministic Rust unit tests and four actual CLI fixtures cover exact
+Unicode/escape/newline boundaries, aggregate/metadata charging, expired budgets,
+preserved successful shape, no artifact fallback and retained earlier mutation
+without a later write. An exactly full successful prefix refuses the next
+operation before invocation. Native compilation and execution remain unrun locally;
+this is an unqualified source candidate, without Windows/platform/main/release
+acceptance. Existing PR28's browser/VSIX qualification continues independently.
+
 ## Corrected reset target and fresh TLS source confirmation (2026-10-31)
 
 At `53a280147efaf96f8bc2f443c28aadecce3abefe`, the actual Ubuntu shard 7
