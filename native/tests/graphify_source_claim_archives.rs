@@ -39,8 +39,9 @@ struct Registration {
     archive: Archive,
 }
 struct Fixture {
-    central: TempDir,
+    // Fields drop in declaration order, including on assertion failure.
     registry: Registry,
+    central: TempDir,
     joined: Value,
     caller: String,
     view_id: String,
@@ -134,6 +135,13 @@ fn fixture() -> Fixture {
     }
 }
 impl Fixture {
+    fn finish(self) {
+        let Self {
+            registry, central, ..
+        } = self;
+        drop(registry);
+        central.close().unwrap();
+    }
     fn db(&self) -> rusqlite::Connection {
         rusqlite::Connection::open(self.central.path().join("yoke-collection.sqlite")).unwrap()
     }
@@ -172,6 +180,7 @@ fn public_collection_replays_source_claim_view_after_entire_original_store_loss(
         hash(archived.archive.inputs[0].payload.as_bytes()),
         archived.archive.inputs[0].artifact_id
     );
+    f.finish();
 }
 
 #[test]
@@ -225,6 +234,7 @@ fn public_collection_refuses_resealed_corrupt_or_missing_original_claim_input() 
                 .unwrap(),
             f.joined
         );
+        f.finish();
     }
 }
 
@@ -275,4 +285,5 @@ fn archived_source_claim_view_refuses_corrupt_captured_source_without_repair() {
             .unwrap(),
         f.joined
     );
+    f.finish();
 }
