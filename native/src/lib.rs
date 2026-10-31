@@ -120,6 +120,7 @@ pub mod store;
 pub mod symbol_info_budget;
 pub mod symbol_workspace;
 pub mod test_map;
+pub mod tool_budgets;
 pub mod trail_adapter;
 mod validation;
 pub mod verify;

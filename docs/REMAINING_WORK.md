@@ -1,5 +1,18 @@
 # Remaining implementation and acceptance
 
+## Explicit global tool-budget candidate (2026-10-31)
+
+A selected numeric policy now has actual configuration, Session binding and
+public facade/Serena/persistent-cell deadline and answer-limit integration.
+The original host ceiling and cancellation remain tighter; absent selection
+preserves preceding behavior. Native cooperative deadlines do not establish
+hard interruptible synchronous I/O. The 17 declared answer facades retain their
+per-call overrides and independent byte/frame caps. Four authored unit and seven
+integration tests, exact hosted compilation/regression and actual cleanup/time
+qualification remain unrun locally. Token estimators, backend auto-detection
+priorities and full upstream/backend/platform/VSIX/main/release remain open.
+[Contract and qualification scope](../native/docs/global-tool-budgets.md).
+
 ## Selected context options candidate (2026-10-31)
 
 The pinned ten-field context and seven-field mode declarations now have a
