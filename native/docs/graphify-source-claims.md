@@ -1,13 +1,17 @@
-# Snapshot-bound declared source claims: test-first contract
+# Snapshot-bound declared source claims
 
-This is an authored admission contract and four public counterexamples.
-The importer, View selection and declared-claim policy are **not implemented
-at this checkpoint**. These tests have not yet run natively. Their presence
-does not establish numeric behavior or full Graphify compatibility.
+This contract began with four public counterexamples at `90bd77e1`. Their
+actual native Linux run compiles and fails at the absent public importer,
+after checking the real captured source/evidence premises. The current source
+candidate implements host admission, immutable View selection/archive replay
+and the separate declared-claim policy. **Native compilation and GREEN
+qualification of this implementation remain pending.** Its presence does not
+establish full Graphify compatibility.
 
 The selected-category/prefix producer remains published separately at
 `c41b75b7466fe7a75297f067a045ad1f9c1ce337`. This branch adds tests and this
-document only while that producer finishes its source-pinned qualification.
+document only at the RED checkpoint. The parent producer's scoped Windows
+default, Rust host and browser/aggregate evidence is now qualified separately.
 
 ## Host input and authority
 
@@ -123,6 +127,60 @@ hop evidence, explicit policy/category meaning, the caller deadline and
 whole-response refusal. Declarations do not become calibrated probabilities,
 compiler binding or observed execution.
 
+## Implementation and qualification boundary
+
+Admission reads only the explicitly selected bounded regular host file. The
+reader opens without following links and holds physical identities for the file
+and its local directory chain. Unix opens each child relative to its held parent;
+Windows denies write/delete sharing while the selected chain is held. Reparse,
+multiple-link, identity or name changes refuse before publication. It
+compares held-file modification/change metadata and repeats the bounded read;
+concurrent same-inode writes refuse rather than becoming a mixed document. It
+requires an existing snapshot, checks every original observation and complete
+evidence list, and validates the entire document before either CAS publication
+or registration. Both artifact and scoped-registration conflicts are checked
+before physical publication. As with existing Store publishers, an unexpected
+physical IO/commit failure can leave an unregistered physical blob; it does
+not become a published View.
+
+The artifact retains the complete original document as a UTF-8 string. A local
+lossless raw-JSON reader checks duplicate decoded keys and depth/node limits
+without converting numeric tokens. It uses a local byte/depth/node/deadline-bounded
+token reader; serde features and ordinary `Value` decoding remain unchanged.
+Only JSON strings and exact metadata schemas use the existing decoder. Exact integer comparisons use sign,
+decimal digits and magnitude; mixed integer/finite-binary64 comparisons use the
+float's exact truncated integer plus its fractional part. `pathSourceScoreToken`
+reports the original selected token as text, never a calibrated probability.
+
+The ordinary View builder counts declared selections in its existing 29-ID
+selection limit, 32-selection materialized limit and aggregate 32 MB input
+budget. It adds descriptors only: nodes, observations and evidence are unchanged.
+Loading, retention and self-contained archive replay revalidate retained input
+against the original canonical scope. Queries read the admitted CAS artifact,
+not the original host path. No Graphify MCP import tool is added.
+
+Only `weakest_declared_source_claims_v1` uses these declarations. Its sorted
+logical traversal (sorted primary arcs, then sorted implied reverse-contains arcs)
+and backward shortest-DAG enumeration rank at most 256 distinct
+shortest node paths, using a 257th only to disclose the cap. Original parallel
+observations/evidence remain in the returned hops. Root direction markers may
+reverse the bound original endpoints; a marker naming another endpoint is
+retained as data at admission but refused by this policy. Nested copy markers
+do not grant traversal authority. Stored/declared `contains` allows the implied
+reverse hop; forward primary declarations take ranking preference over backward
+ones. Complete-path ties retain prefix order, including weakest-hop position.
+Existing category and first-observation policies keep their original code paths.
+
+The original four public case bodies remain unchanged. Additional cases cover
+file/schema/deadline refusals with complete publication-state comparisons, plus
+category/invalid-score/large integer-float matrices through actual host admission
+and public queries. Equal-rank and 256-prefix fixtures distinguish primary-arc
+insertion from implied reverse arcs, using genuine admitted observations.
+Authored units cover raw numeric retention, nested duplicate/depth/node refusals,
+exact signed integer-float ordering, physical input pins, deterministic concurrent
+mutation refusal and storeless original/corrupt archive replay. These
+additional tests have not yet run natively.
+
 ## Initial fixtures and remaining requirements
 
 `native/tests/graphify_source_claims.rs` authors four cases:
@@ -152,7 +210,7 @@ captured UTF-8/CRLF hashes/ranges. The intended first RED is the absent public
 importer. Later numeric/reload/transport/refusal assertions remain unreached
 until admission exists; that first failure cannot qualify them.
 
-Producer and complete archive replay implementation, actual causal RED/GREEN,
+Actual candidate compilation/GREEN, adversarial complete archive replay,
 finite/invalid-score matrices, category/score conflicts, historical markers,
 directed/undirected behavior, resource/cancellation/output refusals and full
 current CLI/MCP/backend/upstream/Windows/main/release gates remain required.

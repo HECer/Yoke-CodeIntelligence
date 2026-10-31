@@ -893,6 +893,11 @@ impl From<ParsedOperation> for Operation {
 }
 #[derive(Subcommand)]
 enum GraphOperation {
+    /// Admit one explicit host file against an existing captured snapshot.
+    ImportSourceClaims {
+        #[arg(long)]
+        input: PathBuf,
+    },
     Build {
         #[arg(long)]
         options: Option<PathBuf>,
@@ -2154,6 +2159,22 @@ fn run_parity(
         }
         ExtensionOperation::Graph { command } => {
             match command {
+                GraphOperation::ImportSourceClaims { input } => {
+                    ensure!(
+                        arguments["snapshotId"]
+                            .as_str()
+                            .is_some_and(yoke::model::valid_id),
+                        "Declared source import requires an explicit existing snapshot"
+                    );
+                    let (snapshot, graph) = engine.select(arguments, deadline)?;
+                    print(&yoke::graph_view::source_claims::import_file(
+                        &engine.store,
+                        &snapshot,
+                        &graph,
+                        &input,
+                        deadline,
+                    )?)?;
+                }
                 GraphOperation::Build { options } => {
                     let options = options
                         .map(|path| -> Result<yoke::graph_view::BuildOptions> {

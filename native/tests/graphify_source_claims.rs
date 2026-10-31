@@ -658,3 +658,296 @@ fn admitted_claim_scope_failures_refuse_without_registration_capture_or_source_c
         );
     }
 }
+
+#[test]
+fn declared_document_file_schema_and_deadline_refusals_preserve_all_publication_state() {
+    let f = fixture();
+    import(&f, &document(&f, &nested_claims(&f)));
+    let baseline = published_state(&f);
+    let mut cases = vec![vec![b' '; 1_000_001], vec![0xff, 0xfe, 0xfd]];
+    let valid = document(&f, &nested_claims(&f));
+    let mut missing: Value = yoke::json::parse(&valid, 1_000_000).unwrap();
+    missing["claims"][0]
+        .as_object_mut()
+        .unwrap()
+        .remove("target");
+    cases.push(serde_json::to_vec(&missing).unwrap());
+    let mut unknown: Value = yoke::json::parse(&valid, 1_000_000).unwrap();
+    unknown["claims"][0]["newHostGrant"] = json!("not authority");
+    cases.push(serde_json::to_vec(&unknown).unwrap());
+    let mut sentinel: Value = yoke::json::parse(&valid, 1_000_000).unwrap();
+    let endpoint = serde_json::to_string(&sentinel["claims"][0]["target"]).unwrap();
+    sentinel["claims"][0]["target"] = json!({"$serde_json::private::RawValue":endpoint});
+    cases.push(serde_json::to_vec(&sentinel).unwrap());
+    let mut nested: Value = yoke::json::parse(&valid, 1_000_000).unwrap();
+    nested["claims"][0]["attributes"] = json!({"nestedDepthSentinel":"original"});
+    let text = serde_json::to_string(&nested).unwrap().replace(
+        "\"original\"",
+        &format!("{}0{}", "[".repeat(65), "]".repeat(65)),
+    );
+    cases.push(text.into_bytes());
+    for (ordinal, bytes) in cases.iter().enumerate() {
+        let path = f.host.path().join(format!("refused-{ordinal}.json"));
+        fs::write(&path, bytes).unwrap();
+        let output = cli(&f, &["graph", "import-source-claims"], Some(&path));
+        assert!(!output.status.success());
+        assert!(output.stdout.is_empty());
+        assert_eq!(fs::read(&path).unwrap(), *bytes);
+        assert_eq!(published_state(&f), baseline);
+    }
+    let directory = cli(&f, &["graph", "import-source-claims"], Some(f.host.path()));
+    assert!(!directory.status.success() && directory.stdout.is_empty());
+    let input = f.host.path().join("deadline.json");
+    fs::write(&input, &valid).unwrap();
+    let snapshot = f
+        .session
+        .engine
+        .store
+        .snapshot(&f.base.snapshot_id)
+        .unwrap();
+    let graph = f.session.engine.store.graph(&f.base.snapshot_id).unwrap();
+    assert!(
+        graph_view::source_claims::import_file(
+            &f.session.engine.store,
+            &snapshot,
+            &graph,
+            &input,
+            &Deadline::new(0)
+        )
+        .is_err()
+    );
+    assert_eq!(published_state(&f), baseline);
+    assert_eq!(
+        fs::read(f.root.path().join("main.rs")).unwrap(),
+        SOURCE.as_bytes()
+    );
+}
+
+#[test]
+fn admitted_declared_scores_keep_invalid_values_unscored_and_categories_primary() {
+    let mut f = fixture();
+    for (left, right, expected) in [
+        (
+            r#"{"confidence":"INFERRED","confidence_score":0.1}"#,
+            r#"{"confidence":"AMBIGUOUS","confidence_score":999}"#,
+            "weaker",
+        ),
+        (
+            r#"{"confidence":"INFERRED","confidence_score":true}"#,
+            r#"{"confidence":"INFERRED","confidence_score":0.4}"#,
+            "weaker",
+        ),
+        (
+            r#"{"confidence":"INFERRED","confidence_score":"-9"}"#,
+            r#"{"confidence":"INFERRED","confidence_score":0}"#,
+            "weaker",
+        ),
+        (
+            r#"{"confidence":"INFERRED","confidence_score":1e999}"#,
+            r#"{"confidence":"INFERRED","confidence_score":1e300}"#,
+            "weaker",
+        ),
+        (
+            r#"{"confidence":"EXTRACTED","confidence_score":-999}"#,
+            r#"{"confidence":"INFERRED","confidence_score":999}"#,
+            "weaker",
+        ),
+        (
+            r#"{"confidence":"unknown","confidence_score":999}"#,
+            r#"{"confidence":"INFERRED","confidence_score":-999}"#,
+            "stronger",
+        ),
+        (
+            r#"{"confidence":"INFERRED","confidence_score":9007199254740993}"#,
+            r#"{"confidence":"INFERRED","confidence_score":9007199254740992.0}"#,
+            "weaker",
+        ),
+        (
+            r#"{"confidence":"INFERRED","confidence_score":-9007199254740993}"#,
+            r#"{"confidence":"INFERRED","confidence_score":-9007199254740992.0}"#,
+            "stronger",
+        ),
+    ] {
+        let attributes = BTreeMap::from([
+            (
+                call(&f, "\u{3b1}", "stronger")["id"]
+                    .as_str()
+                    .unwrap()
+                    .to_owned(),
+                left.to_owned(),
+            ),
+            (
+                call(&f, "\u{3b1}", "weaker")["id"]
+                    .as_str()
+                    .unwrap()
+                    .to_owned(),
+                right.to_owned(),
+            ),
+        ]);
+        let raw = document(&f, &attributes);
+        let (artifact, _) = import(&f, &raw);
+        let view = selected(&f, &artifact);
+        let result = query(&mut f, &view);
+        let expected_edges = json!([
+            call(&f, "\u{3b1}", expected)["id"],
+            call(&f, expected, "omega")["id"]
+        ]);
+        assert_eq!(
+            result["pathObservationIds"], expected_edges,
+            "left={left}; right={right}"
+        );
+    }
+    assert_eq!(
+        fs::read(f.root.path().join("main.rs")).unwrap(),
+        SOURCE.as_bytes()
+    );
+}
+
+#[test]
+fn admitted_reverse_contains_keeps_primary_arc_order_when_whole_paths_tie() {
+    let mut f = fixture();
+    let mut branches = ["stronger", "weaker"];
+    branches.sort_by_key(|name| node(&f, name));
+    let (reverse, ordinary) = (branches[0], branches[1]);
+    assert!(node(&f, reverse) < node(&f, ordinary));
+    let edge = call(&f, "\u{3b1}", reverse);
+    let attributes=BTreeMap::from([(edge["id"].as_str().unwrap().to_owned(),serde_json::to_string(&json!({"confidence":"EXTRACTED","relation":"contains","_src":node(&f,reverse),"_tgt":node(&f,"\u{3b1}")})).unwrap())]);
+    let (artifact, _) = import(&f, &document(&f, &attributes));
+    let view = selected(&f, &artifact);
+    let result = query(&mut f, &view);
+    assert_eq!(result["pathSourceCategory"], "extracted");
+    assert_eq!(
+        result["pathObservationIds"],
+        json!([
+            call(&f, "\u{3b1}", ordinary)["id"],
+            call(&f, ordinary, "omega")["id"]
+        ])
+    );
+    assert_eq!(
+        result["pathHops"][0]["observations"],
+        json!([call(&f, "\u{3b1}", ordinary)])
+    );
+    assert_eq!(query(&mut f, &view), result);
+}
+
+#[test]
+fn admitted_reverse_contains_is_outside_the_first_256_primary_routes() {
+    let root = TempDir::new().unwrap();
+    let host = TempDir::new().unwrap();
+    let mut source = "fn source_root(){\n".to_owned();
+    for i in 0..257 {
+        source.push_str(&format!("branch_{i}();\n"));
+    }
+    source.push_str("}\n");
+    for i in 0..257 {
+        source.push_str(&format!("fn branch_{i}(){{ target_end(); }}\n"));
+    }
+    source.push_str("fn target_end(){}\n");
+    fs::write(root.path().join("main.rs"), &source).unwrap();
+    let mut engine = Engine::open(root.path()).unwrap();
+    let (snapshot, graph, _, _) = engine.index(&Deadline::new(30000)).unwrap();
+    let base = graph_view::build(
+        &engine.store,
+        &snapshot,
+        &graph,
+        &BuildOptions {
+            structural_kinds: vec![],
+            ..BuildOptions::default()
+        },
+        &Deadline::new(30000),
+    )
+    .unwrap();
+    let session = Session::open(
+        engine,
+        HostProfile::default(),
+        Some("reverse-prefix-claims"),
+        &Deadline::new(30000),
+    )
+    .unwrap();
+    let mut f = Fixture {
+        session,
+        base,
+        root,
+        host,
+    };
+    assert_eq!(
+        f.base
+            .observations
+            .iter()
+            .filter(|o| o["relation"] == "calls")
+            .count(),
+        514
+    );
+    let mut branches: Vec<_> = (0..257).map(|i| format!("branch_{i}")).collect();
+    branches.sort_by_key(|name| node(&f, name));
+    let reverse = &branches[0];
+    let ordinary = &branches[256];
+    let root_id = node(&f, "source_root");
+    let target = node(&f, "target_end");
+    let mut observation_ids = BTreeSet::new();
+    for branch in &branches {
+        for (a, b) in [
+            ("source_root", branch.as_str()),
+            (branch.as_str(), "target_end"),
+        ] {
+            let edge = call(&f, a, b);
+            assert!(observation_ids.insert(edge["id"].as_str().unwrap().to_owned()));
+            let sites = edge["evidenceIds"].as_array().unwrap();
+            assert_eq!(sites.len(), 1);
+            let site = f
+                .base
+                .evidence
+                .iter()
+                .find(|s| s["id"] == sites[0])
+                .unwrap();
+            assert_eq!(site["contentHash"], hash(source.as_bytes()));
+            let begin = site["startByte"].as_u64().unwrap() as usize;
+            let end = site["endByte"].as_u64().unwrap() as usize;
+            assert_eq!(&source[begin..end], format!("{b}()"));
+        }
+    }
+    assert_eq!(observation_ids.len(), 514);
+    let attributes=BTreeMap::from([
+        (call(&f,"source_root",reverse)["id"].as_str().unwrap().to_owned(),serde_json::to_string(&json!({"confidence":"INFERRED","confidence_score":0.1,"relation":"contains","_src":node(&f,reverse),"_tgt":root_id})).unwrap()),
+        (call(&f,"source_root",ordinary)["id"].as_str().unwrap().to_owned(),r#"{"confidence":"INFERRED","confidence_score":0.8}"#.to_owned()),
+    ]);
+    let (artifact, _) = import(&f, &document(&f, &attributes));
+    let view = selected(&f, &artifact);
+    let args = json!({"graphViewId":view.id,"source":root_id,"target":target,"max_hops":2,"path_policy":POLICY});
+    let result = yoke::graphify_adapter::invoke(
+        &mut f.session,
+        "shortest_path",
+        &args,
+        &Deadline::new(30000),
+    )
+    .unwrap();
+    assert_eq!(result["found"], true);
+    assert_eq!(result["shortestNodePathsConsidered"], 256);
+    assert_eq!(result["shortestNodePathsCapped"], true);
+    assert_eq!(result["pathSourceScoreToken"], "0.8");
+    assert_eq!(
+        result["pathObservationIds"],
+        json!([
+            call(&f, "source_root", ordinary)["id"],
+            call(&f, ordinary, "target_end")["id"]
+        ])
+    );
+    assert_eq!(
+        result["pathHops"][0]["observations"],
+        json!([call(&f, "source_root", ordinary)])
+    );
+    assert_eq!(
+        yoke::graphify_adapter::invoke(
+            &mut f.session,
+            "shortest_path",
+            &args,
+            &Deadline::new(30000)
+        )
+        .unwrap(),
+        result
+    );
+    assert_eq!(
+        fs::read(f.root.path().join("main.rs")).unwrap(),
+        source.as_bytes()
+    );
+}
