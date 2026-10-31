@@ -6,6 +6,8 @@ import unittest
 import subprocess
 from types import SimpleNamespace
 import tempfile
+import io
+from contextlib import redirect_stderr
 
 SCRIPTS = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("usage_browser", SCRIPTS / "host_tool_usage_browser.py")
@@ -34,9 +36,10 @@ def orchestrate(fault=None):
                   "beforeForcedCleanup": True, "scriptErrors": 0, "consoleErrors": 0,
                   "statisticsResetRequests": {"desktop": 1, "mobile": 1}}
     read_result = {"status": "ok", "data": {"text": "owned \u03c0\U0001f980e\u0301\r\n" * 3}}
-    output_tokens = len(USAGE.json.dumps(read_result, ensure_ascii=False, separators=(",", ":"))) // 4
+    output_tokens = len(USAGE.json.dumps(read_result["data"], ensure_ascii=False, separators=(",", ":"))) // 4
+    wrapped_tokens = len(USAGE.json.dumps(read_result, ensure_ascii=False, separators=(",", ":"))) // 4
     require("\r\n" in read_result["data"]["text"] and output_tokens != len(USAGE.json.dumps(
-        read_result, ensure_ascii=False, separators=(",", ":")).encode()) // 4,
+        read_result["data"], ensure_ascii=False, separators=(",", ":")).encode()) // 4,
         "The inert reply must exercise actual Unicode scalars and CRLF")
 
     class Actor:
@@ -53,10 +56,15 @@ def orchestrate(fault=None):
             require(method == "tools/call" and args == {"name": "read_file",
                     "arguments": {"relative_path": "main.rs"}}, "Unexpected tool")
             events.append("read")
+            if fault == "actor-error":
+                raise RuntimeError("Private capability and protocol body must stay private")
             self.reads += 1
             current["revision"] = str(int(current["revision"]) + 1)
             current["tools"]["read_file"] = {"numTimesCalled": str(self.reads), "inputTokens": str(self.reads * 6),
-                                      "outputTokens": str(self.reads * (1 if fault == "output" else output_tokens))}
+                                      "outputTokens": str(self.reads * (1 if fault == "output" else
+                                          wrapped_tokens if fault == "output-wrapper" else output_tokens))}
+            if fault == "text-fallback":
+                return {"isError": False, "content": [{"type": "text", "text": USAGE.json.dumps(read_result)}]}
             return {"isError": False, "structuredContent": copy.deepcopy(read_result)}
 
         def shutdown(self):
@@ -100,6 +108,7 @@ def orchestrate(fault=None):
             actor.close()
 
     harness = SimpleNamespace(require=require, LIVE=SimpleNamespace(Actor=Actor, MAX_JSON=1000000,
+        decode=lambda raw: USAGE.json.loads(raw),
         require_worker_job=lambda name: events.append("job-admission")), Browser=Browser,
         write_json=lambda path, value: require(value["dashboard"]["management"]["toolUsageReset"] is True
             and value["tokenCountEstimator"] == "CHAR_COUNT", "Separate host grant required"),
@@ -186,9 +195,19 @@ class CountsAdmission(unittest.TestCase):
                          ["desktop-before", "mobile-before", "mobile-pending", "desktop-pending"])
 
     def test_cancel_conflict_identity_and_shutdown_failure_refuse_and_close_all_owned_resources(self):
-        for fault in ("cancel", "conflict", "identity", "shutdown", "output"):
-            with self.subTest(fault=fault), self.assertRaises(RuntimeError):
+        for fault in ("cancel", "conflict", "identity", "shutdown", "output", "output-wrapper"):
+            with self.subTest(fault=fault), redirect_stderr(io.StringIO()), self.assertRaises(RuntimeError):
                 orchestrate(fault)
+
+    def test_text_only_mcp_envelope_counts_the_original_compatibility_payload(self):
+        result, _ = orchestrate("text-fallback")
+        USAGE.admit_result(require, result)
+
+    def test_private_actor_error_emits_only_a_fixed_phase_and_still_closes_resources(self):
+        output = io.StringIO()
+        with redirect_stderr(output), self.assertRaises(RuntimeError):
+            orchestrate("actor-error")
+        self.assertEqual(output.getvalue(), "Owned tool statistics browser failed: seed-counts\n")
 
     def test_missing_semantic_or_lifecycle_evidence_never_becomes_success(self):
         result, _ = orchestrate()

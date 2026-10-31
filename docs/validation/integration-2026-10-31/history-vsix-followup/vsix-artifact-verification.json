@@ -1,0 +1,103 @@
+{
+  "sourceRevision": "3ceb66ced10bacda9cd024d0f84a5345ea8cf80c",
+  "artifactId": 13036009858,
+  "archiveSHA256": "c02ca67c9c20e2739bb5b27ddbfcc46c9239c90505de127f7070b2bcacbde1f3",
+  "controls": [
+    {
+      "path": "scripts/host_vscode.py",
+      "recordedSHA256": "aaa9518d9034e164c89c87d0b42fa73e659c62b045c588339b5b83e88577a983",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": "scripts/vscode_owned_job.py",
+      "recordedSHA256": "c773bf3a8d9af8fcc51bf4d4e5991be7a720c1596c66e116850f15ceaa631b61",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": "scripts/run_native_tests.py",
+      "recordedSHA256": "f864e8542260c967dadc7cb8878c16507cab26c6d8e2fd93acb4f83a0cef123e",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": "extensions/vscode/test-host.cjs",
+      "recordedSHA256": "063bdd94d30440c757be0344a460ebba1167b32da3365e34bf4e73207ae352de",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": "extensions/vscode/package.json",
+      "recordedSHA256": "d77608b4f89fa94d88ebfad2e606617f05ee659f94a62a05ff997538d798f21d",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": "package.json",
+      "recordedSHA256": "3ba8790dc3e49e3b7e0c8484412cb327ca861e3f59f34b741f7b60fe64307698",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": "Cargo.lock",
+      "recordedSHA256": "3fd92cd4fa034bffb88d765ed0c02f3d5335f3317ff19c31e70a3d5149e49f6a",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": "native/Cargo.toml",
+      "recordedSHA256": "492b7530a3521b26e5215e1285ad5161e6bc20fed3c5c65de72c60978f16d2d8",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "recordedSHA256": "d59fdc510beb119fd3f91ab5c2009c4669d88f81424695968761f9174d6b9468",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    }
+  ],
+  "sourceMapEntries": 1835,
+  "builtMapEntries": 277,
+  "controlBytesComparedToGit": true,
+  "allSourceOrBuiltPayloadsIndependentlyCompared": false,
+  "sameFreshSuccessfulProducerAndNativeRole": true,
+  "nativeSHA256": "7bff49b7873ee6e379377003b8bef8b4e1f24963613ad8a0f50f4d20509ad90f",
+  "vsixSHA256": "90f73e9edc709ee2d28ffc0a69d0770cf027e478c169decda41a7cbc8b5d5c31",
+  "stages": [
+    {
+      "phase": "tool",
+      "jobSHA256": "893269ac8d75359d7ee7af67db99adc6c5e59f680231c543155292cb4453df77",
+      "stageSHA256": "8f4b51e91c923407f82c0e39cf033b128181f3f4c032b65a3f9b9f6ec227bcd1"
+    },
+    {
+      "phase": "package",
+      "jobSHA256": "893269ac8d75359d7ee7af67db99adc6c5e59f680231c543155292cb4453df77",
+      "stageSHA256": "e3965d0c49405b541c877eb917aa4bd4b36cdfa9b258aaf7cb15685cee1a7493"
+    },
+    {
+      "phase": "explicit",
+      "jobSHA256": "893269ac8d75359d7ee7af67db99adc6c5e59f680231c543155292cb4453df77",
+      "stageSHA256": "06b165ec931231173a264bd3444b9d06dd48a400a9b409c9c5d4e129f54bf611"
+    },
+    {
+      "phase": "bundled",
+      "jobSHA256": "893269ac8d75359d7ee7af67db99adc6c5e59f680231c543155292cb4453df77",
+      "stageSHA256": "2256a38c5916d932cb9d322a8c2e756feedf38c933c253eb0e376397824cd078"
+    }
+  ],
+  "explicitAndBundledRustHostQualifiedAtSource": true,
+  "typescriptExecutionQualified": false,
+  "wholePlatformOrReleaseAccepted": false,
+  "localNativeImageReads": false
+}

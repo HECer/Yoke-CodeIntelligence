@@ -343,9 +343,15 @@ fn real_stdio_reports_prior_completed_calls_without_counter_recursion() {
     assert_eq!(rows[1]["result"]["isError"], false);
     let config: Value =
         serde_json::from_str(rows[2]["result"]["content"][0]["text"].as_str().unwrap()).unwrap();
+    assert_eq!(config["status"], "ok");
     assert_eq!(
-        config["toolUsageStatistics"]["tools"]["read_file"]["numTimesCalled"],
+        config["data"]["toolUsageStatistics"]["tools"]["read_file"]["numTimesCalled"],
         1
+    );
+    assert!(
+        config["data"]["toolUsageStatistics"]["tools"]
+            .get("get_current_config")
+            .is_none()
     );
     let current = stats(&mut s);
     assert_eq!(current["tools"]["get_current_config"]["numTimesCalled"], 1);
@@ -445,8 +451,9 @@ fn real_authenticated_http_counts_once_and_reports_prior_tool_output() {
     );
     let view: Value =
         serde_json::from_str(result["result"]["content"][0]["text"].as_str().unwrap()).unwrap();
+    assert_eq!(view["status"], "ok");
     assert_eq!(
-        view["toolUsageStatistics"]["tools"]["read_file"]["numTimesCalled"],
+        view["data"]["toolUsageStatistics"]["tools"]["read_file"]["numTimesCalled"],
         1
     );
     server.revoke("owned-counts").unwrap();

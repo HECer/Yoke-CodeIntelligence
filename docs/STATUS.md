@@ -1,5 +1,36 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Source-specific history browser and combined VSIX evidence (2026-10-31)
+
+At `3ceb66ced10bacda9cd024d0f84a5345ea8cf80c`, four real Windows history
+browser profiles pass their automation and independent artifact checks: native,
+Serena, persistent Python and authenticated HTTP. The parent agent visually
+inspected all 24 original desktop/mobile before/pending/after PNGs. The scoped
+history visual checkpoint is accepted; human review, motion/visible-shell
+acceptance, current-head acceptance and full Windows/release acceptance remain
+open. The same source's combined VSIX also passes fresh package production and
+both actual explicit/bundled Rust extension-host assertions in VS Code 1.143.1.
+TypeScript is byte-verified as bundled content, without execution of its editor
+mode. [Source-bound receipts and limits](validation/integration-2026-10-31/history-vsix-followup/README.md)
+retain the exact run/artifact identities and original false broader flags.
+
+The separate statistics browser fails before capture because its oracle counts
+an MCP wrapper added after the actual compatibility result was measured. Its
+candidate correction counts the original payload, adds a full-wrapper negative
+case and fixed private-safe failure phases. Two native transport fixtures now
+read the existing status/data envelope correctly. The decimal fixture separates
+exact 599999 ms from the fractional value that rounds up to 600000 ms. The
+TSGo fixture uses declared `queryProject`/`ci_find` with its nested 64000-byte
+budget: `symbols.find` injects a search kind incompatible with LSP navigation.
+Production counting, dispatch, validation, deadlines and permissions are
+unchanged. Fresh native, TSGo and statistics-browser CI remain required.
+
+For these repairs, local typecheck and npm tests pass (266 passed, three skipped),
+as do 62 focused inert Python tests, Rust formatting and whitespace checks.
+The full Python run has 318 passed, one skipped and two Cargo-required failures
+because Cargo is absent from the selected PATH. No local native build or image
+read was used to bypass the existing qualification boundary.
+
 ## Reset project-binding fixture correction (2026-10-31)
 
 At `3ceb66ce`, the actual Ubuntu `session_dashboard_management` target reaches

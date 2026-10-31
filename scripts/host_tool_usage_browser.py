@@ -5,6 +5,7 @@ ownership of producer admission, image access, Job bounds and cleanup.
 """
 import json
 import re
+import sys
 
 VARIANT = "tool-usage"
 OUTPUT = "ci-tool-usage-browser"
@@ -109,6 +110,7 @@ def exercise(harness, native, node, edge, fixture, output, job_name, inputs):
         "memories": False, "toolUsageReset": True, "shutdown": True, "operationTimeoutMs": 3000},
         "lifetimeMs": 600000}})
     actors, browser = [], None
+    phase = "session-start"
     try:
         actor = live.Actor(native, source, profile, output, "browser-statistics", "serena")
         actors.append(actor)
@@ -126,35 +128,45 @@ def exercise(harness, native, node, edge, fixture, output, job_name, inputs):
             value = reply.get("structuredContent")
             if value is None:
                 value = live.decode(reply["content"][0]["text"].encode())
-            require(type(value) is dict and value.get("status") == "ok", "Owning read incomplete")
-            # Count the full original result, including its status/data wrapper,
-            # with native compact JSON escaping and Unicode scalars, not UTF-8 bytes.
-            encoded = json.dumps(value, ensure_ascii=False, separators=(",", ":"), sort_keys=True, allow_nan=False)
+            require(type(value) is dict and set(value) == {"status", "data"}
+                    and value["status"] == "ok" and type(value["data"]) is dict, "Owning read incomplete")
+            # The compatibility result is counted before protocol.rs adds this
+            # MCP success envelope. Count that original result as Unicode scalars.
+            encoded = json.dumps(value["data"], ensure_ascii=False, separators=(",", ":"), sort_keys=True, allow_nan=False)
             require(len(encoded.encode()) <= live.MAX_JSON, "Owned read result capacity")
             return len(encoded) // 4
 
+        phase = "seed-counts"
         for _ in range(2):
             before = counts()
             expected_output = read_output_tokens()
             admit_read_increment(require, before, counts(), expected_output)
         initial = counts()
+        phase = "browser-start"
         browser = harness.Browser(node, edge, fixture, output, actor, job_name,
                                   inputs["native/src/session_dashboard.html"], VARIANT)
+        phase = "browser-before"
         ready = browser.call({"phase": "before", "counts": initial})
+        phase = "browser-pending"
         pending = browser.call({"phase": "pending", "counts": initial})
         require(counts() == initial and pending.get("cancelNoRequest") is True
                 and pending.get("expectedRevision") == initial["revision"], "Cancel/open reset changed totals")
+        phase = "intervening-count"
         expected_output = read_output_tokens()
         advanced = counts()
         admit_read_increment(require, initial, advanced, expected_output)
+        phase = "stale-reset"
         conflict = browser.call({"phase": "after", "viewport": "desktop", "counts": advanced})
         require(counts() == advanced and conflict.get("staleResetRefused") is True,
                 "Stale reset changed counted calls")
+        phase = "fresh-reset"
         cleared = browser.call({"phase": "after", "viewport": "mobile", "counts": advanced})
         final = counts()
         admit_clear(require, advanced, final)
+        phase = "browser-exit"
         browser_exit = browser.shutdown()
         require(counts() == final, "Browser shutdown changed statistics")
+        phase = "native-exit"
         exits = [actor.shutdown()]
         require(target.read_bytes() == original, "Source changed during shutdown")
         return {"variant": VARIANT, "owningProtocol": "serena", "automationComplete": True,
@@ -163,5 +175,10 @@ def exercise(harness, native, node, edge, fixture, output, job_name, inputs):
             "advancedReadOutputTokens": expected_output,
             "sourceUnchanged": True, "persistedIdentityUnchanged": True,
             "browserExit": browser_exit, "nativeExits": exits}
+    except Exception:
+        # phase is assigned only fixed literals here; no private error text,
+        # protocol, fixture path or capability enters the uploaded diagnostics.
+        print("Owned tool statistics browser failed: " + phase, file=sys.stderr)
+        raise
     finally:
         harness.close_owned_resources(browser, actors, [])
