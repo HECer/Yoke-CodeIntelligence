@@ -15,14 +15,16 @@ use yoke::{
 
 struct Announce {
     bytes: Vec<u8>,
-    sender: mpsc::Sender<Value>,
+    sender: mpsc::Sender<Result<Value, String>>,
 }
 impl Write for Announce {
     fn write(&mut self, bytes: &[u8]) -> io::Result<usize> {
         self.bytes.extend_from_slice(bytes);
         if let Some(end) = self.bytes.iter().position(|b| *b == b'\n') {
             self.sender
-                .send(serde_json::from_slice(&self.bytes[..end]).map_err(io::Error::other)?)
+                .send(Ok(
+                    serde_json::from_slice(&self.bytes[..end]).map_err(io::Error::other)?
+                ))
                 .map_err(io::Error::other)?;
             self.bytes.drain(..=end);
         }
@@ -76,10 +78,17 @@ impl Server {
         .unwrap();
         let root = dir.path().to_owned();
         let (sender, receiver) = mpsc::channel();
+        let failure_sender = sender.clone();
         let join = thread::spawn(move || {
-            let mut engine = Engine::open(root)?;
+            let mut engine = match Engine::open(root) {
+                Ok(engine) => engine,
+                Err(error) => {
+                    let _ = failure_sender.send(Err(format!("phase=open-engine; {error:#}")));
+                    return Err(error);
+                }
+            };
             engine.allow_writes = true;
-            serve(
+            let result = serve(
                 &mut engine,
                 Config {
                     port: 0,
@@ -96,12 +105,23 @@ impl Server {
                     bytes: vec![],
                     sender,
                 },
-            )?;
+            );
+            if let Err(error) = result {
+                // Preserve engine teardown before the readiness receiver fails.
+                drop(engine);
+                let _ = failure_sender.send(Err(format!("phase=serve; {error:#}")));
+                return Err(error);
+            }
             Ok(engine.allow_writes)
         });
-        let handshake = receiver
-            .recv_timeout(Duration::from_secs(5))
-            .expect("Owned Explorer did not announce readiness");
+        let handshake = match receiver.recv_timeout(Duration::from_secs(5)) {
+            Ok(Ok(handshake)) => handshake,
+            Ok(Err(error)) => panic!("Owned Explorer failed before readiness: {error}"),
+            Err(error) => panic!(
+                "Owned Explorer did not announce readiness: {error}; thread_finished={}",
+                join.is_finished()
+            ),
+        };
         let url = handshake["url"].as_str().unwrap();
         let (base, token) = url
             .strip_prefix("http://")

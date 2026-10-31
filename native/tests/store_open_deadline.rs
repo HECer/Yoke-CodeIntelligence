@@ -6,7 +6,113 @@ use std::{
     },
     time::{Duration, Instant},
 };
-use yoke::{capture::Deadline, store::Store};
+use yoke::{
+    capture::Deadline,
+    store::{OpeningObservations, OpeningPhase, Store},
+};
+
+#[test]
+fn observed_open_preserves_default_errors_and_resets_previous_observations() {
+    let root = tempfile::tempdir().unwrap();
+    let mut observations = OpeningObservations::default();
+    for budget in [Duration::ZERO, Duration::MAX] {
+        let original = Store::open_with_timeout(root.path(), budget).err().unwrap();
+        let observed = Store::open_with_timeout_observed(root.path(), budget, &mut observations)
+            .err()
+            .unwrap();
+        assert_eq!(observed.to_string(), original.to_string());
+        assert_eq!(observations.last_phase(), Some(OpeningPhase::Budget));
+        assert_eq!(observations.first_observation(OpeningPhase::Ready), None);
+        assert!(!root.path().join(".yoke").exists());
+    }
+    let store =
+        Store::open_with_timeout_observed(root.path(), Duration::from_secs(10), &mut observations)
+            .unwrap();
+    let identity = store.workspace_id.clone();
+    let content = "\u{feff}observed store π e\u{301}\r\n";
+    store.record("owned", "source", &content).unwrap();
+    assert_eq!(observations.last_phase(), Some(OpeningPhase::Ready));
+    assert!(
+        observations
+            .first_observation(OpeningPhase::SqlSetup)
+            .is_some()
+    );
+    drop(store);
+    assert!(
+        Store::open_with_timeout_observed(root.path(), Duration::ZERO, &mut observations).is_err()
+    );
+    assert_eq!(observations.last_phase(), Some(OpeningPhase::Budget));
+    assert_eq!(observations.first_observation(OpeningPhase::Ready), None);
+    let reopened = Store::open(root.path()).unwrap();
+    assert_eq!(reopened.workspace_id, identity);
+    assert_eq!(
+        reopened.get_record::<String>("owned", "source").unwrap(),
+        content
+    );
+    assert!(!format!("{observations:?}").contains(root.path().to_str().unwrap()));
+}
+
+#[test]
+fn observed_setup_retains_parent_ceiling_and_has_no_ready_boundary_on_refusal() {
+    let root = existing();
+    let holder = excluded(root.path());
+    let mut observations = OpeningObservations::default();
+    let started = Instant::now();
+    let result = Deadline::run_bounded(
+        &Deadline::new(120),
+        Arc::new(AtomicBool::new(false)),
+        || {
+            Store::open_with_timeout_observed(
+                root.path(),
+                Duration::from_secs(2),
+                &mut observations,
+            )
+            .map(drop)
+        },
+    );
+    let elapsed = started.elapsed();
+    holder.execute_batch("ROLLBACK").unwrap();
+    drop(holder);
+    assert!(result.is_err());
+    assert!(
+        elapsed < Duration::from_millis(500),
+        "Observed opening renewed its ceiling: {elapsed:?}; {observations:?}"
+    );
+    assert!(
+        observations
+            .first_observation(OpeningPhase::Budget)
+            .is_some()
+    );
+    assert_ne!(observations.last_phase(), Some(OpeningPhase::Ready));
+    assert_eq!(observations.first_observation(OpeningPhase::Ready), None);
+    drop(Store::open(root.path()).unwrap());
+}
+
+#[test]
+fn observed_success_clears_setup_policy_before_later_independent_operations() {
+    let root = tempfile::tempdir().unwrap();
+    let cancel = Arc::new(AtomicBool::new(false));
+    let mut observations = OpeningObservations::default();
+    let store = Deadline::run_bounded(&Deadline::new(10000), Arc::clone(&cancel), || {
+        Store::open_with_timeout_observed(root.path(), Duration::from_secs(10), &mut observations)
+    })
+    .unwrap();
+    cancel.store(true, Ordering::SeqCst);
+    // Raw SQL deliberately precedes checked Store operations, which otherwise
+    // replace their own policy. A leaked setup progress handler must interrupt.
+    let sum: i64 = store.db.query_row(
+        "WITH RECURSIVE n(x) AS (VALUES(0) UNION ALL SELECT x+1 FROM n WHERE x<10000) SELECT sum(x) FROM n",
+        [], |row| row.get(0),
+    ).unwrap();
+    assert_eq!(sum, 50_005_000);
+    store.record("owned", "after-observed-open", &true).unwrap();
+    assert!(
+        store
+            .get_record::<bool>("owned", "after-observed-open")
+            .unwrap()
+    );
+    assert_eq!(observations.last_phase(), Some(OpeningPhase::Ready));
+}
 
 fn existing() -> tempfile::TempDir {
     let root = tempfile::tempdir().unwrap();

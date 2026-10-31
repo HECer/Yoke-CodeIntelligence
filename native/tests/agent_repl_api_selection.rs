@@ -78,9 +78,19 @@ fn invalid_windows_python_images_refuse_before_any_worker_launch() {
     assert!(!root.path().join(".yoke").exists());
 }
 fn run(worker: &mut AgentRepl, session: &mut Session, code: &str) -> Value {
+    let deadline = Deadline::new(20000);
+    let started = std::time::Instant::now();
     worker
-        .execute(session, code, &Deadline::new(20000))
-        .unwrap()
+        .execute(session, code, &deadline)
+        .unwrap_or_else(|error| {
+            // Identify the authored fixture cell without logging its payload.
+            let elapsed = started.elapsed();
+            let remaining = deadline.remaining();
+            panic!(
+                "Owned REPL fixture cell failed: {error}; cellSha256={}; elapsed={elapsed:?}; remaining={remaining:?}",
+                yoke::model::hash(code)
+            )
+        })
 }
 fn steer(session: &mut Session, args: Value) {
     session
