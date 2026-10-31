@@ -153,6 +153,7 @@ impl Principal {
             (None, Some(_)) => anyhow::bail!("session_prompt_selection_required"),
             (None, None) => {}
         }
+        crate::required_prompt_memories::admit_host(&target.host, &Deadline::new(30000))?;
         target.root = target.root.canonicalize()?;
         ensure!(
             target.root.is_dir()
