@@ -1,5 +1,21 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Compiler do-first admission repair candidate (2026-10-31)
+
+Completed Windows and Linux body-inlining CI each passed 30/34 integration cases;
+the same four do/CLI cases refused an unexplained identifier. The later native
+publication inventory now includes the private do-first marker already checked
+by independent source reconstruction, canonical freshness and collision gates.
+The production correction is one inventory entry; existing binding/target,
+diagnostic, exact-byte, budget, permission and writer/recovery checks remain.
+A new authored compiler-witness unit fixture covers two do frames plus missing,
+aliased/reused, foreign-target and extra-observation refusal without source or
+plan/journal writes. The original 34 integration fixtures remain unchanged.
+The correction and new fixture are uncompiled/unrun locally; fresh native CI,
+combined Windows/platform/VSIX/main/release acceptance remain pending. The
+separately observed persistent-callback global-budget fixture failure remains
+open and is not certified by this repair.
+
 ## Hosted VSIX inventory and Session assertion repair candidate (2026-10-31)
 
 The completed Windows VSIX run on `6fef75be` stopped before native production:

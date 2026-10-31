@@ -1,5 +1,17 @@
 # Remaining implementation and acceptance
 
+## Compiler do-first admission repair candidate (2026-10-31)
+
+The matching four body-inline failures on Windows and Linux are addressed by a
+one-entry source correction: the publication inventory now includes the private
+do-first marker already validated during native reconstruction. Global name
+uniqueness and original source/observation/target/permission/budget gates remain.
+A new native compiler-witness unit fixture covers accepted two-frame output and
+forged names/targets/extra observations. It and the unchanged 34 integration cases
+require fresh hosted runtime qualification. The persistent-callback global-tool
+budget fixture also failed separately and still needs investigation. Combined
+native/Windows/platform/browser/VSIX/main/release acceptance remains open.
+
 ## Hosted VSIX inventory and Session assertion repair candidate (2026-10-31)
 
 A completed Windows VSIX job stopped during source-name admission, before a
