@@ -1,5 +1,21 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Creation-time language-server selection candidate (2026-10-31)
+
+An explicit global ls_priorities/host policy now chooses one of the 80 current
+backend declarations by captured filename count, positive priority and stable
+public order. Exact suffix/case/superset data is pinned; source edits do not
+silently change a retained Session choice. Explicit host/dashboard selections
+supersede detection. Every semantic entry point refuses automatic fallback to
+an unselected legacy provider; missing registrations fail without startup.
+Metadata is excluded from source-retention roots, total Session serialization
+keeps its original 64KB bound, and read-only dashboard data reports the choice.
+Typecheck passed; npm passed 266 tests with three skips; ten inert contract
+tests passed. Twelve native unit and seven integration fixtures are authored
+but uncompiled/unrun locally. Exact native/hosted qualification, real vendors,
+combined Windows/platform/browser/VSIX/main/release acceptance remain open.
+[Selection contract and evidence limits](../native/docs/server-autoselection.md).
+
 ## Explicit global tool-budget candidate (2026-10-31)
 
 Host-selected global tool_timeout and default_max_tool_answer_chars now project

@@ -617,3 +617,14 @@ The policy binds Sessions and reaches selected tool deadlines and declared
 answer facades, including -1 as the configured default. Original host ceilings,
 cancellation and byte limits remain independent. Empty selection preserves prior
 bindings and behavior. See [duration, character semantics and unrun native gates](global-tool-budgets.md).
+
+## Explicit creation-time language detection
+
+Global-only ls_priorities maps known backend IDs to signed 32-bit priorities.
+An empty map opts into the compiled public defaults; null clears the host policy,
+while omission preserves it. The resulting HostProfile.languageServerAutoSelection
+selects one backend by captured filename count, then positive priority, then
+public declaration order. Explicit host/dashboard selections supersede detection.
+Registrations and execution grants remain host-owned; no match has no legacy
+fallback. Choices persist per Session project instead of changing after source
+edits. See [selection data, lifecycle, bounds and pending native qualification](server-autoselection.md).

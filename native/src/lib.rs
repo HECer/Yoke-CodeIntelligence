@@ -103,6 +103,7 @@ pub mod runtime;
 pub mod semantic_enrichment;
 pub mod semantic_refactor;
 pub mod semantic_workspace;
+pub mod server_autoselection;
 pub mod server_catalog;
 pub mod server_selection;
 pub mod server_settings;
@@ -143,6 +144,7 @@ pub struct Engine {
     pub(crate) git_repository_host: Option<git_workflows::repository_host::Host>,
     pub(crate) backend_servers: BTreeMap<String, lsp::ConfiguredServer>,
     pub(crate) selected_backends: Option<Vec<String>>,
+    pub(crate) automatic_backend_selection: bool,
     pub(crate) backend_registry_sealed: bool,
     pub(crate) symbol_workspace_folders: Option<Vec<String>>,
     pub(crate) additional_workspace_folders: Option<Vec<String>>,
@@ -238,6 +240,7 @@ impl Engine {
             git_repository_host: None,
             backend_servers: BTreeMap::new(),
             selected_backends: None,
+            automatic_backend_selection: false,
             backend_registry_sealed: false,
             symbol_workspace_folders: None,
             additional_workspace_folders: None,
@@ -611,7 +614,11 @@ impl Engine {
                 if let Some(ids) = &self.selected_backends {
                     status["capabilities"]["selectedLanguageServers"] = json!(ids);
                     status["capabilities"]["backendSelectionPolicy"] =
-                        json!("first_declared_extension_match_then_first_fallback");
+                        json!(if self.automatic_backend_selection {
+                            "creation_time_captured_filename_counts_then_priority"
+                        } else {
+                            "first_declared_extension_match_then_first_fallback"
+                        });
                     status["capabilities"]["backendRuntimeCertification"] = json!(false);
                 }
                 if let Some(policy) = self.capture_options.source_encoding {
@@ -1027,6 +1034,18 @@ impl Engine {
         let Some(ids) = &self.selected_backends else {
             return Ok(None);
         };
+        if self.automatic_backend_selection {
+            let selected = ids
+                .iter()
+                .find(|id| server_autoselection::matches_backend(id, path));
+            if let Some(id) = selected {
+                ensure!(
+                    self.backend_servers.contains_key(id),
+                    "language_server_not_host_registered"
+                );
+            }
+            return Ok(selected.map(String::as_str));
+        }
         let id = server_selection::choose(ids, path)?;
         ensure!(
             self.backend_servers.contains_key(id),
@@ -1041,6 +1060,9 @@ impl Engine {
     ) -> Result<Option<(lsp::Server, Option<lsp::HostConfiguration>)>> {
         if let Some((_, p)) = self.selected_provider(path)? {
             return Ok(Some((p.server, Some(p.configuration))));
+        }
+        if self.automatic_backend_selection {
+            return Ok(None);
         }
         Ok(self
             .servers
@@ -1084,6 +1106,9 @@ impl Engine {
     fn semantic_server(&self, language: &str, path: &str) -> Result<Option<lsp::Server>> {
         if let Some((_, p)) = self.selected_provider(path)? {
             return Ok(Some(p.server));
+        }
+        if self.automatic_backend_selection {
+            return Ok(None);
         }
         Ok(self
             .servers

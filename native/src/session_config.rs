@@ -95,6 +95,7 @@ fn label(value: &str) -> Result<()> {
     Ok(())
 }
 struct DecodedFields {
+    auto_selection: Option<Option<crate::server_autoselection::Config>>,
     tool_budgets: Map<String, Value>,
     encoding: Option<Option<crate::source_encoding::Codec>>,
     additional_folders: Option<Option<Vec<String>>>,
@@ -120,6 +121,7 @@ fn rename_fields(
     prompt_rendered: bool,
 ) -> Result<DecodedFields> {
     let mut mapped = Map::new();
+    let mut auto_selection = None;
     let mut tool_budgets = Map::new();
     let mut encoding = None;
     let mut additional_folders = None;
@@ -135,6 +137,11 @@ fn rename_fields(
     let mut symbol_info_budget = None;
     let mut workspace_folders = None;
     for (key, value) in raw {
+        if key == "ls_priorities" {
+            ensure!(global, "session_config_ls_priorities_global_only");
+            auto_selection = Some(crate::server_autoselection::Config::from_yaml(&value)?);
+            continue;
+        }
         if crate::tool_budgets::yaml_field(&key, &value, global)? {
             tool_budgets.insert(key, value);
             continue;
@@ -308,6 +315,7 @@ fn rename_fields(
         mapped.insert(name.into(), value);
     }
     Ok(DecodedFields {
+        auto_selection,
         tool_budgets,
         encoding,
         additional_folders,
@@ -453,6 +461,7 @@ fn project_inner(
             raw.insert(key.into(), json!(rendered.text));
         }
         let DecodedFields {
+            auto_selection,
             tool_budgets,
             encoding,
             additional_folders,
@@ -477,6 +486,9 @@ fn project_inner(
             prompt_rendering.is_some() || defer,
         )?;
         crate::tool_budgets::project(&mut profile.tool_budgets, &tool_budgets)?;
+        if let Some(selection) = auto_selection {
+            profile.language_server_auto_selection = selection;
+        }
         if let Target::Project { project } | Target::ProjectLocal { project } = source.target {
             label(project)?;
             ensure!(
@@ -803,6 +815,9 @@ fn project_inner(
     }
     if let Some(folders) = &profile.symbol_workspace_folders {
         folders.validate(&profile)?;
+    }
+    if let Some(selection) = &profile.language_server_auto_selection {
+        selection.validate()?;
     }
     if let Some(budgets) = &profile.tool_budgets {
         budgets.validate()?;
