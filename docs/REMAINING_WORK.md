@@ -1,5 +1,17 @@
 # Remaining implementation and acceptance
 
+## Selected dashboard statistics qualification (2026-10-31)
+
+The selected-estimator dashboard now has exact decimal display counters,
+BigInt comparisons, filtering/sorting and an independently granted confirmed
+reset. Its ephemeral revision refuses stale/replayed/ABA requests; current
+`ci_session` exclusions remain enforced. Eight pure extracted client tests pass,
+including obsolete state-response rejection. Authored native exact-counter,
+overflow and six real-HTTP management fixtures still require fresh guarded
+compilation/execution. Owned-data HTML screenshots and interaction checks do not
+qualify native HTTP, runtime/Windows kernels, VSIX, main or release. Full upstream
+default/application and statistical representation equivalence remain open.
+
 ## Windows hover phase-observation candidate (2026-10-31)
 
 The separate Windows facade hover timeout still needs measured phase evidence.

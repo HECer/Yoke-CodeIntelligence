@@ -2,6 +2,11 @@
 use super::*;
 
 impl Session {
+    pub(super) fn next_tool_usage_revision(&self) -> Result<u64> {
+        self.tool_usage_revision
+            .checked_add(1)
+            .context("tool_usage_statistics_revision_overflow")
+    }
     pub(crate) fn preflight_tool_usage(
         &self,
         name: &str,
@@ -10,6 +15,7 @@ impl Session {
     ) -> Result<()> {
         if let Some(stats) = &self.tool_usage {
             self.require_serena_tool(name, deadline)?;
+            self.next_tool_usage_revision()?;
             stats.preflight(name, args, deadline)?;
         }
         Ok(())
@@ -27,6 +33,7 @@ impl Session {
         if self.tool_usage.is_some() {
             let outcome = (|| -> Result<()> {
                 self.check_tool_state(deadline)?;
+                let revision = self.next_tool_usage_revision()?;
                 if self.tool_usage.as_ref().expect("Selected immutable statistics policy").annotate_native_result(result) {
                     let inventory = crate::compatibility::contracts();
                     let method = inventory["tools"].as_array().expect("Owned tool inventory")
@@ -48,6 +55,7 @@ impl Session {
                     .as_mut()
                     .expect("Selected immutable statistics policy")
                     .commit(measured, deadline)?;
+                self.tool_usage_revision = revision;
                 Ok(())
             })()
             .context("tool_usage_statistics_failed_after_operation_no_rollback");
@@ -75,6 +83,48 @@ mod tests {
         Arc,
         atomic::{AtomicUsize, Ordering},
     };
+    #[test]
+    fn exhausted_ephemeral_statistics_revision_refuses_before_counting_or_clear() {
+        let root = tempfile::tempdir().unwrap();
+        let bytes = b"fn owned() {}\n";
+        std::fs::write(root.path().join("main.rs"), bytes).unwrap();
+        let deadline = Deadline::new(20000);
+        let host = HostProfile {
+            token_count_estimator: Some(Estimator::CharCount),
+            ..Default::default()
+        };
+        let mut session = Session::open(
+            Engine::open(root.path()).unwrap(),
+            host,
+            Some("revision-limit"),
+            &deadline,
+        )
+        .unwrap();
+        session.tool_usage_revision = u64::MAX;
+        let before = session.tool_usage.as_ref().unwrap().view();
+        assert!(
+            session
+                .preflight_tool_usage("read_file", &json!({"relative_path":"main.rs"}), &deadline)
+                .unwrap_err()
+                .to_string()
+                .contains("statistics_revision_overflow")
+        );
+        assert!(
+            session
+                .invoke("clearToolUsage", &json!({}), &deadline)
+                .is_err()
+        );
+        let mut result = json!({"text":"owned"});
+        assert!(
+            session
+                .record_tool_usage("read_file", &json!({}), &mut result, &deadline)
+                .is_err()
+        );
+        assert_eq!(session.tool_usage.as_ref().unwrap().view(), before);
+        assert_eq!(session.tool_usage_revision, u64::MAX);
+        assert_eq!(std::fs::read(root.path().join("main.rs")).unwrap(), bytes);
+    }
+
     #[test]
     fn disclosure_metadata_cannot_bypass_an_existing_exact_answer_limit() {
         let root = tempfile::tempdir().unwrap();

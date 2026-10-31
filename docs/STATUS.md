@@ -1,5 +1,21 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Selected dashboard tool statistics candidate (2026-10-31)
+
+An explicitly selected estimator now adds a Statistics page with exact decimal
+u64 counters, BigInt totals, per-tool filtering/sorting and relative input/output
+bars. Missing/malformed data remains unavailable rather than zero. A separate,
+default-false host reset grant retains current `ci_session` steering and existing
+private HTTP/Session/project admission. Confirmed resets compare a checked
+instance revision; new counts, replay and ABA refuse without clearing. Source,
+persisted State identity and cumulative remote-attempt diagnostics are unchanged.
+The browser discards pre-management state replies and reads afresh after reset.
+Eight extracted client-model/orchestration tests pass. Native exact-counter,
+overflow and six HTTP/permission/staleness fixtures are authored but uncompiled
+and unrun locally. Owned-data desktop/mobile HTML checks are separate from native
+acceptance. Fresh guarded Windows/native/VSIX/main/release qualification and full
+upstream/default representation parity remain open.
+
 ## Windows hover phase-observation candidate (2026-10-31)
 
 Completed Windows facade-options CI on `ccd7a108` passed two cases and timed out

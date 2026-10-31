@@ -113,6 +113,16 @@ operation text is replaced by a fixed label. This activity is independent of the
 separately selected raw-log reader and does not count every public protocol
 request. Evicted activity rows are disclosed.
 
+An explicitly selected [tool token estimator](tool-usage-estimators.md) adds a
+Statistics page with exact decimal counters, per-tool filtering/sorting and
+relative input/output bars. These successful Serena-operation totals are distinct
+from the bounded native activity rows. A separate
+`management.toolUsageReset: true` host grant permits confirmed, revision-bound
+clearing of only this instance's tool totals. Current `ci_session` steering and
+all private management checks remain required; counts arriving after review
+refuse the reset. Remote counting attempts are preserved. Without estimator
+selection the Statistics tab is absent; without the reset grant it is read only.
+
 Selected project files support [bound-journal conditional rollback](session-dashboard-project-recovery.md).
 Other native or older unbound journals retain host recovery. Global binding
 migration uses the explicit host-only workflow. Tray integration and automatic
@@ -153,6 +163,7 @@ Host bounds (camelCase) are:
 | `management.memories` | `true` when opted in | boolean; write policy remains separate |
 | `management.operationTimeoutMs` | `30000` | `100`–`60000` |
 | `management.shutdown` | `false` | boolean; trusted owning transport binding also required |
+| `management.toolUsageReset` | `false` | boolean; selected statistics, owning driver and current `ci_session` policy required |
 | `management.documents` | absent/null | closed explicit selection; Windows guarded backend |
 | `management.rawLogs` | absent/null | closed exact-file selection; explicit 1-64000-byte windows; Windows backend |
 

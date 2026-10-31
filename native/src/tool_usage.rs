@@ -259,7 +259,30 @@ impl Stats {
         self.entries.clear();
         Ok(())
     }
+    pub(crate) fn dashboard_view(&self, revision: u64) -> Value {
+        let tools = self
+            .entries
+            .iter()
+            .map(|(name, entry)| {
+                (
+                    name.clone(),
+                    json!({
+                        "numTimesCalled":entry.num_times_called.to_string(),
+                        "inputTokens":entry.input_tokens.to_string(),
+                        "outputTokens":entry.output_tokens.to_string()
+                    }),
+                )
+            })
+            .collect::<serde_json::Map<String, Value>>();
+        json!({"schema":"native_tool_usage_display_v1","estimator":self.estimator.name(),
+            "scope":"current_session_instance_successful_serena_operations","revision":revision.to_string(),
+            "hostGrantRemoteAttempts":match &self.counter { Counter::Remote(host) => host.attempts(), _ => 0 }.to_string(),
+            "tools":tools})
+    }
 }
+#[cfg(test)]
+#[path = "tool_usage_dashboard_tests.rs"]
+mod dashboard_tests;
 #[cfg(test)]
 #[path = "tool_usage_tests.rs"]
 mod tests;

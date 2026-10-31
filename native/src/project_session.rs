@@ -254,6 +254,7 @@ pub(crate) fn validate_retention_record(
 }
 pub struct Session {
     tool_usage: Option<crate::tool_usage::Stats>,
+    tool_usage_revision: u64,
     activation_diagnostic: Option<crate::project_activation::Diagnostic>,
     inspection_only: bool,
     inspection_source_read: bool,
@@ -306,6 +307,8 @@ mod dashboard_project_documents;
 mod dashboard_project_recovery;
 #[path = "session_dashboard_shutdown.rs"]
 mod dashboard_shutdown;
+#[path = "session_dashboard_tool_usage.rs"]
+mod dashboard_tool_usage;
 #[path = "session_prompt_session.rs"]
 mod prompt_memory;
 #[path = "tool_usage_session.rs"]
@@ -1898,6 +1901,7 @@ impl Session {
             };
         let mut session = Self {
             tool_usage,
+            tool_usage_revision: 0,
             activation_ready_projects: if activation_diagnostic.is_some() {
                 BTreeSet::from([state.active_project.clone()])
             } else {
@@ -2713,6 +2717,7 @@ impl Session {
             "executionAuthority":"independent_host_grants","sourceWrittenByDashboard":false});
         if let Some(stats) = &self.tool_usage {
             value["toolUsageStatistics"] = stats.view();
+            value["toolUsageStatisticsDisplay"] = stats.dashboard_view(self.tool_usage_revision);
         }
         if self.host.language_server_auto_selection.is_some() {
             let active = self.automatic_language_applies(&self.state.active_project);
@@ -2831,10 +2836,12 @@ impl Session {
             }
             "clearToolUsage" => {
                 fields(args, &[])?;
+                let revision = self.next_tool_usage_revision()?;
                 self.tool_usage
                     .as_mut()
                     .context("tool_usage_selection_required")?
                     .clear(deadline)?;
+                self.tool_usage_revision = revision;
                 Ok(
                     json!({"cleared":true,"scope":"current_session_instance_only","sourceChanged":false}),
                 )

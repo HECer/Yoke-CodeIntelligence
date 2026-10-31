@@ -110,8 +110,41 @@ empty closed arguments. Both are passive and cannot enter activation commands.
 Selected-hook inspection avoids new Session publication; without selected hooks,
 the existing initial Session-publication behavior remains. Reading/resetting
 counters adds no persisted counter record or State update. Dashboard JSON is
-refreshed after successful counting and failed attempts; no HTML chart/control
-or visual acceptance is added by this change.
+refreshed after successful counting and failed attempts. The separately enabled
+dashboard adds the selected statistics view described below.
+
+## Selected dashboard statistics
+
+With an estimator selected, the dashboard Statistics page shows counted calls,
+input/output and combined token totals, per-tool filtering/sorting and relative
+input/output bars. Display counters and the independent ephemeral revision are
+canonical decimal u64 strings; browser calculations use BigInt and retain exact
+values above JavaScript's safe integer range. The preceding numeric
+`toolUsageStatistics` output is unchanged. Missing or malformed display data is
+unavailable, distinct from a selected empty session's actual zero totals.
+No Statistics tab is added when counting is unselected.
+
+The host can independently select `dashboard.management.toolUsageReset: true`.
+It defaults false and is omitted when false. The owning management driver,
+current `ci_session` policy, private HTTP admission and existing Session/project
+binding remain required; `sessionControls` and `memories` need not be enabled.
+Clearing requires explicit browser confirmation and the exact statistics revision
+captured before confirmation. Every successful count and clear advances that
+checked instance revision, so new counts, replay and same-value ABA resets refuse
+with 409 until the user reviews and confirms again. Revision overflow refuses
+before another count or clear. There is no automatic reset retry.
+
+Clearing affects only the owning instance's tool totals. Cumulative remote
+attempts, other Sessions, persisted Session state/hash/revision, immutable
+snapshots and source bytes are preserved. Reading or clearing statistics never
+calls a provider. Browser state requests started before management cannot
+republish an obsolete view after it; the reset handler waits for a fresh read.
+If that read cannot be confirmed, the UI discloses that the display needs refresh.
+
+Owned-data browser checks exercise the actual HTML without a native server or
+provider. They establish only the inspected presentation and client interaction;
+actual native HTTP reset, steering, resource and transport fixtures still need
+fresh hosted compilation and execution.
 
 For returned native ok/partial envelopes, selected remote counting sets
 `metrics.localOnly=false` and `externalUsage=unknown`. A separate
