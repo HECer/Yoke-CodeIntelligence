@@ -1,5 +1,17 @@
 # Remaining implementation and acceptance
 
+## CLI argument-group repair candidate (2026-10-31)
+
+Completed Linux and Windows CLI failures share a duplicate Clap group ID from
+the flattened token-count and activation `Arguments` types. A unique token group
+ID preserves required-pair and host authority rules. Three native parser tests
+cover the full command graph, default absence of grants, global flag pairing and
+coexisting activation options without host binding or credential/file reads.
+They remain uncompiled/unrun locally; fresh exact-head CI must verify this
+correction and the previously blocked CLI/TLS consumers. The old Windows TLS
+producer's successful compilation is not corrected-source runtime acceptance.
+Full native/Windows/platform/browser/VSIX/main/release gates remain open.
+
 ## Persistent callback budget assertion repair candidate (2026-10-31)
 
 The separate persistent-callback budget failure used an obsolete scalar-error

@@ -5784,6 +5784,104 @@ fn main() {
 }
 
 #[cfg(test)]
+mod cli_argument_tests {
+    use super::*;
+    use clap::{CommandFactory, error::ErrorKind};
+
+    #[test]
+    fn complete_parser_is_valid_and_default_invocation_grants_no_authority() {
+        Cli::command().debug_assert();
+        let cli = Cli::try_parse_from(["yoke", "server-catalog"]).unwrap();
+        assert!(!cli.tool_usage.selected());
+        cli.tool_usage.validate().unwrap();
+        assert!(!cli.activation.selected());
+        cli.activation.validate().unwrap();
+        assert!(!cli.allow_writes);
+        assert!(!cli.allow_session_templates);
+        assert!(!cli.trust_servers);
+    }
+
+    #[test]
+    fn token_disclosure_requires_both_flags_before_or_after_subcommand() {
+        for arguments in [
+            vec!["yoke", "--allow-tool-token-disclosure", "server-catalog"],
+            vec!["yoke", "server-catalog", "--allow-tool-token-disclosure"],
+            vec![
+                "yoke",
+                "--token-count-credential",
+                "owned-count-fixture",
+                "server-catalog",
+            ],
+            vec![
+                "yoke",
+                "server-catalog",
+                "--token-count-credential",
+                "owned-count-fixture",
+            ],
+        ] {
+            let error = Cli::try_parse_from(arguments)
+                .err()
+                .expect("Unpaired grant");
+            assert_eq!(error.kind(), ErrorKind::MissingRequiredArgument);
+        }
+        for arguments in [
+            vec![
+                "yoke",
+                "--allow-tool-token-disclosure",
+                "--token-count-credential",
+                "owned-count-fixture",
+                "server-catalog",
+            ],
+            vec![
+                "yoke",
+                "server-catalog",
+                "--token-count-credential",
+                "owned-count-fixture",
+                "--allow-tool-token-disclosure",
+            ],
+        ] {
+            let cli = Cli::try_parse_from(arguments).unwrap();
+            assert!(cli.tool_usage.selected());
+            cli.tool_usage.validate().unwrap();
+            assert_eq!(
+                cli.tool_usage.token_count_credential.as_deref(),
+                Some("owned-count-fixture")
+            );
+            assert!(!cli.activation.selected());
+            assert!(!cli.allow_writes);
+            assert!(!cli.allow_session_templates);
+            assert!(!cli.trust_servers);
+        }
+    }
+
+    #[test]
+    fn token_and_activation_groups_can_coexist_without_binding_either() {
+        let cli = Cli::try_parse_from([
+            "yoke",
+            "--allow-tool-token-disclosure",
+            "--token-count-credential",
+            "owned-count-fixture",
+            "--allow-project-activation",
+            "--activation-selection",
+            "owned-selection-not-read.json",
+            "server-catalog",
+        ])
+        .unwrap();
+        assert!(cli.tool_usage.selected());
+        cli.tool_usage.validate().unwrap();
+        assert!(cli.activation.selected());
+        cli.activation.validate().unwrap();
+        assert_eq!(
+            cli.activation.activation_selection.as_deref(),
+            Some(std::path::Path::new("owned-selection-not-read.json"))
+        );
+        assert!(!cli.allow_writes);
+        assert!(!cli.allow_session_templates);
+        assert!(!cli.trust_servers);
+    }
+}
+
+#[cfg(test)]
 mod runtime_batch_tests {
     use super::*;
     use yoke::runtime::Request;

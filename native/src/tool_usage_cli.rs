@@ -7,6 +7,7 @@ use yoke::{
 };
 
 #[derive(Clone, Default, clap::Args)]
+#[group(id = "tool_token_count_disclosure")]
 pub struct Arguments {
     /// Permit selected tool arguments/results to leave this host for token counting.
     #[arg(long, global = true, requires = "token_count_credential")]

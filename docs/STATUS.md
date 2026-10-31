@@ -1,5 +1,19 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## CLI argument-group repair candidate (2026-10-31)
+
+Completed Linux and Windows CLI groups on estimator source `ccd7a108` panic
+before dispatch because the two flattened `Arguments` types derive the same Clap
+group ID. The token-count options now declare a unique group ID, retaining both
+independent required flags and all activation/host binding checks. Three authored
+native parser tests check the complete command graph, unselected defaults,
+one-sided refusal and paired global flags, and coexistence with activation flags
+without binding hosts, reading credentials or executing commands. Fresh Windows
+TLS preparation compiled that older source but its runtime consumer failed;
+neither that producer nor these source checks qualify this corrected candidate.
+The parser tests remain uncompiled/unrun locally. Exact-head native, Windows,
+VSIX, main and release acceptance remain open.
+
 ## Persistent callback budget assertion repair candidate (2026-10-31)
 
 The completed Linux global-budget group passed six of seven cases; the remaining
