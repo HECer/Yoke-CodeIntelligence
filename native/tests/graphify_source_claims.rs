@@ -951,3 +951,58 @@ fn admitted_reverse_contains_is_outside_the_first_256_primary_routes() {
         source.as_bytes()
     );
 }
+
+#[test]
+fn admitted_equal_numeric_routes_rank_the_original_weakest_hop_before_prefix_order() {
+    let mut f = fixture();
+    let mut branches = ["stronger", "weaker"];
+    branches.sort_by_key(|name| node(&f, name));
+    let (first, later) = (branches[0], branches[1]);
+    assert!(node(&f, first) < node(&f, later));
+    let score = r#"{"confidence":"INFERRED","confidence_score":0.5}"#;
+    let attributes = BTreeMap::from([
+        (
+            call(&f, first, "omega")["id"].as_str().unwrap().to_owned(),
+            score.to_owned(),
+        ),
+        (
+            call(&f, "\u{3b1}", later)["id"]
+                .as_str()
+                .unwrap()
+                .to_owned(),
+            score.to_owned(),
+        ),
+    ]);
+    let (artifact, _) = import(&f, &document(&f, &attributes));
+    let view = selected(&f, &artifact);
+    let result = query(&mut f, &view);
+    assert_eq!(result["pathSourceScoreToken"], "0.5");
+    assert_weaker_route(&f, &result, later);
+    let control = BTreeMap::from([
+        (
+            call(&f, "\u{3b1}", first)["id"]
+                .as_str()
+                .unwrap()
+                .to_owned(),
+            score.to_owned(),
+        ),
+        (
+            call(&f, later, "omega")["id"].as_str().unwrap().to_owned(),
+            score.to_owned(),
+        ),
+    ]);
+    let (control_artifact, _) = import(&f, &document(&f, &control));
+    assert_ne!(control_artifact, artifact);
+    let control_view = selected(&f, &control_artifact);
+    assert_eq!(control_view.nodes, view.nodes);
+    assert_eq!(control_view.observations, view.observations);
+    assert_eq!(control_view.evidence, view.evidence);
+    let control_result = query(&mut f, &control_view);
+    assert_eq!(control_result["pathSourceScoreToken"], "0.5");
+    assert_weaker_route(&f, &control_result, first);
+    assert_eq!(query(&mut f, &view), result);
+    assert_eq!(
+        fs::read(f.root.path().join("main.rs")).unwrap(),
+        SOURCE.as_bytes()
+    );
+}
