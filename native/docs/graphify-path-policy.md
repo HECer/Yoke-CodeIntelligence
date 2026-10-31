@@ -42,9 +42,15 @@ deadline throughout collection. The existing bounded JSON encoder counts and
 serializes the borrowed result before owned JSON copies are created, under the
 same 256,000-byte limit and absolute deadline. The final whole-response byte
 refusal remains. A complete provenance result that cannot fit is refused; it is
-not silently clipped. This implementation still awaits fresh native GREEN.
-Retained numeric source-claim semantics, contradictory-source fixtures, route
-counting/caps and full current upstream CLI/MCP equivalence remain outstanding.
+not silently clipped. At published source `9b429f4d`, all seven policy/rendering
+units and eleven public selected-View cases pass on Linux and Windows. The
+independent source/text receipts are
+`73a518251332532b416c7e8064e4bf393b9f31285914de09431ef92cddca4fcd`
+and `eb182a06f6fad09b2fbfe8623a643baf9d35769a780fd45a45af25f47a5b0c00`;
+the latter preserves a separate unchanged-core deadline failure and is not
+whole Windows/default-suite acceptance. Retained numeric source-claim semantics,
+contradictory admitted claim fixtures, the route counting/prefix stage below
+and full current upstream CLI/MCP equivalence remain outstanding.
 
 ## Qualification
 
@@ -124,3 +130,40 @@ across observations/hops; it does not establish public source admission.
 No new native case has run locally. Numeric
 source-claim admission, contradictory claim fixtures, distinct-node 256/257
 counting and full current CLI/MCP equivalence remain open.
+
+
+## Distinct-node route prefix: test-first candidate
+
+The next candidate specifies the current upstream boundary separately from
+the four coalesced category states: discover at most 257 distinct shortest
+node paths, rank only the first 256, and report whether another path exists.
+Parallel observations remain separate original claims at each hop and do not
+increase the node-path count. The selected policy is still an unmerged
+candidate; its current producer ranks all coalesced category routes and has
+not implemented this prefix behavior.
+
+The proposed selected-only fields are `shortestNodePathsConsidered` (0..256),
+`shortestNodePathsCapped`, `shortestNodePathLimit` (256), and
+`pathSelectionScope` (`first_256_distinct_shortest_node_paths`). A 257th path
+detects the cap and cannot displace the weakest in-prefix route. Original
+deadline, max-hop, complete parallel provenance and whole-output refusal
+bounds remain. Omitted and explicit legacy selection keep their old shape.
+
+Three explicitly synthetic category-policy tests specify the excluded weaker
+257th route, a weaker parallel copy on in-prefix route 255, and a multilevel
+reconverging graph with 257 complete routes but only two first-hop neighbors.
+The order is defined by shortest-path predecessor lists in BFS first-discovery
+order, then backward enumeration from the target. For each target predecessor,
+its predecessor choices are exhausted before the next target predecessor;
+parallel copies coalesce only for this node-path enumeration, not claim ranking
+or output. In the multilevel fixture this excludes a weak last suffix that
+forward DFS would place inside its prefix. These synthetic cases make no
+source-admission claim. Two genuine public selected-View fixtures have exactly
+256 or 257 function branches, two original first-hop calls per branch and
+independently pinned UTF-8/combining-character/CRLF source hashes. They specify
+the count/cap fields, full original hop objects/evidence, stable results and
+replay after a later index and unindexed host edit without query publication.
+These five tests are authored only; native RED remains unrun. No producer
+change for this stage has been made. Actual numeric claim admission/replay,
+contradictory admitted numeric/category claims and full current CLI/MCP
+qualification remain open.

@@ -693,3 +693,241 @@ fn selected_parallel_hop_output_refuses_capacity_without_publishing_or_losing_so
     );
     assert!(f.session.engine.servers.is_empty());
 }
+
+fn assert_selected_distinct_node_route_boundary(route_count: usize, expected_source_hash: &str) {
+    let mut source = String::from("// \u{3a9} e\u{301}\r\nfn \u{3b1}(){\r\n");
+    for ordinal in 0..route_count {
+        source.push_str(&format!(
+            "branch_{ordinal:03}(); branch_{ordinal:03}();\r\n"
+        ));
+    }
+    source.push_str("}\r\nfn omega(){}\r\n");
+    for ordinal in 0..route_count {
+        source.push_str(&format!("fn branch_{ordinal:03}(){{ omega(); }}\r\n"));
+    }
+    assert_eq!(yoke::model::hash(source.as_bytes()), expected_source_hash);
+    let mut f = fixture_with_source(AnalyzerEpoch::V8, &source);
+    let alpha = node_id(&f.selected, "function", "\u{3b1}");
+    let omega = node_id(&f.selected, "function", "omega");
+    // Establish the complete admitted two-hop premise before the causal RED:
+    // every named branch is unique, both entry calls survive admission, every
+    // branch has exactly one resolved exit, and no shorter/extra route exists.
+    let mut branch_ids = BTreeSet::new();
+    for ordinal in 0..route_count {
+        let name = format!("branch_{ordinal:03}");
+        assert_eq!(
+            f.selected
+                .nodes
+                .iter()
+                .filter(|node| node["kind"] == "function" && node["name"] == name)
+                .count(),
+            1
+        );
+        let branch = node_id(&f.selected, "function", &name);
+        assert!(branch_ids.insert(branch.clone()));
+        let entries: Vec<_> = f
+            .selected
+            .observations
+            .iter()
+            .filter(|edge| edge["source"] == alpha && edge["target"] == branch)
+            .collect();
+        assert_eq!(entries.len(), 2);
+        assert_ne!(entries[0]["id"], entries[1]["id"]);
+        assert_ne!(entries[0]["evidenceIds"], entries[1]["evidenceIds"]);
+        let exits: Vec<_> = f
+            .selected
+            .observations
+            .iter()
+            .filter(|edge| edge["source"] == branch && !edge["target"].is_null())
+            .collect();
+        assert_eq!(exits.len(), 1);
+        assert_eq!(exits[0]["target"], omega);
+    }
+    assert_eq!(branch_ids.len(), route_count);
+    let all_entries: Vec<_> = f
+        .selected
+        .observations
+        .iter()
+        .filter(|edge| edge["source"] == alpha && !edge["target"].is_null())
+        .collect();
+    assert_eq!(all_entries.len(), route_count * 2);
+    assert!(
+        all_entries
+            .iter()
+            .all(|edge| branch_ids.contains(edge["target"].as_str().unwrap()))
+    );
+    assert!(
+        !f.selected
+            .observations
+            .iter()
+            .any(|edge| edge["source"] == omega && !edge["target"].is_null())
+    );
+    let original = serde_json::to_vec(&f.selected).unwrap();
+    let before = counts(&f.session);
+    let latest = f.session.engine.store.latest().unwrap();
+    let args = json!({"source":alpha,"target":omega,"max_hops":2});
+    let legacy = selected_call(&mut f, "shortest_path", args.clone());
+    let mut explicit_legacy_args = args.clone();
+    explicit_legacy_args["path_policy"] = json!("first_observation_v1");
+    assert_eq!(
+        selected_call(&mut f, "shortest_path", explicit_legacy_args),
+        legacy
+    );
+    for key in [
+        "shortestNodePathsConsidered",
+        "shortestNodePathsCapped",
+        "shortestNodePathLimit",
+        "pathSelectionScope",
+    ] {
+        assert!(
+            legacy.get(key).is_none(),
+            "Legacy response shape changed at {key}"
+        );
+    }
+    let mut selected_args = args;
+    selected_args["path_policy"] = json!("weakest_source_categories_v1");
+    let result = selected_call(&mut f, "shortest_path", selected_args.clone());
+    assert_eq!(result["found"], true);
+    assert_eq!(result["hops"], 2);
+    assert_eq!(
+        result["shortestNodePathsConsidered"].as_u64(),
+        Some(256),
+        "Two original calls per branch must not double the distinct shortest node-path count"
+    );
+    assert_eq!(result["shortestNodePathsCapped"], route_count == 257);
+    assert_eq!(result["shortestNodePathLimit"], 256);
+    assert_eq!(
+        result["pathSelectionScope"],
+        "first_256_distinct_shortest_node_paths"
+    );
+    assert_eq!(result["pathHops"].as_array().unwrap().len(), 2);
+    assert_eq!(
+        result["pathHops"][0]["observations"]
+            .as_array()
+            .unwrap()
+            .len(),
+        2
+    );
+    assert_eq!(
+        result["pathHops"][1]["observations"]
+            .as_array()
+            .unwrap()
+            .len(),
+        1
+    );
+    assert_eq!(result["pathHops"][0]["traversalSourceId"], alpha);
+    assert_eq!(result["pathHops"][1]["traversalTargetId"], omega);
+    assert_eq!(
+        result["pathHops"][0]["traversalTargetId"],
+        result["pathHops"][1]["traversalSourceId"]
+    );
+    assert!(branch_ids.contains(result["pathHops"][0]["traversalTargetId"].as_str().unwrap()));
+    assert_eq!(result["pathObservationIds"].as_array().unwrap().len(), 2);
+    for (ordinal, hop) in result["pathHops"].as_array().unwrap().iter().enumerate() {
+        assert_eq!(
+            hop["selectedObservationId"],
+            result["pathObservationIds"][ordinal]
+        );
+        let originals: Vec<_> = f
+            .selected
+            .observations
+            .iter()
+            .filter(|edge| {
+                edge["source"] == hop["traversalSourceId"]
+                    && edge["target"] == hop["traversalTargetId"]
+            })
+            .cloned()
+            .collect();
+        assert_eq!(hop["observations"], json!(originals));
+        assert_eq!(
+            hop["observationIds"],
+            json!(originals.iter().map(|edge| &edge["id"]).collect::<Vec<_>>())
+        );
+        assert!(
+            originals
+                .iter()
+                .any(|edge| edge["id"] == hop["selectedObservationId"])
+        );
+        let ids: BTreeSet<_> = originals
+            .iter()
+            .flat_map(|edge| {
+                edge["evidenceIds"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|id| id.as_str().unwrap())
+            })
+            .collect();
+        let sites: Vec<_> = f
+            .selected
+            .evidence
+            .iter()
+            .filter(|site| ids.contains(site["id"].as_str().unwrap()))
+            .cloned()
+            .collect();
+        assert_eq!(hop["evidence"], json!(sites));
+        for site in sites {
+            assert_eq!(site["path"], "main.rs");
+            assert_eq!(site["contentHash"], expected_source_hash);
+            let start = site["startByte"].as_u64().unwrap() as usize;
+            let end = site["endByte"].as_u64().unwrap() as usize;
+            assert!(source.is_char_boundary(start) && source.is_char_boundary(end));
+            let anchor = &source[start..end];
+            assert!(
+                anchor == "omega()" || (anchor.starts_with("branch_") && anchor.ends_with("()"))
+            );
+        }
+    }
+    assert_eq!(
+        selected_call(&mut f, "shortest_path", selected_args.clone()),
+        result
+    );
+    assert_eq!(counts(&f.session), before);
+    assert_eq!(f.session.engine.store.latest().unwrap(), latest);
+    assert_eq!(
+        fs::read(f.root.path().join("main.rs")).unwrap(),
+        source.as_bytes()
+    );
+    fs::write(f.root.path().join("main.rs"), b"fn indexed_later(){}\n").unwrap();
+    f.session.engine.index(&Deadline::new(30000)).unwrap();
+    fs::write(f.root.path().join("main.rs"), b"fn not_indexed(){}\n").unwrap();
+    let historical_before = counts(&f.session);
+    assert_eq!(
+        selected_call(&mut f, "shortest_path", selected_args),
+        result
+    );
+    assert_eq!(counts(&f.session), historical_before);
+    assert_eq!(
+        serde_json::to_vec(
+            &graph_view::load(
+                &f.session.engine.store,
+                &f.selected.id,
+                &Deadline::new(30000)
+            )
+            .unwrap()
+        )
+        .unwrap(),
+        original
+    );
+    assert_eq!(
+        fs::read(f.root.path().join("main.rs")).unwrap(),
+        b"fn not_indexed(){}\n"
+    );
+    assert!(f.session.engine.servers.is_empty());
+}
+
+#[test]
+fn selected_exactly_256_node_routes_keep_parallel_source_claims_and_report_no_cap() {
+    assert_selected_distinct_node_route_boundary(
+        256,
+        "9ff5904852f61f118c4ab6b6263843874a4b02ae35c8225d2e43c962fb9f00b6",
+    );
+}
+
+#[test]
+fn selected_257_node_routes_report_the_ranked_prefix_cap_and_replay_the_old_view() {
+    assert_selected_distinct_node_route_boundary(
+        257,
+        "2ecb7307a726c93aca9feaaae9b610af70ce71d19b25c7dafe10d90f887e321c",
+    );
+}

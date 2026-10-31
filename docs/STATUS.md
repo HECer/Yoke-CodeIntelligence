@@ -1,5 +1,40 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Distinct-node route cap: causal fixtures pending (2026-10-31)
+
+At published source `9b429f4d`, independent Linux and Windows text/source
+audits confirm all seven selector/rendering units and eleven public selected-
+View cases, including exact parallel evidence, historical replay and the
+1,200-call whole-output refusal. Linux also passes eight adapter cases and
+the original CLI target. Receipts are
+`73a518251332532b416c7e8064e4bf393b9f31285914de09431ef92cddca4fcd`
+and `eb182a06f6fad09b2fbfe8623a643baf9d35769a780fd45a45af25f47a5b0c00`.
+This is scoped hop evidence. A separate unchanged Windows core case fails at
+its request deadline; its cause remains unestablished. The exact-job retry
+was refused while the workflow was running. Current macOS resource-limit,
+host-executable and initialization diagnostics remain recorded separately.
+Full current Windows/default/platform/main/release gates are still open.
+At the same `9b429f4d` source, the actual explicit Rust VS Code host, fresh
+package producer and three real TSGo navigation operations are independently
+checked with all 1,840 selected source hashes and four owned Job scenarios.
+The bundled Rust host fails with `output_inventory_missing_entry`: cleanup is
+confirmed, but natural exit, its worker result and final VSIX acceptance are
+absent. The exact-job diagnostic retry request was accepted after the workflow
+completed; a new execution result is not yet verified. No guard was relaxed.
+Receipts are `a0eb1fbfb17e7f6f84461af4a67014febe3eb9400582e0ebcb3c881e70606723`
+and `510490184eac4b2d6602d18feb488bc8e2e8b6793624d246d2994df5dc1d379c`.
+
+The next five authored cases specify distinct shortest node-path counting and
+the first-256/257th-detection prefix boundary under the unmerged selected
+policy. Three are pure category-policy counterexamples, including a multilevel
+reconverging route-order boundary; two use genuinely
+published selected Views with 256 or 257 source branches and parallel calls.
+The production selector is unchanged, and these new native cases remain
+unrun. A four-state count is not a node-path count. Numeric source-claim
+admission/replay, contradictory admitted claims, full current CLI/MCP and the
+wider original R1-R9/backend/upstream acceptance remain outstanding.
+
+
 ## Shortest-path source-category selector candidate (2026-10-31)
 
 At `b929b7b3`, the original native counterexample fails at its intended route

@@ -190,3 +190,143 @@ fn hop_rendering_keeps_full_evidence_order_and_shared_sites_without_collapsing_o
     assert_eq!(hops[0]["evidence"], json!([first, shared]));
     assert_eq!(hops[1]["evidence"], json!([shared]));
 }
+
+// These are explicitly synthetic category-policy cases. They specify route
+// enumeration and do not establish public admission of numeric source claims.
+fn parallel_node_routes(route_count: usize) -> View {
+    let mut view = equal_length_routes();
+    view.nodes = ["start", "end"]
+        .into_iter()
+        .map(|name| json!({"id":hash(name.as_bytes()),"name":name}))
+        .collect();
+    view.observations.clear();
+    for ordinal in 0..route_count {
+        let name = format!("branch_{ordinal:03}");
+        view.nodes
+            .push(json!({"id":hash(name.as_bytes()),"name":name}));
+        for copy in 0..2 {
+            view.observations.push(json!({
+                "id":hash(format!("entry {ordinal} copy {copy}").as_bytes()),
+                "source":hash(b"start"),"target":hash(name.as_bytes()),
+                "relation":"call","resolution":"syntactic","evidenceIds":[]
+            }));
+        }
+        view.observations.push(json!({
+            "id":hash(format!("exit {ordinal}").as_bytes()),
+            "source":hash(name.as_bytes()),"target":hash(b"end"),
+            "relation":"call","resolution":"syntactic","evidenceIds":[]
+        }));
+    }
+    view
+}
+
+#[test]
+fn a_weaker_257th_node_route_does_not_displace_the_ranked_256_route_prefix() {
+    let mut view = parallel_node_routes(257);
+    // Both original copies of the last route are outside the ranked prefix.
+    for copy in 0..2 {
+        view.observations[256 * 3 + copy]["resolution"] = json!("unmapped_claim");
+    }
+    let original = serde_json::to_vec(&view).unwrap();
+    let args = json!({"source":"start","target":"end","max_hops":2,"undirected":false,"path_policy":"weakest_source_categories_v1"});
+    let result = shortest(&view, &args, &Deadline::new(1000)).unwrap();
+    assert_eq!(
+        result["pathObservationIds"],
+        json!([hash(b"entry 0 copy 0"), hash(b"exit 0")]),
+        "Only the first 256 distinct shortest node routes are ranked; the 257th only detects the cap"
+    );
+    assert_eq!(result["pathSourceCategory"], "extracted");
+    assert_eq!(result["shortestNodePathsConsidered"], 256);
+    assert_eq!(result["shortestNodePathsCapped"], true);
+    assert_eq!(result["shortestNodePathLimit"], 256);
+    assert_eq!(
+        result["pathSelectionScope"],
+        "first_256_distinct_shortest_node_paths"
+    );
+    assert_eq!(serde_json::to_vec(&view).unwrap(), original);
+}
+
+#[test]
+fn every_parallel_claim_on_an_in_prefix_hop_affects_its_route_without_adding_routes() {
+    let mut view = parallel_node_routes(257);
+    // The second original copy is weaker. It must affect route 255 even when
+    // node-path enumeration coalesces the duplicate neighbor for counting.
+    view.observations[255 * 3 + 1]["resolution"] = json!("heuristic");
+    for copy in 0..2 {
+        view.observations[256 * 3 + copy]["resolution"] = json!("unmapped_claim");
+    }
+    let args = json!({"source":"start","target":"end","max_hops":2,"undirected":false,"path_policy":"weakest_source_categories_v1"});
+    let result = shortest(&view, &args, &Deadline::new(1000)).unwrap();
+    assert_eq!(
+        result["pathObservationIds"],
+        json!([hash(b"entry 255 copy 1"), hash(b"exit 255")]),
+        "Parallel evidence is retained and ranked within a hop, never counted as a separate node path"
+    );
+    assert_eq!(result["pathSourceCategory"], "inferred");
+    assert_eq!(
+        result["pathHops"][0]["observations"],
+        json!([view.observations[255 * 3], view.observations[255 * 3 + 1]])
+    );
+    assert_eq!(result["shortestNodePathsConsidered"], 256);
+    assert_eq!(result["shortestNodePathsCapped"], true);
+}
+
+#[test]
+fn complete_node_routes_use_predecessor_order_across_multilevel_reconvergence() {
+    let mut view = parallel_node_routes(0);
+    for name in ["left", "right"] {
+        view.nodes
+            .push(json!({"id":hash(name.as_bytes()),"name":name}));
+        view.observations.push(json!({
+            "id":hash(format!("start {name}").as_bytes()),"source":hash(b"start"),
+            "target":hash(name.as_bytes()),"relation":"call","resolution":"syntactic","evidenceIds":[]
+        }));
+    }
+    // 128 shared suffixes each admit left/right, plus one final left-only
+    // suffix: 257 complete paths but only two first-hop neighbors. Target-
+    // predecessor order visits both prefixes of each earlier suffix before
+    // the last suffix; forward DFS would incorrectly rank its weak route.
+    for ordinal in 0..129 {
+        let name = format!("middle_{ordinal:03}");
+        view.nodes
+            .push(json!({"id":hash(name.as_bytes()),"name":name}));
+        for prefix in ["left", "right"] {
+            if ordinal == 128 && prefix == "right" {
+                continue;
+            }
+            view.observations.push(json!({
+                "id":hash(format!("{prefix} {name}").as_bytes()),"source":hash(prefix.as_bytes()),
+                "target":hash(name.as_bytes()),"relation":"call",
+                "resolution":if ordinal == 128 {"unmapped_claim"} else {"syntactic"},"evidenceIds":[]
+            }));
+        }
+        view.observations.push(json!({
+            "id":hash(format!("{name} end").as_bytes()),"source":hash(name.as_bytes()),
+            "target":hash(b"end"),"relation":"call","resolution":"syntactic","evidenceIds":[]
+        }));
+    }
+    let before = serde_json::to_vec(&view).unwrap();
+    let result = shortest(
+        &view,
+        &json!({
+            "source":"start","target":"end","max_hops":3,"undirected":false,
+            "path_policy":"weakest_source_categories_v1"
+        }),
+        &Deadline::new(1000),
+    )
+    .unwrap();
+    assert_eq!(result["hops"], 3);
+    assert_eq!(
+        result["pathObservationIds"],
+        json!([
+            hash(b"start left"),
+            hash(b"left middle_000"),
+            hash(b"middle_000 end")
+        ]),
+        "Count complete node routes and rank the target-predecessor prefix, not first-hop neighbors or forward DFS"
+    );
+    assert_eq!(result["pathSourceCategory"], "extracted");
+    assert_eq!(result["shortestNodePathsConsidered"], 256);
+    assert_eq!(result["shortestNodePathsCapped"], true);
+    assert_eq!(serde_json::to_vec(&view).unwrap(), before);
+}
