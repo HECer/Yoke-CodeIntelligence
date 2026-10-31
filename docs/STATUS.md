@@ -1,5 +1,19 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Explicit global tool-budget candidate (2026-10-31)
+
+Host-selected global tool_timeout and default_max_tool_answer_chars now project
+into a separately bound Session policy. Tool/facade/persistent-cell entry points
+intersect the selected clock with original host deadlines and cancellation;
+only the 17 declared answer facades resolve missing/-1 to the selected default.
+Per-call overrides, Unicode scalar counting, zero and independent byte ceilings
+remain explicit. Empty selection retains previous profile bytes and bindings.
+Two inert contract tests passed RED/GREEN; four native unit and seven integration
+tests are authored but unrun locally. Source/npm checks do not establish native
+deadline, Windows cleanup, platform or release acceptance. Exact hosted runtime
+qualification and broader parity/VSIX/main/release gates remain open.
+[Policy, admission and remaining evidence](../native/docs/global-tool-budgets.md).
+
 ## Selected context options candidate (2026-10-31)
 
 The pinned ten-field context and seven-field mode declarations now have a

@@ -537,6 +537,19 @@ impl Backend<'_> {
             _ => false,
         }
     }
+    fn call_response(&mut self, name: &str, args: Value) -> Result<Value> {
+        let policy = match self {
+            Self::Serena(session, _) => session.tool_budgets(),
+            _ => None,
+        };
+        let parent =
+            crate::capture::Deadline::new(policy.and_then(|p| p.timeout_ms).unwrap_or(120000));
+        crate::tool_budgets::with_deadline(policy.as_ref(), &parent, |_| {
+            self.call(name, args).and_then(|result| {
+                crate::context_options::tool_response(result, self.structured_output())
+            })
+        })
+    }
     fn call(&mut self, name: &str, args: Value) -> Result<Value> {
         if !self.tool_allowed(name) {
             return Ok(
@@ -579,7 +592,11 @@ impl Backend<'_> {
                 Ok(result.unwrap_or_else(|error|json!({"status":"error","data":{},"error":{"message":error.to_string()}})))
             }
             Self::Serena(session, runtime) => {
-                let deadline = crate::capture::Deadline::new(120000);
+                let timeout = session
+                    .tool_budgets()
+                    .and_then(|p| p.timeout_ms)
+                    .unwrap_or(120000);
+                let deadline = crate::capture::Deadline::new(timeout);
                 let result = match runtime.as_deref_mut() {
                     Some(runtime) => crate::compatibility::invoke_serena_with_repl(
                         session, runtime, name, &args, &deadline,
@@ -1055,17 +1072,13 @@ fn serve_backend_state(
                     send(error(id, -32602, "Tool name required"))?;
                     continue;
                 };
-                match backend
-                    .call(
-                        name,
-                        message["params"]
-                            .get("arguments")
-                            .cloned()
-                            .unwrap_or_else(|| json!({})),
-                    )
-                    .and_then(|result| {
-                        crate::context_options::tool_response(result, backend.structured_output())
-                    }) {
+                match backend.call_response(
+                    name,
+                    message["params"]
+                        .get("arguments")
+                        .cloned()
+                        .unwrap_or_else(|| json!({})),
+                ) {
                     Ok(result) => result,
                     Err(_) => {
                         send(error(

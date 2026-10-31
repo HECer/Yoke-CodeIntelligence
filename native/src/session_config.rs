@@ -95,6 +95,7 @@ fn label(value: &str) -> Result<()> {
     Ok(())
 }
 struct DecodedFields {
+    tool_budgets: Map<String, Value>,
     encoding: Option<Option<crate::source_encoding::Codec>>,
     additional_folders: Option<Option<Vec<String>>>,
     native_defaults: Map<String, Value>,
@@ -119,6 +120,7 @@ fn rename_fields(
     prompt_rendered: bool,
 ) -> Result<DecodedFields> {
     let mut mapped = Map::new();
+    let mut tool_budgets = Map::new();
     let mut encoding = None;
     let mut additional_folders = None;
     let mut native_defaults = Map::new();
@@ -133,6 +135,10 @@ fn rename_fields(
     let mut symbol_info_budget = None;
     let mut workspace_folders = None;
     for (key, value) in raw {
+        if crate::tool_budgets::yaml_field(&key, &value, global)? {
+            tool_budgets.insert(key, value);
+            continue;
+        }
         if let Some((name, value)) =
             crate::context_options::yaml_field(&key, &value, definition, context)?
         {
@@ -302,6 +308,7 @@ fn rename_fields(
         mapped.insert(name.into(), value);
     }
     Ok(DecodedFields {
+        tool_budgets,
         encoding,
         additional_folders,
         native_defaults,
@@ -446,6 +453,7 @@ fn project_inner(
             raw.insert(key.into(), json!(rendered.text));
         }
         let DecodedFields {
+            tool_budgets,
             encoding,
             additional_folders,
             native_defaults,
@@ -468,6 +476,7 @@ fn project_inner(
             is_project,
             prompt_rendering.is_some() || defer,
         )?;
+        crate::tool_budgets::project(&mut profile.tool_budgets, &tool_budgets)?;
         if let Target::Project { project } | Target::ProjectLocal { project } = source.target {
             label(project)?;
             ensure!(
@@ -724,6 +733,9 @@ fn project_inner(
         if let Some(rendering) = prompt_rendering {
             receipt["promptRendering"] = rendering;
         }
+        if !tool_budgets.is_empty() {
+            receipt["toolBudgetDeclarations"] = Value::Object(tool_budgets);
+        }
         let mut reported_defaults = native_defaults;
         if let Some(value) = reported_defaults
             .get("activation_command")
@@ -791,6 +803,12 @@ fn project_inner(
     }
     if let Some(folders) = &profile.symbol_workspace_folders {
         folders.validate(&profile)?;
+    }
+    if let Some(budgets) = &profile.tool_budgets {
+        budgets.validate()?;
+    }
+    if crate::tool_budgets::unselected(&profile.tool_budgets) {
+        profile.tool_budgets = None;
     }
     if let Some(budgets) = &profile.symbol_info_budgets {
         budgets.validate(&profile)?;

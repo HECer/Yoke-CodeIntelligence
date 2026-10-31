@@ -182,6 +182,17 @@ pub fn invoke_serena(
     args: &Value,
     deadline: &Deadline,
 ) -> Result<Value> {
+    let policy = session.tool_budgets();
+    crate::tool_budgets::with_deadline(policy.as_ref(), deadline, |deadline| {
+        invoke_serena_inner(session, name, args, deadline)
+    })
+}
+fn invoke_serena_inner(
+    session: &mut Session,
+    name: &str,
+    args: &Value,
+    deadline: &Deadline,
+) -> Result<Value> {
     deadline.check()?;
     session.require_serena_tool(name, deadline)?;
     let inventory = contracts();
@@ -287,6 +298,18 @@ pub fn invoke_serena(
 }
 /// Use an already authorized, persistent host runtime; tool arguments never configure it.
 pub fn invoke_serena_with_repl(
+    session: &mut Session,
+    runtime: &mut crate::agent_repl::AgentRepl,
+    name: &str,
+    args: &Value,
+    deadline: &Deadline,
+) -> Result<Value> {
+    let policy = session.tool_budgets();
+    crate::tool_budgets::with_deadline(policy.as_ref(), deadline, |deadline| {
+        invoke_serena_with_repl_inner(session, runtime, name, args, deadline)
+    })
+}
+fn invoke_serena_with_repl_inner(
     session: &mut Session,
     runtime: &mut crate::agent_repl::AgentRepl,
     name: &str,

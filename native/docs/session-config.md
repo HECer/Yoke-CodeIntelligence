@@ -607,3 +607,13 @@ The selected policy changes actual Serena discovery/output and the existing
 host-startup-only project lock. Absent fields retain preceding identities and output.
 See [the complete selected context contract](context-definition-options.md) for
 true/false/null behavior, scopes, budgets and pending native qualification.
+
+## Explicit global tool limits
+
+Global YAML additionally projects tool_timeout (positive seconds, at most 600)
+and default_max_tool_answer_chars (integer 0 through 4000000) into HostProfile
+toolBudgets. Null clears one selection; omission preserves the host selection.
+The policy binds Sessions and reaches selected tool deadlines and declared
+answer facades, including -1 as the configured default. Original host ceilings,
+cancellation and byte limits remain independent. Empty selection preserves prior
+bindings and behavior. See [duration, character semantics and unrun native gates](global-tool-budgets.md).

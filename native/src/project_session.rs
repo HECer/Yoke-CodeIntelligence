@@ -84,6 +84,8 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
+    #[serde(default, skip_serializing_if = "crate::tool_budgets::unselected")]
+    pub tool_budgets: Option<crate::tool_budgets::Config>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub activation_commands: Option<crate::project_activation::Config>,
     #[serde(skip)]
@@ -143,6 +145,7 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            tool_budgets: None,
             activation_commands: None,
             activation_runtime: None,
             prompt_templates: None,
@@ -1021,6 +1024,12 @@ impl Session {
         inspection_only: bool,
         deadline: &Deadline,
     ) -> Result<Self> {
+        if let Some(budgets) = &host.tool_budgets {
+            budgets.validate()?;
+        }
+        if crate::tool_budgets::unselected(&host.tool_budgets) {
+            host.tool_budgets = None;
+        }
         if let Some(config) = &host.activation_commands {
             config.validate(&host, deadline)?;
         }
@@ -1512,6 +1521,11 @@ impl Session {
             fingerprint
         };
         engine.sync_source_exclusions(deadline)?;
+        let fingerprint = if let Some(budgets) = &host.tool_budgets {
+            identity(&(fingerprint, crate::tool_budgets::VERSION, budgets))
+        } else {
+            fingerprint
+        };
         let fingerprint = if let Some(budgets) = &host.symbol_info_budgets {
             identity(&(fingerprint, "host_symbol_info_budgets_v1", budgets))
         } else {
@@ -1915,6 +1929,7 @@ impl Session {
             || self.host.language_servers.is_some()
             || self.host.symbol_workspace_folders.is_some()
             || self.host.symbol_info_budgets.is_some()
+            || self.host.tool_budgets.is_some()
             || self.host.primary_read_only
             || !crate::source_exclusions::unselected(&self.host.source_exclusions)
             || self.host.source_line_endings.is_some()
@@ -2485,6 +2500,9 @@ impl Session {
         };
         self.project_engine(&project, deadline)
     }
+    pub(crate) fn tool_budgets(&self) -> Option<crate::tool_budgets::Config> {
+        self.host.tool_budgets
+    }
     pub fn invoke(&mut self, operation: &str, args: &Value, deadline: &Deadline) -> Result<Value> {
         let activity = self
             .dashboard
@@ -2493,7 +2511,10 @@ impl Session {
             .and_then(|handle| handle.begin(operation));
         let previous_inspection = self.inspection_source_read;
         self.inspection_source_read = self.inspection_only && Self::passive_operation(operation);
-        let result = self.invoke_inner(operation, args, deadline);
+        let policy = self.tool_budgets();
+        let result = crate::tool_budgets::with_deadline(policy.as_ref(), deadline, |deadline| {
+            self.invoke_inner(operation, args, deadline)
+        });
         self.inspection_source_read = previous_inspection;
         self.finish_dashboard_activity(activity, &result);
         result
@@ -2720,6 +2741,9 @@ impl Session {
                     value["symbolWorkspaceFolders"] = serde_json::to_value(folders)?;
                     value["symbolWorkspaceFoldersResolved"] =
                         json!(folders.select(&self.state.active_project));
+                }
+                if let Some(budgets) = &self.host.tool_budgets {
+                    value["toolBudgets"] = serde_json::to_value(budgets)?;
                 }
                 if let Some(budgets) = &self.host.symbol_info_budgets {
                     value["symbolInfoBudgets"] = serde_json::to_value(budgets)?;

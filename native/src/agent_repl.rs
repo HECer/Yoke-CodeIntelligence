@@ -363,7 +363,10 @@ impl AgentRepl {
             !code.is_empty() && code.len() <= 128000 && !code.contains('\0'),
             "Invalid agent REPL code budget"
         );
-        let result = self.execute_inner(session, code, deadline, apply_api_selection);
+        let policy = session.tool_budgets();
+        let result = crate::tool_budgets::with_deadline(policy.as_ref(), deadline, |deadline| {
+            self.execute_inner(session, code, deadline, apply_api_selection)
+        });
         if let Err(error) = result {
             if let Err(cleanup) = self.close() {
                 return Err(cleanup.context(format!(
@@ -822,25 +825,20 @@ fn dispatch(
     project: Option<&str>,
     deadline: &Deadline,
 ) -> Result<Value> {
-    let limit = args
-        .get("max_answer_chars")
-        .map(|value| {
-            value
-                .as_i64()
-                .filter(|n| (-1..=4_000_000).contains(n))
-                .context("Invalid max_answer_chars bound")
-        })
-        .transpose()?;
-    let value = dispatch_unbounded(session, spec, method, args, project, deadline)?;
-    if let Some(limit) = limit.filter(|n| *n >= 0) {
-        let characters = serde_json::to_string(&value)?.chars().count();
-        ensure!(
-            characters <= limit as usize,
-            "Result contains {characters} serialized Unicode characters and exceeds max_answer_chars={limit}; narrow the requested result"
-        );
-    }
-    deadline.check()?;
-    Ok(value)
+    let policy = session.tool_budgets();
+    let limit = crate::tool_budgets::answer_limit(policy.as_ref(), method, args)?;
+    crate::tool_budgets::with_deadline(policy.as_ref(), deadline, |deadline| {
+        let value = dispatch_unbounded(session, spec, method, args, project, deadline)?;
+        if let Some(limit) = limit {
+            let characters = serde_json::to_string(&value)?.chars().count();
+            ensure!(
+                characters <= limit as usize,
+                "Result contains {characters} serialized Unicode characters and exceeds max_answer_chars={limit}; narrow the requested result"
+            );
+        }
+        deadline.check()?;
+        Ok(value)
+    })
 }
 fn dispatch_unbounded(
     session: &mut Session,
