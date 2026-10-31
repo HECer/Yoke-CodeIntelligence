@@ -913,3 +913,7 @@ pub fn resource(session: &mut Session, uri: &str, deadline: &Deadline) -> Result
     prepared.publish(&engine.store, deadline)?;
     Ok((mime.into(), body))
 }
+
+#[cfg(test)]
+#[path = "graphify_path_policy_tests.rs"]
+mod path_policy_tests;
