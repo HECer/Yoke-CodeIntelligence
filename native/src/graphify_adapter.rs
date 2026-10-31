@@ -487,6 +487,101 @@ fn walk(view: &View, args: &Value, deadline: &Deadline) -> Result<Value> {
     out["totalSelectedObservations"] = json!(edges.len());
     budget(out, bounded(args, "token_budget", 128, 65536)?, deadline)
 }
+fn path_hops(
+    view: &View,
+    nodes: &[usize],
+    edges: &[usize],
+    adjacency: &[Vec<(usize, usize)>],
+    deadline: &Deadline,
+) -> Result<Value> {
+    #[derive(serde::Serialize)]
+    #[serde(rename_all = "camelCase")]
+    struct Hop<'a> {
+        traversal_source_id: &'a str,
+        traversal_target_id: &'a str,
+        selected_observation_id: &'a str,
+        observation_ids: Vec<&'a str>,
+        observations: Vec<&'a Value>,
+        evidence: Vec<&'a Value>,
+    }
+
+    deadline.check()?;
+    if edges.is_empty() {
+        return Ok(json!([]));
+    }
+    ensure!(
+        nodes.len() == edges.len() + 1 && edges.len() <= 64,
+        "Invalid selected path shape"
+    );
+    let mut evidence_index = BTreeMap::new();
+    for (index, site) in view.evidence.iter().enumerate() {
+        deadline.check()?;
+        ensure!(
+            evidence_index.insert(id(site), index).is_none(),
+            "Duplicate path evidence ID"
+        );
+    }
+    let mut hops = Vec::with_capacity(edges.len());
+    for (pair, &selected_edge) in nodes.windows(2).zip(edges) {
+        deadline.check()?;
+        let mut observations = vec![];
+        let mut observation_ids = vec![];
+        let mut evidence_indices = BTreeSet::new();
+        let mut selected_present = false;
+        // Adjacency preserves View order and the caller's selected direction.
+        // Retain each original object, including opposite stored directions in
+        // an explicitly undirected hop, rather than rewriting its endpoints.
+        for (next, edge) in &adjacency[pair[0]] {
+            deadline.check()?;
+            if *next != pair[1] {
+                continue;
+            }
+            let original = &view.observations[*edge];
+            selected_present |= *edge == selected_edge;
+            observations.push(original);
+            observation_ids.push(id(original));
+            for evidence_id in original["evidenceIds"]
+                .as_array()
+                .context("Path observation evidence missing")?
+            {
+                deadline.check()?;
+                let key = evidence_id
+                    .as_str()
+                    .context("Invalid path evidence reference")?;
+                evidence_indices.insert(
+                    *evidence_index
+                        .get(key)
+                        .context("Path observation evidence absent")?,
+                );
+            }
+        }
+        ensure!(
+            selected_present,
+            "Selected path observation absent from hop"
+        );
+        let mut evidence = Vec::with_capacity(evidence_indices.len());
+        for index in evidence_indices {
+            deadline.check()?;
+            evidence.push(&view.evidence[index]);
+        }
+        hops.push(Hop {
+            traversal_source_id: id(&view.nodes[pair[0]]),
+            traversal_target_id: id(&view.nodes[pair[1]]),
+            selected_observation_id: id(&view.observations[selected_edge]),
+            observation_ids,
+            observations,
+            evidence,
+        });
+    }
+    // Serialize borrowed originals under the existing byte/deadline bound
+    // before creating owned JSON copies. Shared evidence cannot multiply into
+    // an unbounded cloned payload across different hops.
+    let bytes = crate::json::encode_bounded(&hops, MAX_OUTPUT, deadline)?;
+    let result = crate::json::parse(&bytes, MAX_OUTPUT)?;
+    deadline.check()?;
+    Ok(result)
+}
+
 fn shortest(view: &View, args: &Value, deadline: &Deadline) -> Result<Value> {
     let max = bounded(args, "max_hops", 1, 64)?;
     let sources = matches(view, text(args, "source")?, deadline)?;
@@ -637,6 +732,7 @@ fn shortest(view: &View, args: &Value, deadline: &Deadline) -> Result<Value> {
         out["pathSourceCategory"] = json!(weakest_category);
         out["pathCategoryMeaning"] =
             json!("declared_source_categories_not_probabilities_or_execution_proof");
+        out["pathHops"] = path_hops(view, &nodes, &edges, &adjacency, deadline)?;
     }
     Ok(out)
 }

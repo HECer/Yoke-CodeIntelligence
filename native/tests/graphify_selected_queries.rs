@@ -501,6 +501,14 @@ fn selected_shortest_path_preserves_parallel_hop_provenance_through_historical_r
             })
             .collect();
         assert_eq!(evidence_ids, claimed_ids);
+        let original_evidence: Vec<_> = f
+            .selected
+            .evidence
+            .iter()
+            .filter(|site| claimed_ids.contains(site["id"].as_str().unwrap()))
+            .cloned()
+            .collect();
+        assert_eq!(hops[index]["evidence"], json!(original_evidence));
         let mut ranges = vec![];
         for site in evidence {
             assert_eq!(site["path"], "main.rs");
@@ -590,6 +598,24 @@ fn selected_undirected_hops_preserve_opposite_stored_directions_and_all_parallel
     assert_eq!(hop["observations"], json!(originals));
     let sites = hop["evidence"].as_array().unwrap();
     assert_eq!(sites.len(), 3);
+    let claimed_ids: BTreeSet<_> = originals
+        .iter()
+        .flat_map(|edge| {
+            edge["evidenceIds"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|id| id.as_str().unwrap().to_owned())
+        })
+        .collect();
+    let original_evidence: Vec<_> = f
+        .selected
+        .evidence
+        .iter()
+        .filter(|site| claimed_ids.contains(site["id"].as_str().unwrap()))
+        .cloned()
+        .collect();
+    assert_eq!(hop["evidence"], json!(original_evidence));
     let mut ranges: Vec<_> = sites
         .iter()
         .map(|site| {
@@ -606,4 +632,64 @@ fn selected_undirected_hops_preserve_opposite_stored_directions_and_all_parallel
         .collect();
     ranges.sort();
     assert_eq!(ranges, [(9, 15), (17, 23), (39, 43)]);
+}
+
+#[test]
+fn selected_parallel_hop_output_refuses_capacity_without_publishing_or_losing_source_bytes() {
+    let source = format!(
+        "fn α(){{ {} }}\r\nfn beta(){{}}\r\n",
+        "beta();".repeat(1200)
+    );
+    let mut f = fixture_with_source(AnalyzerEpoch::V8, &source);
+    let alpha = node_id(&f.selected, "function", "α");
+    let beta = node_id(&f.selected, "function", "beta");
+    assert_eq!(
+        f.selected
+            .observations
+            .iter()
+            .filter(|edge| edge["source"] == alpha && edge["target"] == beta)
+            .count(),
+        1200
+    );
+    let legacy = selected_call(
+        &mut f,
+        "shortest_path",
+        json!({"source":alpha,"target":beta,"max_hops":1}),
+    );
+    assert_eq!(legacy["found"], true);
+    assert_eq!(legacy["observations"].as_array().unwrap().len(), 1);
+    assert!(legacy.get("pathHops").is_none());
+    let original = serde_json::to_vec(&f.selected).unwrap();
+    let before = counts(&f.session);
+    let latest = f.session.engine.store.latest().unwrap();
+    let error = yoke::graphify_adapter::invoke(
+        &mut f.session,
+        "shortest_path",
+        &json!({
+            "graphViewId":f.selected.id,"source":alpha,"target":beta,"max_hops":1,
+            "path_policy":"weakest_source_categories_v1"
+        }),
+        &Deadline::new(30000),
+    )
+    .expect_err("Complete parallel provenance exceeds capacity and must not be silently clipped");
+    assert!(error.to_string().contains("capacity"), "{error:#}");
+    assert_eq!(counts(&f.session), before);
+    assert_eq!(f.session.engine.store.latest().unwrap(), latest);
+    assert_eq!(
+        serde_json::to_vec(
+            &graph_view::load(
+                &f.session.engine.store,
+                &f.selected.id,
+                &Deadline::new(30000)
+            )
+            .unwrap()
+        )
+        .unwrap(),
+        original
+    );
+    assert_eq!(
+        fs::read(f.root.path().join("main.rs")).unwrap(),
+        source.as_bytes()
+    );
+    assert!(f.session.engine.servers.is_empty());
 }

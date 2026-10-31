@@ -149,3 +149,44 @@ fn a_longer_weaker_route_cannot_displace_a_shorter_stronger_route() {
     );
     assert_eq!(result["pathSourceCategory"], "extracted");
 }
+
+#[test]
+fn hop_rendering_keeps_full_evidence_order_and_shared_sites_without_collapsing_observations() {
+    let mut view = equal_length_routes();
+    // Pure rendering fixture, not source admission: deliberately put IDs in
+    // reverse lexical order and share one site across observations and hops.
+    let first = json!({
+        "id":"f".repeat(64),"path":"synthetic.rs","startByte":0,"endByte":2,
+        "anchor":"first original site","trust":"synthetic_unit_only","producer":"unit_fixture"
+    });
+    let shared = json!({
+        "id":"0".repeat(64),"path":"synthetic.rs","startByte":3,"endByte":7,
+        "anchor":"shared original site","trust":"synthetic_unit_only","producer":"unit_fixture"
+    });
+    view.evidence = vec![first.clone(), shared.clone()];
+    view.observations[2]["evidenceIds"] = json!([shared["id"], first["id"]]);
+    view.observations[3]["evidenceIds"] = json!([shared["id"]]);
+    let mut parallel = view.observations[2].clone();
+    parallel["id"] = json!(hash(b"parallel weaker-route claim"));
+    parallel["resolution"] = json!("syntactic");
+    parallel["evidenceIds"] = json!([shared["id"]]);
+    view.observations.push(parallel.clone());
+    let result = shortest(
+        &view,
+        &json!({
+            "source":"start","target":"end","max_hops":4,"undirected":false,
+            "path_policy":"weakest_source_categories_v1"
+        }),
+        &Deadline::new(1000),
+    )
+    .unwrap();
+    assert_eq!(result["pathSourceCategory"], "inferred");
+    let hops = result["pathHops"].as_array().unwrap();
+    assert_eq!(hops.len(), 2);
+    assert_eq!(
+        hops[0]["observations"],
+        json!([view.observations[2], parallel])
+    );
+    assert_eq!(hops[0]["evidence"], json!([first, shared]));
+    assert_eq!(hops[1]["evidence"], json!([shared]));
+}

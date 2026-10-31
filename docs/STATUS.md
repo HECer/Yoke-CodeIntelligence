@@ -31,15 +31,38 @@ compilation and exactly one credential-backed TLS case (49 filtered); that
 separate proof does not execute the selector cases. The failed original build
 provides no runtime acceptance.
 
-The current test-first follow-up specifies derived `pathHops` for the explicit
-selected policy through genuine published Views. Two authored public tests cover
-all parallel original observations and exact UTF-8/CRLF evidence per hop,
-historical replay without capture or mutation, and directed versus explicitly
-undirected opposite stored claims. Production behavior is unchanged from
-`cf1d0671`; the hop presentation is not implemented. These new native tests
-await guarded hosted compilation and the intended causal RED, not acceptance.
+At `3ddf641c`, two genuine published-View cases reach the intended missing
+`pathHops` assertions on Ubuntu: eight original cases pass, the two fail, and
+none are ignored or filtered. Independent receipt
+`7d75e966ac1ae0f00b02e43aacc51342c3d114a5ebae2d144de20a6f0d0378fa`
+verifies all 95 text members, exact target partition and all 1,176 raw Git source
+hashes. The later new provenance/replay assertions are not exercised by that RED.
+The candidate now derives complete per-hop original observations and exact
+evidence for the explicit selected policy, retaining opposite stored directions
+only during explicitly undirected traversal. It serializes borrowed originals
+under the existing deadline and byte cap before constructing owned JSON.
+A further public 1,200-call fixture requires whole-request capacity refusal
+without publication or source-byte loss. Public cases compare complete original
+evidence arrays in View order; a separate explicitly synthetic rendering unit
+covers multiple references and shared-site deduplication without an admission
+claim. Fresh native GREEN for this candidate
+remains pending; numeric claim admission, contradictory-source fixtures and
+distinct-node route counting/caps remain open.
 macOS PDF resource-limit and template EINVAL failures remain recorded; no limits
 were relaxed and no tests were skipped.
+
+The earlier `cf1d0671` source independently passes all eight Windows default
+shards: 378 exact whole-target groups, 3,954 observed passes, zero failures,
+53 original ignores and no filters. All 1,176 source hashes match Git forms;
+full-shard receipt SHA256 is
+`25f307002f5d91977ce10997f07939b4373805025f614761de0f2ed3cde53af3`.
+Its separate explicit/bundled real Rust VS Code hosts, same fresh CLI, actual
+TSGo hover/definition/references and four kernel Job scenarios are independently
+checked in receipts
+`a68f33483317526870eb420531f947dddd4ca04ac30c12a6ad0d613beee8bdb4`
+and `1df6c0ac69d6924f36e87805944c4bec7f3f908944edaa2b9b960833e8035bd5`.
+Those earlier-source results do not qualify the new candidate or constitute
+full upstream, Windows/main or release acceptance.
 
 ## Current-source Windows aggregate checkpoint (2026-10-31)
 
