@@ -1,5 +1,16 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Session host-option plumbing repair candidate (2026-10-31)
+
+Completed Linux Clippy on estimator source `ccd7a108` refused three Session
+helpers with eight parameters. The existing private SessionHostOptions structure
+now carries template, activation and token-count selections through ordinary,
+stdio, persistent REPL and Git Session preparation. The same host-derived values
+reach the original binding calls in the same order; no new serialized authority,
+default, permission exception or lint suppression is introduced. Existing parser
+and native runtime fixtures remain unchanged. Fresh exact-head Clippy and native
+qualification are still required; no local native build or Clippy pass is claimed.
+
 ## CLI argument-group repair candidate (2026-10-31)
 
 Completed Linux and Windows CLI groups on estimator source `ccd7a108` panic

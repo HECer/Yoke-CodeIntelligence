@@ -1,5 +1,15 @@
 # Remaining implementation and acceptance
 
+## Session host-option plumbing repair candidate (2026-10-31)
+
+The completed Linux Clippy run refused open_session, run_session and
+prepare_git_session for eight parameters. Their host template/activation/token
+options now travel together through the existing private SessionHostOptions
+structure, retaining the original bind order and all authority checks. No lint
+suppression, deserialization or default authority was added. Existing parser and
+native fixtures are unchanged; exact-head hosted Clippy and runtime acceptance
+remain open, including combined Windows/VSIX/main/release qualification.
+
 ## CLI argument-group repair candidate (2026-10-31)
 
 Completed Linux and Windows CLI failures share a duplicate Clap group ID from
