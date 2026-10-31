@@ -1,5 +1,34 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Hosted inventory repair and explicit CI regression selection (2026-10-31)
+
+Exact source `6989862daeee8f00592e2b53f60376b584ea3d37` now completes the
+[combined VSIX and real Rust host job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41243681181/job/124662716634).
+Independent audit of text artifact `13058973373` checks all 33 members, all
+1,847 selected source hashes against exact Git or explicit Windows CRLF forms,
+the fresh successful release producer and both explicit/bundled Rust host modes.
+The four phase receipts require natural zero-exit empty process trees and closed
+handles. Original unsaved-source, executable-selection, protected-buffer and
+saved-source assertions pass in both modes on VS Code 1.143.1. The retained
+TypeScript runtime is bundled and byte-checked by the hosted producer; its
+extension mode is not executed. No compiled payload is opened locally.
+Receipt SHA-256: `1c64d0f134ea35896406c321b509db7d8c3079417f760283c17c2857313c3e27`.
+This is source-specific host evidence; the successful run does not prove the
+removed-leaf race occurred, and the original `0e17b87a` failure remains below.
+
+The eleven pure inventory regression cases were missing from the launcher CI
+job's explicit unittest selection. That gate now selects them alongside the
+original admission cases, before the actual kernel probe, within its unchanged
+one-minute step. All 47 local Python launcher/inventory/host/source-inventory
+contracts pass, including those eleven cases. Fresh local typecheck and npm tests
+pass: 266 passed, zero failed, three original skips (269 total). These checks
+run no Windows controller or native image. Hosted execution of the new CI
+selection remains pending; prior host evidence is not reassigned to this stage.
+See the [source-specific receipt](validation/vscode-inventory-2026-10-31.json).
+
+Full R4/R1-R9, backend/current-upstream, current browser/Windows, main and release
+acceptance remain open. Linux/macOS runtime certification stays deferred.
+
 ## Source-specific path guards and Windows host evidence (2026-10-31)
 
 At `0e17b87a23f630752e2db8a61995a87ed36371fe`, all eight named Windows
