@@ -5364,3 +5364,18 @@ The static graph is not the complete runtime. A successful reference query is no
 The facade deliberately does **not** merge all upstream applications into one implicit privileged process. The native path does not need a model. Advanced provider/network/key/retention privileges remain host CLI/library operations, not automatically granted to an MCP caller. See `ADVANCED.md`, `FEDERATION.md`, `SECURITY.md` and `UPSTREAMS.md` for operation-specific boundaries.
 
 Version 0.3 is therefore usable for continued development and bounded local workflows; calling it universally production-ready, fully externally verified or complete feature-for-feature parity with every upstream product would be inaccurate.
+
+
+## Combined inherited repair checkpoint (2026-11-01)
+
+The combined candidate now applies its existing documentation filter in the
+Git query before the unchanged inventory caps. Selected source names/order,
+file/total limits and ordinary-file checks remain authoritative. The notified
+VSIX job stopped during source inventory, before native build or editor work.
+The existing doFirst synthetic-name inventory repair and adversarial two-frame
+regression, plus the owned MCP/Explorer request-EOF fixture corrections, are
+also carried forward exactly from their scoped PRs. Original test assertions,
+timeouts, resource ceilings, permission and writer/recovery gates remain.
+No local native/controller/editor execution or native-image payload read is
+performed. Fresh guarded whole-source CI and real VSIX/extension-host evidence
+are still required; macOS resource enforcement and broader acceptance stay open.
