@@ -56,6 +56,16 @@ impl Projection {
     }
     pub fn plan(&self) -> Value {
         let mut value = json!({"schema":"native_session_config_yaml_v1","hostProfile":self.profile,"sources":self.sources,"sourceBytesRewritten":false,"templatesEvaluated":self.sources.iter().any(|s| s.get("promptRendering").is_some()),"activationCommandsExecuted":false,"projectRegistrationsFromYaml":false,"runtimeTrustFromYaml":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"sourceExecuted":false,"complete":false});
+        if let Some(config) = &self.profile.activation_commands {
+            value["hostProfile"]
+                .as_object_mut()
+                .expect("Host profile object")
+                .remove("activationCommands");
+            value["hostProfileRedactions"] = json!(["activationCommands"]);
+            value["activationConfigurationSha256"] = json!(config.fingerprint());
+            value["activationExecutionAuthorityRequired"] = json!(true);
+            value["activationRuntimeContract"] = json!(crate::project_activation::VERSION);
+        }
         if let Some(config) = &self.profile.prompt_templates {
             value["templatesDeferred"] = json!(true);
             value["sessionTemplateAuthorizationRequired"] = json!(true);
@@ -140,18 +150,14 @@ fn rename_fields(
                 continue;
             }
             "activation_command" if global || project => {
-                ensure!(
-                    value.is_null(),
-                    "session_config_activation_command_unavailable"
-                );
+                crate::project_activation::command(&value)?;
                 native_defaults.insert(key, value);
                 continue;
             }
             "activation_command_timeout" if global || project => {
-                ensure!(
-                    value.is_null() || value.as_u64() == Some(180),
-                    "session_config_activation_timeout_unavailable"
-                );
+                if !value.is_null() {
+                    crate::project_activation::timeout(&value)?;
+                }
                 native_defaults.insert(key, value);
                 continue;
             }
@@ -345,6 +351,9 @@ fn project_inner(
     );
     crate::json::encode_bounded(base, MAX_PROFILE_BYTES, deadline)?;
     let mut profile = base.clone();
+    // Preserve explicit clears/defaults until all layers are known. Defaults
+    // alone still disappear from the profile exactly as before this policy.
+    let mut activation = base.activation_commands.clone().unwrap_or_default();
     let mut encodings = profile.source_encodings.clone().unwrap_or_default();
     let mut encoding_declared = false;
     let mut seen = BTreeSet::new();
@@ -685,6 +694,7 @@ fn project_inner(
             }
         }
         let mut receipt = json!({"target":source.target,"originalBytes":source.bytes.len(),"originalSha256":source.expected_sha256,"declaredProjectName":declared,"declaredProjectNameIsRegistration":false});
+        activation.project_yaml(source.target, &native_defaults);
         if defer && let Some(key) = prompt_key {
             let original = yaml::decode(source.bytes, deadline)?
                 .get(key)
@@ -698,13 +708,37 @@ fn project_inner(
         if let Some(rendering) = prompt_rendering {
             receipt["promptRendering"] = rendering;
         }
-        if !native_defaults.is_empty() {
-            receipt["nativeEquivalentDefaults"] = Value::Object(native_defaults);
+        let mut reported_defaults = native_defaults;
+        if let Some(value) = reported_defaults
+            .get("activation_command")
+            .filter(|v| !v.is_null())
+        {
+            receipt["activationCommandDeclaration"] = json!({"commandSha256":model::hash(value.as_str().expect("Validated command")),"commandBytes":value.as_str().expect("Validated command").len(),"runtimeAuthority":false});
+            reported_defaults.remove("activation_command");
+        }
+        if let Some(value) = reported_defaults
+            .get("activation_command_timeout")
+            .filter(|v| !v.is_null() && v.as_u64() != Some(180))
+        {
+            receipt["activationTimeoutDeclaration"] = json!({"requestedTimeoutNs":u64::try_from(crate::project_activation::timeout(value)?.as_nanos())?,"runtimeAuthority":false});
+            reported_defaults.remove("activation_command_timeout");
+        }
+        if !reported_defaults.is_empty() {
+            receipt["nativeEquivalentDefaults"] = Value::Object(reported_defaults);
             receipt["nativeDefaultCapabilities"] = json!({"sourceEncodings":["utf-8"],"activationCommands":false,"languageBackends":["LSP"],"additionalWorkspaceFolders":true,"additionalWorkspaceFolderScope":"captured_relative_only"});
         }
         receipts.push(receipt);
     }
     deadline.check()?;
+    if activation.selected() {
+        activation.validate(&profile, deadline)?;
+        profile.activation_commands = Some(activation);
+        // Reprojection cannot carry a previous runtime grant to changed data.
+        profile.activation_runtime = None;
+    } else {
+        profile.activation_commands = None;
+        profile.activation_runtime = None;
+    }
     if let Some(folders) = &profile.additional_workspace_folders {
         folders.validate(&profile)?;
     }

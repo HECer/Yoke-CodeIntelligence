@@ -18,6 +18,9 @@ use std::{
 mod windows_job;
 
 #[cfg(test)]
+#[path = "process_activation_tests.rs"]
+mod activation_tests;
+#[cfg(test)]
 #[path = "process_cleanup_tests.rs"]
 mod cleanup_tests;
 
@@ -77,7 +80,7 @@ pub fn run_capture(
     deadline: &crate::capture::Deadline,
     limits: CaptureLimits,
 ) -> Result<CapturedOutput> {
-    capture(command, input, deadline, limits, None)
+    capture(command, input, deadline, limits, None, None).map(|observed| observed.output)
 }
 /// Bound committed memory on Windows Jobs, or address space on Unix, before execution.
 /// An unavailable OS limit fails spawn rather than running without the limit.
@@ -88,7 +91,52 @@ pub fn run_capture_with_memory_limit(
     limits: CaptureLimits,
     memory_bytes: usize,
 ) -> Result<CapturedOutput> {
-    capture(command, input, deadline, limits, Some(memory_bytes))
+    capture(command, input, deadline, limits, Some(memory_bytes), None)
+        .map(|observed| observed.output)
+}
+/// Narrow observation route for a command-local timeout inside a live caller.
+/// Construction stays private: a textual error or caller-created CapturedOutput
+/// cannot establish owned-tree cleanup or complete stream collection.
+pub(crate) struct ObservedCapture {
+    output: CapturedOutput,
+    stop: Option<crate::capture::DeadlineFailure>,
+    streams_complete: bool,
+}
+impl ObservedCapture {
+    pub(crate) fn require_complete(&self) -> Result<()> {
+        ensure!(
+            self.stop != Some(crate::capture::DeadlineFailure::Cancelled),
+            "Host capture cancelled"
+        );
+        ensure!(
+            self.streams_complete,
+            "Host capture stream completion unproven"
+        );
+        Ok(())
+    }
+    pub(crate) fn command_timed_out(&self) -> bool {
+        self.stop == Some(crate::capture::DeadlineFailure::Expired)
+    }
+    pub(crate) fn into_output(self) -> CapturedOutput {
+        self.output
+    }
+}
+pub(crate) fn run_capture_observed(
+    command: Command,
+    input: &[u8],
+    command_deadline: &crate::capture::Deadline,
+    enclosing: &crate::capture::Deadline,
+    limits: CaptureLimits,
+) -> Result<ObservedCapture> {
+    let command_deadline = command_deadline.intersection(enclosing)?;
+    capture(
+        command,
+        input,
+        &command_deadline,
+        limits,
+        None,
+        Some(enclosing),
+    )
 }
 fn capture(
     mut command: Command,
@@ -96,7 +144,8 @@ fn capture(
     deadline: &crate::capture::Deadline,
     limits: CaptureLimits,
     memory_bytes: Option<usize>,
-) -> Result<CapturedOutput> {
+    observation: Option<&crate::capture::Deadline>,
+) -> Result<ObservedCapture> {
     deadline.check()?;
     ensure!(
         command.get_current_dir().is_some(),
@@ -221,6 +270,7 @@ fn capture(
     let mut io_error = false;
     let mut exit = None;
     let mut timed_out = false;
+    let mut stop = None;
     #[cfg(windows)]
     let mut group_cleaned = false;
     loop {
@@ -257,7 +307,8 @@ fn capture(
             child.cleanup_checked(Duration::from_secs(2))?;
             group_cleaned = true;
         }
-        if deadline.check().is_err() {
+        if let Some(failure) = deadline.failure() {
+            stop = Some(failure);
             timed_out = true;
             break;
         }
@@ -296,15 +347,53 @@ fn capture(
         // cleanup failures here instead of suppressing them in best-effort Drop.
         exit = Some(child.cleanup_checked(Duration::from_secs(2))?);
     }
-    Ok(CapturedOutput {
-        exit_code: exit.and_then(|status| status.code()),
-        stdout: outputs[0].take().unwrap_or_default(),
-        stderr: outputs[1].take().unwrap_or_default(),
-        stdin_complete: stdin_done && stdin_complete,
-        output_complete,
-        timed_out,
-        output_exceeded: exceeded.load(Ordering::SeqCst),
-        io_error,
+    // Existing capture callers retain their exact output_complete and error
+    // precedence. Only the observed route may drain after checked termination,
+    // bounded by both a small finite drain allowance and the original caller.
+    if let Some(enclosing) = observation {
+        let drain_end = std::time::Instant::now() + Duration::from_millis(100);
+        while !(stdin_done && outputs.iter().all(Option::is_some)) {
+            if enclosing.check().is_err() {
+                break;
+            }
+            let remaining = drain_end
+                .saturating_duration_since(std::time::Instant::now())
+                .min(enclosing.remaining());
+            if remaining.is_zero() {
+                break;
+            }
+            let Ok((stream, result)) = completed.recv_timeout(remaining) else {
+                break;
+            };
+            if stream == 2 {
+                stdin_done = true;
+                stdin_complete = result.is_ok();
+            }
+            match result {
+                Ok(bytes) if stream < 2 => outputs[stream] = Some(bytes),
+                Err(_) => io_error = true,
+                _ => {}
+            }
+        }
+    }
+    let streams_complete = stdin_done
+        && stdin_complete
+        && outputs.iter().all(Option::is_some)
+        && !io_error
+        && !exceeded.load(Ordering::SeqCst);
+    Ok(ObservedCapture {
+        stop,
+        streams_complete,
+        output: CapturedOutput {
+            exit_code: exit.and_then(|status| status.code()),
+            stdout: outputs[0].take().unwrap_or_default(),
+            stderr: outputs[1].take().unwrap_or_default(),
+            stdin_complete: stdin_done && stdin_complete,
+            output_complete,
+            timed_out,
+            output_exceeded: exceeded.load(Ordering::SeqCst),
+            io_error,
+        },
     })
 }
 

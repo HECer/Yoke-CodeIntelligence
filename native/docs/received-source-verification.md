@@ -80,8 +80,19 @@ receiver and local workspace/snapshot pins, local entity/range/hash evidence and
 explicit header-projection granularity. It excludes implementation text and
 keeps root `sourceAuthority:false`, `complete:false`, compiler/semantic-identity
 flags false, and zero network/model calls and writes. Only the separately checked
-local capture supplies the per-row source correspondence. The sender's original
-source-digest hash is not recomputed and remains an unverified claim.
+local capture supplies the per-row source correspondence. Without an explicit
+preview the sender's source-digest hash remains an unverified claim.
+
+The `verify` command optionally accepts an absolute host-selected `--source-preview`
+with independent `--allow-source-preview`, `--max-preview-bytes` and
+`--max-preview-encoded-bytes` limits (each defaults to 4 MB). After permission,
+scope and receipt verification it reads the file, strictly parses bounded JSON,
+and hashes the bounded encoding of the parsed value, as the sender does before
+adding discussions. A match sets `senderSourceDigestHashVerified` only; it does
+not establish sender snapshot identity, remote ownership or source authority.
+Duplicate fields, trailing data, null, malformed input and mismatches refuse.
+Synchronous file reads and parsing are checked around the deadline but are not
+interruptible wall-clock bounds. Interpret does not accept this option.
 
 Frozen `find` performs a case-sensitive literal match over verified path/name/
 kind/signature fields. It preserves original row IDs and can operate after both

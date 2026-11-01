@@ -1,12 +1,60 @@
 # Selected source encodings (qualification in progress)
 
+## UTF-32 source candidate (2026-10-30)
+
+Explicit utf32, utf32_le and utf32_be policies extend the existing codec stack.
+UTF-32 uses one four-byte code unit per Unicode scalar; surrogate values,
+values above U+10FFFF and incomplete units refuse without replacement.
+Original raw bytes/hashes remain authoritative and all returned ranges use
+their original byte offsets. The existing two-pass allocation admission,
+4,000,000-byte raw/text limits, mapping bounds and cancellation checks remain.
+
+Finite YAML aliases add utf_32/utf32/U32, utf_32_le/UTF-32LE and
+utf_32_be/UTF-32BE, with the existing ASCII case and hyphen handling.
+Plain and JSON-style quoted YAML strings use the same alias parser.
+Capture/profile JSON uses the canonical enum spellings above.
+The alias and invalid-scalar references are the
+[Python codec table](https://docs.python.org/3.11/library/codecs.html#standard-encodings)
+and [Unicode UTF/BOM reference](https://www.unicode.org/faq/utf_bom.html).
+
+The portable native utf32 policy requires a four-byte LE or BE BOM, including
+for an otherwise empty existing file. It consumes that signature only in the
+analysis view; edits preserve its bytes and order. It deliberately refuses an
+unmarked stream instead of guessing a platform default. Explicit LE/BE does
+not consume a signature: matching U+FEFF remains text, while opposite-order
+signature bytes are invalid scalars. New utf32 files get a deterministic LE
+signature; new explicit LE/BE files get none. CR, LF, noncharacters and non-BMP
+scalars are preserved without normalization.
+
+Three new core fixtures cover boundaries, malformed units, BOMs, capacity,
+cancellation, configuration, capture, plans and immutable replay. Four new
+transport fixtures cover real CLI/stdio, authenticated HTTP, a labeled Node LSP
+fixture with raw offsets and rename refusal, and executed raw-byte verification
+followed by approval/workspace journals. At source `38322c7`, all seven new
+fixtures pass on hosted Windows, Linux and macOS in
+[run 41125931169](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41125931169).
+The whole transport target passes 14/14 on each platform. The core target passes
+23/24: its remaining failure is an obsolete rejection input that still expects
+the newly supported quoted `utf-32` YAML selection to refuse. This correction
+uses unsupported `utf-7` for that negative input without changing its assertions,
+and adds positive plain/quoted alias and canonical-JSON-policy checks while
+retaining JSON enum alias refusal. Corrected whole-core execution remains
+pending; production codec/authority code is unchanged. Targets declare 24/14 cases.
+Existing proof-consumer, permission, source, stale and cleanup restrictions
+remain. No general codec registry, automatic detection, optional proof capability
+or full Python/Unicode/project certification is introduced. Corrected-source
+native compilation, fixtures and full qualification await the guarded hosted pipeline.
+
 This is a bounded native codec increment, not certification of the complete
 encoding identity, all standard codecs, all language servers or the project.
-Source `b55064b9` has compiled and executed codec targets with 14/1 core and 4/1
-transport pass/fail counts. The reserved-basename and approval-schema fixture
-defects are corrected; their fresh execution and full functional acceptance
-remain pending. The parent owns serial guarded native/CLI/stdio/HTTP/compatibility,
-typecheck and npm acceptance.
+Earlier source `272ec171` has source-bound macOS results for all 19 core and
+eight transport cases in [run 41031519894](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41031519894),
+tested merge `79872a66` with an identical Git tree. Those results include ASCII
+and UTF-8-SIG and retain that source identity; they do not qualify Windows-1252.
+The Windows-1252 increment is integrated afterward, with 21 core and ten
+transport declarations. Native compilation and execution of the new increment
+remain unrun pending guarded hosted qualification. The parent owns serial
+native/CLI/stdio/HTTP/compatibility and full functional acceptance.
 Shared release status, the original 353-entry inventory and certification flags
 are intentionally outside this change.
 
@@ -35,22 +83,34 @@ underscores. These are the admitted spellings (plus those case/separator forms):
 | Codec | Canonical and documented aliases |
 | --- | --- |
 | UTF-8 | `utf_8`, `utf8`, `u8`, `utf`, `cp65001` |
+| Strict ASCII | `ascii`, `us_ascii`, `646` |
+| UTF-8 with optional signature | `utf_8_sig` |
 | BOM-selected UTF-16 | `utf_16`, `utf16`, `u16` |
 | Explicit little endian | `utf_16_le`, `utf-16le` |
 | Explicit big endian | `utf_16_be`, `utf-16be` |
+| Windows-1252 | `cp1252`, `windows-1252` |
+| BOM-selected UTF-32 | `utf_32`, `utf32`, `u32` |
+| Explicit UTF-32LE | `utf_32_le`, `utf-32le` |
+| Explicit UTF-32BE | `utf_32_be`, `utf-32be` |
 | True ISO-8859-1 | `latin_1`, `latin1`, `iso-8859-1`, `iso8859-1`, `8859`, `cp819`, `latin`, `L1` |
 
 The [Python 3.11 standard encoding table](https://docs.python.org/3.11/library/codecs.html#standard-encodings)
 is the alias reference, not a promise to implement its entire codec registry or
-additional registry normalization. Whitespace aliases, arbitrary punctuation,
-UTF-8-SIG, ASCII, Windows-1252, UTF-32 and every other codec are unsupported.
+additional registry normalization. Whitespace aliases, arbitrary punctuation and
+other codecs are unsupported.
 Unknown codecs and invalid setting types refuse explicitly. Latin1 maps each
 byte directly to the same numbered Unicode scalar, including C1 controls;
-byte `80` is U+0080, not the Windows-1252 euro sign.
+byte `80` is U+0080, not the Windows-1252 euro sign. Explicit ASCII rejects
+every byte at or above `80` and rejects edits containing non-ASCII characters;
+it never replaces or transliterates them. ASCII is a selected policy, not
+automatic detection.
+For an existing UTF-8-SIG file without a signature, an edit that would place
+U+FEFF at the start is refused: its bytes would otherwise be consumed as a
+signature when the file is read again. Existing signatures are preserved.
 
 The resolved host profile uses `sourceEncodings` with `global` and
 `projects.<registered-name>.project/local`, with canonical enum values `utf8`,
-`utf16`, `utf16_le`, `utf16_be`, `latin1`. Example:
+`utf8_sig`, `utf16`, `utf16_le`, `utf16_be`, `latin1`, `ascii`, `windows1252`, `utf32`, `utf32_le`, `utf32_be`. Example:
 
 ```json
 {"sourceEncodings":{"global":"latin1","projects":{"default":{"local":"utf16"},"secondary":{"project":"utf8"}}}}
@@ -88,7 +148,12 @@ inherited by native derived snapshots.
 checked monotonic scalar-boundary map. It never applies Unicode normalization,
 replacement characters or newline conversion. For the new policies, decoding
 is a strict two-pass operation: sizes are checked before allocating text/maps.
-Odd UTF-16 input and unpaired high/low surrogates refuse.
+Odd UTF-16 input and unpaired high/low surrogates refuse. Windows-1252 follows the
+[Python 3.11 strict cp1252 codec](https://github.com/python/cpython/blob/3.11/Lib/encodings/cp1252.py):
+bytes `81`, `8D`, `8F`, `90` and `9D` are undefined and refuse; they are not mapped
+to C1 controls. Unrepresentable characters refuse on write.
+
+`utf8_sig` consumes an optional initial `EF BB BF` signature and keeps it as an immutable raw prefix; without one the decoded text starts at raw byte zero. New files use a signature; existing files preserve its presence. Invalid UTF-8 refuses. Legacy UTF-8 continues to expose U+FEFF as text.
 
 `utf16` requires an initial `FF FE` or `FE FF` BOM. That BOM selects byte order
 and is consumed from analysis text; it remains an immutable raw prefix. This
@@ -282,3 +347,23 @@ native/src/store_read_only.rs
 native/src/test_map.rs
 native/src/trail_adapter.rs
 ```
+
+## Windows-1252 increment
+
+The Windows-1252 implementation from source-only candidate `4995fe20` is
+integrated after ASCII and UTF-8-SIG at `272ec171`, retaining both codec variants,
+their aliases, byte mappings, capability entries and original fixtures.
+The original undefined-codec assertions now exclude only the newly supported
+Windows-1252 names. Native execution of this combined increment remains pending
+guarded qualification; earlier codec results retain their own source identity.
+
+The added core fixture pins the independent UTF-8 hash of all 251 defined byte
+values and checks every scalar boundary in both directions. Expansion/cancellation
+cases refuse before publication. The new stdio fixture checks decoded reads,
+raw-byte create plans, request-codec override refusal and unrepresentable edits
+without writing source. A separate actual verification/approval/writer fixture
+requires a failed wrong-byte verification, refusal to apply it, a successful
+exact-byte verification, a checked journal and retention of original CAS bytes.
+These fixtures are authored for the unchanged guarded CI; they have not run
+locally. No selected-codec compiler/runtime proof or semantic edit capability is
+enabled by adding this codec.

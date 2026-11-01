@@ -346,6 +346,10 @@ impl ConnectionState {
         profile: Profile,
         bytes: &[u8],
     ) -> Result<Option<Value>> {
+        ensure!(
+            profile != Profile::Native || !session.has_activation_policy(),
+            "activation_session_profile_required"
+        );
         self.bind(profile, false)?;
         if profile == Profile::Native {
             session.check_registered_git_state(&crate::capture::Deadline::new(120000))?;

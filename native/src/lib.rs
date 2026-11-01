@@ -78,6 +78,7 @@ pub mod platform_credentials;
 pub mod postgres_catalog;
 pub mod postgres_catalog_client;
 pub mod process;
+pub mod project_activation;
 pub mod project_session;
 pub mod projects;
 pub mod protocol;
@@ -209,9 +210,28 @@ impl Engine {
         Self::open_with_timeout(root, std::time::Duration::from_secs(10))
     }
     pub fn open_with_timeout(root: impl AsRef<Path>, timeout: std::time::Duration) -> Result<Self> {
-        let root = root.as_ref().canonicalize()?;
+        Self::open_with_timeout_inner(root.as_ref(), timeout, None)
+    }
+    /// Host-only Store setup observations, with no change to opening authority.
+    pub fn open_with_timeout_observed(
+        root: impl AsRef<Path>,
+        timeout: std::time::Duration,
+        observations: &mut store::OpeningObservations,
+    ) -> Result<Self> {
+        *observations = store::OpeningObservations::default();
+        Self::open_with_timeout_inner(root.as_ref(), timeout, Some(observations))
+    }
+    fn open_with_timeout_inner(
+        root: &Path,
+        timeout: std::time::Duration,
+        observations: Option<&mut store::OpeningObservations>,
+    ) -> Result<Self> {
+        let root = root.canonicalize()?;
         ensure!(root.is_dir(), "Workspace root must be a directory");
-        let store = Store::open_with_timeout(&root, timeout)?;
+        let store = match observations {
+            Some(observations) => Store::open_with_timeout_observed(&root, timeout, observations)?,
+            None => Store::open_with_timeout(&root, timeout)?,
+        };
         Ok(Self {
             git_repository_host: None,
             backend_servers: BTreeMap::new(),
@@ -593,7 +613,7 @@ impl Engine {
                     status["capabilities"]["backendRuntimeCertification"] = json!(false);
                 }
                 if let Some(policy) = self.capture_options.source_encoding {
-                    status["capabilities"]["sourceEncoding"] = json!({"schema":source_encoding::VERSION,"selected":policy,"supported":["utf8","utf16_bom_required","utf16_le","utf16_be","latin1"],"otherCodecs":"unsupported","offsets":"original_source_bytes","semanticWorkspaceEdits":false,"compilerPieceRefactors":false,"runtimeTraceMapping":false,"manifestBalancedRetrieval":false,"fullEncodingIdentityCertified":false});
+                    status["capabilities"]["sourceEncoding"] = json!({"schema":source_encoding::VERSION,"selected":policy,"supported":["utf8","utf8_sig","utf16_bom_required","utf16_le","utf16_be","latin1","ascii","windows1252","utf32_bom_required","utf32_le","utf32_be"],"otherCodecs":"unsupported","offsets":"original_source_bytes","semanticWorkspaceEdits":false,"compilerPieceRefactors":false,"runtimeTraceMapping":false,"manifestBalancedRetrieval":false,"fullEncodingIdentityCertified":false});
                 }
                 return Ok(status);
             }

@@ -9,6 +9,11 @@ use yaml_rust2::{
 };
 
 const MAX_EVENTS: usize = 8192;
+#[derive(Clone, Copy)]
+enum NumericBudget {
+    Symbol,
+    Activation,
+}
 struct Reader<'a> {
     parser: Parser<std::str::Chars<'a>>,
     deadline: &'a Deadline,
@@ -27,7 +32,12 @@ impl Reader<'_> {
             .map(|v| v.0)
             .map_err(|_| anyhow::anyhow!("session_config_yaml_invalid"))
     }
-    fn value(&mut self, event: Event, depth: usize, budget_seconds: bool) -> Result<Value> {
+    fn value(
+        &mut self,
+        event: Event,
+        depth: usize,
+        budget_seconds: Option<NumericBudget>,
+    ) -> Result<Value> {
         ensure!(depth <= 16, "session_config_yaml_depth_exceeded");
         self.deadline.check()?;
         match event {
@@ -45,14 +55,18 @@ impl Reader<'_> {
                     Yaml::Integer(n) => json!(n),
                     Yaml::Boolean(b) => json!(b),
                     Yaml::Null => Value::Null,
-                    Yaml::Real(s) if budget_seconds => {
-                        let seconds =
-                            s.parse::<f64>()
-                                .ok()
-                                .filter(|s| s.is_finite())
-                                .ok_or_else(|| {
-                                    anyhow::anyhow!("session_config_symbol_info_budget_invalid")
-                                })?;
+                    Yaml::Real(s) if budget_seconds.is_some() => {
+                        let invalid = match budget_seconds {
+                            Some(NumericBudget::Activation) => {
+                                "session_config_activation_timeout_unavailable"
+                            }
+                            _ => "session_config_symbol_info_budget_invalid",
+                        };
+                        let seconds = s
+                            .parse::<f64>()
+                            .ok()
+                            .filter(|s| s.is_finite())
+                            .ok_or_else(|| anyhow::anyhow!(invalid))?;
                         ensure!(
                             seconds != 0.0
                                 || !s
@@ -61,7 +75,11 @@ impl Reader<'_> {
                                     .unwrap_or("")
                                     .bytes()
                                     .any(|b| matches!(b, b'1'..=b'9')),
-                            "session_config_symbol_info_budget_underflow"
+                            match budget_seconds {
+                                Some(NumericBudget::Activation) =>
+                                    "session_config_activation_timeout_unavailable",
+                                _ => "session_config_symbol_info_budget_underflow",
+                            }
                         );
                         json!(seconds)
                     }
@@ -79,7 +97,7 @@ impl Reader<'_> {
                     if event == Event::SequenceEnd {
                         break;
                     }
-                    values.push(self.value(event, depth + 1, false)?);
+                    values.push(self.value(event, depth + 1, None)?);
                 }
                 Ok(Value::Array(values))
             }
@@ -94,7 +112,7 @@ impl Reader<'_> {
                     if event == Event::MappingEnd {
                         break;
                     }
-                    let Value::String(key) = self.value(event, depth + 1, false)? else {
+                    let Value::String(key) = self.value(event, depth + 1, None)? else {
                         anyhow::bail!("session_config_yaml_string_key_required")
                     };
                     ensure!(
@@ -102,8 +120,16 @@ impl Reader<'_> {
                         "session_config_yaml_duplicate_or_merge_key"
                     );
                     let event = self.next()?;
-                    let value =
-                        self.value(event, depth + 1, depth == 0 && key == "symbol_info_budget")?;
+                    let numeric = if depth == 0 {
+                        match key.as_str() {
+                            "symbol_info_budget" => Some(NumericBudget::Symbol),
+                            "activation_command_timeout" => Some(NumericBudget::Activation),
+                            _ => None,
+                        }
+                    } else {
+                        None
+                    };
+                    let value = self.value(event, depth + 1, numeric)?;
                     values.insert(key, value);
                 }
                 Ok(Value::Object(values))
@@ -136,7 +162,7 @@ pub(super) fn decode(bytes: &[u8], deadline: &Deadline) -> Result<Map<String, Va
     }
     ensure!(event == Event::DocumentStart, "session_config_yaml_invalid");
     let event = reader.next()?;
-    let value = reader.value(event, 0, false)?;
+    let value = reader.value(event, 0, None)?;
     ensure!(
         reader.next()? == Event::DocumentEnd && reader.next()? == Event::StreamEnd,
         "session_config_yaml_single_document_required"
