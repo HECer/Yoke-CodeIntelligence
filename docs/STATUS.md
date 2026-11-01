@@ -5596,3 +5596,45 @@ Inert source admission selects the same 1,814 names/order as the original
 documentation postfilter: 98,586 raw filename bytes instead of 1,907,034 broad
 inventory bytes. Original raw/path/file/total and ordinary-file/hash gates remain.
 These source checks do not execute or qualify the three new native tests.
+
+## PR26 persistent callback error fixture (2026-11-01)
+
+Windows shard 5 job 124419537088 at old merge 69086ee71b95aa76379343e3fcb130936472e497
+records 46/48 successful target groups. Global budget integration is 6 passed /
+1 failed: the persistent callback case reads the existing structured error as a
+string and unwraps None. The Python worker has always returned error.type and
+error.message; the native wrapper preserves that object. The other failed target
+is the already corrected 80-versus-77 catalog fixture. Text artifact 13031430469
+matches ZIP SHA-256 24cb91f9f0bc26a05f4130d2ba3bafb6e3078f1d3afaebe6e0bfcf59514d7642;
+all 96 group-log lengths/hashes verify.
+
+The persistent callback fixture now checks RuntimeError and the original
+max_answer_chars=0 message, one callback and retained state. The original explicit
+override, 5,000 ms timeout, 10-second sleep, less-than-nine-second bound, worker
+loss, close and source-preservation assertions remain. All seven original test
+functions remain. The other eleven protected original budget paths, production
+worker and public/frozen contracts are unchanged; the earlier checkpoint's
+twelve-byte-exact-path statement remains historical evidence for that checkpoint.
+No native build, Cargo test, Clippy, controller, vendor or editor ran locally.
+Fresh exact-source native budget/timeout/cleanup and platform qualification is
+still required.
+
+Actual local fixture checks: 54 selected inert tests, the changed Rust root's
+Rust 1.94.1/edition 2024 formatting, Python worker AST parsing, staged
+whitespace and typecheck pass. npm reports 266 pass / 0 fail / 3 existing
+skips, 46887.9047 ms. These checks do not execute the native target.
+
+## PR27 inherited callback fixture correction (2026-11-01)
+
+This normal merge carries PR26 61152c5ee1 and its structured-error
+budget fixture correction. Native production and all preflight/selection
+implementation, contracts and original autoselection tests remain byte-exact
+to PR27 7bcdcf626. The corrected budget fixture is exact to the parent.
+Both prior status scopes are retained. Native budget/HTTP/platform/VSIX
+qualification remains pending; no local native execution is claimed.
+
+Actual propagation checks: 56 selected inert tests, formatting of the changed
+Rust test root, whitespace and typecheck pass. npm reports 266 pass /
+0 fail / 3 existing skips, 45499.4066 ms. Production and original
+autoselection/preflight test blobs remain exact to 7bcdcf626; new native
+budget and HTTP qualification is still pending hosted execution.
