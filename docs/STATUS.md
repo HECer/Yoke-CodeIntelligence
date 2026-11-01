@@ -5448,3 +5448,151 @@ The static graph is not the complete runtime. A successful reference query is no
 The facade deliberately does **not** merge all upstream applications into one implicit privileged process. The native path does not need a model. Advanced provider/network/key/retention privileges remain host CLI/library operations, not automatically granted to an MCP caller. See `ADVANCED.md`, `FEDERATION.md`, `SECURITY.md` and `UPSTREAMS.md` for operation-specific boundaries.
 
 Version 0.3 is therefore usable for continued development and bounded local workflows; calling it universally production-ready, fully externally verified or complete feature-for-feature parity with every upstream product would be inaccurate.
+
+
+
+## PR22 do-first admission correction (2026-11-01)
+
+The current-backend candidate inherited an omitted validated doFirst name in
+the final synthetic-name inventory. Its Ubuntu shard reports 30/4 in the whole
+compiler_inline_body target. The exact PR17 admission repair and adversarial
+two-frame regression are now backported; all existing tests and the three
+backend additions remain unchanged. Native compilation/execution remain unrun
+locally. Fresh guarded hosted qualification is required; this correction does
+not resolve separate macOS, provider-runtime, VSIX or release gates.
+Local recheck passes the two catalog data-contract tests, Rust 1.94.1 format,
+typecheck and npm 266 passed / 0 failed / 3 existing skips. These are source/npm
+checks and do not establish native or combined runtime acceptance.
+
+
+
+Update (2026-11-01): source `06267ee8` stops before compilation in source
+inventory admission. Its Git query includes 19,106 paths / 1,905,079 bytes before
+the existing documentation filter, exceeding the 1 MB raw limit although only
+1,769 paths are logically selected. The repair applies that same selection in
+Git before the unchanged byte/cardinality limits. Inert Git-index regressions
+retain Unicode/hidden Markdown and receipt policy, reject malformed/oversized
+inventories, and exclude large historical source trees. Actual fresh production,
+packaging and both real extension-host modes still require new hosted evidence.
+
+
+
+
+## Combined inherited repair checkpoint (2026-11-01)
+
+The combined candidate now applies its existing documentation filter in the
+Git query before the unchanged inventory caps. Selected source names/order,
+file/total limits and ordinary-file checks remain authoritative. The notified
+VSIX job stopped during source inventory, before native build or editor work.
+The existing doFirst synthetic-name inventory repair and adversarial two-frame
+regression, plus the owned MCP/Explorer request-EOF fixture corrections, are
+also carried forward exactly from their scoped PRs. Original test assertions,
+timeouts, resource ceilings, permission and writer/recovery gates remain.
+No local native/controller/editor execution or native-image payload read is
+performed. Fresh guarded whole-source CI and real VSIX/extension-host evidence
+are still required; macOS resource enforcement and broader acceptance stay open.
+
+
+## Current catalog CLI fixture correction (2026-11-01)
+
+The original catalog candidate exposed 80 intended entries, but an inherited
+public CLI fixture still expected 77. The observed Windows parity_cli target
+records 7 passed / 1 failed at that exact count mismatch. The fixture now
+requires exactly 80 declared entries and unique adapter IDs, all three newly
+admitted public IDs, the explicit-host execution boundary and unchanged null
+live certification. All note-persistence assertions and production code remain
+unchanged. This source correction still requires fresh guarded native CI; it
+does not establish vendor-runtime, combined, VSIX or release acceptance.
+Local recheck passes both catalog data-contract tests, Rust 1.94.1 format,
+typecheck and npm 266 passed / 0 failed / 3 existing skips. Native execution
+remains unrun locally and fresh hosted qualification is required.
+
+
+## Refreshed Session candidate and stdio fixture (2026-11-01)
+
+The Session candidate now inherits the corrected catalog/combined source through
+a normal TSGo-base merge. The public CLI fixture requires the intended 80-entry
+catalog; original inventory, do-first and loopback corrections remain. The
+Session stdio fixture now checks the unchanged status/data transport: status
+must be ok and data.activeProject must be default for both accepted spellings.
+Original isError, foreign/duplicate-session, source-preservation, permissions
+and budget assertions remain; alias production and the frozen 53-tool data are
+unchanged. Native/vendor/editor execution remains unrun locally and fresh
+guarded hosted qualification is required.
+Local source recheck passes 50 inert admission/catalog/schema tests, Rust
+1.94.1 formatting, typecheck and npm 266 passed / 0 failed / 3 existing skips.
+These checks do not establish native, live vendor or editor acceptance.
+
+
+## Refreshed selected context candidate and configuration fixture (2026-11-01)
+
+The selected context candidate now normally merges the corrected Session base,
+retaining its bounded source inventory, do-first admission, owned loopback and
+strict 80-entry catalog fixtures. The inherited Session stdio assertion checks
+the existing status/data response envelope. The context project-lock fixture
+now checks the public startupProject and projectActivationLocked configuration
+fields; all activation, foreign-project and stale/resume assertions remain.
+Context production, field contracts, fixed historical tool data, scopes, byte
+budgets, permissions and existing runtime/approval/recovery gates are unchanged.
+Native/controller/vendor/editor execution remains unrun locally; fresh guarded
+hosted qualification is still required.
+Local recheck passes 52 inert admission/catalog/schema tests, Rust 1.94.1
+format checks for 14 changed roots, Python AST for eight files, typecheck and
+npm 266 passed / 0 failed / 3 existing skips. Native compilation and the ten
+context unit/integration tests remain unrun locally; hosted qualification is
+still required.
+
+
+## Refreshed global tool-budget candidate (2026-11-01)
+
+The global tool-budget candidate now normally merges the corrected context
+base, carrying the bounded source inventory, do-first admission, owned loopback,
+strict 80-entry catalog and Session/context fixture corrections. The context
+fixture checks the existing public startupProject/projectActivationLocked
+configuration fields; Session stdio checks the existing status/data envelope.
+The original global budget implementation, field contract, all budget tests
+and public-data checks remain byte-exact. Timeout/cancellation/cleanup
+precedence, character and byte ceilings, host authority, stale-state and
+write/approval/recovery boundaries retain their original paths. Native tests,
+controller/vendor/editor execution and Windows cleanup/kernel qualification
+remain unrun locally and require fresh guarded hosted evidence.
+Local recheck passes 54 inert admission/catalog/schema tests, Rust 1.94.1
+format checks for 16 changed roots, Python AST for nine files, typecheck and
+npm 266 passed / 0 failed / 3 existing skips. These source/npm checks do not
+establish native budget, deadline, cleanup, platform or release acceptance.
+
+## PR27 HTTP preflight and corrected-base candidate (2026-11-01)
+
+The original PR27 source 6b5a3da42e72bf3e00afea8b8c441ca6b3ba120f
+fails Ubuntu shard 1 job 124431535400 (run 41165324653): 46/47 target
+groups succeed. server_autoselection records 6 passed / 1 failed, with
+language_auto_inspection_requires_initialized_selection during HTTP
+Principal::new. Artifact 13030547689 matches ZIP SHA-256
+76206bc83c711cd03afeb6ab7167426ad38598db6904026eeea4885b141c3ac6;
+all 94 raw group-log lengths/hashes verify.
+
+The candidate normally merges corrected PR26 10e5fe72 and separates internal
+host preflight from ordinary inspection/active Session creation. Preflight
+retains host, retained-state/binding, activation and deadline admission, returns
+only Result<()>, and cannot publish a new Session or initialize an automatic
+choice. Authenticated initialization retains the original active creation and
+registration checks. Ordinary inspection still refuses an uninitialized choice.
+Three added native unit fixtures cover nonpublication/noncapture/provider
+non-start and policy, deadline, authority, binding and registration refusals.
+The original seven autoselection integration cases and 80-entry declaration
+contract remain unchanged.
+
+Native compilation, Cargo tests, Clippy, the new fixtures and actual HTTP/VSIX
+execution remain unrun locally. Fresh exact-source guarded platform/HTTP
+qualification is required. The strict macOS resource issue and broader
+vendor/browser/main/release requirements remain open.
+
+Actual local candidate checks: 56 selected inert tests (54 plus 2 catalog cases)
+pass; Rust 1.94.1/edition 2024 formatting passes for 14 changed roots, preserving
+the original tracked line endings, and 11 Python AST checks pass. Typecheck
+passes; npm reports 266 pass / 0 fail / 3 existing skips, 47,241.9429 ms.
+Fourteen original feature blobs and ten inherited repair blobs are exact.
+Inert source admission selects the same 1,814 names/order as the original
+documentation postfilter: 98,586 raw filename bytes instead of 1,907,034 broad
+inventory bytes. Original raw/path/file/total and ordinary-file/hash gates remain.
+These source checks do not execute or qualify the three new native tests.

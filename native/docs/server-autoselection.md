@@ -111,3 +111,27 @@ host refusal, dashboard override/reset, metadata validation, secondary activatio
 stdio and authenticated HTTP. They have not been compiled or executed locally.
 No native runtime, real vendor, Windows kernel cleanup, combined platform,
 browser/VSIX, main or release acceptance follows from these source checks.
+
+## HTTP host preflight correction (2026-11-01)
+
+The original Ubuntu shard at `6b5a3da4` passed six of the seven integration
+fixtures. The authenticated HTTP fixture refused during `Principal::new` with
+`language_auto_inspection_requires_initialized_selection`. Principal admission
+opens a fresh random Session label, so no creation choice exists at that stage.
+
+HTTP admission now uses an internal host preflight that returns only `Result<()>`.
+It preserves host/profile, registration, binding, retained-state, activation and
+deadline validation, while skipping new Session publication and creation-time
+selection. Its temporary Session cannot escape to a caller. The authenticated
+initialization path still creates an ordinary active Session and performs the
+original bounded filename capture, selection and registration refusal. Ordinary
+inspection still refuses a missing automatic choice.
+
+Three additional native unit fixtures cover source/session nonpublication,
+provider non-start, ordinary inspection refusal, malformed policy, expired
+deadline, write authority, retained binding/state and missing winning registration.
+The original seven integration fixtures and declaration contract are unchanged.
+The branch also inherits the corrected PR26 base and its scoped inventory,
+admission, loopback, catalog and Session/context fixture repairs. New native
+unit/integration, HTTP, platform and VSIX acceptance still requires exact-source
+hosted execution; no local native compilation or test execution is claimed.

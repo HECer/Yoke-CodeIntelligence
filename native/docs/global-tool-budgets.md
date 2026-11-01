@@ -106,3 +106,15 @@ Exact hosted compilation, whole-target regression and actual deadline/cleanup
 qualification remain required. Token estimators, backend auto-detection
 priorities, full current upstream parity, other platform/backend acceptance,
 combined VSIX, main and release acceptance remain open.
+
+
+## Base refresh and CI status (2026-11-01)
+
+A normal merge carries the corrected selected-context base and its original
+Session/configuration fixture assertions, bounded source inventory and earlier
+scoped compiler/loopback/catalog repairs. Global budget production, compiled
+field data, four native unit tests, seven integration tests and the independent
+public-data tests remain exact to the original budget candidate. This refresh
+does not change deadline/cancellation/cleanup behavior, answer admission,
+profile binding or authority. Native compilation and runtime/cleanup/editor
+qualification remain unrun locally and pending fresh guarded hosted evidence.

@@ -158,6 +158,11 @@ fn explorer_incomplete_headers_report_receive_progress_without_response_content(
             stream.set_read_timeout(Some(Duration::from_secs(5)))?;
             stream.set_write_timeout(Some(Duration::from_secs(5)))?;
             stream.read_exact(&mut [0; 1])?;
+            // Observe the client's write-half EOF before ending the response.
+            let mut trailing = [0; 1];
+            if stream.read(&mut trailing)? != 0 {
+                return Err(io::ErrorKind::InvalidData.into());
+            }
             stream.write_all(&response)?;
             stream.shutdown(Shutdown::Write)
         });
@@ -165,8 +170,9 @@ fn explorer_incomplete_headers_report_receive_progress_without_response_content(
         stream.set_read_timeout(Some(Duration::from_secs(5))).unwrap();
         stream.set_write_timeout(Some(Duration::from_secs(2))).unwrap();
         stream.write_all(b"!").unwrap();
+        stream.shutdown(Shutdown::Write).unwrap();
         let result = std::panic::catch_unwind(|| read_response(stream));
-        assert!(peer.join().unwrap().is_ok());
+        peer.join().unwrap().unwrap();
         if complete {
             let response = match result {
                 Ok(response) => response,
