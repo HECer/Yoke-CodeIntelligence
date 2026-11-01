@@ -107,6 +107,14 @@ def token_spans(sources):
             for name, raw in sources.items() if name.endswith(".ts")}
 
 
+def query_requests(sources):
+    offset = token_spans(sources)["entry.ts"][-1][0]
+    # symbols.find adds a captured-search kind, which cannot accompany navigation.
+    return [{"operation": "queryProject", "args": {"project": "default", "tool": "ci_find", "arguments": {
+        "languageServer": {"path": "entry.ts", "offset": offset, "operation": operation}, "maxBytes": 64000}}}
+        for operation in ("hover", "definition", "references")]
+
+
 def utf16_range(raw, start, end):
     def position(offset):
         prefix = raw[:offset].decode("utf8")
@@ -312,10 +320,7 @@ def query(tool, fixture, native, vendor_hash):
     V.write_json(fixture / "servers.json", [{"backendId": "typescript_tsgo", "command": str(vendor),
         "args": ["--lsp", "--stdio"], "configuration": {"allowSourceExecution": True}}])
     V.write_json(fixture / "host.json", {"languageServers": {"global": ["typescript_tsgo"]}})
-    offset = token_spans(sources)["entry.ts"][-1][0]
-    V.write_json(fixture / "requests.json", [{"operation": "symbols.find", "args": {
-        "languageServer": {"path": "entry.ts", "offset": offset, "operation": operation}, "maxBytes": 64000}}
-        for operation in ("hover", "definition", "references")])
+    V.write_json(fixture / "requests.json", query_requests(sources))
     raw = command([native, "--root", workspace, "--timeout", "100000", "--max-bytes", "64000",
         "--language-server-config", fixture / "servers.json", "--trust-servers", "session", "--host-profile", fixture / "host.json",
         "--requests", fixture / "requests.json"], workspace, fixture, "session", 120)
