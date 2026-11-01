@@ -2,6 +2,12 @@
 
 ## MCP HTTP revocation failure still needs source-bound observations (2026-10-30)
 
+Update (2026-11-01): the new owned EOF fixture also fails on PR19 merge source
+`a3038d94`. Its repair finishes only that fixture's request write half and checks
+peer EOF; existing client exchanges retain their original request behavior,
+framing/parser and timeout values. Fresh whole-target qualification is required
+for this repair. The independently recurring queued-revocation EOF remains open.
+
 The `9d0c4c72` macOS PR run's queued-revocation case fails in the already-running
 reader's client exchange, before its expected 503 result. Existing artifacts lack
 prefix length and timing, so the cause remains unestablished. Failure-only scalar

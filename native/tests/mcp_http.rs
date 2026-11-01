@@ -89,6 +89,10 @@ fn exchange(address: SocketAddr, request: &[u8]) -> Response {
     tcp.set_read_timeout(Some(Duration::from_secs(10))).unwrap();
     tcp.write_all(request).unwrap();
     observation.sent_us = observation.began.elapsed().as_micros();
+    read_response(tcp, observation)
+}
+#[track_caller]
+fn read_response(mut tcp: TcpStream, mut observation: ResponseObservation) -> Response {
     let mut bytes = vec![];
     loop {
         let mut chunk = [0; 8192];
@@ -217,11 +221,25 @@ fn incomplete_tcp_eof_reports_scalar_progress_without_response_content() {
             stream.set_write_timeout(Some(Duration::from_secs(5)))?;
             let mut request = [0; 1];
             stream.read_exact(&mut request)?;
+            // Finish the owned request before sending response EOF.
+            let mut trailing = [0; 1];
+            if stream.read(&mut trailing)? != 0 {
+                return Err(std::io::ErrorKind::InvalidData.into());
+            }
             stream.write_all(&response)?;
             stream.shutdown(std::net::Shutdown::Write)
         });
-        let failure = std::panic::catch_unwind(|| exchange(address, b"!"));
-        assert!(peer.join().unwrap().is_ok());
+        let failure = std::panic::catch_unwind(|| {
+            let mut observation = ResponseObservation::new();
+            let mut tcp = TcpStream::connect(address).unwrap();
+            observation.connected_us = observation.began.elapsed().as_micros();
+            tcp.set_read_timeout(Some(Duration::from_secs(10))).unwrap();
+            tcp.write_all(b"!").unwrap();
+            tcp.shutdown(std::net::Shutdown::Write).unwrap();
+            observation.sent_us = observation.began.elapsed().as_micros();
+            read_response(tcp, observation)
+        });
+        peer.join().unwrap().unwrap();
         let payload = failure
             .err()
             .expect("Incomplete frames must remain failures");
