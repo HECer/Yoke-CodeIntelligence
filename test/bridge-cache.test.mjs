@@ -33,26 +33,50 @@ test('Graphify worker passes separate host cache and original root to its pinned
         assert(basename(cache).startsWith('ci-gfy-contract-'));
         rmSync(cache, { recursive: true, force: true });
     });
-    const program = `import importlib.metadata,types,sys,runpy,json
+    // Fixed fixture-only markers distinguish interpreter/import/extraction stalls.
+    // Only scalar observations enter a timeout error; provider output stays private.
+    const observeFailure = (result, began) => {
+        if (!result.error)
+            return;
+        const stderr = result.stderr ?? '';
+        result.error.message += '; observations=' + JSON.stringify({
+            timeoutMs: 10000, elapsedMs: Math.round(performance.now() - began),
+            statusPresent: result.status !== null, signalPresent: result.signal !== null,
+            stdoutBytes: Buffer.byteLength(result.stdout ?? ''), stderrBytes: Buffer.byteLength(stderr),
+            phases: [0, 1, 2, 3, 4].map(value => stderr.split(/\r?\n/).includes('CI_GRAPHIFY_PHASE=' + value)),
+        });
+    };
+    const program = `import sys
+def phase(value):
+ sys.stderr.write('CI_GRAPHIFY_PHASE=' + str(value) + '\\n')
+ sys.stderr.flush()
+phase(0)
+import importlib.metadata,types,runpy,json
 from pathlib import Path
+phase(1)
 version=importlib.metadata.version
 importlib.metadata.version=lambda name: '0.9.87' if name=='graphifyy' else version(name)
 package=types.ModuleType('graphify');module=types.ModuleType('graphify.extract')
 def extract(paths,*,root,cache_root):
+ phase(2)
  assert root.is_absolute() and cache_root.is_absolute()
  assert root!=cache_root and not cache_root.is_relative_to(root)
  assert [p.relative_to(root).as_posix() for p in paths]==['a.py']
  assert paths[0].read_text(encoding='utf-8')=='def owned():\\n    return 1\\n'
  (cache_root/'visited').write_text('contract fixture',encoding='utf-8')
+ phase(3)
  return {'nodes':[],'links':[]}
 module.extract=extract;sys.modules['graphify']=package;sys.modules['graphify.extract']=module
 runpy.run_path(sys.argv[1],run_name='__main__')
+phase(4)
 `;
     const input = { root: f.root, cacheRoot: toNamespacedPath(cache), snapshotId: s.id, sourceHashes: { 'a.py': hash(f.read('a.py')) } };
+    const began = performance.now();
     const r = spawnSync(process.platform === 'win32' ? 'python' : 'python3', ['-I', '-c', program, fileURLToPath(new URL('../workers/graphify_bridge.py', import.meta.url))], {
         input: JSON.stringify(input), encoding: 'utf8', timeout: 10000,
         env: { PATH: process.env.PATH ?? '', SystemRoot: process.env.SystemRoot ?? '', CI: '1', DO_NOT_TRACK: '1' },
     });
+    observeFailure(r, began);
     assert.ifError(r.error);
     assert.equal(r.status, 0, r.stderr);
     const result = JSON.parse(r.stdout);
@@ -63,10 +87,13 @@ runpy.run_path(sys.argv[1],run_name='__main__')
     assert.equal(readFileSync(join(cache, 'visited'), 'utf8'), 'contract fixture');
     assert.equal(f.read('a.py'), 'def owned():\n    return 1\n');
     unlinkSync(join(cache, 'visited'));
+    const refusedBegan = performance.now();
     const refused = spawnSync(process.platform === 'win32' ? 'python' : 'python3', ['-I', '-c', program, fileURLToPath(new URL('../workers/graphify_bridge.py', import.meta.url))], {
         input: JSON.stringify({ ...input, cacheRoot: 'relative-cache' }), encoding: 'utf8', timeout: 10000,
         env: { PATH: process.env.PATH ?? '', SystemRoot: process.env.SystemRoot ?? '', CI: '1', DO_NOT_TRACK: '1' },
     });
+    observeFailure(refused, refusedBegan);
+    assert.ifError(refused.error);
     assert.notEqual(refused.status, 0);
     assert.match(refused.stderr, /Host cache directory must be existing and absolute/);
     assert(!existsSync(join(cache, 'visited')));
