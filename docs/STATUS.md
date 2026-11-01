@@ -5606,3 +5606,47 @@ or network attempts, Python AST parsing, npm run typecheck and npm test
 root with all 98 selected Git mode/blob/path inputs equal to this candidate.
 No local native, controller, vendor or editor code was executed. These checks
 do not establish merged-source native, macOS PDF or vendor/VSIX acceptance.
+
+
+## Node 24 Graphify fixture timeout observations (2026-11-01)
+
+PR24 Windows/Node24 job `124911230254` at merge
+`81366a1efffac5fd128807e075734508ec39f440` passes typecheck but fails
+one owned Graphify contract fixture: `spawnSync python ETIMEDOUT` at
+the unchanged 10,000 ms limit. That run reports 266 passes, one failure
+and two skips. It does not identify the stalled Python phase or qualify
+the real external Graphify package.
+
+The fixture now emits five fixed stderr markers for bootstrap entry,
+stdlib imports, extraction entry/return and wrapper return. On a spawn
+error it adds only elapsed time, stream byte counts, status/signal
+presence and observed marker flags to the original error. Both 10-second
+limits and every original positive/relative-cache assertion remain.
+The negative branch additionally rejects spawn errors before its
+existing refusal checks. Production bridge and core sources are unchanged.
+
+Local Node 24.21.0 / Python 3.14.7 typecheck and full Node tests pass:
+266 passed, zero failed, three existing skips. A first isolated run
+failed because its source copy omitted the publisher dry-run script;
+that original script was added unchanged before the final run, and both
+logs are retained. Inert failure-path checks retain the error object and
+exclude stdout/stderr/signal canaries from observations; Python AST
+checks retain all non-observation statements and imports. No native,
+vendor or editor runtime qualification is claimed. Fresh hosted Node24
+acceptance remains required; this is instrumentation, not a proven
+timeout fix.
+
+## Context-options base refresh (2026-11-01)
+
+The context-options branch now merges base
+`f9dc097d9e2ad704262e5c17d30dfa138c4c1049` while preserving its own
+`05df4963cfc1c4f27cbf3616b812d6e25e626948` history. The inherited
+Graphify fixture observations and both status notes are retained. The complete
+native tree and all context-definition implementation, contract and native tests
+remain unchanged. No permission, resource budget or lifecycle assertion changes.
+
+All 101 Node input files exactly match the source set used by the immediately
+preceding base validation: typecheck passed and Node tests passed 266 cases with
+three existing skips. That validation is reused after byte comparison; no new
+Node run is claimed. The two inert context declaration checks also pass. Native,
+combined, VSIX and hosted acceptance of this merge still require fresh CI.
