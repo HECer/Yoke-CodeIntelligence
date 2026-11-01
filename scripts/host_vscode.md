@@ -24,6 +24,14 @@ source, generated JavaScript and dependency-package byte identities stay
 separate. The selected source map includes packaging inputs, not every compiler
 or external build input.
 
+The fixed Git inventory applies the existing documentation policy before its
+1 MB / 4,096-path admission: all tracked Markdown, plus top-level
+`docs/validation/native-*.json` and `.txt` receipts except native-distribution
+receipts. Historical documentation source snapshots remain excluded as before.
+The post-query policy check, ordinary-file checks, 16 MB per-file and 96 MB total
+source-byte limits remain mandatory. Filtering earlier does not narrow the
+logical selected source set or enlarge any capacity.
+
 ## Four owned workers
 
 Each phase gets an assigned-before-resume kill-on-close Job through the existing

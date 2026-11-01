@@ -27,6 +27,9 @@ use zeroize::Zeroizing;
 
 const MAX_RESPONSE: usize = 16_000_000;
 #[cfg(test)]
+#[path = "mcp_http_preflight_tests.rs"]
+mod preflight_tests;
+#[cfg(test)]
 #[path = "mcp_http_rejection_tests.rs"]
 mod rejection_tests;
 const VERSIONS: [&str; 3] = ["2025-11-25", "2025-06-18", "2025-03-26"];
@@ -90,10 +93,10 @@ impl Target {
         }
         Ok(engine)
     }
-    fn validate_startup(&self, deadline: &Deadline) -> Result<()> {
+    fn preflight(&self, deadline: &Deadline) -> Result<()> {
         let engine = self.engine(deadline)?;
         let label = format!("http-{}", random_id()?);
-        Session::validate_http_startup(
+        Session::preflight(
             engine,
             self.host.clone(),
             Some(&label),
@@ -233,7 +236,7 @@ impl Principal {
         }
         // Validate source/session host authority before a listener can be opened.
         let preflight_deadline = Deadline::new(30_000);
-        target.validate_startup(&preflight_deadline)?;
+        target.preflight(&preflight_deadline)?;
         Ok(Self {
             id: id.into(),
             token_hash: Sha256::digest(token.as_slice()).into(),

@@ -350,13 +350,12 @@ fn trusted_persistent_callback_uses_selected_default_and_whole_cell_deadline_los
     assert!(
         response["error"]["message"]
             .as_str()
-            .unwrap()
-            .contains("max_answer_chars=0"),
+            .is_some_and(|message| message.contains("max_answer_chars=0")),
         "{response}"
     );
     assert!(response["result"].is_null(), "{response}");
-    assert_eq!(response["callbackCount"], 1);
-    assert_eq!(response["stateLost"], false);
+    assert_eq!(response["callbackCount"], 1, "{response}");
+    assert_eq!(response["stateLost"], false, "{response}");
     let response = runtime
         .execute(
             &mut session,

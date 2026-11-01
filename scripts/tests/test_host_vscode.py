@@ -6,15 +6,19 @@ from pathlib import Path, PureWindowsPath
 import re
 import stat
 import struct
+import subprocess
+import tempfile
 import unittest
+from unittest import mock
 import zipfile
 
 
 def functions():
     scripts = Path(__file__).resolve().parents[1]
-    namespace = {"json": json, "PureWindowsPath": PureWindowsPath, "re": re, "stat": stat, "struct": struct}
+    namespace = {"json": json, "Path": Path, "PureWindowsPath": PureWindowsPath, "re": re, "stat": stat,
+                 "struct": struct, "subprocess": subprocess}
     sources = [(scripts / "vscode_owned_job.py", {"require", "admit_receipt"}),
-               (scripts / "host_vscode.py", {"require", "unique_object", "reject_constant", "decode", "admit_lifecycle", "producer_role", "safe_members", "admit_host_report", "admit_state", "zip_directory", "admit_stage_result"})]
+               (scripts / "host_vscode.py", {"require", "unique_object", "reject_constant", "decode", "admit_lifecycle", "producer_role", "safe_members", "admit_host_report", "admit_state", "zip_directory", "admit_stage_result", "source_inventory_command", "source_inputs"})]
     for path, names in sources:
         if not path.is_file():
             continue
@@ -71,6 +75,40 @@ class Admission(unittest.TestCase):
         return {"kind": "actual-vscode-extension-host", "passed": True, "runtime": "rust",
                 "bundledRuntime": False, "vscodeVersion": "1.143.1", "unsavedSourceBound": True,
                 "workspaceExecutableIgnored": True, "protectedOpenBufferExcluded": True, "savedSourceUnchanged": True}
+
+    def test_source_inventory_filters_excluded_history_before_output_admission(self):
+        selected = {"Cargo.toml", "native/src/main.rs", "scripts/owned.py", ".github/workflows/ci.yml",
+                    "docs/ARCHITECTURE.md", "docs/.hidden.md", "docs/nested/caf\u00e9-\u03c0.md",
+                    "docs/validation/native-owned.json", "docs/validation/native-owned.txt",
+                    "docs/validation/native-distribution-note.md"}
+        excluded = {"docs/validation/native-distribution.json", "docs/validation/native-distribution-owned.txt",
+                    "docs/validation/nested/native-owned.json", "docs/validation/native-owned.yaml"}
+        excluded.update(f"docs/validation/history/{i:05d}/{'a' * 70}/{'b' * 60}.rs" for i in range(8000))
+        with tempfile.TemporaryDirectory(prefix="yoke-inert-source-index-") as directory:
+            root = Path(directory)
+            subprocess.run(["git", "init", "--quiet", str(root)], check=True, capture_output=True, timeout=10)
+            blob = subprocess.check_output(["git", "hash-object", "-w", "--stdin"], input=b"", cwd=root, timeout=10).decode().strip()
+            index = b"".join(f"100644 {blob}\t{name}\0".encode() for name in sorted(selected | excluded))
+            subprocess.run(["git", "update-index", "-z", "--index-info"], input=index, cwd=root,
+                           check=True, capture_output=True, timeout=10)
+            old = subprocess.check_output(["git", "ls-files", "-z", "--", "Cargo.toml", "native", "scripts",
+                                           ".github/workflows", "docs"], cwd=root, timeout=10)
+            self.assertGreater(len(old), 1_000_000)
+            self.assertGreater(len(old.split(b"\0")), 4097)
+            raw = subprocess.check_output(self.call("source_inventory_command"), cwd=root, timeout=10)
+            self.assertEqual(set(raw.decode().split("\0")[:-1]), selected)
+            self.assertLessEqual(len(raw), 1_000_000)
+            self.assertLessEqual(len(raw.split(b"\0")), 4097)
+
+    def test_source_inventory_preserves_budget_path_and_framing_refusals(self):
+        self.functions["ROOT"] = Path.cwd()
+        invalid = [b"x" * 1_000_001,
+                   b"".join(f"native/{i}.rs\0".encode() for i in range(4097)),
+                   b"native/missing-terminator.rs", b"native/../escape.rs\0", b"native//empty.rs\0",
+                   b"native\\alias.rs\0", b"docs/escape/../bad.md\0", b"\xff\0"]
+        for raw in invalid:
+            with self.subTest(prefix=raw[:40]), mock.patch.object(subprocess, "check_output", return_value=raw), self.assertRaises(ValueError):
+                self.call("source_inputs")
 
     def test_stale_lifecycle_cannot_authorize_new_source(self):
         with self.assertRaises(ValueError):

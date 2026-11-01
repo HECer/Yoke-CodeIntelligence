@@ -120,14 +120,32 @@ stdio and authenticated HTTP. They have not been compiled or executed locally.
 No native runtime, real vendor, Windows kernel cleanup, combined platform,
 browser/VSIX, main or release acceptance follows from these source checks.
 
-Completed Linux CI on source `6b5a3da4` compiled the seven integration fixtures:
-six passed and authenticated HTTP failed during host startup, before a listener
-or client initialization. The PR merge used the identical source tree. The
-startup separation above addresses that observed ordering error. Three additional
-fixtures cover passive-inspection refusal, invalid HTTP host policy and a missing
-activation runtime grant combined with automatic selection; the
-existing HTTP fixture now checks zero snapshots/Session rows before startup and
-exactly one Session after authenticated initialization. These corrections have
-not yet received native runtime qualification. The unrelated public catalog CLI
-fixture now checks 80 declared backends, including the three current additions;
-its live-certification field remains unavailable.
+## HTTP host preflight correction (2026-11-01)
+
+The original Ubuntu shard at `6b5a3da4` passed six of the seven integration
+fixtures. The authenticated HTTP fixture refused during `Principal::new` with
+`language_auto_inspection_requires_initialized_selection`. Principal admission
+opens a fresh random Session label, so no creation choice exists at that stage.
+
+HTTP admission now uses an internal host preflight that returns only `Result<()>`.
+It preserves host/profile, registration, binding, retained-state, activation and
+deadline validation, while skipping new Session publication and creation-time
+selection. Its temporary Session cannot escape to a caller. The authenticated
+initialization path still creates an ordinary active Session and performs the
+original bounded filename capture, selection and registration refusal. Ordinary
+inspection still refuses a missing automatic choice.
+
+Three additional native unit fixtures cover source/session nonpublication,
+provider non-start, ordinary inspection refusal, malformed policy, expired
+deadline, write authority, retained binding/state and missing winning registration.
+The original seven integration cases and declaration contract are retained.
+PR28 also retains three additive integration fixtures for passive-inspection
+refusal, invalid HTTP policy and an absent activation runtime grant. Its existing
+HTTP fixture checks zero snapshots/Session rows before startup and exactly one
+Session after authenticated initialization. The public catalog CLI retains
+80 distinct declared backend IDs, including the three current additions, and
+keeps live-certification unavailable.
+The branch also inherits the corrected PR26 base and its scoped inventory,
+admission, loopback, catalog and Session/context fixture repairs. New native
+unit/integration, HTTP, platform and VSIX acceptance still requires exact-source
+hosted execution; no local native compilation or test execution is claimed.
