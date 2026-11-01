@@ -1,5 +1,39 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Explorer loopback EOF coordination repair (2026-11-01; hosted recheck pending)
+
+At PR #19 source `2a205ac3`, the Windows Explorer target passes 8/8 cases.
+The macOS target passes all six original cases and the new scalar test, but its
+new loopback fixture fails with a read error (raw OS code 54) and an unsuccessful
+peer result. The fixture now half-closes the client's request write side and
+requires the peer to observe request EOF before sending its response. Unexpected
+trailing request bytes still fail, and peer I/O errors retain their error value.
+The four response cases, all receive assertions, formatter/parser, six original
+tests, production code and socket/host timeout values are unchanged.
+
+Local native execution remains unrun. Fresh guarded hosted qualification of the
+repaired eight-case target is pending; the earlier Windows rebuild/reload cause,
+strict macOS memory and broader release gates remain open. This fixture repair
+does not qualify later source using the earlier Windows or Linux results.
+
+## Explorer HTTP receive observations await hosted execution (2026-10-30)
+
+At source `85d0893d`, completed push run `41096155077` passes five of six
+Windows Explorer HTTP cases; the rebuild/reload case fails because its received
+bytes lack a complete HTTP header delimiter. The retained artifact cannot
+distinguish empty from partial response bytes or establish the failing request,
+receive duration or cause. Linux/macOS pass all six at that same source.
+
+This candidate retains scalar receive elapsed time, byte count, read-failure and
+raw OS-error flags/code, and delimiter presence in a closed formatter (maximum
+169 bytes on 64-bit targets). It keeps the original read-to-EOF operation, success
+parser, all six test bodies, requests, timeouts and production code unchanged.
+Two added tests cover scalar extremes and an owned bounded TCP peer with empty,
+partial and valid responses plus synthetic-content exclusion. Those native tests
+and the eight-case target remain unrun locally and require guarded hosted CI.
+Instrumentation may affect scheduling; no cause or repair is established.
+Full platform, strict macOS memory, VSIX, main and release gates remain open.
+
 ## MCP HTTP incomplete-response observations (2026-10-30)
 
 Update (2026-11-01): PR19 merge source `a3038d94` records 13 passed and two
