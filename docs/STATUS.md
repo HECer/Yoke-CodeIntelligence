@@ -36,6 +36,15 @@ Full platform, strict macOS memory, VSIX, main and release gates remain open.
 
 ## MCP HTTP incomplete-response observations (2026-10-30)
 
+Update (2026-11-01): PR19 merge source `a3038d94` records 13 passed and two
+failed MCP cases. The new owned EOF fixture fails its peer-result requirement;
+the original queued-revocation case also receives an empty premature EOF. The
+candidate now half-closes only the owned fixture's request and requires peer
+request EOF before responding. The framed receive loop is factored byte-exact
+so the original client does not acquire half-close behavior. Original tests,
+parser, formatter and timeout values remain. Fresh native qualification is
+pending; the original revocation EOF cause and macOS resource gates remain open.
+
 At PR9 source `9d0c4c72`, tested merge `0dc3f536`, run `41031494443`,
 the MCP HTTP target passes 12 of 13 cases. The already-running reader in the
 queued-principal revocation case receives EOF before a complete framed response;
