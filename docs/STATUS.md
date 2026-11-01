@@ -5461,3 +5461,19 @@ does not establish vendor-runtime, combined, VSIX or release acceptance.
 Local recheck passes both catalog data-contract tests, Rust 1.94.1 format,
 typecheck and npm 266 passed / 0 failed / 3 existing skips. Native execution
 remains unrun locally and fresh hosted qualification is required.
+
+
+## Refreshed Session candidate and stdio fixture (2026-11-01)
+
+The Session candidate now inherits the corrected catalog/combined source through
+a normal TSGo-base merge. The public CLI fixture requires the intended 80-entry
+catalog; original inventory, do-first and loopback corrections remain. The
+Session stdio fixture now checks the unchanged status/data transport: status
+must be ok and data.activeProject must be default for both accepted spellings.
+Original isError, foreign/duplicate-session, source-preservation, permissions
+and budget assertions remain; alias production and the frozen 53-tool data are
+unchanged. Native/vendor/editor execution remains unrun locally and fresh
+guarded hosted qualification is required.
+Local source recheck passes 50 inert admission/catalog/schema tests, Rust
+1.94.1 formatting, typecheck and npm 266 passed / 0 failed / 3 existing skips.
+These checks do not establish native, live vendor or editor acceptance.

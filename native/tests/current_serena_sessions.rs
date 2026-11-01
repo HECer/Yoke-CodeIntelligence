@@ -152,7 +152,8 @@ fn real_serena_stdio_discovery_and_both_session_spellings_use_the_owned_session(
         assert_eq!(row["result"]["isError"], false, "{row}");
         let value: Value =
             serde_json::from_str(row["result"]["content"][0]["text"].as_str().unwrap()).unwrap();
-        assert_eq!(value["activeProject"], "default");
+        assert_eq!(value["status"], "ok");
+        assert_eq!(value["data"]["activeProject"], "default");
     }
     for row in &rows[4..] {
         assert_eq!(row["result"]["isError"], true, "{row}");
