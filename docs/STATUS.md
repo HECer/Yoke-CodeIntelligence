@@ -2,6 +2,15 @@
 
 ## Fresh combined VSIX CI candidate (2026-10-31)
 
+Update (2026-11-01): source `06267ee8` stops before compilation in source
+inventory admission. Its Git query includes 19,106 paths / 1,905,079 bytes before
+the existing documentation filter, exceeding the 1 MB raw limit although only
+1,769 paths are logically selected. The repair applies that same selection in
+Git before the unchanged byte/cardinality limits. Inert Git-index regressions
+retain Unicode/hidden Markdown and receipt policy, reject malformed/oversized
+inventories, and exclude large historical source trees. Actual fresh production,
+packaging and both real extension-host modes still require new hosted evidence.
+
 A new push-only Windows job depends on the same-run owned-Job lifecycle probe.
 It requires fresh matching native release and TypeScript outputs, pinned editor
 procurement, unchanged native/combined VSIX packagers, complete inventory/hash

@@ -2,6 +2,12 @@
 
 ## Fresh combined VSIX CI candidate (2026-10-31)
 
+Update (2026-11-01): source `06267ee8` fails in source-inventory admission before
+the native producer. The repair moves the existing documentation selection into
+the fixed Git query, retaining the exact selected set and all inventory/source
+byte caps. Fresh hosted producer, VSIX and both real editor modes remain required;
+the failed preparation established no native or editor execution acceptance.
+
 A new push-only Windows job depends on the same-run owned-Job lifecycle probe.
 It requires fresh matching native release and TypeScript outputs, pinned editor
 procurement, unchanged native/combined VSIX packagers, complete inventory/hash
