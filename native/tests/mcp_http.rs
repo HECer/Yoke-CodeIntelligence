@@ -203,6 +203,7 @@ fn incomplete_tcp_eof_reports_scalar_progress_without_response_content() {
         let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
         listener.set_nonblocking(true).unwrap();
         let address = listener.local_addr().unwrap();
+        let (release_peer, inspected) = std::sync::mpsc::sync_channel(1);
         let peer = std::thread::spawn(move || -> std::io::Result<()> {
             let end = Instant::now() + Duration::from_secs(5);
             let mut stream = loop {
@@ -221,25 +222,30 @@ fn incomplete_tcp_eof_reports_scalar_progress_without_response_content() {
             stream.set_write_timeout(Some(Duration::from_secs(5)))?;
             let mut request = [0; 1];
             stream.read_exact(&mut request)?;
-            // Finish the owned request before sending response EOF.
-            let mut trailing = [0; 1];
-            if stream.read(&mut trailing)? != 0 {
+            if request != [b'!'] {
                 return Err(std::io::ErrorKind::InvalidData.into());
             }
             stream.write_all(&response)?;
-            stream.shutdown(std::net::Shutdown::Write)
+            stream.shutdown(std::net::Shutdown::Write)?;
+            // Keep the peer's read half alive until response inspection ends.
+            // The fixed request is fully consumed; no client FIN is required.
+            inspected
+                .recv_timeout(Duration::from_secs(5))
+                .map_err(|error| std::io::Error::other(format!("Owned EOF inspection: {error}")))
         });
-        let failure = std::panic::catch_unwind(|| {
-            let mut observation = ResponseObservation::new();
-            let mut tcp = TcpStream::connect(address).unwrap();
-            observation.connected_us = observation.began.elapsed().as_micros();
-            tcp.set_read_timeout(Some(Duration::from_secs(10))).unwrap();
-            tcp.write_all(b"!").unwrap();
-            tcp.shutdown(std::net::Shutdown::Write).unwrap();
-            observation.sent_us = observation.began.elapsed().as_micros();
-            read_response(tcp, observation)
-        });
+        let mut observation = ResponseObservation::new();
+        let mut tcp = TcpStream::connect(address).unwrap();
+        observation.connected_us = observation.began.elapsed().as_micros();
+        tcp.set_read_timeout(Some(Duration::from_secs(10))).unwrap();
+        tcp.write_all(b"!").unwrap();
+        observation.sent_us = observation.began.elapsed().as_micros();
+        // Retain the original handle across the expected reader panic, so
+        // unwinding cannot tear down the connection before the peer is released.
+        let reader = tcp.try_clone().unwrap();
+        let failure = std::panic::catch_unwind(|| read_response(reader, observation));
+        let _ = release_peer.send(());
         peer.join().unwrap().unwrap();
+        drop(tcp);
         let payload = failure
             .err()
             .expect("Incomplete frames must remain failures");
