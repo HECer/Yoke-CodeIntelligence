@@ -32,3 +32,79 @@ jobs:
       - run: node scripts/configured-smoke.mjs
       - run: node scripts/publish-github.mjs --dry-run
       - run: npm pack --dry-run
+  vscode-owned-job:
+    name: Windows VS Code launcher Job lifecycle (no VSIX acceptance)
+    runs-on: windows-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Check inert launcher admission adversaries
+        timeout-minutes: 1
+        run: python -m unittest scripts.tests.test_vscode_owned_job -v
+      - name: Probe only owned Python process trees and passed-marker refusal
+        timeout-minutes: 2
+        run: python scripts/vscode_owned_job.py --ci-probe
+      - name: Preserve separate launcher lifecycle receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vscode-owned-job-windows
+          path: validation/ci-vscode-owned-job
+          if-no-files-found: warn
+  windows-vsix:
+    name: Windows combined VSIX and real Rust extension-host acceptance
+    if: github.event_name == 'push'
+    needs: vscode-owned-job
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - uses: dtolnay/rust-toolchain@1.94.1
+      - name: Use the canonical Windows temporary directory
+        run: python scripts/ci_windows_temp.py
+      - uses: actions/download-artifact@v4
+        with:
+          name: vscode-owned-job-windows
+          path: validation/ci-vscode-lifecycle-proof
+      - name: Check inert lifecycle and VSIX admission adversaries
+        timeout-minutes: 1
+        run: python -m unittest scripts.tests.test_vscode_owned_job scripts.tests.test_host_vscode -v
+      - name: Install locked TypeScript build dependencies without lifecycle scripts
+        timeout-minutes: 10
+        run: npm ci --ignore-scripts
+      - name: Produce fresh matching native release and TypeScript inputs
+        timeout-minutes: 35
+        run: python scripts/host_vscode.py prepare
+      - name: Procure and admit the pinned official editor in an owned worker
+        timeout-minutes: 4
+        run: python scripts/host_vscode.py stage --phase tool
+      - name: Package and reopen the actual native and combined VSIX outputs
+        timeout-minutes: 4
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/host_vscode.py stage --phase package
+      - name: Exercise the explicit native selection in the real extension host
+        timeout-minutes: 4
+        run: python scripts/host_vscode.py stage --phase explicit
+      - name: Exercise the extracted bundled native selection in the real extension host
+        timeout-minutes: 4
+        run: python scripts/host_vscode.py stage --phase bundled
+      - name: Require both source-bound host results and natural owned-tree exits
+        timeout-minutes: 1
+        run: python scripts/host_vscode.py finish
+      - name: Preserve only VSIX acceptance text receipts and bounded logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: combined-vsix-rust-host-windows
+          path: validation/ci-vscode-acceptance
+          if-no-files-found: warn
