@@ -5413,3 +5413,18 @@ timeouts, resource ceilings, permission and writer/recovery gates remain.
 No local native/controller/editor execution or native-image payload read is
 performed. Fresh guarded whole-source CI and real VSIX/extension-host evidence
 are still required; macOS resource enforcement and broader acceptance stay open.
+
+
+## Current catalog CLI fixture correction (2026-11-01)
+
+The original catalog candidate exposed 80 intended entries, but an inherited
+public CLI fixture still expected 77. The observed Windows parity_cli target
+records 7 passed / 1 failed at that exact count mismatch. The fixture now
+requires exactly 80 declared entries and unique adapter IDs, all three newly
+admitted public IDs, the explicit-host execution boundary and unchanged null
+live certification. All note-persistence assertions and production code remain
+unchanged. This source correction still requires fresh guarded native CI; it
+does not establish vendor-runtime, combined, VSIX or release acceptance.
+Local recheck passes both catalog data-contract tests, Rust 1.94.1 format,
+typecheck and npm 266 passed / 0 failed / 3 existing skips. Native execution
+remains unrun locally and fresh hosted qualification is required.
