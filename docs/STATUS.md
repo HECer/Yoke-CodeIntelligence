@@ -27,6 +27,16 @@ has twelve passes and one failure creating its symlink fixture because this
 account lacks Windows privilege 1314; the fixture is unchanged and not skipped.
 The real PDF extraction case passes. No local macOS execution is claimed.
 
+The later macOS shard 5 at `bbcfc363a7` (run `41302558796`, job
+`124836351746`) exposes two separate HTTP fixture races. Owned diagnostic peers
+now restore blocking mode after nonblocking accept and retain peer error detail.
+The queued-revocation case observes invalidation, then independently revokes the
+busy principal instead of waiting for competing request deadlines. Production
+HTTP budgets and refusal assertions stay unchanged. Both complete local Windows
+HTTP targets pass (28 tests, no skips), as do fresh typecheck, npm (266 passes,
+three existing skips), targeted formatting and whitespace checks. Exact-head
+macOS qualification of these fixture changes remains pending.
+
 ## Hosted inventory repair and explicit CI regression selection (2026-10-31)
 
 Exact source `6989862daeee8f00592e2b53f60376b584ea3d37` now completes the

@@ -213,6 +213,9 @@ fn incomplete_tcp_eof_reports_scalar_progress_without_response_content() {
                     Err(error) => return Err(error),
                 }
             };
+            // Accepted-socket mode inheritance differs on macOS. This owned
+            // handshake uses blocking reads, bounded by the socket timeout.
+            stream.set_nonblocking(false)?;
             stream.set_read_timeout(Some(Duration::from_secs(5)))?;
             stream.set_write_timeout(Some(Duration::from_secs(5)))?;
             let mut request = [0; 1];
@@ -221,7 +224,9 @@ fn incomplete_tcp_eof_reports_scalar_progress_without_response_content() {
             stream.shutdown(std::net::Shutdown::Write)
         });
         let failure = std::panic::catch_unwind(|| exchange(address, b"!"));
-        assert!(peer.join().unwrap().is_ok());
+        peer.join()
+            .unwrap()
+            .expect("Owned HTTP peer handshake and response");
         let payload = failure
             .err()
             .expect("Incomplete frames must remain failures");
@@ -839,7 +844,15 @@ fn queued_request_is_rechecked_after_current_principal_revocation() {
     let control = server.controller();
     wait_for(|| control.pending_requests().unwrap() == 2);
     let revoked = std::thread::spawn(move || control.revoke("queued").unwrap());
+    // Observe invalidation before releasing the busy actor. Waiting for its
+    // request deadline instead races the queued connection's physical budget.
+    wait_for(|| server.controller().session_count().unwrap() == 1);
+    // Use host invalidation: a network cancellation would itself wait behind
+    // the pending policy writer. Both revocations cancel before taking that lock.
+    let control = server.controller();
+    let released = std::thread::spawn(move || control.revoke("reader").unwrap());
     assert_eq!(running.join().unwrap().status, 503);
+    assert!(released.join().unwrap());
     assert!(revoked.join().unwrap());
     assert_eq!(queued.join().unwrap().status, 503);
     assert_eq!(
