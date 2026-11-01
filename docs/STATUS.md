@@ -5479,3 +5479,40 @@ controller; all 13 pure admission/route tests pass with the correction. A proces
 and network audit hook observes no external attempts. Python AST, typecheck and
 npm 266 passed / 0 failed / 3 existing skips pass on the identical Node inputs.
 These checks do not import the controller or execute TSGo/native/editor code.
+
+
+## PR23 macOS shard-5 owned EOF fixture repair (2026-11-02)
+
+Job 124906557513/run 41326204824 tested merge
+f53de085fda39eb9bb70b3abf165b5b65b783e02, whose tree equals
+eaf554fb9719aa217cc5b3b9f730b7ea12aa5698. Artifact 13105805273
+(SHA256 78ab069519103b81faf4dc520226b2675945b1dd1ca50f5db02b2b4ed5fe0c3e)
+contains 48 target groups, 45 successful, and 96 independently verified raw
+stdout/stderr logs. The shard receipt is incomplete; its successful groups
+do not make native acceptance green. The original native tree and all seven
+selected failing-test/production/runner sources match the PR23 base exactly.
+
+The adversarial EOF test records an expected incomplete-frame reader panic,
+then client shutdown(Write) ENOTCONN (57) and a peer request-EOF read failure
+WouldBlock (35). Port only the existing ff751140c2660e951ac50025fa0715f9ed8de168
+fixture lifetime repair: consume and validate the fixed one-byte request,
+retain the original client handle across the expected reader panic, and keep
+the peer read half alive until inspection releases it through a bounded channel.
+The original empty and partial-response cases, framed-reader helper, incomplete
+frame/scalar/privacy assertions, socket/accept deadlines and peer-error checks
+remain. Production transport and resource-limit code are unchanged.
+
+Eight mixed-PDF cases explicitly report SetAddressSpace errno22 at 268435456
+bytes and CPU20. Four prompt-memory cases separately report RPC Host executable
+unavailable, generic host errno22, explicit RLIMIT_AS installation failure, and
+missing instructions without a printed initialization cause. The transport loop
+does not identify its failing profile. These inherited failures remain unresolved;
+generic errno22 is not evidence identifying a particular API.
+
+Pinned Rust 1.94.1 rustfmt parses/checks the changed test source successfully.
+Fresh npm run typecheck and npm test pass: 266 passes, zero failures, three
+existing skips (269 total), Node 24.21.0/Python 3.14.7, with 101 recorded source
+inputs unchanged after validation. These are owned Node/Python fixtures, not
+native HTTP acceptance. No local Cargo/native/controller/vendor/editor program
+or compiled native/vendor/editor payload was run or inspected. Exact new-head
+hosted native/macOS, combined Windows/VSIX and release qualification remain open.
