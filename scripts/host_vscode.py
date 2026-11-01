@@ -269,10 +269,18 @@ def identity():
     return revision, environment
 
 
+def source_inventory_command():
+    # Apply the existing documentation policy before bounding Git's output.
+    return ["git", "ls-files", "-z", "--", "Cargo.toml", "Cargo.lock", "package.json", "package-lock.json",
+        ".gitattributes", "native", "src", "python", "scripts", "workers", "extensions/vscode",
+        ":(glob)docs/**/*.md", ":(glob)docs/validation/native-*.json", ":(glob)docs/validation/native-*.txt",
+        ":(exclude,glob)docs/validation/native-distribution*.json",
+        ":(exclude,glob)docs/validation/native-distribution*.txt", "LICENSE",
+        "SECURITY.md", "CHANGELOG.md", "THIRD_PARTY_NOTICES.md", "UPSTREAMS.json", ".github/workflows"]
+
+
 def source_inputs():
-    raw = subprocess.check_output(["git", "ls-files", "-z", "--", "Cargo.toml", "Cargo.lock", "package.json", "package-lock.json",
-        ".gitattributes", "native", "src", "python", "scripts", "workers", "extensions/vscode", "docs", "LICENSE",
-        "SECURITY.md", "CHANGELOG.md", "THIRD_PARTY_NOTICES.md", "UPSTREAMS.json", ".github/workflows"], cwd=ROOT, timeout=30)
+    raw = subprocess.check_output(source_inventory_command(), cwd=ROOT, timeout=30)
     require(len(raw) <= 1_000_000, "Source inventory capacity")
     paths = raw.decode().split("\0")
     require(paths[-1] == "" and 0 < len(paths) <= 4097, "Source inventory cardinality")

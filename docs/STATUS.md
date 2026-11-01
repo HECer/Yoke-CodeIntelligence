@@ -5418,3 +5418,77 @@ The static graph is not the complete runtime. A successful reference query is no
 The facade deliberately does **not** merge all upstream applications into one implicit privileged process. The native path does not need a model. Advanced provider/network/key/retention privileges remain host CLI/library operations, not automatically granted to an MCP caller. See `ADVANCED.md`, `FEDERATION.md`, `SECURITY.md` and `UPSTREAMS.md` for operation-specific boundaries.
 
 Version 0.3 is therefore usable for continued development and bounded local workflows; calling it universally production-ready, fully externally verified or complete feature-for-feature parity with every upstream product would be inaccurate.
+
+
+
+## PR22 do-first admission correction (2026-11-01)
+
+The current-backend candidate inherited an omitted validated doFirst name in
+the final synthetic-name inventory. Its Ubuntu shard reports 30/4 in the whole
+compiler_inline_body target. The exact PR17 admission repair and adversarial
+two-frame regression are now backported; all existing tests and the three
+backend additions remain unchanged. Native compilation/execution remain unrun
+locally. Fresh guarded hosted qualification is required; this correction does
+not resolve separate macOS, provider-runtime, VSIX or release gates.
+Local recheck passes the two catalog data-contract tests, Rust 1.94.1 format,
+typecheck and npm 266 passed / 0 failed / 3 existing skips. These are source/npm
+checks and do not establish native or combined runtime acceptance.
+
+
+
+Update (2026-11-01): source `06267ee8` stops before compilation in source
+inventory admission. Its Git query includes 19,106 paths / 1,905,079 bytes before
+the existing documentation filter, exceeding the 1 MB raw limit although only
+1,769 paths are logically selected. The repair applies that same selection in
+Git before the unchanged byte/cardinality limits. Inert Git-index regressions
+retain Unicode/hidden Markdown and receipt policy, reject malformed/oversized
+inventories, and exclude large historical source trees. Actual fresh production,
+packaging and both real extension-host modes still require new hosted evidence.
+
+
+
+
+## Combined inherited repair checkpoint (2026-11-01)
+
+The combined candidate now applies its existing documentation filter in the
+Git query before the unchanged inventory caps. Selected source names/order,
+file/total limits and ordinary-file checks remain authoritative. The notified
+VSIX job stopped during source inventory, before native build or editor work.
+The existing doFirst synthetic-name inventory repair and adversarial two-frame
+regression, plus the owned MCP/Explorer request-EOF fixture corrections, are
+also carried forward exactly from their scoped PRs. Original test assertions,
+timeouts, resource ceilings, permission and writer/recovery gates remain.
+No local native/controller/editor execution or native-image payload read is
+performed. Fresh guarded whole-source CI and real VSIX/extension-host evidence
+are still required; macOS resource enforcement and broader acceptance stay open.
+
+
+## Current catalog CLI fixture correction (2026-11-01)
+
+The original catalog candidate exposed 80 intended entries, but an inherited
+public CLI fixture still expected 77. The observed Windows parity_cli target
+records 7 passed / 1 failed at that exact count mismatch. The fixture now
+requires exactly 80 declared entries and unique adapter IDs, all three newly
+admitted public IDs, the explicit-host execution boundary and unchanged null
+live certification. All note-persistence assertions and production code remain
+unchanged. This source correction still requires fresh guarded native CI; it
+does not establish vendor-runtime, combined, VSIX or release acceptance.
+Local recheck passes both catalog data-contract tests, Rust 1.94.1 format,
+typecheck and npm 266 passed / 0 failed / 3 existing skips. Native execution
+remains unrun locally and fresh hosted qualification is required.
+
+
+## Refreshed Session candidate and stdio fixture (2026-11-01)
+
+The Session candidate now inherits the corrected catalog/combined source through
+a normal TSGo-base merge. The public CLI fixture requires the intended 80-entry
+catalog; original inventory, do-first and loopback corrections remain. The
+Session stdio fixture now checks the unchanged status/data transport: status
+must be ok and data.activeProject must be default for both accepted spellings.
+Original isError, foreign/duplicate-session, source-preservation, permissions
+and budget assertions remain; alias production and the frozen 53-tool data are
+unchanged. Native/vendor/editor execution remains unrun locally and fresh
+guarded hosted qualification is required.
+Local source recheck passes 50 inert admission/catalog/schema tests, Rust
+1.94.1 formatting, typecheck and npm 266 passed / 0 failed / 3 existing skips.
+These checks do not establish native, live vendor or editor acceptance.
