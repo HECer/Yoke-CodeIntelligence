@@ -6066,3 +6066,105 @@ npm run typecheck and npm test pass (266 passed / 0 failed / 3 existing skips)
 on 98 matching Node Git mode/blob/path inputs. No live controller, native,
 vendor or editor program was executed, and no native-image payload was read.
 These checks do not establish merged-source native or hosted acceptance.
+
+
+## Node 24 Graphify fixture timeout observations (2026-11-01)
+
+PR24 Windows/Node24 job `124911230254` at merge
+`81366a1efffac5fd128807e075734508ec39f440` passes typecheck but fails
+one owned Graphify contract fixture: `spawnSync python ETIMEDOUT` at
+the unchanged 10,000 ms limit. That run reports 266 passes, one failure
+and two skips. It does not identify the stalled Python phase or qualify
+the real external Graphify package.
+
+The fixture now emits five fixed stderr markers for bootstrap entry,
+stdlib imports, extraction entry/return and wrapper return. On a spawn
+error it adds only elapsed time, stream byte counts, status/signal
+presence and observed marker flags to the original error. Both 10-second
+limits and every original positive/relative-cache assertion remain.
+The negative branch additionally rejects spawn errors before its
+existing refusal checks. Production bridge and core sources are unchanged.
+
+Local Node 24.21.0 / Python 3.14.7 typecheck and full Node tests pass:
+266 passed, zero failed, three existing skips. A first isolated run
+failed because its source copy omitted the publisher dry-run script;
+that original script was added unchanged before the final run, and both
+logs are retained. Inert failure-path checks retain the error object and
+exclude stdout/stderr/signal canaries from observations; Python AST
+checks retain all non-observation statements and imports. No native,
+vendor or editor runtime qualification is claimed. Fresh hosted Node24
+acceptance remains required; this is instrumentation, not a proven
+timeout fix.
+
+## Context-options base refresh (2026-11-01)
+
+The context-options branch now merges base
+`f9dc097d9e2ad704262e5c17d30dfa138c4c1049` while preserving its own
+`05df4963cfc1c4f27cbf3616b812d6e25e626948` history. The inherited
+Graphify fixture observations and both status notes are retained. The complete
+native tree and all context-definition implementation, contract and native tests
+remain unchanged. No permission, resource budget or lifecycle assertion changes.
+
+All 101 Node input files exactly match the source set used by the immediately
+preceding base validation: typecheck passed and Node tests passed 266 cases with
+three existing skips. That validation is reused after byte comparison; no new
+Node run is claimed. The two inert context declaration checks also pass. Native,
+combined, VSIX and hosted acceptance of this merge still require fresh CI.
+
+## Global-tool-budget base refresh (2026-11-01)
+
+The budget branch now merges Context base
+`80500e027ac6a4a75329927ce16173548083280a` while preserving its own
+`e7232301226482fe589b0b6b6665fdf652c2b3ef` history. Both status histories
+and the exact inherited Graphify fixture observations remain. The complete
+native tree, global budget implementation, context options, declaration data
+and native tests remain unchanged. Host permissions and all timeout/output
+budgets keep their existing behavior.
+
+Four inert context/budget declaration checks pass. All 101 recorded Node-suite
+input files match the immediately preceding validated base set exactly, so its
+typecheck and 266-pass/three-existing-skip results are reused after byte
+comparison. No fresh Node run is claimed. Hosted/native/combined/VSIX acceptance
+of this merge remains pending; the original Python timeout cause stays open.
+
+
+## PR27 updated budget-base merge qualification (2026-11-01)
+
+The updated global-tool-budget base c8fc8573273b0a6e2eeb5794f47978a952bec5c7
+is merged into creation-selection head 6faf46861c8f41506c3410a29181b28a44dcf572.
+The sole documentation conflict retains the entire existing PR27 status document,
+including its creation-selection summary, and the complete append-only base
+updates. The inherited Graphify fixture diagnostics match the base byte for byte.
+All native selection, HTTP preflight, retention, budget and context source bytes
+remain unchanged; this merge does not alter selection or enforcement behavior.
+
+Six inert declaration checks pass for creation-time server selection, context
+options and global budgets. All 101 recorded Node-suite input files match the
+immediately preceding qualified source set exactly. Its successful typecheck
+and 266-pass/zero-failure/three-existing-skip results are reused after byte
+comparison; no fresh Node run is claimed. Exact new-head hosted/native/runtime,
+combined Windows/VSIX, real-provider and release acceptance remain pending.
+The original Python timeout cause remains unresolved. No local native,
+controller, external vendor or editor-host program was executed.
+
+
+## PR28 updated creation-selection-base merge qualification (2026-11-01)
+
+The updated creation-time selection base 03e99deb8ce3062a44b2d466ff35e19ecda3f874
+is merged into estimator head 40e8c0772892f22f4f8b7418e1614e66bd89168d.
+The single status conflict retains this PR's complete existing document and
+all append-only base status updates. The Graphify fixture diagnostics are
+inherited byte for byte. Native tree 700674c2fe4676f14283437539a822a369f4a1f3,
+including estimators, dashboard, selection, preflight and their native tests,
+is unchanged. Existing browser/runtime observations keep their original scope.
+
+Eight inert declaration checks pass for estimators, creation-time selection,
+context options and global budgets. A fresh isolated typecheck passes, and
+the fresh full Node suite reports 266 passes, zero failures and three existing
+skips (269 tests) on Node 24.21.0 with Python 3.14.7. Its 101 source inputs are
+recorded and unchanged after validation; the PR28 dashboard HTML is included.
+Owned Node/Python fixtures ran. No local native, controller, external vendor
+or editor-host program was executed, and no native/vendor/editor binary was read.
+Exact new-head hosted/native/runtime, combined Windows/VSIX, real-provider and
+release acceptance remain pending. The original hosted Python timeout cause
+remains unresolved; its original two 10-second fixture limits are unchanged.
