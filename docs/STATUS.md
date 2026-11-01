@@ -1,5 +1,32 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Required startup notes: macOS worker-limit repair (2026-11-01)
+
+PR #34's original `f165514611de6faf91c1a42f199e830c93c0f0ab` macOS shards
+0, 1, 2, 3, 4, 6 and 7 fail across twelve complete Cargo targets. The retained
+text artifacts from Rust core run `41254545030` show fixed 256 MiB address-space
+limit installation refusing with `EINVAL`, in both PDF and template workers;
+the new required-note CLI/stdio cases reach that same template boundary.
+No review comments were present when the repair was diagnosed.
+
+The existing PR #31 worker repair is reused here: macOS observes its actual
+virtual baseline, installs a bounded growth allowance without raising inherited
+limits, verifies the kernel ceiling and reports separate policy metadata.
+See [the memory contract](../native/docs/macos-worker-memory.md) for the limits
+of this policy, including reuse of existing mappings. Windows/Linux memory
+policies and required-note authority remain separate. No tests are skipped or
+CI coverage reduced. Exact-head hosted macOS enforcement and full shard
+qualification remain pending; Windows results cannot substitute for them.
+
+Local Windows validation of repair `98fc11f5b7`: typecheck passes; npm tests
+have 266 passes, three existing skips and no failures. All 381 format roots
+and targeted Clippy with `-D warnings` pass. Eight required-note units, two
+memory-budget units and 110 integration cases across twelve complete targets
+pass, including all fourteen required-note cases. The separate media target
+has twelve passes and one failure creating its symlink fixture because this
+account lacks Windows privilege 1314; the fixture is unchanged and not skipped.
+The real PDF extraction case passes. No local macOS execution is claimed.
+
 ## Hosted inventory repair and explicit CI regression selection (2026-10-31)
 
 Exact source `6989862daeee8f00592e2b53f60376b584ea3d37` now completes the
