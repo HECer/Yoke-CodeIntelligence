@@ -5511,3 +5511,98 @@ format checks for 14 changed roots, Python AST for eight files, typecheck and
 npm 266 passed / 0 failed / 3 existing skips. Native compilation and the ten
 context unit/integration tests remain unrun locally; hosted qualification is
 still required.
+
+
+## PR23 Rust VSIX acceptance and TSGo request-route correction (2026-11-01)
+
+Windows job 124813194199 in run 41263237286 at source
+90749c2954d1abcc2bc3497e44aa08d162ea731a completes fresh native/TypeScript
+production, packaging/reopening, and both actual VS Code 1.143.1 Rust
+extension-host modes: explicit executable and extracted bundled executable.
+The receipts bind native SHA-256
+cdb6183949b85534d2b84dc7979182775e4e9e33994244c5855b49d8c3a84e36,
+unsaved source, workspace-executable refusal, protected-buffer exclusion,
+unchanged saved source and natural owned-tree exits. TypeScript runtime bytes
+are bundled and checked; the TypeScript extension mode is not executed.
+This scoped VSIX result does not establish whole-platform or release acceptance.
+
+The separate pinned TSGo 7.0.0-dev.20260707.2 procurement/version stage passes,
+but its three query envelopes refuse before any language-server attempt.
+The controller used symbols.find, which adds kind=symbol; native navigation
+correctly rejects mixed search fields. The corrected controller uses the existing
+read-only queryProject(default, ci_find) Session route with the same navigation
+arguments, exact Unicode/CRLF byte offset, output/time budgets and host grants.
+Source-extracted regression tests check the request contract and its actual
+stage wiring. Native production and all strict reply/source/version/lifecycle
+admission checks are unchanged. No controller, native, vendor or editor runs
+locally; fresh hosted TSGo and corrected-source VSIX qualification remain open.
+
+Actual local checks: both new inert request regressions fail against the old
+controller; all 13 pure admission/route tests pass with the correction. A process
+and network audit hook observes no external attempts. Python AST, typecheck and
+npm 266 passed / 0 failed / 3 existing skips pass on the identical Node inputs.
+These checks do not import the controller or execute TSGo/native/editor code.
+
+
+## PR24 Windows Rust VSIX checkpoint and TSGo base refresh (2026-11-01)
+
+At source b1ebcf469db901f407430bee117bb065d5036ab7, Windows run
+41263743556/job124819216130 produced and reopened the actual combined VSIX.
+Both explicit and extracted bundled Rust modes passed the real VS Code 1.143.1
+extension-host assertions, including unsaved source binding, protected-buffer
+exclusion, ignored workspace executables and unchanged saved source. Native
+0.5.0 SHA256 is 775edc9134c6af73b0500f647b2ff9d89e3958b3876f4d696da13650a0c14d53;
+combined VSIX SHA256 is 34a37acc66de65172fcff025361135ee8c0884f74efe22524d9f78759b781a38.
+All four owned worker trees exited naturally before cleanup with closed handles.
+TypeScript 0.3 runtime bytes were bundled and verified; its extension mode was
+not executed. This is scoped old-source Rust-host acceptance, not whole-platform,
+all-feature, main or release acceptance.
+
+The later pinned official TSGo procurement/version step passed, but all three
+navigation requests refused before LSP dispatch with the inherited mixed-search
+field error. The query worker exited 1 and final vendor admission failed; the
+step-19 wrapper's success does not establish a semantic query result. The
+Session report records zero language-server attempts and sourceWritten:false,
+not an assertion that no retained index/store data changed.
+
+This candidate normally merges TSGo base eaf554fb, retaining the Session alias
+feature and every original native source byte. It carries the checked public
+read-only queryProject/ci_find request builder and its two inert regressions;
+permissions, vendor pins, deadlines and final admission remain unchanged.
+Fresh hosted TSGo and Rust VSIX evidence is required for the merged source.
+Local merge validation passes all 13 inert TSGo tests with zero external
+process/network attempts, Python AST parsing, npm run typecheck and npm test
+(266 passed / 0 failed / 3 existing skips). Node checks ran in the existing
+clean root with all 98 selected Node Git mode/blob/path inputs equal to this
+candidate. No local controller, native, vendor or editor code was executed;
+these checks do not establish corrected-source hosted acceptance.
+
+
+## PR25 Context candidate base refresh and macOS PDF boundary (2026-11-01)
+
+At source 14b75cc2f2f207c0377c07c18518dc8f751a1dab, macOS PR job
+124729558999/run41266252757 executes merge 9a31cb5a, whose tree equals that
+head. Its text receipt has 46 of 47 target groups successful; media records
+8 passed / 5 failed / 0 ignored. All five failures are typed PDF worker
+ResourceLimits/SetAddressSpace refusals with errno 22, requested memory
+268435456 bytes and CPU 20 seconds. The three selected media/test/process
+source files remain exact to the preceding Session base. These failures do
+not establish PDF extraction/visitor acceptance or a context-feature defect.
+The context-definition-options integration target is absent from this shard.
+Original partial failures and the separate macOS memory-policy gate remain.
+
+This candidate normally merges corrected Session/TSGo base b90ec85f. The
+entire native tree, including the selected context contracts, stays byte-exact
+to 14b75cc. Only the inherited CI request builder, its inert tests and this
+append-only status merge change. The read-only queryProject/ci_find route
+avoids symbols.find search-kind injection; vendor pins, permissions, limits,
+source/reply binding and final admission predicates remain unchanged.
+The scoped b1eb Rust VSIX and earlier source results remain bound to their own
+revisions. Fresh merged-source native, TSGo and VSIX evidence is required;
+this base-conflict resolution does not resolve the old macOS PDF refusals.
+Local merge validation passes 13 inert TSGo tests with zero external process
+or network attempts, Python AST parsing, npm run typecheck and npm test
+(266 passed / 0 failed / 3 existing skips). Node checks use the existing clean
+root with all 98 selected Git mode/blob/path inputs equal to this candidate.
+No local native, controller, vendor or editor code was executed. These checks
+do not establish merged-source native, macOS PDF or vendor/VSIX acceptance.
