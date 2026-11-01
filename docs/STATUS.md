@@ -5448,3 +5448,34 @@ does not establish vendor-runtime, combined, VSIX or release acceptance.
 Local recheck passes both catalog data-contract tests, Rust 1.94.1 format,
 typecheck and npm 266 passed / 0 failed / 3 existing skips. Native execution
 remains unrun locally and fresh hosted qualification is required.
+
+
+## PR23 Rust VSIX acceptance and TSGo request-route correction (2026-11-01)
+
+Windows job 124813194199 in run 41263237286 at source
+90749c2954d1abcc2bc3497e44aa08d162ea731a completes fresh native/TypeScript
+production, packaging/reopening, and both actual VS Code 1.143.1 Rust
+extension-host modes: explicit executable and extracted bundled executable.
+The receipts bind native SHA-256
+cdb6183949b85534d2b84dc7979182775e4e9e33994244c5855b49d8c3a84e36,
+unsaved source, workspace-executable refusal, protected-buffer exclusion,
+unchanged saved source and natural owned-tree exits. TypeScript runtime bytes
+are bundled and checked; the TypeScript extension mode is not executed.
+This scoped VSIX result does not establish whole-platform or release acceptance.
+
+The separate pinned TSGo 7.0.0-dev.20260707.2 procurement/version stage passes,
+but its three query envelopes refuse before any language-server attempt.
+The controller used symbols.find, which adds kind=symbol; native navigation
+correctly rejects mixed search fields. The corrected controller uses the existing
+read-only queryProject(default, ci_find) Session route with the same navigation
+arguments, exact Unicode/CRLF byte offset, output/time budgets and host grants.
+Source-extracted regression tests check the request contract and its actual
+stage wiring. Native production and all strict reply/source/version/lifecycle
+admission checks are unchanged. No controller, native, vendor or editor runs
+locally; fresh hosted TSGo and corrected-source VSIX qualification remain open.
+
+Actual local checks: both new inert request regressions fail against the old
+controller; all 13 pure admission/route tests pass with the correction. A process
+and network audit hook observes no external attempts. Python AST, typecheck and
+npm 266 passed / 0 failed / 3 existing skips pass on the identical Node inputs.
+These checks do not import the controller or execute TSGo/native/editor code.
