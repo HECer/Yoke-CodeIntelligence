@@ -86,6 +86,12 @@ candidate. [Constituents, preserved gates and remaining acceptance](validation/i
 
 ## Fresh combined VSIX CI candidate (2026-10-31)
 
+Update (2026-11-01): source `06267ee8` fails in source-inventory admission before
+the native producer. The repair moves the existing documentation selection into
+the fixed Git query, retaining the exact selected set and all inventory/source
+byte caps. Fresh hosted producer, VSIX and both real editor modes remain required;
+the failed preparation established no native or editor execution acceptance.
+
 A new push-only Windows job depends on the same-run owned-Job lifecycle probe.
 It requires fresh matching native release and TypeScript outputs, pinned editor
 procurement, unchanged native/combined VSIX packagers, complete inventory/hash
@@ -2665,3 +2671,18 @@ full upstream contract certification require their own actual evidence.
 PR #7 remains a draft against main. Main integration, release packaging and the
 separate `HECer/Code-Intelligence` publisher require real remote verification
 before release status changes. The integration branch is not a release receipt.
+
+
+## Combined inherited repair checkpoint (2026-11-01)
+
+The combined candidate now applies its existing documentation filter in the
+Git query before the unchanged inventory caps. Selected source names/order,
+file/total limits and ordinary-file checks remain authoritative. The notified
+VSIX job stopped during source inventory, before native build or editor work.
+The existing doFirst synthetic-name inventory repair and adversarial two-frame
+regression, plus the owned MCP/Explorer request-EOF fixture corrections, are
+also carried forward exactly from their scoped PRs. Original test assertions,
+timeouts, resource ceilings, permission and writer/recovery gates remain.
+No local native/controller/editor execution or native-image payload read is
+performed. Fresh guarded whole-source CI and real VSIX/extension-host evidence
+are still required; macOS resource enforcement and broader acceptance stay open.
