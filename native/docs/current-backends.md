@@ -52,3 +52,11 @@ Native compilation and these fixtures remain unrun locally and require guarded
 hosted evidence. Real vendor runtimes, all historical 77 backend qualifications
 and these three new runtime qualifications, broader current upstream parity,
 platform/VSIX/main and release acceptance remain open.
+
+
+The catalog candidate also inherits combined-source inlining. The notified
+Ubuntu shard at parent 3a9b21fb records four unexplained-identifier refusals in
+compiler_inline_body. The exact PR17 do-first name-inventory correction and
+two-frame adversarial regression are backported without changing catalog
+entries, existing tests, assertions or budgets. Fresh guarded hosted results
+are still required; this is not backend-runtime or combined-source acceptance.

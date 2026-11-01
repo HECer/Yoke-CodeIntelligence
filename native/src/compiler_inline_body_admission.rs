@@ -475,6 +475,7 @@ fn check(
             .chain(&frame.names.var_seeds)
             .chain(&frame.names.return_type)
             .chain(&frame.names.argument_capture)
+            .chain(&frame.names.do_first)
             .chain(&frame.predicate_names)
         {
             d.check()?;
