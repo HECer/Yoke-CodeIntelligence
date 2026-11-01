@@ -92,6 +92,8 @@ fn host_preflight_keeps_deadline_policy_and_write_authority_refusals() {
     .unwrap();
     assert!(Principal::new("invalid-auto", Zeroizing::new(vec![51; 32]), invalid).is_err());
     let mut writes = target.clone();
+    // Host defaults include editing; select a non-editing profile for this refusal.
+    writes.host.modes = vec!["interactive".into()];
     writes.allow_writes = true;
     let error = Principal::new("invalid-writes", Zeroizing::new(vec![51; 32]), writes)
         .err()
@@ -101,6 +103,10 @@ fn host_preflight_keeps_deadline_policy_and_write_authority_refusals() {
             .to_string()
             .contains("Host write authority requires editing mode")
     );
+    let mut allowed = target.clone();
+    allowed.host.modes = vec!["interactive".into(), "editing".into()];
+    allowed.allow_writes = true;
+    Principal::new("editing-writes", Zeroizing::new(vec![51; 32]), allowed).unwrap();
     assert_eq!(counts(&target.root), (0, 0));
     assert!(!marker.exists());
 }

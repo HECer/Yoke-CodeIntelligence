@@ -16,13 +16,49 @@ def functions():
     if path.is_file():
         tree = ast.parse(path.read_bytes())
         names = {"require", "admit_members", "admit_package", "fixture_sources", "token_spans",
-                 "utf16_range", "admit_reply", "admit_state", "admit_result", "query"}
+                 "utf16_range", "admit_reply", "admit_state", "admit_result", "query", "query_requests"}
         selected = [n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name in names]
         exec(compile(ast.Module(body=selected, type_ignores=[]), "<inert-tsgo-admission>", "exec"), namespace)
     return namespace
 
 
 class VendorAdmission(unittest.TestCase):
+    def test_query_requests_use_readonly_navigation_and_exact_utf8_callsite(self):
+        sources = self.call("fixture_sources")
+        requests = self.call("query_requests", sources)
+        self.assertEqual(len(requests), 3)
+        offset = sources["entry.ts"].rfind(b"greet")
+        self.assertGreater(offset, len(sources["entry.ts"][:offset].decode("utf8")))
+        for operation, request in zip(("hover", "definition", "references"), requests):
+            self.assertEqual(request["operation"], "queryProject")
+            self.assertEqual(set(request["args"]), {"project", "tool", "arguments"})
+            self.assertEqual(request["args"]["project"], "default")
+            self.assertEqual(request["args"]["tool"], "ci_find")
+            arguments = request["args"]["arguments"]
+            self.assertEqual(set(arguments), {"languageServer", "maxBytes"})
+            self.assertEqual(arguments["maxBytes"], 64000)
+            self.assertEqual(arguments["languageServer"], {"path": "entry.ts", "offset": offset, "operation": operation})
+            self.assertEqual(sources["entry.ts"][offset:offset + 5], b"greet")
+
+
+    def test_query_stage_writes_the_checked_request_builder(self):
+        path = Path(__file__).resolve().parents[1] / "host_tsgo.py"
+        tree = ast.parse(path.read_bytes())
+        query = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == "query")
+        writes = [node for node in ast.walk(query) if isinstance(node, ast.Call)
+                  and isinstance(node.func, ast.Attribute) and node.func.attr == "write_json"
+                  and node.args and isinstance(node.args[0], ast.BinOp)
+                  and isinstance(node.args[0].right, ast.Constant) and node.args[0].right.value == "requests.json"]
+        self.assertEqual(len(writes), 1)
+        builder = writes[0].args[1]
+        self.assertIsInstance(builder, ast.Call)
+        self.assertIsInstance(builder.func, ast.Name)
+        self.assertEqual(builder.func.id, "query_requests")
+        self.assertEqual(len(builder.args), 1)
+        self.assertIsInstance(builder.args[0], ast.Name)
+        self.assertEqual(builder.args[0].id, "sources")
+
+
     def test_actual_query_orchestration_uses_scoped_lsp_route_and_native_byte_budget(self):
         namespace = functions()
         with tempfile.TemporaryDirectory() as directory:
