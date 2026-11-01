@@ -5492,3 +5492,22 @@ guarded hosted qualification is required.
 Local source recheck passes 50 inert admission/catalog/schema tests, Rust
 1.94.1 formatting, typecheck and npm 266 passed / 0 failed / 3 existing skips.
 These checks do not establish native, live vendor or editor acceptance.
+
+
+## Refreshed selected context candidate and configuration fixture (2026-11-01)
+
+The selected context candidate now normally merges the corrected Session base,
+retaining its bounded source inventory, do-first admission, owned loopback and
+strict 80-entry catalog fixtures. The inherited Session stdio assertion checks
+the existing status/data response envelope. The context project-lock fixture
+now checks the public startupProject and projectActivationLocked configuration
+fields; all activation, foreign-project and stale/resume assertions remain.
+Context production, field contracts, fixed historical tool data, scopes, byte
+budgets, permissions and existing runtime/approval/recovery gates are unchanged.
+Native/controller/vendor/editor execution remains unrun locally; fresh guarded
+hosted qualification is still required.
+Local recheck passes 52 inert admission/catalog/schema tests, Rust 1.94.1
+format checks for 14 changed roots, Python AST for eight files, typecheck and
+npm 266 passed / 0 failed / 3 existing skips. Native compilation and the ten
+context unit/integration tests remain unrun locally; hosted qualification is
+still required.
