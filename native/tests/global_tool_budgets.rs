@@ -329,12 +329,15 @@ fn trusted_persistent_callback_uses_selected_default_and_whole_cell_deadline_los
     let response = runtime
         .execute(&mut session, "s.fs.read_file(relative_path='main.rs')", &d)
         .unwrap();
+    assert_eq!(response["error"]["type"], "RuntimeError", "{response}");
     assert!(
-        response["error"]
+        response["error"]["message"]
             .as_str()
-            .unwrap()
-            .contains("max_answer_chars=0")
+            .is_some_and(|message| message.contains("max_answer_chars=0")),
+        "{response}"
     );
+    assert_eq!(response["callbackCount"], 1, "{response}");
+    assert_eq!(response["stateLost"], false, "{response}");
     let response = runtime
         .execute(
             &mut session,

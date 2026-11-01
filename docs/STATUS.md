@@ -5544,3 +5544,30 @@ Local recheck passes 54 inert admission/catalog/schema tests, Rust 1.94.1
 format checks for 16 changed roots, Python AST for nine files, typecheck and
 npm 266 passed / 0 failed / 3 existing skips. These source/npm checks do not
 establish native budget, deadline, cleanup, platform or release acceptance.
+
+## PR26 persistent callback error fixture (2026-11-01)
+
+Windows shard 5 job 124419537088 at old merge 69086ee71b95aa76379343e3fcb130936472e497
+records 46/48 successful target groups. Global budget integration is 6 passed /
+1 failed: the persistent callback case reads the existing structured error as a
+string and unwraps None. The Python worker has always returned error.type and
+error.message; the native wrapper preserves that object. The other failed target
+is the already corrected 80-versus-77 catalog fixture. Text artifact 13031430469
+matches ZIP SHA-256 24cb91f9f0bc26a05f4130d2ba3bafb6e3078f1d3afaebe6e0bfcf59514d7642;
+all 96 group-log lengths/hashes verify.
+
+The persistent callback fixture now checks RuntimeError and the original
+max_answer_chars=0 message, one callback and retained state. The original explicit
+override, 5,000 ms timeout, 10-second sleep, less-than-nine-second bound, worker
+loss, close and source-preservation assertions remain. All seven original test
+functions remain. The other eleven protected original budget paths, production
+worker and public/frozen contracts are unchanged; the earlier checkpoint's
+twelve-byte-exact-path statement remains historical evidence for that checkpoint.
+No native build, Cargo test, Clippy, controller, vendor or editor ran locally.
+Fresh exact-source native budget/timeout/cleanup and platform qualification is
+still required.
+
+Actual local fixture checks: 54 selected inert tests, the changed Rust root's
+Rust 1.94.1/edition 2024 formatting, Python worker AST parsing, staged
+whitespace and typecheck pass. npm reports 266 pass / 0 fail / 3 existing
+skips, 46887.9047 ms. These checks do not execute the native target.

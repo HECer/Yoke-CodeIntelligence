@@ -118,3 +118,19 @@ public-data tests remain exact to the original budget candidate. This refresh
 does not change deadline/cancellation/cleanup behavior, answer admission,
 profile binding or authority. Native compilation and runtime/cleanup/editor
 qualification remain unrun locally and pending fresh guarded hosted evidence.
+
+## Persistent callback fixture correction (2026-11-01)
+
+The original Windows shard at merge `69086ee7` records six passing budget
+integration cases and one failure in the persistent callback case. The fixture
+incorrectly reads `error` as a string. The existing Python worker returns an
+object containing `type` and `message`; the Rust runtime preserves that object.
+
+The fixture now requires `RuntimeError`, the original `max_answer_chars=0`
+message, one callback and a retained worker before the explicit override. All
+seven original cases and the later override, 5,000 ms whole-cell timeout,
+10-second sleep, less-than-nine-second assertion, worker-loss, cleanup and source
+assertions remain. Budget implementation, worker/protocol bytes and public
+contracts are unchanged. The previous run did not reach those later assertions;
+their fresh native execution and actual Windows cleanup qualification remain
+required. No native compilation or test execution ran locally for this correction.
