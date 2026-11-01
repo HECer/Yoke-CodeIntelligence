@@ -1,5 +1,30 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## PR22 do-first admission correction (2026-11-01)
+
+The current-backend candidate inherited an omitted validated doFirst name in
+the final synthetic-name inventory. Its Ubuntu shard reports 30/4 in the whole
+compiler_inline_body target. The exact PR17 admission repair and adversarial
+two-frame regression are now backported; all existing tests and the three
+backend additions remain unchanged. Native compilation/execution remain unrun
+locally. Fresh guarded hosted qualification is required; this correction does
+not resolve separate macOS, provider-runtime, VSIX or release gates.
+Local recheck passes the two catalog data-contract tests, Rust 1.94.1 format,
+typecheck and npm 266 passed / 0 failed / 3 existing skips. These are source/npm
+checks and do not establish native or combined runtime acceptance.
+
+## Current upstream backend-ID candidate (2026-10-31)
+
+The current Serena public registry adds vbnet, typescript_tsgo and graphql to
+the historical 77 IDs. A separately pinned data contract now admits all 80;
+the old 77 entries/order and original 353 inventory assessments are preserved.
+Explicit host registration/trust and original passive/source-execution, path,
+resource and selection gates remain. GraphQL requires explicit capture language
+overrides and no native GraphQL grammar is claimed. Data-contract RED/GREEN and
+local source/npm checks do not qualify the four authored native fixtures or
+real vendor runtimes. Combined/platform/VSIX/main/release gates stay open.
+[Exact contract and remaining runtime scope](../native/docs/current-backends.md).
+
 ## Combined current-source candidate (2026-10-31)
 
 The isolated integration branch now includes the current source from PR7-20:
@@ -5388,3 +5413,18 @@ timeouts, resource ceilings, permission and writer/recovery gates remain.
 No local native/controller/editor execution or native-image payload read is
 performed. Fresh guarded whole-source CI and real VSIX/extension-host evidence
 are still required; macOS resource enforcement and broader acceptance stay open.
+
+
+## Current catalog CLI fixture correction (2026-11-01)
+
+The original catalog candidate exposed 80 intended entries, but an inherited
+public CLI fixture still expected 77. The observed Windows parity_cli target
+records 7 passed / 1 failed at that exact count mismatch. The fixture now
+requires exactly 80 declared entries and unique adapter IDs, all three newly
+admitted public IDs, the explicit-host execution boundary and unchanged null
+live certification. All note-persistence assertions and production code remain
+unchanged. This source correction still requires fresh guarded native CI; it
+does not establish vendor-runtime, combined, VSIX or release acceptance.
+Local recheck passes both catalog data-contract tests, Rust 1.94.1 format,
+typecheck and npm 266 passed / 0 failed / 3 existing skips. Native execution
+remains unrun locally and fresh hosted qualification is required.

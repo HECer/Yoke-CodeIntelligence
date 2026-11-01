@@ -1,5 +1,17 @@
 # Remaining implementation and acceptance
 
+## Current upstream backend-ID candidate (2026-10-31)
+
+The current Serena public registry adds vbnet, typescript_tsgo and graphql to
+the historical 77 IDs. A separately pinned data contract now admits all 80;
+the old 77 entries/order and original 353 inventory assessments are preserved.
+Explicit host registration/trust and original passive/source-execution, path,
+resource and selection gates remain. GraphQL requires explicit capture language
+overrides and no native GraphQL grammar is claimed. Data-contract RED/GREEN and
+local source/npm checks do not qualify the four authored native fixtures or
+real vendor runtimes. Combined/platform/VSIX/main/release gates stay open.
+[Exact contract and remaining runtime scope](../native/docs/current-backends.md).
+
 ## Combined current-source candidate (2026-10-31)
 
 The isolated integration branch now includes the current source from PR7-20:

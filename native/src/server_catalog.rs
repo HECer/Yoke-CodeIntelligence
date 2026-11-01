@@ -682,6 +682,32 @@ const ENTRIES: &[Entry] = &[
         companions: &[],
         notes: "Catalog metadata grants no runtime authority. Select a measured passive host profile or explicit source execution permission; capabilities are negotiated at runtime.",
     },
+    Entry {
+        id: "vbnet",
+        provider: "Roslyn language server (Visual Basic/C#)",
+        languages: &["vbnet", "csharp"],
+        extensions: &["vb", "cs"],
+        companions: &[],
+        notes: "Requires an explicit host Roslyn registration and its document-language configuration. Metadata neither installs a server nor grants source execution; runtime capabilities remain unqualified.",
+    },
+    Entry {
+        id: "typescript_tsgo",
+        provider: "TypeScript native preview language server (tsgo)",
+        languages: &["typescript", "javascript", "tsx", "jsx"],
+        extensions: &[
+            "ts", "tsx", "js", "jsx", "mts", "cts", "mjs", "cjs", "mtsx", "ctsx", "mjsx", "cjsx",
+        ],
+        companions: &[],
+        notes: "Requires an explicitly selected host TypeScript native language-server command. Catalog selection does not replace the immutable TypeScript compiler worker or authorize project execution; runtime capabilities remain unqualified.",
+    },
+    Entry {
+        id: "graphql",
+        provider: "graphql-language-service-cli",
+        languages: &["graphql"],
+        extensions: &["graphql", "gql"],
+        companions: &[],
+        notes: "Experimental upstream provider requires schema configuration. Use explicit capture language overrides for GraphQL source; no native GraphQL grammar is advertised. Host registration and original source-execution/passive policy remain mandatory; runtime capabilities remain unqualified.",
+    },
 ];
 pub fn entries() -> &'static [Entry] {
     ENTRIES
