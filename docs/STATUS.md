@@ -37,6 +37,31 @@ HTTP targets pass (28 tests, no skips), as do fresh typecheck, npm (266 passes,
 three existing skips), targeted formatting and whitespace checks. Exact-head
 macOS qualification of these fixture changes remains pending.
 
+At `60f3c6ee03`, both push run `41333494444` and PR run `41333500446`
+retain the same six failing targets across macOS shards 0, 1, 3, 4 and 6.
+Template discovery and cross-process PDF/claim comparisons encounter different
+valid VM observations. Meaning-provider graph loads also compare a fresh
+extraction's measurements against the original saved input, causing
+`mixed_view_input_invalid`. The aggregate correctly refuses incomplete shards;
+their source revisions agree within each run.
+
+Replay now validates the closed macOS memory records independently and permits
+only the baseline and matching inner/outer ceiling measurements to differ.
+All source, quote, warning and policy fields still compare exactly. Fresh claim
+validation runs before the original saved input receipt is restored in the
+reconstructed graph, whose complete bytes must still match its saved artifact.
+Cross-process CLI fixtures validate both memory reports before comparing their
+remaining fields. Source permissions, worker limits and aggregate admission are
+unchanged. Current macOS execution remains a hosted qualification gate.
+
+Local Windows validation of this follow-up passes: two new synthetic replay
+regressions (including forged policy/source changes and tighter valid ceilings),
+55 tests across all six affected complete integration targets, targeted Clippy
+with `-D warnings`, typecheck and npm (266 passes, three existing skips).
+The 381 format roots and final touched-file formatting/whitespace checks pass.
+No failed target is skipped, no prior artifact is rewritten and no hosted
+macOS success is inferred from these Windows results.
+
 ## Hosted inventory repair and explicit CI regression selection (2026-10-31)
 
 Exact source `6989862daeee8f00592e2b53f60376b584ea3d37` now completes the

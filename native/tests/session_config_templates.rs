@@ -284,7 +284,28 @@ fn templates_discovery_returns_replayable_context_and_identical_pinned_plan() {
         serde_json::to_vec(&discovered["selection"]).unwrap(),
     )
     .unwrap();
-    assert_eq!(f.value(), discovered["projection"]);
+    let mut replayed = f.value();
+    let mut original = discovered["projection"].clone();
+    // Host policy and rendered bytes repeat; VM observations describe each run.
+    for projection in [&mut replayed, &mut original] {
+        for source in projection["sources"].as_array_mut().unwrap() {
+            let evidence = &mut source["promptRendering"]["hostRendererEvidence"];
+            memory_budget::assert_report(evidence, "memoryCeilingBytes");
+            if cfg!(target_os = "macos") {
+                evidence
+                    .as_object_mut()
+                    .unwrap()
+                    .remove("memoryCeilingBytes");
+                for key in ["baselineVirtualBytes", "ceilingBytes"] {
+                    evidence["memoryBudget"]
+                        .as_object_mut()
+                        .unwrap()
+                        .remove(key);
+                }
+            }
+        }
+    }
+    assert_eq!(replayed, original);
     f.unchanged();
 }
 #[test]

@@ -65,6 +65,16 @@ whole operation. PDF headers retain the original path, container hash/size,
 decoded page hashes/lengths, exact extraction policy, warnings and observed
 worker resource limits.
 
+On macOS these limits include execution-specific VM baseline and ceiling
+measurements. A fresh extraction can report different measurements for the same
+immutable PDF bytes. Meaning-provider replay validates both closed memory-policy
+records, then compares every input field except those three measured byte
+values (the baseline, budget ceiling and matching outer memory ceiling).
+The policy kind/schema, growth budget, CPU cap, page/source hashes, text, ranges,
+warnings and provenance remain exact. Reconstructed saved graphs retain their
+original execution receipt and artifact bytes; current measurements never
+replace historical observations or establish independent OS attestation.
+
 PDF matches return a `pdfPageText` source reference:
 
 ```json
