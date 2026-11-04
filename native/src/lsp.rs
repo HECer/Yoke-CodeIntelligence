@@ -827,9 +827,21 @@ impl Session {
         bail!("Diagnostic publication notification budget exceeded")
     }
     fn request(&mut self, method: &str, params: Value, deadline: &Deadline) -> Result<Value> {
+        self.request_message(method, Some(params), deadline)
+    }
+    fn request_message(
+        &mut self,
+        method: &str,
+        params: Option<Value>,
+        deadline: &Deadline,
+    ) -> Result<Value> {
         self.next += 1;
         let id = self.next;
-        self.send(json!({"jsonrpc":"2.0","id":id,"method":method,"params":params}))?;
+        let mut message = json!({"jsonrpc":"2.0","id":id,"method":method});
+        if let Some(params) = params {
+            message["params"] = params;
+        }
+        self.send(message)?;
         for _ in 0..4096 {
             deadline.check()?;
             let message = receive_cooperatively(&self.messages, deadline)
@@ -863,8 +875,10 @@ impl Session {
             deadline.check()?;
             return Ok(());
         }
-        self.request("shutdown", Value::Null, deadline)?;
-        self.notify("exit", Value::Null)?;
+        // LSP lifecycle messages have no parameters. Explicit JSON null is a
+        // different envelope and strict servers (including TSGo) reject it.
+        self.request_message("shutdown", None, deadline)?;
+        self.send(json!({"jsonrpc":"2.0","method":"exit"}))?;
         let stop =
             std::time::Instant::now() + deadline.remaining().min(std::time::Duration::from_secs(2));
         while self
@@ -3726,6 +3740,57 @@ mod uri_tests {
             .request("initialize", json!({"rootUri":uri(root).unwrap()}), setup)
             .unwrap();
         session
+    }
+    #[test]
+    fn strict_lifecycle_omits_params_and_exits_naturally_after_shutdown_response() {
+        let _fixture = PROTOCOL_FIXTURE
+            .lock()
+            .unwrap_or_else(|error| error.into_inner());
+        let directory = tempfile::tempdir().unwrap();
+        let deadline = Deadline::new(10000);
+        let mut session = fixture("strict-lifecycle", directory.path(), &deadline);
+        session.shutdown(&deadline).unwrap();
+        let report = receive_cooperatively(&session.messages, &deadline)
+            .unwrap()
+            .unwrap();
+        assert_eq!(report["method"], "fixture/lifecycle");
+        assert_eq!(report["params"]["valid"], true);
+        let status = session.child.as_mut().unwrap().try_wait().unwrap();
+        assert!(status.is_some_and(|status| status.success()));
+    }
+    #[test]
+    fn explicit_null_request_and_notification_params_remain_present() {
+        let _fixture = PROTOCOL_FIXTURE
+            .lock()
+            .unwrap_or_else(|error| error.into_inner());
+        let directory = tempfile::tempdir().unwrap();
+        let deadline = Deadline::new(10000);
+        let mut session = fixture("strict-lifecycle", directory.path(), &deadline);
+        let result = session
+            .request("fixture/echoParams", Value::Null, &deadline)
+            .unwrap();
+        assert_eq!(result, json!({"hasParams":true,"params":null}));
+        session.notify("fixture/echoParams", Value::Null).unwrap();
+        let notification = receive_cooperatively(&session.messages, &deadline)
+            .unwrap()
+            .unwrap();
+        assert_eq!(notification["method"], "fixture/echoed");
+        assert_eq!(notification["params"], result);
+        let error = session
+            .request("shutdown", Value::Null, &deadline)
+            .unwrap_err();
+        assert!(error.to_string().contains("InvalidParams"), "{error}");
+        session.shutdown(&deadline).unwrap();
+        assert!(
+            session
+                .child
+                .as_mut()
+                .unwrap()
+                .try_wait()
+                .unwrap()
+                .unwrap()
+                .success()
+        );
     }
     #[test]
     fn blocked_pipe_write_uses_300ms_deadline_after_confirmed_server_pause() {
