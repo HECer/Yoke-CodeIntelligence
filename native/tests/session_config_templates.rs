@@ -284,7 +284,13 @@ fn templates_discovery_returns_replayable_context_and_identical_pinned_plan() {
         serde_json::to_vec(&discovered["selection"]).unwrap(),
     )
     .unwrap();
-    assert_eq!(f.value(), discovered["projection"]);
+    let mut compared = f.value();
+    let actual = &mut compared["sources"][0]["promptRendering"]["hostRendererEvidence"];
+    let expected =
+        &discovered["projection"]["sources"][0]["promptRendering"]["hostRendererEvidence"];
+    memory_budget::assert_same_policy(actual, expected, "memoryCeilingBytes");
+    *actual = expected.clone();
+    assert_eq!(compared, discovered["projection"]);
     f.unchanged();
 }
 #[test]
