@@ -100,19 +100,37 @@ def ordinary(path, directory=False):
     require(path.is_dir() if directory else path.is_file(), "Owned path unavailable")
 
 
-def output_usage(root):
+def output_usage(root, *, allow_disappeared=False):
+    require(type(allow_disappeared) is bool, "Invalid live inventory selection")
+    ordinary(root, True)
+
+    def walk_error(error):
+        # Only an enumerated descendant may disappear during a live scan.
+        # Loss of the owned root, access errors and final-scan races still refuse.
+        if (allow_disappeared and isinstance(error, FileNotFoundError)
+                and error.filename is not None
+                and Path(error.filename) != root
+                and Path(error.filename).is_relative_to(root)):
+            return
+        raise error
+
     total = count = 0
-    for directory, directories, files in os.walk(root, followlinks=False):
+    for directory, directories, files in os.walk(root, followlinks=False, onerror=walk_error):
         require(len(Path(directory).relative_to(root).parts) <= 32, "Fixture depth capacity")
         file_names = set(files)
         for name in directories + files:
             path = Path(directory) / name
-            require(not path.is_symlink() and not path.is_junction(), "Linked fixture entry refused")
             count += 1
             require(count <= MAX_ENTRIES, "Fixture entry capacity")
-            if name in file_names:
-                total += path.stat().st_size
-                require(total <= MAX_OUTPUT, "Fixture output capacity")
+            try:
+                require(not path.is_symlink() and not path.is_junction(), "Linked fixture entry refused")
+                if name in file_names:
+                    total += path.stat().st_size
+                    require(total <= MAX_OUTPUT, "Fixture output capacity")
+            except FileNotFoundError:
+                if not allow_disappeared:
+                    raise
+    ordinary(root, True)
     return total
 
 
@@ -132,6 +150,18 @@ def close_handles(handles, close):
             except Exception:
                 complete = False
     return complete
+
+
+def failure_reason(phase, error):
+    """Publish only fixed categories, never paths, arguments or exception text."""
+    if phase not in ("launch", "job_limits", "job_assignment", "resume", "wait",
+                     "disk_reserve", "output_inventory", "exit_code", "accounting"):
+        return "api_error"
+    category = ("missing_entry" if isinstance(error, FileNotFoundError) else
+                "access_denied" if isinstance(error, PermissionError) else
+                "os_error" if isinstance(error, OSError) else
+                "refused" if isinstance(error, ValueError) else "exception")
+    return phase + "_" + category
 
 
 def run_owned(program, arguments, fixture, timeout):
@@ -189,10 +219,12 @@ def run_owned(program, arguments, fixture, timeout):
         require(api.QueryInformationJobObject(job, 1, info, 48, None), "Windows Job query failed")
         return int.from_bytes(info.raw[40:44], "little")
 
+    phase = "job_limits"
     try:
         limits = Extended()
         limits.basic.flags = 0x2000  # KILL_ON_JOB_CLOSE; no breakaway grant.
         require(api.SetInformationJobObject(job, 9, ctypes.byref(limits), ctypes.sizeof(limits)), "Job limit failed")
+        phase = "launch"
         environment = os.environ.copy()
         for key in ("ELECTRON_RUN_AS_NODE", "VSCODE_IPC_HOOK_CLI", "VSCODE_PORTABLE", "VSCODE_LOGS", "VSCODE_EXTENSIONS"):
             environment.pop(key, None)
@@ -216,10 +248,13 @@ def run_owned(program, arguments, fixture, timeout):
             process, thread, _, _ = _winapi.CreateProcess(None, subprocess.list2cmdline([str(program), *arguments]),
                 None, None, True, subprocess.CREATE_NO_WINDOW | 0x00000004, environment, str(fixture), startup)
             row["startedSuspended"] = True
+            phase = "job_assignment"
             require(api.AssignProcessToJobObject(job, process), "Suspended Job assignment failed")
             row["assignedBeforeResume"] = True
+            phase = "resume"
             require(api.ResumeThread(thread) != 0xffffffff, "Owned tool resume failed")
             while True:
+                phase = "wait"
                 wait = _winapi.WaitForSingleObject(process, 100)
                 require(wait in (0, 258), "Owned process wait failed")
                 if wait == 0:
@@ -227,12 +262,16 @@ def run_owned(program, arguments, fixture, timeout):
                 if time.monotonic() >= deadline:
                     row["reason"] = "deadline"
                     raise ValueError("Owned tool deadline")
+                phase = "disk_reserve"
                 require(shutil.disk_usage(fixture).free >= MIN_FREE, "Owned disk reserve unavailable")
-                output_usage(fixture)
+                phase = "output_inventory"
+                output_usage(fixture, allow_disappeared=True)
             if time.monotonic() >= deadline:
                 row["reason"] = "deadline"
                 raise ValueError("Owned tool deadline")
+            phase = "exit_code"
             row["exitCode"] = _winapi.GetExitCodeProcess(process)
+            phase = "accounting"
             row["activeAtRootExit"] = active()
             remaining = row["activeAtRootExit"]
             drain = min(deadline, time.monotonic() + 1)
@@ -241,15 +280,17 @@ def run_owned(program, arguments, fixture, timeout):
                 remaining = active()
             row["activeBeforeCleanup"] = remaining
             row["treeExitedBeforeCleanup"] = remaining == 0
+            phase = "disk_reserve"
             require(shutil.disk_usage(fixture).free >= MIN_FREE, "Owned disk reserve unavailable")
+            phase = "output_inventory"
             output_usage(fixture)
             if time.monotonic() >= deadline:
                 row["reason"] = "deadline"
                 raise ValueError("Owned tool deadline")
             row["reason"] = "root_exit" if row["exitCode"] != 0 else "tree_alive" if remaining else "success"
-    except Exception:
-        # Fixed categories only; no exception, argument, profile or log content.
-        pass
+    except Exception as error:
+        if row["reason"] == "api_error":
+            row["reason"] = failure_reason(phase, error)
     finally:
         cleanup_ok = True
         if process is not None and not row["assignedBeforeResume"]:

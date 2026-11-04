@@ -5516,3 +5516,17 @@ inputs unchanged after validation. These are owned Node/Python fixtures, not
 native HTTP acceptance. No local Cargo/native/controller/vendor/editor program
 or compiled native/vendor/editor payload was run or inspected. Exact new-head
 hosted native/macOS, combined Windows/VSIX and release qualification remain open.
+
+
+## Shared Windows LSP lifecycle and owned-monitor backport (2026-11-04)
+
+Four bounded text-only TSGo receipts from heads 45294939 (PR #23), b5b594b6 (PR #24), 830fbe99 (PR #26) and 241291aa (PR #28) record three REQUEST_FAILED results per query session: the real strict server rejects lifecycle params:null with -32602 (expected no params, got null). Their owned query roots exit naturally with status 1 and cleanup succeeds; those runs do not establish vendor acceptance.
+
+This branch backports the exact three LSP patch hunks and strict owned protocol fixture from existing correction 002024f4 (PR #30), preserving this branch's remaining native source. Shutdown and exit now omit params; ordinary requests and notifications retain explicitly supplied null. Two native adversarial tests cover both distinctions and natural lifecycle exit. The original deadlines, notification/response budgets, transport and permission checks remain intact.
+
+It also reuses the exact published owned-Job monitor and its tests from e244f087 (PR #31), after proving both older preimages match that correction's ancestry. A disappearing descendant during a live output inventory is tolerated only while the process is running; the final inventory remains strict. Entry, byte, depth, time, Job admission and cleanup limits remain enforced. The owned RED reproduction confirms that the old inventory raises FileNotFoundError when an enumerated entry disappears before stat. PR #24's older explicit editor api_error has no phase-level diagnosis and is not asserted to share this cause.
+
+Validation: 34 inert AST-extracted/data admission tests pass. Direct wire checks execute only the owned Node fixture: explicit-null request/notification echo, rejected null shutdown, successful parameterless shutdown/natural exit, and rejected exit carrying params. Pinned Rust 1.94.1 rustfmt and fixture syntax pass. Fresh npm run typecheck passes; npm test reports 266 passed, 0 failed and 3 existing skips (269 total), Node 24.21.0 / Python 3.14.7. All 101 recorded Node inputs remain unchanged. No local Cargo/native test, real vendor, controller entry point or editor runtime was executed or inspected. The two native tests are authored, not locally run.
+
+Existing PR #31 e244f087 hosted push CI records successful combined Windows VSIX, real Rust extension-host and TSGo steps. That result belongs to its exact source and does not qualify this backport. New-head native/vendor/editor CI, inherited macOS resource and host failures, full platform/main/release acceptance remain open. No CI rerun, assertion waiver, timeout increase, force push or main/release merge is included.
+
