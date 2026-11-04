@@ -218,6 +218,9 @@ fn incomplete_tcp_eof_reports_scalar_progress_without_response_content() {
                     Err(error) => return Err(error),
                 }
             };
+            // Accepted sockets can inherit the listener's nonblocking mode.
+            // Timeout-bound fixture I/O must explicitly use blocking reads.
+            stream.set_nonblocking(false)?;
             stream.set_read_timeout(Some(Duration::from_secs(5)))?;
             stream.set_write_timeout(Some(Duration::from_secs(5)))?;
             let mut request = [0; 1];
