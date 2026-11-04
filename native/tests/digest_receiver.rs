@@ -1126,9 +1126,24 @@ fn detached_host_cancellation_remains_binding_after_start_returns() {
     std::thread::sleep(Duration::from_millis(30));
     let at = std::time::Instant::now();
     cancel.store(true, Ordering::SeqCst);
-    h.wait().unwrap();
-    assert!(at.elapsed() < Duration::from_secs(1));
-    assert_eq!(count(root.path()), 0);
+    let stored = std::time::Instant::now();
+    let report = h.wait().unwrap();
+    // Capture join latency before reading SQLite; observation cannot enlarge
+    // the existing cancellation bound or include unrelated state-query time.
+    let elapsed = at.elapsed();
+    let after_store = stored.elapsed();
+    let requests = report["requests"]
+        .as_u64()
+        .expect("Owned receiver request count");
+    let records = count(root.path());
+    assert!(
+        elapsed < Duration::from_secs(1),
+        "Owned receiver cancellation exceeded bound; elapsed_us={} after_store_us={} accepted_requests={requests} records={records} cancelled={} receiver_joined=true",
+        elapsed.as_micros(),
+        after_store.as_micros(),
+        cancel.load(Ordering::SeqCst)
+    );
+    assert_eq!(records, 0);
 }
 
 #[test]

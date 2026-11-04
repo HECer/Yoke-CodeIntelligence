@@ -5870,3 +5870,14 @@ The static graph is not the complete runtime. A successful reference query is no
 The facade deliberately does **not** merge all upstream applications into one implicit privileged process. The native path does not need a model. Advanced provider/network/key/retention privileges remain host CLI/library operations, not automatically granted to an MCP caller. See `ADVANCED.md`, `FEDERATION.md`, `SECURITY.md` and `UPSTREAMS.md` for operation-specific boundaries.
 
 Version 0.3 is therefore usable for continued development and bounded local workflows; calling it universally production-ready, fully externally verified or complete feature-for-feature parity with every upstream product would be inaccurate.
+
+
+## Detached receiver cancellation latency observation (2026-11-04)
+
+The delayed Windows shard 6 job 126514029220 / run 41812223564 tests PR merge 49dc548d0f8d8866a1513338233dc8b67172b6f9, whose tree equals head 467a3db84255c2875caf078a4d78d59b90c2ca88. Its bounded text artifact 13316675904 matches ZIP SHA-256 5ee25d26f5fc2804faabc99cade445543264025e7ea615b32c883fcd6f34f1cd; all 98 raw group-log lengths and hashes verify. Of 49 target groups, 48 pass. Only digest_receiver fails (48 passed, 1 failed, 1 existing ignored case), at the one-second assertion in detached_host_cancellation_remains_binding_after_start_returns. The receiver wait returns successfully before that assertion; the old log does not record its measured latency. The cause of the exceeded bound is not established.
+
+The existing test now records only scalar failure observations: elapsed time from before the cancel store, time from after it, the joined receiver's accepted-request count, the resulting record count, and the host cancellation flag. Join latency is captured before the SQLite observation. The exact one-second limit and zero-record assertion remain enforced; receiver, deadline, socket, permission and cleanup implementation is unchanged. This is diagnostic instrumentation, not a claim that the cancellation failure is fixed.
+
+An owned Python loopback probe of the same Windows blocking Winsock 50 ms receive option observed 54-61 ms blocked reads and 24-31 ms from the probe's flag to join. That experiment executes no Rust/project image and does not reproduce or explain the hosted failure. It supplies no native cancellation qualification.
+
+Pinned Rust 1.94.1 rustfmt and fresh npm run typecheck pass. Fresh npm test reports 266 passed, 0 failed and 3 existing skips (269 total); the 101 recorded Node inputs remain unchanged. No local Cargo/native test, controller, real vendor or editor runtime is executed or inspected. Exact new-head native qualification, the receiver latency investigation and the other recorded platform issues remain open. No deadline increase, assertion waiver, extra ignored case, force push, manual CI rerun or main/release merge is included.
