@@ -62,6 +62,26 @@ The 381 format roots and final touched-file formatting/whitespace checks pass.
 No failed target is skipped, no prior artifact is rewritten and no hosted
 macOS success is inferred from these Windows results.
 
+macOS shard 5 at `f5ff765` (run `41812741702`, job `126515779322`)
+subsequently fails the real stalled-query HTTP deadline case: zero reply bytes
+and EOF at about 1823 ms under a configured 1800 ms physical budget. The fixed
+100 ms expiry-response reserve is insufficient. An owned TCP regression that
+resumes 150 ms after work expiry reproduces the failed response on Windows;
+the independent expired/cancelled-budget case still refuses late writes.
+
+The reserve now uses a quarter of the original budget, clamped to 100–500 ms.
+The total physical deadline and cancellation remain unchanged; the 1800 ms
+case leaves 450 ms for the bounded refusal. No error or TLS shutdown gets a
+new allowance. Delivery under arbitrary scheduling pauses remains best effort
+within that physical ceiling, as documented in the HTTP contract. Fresh hosted
+macOS qualification remains pending.
+
+Local Windows checks pass: both deadline regressions after the reproduced RED,
+all 20 HTTP server cases, three CLI cases with one existing credential-manager
+ignore, targeted Clippy with `-D warnings`, typecheck, npm (266 passes and three
+existing skips), all 381 format roots and whitespace checks. No test or total
+physical timeout is relaxed.
+
 ## Hosted inventory repair and explicit CI regression selection (2026-10-31)
 
 Exact source `6989862daeee8f00592e2b53f60376b584ea3d37` now completes the
