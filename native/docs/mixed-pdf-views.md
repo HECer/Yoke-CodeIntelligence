@@ -50,7 +50,9 @@ Every query loads the registered frozen container bytes, validates their exact
 size/hash and re-extracts them through the existing native worker. It never
 trusts a saved inspection's decoded text or opens the live asset path. The worker
 runs on a read-only temporary copy with the existing bounded pipes, managed
-process, shared deadline/cancellation, 256 MiB memory cap and 20-second CPU cap.
+process, shared deadline/cancellation, a platform-specific 256 MiB memory budget
+and 20-second CPU cap. The [macOS policy](macos-worker-memory.md) bounds virtual-
+address growth and reports its observed baseline and actual ceiling separately.
 The original 10 MB input, 2,000-page, 200 KB per-page, 2 MB total decoded-text and
 8 MB worker-output limits remain. No capture, provider, project execution,
 SQL/CAS publication or overflow artifact is introduced by mixed queries.
@@ -62,6 +64,16 @@ one-based page number. Pagination is global; match/output overflow refuses the
 whole operation. PDF headers retain the original path, container hash/size,
 decoded page hashes/lengths, exact extraction policy, warnings and observed
 worker resource limits.
+
+On macOS these limits include execution-specific VM baseline and ceiling
+measurements. A fresh extraction can report different measurements for the same
+immutable PDF bytes. Meaning-provider replay validates both closed memory-policy
+records, then compares every input field except those three measured byte
+values (the baseline, budget ceiling and matching outer memory ceiling).
+The policy kind/schema, growth budget, CPU cap, page/source hashes, text, ranges,
+warnings and provenance remain exact. Reconstructed saved graphs retain their
+original execution receipt and artifact bytes; current measurements never
+replace historical observations or establish independent OS attestation.
 
 PDF matches return a `pdfPageText` source reference:
 

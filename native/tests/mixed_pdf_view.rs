@@ -16,6 +16,8 @@ use yoke::{
 #[path = "support/mixed_pdf_fixture.rs"]
 mod support;
 use support::*;
+#[path = "support/memory_replay.rs"]
+mod memory_replay;
 
 #[test]
 fn mixed_meaning_pdf_inputs_replay_frozen_original_pages_and_require_explicit_worker_permission() {
@@ -94,13 +96,12 @@ fn mixed_meaning_pdf_inputs_replay_frozen_original_pages_and_require_explicit_wo
         assert_eq!(unit["item"], read["item"]);
     }
     let typed = serde_json::from_value(request.clone()).unwrap();
-    assert_eq!(
-        view.prepare_meaning_inputs(&typed, &d)
-            .unwrap()
-            .export(4_000_000, &d)
-            .unwrap(),
-        result
-    );
+    let replayed = view
+        .prepare_meaning_inputs(&typed, &d)
+        .unwrap()
+        .export(4_000_000, &d)
+        .unwrap();
+    memory_replay::assert_inputs(replayed, result);
     let mut stale = request;
     stale["units"][2]["source"]["contentHash"] = json!("0".repeat(64));
     let stale = serde_json::from_value(stale).unwrap();

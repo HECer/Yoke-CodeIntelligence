@@ -790,6 +790,7 @@ enum PdfResourceApi {
     QueryJobLimits,
     VerifyJobLimits,
     SetAddressSpace,
+    SetMacosMemoryBudget,
     SetCpu,
     GetAddressSpace,
     GetCpu,
@@ -954,6 +955,8 @@ pub(crate) struct ResourceLimits {
     memory_bytes: u64,
     cpu_seconds: u32,
     memory_enforcement: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    memory_budget: Option<crate::process::MacosMemoryBudget>,
 }
 #[cfg(windows)]
 fn pdf_limits() -> Result<ResourceLimits> {
@@ -1071,9 +1074,10 @@ fn pdf_limits() -> Result<ResourceLimits> {
         memory_bytes: PDF_MEMORY,
         cpu_seconds: 20,
         memory_enforcement: "windows_job_object".into(),
+        memory_budget: None,
     })
 }
-#[cfg(any(target_os = "linux", target_os = "macos"))]
+#[cfg(target_os = "linux")]
 fn pdf_limits() -> Result<ResourceLimits> {
     #[repr(C)]
     struct Limit {
@@ -1130,6 +1134,44 @@ fn pdf_limits() -> Result<ResourceLimits> {
         memory_bytes: PDF_MEMORY,
         cpu_seconds: 20,
         memory_enforcement: "rlimit_as".into(),
+        memory_budget: None,
+    })
+}
+#[cfg(target_os = "macos")]
+fn pdf_limits() -> Result<ResourceLimits> {
+    let memory = crate::process::limit_current_memory(PDF_MEMORY as usize).map_err(|error| {
+        let os_error = error.chain().find_map(|cause| {
+            cause
+                .downcast_ref::<std::io::Error>()
+                .and_then(std::io::Error::raw_os_error)
+        });
+        PdfResourceFailure {
+            api: PdfResourceApi::SetMacosMemoryBudget,
+            os_error,
+        }
+    })?;
+    let cpu = libc::rlimit {
+        rlim_cur: 20,
+        rlim_max: 21,
+    };
+    if unsafe { libc::setrlimit(libc::RLIMIT_CPU, &cpu) } != 0 {
+        return Err(pdf_resource_os_error(PdfResourceApi::SetCpu));
+    }
+    let mut installed = libc::rlimit {
+        rlim_cur: 0,
+        rlim_max: 0,
+    };
+    if unsafe { libc::getrlimit(libc::RLIMIT_CPU, &mut installed) } != 0 {
+        return Err(pdf_resource_os_error(PdfResourceApi::GetCpu));
+    }
+    if installed.rlim_cur != 20 || installed.rlim_max != 21 {
+        return Err(pdf_resource_mismatch(PdfResourceApi::VerifyRlimits));
+    }
+    Ok(ResourceLimits {
+        memory_bytes: memory.ceiling_bytes() as u64,
+        cpu_seconds: 20,
+        memory_enforcement: crate::process::MACOS_MEMORY_KIND.into(),
+        memory_budget: memory.macos_budget().cloned(),
     })
 }
 #[cfg(not(any(windows, target_os = "linux", target_os = "macos")))]
@@ -2027,12 +2069,25 @@ pub(crate) fn frozen_pdf_with_worker(
         parsed.metadata.pages > 0
             && parsed.metadata.pages <= 2000
             && parsed.segments.len() == parsed.metadata.pages
-            && parsed.resource_limits.memory_bytes == PDF_MEMORY
-            && parsed.resource_limits.cpu_seconds == 20
-            && ["windows_job_object", "rlimit_as"]
-                .contains(&parsed.resource_limits.memory_enforcement.as_str()),
+            && parsed.resource_limits.cpu_seconds == 20,
         "Native PDF worker page/resource contract mismatch"
     );
+    if cfg!(target_os = "macos") {
+        crate::process::validate_memory_report(
+            usize::try_from(parsed.resource_limits.memory_bytes)?,
+            &parsed.resource_limits.memory_enforcement,
+            parsed.resource_limits.memory_budget.as_ref(),
+            PDF_MEMORY as usize,
+        )?;
+    } else {
+        ensure!(
+            parsed.resource_limits.memory_bytes == PDF_MEMORY
+                && parsed.resource_limits.memory_budget.is_none()
+                && ["windows_job_object", "rlimit_as"]
+                    .contains(&parsed.resource_limits.memory_enforcement.as_str()),
+            "Native PDF worker memory contract mismatch"
+        );
+    }
     let mut total = 0usize;
     for (i, segment) in parsed.segments.iter().enumerate() {
         deadline.check()?;

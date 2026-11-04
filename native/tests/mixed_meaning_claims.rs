@@ -11,6 +11,8 @@ use yoke::{
 #[path = "support/mixed_pdf_fixture.rs"]
 mod support;
 use support::*;
+#[path = "support/memory_replay.rs"]
+mod memory_replay;
 
 fn loaded(f: &Fixture, d: &Deadline) -> mixed_view::CheckedMixedView {
     mixed_view::load_with_pdf(
@@ -314,7 +316,7 @@ fn mixed_claims_cli_requires_checked_inputs_and_closed_data_before_store_initial
         String::from_utf8_lossy(&result.stderr)
     );
     let result: Value = serde_json::from_slice(&result.stdout).unwrap();
-    assert_eq!(result["inputs"], input);
+    memory_replay::assert_inputs(result["inputs"].clone(), input);
     let denied = run(&f.engine.root, false);
     assert!(!denied.status.success());
     assert!(denied.stdout.is_empty());
