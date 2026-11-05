@@ -351,6 +351,12 @@ fn fields(a: &Value, allowed: &[&str]) -> Result<()> {
     Ok(())
 }
 impl Session {
+    pub(crate) fn context_definition(&self) -> Option<&crate::session_steering::Definition> {
+        self.host
+            .steering
+            .as_ref()
+            .and_then(|s| s.contexts.get(&self.host.context))
+    }
     /// Passive batch operations never implicitly enter a shell lifecycle. A
     /// selected-hook inspection handle additionally rejects semantic backends.
     pub fn passive_operation(operation: &str) -> bool {

@@ -63,6 +63,9 @@ pub(crate) fn serena_tools_for_session(session: &Session) -> Value {
             }
         }
     }
+    if let Some(definition) = session.context_definition() {
+        crate::context_options::decorate(&mut tools, definition);
+    }
     tools
 }
 pub(crate) fn repl_control_tool(name: &str) -> bool {

@@ -113,6 +113,7 @@ struct DecodedFields {
 fn rename_fields(
     raw: Map<String, Value>,
     definition: bool,
+    context: bool,
     global: bool,
     project: bool,
     prompt_rendered: bool,
@@ -132,6 +133,12 @@ fn rename_fields(
     let mut symbol_info_budget = None;
     let mut workspace_folders = None;
     for (key, value) in raw {
+        if let Some((name, value)) =
+            crate::context_options::yaml_field(&key, &value, definition, context)?
+        {
+            mapped.insert(name, value);
+            continue;
+        }
         let name = match key.as_str() {
             "encoding" if global || project => {
                 let codec = if value.is_null() {
@@ -252,7 +259,13 @@ fn rename_fields(
             }
             "agent_interface" if !definition => "agentInterface",
             "initial_prompt" if project => "instructions",
-            "prompt" if definition => "instructions",
+            "prompt" if definition => {
+                if value.is_null() {
+                    mapped.insert("instructions".into(), json!(""));
+                    continue;
+                }
+                "instructions"
+            }
             "base_modes" if global => {
                 base = Some(value);
                 continue;
@@ -382,12 +395,14 @@ fn project_inner(
             Target::Project { .. } | Target::ProjectLocal { .. }
         );
         let definition = matches!(source.target, Target::Context { .. } | Target::Mode { .. });
+        let context = matches!(source.target, Target::Context { .. });
         let mut raw = yaml::decode(source.bytes, deadline)?;
         if renderer.is_some() || defer {
             // Reject unsupported settings before starting any host renderer.
             rename_fields(
                 raw.clone(),
                 definition,
+                context,
                 matches!(source.target, Target::Global),
                 is_project,
                 true,
@@ -414,7 +429,7 @@ fn project_inner(
         };
         if let Some(renderer) = renderer.as_mut()
             && let Some(key) = prompt_key
-            && let Some(value) = raw.get(key)
+            && let Some(value) = raw.get(key).filter(|value| !definition || !value.is_null())
         {
             let original = value
                 .as_str()
@@ -448,6 +463,7 @@ fn project_inner(
         } = rename_fields(
             raw,
             definition,
+            context,
             matches!(source.target, Target::Global),
             is_project,
             prompt_rendering.is_some() || defer,

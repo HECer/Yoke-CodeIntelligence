@@ -10,6 +10,7 @@ pub mod compiler_inline;
 pub mod compiler_move;
 pub mod config_graph;
 pub mod container;
+pub mod context_options;
 pub mod contracts;
 pub mod credentials;
 pub mod dataflow;

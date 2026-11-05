@@ -1,5 +1,20 @@
 # Remaining implementation and acceptance
 
+## Selected context options candidate (2026-10-31)
+
+The pinned ten-field context and seven-field mode declarations now have a
+native candidate for literal description metadata, tool-description overrides,
+host-startup-only single-project restriction and true/false/null structured
+Serena MCP output. Null definition prompts do not invoke a renderer. Unknown,
+invalid, oversized and wrong-scope inputs refuse; exclusions, source/runtime
+permissions and recovery remain separate. Absent options preserve preceding
+serialization and output. Structured text/object copies share the original
+inline cap; no clipped success is substituted. Historical contracts/353 ledger
+remain unchanged. Two inert declaration checks passed RED/GREEN; four native
+unit and six integration tests are authored but unrun locally. Exact hosted,
+full configuration/client/backend/platform/VSIX/main/release gates remain open.
+[Actual behavior and bounds](../native/docs/context-definition-options.md).
+
 ## Current Serena Session parameter candidate (2026-10-31)
 
 Current upstream activate_project and serena_repl declarations use session;
