@@ -23,7 +23,18 @@ fn genuine_source_only_views_qualify_epoch8_and_epoch9_and_the_mutation_oracle()
     for epoch in [AnalyzerEpoch::V8, AnalyzerEpoch::V9] {
         let dir = tempfile::tempdir().unwrap();
         fs::write(dir.path().join("a.rs"), support::A).unwrap();
-        let mut engine = Engine::open(dir.path()).unwrap();
+        let mut opening = yoke::store::OpeningObservations::default();
+        // Preserve Engine::open's ten-second budget; record only closed phases/times.
+        let mut engine = Engine::open_with_timeout_observed(
+            dir.path(),
+            std::time::Duration::from_secs(10),
+            &mut opening,
+        )
+        .unwrap_or_else(|error| {
+            panic!(
+                "Historical source fixture opening failed: {error}; epoch={epoch:?}; {opening:?}"
+            )
+        });
         engine.capture_epoch = epoch;
         let (snapshot, graph, _, _) = engine.index(&support::d()).unwrap();
         assert_eq!(

@@ -68,7 +68,15 @@ let raw='';process.stdin.on('data',b=>raw+=b);process.stdin.on('end',()=>{
  coverage:r.payload.sources.map(s=>({sourceId:s.anchor.sourceId,outcome:'claims'}))}}));
 });
 "#).unwrap();
-    let mut engine = Engine::open(&root).unwrap();
+    let mut opening = yoke::store::OpeningObservations::default();
+    // Preserve Engine::open's ten-second budget; record only closed phases/times.
+    let mut engine =
+        Engine::open_with_timeout_observed(&root, std::time::Duration::from_secs(10), &mut opening)
+            .unwrap_or_else(|error| {
+                panic!(
+                    "Meaning archive fixture opening failed: {error}; epoch={epoch:?}; {opening:?}"
+                )
+            });
     engine.capture_epoch = epoch;
     let (original, original_graph, _, _) = engine.index(&d()).unwrap();
     let provider = ProviderSpec {
