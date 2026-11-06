@@ -2,12 +2,26 @@
 use crate::{capture::Deadline, project_session::Session};
 use anyhow::{Context, Result, bail, ensure};
 use serde_json::{Value, json};
+mod current_sessions;
 fn contracts() -> Value {
     serde_json::from_str(include_str!("compatibility_contracts.json"))
         .expect("Built-in public contract JSON")
 }
 pub fn serena_tools() -> Value {
-    Value::Array(contracts()["tools"].as_array().expect("Built-in tools").iter().map(|row| json!({"name":row["name"],"description":row["description"],"inputSchema":row["inputSchema"]})).collect())
+    let current = current_sessions::schemas();
+    Value::Array(
+        contracts()["tools"]
+            .as_array()
+            .expect("Built-in tools")
+            .iter()
+            .map(|row| {
+                let schema = current
+                    .get(row["name"].as_str().expect("Built-in tool name"))
+                    .unwrap_or(&row["inputSchema"]);
+                json!({"name":row["name"],"description":row["description"],"inputSchema":schema})
+            })
+            .collect(),
+    )
 }
 pub(crate) fn serena_tools_for_session(session: &Session) -> Value {
     let mut tools = serena_tools();
@@ -133,11 +147,12 @@ pub(crate) fn arguments(args: &Value, schema: &Value) -> Result<Value> {
 }
 fn session_arguments(
     session: &Session,
+    name: &str,
     args: &Value,
     schema: &Value,
     method: &str,
 ) -> Result<Value> {
-    let mut normalized = arguments(args, schema)?;
+    let mut normalized = current_sessions::normalize(name, args, schema)?;
     if method == "fs.search_for_pattern"
         && session.has_git_ignore_selection()
         && args.get("skip_ignored_files").is_none()
@@ -175,6 +190,7 @@ pub fn invoke_serena(
         .context("Unknown public Serena tool")?;
     let args = session_arguments(
         session,
+        name,
         args,
         &row["inputSchema"],
         row["facadeMethod"].as_str().unwrap_or(""),
@@ -241,7 +257,7 @@ pub fn invoke_serena(
                 ),
                 "External public query is not an immutable source read"
             );
-            let nested = session_arguments(session, &nested, &target["inputSchema"], method)?;
+            let nested = session_arguments(session, tool, &nested, &target["inputSchema"], method)?;
             crate::agent_repl::invoke_facade(session, method, nested, Some(project), deadline)
         }
         "serena_repl" => {
@@ -285,6 +301,7 @@ pub fn invoke_serena_with_repl(
         .context("Unknown public Serena tool")?;
     let args = session_arguments(
         session,
+        name,
         args,
         &row["inputSchema"],
         row["facadeMethod"].as_str().unwrap_or(""),
