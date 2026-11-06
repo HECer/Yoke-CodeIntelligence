@@ -6,20 +6,32 @@ use yoke::{
     project_session::{HostProfile, Session},
 };
 const SOURCE: &str = "// 🌍\nfn helper() {}\nfn main() { helper(); }\n";
+#[path = "support/lsp_phase_observations.rs"]
+mod phase_observations;
 fn session(root: &Path) -> Session {
+    session_with_observations(root, None)
+}
+fn session_with_observations(
+    root: &Path,
+    observations: Option<&phase_observations::Observations>,
+) -> Session {
     fs::write(root.join("main.rs"), SOURCE).unwrap();
     let mut engine = Engine::open(root).unwrap();
+    let mut args = vec![
+        Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/fixtures/advanced-lsp.mjs")
+            .display()
+            .to_string(),
+        "".into(),
+    ];
+    if let Some(observations) = observations {
+        args.extend(observations.arguments());
+    }
     engine
         .register_configured_server(yoke::lsp::ConfiguredServer {
             server: yoke::lsp::Server {
                 command: "node".into(),
-                args: vec![
-                    Path::new(env!("CARGO_MANIFEST_DIR"))
-                        .join("tests/fixtures/advanced-lsp.mjs")
-                        .display()
-                        .to_string(),
-                    "".into(),
-                ],
+                args,
                 language: "rust".into(),
                 trust: true,
             },
@@ -66,13 +78,22 @@ fn implementation_kinds_and_info_use_the_implemented_source_symbol() {
 #[test]
 fn diagnostic_line_ranges_and_reference_scope_are_real_source_filters() {
     let root = tempfile::tempdir().unwrap();
-    let mut session = session(root.path());
+    let observations = phase_observations::Observations::new().ok();
+    let mut session = session_with_observations(root.path(), observations.as_ref());
+    let started = std::time::Instant::now();
     let empty = invoke(
         &mut session,
         "lsp.get_diagnostics_for_file",
         json!({"relative_path":"main.rs","start_line":0,"end_line":1}),
     )
-    .unwrap();
+    .unwrap_or_else(|error| {
+        panic!(
+            "Facade diagnostics fixture failed; elapsedMs={}; observationsUnavailable={}; bestEffortPhases={:?}; error={error:#}",
+            started.elapsed().as_millis(),
+            observations.is_none(),
+            observations.as_ref().map(|value| value.collect())
+        )
+    });
     assert!(empty["items"].as_array().unwrap().is_empty());
     let actual = invoke(
         &mut session,
