@@ -108,3 +108,28 @@ jobs:
           name: combined-vsix-rust-host-windows
           path: validation/ci-vscode-acceptance
           if-no-files-found: warn
+      - name: Check inert real-vendor admission adversaries
+        if: ${{ !cancelled() }}
+        timeout-minutes: 1
+        run: python -m unittest scripts.tests.test_host_tsgo -v
+      - name: Procure pinned official TSGo in a separate owned worker
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        timeout-minutes: 4
+        run: python scripts/host_tsgo.py stage --phase tool
+      - name: Query real TSGo through the fresh native public Session CLI
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        timeout-minutes: 4
+        run: python scripts/host_tsgo.py stage --phase query
+      - name: Require real TSGo source bindings and natural owned-tree exits
+        if: ${{ !cancelled() }}
+        timeout-minutes: 1
+        run: python scripts/host_tsgo.py finish
+      - name: Preserve only real-vendor text receipts and bounded logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tsgo-real-vendor-windows
+          path: validation/ci-tsgo-acceptance
+          if-no-files-found: warn

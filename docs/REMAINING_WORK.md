@@ -1,5 +1,32 @@
 # Remaining implementation and acceptance
 
+## Current Serena Session parameter candidate (2026-10-31)
+
+Current upstream activate_project and serena_repl declarations use session;
+the historical pinned declarations used session_id. The native candidate now
+advertises and accepts exactly one spelling while preserving the original
+host-owned Session equality and activation/REPL runtime gates. Dual, foreign,
+nonstring, unknown and oversized arguments refuse. The historical 53-tool JSON,
+other 51 schemas, original 353 ledger and unrelated behavior remain unchanged.
+Two inert public-data checks passed RED/GREEN. Three native unit and four
+integration tests are authored but unrun locally; exact hosted qualification,
+broader current parity, backends/platform/VSIX/main/release remain open.
+[Current and legacy parameter contract](../native/docs/current-serena-sessions.md).
+
+## Real Windows TSGo CI candidate (2026-10-31)
+
+An additive hosted profile now selects the pinned real Microsoft TSGo preview
+through the public native Session CLI and explicit host backend registration.
+It reuses the same-run fresh release producer, private owned process trees and
+unchanged VSIX gates. Vendor procurement binds SHA-512, version, archive/file
+budgets and the complete extracted inventory. Unicode/CRLF fixtures require
+nonempty hover, exact definition and reference byte/hash anchors, unchanged
+source and natural process-tree exit. The original 353-entry ledger is unchanged.
+Eleven inert admission tests cover this profile; local source/npm checks do not
+qualify vendor execution. Exact hosted evidence, the other current backends,
+passive TSGo behavior, broader parity/platform/VSIX/main/release remain open.
+[Profile, fixed vendor and actual acceptance requirements](../scripts/host_tsgo.md).
+
 ## Current upstream backend-ID candidate (2026-10-31)
 
 The current Serena public registry adds vbnet, typescript_tsgo and graphql to

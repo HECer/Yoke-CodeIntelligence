@@ -1131,6 +1131,9 @@ pub fn load_checked(
 ) -> Result<CheckedGraph> {
     load_impl(store, id, pdf_worker, d).map_err(|e| sanitized(e, d))
 }
+#[path = "mixed_meaning_replay.rs"]
+mod replay;
+
 fn load_impl(
     store: &Store,
     id: &str,
@@ -1146,7 +1149,7 @@ fn load_impl(
     let inputs = view.prepare_meaning_inputs(&job.request, d)?;
     input(
         inputs.input_hash() == job.prepared_input_hash
-            && inputs.export(MAX_OUTPUT_BYTES, d)? == saved
+            && replay::same_inputs(inputs.export(MAX_OUTPUT_BYTES, d)?, &saved, d)?
             && inputs.provider_payload(&job.contract_hash, d)? == payload
             && same(&bindings(&inputs), &job.bindings, d)?,
     )?;
@@ -1157,6 +1160,9 @@ fn load_impl(
             && roots.records == job.parent_records,
     )?;
     let mut expected = graph_value(&inputs, &job, &reply, d)?;
+    // Source/claim validation above uses the current replay. Preserve the exact
+    // original execution receipt when reconstructing the immutable saved graph.
+    expected["sourceValidation"]["inputs"] = saved;
     let id = job
         .graph_artifact_id
         .as_ref()
