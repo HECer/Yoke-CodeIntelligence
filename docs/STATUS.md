@@ -6259,3 +6259,13 @@ Only this owned test's exchange call now catches an unwinding response failure t
 Fresh pinned Rustfmt check passes. All101 unchanged Node inputs and retained successful typecheck/npm logs are rehashed (266 passed,0 failed,3 existing skips); no fresh Node test run is claimed. No local native/vendor/controller/worker/editor runtime is compiled or executed, and no CI retry is requested. New-head native/full CI and the response-delivery cause remain open under the existing watch.
 
 No disposable worktree, full build copy, index or runtime process was created. Required immutable shard text/source/audit/check evidence remains in `validation/pr27-ef061-macos5-127861635436-20261106/`; prior cleanup disclosures stay intact.
+
+### PR27 compiler-inline fixture opening observations (2026-11-06)
+
+Windows shard5 job127932757174/run42229881616 on `423f9634937140cfdc8002f34c2687e2ef493c7a` checks out merge5759b67b829d158c8d6a8898815800523d364286 with the exact same Git tree. All96 raw log sizes/hashes and1,157 selected inputs verify (42 exactGit,1,115 solelyLF-to-CRLF,zero unexplained).47/48 whole targetgroups pass. compiler_inline has13 passed/3 failed/0 ignored/filtered;150.42seconds is the whole-target duration. The three cases fail at shared fixture Engine::open line34 before their affected compiler preparation and following assertions. The specific failed fixture variant and Store/OS phase are unrecorded. This differs from the earlier macOS tsx/2 thirty-second preparation timeout. MCP HTTP passes all20 tests, including the deadline-response and corrected incomplete-EOF peer cases.
+
+The shared compiler-inline fixture now calls the existing host-only observed-opening API with exactly Engine::open's original ten-second budget. Closed phase-entry/timing observations are included only in its failure message; entry is not completion, and no internal cause or timeout fix is claimed. All other fixture/test bytes, assertions, compiler30-second budgets, production, authority and protocol stimuli remain unchanged.
+
+Fresh pinned Rustfmt check passes. All101 unchanged Node inputs and retained successful typecheck/npm logs were rehashed (266 passed,0 failed,3 existing skips); no fresh Node test run is claimed. No local native/vendor/controller/worker/editor runtime is compiled or executed, no CIretry or limit/assertion waiver. New-head native/fullCI remains required under the existing watch.
+
+No disposable worktree, full build copy, index or runtime process was created. Required immutable receipt/source/audit/check evidence stays in `validation/pr27-423-windows5-127932757174-20261106/`; prior cleanup disclosures remain intact.
