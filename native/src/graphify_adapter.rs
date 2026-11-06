@@ -9,6 +9,7 @@ use anyhow::{Context, Result, bail, ensure};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 const MAX_OUTPUT: usize = 256_000;
+const MAX_SHORTEST_NODE_PATHS: usize = 256;
 fn definitions() -> Vec<(&'static str, &'static str, Value, Vec<&'static str>)> {
     vec![
         (
@@ -49,8 +50,8 @@ fn definitions() -> Vec<(&'static str, &'static str, Value, Vec<&'static str>)> 
         ),
         (
             "shortest_path",
-            "Find a bounded directed shortest path; undirected is an explicit option.",
-            json!({"source":{"type":"string"},"target":{"type":"string"},"max_hops":{"type":"integer","default":8},"undirected":{"type":"boolean","default":false}}),
+            "Find a bounded directed shortest path; undirected and weakest source-category selection are explicit options.",
+            json!({"source":{"type":"string"},"target":{"type":"string"},"max_hops":{"type":"integer","default":8},"undirected":{"type":"boolean","default":false},"path_policy":{"type":"string","enum":["first_observation_v1","weakest_source_categories_v1"]}}),
             vec!["source", "target"],
         ),
         (
@@ -487,6 +488,232 @@ fn walk(view: &View, args: &Value, deadline: &Deadline) -> Result<Value> {
     out["totalSelectedObservations"] = json!(edges.len());
     budget(out, bounded(args, "token_budget", 128, 65536)?, deadline)
 }
+fn path_hops(
+    view: &View,
+    nodes: &[usize],
+    edges: &[usize],
+    adjacency: &[Vec<(usize, usize)>],
+    deadline: &Deadline,
+) -> Result<Value> {
+    #[derive(serde::Serialize)]
+    #[serde(rename_all = "camelCase")]
+    struct Hop<'a> {
+        traversal_source_id: &'a str,
+        traversal_target_id: &'a str,
+        selected_observation_id: &'a str,
+        observation_ids: Vec<&'a str>,
+        observations: Vec<&'a Value>,
+        evidence: Vec<&'a Value>,
+    }
+
+    deadline.check()?;
+    if edges.is_empty() {
+        return Ok(json!([]));
+    }
+    ensure!(
+        nodes.len() == edges.len() + 1 && edges.len() <= 64,
+        "Invalid selected path shape"
+    );
+    let mut evidence_index = BTreeMap::new();
+    for (index, site) in view.evidence.iter().enumerate() {
+        deadline.check()?;
+        ensure!(
+            evidence_index.insert(id(site), index).is_none(),
+            "Duplicate path evidence ID"
+        );
+    }
+    let mut hops = Vec::with_capacity(edges.len());
+    for (pair, &selected_edge) in nodes.windows(2).zip(edges) {
+        deadline.check()?;
+        let mut observations = vec![];
+        let mut observation_ids = vec![];
+        let mut evidence_indices = BTreeSet::new();
+        let mut selected_present = false;
+        // Adjacency preserves View order and the caller's selected direction.
+        // Retain each original object, including opposite stored directions in
+        // an explicitly undirected hop, rather than rewriting its endpoints.
+        for (next, edge) in &adjacency[pair[0]] {
+            deadline.check()?;
+            if *next != pair[1] {
+                continue;
+            }
+            let original = &view.observations[*edge];
+            selected_present |= *edge == selected_edge;
+            observations.push(original);
+            observation_ids.push(id(original));
+            for evidence_id in original["evidenceIds"]
+                .as_array()
+                .context("Path observation evidence missing")?
+            {
+                deadline.check()?;
+                let key = evidence_id
+                    .as_str()
+                    .context("Invalid path evidence reference")?;
+                evidence_indices.insert(
+                    *evidence_index
+                        .get(key)
+                        .context("Path observation evidence absent")?,
+                );
+            }
+        }
+        ensure!(
+            selected_present,
+            "Selected path observation absent from hop"
+        );
+        let mut evidence = Vec::with_capacity(evidence_indices.len());
+        for index in evidence_indices {
+            deadline.check()?;
+            evidence.push(&view.evidence[index]);
+        }
+        hops.push(Hop {
+            traversal_source_id: id(&view.nodes[pair[0]]),
+            traversal_target_id: id(&view.nodes[pair[1]]),
+            selected_observation_id: id(&view.observations[selected_edge]),
+            observation_ids,
+            observations,
+            evidence,
+        });
+    }
+    // Serialize borrowed originals under the existing byte/deadline bound
+    // before creating owned JSON copies. Shared evidence cannot multiply into
+    // an unbounded cloned payload across different hops.
+    let bytes = crate::json::encode_bounded(&hops, MAX_OUTPUT, deadline)?;
+    let result = crate::json::parse(&bytes, MAX_OUTPUT)?;
+    deadline.check()?;
+    Ok(result)
+}
+
+struct NodeRoutePrefix {
+    nodes: Vec<usize>,
+    edges: Vec<usize>,
+    weakest_category: Option<u8>,
+    considered: usize,
+    capped: bool,
+}
+
+fn weakest_node_route_prefix(
+    view: &View,
+    adjacency: &[Vec<(usize, usize)>],
+    distances: &BTreeMap<usize, usize>,
+    start: usize,
+    end: usize,
+    deadline: &Deadline,
+) -> Result<NodeRoutePrefix> {
+    use crate::graph_extensions::{AnalysisCategory as Category, SourceCategoryPolicy};
+    #[derive(Clone, Copy)]
+    struct Predecessor {
+        node: usize,
+        observation: usize,
+        rank: u8,
+    }
+    let policy = SourceCategoryPolicy::default();
+    let end_distance = *distances
+        .get(&end)
+        .context("Shortest path distance missing")?;
+    ensure!(end_distance <= 64, "Shortest path depth capacity");
+    let mut predecessors = vec![Vec::<Predecessor>::new(); view.nodes.len()];
+    let mut hop_positions = BTreeMap::<(usize, usize), usize>::new();
+    let mut seen = vec![false; view.nodes.len()];
+    seen[start] = true;
+    let mut pending = VecDeque::from([start]);
+    // Revisit the shortest DAG in BFS discovery order. Each predecessor node
+    // occurs once for counting; its weakest original parallel observation is
+    // retained separately, with original View order breaking equal ranks.
+    while let Some(at) = pending.pop_front() {
+        deadline.check()?;
+        let distance = distances[&at];
+        if distance >= end_distance {
+            continue;
+        }
+        for &(next, edge) in &adjacency[at] {
+            deadline.check()?;
+            if distances.get(&next).copied() != Some(distance + 1) {
+                continue;
+            }
+            let resolution = view.observations[edge]["resolution"].as_str().unwrap_or("");
+            let rank = match policy.resolution_categories.get(resolution) {
+                Some(Category::Extracted) => 3,
+                Some(Category::Inferred) => 2,
+                Some(Category::Ambiguous) => 1,
+                Some(Category::Unmapped) | None => 0,
+            };
+            match hop_positions.entry((at, next)) {
+                std::collections::btree_map::Entry::Vacant(entry) => {
+                    entry.insert(predecessors[next].len());
+                    predecessors[next].push(Predecessor {
+                        node: at,
+                        observation: edge,
+                        rank,
+                    });
+                }
+                std::collections::btree_map::Entry::Occupied(entry) => {
+                    let original = &mut predecessors[next][*entry.get()];
+                    if rank < original.rank {
+                        original.observation = edge;
+                        original.rank = rank;
+                    }
+                }
+            }
+            if !seen[next] {
+                seen[next] = true;
+                pending.push_back(next);
+            }
+        }
+    }
+    let mut result = NodeRoutePrefix {
+        nodes: vec![],
+        edges: vec![],
+        weakest_category: None,
+        considered: 0,
+        capped: false,
+    };
+    // Enumerate complete paths backwards through ordered predecessor lists.
+    // Keep only a depth-bounded stack and the chosen route, never a route set.
+    // Discovering path 257 detects the cap without ranking or returning it.
+    let mut stack = vec![(end, 0usize)];
+    let mut reverse_edges = Vec::<(usize, u8)>::new();
+    while let Some(&(at, _)) = stack.last() {
+        deadline.check()?;
+        if at == start {
+            if result.considered == MAX_SHORTEST_NODE_PATHS {
+                result.capped = true;
+                break;
+            }
+            result.considered += 1;
+            let mut weakest = 3u8;
+            for &(_, rank) in &reverse_edges {
+                deadline.check()?;
+                weakest = weakest.min(rank);
+            }
+            if result.nodes.is_empty() || weakest < result.weakest_category.unwrap_or(3) {
+                result.nodes = stack.iter().rev().map(|&(node, _)| node).collect();
+                result.edges = reverse_edges.iter().rev().map(|&(edge, _)| edge).collect();
+                result.weakest_category = (!reverse_edges.is_empty()).then_some(weakest);
+            }
+            stack.pop();
+            reverse_edges.pop();
+            continue;
+        }
+        let (_, choice) = stack.last_mut().context("Shortest path stack missing")?;
+        if *choice == predecessors[at].len() {
+            stack.pop();
+            reverse_edges.pop();
+            continue;
+        }
+        let predecessor = predecessors[at][*choice];
+        *choice += 1;
+        ensure!(stack.len() <= end_distance, "Shortest path stack capacity");
+        stack.push((predecessor.node, 0));
+        reverse_edges.push((predecessor.observation, predecessor.rank));
+    }
+    ensure!(
+        result.considered > 0 && !result.nodes.is_empty(),
+        "Shortest node route missing"
+    );
+    deadline.check()?;
+    Ok(result)
+}
+
 fn shortest(view: &View, args: &Value, deadline: &Deadline) -> Result<Value> {
     let max = bounded(args, "max_hops", 1, 64)?;
     let sources = matches(view, text(args, "source")?, deadline)?;
@@ -545,7 +772,20 @@ fn shortest(view: &View, args: &Value, deadline: &Deadline) -> Result<Value> {
     let found = distances.contains_key(&end);
     let mut nodes = vec![];
     let mut edges = vec![];
-    if found {
+    let category_policy = args["path_policy"] == "weakest_source_categories_v1";
+    let mut weakest_category = None;
+    let mut paths_considered = 0;
+    let mut paths_capped = false;
+    if found && category_policy {
+        let prefix = weakest_node_route_prefix(view, &adjacency, &distances, start, end, deadline)?;
+        paths_considered = prefix.considered;
+        paths_capped = prefix.capped;
+        weakest_category = prefix
+            .weakest_category
+            .map(|rank| ["unmapped", "ambiguous", "inferred", "extracted"][usize::from(rank)]);
+        nodes = prefix.nodes;
+        edges = prefix.edges;
+    } else if found {
         let mut at = end;
         nodes.push(at);
         while at != start {
@@ -572,6 +812,17 @@ fn shortest(view: &View, args: &Value, deadline: &Deadline) -> Result<Value> {
             .map(|i| id(&view.observations[*i]))
             .collect::<Vec<_>>()
     );
+    if category_policy {
+        out["pathPolicy"] = json!("weakest_source_categories_v1");
+        out["pathSourceCategory"] = json!(weakest_category);
+        out["pathCategoryMeaning"] =
+            json!("declared_source_categories_not_probabilities_or_execution_proof");
+        out["pathHops"] = path_hops(view, &nodes, &edges, &adjacency, deadline)?;
+        out["shortestNodePathsConsidered"] = json!(paths_considered);
+        out["shortestNodePathsCapped"] = json!(paths_capped);
+        out["shortestNodePathLimit"] = json!(MAX_SHORTEST_NODE_PATHS);
+        out["pathSelectionScope"] = json!("first_256_distinct_shortest_node_paths");
+    }
     Ok(out)
 }
 fn stats(view: &View, report: &Value) -> Value {
@@ -913,3 +1164,7 @@ pub fn resource(session: &mut Session, uri: &str, deadline: &Deadline) -> Result
     prepared.publish(&engine.store, deadline)?;
     Ok((mime.into(), body))
 }
+
+#[cfg(test)]
+#[path = "graphify_path_policy_tests.rs"]
+mod path_policy_tests;

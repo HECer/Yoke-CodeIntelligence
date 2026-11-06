@@ -100,19 +100,37 @@ def ordinary(path, directory=False):
     require(path.is_dir() if directory else path.is_file(), "Owned path unavailable")
 
 
-def output_usage(root):
+def output_usage(root, *, allow_disappeared=False):
+    require(type(allow_disappeared) is bool, "Invalid live inventory selection")
+    ordinary(root, True)
+
+    def walk_error(error):
+        # Only an enumerated descendant may disappear during a live scan.
+        # Loss of the owned root, access errors and final-scan races still refuse.
+        if (allow_disappeared and isinstance(error, FileNotFoundError)
+                and error.filename is not None
+                and Path(error.filename) != root
+                and Path(error.filename).is_relative_to(root)):
+            return
+        raise error
+
     total = count = 0
-    for directory, directories, files in os.walk(root, followlinks=False):
+    for directory, directories, files in os.walk(root, followlinks=False, onerror=walk_error):
         require(len(Path(directory).relative_to(root).parts) <= 32, "Fixture depth capacity")
         file_names = set(files)
         for name in directories + files:
             path = Path(directory) / name
-            require(not path.is_symlink() and not path.is_junction(), "Linked fixture entry refused")
             count += 1
             require(count <= MAX_ENTRIES, "Fixture entry capacity")
-            if name in file_names:
-                total += path.stat().st_size
-                require(total <= MAX_OUTPUT, "Fixture output capacity")
+            try:
+                require(not path.is_symlink() and not path.is_junction(), "Linked fixture entry refused")
+                if name in file_names:
+                    total += path.stat().st_size
+                    require(total <= MAX_OUTPUT, "Fixture output capacity")
+            except FileNotFoundError:
+                if not allow_disappeared:
+                    raise
+    ordinary(root, True)
     return total
 
 
@@ -247,7 +265,7 @@ def run_owned(program, arguments, fixture, timeout):
                 phase = "disk_reserve"
                 require(shutil.disk_usage(fixture).free >= MIN_FREE, "Owned disk reserve unavailable")
                 phase = "output_inventory"
-                output_usage(fixture)
+                output_usage(fixture, allow_disappeared=True)
             if time.monotonic() >= deadline:
                 row["reason"] = "deadline"
                 raise ValueError("Owned tool deadline")

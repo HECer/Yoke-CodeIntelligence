@@ -1,4 +1,6 @@
 //! Actual host-only template projection, OS bounds, and immutable original input.
+#[path = "support/memory_budget.rs"]
+mod memory_budget;
 use serde_json::{Value, json};
 use std::{
     fs,
@@ -87,10 +89,7 @@ fn templates_render_conditions_loops_filters_macros_and_json_data_without_evalua
         proof["renderedPromptSha256"],
         yoke::model::hash("ALPHA,BETA\n")
     );
-    assert_eq!(
-        proof["hostRendererEvidence"]["memoryCeilingBytes"],
-        256 * 1024 * 1024
-    );
+    memory_budget::assert_report(&proof["hostRendererEvidence"], "memoryCeilingBytes");
 }
 #[test]
 fn templates_use_selected_catalog_includes_inheritance_imports_and_unicode_exactly() {
@@ -285,7 +284,13 @@ fn templates_discovery_returns_replayable_context_and_identical_pinned_plan() {
         serde_json::to_vec(&discovered["selection"]).unwrap(),
     )
     .unwrap();
-    assert_eq!(f.value(), discovered["projection"]);
+    let mut compared = f.value();
+    let actual = &mut compared["sources"][0]["promptRendering"]["hostRendererEvidence"];
+    let expected =
+        &discovered["projection"]["sources"][0]["promptRendering"]["hostRendererEvidence"];
+    memory_budget::assert_same_policy(actual, expected, "memoryCeilingBytes");
+    *actual = expected.clone();
+    assert_eq!(compared, discovered["projection"]);
     f.unchanged();
 }
 #[test]
@@ -331,7 +336,7 @@ fn templates_worker_direct_call_self_imposes_and_observes_os_memory_limit() {
     );
     let v: Value = serde_json::from_slice(&out.stdout).unwrap();
     assert_eq!(v["rendered"], "owned");
-    assert_eq!(v["memoryCeilingBytes"], 256 * 1024 * 1024);
+    memory_budget::assert_report(&v, "memoryCeilingBytes");
     assert_eq!(v["requestSha256"], yoke::model::hash(input));
 }
 

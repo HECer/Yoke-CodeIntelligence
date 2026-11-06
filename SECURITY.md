@@ -64,7 +64,12 @@ runtime trust or write authority. Eager exported profiles remain literal.
 
 The parent imposes an OS memory ceiling before execution; the worker independently
 self-limits before input, including direct helper calls. Windows uses committed
-Job memory, Unix uses address space with enforcement errors refusing execution.
+Job memory and Linux uses absolute address space. macOS separately bounds
+additional virtual address space above an observed startup baseline, retaining
+inherited hard limits and reporting the actual absolute ceiling. It does not
+bound RSS or allocation within already reserved mappings. See the
+[macOS worker contract](native/docs/macos-worker-memory.md). Enforcement errors
+refuse execution.
 Fuel, recursion, output and an inherited parent capture deadline remain bounded;
 checked process cleanup is mandatory. These are resource and interpreter-interface
 boundaries, not an OS filesystem/network sandbox or protection from an equal-account

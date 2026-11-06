@@ -1,4 +1,6 @@
 //! Frozen native, Office and PDF text retain exact separate source spaces.
+#[path = "support/memory_budget.rs"]
+mod memory_budget;
 use serde_json::{Value, json};
 use std::{
     fs,
@@ -94,13 +96,17 @@ fn mixed_meaning_pdf_inputs_replay_frozen_original_pages_and_require_explicit_wo
         assert_eq!(unit["item"], read["item"]);
     }
     let typed = serde_json::from_value(request.clone()).unwrap();
-    assert_eq!(
-        view.prepare_meaning_inputs(&typed, &d)
-            .unwrap()
-            .export(4_000_000, &d)
-            .unwrap(),
-        result
-    );
+    let expected = view
+        .prepare_meaning_inputs(&typed, &d)
+        .unwrap()
+        .export(4_000_000, &d)
+        .unwrap();
+    let mut compared = result.clone();
+    let actual_limits = &mut compared["mixedView"]["pdfs"][0]["resourceLimits"];
+    let expected_limits = &expected["mixedView"]["pdfs"][0]["resourceLimits"];
+    memory_budget::assert_same_policy(actual_limits, expected_limits, "memoryBytes");
+    *actual_limits = expected_limits.clone();
+    assert_eq!(expected, compared);
     let mut stale = request;
     stale["units"][2]["source"]["contentHash"] = json!("0".repeat(64));
     let stale = serde_json::from_value(stale).unwrap();
