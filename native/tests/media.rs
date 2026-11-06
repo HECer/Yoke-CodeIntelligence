@@ -1,3 +1,5 @@
+#[path = "support/memory_budget.rs"]
+mod memory_budget;
 use serde_json::{Value, json};
 use std::fs;
 use std::time::{Duration, Instant};
@@ -388,7 +390,7 @@ fn native_pdf_worker_extracts_actual_text_without_opening_a_source_index() {
             .contains("Native invoice Grüße")
     );
     assert_eq!(data["segments"][0]["origin"], "native_pdf_text_not_ocr");
-    assert_eq!(data["resourceLimits"]["memoryBytes"], 268435456);
+    memory_budget::assert_report(&data["resourceLimits"], "memoryBytes");
     assert_eq!(data["sourceHash"], hash(pdf()));
     let inspect = media::inspect(&engine, "invoice.pdf", &Deadline::new(10_000)).unwrap();
     assert_eq!(inspect["metadata"]["nativeTextAvailable"], false);
