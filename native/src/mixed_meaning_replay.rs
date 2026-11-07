@@ -1,56 +1,34 @@
-//! Source replay compares evidence exactly; macOS VM measurements describe one
-//! execution and are independently validated rather than required to repeat.
+//! Compare all source evidence exactly after validating and retaining only the
+//! independent execution's permitted resource observations.
 use super::*;
-use crate::process::{MACOS_MEMORY_KIND, MacosMemoryBudget};
-
-#[derive(serde::Deserialize)]
-#[serde(rename_all = "camelCase", deny_unknown_fields)]
-struct MacosLimits {
-    memory_bytes: u64,
-    cpu_seconds: u32,
-    memory_enforcement: String,
-    memory_budget: MacosMemoryBudget,
-}
-fn validate_observation(value: &Value) -> Result<()> {
-    let limits: MacosLimits = crate::json::decode(value.clone())?;
-    limits.memory_budget.validate(256 * 1024 * 1024)?;
-    input(
-        limits.cpu_seconds == 20
-            && limits.memory_enforcement == MACOS_MEMORY_KIND
-            && limits.memory_bytes == limits.memory_budget.ceiling_bytes(),
-    )
-}
+#[cfg(test)]
+use crate::process::MACOS_MEMORY_KIND;
 
 pub(super) fn same_inputs(mut replayed: Value, saved: &Value, d: &Deadline) -> Result<bool> {
     check(d)?;
+    // A source identity mismatch is already a negative comparison. It must not
+    // become eligible for resource-observation normalization.
     if let (Some(current), Some(original)) = (
         replayed
-            .pointer_mut("/mixedView/pdfs")
-            .and_then(Value::as_array_mut),
+            .pointer("/mixedView/pdfs")
+            .and_then(Value::as_array),
         saved.pointer("/mixedView/pdfs").and_then(Value::as_array),
     ) {
         if current.len() != original.len() {
             return Ok(false);
         }
-        for (current, original) in current.iter_mut().zip(original) {
+        for (current, original) in current.iter().zip(original) {
             check(d)?;
-            let now = &mut current["resourceLimits"];
-            let then = &original["resourceLimits"];
-            if now["memoryEnforcement"] == MACOS_MEMORY_KIND
-                && then["memoryEnforcement"] == MACOS_MEMORY_KIND
+            if current["assetId"] != original["assetId"]
+                || current["containerHash"] != original["containerHash"]
+                || current["resourceLimits"]["memoryEnforcement"]
+                    != original["resourceLimits"]["memoryEnforcement"]
             {
-                validate_observation(now)?;
-                validate_observation(then)?;
-                // Only these execution measurements may vary. Policy schema,
-                // budget, CPU cap, PDF hashes/pages/warnings and all other data
-                // still compare exactly. The saved receipt is never rewritten.
-                now["memoryBytes"] = then["memoryBytes"].clone();
-                for field in ["baselineVirtualBytes", "ceilingBytes"] {
-                    now["memoryBudget"][field] = then["memoryBudget"][field].clone();
-                }
+                return Ok(false);
             }
         }
     }
+    resource_replay::retain(&mut replayed, saved, &mut || check(d))?;
     let same = replayed == *saved;
     check(d)?;
     Ok(same)
@@ -63,7 +41,7 @@ mod tests {
     fn sample(baseline: u64) -> Value {
         let ceiling = baseline + 268435456;
         json!({"units":[{"item":{"text":"e\u{301} 🦀","source":{"startByte":1,"endByte":9}}}],
-            "mixedView":{"pdfs":[{"assetId":"original","pages":[{"contentHash":"exact","page":1}],
+            "mixedView":{"pdfs":[{"assetId":"original","containerHash":"original-container","pages":[{"contentHash":"exact","page":1}],
                 "warnings":[],"resourceLimits":{"memoryBytes":ceiling,"cpuSeconds":20,
                     "memoryEnforcement":MACOS_MEMORY_KIND,"memoryBudget":{"schema":1,
                         "baselineVirtualBytes":baseline,"growthBudgetBytes":268435456,"ceilingBytes":ceiling}}}]}})
@@ -83,6 +61,7 @@ mod tests {
             "/units/0/item/text",
             "/units/0/item/source/startByte",
             "/mixedView/pdfs/0/assetId",
+            "/mixedView/pdfs/0/containerHash",
             "/mixedView/pdfs/0/pages/0/contentHash",
             "/mixedView/pdfs/0/pages/0/page",
             "/mixedView/pdfs/0/warnings",

@@ -20,6 +20,8 @@ mod busy;
 mod opening;
 #[path = "store_read_only.rs"]
 mod read_only;
+#[path = "store_schema.rs"]
+mod schema;
 pub use opening::{OpeningObservations, OpeningPhase};
 
 pub struct Store {
@@ -232,20 +234,16 @@ impl Store {
         }
         deadline.check()?;
         opening::enter(&mut observations, OpeningPhase::Connection);
-        let db = Connection::open(db_path)?;
+        let mut db = Connection::open(db_path)?;
         opening::enter(&mut observations, OpeningPhase::SqlPolicy);
         busy::install(&db, Some(&deadline))?;
         let bounded = deadline.clone();
         db.progress_handler(1000, Some(move || bounded.check().is_err()));
         opening::enter(&mut observations, OpeningPhase::SqlSetup);
-        db.execute_batch("PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA synchronous=FULL;
-            CREATE TABLE IF NOT EXISTS meta(key TEXT PRIMARY KEY,value TEXT NOT NULL);
-            CREATE TABLE IF NOT EXISTS snapshots(id TEXT PRIMARY KEY,value TEXT NOT NULL);
-            CREATE TABLE IF NOT EXISTS graphs(id TEXT PRIMARY KEY,value TEXT NOT NULL);
-            CREATE TABLE IF NOT EXISTS cache(key TEXT PRIMARY KEY,value TEXT NOT NULL);
-            CREATE TABLE IF NOT EXISTS records(kind TEXT NOT NULL,id TEXT NOT NULL,value TEXT NOT NULL,PRIMARY KEY(kind,id));
-            CREATE VIRTUAL TABLE IF NOT EXISTS symbols USING fts5(snapshot UNINDEXED,id UNINDEXED,name,path UNINDEXED,signature);
-            CREATE VIRTUAL TABLE IF NOT EXISTS documents USING fts5(snapshot UNINDEXED,path UNINDEXED,text);")?;
+        db.execute_batch(
+            "PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA synchronous=FULL;",
+        )?;
+        schema::initialize(&mut db, &deadline)?;
         deadline.check()?;
         opening::enter(&mut observations, OpeningPhase::WorkspaceIdentity);
         let workspace_id: Option<String> = db

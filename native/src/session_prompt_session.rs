@@ -14,18 +14,46 @@ impl Session {
         config: &Config,
         d: &Deadline,
     ) -> Result<Option<Arc<Snapshot>>> {
+        self.prompt_memories_for_state(config, &self.state, d)
+    }
+
+    fn prompt_memories_for_state(
+        &self,
+        config: &Config,
+        state: &super::State,
+        d: &Deadline,
+    ) -> Result<Option<Arc<Snapshot>>> {
         let Some(names) = &config.memory_embeddings else {
             return Ok(None);
         };
         self.check_tool_state(d)?;
         ensure!(
-            !self.state.modes.iter().any(|m| m == "no-memories"),
+            !state.modes.iter().any(|m| m == "no-memories"),
             "Notes disabled by session mode"
         );
-        self.require_tool("read_memory", d)?;
-        self.require_repl_api("mem.read_memory")?;
-        let patterns = self
-            .steering()?
+        let steering = self
+            .steering_enabled()
+            .then(|| {
+                crate::session_steering::resolve(
+                    &self.host,
+                    &state.active_project,
+                    state.mode_override.as_deref(),
+                )
+            })
+            .transpose()?;
+        self.check_tool_state(d)?;
+        ensure!(
+            steering.as_ref().is_none_or(|s| s.allows("read_memory")),
+            "Tool excluded by session steering"
+        );
+        ensure!(
+            steering
+                .as_ref()
+                .is_none_or(|s| s.api_allowed("mem.read_memory")),
+            "API excluded by session steering"
+        );
+        let patterns = steering
+            .as_ref()
             .map(|s| {
                 notes::memory_patterns(&s.read_only_memory_patterns, &s.ignored_memory_patterns)
             })
@@ -43,20 +71,17 @@ impl Session {
             .any(|(scope, _)| *scope == notes::Scope::Project)
         {
             ensure!(
-                !self
-                    .state
-                    .removed_projects
-                    .contains(&self.state.active_project),
+                !self.state.removed_projects.contains(&state.active_project),
                 "Project removed from session"
             );
-            let root = if self.state.active_project == "default" {
+            let root = if state.active_project == "default" {
                 &self.engine.root
             } else {
                 &self
                     .host
                     .projects
                     .iter()
-                    .find(|p| p.name == self.state.active_project)
+                    .find(|p| p.name == state.active_project)
                     .context("Project is not host-registered")?
                     .root
             };
@@ -95,5 +120,29 @@ impl Session {
         snapshot.check_selection(names, d)?;
         self.check_tool_state(d)?;
         Ok(Some(Arc::new(snapshot)))
+    }
+
+    pub(super) fn admit_required_memories_for_state(
+        &self,
+        state: &super::State,
+        d: &Deadline,
+    ) -> Result<()> {
+        if self.host.required_prompt_memories.is_none() {
+            return Ok(());
+        }
+        crate::required_prompt_memories::admit_host(&self.host, d)?;
+        let config = self
+            .host
+            .prompt_templates
+            .as_ref()
+            .context("required_memory_templates_required")?;
+        let snapshot = self.prompt_memories_for_state(config, state, d)?;
+        crate::required_prompt_memories::prepare(
+            &self.host,
+            &state.active_project,
+            snapshot.as_deref(),
+            d,
+        )?;
+        Ok(())
     }
 }

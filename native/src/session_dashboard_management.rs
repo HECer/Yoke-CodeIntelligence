@@ -24,6 +24,8 @@ pub struct Config {
     pub raw_logs: Option<crate::host_install::logs::Config>,
     #[serde(skip_serializing_if = "is_false")]
     pub shutdown: bool,
+    #[serde(skip_serializing_if = "is_false")]
+    pub tool_usage_reset: bool,
 }
 fn is_false(value: &bool) -> bool {
     !value
@@ -38,6 +40,7 @@ impl Default for Config {
             documents: None,
             raw_logs: None,
             shutdown: false,
+            tool_usage_reset: false,
         }
     }
 }
@@ -132,6 +135,9 @@ pub(crate) struct Request {
     deny_unknown_fields
 )]
 pub(crate) enum Action {
+    ResetToolUsage {
+        expected_statistics_revision: String,
+    },
     Shutdown {},
     ReadLog {
         log_id: String,
@@ -277,6 +283,15 @@ impl Request {
             Ok(())
         };
         match &self.action {
+            Action::ResetToolUsage {
+                expected_statistics_revision,
+            } => {
+                let parsed = expected_statistics_revision.parse::<u64>().ok();
+                ensure!(
+                    parsed.is_some_and(|v| v.to_string() == *expected_statistics_revision),
+                    "dashboard_tool_usage_revision_invalid"
+                );
+            }
             Action::ReadLog { log_id, max_bytes } => {
                 crate::project_session::label(log_id)?;
                 ensure!(

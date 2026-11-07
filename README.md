@@ -26,6 +26,9 @@ An explicitly enabled [native session dashboard](native/docs/session-dashboard.m
 Explicit [authored-memory embeddings](native/docs/prompt-memories.md) add selected
 application-note revisions to live prompts with current policies and honest
 missing-note diagnostics. Default memory lookup remains disabled.
+Separately confirmed [required startup notes](native/docs/required-prompt-memories.md)
+pin exact authored revisions and refuse missing or changed required guidance;
+their native runtime qualification remains pending.
 
 Separately granted [live session prompt templates](native/docs/session-prompt-runtime.md)
 derive actual current catalog variables and support deferred YAML projection.

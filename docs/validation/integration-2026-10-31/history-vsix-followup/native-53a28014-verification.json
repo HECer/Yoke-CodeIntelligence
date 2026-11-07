@@ -1,0 +1,887 @@
+{
+  "schema": "source_specific_native_followup_v1",
+  "sourceRevision": "53a280147efaf96f8bc2f443c28aadecce3abefe",
+  "runId": 41189561472,
+  "nativeImagesReadLocally": false,
+  "tls": {
+    "artifactId": 13038790593,
+    "zipSHA256": "b9500ac51e7956d4a145c0f6c464dcd3aef300596e81f66e0b2c06563060692b",
+    "case": {
+      "case": "actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_ca",
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "filteredOut": 49,
+      "wholeCargoTarget": false,
+      "countsAreNotCombined": true
+    },
+    "controls": [
+      {
+        "path": "scripts/host_credential_tls.py",
+        "sha256": "bdfe00819dc86388f39db3ce3cb9093df5b9797fe235e4ed8f3a2ceb3ddbe886",
+        "matchingForms": [
+          "Windows CRLF"
+        ]
+      },
+      {
+        "path": "scripts/vscode_owned_job.py",
+        "sha256": "c773bf3a8d9af8fcc51bf4d4e5991be7a720c1596c66e116850f15ceaa631b61",
+        "matchingForms": [
+          "Windows CRLF"
+        ]
+      },
+      {
+        "path": "scripts/run_native_tests.py",
+        "sha256": "f864e8542260c967dadc7cb8878c16507cab26c6d8e2fd93acb4f83a0cef123e",
+        "matchingForms": [
+          "Windows CRLF"
+        ]
+      },
+      {
+        "path": "native/tests/digest_receiver.rs",
+        "sha256": "90e0353617f6f3ca6910b9db01189633d83969fc4eb5cc63bbd69ed02c454518",
+        "matchingForms": [
+          "Windows CRLF"
+        ]
+      },
+      {
+        "path": ".github/workflows/rust.yml",
+        "sha256": "a4ef9e3e0817744ee5df52b85104614fafeb596beb890d12b12de09c223392d7",
+        "matchingForms": [
+          "Windows CRLF"
+        ]
+      },
+      {
+        "path": "Cargo.lock",
+        "sha256": "3fd92cd4fa034bffb88d765ed0c02f3d5335f3317ff19c31e70a3d5149e49f6a",
+        "matchingForms": [
+          "Windows CRLF"
+        ]
+      }
+    ],
+    "freshPairedProducerAndNaturalExitChecked": true,
+    "wholeTargetOrPlatformAccepted": false
+  },
+  "ubuntuShard7": {
+    "artifactId": 13037723627,
+    "zipSHA256": "414880ffeb07a48fe355f308694454864efe30ed1a0ff72c43cb5411cd821ee4",
+    "all48AssignedGroupLogsVerified": true,
+    "inventoryDigestAndExactPartitionChecked": true,
+    "controls": [
+      {
+        "path": "scripts/native_shards.py",
+        "sha256": "9bd3b7be8e16236fabbff76aa754ff18b27735e22da1ed05c6446421c47bd669",
+        "matchingForms": [
+          "Git blob"
+        ]
+      },
+      {
+        "path": "scripts/run_native_tests.py",
+        "sha256": "782fb9fa147a16510a0dd8caa5bf4bbf20bfcecb726d009c953a0858f9620625",
+        "matchingForms": [
+          "Git blob"
+        ]
+      },
+      {
+        "path": ".github/workflows/rust.yml",
+        "sha256": "7142b1ac78d53de256179f66d0106b98d8ca9a84c2f92a094bec7ea7c7fc2bd4",
+        "matchingForms": [
+          "Git blob"
+        ]
+      },
+      {
+        "path": "native/tests/session_dashboard_management.rs",
+        "sha256": "ac69a5d78d17eca593c95636b5f1e499dc8a891424b25f864908ccd58569443a",
+        "matchingForms": [
+          "Git blob"
+        ]
+      },
+      {
+        "path": "native/tests/support/dashboard_tool_usage.rs",
+        "sha256": "164f23bb9fc571f1c13629e77faeadb53aa19bef27cf47658d1105e8f3f3d711",
+        "matchingForms": [
+          "Git blob"
+        ]
+      }
+    ],
+    "dashboardManagement": {
+      "passed": 20,
+      "failed": 0,
+      "ignored": 0,
+      "filteredOut": 0
+    },
+    "groups": [
+      {
+        "group": "yoke-code-intelligence:test:agent_file_options:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0000.stdout",
+            "bytes": 517,
+            "sha256": "e05ba8af066421cd81b54dd35e77b41ec26aec9acc763bc00ccb3b31055152c0"
+          },
+          {
+            "name": "0000.stderr",
+            "bytes": 419,
+            "sha256": "2671b8798750f1c9f5756e62c4528f76fdcb571df302a34e03f88f6b5e453b59"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:blob_bounds:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0001.stdout",
+            "bytes": 215,
+            "sha256": "eecf22b74c2043b7b15bf7d13d1cacd69112c722bf4f3fbee037c1b4a77bc6f4"
+          },
+          {
+            "name": "0001.stderr",
+            "bytes": 362,
+            "sha256": "eb330dc53876d8ef57c99a7c5c7593d3a423d63b2e874000fd3a780cdc9c68a8"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:capture_epoch_selection:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0002.stdout",
+            "bytes": 349,
+            "sha256": "6e88b6dff285477d29b41251d04562081d884bf857a1add62a61bf814f7303f1"
+          },
+          {
+            "name": "0002.stderr",
+            "bytes": 386,
+            "sha256": "5eb27f1f78a182f311c3cf55e59ae9623fc8fcee84b5c700554c6f81c7d59ec4"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:capture_policy:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0003.stdout",
+            "bytes": 900,
+            "sha256": "df192dce8c1857f12111ad304da473eb0bcc71d5664b3adf8d90a383c77c328e"
+          },
+          {
+            "name": "0003.stderr",
+            "bytes": 368,
+            "sha256": "514910111cc6071260c5876df4d8ac08572413c5a8100d05e8b475112247df83"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:client_lock:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0004.stdout",
+            "bytes": 274,
+            "sha256": "ec061c8318ff2592d1fdea04cdca3d6819852a9e0fc4fa48a7fd0cacc74addea"
+          },
+          {
+            "name": "0004.stderr",
+            "bytes": 362,
+            "sha256": "a61eaa75b29538f00702ac7437b24df32239c6791ed420a8016f4b33abf4d8da"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:core:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0005.stdout",
+            "bytes": 512,
+            "sha256": "eb2306f9f4cd63f8fb7556acc33fd0bce02bb06e1cc663f34a47bda1b58cfd57"
+          },
+          {
+            "name": "0005.stderr",
+            "bytes": 348,
+            "sha256": "6c4b1d8bc4c87ee859b658e0b0f33474dfdbae52ed7d875114f70257c842192d"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:decision_cli:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0006.stdout",
+            "bytes": 981,
+            "sha256": "440f3fe7f0de25dd44e2b55a058754d5bd108e197dae014566431f07a2f372d0"
+          },
+          {
+            "name": "0006.stderr",
+            "bytes": 364,
+            "sha256": "d4897923be80e7b07ce0982f0ac5008ae87edea0b033b67aa1324b79891094fc"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:decision_retention:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0007.stdout",
+            "bytes": 283,
+            "sha256": "0f7eb8a5d65b4f5b947de5333cfb5d907ab01a4dbcf54947c036561b1a73390f"
+          },
+          {
+            "name": "0007.stderr",
+            "bytes": 376,
+            "sha256": "b5c60f2d8a7e5114ed57332531d26d1571a5c8087d4e6994df51c625c11ee3c8"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:declaration_attachments_live:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0008.stdout",
+            "bytes": 447,
+            "sha256": "621e37630c1afb41f88cef0e5004de5aa85d816acb81f6640ef09570868c582f"
+          },
+          {
+            "name": "0008.stderr",
+            "bytes": 396,
+            "sha256": "8fac8337804dee77489295ee619abdb20ca8fac9e2847c1ae7ee6f2e8fa973d1"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:digest_history_acquisition:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0009.stdout",
+            "bytes": 1008,
+            "sha256": "2214622cd2be6c821e39bf8debc2d7e10379f4cc12c423566e6a26fb3dc8a036"
+          },
+          {
+            "name": "0009.stderr",
+            "bytes": 392,
+            "sha256": "9deb604d883080945f0d877510e889cc3b8483c95be73c0b8c2f10d4fa75b202"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:engine_epoch_review:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0010.stdout",
+            "bytes": 359,
+            "sha256": "c9cff779b1e5e239df95e0996c381a9be076ba75907e5768118e0d9b1000fcf4"
+          },
+          {
+            "name": "0010.stderr",
+            "bytes": 378,
+            "sha256": "1881fbc1a33d215d29606523148dfcf2ca7bf14f188f0899ec9e49d6395786e2"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:explorer_sources:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0011.stdout",
+            "bytes": 483,
+            "sha256": "fc39c621cdcfeae14e4e95b43ac90a5e7a22fbe0227b2f707e7f308cc57c0353"
+          },
+          {
+            "name": "0011.stderr",
+            "bytes": 372,
+            "sha256": "3130853914c56825b1490dc44c0308e4c2e417006790fd9df1788cb97656e233"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:facade_file_rename:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0012.stdout",
+            "bytes": 926,
+            "sha256": "4e8f597b60b57199de56d483cda3acb79de40ecabb84d09edc052d3be874f36a"
+          },
+          {
+            "name": "0012.stderr",
+            "bytes": 376,
+            "sha256": "3605083a87270d7db3da52c30fb01e06f785fb8a3cea97485700c0d33a5ea890"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:facade_file_usage:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0013.stdout",
+            "bytes": 907,
+            "sha256": "3d46d7d4d9feaffce6cd04bc2324186944d75b3d672a27bea95e45d1b868c723"
+          },
+          {
+            "name": "0013.stderr",
+            "bytes": 374,
+            "sha256": "3078ecfb59cdaf23e328b523298630290d8a50e5cb41ca7b13b3c90b678ab7cc"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:federation_receipt_bounds:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0014.stdout",
+            "bytes": 285,
+            "sha256": "5991852ea2abdbde2a6c2aba332c1bfdc2d5c9946bd53d5d921f8c05a6103d4b"
+          },
+          {
+            "name": "0014.stderr",
+            "bytes": 390,
+            "sha256": "2cdf842ae120568d988b97b15c44507feec568c688d3e1c4854f7d540eb8dc38"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:git_affected_details:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0015.stdout",
+            "bytes": 1197,
+            "sha256": "d43a72347e00164d4d9a15e3aca451d3284a1a0962b07abc2ca1e144c1442fc8"
+          },
+          {
+            "name": "0015.stderr",
+            "bytes": 380,
+            "sha256": "0b02a88118140a1f6a572ba0706c9ade07c8d8f056ba98d566fc2898a15bb751"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:git_impact_details:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0016.stdout",
+            "bytes": 2598,
+            "sha256": "cd267576b24d92fc88c0a6bbae05943ac9ec2d4c01dafea350d82080ec95d87d"
+          },
+          {
+            "name": "0016.stderr",
+            "bytes": 376,
+            "sha256": "35e787f19f93f92ff1f8342c613401d2764e59364371577d6abaa2aaeaeb1709"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:git_owners:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0017.stdout",
+            "bytes": 956,
+            "sha256": "506021248db573a72a9a13b0f1c7080ba8822175550604db572ff5f5d2bb9ab7"
+          },
+          {
+            "name": "0017.stderr",
+            "bytes": 360,
+            "sha256": "867536de37a8688281c4c47cfc62779458891cc91abdaab9e69a9ccb945dadc1"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:github_app_ingress:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0018.stdout",
+            "bytes": 1824,
+            "sha256": "85edcb878c359f1750b53ba49fcf9a97df99b94eaae7a326adae85468f6d061a"
+          },
+          {
+            "name": "0018.stderr",
+            "bytes": 376,
+            "sha256": "f08f3a1c348a338a6e1cf1b6e6d2c460c495aa82f72ec1ee68f9e18f4bc4d629"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:github_app_ingress_cli:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0019.stdout",
+            "bytes": 402,
+            "sha256": "45404739c8790eafd5a101ae2a716943fed7e8ff751eec991fbf467631f318b1"
+          },
+          {
+            "name": "0019.stderr",
+            "bytes": 384,
+            "sha256": "af75d316c47453602bb151c5ba981b96d9e29be3c55771f7d5a3e20444c94acb"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:github_app_worker:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0020.stdout",
+            "bytes": 2862,
+            "sha256": "492df578088ef41e2d3ef440c902135cbf70effa6a49c97af80f3330d1935e0e"
+          },
+          {
+            "name": "0020.stderr",
+            "bytes": 374,
+            "sha256": "101ad134f9822152a4e85fbb9d276ac8f0b864d7bf048a72d84cafead8db82af"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:github_app_worker_run:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0021.stdout",
+            "bytes": 113,
+            "sha256": "df166913f47ff1f04202cae9b31df67ed272d692d99a0023a8117dc3029100dd"
+          },
+          {
+            "name": "0021.stderr",
+            "bytes": 382,
+            "sha256": "6d8afd0f735dd9b20d93c78b7745826e823221ee7466e5eb2f057a955b0bcc42"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:graph:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0022.stdout",
+            "bytes": 189,
+            "sha256": "8f05a031e72d82427d9cf197d76edffa9ad87dc2656ff3212906207b93db505b"
+          },
+          {
+            "name": "0022.stderr",
+            "bytes": 350,
+            "sha256": "b0f909766296ee910949ebf203abbfa8082b51a866fc2796260db53bef066197"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:graph_review_adversarial:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0023.stdout",
+            "bytes": 434,
+            "sha256": "f8ad9997a1ea214e24bbbdb7d9469d5b38f223e474436b38aaa5b4a19e8b9c6a"
+          },
+          {
+            "name": "0023.stderr",
+            "bytes": 388,
+            "sha256": "f4d9bd2ade30ea653ff59b145e37f541403cc5d751458041551a7d5951f585ee"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:graph_view:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0024.stdout",
+            "bytes": 1005,
+            "sha256": "4b0fa86b4a5aac698175955692b7165415305656b0e9b76aa93a074db4589c26"
+          },
+          {
+            "name": "0024.stderr",
+            "bytes": 360,
+            "sha256": "3cac26084b6df4141493d5720d4cba52c2ab9b7cb065c22b504b980af2136753"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:host_cli:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0025.stdout",
+            "bytes": 284,
+            "sha256": "3debf46fd6c46c5114a114f868b7eb3de7c1568ce6005debe86414caacffddc9"
+          },
+          {
+            "name": "0025.stderr",
+            "bytes": 356,
+            "sha256": "3bf75021e20444aeb11b6a98b7680bb45519b271e4873fd270727e54d3ff4f52"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:ledger_admission_review:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0026.stdout",
+            "bytes": 214,
+            "sha256": "457af8dfd8bf2ab0ede2d4fc06a20d79fc676bd234817a071b776e92a296ca0c"
+          },
+          {
+            "name": "0026.stderr",
+            "bytes": 386,
+            "sha256": "b101e5ef9265d980574fc9b67de7580d0598ef045b2922d471b3e00e84c59293"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:lsp_action_resolve:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0027.stdout",
+            "bytes": 787,
+            "sha256": "edde67f78f9622e777eb0d64d9056d52dc0a8cfb0156b2c76686b4fb4fe1f806"
+          },
+          {
+            "name": "0027.stderr",
+            "bytes": 376,
+            "sha256": "47e909f507c3ea523166db397b3e3659d42d027becb1a28d3e21177b894f553a"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:manifest_graph:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0028.stdout",
+            "bytes": 699,
+            "sha256": "cef2bf8702b258729d36609b1cfa38c988be53a3bfcf0774126ee39744a0d00f"
+          },
+          {
+            "name": "0028.stderr",
+            "bytes": 368,
+            "sha256": "089d4661ea2f4af897f78afcfb6c30f1bf58371c16cfbd7b3cefade2abba66e3"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:meaning_archive_primitives:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0029.stdout",
+            "bytes": 1002,
+            "sha256": "ded254111697cba02db2cfe948b711ef1347a6c536b25ca857038c9f56dea109"
+          },
+          {
+            "name": "0029.stderr",
+            "bytes": 392,
+            "sha256": "12e355b55971a097b08c460b3add5e96d3f8730eb8e94ff4d63024b466e9884f"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:monorepo_profiles:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0030.stdout",
+            "bytes": 1138,
+            "sha256": "50d30f09e6ed5986c2994dc4fe6a5de0fe2c63b6e831cd637b19a1d75d6e74f7"
+          },
+          {
+            "name": "0030.stderr",
+            "bytes": 374,
+            "sha256": "aa5b9d41023e149e2498e729ceaefd971267cc56ed9110f5d0350a8214ec987e"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:neo4j_publish:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0031.stdout",
+            "bytes": 767,
+            "sha256": "e3a264a04c395d2c1b4724018e1e410ec4a436a9e4c44bd571b7e878f4775713"
+          },
+          {
+            "name": "0031.stderr",
+            "bytes": 366,
+            "sha256": "06bb942ae59b3b5a9714dbb2f103c744a53c5986cf5340ad5ea41ebfb1bed8e7"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:plan_integrity:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0032.stdout",
+            "bytes": 1174,
+            "sha256": "3edff7e9a669ed8b56669c7d64cc06881d217dbcc95a5fee1a3ddddb7d80930f"
+          },
+          {
+            "name": "0032.stderr",
+            "bytes": 368,
+            "sha256": "53c4e38331f7136d0dc94ba8ebff23918aa10f369a8ce8f499b3f30ef0547fb5"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:projects:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0033.stdout",
+            "bytes": 727,
+            "sha256": "5e3d266092f2239bd3937b6a83f9a6fa2499c8b1cbb63c9022dd130b6429a221"
+          },
+          {
+            "name": "0033.stderr",
+            "bytes": 356,
+            "sha256": "308e501a8698a7a964ec870ab69153b0fda46ef63289c3b1d85ef620518041df"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:propagated_delete_live:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0034.stdout",
+            "bytes": 473,
+            "sha256": "7a2e608b9c13cb00207f72be615d696402ddd2e0eccc951ee21f9958a5a788eb"
+          },
+          {
+            "name": "0034.stderr",
+            "bytes": 384,
+            "sha256": "20a7ccb0041ac10095175dd56d1066d5bc1c86bd5599fc8779888d970d58e575"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:provider_batches_review:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0035.stdout",
+            "bytes": 964,
+            "sha256": "1bbed9d10bcbc559f8fc26c4d7c67e6a00cf2ab7b82ccc641fbd37c356b034c5"
+          },
+          {
+            "name": "0035.stderr",
+            "bytes": 386,
+            "sha256": "337505098d398607b1a903996e5f8d6227cd30d20f2bcfa36e1e1dbb56c32c24"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:query_parity:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0036.stdout",
+            "bytes": 1059,
+            "sha256": "b5b335b5bd6adce52509a08f448bd80a38739b48deaf17c2bbe61673a395ae75"
+          },
+          {
+            "name": "0036.stderr",
+            "bytes": 364,
+            "sha256": "7f6843486a141f406227c2788b56da30c216fe21b1aacf75da4ef9f7f6a359a3"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:read_only_dependencies:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0037.stdout",
+            "bytes": 1094,
+            "sha256": "b74c969780bfcb67bf11de0136372f44b6ce1fbdf9cf0e736ffdc5930e717652"
+          },
+          {
+            "name": "0037.stderr",
+            "bytes": 384,
+            "sha256": "f5179036b2e524959a9c1a1ea80fb0ab545e2afa017b7bf19b99509aacbedb70"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:server_autoselection:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0038.stdout",
+            "bytes": 1033,
+            "sha256": "5d9f5d4a90991c532f6813b4873b45d6b3ab9bf5ccc888517d439a6ff0610baa"
+          },
+          {
+            "name": "0038.stderr",
+            "bytes": 380,
+            "sha256": "ea67508f45f87e56bdb4d635d67da48d9d5c2127e5e25589cec0917190123c92"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:server_selection:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0039.stdout",
+            "bytes": 1102,
+            "sha256": "98a12d2d39b2294aaf7cffcc420cb478ca479871c8e8f8a8c98da90f1c8ef213"
+          },
+          {
+            "name": "0039.stderr",
+            "bytes": 372,
+            "sha256": "db54806251b9d8bdcb906c91d38dc14308ded296d770092ca5c17d8d09840a9e"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:session_dashboard:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0040.stdout",
+            "bytes": 1213,
+            "sha256": "4758c93835fbaba1c539a461db996c02c6b37ab8f33f298ca653bd05e76f5c20"
+          },
+          {
+            "name": "0040.stderr",
+            "bytes": 374,
+            "sha256": "92585280930320567e2cd221fdb731f184ad77e30ec10d13bbde78ec8a0d19cb"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:session_dashboard_management:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0041.stdout",
+            "bytes": 1980,
+            "sha256": "db3849940659f45b0b536641b77eeca459c9476fe6762acfe8c14f2bae12d114"
+          },
+          {
+            "name": "0041.stderr",
+            "bytes": 396,
+            "sha256": "faab009ddf4b68ac8b1ef8d7eac8181758a0f7c5b262b3e0f3f94d32439e186d"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:session_mcp:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0042.stdout",
+            "bytes": 359,
+            "sha256": "5cd4a4b21418a9d5232ef3cdcb65a0ac7029e0e4f1f89358f66e8d87c57f0022"
+          },
+          {
+            "name": "0042.stderr",
+            "bytes": 362,
+            "sha256": "a281eccc26a9cb06e025a117f23444aa3afc352ab00ed001194ee32a6a7f68be"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:session_review:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0043.stdout",
+            "bytes": 167,
+            "sha256": "f7a82097205573b4168056ab7769c13f6f5ef7f65514c8b262bffef52e5b44e5"
+          },
+          {
+            "name": "0043.stderr",
+            "bytes": 368,
+            "sha256": "9e51c72528965b8a76155dd12269ef484cd0581671b49d256c4a9503b27db70d"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:skill_takeaways_contract_review:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0044.stdout",
+            "bytes": 707,
+            "sha256": "35f7d27d7f761563b129f27454269e9cb203d54b684bb475366cdbab0c3a717f"
+          },
+          {
+            "name": "0044.stderr",
+            "bytes": 402,
+            "sha256": "ffd3fd7a077d3dae112e436abae9149a42ff79da9580e36e1c30f0d22af4dc80"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:source_exclusions:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0045.stdout",
+            "bytes": 847,
+            "sha256": "aa3ed9cbeb4f4458eadf16daf5669aa8d151c6dd97e4697ffbf5831b6a3a5aef"
+          },
+          {
+            "name": "0045.stderr",
+            "bytes": 374,
+            "sha256": "60d371be13a38a0dd290ba9f3b5eed47d3bf2bb819eedc231417eee2769dc870"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:symbol_info_budget:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0046.stdout",
+            "bytes": 741,
+            "sha256": "c80a1394b78f16e559ab37c3827ba4b4c741bf7dd385a936c5be04d9a7e99d87"
+          },
+          {
+            "name": "0046.stderr",
+            "bytes": 376,
+            "sha256": "4f4a78aedc9f616fb1d87acbf0bee8d607dc2fbe82c93fa3e68bc37256ad3152"
+          }
+        ]
+      },
+      {
+        "group": "yoke-code-intelligence:test:tool_usage:test",
+        "exitCode": 0,
+        "logs": [
+          {
+            "name": "0047.stdout",
+            "bytes": 1198,
+            "sha256": "3704e8c474d5366313582a50630eabfb59e8a8a90e110d859d206cb5822cfd59"
+          },
+          {
+            "name": "0047.stderr",
+            "bytes": 360,
+            "sha256": "531e29866224ba867bd864e0e56e870beed7c6ad4737b2ed7a3f004767061920"
+          }
+        ]
+      }
+    ],
+    "fullInventoryOrPlatformAccepted": false
+  },
+  "subsequentSourceQualified": false,
+  "fullWindowsOrReleaseAccepted": false
+}

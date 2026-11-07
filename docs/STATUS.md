@@ -1,5 +1,658 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Required startup notes: macOS worker-limit repair (2026-11-01)
+
+PR #34's original `f165514611de6faf91c1a42f199e830c93c0f0ab` macOS shards
+0, 1, 2, 3, 4, 6 and 7 fail across twelve complete Cargo targets. The retained
+text artifacts from Rust core run `41254545030` show fixed 256 MiB address-space
+limit installation refusing with `EINVAL`, in both PDF and template workers;
+the new required-note CLI/stdio cases reach that same template boundary.
+No review comments were present when the repair was diagnosed.
+
+The existing PR #31 worker repair is reused here: macOS observes its actual
+virtual baseline, installs a bounded growth allowance without raising inherited
+limits, verifies the kernel ceiling and reports separate policy metadata.
+See [the memory contract](../native/docs/macos-worker-memory.md) for the limits
+of this policy, including reuse of existing mappings. Windows/Linux memory
+policies and required-note authority remain separate. No tests are skipped or
+CI coverage reduced. Exact-head hosted macOS enforcement and full shard
+qualification remain pending; Windows results cannot substitute for them.
+
+Local Windows validation of repair `98fc11f5b7`: typecheck passes; npm tests
+have 266 passes, three existing skips and no failures. All 381 format roots
+and targeted Clippy with `-D warnings` pass. Eight required-note units, two
+memory-budget units and 110 integration cases across twelve complete targets
+pass, including all fourteen required-note cases. The separate media target
+has twelve passes and one failure creating its symlink fixture because this
+account lacks Windows privilege 1314; the fixture is unchanged and not skipped.
+The real PDF extraction case passes. No local macOS execution is claimed.
+
+The later macOS shard 5 at `bbcfc363a7` (run `41302558796`, job
+`124836351746`) exposes two separate HTTP fixture races. Owned diagnostic peers
+now restore blocking mode after nonblocking accept and retain peer error detail.
+The queued-revocation case observes invalidation, then independently revokes the
+busy principal instead of waiting for competing request deadlines. Production
+HTTP budgets and refusal assertions stay unchanged. Both complete local Windows
+HTTP targets pass (28 tests, no skips), as do fresh typecheck, npm (266 passes,
+three existing skips), targeted formatting and whitespace checks. Exact-head
+macOS qualification of these fixture changes remains pending.
+
+At `60f3c6ee03`, both push run `41333494444` and PR run `41333500446`
+retain the same six failing targets across macOS shards 0, 1, 3, 4 and 6.
+Template discovery and cross-process PDF/claim comparisons encounter different
+valid VM observations. Meaning-provider graph loads also compare a fresh
+extraction's measurements against the original saved input, causing
+`mixed_view_input_invalid`. The aggregate correctly refuses incomplete shards;
+their source revisions agree within each run.
+
+Replay now validates the closed macOS memory records independently and permits
+only the baseline and matching inner/outer ceiling measurements to differ.
+All source, quote, warning and policy fields still compare exactly. Fresh claim
+validation runs before the original saved input receipt is restored in the
+reconstructed graph, whose complete bytes must still match its saved artifact.
+Cross-process CLI fixtures validate both memory reports before comparing their
+remaining fields. Source permissions, worker limits and aggregate admission are
+unchanged. Current macOS execution remains a hosted qualification gate.
+
+Local Windows validation of this follow-up passes: two new synthetic replay
+regressions (including forged policy/source changes and tighter valid ceilings),
+55 tests across all six affected complete integration targets, targeted Clippy
+with `-D warnings`, typecheck and npm (266 passes, three existing skips).
+The 381 format roots and final touched-file formatting/whitespace checks pass.
+No failed target is skipped, no prior artifact is rewritten and no hosted
+macOS success is inferred from these Windows results.
+
+macOS shard 5 at `f5ff765` (run `41812741702`, job `126515779322`)
+subsequently fails the real stalled-query HTTP deadline case: zero reply bytes
+and EOF at about 1823 ms under a configured 1800 ms physical budget. The fixed
+100 ms expiry-response reserve is insufficient. An owned TCP regression that
+resumes 150 ms after work expiry reproduces the failed response on Windows;
+the independent expired/cancelled-budget case still refuses late writes.
+
+The reserve now uses a quarter of the original budget, clamped to 100–500 ms.
+The total physical deadline and cancellation remain unchanged; the 1800 ms
+case leaves 450 ms for the bounded refusal. No error or TLS shutdown gets a
+new allowance. Delivery under arbitrary scheduling pauses remains best effort
+within that physical ceiling, as documented in the HTTP contract. Fresh hosted
+macOS qualification remains pending.
+
+Local Windows checks pass: both deadline regressions after the reproduced RED,
+all 20 HTTP server cases, three CLI cases with one existing credential-manager
+ignore, targeted Clippy with `-D warnings`, typecheck, npm (266 passes and three
+existing skips), all 381 format roots and whitespace checks. No test or total
+physical timeout is relaxed.
+
+## Hosted inventory repair and explicit CI regression selection (2026-10-31)
+
+Exact source `6989862daeee8f00592e2b53f60376b584ea3d37` now completes the
+[combined VSIX and real Rust host job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41243681181/job/124662716634).
+Independent audit of text artifact `13058973373` checks all 33 members, all
+1,847 selected source hashes against exact Git or explicit Windows CRLF forms,
+the fresh successful release producer and both explicit/bundled Rust host modes.
+The four phase receipts require natural zero-exit empty process trees and closed
+handles. Original unsaved-source, executable-selection, protected-buffer and
+saved-source assertions pass in both modes on VS Code 1.143.1. The retained
+TypeScript runtime is bundled and byte-checked by the hosted producer; its
+extension mode is not executed. No compiled payload is opened locally.
+Receipt SHA-256: `1c64d0f134ea35896406c321b509db7d8c3079417f760283c17c2857313c3e27`.
+This is source-specific host evidence; the successful run does not prove the
+removed-leaf race occurred, and the original `0e17b87a` failure remains below.
+
+The eleven pure inventory regression cases were missing from the launcher CI
+job's explicit unittest selection. That gate now selects them alongside the
+original admission cases, before the actual kernel probe, within its unchanged
+one-minute step. All 47 local Python launcher/inventory/host/source-inventory
+contracts pass, including those eleven cases. Fresh local typecheck and npm tests
+pass: 266 passed, zero failed, three original skips (269 total). These checks
+run no Windows controller or native image. Hosted execution of the new CI
+selection remains pending; prior host evidence is not reassigned to this stage.
+See the [source-specific receipt](validation/vscode-inventory-2026-10-31.json).
+
+Full R4/R1-R9, backend/current-upstream, current browser/Windows, main and release
+acceptance remain open. Linux/macOS runtime certification stays deferred.
+
+## Source-specific path guards and Windows host evidence (2026-10-31)
+
+At `0e17b87a23f630752e2db8a61995a87ed36371fe`, all eight named Windows
+partitions have 379 complete target groups, 3,982 passes, zero failures,
+53 original ignores and no measured or filtered cases. All
+twelve public source-claim cases pass, including the three new direction,
+parallel-evidence and whole-output-refusal guards. The library has 874 passes
+and seven original ignores; its new deterministic post-first-route cancellation
+case passes. The thirteen selected-query and eleven selected-View analysis
+cases also pass. These target totals are included in the aggregate, never added
+twice. Source/text receipt SHA-256:
+`86d741f376519a5bf5945d3586e79da014d58c7350bc6368c6b788ec3c262270`.
+It verifies 1,182 source pins against exact Git or explicit Windows CRLF forms,
+independently derives 379 targets/weights and checks every exact partition/log.
+All eight source and target inventory hashes agree; each target occurs once.
+Original artifacts: [run 41239700108](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41239700108).
+
+The same `0e17b87a` source's new
+[combined VSIX job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41239700091/job/124650949540)
+fails during explicit-host monitoring with `output_inventory_missing_entry`.
+Its receipt has no natural root-exit proof, reports forced cleanup to zero active
+processes, and correctly remains incomplete. The editor had started, but no
+extension-host assertion result was produced. The closed 23-text-member
+artifact is `13057059008`, ZIP SHA-256
+`53270304f631736c7eb44263b132b6498d92d2591ad08403aa737d9239d684f6`.
+The inventory enumerates names before checking file sizes; a listed leaf can
+disappear while the owned editor is running. The follow-up uses an explicit
+live-only removed-leaf mode while retaining charged entry counts and strict
+settled/final scans. No fixed limit, Job admission or success receipt is relaxed.
+Eleven authored pure inventory tests and a fresh actual Windows host run still
+require hosted execution. This is a repair candidate, not successful VSIX proof.
+
+Separately, the prior exact `08e6acddb889e0d6567e68ac65d56a93760f2274`
+[Windows combined host job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41234224148/job/124638968950)
+completes both explicit and bundled Rust VS Code modes, actual TSGo
+7.0.0-dev.20260707.2 hover/definition/references and four real owned Job lifecycle
+scenarios. The source and built-input maps remain separately bound.
+VSIX receipt: `d2618abc8081a1f2e2e552c045e33b09f48529f9fb16d4d64b19a63d6f534f89`.
+TSGo/Job receipt: `faa5572bffd8722aaf3d9c1c06afaad7d5ce1a5d0d78a662310e281b4999e0af`.
+Retained TypeScript bytes are checked in the package; TypeScript extension-host
+mode is not executed and transitive vendor execution is not attested.
+
+That same prior `08e6acdd`
+[Windows native aggregate](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41234224060/job/124644755730)
+completes release build/input binding/upload, two named actual Rust Analyzer
+cases, original history and five installed Edge profiles. Independent text
+audit checks 162 CLI outcomes and 126 exact archived-record readbacks.
+All 30 original desktop/mobile PNG/DOM pairs were hash-checked and actually
+viewed by the parent agent. Pending recovery preserves the draft and disables
+review/save; a fresh post-recovery save succeeds. Tool statistics show stale
+reset refusal and a fresh reset to zero. No visible correction is required in
+those captured states. Aggregate receipt:
+`3ae7453af71a51d997a9d3990cce985bda1a5fbcfcce72022aab7a2f59a28614`.
+Human, motion, visible desktop-shell and release-acceptance claims remain false.
+The compiled release ZIP was not read locally.
+
+These are named source/target proofs. Prior host/browser evidence does not
+qualify `0e17b87a` or later source. Full R4, R1-R9, backend, current-upstream,
+Windows, main and release acceptance remain open. Linux/macOS runtime
+certification stays deferred; original failures and unchanged limits remain.
+The older sections below retain their historical checkpoint status.
+
+## Source-claim admission: Windows default-profile evidence (2026-10-31)
+
+Exact source [08e6acddb889e0d6567e68ac65d56a93760f2274](https://github.com/HECer/Yoke-CodeIntelligence/commit/08e6acddb889e0d6567e68ac65d56a93760f2274)
+passes all eight default Windows Cargo target partitions: **379 complete target
+groups, 3,978 observed test passes, zero failures, 53 existing ignored cases,
+zero measured or filtered cases**. The independent text-artifact audit checks
+all 1,182 selected source hashes against exact Git bytes or the permitted
+Windows checkout form (42 exact Git files and 1,140 CRLF files), independently
+derives all 379 targets and weights, and verifies each partition and raw log.
+All eight source/target inventories agree and every target is covered once.
+Receipt SHA-256:
+`fd883a6d643c47d703f257e5904b9ef6ad697a784a403d44c391ea13d4dcad8e`.
+Original artifacts remain in [Rust core run 41234224060](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41234224060).
+This source map covers the declared selected inputs; it does not assert every
+possible build input or certify every backend.
+
+The Windows library has 873 passes, zero failures and seven original ignores.
+Its four new source-claim units pass, including the actual Windows test that
+denies writes, leaf renames and parent renames while name pins are held, then
+successfully writes and rereads after release. The bounded JSON grammar,
+storeless original/corrupt-input replay and exact integer/float comparison
+units also pass. These cases are included in the totals above. The nine public
+source-claim cases pass on Windows, Linux and macOS, including the paired
+weakest-hop-position control and real 256/257-route counterexample. The
+original Windows/Linux parent RED remains separately recorded. Windows and
+Linux all-target Clippy with `-D warnings` and the Windows format roots pass.
+
+The selected policy retains original numeric tokens, directed parallel
+observations, evidence and captured source bytes. Declarations remain
+unverified source claims. Host admission, immutable View selection and the
+existing ten-tool Graphify transport do not establish Graphify node-link file
+interoperability or full current upstream equivalence.
+
+The follow-up adds three public path/direction/provenance/output guard
+cases and a deterministic first-route cancellation unit. Those additional
+cases are outside this qualified source and still unrun at this checkpoint. Matching current
+Windows VSIX, vendor-tool and browser/release evidence is still being
+qualified. Full R4, R1-R9, backend, main and release acceptance remain open.
+Linux/macOS runtime certification remains deferred; their original separate
+resource-limit and HTTP failures are preserved. The earlier candidate sections
+below retain their historical source-specific status.
+
+## Distinct-node shortest-path prefix candidate (2026-10-31)
+
+The selected `weakest_source_categories_v1` candidate now ranks the first 256
+distinct complete shortest node paths and discovers a 257th only to report
+the cap. BFS first-discovery predecessor lists and backward enumeration make
+the prefix deterministic, including multilevel reconvergence. Parallel claims
+do not increase node-path counts; every original hop observation/evidence
+remains retained, and the weakest original copy affects that hop. The chosen
+route and depth-bounded stack avoid materializing an exponential path set. Absolute
+deadlines, max hops, source admission and whole-output refusal remain. Omitted
+and explicit legacy policy keep their original route and response shape.
+
+At test-first `2037686c`, both new public 256/257 fixtures reach the intended
+missing-count assertion on Linux and Windows after verifying all admitted
+branches/calls: eleven old cases pass, two fail at line 792 (`None` vs256), no
+ignores/filters. Receipt
+`91ccc39c1554b13bf0cc6e61707a08fe2a4b12f242a002eac5374cbf7676468c`
+checks all 1,176 source hashes against Git, independently derives all 378
+targets for each platform, and checks exact partitions and every text log
+for 97 whole target executions. The same source's
+whole Linux library has 565 passes/three intended route-identity failures/six
+original ignores/no filters; all seven old policy units pass. The new pure
+fixtures choose an excluded 257th route rather than the required prefix route.
+Receipt `2f3c7ff1105778992b6589c90ead7540987c8261b97637c26fc7d58f033b09f4`
+verifies all 48 groups and binds the public RED. Later new public provenance,
+cap and replay assertions are not exercised by those failing runs.
+
+The producer is now changed, with two additional authored regressions for
+self/unreachable/max-hop/cyclic/reverse routes and expired/pre-selection
+cancelled requests. Original ten policy units and thirteen public bodies are retained.
+Fresh native GREEN for this candidate remains pending. Numeric source-claim
+admission/replay, contradictory ADMITTED claims, full current CLI/MCP and the
+original wider R1-R9/backend/upstream/Windows/main/release gates stay open.
+
+Earlier `9b429f4d` hop-only runtime proofs remain source-specific: all seven units and
+eleven public cases pass on Linux/Windows. Its explicit Rust VS Code host and
+three actual TSGo operations are separately checked; the bundled host fails
+`output_inventory_missing_entry`, with cleanup but no natural-exit/final result
+proof. Exact old-source bundled-host and unchanged-core deadline retry requests
+were accepted; fresh outcomes remain unverified. No guard was relaxed.
+See the [full contract and qualification](../native/docs/graphify-path-policy.md).
+
+## Shortest-path source-category selector candidate (2026-10-31)
+
+At `b929b7b3`, the original native counterexample fails at its intended route
+assertion on Windows: the first stronger two-hop route is returned instead of
+the expected weaker two-hop route. The complete library has 857 passes, that
+one failure, seven original ignores and no filters. Independent text-artifact
+checks bind all 1,175 selected source hashes, the exact target partition and
+raw log hashes. The candidate adds explicit `weakest_source_categories_v1`
+selection through a bounded four-state shortest-route DAG while retaining the
+omitted/default first-observation behavior. Categories are declared source
+projections, never probability or execution attestation. At corrected source
+`cf1d0671`, Ubuntu shard 4 passes all six selector units within the whole
+library target (564 passed, six original ignored, no filters), and the complete
+public adapter target passes eight cases without ignores or filters. Independent
+receipt `a514b525c3499182df4cd53f198ec9c3738389f32526250001b9ef2316feb262`
+checks all 1,176 selected raw source hashes directly against Git, the independently
+derived 378-target inventory, exact partitions and all text logs for that shard
+and two separately failed macOS shards. This is scoped selector/public-adapter
+evidence, not full Linux, Windows or macOS acceptance. Parallel-hop presentation,
+numeric claim semantics, route count/caps and full current upstream equivalence
+remain open.
+See the [selector contract and causal RED evidence](../native/docs/graphify-path-policy.md).
+
+The first implementation at `23a9d8a7` fails native compilation with `E0432`:
+the policy file is a private child of `graph_extensions`, whose existing public
+exports are `AnalysisCategory` and `SourceCategoryPolicy`. The candidate now
+imports those exports. The corrected source also passes fresh Windows paired
+compilation and exactly one credential-backed TLS case (49 filtered); that
+separate proof does not execute the selector cases. The failed original build
+provides no runtime acceptance.
+
+At `3ddf641c`, two genuine published-View cases reach the intended missing
+`pathHops` assertions on Ubuntu: eight original cases pass, the two fail, and
+none are ignored or filtered. Independent receipt
+`7d75e966ac1ae0f00b02e43aacc51342c3d114a5ebae2d144de20a6f0d0378fa`
+verifies all 95 text members, exact target partition and all 1,176 raw Git source
+hashes. The later new provenance/replay assertions are not exercised by that RED.
+The candidate now derives complete per-hop original observations and exact
+evidence for the explicit selected policy, retaining opposite stored directions
+only during explicitly undirected traversal. It serializes borrowed originals
+under the existing deadline and byte cap before constructing owned JSON.
+A further public 1,200-call fixture requires whole-request capacity refusal
+without publication or source-byte loss. Public cases compare complete original
+evidence arrays in View order; a separate explicitly synthetic rendering unit
+covers multiple references and shared-site deduplication without an admission
+claim. Fresh native GREEN for this candidate
+remains pending; numeric claim admission, contradictory-source fixtures and
+distinct-node route counting/caps remain open.
+macOS PDF resource-limit and template EINVAL failures remain recorded; no limits
+were relaxed and no tests were skipped.
+
+The earlier `cf1d0671` source independently passes all eight Windows default
+shards: 378 exact whole-target groups, 3,954 observed passes, zero failures,
+53 original ignores and no filters. All 1,176 source hashes match Git forms;
+full-shard receipt SHA256 is
+`25f307002f5d91977ce10997f07939b4373805025f614761de0f2ed3cde53af3`.
+Its separate explicit/bundled real Rust VS Code hosts, same fresh CLI, actual
+TSGo hover/definition/references and four kernel Job scenarios are independently
+checked in receipts
+`a68f33483317526870eb420531f947dddd4ca04ac30c12a6ad0d613beee8bdb4`
+and `1df6c0ac69d6924f36e87805944c4bec7f3f908944edaa2b9b960833e8035bd5`.
+Those earlier-source results do not qualify the new candidate or constitute
+full upstream, Windows/main or release acceptance.
+
+## Current-source Windows aggregate checkpoint (2026-10-31)
+
+At `002024f4`, all eight Windows default shards independently verify 378 exact
+whole-target groups, 3,947 observed passes, zero failures, 53 original ignores
+and no filtered tests. All 1,174 selected source hashes match their Git forms.
+The separate [Windows aggregate job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41194162604/job/124530752972)
+also succeeds through two selected real rust-analyzer cases, fresh release build,
+unchanged-input binding, upload, original owning-history fixtures and five browser
+profiles. Independent audits verify the original 162 CLI outcomes and 126 exact
+archived-record readbacks, all 30 original PNG/DOM pairs and the same fresh CLI
+identity. The parent agent actually viewed every original screenshot. The scoped
+aggregate receipt SHA256 is `2a5e13f7e831e9db5b24dda0d7164fe60600a49035c543aee3260e8086dcf769`.
+Compiled release artifact `13043070595` was checked as upload metadata only;
+its ZIP was not downloaded or read locally. Separate current VSIX/TSGo and Job
+lifecycle evidence is recorded in [PR30](https://github.com/HECer/Yoke-CodeIntelligence/pull/30).
+Original CI human/visual/release flags are unchanged; the agent's visual review
+is a separate fixture-scoped checkpoint. The overall Rust workflow still fails
+on macOS, whose runtime certification remains deferred. Broader upstream/backend,
+full Windows/main/release acceptance remain open; these source-specific results
+do not qualify subsequent candidates.
+
+## Fresh browser/VSIX proof and strict LSP lifecycle candidate (2026-10-31)
+
+At `45323315`, five Windows browser profiles pass independent artifact checks;
+the parent visually inspected all 30 original screenshots. Native, Serena,
+persistent Python, HTTP and statistics before/pending/after states pass the
+scoped agent visual checkpoint. The same source's combined VSIX passes both
+actual explicit/bundled Rust extension-host assertions in VS Code 1.143.1.
+The enclosing VSIX/TSGo job fails later because all three TSGo replies reject
+`params: null` on the no-parameter lifecycle. The candidate omits that member
+only for shutdown/exit and retains explicit-null custom calls, protocol ordering,
+deadlines, ownership and cleanup. Two strict native fixtures remain unrun locally.
+The older VSIX `api_error` lacks a precise exception; future refusals now record
+fixed phase/error categories without private details or admission relaxation.
+[Source-bound receipts and limits](validation/integration-2026-10-31/history-vsix-followup/README.md#fresh-browser-and-vsix-confirmation-at-45323315)
+preserve the failed overall job and original broader flags. Human/motion/visible-
+shell review, subsequent-candidate, full Windows/platform/main/release acceptance
+remain open. Local typecheck, 266 npm passes/three skips and 34 inert Python
+admission tests pass; these do not execute or qualify the new native code.
+
+## Session CLI answer-budget repair candidate (2026-10-31)
+
+The Session batch path previously ignored the global `--max-bytes` selection,
+counted only accumulated result bytes against 8 MB and printed an uncharged
+outer wrapper. The candidate now applies the selected global cap (default
+32000, allowed 1024..4000000) to every byte of the complete reply plus newline.
+Wrapper, separators and changing activation metadata are charged under the
+inherited deadline; final bounded serialization precedes stdout. A refused
+result stops subsequent operations and reports that prior effects may already
+have occurred. No batch result is persisted as a transport artifact, preserving
+ephemeral statistics and private response data. Existing request/cardinality,
+permission, source/state and non-atomic mutation rules remain.
+
+Four deterministic Rust unit tests and four actual CLI fixtures cover exact
+Unicode/escape/newline boundaries, aggregate/metadata charging, expired budgets,
+preserved successful shape, no artifact fallback and retained earlier mutation
+without a later write. An exactly full successful prefix refuses the next
+operation before invocation. Native compilation and execution remain unrun locally;
+this is an unqualified source candidate, without Windows/platform/main/release
+acceptance. Existing PR28's browser/VSIX qualification continues independently.
+
+The first hosted candidate `512d026d` fails compilation with E0423 because an
+accumulator update still refers to the removed local variable `used`.
+`2c803a93` restores accumulation of prior rows, the next comma and the admitted
+serialized value. This is a source correction awaiting fresh native compilation
+and all eight fixtures; no failed producer supplies runtime acceptance.
+
+## Corrected reset target and fresh TLS source confirmation (2026-10-31)
+
+At `53a280147efaf96f8bc2f443c28aadecce3abefe`, the actual Ubuntu shard 7
+passes all 20 `session_dashboard_management` tests, with zero failed, ignored,
+measured or filtered. This executes the corrected malformed-label/foreign-label
+refusals and all six selected statistics-management cases. The same source's
+single explicitly selected Windows credential-backed TLS case passes again
+(one passed, zero failed/ignored, 49 filtered). Independently verified text
+artifacts bind source/control bytes, log hashes, the exact shard partition and
+the TLS producer/Job lifecycle. [Receipts and scope](validation/integration-2026-10-31/history-vsix-followup/README.md#fresh-native-confirmation-at-53a28014)
+preserve these as separate, nonadditive observations. Other corrected targets,
+fresh Windows dashboard/statistics-browser/TSGo qualification and whole-source
+Windows/platform/main/release gates remain open. The automatic browser
+diagnostic was skipped because its explicit commit marker was absent; this
+documentation publication supplies the existing `[browser-evidence]` marker
+to request a separate fresh diagnostic without changing any workflow guard.
+
+## Source-specific history browser and combined VSIX evidence (2026-10-31)
+
+At `3ceb66ced10bacda9cd024d0f84a5345ea8cf80c`, four real Windows history
+browser profiles pass their automation and independent artifact checks: native,
+Serena, persistent Python and authenticated HTTP. The parent agent visually
+inspected all 24 original desktop/mobile before/pending/after PNGs. The scoped
+history visual checkpoint is accepted; human review, motion/visible-shell
+acceptance, current-head acceptance and full Windows/release acceptance remain
+open. The same source's combined VSIX also passes fresh package production and
+both actual explicit/bundled Rust extension-host assertions in VS Code 1.143.1.
+TypeScript is byte-verified as bundled content, without execution of its editor
+mode. [Source-bound receipts and limits](validation/integration-2026-10-31/history-vsix-followup/README.md)
+retain the exact run/artifact identities and original false broader flags.
+
+The separate statistics browser fails before capture because its oracle counts
+an MCP wrapper added after the actual compatibility result was measured. Its
+candidate correction counts the original payload, adds a full-wrapper negative
+case and fixed private-safe failure phases. Two native transport fixtures now
+read the existing status/data envelope correctly. The decimal fixture separates
+exact 599999 ms from the fractional value that rounds up to 600000 ms. The
+TSGo fixture uses declared `queryProject`/`ci_find` with its nested 64000-byte
+budget: `symbols.find` injects a search kind incompatible with LSP navigation.
+Production counting, dispatch, validation, deadlines and permissions are
+unchanged. Fresh native, TSGo and statistics-browser CI remain required.
+
+For these repairs, local typecheck and npm tests pass (266 passed, three skipped),
+as do 62 focused inert Python tests, Rust formatting and whitespace checks.
+The full Python run has 318 passed, one skipped and two Cargo-required failures
+because Cargo is absent from the selected PATH. No local native build or image
+read was used to bypass the existing qualification boundary.
+
+## Reset project-binding fixture correction (2026-10-31)
+
+At `3ceb66ce`, the actual Ubuntu `session_dashboard_management` target reaches
+19 passing tests and one failure: its Unicode foreign-project label expected
+HTTP 409, although the existing ASCII label validator correctly returns 400.
+The fixture now separately requires malformed `other🌍` to return 400 and valid
+foreign `other` to return 409 with `notApplied: true`. Both must preserve the
+exact statistics snapshot. Product validation and permissions are unchanged;
+the corrected fixture still requires fresh native execution.
+
+## Source-specific Windows credential TLS confirmation (2026-10-31)
+
+At `3ceb66ced10bacda9cd024d0f84a5345ea8cf80c`, the
+[Windows credential-backed TLS job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41184768572/job/124489341264)
+passes its explicitly selected existing receiver/sender recovery case using OS
+credentials and the selected CA: one passed, zero failed/ignored, 49 filtered
+out. Artifact `13036678194` has SHA-256
+`b0c175b2c6cf9b631d388ca002a34670f8b27976dfabb0190bfd9ad065731a3f`.
+Independent text-artifact checks bind the successful paired CLI/test producer,
+source revision, case/log hashes, named Job membership, natural worker/tree
+exit and cleanup. No native image was read or executed locally. This is one
+source-specific case, without whole-target, platform, VSIX or release acceptance;
+subsequent candidates retain their own fresh-source qualification gates.
+
+## Dashboard reset compilation repair candidate (2026-10-31)
+
+Hosted `b5acd974` Windows Clippy, credential-TLS and VSIX producers, plus three
+Ubuntu shards, fail at the same `E0277`: the reset's final binding check returns
+a private HTTP failure that cannot be propagated into `anyhow::Result` with
+`?`. Five digest-verified text artifacts contain the same compiler failure,
+including 143 shard group logs; these are compile failures, not executed test
+failures. The unchanged binding check now explicitly maps refusal to a fixed
+internal error. Its position after the reset, outer unconfirmed-outcome reply,
+permissions and source/state checks remain. Fresh hosted compilation and full
+runtime qualification remain required for subsequent candidates. The selected
+`3ceb66ce` Windows TLS producer above now confirms one successful paired CLI/test
+build; local native compilation remains unrun.
+
+## Real tool statistics browser CI candidate (2026-10-31)
+
+A separate guarded `tool-usage` browser variant now authors real owning Serena
+calls, desktop/mobile filter/sort and exact count checks, Cancel without a
+request, stale HTTP-409 reset refusal, and a fresh explicit reset to zero. It
+retains the original fresh-producer, Windows Job, resource, privacy, lifecycle
+and six-image admission guards; the four history variants remain independent.
+Focused inert tests pass. Actual new-source native execution and all six CI
+screenshots with visual review remain pending. This is source wiring, without
+native/browser, visible-shell, full Windows, VSIX or release acceptance.
+The local full Python suite reports 315 passed, one skipped and two failed
+Cargo-dependent checks because Cargo is absent from the selected PATH; no
+native build was attempted to bypass the current source-only qualification.
+
+## Decimal duration projection repair candidate (2026-10-31)
+
+The preceding binary-float multiplication can widen a decoded `2.007` second
+budget to 2,008 ms. Tool timeout and symbol-information policy now share checked
+decimal scaling of the canonical decoded number, yielding 2,007 ms while still
+rounding genuine fractional milliseconds upward. Existing positive/zero/null,
+600,000 ms, host-deadline and persisted integer-policy semantics remain separate.
+An independent IEEE754/Decimal reproducer confirms the old arithmetic mismatch;
+it does not execute Rust. Three shared native unit functions cover 20,000 exact
+millisecond grid inputs, exponent/subnormal/fractional/overflow/type boundaries.
+One new YAML integration fixture checks both projected policies. Those native
+fixtures remain uncompiled/unrun locally; fresh guarded native qualification is
+required. Full Windows/VSIX/main/release acceptance remains open.
+
+## Selected dashboard tool statistics candidate (2026-10-31)
+
+An explicitly selected estimator now adds a Statistics page with exact decimal
+u64 counters, BigInt totals, per-tool filtering/sorting and relative input/output
+bars. Missing/malformed data remains unavailable rather than zero. A separate,
+default-false host reset grant retains current `ci_session` steering and existing
+private HTTP/Session/project admission. Confirmed resets compare a checked
+instance revision; new counts, replay and ABA refuse without clearing. Source,
+persisted State identity and cumulative remote-attempt diagnostics are unchanged.
+The browser discards pre-management state replies and reads afresh after reset.
+Eight extracted client-model/orchestration tests pass. Native exact-counter,
+overflow and six HTTP/permission/staleness fixtures are authored but uncompiled
+and unrun locally. Owned-data desktop/mobile HTML checks are separate from native
+acceptance. Fresh guarded Windows/native/VSIX/main/release qualification and full
+upstream/default representation parity remain open.
+
+## Windows hover phase-observation candidate (2026-10-31)
+
+Completed Windows facade-options CI on `ccd7a108` passed two cases and timed out
+in the requested-hover case under its original 20-second limit. That owned LSP
+fixture can now opt into bounded, nonblocking loopback UDP observations containing
+only closed phase/method labels, worker IDs and elapsed time. The test reports
+admitted observations only after failure; missing/dropped packets prove nothing.
+Unavailable observer setup leaves the original hover invocation active and is
+reported as unavailable if that invocation fails.
+Three authored helper tests cover closed decoding, malformed/foreign/Unicode and
+oversized packets, and an empty nonblocking harvest. Five pure extracted-logic
+tests pass with fake UDP, without importing or running the LSP fixture. They
+cover opt-in, closed labels, packet/byte caps, send failures and elapsed bounds.
+Production code, existing
+assertions and deadlines are unchanged. Fresh native compilation, actual Windows
+phase evidence and runtime diagnosis remain pending; this is not a timeout fix.
+
+## Session host-option plumbing repair candidate (2026-10-31)
+
+Completed Linux Clippy on estimator source `ccd7a108` refused three Session
+helpers with eight parameters. The existing private SessionHostOptions structure
+now carries template, activation and token-count selections through ordinary,
+stdio, persistent REPL and Git Session preparation. The same host-derived values
+reach the original binding calls in the same order; no new serialized authority,
+default, permission exception or lint suppression is introduced. Existing parser
+and native runtime fixtures remain unchanged. Fresh exact-head Clippy and native
+qualification are still required; no local native build or Clippy pass is claimed.
+
+## CLI argument-group repair candidate (2026-10-31)
+
+Completed Linux and Windows CLI groups on estimator source `ccd7a108` panic
+before dispatch because the two flattened `Arguments` types derive the same Clap
+group ID. The token-count options now declare a unique group ID, retaining both
+independent required flags and all activation/host binding checks. Three authored
+native parser tests check the complete command graph, unselected defaults,
+one-sided refusal and paired global flags, and coexistence with activation flags
+without binding hosts, reading credentials or executing commands. Fresh Windows
+TLS preparation compiled that older source but its runtime consumer failed;
+neither that producer nor these source checks qualify this corrected candidate.
+The parser tests remain uncompiled/unrun locally. Exact-head native, Windows,
+VSIX, main and release acceptance remain open.
+
+## Persistent callback budget assertion repair candidate (2026-10-31)
+
+The completed Linux global-budget group passed six of seven cases; the remaining
+fixture attempted to read a Python cell's structured error as a string. It now
+checks RuntimeError/message, absent result, one callback and preserved worker
+state, followed by the original explicit answer override, whole-cell deadline
+and lost-worker assertions. The successful override additionally checks exact
+captured text. No runtime, budget, protocol or permission code changed. This
+corrected native fixture remains uncompiled/unrun locally and needs fresh hosted
+qualification; full native/Windows/VSIX/main/release acceptance remains open.
+
+## Compiler do-first admission repair candidate (2026-10-31)
+
+Completed Windows and Linux body-inlining CI each passed 30/34 integration cases;
+the same four do/CLI cases refused an unexplained identifier. The later native
+publication inventory now includes the private do-first marker already checked
+by independent source reconstruction, canonical freshness and collision gates.
+The production correction is one inventory entry; existing binding/target,
+diagnostic, exact-byte, budget, permission and writer/recovery checks remain.
+A new authored compiler-witness unit fixture covers two do frames plus missing,
+aliased/reused, foreign-target and extra-observation refusal without source or
+plan/journal writes. The original 34 integration fixtures remain unchanged.
+The correction and new fixture are uncompiled/unrun locally; fresh native CI,
+combined Windows/platform/VSIX/main/release acceptance remain pending. The
+separately observed persistent-callback global-budget fixture failure remains
+open and is not certified by this repair.
+
+## Hosted VSIX inventory and Session assertion repair candidate (2026-10-31)
+
+The completed Windows VSIX run on `6fef75be` stopped before native production:
+Git listed 19,140 paths / 1,906,519 filename bytes, including historical evidence,
+before the existing documentation filter. That exceeded the original 1MB name
+response cap. Git pathspecs now exclude those historical evidence classes before
+the same count/byte limits, preserving the exact intended selected file set.
+An inert Git-index fixture reproduces the refusal with 19,000 excluded historical
+paths and checks the selected text/Unicode inputs plus path/capacity refusals;
+the test is part of the existing hosted VSIX admission step. No producer, disk,
+payload, owned-process or package limits are raised. Two native Session fixtures
+now assert the existing status/data transport envelope and
+startupProject/projectActivationLocked metadata instead of nonexistent fields.
+Typecheck, 266 npm tests/three skips, 35 inert admission tests, Python AST and
+format checks passed; the new inventory test reproduced the prior refusal.
+Their new native runs and actual VSIX/extension-host qualification remain open.
+Four Windows compiler-inline cases also remain open after an independent
+identifier-proof refusal; no assertion or proof gate was weakened for them.
+
+## Hosted HTTP startup and catalog regression repair candidate (2026-10-31)
+
+Completed Linux CI on creation-selection source `6b5a3da4` found two failures:
+authenticated HTTP host preflight required the not-yet-created automatic choice,
+and the catalog CLI fixture still expected 77 instead of 80 declarations. The
+HTTP preflight now validates host/registration/activation authority without
+publishing a Session or selecting a backend. Authenticated initialization keeps
+the original construction and selection path; public passive inspection still
+refuses an uninitialized choice. Added fixtures check policy rejection and
+absence of preflight snapshots/Session rows/provider startup. Four inert
+declaration tests and TypeScript checks passed; the corrected native fixtures
+remain uncompiled/unrun locally and require fresh hosted results. Existing Git
+host preparation, resource/permission gates and unavailable live-certification
+claims are unchanged. Combined native/VSIX/main/release acceptance remains open.
+
+## Selected tool-usage estimator candidate (2026-10-31)
+
+Explicit global token_count_estimator now has independent native CHAR_COUNT,
+compiled o200k_base TIKTOKEN_GPT4O and host-authorized count-only Anthropic paths.
+Bounded count-only aggregates cover successful public Serena operations once;
+no source text, history root or billing assertion is retained. Remote disclosure
+requires a separate revocable host grant and OS credential, with current-state
+checks before/between requests, paired atomic counters and no fallback/retry.
+Native raw-envelope disclosures are marked nonlocal; original byte estimates
+remain explicitly scoped. Passive statistics operations avoid activation hooks;
+dashboard JSON refreshes immediately. Typecheck, 266 npm tests/three skips and
+twelve inert contract tests passed. Eighteen unit and twelve integration native
+fixtures are authored but uncompiled/unrun locally. Exact native/provider,
+Windows/resource, packaging/browser/VSIX/main/release gates remain open.
+[Methods, authority and evidence limits](../native/docs/tool-usage-estimators.md).
+
+## Creation-time language-server selection candidate (2026-10-31)
+
+An explicit global ls_priorities/host policy now chooses one of the 80 current
+backend declarations by captured filename count, positive priority and stable
+public order. Exact suffix/case/superset data is pinned; source edits do not
+silently change a retained Session choice. Explicit host/dashboard selections
+supersede detection. Every semantic entry point refuses automatic fallback to
+an unselected legacy provider; missing registrations fail without startup.
+Metadata is excluded from source-retention roots, total Session serialization
+keeps its original 64KB bound, and read-only dashboard data reports the choice.
+Typecheck passed; npm passed 266 tests with three skips; ten inert contract
+tests passed. Twelve native unit and seven integration fixtures are authored
+but uncompiled/unrun locally. Exact native/hosted qualification, real vendors,
+combined Windows/platform/browser/VSIX/main/release acceptance remain open.
+[Selection contract and evidence limits](../native/docs/server-autoselection.md).
+
 ## Explicit global tool-budget candidate (2026-10-31)
 
 Host-selected global tool_timeout and default_max_tool_answer_chars now project
@@ -5434,6 +6087,183 @@ The facade deliberately does **not** merge all upstream applications into one im
 Version 0.3 is therefore usable for continued development and bounded local workflows; calling it universally production-ready, fully externally verified or complete feature-for-feature parity with every upstream product would be inaccurate.
 
 
+## Preserved PR29 integration evidence
+
+## Detached receiver cancellation latency observation (2026-11-04)
+
+The delayed Windows shard 6 job 126514029220 / run 41812223564 tests PR merge 49dc548d0f8d8866a1513338233dc8b67172b6f9, whose tree equals head 467a3db84255c2875caf078a4d78d59b90c2ca88. Its bounded text artifact 13316675904 matches ZIP SHA-256 5ee25d26f5fc2804faabc99cade445543264025e7ea615b32c883fcd6f34f1cd; all 98 raw group-log lengths and hashes verify. Of 49 target groups, 48 pass. Only digest_receiver fails (48 passed, 1 failed, 1 existing ignored case), at the one-second assertion in detached_host_cancellation_remains_binding_after_start_returns. The receiver wait returns successfully before that assertion; the old log does not record its measured latency. The cause of the exceeded bound is not established.
+
+The existing test now records only scalar failure observations: elapsed time from before the cancel store, time from after it, the joined receiver's accepted-request count, the resulting record count, and the host cancellation flag. Join latency is captured before the SQLite observation. The exact one-second limit and zero-record assertion remain enforced; receiver, deadline, socket, permission and cleanup implementation is unchanged. This is diagnostic instrumentation, not a claim that the cancellation failure is fixed.
+
+An owned Python loopback probe of the same Windows blocking Winsock 50 ms receive option observed 54-61 ms blocked reads and 24-31 ms from the probe's flag to join. That experiment executes no Rust/project image and does not reproduce or explain the hosted failure. It supplies no native cancellation qualification.
+
+Pinned Rust 1.94.1 rustfmt and fresh npm run typecheck pass. Fresh npm test reports 266 passed, 0 failed and 3 existing skips (269 total); the 101 recorded Node inputs remain unchanged. No local Cargo/native test, controller, real vendor or editor runtime is executed or inspected. Exact new-head native qualification, the receiver latency investigation and the other recorded platform issues remain open. No deadline increase, assertion waiver, extra ignored case, force push, manual CI rerun or main/release merge is included.
+
+### PR32 source-claim integration after PR33 ? 2026-11-07
+
+PR33's implementation and its original exact-tree green hosted matrix were
+merged into the test-first PR32 branch as `9810ea16`. The actual PR31 parent
+subsequently requires reconciliation with `312763d9`; the PR API's historical
+base SHA is not the current branch ref. This normal two-parent integration keeps
+all source-claim producer/ranking/archive bytes intact and preserves both sides'
+recorded evidence rather than relabeling old runs as qualification of the merge.
+
+The parent owns the complete HTTP fixture peer lifetime, strict settled/live
+inventory API and current PDF resource-policy validation. The source-claim side
+keeps full prepared-input equality and its original adversarial replay controls;
+its replay bridge now uses the parent's policy validator and rejects changed PDF
+identity or enforcement kinds before observation normalization. Original saved
+resource receipts, source hashes, claims and accounting remain exact. No new
+execution/host authority, larger timeout, retry, ignore or weaker exit proof is
+introduced. Both launcher regression families retain their assertions against the
+same canonical `allow_disappeared` API. The automatic merge's duplicated JoinHandle
+consumption is avoided by retaining the parent's complete tested fixture source.
+
+Fresh local validation is limited to 32 inert Python admission/inventory cases
+and parsing/formatting the eight retained Rust roots. No native, real vendor,
+controller/worker/editor runtime or compiled payload was run or opened locally.
+The npm/typecheck source inputs remain identical to the inspected successful
+PR33 hosted jobs; those results are reused as exact-source evidence, not rerun.
+The combined native merge still requires its own hosted matrix. Main integration,
+human visual acceptance where applicable and production/release readiness remain
+open. Reproducible evidence: `validation/pr33-e38-green-merge-20261107/base-merge/`.
+
+### Atomic Store bootstrap candidate ? 2026-11-07
+
+PR32's `52d7a4d` Windows push aggregate admits 381/382 whole groups before
+refusing the incomplete compiler-body fixture shard. Its two Engine openings
+retain the original ten-second deadline and fail after entering SqlSetup or
+WorkspaceIdentity; exact SQL/OS scheduling causes are unrecorded. All 764 raw
+logs and 1,198 selected source hashes are independently bound to that source.
+The two failing cases do not reach their compiler assertions, and neither this
+receipt nor a later successful run alone establishes a compiler regression/fix.
+
+Store bootstrap now places its seven unchanged CREATE statements inside one
+explicit deferred SQLite transaction, instead of separate statement commits.
+WAL, foreign keys and synchronous=FULL remain configured outside the transaction.
+The original busy/progress handlers, parent/cancellation ceiling, physical locks,
+workspace-identity initialization, final deadline check and policy clearing stay
+intact. Deferred admission avoids reserving a writer before an existing-schema
+open actually needs one. Errors before commit drop the owned transaction under
+the driver's existing rollback behavior; no public schema format changes.
+
+Five new native regressions inspect real SQLite commit hooks and WAL databases:
+one bootstrap commit with all original objects/settings, refused-commit rollback
+and fresh-attempt recovery, pre-expired refusal, inherited cancellation before
+commit, and existing-schema read admission beside another uncommitted writer.
+These tests are authored and rustfmt-parsed, not compiled/executed locally. All
+existing opening-deadline/cancellation and compiler-fixture test bytes remain
+unchanged. The 101 npm/typecheck input blobs remain byte-identical to their
+prior hosted qualification; those results are reused, not rerun. New hosted
+native checks are required. This is an atomicity/commit-overhead improvement,
+not proof of the historical Windows stall's cause or a measured latency cure.
+No budget/assertion/ignore/durability/authority waiver or automatic retry is added.
+Main integration, full native acceptance and production/release readiness remain
+open. Evidence: `validation/pr32-52d-windows-aggregate-128276279500-20261107/`.
+
+SQLite transaction/WAL behavior and the pinned rusqlite rollback/commit-hook
+contracts: https://www.sqlite.org/lang_transaction.html,
+https://www.sqlite.org/wal.html,
+https://docs.rs/rusqlite/0.37.0/rusqlite/struct.Transaction.html.
+
+### Owned arXiv admission deadline handoff candidate - 2026-11-07
+
+PR30 head `6382fa4` Windows push aggregate 42338299534/128307001707
+refuses an incomplete shard: 381/382 groups pass, and the arXiv HTTP group
+has three passing cases and one failed journal-phase assertion after the original
+300ms capture refusal and strict two-second return bound have already passed.
+The journal remains pending; the original log does not retain the capture error,
+request-received state or exact failed stage. Five later browser-upload errors
+are secondary to skipped acceptance. All 764 raw logs and 1,199 selected source
+inputs are independently verified (42 exact, 1,157 explained CRLF-only).
+
+A source-visible ownership gap is corrected: successful durable admission now
+constructs the exclusively held Permit before checking its final handoff policy.
+If that same deadline or inherited cancellation refuses, the same known owner
+completes only its own not-yet-started attempt and returns the original refusal.
+There is no network request, renewed deadline, automatic recovery or retry in
+that branch. Failed journal writes/completion and abandoned permits retain the
+existing pending/corrupt refusal and exact-hash host-granted recovery contract;
+the normal three-second completion cooldown and exclusive locks remain intact.
+This closes a specific code path; the old log does not prove it caused this run.
+
+Three deterministic native journal regressions cover expired and inherited-
+cancelled handoff, cooldown preservation, and refused completion retaining exact
+recovery permissions/state. The original HTTP case keeps its 300ms/2s bounds and
+completed assertion, adding only bounded error/elapsed/request-presence/sequence
+diagnostics. Native tests are authored, not compiled or run locally. Pinned
+Rustfmt is the local parse/format check; npm/typecheck inputs remain unchanged
+and previous hosted source qualification is reused, not rerun. Fresh native CI
+is required before any next merge. Full production/release readiness remains open.
+Evidence: `validation/pr30-638-windows-128307001707-20261107/`.
+
+### Complete ingress capacity refusal followed by reset - 2026-11-07
+
+Delayed PR30 `6382fa4` macOS shard5 (42338304408/128300127202)
+contains 47/48 passing groups. github_app_ingress reports 21 passed and one
+fixture read failure: ConnectionReset/OS54 after 203 retained bytes with a 503
+status prefix and header end117, at898.125 microseconds. The original trace does
+not retain the response body or its declared length; completeness is not inferred
+from these counts. The old test never reaches its 503/750ms/no-queue assertions.
+The tested PR merge `cd65bd3` has the exact `6382fa4` source tree. This fixture is
+unchanged by the intervening arXiv candidate `6f2b379`.
+
+Only the owned test client's transport adapter changes. It preserves a reset
+only after an exact complete Content-Length-framed capacity-refusal response:
+503, the expected finite headers, accepted=false/complete=false and the exact
+capacity error, no extra/pipelined data. Partial/malformed/mismatched responses
+and every other transport error still panic. The real capacity case additionally
+requires the complete refusal profile; its original 503 assertion,750ms bound,
+empty durable queue and owned shutdown remain. Production bytes are unchanged.
+
+Three pure reader regressions cover complete EOF/reset responses, all truncated
+prefixes, malformed/duplicate/absent framing, wrong payload/status, pipelining and
+non-reset errors. They are authored, not compiled/run locally. Pinned Rustfmt
+and static diff checks are the local validation; the 101 npm/typecheck inputs
+remain unchanged and prior hosted source qualification is reused, not rerun.
+Fresh exact-head native CI and downstream production/release readiness remain
+required; no timeout, functional assertion, ignore or production close policy is
+relaxed. Evidence: `validation/pr30-638-macos5-128300127202-20261107/`.
+
+Read/error and framing contracts: https://doc.rust-lang.org/std/io/trait.Read.html#method.read_to_end,
+https://www.rfc-editor.org/rfc/rfc9112.html#section-6.3
+
+### Cross-platform test ownership follow-up - 2026-11-07
+
+PR30 `b87b3ab` has independent Windows and macOS failures. Windows push
+42344481410 has 381/382 whole groups pass, its PR counterpart42344485651
+has380/382, and macOS PR shard5 has48/49. The two Windows library failures are
+new test observations opening the exclusively locked rate journal through a
+second handle (OS33), before their handoff assertions. Those reads now use the
+still-owned handle with a bounded129-byte read and restored cursor; no unlock,
+production journal change or recovery-policy change occurs.
+
+The macOS server-selection case completes revocation/provider assertions and
+shutdown, then its late TCP-connect assertion unexpectedly succeeds. The old
+trace cannot identify the accepting listener or prove address reuse. Its test
+now requires an active service to exclude a second bind and shutdown to permit
+an exact-address rebind, retained as a guard through verification. This positively
+checks address ownership/release; no production socket/shutdown behavior changes.
+
+A separate Windows facade diagnostic request reaches the original20-second
+refusal before any line/reference filter assertion. Its cause remains open.
+The fixture now optionally uses the existing bounded loopback phase observer
+and records method/elapsed/phase data only on failure. The provider script,
+20-second policy and all filter/source assertions are unchanged. Observations
+are best-effort diagnostics, not delivery/exit or semantic acceptance proof.
+The shared observer's three existing adversarial tests are also compiled in this
+target. No native tests or provider/controller/editor runtime ran locally;
+Rustfmt/static checks are local, and prior hosted Node qualification is reused
+only for the101 unchanged input blobs. Fresh native CI and downstream production
+readiness remain pending; no manual rerun, larger deadline, ignore, weakened
+journal/assertion or executable-payload inspection is used.
+
+Evidence: `validation/pr30-b87-multi-ci-20261107/`. Platform contracts:
+https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-lockfileex,
+https://doc.rust-lang.org/std/net/struct.TcpListener.html#method.bind.
+
+## Preserved tool-usage base evidence
+
 
 ## PR22 do-first admission correction (2026-11-01)
 
@@ -5545,6 +6375,42 @@ format checks for 16 changed roots, Python AST for nine files, typecheck and
 npm 266 passed / 0 failed / 3 existing skips. These source/npm checks do not
 establish native budget, deadline, cleanup, platform or release acceptance.
 
+## PR27 HTTP preflight and corrected-base candidate (2026-11-01)
+
+The original PR27 source 6b5a3da42e72bf3e00afea8b8c441ca6b3ba120f
+fails Ubuntu shard 1 job 124431535400 (run 41165324653): 46/47 target
+groups succeed. server_autoselection records 6 passed / 1 failed, with
+language_auto_inspection_requires_initialized_selection during HTTP
+Principal::new. Artifact 13030547689 matches ZIP SHA-256
+76206bc83c711cd03afeb6ab7167426ad38598db6904026eeea4885b141c3ac6;
+all 94 raw group-log lengths/hashes verify.
+
+The candidate normally merges corrected PR26 10e5fe72 and separates internal
+host preflight from ordinary inspection/active Session creation. Preflight
+retains host, retained-state/binding, activation and deadline admission, returns
+only Result<()>, and cannot publish a new Session or initialize an automatic
+choice. Authenticated initialization retains the original active creation and
+registration checks. Ordinary inspection still refuses an uninitialized choice.
+Three added native unit fixtures cover nonpublication/noncapture/provider
+non-start and policy, deadline, authority, binding and registration refusals.
+The original seven autoselection integration cases and 80-entry declaration
+contract remain unchanged.
+
+Native compilation, Cargo tests, Clippy, the new fixtures and actual HTTP/VSIX
+execution remain unrun locally. Fresh exact-source guarded platform/HTTP
+qualification is required. The strict macOS resource issue and broader
+vendor/browser/main/release requirements remain open.
+
+Actual local candidate checks: 56 selected inert tests (54 plus 2 catalog cases)
+pass; Rust 1.94.1/edition 2024 formatting passes for 14 changed roots, preserving
+the original tracked line endings, and 11 Python AST checks pass. Typecheck
+passes; npm reports 266 pass / 0 fail / 3 existing skips, 47,241.9429 ms.
+Fourteen original feature blobs and ten inherited repair blobs are exact.
+Inert source admission selects the same 1,814 names/order as the original
+documentation postfilter: 98,586 raw filename bytes instead of 1,907,034 broad
+inventory bytes. Original raw/path/file/total and ordinary-file/hash gates remain.
+These source checks do not execute or qualify the three new native tests.
+
 ## PR26 persistent callback error fixture (2026-11-01)
 
 Windows shard 5 job 124419537088 at old merge 69086ee71b95aa76379343e3fcb130936472e497
@@ -5571,6 +6437,21 @@ Actual local fixture checks: 54 selected inert tests, the changed Rust root's
 Rust 1.94.1/edition 2024 formatting, Python worker AST parsing, staged
 whitespace and typecheck pass. npm reports 266 pass / 0 fail / 3 existing
 skips, 46887.9047 ms. These checks do not execute the native target.
+
+## PR27 inherited callback fixture correction (2026-11-01)
+
+This normal merge carries PR26 61152c5ee1 and its structured-error
+budget fixture correction. Native production and all preflight/selection
+implementation, contracts and original autoselection tests remain byte-exact
+to PR27 7bcdcf626. The corrected budget fixture is exact to the parent.
+Both prior status scopes are retained. Native budget/HTTP/platform/VSIX
+qualification remains pending; no local native execution is claimed.
+
+Actual propagation checks: 56 selected inert tests, formatting of the changed
+Rust test root, whitespace and typecheck pass. npm reports 266 pass /
+0 fail / 3 existing skips, 45499.4066 ms. Production and original
+autoselection/preflight test blobs remain exact to 7bcdcf626; new native
+budget and HTTP qualification is still pending hosted execution.
 
 
 ## PR23 Rust VSIX acceptance and TSGo request-route correction (2026-11-01)
@@ -5694,6 +6575,64 @@ original data contracts; this is not native enforcement acceptance. No local
 native, controller, vendor or editor code was executed.
 
 
+## PR27 Creation-selection candidate base refresh (2026-11-01)
+
+The creation-time language-server selection candidate normally merges Budget
+base e7232301 after its Context/Session/TSGo refresh. The full native subtree
+remains byte-exact to 33ded83e, including explicit non-editing/allowed-editing
+preflight test controls, automatic-selection admission, original deadlines,
+registration/trust and project/mode permission gates. The Language-Server and
+Budget declaration data and their original inert Python tests remain unchanged.
+
+Only the inherited CI request builder, its inert regressions and this status
+merge change. Navigation uses the established read-only queryProject/ci_find
+route without symbols.find search-kind injection. Vendor pins, host authority,
+source/reply checks, command deadlines and final lifecycle admission remain.
+All original PR27 status bytes and exact upstream status additions are retained.
+Earlier failed Meaning deadlines, old macOS resource observations and Windows
+bundled-host failures retain their source-specific scopes. Fresh merged-source
+native, creation-selection/preflight, TSGo and VSIX qualification is required;
+this base-conflict resolution is not a main or release acceptance.
+Local merge validation passes 17 inert tests: 13 TSGo regressions, two original
+budget data-contract tests and two original creation-selection data tests,
+with zero external process/network attempts. Python AST parsing, npm run
+typecheck and npm test pass (266 passed / 0 failed / 3 existing skips) on
+98 matching Node Git mode/blob/path inputs. The 80 backend declarations,
+17 answer-budget facades and existing preflight source bytes are preserved.
+These data/source checks do not establish native selection or enforcement.
+No local native, controller, vendor or editor code was executed.
+
+
+## PR28 Usage-estimator candidate base refresh (2026-11-01)
+
+The usage/token-estimator candidate normally merges corrected creation-selection
+base 6faf4686. Its original production implementation, dashboard/source-inventory
+and owned-fixture resolutions remain unchanged. The inherited preflight test
+now uses the existing explicit non-editing negative and editing-enabled positive
+controls from 33ded83e; original assertions and permission gates remain.
+
+PR28 already sent TSGo requests through read-only queryProject/ci_find. The
+merged controller keeps that route through the base's checked pure builder.
+Its existing inert orchestration regression remains, including original native
+byte/deadline checks, alongside the two added request-shape/UTF8 regressions.
+All other controller function ASTs and original test methods remain unchanged.
+Vendor pins, source/reply checks and final lifecycle admission are retained.
+
+All original PR28 status bytes and exact upstream additions remain. Prior
+source-specific runtime/VSIX/browser observations retain their original scope;
+no fresh acceptance is inferred for this merged source. Native usage/selection/
+preflight, TSGo and both real extension-host modes require new hosted evidence.
+Local merge validation passes 20 inert tests: 14 combined TSGo regressions
+and the six original Budget/selection/estimator data-contract tests, with zero
+external process/network attempts. The query orchestration runs only against
+stubbed commands and owned temporary text fixtures. Python AST parsing,
+Rust 1.94.1 formatting of the unchanged upstream preflight correction,
+npm run typecheck and npm test pass (266 passed / 0 failed / 3 existing skips)
+on 98 matching Node Git mode/blob/path inputs. No live controller, native,
+vendor or editor program was executed, and no native-image payload was read.
+These checks do not establish merged-source native or hosted acceptance.
+
+
 ## Node 24 Graphify fixture timeout observations (2026-11-01)
 
 PR24 Windows/Node24 job `124911230254` at merge
@@ -5752,6 +6691,48 @@ input files match the immediately preceding validated base set exactly, so its
 typecheck and 266-pass/three-existing-skip results are reused after byte
 comparison. No fresh Node run is claimed. Hosted/native/combined/VSIX acceptance
 of this merge remains pending; the original Python timeout cause stays open.
+
+
+## PR27 updated budget-base merge qualification (2026-11-01)
+
+The updated global-tool-budget base c8fc8573273b0a6e2eeb5794f47978a952bec5c7
+is merged into creation-selection head 6faf46861c8f41506c3410a29181b28a44dcf572.
+The sole documentation conflict retains the entire existing PR27 status document,
+including its creation-selection summary, and the complete append-only base
+updates. The inherited Graphify fixture diagnostics match the base byte for byte.
+All native selection, HTTP preflight, retention, budget and context source bytes
+remain unchanged; this merge does not alter selection or enforcement behavior.
+
+Six inert declaration checks pass for creation-time server selection, context
+options and global budgets. All 101 recorded Node-suite input files match the
+immediately preceding qualified source set exactly. Its successful typecheck
+and 266-pass/zero-failure/three-existing-skip results are reused after byte
+comparison; no fresh Node run is claimed. Exact new-head hosted/native/runtime,
+combined Windows/VSIX, real-provider and release acceptance remain pending.
+The original Python timeout cause remains unresolved. No local native,
+controller, external vendor or editor-host program was executed.
+
+
+## PR28 updated creation-selection-base merge qualification (2026-11-01)
+
+The updated creation-time selection base 03e99deb8ce3062a44b2d466ff35e19ecda3f874
+is merged into estimator head 40e8c0772892f22f4f8b7418e1614e66bd89168d.
+The single status conflict retains this PR's complete existing document and
+all append-only base status updates. The Graphify fixture diagnostics are
+inherited byte for byte. Native tree 700674c2fe4676f14283437539a822a369f4a1f3,
+including estimators, dashboard, selection, preflight and their native tests,
+is unchanged. Existing browser/runtime observations keep their original scope.
+
+Eight inert declaration checks pass for estimators, creation-time selection,
+context options and global budgets. A fresh isolated typecheck passes, and
+the fresh full Node suite reports 266 passes, zero failures and three existing
+skips (269 tests) on Node 24.21.0 with Python 3.14.7. Its 101 source inputs are
+recorded and unchanged after validation; the PR28 dashboard HTML is included.
+Owned Node/Python fixtures ran. No local native, controller, external vendor
+or editor-host program was executed, and no native/vendor/editor binary was read.
+Exact new-head hosted/native/runtime, combined Windows/VSIX, real-provider and
+release acceptance remain pending. The original hosted Python timeout cause
+remains unresolved; its original two 10-second fixture limits are unchanged.
 
 
 ## PR23 macOS shard-5 owned EOF fixture repair (2026-11-02)
@@ -5852,6 +6833,48 @@ acceptance remain pending. Inherited PDF/memory failures and the original
 hosted Python timeout cause remain unresolved with their original evidence scope.
 
 
+## PR27 updated budget-base merge qualification (2026-11-02)
+
+The updated budget base 830fbe9995c8ee6d30d640c841157e47b66b5e9a is merged
+into creation-selection head 03e99deb8ce3062a44b2d466ff35e19ecda3f874.
+The sole status conflict retains the complete existing PR27 document and new
+base suffix. The HTTP EOF test is exactly inherited base blob
+99f1a0fa29b45fb11bf0e87487a98fb57d918efb, reusing its source-format evidence.
+All creation-selection source, public data, documentation and native tests
+retain their original bytes. Production native and Node code are unchanged.
+
+Eight inert selection/budget/context/session declaration checks pass. All 101
+recorded Node-suite inputs match the qualified PR24 set byte for byte. Successful
+typecheck and 266-pass/zero-failure/three-existing-skip results are reused.
+No fresh Node or native test run is claimed. No local native, controller,
+external vendor or editor-host program or compiled payload was executed or
+inspected. Exact new-head native/macOS/combined Windows/VSIX and release
+acceptance remain pending. Inherited PDF/memory failures and the original
+hosted Python timeout cause remain unresolved with their original evidence scope.
+
+
+## PR28 updated creation-selection-base merge qualification (2026-11-02)
+
+The updated selection base b64b96431da34bef09ae59ca8e1852d618642d3e is merged
+into estimator head 1a92a1b87e855319a8be44aa2098abd90ffa9be7.
+The sole status conflict retains the complete existing PR28 document and new
+base suffix. The inherited HTTP EOF test is exactly base blob
+99f1a0fa29b45fb11bf0e87487a98fb57d918efb, reusing its source-format evidence.
+All estimator, dashboard and other original feature source retains its bytes.
+Production native and Node code are unchanged, including the PR28 dashboard HTML.
+
+Ten inert estimator/selection/budget/context/session declaration checks pass.
+All 101 recorded Node-suite inputs match the previously qualified PR28 set byte
+for byte, including its own dashboard HTML. Its successful typecheck and
+266-pass/zero-failure/three-existing-skip results are reused. This uses PR28's
+qualification, not the older PR24 set with different dashboard HTML. No fresh
+Node or native test run is claimed. No local native, controller, external vendor
+or editor-host program or compiled payload was executed or inspected.
+Exact new-head native/macOS/combined Windows/VSIX and release acceptance remain
+pending. Inherited PDF/memory failures and the original hosted Python timeout
+cause remain unresolved; historical browser/runtime evidence keeps its scope.
+
+
 ## Shared Windows LSP lifecycle and owned-monitor backport (2026-11-04)
 
 Four bounded text-only TSGo receipts from heads 45294939 (PR #23), b5b594b6 (PR #24), 830fbe99 (PR #26) and 241291aa (PR #28) record three REQUEST_FAILED results per query session: the real strict server rejects lifecycle params:null with -32602 (expected no params, got null). Their owned query roots exit naturally with status 1 and cleanup succeeds; those runs do not establish vendor acceptance.
@@ -5870,6 +6893,23 @@ Stack propagation to PR #24 (2026-11-04): the preceding shared Windows correctio
 Stack propagation to PR #25 (2026-11-04): the preceding shared Windows correction is merged with both parents, preserving the complete older-head status and complete new-base status suffix. The 101 Node inputs are byte-identical to the previously recorded qualification for this layer (pr24-base-452949-merge-20261102). The shared backport section records the fresh PR #23 Node run; no new native, vendor or editor execution is claimed for this merge. Exact new-head hosted qualification and separately diagnosed failures remain open.
 
 Stack propagation to PR #26 (2026-11-04): the preceding shared Windows correction is merged with both parents, preserving the complete older-head status and complete new-base status suffix. The 101 Node inputs are byte-identical to the previously recorded qualification for this layer (pr24-base-452949-merge-20261102). The shared backport section records the fresh PR #23 Node run; no new native, vendor or editor execution is claimed for this merge. Exact new-head hosted qualification and separately diagnosed failures remain open.
+
+Stack propagation to PR #27 (2026-11-04): the preceding shared Windows correction is merged with both parents, preserving the complete older-head status and complete new-base status suffix. The 101 Node inputs are byte-identical to the previously recorded qualification for this layer (pr24-base-452949-merge-20261102). The shared backport section records the fresh PR #23 Node run; no new native, vendor or editor execution is claimed for this merge. Exact new-head hosted qualification and separately diagnosed failures remain open.
+
+Stack propagation to PR #28 (2026-11-04): the preceding shared Windows correction is merged with both parents, preserving the complete older-head status and complete new-base status suffix. The 101 Node inputs are byte-identical to the previously recorded qualification for this layer (pr28-base-03e99-merge-20261101). The shared backport section records the fresh PR #23 Node run; no new native, vendor or editor execution is claimed for this merge. Exact new-head hosted qualification and separately diagnosed failures remain open.
+
+
+## Explorer EOF fixture endpoint correction (2026-11-04)
+
+The delayed macOS aggregate job 125360024912 / run 41363287500 tests merge da351d458152d2e2d05a59dd0437afbadbc83629, whose tree equals original head 241291aa3237adf0daff237d3fc4c533a45f711e. All eight bounded text receipts agree on source, inventory and input maps. Of 377 target groups, 365 pass; all 754 raw group-log lengths and hashes verify independently. The aggregate correctly refuses incomplete shards.
+
+One additional failure is in explorer_incomplete_headers_report_receive_progress_without_response_content: expected empty/partial-response parser panics are followed by client write-half shutdown failure, ENOTCONN (57). This fixture's older EOF coordination is replaced by the endpoint-lifetime correction already published in PR #31 at 467a3db84255c2875caf078a4d78d59b90c2ca88. Exact three-block normalization accounts for the older branch's coordination variant before matching that correction's parent bytes. The accepted fixture socket explicitly uses blocking reads under the existing timeout, consistent with the later PR #34 handshake correction. The peer validates the fixed one-byte request and retains its read half until response inspection ends; a client clone keeps unwinding from tearing down the connection prematurely.
+
+The four zero-byte, partial-header and complete-response cases, exact parser behavior, bounded scalar diagnostics, privacy canaries, socket/accept limits and peer-error checks remain enforced. Production HTTP, media, process, permission and resource-limit code is unchanged.
+
+Pinned Rust 1.94.1 rustfmt and fresh npm run typecheck pass. Fresh npm test reports 266 passed, 0 failed and 3 existing skips (269 total), Node 24.21.0 / Python 3.14.7; all 101 recorded Node inputs remain unchanged. The corrected Rust fixture is source-checked but not executed locally: no local Cargo/native, controller, real vendor or editor runtime is run or inspected. Exact new-head native qualification remains pending.
+
+The separate 43 explicitly recorded PDF SetAddressSpace errno-22 failures and the prompt-worker failures remain open on this branch. A single failed API is not established for all prompt symptoms. The shared macOS policy/replay correction in later stack layers still needs exact-source hosted qualification; this fixture patch does not establish its acceptance. No timeout increase, assertion waiver, resource-limit bypass, force push, manual CI rerun or main/release merge is included.
 
 ### PR23 Windows session-expiry fixture observations (2026-11-04)
 
@@ -5897,6 +6937,18 @@ Stack propagation to PR #26 (2026-11-04): the preceding shared Windows correctio
 - The first new local `npm test` wrapper timed out after 180 seconds; its Node child later emitted a complete 266-pass / 0-fail / 3-skip summary in 207,004.8868 ms, but the npm exit status was not captured. A second attempt with the same 180-second bound and explicit ownership of the npm parent/tree also timed out; targeted cleanup of that still-owned process tree returned 0. Preserve both logs and their failure receipts. The cause of the local slow runs is not established. Do not increase the timeout or present these attempts as green. Native and fresh new-head CI qualification remain open.
 - No local Cargo/native/vendor/controller/editor compilation or execution occurred. The merge changes no TTL, request or resource limits, authority gates, required assertions, or ignored-case policy. This resolves the source conflict without claiming a native fix. Evidence, including the source-identity comparison and retained timeout records: `validation/pr26-b663-base447-merge-20261104/`.
 
+### PR27 conflict resolution after the PR26 diagnostic merge (2026-11-04)
+
+- Merge current PR26 `0a8d44fc1a0bcc0684978cb647aa62f5348a049e` into PR27 `2ec9bcc07ef4d6d1b19239db319da72b38937c02` using ordered parents `[2ec9bcc07ef4d6d1b19239db319da72b38937c02, 0a8d44fc1a0bcc0684978cb647aa62f5348a049e]`. The common ancestor is `b663eff370f0dcac4a27ec4dcfd379af98b0c23f`. The base delta contains only STATUS and the already validated PR23 session-expiry test diagnostics. Preserve the entire PR27 STATUS preimage and exact new base suffix. Import `native/tests/mcp_http_review.rs` byte-for-byte from the base. Every other tracked entry, including all production sources and PR27 language-server selection, remains identical to the PR27 preimage.
+- Fresh Typecheck and pinned Rustfmt 1.94.1 pass (edition 2024, `skip_children=true` for the inherited test). The full set of 101 Node source inputs is byte-identical to the recorded, successfully exited PR25 validation run: 266 passed, 0 failed, 3 existing skips, 269 total; npm exit 0. Reuse that exact-source qualification; no fresh `npm test` pass is claimed. The inherited PR26 STATUS evidence retains both new local 180-second timeout attempts and distinguishes them from the previously successful qualification. The unchanged suite was not repeated again for this documentation/test-diagnostic merge.
+- No local Cargo/native/vendor/controller/editor compilation or execution occurred. TTLs, request/resource limits, authority gates, required assertions, ignored-case policy, and all language-server-selection behavior remain unchanged. Native failures and fresh new-head CI qualification remain open; this is a source-conflict resolution, not a claimed native fix. Evidence: `validation/pr27-2ec-base0a8-merge-20261104/`.
+
+### PR28 conflict resolution after the PR27 diagnostic merge (2026-11-04)
+
+- Merge current PR27 `baa48f644aa2c753e09e07d220edc00c90270ebf` into PR28 `dd05f4493ca2a9ac952f76518035185dc56fac99` using ordered parents `[dd05f4493ca2a9ac952f76518035185dc56fac99, baa48f644aa2c753e09e07d220edc00c90270ebf]`. The common ancestor is `2ec9bcc07ef4d6d1b19239db319da72b38937c02`. The base delta contains only STATUS and the already validated PR23 session-expiry test diagnostics. Preserve the complete PR28 STATUS preimage and exact new base suffix. Import `native/tests/mcp_http_review.rs` byte-for-byte from the base. All other tracked entries remain identical to the PR28 preimage, including production tool-usage/token-estimator behavior and the Explorer socket-lifetime fixture repair at `native/tests/explorer_http.rs` (blob `d34eb31459ef77bd6c78d286ea873a6800eb539c`).
+- Fresh Typecheck and pinned Rustfmt 1.94.1 pass (edition 2024, `skip_children=true` for the inherited test). All 101 Node source inputs, including PR28's dashboard, match the recorded successful PR28 Explorer-fixture validation candidate byte-for-byte. Its `fix-validation-proof.json` and log hashes verify npm exit 0, 266 passed, 0 failed, 3 existing skips, 269 total. Reuse this PR28-specific exact-source qualification without claiming a fresh `npm test` run. The manifest comes from `validation/pr28-base-03e99-merge-20261101/node-source-inputs.json`; the successful proof and logs are in `validation/pr28-241-pr-macos-aggregate-125360024912-20261104/`. PR25's qualification is inapplicable because its dashboard differs. Preserve that failed initial comparison as evidence.
+- The inherited STATUS suffix retains the separate PR26 local 180-second timeout attempts and their honest limitations. No local Cargo/native/vendor/controller/editor compilation or execution occurred. TTLs, request/resource limits, authority gates, required assertions, and ignored-case policy remain unchanged. The earlier Explorer fixture repair and all remaining native failures still need actual native CI qualification. This resolves the source conflict without claiming a native fix or a green fresh-head CI result. Evidence: `validation/pr28-dd05-basebaa-merge-20261104/`.
+
 ### PR25 macOS worker-memory and immutable replay repair (2026-11-04)
 
 - The notified source `44786f4c96baf93e143e8c053527e789904c1835` fails macOS shard 4 in run `41824999841`, job `126557355969`: bounded text artifact `13348866894` (123,588 bytes, SHA-256 `ad15846dadeeb9f0375db53b43e1329650d5bfd8bc490d506faf6cad15ceb459`) verifies 94 raw logs, 44/47 successful groups. Catalogs report 6 pass/9 fail, templates 7 pass/6 fail, and source-acquisition CLI 3 pass/1 fail. Two failures explicitly identify RLIMIT_AS installation and one PDF failure identifies SetAddressSpace at 268,435,456 bytes; 13 generic host-start errno22 errors do not identify their API.
@@ -5913,6 +6965,20 @@ Stack propagation to PR #26 (2026-11-04): the preceding shared Windows correctio
 - Fresh Typecheck and pinned Rustfmt 1.94.1 pass for all 14 inherited Rust files (edition 2024, skip_children=true). All 101 Node source inputs are byte-identical to the freshly recorded successful PR25 backport candidate: npm exit 0, 266 passed, 0 failed, 3 existing skips, 269 total. Its proof and log hashes are reverified; no fresh npm test run is claimed for this merge. Historical PR26 local timeout receipts remain retained in the preserved STATUS history.
 - No local Cargo/native/vendor/controller/editor compilation or execution occurred. The merged PR26 head still needs its own native CI qualification; supporting reference passes are not current-head acceptance. Evidence: `validation/pr26-0a8-basee8e-macos-merge-20261104/`.
 
+### PR27 merge of the shared macOS memory/replay correction (2026-11-04)
+
+- Resolve the conflict with PR26 by a normal ordered two-parent merge of PR27 `baa48f644aa2c753e09e07d220edc00c90270ebf` and current PR26 `74ac98430189f865b3d9e7378f0da1edf084be29`, with common ancestor `0a8d44fc1a0bcc0684978cb647aa62f5348a049e`. All 19 non-STATUS base paths have exact common-ancestor preimages at PR27 and inherit the base postimages byte-for-byte. Preserve the complete PR27 STATUS preimage and exact appended base suffix. All other tracked entries, including language-server-selection behavior, remain identical to PR27.
+- Inherit the macOS virtual-address growth policy, inherited-limit preservation, closed reports, immutable source/replay comparisons, adversarial cases and scoped hosted evidence unchanged from the base. The policy bounds at most 256 MiB of additional virtual address space; it does not claim an RSS/committed-memory or total-address-space cap. Linux/Windows policies, request deadlines, PDF CPU limits and ignored-case policy remain unchanged.
+- Fresh Typecheck and pinned Rustfmt 1.94.1 pass for all 14 inherited Rust files (edition 2024, skip_children=true). All 101 Node source inputs are byte-identical to the freshly recorded successful PR25 backport candidate: npm exit 0, 266 passed, 0 failed, 3 existing skips, 269 total. Reverify the proof and log hashes; no fresh npm test run is claimed for this merge. Earlier timeout evidence remains in the preserved history.
+- No local Cargo/native/vendor/controller/editor compilation or execution occurred. This merged PR27 head still needs its own native CI qualification; supporting reference passes are not current-head acceptance. Evidence: `validation/pr27-baa-base74a-macos-merge-20261104/`.
+
+### PR28 merge of the shared macOS memory/replay correction (2026-11-04)
+
+- Resolve the conflict with PR27 by a normal ordered two-parent merge of PR28 `25cc6d13e4df9dc67f273217019acb63c4faac18` and current PR27 `030df5213e37bbae06847c3e3667ac6c1447a9be`, with common ancestor `baa48f644aa2c753e09e07d220edc00c90270ebf`. All 18 non-STATUS/non-SECURITY base paths have exact common-ancestor preimages at PR28 and inherit base postimages byte-for-byte. SECURITY inherits only the exact unique memory-policy hunk, reverse-proven to preserve all original PR28 bytes including explicit remote tool-count disclosure authority. Preserve the complete PR28 STATUS preimage and exact appended base suffix. All other tracked entries, including token estimators, dashboard source and Explorer fixture blob `d34eb31459ef77bd6c78d286ea873a6800eb539c`, remain identical to PR28.
+- Inherit the macOS virtual-address growth policy, inherited-limit preservation, closed reports, immutable source/replay comparisons, adversarial cases and scoped hosted evidence unchanged from the base. The policy bounds at most 256 MiB of additional virtual address space; it does not claim an RSS/committed-memory or total-address-space cap. Linux/Windows policies, request deadlines, PDF CPU limits and ignored-case policy remain unchanged.
+- Fresh Typecheck and pinned Rustfmt 1.94.1 pass for all 14 inherited Rust files (edition 2024, skip_children=true). All 101 Node source inputs are byte-identical to the separately recorded successful PR28 Explorer-correction candidate, including the PR28-specific dashboard: npm exit 0, 266 passed, 0 failed, 3 existing skips, 269 total. Reverify the proof and log hashes; no fresh npm test run is claimed for this merge. Earlier timeout evidence remains in the preserved history.
+- No local Cargo/native/vendor/controller/editor compilation or execution occurred. This merged PR28 head still needs its own native CI qualification; supporting reference passes are not current-head acceptance. Evidence: `validation/pr28-25cc-base030-macos-merge-20261104/`.
+
 ### PR25 store-opening deadline fixture preparation (2026-11-04)
 
 - Current-head Ubuntu shard 3, run `41884163925`, job `126764021468`, checked out `92aab7c46e3be62453ac931b538d7856682bd534` (same full tree as `e8eb191e90a3caaaa2851482e8901b5de9ea7cb4`). Bounded text-only artifact `13362399652` is 110,683 bytes, SHA-256 `4f82ac2250100a41ac769a7a7518dd21e1c2fa4e5fff1511ec85af777e92c2b3`; all 94 group logs were verified. 46/47 complete target groups passed. The only failing target was `store_open_deadline` (9 passed, 1 failed, 0 ignored), at the first 500-ms opening unwrap in `successful_open_does_not_leave_its_setup_deadline_on_later_operations`, before the 550-ms expiry wait or post-opening assertions. No internal opening phase or fresh-schema elapsed duration was recorded, so do not attribute the timeout to a specific SQLite/OS operation.
@@ -5926,6 +6992,20 @@ Stack propagation to PR #26 (2026-11-04): the preceding shared Windows correctio
 - Inherit only the existing() schema-preparation fixture correction. The separate connection still uses the original 500-ms opening budget, waits the original 550 ms and retains the exact record/get assertions. No production behavior, timeout, retry, skip or assertion is changed. Original fresh-creation/cancellation/raw-SQL cleanup coverage remains intact. The initial failure is retained, not treated as a pass.
 - Fresh Typecheck and pinned Rustfmt 1.94.1 pass for the one inherited Rust file (edition 2024, skip_children=true). All 101 Node input files are byte-identical to the previously recorded successful PR25 qualification: npm exit 0, 266 passed, 0 failed, 3 existing skips, 269 total. Reverify its proof and log hashes; no fresh npm test run is claimed. The separate hosted PR26 Windows Node24 Python-import timeout remains unresolved; historical Node qualification does not waive it or establish current-head hosted acceptance.
 - No local Cargo/native/vendor/controller/editor compilation or execution occurred. This merged PR26 head still requires its own hosted native and full-PR CI qualification. Evidence: `validation/pr26-74ac-based3f-fixture-merge-20261104/`.
+
+### PR27 merge of the store-opening fixture preparation correction (2026-11-04)
+
+- Resolve the conflict with PR26 by a normal ordered two-parent merge of PR27 `030df5213e37bbae06847c3e3667ac6c1447a9be` and current PR26 `526f19046ef68b691e3088629c97dc3f902409ff`, with common ancestor `74ac98430189f865b3d9e7378f0da1edf084be29`. The only non-STATUS base change is `native/tests/store_open_deadline.rs`: its PR27 preimage matches the common ancestor, and its postimage is inherited byte-for-byte. Preserve the complete PR27 STATUS byte prefix and exact appended base suffix. Every other tracked entry, including language-server selection, global tool budgets, Graphify fixture instrumentation and the macOS memory/replay policy, remains identical to PR27.
+- Inherit only the existing() schema-preparation fixture correction. The separate connection still uses the original 500-ms opening budget, waits the original 550 ms and retains the exact record/get assertions. No production behavior, timeout, retry, skip or assertion is changed. Original fresh-creation/cancellation/raw-SQL cleanup coverage remains intact; the original failure is retained, not counted as a pass.
+- Fresh Typecheck and pinned Rustfmt 1.94.1 pass for the one inherited Rust file (edition 2024, skip_children=true). All 101 Node input files are byte-identical to the previously recorded successful PR25 qualification (passing postimage e8eb191, candidate 44786f4): npm exit 0, 266 passed, 0 failed, 3 existing skips, 269 total. Reverify the proof and log hashes; no fresh npm test run is claimed. The separately documented hosted PR26 Windows Node24 Python-import timeout in the retained base history remains unresolved; historical Node success does not waive it or establish new-head hosted acceptance.
+- No local Cargo/native/vendor/controller/editor compilation or execution occurred. This merged PR27 head still requires its own hosted native and full-PR CI qualification. Evidence: `validation/pr27-030-base526-fixture-merge-20261104/`.
+
+### PR28 merge of the store-opening fixture preparation correction (2026-11-04)
+
+- Resolve the conflict with PR27 by a normal ordered two-parent merge of PR28 `0d80b8ecc81f70fed6c73779fa9a14ec26375188` and current PR27 `a9077348652ec1e944b8d328b7087a162b423d2f`, with common ancestor `030df5213e37bbae06847c3e3667ac6c1447a9be`. The only non-STATUS base change is `native/tests/store_open_deadline.rs`: its PR28 preimage matches the common ancestor, and its postimage is inherited byte-for-byte. Preserve the complete PR28 STATUS byte prefix and exact appended base suffix. Every other tracked entry remains identical to PR28, including token estimators, explicit disclosure authority in SECURITY, its distinct dashboard, Explorer fixture blob `d34eb31459ef77bd6c78d286ea873a6800eb539c`, language-server selection, global tool budgets and all production code.
+- Inherit only the existing() schema-preparation fixture correction. The separate connection retains its original 500-ms opening budget, 550-ms wait and exact record/get assertions. No timeout, retry, skip, assertion or production behavior is changed. The original failure remains evidence; original fresh-creation/cancellation/raw-SQL cleanup coverage stays intact.
+- Fresh Typecheck and pinned Rustfmt 1.94.1 pass for the inherited Rust file (edition 2024, skip_children=true). All 101 Node input files, including PR28's distinct dashboard, are byte-identical to its own previously recorded successful Explorer-correction candidate: npm exit 0, 266 passed, 0 failed, 3 existing skips, 269 total. Reverify the original manifest, all qualified candidate bytes, proof and command-log hashes; no fresh npm test run is claimed. The separate hosted PR26 Windows Node24 import timeout retained in base history is not waived by these historical results.
+- No local Cargo/native/vendor/controller/editor compilation or execution occurred. The merged PR28 head still requires its own hosted native and full-PR CI qualification. Evidence: `validation/pr28-0d80-basea907-fixture-merge-20261104/`.
 
 ### PR24 qualified macOS memory/replay correction (2026-11-04)
 
@@ -5947,6 +7027,18 @@ Stack propagation to PR #26 (2026-11-04): the preceding shared Windows correctio
 - Resolve the conflict by a normal ordered two-parent merge of PR26 `526f19046ef68b691e3088629c97dc3f902409ff` and current PR25 `257ed6c8038987042ac9cac43e0d545f29917235`, common ancestor `d3f9732a8617004152331074634c9bf1919b64fa`. The entire base delta from that common ancestor is STATUS only. Preserve the full old PR26 STATUS byte prefix and exact appended base suffix. Every other tracked entry stays identical to PR26, including global tool budgets, all production code, the macOS memory/replay correction and store-opening fixture `363740b4a130e1eb3d3ae3285c8888123dbbb518` with unchanged 500-ms opening/550-ms wait/assertions.
 - No fresh test/formatter/typecheck run is needed or claimed for the STATUS-only tree change. Prior successful proof and command-log hashes were reverified; the previous PR26 merge proof's tree exactly matches the former head. All 101 Node inputs and original qualified candidate bytes remain identical to the historical successful Node qualification (npm exit 0, 266 passed, 0 failed, 3 existing skips, 269 total). Historical results do not waive the documented Windows Node24 import timeout or establish acceptance of this new head.
 - No local Cargo/native/vendor/controller/editor compilation or execution occurred. New-head hosted native/full PR CI remains required under the existing watch. Evidence: `validation/pr26-526-base257-history-merge-20261104/`.
+
+### PR27 STATUS-only base merge (2026-11-04)
+
+- Resolve the conflict by a normal ordered two-parent merge of PR27 `a9077348652ec1e944b8d328b7087a162b423d2f` and current PR26 `664b12c75057de3bed79967ee158346fe16cd3f0`, common ancestor `526f19046ef68b691e3088629c97dc3f902409ff`. The entire base delta is STATUS only. Preserve the full old PR27 STATUS byte prefix and exact appended base suffix. Every other tracked entry stays identical to PR27, including language-server selection, global tool budgets, production code, macOS memory/replay policy and corrected store-opening fixture `363740b4a130e1eb3d3ae3285c8888123dbbb518` with unchanged 500-ms opening/550-ms wait/assertions.
+- No fresh test/formatter/typecheck run is needed or claimed for this documentation-only tree change. Prior successful proof and command-log hashes were reverified; the previous PR27 validation tree exactly equals the former head. All 101 Node inputs and original qualified candidate bytes remain identical to historical successful qualification (npm exit 0, 266 passed, 0 failed, 3 existing skips, 269 total). Historical checks do not waive the separately documented Windows Node24 import timeout or establish acceptance of this new head.
+- No local Cargo/native/vendor/controller/editor compilation or execution occurred. Hosted native/full PR CI on the new head remains required under the existing watch. Evidence: `validation/pr27-a907-base664-history-merge-20261104/`.
+
+### PR28 STATUS-only base merge (2026-11-04)
+
+- Resolve the conflict by a normal ordered two-parent merge of PR28 `5542d33abccdcd2b3cc19dce83ab19a187402b6f` and current PR27 `51983ad555747f056076a96dc0ef075c21e96f12`, common ancestor `a9077348652ec1e944b8d328b7087a162b423d2f`. The entire base delta is STATUS only. Preserve the full old PR28 STATUS byte prefix plus the exact appended base suffix. Every other tracked entry stays identical to PR28, including token estimators, disclosure authority, its distinct dashboard, Explorer fixture `d34eb31459ef77bd6c78d286ea873a6800eb539c`, corrected Store fixture `363740b4a130e1eb3d3ae3285c8888123dbbb518` and all production code.
+- No fresh test/formatter/typecheck run is needed or claimed for this documentation-only tree change. The previous PR28 merge proof's tree exactly matches the former head; its check logs and PR28's own historical Explorer-correction proof/logs were reverified. All 101 Node inputs, original manifest and qualified candidate bytes match, including the distinct dashboard. Historical Node results remain npm exit 0, 266 passed, 0 failed, 3 existing skips, 269 total. No smaller-dashboard qualification is substituted; historical success does not waive known hosted failures or establish acceptance of this new head.
+- No local Cargo/native/vendor/controller/editor compilation or execution occurred. New-head hosted native/full PR CI remains required under the existing watch. Evidence: `validation/pr28-554-base519-history-merge-20261104/`.
 
 ### PR23 qualified macOS memory/replay correction (2026-11-04)
 
@@ -5975,6 +7067,18 @@ Stack propagation to PR #26 (2026-11-04): the preceding shared Windows correctio
 - No fresh test/formatter/typecheck run is needed or claimed for this documentation-only tree change. The previous matching PR26 history proof and referenced successful source-check/log chain were reverified with bounded, cycle-checked reads; its tree exactly equals the former head. All 101 Node inputs and original historical candidate files remain byte-identical to successful qualification (npm exit 0, 266 passed, 0 failed, 3 existing skips, 269 total). Historical success does not waive the documented Windows Node24 import timeout or qualify this new head.
 - No local Cargo/native/vendor/controller/editor compilation or execution occurred. New-head hosted native/full PR CI remains required under the existing watch. Evidence: `validation/pr26-664-base9b8-history-merge-20261104/`.
 
+### PR27 STATUS-only base merge, second update (2026-11-04)
+
+- Resolve the conflict by a normal ordered two-parent merge of PR27 `51983ad555747f056076a96dc0ef075c21e96f12` and current PR26 `090e12b7ecd8aff829ba2da096ac7d23b942219f`, common ancestor `664b12c75057de3bed79967ee158346fe16cd3f0`. The full base delta is STATUS only. Preserve the complete old PR27 STATUS byte prefix plus the exact appended base suffix. Every other tracked entry stays identical to PR27, including language-server selection, global tool budgets, all production code, Node fixtures, macOS memory/replay policy and corrected Store fixture `363740b4a130e1eb3d3ae3285c8888123dbbb518` with unchanged 500-ms opening/550-ms wait/assertions.
+- No fresh test/formatter/typecheck run is needed or claimed for this documentation-only tree change. The prior matching PR27 history proof and referenced successful source-check/log chain were reverified with bounded, cycle-checked reads; its tree exactly equals the former head. All 101 Node inputs and original historical candidate files remain byte-identical to successful qualification (npm exit 0, 266 passed, 0 failed, 3 existing skips, 269 total). Historical success does not waive known hosted failures or qualify this new head.
+- No local Cargo/native/vendor/controller/editor compilation or execution occurred. New-head hosted native/full PR CI remains required under the existing watch. Evidence: `validation/pr27-519-base090-history-merge-20261104/`.
+
+### PR28 STATUS-only base merge, second update (2026-11-04)
+
+- Normal ordered two-parent merge of PR28 `cd3a2442892b55efa7c8c63c15147e6278d19bfb` and current PR27 `c6d37da0748a514b396d3772178e6eddde073a17`, common ancestor `51983ad555747f056076a96dc0ef075c21e96f12`. The full base delta is STATUS only; preserve the entire old PR28 STATUS byte prefix and exact appended base suffix. All other tracked entries remain identical, including token estimators, disclosure authority, PR28's distinct dashboard, Explorer correction and corrected Store fixture.
+- No fresh test, formatter or typecheck run is needed or claimed for this documentation-only tree change. Reverify the prior matching-head proof and its bounded, cycle-checked log chain plus all 101 own PR28 Node inputs and qualified candidate files. Historical npm result: 266 passed, 0 failed, 3 existing skips, 269 total, exit 0. This does not waive hosted failures or qualify the new head.
+- No local Cargo/native/vendor/controller/editor compilation or execution occurred. New-head hosted native/full PR CI remains required under the existing watch. Evidence: `validation/pr28-cd3-basec6d-history-merge-20261104/`.
+
 ### PR24 Explorer fixture endpoint lifetime and socket mode (2026-11-05)
 
 - Current head `1c1b2e786621c03168be9cb864b113a4d3eae8f6` macOS shard 4, run `41923371213`, job `126901306450`, executes that exact checkout. Text-only artifact `13428016384` is 122,694 bytes, SHA-256 `84e0425f7ddd9c49bdf6c29f2185587834334840498306a65ec659758e364930`; all 96 raw log lengths/hashes and 1,139 recorded selected source hashes verify. 47/48 whole target groups pass. Only `explorer_http` fails, 7 passed / 1 failed / 0 ignored or filtered, 1.27 s for the entire target. The incomplete-header case first catches the expected empty-prefix missing-delimiter failure (39,871 microseconds), then fails at the client write-half shutdown, line 173, OS 57 / NotConnected. The exact peer-side error or close cause is not retained.
@@ -5992,6 +7096,18 @@ Stack propagation to PR #26 (2026-11-04): the preceding shared Windows correctio
 - Resolve the renewed conflict with a normal ordered two-parent merge of PR26 `090e12b7ecd8aff829ba2da096ac7d23b942219f` and current PR25 `d350c3a773d845490469aaade614156f761b5087`, common ancestor `9b8d0169eb02815b7d0972db85f95f2d89093cc9`. The base delta contains only Explorer test coordination and appended STATUS. The former head's Explorer preimage exactly equals the common ancestor; adopt the exact current base postimage `d34eb31459ef77bd6c78d286ea873a6800eb539c`. Preserve the full old PR26 STATUS byte prefix plus the exact base suffix, including its honest policy-blocked cleanup disclosure. Every other tracked entry stays identical to PR26, including global tool budgets, inherited definition options, production code and corrected Store fixture `363740b4a130e1eb3d3ae3285c8888123dbbb518`.
 - The inherited owned fixture keeps both socket endpoints alive through inspection, uses an explicitly blocking accepted peer and retains all eight test cases, strict parser/progress/privacy assertions and request bounds. The recent PR24 rustfmt/typecheck/npm proof and command-log hashes were reverified against the exact fixture pre/postimages and all 101 PR26/base Node input files; all match the successful candidate bytes. Its historical result is 266 passed, 0 failed, 3 existing skips, 269 total, npm exit 0. No fresh test/typecheck/formatter run is claimed for this exact-source merge; full native macOS/new-head CI remains required and prior hosted failures are not waived.
 - No local Cargo/native/vendor/controller/editor compilation or execution, CI retry, force push, deadline/authority/assertion relaxation, worktree, disposable source copy or index was introduced. The tree is assembled from immutable Git objects; only reproducible source/proof deliverables are retained in `validation/pr26-090-based350-explorer-merge-20261105/`. Existing watches continue. The previous PR24 temporary-copy cleanup rejection remains disclosed; this merge does not delete or repurpose that retained evidence.
+
+### PR27 base merge with Explorer fixture correction (2026-11-05)
+
+- Resolve the renewed conflict with a normal ordered two-parent merge of PR27 `c6d37da0748a514b396d3772178e6eddde073a17` and current PR26 `fd06ef31e70ee1865216da0f2efaf13b42ad6af2`, common ancestor `090e12b7ecd8aff829ba2da096ac7d23b942219f`. The base delta contains only Explorer test coordination and appended STATUS. The former head's Explorer preimage exactly equals the common ancestor; adopt the exact current base postimage `d34eb31459ef77bd6c78d286ea873a6800eb539c`. Preserve the full old PR27 STATUS byte prefix plus the exact base suffix, including its honest policy-blocked cleanup disclosure. Every other tracked entry stays identical to PR27, including language-server selection, inherited global tool budgets and definition options, production code and corrected Store fixture `363740b4a130e1eb3d3ae3285c8888123dbbb518`.
+- The inherited owned fixture keeps both socket endpoints alive through inspection, uses an explicitly blocking accepted peer and retains all eight test cases, strict parser/progress/privacy assertions and request bounds. The recent PR24 rustfmt/typecheck/npm proof and command-log hashes were reverified against the exact fixture pre/postimages and all 101 PR27/base Node input files; all match the successful candidate bytes. Its historical result is 266 passed, 0 failed, 3 existing skips, 269 total, npm exit 0. No fresh test/typecheck/formatter run is claimed for this exact-source merge; full native macOS/new-head CI remains required and prior hosted failures are not waived.
+- No local Cargo/native/vendor/controller/editor compilation or execution, CI retry, force push, deadline/authority/assertion relaxation, worktree, disposable source copy or index was introduced. The tree is assembled from immutable Git objects; only reproducible source/proof deliverables are retained in `validation/pr27-c6d-basefd06-explorer-merge-20261105/`. Existing watches continue. The previous PR24 temporary-copy cleanup rejection remains disclosed; this merge does not delete or repurpose that retained evidence.
+
+### PR28 STATUS-only merge of the Explorer-corrected base (2026-11-05)
+
+- Normal ordered two-parent merge of PR28 `d7a62d78b361a267e53eca2441561048e67b05aa` and current PR27 `1827046147a6edf328a203178ce33624a0694438`, common ancestor `c6d37da0748a514b396d3772178e6eddde073a17`. The base delta contains Explorer and STATUS, but the Explorer correction is already byte-identical on PR28 (d34eb31459ef77bd6c78d286ea873a6800eb539c). Therefore only STATUS changes in the merge tree; preserve the entire old PR28 STATUS byte prefix and exact appended base suffix. All other tracked entries remain identical, including token estimators, disclosure authority, PR28's distinct dashboard, Explorer correction and corrected Store fixture.
+- No fresh test, formatter or typecheck run is needed or claimed for this documentation-only tree change. Reverify the prior matching-head proof and its bounded, cycle-checked log chain plus all 101 own PR28 Node inputs and qualified candidate files. Historical npm result: 266 passed, 0 failed, 3 existing skips, 269 total, exit 0. This does not waive hosted failures or qualify the new head.
+- No local Cargo/native/vendor/controller/editor compilation or execution occurred. New-head hosted native/full PR CI remains required under the existing watch. No disposable checkout, worktree or index is created; only reproducible proof/plan/helper deliverables are retained as evidence. Earlier policy-blocked cleanup from PR24 remains disclosed and its retained files are untouched. Evidence: `validation/pr28-d7a-base182-history-merge-20261105/`.
 
 ## PR24 Windows archive-fixture opening diagnostics (2026-11-05)
 
@@ -6023,6 +7139,26 @@ The exact base postimages and recent Rustfmt log hashes were reverified against 
 
 No disposable worktree, build copy, index or process was created. Reproducible merge/source-check evidence is retained in `validation/pr26-fd06-base14-opening-merge-20261105/`. Prior cleanup disclosures remain intact. Existing watches continue.
 
+### PR27 base merge with archive-fixture opening observations (2026-11-05)
+
+Normal ordered two-parent merge of PR27 `1827046147a6edf328a203178ce33624a0694438` and current PR26 `e4dd68bff98265e5720e6543643c5dea4a871ebe`, common ancestor `fd06ef31e70ee1865216da0f2efaf13b42ad6af2`. The base delta contains only the two observed Engine-opening test fixtures and appended STATUS. Both PR27 preimages exactly equal the common ancestor; adopt both base postimages byte-for-byte. Preserve the full prior PR27 STATUS prefix plus the exact base suffix and this record. Every other tracked entry remains identical to PR27, including creation language-server selection, global tool budgets and context definition options, production code, existing Store and Explorer fixtures.
+
+The inherited observations retain the original ten-second opening budget and every other assertion/source byte. Closed phase-entry samples and durations plus selected epoch diagnose the next failure; they do not prove phase completion or a failing OS operation. The two PR24 opening timeouts remain unresolved. The separately audited PR25 Windows compiler-inlining preparation deadline also remains unresolved; it is not an Engine-opening failure and is not fixed by this merge.
+
+The exact base postimages and recent Rustfmt log hashes were reverified against PR24's retained proof. All 101 Node inputs match both parents and the retained successful typecheck/npm qualification (266 passed, 0 failed, 3 existing skips / 269 total). No fresh formatter/typecheck/npm run is claimed for this exact-source merge. New-head native/full CI remains required. No local Cargo/native/vendor/controller/editor runtime is compiled or executed, no CI retry or forced update is requested, and no budget, permission or assertion is relaxed.
+
+No disposable worktree, build copy, index or process was created. Reproducible merge/source-check evidence is retained in `validation/pr27-182-basee4-opening-merge-20261105/`. Prior cleanup disclosures remain intact. Existing watches continue.
+
+### PR28 base merge with archive-fixture opening observations (2026-11-05)
+
+Normal ordered two-parent merge of PR28 `0100ee66bd6d5324878f141177309a587f008bfe` and current PR27 `579bff112c8055ae37e9017e671d756189c7d17e`, common ancestor `1827046147a6edf328a203178ce33624a0694438`. The base delta contains only the two observed Engine-opening test fixtures and appended STATUS. Both PR28 preimages exactly equal the common ancestor; adopt both base postimages byte-for-byte. Preserve the full prior PR28 STATUS prefix plus the exact base suffix and this record. Every other tracked entry remains identical to PR28, including token estimators, its distinct dashboard, creation language-server selection, global tool budgets and context definition options, production code, existing Store and Explorer fixtures.
+
+The inherited observations retain the original ten-second opening budget and every other assertion/source byte. Closed phase-entry samples and durations plus selected epoch diagnose the next failure; they do not prove phase completion or a failing OS operation. The two PR24 opening timeouts remain unresolved. The separately audited PR25 Windows compiler-inlining preparation deadline also remains unresolved; it is not an Engine-opening failure and is not fixed by this merge.
+
+The exact base postimages and recent Rustfmt log hashes were reverified against PR24's retained proof. All 101 own PR28 Node inputs match its retained successful typecheck/npm qualification, including the 80,285-byte dashboard; the upstream dashboard is not substituted (266 passed, 0 failed, 3 existing skips / 269 total). No fresh formatter/typecheck/npm run is claimed for this exact-source merge. New-head native/full CI remains required. No local Cargo/native/vendor/controller/editor runtime is compiled or executed, no CI retry or forced update is requested, and no budget, permission or assertion is relaxed.
+
+No disposable worktree, build copy, index or process was created. Reproducible merge/source-check evidence is retained in `validation/pr28-0100-base579-opening-merge-20261105/`. Prior cleanup disclosures remain intact. Existing watches continue.
+
 ## PR25 Windows native aggregate: compiler-move fixture opening diagnostics (2026-11-05)
 
 Run 42071447909 / job 127515687325 refuses native coverage at the original source/scope/result guard. All eight Windows shard ZIPs were admitted as bounded text, pinned to current head `14b9cf3778c796b21592a5827079765a059691d3`. All 750 raw log lengths/hashes verify. The complete 375-group recorded inventory and exact weighted assignments agree across receipts; all 1,144 selected source hashes match Git blobs exactly (42) or only by LF-to-CRLF conversion (1,102). These selected inputs are not all build inputs. The hosted aggregate's newly computed Cargo metadata/input map was not retained, so no first failing guard conjunct is asserted. Shard 3's incomplete flag independently requires refusal under the source-extracted pure admission check.
@@ -6044,3 +7180,184 @@ The library target has 824 passed / 1 failed / 7 ignored: the original-symbol se
 Resolve the newly observed base conflict through a normal ordered merge of `e4dd68bff98265e5720e6543643c5dea4a871ebe` and `0e38ebe44a4c90dba50f122d02c6a744e0a22349`, common `14b9cf3778c796b21592a5827079765a059691d3`. Adopt only the exact checked compiler_move fixture postimage from the base and preserve the full old STATUS prefix plus exact base suffix and this record. Its existing observed-opening API retains the original ten-second budget, all assertions and other fixture bytes. Every other tracked entry remains identical to PR26, including global budgets, production code and both currently failing test paths. This merge does not claim to fix either current query timeout or the upstream compiler-move opening failures.
 
 The inherited fixture's recent pinned Rustfmt proof/log hash and exact pre/postimages were reverified, as were all 101 unchanged Node inputs against both parents. No fresh formatter/typecheck/npm/native/vendor/controller/worker/editor run or CI retry is claimed for this exact-source merge. The previously observed current-source Node-22 Python-fixture failures remain open. Exact new-head native/full CI is required under the existing watch. No budget, retry, skip, filter, assertion or authority is relaxed. No disposable worktree, build copy, index or process was created; required bounded CI/source/proof evidence is retained in `validation/pr26-e4dd-windows-aggregate-127527099973-20261105/`.
+
+### PR27 checked compiler-move opening-fixture base merge (2026-11-05)
+
+Resolve the renewed conflict through a normal ordered merge of PR27 `579bff112c8055ae37e9017e671d756189c7d17e` and current PR26 `c711d9bb97bd1567c531cfd3b70d1b0655b7bbb9`, common `e4dd68bff98265e5720e6543643c5dea4a871ebe`. The base delta contains only the compiler_move opening-diagnostic fixture and appended STATUS. Its PR27 preimage exactly equals the common ancestor; adopt the exact checked base postimage `208f1fda8cc7f25ce92047eae28bfc12c28f0ff9`. Preserve the entire old PR27 STATUS prefix plus the exact base suffix and this record. Every other tracked entry remains identical to PR27, including creation language-server selection, global budgets, context options, production code and the failing semantic-query path.
+
+The inherited fixture uses the existing observed-opening API with the original ten-second budget, closed phase-entry/timing diagnostics and every other assertion/source byte preserved. The recent pinned Rustfmt proof/log and exact source pre/postimages were reverified. All 101 unchanged Node inputs match both parents. No fresh formatter/typecheck/npm or native/vendor/controller/worker/editor run is claimed for this exact-source merge; no CI retry is requested.
+
+The previously audited PR27 Windows semantic snapshot query failed under its own twenty-second operation budget before snapshot/hash assertions. That cause remains unresolved. The upstream compiler-move opening failures and separately recorded inspection/Node-22 failures are not claimed fixed or waived. New-head native/full CI remains required under the existing watch. No budget, authority, assertion, filter, ignore or retry policy is relaxed.
+
+No disposable worktree, build copy, index or process was created. Required immutable source/check/merge evidence is retained in `validation/pr27-579-basec711-compiler-opening-merge-20261105/`; earlier cleanup disclosures remain intact.
+
+### PR28 checked compiler-move opening-fixture base merge (2026-11-05)
+
+Normal ordered merge of PR28 `e38b7e466873d14728147ad7ee2b11bc8aa1aedc` and current PR27 `b904a6b7ac3d6a1eb0f32006bc5cf22e758f69de`, common `579bff112c8055ae37e9017e671d756189c7d17e`. The base delta contains only compiler_move fixture diagnostics and appended STATUS. Adopt its exact checked postimage `208f1fda8cc7f25ce92047eae28bfc12c28f0ff9` after verifying that PR28's preimage equals the common ancestor. Preserve the entire old PR28 STATUS byte prefix and the exact base suffix plus this record. Every other tracked entry remains identical to PR28: token estimators, disclosure authority, its distinct dashboard, production behavior and existing query guards.
+
+The inherited observed-opening fixture retains the original ten-second budget and all other assertions/source bytes. Its pinned Rustfmt proof/log and pre/postimages were reverified. Separately rehash all 101 OWN PR28 Node inputs against its successful candidate and bounded six-record proof chain, including the 80,285-byte dashboard (not the upstream dashboard). This reuses source-specific prior checks; no fresh formatter/typecheck/npm run is claimed.
+
+Known opening, semantic/inspection and Node-fixture CI failures remain unwaived and are not claimed fixed by the merge. Exact new-head native/full CI remains required under the existing watch. No local native/vendor/controller/worker/editor runtime or CI retry is started, and no deadline, ignore/filter, assertion, authority or policy is relaxed.
+
+No disposable worktree, build copy, index or process was created. Required immutable source/check/merge evidence is retained in `validation/pr28-e38-baseb904-compiler-opening-merge-20261105/`; earlier cleanup disclosures remain intact.
+
+### PR27 macOS incomplete-HTTP fixture blocking mode (2026-11-06)
+
+Push run 42125320998 on `b904a6b7ac3d6a1eb0f32006bc5cf22e758f69de`, aggregate job 127809100746, refuses incomplete shard 5. All eight bounded text archives, 754 raw log sizes/hashes, 1,157 selected Git source hashes and exact target assignments verify. Of 377 whole Cargo target groups, 376 pass. The sole failing target is mcp_http (14 passed, 1 failed, 0 ignored/filtered; 13.53 seconds is the whole-target duration). The first empty-response variant of incomplete_tcp_eof_reports_scalar_progress_without_response_content gets client reset54 after 261 microseconds and peer join WouldBlock35. It never reaches scalar/canary assertions or the partial-frame variant. This is not an Engine-opening or semantic-query timeout. The exact peer I/O operation that returned WouldBlock was not retained.
+
+The owned fixture now explicitly sets its accepted peer stream blocking before the existing five-second read/write timeouts and one-byte request handshake. The nonblocking listener and bounded accept, release handshake, cloned client lifetime, ten-second client read, both incomplete-frame stimuli, all scalar/canary assertions and every other test/source byte remain unchanged. No production transport, permission, timeout, retry, skip or assertion is relaxed. This corrects the missing accepted-stream mode selection; successful corrected native execution is still unverified.
+
+Fresh pinned Rustfmt check passes. All 101 Node inputs and retained successful check logs were rehashed against the preceding source qualification (typecheck and npm 266 passed, 0 failed, 3 existing skips /269 total); no fresh Node run is claimed for these unchanged inputs. No local Cargo/native/vendor/controller/worker/editor runtime is compiled or executed, and no CI retry is requested. New-head native/full CI remains required under the existing watch. The aggregate coverage refusal was independently reproduced using only AST-extracted pure receipt-admission functions; the fresh hosted aggregate Cargo metadata/input map is not retained, so its first failing predicate is unknown.
+
+Required immutable text receipts, original/fixed fixture bytes, formatter log and reproducible audit/source checks remain in `validation/pr27-b904-macos-aggregate-127809100746-20261106/`. No disposable worktree, full build copy, index or runtime process was created. Earlier cleanup disclosures remain intact.
+
+### PR28 checked MCP incomplete-HTTP fixture base merge (2026-11-06)
+
+Normal ordered merge of PR28 `004824781b2146cae1684202ef17fef74fa481d4` and current PR27 `ef0612e3cdef558610ad3862b2470afeb9f90e30`, common `b904a6b7ac3d6a1eb0f32006bc5cf22e758f69de`. The base delta contains only the owned MCP incomplete-EOF test's explicit blocking peer mode and appended STATUS. PR28's exact preimage equals the common ancestor; adopt the checked postimage `cf159f7000d8a1fb2ed3409aa73774ddc39d7923` byte-for-byte. Preserve the entire old PR28 STATUS prefix, the exact base suffix and this record. Every other tracked entry stays identical to PR28, including token estimators, disclosure authority, production behavior and its distinct 80,285-byte dashboard.
+
+The inherited fixture correction retains the original nonblocking bounded accept, five-second peer read/write/release waits, ten-second client read, cloned client lifetime, both EOF stimuli and every scalar/canary assertion. The old macOS aggregate refuses incomplete shard5 after one peer WouldBlock/client-reset fixture failure; 376/377 target groups pass. No Engine-opening or semantic-query timeout is inferred from this failure, and the peer's exact failing I/O operation was not recorded. Successful corrected native execution is still unverified.
+
+Reverified the exact base pre/postimages and pinned Rustfmt proof/log. Separately rehashed all 101 OWN PR28 Node inputs against its retained successful typecheck/npm qualification (266 passed, 0 failed, 3 existing skips) and bounded seven-record proof chain, including its own dashboard rather than the smaller upstream dashboard. These are source-specific reused checks; no fresh formatter/typecheck/npm run is claimed for this byte-exact merge. No local native/vendor/controller/worker/editor runtime or manual CI retry is started. No deadline, ignore/filter, assertion, authority or policy is relaxed. New-head native/full CI remains required under the existing watch.
+
+No disposable worktree, build copy, index or process was created. Required immutable source/check/merge evidence is retained in `validation/pr28-004-baseef-mcp-blocking-merge-20261106/`; prior cleanup disclosures remain intact.
+
+### PR27 deadline-response failure-only marker observations (2026-11-06)
+
+PR run 42208680921/macOS shard5 job127861635436 on `ef0612e3cdef558610ad3862b2470afeb9f90e30` checks out merge18c33e8185899df8543fc80f848e35dce50ffcbf with the exact same Git tree. All 96 raw log sizes/hashes and 1,157 selected Git input hashes verify; 47/48 whole target groups pass. The previously corrected incomplete-EOF peer fixture now passes. The sole mcp_http failure is running_query_obeys_host_deadline_despite_client_timeout_and_returns_http_error (14 passed, 1 failed, 0 ignored/filtered; 13.85 seconds is the whole-target duration). The initialized query connection returns EOF before any response bytes at client elapsed1,820,838 microseconds. Marker, expected503 and under-four-second assertions are not reached. The host physical/work budgets remain1,800/1,700ms despite the requested600,000ms. Provider hover start and internal closure phase are unknown; repeated EOF observations on earlier PR25/26 sources do not establish a shared cause.
+
+Only this owned test's exchange call now catches an unwinding response failure to emit elapsed microseconds and a closed hover-marker state (present/absent/unavailable), then resumes the original panic payload. No response/request bytes, headers, Session IDs, addresses, paths or I/O error text enter this diagnostic. A present marker proves the owned fixture wrote its hover marker; absence/unavailability cannot identify a precise earlier stall. Successful calls continue through every original assertion. Protocol stimuli, host/client timeouts, provider configuration, cleanup, assertions, other tests and all production bytes remain unchanged. This is diagnostic instrumentation, not a fix or acceptance waiver.
+
+Fresh pinned Rustfmt check passes. All101 unchanged Node inputs and retained successful typecheck/npm logs are rehashed (266 passed,0 failed,3 existing skips); no fresh Node test run is claimed. No local native/vendor/controller/worker/editor runtime is compiled or executed, and no CI retry is requested. New-head native/full CI and the response-delivery cause remain open under the existing watch.
+
+No disposable worktree, full build copy, index or runtime process was created. Required immutable shard text/source/audit/check evidence remains in `validation/pr27-ef061-macos5-127861635436-20261106/`; prior cleanup disclosures stay intact.
+
+### PR28 checked deadline-marker diagnostic base merge (2026-11-06)
+
+Normal ordered merge of PR28 `4da6788943e0c8bbbfd97611abf1a4cb78f99292` and current PR27 `423f9634937140cfdc8002f34c2687e2ef493c7a`, common `ef0612e3cdef558610ad3862b2470afeb9f90e30`. The base delta contains only the owned HTTP deadline test's failure-only marker diagnostics and appended STATUS. PR28's preimage equals the common ancestor; adopt the checked postimage `853befd96d11dfe5bddd7371f9c7e9b2e1569791` byte-for-byte. Preserve the entire old PR28 STATUS prefix, exact base suffix and this record. Every other tracked entry remains identical to PR28, including token estimators, disclosure authority, production behavior and its distinct80,285-byte dashboard.
+
+The inherited diagnostic catches only an unwinding response failure, prints elapsed microseconds plus closed hover-marker state, and resumes the original panic payload. It retains host/client deadlines, every request byte/assertion and the original success path. No payload/path data enters the new diagnostic. The earlier EOF peer correction passes in PR27's newest shard, but the separate deadline-response case still fails before marker/503 assertions; its actual internal cause remains unknown. This merge does not claim a root-cause fix.
+
+Reverified the exact base pre/postimages and fresh pinned Rustfmt proof/log, then all101 OWN PR28 Node inputs against its retained successful typecheck/npm qualification (266 passed,0 failed,3 existing skips) and bounded eight-record proof chain. Its own dashboard remains authoritative rather than the smaller upstream one. No fresh formatter/typecheck/npm or local native/vendor/controller/worker/editor execution is claimed for this byte-exact merge. No CI retry, deadline/ignore/filter/assertion/authority relaxation. New-head native/fullCI remains required under the existing watch.
+
+No disposable worktree, build copy, index or runtime process was created. Required immutable source/check/merge evidence stays in `validation/pr28-4da-base423-deadline-marker-merge-20261106/`; prior cleanup disclosures remain intact.
+
+### PR27 compiler-inline fixture opening observations (2026-11-06)
+
+Windows shard5 job127932757174/run42229881616 on `423f9634937140cfdc8002f34c2687e2ef493c7a` checks out merge5759b67b829d158c8d6a8898815800523d364286 with the exact same Git tree. All96 raw log sizes/hashes and1,157 selected inputs verify (42 exactGit,1,115 solelyLF-to-CRLF,zero unexplained).47/48 whole targetgroups pass. compiler_inline has13 passed/3 failed/0 ignored/filtered;150.42seconds is the whole-target duration. The three cases fail at shared fixture Engine::open line34 before their affected compiler preparation and following assertions. The specific failed fixture variant and Store/OS phase are unrecorded. This differs from the earlier macOS tsx/2 thirty-second preparation timeout. MCP HTTP passes all20 tests, including the deadline-response and corrected incomplete-EOF peer cases.
+
+The shared compiler-inline fixture now calls the existing host-only observed-opening API with exactly Engine::open's original ten-second budget. Closed phase-entry/timing observations are included only in its failure message; entry is not completion, and no internal cause or timeout fix is claimed. All other fixture/test bytes, assertions, compiler30-second budgets, production, authority and protocol stimuli remain unchanged.
+
+Fresh pinned Rustfmt check passes. All101 unchanged Node inputs and retained successful typecheck/npm logs were rehashed (266 passed,0 failed,3 existing skips); no fresh Node test run is claimed. No local native/vendor/controller/worker/editor runtime is compiled or executed, no CIretry or limit/assertion waiver. New-head native/fullCI remains required under the existing watch.
+
+No disposable worktree, full build copy, index or runtime process was created. Required immutable receipt/source/audit/check evidence stays in `validation/pr27-423-windows5-127932757174-20261106/`; prior cleanup disclosures remain intact.
+
+### PR28 inspection-timeout audit and checked opening-diagnostic base merge (2026-11-06)
+
+Windows shard0 job127934369690/run42230360691 on PR28 `0f9d19424573c1076ccca8363bf1dbe7739c018a` uses mergea3d7f64e859edc0850e7148b35454719ec198a10 with the exact same Git tree.43/44 whole targetgroups pass; all88 raw log sizes/hashes and1,179 selected inputs verify (42 exactGit,1,137 LF-to-CRLF only,zero unexplained). The sole agent_diagnostic_boundaries failure has4 passed/1 failed/0 ignored/filtered (32.85seconds whole target). The first partial-line jb.run_inspections call opens its Session in204.0835ms, then fails at20.0018276seconds under the original20-second operation budget. The available best-effort UDP observer receives0 packets, no discard/error/capacity event and all10 phase values remain null. Absence does not prove no launch or a particular process/OS stall. Partial-range assertions and the later full-file EOF call are not reached; no filtering regression is established. The test/LSP fixture bytes equal the earlier PR26 failure source, without establishing a shared cause. Audit95b6ef4c8f087d82d7c10b1e2f63ae5aad95ddf57aaa30aa9ee4636f88f88db9 is retained below.
+
+Normal ordered merge of PR28 `0f9d19424573c1076ccca8363bf1dbe7739c018a` and current PR27 `70e9f4d56bb6824dd05a0d23d993730c3a433f4e`, common `423f9634937140cfdc8002f34c2687e2ef493c7a`. The base delta contains only the shared compiler-inline observed-opening test fixture and appended STATUS. PR28's preimage equals the common ancestor; adopt the checked postimage `d687cb1fc4e9a26018636b9568485b80764589f9` byte-for-byte. Preserve the full old PR28 STATUS prefix, exact base suffix and this record. Every other tracked entry stays identical to PR28, including the failing inspection sources, token estimators, disclosure authority, production and its distinct80,285-byte dashboard.
+
+The inherited opening diagnostics keep exactly the original10-second budget and every other assertion/source byte. They record phase entry, not completion, and do not fix this separate20-second inspection failure or establish an opening cause. Reverified exact base pre/postimages and pinned Rustfmt proof/log, plus all101 OWN PR28 Node inputs and bounded nine-record qualification chain against its retained successful typecheck/npm result (266 passed,0 failed,3 existing skips). No fresh formatter/typecheck/npm or local native/vendor/controller/worker/editor runtime is executed. No CIretry, timeout/ignore/filter/assertion/authority waiver. New-head native/fullCI remains required under the existing watch.
+
+No disposable worktree, build copy, index or runtime process was created. Required immutable receipt/source/check/merge evidence stays in `validation/pr28-0f9-windows0-127934369690-20261106/`; prior cleanup disclosures remain intact.
+
+### PR28 first facade-diagnostics request phase observations (2026-11-06)
+
+Windows shard1 job127958608757/run42237428587 on `eb0ccbce5c84850039e598f6a26f22c48c7014ab` checks out merge3037f0fe4aa6593de12caab5741f9c4f2051e410 with the exact same Git tree.46/47 whole targetgroups pass; all94 raw log sizes/hashes and1,179 selected inputs verify (42 exactGit,1,137 LF-to-CRLF only,zero unexplained). agent_facade_semantics has3 passed/1 failed/0 ignored/filtered;23.12seconds is the whole-target duration. The first lsp.get_diagnostics_for_file call for lines0..1 fails under its independent20-second budget after Engine/Session setup. Empty-range assertions, the later line2 request and symbol/reference diagnostics are not reached. Its LSP launch/handshake/request phase and individual duration remain unknown; no source-filter regression is established.
+
+Only this integration fixture now reuses the existing bounded support/lsp_phase_observations.rs observer and the unchanged advanced LSP fixture's optional host correlation arguments. Other tests keep the old session helper with no observer. Optional observer setup failure preserves the original query and is reported as unavailable, never skipped or accepted. On failure, the first diagnostics call reports elapsed milliseconds, observer availability and closed phase/method/PID/time observations; the original error still panics. Nonblocking collection retains64-packet/8,192-byte bounds. UDP loss/absence cannot prove no launch or a particular stall, and a queued reply does not prove delivery. Nonces, payloads, source/path data are excluded from the summary.
+
+The helper's three existing packet-admission/empty-observer tests are reused in this integration target; they have not been executed locally. Every original assertion, request byte,20-second setup/invoke budget, provider configuration and production byte remains intact. Fresh pinned Rustfmt passes. Rehashed all101 OWN PR28 Node inputs and retained successful typecheck/npm logs (266 passed,0 failed,3 existing skips), its80,285-byte dashboard and bounded ten-record qualification chain. No fresh Node/native/vendor/controller/worker/editor run, CIretry, ignore/filter/assertion/authority waiver. Root cause/new-head native/fullCI remain open under the existing watch.
+
+No disposable worktree, full build copy, index or runtime process was created. Required immutable receipt/source/audit/check evidence remains in `validation/pr28-eb0-windows1-127958608757-20261106/`; prior cleanup disclosures stay intact.
+
+
+## PR30 qualified merge and PR29 base reconciliation (2026-11-07)
+
+PR30 head 03f82cb512e4759cb324c24c5924606cee562ece received all 37 distinct
+check names across push and PR workflows: 71 successful check runs and three
+conditional diagnostic/duplicate-job skips. The real Windows combined VSIX and
+both extension-host modes passed on the push source. Normal merge
+cb1764a00b1fe0a8daf2651d70e00c90aeb91fbf into PR29 preserves the qualified
+tree 632c6d45f5cee644ab09f9e481e0e610c549293c exactly. No main or release
+qualification follows from this dependency merge.
+
+PR29 now reconciles that source with actual tool-usage base
+248bbf761e7c253a5ba8187c84e0b66fa9bc7315, preserving both parent histories.
+Host preflight and its three unit regressions coexist with HTTP deadline tests,
+required startup-memory admission and immutable resource replay. The qualified
+facade phase observer is retained once. Both sides' original deadlines,
+resource ceilings, authority, assertions and recovery gates remain in place.
+
+The inherited base also carries bounded source-inventory admission and its
+adversarial regressions, fixture-only opening/HTTP observations and the existing
+store-opening preparation correction. Node test inputs change with the inherited
+Graphify timeout observations. The combined PR29 source requires fresh hosted
+Node typecheck/tests, whole native targets and real Windows VSIX qualification.
+No local native, vendor, controller, worker or editor execution is claimed.
+The earlier facade deadline and macOS foreign-listener causes remain unproven.
+Historical records above describe their own source checkpoints.
+
+
+## PR29 Windows inspection deadline: native phase context candidate (2026-11-07)
+
+At exact head 879165ba8c0a793a55ff8e3552a3a3a8058d8760, push run
+42365344460's Windows aggregate correctly refuses its incomplete shard set.
+All eight bounded text archives, 764 raw logs and 1,200 selected source pins
+are independently verified (42 exact, 1,158 explained LF-to-CRLF matches).
+381 of 382 whole target groups pass. The sole failed target is
+agent_diagnostic_boundaries: four passed, one failed, none ignored. Its
+independent inspection line-range case returns at 20.0111299 seconds under
+the original 20-second deadline; Session opening used about 4.82 ms. The
+optional UDP fixture observer records zero packets. This does not prove that
+no provider started or locate the stalled native phase. Browser artifacts are
+absent because the strict coverage gate stopped their execution.
+
+The candidate adds four closed inspection phase labels to the native error
+chain: query-engine preparation, request, source indexing and provider
+diagnostics. The original outer error Display and underlying typed causes are
+preserved exactly. No URI, source, expression, provider payload or new caller
+data is captured. Success values, invocation order, snapshot/evidence admission,
+line-range/EOF assertions, process lifecycle and the original deadline remain
+unchanged. An additive unit regression checks original Display and nested typed
+permission, cancellation-like, timeout and capacity-like refusal causes.
+
+This is a diagnostic candidate, not an established timeout repair. Its native
+unit regression and original whole integration target remain unrun locally and
+require fresh exact-source hosted qualification. No automatic retry, new ignore,
+resource-limit increase, permission or recovery waiver is introduced. The old
+Ubuntu DAP startup timeout remains separately scoped and unexplained. Main,
+release and complete production readiness remain open. Failure-audit SHA-256:
+4f52e1e4fc90a3e055f0a6073496dd5cca7b9c54790ee92b76387d89d01e2359.
+
+
+## PR27 Windows source-bound query: test-only native phases (2026-11-07)
+
+At dec74470f45450d90dfc22981ce724b03cead84a, Windows push run 42381613801
+correctly refuses incomplete coverage: 381 of 382 whole target groups pass.
+All eight bounded text archives, 764 raw-log lengths/digests and 1,200 selected
+source pins are verified against the exact tree (42 raw matches, 1,158 explained
+LF-to-CRLF matches). The sole failed library target has 904 passed, one failed and
+seven existing ignored cases. The source-bound implementation-query case returns
+REQUEST_FAILED/Request deadline exceeded before its snapshot/hash comparisons.
+Its separate 60-second setup and 20-second operation budgets remain unchanged;
+387.81 seconds is the entire library duration, not the case's measured latency.
+
+The candidate adds a test-only, thread-local parent-phase trace to that unit
+case. Up to 32 closed phase/time entries distinguish native dispatch, provider
+preparation, source materialization, transport creation, initialization, document
+open and operation reply. No caller/source/path/protocol data is accepted.
+Nested guards restore their owner; traces are disabled without a guard and
+cannot cross threads. Two additive unit regressions cover capacity, nesting,
+disabled tracing and thread isolation. All hooks and trace support are cfg(test);
+normal library/release logic is unchanged.
+
+The original source edit, captured-symbol query, snapshot/content-hash assertions,
+deadlines, failure result, cleanup and aggregate refusal remain. No retry,
+provider prewarming, new ignore or resource/authority/recovery waiver is added.
+This is diagnostic instrumentation, not a proven timeout repair. Native
+compilation, the two new regressions and the original complete library target
+remain unrun locally and require fresh hosted qualification. Earlier deadlines
+remain separately unexplained; main/release/full production readiness stay open.
+Failure-audit SHA-256:
+35f37f5352bc959d1195ce8f6ca95346306fb6d844b0bd758a3684e98bed8aa0.
