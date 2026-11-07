@@ -335,6 +335,10 @@ pub(crate) fn stage_move_intent_at(
 ) -> Result<StagedSemantic> {
     deadline.check()?;
     let selected = engine.selected_provider(intent.source_path())?;
+    ensure!(
+        !engine.automatic_backend_selection || selected.is_some(),
+        "language_auto_no_selected_provider_for_path"
+    );
     let host = selected
         .as_ref()
         .map(|(_, p)| (&p.server, &p.configuration))

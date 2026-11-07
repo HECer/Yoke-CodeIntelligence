@@ -22,6 +22,10 @@ use std::{
 };
 use url::Url;
 
+#[path = "lsp_error_stages.rs"]
+mod error_stages;
+use error_stages::{ProviderStage, annotate as provider_error};
+
 #[path = "lsp_refactor_intents.rs"]
 mod refactor_intents;
 pub(crate) use refactor_intents::stage_move_intent_at;
@@ -33,6 +37,155 @@ mod source_encoding_tests;
 pub(crate) use resource_settings::{
     effective as effective_resource_settings, validate_entries as validate_resource_entries,
 };
+
+#[cfg(test)]
+pub(crate) mod test_startup_phases {
+    use std::{cell::RefCell, marker::PhantomData, rc::Rc, time::Instant};
+
+    const MAX_PHASES: usize = 32;
+
+    #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+    pub(crate) enum Phase {
+        SymbolArgumentsReady,
+        NativeEntered,
+        NativeReturned,
+        ProviderDispatch,
+        ProviderSetup,
+        MaterializeBegin,
+        MaterializeEnd,
+        TransportBegin,
+        TransportReady,
+        InitializeBegin,
+        InitializeReady,
+        TargetOpenBegin,
+        TargetOpenEnd,
+        ProviderReady,
+        OperationBegin,
+        OperationReply,
+    }
+
+    #[derive(Clone, Debug)]
+    pub(crate) struct Summary {
+        phases: Vec<(Phase, u32)>,
+        capacity_reached: bool,
+    }
+
+    struct State {
+        started: Instant,
+        summary: Summary,
+    }
+
+    thread_local! {
+        static CURRENT: RefCell<Option<State>> = const { RefCell::new(None) };
+    }
+
+    // Thread-owned and test-only. The trace never controls admission, retries,
+    // deadlines or results; only closed phases and capped elapsed times enter it.
+    pub(crate) struct Guard {
+        previous: Option<State>,
+        _thread: PhantomData<Rc<()>>,
+    }
+    impl Guard {
+        pub(crate) fn begin() -> Self {
+            let previous = CURRENT.with(|current| {
+                current.replace(Some(State {
+                    started: Instant::now(),
+                    summary: Summary {
+                        phases: Vec::with_capacity(MAX_PHASES),
+                        capacity_reached: false,
+                    },
+                }))
+            });
+            Self {
+                previous,
+                _thread: PhantomData,
+            }
+        }
+    }
+    impl Drop for Guard {
+        fn drop(&mut self) {
+            CURRENT.with(|current| {
+                let _ = current.replace(self.previous.take());
+            });
+        }
+    }
+    pub(crate) fn record(phase: Phase) {
+        CURRENT.with(|current| {
+            let Ok(mut current) = current.try_borrow_mut() else {
+                return;
+            };
+            let Some(state) = current.as_mut() else {
+                return;
+            };
+            if state.summary.phases.len() == MAX_PHASES {
+                state.summary.capacity_reached = true;
+                return;
+            }
+            let elapsed = state.started.elapsed().as_millis().min(600_000) as u32;
+            state.summary.phases.push((phase, elapsed));
+        });
+    }
+    pub(crate) fn snapshot() -> Option<Summary> {
+        CURRENT.with(|current| {
+            current
+                .try_borrow()
+                .ok()?
+                .as_ref()
+                .map(|state| state.summary.clone())
+        })
+    }
+
+    #[test]
+    fn phase_capacity_is_bounded_and_nested_guards_restore_the_owner() {
+        let _outer = Guard::begin();
+        record(Phase::NativeEntered);
+        {
+            let _inner = Guard::begin();
+            for _ in 0..MAX_PHASES + 5 {
+                record(Phase::InitializeBegin);
+            }
+            let report = snapshot().unwrap();
+            assert_eq!(report.phases.len(), MAX_PHASES);
+            assert!(report.capacity_reached);
+            assert!(
+                report
+                    .phases
+                    .iter()
+                    .all(|(phase, ms)| *phase == Phase::InitializeBegin && *ms <= 600_000)
+            );
+        }
+        let report = snapshot().unwrap();
+        assert_eq!(report.phases.len(), 1);
+        assert_eq!(report.phases[0].0, Phase::NativeEntered);
+        assert!(!report.capacity_reached);
+    }
+
+    #[test]
+    fn disabled_and_foreign_thread_records_cannot_change_the_owner_trace() {
+        record(Phase::NativeEntered);
+        assert!(snapshot().is_none());
+        {
+            let _owner = Guard::begin();
+            record(Phase::SymbolArgumentsReady);
+            std::thread::spawn(|| {
+                record(Phase::OperationReply);
+                assert!(snapshot().is_none());
+                let _foreign = Guard::begin();
+                record(Phase::TransportReady);
+                let own = snapshot().unwrap();
+                assert_eq!(own.phases.len(), 1);
+                assert_eq!(own.phases[0].0, Phase::TransportReady);
+            })
+            .join()
+            .unwrap();
+            let report = snapshot().unwrap();
+            assert_eq!(report.phases.len(), 1);
+            assert_eq!(report.phases[0].0, Phase::SymbolArgumentsReady);
+        }
+        record(Phase::OperationReply);
+        assert!(snapshot().is_none());
+    }
+}
 
 fn receive_cooperatively<T>(channel: &Receiver<T>, deadline: &Deadline) -> Result<T> {
     loop {
@@ -234,7 +387,9 @@ pub fn restart_registered(engine: &mut Engine, deadline: &Deadline) -> Result<Va
             .selected_backends
             .as_ref()
             .is_some_and(|ids| !ids.is_empty() && ids.len() <= 32)
-            || (!engine.servers.is_empty() && engine.servers.len() <= 100),
+            || (!engine.automatic_backend_selection
+                && !engine.servers.is_empty()
+                && engine.servers.len() <= 100),
         "Restart requires bounded host-registered providers"
     );
     let (snapshot, graph, _, _) = engine.index(deadline)?;
@@ -2035,17 +2190,27 @@ fn run_at_internal(
     directory: Option<&changes::SelectedDirectoryMove>,
     deadline: &Deadline,
 ) -> Result<Value> {
-    check_semantic_manifests(engine, snapshot, graph, deadline)?;
-    let selected = engine.selected_provider(request.path)?;
+    check_semantic_manifests(engine, snapshot, graph, deadline)
+        .map_err(|error| provider_error(error, ProviderStage::SourceManifests))?;
+    let selected = engine
+        .selected_provider(request.path)
+        .map_err(|error| provider_error(error, ProviderStage::ProviderSelection))?;
+    ensure!(
+        !engine.automatic_backend_selection || selected.is_some(),
+        "language_auto_no_selected_provider_for_path"
+    );
     let host = selected
         .as_ref()
         .map(|(_, p)| (&p.server, Some(&p.configuration)))
         .unwrap_or(host);
     ensure!(host.0.trust, "Language server trust is required");
-    let configuration = effective_host_configuration(engine, snapshot, host.1, deadline)?;
+    let configuration = effective_host_configuration(engine, snapshot, host.1, deadline)
+        .map_err(|error| provider_error(error, ProviderStage::HostConfiguration))?;
     let host = (host.0, configuration.as_ref());
-    validate_passive_host(host.0, host.1, deadline)?;
-    let profile = server_profile(host.0, host.1, deadline)?;
+    validate_passive_host(host.0, host.1, deadline)
+        .map_err(|error| provider_error(error, ProviderStage::PassiveAdmission))?;
+    let profile = server_profile(host.0, host.1, deadline)
+        .map_err(|error| provider_error(error, ProviderStage::ProfileBinding))?;
     let profile_hash =
         selected_profile_hash(&profile, selected.as_ref().map(|(id, _)| id.as_str()));
     let encoding = crate::source_encoding::selected(&engine.store, snapshot)?;
@@ -2062,7 +2227,8 @@ fn run_at_internal(
     let path = request.path;
     let mut value = run_at_unprofiled(
         engine, host, snapshot, graph, request, options, staged, directory, deadline,
-    )?;
+    )
+    .map_err(|error| provider_error(error, ProviderStage::RequestDispatch))?;
     value["serverProfileHash"] = json!(profile_hash);
     if let Some(policy) = encoding {
         value["sourceEncodingPolicy"] = json!(policy);
@@ -2642,6 +2808,8 @@ fn initialize_provider_at(
     target_language: &str,
     deadline: &Deadline,
 ) -> Result<InitializedProvider> {
+    #[cfg(test)]
+    test_startup_phases::record(test_startup_phases::Phase::ProviderSetup);
     let (server, configuration) = host;
     let tree = tempfile::Builder::new().prefix("yoke-lsp-").tempdir()?;
     let exclusions = passive_source_exclusions(server, configuration, snapshot);
@@ -2667,14 +2835,25 @@ fn initialize_provider_at(
     if passive_rust {
         validate_passive_manifest_sources(engine, snapshot, deadline)?;
     }
-    changes::materialize_source_views(&engine.store, snapshot, tree.path(), &exclusions, deadline)?;
+    #[cfg(test)]
+    test_startup_phases::record(test_startup_phases::Phase::MaterializeBegin);
+    changes::materialize_source_views(&engine.store, snapshot, tree.path(), &exclusions, deadline)
+        .map_err(|error| provider_error(error, ProviderStage::Materialize))?;
+    #[cfg(test)]
+    test_startup_phases::record(test_startup_phases::Phase::MaterializeEnd);
+    #[cfg(test)]
+    test_startup_phases::record(test_startup_phases::Phase::TransportBegin);
     let mut session = if let Some(endpoint) =
         configuration.and_then(|configuration| configuration.tcp_endpoint)
     {
-        Session::connect(server, endpoint, deadline)?
+        Session::connect(server, endpoint, deadline)
+            .map_err(|error| provider_error(error, ProviderStage::TransportConnect))?
     } else {
-        Session::spawn_scoped(server, tree.path(), passive_rust, deadline)?
+        Session::spawn_scoped(server, tree.path(), passive_rust, deadline)
+            .map_err(|error| provider_error(error, ProviderStage::TransportSpawn))?
     };
+    #[cfg(test)]
+    test_startup_phases::record(test_startup_phases::Phase::TransportReady);
     let root_uri = uri(tree.path())?;
     session.resource_settings = resource_binding;
     let document_uri = uri(&tree.path().join(path))?;
@@ -2799,7 +2978,13 @@ fn initialize_provider_at(
             value["checkOnSave"] = json!(false);
         }
     }
-    let initialization = session.request("initialize", initialize, deadline)?;
+    #[cfg(test)]
+    test_startup_phases::record(test_startup_phases::Phase::InitializeBegin);
+    let initialization = session
+        .request("initialize", initialize, deadline)
+        .map_err(|error| provider_error(error, ProviderStage::Initialize))?;
+    #[cfg(test)]
+    test_startup_phases::record(test_startup_phases::Phase::InitializeReady);
     let capabilities = initialization["capabilities"].clone();
     ensure!(capabilities.is_object(), "Server capabilities missing");
     ensure!(
@@ -2841,16 +3026,22 @@ fn initialize_provider_at(
         .and_then(|config| config.language_ids.get(target_language))
         .map(String::as_str)
         .unwrap_or_else(|| document_language(target_language));
+    #[cfg(test)]
+    test_startup_phases::record(test_startup_phases::Phase::TargetOpenBegin);
     session.notify(
         "textDocument/didOpen",
         json!({"textDocument":{"uri":document_uri,"languageId":language,"version":1,"text":text}}),
-    )?;
+    ).map_err(|error| provider_error(error, ProviderStage::TargetOpen))?;
+    #[cfg(test)]
+    test_startup_phases::record(test_startup_phases::Phase::TargetOpenEnd);
     if Path::new(&server.command)
         .file_stem()
         .is_some_and(|name| name == "rust-analyzer")
     {
         session.await_ready(deadline)?;
     }
+    #[cfg(test)]
+    test_startup_phases::record(test_startup_phases::Phase::ProviderReady);
     Ok(InitializedProvider {
         tree,
         session,
@@ -2873,6 +3064,8 @@ fn run_at_unprofiled(
     deadline: &Deadline,
 ) -> Result<Value> {
     let (server, configuration) = host;
+    #[cfg(test)]
+    test_startup_phases::record(test_startup_phases::Phase::ProviderDispatch);
     check_semantic_manifests(engine, snapshot, graph, deadline)?;
     let encoding = crate::source_encoding::selected(&engine.store, snapshot)?;
     ensure!(
@@ -2900,7 +3093,8 @@ fn run_at_unprofiled(
         new_name,
     } = request;
     ensure!(server.trust, "Language server trust is required");
-    let source_view = query::source_view(&engine.store, snapshot, path)?;
+    let source_view = query::source_view(&engine.store, snapshot, path)
+        .map_err(|error| provider_error(error, ProviderStage::SourceView))?;
     let text = source_view.text();
     let content_hash = &snapshot
         .files
@@ -2929,7 +3123,8 @@ fn run_at_unprofiled(
         text,
         target_language,
         deadline,
-    )?;
+    )
+    .map_err(|error| provider_error(error, ProviderStage::ProviderSetup))?;
     if operation == "capabilities" {
         let declared = capabilities["codeActionProvider"].get("codeActionKinds");
         let kinds = declared
@@ -3098,8 +3293,9 @@ fn run_at_unprofiled(
             // This installed provider family publishes the diagnostics required by
             // its quick-fix resolver. Other unmeasured families are not inferred.
             let scope = crate::capture::source_scope_policy(&engine.store, snapshot)?;
-            let publication =
-                session.await_diagnostics(tree.path(), snapshot, &scope, path, deadline)?;
+            let publication = session
+                .await_diagnostics(tree.path(), snapshot, &scope, path, deadline)
+                .map_err(|error| provider_error(error, ProviderStage::PublishedDiagnostics))?;
             ensure!(
                 publication
                     .get("version")
@@ -3154,10 +3350,13 @@ fn run_at_unprofiled(
     if operation == "completion" {
         params["context"] = json!({"triggerKind":1});
     }
+    #[cfg(test)]
+    test_startup_phases::record(test_startup_phases::Phase::OperationBegin);
     let mut response = if push_diagnostics {
         let scope = crate::capture::source_scope_policy(&engine.store, snapshot)?;
-        let publication =
-            session.await_diagnostics(tree.path(), snapshot, &scope, path, deadline)?;
+        let publication = session
+            .await_diagnostics(tree.path(), snapshot, &scope, path, deadline)
+            .map_err(|error| provider_error(error, ProviderStage::PublishedDiagnostics))?;
         ensure!(
             publication
                 .get("version")
@@ -3166,8 +3365,12 @@ fn run_at_unprofiled(
         );
         json!({"kind":"full","items":publication["diagnostics"],"version":publication["version"]})
     } else {
-        session.request(method, params, deadline)?
+        session
+            .request(method, params, deadline)
+            .map_err(|error| provider_error(error, ProviderStage::RequestReply))?
     };
+    #[cfg(test)]
+    test_startup_phases::record(test_startup_phases::Phase::OperationReply);
     if matches!(
         operation,
         "incomingCalls" | "outgoingCalls" | "supertypes" | "subtypes"

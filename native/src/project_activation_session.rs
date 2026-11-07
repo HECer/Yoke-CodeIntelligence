@@ -512,7 +512,8 @@ impl Session {
             "externalEffectsTransactional":false,"automaticRetry":false}),
         ))
     }
-    pub(super) fn activate_selected(&mut self, next: State, d: &Deadline) -> Result<()> {
+    pub(super) fn activate_selected(&mut self, mut next: State, d: &Deadline) -> Result<()> {
+        self.admit_required_memories_for_state(&next, d)?;
         ensure!(
             !self.inspection_only,
             "activation_inspection_session_read_only"
@@ -546,7 +547,15 @@ impl Session {
             self.activation_receipt_witness = Some(attempt.persisted.clone());
         }
         let result = (|| {
+            self.admit_required_memories_for_state(&next, d)?;
             self.project_engine(&project, d)?;
+            // Initial metadata selection may have published one Session revision.
+            // Keep that owned choice and advance from the current revision;
+            // the original SQL comparison still rejects foreign state changes.
+            if self.host.language_server_auto_selection.is_some() {
+                next.automatic_language_servers = self.state.automatic_language_servers.clone();
+                next.revision = self.state.revision;
+            }
             // Recheck root/config/session after fresh engine admission too.
             if let Some(config) = &self.host.activation_commands
                 && config.resolve(&project)?.command.is_some()

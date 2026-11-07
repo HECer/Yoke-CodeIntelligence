@@ -13,6 +13,7 @@ const MAX_EVENTS: usize = 8192;
 enum NumericBudget {
     Symbol,
     Activation,
+    Tool,
 }
 struct Reader<'a> {
     parser: Parser<std::str::Chars<'a>>,
@@ -57,6 +58,7 @@ impl Reader<'_> {
                     Yaml::Null => Value::Null,
                     Yaml::Real(s) if budget_seconds.is_some() => {
                         let invalid = match budget_seconds {
+                            Some(NumericBudget::Tool) => "session_config_tool_timeout_invalid",
                             Some(NumericBudget::Activation) => {
                                 "session_config_activation_timeout_unavailable"
                             }
@@ -76,6 +78,8 @@ impl Reader<'_> {
                                     .bytes()
                                     .any(|b| matches!(b, b'1'..=b'9')),
                             match budget_seconds {
+                                Some(NumericBudget::Tool) =>
+                                    "session_config_tool_timeout_underflow",
                                 Some(NumericBudget::Activation) =>
                                     "session_config_activation_timeout_unavailable",
                                 _ => "session_config_symbol_info_budget_underflow",
@@ -122,6 +126,7 @@ impl Reader<'_> {
                     let event = self.next()?;
                     let numeric = if depth == 0 {
                         match key.as_str() {
+                            "tool_timeout" => Some(NumericBudget::Tool),
                             "symbol_info_budget" => Some(NumericBudget::Symbol),
                             "activation_command_timeout" => Some(NumericBudget::Activation),
                             _ => None,

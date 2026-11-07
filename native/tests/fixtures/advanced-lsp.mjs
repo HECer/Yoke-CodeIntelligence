@@ -1,16 +1,39 @@
 // Own bounded protocol fixture. This is not an actual compiler/language server.
 import { pathToFileURL } from 'node:url';
 import path from 'node:path';
+import dgram from 'node:dgram';
 const adversary = process.argv[2] ?? '';
+// Explicit test-host correlation only. This channel cannot prove delivery or exit.
+const observationPort = Number(process.argv[3]);
+const observationNonce = process.argv[4];
+let observationSocket, observationCount=0, observationBytes=0;
+const observationStarted=performance.now();
+if(Number.isInteger(observationPort)&&observationPort>0&&observationPort<=65535&&/^[a-f0-9]{64}$/.test(observationNonce??'')){
+ observationSocket=dgram.createSocket('udp4');
+ observationSocket.on('error',()=>{observationSocket=undefined;});
+ observationSocket.unref();
+}
+const observationMethods=new Map([['startup','startup'],['initialize','initialize'],['initialized','initialized'],['textDocument/didOpen','did_open'],['textDocument/documentSymbol','document_symbol'],['textDocument/hover','hover'],['shutdown','shutdown'],['exit','exit']]);
+function observe(phase,method){
+ if(!observationSocket||observationCount>=64||!['started','received','reply_queued'].includes(phase))return;
+ const timeMs=Math.floor(performance.now()-observationStarted);
+ if(timeMs>600000)return;
+ const bytes=Buffer.from(JSON.stringify({nonce:observationNonce,worker:process.pid,phase,method:observationMethods.get(method)??'other',timeMs}));
+ if(bytes.length>=256||observationBytes+bytes.length>8192)return;
+ observationCount++;observationBytes+=bytes.length;
+ try{observationSocket.send(bytes,observationPort,'127.0.0.1',()=>{});}catch{observationSocket=undefined;}
+}
+observe('started','startup');
 let buffer = Buffer.alloc(0), uri, settingsChecked=false, pendingTypeQuery;
 const declaration = {start:{line:1,character:3},end:{line:1,character:9}};
 const helper = {name:'helper',kind:12,uri:'',range:{start:{line:1,character:0},end:{line:1,character:14}},selectionRange:declaration,data:{providerOpaque:'retained'}};
 const caller = {name:'main',kind:12,uri:'',range:{start:{line:2,character:0},end:{line:2,character:23}},selectionRange:{start:{line:2,character:3},end:{line:2,character:7}},data:{providerOpaque:'caller-retained'}};
 const call = {start:{line:2,character:12},end:{line:2,character:18}};
 function send(value) {const body=Buffer.from(JSON.stringify(value));process.stdout.write(`Content-Length: ${body.length}\r\n\r\n`);process.stdout.write(body);}
-function reply(message,result){send({jsonrpc:'2.0',id:message.id,result});}
-function error(message,text){send({jsonrpc:'2.0',id:message.id,error:{code:-32602,message:text}});}
+function reply(message,result){send({jsonrpc:'2.0',id:message.id,result});observe('reply_queued',message.method);}
+function error(message,text){send({jsonrpc:'2.0',id:message.id,error:{code:-32602,message:text}});observe('reply_queued',message.method);}
 function handle(m){
+ observe('received',m.method);
  if(m.id==='fixture-config'){settingsChecked=m.result?.[0]?.enabled===true;if(pendingTypeQuery){if(settingsChecked)reply(pendingTypeQuery,{uri,range:declaration});else error(pendingTypeQuery,'Host settings did not reach workspace/configuration');pendingTypeQuery=undefined;}return;}
  if(m.method==='initialize'){const capabilities={positionEncoding:'utf-16',textDocumentSync:1,hoverProvider:true,declarationProvider:true,implementationProvider:true,typeDefinitionProvider:adversary!=='unsupported',callHierarchyProvider:true,typeHierarchyProvider:true,documentSymbolProvider:true,completionProvider:{resolveProvider:false},signatureHelpProvider:{triggerCharacters:['(']},diagnosticProvider:{interFileDependencies:false,workspaceDiagnostics:false},renameProvider:{prepareProvider:true},codeActionProvider:true};if(adversary.startsWith('push-'))delete capabilities.diagnosticProvider;reply(m,{capabilities});return;}
  if(m.method==='initialized'){if(adversary==='host-settings')send({jsonrpc:'2.0',id:'fixture-config',method:'workspace/configuration',params:{items:[{section:'feature'}]}});if(adversary==='configuration-flood')send({jsonrpc:'2.0',id:'fixture-flood',method:'workspace/configuration',params:{items:Array.from({length:1000},()=>({}))}});return;}

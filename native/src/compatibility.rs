@@ -3,7 +3,7 @@ use crate::{capture::Deadline, project_session::Session};
 use anyhow::{Context, Result, bail, ensure};
 use serde_json::{Value, json};
 mod current_sessions;
-fn contracts() -> Value {
+pub(crate) fn contracts() -> Value {
     serde_json::from_str(include_str!("compatibility_contracts.json"))
         .expect("Built-in public contract JSON")
 }
@@ -62,6 +62,9 @@ pub(crate) fn serena_tools_for_session(session: &Session) -> Value {
                 tool["inputSchema"]["properties"]["skip_ignored_files"]["default"] = json!(default);
             }
         }
+    }
+    if let Some(definition) = session.context_definition() {
+        crate::context_options::decorate(&mut tools, definition);
     }
     tools
 }
@@ -179,6 +182,20 @@ pub fn invoke_serena(
     args: &Value,
     deadline: &Deadline,
 ) -> Result<Value> {
+    let policy = session.tool_budgets();
+    crate::tool_budgets::with_deadline(policy.as_ref(), deadline, |deadline| {
+        session.preflight_tool_usage(name, args, deadline)?;
+        let mut result = invoke_serena_inner(session, name, args, deadline)?;
+        session.record_tool_usage(name, args, &mut result, deadline)?;
+        Ok(result)
+    })
+}
+fn invoke_serena_inner(
+    session: &mut Session,
+    name: &str,
+    args: &Value,
+    deadline: &Deadline,
+) -> Result<Value> {
     deadline.check()?;
     session.require_serena_tool(name, deadline)?;
     let inventory = contracts();
@@ -290,6 +307,21 @@ pub fn invoke_serena_with_repl(
     args: &Value,
     deadline: &Deadline,
 ) -> Result<Value> {
+    let policy = session.tool_budgets();
+    crate::tool_budgets::with_deadline(policy.as_ref(), deadline, |deadline| {
+        session.preflight_tool_usage(name, args, deadline)?;
+        let mut result = invoke_serena_with_repl_inner(session, runtime, name, args, deadline)?;
+        session.record_tool_usage(name, args, &mut result, deadline)?;
+        Ok(result)
+    })
+}
+fn invoke_serena_with_repl_inner(
+    session: &mut Session,
+    runtime: &mut crate::agent_repl::AgentRepl,
+    name: &str,
+    args: &Value,
+    deadline: &Deadline,
+) -> Result<Value> {
     deadline.check()?;
     session.require_serena_tool(name, deadline)?;
     let inventory = contracts();
@@ -341,5 +373,5 @@ pub fn invoke_serena_with_repl(
         );
         return Ok(response["result"].clone());
     }
-    invoke_serena(session, name, &args, deadline)
+    invoke_serena_inner(session, name, &args, deadline)
 }

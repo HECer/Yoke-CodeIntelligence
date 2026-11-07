@@ -14,6 +14,21 @@ executes a bounded sequence of session operations. The sequence is not atomic.
 Each mutation has its own transaction and revision guards. A subsequent command
 with the same ID and host profile resumes project selection and modes.
 
+The global `--max-bytes` also bounds the complete Session CLI stdout response,
+including its JSON wrapper, array separators, activation-effects metadata and
+final newline. Its default is 32000 bytes; explicit selections must be
+1024..4000000. This outer cap does not replace individual query budgets or the
+existing 4 MB request-file and 1000-operation limits. Large batches must select
+an adequate explicit cap or be split into smaller batches.
+
+Results stay in invocation-local memory. A batch transport overflow creates no
+fallback artifact and publishes no stdout; after the overflowing operation it
+executes no later request. Earlier Session mutations or activation effects can
+already have happened, so the nonzero failure explicitly preserves the batch's
+non-atomic outcome. Inspect current state before retrying mutations. A normal
+successful response retains its existing JSON fields. Transport I/O failures
+can still leave a partial write and do not imply rollback.
+
 Example host profile:
 
 ```json

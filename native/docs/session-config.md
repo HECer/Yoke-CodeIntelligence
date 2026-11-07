@@ -530,15 +530,21 @@ adding a new HostProfile policy: encoding null/utf-8/UTF-8/utf8/UTF8, an unset
 activation_command, null/default 180 activation_command_timeout, null/LSP
 language_backend and null/empty ls_additional_workspace_folders. Source receipts
 conditionally identify these nativeEquivalentDefaults and nativeDefaultCapabilities.
-Other source encodings and JetBrains return named unavailable errors.
+These receipt fields describe equivalent defaults, not the full selected-codec
+catalog. Explicit [selected source encodings](source-encodings.md) project strict
+UTF-8-SIG, ASCII, Latin1, Windows-1252, UTF-16 and UTF-32 policies, including their
+documented byte-order variants. Original raw bytes remain authoritative;
+unsupported codec values, proof consumers and provider combinations refuse.
+JetBrains remains unavailable through this language-backend selection.
 Nonempty activation commands and positive-number timeouts now project inert
 global/project/local declarations. Actual execution requires a separately
 selected nonserializable runtime grant and the CLI's independent host switch;
 see [activation commands](project-activation.md). Captured-relative
 additional folders are supported separately below; external folders remain unavailable.
-Inactive/default values retain their exact previous projection. No transcoding,
-automatic project execution during configuration projection or
-extra source/workspace authority occurs. Empty activation strings also refuse.
+Inactive/default values retain their exact previous projection. Configuration
+projection performs no transcoding or automatic project execution and grants no
+extra source/workspace authority. Explicit selected-codec decoding and prepared
+edit encoding follow their separate contract. Empty activation strings also refuse.
 
 Public added_modes:null means no added modes from that layer, retaining lower
 layer additions; it is equivalent to an empty added_modes list. Nonempty lists
@@ -597,3 +603,44 @@ creates plain UTF-8 at a fresh destination. Neither form grants runtime, policy
 or source execution rights. Catalog sources and policy sources share the 2MB raw
 budget; named/catalog protocol 2 retains the same bounded engine and memory guard.
 See [catalog schema, order, receipts and exact limits](prompt-catalogs.md).
+
+## Selected context metadata and output policy
+
+Custom context definitions additionally accept description, tool_description_overrides,
+single_project and structured_tool_output. Modes accept literal description metadata;
+null context/mode prompts produce empty instructions without calling a renderer.
+The selected policy changes actual Serena discovery/output and the existing
+host-startup-only project lock. Absent fields retain preceding identities and output.
+See [the complete selected context contract](context-definition-options.md) for
+true/false/null behavior, scopes, budgets and pending native qualification.
+
+## Explicit global tool limits
+
+Global YAML additionally projects tool_timeout (positive seconds, at most 600)
+and default_max_tool_answer_chars (integer 0 through 4000000) into HostProfile
+toolBudgets. Null clears one selection; omission preserves the host selection.
+The policy binds Sessions and reaches selected tool deadlines and declared
+answer facades, including -1 as the configured default. Original host ceilings,
+cancellation and byte limits remain independent. Empty selection preserves prior
+bindings and behavior. See [duration, character semantics and unrun native gates](global-tool-budgets.md).
+
+## Explicit creation-time language detection
+
+Global-only ls_priorities maps known backend IDs to signed 32-bit priorities.
+An empty map opts into the compiled public defaults; null clears the host policy,
+while omission preserves it. The resulting HostProfile.languageServerAutoSelection
+selects one backend by captured filename count, then positive priority, then
+public declaration order. Explicit host/dashboard selections supersede detection.
+Registrations and execution grants remain host-owned; no match has no legacy
+fallback. Choices persist per Session project instead of changing after source
+edits. See [selection data, lifecycle, bounds and pending native qualification](server-autoselection.md).
+
+## Explicit tool-usage counting
+
+Global token_count_estimator selects CHAR_COUNT, TIKTOKEN_GPT4O or
+ANTHROPIC_CLAUDE_SONNET_4. Null clears the selection; omission preserves the host
+policy. These separate statistics use native argument/result JSON and never
+replace the existing byte estimate or provider billing. Remote counting still
+requires independent host network/text-disclosure flags and an OS credential;
+the YAML declaration grants neither. See [methods, authority, lifecycle and
+unrun native gates](tool-usage-estimators.md).
