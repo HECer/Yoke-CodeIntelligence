@@ -18,6 +18,29 @@ mod move_intents;
 #[path = "semantic_propagated_delete.rs"]
 mod propagated_delete;
 
+#[derive(Clone, Copy)]
+pub(crate) enum InspectionStage {
+    QueryEngine,
+    Request,
+    SourceIndex,
+    ProviderDiagnostics,
+}
+
+// Add only closed phase labels to the error chain. Preserve the original outer
+// Display string and typed causes so existing refusal handling remains exact.
+pub(crate) fn inspection_stage<T>(result: Result<T>, stage: InspectionStage) -> Result<T> {
+    result.map_err(|error| {
+        let original = error.to_string();
+        let label = match stage {
+            InspectionStage::QueryEngine => "inspection_stage=query_engine",
+            InspectionStage::Request => "inspection_stage=request",
+            InspectionStage::SourceIndex => "inspection_stage=source_index",
+            InspectionStage::ProviderDiagnostics => "inspection_stage=provider_diagnostics",
+        };
+        error.context(label).context(original)
+    })
+}
+
 pub fn invoke(
     engine: &mut Engine,
     operation: &str,
@@ -85,7 +108,12 @@ pub fn invoke(
     if operation == "safeDelete" {
         propagated_delete::validate_policy(args)?;
     }
-    let (snapshot, graph, _, _) = engine.index(deadline)?;
+    let indexed = engine.index(deadline);
+    let (snapshot, graph, _, _) = if operation == "inspections" {
+        inspection_stage(indexed, InspectionStage::SourceIndex)?
+    } else {
+        indexed?
+    };
     crate::source_encoding::require_legacy(
         &engine.store,
         &snapshot,
@@ -207,14 +235,17 @@ pub fn invoke(
         );
         let begin = starts[first];
         let end = starts.get(last + 1).copied().unwrap_or(text.len());
-        let mut value = provider(
-            engine,
-            &snapshot,
-            &graph,
-            entity,
-            "diagnostics",
-            &json!({"minSeverity":min,"maxItems":2000}),
-            deadline,
+        let mut value = inspection_stage(
+            provider(
+                engine,
+                &snapshot,
+                &graph,
+                entity,
+                "diagnostics",
+                &json!({"minSeverity":min,"maxItems":2000}),
+                deadline,
+            ),
+            InspectionStage::ProviderDiagnostics,
         )?;
         let items: Vec<_> = value["items"]
             .as_array()
@@ -787,4 +818,52 @@ fn stage_provider(
         request.2,
         deadline,
     )
+}
+
+#[cfg(test)]
+mod inspection_stage_tests {
+    use super::*;
+
+    #[test]
+    fn inspection_phase_context_preserves_display_typed_refusals_and_nested_causes() {
+        for (stage, label) in [
+            (
+                InspectionStage::QueryEngine,
+                "inspection_stage=query_engine",
+            ),
+            (InspectionStage::Request, "inspection_stage=request"),
+            (
+                InspectionStage::SourceIndex,
+                "inspection_stage=source_index",
+            ),
+            (
+                InspectionStage::ProviderDiagnostics,
+                "inspection_stage=provider_diagnostics",
+            ),
+        ] {
+            for kind in [
+                std::io::ErrorKind::PermissionDenied,
+                std::io::ErrorKind::Interrupted,
+                std::io::ErrorKind::TimedOut,
+                std::io::ErrorKind::WouldBlock,
+            ] {
+                let cause = std::io::Error::new(kind, "owned original refusal");
+                let error = anyhow::Error::new(cause).context("existing outer refusal");
+                let before = error.to_string();
+                let tagged = inspection_stage(Err::<Value, _>(error), stage).unwrap_err();
+                let nested = inspection_stage(Err::<Value, _>(tagged), InspectionStage::Request)
+                    .unwrap_err();
+                assert_eq!(nested.to_string(), before);
+                let cause = nested.downcast_ref::<std::io::Error>().unwrap();
+                assert_eq!(cause.kind(), kind);
+                assert_eq!(cause.to_string(), "owned original refusal");
+                assert!(nested.chain().any(|error| error.to_string() == label));
+                assert!(
+                    nested
+                        .chain()
+                        .any(|error| error.to_string() == "inspection_stage=request")
+                );
+            }
+        }
+    }
 }

@@ -101,6 +101,10 @@ pub struct HostProfile {
     #[serde(skip)]
     pub prompt_runtime: Option<crate::session_prompt::Runtime>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub required_prompt_memories: Option<crate::required_prompt_memories::Policy>,
+    #[serde(skip)]
+    pub required_prompt_memory_runtime: Option<crate::required_prompt_memories::Runtime>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub dashboard: Option<crate::session_dashboard::Config>,
     #[serde(default, skip_serializing_if = "crate::semantic_workspace::unselected")]
     pub additional_workspace_folders: Option<crate::semantic_workspace::HostFolders>,
@@ -159,6 +163,8 @@ impl Default for HostProfile {
             activation_runtime: None,
             prompt_templates: None,
             prompt_runtime: None,
+            required_prompt_memories: None,
+            required_prompt_memory_runtime: None,
             dashboard: None,
             language_servers: None,
             additional_workspace_folders: None,
@@ -1113,6 +1119,7 @@ impl Session {
             (Some(_), None) => anyhow::bail!("session_prompt_host_permission_required"),
             (None, Some(_)) => anyhow::bail!("session_prompt_selection_required"),
         }
+        crate::required_prompt_memories::admit_host(&host, deadline)?;
         engine.store.set_deadline(deadline)?;
         if let Some(projects) = &git_repository_projects {
             projects.validate(&host, &engine.root, deadline)?;
@@ -1468,6 +1475,15 @@ impl Session {
                 fingerprint,
                 crate::session_prompt::VERSION,
                 config.fingerprint()?,
+            ))
+        } else {
+            fingerprint
+        };
+        let fingerprint = if let Some(policy) = &host.required_prompt_memories {
+            identity(&(
+                fingerprint,
+                crate::required_prompt_memories::VERSION,
+                policy,
             ))
         } else {
             fingerprint
@@ -1930,6 +1946,23 @@ impl Session {
             debug_adapters: BTreeMap::new(),
             process_cleanup_unproven: false,
         };
+        if !inspection_only && session.host.required_prompt_memories.is_some() {
+            // A selected startup must not admit backend work with unavailable
+            // confirmed notes. Ordinary Session metadata/explicit hook effects
+            // may already exist; this is not a rollback of those operations.
+            let config = session
+                .host
+                .prompt_templates
+                .as_ref()
+                .context("required_memory_templates_required")?;
+            let memories = session.prompt_memories(config, deadline)?;
+            crate::required_prompt_memories::prepare(
+                &session.host,
+                &session.state.active_project,
+                memories.as_deref(),
+                deadline,
+            )?;
+        }
         if !host_preflight {
             session.ensure_automatic_language("default", deadline)?;
         }
@@ -2015,6 +2048,7 @@ impl Session {
         }
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
+        crate::required_prompt_memories::admit_host(&self.host, deadline)?;
         if let Some(registry) = &self.dashboard_language_registry {
             registry.check(
                 &self.engine,
@@ -2212,6 +2246,12 @@ impl Session {
         let selected = crate::protocol::session_tools(self, profile);
         let context = crate::session_prompt::resolve_catalog(profile, &full, &selected, deadline)?;
         let memories = self.prompt_memories(config, deadline)?;
+        let required = crate::required_prompt_memories::prepare(
+            &self.host,
+            &self.state.active_project,
+            memories.as_deref(),
+            deadline,
+        )?;
         let mut binding = json!({"schema":crate::session_prompt::VERSION,"sessionId":self.state.id,"sessionStateSha256":crate::model::hash(&self.persisted),"revision":self.state.revision,"activeProject":self.state.active_project,"context":self.state.context,"modes":self.state.modes,"selectionSha256":config.fingerprint()?,"catalog":context.evidence});
         if let Some(snapshot) = &memories {
             binding["memorySnapshotSha256"] = json!(snapshot.hash()?);
@@ -2257,6 +2297,15 @@ impl Session {
                 receipts.push(json!({"source":fragment.source,"rendering":rendered.evidence}));
             }
         }
+        if let Some(prepared) = &required {
+            ensure!(
+                text.len()
+                    .checked_add(prepared.text.len())
+                    .is_some_and(|n| n <= 131072),
+                "session_prompt_instructions_capacity"
+            );
+            text.push_str(&prepared.text);
+        }
         self.check_tool_state(deadline)?;
         if let Some(before) = &memories {
             let after = self
@@ -2267,7 +2316,11 @@ impl Session {
                 "session_prompt_memory_changed_during_render"
             );
         }
+        crate::required_prompt_memories::admit_host(&self.host, deadline)?;
         let mut evidence = json!({"schema":crate::session_prompt::VERSION,"binding":binding,"fragments":receipts,"sourceBytesRewritten":false,"complete":false});
+        if let Some(prepared) = required {
+            evidence["requiredMemories"] = prepared.evidence;
+        }
         if memories.is_some() {
             evidence["memoryEmbeddingsPartial"] =
                 json!(
@@ -2295,6 +2348,19 @@ impl Session {
             next.modes = resolved.modes;
         }
         Ok(())
+    }
+    fn configuration_after_required_transition(&mut self, d: &Deadline) -> Result<Value> {
+        let mut value = self.invoke("configuration", &json!({}), d)?;
+        if self.host.required_prompt_memories.is_some() {
+            let instructions = self.prompt_instructions(d).context(
+                "Required guidance unavailable; selected Session state may already have changed",
+            )?;
+            value["instructions"] = json!(instructions.text);
+            if let Some(evidence) = instructions.evidence {
+                value["promptRendering"] = evidence;
+            }
+        }
+        Ok(value)
     }
     pub fn debug_info(&self) -> Value {
         json!({"provider":"independent_dap","profiles":self.host.debug_profiles.iter().map(|profile|json!({"key":profile.key,"adapterId":profile.adapter_id,"trustAdapter":profile.trust_adapter,"allowTargetExecution":profile.allow_target_execution,"allowEvaluation":profile.allow_evaluation,"active":self.debug_adapters.contains_key(&profile.key)})).collect::<Vec<_>>(),"states":self.debug_adapters.iter().map(|(key,adapter)|json!({"key":key,"state":adapter.info()})).collect::<Vec<_>>(),"execution":"explicit_host_authority_required","osSandbox":false})
@@ -2383,6 +2449,7 @@ impl Session {
     }
     fn update(&mut self, mut next: State, deadline: &Deadline) -> Result<()> {
         deadline.check()?;
+        self.admit_required_memories_for_state(&next, deadline)?;
         ensure!(
             !self.inspection_only || self.host.activation_commands.is_none(),
             "activation_inspection_session_read_only"
@@ -2413,6 +2480,12 @@ impl Session {
     }
     fn project_engine(&mut self, name: &str, deadline: &Deadline) -> Result<&mut Engine> {
         self.check_tool_state(deadline)?;
+        if self.host.required_prompt_memories.is_some() {
+            let mut selected = self.state.clone();
+            selected.active_project = name.to_owned();
+            self.resolve_next_modes(&mut selected)?;
+            self.admit_required_memories_for_state(&selected, deadline)?;
+        }
         self.admit_activation_engine(name, deadline)?;
         ensure!(
             self.engine.capture_epoch == self.capture_epoch,
@@ -2976,7 +3049,7 @@ impl Session {
                 next.active_project = name.into();
                 self.resolve_next_modes(&mut next)?;
                 self.activate_selected(next, deadline)?;
-                self.invoke("configuration", &json!({}), deadline)
+                self.configuration_after_required_transition(deadline)
             }
             "activationReceipt" => {
                 fields(args, &[])?;
@@ -3032,7 +3105,7 @@ impl Session {
                     next.modes = requested;
                 }
                 self.update(next, deadline)?;
-                self.invoke("configuration", &json!({}), deadline)
+                self.configuration_after_required_transition(deadline)
             }
             "checkOnboarding" => {
                 fields(args, &[])?;

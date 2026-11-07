@@ -91,6 +91,7 @@ pub mod query_features;
 mod refactor_contract;
 pub mod replacement;
 pub mod repository_discovery;
+pub mod required_prompt_memories;
 pub mod resolution;
 pub mod retention;
 pub mod retrieval;

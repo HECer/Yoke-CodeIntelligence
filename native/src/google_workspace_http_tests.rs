@@ -490,12 +490,15 @@ fn https_never_sends_private_headers_to_an_owned_plaintext_peer() {
     );
     let mut url = peer.url(&p);
     url.set_scheme("https").unwrap();
+    // Include native OS trust-store loading in the ordinary host budget. This
+    // case tests TLS refusal and secret isolation, not a one-second deadline;
+    // the waiting-peer test separately exercises short deadlines/cancellation.
     let error = receive(
         &p,
         peer.address,
         &HostAccessToken::from_host_input(TOKEN.as_bytes()).unwrap(),
         &Limits::default(),
-        &Deadline::new(1000),
+        &deadline(),
         &url,
     )
     .err()

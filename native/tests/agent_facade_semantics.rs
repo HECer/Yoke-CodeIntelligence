@@ -1,3 +1,5 @@
+#[path = "support/lsp_phase_observations.rs"]
+mod lsp_phase_observations;
 use serde_json::{Value, json};
 use std::{fs, path::Path};
 use yoke::{
@@ -6,32 +8,32 @@ use yoke::{
     project_session::{HostProfile, Session},
 };
 const SOURCE: &str = "// 🌍\nfn helper() {}\nfn main() { helper(); }\n";
-#[path = "support/lsp_phase_observations.rs"]
-mod phase_observations;
 fn session(root: &Path) -> Session {
-    session_with_observations(root, None)
+    observed_session(root, None)
 }
-fn session_with_observations(
+fn observed_session(
     root: &Path,
-    observations: Option<&phase_observations::Observations>,
+    observations: Option<&lsp_phase_observations::Observations>,
 ) -> Session {
     fs::write(root.join("main.rs"), SOURCE).unwrap();
     let mut engine = Engine::open(root).unwrap();
-    let mut args = vec![
-        Path::new(env!("CARGO_MANIFEST_DIR"))
-            .join("tests/fixtures/advanced-lsp.mjs")
-            .display()
-            .to_string(),
-        "".into(),
-    ];
-    if let Some(observations) = observations {
-        args.extend(observations.arguments());
-    }
     engine
         .register_configured_server(yoke::lsp::ConfiguredServer {
             server: yoke::lsp::Server {
                 command: "node".into(),
-                args,
+                args: {
+                    let mut args = vec![
+                        Path::new(env!("CARGO_MANIFEST_DIR"))
+                            .join("tests/fixtures/advanced-lsp.mjs")
+                            .display()
+                            .to_string(),
+                        "".into(),
+                    ];
+                    if let Some(observations) = observations {
+                        args.extend(observations.arguments());
+                    }
+                    args
+                },
                 language: "rust".into(),
                 trust: true,
             },
@@ -78,8 +80,9 @@ fn implementation_kinds_and_info_use_the_implemented_source_symbol() {
 #[test]
 fn diagnostic_line_ranges_and_reference_scope_are_real_source_filters() {
     let root = tempfile::tempdir().unwrap();
-    let observations = phase_observations::Observations::new().ok();
-    let mut session = session_with_observations(root.path(), observations.as_ref());
+    // Best effort only: no observation grants authority or proves provider exit.
+    let observations = lsp_phase_observations::Observations::new().ok();
+    let mut session = observed_session(root.path(), observations.as_ref());
     let started = std::time::Instant::now();
     let empty = invoke(
         &mut session,
@@ -87,12 +90,8 @@ fn diagnostic_line_ranges_and_reference_scope_are_real_source_filters() {
         json!({"relative_path":"main.rs","start_line":0,"end_line":1}),
     )
     .unwrap_or_else(|error| {
-        panic!(
-            "Facade diagnostics fixture failed; elapsedMs={}; observationsUnavailable={}; bestEffortPhases={:?}; error={error:#}",
-            started.elapsed().as_millis(),
-            observations.is_none(),
-            observations.as_ref().map(|value| value.collect())
-        )
+        let phases = observations.as_ref().map(|observer| observer.collect());
+        panic!("owned diagnostic facade failed; method=lsp.get_diagnostics_for_file; elapsed={:?}; error={error:#}; best_effort_provider_phases={phases:?}", started.elapsed());
     });
     assert!(empty["items"].as_array().unwrap().is_empty());
     let actual = invoke(

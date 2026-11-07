@@ -674,6 +674,13 @@ fn real_http_principal_host_registrations_dispatch_selection_and_revocation_prec
     assert!(server.revoke("owned-selector").unwrap());
     assert_eq!(http(address, Some(sid), true, request).0, 401);
     assert_eq!(rows(&log).len(), before);
+    assert!(
+        std::net::TcpListener::bind(address).is_err(),
+        "running service must own its exact address"
+    );
     server.shutdown().unwrap();
-    assert!(std::net::TcpStream::connect(address).is_err());
+    // Prove release of this exact address and hold it, so another parallel
+    // fixture cannot turn a late connect probe into a different service.
+    let _released_address = std::net::TcpListener::bind(address)
+        .expect("shutdown must release its exact listening address");
 }

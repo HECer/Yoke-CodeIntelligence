@@ -47,6 +47,7 @@ mod neo4j_publish_cli;
 mod postgres_catalog_cli;
 mod project_activation_cli;
 mod repository_discovery_cli;
+mod session_batch_output;
 mod session_config_cli;
 mod source_acquisition_cli;
 mod tool_usage_cli;
@@ -83,6 +84,9 @@ struct Cli {
     /// Evaluate explicitly selected host prompts in session responses.
     #[arg(long, global = true)]
     allow_session_templates: bool,
+    /// Confirm exactly pinned authored notes as mandatory Session instructions.
+    #[arg(long, global = true)]
+    allow_required_prompt_memories: bool,
     #[arg(long, global = true)]
     language_server_config: Option<PathBuf>,
     #[arg(long, global = true)]
@@ -892,6 +896,11 @@ impl From<ParsedOperation> for Operation {
 }
 #[derive(Subcommand)]
 enum GraphOperation {
+    /// Admit one explicit host file against an existing captured snapshot.
+    ImportSourceClaims {
+        #[arg(long)]
+        input: PathBuf,
+    },
     Build {
         #[arg(long)]
         options: Option<PathBuf>,
@@ -2153,6 +2162,22 @@ fn run_parity(
         }
         ExtensionOperation::Graph { command } => {
             match command {
+                GraphOperation::ImportSourceClaims { input } => {
+                    ensure!(
+                        arguments["snapshotId"]
+                            .as_str()
+                            .is_some_and(yoke::model::valid_id),
+                        "Declared source import requires an explicit existing snapshot"
+                    );
+                    let (snapshot, graph) = engine.select(arguments, deadline)?;
+                    print(&yoke::graph_view::source_claims::import_file(
+                        &engine.store,
+                        &snapshot,
+                        &graph,
+                        &input,
+                        deadline,
+                    )?)?;
+                }
                 GraphOperation::Build { options } => {
                     let options = options
                         .map(|path| -> Result<yoke::graph_view::BuildOptions> {
@@ -2320,7 +2345,12 @@ fn session_host_profile(
         })
         .transpose()?
         .unwrap_or_default();
-    session_config_cli::bind_prompt_runtime(&mut host, host_options.allow_templates, deadline)?;
+    session_config_cli::bind_prompt_runtime(
+        &mut host,
+        host_options.allow_templates,
+        host_options.allow_required_memories,
+        deadline,
+    )?;
     host_options.tool_usage.bind(&mut host, deadline)?;
     host_options.activation.bind(&mut host, root, deadline)?;
     Ok(host)
@@ -2351,6 +2381,7 @@ fn run_session(
     id: Option<String>,
     host_profile: Option<PathBuf>,
     requests: PathBuf,
+    max_bytes: u64,
     host_options: &SessionHostOptions<'_>,
     deadline: &Deadline,
 ) -> Result<bool> {
@@ -2360,6 +2391,7 @@ fn run_session(
         operation: String,
         args: Value,
     }
+    let mut reply = session_batch_output::Batch::new(max_bytes, deadline)?;
     let requests: Vec<Request> = yoke::json::decode(input_json(&requests, 4_000_000)?)?;
     ensure!(requests.len() <= 1000, "Too many session requests");
     let inspection_only = requests
@@ -2373,23 +2405,31 @@ fn run_session(
         inspection_only,
         deadline,
     )?;
-    let mut results = Vec::new();
-    let mut bytes = 0usize;
-    for request in requests {
+    for (index, request) in requests.into_iter().enumerate() {
         deadline.check()?;
+        reply
+            .admit_next(!inspection_only && session.activation_effects_possible(), deadline)
+            .with_context(|| format!("Session answer unavailable before operation {}; batch is not atomic and prior effects may have occurred", index + 1))?;
         let result = session.invoke(&request.operation, &request.args, deadline)?;
-        bytes = bytes
-            .checked_add(serde_json::to_vec(&result)?.len())
-            .ok_or_else(|| anyhow::anyhow!("Session output size overflow"))?;
-        ensure!(bytes <= 8_000_000, "Session batch output budget exceeded");
-        results.push(result);
+        reply
+            .push(
+                result,
+                !inspection_only && session.activation_effects_possible(),
+                deadline,
+            )
+            .with_context(|| format!("Session answer unavailable after operation {}; batch is not atomic and prior effects may have occurred", index + 1))?;
     }
-    let mut reply = json!({"results":results,"sourceWritten":false,"atomicBatch":false});
-    if !inspection_only && session.activation_effects_possible() {
-        reply["sourceWritten"] = Value::Null;
-        reply["activationExternalEffectsPossible"] = json!(true);
-    }
-    print(&reply)?;
+    let bytes = reply
+        .finish(
+            !inspection_only && session.activation_effects_possible(),
+            deadline,
+        )
+        .context(
+            "Session answer unavailable; batch is not atomic and prior effects may have occurred",
+        )?;
+    io::stdout().lock().write_all(&bytes).context(
+        "Session answer transport failed; batch is not atomic and prior effects may have occurred",
+    )?;
     Ok(true)
 }
 #[derive(clap::Args)]
@@ -2862,6 +2902,7 @@ fn invoke_model_operation(
 }
 struct SessionHostOptions<'a> {
     allow_templates: bool,
+    allow_required_memories: bool,
     activation: &'a project_activation_cli::Arguments,
     tool_usage: &'a tool_usage_cli::Arguments,
 }
@@ -2986,7 +3027,15 @@ fn run_extension(
             arguments.get("snapshotId").is_none(),
             "Session operations select their own source snapshots"
         );
-        return run_session(engine, id, host_profile, requests, &host_options, deadline);
+        return run_session(
+            engine,
+            id,
+            host_profile,
+            requests,
+            arguments["maxBytes"].as_u64().unwrap_or(32000),
+            &host_options,
+            deadline,
+        );
     }
     if let ExtensionOperation::ServeSession(server) = operation {
         ensure!(
@@ -3286,9 +3335,7 @@ fn run_http(
     args: &HttpServeArguments,
     trust_servers: bool,
     allow_writes: bool,
-    allow_session_templates: bool,
-    activation: &project_activation_cli::Arguments,
-    tool_usage: &tool_usage_cli::Arguments,
+    host_options: &SessionHostOptions<'_>,
 ) -> Result<bool> {
     ensure!(
         args.trust_service,
@@ -3312,7 +3359,7 @@ fn run_http(
             "activation_session_profile_required"
         );
         ensure!(
-            principal.host_profile.prompt_templates.is_none() || allow_session_templates,
+            principal.host_profile.prompt_templates.is_none() || host_options.allow_templates,
             "session_prompt_host_permission_required"
         );
         ensure!(
@@ -3321,6 +3368,16 @@ fn run_http(
         );
         if let Some(config) = &principal.host_profile.prompt_templates {
             config.validate(&Deadline::new(host.request_timeout_ms))?;
+        }
+        if let Some(policy) = &principal.host_profile.required_prompt_memories {
+            ensure!(
+                host_options.allow_required_memories,
+                "required_memory_host_confirmation_required"
+            );
+            policy.validate(
+                &principal.host_profile,
+                &Deadline::new(host.request_timeout_ms),
+            )?;
         }
 
         ensure!(
@@ -3411,16 +3468,17 @@ fn run_http(
         }
     }
     for principal in &mut host.principals {
-        tool_usage.bind(
+        host_options.tool_usage.bind(
             &mut principal.host_profile,
             &Deadline::new(host.request_timeout_ms),
         )?;
         session_config_cli::bind_prompt_runtime(
             &mut principal.host_profile,
-            allow_session_templates,
+            host_options.allow_templates,
+            host_options.allow_required_memories,
             &Deadline::new(host.request_timeout_ms),
         )?;
-        activation.bind(
+        host_options.activation.bind(
             &mut principal.host_profile,
             principal.root.as_deref().unwrap_or(root),
             &Deadline::new(host.request_timeout_ms),
@@ -3595,7 +3653,7 @@ fn run(cli: Cli) -> Result<bool> {
         "activation_host_route_required"
     );
     ensure!(
-        !cli.allow_session_templates
+        !(cli.allow_session_templates || cli.allow_required_prompt_memories)
             || matches!(&operation,Operation::Extensions(ext) if matches!(ext.as_ref(),ExtensionOperation::Session{..}|ExtensionOperation::ServeSession(_)|ExtensionOperation::ServeHttp(_)|ExtensionOperation::AgentRepl(_))),
         "session_prompt_host_route_required"
     );
@@ -4448,9 +4506,12 @@ fn run(cli: Cli) -> Result<bool> {
             args,
             cli.trust_servers,
             cli.allow_writes,
-            cli.allow_session_templates,
-            &cli.activation,
-            &cli.tool_usage,
+            &SessionHostOptions {
+                allow_templates: cli.allow_session_templates,
+                allow_required_memories: cli.allow_required_prompt_memories,
+                activation: &cli.activation,
+                tool_usage: &cli.tool_usage,
+            },
         );
     }
     if let Operation::Credentials { ref command } = operation {
@@ -4748,6 +4809,7 @@ fn run(cli: Cli) -> Result<bool> {
     let deadline = Deadline::new(cli.timeout);
     let host_options = SessionHostOptions {
         allow_templates: cli.allow_session_templates,
+        allow_required_memories: cli.allow_required_prompt_memories,
         activation: &cli.activation,
         tool_usage: &cli.tool_usage,
     };

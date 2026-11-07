@@ -22,3 +22,20 @@ pub fn assert_report(report: &Value, ceiling_field: &str) {
         assert!(report.get("memoryBudget").is_none());
     }
 }
+
+// Compare independent executions without treating the macOS startup VM sample
+// as stable output. Every report must satisfy the actual platform contract; all
+// policy and non-observation fields still compare exactly.
+#[allow(dead_code)]
+pub fn assert_same_policy(actual: &Value, expected: &Value, ceiling_field: &str) {
+    assert_report(actual, ceiling_field);
+    assert_report(expected, ceiling_field);
+    let mut compared = actual.clone();
+    if cfg!(target_os = "macos") {
+        compared[ceiling_field] = expected[ceiling_field].clone();
+        for field in ["baselineVirtualBytes", "ceilingBytes"] {
+            compared["memoryBudget"][field] = expected["memoryBudget"][field].clone();
+        }
+    }
+    assert_eq!(compared, *expected);
+}

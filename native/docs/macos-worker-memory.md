@@ -46,6 +46,17 @@ budget arithmetic and matching ceiling before accepting worker output. Reported
 worker evidence is not independent OS attestation. Old immutable stored records
 remain literal; they are never relabelled with this new policy.
 
+Mixed-meaning graph replay re-extracts the immutable PDF under current independent
+worker authority and validates the current resource policy. A new process's VM
+baseline and ceiling are observations, not stable source-input identity. When
+both reports have the same valid macOS growth policy, the reconstructed graph
+retains the saved build's original resource observation. Every other prepared
+input and graph field still receives its existing exact comparison, including
+PDF identity, container/page hashes, text, paths, claims and accounting. Legacy
+resource reports retain exact equality. Saved artifacts are not rewritten, and
+historical observations are not attestation of the replay worker's OS state.
+Direct PDF queries continue to report their current extraction observation.
+
 Pure regression cases cover overflow, forged records, large baselines and
 nonrefreshing inherited ceilings. Native macOS cases exercise direct and
 parent-limited child processes, exact OS observation, small mapping success,

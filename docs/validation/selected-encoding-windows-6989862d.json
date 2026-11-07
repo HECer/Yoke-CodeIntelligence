@@ -1,0 +1,89 @@
+{
+  "sourceRevision": "6989862daeee8f00592e2b53f60376b584ea3d37",
+  "runId": 41243681172,
+  "scope": "Two complete selected encoding Windows targets, including imported UTF32 test modules; no blanket codec/server or later-source qualification",
+  "nativeCompilationOrExecutionLocal": false,
+  "targets": [
+    {
+      "target": "yoke-code-intelligence:test:source_encodings:test",
+      "artifactId": 13058482137,
+      "partition": 5,
+      "logSHA256": "dbaa8a2801be98bc1491c78b9c4f04465952735e0419b8329810dbe065437e37",
+      "committedTestSourceSHA256": {
+        "native/tests/source_encodings.rs": "0f12e0754355c8e879371d67379483c9955feac3bac6d4c8b6c0ffddcc0fbf73",
+        "native/tests/support/source_encodings_utf32.rs": "b8f2ae0769d5e150209b49840d6fc6dcb9c8cab00f8459f3b439403ac065555a"
+      },
+      "allCaseNamesMatched": true,
+      "cases": [
+        "actual_capture_structural_search_quotes_parallel_edges_and_immutable_replay_use_raw_offsets",
+        "ascii_plans_preserve_original_bytes_and_refuse_unrepresentable_edits",
+        "ascii_strictly_preserves_bytes_offsets_and_rejects_non_ascii",
+        "encoded_capture_applies_secret_path_and_decoded_secret_filters_before_publication",
+        "facade_symbol_bodies_decode_selected_bytes_without_changing_raw_anchors",
+        "lsp_positions_map_crlf_and_nonbmp_without_permitting_half_surrogates",
+        "malformed_utf16_and_capacity_deadlines_refuse_without_replacement",
+        "model_source_selection_refuses_utf8_valid_latin1_before_provider_execution",
+        "optional_utf8_piece_consumers_refuse_without_starting_tools_or_creating_overlay_state",
+        "primary_and_secondary_codec_selection_session_resume_and_source_read_only_stay_independent",
+        "replacements_creates_bulk_edits_and_plan_replay_encode_before_review_preserving_bom_and_crlf",
+        "strict_codecs_map_only_scalar_boundaries_and_round_trip_original_bytes",
+        "strict_configuration_protocol_types_unknown_fields_and_host_scopes_do_not_grant_authority",
+        "symbolic_replacement_deletion_and_explicit_line_ending_formatting_use_original_codec",
+        "true_latin1_is_bijective_and_cannot_encode_windows1252_or_lossy_replacements",
+        "unrepresentable_edits_invalid_raw_boundaries_stale_codec_and_forged_plans_refuse",
+        "utf32::utf32_capture_plans_and_replay_keep_original_hashes_endian_and_byte_ranges",
+        "utf32::utf32_scalar_boundaries_boms_and_malformed_units_are_strict",
+        "utf32::utf32_selection_capacity_and_cancellation_do_not_relax_existing_admission",
+        "utf8_sig_bomless_edits_refuse_ambiguous_leading_character",
+        "utf8_sig_strict_prefix_boundaries_and_invalid_input",
+        "windows1252_decoded_expansion_and_cancellation_refuse_before_publication",
+        "windows1252_strict_mapping_and_raw_change_replay",
+        "yaml_resolution_is_order_independent_and_utf8_legacy_bytes_stay_exact"
+      ],
+      "totals": {
+        "passed": 24,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filteredOut": 0
+      }
+    },
+    {
+      "target": "yoke-code-intelligence:test:source_encodings_transport:test",
+      "artifactId": 13059465307,
+      "partition": 6,
+      "logSHA256": "bf5e7706e541dafd6bdc9b7ccbe71402c54399a13188176b43868bec43006843",
+      "committedTestSourceSHA256": {
+        "native/tests/source_encodings_transport.rs": "6a783d286a15a631b8bf181a17e769589ef72f9c3e950d9474982256443c6b98",
+        "native/tests/support/source_encodings_utf32_transport.rs": "1bf68715dee3c588e9504e137ac24e700d1afb77285b2bb0d6fa6a3f69c4371d"
+      },
+      "allCaseNamesMatched": true,
+      "cases": [
+        "actual_cli_capture_config_and_yaml_projected_session_read_original_encoded_source",
+        "actual_executed_raw_byte_verification_approval_and_writer_journal_preserve_selected_codec",
+        "actual_http_session_uses_host_codec_and_cannot_select_a_request_codec",
+        "actual_native_stdio_read_plan_and_unknown_codec_refusal_keep_raw_source_immutable",
+        "actual_registered_lsp_reads_private_utf8_copy_maps_raw_anchors_and_refuses_encoded_rename_before_spawn",
+        "ascii_stdio_host_selection_preserves_offsets_and_rejects_unicode_edits",
+        "utf32::utf32_actual_http_uses_host_policy_and_refuses_request_codec",
+        "utf32::utf32_actual_stdio_keeps_raw_hashes_create_order_and_host_selection",
+        "utf32::utf32_executed_verification_writer_and_journal_preserve_order_and_prefix",
+        "utf32::utf32_registered_lsp_maps_raw_anchors_and_refuses_rename",
+        "utf8_sig_executed_verification_and_writer_preserve_signature",
+        "utf8_sig_registered_lsp_maps_raw_anchors_and_refuses_rename",
+        "windows1252_executed_raw_byte_verification_and_writer_preserve_source_codec",
+        "windows1252_stdio_host_selection_reads_and_prepares_raw_bytes_without_request_override"
+      ],
+      "totals": {
+        "passed": 14,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filteredOut": 0
+      }
+    }
+  ],
+  "lspEvidenceUsesExplicitLabeledNodeContractFixture": true,
+  "actualAllLanguageServerCertification": false,
+  "allCodecOrMainOrReleaseAcceptance": false
+}
