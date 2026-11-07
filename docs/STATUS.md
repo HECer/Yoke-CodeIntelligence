@@ -7329,3 +7329,35 @@ resource-limit increase, permission or recovery waiver is introduced. The old
 Ubuntu DAP startup timeout remains separately scoped and unexplained. Main,
 release and complete production readiness remain open. Failure-audit SHA-256:
 4f52e1e4fc90a3e055f0a6073496dd5cca7b9c54790ee92b76387d89d01e2359.
+
+
+## PR27 Windows source-bound query: test-only native phases (2026-11-07)
+
+At dec74470f45450d90dfc22981ce724b03cead84a, Windows push run 42381613801
+correctly refuses incomplete coverage: 381 of 382 whole target groups pass.
+All eight bounded text archives, 764 raw-log lengths/digests and 1,200 selected
+source pins are verified against the exact tree (42 raw matches, 1,158 explained
+LF-to-CRLF matches). The sole failed library target has 904 passed, one failed and
+seven existing ignored cases. The source-bound implementation-query case returns
+REQUEST_FAILED/Request deadline exceeded before its snapshot/hash comparisons.
+Its separate 60-second setup and 20-second operation budgets remain unchanged;
+387.81 seconds is the entire library duration, not the case's measured latency.
+
+The candidate adds a test-only, thread-local parent-phase trace to that unit
+case. Up to 32 closed phase/time entries distinguish native dispatch, provider
+preparation, source materialization, transport creation, initialization, document
+open and operation reply. No caller/source/path/protocol data is accepted.
+Nested guards restore their owner; traces are disabled without a guard and
+cannot cross threads. Two additive unit regressions cover capacity, nesting,
+disabled tracing and thread isolation. All hooks and trace support are cfg(test);
+normal library/release logic is unchanged.
+
+The original source edit, captured-symbol query, snapshot/content-hash assertions,
+deadlines, failure result, cleanup and aggregate refusal remain. No retry,
+provider prewarming, new ignore or resource/authority/recovery waiver is added.
+This is diagnostic instrumentation, not a proven timeout repair. Native
+compilation, the two new regressions and the original complete library target
+remain unrun locally and require fresh hosted qualification. Earlier deadlines
+remain separately unexplained; main/release/full production readiness stay open.
+Failure-audit SHA-256:
+35f37f5352bc959d1195ce8f6ca95346306fb6d844b0bd758a3684e98bed8aa0.
