@@ -342,9 +342,22 @@ fn recheck(loaded: &[Loaded], deadline: &Deadline) -> Result<()> {
 pub(crate) fn bind_prompt_runtime(
     host: &mut yoke::project_session::HostProfile,
     allowed: bool,
+    required_memories_allowed: bool,
     d: &Deadline,
 ) -> Result<()> {
-    templates::bind_runtime(host, allowed, d)
+    if let Some(policy) = &host.required_prompt_memories {
+        ensure!(
+            required_memories_allowed,
+            "required_memory_host_confirmation_required"
+        );
+        policy.validate(host, d)?;
+    }
+    templates::bind_runtime(host, allowed, d)?;
+    if host.required_prompt_memories.is_some() {
+        host.required_prompt_memory_runtime =
+            Some(yoke::required_prompt_memories::Runtime::confirm(host, d)?);
+    }
+    Ok(())
 }
 pub fn run(args: &Arguments, timeout: u64, max_bytes: u64) -> Result<bool> {
     ensure!(

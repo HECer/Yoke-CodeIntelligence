@@ -23,6 +23,26 @@ SPEC.loader.exec_module(BROWSER)
 
 
 class WorkerAdmission(unittest.TestCase):
+    def test_after_save_failure_labels_are_closed_and_never_admit_success(self):
+        labels = ("after-pending-click", "after-pending-receipt", "after-pending-admission", "after-load",
+                  "after-review", "after-save-click", "after-save-confirm", "after-apply-receipt",
+                  "after-read-receipt", "after-read-admission", "after-saved-state", "after-script-errors",
+                  "after-snapshot")
+        secret = "https://private.invalid/#private-capability"
+        for viewport in ("desktop", "mobile"):
+            for checkpoint in (*labels, secret, [secret], None):
+                value = {"phase": "after", "ok": False, "reason": "real-browser-failed",
+                         "checkpoint": checkpoint, "viewport": viewport}
+                with self.subTest(viewport=viewport, checkpoint=checkpoint), \
+                        mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                    BROWSER.report_driver_failure(value, "after")
+                    expected = checkpoint if type(checkpoint) is str and checkpoint in labels else "other"
+                    self.assertEqual(log.getvalue(),
+                                     f"Owned browser driver failed: checkpoint={expected}; viewport={viewport}\n")
+                    self.assertNotIn(secret, log.getvalue())
+                    with self.assertRaises(RuntimeError):
+                        BROWSER.admit_driver_reply(value, "after", "private-capability")
+
     def test_failed_driver_start_retains_and_closes_its_owned_process_and_channel_handles(self):
         with tempfile.TemporaryDirectory() as directory:
             fixture = Path(directory).resolve()

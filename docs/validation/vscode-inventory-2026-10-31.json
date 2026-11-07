@@ -1,0 +1,178 @@
+{
+  "sourceRevision": "6989862daeee8f00592e2b53f60376b584ea3d37",
+  "artifactId": 13058973373,
+  "archiveSHA256": "27fc96267be54c8c62d9a378278b6f30affff2fa736bbf69013026f7b8c674e9",
+  "controls": [
+    {
+      "path": "scripts/host_vscode.py",
+      "recordedSHA256": "aaa9518d9034e164c89c87d0b42fa73e659c62b045c588339b5b83e88577a983",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": "scripts/vscode_owned_job.py",
+      "recordedSHA256": "8541636609f4fe3df94ce55761e6c6309ae716e2bdf3bf406476a40205b69caa",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": "scripts/run_native_tests.py",
+      "recordedSHA256": "f864e8542260c967dadc7cb8878c16507cab26c6d8e2fd93acb4f83a0cef123e",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": "extensions/vscode/test-host.cjs",
+      "recordedSHA256": "063bdd94d30440c757be0344a460ebba1167b32da3365e34bf4e73207ae352de",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": "extensions/vscode/package.json",
+      "recordedSHA256": "d77608b4f89fa94d88ebfad2e606617f05ee659f94a62a05ff997538d798f21d",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": "package.json",
+      "recordedSHA256": "3ba8790dc3e49e3b7e0c8484412cb327ca861e3f59f34b741f7b60fe64307698",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": "Cargo.lock",
+      "recordedSHA256": "3fd92cd4fa034bffb88d765ed0c02f3d5335f3317ff19c31e70a3d5149e49f6a",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": "native/Cargo.toml",
+      "recordedSHA256": "492b7530a3521b26e5215e1285ad5161e6bc20fed3c5c65de72c60978f16d2d8",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "recordedSHA256": "d59fdc510beb119fd3f91ab5c2009c4669d88f81424695968761f9174d6b9468",
+      "matchingForms": [
+        "Windows CRLF"
+      ]
+    }
+  ],
+  "sourceMapEntries": 1847,
+  "builtMapEntries": 277,
+  "controlBytesComparedToGit": true,
+  "allSelectedSourceHashesMatchPermittedGitForms": true,
+  "selectedSourceBytes": 29157971,
+  "sourceFormCounts": {
+    "Windows CRLF": 1332,
+    "Git blob": 515
+  },
+  "allSourceOrBuiltPayloadsIndependentlyCompared": false,
+  "sameFreshSuccessfulProducerAndNativeRole": true,
+  "nativeSHA256": "299e2db0c6a8c719b1fb5a179b0ce76a5c3465eaeedd35659452ebd3f4beeed8",
+  "vsixSHA256": "4d154a983cad167ddd4cfde37d52421625f2168aa9c4eb862103b34e41d8e3dd",
+  "stages": [
+    {
+      "phase": "tool",
+      "jobSHA256": "893269ac8d75359d7ee7af67db99adc6c5e59f680231c543155292cb4453df77",
+      "stageSHA256": "93e4ab99746eab53beccfb70d616eb0f5138b7d1af8376b76fd65f8723212753"
+    },
+    {
+      "phase": "package",
+      "jobSHA256": "893269ac8d75359d7ee7af67db99adc6c5e59f680231c543155292cb4453df77",
+      "stageSHA256": "ddaee3d3273f20e30c10d9aefe773b1cbd214f496fbc9bdce3939f09feceff76"
+    },
+    {
+      "phase": "explicit",
+      "jobSHA256": "893269ac8d75359d7ee7af67db99adc6c5e59f680231c543155292cb4453df77",
+      "stageSHA256": "ca61b1a8498715e654d6bc99b591bf36dfd29f0f48e74086e9e1ff9cdfb35577"
+    },
+    {
+      "phase": "bundled",
+      "jobSHA256": "893269ac8d75359d7ee7af67db99adc6c5e59f680231c543155292cb4453df77",
+      "stageSHA256": "c331f623cbea0818ccab7f79ac6bf12171a1a1352a4ec3ccbd6716c0dd136252"
+    }
+  ],
+  "explicitAndBundledRustHostQualifiedAtSource": true,
+  "typescriptExecutionQualified": false,
+  "newNativeDocExplainsOneAdditionalNativeAndVSIXMember": true,
+  "allCurrentGraphifyParityQualified": false,
+  "wholePlatformOrReleaseAccepted": false,
+  "localNativeImageReads": false,
+  "schemaVersion": 1,
+  "product": "Code Intelligence",
+  "nativeVersion": "0.5.0",
+  "retainedTypeScriptVersion": "0.3.0",
+  "runId": 41243681181,
+  "jobId": 124662716634,
+  "jobURL": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41243681181/job/124662716634",
+  "verificationReceiptSHA256": "1c64d0f134ea35896406c321b509db7d8c3079417f760283c17c2857313c3e27",
+  "sourceScope": "Exact published 6989862d before the subsequent CI-selection/documentation change",
+  "inventoryRaceObservedInAcceptedHostRun": false,
+  "localValidation": {
+    "pythonVersion": "3.14.7",
+    "nodeVersion": "24.21.0",
+    "pythonCommand": [
+      "python",
+      "-m",
+      "unittest",
+      "scripts.tests.test_vscode_owned_job",
+      "scripts.tests.test_vscode_output_usage",
+      "scripts.tests.test_host_vscode",
+      "scripts.tests.test_host_vscode_source_inventory",
+      "-v"
+    ],
+    "pythonPassed": 47,
+    "pythonFailures": 0,
+    "pythonInventoryCasesPassed": 11,
+    "controllerImported": false,
+    "controllerOrNativeImageExecuted": false,
+    "typecheckCommand": [
+      "npm.cmd",
+      "run",
+      "typecheck"
+    ],
+    "typecheckExitCode": 0,
+    "testCommand": [
+      "npm.cmd",
+      "test"
+    ],
+    "testExitCode": 0,
+    "tests": 269,
+    "passed": 266,
+    "failed": 0,
+    "skipped": 3,
+    "durationMs": 49578.3935,
+    "sourceSHA256": {
+      "scripts/vscode_owned_job.py": "e1066de142db615fd3b4b9c30f548c24d6c87f94aec4020c569d3b04cf732350",
+      "scripts/tests/test_vscode_owned_job.py": "ecc787461bc67b8704df504600bf947e2403c06031e23b5b62de1ebabca85413",
+      "scripts/tests/test_vscode_output_usage.py": "fcb2667a14a1eef7b80aaf67d7400d01b3c7cc711ff737226ff0593e0468ccc1",
+      "scripts/tests/test_host_vscode.py": "e76c9f9cce10e3ed9d3c75b44cc96db0aad747a38240037fe57e64e039576f01",
+      "scripts/tests/test_host_vscode_source_inventory.py": "0310993bd0ebac5f6a56cb96187988ce042e3732c462ecf321f575ecea132506",
+      "package.json": "5ac1fb7e1786ae38ef6036af6380b91ed9e37631da0fbd10227bc453c7a348fa",
+      "package-lock.json": "8035b57d7bc3effdaa9843695df353718fac6a848310887421bbd875d738db98",
+      "scripts/run-tests.mjs": "6487c752f6c340cf78b71b5ad46840aa00a34080acdf90ba3e423dda695c8419"
+    }
+  },
+  "followupCIGate": {
+    "job": "vscode-owned-job",
+    "command": "python -m unittest scripts.tests.test_vscode_owned_job scripts.tests.test_vscode_output_usage -v",
+    "timeoutMinutes": 1,
+    "precedesActualKernelProbe": true,
+    "hostedExecutionQualified": false
+  },
+  "limitations": [
+    "Selected source hashes match Git or explicit CRLF checkout forms; built/native/VSIX payloads were not independently opened locally.",
+    "Hosted text receipts report matching fresh producer, package checks and both real Rust host modes; TypeScript extension mode was not executed.",
+    "No browser, full upstream/backend parity, main merge or release acceptance is established."
+  ]
+}
