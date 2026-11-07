@@ -6125,3 +6125,41 @@ PR33 hosted jobs; those results are reused as exact-source evidence, not rerun.
 The combined native merge still requires its own hosted matrix. Main integration,
 human visual acceptance where applicable and production/release readiness remain
 open. Reproducible evidence: `validation/pr33-e38-green-merge-20261107/base-merge/`.
+
+### Atomic Store bootstrap candidate ? 2026-11-07
+
+PR32's `52d7a4d` Windows push aggregate admits 381/382 whole groups before
+refusing the incomplete compiler-body fixture shard. Its two Engine openings
+retain the original ten-second deadline and fail after entering SqlSetup or
+WorkspaceIdentity; exact SQL/OS scheduling causes are unrecorded. All 764 raw
+logs and 1,198 selected source hashes are independently bound to that source.
+The two failing cases do not reach their compiler assertions, and neither this
+receipt nor a later successful run alone establishes a compiler regression/fix.
+
+Store bootstrap now places its seven unchanged CREATE statements inside one
+explicit deferred SQLite transaction, instead of separate statement commits.
+WAL, foreign keys and synchronous=FULL remain configured outside the transaction.
+The original busy/progress handlers, parent/cancellation ceiling, physical locks,
+workspace-identity initialization, final deadline check and policy clearing stay
+intact. Deferred admission avoids reserving a writer before an existing-schema
+open actually needs one. Errors before commit drop the owned transaction under
+the driver's existing rollback behavior; no public schema format changes.
+
+Five new native regressions inspect real SQLite commit hooks and WAL databases:
+one bootstrap commit with all original objects/settings, refused-commit rollback
+and fresh-attempt recovery, pre-expired refusal, inherited cancellation before
+commit, and existing-schema read admission beside another uncommitted writer.
+These tests are authored and rustfmt-parsed, not compiled/executed locally. All
+existing opening-deadline/cancellation and compiler-fixture test bytes remain
+unchanged. The 101 npm/typecheck input blobs remain byte-identical to their
+prior hosted qualification; those results are reused, not rerun. New hosted
+native checks are required. This is an atomicity/commit-overhead improvement,
+not proof of the historical Windows stall's cause or a measured latency cure.
+No budget/assertion/ignore/durability/authority waiver or automatic retry is added.
+Main integration, full native acceptance and production/release readiness remain
+open. Evidence: `validation/pr32-52d-windows-aggregate-128276279500-20261107/`.
+
+SQLite transaction/WAL behavior and the pinned rusqlite rollback/commit-hook
+contracts: https://www.sqlite.org/lang_transaction.html,
+https://www.sqlite.org/wal.html,
+https://docs.rs/rusqlite/0.37.0/rusqlite/struct.Transaction.html.
