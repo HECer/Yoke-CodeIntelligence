@@ -291,3 +291,75 @@ test('partial EOF and preexisting unowned pending requests cannot become success
   await assert.rejects(pending.cdp.close(), /admission-or-assertion/);
   assert.deepEqual(pending.requests, []);
 });
+
+function afterPhaseFixture({viewport = 'desktop', failAt, invalidPending = false, wrongRead = false, scriptErrors = 0} = {}) {
+  // Execute the actual save orchestration against inert CDP/DOM/network doubles.
+  // This never starts a browser, provider or native process.
+  const source = fs.readFileSync(require.resolve('../host_history_browser.cjs'), 'utf8');
+  const body = source.slice(source.indexOf("  if (phase === 'after')"), source.indexOf("  if (phase === 'close')"));
+  const calls = [], draft = '\ufeffowned π 🦀 e\u0301\r\n';
+  const pages = ['desktop', 'mobile'].map(name => ({name, receipts: []}));
+  const failure = Error('private endpoint and capability must not become diagnostics');
+  const context = {phase: 'after', config: {variant: 'native'}, commands: viewport === 'desktop' ? 4 : 5,
+    value: {viewport, draft}, pages, checkpoint: 'phase-entry', observedViewport: 'none',
+    scriptErrors, consoleErrors: 0, Buffer, JSON, hash: value => require('node:crypto').createHash('sha256').update(value).digest('hex'),
+    need: value => { if (!value) throw Error('admission-or-assertion'); }};
+  const observe = kind => {
+    calls.push({kind, checkpoint: context.checkpoint, viewport: context.observedViewport});
+    if (context.checkpoint === failAt) throw failure;
+  };
+  Object.assign(context, {
+    click: async (p, selector) => { assert.equal(p.name, viewport); observe(selector); },
+    receipt: async (p, kind) => {
+      observe(kind);
+      if (kind === 'pending') return {journals: [], ...(invalidPending ? {complete: false} : {})};
+      if (kind === 'read') return {document: {content: wrongRead ? 'other' : draft, sha256: context.hash(Buffer.from(draft))}};
+      assert.equal(kind, 'apply'); return {};
+    },
+    load: async (p, discard) => { assert.equal(discard, true); observe('load'); },
+    draftAndReview: async (p, value) => { assert.equal(value, draft); observe('review'); return {id: 'a'.repeat(64)}; },
+    confirm: async (p, prefix) => { assert.equal(prefix, 'Save reviewed plan ' + 'a'.repeat(64)); observe('confirm'); },
+    until: async (p, expression) => {
+      assert.equal(expression, "document.getElementById('management-status').textContent.startsWith('Selected file saved.')");
+      observe('saved-state');
+    },
+    snapshot: async (p, state) => { assert.equal(state, 'after'); observe('snapshot'); return {}; },
+  });
+  vm.createContext(context);
+  vm.runInContext('this.run = async function(){\n' + body + '\n};', context);
+  return {run: () => context.run(), context, calls, failure, draft};
+}
+
+test('after-save observations retain both viewport operations and exact guarded readback', async () => {
+  for (const viewport of ['desktop', 'mobile']) {
+    const f = afterPhaseFixture({viewport});
+    const result = await f.run();
+    assert.equal(result.guardedSaveObserved, true);
+    assert.equal(result.exactReadBackSha256, f.context.hash(Buffer.from(f.draft)));
+    assert.deepEqual(f.calls.map(c => c.kind), ['#pending-documents', 'pending', 'load', 'review',
+      '#apply-document', 'confirm', 'apply', 'read', 'saved-state', 'snapshot']);
+    assert.ok(f.calls.every(c => c.viewport === viewport));
+    assert.equal(f.context.checkpoint, 'after-snapshot');
+  }
+});
+
+test('after-save failures retain their original refusal and identify only the fixed operation and viewport', async () => {
+  const checkpoints = ['after-pending-click', 'after-pending-receipt', 'after-load', 'after-review',
+    'after-save-click', 'after-save-confirm', 'after-apply-receipt', 'after-read-receipt',
+    'after-saved-state', 'after-snapshot'];
+  for (const viewport of ['desktop', 'mobile']) for (const failAt of checkpoints) {
+    const f = afterPhaseFixture({viewport, failAt});
+    await assert.rejects(f.run(), error => error === f.failure);
+    assert.equal(f.context.checkpoint, failAt);
+    assert.equal(f.context.observedViewport, viewport);
+    assert.equal(f.calls.at(-1).checkpoint, failAt);
+    assert.ok(f.calls.every(c => c.viewport === viewport));
+  }
+  for (const [options, expected] of [[{invalidPending: true}, 'after-pending-admission'],
+    [{wrongRead: true}, 'after-read-admission'], [{scriptErrors: 1}, 'after-script-errors']]) {
+    const f = afterPhaseFixture(options);
+    await assert.rejects(f.run(), /admission-or-assertion/);
+    assert.equal(f.context.checkpoint, expected);
+    assert.ok(f.calls.every(c => c.kind !== 'snapshot'));
+  }
+});

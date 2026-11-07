@@ -260,7 +260,11 @@ def report_driver_failure(value, phase):
         return
     allowed = {"phase-entry", "pending-refresh", "pending-click", "pending-receipt", "pending-admission",
                "pending-disabled", "pending-tab", "pending-repeat-click", "pending-repeat-receipt",
-               "pending-keyboard-focus", "pending-repeat-admission", "pending-snapshot"}
+               "pending-keyboard-focus", "pending-repeat-admission", "pending-snapshot",
+               "after-pending-click", "after-pending-receipt", "after-pending-admission", "after-load",
+               "after-review", "after-save-click", "after-save-confirm", "after-apply-receipt",
+               "after-read-receipt", "after-read-admission", "after-saved-state", "after-script-errors",
+               "after-snapshot"}
     shape = (set(value) == {"phase", "ok", "reason", "checkpoint", "viewport"}
              and value.get("phase") == phase and value.get("reason") == "real-browser-failed")
     checkpoint = value.get("checkpoint")

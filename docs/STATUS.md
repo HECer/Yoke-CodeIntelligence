@@ -7361,3 +7361,46 @@ remain unrun locally and require fresh hosted qualification. Earlier deadlines
 remain separately unexplained; main/release/full production readiness stay open.
 Failure-audit SHA-256:
 35f37f5352bc959d1195ce8f6ca95346306fb6d844b0bd758a3684e98bed8aa0.
+
+## PR26 Windows browser: post-resume save observations (2026-11-07)
+
+At integration head 8c7bd998f3111652fd49008dc716d470c50e2f57, the 74
+push/PR check runs finish with 70 successes, one failure and three conditional
+skips. PR run 42392620293 checks merge 7a2724a58c24ac6c7ae0a8e975df0d121182c78b;
+its full tree equals head tree 06557eb6f31dcf35e84b92dfd3f05712cd4d541c.
+Windows job 128474919828 passes whole native coverage, real Rust-analyzer and
+compiler attachment checks, the release build and original host-history CLI
+flow. The native owning-dashboard Edge exercise fails; the later Serena,
+persistent-Python, HTTP and tool-statistics browser exercises pass.
+
+The failed browser artifact has a verified ZIP digest and 1,200 selected source
+pins (42 exact Git bytes, 1,158 explained LF-to-CRLF matches). Four real PNG/DOM
+pairs retain the same reviewed draft; both pending viewports disable Review and
+Save and expose no recovery button. Actual desktop/mobile pending and mobile
+before images were inspected. This does not establish complete visual/browser
+acceptance. The worker reports save-desktop with driver checkpoint phase-entry
+and viewport none. Host resume/archive reads were reached, but no individual
+subsequent save operation, exception or underlying cause is identified.
+
+The harness now records thirteen closed after-save checkpoints and the selected
+desktop/mobile viewport. The observations distinguish pending inspection and
+admission, reload, review, click/confirmation, apply/read receipts, exact readback,
+saved-state/error checks and screenshot capture. No arbitrary data, URL, source,
+path or error string enters the labels. Removing only these observations recovers
+the original JavaScript exactly; removing the new closed labels recovers the
+original Python AST. All original calls, refusal conditions, time/resource limits,
+write permissions, recovery steps, cleanup and success requirements are retained.
+
+Two pure in-memory Node regressions fail on the old observations and pass with
+the change (15 total protocol cases pass). Forty pure/mocked Python cases pass,
+including an additive closed-label/privacy/refusal regression. These exercise
+only the harness doubles; no local native, browser, vendor, controller or worker
+runtime ran. All 101 Node package input blobs remain exact to the integration
+head whose hosted npm run typecheck and npm test steps pass. No new local npm
+run is claimed. Fresh new-head hosted native/browser/full CI is required.
+
+This is diagnostic instrumentation, not a proven browser repair or an acceptance
+waiver. No retry, skip, larger deadline, forced update or protection bypass is
+added. Main/release and full production readiness remain open.
+Failure-audit SHA-256:
+edc3593f6aba3a274f0b7d2317ce1d260a05f65867bb0738ac343a137a6c72e3.

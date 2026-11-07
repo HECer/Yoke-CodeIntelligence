@@ -500,22 +500,36 @@ async function run(value) {
     if (config.variant === 'tool-usage') return statistics.after(pages, value.viewport, value.counts);
     need(typeof value.draft === 'string' && Buffer.byteLength(value.draft) <= 64000);
     const p = pages.find(p => p.name === value.viewport);
+    observedViewport = p.name;
     const since = p.receipts.length;
+    checkpoint = 'after-pending-click';
     await click(p, '#pending-documents');
+    checkpoint = 'after-pending-receipt';
     const pending = await receipt(p, 'pending', since);
     // The live global API omits complete when ordinary unblocked journals are
     // available; an absent field is never reinterpreted as proof of completeness.
+    checkpoint = 'after-pending-admission';
     need(pending.blockedByHistoryArchive !== true && pending.complete !== false && Array.isArray(pending.journals));
+    checkpoint = 'after-load';
     await load(p, true);
+    checkpoint = 'after-review';
     const plan = await draftAndReview(p, value.draft);
     const prior = p.receipts.length;
+    checkpoint = 'after-save-click';
     await click(p, '#apply-document');
+    checkpoint = 'after-save-confirm';
     await confirm(p, 'Save reviewed plan ' + plan.id);
+    checkpoint = 'after-apply-receipt';
     await receipt(p, 'apply', prior);
+    checkpoint = 'after-read-receipt';
     const read = await receipt(p, 'read', prior);
+    checkpoint = 'after-read-admission';
     need(read.document.content === value.draft && read.document.sha256 === hash(Buffer.from(value.draft)));
+    checkpoint = 'after-saved-state';
     await until(p, `document.getElementById('management-status').textContent.startsWith('Selected file saved.')`);
+    checkpoint = 'after-script-errors';
     need(!scriptErrors && !consoleErrors);
+    checkpoint = 'after-snapshot';
     return {planId: plan.id, ...await snapshot(p, 'after'), guardedSaveObserved: true,
       exactReadBackSha256: hash(Buffer.from(read.document.content)), scriptErrors, consoleErrors};
   }
