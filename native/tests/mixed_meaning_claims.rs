@@ -1,7 +1,4 @@
 //! Checked quotations qualify host-submitted observations, never semantic truth.
-#[cfg(target_os = "macos")]
-#[path = "support/memory_budget.rs"]
-mod memory_budget;
 use serde_json::{Value, json};
 use std::{fs, io::Read, process::Command};
 use yoke::{
@@ -14,6 +11,8 @@ use yoke::{
 #[path = "support/mixed_pdf_fixture.rs"]
 mod support;
 use support::*;
+#[path = "support/memory_replay.rs"]
+mod memory_replay;
 
 fn loaded(f: &Fixture, d: &Deadline) -> mixed_view::CheckedMixedView {
     mixed_view::load_with_pdf(
@@ -317,30 +316,7 @@ fn mixed_claims_cli_requires_checked_inputs_and_closed_data_before_store_initial
         String::from_utf8_lossy(&result.stderr)
     );
     let result: Value = serde_json::from_slice(&result.stdout).unwrap();
-    let compared = result["inputs"].clone();
-    #[cfg(target_os = "macos")]
-    let compared = {
-        let mut compared = compared;
-        let current = compared["mixedView"]["pdfs"].as_array_mut().unwrap();
-        let original = input["mixedView"]["pdfs"].as_array().unwrap();
-        assert_eq!(current.len(), original.len());
-        for (current, original) in current.iter_mut().zip(original) {
-            // Separate live extractions have independent VM observations. Prove
-            // each report before comparing all stable input/provenance fields.
-            for report in [&current["resourceLimits"], &original["resourceLimits"]] {
-                memory_budget::assert_report(report, "memoryBytes");
-                assert_eq!(report["cpuSeconds"], 20);
-            }
-            current["resourceLimits"]["memoryBytes"] =
-                original["resourceLimits"]["memoryBytes"].clone();
-            for field in ["baselineVirtualBytes", "ceilingBytes"] {
-                current["resourceLimits"]["memoryBudget"][field] =
-                    original["resourceLimits"]["memoryBudget"][field].clone();
-            }
-        }
-        compared
-    };
-    assert_eq!(compared, input);
+    memory_replay::assert_inputs(result["inputs"].clone(), input);
     let denied = run(&f.engine.root, false);
     assert!(!denied.status.success());
     assert!(denied.stdout.is_empty());

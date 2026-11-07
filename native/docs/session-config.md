@@ -530,15 +530,21 @@ adding a new HostProfile policy: encoding null/utf-8/UTF-8/utf8/UTF8, an unset
 activation_command, null/default 180 activation_command_timeout, null/LSP
 language_backend and null/empty ls_additional_workspace_folders. Source receipts
 conditionally identify these nativeEquivalentDefaults and nativeDefaultCapabilities.
-Other source encodings and JetBrains return named unavailable errors.
+These receipt fields describe equivalent defaults, not the full selected-codec
+catalog. Explicit [selected source encodings](source-encodings.md) project strict
+UTF-8-SIG, ASCII, Latin1, Windows-1252, UTF-16 and UTF-32 policies, including their
+documented byte-order variants. Original raw bytes remain authoritative;
+unsupported codec values, proof consumers and provider combinations refuse.
+JetBrains remains unavailable through this language-backend selection.
 Nonempty activation commands and positive-number timeouts now project inert
 global/project/local declarations. Actual execution requires a separately
 selected nonserializable runtime grant and the CLI's independent host switch;
 see [activation commands](project-activation.md). Captured-relative
 additional folders are supported separately below; external folders remain unavailable.
-Inactive/default values retain their exact previous projection. No transcoding,
-automatic project execution during configuration projection or
-extra source/workspace authority occurs. Empty activation strings also refuse.
+Inactive/default values retain their exact previous projection. Configuration
+projection performs no transcoding or automatic project execution and grants no
+extra source/workspace authority. Explicit selected-codec decoding and prepared
+edit encoding follow their separate contract. Empty activation strings also refuse.
 
 Public added_modes:null means no added modes from that layer, retaining lower
 layer additions; it is equivalent to an empty added_modes list. Nonempty lists

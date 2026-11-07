@@ -1134,6 +1134,9 @@ pub fn load_checked(
 ) -> Result<CheckedGraph> {
     load_impl(store, id, pdf_worker, d).map_err(|e| sanitized(e, d))
 }
+#[path = "mixed_meaning_replay.rs"]
+mod replay;
+
 fn load_impl(
     store: &Store,
     id: &str,
@@ -1147,15 +1150,12 @@ fn load_impl(
         reply_for_job(store, &job, d)?.ok_or_else(|| failure("mixed_meaning_record_invalid"))?;
     let view = job.selection.load(store, pdf_worker, d)?;
     let inputs = view.prepare_meaning_inputs(&job.request, d)?;
-    let mut replayed = inputs.export(MAX_OUTPUT_BYTES, d)?;
-    resource_replay::retain(&mut replayed, &saved, &mut || check(d))?;
     input(
         inputs.input_hash() == job.prepared_input_hash
-            && replayed == saved
+            && replay::same_inputs(inputs.export(MAX_OUTPUT_BYTES, d)?, &saved, d)?
             && inputs.provider_payload(&job.contract_hash, d)? == payload
             && same(&bindings(&inputs), &job.bindings, d)?,
     )?;
-    drop(replayed);
     let roots = parent_roots(store, &view, d)?;
     input(
         roots.snapshots == job.parent_snapshots

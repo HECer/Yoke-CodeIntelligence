@@ -84,6 +84,9 @@ struct Cli {
     /// Evaluate explicitly selected host prompts in session responses.
     #[arg(long, global = true)]
     allow_session_templates: bool,
+    /// Confirm exactly pinned authored notes as mandatory Session instructions.
+    #[arg(long, global = true)]
+    allow_required_prompt_memories: bool,
     #[arg(long, global = true)]
     language_server_config: Option<PathBuf>,
     #[arg(long, global = true)]
@@ -893,6 +896,11 @@ impl From<ParsedOperation> for Operation {
 }
 #[derive(Subcommand)]
 enum GraphOperation {
+    /// Admit one explicit host file against an existing captured snapshot.
+    ImportSourceClaims {
+        #[arg(long)]
+        input: PathBuf,
+    },
     Build {
         #[arg(long)]
         options: Option<PathBuf>,
@@ -2154,6 +2162,22 @@ fn run_parity(
         }
         ExtensionOperation::Graph { command } => {
             match command {
+                GraphOperation::ImportSourceClaims { input } => {
+                    ensure!(
+                        arguments["snapshotId"]
+                            .as_str()
+                            .is_some_and(yoke::model::valid_id),
+                        "Declared source import requires an explicit existing snapshot"
+                    );
+                    let (snapshot, graph) = engine.select(arguments, deadline)?;
+                    print(&yoke::graph_view::source_claims::import_file(
+                        &engine.store,
+                        &snapshot,
+                        &graph,
+                        &input,
+                        deadline,
+                    )?)?;
+                }
                 GraphOperation::Build { options } => {
                     let options = options
                         .map(|path| -> Result<yoke::graph_view::BuildOptions> {
@@ -2321,7 +2345,12 @@ fn session_host_profile(
         })
         .transpose()?
         .unwrap_or_default();
-    session_config_cli::bind_prompt_runtime(&mut host, host_options.allow_templates, deadline)?;
+    session_config_cli::bind_prompt_runtime(
+        &mut host,
+        host_options.allow_templates,
+        host_options.allow_required_memories,
+        deadline,
+    )?;
     host_options.tool_usage.bind(&mut host, deadline)?;
     host_options.activation.bind(&mut host, root, deadline)?;
     Ok(host)
@@ -2873,6 +2902,7 @@ fn invoke_model_operation(
 }
 struct SessionHostOptions<'a> {
     allow_templates: bool,
+    allow_required_memories: bool,
     activation: &'a project_activation_cli::Arguments,
     tool_usage: &'a tool_usage_cli::Arguments,
 }
@@ -3305,9 +3335,7 @@ fn run_http(
     args: &HttpServeArguments,
     trust_servers: bool,
     allow_writes: bool,
-    allow_session_templates: bool,
-    activation: &project_activation_cli::Arguments,
-    tool_usage: &tool_usage_cli::Arguments,
+    host_options: &SessionHostOptions<'_>,
 ) -> Result<bool> {
     ensure!(
         args.trust_service,
@@ -3331,7 +3359,7 @@ fn run_http(
             "activation_session_profile_required"
         );
         ensure!(
-            principal.host_profile.prompt_templates.is_none() || allow_session_templates,
+            principal.host_profile.prompt_templates.is_none() || host_options.allow_templates,
             "session_prompt_host_permission_required"
         );
         ensure!(
@@ -3340,6 +3368,16 @@ fn run_http(
         );
         if let Some(config) = &principal.host_profile.prompt_templates {
             config.validate(&Deadline::new(host.request_timeout_ms))?;
+        }
+        if let Some(policy) = &principal.host_profile.required_prompt_memories {
+            ensure!(
+                host_options.allow_required_memories,
+                "required_memory_host_confirmation_required"
+            );
+            policy.validate(
+                &principal.host_profile,
+                &Deadline::new(host.request_timeout_ms),
+            )?;
         }
 
         ensure!(
@@ -3430,16 +3468,17 @@ fn run_http(
         }
     }
     for principal in &mut host.principals {
-        tool_usage.bind(
+        host_options.tool_usage.bind(
             &mut principal.host_profile,
             &Deadline::new(host.request_timeout_ms),
         )?;
         session_config_cli::bind_prompt_runtime(
             &mut principal.host_profile,
-            allow_session_templates,
+            host_options.allow_templates,
+            host_options.allow_required_memories,
             &Deadline::new(host.request_timeout_ms),
         )?;
-        activation.bind(
+        host_options.activation.bind(
             &mut principal.host_profile,
             principal.root.as_deref().unwrap_or(root),
             &Deadline::new(host.request_timeout_ms),
@@ -3614,7 +3653,7 @@ fn run(cli: Cli) -> Result<bool> {
         "activation_host_route_required"
     );
     ensure!(
-        !cli.allow_session_templates
+        !(cli.allow_session_templates || cli.allow_required_prompt_memories)
             || matches!(&operation,Operation::Extensions(ext) if matches!(ext.as_ref(),ExtensionOperation::Session{..}|ExtensionOperation::ServeSession(_)|ExtensionOperation::ServeHttp(_)|ExtensionOperation::AgentRepl(_))),
         "session_prompt_host_route_required"
     );
@@ -4467,9 +4506,12 @@ fn run(cli: Cli) -> Result<bool> {
             args,
             cli.trust_servers,
             cli.allow_writes,
-            cli.allow_session_templates,
-            &cli.activation,
-            &cli.tool_usage,
+            &SessionHostOptions {
+                allow_templates: cli.allow_session_templates,
+                allow_required_memories: cli.allow_required_prompt_memories,
+                activation: &cli.activation,
+                tool_usage: &cli.tool_usage,
+            },
         );
     }
     if let Operation::Credentials { ref command } = operation {
@@ -4767,6 +4809,7 @@ fn run(cli: Cli) -> Result<bool> {
     let deadline = Deadline::new(cli.timeout);
     let host_options = SessionHostOptions {
         allow_templates: cli.allow_session_templates,
+        allow_required_memories: cli.allow_required_prompt_memories,
         activation: &cli.activation,
         tool_usage: &cli.tool_usage,
     };
