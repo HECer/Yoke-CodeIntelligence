@@ -22,6 +22,10 @@ use std::{
 };
 use url::Url;
 
+#[path = "lsp_error_stages.rs"]
+mod error_stages;
+use error_stages::{ProviderStage, annotate as provider_error};
+
 #[path = "lsp_refactor_intents.rs"]
 mod refactor_intents;
 pub(crate) use refactor_intents::stage_move_intent_at;
@@ -2186,8 +2190,11 @@ fn run_at_internal(
     directory: Option<&changes::SelectedDirectoryMove>,
     deadline: &Deadline,
 ) -> Result<Value> {
-    check_semantic_manifests(engine, snapshot, graph, deadline)?;
-    let selected = engine.selected_provider(request.path)?;
+    check_semantic_manifests(engine, snapshot, graph, deadline)
+        .map_err(|error| provider_error(error, ProviderStage::SourceManifests))?;
+    let selected = engine
+        .selected_provider(request.path)
+        .map_err(|error| provider_error(error, ProviderStage::ProviderSelection))?;
     ensure!(
         !engine.automatic_backend_selection || selected.is_some(),
         "language_auto_no_selected_provider_for_path"
@@ -2197,10 +2204,13 @@ fn run_at_internal(
         .map(|(_, p)| (&p.server, Some(&p.configuration)))
         .unwrap_or(host);
     ensure!(host.0.trust, "Language server trust is required");
-    let configuration = effective_host_configuration(engine, snapshot, host.1, deadline)?;
+    let configuration = effective_host_configuration(engine, snapshot, host.1, deadline)
+        .map_err(|error| provider_error(error, ProviderStage::HostConfiguration))?;
     let host = (host.0, configuration.as_ref());
-    validate_passive_host(host.0, host.1, deadline)?;
-    let profile = server_profile(host.0, host.1, deadline)?;
+    validate_passive_host(host.0, host.1, deadline)
+        .map_err(|error| provider_error(error, ProviderStage::PassiveAdmission))?;
+    let profile = server_profile(host.0, host.1, deadline)
+        .map_err(|error| provider_error(error, ProviderStage::ProfileBinding))?;
     let profile_hash =
         selected_profile_hash(&profile, selected.as_ref().map(|(id, _)| id.as_str()));
     let encoding = crate::source_encoding::selected(&engine.store, snapshot)?;
@@ -2217,7 +2227,8 @@ fn run_at_internal(
     let path = request.path;
     let mut value = run_at_unprofiled(
         engine, host, snapshot, graph, request, options, staged, directory, deadline,
-    )?;
+    )
+    .map_err(|error| provider_error(error, ProviderStage::RequestDispatch))?;
     value["serverProfileHash"] = json!(profile_hash);
     if let Some(policy) = encoding {
         value["sourceEncodingPolicy"] = json!(policy);
@@ -2826,7 +2837,8 @@ fn initialize_provider_at(
     }
     #[cfg(test)]
     test_startup_phases::record(test_startup_phases::Phase::MaterializeBegin);
-    changes::materialize_source_views(&engine.store, snapshot, tree.path(), &exclusions, deadline)?;
+    changes::materialize_source_views(&engine.store, snapshot, tree.path(), &exclusions, deadline)
+        .map_err(|error| provider_error(error, ProviderStage::Materialize))?;
     #[cfg(test)]
     test_startup_phases::record(test_startup_phases::Phase::MaterializeEnd);
     #[cfg(test)]
@@ -2834,9 +2846,11 @@ fn initialize_provider_at(
     let mut session = if let Some(endpoint) =
         configuration.and_then(|configuration| configuration.tcp_endpoint)
     {
-        Session::connect(server, endpoint, deadline)?
+        Session::connect(server, endpoint, deadline)
+            .map_err(|error| provider_error(error, ProviderStage::TransportConnect))?
     } else {
-        Session::spawn_scoped(server, tree.path(), passive_rust, deadline)?
+        Session::spawn_scoped(server, tree.path(), passive_rust, deadline)
+            .map_err(|error| provider_error(error, ProviderStage::TransportSpawn))?
     };
     #[cfg(test)]
     test_startup_phases::record(test_startup_phases::Phase::TransportReady);
@@ -2966,7 +2980,9 @@ fn initialize_provider_at(
     }
     #[cfg(test)]
     test_startup_phases::record(test_startup_phases::Phase::InitializeBegin);
-    let initialization = session.request("initialize", initialize, deadline)?;
+    let initialization = session
+        .request("initialize", initialize, deadline)
+        .map_err(|error| provider_error(error, ProviderStage::Initialize))?;
     #[cfg(test)]
     test_startup_phases::record(test_startup_phases::Phase::InitializeReady);
     let capabilities = initialization["capabilities"].clone();
@@ -3015,7 +3031,7 @@ fn initialize_provider_at(
     session.notify(
         "textDocument/didOpen",
         json!({"textDocument":{"uri":document_uri,"languageId":language,"version":1,"text":text}}),
-    )?;
+    ).map_err(|error| provider_error(error, ProviderStage::TargetOpen))?;
     #[cfg(test)]
     test_startup_phases::record(test_startup_phases::Phase::TargetOpenEnd);
     if Path::new(&server.command)
@@ -3077,7 +3093,8 @@ fn run_at_unprofiled(
         new_name,
     } = request;
     ensure!(server.trust, "Language server trust is required");
-    let source_view = query::source_view(&engine.store, snapshot, path)?;
+    let source_view = query::source_view(&engine.store, snapshot, path)
+        .map_err(|error| provider_error(error, ProviderStage::SourceView))?;
     let text = source_view.text();
     let content_hash = &snapshot
         .files
@@ -3106,7 +3123,8 @@ fn run_at_unprofiled(
         text,
         target_language,
         deadline,
-    )?;
+    )
+    .map_err(|error| provider_error(error, ProviderStage::ProviderSetup))?;
     if operation == "capabilities" {
         let declared = capabilities["codeActionProvider"].get("codeActionKinds");
         let kinds = declared
@@ -3275,8 +3293,9 @@ fn run_at_unprofiled(
             // This installed provider family publishes the diagnostics required by
             // its quick-fix resolver. Other unmeasured families are not inferred.
             let scope = crate::capture::source_scope_policy(&engine.store, snapshot)?;
-            let publication =
-                session.await_diagnostics(tree.path(), snapshot, &scope, path, deadline)?;
+            let publication = session
+                .await_diagnostics(tree.path(), snapshot, &scope, path, deadline)
+                .map_err(|error| provider_error(error, ProviderStage::PublishedDiagnostics))?;
             ensure!(
                 publication
                     .get("version")
@@ -3335,8 +3354,9 @@ fn run_at_unprofiled(
     test_startup_phases::record(test_startup_phases::Phase::OperationBegin);
     let mut response = if push_diagnostics {
         let scope = crate::capture::source_scope_policy(&engine.store, snapshot)?;
-        let publication =
-            session.await_diagnostics(tree.path(), snapshot, &scope, path, deadline)?;
+        let publication = session
+            .await_diagnostics(tree.path(), snapshot, &scope, path, deadline)
+            .map_err(|error| provider_error(error, ProviderStage::PublishedDiagnostics))?;
         ensure!(
             publication
                 .get("version")
@@ -3345,7 +3365,9 @@ fn run_at_unprofiled(
         );
         json!({"kind":"full","items":publication["diagnostics"],"version":publication["version"]})
     } else {
-        session.request(method, params, deadline)?
+        session
+            .request(method, params, deadline)
+            .map_err(|error| provider_error(error, ProviderStage::RequestReply))?
     };
     #[cfg(test)]
     test_startup_phases::record(test_startup_phases::Phase::OperationReply);

@@ -7404,3 +7404,52 @@ waiver. No retry, skip, larger deadline, forced update or protection bypass is
 added. Main/release and full production readiness remain open.
 Failure-audit SHA-256:
 edc3593f6aba3a274f0b7d2317ce1d260a05f65867bb0738ac343a137a6c72e3.
+
+## PR25 Windows diagnostics: preserve refusals with provider phases (2026-11-07)
+
+The green notification for 636eebae9923d485c0891dbca0c02db42c3567d5 does
+not describe every push result. The full 74-run set contains 69 successes, two
+failures and three conditional skips. Both failures belong to Windows push run
+42413460446: shard zero fails one native target and the aggregate correctly
+refuses incomplete coverage. Later browser uploads have no files because the
+acceptance steps did not run; they are not additional executed browser failures.
+
+Artifact 13590787436 and its ZIP digest, all 90 raw-log lengths/digests, selected
+inventory/partition/weights and 1,200 source pins verify (42 exact Git bytes,
+1,158 explained CRLF-only). Shard zero has 44 of 45 successful whole groups.
+The five-case agent_diagnostic_boundaries target has three passes and two
+deadline failures, with no ignored or filtered cases. The original line-zero
+inspection and direct-diagnostics cases fail before their range/EOF assertions.
+Session opening takes 140.4947 ms and 3.6215 ms; failed operation elapsed times
+are 20.0609717 s and 20.0024636 s under unchanged 20-second deadlines. The
+46.27-second result is the whole target duration. The available UDP observer
+receives zero packets; provider startup, transport phase and OS cause remain
+unproven. The first aggregate conjunct is not established from retained inputs,
+but this incomplete receipt cannot satisfy the unchanged completeness guard.
+
+The LSP path now adds only closed provider-phase contexts to existing errors.
+Sixteen error-only hooks distinguish source/selection/configuration/passive
+admission, command-profile binding, source lookup, materialization, transport
+creation, initialization, document opening and request/diagnostic reply paths.
+The original outer Display and typed causes are retained exactly, so flattened
+public NativeJson messages and existing classification do not change. Only
+callers already formatting the full error chain see the constant labels. No
+caller, source, path, URI, command, expression or protocol data is added. This
+does not make the direct facade retain an error chain it previously flattened.
+
+An additive native unit regression covers all fifteen phases with nested
+permission/interruption/timeout/capacity-like I/O causes, real expired Deadline
+refusals and unchanged successful values. It is authored but uncompiled/unrun
+locally. Pinned Rustfmt parsing/format and constructive source/whitespace guards
+pass. Removing only the new error mappings and module declaration, then applying
+the same formatter, recovers the complete original LSP source exactly. The
+original five-case test, fixture, assertions, time limits and cleanup are intact.
+All 101 Node inputs remain exact to the head whose hosted typecheck/npm tests
+pass; no new local npm/native/vendor/controller/worker/editor run is claimed.
+
+This is diagnostic instrumentation, not a proven timeout repair. No retry,
+prewarming, ignore, deadline/resource increase, authority/recovery waiver or
+force update is added. Fresh complete push and PR native/browser/VSIX acceptance
+is required before integration into PR23. Main/release/full production readiness
+remain open. Failure-audit SHA-256:
+61703187b1c9140698d6af71558baab1e4212ace2e66ef96198895fb8b946003.
