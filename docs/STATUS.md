@@ -6194,3 +6194,34 @@ Rustfmt is the local parse/format check; npm/typecheck inputs remain unchanged
 and previous hosted source qualification is reused, not rerun. Fresh native CI
 is required before any next merge. Full production/release readiness remains open.
 Evidence: `validation/pr30-638-windows-128307001707-20261107/`.
+
+### Complete ingress capacity refusal followed by reset - 2026-11-07
+
+Delayed PR30 `6382fa4` macOS shard5 (42338304408/128300127202)
+contains 47/48 passing groups. github_app_ingress reports 21 passed and one
+fixture read failure: ConnectionReset/OS54 after 203 retained bytes with a 503
+status prefix and header end117, at898.125 microseconds. The original trace does
+not retain the response body or its declared length; completeness is not inferred
+from these counts. The old test never reaches its 503/750ms/no-queue assertions.
+The tested PR merge `cd65bd3` has the exact `6382fa4` source tree. This fixture is
+unchanged by the intervening arXiv candidate `6f2b379`.
+
+Only the owned test client's transport adapter changes. It preserves a reset
+only after an exact complete Content-Length-framed capacity-refusal response:
+503, the expected finite headers, accepted=false/complete=false and the exact
+capacity error, no extra/pipelined data. Partial/malformed/mismatched responses
+and every other transport error still panic. The real capacity case additionally
+requires the complete refusal profile; its original 503 assertion,750ms bound,
+empty durable queue and owned shutdown remain. Production bytes are unchanged.
+
+Three pure reader regressions cover complete EOF/reset responses, all truncated
+prefixes, malformed/duplicate/absent framing, wrong payload/status, pipelining and
+non-reset errors. They are authored, not compiled/run locally. Pinned Rustfmt
+and static diff checks are the local validation; the 101 npm/typecheck inputs
+remain unchanged and prior hosted source qualification is reused, not rerun.
+Fresh exact-head native CI and downstream production/release readiness remain
+required; no timeout, functional assertion, ignore or production close policy is
+relaxed. Evidence: `validation/pr30-638-macos5-128300127202-20261107/`.
+
+Read/error and framing contracts: https://doc.rust-lang.org/std/io/trait.Read.html#method.read_to_end,
+https://www.rfc-editor.org/rfc/rfc9112.html#section-6.3

@@ -69,8 +69,39 @@ fn exchange(address: SocketAddr, raw: &[u8]) -> Vec<u8> {
         .set_write_timeout(Some(Duration::from_secs(3)))
         .unwrap();
     socket.write_all(raw).unwrap();
+    read_owned_response(&mut socket, started)
+}
+fn complete_capacity_refusal(raw: &[u8]) -> bool {
+    if raw.len() > 4096 {
+        return false;
+    }
+    let Some(end) = raw.windows(4).position(|bytes| bytes == b"\r\n\r\n") else {
+        return false;
+    };
+    let body = &raw[end + 4..];
+    // This fixture expects the owning server's finite JSON response profile,
+    // not arbitrary close-delimited, chunked, duplicated or pipelined data.
+    let expected = format!(
+        "HTTP/1.1 503 Yoke\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\nCache-Control: no-store\r\n\r\n",
+        body.len()
+    );
+    &raw[..end + 4] == expected.as_bytes()
+        && serde_json::from_slice::<Value>(body).ok()
+            == Some(
+                json!({"accepted":false,"error":"github_app_connection_capacity_exceeded","complete":false}),
+            )
+}
+fn read_owned_response(reader: &mut impl Read, started: Instant) -> Vec<u8> {
     let mut result = Vec::new();
-    socket.read_to_end(&mut result).unwrap_or_else(|error| {
+    reader.read_to_end(&mut result).unwrap_or_else(|error| {
+        // A peer rejecting an unread request may reset after its complete
+        // refusal. Preserve only the exact, fully framed capacity response.
+        // Every partial response and every other error still fails below.
+        if error.kind() == std::io::ErrorKind::ConnectionReset
+            && complete_capacity_refusal(&result)
+        {
+            return result.len();
+        }
         let header_end = result
             .windows(4)
             .position(|bytes| bytes == b"\r\n\r\n")
@@ -368,13 +399,9 @@ fn connection_capacity_does_not_queue_unbounded_stalled_workers() {
     stalled.write_all(&first[..end + 1]).unwrap();
     std::thread::sleep(Duration::from_millis(100));
     let now = Instant::now();
-    assert_eq!(
-        status(&exchange(
-            address,
-            &request(address, &raw, "pull_request", 2)
-        )),
-        503
-    );
+    let wire = exchange(address, &request(address, &raw, "pull_request", 2));
+    assert_eq!(status(&wire), 503);
+    assert!(complete_capacity_refusal(&wire));
     assert!(now.elapsed() < Duration::from_millis(750));
     assert!(f.records().is_empty());
     f.stop();
@@ -992,4 +1019,96 @@ fn owned_shutdown_also_interrupts_a_stalled_tls_handshake() {
     let _released = std::net::TcpListener::bind(address)
         .expect("shutdown must release its exact listening address");
     assert!(f.records().is_empty());
+}
+
+fn capacity_test_wire(body: &[u8]) -> Vec<u8> {
+    let mut wire = format!("HTTP/1.1 503 Yoke\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\nCache-Control: no-store\r\n\r\n", body.len()).into_bytes();
+    wire.extend_from_slice(body);
+    wire
+}
+struct EndingReader {
+    bytes: std::io::Cursor<Vec<u8>>,
+    error: std::io::ErrorKind,
+}
+impl Read for EndingReader {
+    fn read(&mut self, buffer: &mut [u8]) -> std::io::Result<usize> {
+        let count = self.bytes.read(buffer)?;
+        if count == 0 && !buffer.is_empty() {
+            Err(self.error.into())
+        } else {
+            Ok(count)
+        }
+    }
+}
+fn read_with_ending_error(wire: &[u8], error: std::io::ErrorKind) -> Vec<u8> {
+    read_owned_response(
+        &mut EndingReader {
+            bytes: std::io::Cursor::new(wire.to_vec()),
+            error,
+        },
+        Instant::now(),
+    )
+}
+const CAPACITY_BODY: &[u8] = b"{\"accepted\":false,\"complete\":false,\"error\":\"github_app_connection_capacity_exceeded\"}\n";
+#[test]
+fn ingress_fixture_preserves_complete_capacity_refusal_followed_by_reset() {
+    let wire = capacity_test_wire(CAPACITY_BODY);
+    assert!(complete_capacity_refusal(&wire));
+    assert_eq!(
+        read_with_ending_error(&wire, std::io::ErrorKind::ConnectionReset),
+        wire
+    );
+    assert_eq!(
+        read_owned_response(&mut std::io::Cursor::new(wire.clone()), Instant::now()),
+        wire
+    );
+}
+#[test]
+fn ingress_fixture_refuses_every_truncated_capacity_response() {
+    let wire = capacity_test_wire(CAPACITY_BODY);
+    for end in 0..wire.len() {
+        assert!(
+            !complete_capacity_refusal(&wire[..end]),
+            "accepted prefix length {end}"
+        );
+    }
+    for end in [0, 117, wire.len() - 1] {
+        assert!(
+            std::panic::catch_unwind(|| read_with_ending_error(
+                &wire[..end],
+                std::io::ErrorKind::ConnectionReset
+            ))
+            .is_err()
+        );
+    }
+}
+#[test]
+fn ingress_fixture_refuses_wrong_frames_and_other_transport_errors() {
+    let wire = capacity_test_wire(CAPACITY_BODY);
+    let text = std::str::from_utf8(&wire).unwrap();
+    let mut extra = wire.clone();
+    extra.extend_from_slice(b"HTTP/1.1 503 Yoke\r\n\r\n");
+    for bad in [
+        text.replace("503", "202").into_bytes(),
+        text.replace("Content-Length:", "Transfer-Encoding: chunked\r\nContent-Length:").into_bytes(),
+        text.replace("Content-Length: 86", "Content-Length: 85").into_bytes(),
+        text.replace("Content-Length: 86", "Content-Length: 86\r\nContent-Length: 86").into_bytes(),
+        text.replace("Content-Length: 86\r\n", "").into_bytes(),
+        capacity_test_wire(b"not JSON"),
+        capacity_test_wire(br#"{"accepted":true,"complete":false,"error":"github_app_connection_capacity_exceeded"}"#),
+        capacity_test_wire(br#"{"accepted":false,"complete":true,"error":"github_app_connection_capacity_exceeded"}"#),
+        capacity_test_wire(br#"{"accepted":false,"complete":false,"error":"another_refusal"}"#),
+        extra,
+    ] {
+        assert!(!complete_capacity_refusal(&bad));
+        assert!(std::panic::catch_unwind(|| read_with_ending_error(&bad, std::io::ErrorKind::ConnectionReset)).is_err());
+    }
+    for kind in [
+        std::io::ErrorKind::TimedOut,
+        std::io::ErrorKind::WouldBlock,
+        std::io::ErrorKind::UnexpectedEof,
+        std::io::ErrorKind::BrokenPipe,
+    ] {
+        assert!(std::panic::catch_unwind(|| read_with_ending_error(&wire, kind)).is_err());
+    }
 }
