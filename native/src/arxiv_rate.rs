@@ -481,12 +481,26 @@ mod tests {
         let permit = admit(&path, true, &deadline()).unwrap();
         permit.complete().unwrap();
     }
+    fn owned_pending_bytes(permit: &mut Permit) -> Vec<u8> {
+        // Windows byte-range locks also reject a second handle in this process.
+        // Observe through the still-exclusive owner, without unlocking or writing.
+        let position = permit._file.stream_position().unwrap();
+        permit._file.seek(SeekFrom::Start(0)).unwrap();
+        let mut bytes = Vec::new();
+        (&mut permit._file)
+            .take(129)
+            .read_to_end(&mut bytes)
+            .unwrap();
+        permit._file.seek(SeekFrom::Start(position)).unwrap();
+        assert!(bytes.len() <= 128);
+        bytes
+    }
     #[test]
     fn expired_post_journal_handoff_finishes_owned_attempt_and_keeps_cooldown() {
         let dir = tempfile::tempdir().unwrap();
         let path = dir.path().join("arxiv-rate-v1.bin");
-        let permit = admit(&path, true, &deadline()).unwrap();
-        let pending = fs::read(&path).unwrap();
+        let mut permit = admit(&path, true, &deadline()).unwrap();
+        let pending = owned_pending_bytes(&mut permit);
         assert_eq!(state(&pending).unwrap().unwrap().0, 1);
         let error = permit.checked_admission(&Deadline::new(0)).err().unwrap();
         assert_eq!(error.to_string(), "source_acquisition_deadline_exceeded");
@@ -537,7 +551,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let path = dir.path().join("arxiv-rate-v1.bin");
         let mut permit = admit(&path, true, &deadline()).unwrap();
-        let pending = fs::read(&path).unwrap();
+        let pending = owned_pending_bytes(&mut permit);
         // Refuse completion deterministically, without changing the host clock
         // or its durable journal. This models the existing clock guard failing.
         permit.millis = u64::MAX;

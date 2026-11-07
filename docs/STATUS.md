@@ -6225,3 +6225,37 @@ relaxed. Evidence: `validation/pr30-638-macos5-128300127202-20261107/`.
 
 Read/error and framing contracts: https://doc.rust-lang.org/std/io/trait.Read.html#method.read_to_end,
 https://www.rfc-editor.org/rfc/rfc9112.html#section-6.3
+
+### Cross-platform test ownership follow-up - 2026-11-07
+
+PR30 `b87b3ab` has independent Windows and macOS failures. Windows push
+42344481410 has 381/382 whole groups pass, its PR counterpart42344485651
+has380/382, and macOS PR shard5 has48/49. The two Windows library failures are
+new test observations opening the exclusively locked rate journal through a
+second handle (OS33), before their handoff assertions. Those reads now use the
+still-owned handle with a bounded129-byte read and restored cursor; no unlock,
+production journal change or recovery-policy change occurs.
+
+The macOS server-selection case completes revocation/provider assertions and
+shutdown, then its late TCP-connect assertion unexpectedly succeeds. The old
+trace cannot identify the accepting listener or prove address reuse. Its test
+now requires an active service to exclude a second bind and shutdown to permit
+an exact-address rebind, retained as a guard through verification. This positively
+checks address ownership/release; no production socket/shutdown behavior changes.
+
+A separate Windows facade diagnostic request reaches the original20-second
+refusal before any line/reference filter assertion. Its cause remains open.
+The fixture now optionally uses the existing bounded loopback phase observer
+and records method/elapsed/phase data only on failure. The provider script,
+20-second policy and all filter/source assertions are unchanged. Observations
+are best-effort diagnostics, not delivery/exit or semantic acceptance proof.
+The shared observer's three existing adversarial tests are also compiled in this
+target. No native tests or provider/controller/editor runtime ran locally;
+Rustfmt/static checks are local, and prior hosted Node qualification is reused
+only for the101 unchanged input blobs. Fresh native CI and downstream production
+readiness remain pending; no manual rerun, larger deadline, ignore, weakened
+journal/assertion or executable-payload inspection is used.
+
+Evidence: `validation/pr30-b87-multi-ci-20261107/`. Platform contracts:
+https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-lockfileex,
+https://doc.rust-lang.org/std/net/struct.TcpListener.html#method.bind.
