@@ -21,7 +21,7 @@ def inventory_functions(walk=None):
                     constants[target.id] = ast.literal_eval(node.value)
     namespace = {"Path": Path, "os": SimpleNamespace(walk=walk or os.walk), **constants}
     functions = [node for node in tree.body if isinstance(node, ast.FunctionDef)
-                 and node.name in {"require", "output_usage"}]
+                 and node.name in {"require", "ordinary", "output_usage"}]
     exec(compile(ast.Module(body=functions, type_ignores=[]), "<pure-inventory-fixtures>", "exec"), namespace)
     return namespace
 
@@ -36,7 +36,7 @@ class OutputInventory(unittest.TestCase):
         self.assertFalse(stale.exists())
         self.assertEqual(retained.read_bytes(), b"retained")
 
-        def walk(selected, followlinks=False):
+        def walk(selected, followlinks=False, onerror=None):
             self.assertEqual(selected, root)
             self.assertIs(followlinks, False)
             yield str(root), [], names
@@ -56,14 +56,14 @@ class OutputInventory(unittest.TestCase):
         with TemporaryDirectory(prefix="yoke-inventory-owned-") as directory:
             root = Path(directory)
             functions, retained = self.stale_fixture(root)
-            self.assertEqual(functions["output_usage"](root, allow_removed=True), 8)
+            self.assertEqual(functions["output_usage"](root, allow_disappeared=True), 8)
             self.assertEqual(retained.read_bytes(), b"retained")
 
     def test_default_and_explicit_settled_scans_refuse_the_same_missing_leaf(self):
         with TemporaryDirectory(prefix="yoke-inventory-owned-") as directory:
             root = Path(directory)
             functions, _ = self.stale_fixture(root)
-            for keywords in ({}, {"allow_removed": False}):
+            for keywords in ({}, {"allow_disappeared": False}):
                 with self.subTest(keywords=keywords), self.assertRaises(FileNotFoundError):
                     functions["output_usage"](root, **keywords)
 
@@ -74,7 +74,7 @@ class OutputInventory(unittest.TestCase):
             # Reduced synthetic threshold exercises counting without 20,001 files.
             functions["MAX_ENTRIES"] = 1
             with self.assertRaisesRegex(ValueError, "entry capacity"):
-                functions["output_usage"](root, allow_removed=True)
+                functions["output_usage"](root, allow_disappeared=True)
 
     def test_live_removal_does_not_excuse_an_existing_file_over_the_byte_budget(self):
         with TemporaryDirectory(prefix="yoke-inventory-owned-") as directory:
@@ -82,7 +82,7 @@ class OutputInventory(unittest.TestCase):
             functions, _ = self.stale_fixture(root)
             functions["MAX_OUTPUT"] = 7
             with self.assertRaisesRegex(ValueError, "output capacity"):
-                functions["output_usage"](root, allow_removed=True)
+                functions["output_usage"](root, allow_disappeared=True)
 
     def test_live_scan_propagates_nonmissing_size_stat_failures(self):
         with TemporaryDirectory(prefix="yoke-inventory-owned-") as directory:
@@ -102,7 +102,7 @@ class OutputInventory(unittest.TestCase):
 
                 with self.subTest(error=type(error).__name__), patch.object(Path, "stat", denied):
                     with self.assertRaises(type(error)):
-                        inventory_functions()["output_usage"](root, allow_removed=True)
+                        inventory_functions()["output_usage"](root, allow_disappeared=True)
                 self.assertEqual(attempts, ["size-stat"])
 
     def test_live_scan_keeps_link_refusal(self):
@@ -117,23 +117,23 @@ class OutputInventory(unittest.TestCase):
 
             with patch.object(Path, "is_symlink", linked):
                 with self.assertRaisesRegex(ValueError, "Linked fixture entry"):
-                    inventory_functions()["output_usage"](root, allow_removed=True)
+                    inventory_functions()["output_usage"](root, allow_disappeared=True)
 
     def test_live_scan_keeps_depth_refusal(self):
         with TemporaryDirectory(prefix="yoke-inventory-owned-") as directory:
             root = Path(directory)
 
-            def walk(selected, followlinks=False):
+            def walk(selected, followlinks=False, onerror=None):
                 yield str(root.joinpath(*(["deep"] * 33))), [], []
 
             with self.assertRaisesRegex(ValueError, "depth capacity"):
-                inventory_functions(walk)["output_usage"](root, allow_removed=True)
+                inventory_functions(walk)["output_usage"](root, allow_disappeared=True)
 
     def test_inventory_mode_requires_an_actual_boolean(self):
         with TemporaryDirectory(prefix="yoke-inventory-owned-") as directory:
             for value in (None, 0, 1, "live", [], {}):
                 with self.subTest(value=value), self.assertRaises(ValueError):
-                    inventory_functions()["output_usage"](Path(directory), allow_removed=value)
+                    inventory_functions()["output_usage"](Path(directory), allow_disappeared=value)
 
     def test_original_resource_limits_are_unchanged(self):
         functions = inventory_functions()
@@ -150,7 +150,7 @@ class OutputInventory(unittest.TestCase):
                        key=lambda node: node.lineno)
         self.assertEqual(len(calls), 2)
         self.assertEqual([(keyword.arg, ast.literal_eval(keyword.value))
-                          for keyword in calls[0].keywords], [("allow_removed", True)])
+                          for keyword in calls[0].keywords], [("allow_disappeared", True)])
         self.assertEqual(calls[1].keywords, [])
 
 

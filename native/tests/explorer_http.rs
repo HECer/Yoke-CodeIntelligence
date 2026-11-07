@@ -141,6 +141,7 @@ fn explorer_incomplete_headers_report_receive_progress_without_response_content(
         let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
         listener.set_nonblocking(true).unwrap();
         let address = listener.local_addr().unwrap();
+        let (release_peer, inspected) = mpsc::sync_channel(1);
         let peer = thread::spawn(move || -> io::Result<()> {
             let end = Instant::now() + Duration::from_secs(5);
             let mut stream = loop {
@@ -155,21 +156,33 @@ fn explorer_incomplete_headers_report_receive_progress_without_response_content(
                     Err(error) => return Err(error),
                 }
             };
-            // macOS can inherit nonblocking mode from the listening socket.
-            // The fixture's read_exact handshake must wait for the client byte.
+            // Accepted sockets can inherit the listener's nonblocking mode.
+            // Timeout-bound fixture I/O must explicitly use blocking reads.
             stream.set_nonblocking(false)?;
             stream.set_read_timeout(Some(Duration::from_secs(5)))?;
             stream.set_write_timeout(Some(Duration::from_secs(5)))?;
-            stream.read_exact(&mut [0; 1])?;
+            let mut request = [0; 1];
+            stream.read_exact(&mut request)?;
+            if request != [b'!'] {
+                return Err(io::ErrorKind::InvalidData.into());
+            }
             stream.write_all(&response)?;
-            stream.shutdown(Shutdown::Write)
+            stream.shutdown(Shutdown::Write)?;
+            // Keep the read half alive until inspection ends, including an
+            // expected parser panic; the fixed request has been fully consumed.
+            inspected
+                .recv_timeout(Duration::from_secs(5))
+                .map_err(io::Error::other)
         });
         let mut stream = TcpStream::connect(address).unwrap();
         stream.set_read_timeout(Some(Duration::from_secs(5))).unwrap();
         stream.set_write_timeout(Some(Duration::from_secs(2))).unwrap();
         stream.write_all(b"!").unwrap();
-        let result = std::panic::catch_unwind(|| read_response(stream));
-        peer.join().unwrap().expect("Owned HTTP peer handshake and response");
+        let reader = stream.try_clone().unwrap();
+        let result = std::panic::catch_unwind(|| read_response(reader));
+        let _ = release_peer.send(());
+        peer.join().unwrap().unwrap();
+        drop(stream);
         if complete {
             let response = match result {
                 Ok(response) => response,

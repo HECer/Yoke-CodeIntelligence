@@ -831,7 +831,13 @@ fn absolute_request_deadline_stops_a_peer_which_keeps_sending_partial_headers() 
             read_completed_at,
             request_timeout / 2,
         );
-        let clean_close = read_outcome == Ok(0) && wire.is_empty();
+        // Closing an incomplete request with unread peer bytes can produce
+        // either EOF or TCP reset. Neither outcome may carry response bytes;
+        // timeouts and other transport errors still fail this deadline proof.
+        let empty_close = matches!(
+            read_outcome,
+            Ok(0) | Err(std::io::ErrorKind::ConnectionReset)
+        ) && wire.is_empty();
         let request_age = read_completed_at.saturating_sub(connected_at);
         attempts.push((
             sent,
@@ -841,18 +847,18 @@ fn absolute_request_deadline_stops_a_peer_which_keeps_sending_partial_headers() 
             writer,
             successes,
         ));
-        // Retry only a clean, non-early close whose writer failed to provide
+        // Retry only an empty, non-early close whose writer failed to provide
         // continuous traffic. No functional failure or exhausted wall budget
         // can retry. At most one writer exists at a time; all joins count.
         if !stimulated
-            && clean_close
+            && empty_close
             && request_age >= request_timeout
             && attempt < 2
             && now.elapsed() + request_timeout < acceptance_bound
         {
             continue;
         }
-        assert!(clean_close, "partial-header close failed: {attempts:?}");
+        assert!(empty_close, "partial-header close failed: {attempts:?}");
         assert!(sent >= 2, "insufficient writes: {attempts:?}");
         assert!(
             stimulated,

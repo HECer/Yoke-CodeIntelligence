@@ -37,6 +37,14 @@ membership in its specific Job and closes that query handle before native,
 vendor image or archive payload reads. The final gate requires natural whole
 process-tree exit before cleanup and complete closed-handle cleanup evidence.
 
+While a worker is running, output monitoring permits only enumerated descendant
+entries that disappear during the scan (for example SQLite temporary files).
+Missing roots, links, access errors and byte/entry/depth excesses still refuse.
+The final post-exit inventory is strict and does not permit disappearing entries;
+an incomplete live observation cannot replace that final check or the independent
+Job lifecycle proof. This filesystem monitor is not an OS disk quota or atomic
+snapshot against an equal-account writer. No cap or deadline is expanded.
+
 Vendor procurement happens only inside the tool worker. HTTPS uses the fixed
 registry host with no proxy or redirect, 20-second socket timeouts and a
 120-second cooperative procurement deadline. The compressed stream is capped at
