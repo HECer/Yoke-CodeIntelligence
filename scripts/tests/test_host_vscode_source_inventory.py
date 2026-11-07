@@ -12,7 +12,7 @@ def inventory(root):
     source = Path(__file__).resolve().parents[1] / "host_vscode.py"
     tree = ast.parse(source.read_bytes())
     selected = [node for node in tree.body if isinstance(node, ast.FunctionDef)
-                and node.name in {"require", "source_inputs"}]
+                and node.name in {"require", "source_inventory_command", "source_inputs"}]
     namespace = {"Path": Path, "ROOT": root, "subprocess": subprocess}
 
     def ordinary(path):

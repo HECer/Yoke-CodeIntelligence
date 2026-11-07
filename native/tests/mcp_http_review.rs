@@ -20,7 +20,7 @@ fn frame(address: SocketAddr, sid: Option<&str>, value: Value) -> Vec<u8> {
     bytes.extend(body);
     bytes
 }
-fn exchange(address: SocketAddr, bytes: &[u8]) -> (u16, String) {
+fn exchange(address: SocketAddr, bytes: &[u8]) -> (u16, String, Option<i64>) {
     let mut socket = TcpStream::connect(address).unwrap();
     socket
         .set_read_timeout(Some(Duration::from_secs(8)))
@@ -44,9 +44,14 @@ fn exchange(address: SocketAddr, bytes: &[u8]) -> (u16, String) {
                 .unwrap();
             assert!(length < 16_000_000);
             if reply.len() == end + 4 + length {
+                // Scalar diagnostics only; never include response text or tokens.
+                let rpc_error_code = serde_json::from_slice::<Value>(&reply[end + 4..])
+                    .ok()
+                    .and_then(|value| value["error"]["code"].as_i64());
                 return (
                     header.split_whitespace().nth(1).unwrap().parse().unwrap(),
                     header.to_owned(),
+                    rpc_error_code,
                 );
             }
             assert!(reply.len() < end + 4 + length);
@@ -90,7 +95,8 @@ fn single_worker_session_expiry_cancels_an_already_running_provider() {
     )
     .unwrap();
     let address = server.local_addr();
-    let (status, header) = exchange(
+    let initializing = Instant::now();
+    let (status, header, _) = exchange(
         address,
         &frame(
             address,
@@ -98,6 +104,7 @@ fn single_worker_session_expiry_cancels_an_already_running_provider() {
             json!({"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25"}}),
         ),
     );
+    let initialization_elapsed = initializing.elapsed();
     assert_eq!(status, 200);
     let sid = header
         .lines()
@@ -108,7 +115,7 @@ fn single_worker_session_expiry_cancels_an_already_running_provider() {
         })
         .unwrap();
     let started = Instant::now();
-    let (status, _) = exchange(
+    let (status, _, rpc_error_code) = exchange(
         address,
         &frame(
             address,
@@ -116,9 +123,13 @@ fn single_worker_session_expiry_cancels_an_already_running_provider() {
             json!({"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"ci_find","arguments":{"languageServer":{"path":"main.rs","offset":3,"operation":"hover"},"timeoutMs":600000}}}),
         ),
     );
+    let request_elapsed = started.elapsed();
+    let provider_started = marker.exists();
     assert!(
-        marker.exists(),
-        "The provider must actually run before session expiration"
+        provider_started,
+        "The provider must actually run before session expiration; initialization_us={} request_us={} http_status={status} rpc_error_code={rpc_error_code:?} marker_present={provider_started} session_ttl_ms=1200 request_timeout_ms=5000",
+        initialization_elapsed.as_micros(),
+        request_elapsed.as_micros()
     );
     server.shutdown().unwrap();
     assert_eq!(status, 503);

@@ -258,6 +258,13 @@ pub(crate) fn validate_retention_record(
     );
     Ok(())
 }
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum OpenMode {
+    Active,
+    Inspection,
+    HostPreflight,
+}
+
 pub struct Session {
     tool_usage: Option<crate::tool_usage::Stats>,
     tool_usage_revision: u64,
@@ -379,13 +386,6 @@ fn fields(a: &Value, allowed: &[&str]) -> Result<()> {
     );
     Ok(())
 }
-#[derive(Clone, Copy, PartialEq, Eq)]
-enum SessionStartup {
-    Open,
-    Inspect,
-    ValidateHttp,
-}
-
 impl Session {
     pub(crate) fn context_definition(&self) -> Option<&crate::session_steering::Definition> {
         self.host
@@ -1004,14 +1004,7 @@ impl Session {
         session_id: Option<&str>,
         deadline: &Deadline,
     ) -> Result<Self> {
-        Self::open_inner(
-            engine,
-            host,
-            session_id,
-            None,
-            SessionStartup::Open,
-            deadline,
-        )
+        Self::open_inner(engine, host, session_id, None, OpenMode::Active, deadline)
     }
     /// Passive host inspection. Hooks never execute through this constructor.
     /// A new selected session stays unpublished and cannot start a backend.
@@ -1026,7 +1019,7 @@ impl Session {
             host,
             session_id,
             None,
-            SessionStartup::Inspect,
+            OpenMode::Inspection,
             deadline,
         )
     }
@@ -1043,14 +1036,13 @@ impl Session {
             host,
             session_id,
             Some(projects),
-            SessionStartup::Open,
+            OpenMode::Active,
             deadline,
         )
     }
-    /// Validate the HTTP host before listening, without publishing a Session,
-    /// selecting an automatic backend or starting hooks/providers. No usable
-    /// Session escapes; existing Git host preparation remains the caller's gate.
-    pub(crate) fn validate_http_startup(
+    /// Validate host bindings without publishing State, capturing filenames or
+    /// initializing an automatic choice. No Session escapes this preflight.
+    pub(crate) fn preflight(
         engine: Engine,
         host: HostProfile,
         session_id: Option<&str>,
@@ -1062,7 +1054,7 @@ impl Session {
             host,
             session_id,
             projects,
-            SessionStartup::ValidateHttp,
+            OpenMode::HostPreflight,
             deadline,
         )?;
         session.check_activation_start(deadline)
@@ -1088,11 +1080,11 @@ impl Session {
         mut host: HostProfile,
         session_id: Option<&str>,
         git_repository_projects: Option<crate::git_workflows::repository_projects::Hosts>,
-        startup: SessionStartup,
+        mode: OpenMode,
         deadline: &Deadline,
     ) -> Result<Self> {
-        let inspection_only = startup != SessionStartup::Open;
-        let startup_validation = startup == SessionStartup::ValidateHttp;
+        let inspection_only = mode != OpenMode::Active;
+        let host_preflight = mode == OpenMode::HostPreflight;
         ensure!(
             host.token_count_runtime.is_none()
                 || host.token_count_estimator
@@ -1819,7 +1811,7 @@ impl Session {
         automatic_languages::validate_choices(&host, &state.automatic_language_servers)?;
         ensure!(
             !inspection_only
-                || startup_validation
+                || host_preflight
                 || host.language_server_auto_selection.is_none()
                 || state.automatic_language_servers.contains_key("default")
                 || host
@@ -1865,7 +1857,7 @@ impl Session {
             None
         };
         let unpublished_inspection = inspection_only
-            && (host.activation_commands.is_some() || startup_validation)
+            && (host_preflight || host.activation_commands.is_some())
             && raw.is_none();
         let publication = (|| -> Result<()> {
             if raw.is_none() && !unpublished_inspection {
@@ -1971,7 +1963,7 @@ impl Session {
                 deadline,
             )?;
         }
-        if !startup_validation {
+        if !host_preflight {
             session.ensure_automatic_language("default", deadline)?;
         }
         Ok(session)

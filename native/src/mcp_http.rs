@@ -30,6 +30,10 @@ const MAX_RESPONSE: usize = 16_000_000;
 #[path = "mcp_http_deadline_tests.rs"]
 mod deadline_tests;
 
+#[cfg(test)]
+#[path = "mcp_http_preflight_tests.rs"]
+mod preflight_tests;
+
 fn connection_deadlines(timeout_ms: u64) -> (Deadline, Deadline) {
     let physical = Deadline::new(timeout_ms);
     // A fixed 100ms margin can be consumed before the network thread resumes
@@ -103,10 +107,10 @@ impl Target {
         }
         Ok(engine)
     }
-    fn validate_startup(&self, deadline: &Deadline) -> Result<()> {
+    fn preflight(&self, deadline: &Deadline) -> Result<()> {
         let engine = self.engine(deadline)?;
         let label = format!("http-{}", random_id()?);
-        Session::validate_http_startup(
+        Session::preflight(
             engine,
             self.host.clone(),
             Some(&label),
@@ -247,7 +251,7 @@ impl Principal {
         }
         // Validate source/session host authority before a listener can be opened.
         let preflight_deadline = Deadline::new(30_000);
-        target.validate_startup(&preflight_deadline)?;
+        target.preflight(&preflight_deadline)?;
         Ok(Self {
             id: id.into(),
             token_hash: Sha256::digest(token.as_slice()).into(),

@@ -771,7 +771,19 @@ fn running_query_obeys_host_deadline_despite_client_timeout_and_returns_http_err
     let initialized = exchange(address, &frame(address, 21, "POST", None, Some(init()), ""));
     let sid = &initialized.headers["mcp-session-id"];
     let started = Instant::now();
-    let result = exchange(address, &stalled_request(address, sid));
+    let result = std::panic::catch_unwind(|| exchange(address, &stalled_request(address, sid)))
+        .unwrap_or_else(|failure| {
+            let marker_state = match marker.try_exists() {
+                Ok(true) => "present",
+                Ok(false) => "absent",
+                Err(_) => "unavailable",
+            };
+            eprintln!(
+                "Owned deadline response: elapsed_us={} hover_marker={marker_state}",
+                started.elapsed().as_micros()
+            );
+            std::panic::resume_unwind(failure)
+        });
     assert!(
         marker.exists(),
         "Actual provider operation must run before timeout: status={} elapsed_us={}",

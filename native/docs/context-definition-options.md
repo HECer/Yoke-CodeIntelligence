@@ -102,3 +102,15 @@ Native compilation and these ten tests are **unrun locally**. Exact hosted
 qualification remains required. This does not certify complete global YAML,
 all client/SDK behavior, backend runtimes, broader current upstream parity,
 platform/VSIX/main/release or visual acceptance.
+
+
+## CI fixture clarification (2026-11-01)
+
+The candidate inherits the corrected Session and catalog base through a normal
+merge. Its Session stdio fixture checks status and data.activeProject inside
+the unchanged whole-object response envelope. The context project-lock fixture
+checks the existing public configuration fields startupProject and
+projectActivationLocked, retaining all original activation and stale/resume
+refusals. These are fixture corrections; selected context production and field
+contracts remain exact. Native tests and real hosted qualification remain
+unrun locally and pending; no resource, permission or evidence gate is relaxed.
