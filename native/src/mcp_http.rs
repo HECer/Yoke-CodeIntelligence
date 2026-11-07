@@ -27,6 +27,19 @@ use zeroize::Zeroizing;
 
 const MAX_RESPONSE: usize = 16_000_000;
 #[cfg(test)]
+#[path = "mcp_http_deadline_tests.rs"]
+mod deadline_tests;
+
+fn connection_deadlines(timeout_ms: u64) -> (Deadline, Deadline) {
+    let physical = Deadline::new(timeout_ms);
+    // A fixed 100ms margin can be consumed before the network thread resumes
+    // after work expiry. Reserve a bounded share of the same physical budget;
+    // error reporting never receives a fresh deadline or bypasses cancellation.
+    let response_reserve_ms = (timeout_ms / 4).clamp(100, 500);
+    let work = Deadline::new(timeout_ms - response_reserve_ms);
+    (physical, work)
+}
+#[cfg(test)]
 #[path = "mcp_http_rejection_tests.rs"]
 mod rejection_tests;
 const VERSIONS: [&str; 3] = ["2025-11-25", "2025-06-18", "2025-03-26"];
@@ -153,6 +166,7 @@ impl Principal {
             (None, Some(_)) => anyhow::bail!("session_prompt_selection_required"),
             (None, None) => {}
         }
+        crate::required_prompt_memories::admit_host(&target.host, &Deadline::new(30000))?;
         target.root = target.root.canonicalize()?;
         ensure!(
             target.root.is_dir()
@@ -1687,9 +1701,8 @@ pub fn serve(mut config: Config, principals: Vec<Principal>) -> Result<ServerHan
                         let handler = thread::Builder::new()
                             .name("yoke-mcp-http-connection".into())
                             .spawn(move || {
-                                let deadline = Deadline::new(config.request_timeout_ms);
-                                // Reserve part of the same host budget to report expiry.
-                                let work_deadline = Deadline::new(config.request_timeout_ms - 100);
+                                let (deadline, work_deadline) =
+                                    connection_deadlines(config.request_timeout_ms);
                                 let socket = BoundSocket {
                                     socket: tcp,
                                     deadline: &deadline,

@@ -43,7 +43,13 @@ The journal is a bounded two-slot checksum record. An exclusive OS lock remains
 held from a durable pending admission through the owned request's termination.
 Completion is durably recorded and starts a three-second cooldown. Errors and
 timeouts do not silently reset the interval. A crash or failed completion leaves
-a pending or corrupt journal; subsequent admissions refuse. Status reads never
+a pending or corrupt journal; subsequent admissions refuse. A deadline or host
+cancellation detected immediately after a successful durable admission, before
+any request handoff, is still handled by that same exclusive owner: it completes
+only its own attempt and then returns the original refusal. This sends no request
+and starts the normal cooldown; it never renews the request deadline. Failed
+journal writes, failed completion and abandoned permits keep requiring explicit
+recovery. Status reads never
 create a missing file. Linked parents, linked/hardlinked leaves, malformed,
 partial and inconsistent records refuse. Do not delete or replace a journal to
 bypass its interval.

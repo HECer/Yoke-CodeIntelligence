@@ -617,7 +617,24 @@ fn actual_mcp_http_revocation_also_closes_its_dashboard_capability() {
 }
 
 #[test]
-fn oversized_and_incomplete_headers_have_bounded_refusal_and_leave_listener_usable() {
+fn oversized_headers_have_bounded_refusal_and_leave_listener_usable() {
+    let r = root();
+    // Use the normal request deadline for the size-limit check. The deliberately
+    // short deadline belongs to the independent stalled-request case below.
+    let mut s = open(r.path(), host(Config::default()), "header-size-bound");
+    let (address, _) = start(&mut s);
+    let request = format!(
+        "GET / HTTP/1.1\r\nHost: {address}\r\nX-Oversize: {}\r\n\r\n",
+        "a".repeat(16400)
+    );
+    assert_eq!(raw(address, request.as_bytes()).0, 431);
+    assert_eq!(get(address, None, "/").0, 200);
+    drop(s);
+    closed(address);
+}
+
+#[test]
+fn incomplete_headers_have_bounded_refusal_and_leave_listener_usable() {
     let r = root();
     let mut s = open(
         r.path(),
@@ -625,14 +642,9 @@ fn oversized_and_incomplete_headers_have_bounded_refusal_and_leave_listener_usab
             request_timeout_ms: 100,
             ..Default::default()
         }),
-        "framing-bounds",
+        "header-time-bound",
     );
     let (address, _) = start(&mut s);
-    let request = format!(
-        "GET / HTTP/1.1\r\nHost: {address}\r\nX-Oversize: {}\r\n\r\n",
-        "a".repeat(16400)
-    );
-    assert_eq!(raw(address, request.as_bytes()).0, 431);
     let mut stream = TcpStream::connect(address).unwrap();
     stream
         .set_read_timeout(Some(Duration::from_secs(2)))

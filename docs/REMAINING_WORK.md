@@ -1,5 +1,17 @@
 # Remaining implementation and acceptance
 
+## Strict LSP lifecycle and current acceptance follow-up (2026-10-31)
+
+Compile and run both new strict lifecycle/native explicit-null fixtures, then
+repeat the real pinned Windows TSGo hover/definition/reference qualification.
+The actual `45323315` browser and combined VSIX checkpoints now have independent
+artifact and all-30-PNG visual proof, but the overall VSIX/TSGo job remains failed
+and those receipts do not qualify a later source. The earlier VSIX `api_error`
+remains unresolved; fixed private-safe phase/error labels are diagnostic only.
+Retain all ownership, deadline, resource, natural-exit and cleanup requirements.
+Human/motion/visible-shell, TypeScript editor-mode execution, all backend and
+full Windows/platform/main/release qualification remain open.
+
 ## Session batch answer-budget qualification (2026-10-31)
 
 Compile and run the four new `session_batch_output` binary-unit functions and
@@ -12,6 +24,10 @@ Run the existing complete Session, prompt-runtime, statistics and TSGo cases
 with the effective default 32000-byte outer cap; callers with larger legitimate
 batches must select an adequate explicit budget. No native typing/runtime or
 full Windows/release acceptance follows from source formatting or npm checks.
+
+The initial `512d026d` producer fails E0423 at the accumulator's removed `used`
+variable; `2c803a93` corrects that source line. Fresh hosted compilation and the
+complete eight-case budget coverage are still required.
 
 ## Corrected reset project-binding fixture qualification (2026-10-31)
 

@@ -1,4 +1,6 @@
 //! Actual host-only template projection, OS bounds, and immutable original input.
+#[path = "support/memory_budget.rs"]
+mod memory_budget;
 use serde_json::{Value, json};
 use std::{
     fs,
@@ -87,10 +89,7 @@ fn templates_render_conditions_loops_filters_macros_and_json_data_without_evalua
         proof["renderedPromptSha256"],
         yoke::model::hash("ALPHA,BETA\n")
     );
-    assert_eq!(
-        proof["hostRendererEvidence"]["memoryCeilingBytes"],
-        256 * 1024 * 1024
-    );
+    memory_budget::assert_report(&proof["hostRendererEvidence"], "memoryCeilingBytes");
 }
 #[test]
 fn templates_use_selected_catalog_includes_inheritance_imports_and_unicode_exactly() {
@@ -285,7 +284,28 @@ fn templates_discovery_returns_replayable_context_and_identical_pinned_plan() {
         serde_json::to_vec(&discovered["selection"]).unwrap(),
     )
     .unwrap();
-    assert_eq!(f.value(), discovered["projection"]);
+    let mut replayed = f.value();
+    let mut original = discovered["projection"].clone();
+    // Host policy and rendered bytes repeat; VM observations describe each run.
+    for projection in [&mut replayed, &mut original] {
+        for source in projection["sources"].as_array_mut().unwrap() {
+            let evidence = &mut source["promptRendering"]["hostRendererEvidence"];
+            memory_budget::assert_report(evidence, "memoryCeilingBytes");
+            if cfg!(target_os = "macos") {
+                evidence
+                    .as_object_mut()
+                    .unwrap()
+                    .remove("memoryCeilingBytes");
+                for key in ["baselineVirtualBytes", "ceilingBytes"] {
+                    evidence["memoryBudget"]
+                        .as_object_mut()
+                        .unwrap()
+                        .remove(key);
+                }
+            }
+        }
+    }
+    assert_eq!(replayed, original);
     f.unchanged();
 }
 #[test]
@@ -331,7 +351,7 @@ fn templates_worker_direct_call_self_imposes_and_observes_os_memory_limit() {
     );
     let v: Value = serde_json::from_slice(&out.stdout).unwrap();
     assert_eq!(v["rendered"], "owned");
-    assert_eq!(v["memoryCeilingBytes"], 256 * 1024 * 1024);
+    memory_budget::assert_report(&v, "memoryCeilingBytes");
     assert_eq!(v["requestSha256"], yoke::model::hash(input));
 }
 

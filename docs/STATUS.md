@@ -1,5 +1,366 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Required startup notes: macOS worker-limit repair (2026-11-01)
+
+PR #34's original `f165514611de6faf91c1a42f199e830c93c0f0ab` macOS shards
+0, 1, 2, 3, 4, 6 and 7 fail across twelve complete Cargo targets. The retained
+text artifacts from Rust core run `41254545030` show fixed 256 MiB address-space
+limit installation refusing with `EINVAL`, in both PDF and template workers;
+the new required-note CLI/stdio cases reach that same template boundary.
+No review comments were present when the repair was diagnosed.
+
+The existing PR #31 worker repair is reused here: macOS observes its actual
+virtual baseline, installs a bounded growth allowance without raising inherited
+limits, verifies the kernel ceiling and reports separate policy metadata.
+See [the memory contract](../native/docs/macos-worker-memory.md) for the limits
+of this policy, including reuse of existing mappings. Windows/Linux memory
+policies and required-note authority remain separate. No tests are skipped or
+CI coverage reduced. Exact-head hosted macOS enforcement and full shard
+qualification remain pending; Windows results cannot substitute for them.
+
+Local Windows validation of repair `98fc11f5b7`: typecheck passes; npm tests
+have 266 passes, three existing skips and no failures. All 381 format roots
+and targeted Clippy with `-D warnings` pass. Eight required-note units, two
+memory-budget units and 110 integration cases across twelve complete targets
+pass, including all fourteen required-note cases. The separate media target
+has twelve passes and one failure creating its symlink fixture because this
+account lacks Windows privilege 1314; the fixture is unchanged and not skipped.
+The real PDF extraction case passes. No local macOS execution is claimed.
+
+The later macOS shard 5 at `bbcfc363a7` (run `41302558796`, job
+`124836351746`) exposes two separate HTTP fixture races. Owned diagnostic peers
+now restore blocking mode after nonblocking accept and retain peer error detail.
+The queued-revocation case observes invalidation, then independently revokes the
+busy principal instead of waiting for competing request deadlines. Production
+HTTP budgets and refusal assertions stay unchanged. Both complete local Windows
+HTTP targets pass (28 tests, no skips), as do fresh typecheck, npm (266 passes,
+three existing skips), targeted formatting and whitespace checks. Exact-head
+macOS qualification of these fixture changes remains pending.
+
+At `60f3c6ee03`, both push run `41333494444` and PR run `41333500446`
+retain the same six failing targets across macOS shards 0, 1, 3, 4 and 6.
+Template discovery and cross-process PDF/claim comparisons encounter different
+valid VM observations. Meaning-provider graph loads also compare a fresh
+extraction's measurements against the original saved input, causing
+`mixed_view_input_invalid`. The aggregate correctly refuses incomplete shards;
+their source revisions agree within each run.
+
+Replay now validates the closed macOS memory records independently and permits
+only the baseline and matching inner/outer ceiling measurements to differ.
+All source, quote, warning and policy fields still compare exactly. Fresh claim
+validation runs before the original saved input receipt is restored in the
+reconstructed graph, whose complete bytes must still match its saved artifact.
+Cross-process CLI fixtures validate both memory reports before comparing their
+remaining fields. Source permissions, worker limits and aggregate admission are
+unchanged. Current macOS execution remains a hosted qualification gate.
+
+Local Windows validation of this follow-up passes: two new synthetic replay
+regressions (including forged policy/source changes and tighter valid ceilings),
+55 tests across all six affected complete integration targets, targeted Clippy
+with `-D warnings`, typecheck and npm (266 passes, three existing skips).
+The 381 format roots and final touched-file formatting/whitespace checks pass.
+No failed target is skipped, no prior artifact is rewritten and no hosted
+macOS success is inferred from these Windows results.
+
+macOS shard 5 at `f5ff765` (run `41812741702`, job `126515779322`)
+subsequently fails the real stalled-query HTTP deadline case: zero reply bytes
+and EOF at about 1823 ms under a configured 1800 ms physical budget. The fixed
+100 ms expiry-response reserve is insufficient. An owned TCP regression that
+resumes 150 ms after work expiry reproduces the failed response on Windows;
+the independent expired/cancelled-budget case still refuses late writes.
+
+The reserve now uses a quarter of the original budget, clamped to 100–500 ms.
+The total physical deadline and cancellation remain unchanged; the 1800 ms
+case leaves 450 ms for the bounded refusal. No error or TLS shutdown gets a
+new allowance. Delivery under arbitrary scheduling pauses remains best effort
+within that physical ceiling, as documented in the HTTP contract. Fresh hosted
+macOS qualification remains pending.
+
+Local Windows checks pass: both deadline regressions after the reproduced RED,
+all 20 HTTP server cases, three CLI cases with one existing credential-manager
+ignore, targeted Clippy with `-D warnings`, typecheck, npm (266 passes and three
+existing skips), all 381 format roots and whitespace checks. No test or total
+physical timeout is relaxed.
+
+## Hosted inventory repair and explicit CI regression selection (2026-10-31)
+
+Exact source `6989862daeee8f00592e2b53f60376b584ea3d37` now completes the
+[combined VSIX and real Rust host job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41243681181/job/124662716634).
+Independent audit of text artifact `13058973373` checks all 33 members, all
+1,847 selected source hashes against exact Git or explicit Windows CRLF forms,
+the fresh successful release producer and both explicit/bundled Rust host modes.
+The four phase receipts require natural zero-exit empty process trees and closed
+handles. Original unsaved-source, executable-selection, protected-buffer and
+saved-source assertions pass in both modes on VS Code 1.143.1. The retained
+TypeScript runtime is bundled and byte-checked by the hosted producer; its
+extension mode is not executed. No compiled payload is opened locally.
+Receipt SHA-256: `1c64d0f134ea35896406c321b509db7d8c3079417f760283c17c2857313c3e27`.
+This is source-specific host evidence; the successful run does not prove the
+removed-leaf race occurred, and the original `0e17b87a` failure remains below.
+
+The eleven pure inventory regression cases were missing from the launcher CI
+job's explicit unittest selection. That gate now selects them alongside the
+original admission cases, before the actual kernel probe, within its unchanged
+one-minute step. All 47 local Python launcher/inventory/host/source-inventory
+contracts pass, including those eleven cases. Fresh local typecheck and npm tests
+pass: 266 passed, zero failed, three original skips (269 total). These checks
+run no Windows controller or native image. Hosted execution of the new CI
+selection remains pending; prior host evidence is not reassigned to this stage.
+See the [source-specific receipt](validation/vscode-inventory-2026-10-31.json).
+
+Full R4/R1-R9, backend/current-upstream, current browser/Windows, main and release
+acceptance remain open. Linux/macOS runtime certification stays deferred.
+
+## Source-specific path guards and Windows host evidence (2026-10-31)
+
+At `0e17b87a23f630752e2db8a61995a87ed36371fe`, all eight named Windows
+partitions have 379 complete target groups, 3,982 passes, zero failures,
+53 original ignores and no measured or filtered cases. All
+twelve public source-claim cases pass, including the three new direction,
+parallel-evidence and whole-output-refusal guards. The library has 874 passes
+and seven original ignores; its new deterministic post-first-route cancellation
+case passes. The thirteen selected-query and eleven selected-View analysis
+cases also pass. These target totals are included in the aggregate, never added
+twice. Source/text receipt SHA-256:
+`86d741f376519a5bf5945d3586e79da014d58c7350bc6368c6b788ec3c262270`.
+It verifies 1,182 source pins against exact Git or explicit Windows CRLF forms,
+independently derives 379 targets/weights and checks every exact partition/log.
+All eight source and target inventory hashes agree; each target occurs once.
+Original artifacts: [run 41239700108](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41239700108).
+
+The same `0e17b87a` source's new
+[combined VSIX job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41239700091/job/124650949540)
+fails during explicit-host monitoring with `output_inventory_missing_entry`.
+Its receipt has no natural root-exit proof, reports forced cleanup to zero active
+processes, and correctly remains incomplete. The editor had started, but no
+extension-host assertion result was produced. The closed 23-text-member
+artifact is `13057059008`, ZIP SHA-256
+`53270304f631736c7eb44263b132b6498d92d2591ad08403aa737d9239d684f6`.
+The inventory enumerates names before checking file sizes; a listed leaf can
+disappear while the owned editor is running. The follow-up uses an explicit
+live-only removed-leaf mode while retaining charged entry counts and strict
+settled/final scans. No fixed limit, Job admission or success receipt is relaxed.
+Eleven authored pure inventory tests and a fresh actual Windows host run still
+require hosted execution. This is a repair candidate, not successful VSIX proof.
+
+Separately, the prior exact `08e6acddb889e0d6567e68ac65d56a93760f2274`
+[Windows combined host job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41234224148/job/124638968950)
+completes both explicit and bundled Rust VS Code modes, actual TSGo
+7.0.0-dev.20260707.2 hover/definition/references and four real owned Job lifecycle
+scenarios. The source and built-input maps remain separately bound.
+VSIX receipt: `d2618abc8081a1f2e2e552c045e33b09f48529f9fb16d4d64b19a63d6f534f89`.
+TSGo/Job receipt: `faa5572bffd8722aaf3d9c1c06afaad7d5ce1a5d0d78a662310e281b4999e0af`.
+Retained TypeScript bytes are checked in the package; TypeScript extension-host
+mode is not executed and transitive vendor execution is not attested.
+
+That same prior `08e6acdd`
+[Windows native aggregate](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41234224060/job/124644755730)
+completes release build/input binding/upload, two named actual Rust Analyzer
+cases, original history and five installed Edge profiles. Independent text
+audit checks 162 CLI outcomes and 126 exact archived-record readbacks.
+All 30 original desktop/mobile PNG/DOM pairs were hash-checked and actually
+viewed by the parent agent. Pending recovery preserves the draft and disables
+review/save; a fresh post-recovery save succeeds. Tool statistics show stale
+reset refusal and a fresh reset to zero. No visible correction is required in
+those captured states. Aggregate receipt:
+`3ae7453af71a51d997a9d3990cce985bda1a5fbcfcce72022aab7a2f59a28614`.
+Human, motion, visible desktop-shell and release-acceptance claims remain false.
+The compiled release ZIP was not read locally.
+
+These are named source/target proofs. Prior host/browser evidence does not
+qualify `0e17b87a` or later source. Full R4, R1-R9, backend, current-upstream,
+Windows, main and release acceptance remain open. Linux/macOS runtime
+certification stays deferred; original failures and unchanged limits remain.
+The older sections below retain their historical checkpoint status.
+
+## Source-claim admission: Windows default-profile evidence (2026-10-31)
+
+Exact source [08e6acddb889e0d6567e68ac65d56a93760f2274](https://github.com/HECer/Yoke-CodeIntelligence/commit/08e6acddb889e0d6567e68ac65d56a93760f2274)
+passes all eight default Windows Cargo target partitions: **379 complete target
+groups, 3,978 observed test passes, zero failures, 53 existing ignored cases,
+zero measured or filtered cases**. The independent text-artifact audit checks
+all 1,182 selected source hashes against exact Git bytes or the permitted
+Windows checkout form (42 exact Git files and 1,140 CRLF files), independently
+derives all 379 targets and weights, and verifies each partition and raw log.
+All eight source/target inventories agree and every target is covered once.
+Receipt SHA-256:
+`fd883a6d643c47d703f257e5904b9ef6ad697a784a403d44c391ea13d4dcad8e`.
+Original artifacts remain in [Rust core run 41234224060](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41234224060).
+This source map covers the declared selected inputs; it does not assert every
+possible build input or certify every backend.
+
+The Windows library has 873 passes, zero failures and seven original ignores.
+Its four new source-claim units pass, including the actual Windows test that
+denies writes, leaf renames and parent renames while name pins are held, then
+successfully writes and rereads after release. The bounded JSON grammar,
+storeless original/corrupt-input replay and exact integer/float comparison
+units also pass. These cases are included in the totals above. The nine public
+source-claim cases pass on Windows, Linux and macOS, including the paired
+weakest-hop-position control and real 256/257-route counterexample. The
+original Windows/Linux parent RED remains separately recorded. Windows and
+Linux all-target Clippy with `-D warnings` and the Windows format roots pass.
+
+The selected policy retains original numeric tokens, directed parallel
+observations, evidence and captured source bytes. Declarations remain
+unverified source claims. Host admission, immutable View selection and the
+existing ten-tool Graphify transport do not establish Graphify node-link file
+interoperability or full current upstream equivalence.
+
+The follow-up adds three public path/direction/provenance/output guard
+cases and a deterministic first-route cancellation unit. Those additional
+cases are outside this qualified source and still unrun at this checkpoint. Matching current
+Windows VSIX, vendor-tool and browser/release evidence is still being
+qualified. Full R4, R1-R9, backend, main and release acceptance remain open.
+Linux/macOS runtime certification remains deferred; their original separate
+resource-limit and HTTP failures are preserved. The earlier candidate sections
+below retain their historical source-specific status.
+
+## Distinct-node shortest-path prefix candidate (2026-10-31)
+
+The selected `weakest_source_categories_v1` candidate now ranks the first 256
+distinct complete shortest node paths and discovers a 257th only to report
+the cap. BFS first-discovery predecessor lists and backward enumeration make
+the prefix deterministic, including multilevel reconvergence. Parallel claims
+do not increase node-path counts; every original hop observation/evidence
+remains retained, and the weakest original copy affects that hop. The chosen
+route and depth-bounded stack avoid materializing an exponential path set. Absolute
+deadlines, max hops, source admission and whole-output refusal remain. Omitted
+and explicit legacy policy keep their original route and response shape.
+
+At test-first `2037686c`, both new public 256/257 fixtures reach the intended
+missing-count assertion on Linux and Windows after verifying all admitted
+branches/calls: eleven old cases pass, two fail at line 792 (`None` vs256), no
+ignores/filters. Receipt
+`91ccc39c1554b13bf0cc6e61707a08fe2a4b12f242a002eac5374cbf7676468c`
+checks all 1,176 source hashes against Git, independently derives all 378
+targets for each platform, and checks exact partitions and every text log
+for 97 whole target executions. The same source's
+whole Linux library has 565 passes/three intended route-identity failures/six
+original ignores/no filters; all seven old policy units pass. The new pure
+fixtures choose an excluded 257th route rather than the required prefix route.
+Receipt `2f3c7ff1105778992b6589c90ead7540987c8261b97637c26fc7d58f033b09f4`
+verifies all 48 groups and binds the public RED. Later new public provenance,
+cap and replay assertions are not exercised by those failing runs.
+
+The producer is now changed, with two additional authored regressions for
+self/unreachable/max-hop/cyclic/reverse routes and expired/pre-selection
+cancelled requests. Original ten policy units and thirteen public bodies are retained.
+Fresh native GREEN for this candidate remains pending. Numeric source-claim
+admission/replay, contradictory ADMITTED claims, full current CLI/MCP and the
+original wider R1-R9/backend/upstream/Windows/main/release gates stay open.
+
+Earlier `9b429f4d` hop-only runtime proofs remain source-specific: all seven units and
+eleven public cases pass on Linux/Windows. Its explicit Rust VS Code host and
+three actual TSGo operations are separately checked; the bundled host fails
+`output_inventory_missing_entry`, with cleanup but no natural-exit/final result
+proof. Exact old-source bundled-host and unchanged-core deadline retry requests
+were accepted; fresh outcomes remain unverified. No guard was relaxed.
+See the [full contract and qualification](../native/docs/graphify-path-policy.md).
+
+## Shortest-path source-category selector candidate (2026-10-31)
+
+At `b929b7b3`, the original native counterexample fails at its intended route
+assertion on Windows: the first stronger two-hop route is returned instead of
+the expected weaker two-hop route. The complete library has 857 passes, that
+one failure, seven original ignores and no filters. Independent text-artifact
+checks bind all 1,175 selected source hashes, the exact target partition and
+raw log hashes. The candidate adds explicit `weakest_source_categories_v1`
+selection through a bounded four-state shortest-route DAG while retaining the
+omitted/default first-observation behavior. Categories are declared source
+projections, never probability or execution attestation. At corrected source
+`cf1d0671`, Ubuntu shard 4 passes all six selector units within the whole
+library target (564 passed, six original ignored, no filters), and the complete
+public adapter target passes eight cases without ignores or filters. Independent
+receipt `a514b525c3499182df4cd53f198ec9c3738389f32526250001b9ef2316feb262`
+checks all 1,176 selected raw source hashes directly against Git, the independently
+derived 378-target inventory, exact partitions and all text logs for that shard
+and two separately failed macOS shards. This is scoped selector/public-adapter
+evidence, not full Linux, Windows or macOS acceptance. Parallel-hop presentation,
+numeric claim semantics, route count/caps and full current upstream equivalence
+remain open.
+See the [selector contract and causal RED evidence](../native/docs/graphify-path-policy.md).
+
+The first implementation at `23a9d8a7` fails native compilation with `E0432`:
+the policy file is a private child of `graph_extensions`, whose existing public
+exports are `AnalysisCategory` and `SourceCategoryPolicy`. The candidate now
+imports those exports. The corrected source also passes fresh Windows paired
+compilation and exactly one credential-backed TLS case (49 filtered); that
+separate proof does not execute the selector cases. The failed original build
+provides no runtime acceptance.
+
+At `3ddf641c`, two genuine published-View cases reach the intended missing
+`pathHops` assertions on Ubuntu: eight original cases pass, the two fail, and
+none are ignored or filtered. Independent receipt
+`7d75e966ac1ae0f00b02e43aacc51342c3d114a5ebae2d144de20a6f0d0378fa`
+verifies all 95 text members, exact target partition and all 1,176 raw Git source
+hashes. The later new provenance/replay assertions are not exercised by that RED.
+The candidate now derives complete per-hop original observations and exact
+evidence for the explicit selected policy, retaining opposite stored directions
+only during explicitly undirected traversal. It serializes borrowed originals
+under the existing deadline and byte cap before constructing owned JSON.
+A further public 1,200-call fixture requires whole-request capacity refusal
+without publication or source-byte loss. Public cases compare complete original
+evidence arrays in View order; a separate explicitly synthetic rendering unit
+covers multiple references and shared-site deduplication without an admission
+claim. Fresh native GREEN for this candidate
+remains pending; numeric claim admission, contradictory-source fixtures and
+distinct-node route counting/caps remain open.
+macOS PDF resource-limit and template EINVAL failures remain recorded; no limits
+were relaxed and no tests were skipped.
+
+The earlier `cf1d0671` source independently passes all eight Windows default
+shards: 378 exact whole-target groups, 3,954 observed passes, zero failures,
+53 original ignores and no filters. All 1,176 source hashes match Git forms;
+full-shard receipt SHA256 is
+`25f307002f5d91977ce10997f07939b4373805025f614761de0f2ed3cde53af3`.
+Its separate explicit/bundled real Rust VS Code hosts, same fresh CLI, actual
+TSGo hover/definition/references and four kernel Job scenarios are independently
+checked in receipts
+`a68f33483317526870eb420531f947dddd4ca04ac30c12a6ad0d613beee8bdb4`
+and `1df6c0ac69d6924f36e87805944c4bec7f3f908944edaa2b9b960833e8035bd5`.
+Those earlier-source results do not qualify the new candidate or constitute
+full upstream, Windows/main or release acceptance.
+
+## Current-source Windows aggregate checkpoint (2026-10-31)
+
+At `002024f4`, all eight Windows default shards independently verify 378 exact
+whole-target groups, 3,947 observed passes, zero failures, 53 original ignores
+and no filtered tests. All 1,174 selected source hashes match their Git forms.
+The separate [Windows aggregate job](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41194162604/job/124530752972)
+also succeeds through two selected real rust-analyzer cases, fresh release build,
+unchanged-input binding, upload, original owning-history fixtures and five browser
+profiles. Independent audits verify the original 162 CLI outcomes and 126 exact
+archived-record readbacks, all 30 original PNG/DOM pairs and the same fresh CLI
+identity. The parent agent actually viewed every original screenshot. The scoped
+aggregate receipt SHA256 is `2a5e13f7e831e9db5b24dda0d7164fe60600a49035c543aee3260e8086dcf769`.
+Compiled release artifact `13043070595` was checked as upload metadata only;
+its ZIP was not downloaded or read locally. Separate current VSIX/TSGo and Job
+lifecycle evidence is recorded in [PR30](https://github.com/HECer/Yoke-CodeIntelligence/pull/30).
+Original CI human/visual/release flags are unchanged; the agent's visual review
+is a separate fixture-scoped checkpoint. The overall Rust workflow still fails
+on macOS, whose runtime certification remains deferred. Broader upstream/backend,
+full Windows/main/release acceptance remain open; these source-specific results
+do not qualify subsequent candidates.
+
+## Fresh browser/VSIX proof and strict LSP lifecycle candidate (2026-10-31)
+
+At `45323315`, five Windows browser profiles pass independent artifact checks;
+the parent visually inspected all 30 original screenshots. Native, Serena,
+persistent Python, HTTP and statistics before/pending/after states pass the
+scoped agent visual checkpoint. The same source's combined VSIX passes both
+actual explicit/bundled Rust extension-host assertions in VS Code 1.143.1.
+The enclosing VSIX/TSGo job fails later because all three TSGo replies reject
+`params: null` on the no-parameter lifecycle. The candidate omits that member
+only for shutdown/exit and retains explicit-null custom calls, protocol ordering,
+deadlines, ownership and cleanup. Two strict native fixtures remain unrun locally.
+The older VSIX `api_error` lacks a precise exception; future refusals now record
+fixed phase/error categories without private details or admission relaxation.
+[Source-bound receipts and limits](validation/integration-2026-10-31/history-vsix-followup/README.md#fresh-browser-and-vsix-confirmation-at-45323315)
+preserve the failed overall job and original broader flags. Human/motion/visible-
+shell review, subsequent-candidate, full Windows/platform/main/release acceptance
+remain open. Local typecheck, 266 npm passes/three skips and 34 inert Python
+admission tests pass; these do not execute or qualify the new native code.
+
 ## Session CLI answer-budget repair candidate (2026-10-31)
 
 The Session batch path previously ignored the global `--max-bytes` selection,
@@ -20,6 +381,12 @@ without a later write. An exactly full successful prefix refuses the next
 operation before invocation. Native compilation and execution remain unrun locally;
 this is an unqualified source candidate, without Windows/platform/main/release
 acceptance. Existing PR28's browser/VSIX qualification continues independently.
+
+The first hosted candidate `512d026d` fails compilation with E0423 because an
+accumulator update still refers to the removed local variable `used`.
+`2c803a93` restores accumulation of prior rows, the next comma and the admitted
+serialized value. This is a source correction awaiting fresh native compilation
+and all eight fixtures; no failed producer supplies runtime acceptance.
 
 ## Corrected reset target and fresh TLS source confirmation (2026-10-31)
 
@@ -5718,3 +6085,177 @@ The static graph is not the complete runtime. A successful reference query is no
 The facade deliberately does **not** merge all upstream applications into one implicit privileged process. The native path does not need a model. Advanced provider/network/key/retention privileges remain host CLI/library operations, not automatically granted to an MCP caller. See `ADVANCED.md`, `FEDERATION.md`, `SECURITY.md` and `UPSTREAMS.md` for operation-specific boundaries.
 
 Version 0.3 is therefore usable for continued development and bounded local workflows; calling it universally production-ready, fully externally verified or complete feature-for-feature parity with every upstream product would be inaccurate.
+
+
+## Detached receiver cancellation latency observation (2026-11-04)
+
+The delayed Windows shard 6 job 126514029220 / run 41812223564 tests PR merge 49dc548d0f8d8866a1513338233dc8b67172b6f9, whose tree equals head 467a3db84255c2875caf078a4d78d59b90c2ca88. Its bounded text artifact 13316675904 matches ZIP SHA-256 5ee25d26f5fc2804faabc99cade445543264025e7ea615b32c883fcd6f34f1cd; all 98 raw group-log lengths and hashes verify. Of 49 target groups, 48 pass. Only digest_receiver fails (48 passed, 1 failed, 1 existing ignored case), at the one-second assertion in detached_host_cancellation_remains_binding_after_start_returns. The receiver wait returns successfully before that assertion; the old log does not record its measured latency. The cause of the exceeded bound is not established.
+
+The existing test now records only scalar failure observations: elapsed time from before the cancel store, time from after it, the joined receiver's accepted-request count, the resulting record count, and the host cancellation flag. Join latency is captured before the SQLite observation. The exact one-second limit and zero-record assertion remain enforced; receiver, deadline, socket, permission and cleanup implementation is unchanged. This is diagnostic instrumentation, not a claim that the cancellation failure is fixed.
+
+An owned Python loopback probe of the same Windows blocking Winsock 50 ms receive option observed 54-61 ms blocked reads and 24-31 ms from the probe's flag to join. That experiment executes no Rust/project image and does not reproduce or explain the hosted failure. It supplies no native cancellation qualification.
+
+Pinned Rust 1.94.1 rustfmt and fresh npm run typecheck pass. Fresh npm test reports 266 passed, 0 failed and 3 existing skips (269 total); the 101 recorded Node inputs remain unchanged. No local Cargo/native test, controller, real vendor or editor runtime is executed or inspected. Exact new-head native qualification, the receiver latency investigation and the other recorded platform issues remain open. No deadline increase, assertion waiver, extra ignored case, force push, manual CI rerun or main/release merge is included.
+
+### PR32 source-claim integration after PR33 ? 2026-11-07
+
+PR33's implementation and its original exact-tree green hosted matrix were
+merged into the test-first PR32 branch as `9810ea16`. The actual PR31 parent
+subsequently requires reconciliation with `312763d9`; the PR API's historical
+base SHA is not the current branch ref. This normal two-parent integration keeps
+all source-claim producer/ranking/archive bytes intact and preserves both sides'
+recorded evidence rather than relabeling old runs as qualification of the merge.
+
+The parent owns the complete HTTP fixture peer lifetime, strict settled/live
+inventory API and current PDF resource-policy validation. The source-claim side
+keeps full prepared-input equality and its original adversarial replay controls;
+its replay bridge now uses the parent's policy validator and rejects changed PDF
+identity or enforcement kinds before observation normalization. Original saved
+resource receipts, source hashes, claims and accounting remain exact. No new
+execution/host authority, larger timeout, retry, ignore or weaker exit proof is
+introduced. Both launcher regression families retain their assertions against the
+same canonical `allow_disappeared` API. The automatic merge's duplicated JoinHandle
+consumption is avoided by retaining the parent's complete tested fixture source.
+
+Fresh local validation is limited to 32 inert Python admission/inventory cases
+and parsing/formatting the eight retained Rust roots. No native, real vendor,
+controller/worker/editor runtime or compiled payload was run or opened locally.
+The npm/typecheck source inputs remain identical to the inspected successful
+PR33 hosted jobs; those results are reused as exact-source evidence, not rerun.
+The combined native merge still requires its own hosted matrix. Main integration,
+human visual acceptance where applicable and production/release readiness remain
+open. Reproducible evidence: `validation/pr33-e38-green-merge-20261107/base-merge/`.
+
+### Atomic Store bootstrap candidate ? 2026-11-07
+
+PR32's `52d7a4d` Windows push aggregate admits 381/382 whole groups before
+refusing the incomplete compiler-body fixture shard. Its two Engine openings
+retain the original ten-second deadline and fail after entering SqlSetup or
+WorkspaceIdentity; exact SQL/OS scheduling causes are unrecorded. All 764 raw
+logs and 1,198 selected source hashes are independently bound to that source.
+The two failing cases do not reach their compiler assertions, and neither this
+receipt nor a later successful run alone establishes a compiler regression/fix.
+
+Store bootstrap now places its seven unchanged CREATE statements inside one
+explicit deferred SQLite transaction, instead of separate statement commits.
+WAL, foreign keys and synchronous=FULL remain configured outside the transaction.
+The original busy/progress handlers, parent/cancellation ceiling, physical locks,
+workspace-identity initialization, final deadline check and policy clearing stay
+intact. Deferred admission avoids reserving a writer before an existing-schema
+open actually needs one. Errors before commit drop the owned transaction under
+the driver's existing rollback behavior; no public schema format changes.
+
+Five new native regressions inspect real SQLite commit hooks and WAL databases:
+one bootstrap commit with all original objects/settings, refused-commit rollback
+and fresh-attempt recovery, pre-expired refusal, inherited cancellation before
+commit, and existing-schema read admission beside another uncommitted writer.
+These tests are authored and rustfmt-parsed, not compiled/executed locally. All
+existing opening-deadline/cancellation and compiler-fixture test bytes remain
+unchanged. The 101 npm/typecheck input blobs remain byte-identical to their
+prior hosted qualification; those results are reused, not rerun. New hosted
+native checks are required. This is an atomicity/commit-overhead improvement,
+not proof of the historical Windows stall's cause or a measured latency cure.
+No budget/assertion/ignore/durability/authority waiver or automatic retry is added.
+Main integration, full native acceptance and production/release readiness remain
+open. Evidence: `validation/pr32-52d-windows-aggregate-128276279500-20261107/`.
+
+SQLite transaction/WAL behavior and the pinned rusqlite rollback/commit-hook
+contracts: https://www.sqlite.org/lang_transaction.html,
+https://www.sqlite.org/wal.html,
+https://docs.rs/rusqlite/0.37.0/rusqlite/struct.Transaction.html.
+
+### Owned arXiv admission deadline handoff candidate - 2026-11-07
+
+PR30 head `6382fa4` Windows push aggregate 42338299534/128307001707
+refuses an incomplete shard: 381/382 groups pass, and the arXiv HTTP group
+has three passing cases and one failed journal-phase assertion after the original
+300ms capture refusal and strict two-second return bound have already passed.
+The journal remains pending; the original log does not retain the capture error,
+request-received state or exact failed stage. Five later browser-upload errors
+are secondary to skipped acceptance. All 764 raw logs and 1,199 selected source
+inputs are independently verified (42 exact, 1,157 explained CRLF-only).
+
+A source-visible ownership gap is corrected: successful durable admission now
+constructs the exclusively held Permit before checking its final handoff policy.
+If that same deadline or inherited cancellation refuses, the same known owner
+completes only its own not-yet-started attempt and returns the original refusal.
+There is no network request, renewed deadline, automatic recovery or retry in
+that branch. Failed journal writes/completion and abandoned permits retain the
+existing pending/corrupt refusal and exact-hash host-granted recovery contract;
+the normal three-second completion cooldown and exclusive locks remain intact.
+This closes a specific code path; the old log does not prove it caused this run.
+
+Three deterministic native journal regressions cover expired and inherited-
+cancelled handoff, cooldown preservation, and refused completion retaining exact
+recovery permissions/state. The original HTTP case keeps its 300ms/2s bounds and
+completed assertion, adding only bounded error/elapsed/request-presence/sequence
+diagnostics. Native tests are authored, not compiled or run locally. Pinned
+Rustfmt is the local parse/format check; npm/typecheck inputs remain unchanged
+and previous hosted source qualification is reused, not rerun. Fresh native CI
+is required before any next merge. Full production/release readiness remains open.
+Evidence: `validation/pr30-638-windows-128307001707-20261107/`.
+
+### Complete ingress capacity refusal followed by reset - 2026-11-07
+
+Delayed PR30 `6382fa4` macOS shard5 (42338304408/128300127202)
+contains 47/48 passing groups. github_app_ingress reports 21 passed and one
+fixture read failure: ConnectionReset/OS54 after 203 retained bytes with a 503
+status prefix and header end117, at898.125 microseconds. The original trace does
+not retain the response body or its declared length; completeness is not inferred
+from these counts. The old test never reaches its 503/750ms/no-queue assertions.
+The tested PR merge `cd65bd3` has the exact `6382fa4` source tree. This fixture is
+unchanged by the intervening arXiv candidate `6f2b379`.
+
+Only the owned test client's transport adapter changes. It preserves a reset
+only after an exact complete Content-Length-framed capacity-refusal response:
+503, the expected finite headers, accepted=false/complete=false and the exact
+capacity error, no extra/pipelined data. Partial/malformed/mismatched responses
+and every other transport error still panic. The real capacity case additionally
+requires the complete refusal profile; its original 503 assertion,750ms bound,
+empty durable queue and owned shutdown remain. Production bytes are unchanged.
+
+Three pure reader regressions cover complete EOF/reset responses, all truncated
+prefixes, malformed/duplicate/absent framing, wrong payload/status, pipelining and
+non-reset errors. They are authored, not compiled/run locally. Pinned Rustfmt
+and static diff checks are the local validation; the 101 npm/typecheck inputs
+remain unchanged and prior hosted source qualification is reused, not rerun.
+Fresh exact-head native CI and downstream production/release readiness remain
+required; no timeout, functional assertion, ignore or production close policy is
+relaxed. Evidence: `validation/pr30-638-macos5-128300127202-20261107/`.
+
+Read/error and framing contracts: https://doc.rust-lang.org/std/io/trait.Read.html#method.read_to_end,
+https://www.rfc-editor.org/rfc/rfc9112.html#section-6.3
+
+### Cross-platform test ownership follow-up - 2026-11-07
+
+PR30 `b87b3ab` has independent Windows and macOS failures. Windows push
+42344481410 has 381/382 whole groups pass, its PR counterpart42344485651
+has380/382, and macOS PR shard5 has48/49. The two Windows library failures are
+new test observations opening the exclusively locked rate journal through a
+second handle (OS33), before their handoff assertions. Those reads now use the
+still-owned handle with a bounded129-byte read and restored cursor; no unlock,
+production journal change or recovery-policy change occurs.
+
+The macOS server-selection case completes revocation/provider assertions and
+shutdown, then its late TCP-connect assertion unexpectedly succeeds. The old
+trace cannot identify the accepting listener or prove address reuse. Its test
+now requires an active service to exclude a second bind and shutdown to permit
+an exact-address rebind, retained as a guard through verification. This positively
+checks address ownership/release; no production socket/shutdown behavior changes.
+
+A separate Windows facade diagnostic request reaches the original20-second
+refusal before any line/reference filter assertion. Its cause remains open.
+The fixture now optionally uses the existing bounded loopback phase observer
+and records method/elapsed/phase data only on failure. The provider script,
+20-second policy and all filter/source assertions are unchanged. Observations
+are best-effort diagnostics, not delivery/exit or semantic acceptance proof.
+The shared observer's three existing adversarial tests are also compiled in this
+target. No native tests or provider/controller/editor runtime ran locally;
+Rustfmt/static checks are local, and prior hosted Node qualification is reused
+only for the101 unchanged input blobs. Fresh native CI and downstream production
+readiness remain pending; no manual rerun, larger deadline, ignore, weakened
+journal/assertion or executable-payload inspection is used.
+
+Evidence: `validation/pr30-b87-multi-ci-20261107/`. Platform contracts:
+https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-lockfileex,
+https://doc.rust-lang.org/std/net/struct.TcpListener.html#method.bind.
