@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "upstreamRevision": "ede329aaf0c824bea75455a2926f01420d7aa620",
+  "sourceBlobs": {
+    "src/serena/resources/serena_config.template.yml": "047955195f5fcf50d9fb061ca3e0bbd1e5d5ee3c",
+    "src/serena/tools/tools_base.py": "123d390ac4230c049c5b4d81edc940c2f1e0ed48"
+  },
+  "scope": "global",
+  "fields": {
+    "tool_timeout": {
+      "target": "timeoutMs",
+      "unit": "seconds",
+      "default": 240
+    },
+    "default_max_tool_answer_chars": {
+      "target": "defaultAnswerChars",
+      "unit": "unicode_scalars",
+      "default": 150000
+    }
+  },
+  "configuredDefaultSentinel": -1,
+  "answerFacades": [
+    "edit.replace_in_files",
+    "fs.list_dir",
+    "fs.read_file",
+    "fs.search_for_pattern",
+    "jb.find_referencing_symbols",
+    "jb.find_symbol",
+    "jb.get_symbols_overview",
+    "jb.get_type_hierarchy",
+    "jb.list_inspections",
+    "jb.run_inspections",
+    "lsp.find_implementations",
+    "lsp.find_referencing_symbols",
+    "lsp.find_symbol",
+    "lsp.get_diagnostics_for_file",
+    "lsp.get_diagnostics_for_symbol",
+    "lsp.get_symbols_overview",
+    "shell.execute_shell_command"
+  ]
+}

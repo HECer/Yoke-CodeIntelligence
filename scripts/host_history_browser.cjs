@@ -6,6 +6,7 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const {spawn} = require('node:child_process');
 const {TextDecoder} = require('node:util');
+const usage = require('./host_tool_usage_browser.cjs');
 const FRAME = 4_000_000, JSON_LIMIT = 1_000_000, PNG_LIMIT = 2_000_000;
 const decoder = new TextDecoder('utf-8', {fatal: true});
 const hash = data => crypto.createHash('sha256').update(data).digest('hex');
@@ -22,6 +23,7 @@ let input = Buffer.alloc(0), serial = Promise.resolve(), commands = 0, commandBy
 let browserLogs = 0, eventCount = 0, scriptErrors = 0, consoleErrors = 0, pngTotal = 0;
 let closeExit, pipeEOF = false, browserOutputEOF = 0, phase = 'start';
 let checkpoint = 'phase-entry', observedViewport = 'none';
+const statistics = usage.create({need, evaluate, until, click, confirm, cdp: () => cdp, captureSnapshot, receipt});
 
 function safe(value) {
   const text = JSON.stringify(value);
@@ -120,7 +122,12 @@ class CDP {
     if (this.failure) throw this.failure;
   }
   async event(message) {
-    if (this.closing) return;
+    if (this.closing) {
+      // Statistics must not hide a late retry while shutdown drains events.
+      if (config?.variant === 'tool-usage' && message.method === 'Network.requestWillBeSent'
+        && message.params?.request?.method === 'POST') throw Error('statistics-request-during-close');
+      return;
+    }
     const p = pages.find(page => page.session === message.sessionId);
     const e = message.params || {};
     if (message.method === 'Runtime.exceptionThrown') { scriptErrors++; throw Error('script-error'); }
@@ -147,7 +154,13 @@ class CDP {
       if (url.pathname === '/api/manage') {
         need(e.request.method === 'POST' && typeof e.request.postData === 'string'
           && Buffer.byteLength(e.request.postData) <= 128000);
-        const action = JSON.parse(e.request.postData).action;
+        const body = JSON.parse(e.request.postData);
+        if (config.variant === 'tool-usage') {
+          const selected = usage.observeRequest(p, body);
+          p.requests.set(e.requestId, {...selected, bootstrap: false});
+          return;
+        }
+        const action = body.action;
         need(action.kind === 'document' && ['read', 'plan', 'pending', 'apply'].includes(action.request.kind)
           && action.request.documentId === config.document);
         kind = action.request.kind;
@@ -158,7 +171,9 @@ class CDP {
       const request = p.requests.get(e.requestId);
       if (request) {
         request.status = e.response.status;
-        if (request.kind || request.bootstrap) need(request.status === 200);
+        if (request.kind === 'resetToolUsage' && config.variant === 'tool-usage')
+          need(request.status === 200 || request.status === 409);
+        else if (request.kind || request.bootstrap) need(request.status === 200);
       }
     }
     if (message.method === 'Network.loadingFinished') {
@@ -176,6 +191,11 @@ class CDP {
         p.bootstrapSha256 = hash(bytes);
       } else {
         const reply = JSON.parse(decoder.decode(bytes));
+        if (request.kind === 'resetToolUsage' && config.variant === 'tool-usage') {
+          need(p.receipts.length < 64);
+          p.receipts.push({kind: request.kind, data: usage.response(request, request.status, reply)});
+          return;
+        }
         need(reply.schema === 'native_dashboard_management_v1' && reply.outcome === 'completed');
         need(p.receipts.length < 64);
         // Retain only response data in memory. Selected fields are emitted below.
@@ -299,6 +319,11 @@ async function snapshot(p, state) {
   // script source, headers, a full DOM, or arbitrary console/error strings.
   draftNode.textSha256 = hash(Buffer.from(draftNode.text));
   delete draftNode.text;
+  return captureSnapshot(p, state, observation);
+}
+
+async function captureSnapshot(p, state, observation) {
+  need(['before', 'pending', 'after'].includes(state));
   safe(observation);
   const layout = await cdp.send('Page.getLayoutMetrics', {}, p.session);
   const content = layout.cssContentSize;
@@ -328,7 +353,8 @@ function admitStart(value) {
     && /^[0-9a-f]{64}$/.test(process.env.YOKE_BROWSER_WORKER_NONCE || ''));
   need(Object.keys(value).sort().join(',') === 'browser,dashboardSha256,document,draft,output,phase,profile,url,variant');
   const outputs = {native: 'ci-host-document-history-browser', serena: 'ci-host-document-history-browser-serena',
-    'persistent-python': 'ci-host-document-history-browser-persistent-python', http: 'ci-host-document-history-browser-http'};
+    'persistent-python': 'ci-host-document-history-browser-persistent-python', http: 'ci-host-document-history-browser-http',
+    'tool-usage': 'ci-tool-usage-browser'};
   need(typeof value.variant === 'string' && Object.hasOwn(outputs, value.variant)
     && value.variant === process.env.YOKE_BROWSER_WORKER_VARIANT && value.phase === 'start');
   const url = new URL(value.url);
@@ -386,9 +412,14 @@ async function start(value) {
     await cdp.send('Emulation.setDeviceMetricsOverride', {width, height, deviceScaleFactor: 1, mobile: name === 'mobile'}, p.session);
     const navigation = await cdp.send('Page.navigate', {url: config.url}, p.session);
     need(!navigation.errorText);
-    await until(p, `document.getElementById('connection')?.dataset.state==='live' && !document.getElementById('documents-tab').hidden`);
-    await click(p, '#documents-tab', 'page-title');
-    need(await evaluate(p, `document.getElementById('document-choice').value==='new'`));
+    if (config.variant === 'tool-usage') {
+      await until(p, `document.getElementById('connection')?.dataset.state==='live' && !document.getElementById('statistics-tab').hidden`);
+      await click(p, '#statistics-tab', 'page-title');
+    } else {
+      await until(p, `document.getElementById('connection')?.dataset.state==='live' && !document.getElementById('documents-tab').hidden`);
+      await click(p, '#documents-tab', 'page-title');
+      need(await evaluate(p, `document.getElementById('document-choice').value==='new'`));
+    }
   }
   return {variant: config.variant, engine: version.product, reportedBrowserVersions: reportedBrowser,
     protocolVersion: version.protocolVersion, nodeVersion: process.version,
@@ -404,6 +435,10 @@ async function run(value) {
   need(config && pages.length === 2);
   if (phase === 'before') {
     need(commands === 2);
+    if (config.variant === 'tool-usage') {
+      need(pages.every(p => p.bootstrapSha256 === config.dashboardSha256));
+      return statistics.before(pages, value.counts);
+    }
     const states = [];
     for (const p of pages) {
       await load(p, false);
@@ -415,6 +450,7 @@ async function run(value) {
   }
   if (phase === 'pending') {
     need(commands === 3);
+    if (config.variant === 'tool-usage') return statistics.pending(pages, value.counts);
     const states = [];
     for (const p of pages) {
       observedViewport = p.name;
@@ -461,6 +497,7 @@ async function run(value) {
   }
   if (phase === 'after') {
     need((commands === 4 && value.viewport === 'desktop') || (commands === 5 && value.viewport === 'mobile'));
+    if (config.variant === 'tool-usage') return statistics.after(pages, value.viewport, value.counts);
     need(typeof value.draft === 'string' && Buffer.byteLength(value.draft) <= 64000);
     const p = pages.find(p => p.name === value.viewport);
     const since = p.receipts.length;
@@ -484,6 +521,7 @@ async function run(value) {
   }
   if (phase === 'close') {
     need(commands === 6 && !scriptErrors && !consoleErrors);
+    if (config.variant === 'tool-usage') usage.finalRequests(pages);
     closing = true;
     // Some Chromium versions close the pipe before acknowledging Browser.close.
     // A close request followed by raw exit 0 and pipe EOF is required either way.
@@ -492,9 +530,11 @@ async function run(value) {
     need(exit.code === 0 && exit.signal === null);
     for (let n = 0; n < 50 && (!pipeEOF || browserOutputEOF !== 2); n++) await delay(20);
     need(pipeEOF && browserOutputEOF === 2);
+    need(!fatal && !cdp.failure);
     finished = true;
     return {browserCloseRequested: true, browserExitCode: exit.code, cdpEOF: pipeEOF, browserOutputEOF: true,
-      scriptErrors, consoleErrors, screenshots: 6, visualReviewComplete: false};
+      scriptErrors, consoleErrors, screenshots: 6, visualReviewComplete: false,
+      ...(config.variant === 'tool-usage' ? {statisticsResetRequests: usage.finalRequests(pages)} : {})};
   }
   throw Error('unknown-phase');
 }

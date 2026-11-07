@@ -6,20 +6,26 @@ use yoke::{
     project_session::{HostProfile, Session},
 };
 const SOURCE: &str = "// 🌍\nfn helper() {}\nfn main() { helper(); }\n";
-fn session(root: &Path) -> Session {
+#[path = "support/lsp_phase_observations.rs"]
+mod phase_observations;
+fn session(root: &Path, observations: Option<&phase_observations::Observations>) -> Session {
     fs::write(root.join("main.rs"), SOURCE).unwrap();
     let mut engine = Engine::open(root).unwrap();
+    let mut args = vec![
+        Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/fixtures/advanced-lsp.mjs")
+            .display()
+            .to_string(),
+        "".into(),
+    ];
+    if let Some(observations) = observations {
+        args.extend(observations.arguments());
+    }
     engine
         .register_configured_server(yoke::lsp::ConfiguredServer {
             server: yoke::lsp::Server {
                 command: "node".into(),
-                args: vec![
-                    Path::new(env!("CARGO_MANIFEST_DIR"))
-                        .join("tests/fixtures/advanced-lsp.mjs")
-                        .display()
-                        .to_string(),
-                    "".into(),
-                ],
+                args,
                 language: "rust".into(),
                 trust: true,
             },
@@ -43,7 +49,7 @@ fn invoke(session: &mut Session, method: &str, args: Value) -> anyhow::Result<Va
 #[test]
 fn positive_answer_bounds_count_unicode_serialized_characters_and_preserve_full_small_answers() {
     let root = tempfile::tempdir().unwrap();
-    let mut session = session(root.path());
+    let mut session = session(root.path(), None);
     let value = invoke(
         &mut session,
         "fs.read_file",
@@ -76,7 +82,7 @@ fn positive_answer_bounds_count_unicode_serialized_characters_and_preserve_full_
 #[test]
 fn numeric_symbol_kinds_filter_referencing_containers_and_never_the_referenced_target() {
     let root = tempfile::tempdir().unwrap();
-    let mut session = session(root.path());
+    let mut session = session(root.path(), None);
     assert!(
         invoke(
             &mut session,
@@ -127,13 +133,22 @@ fn numeric_symbol_kinds_filter_referencing_containers_and_never_the_referenced_t
 fn include_info_uses_actual_hover_at_the_same_captured_symbol_and_file_documentation_has_exact_anchors()
  {
     let root = tempfile::tempdir().unwrap();
-    let mut session = session(root.path());
+    let observations = phase_observations::Observations::new().ok();
+    let mut session = session(root.path(), observations.as_ref());
+    let started = std::time::Instant::now();
     let value = invoke(
         &mut session,
         "lsp.find_symbol",
         json!({"name_path_pattern":"helper","relative_path":"main.rs","include_info":true}),
     )
-    .unwrap();
+    .unwrap_or_else(|error| {
+        panic!(
+            "include-info fixture failed; elapsedMs={}; observationsUnavailable={}; bestEffortPhases={:?}; error={error:#}",
+            started.elapsed().as_millis(),
+            observations.is_none(),
+            observations.as_ref().map(|value| value.collect())
+        )
+    });
     assert_eq!(
         value["items"][0]["info"]["response"]["contents"]["value"],
         "Independent fixture hover information"

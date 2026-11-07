@@ -129,7 +129,7 @@ function pendingPhaseFixture({blurOnRequest = true, mode = 'normal'} = {}) {
       querySelector: selector => mode === 'missing-target' ? null : nodes[selector.slice(1)]};
     p.nodes = nodes; p.document = document; p.dom = vm.createContext({document});
   }
-  const context = {pages, phase: 'pending', commands: 3, scriptErrors: 0, consoleErrors: 0,
+  const context = {pages, config: {variant: 'native'}, phase: 'pending', commands: 3, scriptErrors: 0, consoleErrors: 0,
     checkpoint: '', observedViewport: '', Number, JSON,
     need: value => { if (!value) throw Error('admission-or-assertion'); },
     evaluate: async (p, expression) => vm.runInContext(expression, p.dom),

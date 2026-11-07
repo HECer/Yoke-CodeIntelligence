@@ -958,6 +958,34 @@ pub(crate) struct ResourceLimits {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     memory_budget: Option<crate::process::MacosMemoryBudget>,
 }
+/// Compare extraction policies, allowing only valid macOS per-process VM
+/// observations to differ. This does not attest either historical OS report.
+pub(crate) fn same_pdf_resource_policy(current: &Value, original: &Value) -> Result<bool> {
+    let current_report: ResourceLimits = crate::json::decode(current.clone())?;
+    let original_report: ResourceLimits = crate::json::decode(original.clone())?;
+    if current == original && current_report.memory_enforcement != crate::process::MACOS_MEMORY_KIND
+    {
+        return Ok(true);
+    }
+    for report in [&current_report, &original_report] {
+        if report.memory_enforcement != crate::process::MACOS_MEMORY_KIND {
+            return Ok(false);
+        }
+        let Some(budget) = &report.memory_budget else {
+            return Ok(false);
+        };
+        budget.validate(PDF_MEMORY as usize)?;
+        if report.cpu_seconds != 20 || report.memory_bytes != budget.ceiling_bytes() {
+            return Ok(false);
+        }
+    }
+    Ok(true)
+}
+
+#[cfg(test)]
+#[path = "media_resource_replay_tests.rs"]
+mod resource_replay_tests;
+
 #[cfg(windows)]
 fn pdf_limits() -> Result<ResourceLimits> {
     use std::ffi::c_void;

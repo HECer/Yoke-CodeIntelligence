@@ -252,3 +252,47 @@ fn shortest_path_bounds_are_consistent_for_missing_and_ambiguous_endpoints() {
         }
     }
 }
+
+#[test]
+fn public_selected_path_policy_is_explicit_and_unknown_policies_refuse() {
+    let (_root, mut s, d) = fixture();
+    let legacy = run(
+        &mut s,
+        "shortest_path",
+        json!({"source":"α","target":"gamma"}),
+        &d,
+    );
+    assert!(legacy.get("pathPolicy").is_none());
+    let explicit_first = run(
+        &mut s,
+        "shortest_path",
+        json!({"source":"α","target":"gamma","path_policy":"first_observation_v1"}),
+        &d,
+    );
+    assert_eq!(explicit_first, legacy);
+    let selected = run(
+        &mut s,
+        "shortest_path",
+        json!({"source":"α","target":"gamma","path_policy":"weakest_source_categories_v1"}),
+        &d,
+    );
+    assert_eq!(selected["found"], true);
+    assert_eq!(selected["hops"], 2);
+    assert_eq!(selected["pathPolicy"], "weakest_source_categories_v1");
+    assert_eq!(selected["pathSourceCategory"], "inferred");
+    assert_eq!(
+        selected["pathCategoryMeaning"],
+        "declared_source_categories_not_probabilities_or_execution_proof"
+    );
+    for policy in [json!("invented"), json!(null), json!(true), json!(0)] {
+        assert!(
+            yoke::graphify_adapter::invoke(
+                &mut s,
+                "shortest_path",
+                &json!({"source":"α","target":"gamma","path_policy":policy}),
+                &d
+            )
+            .is_err()
+        );
+    }
+}

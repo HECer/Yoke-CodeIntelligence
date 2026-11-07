@@ -27,6 +27,23 @@ use zeroize::Zeroizing;
 
 const MAX_RESPONSE: usize = 16_000_000;
 #[cfg(test)]
+#[path = "mcp_http_deadline_tests.rs"]
+mod deadline_tests;
+
+#[cfg(test)]
+#[path = "mcp_http_preflight_tests.rs"]
+mod preflight_tests;
+
+fn connection_deadlines(timeout_ms: u64) -> (Deadline, Deadline) {
+    let physical = Deadline::new(timeout_ms);
+    // A fixed 100ms margin can be consumed before the network thread resumes
+    // after work expiry. Reserve a bounded share of the same physical budget;
+    // error reporting never receives a fresh deadline or bypasses cancellation.
+    let response_reserve_ms = (timeout_ms / 4).clamp(100, 500);
+    let work = Deadline::new(timeout_ms - response_reserve_ms);
+    (physical, work)
+}
+#[cfg(test)]
 #[path = "mcp_http_rejection_tests.rs"]
 mod rejection_tests;
 const VERSIONS: [&str; 3] = ["2025-11-25", "2025-06-18", "2025-03-26"];
@@ -64,7 +81,7 @@ impl Target {
             collection_grants: BTreeMap::new(),
         }
     }
-    fn open(&self, deadline: &Deadline, capture_source: bool) -> Result<Session> {
+    fn engine(&self, deadline: &Deadline) -> Result<Engine> {
         deadline.check()?;
         let driver = if let Some(driver) = &self.git_repository_capture {
             Some(driver.clone())
@@ -88,21 +105,24 @@ impl Target {
             deadline.check()?;
             spec.clone().register(&mut engine, true)?;
         }
+        Ok(engine)
+    }
+    fn preflight(&self, deadline: &Deadline) -> Result<()> {
+        let engine = self.engine(deadline)?;
+        let label = format!("http-{}", random_id()?);
+        Session::preflight(
+            engine,
+            self.host.clone(),
+            Some(&label),
+            self.git_repository_projects.clone(),
+            deadline,
+        )
+    }
+    fn open(&self, deadline: &Deadline) -> Result<Session> {
+        let engine = self.engine(deadline)?;
         // This independent random label is not the transport session secret.
         let label = format!("http-{}", random_id()?);
-        let mut session = if !capture_source {
-            if let Some(projects) = &self.git_repository_projects {
-                Session::inspect_with_git_projects(
-                    engine,
-                    self.host.clone(),
-                    Some(&label),
-                    projects.clone(),
-                    deadline,
-                )?
-            } else {
-                Session::inspect(engine, self.host.clone(), Some(&label), deadline)?
-            }
-        } else if let Some(projects) = &self.git_repository_projects {
+        let mut session = if let Some(projects) = &self.git_repository_projects {
             Session::open_with_git_projects(
                 engine,
                 self.host.clone(),
@@ -113,9 +133,7 @@ impl Target {
         } else {
             Session::open(engine, self.host.clone(), Some(&label), deadline)?
         };
-        if capture_source
-            && (self.git_repository_capture.is_some() || self.git_repository_projects.is_some())
-        {
+        if self.git_repository_capture.is_some() || self.git_repository_projects.is_some() {
             session.index_initial_git_source(deadline)?;
         }
         Ok(session)
@@ -152,6 +170,7 @@ impl Principal {
             (None, Some(_)) => anyhow::bail!("session_prompt_selection_required"),
             (None, None) => {}
         }
+        crate::required_prompt_memories::admit_host(&target.host, &Deadline::new(30000))?;
         target.root = target.root.canonicalize()?;
         ensure!(
             target.root.is_dir()
@@ -232,9 +251,7 @@ impl Principal {
         }
         // Validate source/session host authority before a listener can be opened.
         let preflight_deadline = Deadline::new(30_000);
-        let preflight = target.open(&preflight_deadline, false)?;
-        preflight.check_activation_start(&preflight_deadline)?;
-        drop(preflight);
+        target.preflight(&preflight_deadline)?;
         Ok(Self {
             id: id.into(),
             token_hash: Sha256::digest(token.as_slice()).into(),
@@ -1102,8 +1119,7 @@ fn actor(receiver: mpsc::Receiver<Job>, shared: Arc<Shared>, config: Arc<Config>
                         let operation_deadline = Deadline::new(600_000);
                         if job.initialize {
                             ensure!(!sessions.contains_key(&job.id), "Duplicate MCP session");
-                            let mut native_session =
-                                principal.target.open(&operation_deadline, true)?;
+                            let mut native_session = principal.target.open(&operation_deadline)?;
                             native_session.bind_dashboard_lifetime(Arc::clone(&job.meta.closed));
                             native_session.bind_dashboard_shutdown(
                                 crate::session_dashboard::management::ShutdownScope::HttpSession,
@@ -1689,9 +1705,8 @@ pub fn serve(mut config: Config, principals: Vec<Principal>) -> Result<ServerHan
                         let handler = thread::Builder::new()
                             .name("yoke-mcp-http-connection".into())
                             .spawn(move || {
-                                let deadline = Deadline::new(config.request_timeout_ms);
-                                // Reserve part of the same host budget to report expiry.
-                                let work_deadline = Deadline::new(config.request_timeout_ms - 100);
+                                let (deadline, work_deadline) =
+                                    connection_deadlines(config.request_timeout_ms);
                                 let socket = BoundSocket {
                                     socket: tcp,
                                     deadline: &deadline,

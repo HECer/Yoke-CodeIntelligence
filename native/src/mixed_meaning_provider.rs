@@ -13,6 +13,9 @@ use rusqlite::{
 use serde::de::DeserializeOwned;
 use std::path::PathBuf;
 
+#[path = "mixed_meaning_resource_replay.rs"]
+mod resource_replay;
+
 #[path = "mixed_meaning_composition.rs"]
 pub mod composition;
 #[path = "mixed_meaning_query.rs"]
@@ -1160,9 +1163,11 @@ fn load_impl(
             && roots.records == job.parent_records,
     )?;
     let mut expected = graph_value(&inputs, &job, &reply, d)?;
-    // Source/claim validation above uses the current replay. Preserve the exact
-    // original execution receipt when reconstructing the immutable saved graph.
-    expected["sourceValidation"]["inputs"] = saved;
+    resource_replay::retain(
+        &mut expected["sourceValidation"]["inputs"],
+        &saved,
+        &mut || check(d),
+    )?;
     let id = job
         .graph_artifact_id
         .as_ref()

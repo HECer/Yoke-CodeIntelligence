@@ -85,6 +85,14 @@ impl<'a> CollectionInvocationAccess<'a> {
 #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
 pub struct HostProfile {
     #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub token_count_estimator: Option<crate::tool_usage::Estimator>,
+    #[serde(skip)]
+    pub token_count_runtime: Option<crate::tool_usage::http::Host>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub language_server_auto_selection: Option<crate::server_autoselection::Config>,
+    #[serde(default, skip_serializing_if = "crate::tool_budgets::unselected")]
+    pub tool_budgets: Option<crate::tool_budgets::Config>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub activation_commands: Option<crate::project_activation::Config>,
     #[serde(skip)]
     pub activation_runtime: Option<crate::project_activation::Runtime>,
@@ -92,6 +100,10 @@ pub struct HostProfile {
     pub prompt_templates: Option<crate::session_prompt::Config>,
     #[serde(skip)]
     pub prompt_runtime: Option<crate::session_prompt::Runtime>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub required_prompt_memories: Option<crate::required_prompt_memories::Policy>,
+    #[serde(skip)]
+    pub required_prompt_memory_runtime: Option<crate::required_prompt_memories::Runtime>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub dashboard: Option<crate::session_dashboard::Config>,
     #[serde(default, skip_serializing_if = "crate::semantic_workspace::unselected")]
@@ -143,10 +155,16 @@ pub struct HostProfile {
 impl Default for HostProfile {
     fn default() -> Self {
         Self {
+            token_count_estimator: None,
+            token_count_runtime: None,
+            language_server_auto_selection: None,
+            tool_budgets: None,
             activation_commands: None,
             activation_runtime: None,
             prompt_templates: None,
             prompt_runtime: None,
+            required_prompt_memories: None,
+            required_prompt_memory_runtime: None,
             dashboard: None,
             language_servers: None,
             additional_workspace_folders: None,
@@ -182,6 +200,8 @@ impl Default for HostProfile {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct State {
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    automatic_language_servers: BTreeMap<String, crate::server_autoselection::Decision>,
     id: String,
     label: String,
     workspace_id: String,
@@ -223,6 +243,7 @@ pub(crate) fn validate_retention_record(
         crate::session_steering::retained_modes(modes, true)?;
     }
     dashboard_languages::validate_retained(&state.language_server_overrides)?;
+    crate::server_autoselection::validate_retained(&state.automatic_language_servers)?;
     for name in state
         .onboarded_projects
         .iter()
@@ -237,7 +258,16 @@ pub(crate) fn validate_retention_record(
     );
     Ok(())
 }
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum OpenMode {
+    Active,
+    Inspection,
+    HostPreflight,
+}
+
 pub struct Session {
+    tool_usage: Option<crate::tool_usage::Stats>,
+    tool_usage_revision: u64,
     activation_diagnostic: Option<crate::project_activation::Diagnostic>,
     inspection_only: bool,
     inspection_source_read: bool,
@@ -274,6 +304,8 @@ pub struct Session {
 }
 #[path = "project_activation_session.rs"]
 mod activation;
+#[path = "server_autoselection_session.rs"]
+mod automatic_languages;
 #[path = "session_dashboard_documents.rs"]
 mod dashboard_documents;
 #[path = "session_dashboard_languages.rs"]
@@ -288,8 +320,12 @@ mod dashboard_project_documents;
 mod dashboard_project_recovery;
 #[path = "session_dashboard_shutdown.rs"]
 mod dashboard_shutdown;
+#[path = "session_dashboard_tool_usage.rs"]
+mod dashboard_tool_usage;
 #[path = "session_prompt_session.rs"]
 mod prompt_memory;
+#[path = "tool_usage_session.rs"]
+mod usage;
 fn project_root_key(path: &std::path::Path) -> Option<String> {
     Some(project_root_spelling(path.to_str()?, cfg!(windows)))
 }
@@ -363,6 +399,8 @@ impl Session {
         matches!(
             operation,
             "configuration"
+                | "toolUsage"
+                | "clearToolUsage"
                 | "listProjects"
                 | "checkOnboarding"
                 | "activationReceipt"
@@ -966,7 +1004,7 @@ impl Session {
         session_id: Option<&str>,
         deadline: &Deadline,
     ) -> Result<Self> {
-        Self::open_inner(engine, host, session_id, None, false, deadline)
+        Self::open_inner(engine, host, session_id, None, OpenMode::Active, deadline)
     }
     /// Passive host inspection. Hooks never execute through this constructor.
     /// A new selected session stays unpublished and cannot start a backend.
@@ -976,7 +1014,14 @@ impl Session {
         session_id: Option<&str>,
         deadline: &Deadline,
     ) -> Result<Self> {
-        Self::open_inner(engine, host, session_id, None, true, deadline)
+        Self::open_inner(
+            engine,
+            host,
+            session_id,
+            None,
+            OpenMode::Inspection,
+            deadline,
+        )
     }
     /// Explicit typed Git authorities for every already registered project.
     pub fn open_with_git_projects(
@@ -986,16 +1031,33 @@ impl Session {
         projects: crate::git_workflows::repository_projects::Hosts,
         deadline: &Deadline,
     ) -> Result<Self> {
-        Self::open_inner(engine, host, session_id, Some(projects), false, deadline)
+        Self::open_inner(
+            engine,
+            host,
+            session_id,
+            Some(projects),
+            OpenMode::Active,
+            deadline,
+        )
     }
-    pub(crate) fn inspect_with_git_projects(
+    /// Validate host bindings without publishing State, capturing filenames or
+    /// initializing an automatic choice. No Session escapes this preflight.
+    pub(crate) fn preflight(
         engine: Engine,
         host: HostProfile,
         session_id: Option<&str>,
-        projects: crate::git_workflows::repository_projects::Hosts,
+        projects: Option<crate::git_workflows::repository_projects::Hosts>,
         deadline: &Deadline,
-    ) -> Result<Self> {
-        Self::open_inner(engine, host, session_id, Some(projects), true, deadline)
+    ) -> Result<()> {
+        let session = Self::open_inner(
+            engine,
+            host,
+            session_id,
+            projects,
+            OpenMode::HostPreflight,
+            deadline,
+        )?;
+        session.check_activation_start(deadline)
     }
     pub(crate) fn has_activation_policy(&self) -> bool {
         self.host.activation_commands.is_some()
@@ -1018,9 +1080,32 @@ impl Session {
         mut host: HostProfile,
         session_id: Option<&str>,
         git_repository_projects: Option<crate::git_workflows::repository_projects::Hosts>,
-        inspection_only: bool,
+        mode: OpenMode,
         deadline: &Deadline,
     ) -> Result<Self> {
+        let inspection_only = mode != OpenMode::Active;
+        let host_preflight = mode == OpenMode::HostPreflight;
+        ensure!(
+            host.token_count_runtime.is_none()
+                || host.token_count_estimator
+                    == Some(crate::tool_usage::Estimator::AnthropicClaudeSonnet4),
+            "tool_usage_unselected_network_grant"
+        );
+        let tool_usage = host
+            .token_count_estimator
+            .map(|selected| {
+                crate::tool_usage::Stats::new(selected, host.token_count_runtime.as_ref(), deadline)
+            })
+            .transpose()?;
+        if let Some(selection) = &host.language_server_auto_selection {
+            selection.validate()?;
+        }
+        if let Some(budgets) = &host.tool_budgets {
+            budgets.validate()?;
+        }
+        if crate::tool_budgets::unselected(&host.tool_budgets) {
+            host.tool_budgets = None;
+        }
         if let Some(config) = &host.activation_commands {
             config.validate(&host, deadline)?;
         }
@@ -1034,6 +1119,7 @@ impl Session {
             (Some(_), None) => anyhow::bail!("session_prompt_host_permission_required"),
             (None, Some(_)) => anyhow::bail!("session_prompt_selection_required"),
         }
+        crate::required_prompt_memories::admit_host(&host, deadline)?;
         engine.store.set_deadline(deadline)?;
         if let Some(projects) = &git_repository_projects {
             projects.validate(&host, &engine.root, deadline)?;
@@ -1393,6 +1479,15 @@ impl Session {
         } else {
             fingerprint
         };
+        let fingerprint = if let Some(policy) = &host.required_prompt_memories {
+            identity(&(
+                fingerprint,
+                crate::required_prompt_memories::VERSION,
+                policy,
+            ))
+        } else {
+            fingerprint
+        };
         let fingerprint = if let Some(selected) = crate::session_steering::agent_interface(&host) {
             identity(&(
                 fingerprint,
@@ -1512,6 +1607,34 @@ impl Session {
             fingerprint
         };
         engine.sync_source_exclusions(deadline)?;
+        let fingerprint = if let Some(estimator) = host.token_count_estimator {
+            identity(&(
+                fingerprint,
+                crate::tool_usage::binding(),
+                estimator,
+                host.token_count_runtime
+                    .as_ref()
+                    .map(|runtime| runtime.fingerprint()),
+            ))
+        } else {
+            fingerprint
+        };
+        let fingerprint = if let Some(selection) = &host.language_server_auto_selection {
+            identity(&(
+                fingerprint,
+                crate::server_autoselection::VERSION,
+                crate::server_autoselection::contract_binding(),
+                selection,
+                crate::server_selection::bindings(&engine.backend_servers)?,
+            ))
+        } else {
+            fingerprint
+        };
+        let fingerprint = if let Some(budgets) = &host.tool_budgets {
+            identity(&(fingerprint, crate::tool_budgets::VERSION, budgets))
+        } else {
+            fingerprint
+        };
         let fingerprint = if let Some(budgets) = &host.symbol_info_budgets {
             identity(&(fingerprint, "host_symbol_info_budgets_v1", budgets))
         } else {
@@ -1635,6 +1758,7 @@ impl Session {
             state
         } else {
             State {
+                automatic_language_servers: BTreeMap::new(),
                 id,
                 label: owned_label,
                 workspace_id: engine.store.workspace_id.clone(),
@@ -1684,15 +1808,34 @@ impl Session {
             "Query-only project cannot be activated"
         );
         dashboard_languages::validate_overrides(&host, &state.language_server_overrides)?;
+        automatic_languages::validate_choices(&host, &state.automatic_language_servers)?;
+        ensure!(
+            !inspection_only
+                || host_preflight
+                || host.language_server_auto_selection.is_none()
+                || state.automatic_language_servers.contains_key("default")
+                || host
+                    .language_servers
+                    .as_ref()
+                    .and_then(|s| s.select("default"))
+                    .is_some()
+                || state.language_server_overrides.contains_key("default"),
+            "language_auto_inspection_requires_initialized_selection"
+        );
         if let Some(registry) = &dashboard_language_registry {
             registry.apply(
                 &mut engine,
                 &host,
                 "default",
                 state.language_server_overrides.get("default"),
+                state.automatic_language_servers.get("default"),
             )?;
         }
         let serialized = serde_json::to_string(&state)?;
+        ensure!(
+            serialized.len() <= 64000,
+            "Stored session capacity exceeded"
+        );
         let activation_attempt = if inspection_only {
             None
         } else {
@@ -1713,8 +1856,9 @@ impl Session {
         } else {
             None
         };
-        let unpublished_inspection =
-            inspection_only && host.activation_commands.is_some() && raw.is_none();
+        let unpublished_inspection = inspection_only
+            && (host_preflight || host.activation_commands.is_some())
+            && raw.is_none();
         let publication = (|| -> Result<()> {
             if raw.is_none() && !unpublished_inspection {
                 let inserted = engine.store.db.execute(
@@ -1763,7 +1907,9 @@ impl Session {
                 (Err(error), None) => return Err(error),
                 (Ok(()), None) => (None, activation_witness_before_publication),
             };
-        Ok(Self {
+        let mut session = Self {
+            tool_usage,
+            tool_usage_revision: 0,
             activation_ready_projects: if activation_diagnostic.is_some() {
                 BTreeSet::from([state.active_project.clone()])
             } else {
@@ -1799,7 +1945,28 @@ impl Session {
             global_notes: None,
             debug_adapters: BTreeMap::new(),
             process_cleanup_unproven: false,
-        })
+        };
+        if !inspection_only && session.host.required_prompt_memories.is_some() {
+            // A selected startup must not admit backend work with unavailable
+            // confirmed notes. Ordinary Session metadata/explicit hook effects
+            // may already exist; this is not a rollback of those operations.
+            let config = session
+                .host
+                .prompt_templates
+                .as_ref()
+                .context("required_memory_templates_required")?;
+            let memories = session.prompt_memories(config, deadline)?;
+            crate::required_prompt_memories::prepare(
+                &session.host,
+                &session.state.active_project,
+                memories.as_deref(),
+                deadline,
+            )?;
+        }
+        if !host_preflight {
+            session.ensure_automatic_language("default", deadline)?;
+        }
+        Ok(session)
     }
     pub fn steering_enabled(&self) -> bool {
         crate::session_steering::enabled(&self.host)
@@ -1881,12 +2048,14 @@ impl Session {
         }
     }
     pub(crate) fn check_tool_state(&self, deadline: &Deadline) -> Result<()> {
+        crate::required_prompt_memories::admit_host(&self.host, deadline)?;
         if let Some(registry) = &self.dashboard_language_registry {
             registry.check(
                 &self.engine,
                 &self.host,
                 "default",
                 self.state.language_server_overrides.get("default"),
+                self.state.automatic_language_servers.get("default"),
             )?;
             for (name, engine) in &self.others {
                 deadline.check()?;
@@ -1895,6 +2064,7 @@ impl Session {
                     &self.host,
                     name,
                     self.state.language_server_overrides.get(name),
+                    self.state.automatic_language_servers.get(name),
                 )?;
             }
         }
@@ -1905,6 +2075,7 @@ impl Session {
             driver.check(&self.engine.store, deadline)?;
         }
         if self.git_repository_projects.is_some()
+            || self.host.token_count_estimator.is_some()
             || self.engine.git_repository_host.is_some()
             || self.host.prompt_templates.is_some()
             || self.host.activation_commands.is_some()
@@ -1915,6 +2086,8 @@ impl Session {
             || self.host.language_servers.is_some()
             || self.host.symbol_workspace_folders.is_some()
             || self.host.symbol_info_budgets.is_some()
+            || self.host.tool_budgets.is_some()
+            || self.host.language_server_auto_selection.is_some()
             || self.host.primary_read_only
             || !crate::source_exclusions::unselected(&self.host.source_exclusions)
             || self.host.source_line_endings.is_some()
@@ -1979,6 +2152,8 @@ impl Session {
     pub(crate) fn check_repl_state(&self, deadline: &Deadline) -> Result<()> {
         deadline.check()?;
         if self.host.optional_defaults.is_some()
+            || self.host.token_count_estimator.is_some()
+            || self.host.language_server_auto_selection.is_some()
             || self.agent_interface().is_some()
             || self.host.steering.as_ref().is_some_and(|s| {
                 s.has_api_exclusions() || s.has_memory_patterns() || s.has_inclusions()
@@ -2071,6 +2246,12 @@ impl Session {
         let selected = crate::protocol::session_tools(self, profile);
         let context = crate::session_prompt::resolve_catalog(profile, &full, &selected, deadline)?;
         let memories = self.prompt_memories(config, deadline)?;
+        let required = crate::required_prompt_memories::prepare(
+            &self.host,
+            &self.state.active_project,
+            memories.as_deref(),
+            deadline,
+        )?;
         let mut binding = json!({"schema":crate::session_prompt::VERSION,"sessionId":self.state.id,"sessionStateSha256":crate::model::hash(&self.persisted),"revision":self.state.revision,"activeProject":self.state.active_project,"context":self.state.context,"modes":self.state.modes,"selectionSha256":config.fingerprint()?,"catalog":context.evidence});
         if let Some(snapshot) = &memories {
             binding["memorySnapshotSha256"] = json!(snapshot.hash()?);
@@ -2116,6 +2297,15 @@ impl Session {
                 receipts.push(json!({"source":fragment.source,"rendering":rendered.evidence}));
             }
         }
+        if let Some(prepared) = &required {
+            ensure!(
+                text.len()
+                    .checked_add(prepared.text.len())
+                    .is_some_and(|n| n <= 131072),
+                "session_prompt_instructions_capacity"
+            );
+            text.push_str(&prepared.text);
+        }
         self.check_tool_state(deadline)?;
         if let Some(before) = &memories {
             let after = self
@@ -2126,7 +2316,11 @@ impl Session {
                 "session_prompt_memory_changed_during_render"
             );
         }
+        crate::required_prompt_memories::admit_host(&self.host, deadline)?;
         let mut evidence = json!({"schema":crate::session_prompt::VERSION,"binding":binding,"fragments":receipts,"sourceBytesRewritten":false,"complete":false});
+        if let Some(prepared) = required {
+            evidence["requiredMemories"] = prepared.evidence;
+        }
         if memories.is_some() {
             evidence["memoryEmbeddingsPartial"] =
                 json!(
@@ -2154,6 +2348,19 @@ impl Session {
             next.modes = resolved.modes;
         }
         Ok(())
+    }
+    fn configuration_after_required_transition(&mut self, d: &Deadline) -> Result<Value> {
+        let mut value = self.invoke("configuration", &json!({}), d)?;
+        if self.host.required_prompt_memories.is_some() {
+            let instructions = self.prompt_instructions(d).context(
+                "Required guidance unavailable; selected Session state may already have changed",
+            )?;
+            value["instructions"] = json!(instructions.text);
+            if let Some(evidence) = instructions.evidence {
+                value["promptRendering"] = evidence;
+            }
+        }
+        Ok(value)
     }
     pub fn debug_info(&self) -> Value {
         json!({"provider":"independent_dap","profiles":self.host.debug_profiles.iter().map(|profile|json!({"key":profile.key,"adapterId":profile.adapter_id,"trustAdapter":profile.trust_adapter,"allowTargetExecution":profile.allow_target_execution,"allowEvaluation":profile.allow_evaluation,"active":self.debug_adapters.contains_key(&profile.key)})).collect::<Vec<_>>(),"states":self.debug_adapters.iter().map(|(key,adapter)|json!({"key":key,"state":adapter.info()})).collect::<Vec<_>>(),"execution":"explicit_host_authority_required","osSandbox":false})
@@ -2242,6 +2449,7 @@ impl Session {
     }
     fn update(&mut self, mut next: State, deadline: &Deadline) -> Result<()> {
         deadline.check()?;
+        self.admit_required_memories_for_state(&next, deadline)?;
         ensure!(
             !self.inspection_only || self.host.activation_commands.is_none(),
             "activation_inspection_session_read_only"
@@ -2257,6 +2465,7 @@ impl Session {
             .checked_add(1)
             .context("Session revision overflow")?;
         let text = serde_json::to_string(&next)?;
+        ensure!(text.len() <= 64000, "Stored session capacity exceeded");
         let changed = self.engine.store.db.execute(
             "UPDATE records SET value=?1 WHERE kind=?2 AND id=?3 AND value=?4",
             params![text, RECORD_KIND, next.id, self.persisted],
@@ -2271,6 +2480,12 @@ impl Session {
     }
     fn project_engine(&mut self, name: &str, deadline: &Deadline) -> Result<&mut Engine> {
         self.check_tool_state(deadline)?;
+        if self.host.required_prompt_memories.is_some() {
+            let mut selected = self.state.clone();
+            selected.active_project = name.to_owned();
+            self.resolve_next_modes(&mut selected)?;
+            self.admit_required_memories_for_state(&selected, deadline)?;
+        }
         self.admit_activation_engine(name, deadline)?;
         ensure!(
             self.engine.capture_epoch == self.capture_epoch,
@@ -2374,6 +2589,7 @@ impl Session {
                     &self.host,
                     name,
                     self.state.language_server_overrides.get(name),
+                    self.state.automatic_language_servers.get(name),
                 )?;
             }
             if self.git_repository_projects.is_some() {
@@ -2381,6 +2597,7 @@ impl Session {
             }
             self.others.insert(name.into(), engine);
         }
+        self.ensure_automatic_language(name, deadline)?;
         let engine = self
             .others
             .get_mut(name)
@@ -2485,6 +2702,9 @@ impl Session {
         };
         self.project_engine(&project, deadline)
     }
+    pub(crate) fn tool_budgets(&self) -> Option<crate::tool_budgets::Config> {
+        self.host.tool_budgets
+    }
     pub fn invoke(&mut self, operation: &str, args: &Value, deadline: &Deadline) -> Result<Value> {
         let activity = self
             .dashboard
@@ -2493,7 +2713,10 @@ impl Session {
             .and_then(|handle| handle.begin(operation));
         let previous_inspection = self.inspection_source_read;
         self.inspection_source_read = self.inspection_only && Self::passive_operation(operation);
-        let result = self.invoke_inner(operation, args, deadline);
+        let policy = self.tool_budgets();
+        let result = crate::tool_budgets::with_deadline(policy.as_ref(), deadline, |deadline| {
+            self.invoke_inner(operation, args, deadline)
+        });
         self.inspection_source_read = previous_inspection;
         self.finish_dashboard_activity(activity, &result);
         result
@@ -2557,6 +2780,23 @@ impl Session {
             "symbolWorkspaceFolders":self.host.symbol_workspace_folders.as_ref().and_then(|p| p.select(&self.state.active_project)),
             "additionalWorkspaceFolders":self.host.additional_workspace_folders.as_ref().and_then(|p| p.select(&self.state.active_project)),
             "executionAuthority":"independent_host_grants","sourceWrittenByDashboard":false});
+        if let Some(stats) = &self.tool_usage {
+            value["toolUsageStatistics"] = stats.view();
+            value["toolUsageStatisticsDisplay"] = stats.dashboard_view(self.tool_usage_revision);
+        }
+        if self.host.language_server_auto_selection.is_some() {
+            let active = self.automatic_language_applies(&self.state.active_project);
+            value["automaticLanguageSelectionActive"] = json!(active);
+            if active {
+                let choice = self
+                    .state
+                    .automatic_language_servers
+                    .get(&self.state.active_project);
+                value["automaticLanguageSelectionInitialized"] = json!(choice.is_some());
+                value["selectedBackends"] =
+                    json!(choice.map(|v| v.backend_id.iter().collect::<Vec<_>>()));
+            }
+        }
         if let Some(management) = self.dashboard_management_view() {
             value["management"] = management;
         }
@@ -2652,6 +2892,25 @@ impl Session {
             "Session input budget exceeded"
         );
         match operation {
+            "toolUsage" => {
+                fields(args, &[])?;
+                self.tool_usage
+                    .as_ref()
+                    .map(|stats| stats.view())
+                    .context("tool_usage_selection_required")
+            }
+            "clearToolUsage" => {
+                fields(args, &[])?;
+                let revision = self.next_tool_usage_revision()?;
+                self.tool_usage
+                    .as_mut()
+                    .context("tool_usage_selection_required")?
+                    .clear(deadline)?;
+                self.tool_usage_revision = revision;
+                Ok(
+                    json!({"cleared":true,"scope":"current_session_instance_only","sourceChanged":false}),
+                )
+            }
             "openDashboard" => {
                 fields(args, &[])?;
                 self.open_dashboard(deadline)
@@ -2721,6 +2980,23 @@ impl Session {
                     value["symbolWorkspaceFoldersResolved"] =
                         json!(folders.select(&self.state.active_project));
                 }
+                if let Some(selection) = &self.host.language_server_auto_selection {
+                    value["languageServerAutoSelection"] = serde_json::to_value(selection)?;
+                    value["automaticLanguageServers"] =
+                        serde_json::to_value(&self.state.automatic_language_servers)?;
+                    value["automaticSelectionScope"] =
+                        json!("creation_time_captured_filenames_only");
+                    value["automaticSelectionExhaustiveProjectCoverage"] = json!(false);
+                    value["automaticLanguageSelectionActive"] =
+                        json!(self.automatic_language_applies(&self.state.active_project));
+                }
+                if let Some(stats) = &self.tool_usage {
+                    value["tokenCountEstimator"] = json!(self.host.token_count_estimator);
+                    value["toolUsageStatistics"] = stats.view();
+                }
+                if let Some(budgets) = &self.host.tool_budgets {
+                    value["toolBudgets"] = serde_json::to_value(budgets)?;
+                }
                 if let Some(budgets) = &self.host.symbol_info_budgets {
                     value["symbolInfoBudgets"] = serde_json::to_value(budgets)?;
                     value["symbolInfoBudgetMs"] = json!(budgets.select(&self.state.active_project));
@@ -2773,7 +3049,7 @@ impl Session {
                 next.active_project = name.into();
                 self.resolve_next_modes(&mut next)?;
                 self.activate_selected(next, deadline)?;
-                self.invoke("configuration", &json!({}), deadline)
+                self.configuration_after_required_transition(deadline)
             }
             "activationReceipt" => {
                 fields(args, &[])?;
@@ -2829,7 +3105,7 @@ impl Session {
                     next.modes = requested;
                 }
                 self.update(next, deadline)?;
-                self.invoke("configuration", &json!({}), deadline)
+                self.configuration_after_required_transition(deadline)
             }
             "checkOnboarding" => {
                 fields(args, &[])?;

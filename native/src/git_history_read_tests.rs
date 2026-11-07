@@ -24,6 +24,11 @@ struct ReadPhases {
     size_post_sleep: Option<(Duration, Duration)>,
     size_deadline_check_ok: Option<(Duration, Duration)>,
     contents_entry: Option<(Duration, Duration)>,
+    contents_pre_sleep: Option<(Duration, Duration)>,
+    contents_post_sleep: Option<(Duration, Duration)>,
+    contents_deadline_check_ok: Option<(Duration, Duration)>,
+    walk_returned: Option<(Duration, Duration)>,
+    before_wall_bound: Option<(Duration, Duration)>,
 }
 enum ReadPhase {
     SizeEntry,
@@ -31,6 +36,11 @@ enum ReadPhase {
     SizePostSleep,
     SizeDeadlineCheckOk,
     ContentsEntry,
+    ContentsPreSleep,
+    ContentsPostSleep,
+    ContentsDeadlineCheckOk,
+    WalkReturned,
+    BeforeWallBound,
 }
 struct Reader {
     objects: BTreeMap<String, Vec<u8>>,
@@ -55,6 +65,11 @@ impl Reader {
             ReadPhase::SizePostSleep => &mut self.phases.size_post_sleep,
             ReadPhase::SizeDeadlineCheckOk => &mut self.phases.size_deadline_check_ok,
             ReadPhase::ContentsEntry => &mut self.phases.contents_entry,
+            ReadPhase::ContentsPreSleep => &mut self.phases.contents_pre_sleep,
+            ReadPhase::ContentsPostSleep => &mut self.phases.contents_post_sleep,
+            ReadPhase::ContentsDeadlineCheckOk => &mut self.phases.contents_deadline_check_ok,
+            ReadPhase::WalkReturned => &mut self.phases.walk_returned,
+            ReadPhase::BeforeWallBound => &mut self.phases.before_wall_bound,
         };
         if slot.is_none() {
             *slot = Some((start.elapsed(), d.remaining()));
@@ -96,8 +111,11 @@ impl Objects for Reader {
             // Intentionally return a successful body after cancellation. The
             // traversal must observe the host signal before another object.
         } else {
+            self.record_phase(ReadPhase::ContentsPreSleep, d);
             std::thread::sleep(self.delay);
+            self.record_phase(ReadPhase::ContentsPostSleep, d);
             d.check()?;
+            self.record_phase(ReadPhase::ContentsDeadlineCheckOk, d);
         }
         Ok(self.objects[id].clone())
     }
@@ -223,6 +241,7 @@ fn object_information_and_contents_share_the_original_deadline() {
     let start = Instant::now();
     reader.phase_start = Some(start);
     let result: Result<History> = walk(&mut reader, &head, &Options::default(), &d);
+    reader.record_phase(ReadPhase::WalkReturned, &d);
     assert!(
         result.is_err(),
         "expected deadline refusal; elapsed={:?}; host_remaining={:?}; phases={:?}",
@@ -258,6 +277,7 @@ fn object_information_and_contents_share_the_original_deadline() {
         !reader.different_deadline,
         "An object request changed the deadline"
     );
+    reader.record_phase(ReadPhase::BeforeWallBound, &d);
     assert!(
         start.elapsed() < Duration::from_millis(200),
         "elapsed={:?}; fixture_delay={:?}; host_remaining={:?}; phases={:?}",

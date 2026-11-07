@@ -121,6 +121,8 @@ fn event_name(operation: &str) -> &'static str {
         "onboarding" => "onboarding",
         "initialInstructions" => "initialInstructions",
         "queryProject" => "queryProject",
+        "toolUsage" => "toolUsage",
+        "clearToolUsage" => "clearToolUsage",
         "notes.list" => "notes.list",
         "notes.read" => "notes.read",
         "notes.write" => "notes.write",
@@ -616,6 +618,13 @@ fn snapshot(
             config["memories"] == true
                 && config["memoryWritesGranted"] == true
                 && config["noMemoriesMode"] != true
+        );
+    }
+    if data["view"]["toolUsageStatisticsDisplay"].is_object() {
+        data["capabilities"]["toolUsageStatistics"] = json!(true);
+        data["capabilities"]["toolUsageReset"] = json!(
+            data["view"]["management"]["enabled"] == true
+                && data["view"]["management"]["toolUsageReset"] == true
         );
     }
     crate::json::encode_bounded(&data, 1_000_000, d)

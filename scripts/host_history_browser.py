@@ -19,6 +19,7 @@ import sys
 import tempfile
 import threading
 import time
+from types import SimpleNamespace
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,6 +29,9 @@ _loader.loader.exec_module(LIVE)
 _http_loader = importlib.util.spec_from_file_location("owned_history_browser_http", ROOT / "scripts/host_history_browser_http.py")
 HTTP = importlib.util.module_from_spec(_http_loader)
 _http_loader.loader.exec_module(HTTP)
+_usage_loader = importlib.util.spec_from_file_location("owned_tool_usage_browser", ROOT / "scripts/host_tool_usage_browser.py")
+USAGE = importlib.util.module_from_spec(_usage_loader)
+_usage_loader.loader.exec_module(USAGE)
 require, sha, read_json, write_json = LIVE.require, LIVE.sha, LIVE.read_json, LIVE.write_json
 worker_job_name = LIVE.worker_job_name
 MAX_JSON, MAX_OUTPUT, MIN_FREE = LIVE.MAX_JSON, LIVE.MAX_OUTPUT, LIVE.MIN_FREE
@@ -42,11 +46,12 @@ VARIANTS = {"native": ("native", "ci-host-document-history-browser"),
             "serena": ("serena", "ci-host-document-history-browser-serena"),
             "persistent-python": ("serena", "ci-host-document-history-browser-persistent-python"),
             "http": ("session", "ci-host-document-history-browser-http")}
+PROFILES = {**VARIANTS, "tool-usage": ("serena", USAGE.OUTPUT)}
 
 
 def variant_contract(variant):
-    require(type(variant) is str and variant in VARIANTS, "Fixed browser variant required")
-    return VARIANTS[variant]
+    require(type(variant) is str and variant in PROFILES, "Fixed browser variant required")
+    return PROFILES[variant]
 
 
 def variant_output(variant):
@@ -58,7 +63,7 @@ def output_size(root):
         return LIVE.output_size(root)
     except Exception as error:
         name = Path(root).name
-        role = ("evidence" if name in {row[1] for row in VARIANTS.values()} else
+        role = ("evidence" if name in {row[1] for row in PROFILES.values()} else
                 "fixture" if name.startswith("yoke-owned-history-browser-") else "other")
         reasons = {"Unexpected evidence link": "link", "Evidence entry capacity exceeded": "entries",
                    "Evidence byte capacity exceeded": "bytes"}
@@ -271,7 +276,8 @@ def report_driver_failure(value, phase):
 def verify_artifacts(output, proof):
     """Independently admit all six uploaded images/DOM files, never empty proof."""
     result = proof["result"]
-    states = result["before"]["states"] + result["pending"]["states"] + [item["browser"] for item in result["saves"]]
+    states = (USAGE.artifact_states(result) if proof.get("variant") == "tool-usage" else
+              result["before"]["states"] + result["pending"]["states"] + [item["browser"] for item in result["saves"]])
     expected = {viewport + "-" + phase + ".png" for viewport in ("desktop", "mobile")
                 for phase in ("before", "pending", "after")}
     require(len(states) == 6 and {item["screenshot"] for item in states} == expected,
@@ -297,6 +303,9 @@ def verify_artifacts(output, proof):
         require(state["dom"] == name[:-4] + ".dom.json", "DOM artifact name differs")
         dom_path = plain_path(output / state["dom"])
         dom = read_json(dom_path, 128000)
+        if proof.get("variant") == "tool-usage":
+            require(type(dom.get("nodes")) is list and [node.get("id") for node in dom["nodes"]] == list(USAGE.NODE_IDS),
+                    "Selected statistics DOM nodes differ")
         require(sha(dom_path) == state["domSha256"] and dom["width"] == width
                 and dom["scrollWidth"] <= width and len(dom["nodes"]) == 10
                 and not re.search(r"(?:https?|wss?)://|Bearer\s", json.dumps(dom), re.IGNORECASE),
@@ -479,6 +488,8 @@ def close_owned_resources(browser, actors, runtimes):
 
 
 def admit_variant_result(result, variant):
+    if variant == "tool-usage":
+        return USAGE.admit_result(require, result)
     protocol, _ = variant_contract(variant)
     require(result.get("variant") == variant and result.get("owningProtocol") == protocol
             and result.get("automationComplete") is True, "Selected browser result differs")
@@ -543,6 +554,10 @@ def admit_variant_result(result, variant):
 
 
 def exercise(native, node, edge, fixture, output, job_name, inputs, variant="native"):
+    if variant == "tool-usage":
+        return USAGE.exercise(SimpleNamespace(require=require, LIVE=LIVE, write_json=write_json,
+                             Browser=Browser, close_owned_resources=close_owned_resources),
+                             native, node, edge, fixture, output, job_name, inputs)
     LIVE.require_worker_job(job_name)
     protocol, _ = variant_contract(variant)
     python = trusted_runtime_python(fixture) if variant == "persistent-python" else None
@@ -880,7 +895,7 @@ def main(arguments=None):
     parser.add_argument("--native", type=Path)
     parser.add_argument("--node", type=Path)
     parser.add_argument("--output", type=Path)
-    parser.add_argument("--variant", choices=tuple(VARIANTS), default="native")
+    parser.add_argument("--variant", choices=tuple(PROFILES), default="native")
     options = parser.parse_args(arguments)
     if options.mark_build:
         require(options.variant == "native", "Build marker does not select a browser variant")
