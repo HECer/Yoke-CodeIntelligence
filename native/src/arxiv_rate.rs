@@ -171,6 +171,17 @@ pub(crate) struct Permit {
     pub(crate) millis: u64,
 }
 impl Permit {
+    /// Check the handoff while this admission is still exclusively owned.
+    /// No request has started. Refusing here must close this durable attempt,
+    /// not strand it as if its owner had crashed. Failed writes/completions and
+    /// abandoned permits still require the existing explicit recovery path.
+    fn checked_admission(self, deadline: &Deadline) -> Result<Self> {
+        if let Err(error) = source::check(deadline) {
+            self.complete()?;
+            return Err(error);
+        }
+        Ok(self)
+    }
     /// A tiny mandatory journal cleanup, after the owned request has stopped.
     /// It never resets or extends the network request's original deadline.
     pub(crate) fn complete(mut self) -> Result<(u64, u64)> {
@@ -259,15 +270,15 @@ fn admit_at(path: &Path, millis: u64, deadline: &Deadline) -> Result<Permit> {
     io(file.seek(SeekFrom::Start(((sequence - 1) % 2) * 64)))?;
     io(file.write_all(&slot(sequence, millis)))?;
     io(file.sync_all())?;
-    source::check(deadline)?;
     // A crash leaves either prior valid state or a corrupt slot that refuses
     // further admission. No recovery/truncation silently resets the interval.
-    Ok(Permit {
+    Permit {
         _file: file,
         _directories: dirs,
         sequence,
         millis,
-    })
+    }
+    .checked_admission(deadline)
 }
 
 fn existing(path: &Path, write: bool, deadline: &Deadline) -> Result<(File, Vec<File>, Vec<u8>)> {
@@ -469,5 +480,74 @@ mod tests {
         fs::remove_file(alias).unwrap();
         let permit = admit(&path, true, &deadline()).unwrap();
         permit.complete().unwrap();
+    }
+    #[test]
+    fn expired_post_journal_handoff_finishes_owned_attempt_and_keeps_cooldown() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("arxiv-rate-v1.bin");
+        let permit = admit(&path, true, &deadline()).unwrap();
+        let pending = fs::read(&path).unwrap();
+        assert_eq!(state(&pending).unwrap().unwrap().0, 1);
+        let error = permit.checked_admission(&Deadline::new(0)).err().unwrap();
+        assert_eq!(error.to_string(), "source_acquisition_deadline_exceeded");
+        let status = status(&path, &deadline()).unwrap();
+        assert_eq!(status["phase"], "completed");
+        assert_eq!(status["sequence"], 2);
+        assert_eq!(status["networkConnections"], 0);
+        let completed = fs::read(&path).unwrap();
+        assert_ne!(completed, pending);
+        let (_, stamp) = state(&completed).unwrap().unwrap();
+        let error = admit_at(&path, stamp + 2999, &deadline()).err().unwrap();
+        assert!(error.to_string().contains("rate_limited"));
+        assert_eq!(fs::read(&path).unwrap(), completed);
+    }
+    #[test]
+    fn cancelled_post_journal_handoff_finishes_without_renewing_parent_policy() {
+        use std::sync::{
+            Arc,
+            atomic::{AtomicBool, Ordering},
+        };
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("arxiv-rate-v1.bin");
+        let cancel = Arc::new(AtomicBool::new(false));
+        let error = Deadline::run_bounded(&deadline(), Arc::clone(&cancel), || {
+            let bounded = deadline();
+            let permit = admit(&path, true, &bounded)?;
+            cancel.store(true, Ordering::SeqCst);
+            permit.checked_admission(&bounded)
+        })
+        .err()
+        .unwrap();
+        assert!(cancel.load(Ordering::SeqCst));
+        assert_eq!(error.to_string(), "source_acquisition_deadline_exceeded");
+        let status = status(&path, &deadline()).unwrap();
+        assert_eq!(status["phase"], "completed");
+        assert_eq!(status["sequence"], 2);
+        assert_eq!(status["networkConnections"], 0);
+    }
+    #[test]
+    fn refused_handoff_completion_preserves_pending_and_exact_recovery_permission() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("arxiv-rate-v1.bin");
+        let mut permit = admit(&path, true, &deadline()).unwrap();
+        let pending = fs::read(&path).unwrap();
+        // Refuse completion deterministically, without changing the host clock
+        // or its durable journal. This models the existing clock guard failing.
+        permit.millis = u64::MAX;
+        let error = permit.checked_admission(&Deadline::new(0)).err().unwrap();
+        assert!(error.to_string().contains("clock_regressed"));
+        assert_eq!(fs::read(&path).unwrap(), pending);
+        let status = status(&path, &deadline()).unwrap();
+        assert_eq!(status["phase"], "pending_requires_explicit_recovery");
+        assert_eq!(status["sequence"], 1);
+        let hash = crate::model::hash(&pending);
+        assert!(recover(&path, false, &hash, &deadline()).is_err());
+        assert!(recover(&path, true, &crate::model::hash(b"stale"), &deadline()).is_err());
+        assert_eq!(fs::read(&path).unwrap(), pending);
+        assert!(admit_at(&path, now() + 10000, &deadline()).is_err());
+        assert_eq!(fs::read(&path).unwrap(), pending);
+        let recovered = recover(&path, true, &hash, &deadline()).unwrap();
+        assert_eq!(recovered["sequence"], 2);
+        assert_eq!(recovered["networkConnections"], 0);
     }
 }

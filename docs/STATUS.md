@@ -6163,3 +6163,34 @@ SQLite transaction/WAL behavior and the pinned rusqlite rollback/commit-hook
 contracts: https://www.sqlite.org/lang_transaction.html,
 https://www.sqlite.org/wal.html,
 https://docs.rs/rusqlite/0.37.0/rusqlite/struct.Transaction.html.
+
+### Owned arXiv admission deadline handoff candidate - 2026-11-07
+
+PR30 head `6382fa4` Windows push aggregate 42338299534/128307001707
+refuses an incomplete shard: 381/382 groups pass, and the arXiv HTTP group
+has three passing cases and one failed journal-phase assertion after the original
+300ms capture refusal and strict two-second return bound have already passed.
+The journal remains pending; the original log does not retain the capture error,
+request-received state or exact failed stage. Five later browser-upload errors
+are secondary to skipped acceptance. All 764 raw logs and 1,199 selected source
+inputs are independently verified (42 exact, 1,157 explained CRLF-only).
+
+A source-visible ownership gap is corrected: successful durable admission now
+constructs the exclusively held Permit before checking its final handoff policy.
+If that same deadline or inherited cancellation refuses, the same known owner
+completes only its own not-yet-started attempt and returns the original refusal.
+There is no network request, renewed deadline, automatic recovery or retry in
+that branch. Failed journal writes/completion and abandoned permits retain the
+existing pending/corrupt refusal and exact-hash host-granted recovery contract;
+the normal three-second completion cooldown and exclusive locks remain intact.
+This closes a specific code path; the old log does not prove it caused this run.
+
+Three deterministic native journal regressions cover expired and inherited-
+cancelled handoff, cooldown preservation, and refused completion retaining exact
+recovery permissions/state. The original HTTP case keeps its 300ms/2s bounds and
+completed assertion, adding only bounded error/elapsed/request-presence/sequence
+diagnostics. Native tests are authored, not compiled or run locally. Pinned
+Rustfmt is the local parse/format check; npm/typecheck inputs remain unchanged
+and previous hosted source qualification is reused, not rerun. Fresh native CI
+is required before any next merge. Full production/release readiness remains open.
+Evidence: `validation/pr30-638-windows-128307001707-20261107/`.
