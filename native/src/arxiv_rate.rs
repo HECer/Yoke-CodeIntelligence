@@ -510,16 +510,23 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let path = dir.path().join("arxiv-rate-v1.bin");
         let cancel = Arc::new(AtomicBool::new(false));
+        let mut handoff_error = None;
         let error = Deadline::run_bounded(&deadline(), Arc::clone(&cancel), || {
             let bounded = deadline();
             let permit = admit(&path, true, &bounded)?;
             cancel.store(true, Ordering::SeqCst);
-            permit.checked_admission(&bounded)
+            let result = permit.checked_admission(&bounded);
+            handoff_error = result.as_ref().err().map(ToString::to_string);
+            result
         })
         .err()
         .unwrap();
         assert!(cancel.load(Ordering::SeqCst));
-        assert_eq!(error.to_string(), "source_acquisition_deadline_exceeded");
+        assert_eq!(
+            handoff_error.as_deref(),
+            Some("source_acquisition_deadline_exceeded")
+        );
+        assert_eq!(error.to_string(), "Request cancelled by host");
         let status = status(&path, &deadline()).unwrap();
         assert_eq!(status["phase"], "completed");
         assert_eq!(status["sequence"], 2);
