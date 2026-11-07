@@ -374,6 +374,7 @@ pub fn project_for_session_templates(
     let mut selected = base.clone();
     selected.prompt_templates = Some(config.clone());
     selected.prompt_runtime = None;
+    selected.required_prompt_memory_runtime = None;
     project_inner(&selected, sources, deadline, None, true)
 }
 fn project_inner(

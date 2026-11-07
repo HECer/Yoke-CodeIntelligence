@@ -155,6 +155,9 @@ fn explorer_incomplete_headers_report_receive_progress_without_response_content(
                     Err(error) => return Err(error),
                 }
             };
+            // macOS can inherit nonblocking mode from the listening socket.
+            // The fixture's read_exact handshake must wait for the client byte.
+            stream.set_nonblocking(false)?;
             stream.set_read_timeout(Some(Duration::from_secs(5)))?;
             stream.set_write_timeout(Some(Duration::from_secs(5)))?;
             stream.read_exact(&mut [0; 1])?;
@@ -166,7 +169,7 @@ fn explorer_incomplete_headers_report_receive_progress_without_response_content(
         stream.set_write_timeout(Some(Duration::from_secs(2))).unwrap();
         stream.write_all(b"!").unwrap();
         let result = std::panic::catch_unwind(|| read_response(stream));
-        assert!(peer.join().unwrap().is_ok());
+        peer.join().unwrap().expect("Owned HTTP peer handshake and response");
         if complete {
             let response = match result {
                 Ok(response) => response,

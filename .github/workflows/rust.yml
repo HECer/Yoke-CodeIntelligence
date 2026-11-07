@@ -224,6 +224,29 @@ jobs:
           path: validation/ci-native-coverage.json
           if-no-files-found: warn
       - run: python scripts/run_native_tests.py --controlled-test-runner --locked --test live actual_rust_analyzer -- --ignored
+      - name: Exercise expanded actual Rust-analyzer navigation on Windows
+        if: runner.os == 'Windows'
+        timeout-minutes: 5
+        # Separate explicit live evidence; default ignored counts stay intact.
+        run: python scripts/run_native_tests.py --controlled-test-runner --locked --test live_enrichment actual_rust_server_expanded_call_symbols_completion_signature_diagnostics_and_prepare_rename -- --ignored --exact
+      - name: Exercise owned deletion attachments with actual Windows compilers
+        if: runner.os == 'Windows'
+        timeout-minutes: 8
+        shell: pwsh
+        # These opt-in cases compile owned fixtures; they do not run source modules.
+        run: |
+          $env:YOKE_RUSTC = & rustup which rustc
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $env:YOKE_PYTHON = Join-Path $env:pythonLocation 'python.exe'
+          foreach ($selected in @($env:YOKE_RUSTC, $env:YOKE_PYTHON)) {
+            if (![IO.Path]::IsPathFullyQualified($selected) -or !(Test-Path -LiteralPath $selected -PathType Leaf)) {
+              throw 'The selected compiler must be an existing absolute executable'
+            }
+          }
+          python scripts/run_native_tests.py --controlled-test-runner --locked --test declaration_attachments_live -- --ignored
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python scripts/run_native_tests.py --controlled-test-runner --locked --test python_empty_suite actual_python_ast_and_guarded_apply_recovery_validate_the_planned_pass -- --ignored --exact
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Record selected inputs before the existing Windows release build (metadata only)
         if: runner.os == 'Windows'
         # A marker failure is enforced by the later browser gate, never by

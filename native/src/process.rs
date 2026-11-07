@@ -13,6 +13,10 @@ use std::{
     time::Duration,
 };
 
+#[path = "process_memory_budget.rs"]
+mod memory_budget;
+pub use memory_budget::{MACOS_MEMORY_KIND, MacosMemoryBudget};
+
 #[cfg(windows)]
 #[path = "process_windows_job.rs"]
 mod windows_job;
@@ -82,7 +86,8 @@ pub fn run_capture(
 ) -> Result<CapturedOutput> {
     capture(command, input, deadline, limits, None, None).map(|observed| observed.output)
 }
-/// Bound committed memory on Windows Jobs, or address space on Unix, before execution.
+/// Bound committed memory on Windows, total address space on other Unix, or
+/// additional macOS virtual address space above the parent baseline before exec.
 /// An unavailable OS limit fails spawn rather than running without the limit.
 pub fn run_capture_with_memory_limit(
     command: Command,
@@ -400,8 +405,54 @@ fn capture(
 /// One-way self-limit for a dedicated owned worker, before reading its input.
 /// On Unix the hard address-space ceiling cannot subsequently be raised.
 pub struct CurrentMemoryLimit {
+    ceiling_bytes: usize,
+    macos_budget: Option<MacosMemoryBudget>,
     #[cfg(windows)]
     _job: std::os::windows::io::OwnedHandle,
+}
+impl CurrentMemoryLimit {
+    pub fn ceiling_bytes(&self) -> usize {
+        self.ceiling_bytes
+    }
+    pub fn macos_budget(&self) -> Option<&MacosMemoryBudget> {
+        self.macos_budget.as_ref()
+    }
+}
+pub fn memory_limit_kind() -> &'static str {
+    if cfg!(target_os = "macos") {
+        MACOS_MEMORY_KIND
+    } else if cfg!(windows) {
+        "windows_job_committed_bytes"
+    } else {
+        "unix_address_space_bytes"
+    }
+}
+/// Validate reported policy data; it is not independent OS attestation.
+pub fn validate_memory_report(
+    ceiling: usize,
+    kind: &str,
+    budget: Option<&MacosMemoryBudget>,
+    requested: usize,
+) -> Result<()> {
+    ensure!(
+        (32 * 1024 * 1024..=2 * 1024 * 1024 * 1024).contains(&requested),
+        "Invalid owned memory budget"
+    );
+    ensure!(kind == memory_limit_kind(), "Owned memory policy mismatch");
+    if cfg!(target_os = "macos") {
+        let budget = budget.context("macOS memory budget missing")?;
+        budget.validate(requested)?;
+        ensure!(
+            budget.ceiling_bytes() == ceiling as u64,
+            "macOS memory ceiling mismatch"
+        );
+    } else {
+        ensure!(
+            ceiling == requested && budget.is_none(),
+            "Owned memory ceiling mismatch"
+        );
+    }
+    Ok(())
 }
 pub fn limit_current_memory(memory_bytes: usize) -> Result<CurrentMemoryLimit> {
     ensure!(
@@ -412,13 +463,22 @@ pub fn limit_current_memory(memory_bytes: usize) -> Result<CurrentMemoryLimit> {
     {
         Ok(CurrentMemoryLimit {
             _job: windows_job::limit_current_memory(memory_bytes)?,
+            ceiling_bytes: memory_bytes,
+            macos_budget: None,
         })
     }
     #[cfg(unix)]
     {
+        #[cfg(target_os = "macos")]
+        let macos_budget = Some(memory_budget::observe_and_plan(memory_bytes)?);
+        #[cfg(not(target_os = "macos"))]
+        let macos_budget: Option<MacosMemoryBudget> = None;
+        let ceiling_bytes = macos_budget
+            .as_ref()
+            .map_or(memory_bytes, |b| b.ceiling_bytes() as usize);
         let limit = libc::rlimit {
-            rlim_cur: memory_bytes as libc::rlim_t,
-            rlim_max: memory_bytes as libc::rlim_t,
+            rlim_cur: ceiling_bytes as libc::rlim_t,
+            rlim_max: ceiling_bytes as libc::rlim_t,
         };
         // Capture errno before formatting or another OS observation can replace it.
         if unsafe { libc::setrlimit(libc::RLIMIT_AS, &limit) } != 0 {
@@ -429,7 +489,14 @@ pub fn limit_current_memory(memory_bytes: usize) -> Result<CurrentMemoryLimit> {
                 })
                 .context("Owned memory limit unavailable");
         }
-        Ok(CurrentMemoryLimit {})
+        ensure!(
+            current_memory_limit()? == Some(ceiling_bytes),
+            "Owned memory limit verification failed"
+        );
+        Ok(CurrentMemoryLimit {
+            ceiling_bytes,
+            macos_budget,
+        })
     }
     #[cfg(not(any(windows, unix)))]
     {
@@ -514,6 +581,9 @@ impl ManagedChild {
             );
             #[cfg(unix)]
             {
+                #[cfg(target_os = "macos")]
+                let bytes = memory_budget::observe_and_plan(bytes)?.ceiling_bytes() as usize;
+                // Observe Mach state in the parent, never from the post-fork hook.
                 use std::os::unix::process::CommandExt;
                 // Only an async-signal-safe system call is made between fork and exec.
                 unsafe {

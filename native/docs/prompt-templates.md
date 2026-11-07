@@ -62,10 +62,15 @@ mapping contains at most 32 names, each at most 65536 bytes; bounded relative
 catalog names are opaque identifiers, not file paths. Every render has
 100000 fuel, recursion 64, at most 8192 output bytes and a parent-controlled 10s
 capture intersected with the caller's deadline and cancellation. The request is
-at most 256000 bytes. The normal parent sets a 256MiB OS memory ceiling before
-execution, and the dedicated worker independently applies/observes its own ceiling
-before reading input. Windows limits committed job memory; Unix limits virtual
-address space and fails if it cannot enforce the requested limit. Unix execution
+at most 256000 bytes. The normal parent installs the platform memory policy before
+execution with a requested 256MiB budget. The dedicated worker independently
+applies/observes its own ceiling
+before reading input. Windows limits committed job memory; Linux limits total
+virtual address space. The separately reported [macOS policy](macos-worker-memory.md)
+allows at most 256MiB of additional virtual address space above an observed
+startup baseline, without raising inherited limits. This is not a total-memory
+or RSS cap and does not bound reuse of existing mappings. All platforms refuse
+if the selected limit cannot be installed or verified. Unix execution
 is not qualified by the Windows evidence. Existing checked termination and member
 proofs remain; a failure does not publish a partial profile or create an export.
 

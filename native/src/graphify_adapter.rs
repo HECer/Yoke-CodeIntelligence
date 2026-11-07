@@ -10,6 +10,8 @@ use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 const MAX_OUTPUT: usize = 256_000;
 const MAX_SHORTEST_NODE_PATHS: usize = 256;
+#[path = "graphify_declared_claims.rs"]
+mod declared_claims;
 fn definitions() -> Vec<(&'static str, &'static str, Value, Vec<&'static str>)> {
     vec![
         (
@@ -51,7 +53,7 @@ fn definitions() -> Vec<(&'static str, &'static str, Value, Vec<&'static str>)> 
         (
             "shortest_path",
             "Find a bounded directed shortest path; undirected and weakest source-category selection are explicit options.",
-            json!({"source":{"type":"string"},"target":{"type":"string"},"max_hops":{"type":"integer","default":8},"undirected":{"type":"boolean","default":false},"path_policy":{"type":"string","enum":["first_observation_v1","weakest_source_categories_v1"]}}),
+            json!({"source":{"type":"string"},"target":{"type":"string"},"max_hops":{"type":"integer","default":8},"undirected":{"type":"boolean","default":false},"path_policy":{"type":"string","enum":["first_observation_v1","weakest_source_categories_v1","weakest_declared_source_claims_v1"]}}),
             vec!["source", "target"],
         ),
         (
@@ -1027,6 +1029,9 @@ pub fn invoke(
                     budget(out, bounded(&args, "token_budget", 128, 65536)?, deadline)?
                 }
             }
+        }
+        "shortest_path" if args["path_policy"] == "weakest_declared_source_claims_v1" => {
+            declared_claims::shortest(&engine.store, &view, &args, deadline)?
         }
         "shortest_path" => shortest(&view, &args, deadline)?,
         "get_community" | "god_nodes" | "graph_stats" => {

@@ -31,9 +31,11 @@ the degree p99 with a floor of 50. Returned induced observations retain parallel
 and cross edges. Node labels use exact matches first; ambiguous candidates remain
 explicit. Shortest paths use stored direction unless `undirected` is requested.
 
-Community indices follow checked canonical Leiden report order by descending
-size and deterministic identity ties. Community and degree ranking scope is
-explicitly canonical-only; selected structural overlay nodes remain unassigned.
+Community indices follow the checked selected-View Leiden report order by
+descending size and deterministic identity ties. Canonical nodes and selected
+structural overlay nodes participate in that projection; excluded overlay
+nodes do not. Communities, degree ranking and statistics carry the selected
+View, base-graph, projection-graph and immutable report artifact identities.
 Parallel resolved in/out degree counts self-loops twice. Percentile exclusion and
 community provenance reuse the checked native report, with no model calls. These
 are structural heuristics rather than compiler, runtime or ownership guarantees.
@@ -56,9 +58,23 @@ use the protocol's artifact transport or report explicit output-capacity limits.
 The host must select its repository allowlist, network permission and OS-held
 credential reference. Missing authorization fails explicitly. Owned HTTP fixtures
 exercise the GET contracts; they do not certify a live external installation.
-Selected-overlay community analysis and the separate webhook/review-publication
-lifecycle remain open.
+The separate webhook/review-publication lifecycle requires its own source-bound
+qualification.
 
 Tests cover public schemas/resources, Unicode, parallel call evidence, directed
 and undirected shortest paths, BFS/DFS depth, explicit/heuristic context filters,
 actual output budgets, ambiguous labels and foreign-root refusal.
+
+## Source-specific execution evidence
+
+At source `0e17b87a23f630752e2db8a61995a87ed36371fe`,
+[Windows partition 4](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41239700108/artifacts/13057242787)
+passes all eleven `selected_view_analysis` cases and all thirteen
+`graphify_selected_queries` cases, without failures, ignores or filtering.
+The former includes actual default-View package/Markdown community membership,
+historical selected reports/resources and refusal before report publication.
+The latter checks immutable nondefault queries and bounded route-prefix
+behavior. The complete Windows default-profile source/text receipt is
+`86d741f376519a5bf5945d3586e79da014d58c7350bc6368c6b788ec3c262270`.
+These are executed selected-View contracts, not complete upstream, platform or
+release acceptance.

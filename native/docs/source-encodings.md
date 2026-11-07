@@ -1,5 +1,29 @@
 # Selected source encodings (qualification in progress)
 
+## Source-specific Windows qualification (2026-10-31)
+
+At exact source `6989862daeee8f00592e2b53f60376b584ea3d37`, the complete
+`source_encodings` target passes **24/24** in Windows partition 5, artifact
+`13058482137`; `source_encodings_transport` passes **14/14** in partition 6,
+artifact `13059465307`, in
+[run 41243681172](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41243681172).
+Neither target has failed, ignored, measured or filtered cases. An independent
+audit binds all 38 emitted case names to the committed test roots and their
+separate UTF-32 modules, checks both raw stdout digests, and uses the independently
+verified complete 1,183-source-pin Windows inventory. These overlapping results
+are included in that run's 3,982 passes, not added to them again.
+
+The [exact target receipt](../../docs/validation/selected-encoding-windows-6989862d.json)
+has SHA-256 `a046d346c557a7917a8554ec26cbd0374644574d3cb9f9052f2f0dd27f63b459`.
+This supersedes the earlier Windows pending statements below for these selected
+targets, including Windows-1252 and the corrected UTF-32 rejection fixture.
+The transport LSP checks use an explicitly labeled Node contract fixture; they
+are not live certification of arbitrary language servers. No native image was
+read or executed locally during this audit. The result remains bound to its
+named source, not a later candidate, all standard codecs, every proof consumer,
+the full project or release acceptance. Linux/macOS runtime certification remains
+deferred; earlier platform results retain their original source identities.
+
 ## UTF-32 source candidate (2026-10-30)
 
 Explicit utf32, utf32_le and utf32_be policies extend the existing codec stack.
@@ -38,12 +62,13 @@ The whole transport target passes 14/14 on each platform. The core target passes
 the newly supported quoted `utf-32` YAML selection to refuse. This correction
 uses unsupported `utf-7` for that negative input without changing its assertions,
 and adds positive plain/quoted alias and canonical-JSON-policy checks while
-retaining JSON enum alias refusal. Corrected whole-core execution remains
-pending; production codec/authority code is unchanged. Targets declare 24/14 cases.
+retaining JSON enum alias refusal. Corrected whole-core execution was pending
+at that checkpoint; the later Windows result is recorded above. Production
+codec/authority code is unchanged. Targets declare 24/14 cases.
 Existing proof-consumer, permission, source, stale and cleanup restrictions
 remain. No general codec registry, automatic detection, optional proof capability
-or full Python/Unicode/project certification is introduced. Corrected-source
-native compilation, fixtures and full qualification await the guarded hosted pipeline.
+or full Python/Unicode/project certification is introduced. Broader native,
+fixture and full qualification gates remain distinct from the scoped result above.
 
 This is a bounded native codec increment, not certification of the complete
 encoding identity, all standard codecs, all language servers or the project.
@@ -52,8 +77,8 @@ eight transport cases in [run 41031519894](https://github.com/HECer/Yoke-CodeInt
 tested merge `79872a66` with an identical Git tree. Those results include ASCII
 and UTF-8-SIG and retain that source identity; they do not qualify Windows-1252.
 The Windows-1252 increment is integrated afterward, with 21 core and ten
-transport declarations. Native compilation and execution of the new increment
-remain unrun pending guarded hosted qualification. The parent owns serial
+transport declarations. Its Windows execution is now included in the named
+24/14 result above; other source/platform claims need their own evidence. The parent owns serial
 native/CLI/stdio/HTTP/compatibility and full functional acceptance.
 Shared release status, the original 353-entry inventory and certification flags
 are intentionally outside this change.

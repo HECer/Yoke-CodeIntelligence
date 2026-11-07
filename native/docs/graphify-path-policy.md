@@ -1,5 +1,19 @@
 # Explicit shortest-path source-category selection
 
+At `0e17b87a23f630752e2db8a61995a87ed36371fe`, all thirteen public
+selected-View query cases pass in
+[Windows partition 4](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41239700108/artifacts/13057242787),
+including the genuine 256/257-route prefix controls. All twelve public declared
+source-claim cases and the post-first-route cancellation library case pass in
+their separately named partitions. Receipt
+`86d741f376519a5bf5945d3586e79da014d58c7350bc6368c6b788ec3c262270`
+binds all eight Windows partitions, all 379 default targets and their complete
+source/target/log maps: 3,982 passes, zero failures and 53 original ignores.
+It is not complete transport, upstream, host or release acceptance.
+The earlier RED and intermediate candidate states below remain source-specific
+historical evidence. Numeric declaration admission/replay is documented in
+[graphify-source-claims.md](graphify-source-claims.md).
+
 The native Graphify adapter accepts `path_policy` on `shortest_path`:
 
 - Omission or `first_observation_v1` retains the existing first-observation
@@ -56,9 +70,11 @@ independent source/text receipts are
 `73a518251332532b416c7e8064e4bf393b9f31285914de09431ef92cddca4fcd`
 and `eb182a06f6fad09b2fbfe8623a643baf9d35769a780fd45a45af25f47a5b0c00`;
 the latter preserves a separate unchanged-core deadline failure and is not
-whole Windows/default-suite acceptance. Retained numeric source-claim semantics,
-contradictory admitted claim fixtures, the route counting/prefix stage below
-and full current upstream CLI/MCP equivalence remain outstanding.
+whole Windows/default-suite acceptance. At that `9b429f4d` checkpoint, retained
+numeric source-claim semantics,
+contradictory admitted claims and the route-prefix stage were still outstanding.
+Later source-specific execution evidence is recorded above; full current
+upstream CLI/MCP equivalence remains open.
 
 ## Qualification
 
@@ -131,7 +147,8 @@ public fixture with 1,200 parallel source calls. Legacy selection still returns
 one original observation; complete selected hop provenance must refuse its byte
 capacity without clipping, publishing state or changing archived/host sources.
 Those parallel-hop-only cases pass at `9b429f4d`, as recorded above. The
-new route-prefix producer below awaits separate fresh native qualification. Public assertions compare each complete evidence
+route-prefix producer below awaited separate native qualification at that
+checkpoint. Public assertions compare each complete evidence
 object and its View order. A separate explicitly synthetic rendering unit covers
 multiple-site references, opposite lexical ID ordering and one shared site
 across observations/hops; it does not establish public source admission.
@@ -189,8 +206,8 @@ paths and expired/pre-selection cancelled requests. The cancellation case
 changes its inherited flag after constructing the child deadline and asserts
 the inner operation's refusal before the outer owner's final cancellation
 check. It does not qualify interruption during prefix enumeration.
-All original ten policy units and
-thirteen public case bodies remain unchanged. Fresh native GREEN for the
-changed producer and these additional cases is pending. Source-bound numeric
-claim admission/replay, contradictory admitted numeric/category claims and
-full current CLI/MCP qualification remain required and open.
+All original ten policy units and thirteen public case bodies remain unchanged.
+Fresh native GREEN was pending at that candidate checkpoint; the later
+source-specific Windows evidence is recorded above. Numeric claim admission
+and contradictory claims have their separate executed fixtures. Full current
+CLI/MCP qualification remains required and open.

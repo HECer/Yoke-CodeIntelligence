@@ -100,7 +100,9 @@ def ordinary(path, directory=False):
     require(path.is_dir() if directory else path.is_file(), "Owned path unavailable")
 
 
-def output_usage(root):
+def output_usage(root, *, allow_removed=False):
+    """Keep settled scans strict; a live scan may observe an already removed leaf."""
+    require(type(allow_removed) is bool, "Inventory mode must be explicit")
     total = count = 0
     for directory, directories, files in os.walk(root, followlinks=False):
         require(len(Path(directory).relative_to(root).parts) <= 32, "Fixture depth capacity")
@@ -111,7 +113,14 @@ def output_usage(root):
             count += 1
             require(count <= MAX_ENTRIES, "Fixture entry capacity")
             if name in file_names:
-                total += path.stat().st_size
+                try:
+                    size = path.stat().st_size
+                except FileNotFoundError:
+                    if not allow_removed:
+                        raise
+                    # The enumerated name remains charged against MAX_ENTRIES.
+                    continue
+                total += size
                 require(total <= MAX_OUTPUT, "Fixture output capacity")
     return total
 
@@ -247,7 +256,7 @@ def run_owned(program, arguments, fixture, timeout):
                 phase = "disk_reserve"
                 require(shutil.disk_usage(fixture).free >= MIN_FREE, "Owned disk reserve unavailable")
                 phase = "output_inventory"
-                output_usage(fixture)
+                output_usage(fixture, allow_removed=True)
             if time.monotonic() >= deadline:
                 row["reason"] = "deadline"
                 raise ValueError("Owned tool deadline")
