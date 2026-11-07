@@ -7297,3 +7297,35 @@ Node typecheck/tests, whole native targets and real Windows VSIX qualification.
 No local native, vendor, controller, worker or editor execution is claimed.
 The earlier facade deadline and macOS foreign-listener causes remain unproven.
 Historical records above describe their own source checkpoints.
+
+
+## PR29 Windows inspection deadline: native phase context candidate (2026-11-07)
+
+At exact head 879165ba8c0a793a55ff8e3552a3a3a8058d8760, push run
+42365344460's Windows aggregate correctly refuses its incomplete shard set.
+All eight bounded text archives, 764 raw logs and 1,200 selected source pins
+are independently verified (42 exact, 1,158 explained LF-to-CRLF matches).
+381 of 382 whole target groups pass. The sole failed target is
+agent_diagnostic_boundaries: four passed, one failed, none ignored. Its
+independent inspection line-range case returns at 20.0111299 seconds under
+the original 20-second deadline; Session opening used about 4.82 ms. The
+optional UDP fixture observer records zero packets. This does not prove that
+no provider started or locate the stalled native phase. Browser artifacts are
+absent because the strict coverage gate stopped their execution.
+
+The candidate adds four closed inspection phase labels to the native error
+chain: query-engine preparation, request, source indexing and provider
+diagnostics. The original outer error Display and underlying typed causes are
+preserved exactly. No URI, source, expression, provider payload or new caller
+data is captured. Success values, invocation order, snapshot/evidence admission,
+line-range/EOF assertions, process lifecycle and the original deadline remain
+unchanged. An additive unit regression checks original Display and nested typed
+permission, cancellation-like, timeout and capacity-like refusal causes.
+
+This is a diagnostic candidate, not an established timeout repair. Its native
+unit regression and original whole integration target remain unrun locally and
+require fresh exact-source hosted qualification. No automatic retry, new ignore,
+resource-limit increase, permission or recovery waiver is introduced. The old
+Ubuntu DAP startup timeout remains separately scoped and unexplained. Main,
+release and complete production readiness remain open. Failure-audit SHA-256:
+4f52e1e4fc90a3e055f0a6073496dd5cca7b9c54790ee92b76387d89d01e2359.
