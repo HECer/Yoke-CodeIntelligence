@@ -82,6 +82,14 @@ overrides and all host backend registration settings into the Session
 fingerprint. Current-state checks cover tools and persistent REPL APIs. An
 inspection-only open cannot initialize a missing automatic choice.
 
+HTTP host startup validation is separate from public Session inspection. Before
+listening, it validates the original host, registration, policy and activation
+preconditions without publishing a Session or computing an automatic choice.
+The validation returns no usable Session. The authenticated MCP `initialize`
+then uses the normal Session constructor, including activation, captured-filename
+selection and current-state publication. Existing explicit Git host preparation
+is unchanged. Public inspection still refuses an uninitialized automatic choice.
+
 ## Evidence and bounded scope
 
 Configuration reports the selected policy, per-project `automaticLanguageServers`
@@ -130,7 +138,13 @@ inspection still refuses a missing automatic choice.
 Three additional native unit fixtures cover source/session nonpublication,
 provider non-start, ordinary inspection refusal, malformed policy, expired
 deadline, write authority, retained binding/state and missing winning registration.
-The original seven integration fixtures and declaration contract are unchanged.
+The original seven integration cases and declaration contract are retained.
+PR28 also retains three additive integration fixtures for passive-inspection
+refusal, invalid HTTP policy and an absent activation runtime grant. Its existing
+HTTP fixture checks zero snapshots/Session rows before startup and exactly one
+Session after authenticated initialization. The public catalog CLI retains
+80 distinct declared backend IDs, including the three current additions, and
+keeps live-certification unavailable.
 The branch also inherits the corrected PR26 base and its scoped inventory,
 admission, loopback, catalog and Session/context fixture repairs. New native
 unit/integration, HTTP, platform and VSIX acceptance still requires exact-source

@@ -47,6 +47,19 @@ describe selected data, not an execution grant or runtime certificate.
 
 ## Tool duration
 
+YAML seconds are converted from the canonical decimal representation of the
+decoded JSON number, without multiplying a binary float by 1,000. Thus `2.007`
+selects exactly 2,007 ms, while `2.007000000000001` rounds upward to 2,008 ms.
+Positive sub-millisecond values still select at least 1 ms. The same conversion
+serves `symbol_info_budget`, which independently permits zero; tool timeout zero
+remains invalid. This does not recover precision already lost when YAML was
+decoded. Native JSON integer millisecond selections and saved profiles are not
+rewritten; regenerated YAML projections with corrected values retain normal
+binding/stale checks. An affected projection changes its selected integer budget
+and therefore its host/session fingerprint; an old persisted Session can refuse
+reopening under the newly corrected policy. The existing 600,000 ms ceilings
+remain unchanged.
+
 The timeout surrounds public Serena tools, direct facade dispatch, trusted
 persistent Python cells and their callbacks, and native Session `invoke`
 operations. Serena MCP stdio/HTTP tool calls use it instead of their own

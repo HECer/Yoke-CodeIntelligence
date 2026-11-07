@@ -218,7 +218,8 @@ fn incomplete_tcp_eof_reports_scalar_progress_without_response_content() {
                     Err(error) => return Err(error),
                 }
             };
-            // Use blocking peer I/O under the existing read/write timeouts.
+            // Accepted sockets can inherit the listener's nonblocking mode.
+            // Timeout-bound fixture I/O must explicitly use blocking reads.
             stream.set_nonblocking(false)?;
             stream.set_read_timeout(Some(Duration::from_secs(5)))?;
             stream.set_write_timeout(Some(Duration::from_secs(5)))?;
@@ -785,7 +786,9 @@ fn running_query_obeys_host_deadline_despite_client_timeout_and_returns_http_err
         });
     assert!(
         marker.exists(),
-        "Actual provider operation must run before timeout"
+        "Actual provider operation must run before timeout: status={} elapsed_us={}",
+        result.status,
+        started.elapsed().as_micros(),
     );
     assert_eq!(result.status, 503);
     assert!(started.elapsed() < Duration::from_secs(4));
@@ -877,8 +880,17 @@ fn queued_request_is_rechecked_after_current_principal_revocation() {
     let control = server.controller();
     wait_for(|| control.pending_requests().unwrap() == 2);
     let revoked = std::thread::spawn(move || control.revoke("queued").unwrap());
+    // Invalidation removes the queued session before revoke waits for the
+    // running actor's policy read lease. Observe that boundary before releasing
+    // the blocker, so the queued request cannot run with its old authority.
+    wait_for(|| server.session_count().unwrap() == 1);
+    // Cancel the blocker explicitly instead of waiting for its deadline and
+    // relying on the final 100 ms response reserve under scheduler load.
+    let control = server.controller();
+    let released = std::thread::spawn(move || control.revoke("reader").unwrap());
     assert_eq!(running.join().unwrap().status, 503);
     assert!(revoked.join().unwrap());
+    assert!(released.join().unwrap());
     assert_eq!(queued.join().unwrap().status, 503);
     assert_eq!(
         exchange(address, &frame(address, 22, "POST", None, Some(init()), "")).status,

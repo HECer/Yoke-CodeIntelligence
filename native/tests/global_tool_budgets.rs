@@ -50,6 +50,23 @@ fn projection(
 }
 
 #[test]
+fn decimal_millisecond_boundaries_project_exactly_without_binary_float_widening() {
+    let d = Deadline::new(20000);
+    let base = HostProfile::default();
+    for (seconds, expected) in [
+        ("2.007", 2007),
+        ("2.011", 2011),
+        ("2.007000000000001", 2008),
+    ] {
+        let yaml = format!("tool_timeout: {seconds}\nsymbol_info_budget: {seconds}\n");
+        let selected = projection(&base, &Target::Global, yaml.as_bytes(), &d).unwrap();
+        let value = serde_json::to_value(selected).unwrap();
+        assert_eq!(value["toolBudgets"]["timeoutMs"], expected);
+        assert_eq!(value["symbolInfoBudgets"]["globalMs"], expected);
+    }
+}
+
+#[test]
 fn global_yaml_projects_independent_limits_rounds_positive_time_up_and_clears_explicitly() {
     let d = Deadline::new(20000);
     let base = HostProfile::default();
@@ -336,6 +353,7 @@ fn trusted_persistent_callback_uses_selected_default_and_whole_cell_deadline_los
             .is_some_and(|message| message.contains("max_answer_chars=0")),
         "{response}"
     );
+    assert!(response["result"].is_null(), "{response}");
     assert_eq!(response["callbackCount"], 1, "{response}");
     assert_eq!(response["stateLost"], false, "{response}");
     let response = runtime
@@ -346,6 +364,9 @@ fn trusted_persistent_callback_uses_selected_default_and_whole_cell_deadline_los
         )
         .unwrap();
     assert!(response["error"].is_null());
+    assert_eq!(response["result"]["text"], SOURCE, "{response}");
+    assert_eq!(response["callbackCount"], 1);
+    assert_eq!(response["stateLost"], false);
     let started = std::time::Instant::now();
     assert!(
         runtime

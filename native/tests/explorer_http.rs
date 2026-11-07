@@ -156,7 +156,8 @@ fn explorer_incomplete_headers_report_receive_progress_without_response_content(
                     Err(error) => return Err(error),
                 }
             };
-            // Use blocking reads for this bounded fixture handshake.
+            // Accepted sockets can inherit the listener's nonblocking mode.
+            // Timeout-bound fixture I/O must explicitly use blocking reads.
             stream.set_nonblocking(false)?;
             stream.set_read_timeout(Some(Duration::from_secs(5)))?;
             stream.set_write_timeout(Some(Duration::from_secs(5)))?;

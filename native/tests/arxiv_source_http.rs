@@ -195,13 +195,23 @@ fn mismatched_selector_redirect_and_wrong_tls_name_refuse_and_complete_owned_att
 fn stalled_owned_connection_stops_on_original_deadline_and_releases_rate_lock() {
     let mut s = Server::new(META, false, 200, true, "arxiv.org");
     let start = Instant::now();
+    let result = arxiv_source::capture(&s.spec, &grant(), &Limits::default(), &Deadline::new(300));
+    assert!(result.is_err());
+    let elapsed = start.elapsed();
     assert!(
-        arxiv_source::capture(&s.spec, &grant(), &Limits::default(), &Deadline::new(300)).is_err()
+        elapsed < Duration::from_secs(2),
+        "elapsed={elapsed:?}; capture_error={:?}",
+        result.as_ref().err()
     );
-    assert!(start.elapsed() < Duration::from_secs(2));
     s.join();
+    let status =
+        arxiv_source::rate_status(&s.spec.coordination_file, &Deadline::new(3000)).unwrap();
     assert_eq!(
-        arxiv_source::rate_status(&s.spec.coordination_file, &Deadline::new(3000)).unwrap()["phase"],
-        "completed"
+        status["phase"],
+        "completed",
+        "capture_error={:?}; elapsed={elapsed:?}; request_received={}; sequence={}",
+        result.as_ref().err(),
+        !s.request.lock().unwrap().is_empty(),
+        status["sequence"]
     );
 }

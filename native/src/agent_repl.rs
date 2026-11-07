@@ -1071,6 +1071,7 @@ fn dispatch_unbounded(
         );
     }
     if matches!(method, "jb.run_inspections" | "jb.list_inspections") {
+        use crate::semantic_refactor::{InspectionStage, inspection_stage};
         let mut target = json!({});
         let operation = if method == "jb.run_inspections" {
             "inspections"
@@ -1102,11 +1103,17 @@ fn dispatch_unbounded(
                 _ => bail!("Unsupported inspection severity"),
             });
         }
-        return crate::semantic_refactor::invoke(
-            session.query_engine_at(project, deadline)?,
-            operation,
-            &target,
-            deadline,
+        return inspection_stage(
+            crate::semantic_refactor::invoke(
+                inspection_stage(
+                    session.query_engine_at(project, deadline),
+                    InspectionStage::QueryEngine,
+                )?,
+                operation,
+                &target,
+                deadline,
+            ),
+            InspectionStage::Request,
         );
     }
     if matches!(

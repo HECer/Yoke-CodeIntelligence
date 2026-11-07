@@ -513,6 +513,7 @@ impl Session {
         ))
     }
     pub(super) fn activate_selected(&mut self, mut next: State, d: &Deadline) -> Result<()> {
+        self.admit_required_memories_for_state(&next, d)?;
         ensure!(
             !self.inspection_only,
             "activation_inspection_session_read_only"
@@ -546,6 +547,7 @@ impl Session {
             self.activation_receipt_witness = Some(attempt.persisted.clone());
         }
         let result = (|| {
+            self.admit_required_memories_for_state(&next, d)?;
             self.project_engine(&project, d)?;
             // Initial metadata selection may have published one Session revision.
             // Keep that owned choice and advance from the current revision;

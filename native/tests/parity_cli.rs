@@ -326,6 +326,7 @@ fn public_named_notes_cli_is_persistent_and_global_store_is_explicit() {
     assert_eq!(ids.len(), 80);
     for id in ["vbnet", "typescript_tsgo", "graphql"] {
         assert!(ids.contains(id), "Current public backend missing: {id}");
+        assert_eq!(adapters.iter().filter(|row| row["id"] == id).count(), 1);
     }
     assert_eq!(
         catalog["execution"],
