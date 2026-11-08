@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     steps: &native-shard-steps
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@1.94.1
         with:
           components: clippy, rustfmt, rust-analyzer
@@ -179,7 +179,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     steps: &native-acceptance-steps
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@1.94.1
         with:
           components: clippy, rustfmt, rust-analyzer
@@ -385,7 +385,7 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@1.94.1
       - uses: actions/setup-node@v4
         with:
@@ -501,7 +501,7 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@1.94.1
       - uses: actions/setup-python@v5
         with:
