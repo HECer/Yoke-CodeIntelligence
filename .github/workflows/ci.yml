@@ -41,9 +41,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Check inert launcher admission adversaries
+      - name: Check inert launcher admission and output-inventory adversaries
         timeout-minutes: 1
-        run: python -m unittest scripts.tests.test_vscode_owned_job -v
+        run: python -m unittest scripts.tests.test_vscode_owned_job scripts.tests.test_vscode_output_usage -v
       - name: Probe only owned Python process trees and passed-marker refusal
         timeout-minutes: 2
         run: python scripts/vscode_owned_job.py --ci-probe
@@ -77,7 +77,7 @@ jobs:
           path: validation/ci-vscode-lifecycle-proof
       - name: Check inert lifecycle and VSIX admission adversaries
         timeout-minutes: 1
-        run: python -m unittest scripts.tests.test_vscode_owned_job scripts.tests.test_host_vscode -v
+        run: python -m unittest scripts.tests.test_vscode_owned_job scripts.tests.test_host_vscode scripts.tests.test_host_vscode_source_inventory -v
       - name: Install locked TypeScript build dependencies without lifecycle scripts
         timeout-minutes: 10
         run: npm ci --ignore-scripts
@@ -107,4 +107,29 @@ jobs:
         with:
           name: combined-vsix-rust-host-windows
           path: validation/ci-vscode-acceptance
+          if-no-files-found: warn
+      - name: Check inert real-vendor admission adversaries
+        if: ${{ !cancelled() }}
+        timeout-minutes: 1
+        run: python -m unittest scripts.tests.test_host_tsgo -v
+      - name: Procure pinned official TSGo in a separate owned worker
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        timeout-minutes: 4
+        run: python scripts/host_tsgo.py stage --phase tool
+      - name: Query real TSGo through the fresh native public Session CLI
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        timeout-minutes: 4
+        run: python scripts/host_tsgo.py stage --phase query
+      - name: Require real TSGo source bindings and natural owned-tree exits
+        if: ${{ !cancelled() }}
+        timeout-minutes: 1
+        run: python scripts/host_tsgo.py finish
+      - name: Preserve only real-vendor text receipts and bounded logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tsgo-real-vendor-windows
+          path: validation/ci-tsgo-acceptance
           if-no-files-found: warn

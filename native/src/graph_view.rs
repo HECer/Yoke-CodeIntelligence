@@ -17,6 +17,8 @@ const MAX_BYTES: usize = 32_000_000;
 pub const RECORD_KIND: &str = "native_graph_view_v1";
 #[path = "graph_view_comparison_input.rs"]
 pub(crate) mod comparison_input;
+#[path = "graph_view_source_claims.rs"]
+pub mod source_claims;
 
 #[cfg(all(test, windows))]
 #[path = "graph_view_comparison_input_tests.rs"]
@@ -55,6 +57,8 @@ pub struct BuildOptions {
     pub semantic_overlay_ids: Vec<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub meaning_graph_ids: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub source_claim_overlay_ids: Vec<String>,
 }
 impl Default for BuildOptions {
     fn default() -> Self {
@@ -63,6 +67,7 @@ impl Default for BuildOptions {
             structural_overlay_ids: vec![],
             semantic_overlay_ids: vec![],
             meaning_graph_ids: vec![],
+            source_claim_overlay_ids: vec![],
         }
     }
 }
@@ -564,6 +569,15 @@ fn replay_archived_inputs(
                 && crate::model::hash(input.payload.as_bytes()) == input.artifact_id,
             "Archive selected artifact identity mismatch"
         );
+        if selected["origin"] == source_claims::ORIGIN {
+            source_claims::replay(
+                input.payload.as_bytes(),
+                &input.artifact_id,
+                expected,
+                deadline,
+            )?;
+            continue;
+        }
         let raw = crate::json::parse(input.payload.as_bytes(), MAX_BYTES)?;
         let semantic = match selected["origin"].as_str() {
             Some("structural_overlay") => false,
@@ -1496,6 +1510,7 @@ pub fn build(
             && options.structural_overlay_ids.len()
                 + options.semantic_overlay_ids.len()
                 + options.meaning_graph_ids.len()
+                + options.source_claim_overlay_ids.len()
                 <= 29,
         "View selection capacity exceeded"
     );
@@ -1611,6 +1626,19 @@ pub fn build(
             true,
             deadline,
         )?;
+    }
+    let mut declared = options.source_claim_overlay_ids.clone();
+    declared.sort();
+    for id in declared {
+        deadline.check()?;
+        ensure!(
+            valid_id(&id) && seen.insert(id.clone()),
+            "Invalid or duplicate declared source artifact"
+        );
+        charge_input(store, &id, &mut input_bytes, deadline)?;
+        let (selection, _) = source_claims::load(store, &id, &view, deadline)?;
+        view.overlays.push(selection);
+        limits(&view)?;
     }
     validate_contents(&view, snapshot, &sources, deadline)?;
     view.id = identity(&view);
@@ -1813,6 +1841,12 @@ pub fn load(store: &Store, id: &str, deadline: &Deadline) -> Result<View> {
             "Duplicate view selected artifact"
         );
         charge_input(store, artifact_id, &mut input_bytes, deadline)?;
+        if selection["origin"] == source_claims::ORIGIN {
+            let (descriptor, _) = source_claims::load(store, artifact_id, &expected, deadline)?;
+            expected.overlays.push(descriptor);
+            limits(&expected)?;
+            continue;
+        }
         let (raw, semantic) = match selection["origin"].as_str() {
             Some("structural_overlay") => (
                 source_overlay(store, &snapshot, &graph, artifact_id, deadline)?,
@@ -1904,6 +1938,7 @@ pub(crate) fn validate_retention_record(
         crate::semantic_enrichment::RECORD_KIND,
         crate::semantic_enrichment::RECORD_KIND_V2,
         crate::graph_exports::VIEW_EXPORT_KIND,
+        source_claims::RECORD_KIND,
     ]
     .contains(&kind)
     {
@@ -1962,6 +1997,22 @@ pub(crate) fn validate_retention_record(
     if kind == RECORD_KIND {
         let view = load(store, id, deadline)?;
         return Ok(Some(vec![view.artifact_id]));
+    }
+    if kind == source_claims::RECORD_KIND {
+        let snapshot_id = value["snapshotId"]
+            .as_str()
+            .context("Declared retention snapshot missing")?;
+        let snapshot = store.snapshot(snapshot_id)?;
+        let graph = store.graph(snapshot_id)?;
+        crate::graph_extensions::validate_scope(store, &snapshot, &graph, deadline)?;
+        let original = canonical_view(
+            &snapshot,
+            &graph,
+            &sources(store, &snapshot, deadline)?,
+            deadline,
+        )?;
+        source_claims::load(store, id, &original, deadline)?;
+        return Ok(Some(vec![id.to_owned()]));
     }
     let snapshot_id = value["snapshotId"]
         .as_str()

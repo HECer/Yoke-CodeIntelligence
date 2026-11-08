@@ -255,7 +255,9 @@ fn opening_client_admission_and_lease_waits_observe_host_cancellation() {
 
 #[test]
 fn successful_open_does_not_leave_its_setup_deadline_on_later_operations() {
-    let root = tempfile::tempdir().unwrap();
+    // Prepare the schema before the short opening budget: this test checks
+    // policy removal on a new connection, not fresh database creation speed.
+    let root = existing();
     let store = Store::open_with_timeout(root.path(), Duration::from_millis(500)).unwrap();
     std::thread::sleep(Duration::from_millis(550));
     store.record("owned", "after-opening", &true).unwrap();
