@@ -135,6 +135,8 @@ fn include_info_uses_actual_hover_at_the_same_captured_symbol_and_file_documenta
     let root = tempfile::tempdir().unwrap();
     let observations = phase_observations::Observations::new().ok();
     let mut session = session(root.path(), observations.as_ref());
+    #[cfg(debug_assertions)]
+    let _native_parent_phases = yoke::lsp::test_startup_phases::Guard::begin();
     let started = std::time::Instant::now();
     let value = invoke(
         &mut session,
@@ -142,8 +144,12 @@ fn include_info_uses_actual_hover_at_the_same_captured_symbol_and_file_documenta
         json!({"name_path_pattern":"helper","relative_path":"main.rs","include_info":true}),
     )
     .unwrap_or_else(|error| {
+        #[cfg(debug_assertions)]
+        let native_phases = yoke::lsp::test_startup_phases::snapshot();
+        #[cfg(not(debug_assertions))]
+        let native_phases: Option<()> = None;
         panic!(
-            "include-info fixture failed; elapsedMs={}; observationsUnavailable={}; bestEffortPhases={:?}; error={error:#}",
+            "include-info fixture failed; elapsedMs={}; observationsUnavailable={}; bestEffortPhases={:?}; nativeParentPhases={native_phases:?}; error={error:#}",
             started.elapsed().as_millis(),
             observations.is_none(),
             observations.as_ref().map(|value| value.collect())

@@ -7494,3 +7494,44 @@ worker/editor execution, executable-payload inspection, manual retry, ignore,
 resource increase, permission/recovery waiver or force update is introduced.
 Main/release and full production acceptance remain open. Failure-audit SHA-256:
 a88aa4d158f9f49fae90aafde2c3b7556b8f39f8412bed5aa52aef2ffdb70ec5.
+
+
+## PR7 repeated include-info deadline: original debug integration phases (2026-11-08)
+
+An ancestry-only merge did not change qualified tree c9ed9a23, but Windows push
+run 42459251222 at 924310059942d19fe0a6fef598640d5465020414 again fails
+agent_facade_options. Bounded artifact 13609822766 has verified ZIP digest
+52a988a7017664768926a58e1256e1b4cab3a4303c7f53213b3f649504a67a83;
+all 96 raw logs verify. Shard two passes 47 of 48 whole groups. The six-case
+target has five passes and one include-info failure after 20,068 ms under its
+unchanged 20-second operation limit. Its optional UDP observer is available but
+empty. The aggregate correctly refuses incomplete coverage; later release and
+browser steps do not execute. Earlier green source and the passing separate
+unit counterpart do not establish the intermittent native/provider/OS cause.
+
+The existing bounded parent-phase observer is now available in unit and debug
+library builds. The original integration case explicitly installs its thread-
+owned guard before the same facade request, and adds its closed phase/time
+snapshot only to the existing failure diagnostic. Eight closed facade/source-
+preparation labels precede the existing provider/materialize/transport/initialize/
+open/reply hooks, so failures before provider dispatch are also distinguishable.
+
+The public debug-only surface exposes only an opaque guard and snapshot;
+recording stays crate-private. The observer retains at most 32 closed enum/time
+entries, capped elapsed time, disabled behavior without a guard, nested owner
+restoration and thread isolation. It accepts no source, path, URI, expression,
+protocol, command, endpoint or caller data, and grants no authority. Existing
+capacity/nesting/isolation unit regressions remain. Debug builds acquire no
+default trace or output: the owned fixture opts in. Release builds with neither
+test nor debug_assertions omit the module and all hooks; public protocol/error
+fields and release behavior remain unchanged.
+
+The original six tests, provider arguments/optional UDP observer, all functional
+assertions, setup/operation budgets, deadline failures and cleanup remain.
+No Cargo feature, target selection, retry, prewarming, ignore/filter, resource
+increase, permission or recovery waiver is added. This is diagnostic coverage,
+not a causal timeout repair. Pinned Rustfmt, constructive source/release-gating,
+assertion and whitespace guards pass; changed native typing/execution and the
+new head's full typecheck/npm/native/VSIX CI remain pending. No local native,
+vendor, controller, worker or editor execution is claimed. Main/release and
+complete production acceptance remain open.

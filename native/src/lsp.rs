@@ -38,14 +38,23 @@ pub(crate) use resource_settings::{
     effective as effective_resource_settings, validate_entries as validate_resource_entries,
 };
 
-#[cfg(test)]
-pub(crate) mod test_startup_phases {
+#[cfg(any(test, debug_assertions))]
+#[doc(hidden)]
+pub mod test_startup_phases {
     use std::{cell::RefCell, marker::PhantomData, rc::Rc, time::Instant};
 
     const MAX_PHASES: usize = 32;
 
     #[derive(Clone, Copy, Debug, PartialEq, Eq)]
     pub(crate) enum Phase {
+        FacadeEntered,
+        FacadeDispatch,
+        SymbolPagesBegin,
+        SymbolPagesReady,
+        SymbolPathsBegin,
+        SymbolPathsReady,
+        SymbolInfoBudgetBegin,
+        SymbolInfoBudgetReady,
         SymbolArgumentsReady,
         NativeEntered,
         NativeReturned,
@@ -65,7 +74,7 @@ pub(crate) mod test_startup_phases {
     }
 
     #[derive(Clone, Debug)]
-    pub(crate) struct Summary {
+    pub struct Summary {
         phases: Vec<(Phase, u32)>,
         capacity_reached: bool,
     }
@@ -81,12 +90,12 @@ pub(crate) mod test_startup_phases {
 
     // Thread-owned and test-only. The trace never controls admission, retries,
     // deadlines or results; only closed phases and capped elapsed times enter it.
-    pub(crate) struct Guard {
+    pub struct Guard {
         previous: Option<State>,
         _thread: PhantomData<Rc<()>>,
     }
     impl Guard {
-        pub(crate) fn begin() -> Self {
+        pub fn begin() -> Self {
             let previous = CURRENT.with(|current| {
                 current.replace(Some(State {
                     started: Instant::now(),
@@ -125,7 +134,7 @@ pub(crate) mod test_startup_phases {
             state.summary.phases.push((phase, elapsed));
         });
     }
-    pub(crate) fn snapshot() -> Option<Summary> {
+    pub fn snapshot() -> Option<Summary> {
         CURRENT.with(|current| {
             current
                 .try_borrow()
@@ -2808,7 +2817,7 @@ fn initialize_provider_at(
     target_language: &str,
     deadline: &Deadline,
 ) -> Result<InitializedProvider> {
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::ProviderSetup);
     let (server, configuration) = host;
     let tree = tempfile::Builder::new().prefix("yoke-lsp-").tempdir()?;
@@ -2835,13 +2844,13 @@ fn initialize_provider_at(
     if passive_rust {
         validate_passive_manifest_sources(engine, snapshot, deadline)?;
     }
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::MaterializeBegin);
     changes::materialize_source_views(&engine.store, snapshot, tree.path(), &exclusions, deadline)
         .map_err(|error| provider_error(error, ProviderStage::Materialize))?;
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::MaterializeEnd);
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::TransportBegin);
     let mut session = if let Some(endpoint) =
         configuration.and_then(|configuration| configuration.tcp_endpoint)
@@ -2852,7 +2861,7 @@ fn initialize_provider_at(
         Session::spawn_scoped(server, tree.path(), passive_rust, deadline)
             .map_err(|error| provider_error(error, ProviderStage::TransportSpawn))?
     };
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::TransportReady);
     let root_uri = uri(tree.path())?;
     session.resource_settings = resource_binding;
@@ -2978,12 +2987,12 @@ fn initialize_provider_at(
             value["checkOnSave"] = json!(false);
         }
     }
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::InitializeBegin);
     let initialization = session
         .request("initialize", initialize, deadline)
         .map_err(|error| provider_error(error, ProviderStage::Initialize))?;
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::InitializeReady);
     let capabilities = initialization["capabilities"].clone();
     ensure!(capabilities.is_object(), "Server capabilities missing");
@@ -3026,13 +3035,13 @@ fn initialize_provider_at(
         .and_then(|config| config.language_ids.get(target_language))
         .map(String::as_str)
         .unwrap_or_else(|| document_language(target_language));
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::TargetOpenBegin);
     session.notify(
         "textDocument/didOpen",
         json!({"textDocument":{"uri":document_uri,"languageId":language,"version":1,"text":text}}),
     ).map_err(|error| provider_error(error, ProviderStage::TargetOpen))?;
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::TargetOpenEnd);
     if Path::new(&server.command)
         .file_stem()
@@ -3040,7 +3049,7 @@ fn initialize_provider_at(
     {
         session.await_ready(deadline)?;
     }
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::ProviderReady);
     Ok(InitializedProvider {
         tree,
@@ -3064,7 +3073,7 @@ fn run_at_unprofiled(
     deadline: &Deadline,
 ) -> Result<Value> {
     let (server, configuration) = host;
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::ProviderDispatch);
     check_semantic_manifests(engine, snapshot, graph, deadline)?;
     let encoding = crate::source_encoding::selected(&engine.store, snapshot)?;
@@ -3350,7 +3359,7 @@ fn run_at_unprofiled(
     if operation == "completion" {
         params["context"] = json!({"triggerKind":1});
     }
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::OperationBegin);
     let mut response = if push_diagnostics {
         let scope = crate::capture::source_scope_policy(&engine.store, snapshot)?;
@@ -3369,7 +3378,7 @@ fn run_at_unprofiled(
             .request(method, params, deadline)
             .map_err(|error| provider_error(error, ProviderStage::RequestReply))?
     };
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::OperationReply);
     if matches!(
         operation,

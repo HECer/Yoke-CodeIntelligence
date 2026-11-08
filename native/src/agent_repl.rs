@@ -119,6 +119,8 @@ pub fn invoke_facade(
     project: Option<&str>,
     deadline: &Deadline,
 ) -> Result<Value> {
+    #[cfg(any(test, debug_assertions))]
+    crate::lsp::test_startup_phases::record(crate::lsp::test_startup_phases::Phase::FacadeEntered);
     strict_facade(method, &arguments)?;
     ensure!(
         !matches!(
@@ -133,6 +135,8 @@ pub fn invoke_facade(
         max_output_bytes: MAX_FRAME,
         shell: None,
     };
+    #[cfg(any(test, debug_assertions))]
+    crate::lsp::test_startup_phases::record(crate::lsp::test_startup_phases::Phase::FacadeDispatch);
     dispatch(session, &spec, method, &arguments, project, deadline)
 }
 fn read_frame(input: &mut impl BufRead) -> Result<Value> {
@@ -2123,11 +2127,11 @@ fn semantic_from_symbol(
         "Invalid symbol source binding"
     );
     let args = json!({"snapshotId":symbol["snapshotId"],"languageServer":{"path":path,"offset":offset,"operation":operation,"options":options},"timeoutMs":deadline.remaining().as_millis().min(600000)});
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     crate::lsp::test_startup_phases::record(
         crate::lsp::test_startup_phases::Phase::SymbolArgumentsReady,
     );
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     crate::lsp::test_startup_phases::record(crate::lsp::test_startup_phases::Phase::NativeEntered);
     let value = if let Some(project) = project {
         session.invoke(
@@ -2140,7 +2144,7 @@ fn semantic_from_symbol(
             .active_engine_at(deadline)?
             .invoke_at("ci_find", args, deadline)?
     };
-    #[cfg(test)]
+    #[cfg(any(test, debug_assertions))]
     crate::lsp::test_startup_phases::record(crate::lsp::test_startup_phases::Phase::NativeReturned);
     let value = unwrap_native(value)?;
     ensure!(
@@ -2327,8 +2331,24 @@ fn find_symbols_facade(
             target[to] = json!(kinds);
         }
     }
+    #[cfg(any(test, debug_assertions))]
+    crate::lsp::test_startup_phases::record(
+        crate::lsp::test_startup_phases::Phase::SymbolPagesBegin,
+    );
     let mut roots = symbol_pages(session, target.clone(), None, project, deadline)?;
+    #[cfg(any(test, debug_assertions))]
+    crate::lsp::test_startup_phases::record(
+        crate::lsp::test_startup_phases::Phase::SymbolPagesReady,
+    );
+    #[cfg(any(test, debug_assertions))]
+    crate::lsp::test_startup_phases::record(
+        crate::lsp::test_startup_phases::Phase::SymbolPathsBegin,
+    );
     format_symbol_paths(session, &mut roots, Some(&pattern), project, deadline)?;
+    #[cfg(any(test, debug_assertions))]
+    crate::lsp::test_startup_phases::record(
+        crate::lsp::test_startup_phases::Phase::SymbolPathsReady,
+    );
     // The public dependency switch belongs to the jb facade. It selects only
     // already proven host captures and never widens capture or provider authority.
     let dependency_scope = (method == "jb.find_symbol").then_some(args["search_deps"] == true);
@@ -2368,8 +2388,16 @@ fn find_symbols_facade(
     if body {
         attach_symbol_bodies(session, &mut value, project, deadline)?;
     } else if args["include_info"] == true {
+        #[cfg(any(test, debug_assertions))]
+        crate::lsp::test_startup_phases::record(
+            crate::lsp::test_startup_phases::Phase::SymbolInfoBudgetBegin,
+        );
         let mut budget =
             session.symbol_information_budget(project, method == "lsp.find_symbol", deadline)?;
+        #[cfg(any(test, debug_assertions))]
+        crate::lsp::test_startup_phases::record(
+            crate::lsp::test_startup_phases::Phase::SymbolInfoBudgetReady,
+        );
         for item in value["items"]
             .as_array_mut()
             .context("Symbol items missing")?
