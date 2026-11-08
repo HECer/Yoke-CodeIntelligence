@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
       - name: Use the same Windows temporary directory by its canonical long path
@@ -186,7 +186,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
       - name: Use the same Windows temporary directory by its canonical long path
@@ -390,7 +390,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
       - name: Use the same Windows temporary directory by its canonical long path
@@ -503,7 +503,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@1.94.1
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
       - name: Use the same Windows temporary directory by its canonical long path
