@@ -7453,3 +7453,44 @@ force update is added. Fresh complete push and PR native/browser/VSIX acceptance
 is required before integration into PR23. Main/release/full production readiness
 remain open. Failure-audit SHA-256:
 61703187b1c9140698d6af71558baab1e4212ace2e66ef96198895fb8b946003.
+
+
+## PR7 Windows include-info deadline: unit-build parent probe (2026-11-08)
+
+At 9bc0d2852e0cedafc7daafd4fbf3d422f26672c5, Windows job 128644402623
+correctly refuses incomplete target coverage from shard two in run 42449980912.
+Artifact 13606400959 has verified ZIP SHA-256
+1261cf4f88bf0b95a90ec3acacffb268d183418f999157fc95bce3050af572b5.
+All 96 raw logs, the deterministic 382-target inventory/partition/weights and
+1,201 selected input pins verify against the independently audited identical
+tree. Shard two passes 47 of 48 whole groups. The sole failed
+agent_facade_options target has five passes and one failure, no ignores or
+filters. Its include-info case returns REQUEST_FAILED/deadline exceeded after
+20,006 ms under the original 20-second operation limit, before hover/anchor
+assertions. The available UDP observer has no packets. This does not locate
+provider startup, native transport or an OS cause. Release/browser steps did
+not execute after coverage refused; missing uploads are secondary failures.
+
+A separate cfg(test)-only unit counterpart now exercises the same source,
+configured contract fixture, facade arguments, 20-second setup/operation limits,
+hover text, snapshot/hash bindings and file-documentation byte anchors. It
+enables the existing bounded thread-local native phase guard around each facade
+operation and reports its snapshot only on the original error. Unlike the
+integration build, the unit build contains those existing native hooks, so an
+observed failure can distinguish preparation, materialization, transport,
+initialization, document opening and operation reply. An empty trace retains
+its narrower meaning; no phase proves protocol delivery or successful cleanup.
+
+The original six-case integration target, optional UDP observer, fixture,
+production behavior, assertions, deadlines and ownership/cleanup gates remain
+unchanged. The added probe does not prewarm or retry an original operation and
+does not replace its acceptance result. No runtime trace or public error field
+is added to release builds. This is diagnostic coverage, not a causal timeout
+repair. Pinned Rustfmt and constructive source/contract guards pass; the new
+native case is uncompiled/unrun locally and requires fresh hosted qualification.
+Previously successful typecheck/npm steps belong to the original head;
+complete new-head CI is still required. No local native/vendor/controller/
+worker/editor execution, executable-payload inspection, manual retry, ignore,
+resource increase, permission/recovery waiver or force update is introduced.
+Main/release and full production acceptance remain open. Failure-audit SHA-256:
+a88aa4d158f9f49fae90aafde2c3b7556b8f39f8412bed5aa52aef2ffdb70ec5.

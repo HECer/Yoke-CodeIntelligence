@@ -3205,3 +3205,7 @@ mod source_binding_tests {
         assert_eq!(value["contentHash"], symbol["contentHash"]);
     }
 }
+
+#[cfg(test)]
+#[path = "agent_facade_include_info_probe.rs"]
+mod include_info_parent_probe;
