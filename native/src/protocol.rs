@@ -346,6 +346,10 @@ impl ConnectionState {
         profile: Profile,
         bytes: &[u8],
     ) -> Result<Option<Value>> {
+        ensure!(
+            profile != Profile::Native || !session.has_activation_policy(),
+            "activation_session_profile_required"
+        );
         self.bind(profile, false)?;
         if profile == Profile::Native {
             session.check_registered_git_state(&crate::capture::Deadline::new(120000))?;
@@ -524,6 +528,28 @@ impl Backend<'_> {
         self.session()
             .map_or_else(tools, |session| session_tools(session, self.profile()))
     }
+    fn structured_output(&self) -> bool {
+        match self {
+            Self::Serena(session, _) => session
+                .context_definition()
+                .and_then(|d| d.structured_tool_output)
+                .is_some_and(|v| v.enabled()),
+            _ => false,
+        }
+    }
+    fn call_response(&mut self, name: &str, args: Value) -> Result<Value> {
+        let policy = match self {
+            Self::Serena(session, _) => session.tool_budgets(),
+            _ => None,
+        };
+        let parent =
+            crate::capture::Deadline::new(policy.and_then(|p| p.timeout_ms).unwrap_or(120000));
+        crate::tool_budgets::with_deadline(policy.as_ref(), &parent, |_| {
+            self.call(name, args).and_then(|result| {
+                crate::context_options::tool_response(result, self.structured_output())
+            })
+        })
+    }
     fn call(&mut self, name: &str, args: Value) -> Result<Value> {
         if !self.tool_allowed(name) {
             return Ok(
@@ -566,7 +592,11 @@ impl Backend<'_> {
                 Ok(result.unwrap_or_else(|error|json!({"status":"error","data":{},"error":{"message":error.to_string()}})))
             }
             Self::Serena(session, runtime) => {
-                let deadline = crate::capture::Deadline::new(120000);
+                let timeout = session
+                    .tool_budgets()
+                    .and_then(|p| p.timeout_ms)
+                    .unwrap_or(120000);
+                let deadline = crate::capture::Deadline::new(timeout);
                 let result = match runtime.as_deref_mut() {
                     Some(runtime) => crate::compatibility::invoke_serena_with_repl(
                         session, runtime, name, &args, &deadline,
@@ -1042,7 +1072,7 @@ fn serve_backend_state(
                     send(error(id, -32602, "Tool name required"))?;
                     continue;
                 };
-                let result = match backend.call(
+                match backend.call_response(
                     name,
                     message["params"]
                         .get("arguments")
@@ -1066,8 +1096,7 @@ fn serve_backend_state(
                         }
                         continue;
                     }
-                };
-                json!({"isError":result["status"]=="error","content":[{"type":"text","text":serde_json::to_string(&result)?}]})
+                }
             }
             "resources/read" => {
                 let uri = message["params"]["uri"].as_str().unwrap_or("");

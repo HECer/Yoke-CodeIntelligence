@@ -363,7 +363,10 @@ impl AgentRepl {
             !code.is_empty() && code.len() <= 128000 && !code.contains('\0'),
             "Invalid agent REPL code budget"
         );
-        let result = self.execute_inner(session, code, deadline, apply_api_selection);
+        let policy = session.tool_budgets();
+        let result = crate::tool_budgets::with_deadline(policy.as_ref(), deadline, |deadline| {
+            self.execute_inner(session, code, deadline, apply_api_selection)
+        });
         if let Err(error) = result {
             if let Err(cleanup) = self.close() {
                 return Err(cleanup.context(format!(
@@ -822,25 +825,20 @@ fn dispatch(
     project: Option<&str>,
     deadline: &Deadline,
 ) -> Result<Value> {
-    let limit = args
-        .get("max_answer_chars")
-        .map(|value| {
-            value
-                .as_i64()
-                .filter(|n| (-1..=4_000_000).contains(n))
-                .context("Invalid max_answer_chars bound")
-        })
-        .transpose()?;
-    let value = dispatch_unbounded(session, spec, method, args, project, deadline)?;
-    if let Some(limit) = limit.filter(|n| *n >= 0) {
-        let characters = serde_json::to_string(&value)?.chars().count();
-        ensure!(
-            characters <= limit as usize,
-            "Result contains {characters} serialized Unicode characters and exceeds max_answer_chars={limit}; narrow the requested result"
-        );
-    }
-    deadline.check()?;
-    Ok(value)
+    let policy = session.tool_budgets();
+    let limit = crate::tool_budgets::answer_limit(policy.as_ref(), method, args)?;
+    crate::tool_budgets::with_deadline(policy.as_ref(), deadline, |deadline| {
+        let value = dispatch_unbounded(session, spec, method, args, project, deadline)?;
+        if let Some(limit) = limit {
+            let characters = serde_json::to_string(&value)?.chars().count();
+            ensure!(
+                characters <= limit as usize,
+                "Result contains {characters} serialized Unicode characters and exceeds max_answer_chars={limit}; narrow the requested result"
+            );
+        }
+        deadline.check()?;
+        Ok(value)
+    })
 }
 fn dispatch_unbounded(
     session: &mut Session,
@@ -1073,6 +1071,7 @@ fn dispatch_unbounded(
         );
     }
     if matches!(method, "jb.run_inspections" | "jb.list_inspections") {
+        use crate::semantic_refactor::{InspectionStage, inspection_stage};
         let mut target = json!({});
         let operation = if method == "jb.run_inspections" {
             "inspections"
@@ -1104,11 +1103,17 @@ fn dispatch_unbounded(
                 _ => bail!("Unsupported inspection severity"),
             });
         }
-        return crate::semantic_refactor::invoke(
-            session.query_engine_at(project, deadline)?,
-            operation,
-            &target,
-            deadline,
+        return inspection_stage(
+            crate::semantic_refactor::invoke(
+                inspection_stage(
+                    session.query_engine_at(project, deadline),
+                    InspectionStage::QueryEngine,
+                )?,
+                operation,
+                &target,
+                deadline,
+            ),
+            InspectionStage::Request,
         );
     }
     if matches!(
@@ -2118,6 +2123,12 @@ fn semantic_from_symbol(
         "Invalid symbol source binding"
     );
     let args = json!({"snapshotId":symbol["snapshotId"],"languageServer":{"path":path,"offset":offset,"operation":operation,"options":options},"timeoutMs":deadline.remaining().as_millis().min(600000)});
+    #[cfg(test)]
+    crate::lsp::test_startup_phases::record(
+        crate::lsp::test_startup_phases::Phase::SymbolArgumentsReady,
+    );
+    #[cfg(test)]
+    crate::lsp::test_startup_phases::record(crate::lsp::test_startup_phases::Phase::NativeEntered);
     let value = if let Some(project) = project {
         session.invoke(
             "queryProject",
@@ -2129,6 +2140,8 @@ fn semantic_from_symbol(
             .active_engine_at(deadline)?
             .invoke_at("ci_find", args, deadline)?
     };
+    #[cfg(test)]
+    crate::lsp::test_startup_phases::record(crate::lsp::test_startup_phases::Phase::NativeReturned);
     let value = unwrap_native(value)?;
     ensure!(
         value["snapshotId"] == symbol["snapshotId"]
@@ -3165,6 +3178,8 @@ mod source_binding_tests {
         // Query the already captured symbol under its own unchanged 20s
         // operation budget; host/store setup is not part of this assertion.
         let deadline = Deadline::new(20000);
+        let _observations = crate::lsp::test_startup_phases::Guard::begin();
+        let started = std::time::Instant::now();
         let value = semantic_from_symbol(
             &mut session,
             &symbol,
@@ -3173,7 +3188,16 @@ mod source_binding_tests {
             None,
             &deadline,
         )
-        .unwrap();
+        .unwrap_or_else(|error| {
+            // Sample return (including original cleanup) before reading the
+            // bounded thread-local trace. No source/protocol text enters it.
+            let elapsed = started.elapsed();
+            let remaining = deadline.remaining();
+            let phases = crate::lsp::test_startup_phases::snapshot();
+            panic!(
+                "source-bound implementation failed; elapsed={elapsed:?}; remaining={remaining:?}; native_phases={phases:?}; error={error:#}"
+            );
+        });
         assert_eq!(
             value["snapshotId"], symbol["snapshotId"],
             "Semantic lookup recaptured source at an old symbol offset"

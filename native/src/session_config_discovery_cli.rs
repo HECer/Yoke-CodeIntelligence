@@ -369,7 +369,16 @@ pub(super) fn prepare_with_template_mode(
         deferred.as_ref(),
         deadline,
     )?;
-    let value = json!({"schema":"native_session_config_discovery_v1","selection":selection,"projection":super::templates::plan(&projection,context.as_ref()),"directories":receipts,"discoveryComplete":true,"sourceBytesRewritten":false,"templatesEvaluated":projection.plan()["templatesEvaluated"],"sourceExecuted":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"complete":false});
+    let mut value = json!({"schema":"native_session_config_discovery_v1","selection":selection,"projection":super::templates::plan(&projection,context.as_ref()),"directories":receipts,"discoveryComplete":true,"sourceBytesRewritten":false,"templatesEvaluated":projection.plan()["templatesEvaluated"],"sourceExecuted":false,"storeOpened":false,"networkRequests":0,"modelCalls":0,"complete":false});
+    if selection.host_profile.activation_commands.is_some() {
+        value["selectionSha256"] = json!(yoke::model::hash(serde_json::to_vec(&selection)?));
+        value["selection"]["hostProfile"]
+            .as_object_mut()
+            .expect("Serialized host profile")
+            .remove("activationCommands");
+        value["selectionRedactions"] = json!(["hostProfile.activationCommands"]);
+        value["selectionReplayable"] = json!(false);
+    }
     if let Some(context) = context {
         loaded.extend(context.into_loaded());
     }

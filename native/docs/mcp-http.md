@@ -58,8 +58,13 @@ are never parsed or dispatched. This bounded tail cleanup avoids resetting an
 already framed refusal merely because an oversized header left unread bytes;
 it does not promise delivery for an unbounded sending peer.
 
-The host request budget is 250–30000 ms. The final 100 ms is reserved inside
-that budget for an expiry response. Nested `Deadline::new` calls inherit the
+The host request budget is 250–30000 ms. A quarter of that budget, clamped to
+100–500 ms, is reserved inside the original physical deadline for an expiry
+response. For a 1800 ms request, work expires at 1350 ms and the final 450 ms
+remains for reporting. Scheduling delays consume that same allowance; delivery
+is best effort if the physical budget is exhausted. Neither an error response
+nor TLS shutdown renews the deadline or bypasses cancellation.
+Nested `Deadline::new` calls inherit the
 host ceiling and cancellation on the dispatch thread; passed clones retain
 them across explicit worker boundaries. Unrelated threads do not inherit TLS
 context. Cancellation is cooperative, not hard CPU preemption. Shutdown closes
@@ -67,6 +72,19 @@ network sockets and cancels active work, waits at most five seconds for cleanup,
 and reports failure if cleanup cannot be proven. A non-cooperative native call
 can outlive cancellation and requires host recovery; no hard-kill guarantee is
 made.
+
+On read errors or premature EOF, the integration-test HTTP client retains scalar
+observations:
+connect/send/read monotonic durations, read-call count, received prefix length,
+and whether a complete header declared an expected frame size. These distinguish
+an empty EOF from a partial frame without recording request/response bytes,
+headers, session IDs, addresses or paths. The original ten-second client read
+timeout, framing assertions, server budgets and revocation checks remain.
+An owned TCP peer fixture deliberately closes an empty response and an incomplete
+declared frame. It requires the original client failure, exact scalar progress,
+and exclusion of a synthetic header/body canary from that failure message.
+Instrumentation can affect scheduling; a later observation must be interpreted
+at its recorded source and does not by itself establish a timeout's cause.
 
 Native, Session, Serena, Graphify, Trail and Graft profiles use the shared
 initialized protocol dispatcher. For Serena only, the host can set

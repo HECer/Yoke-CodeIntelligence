@@ -64,7 +64,12 @@ runtime trust or write authority. Eager exported profiles remain literal.
 
 The parent imposes an OS memory ceiling before execution; the worker independently
 self-limits before input, including direct helper calls. Windows uses committed
-Job memory, Unix uses address space with enforcement errors refusing execution.
+Job memory and Linux uses absolute address space. macOS separately bounds
+additional virtual address space above an observed startup baseline, retaining
+inherited hard limits and reporting the actual absolute ceiling. It does not
+bound RSS or allocation within already reserved mappings. See the
+[macOS worker contract](native/docs/macos-worker-memory.md). Enforcement errors
+refuse execution.
 Fuel, recursion, output and an inherited parent capture deadline remain bounded;
 checked process cleanup is mandatory. These are resource and interpreter-interface
 boundaries, not an OS filesystem/network sandbox or protection from an equal-account
@@ -163,3 +168,14 @@ check that epoch too. Legacy generationless journals retain explicit original
 event-reviewed recovery to avoid stranding interrupted writes; this exception
 does not authorize ordinary proposal approval. Serialized epochs grant no rights.
 See [generation evidence](docs/validation/integration-2026-10-24/dashboard-document-generations/README.md).
+
+Explicit remote tool-usage counting additionally requires a nonserializable host
+network/text-disclosure grant; selecting token_count_estimator in configuration
+does not grant it. The shipped CLI requires both --allow-tool-token-disclosure
+and an existing OS model-token credential name. It sends complete admitted tool
+arguments and results to the fixed count-only endpoint, without environment-key
+lookup, generation, redirect or retry. Counts remain ephemeral metadata and never
+grant source retention or provider-billing authority. Stale/revoked admission,
+response limits, original source permissions and answer bounds remain enforced.
+A failure after the underlying operation is explicitly not a rollback. Local
+estimators need no network authority. See [the selected counting contract](native/docs/tool-usage-estimators.md).

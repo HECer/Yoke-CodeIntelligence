@@ -10,10 +10,12 @@ pub mod compiler_inline;
 pub mod compiler_move;
 pub mod config_graph;
 pub mod container;
+pub mod context_options;
 pub mod contracts;
 pub mod credentials;
 pub mod dataflow;
 pub mod debug_adapter;
+mod decimal_duration;
 pub mod decision_records;
 pub mod document_graph;
 pub mod editor;
@@ -78,6 +80,7 @@ pub mod platform_credentials;
 pub mod postgres_catalog;
 pub mod postgres_catalog_client;
 pub mod process;
+pub mod project_activation;
 pub mod project_session;
 pub mod projects;
 pub mod protocol;
@@ -88,6 +91,7 @@ pub mod query_features;
 mod refactor_contract;
 pub mod replacement;
 pub mod repository_discovery;
+pub mod required_prompt_memories;
 pub mod resolution;
 pub mod retention;
 pub mod retrieval;
@@ -101,6 +105,7 @@ pub mod runtime;
 pub mod semantic_enrichment;
 pub mod semantic_refactor;
 pub mod semantic_workspace;
+pub mod server_autoselection;
 pub mod server_catalog;
 pub mod server_selection;
 pub mod server_settings;
@@ -118,6 +123,8 @@ pub mod store;
 pub mod symbol_info_budget;
 pub mod symbol_workspace;
 pub mod test_map;
+pub mod tool_budgets;
+pub mod tool_usage;
 pub mod trail_adapter;
 mod validation;
 pub mod verify;
@@ -140,6 +147,7 @@ pub struct Engine {
     pub(crate) git_repository_host: Option<git_workflows::repository_host::Host>,
     pub(crate) backend_servers: BTreeMap<String, lsp::ConfiguredServer>,
     pub(crate) selected_backends: Option<Vec<String>>,
+    pub(crate) automatic_backend_selection: bool,
     pub(crate) backend_registry_sealed: bool,
     pub(crate) symbol_workspace_folders: Option<Vec<String>>,
     pub(crate) additional_workspace_folders: Option<Vec<String>>,
@@ -209,13 +217,33 @@ impl Engine {
         Self::open_with_timeout(root, std::time::Duration::from_secs(10))
     }
     pub fn open_with_timeout(root: impl AsRef<Path>, timeout: std::time::Duration) -> Result<Self> {
-        let root = root.as_ref().canonicalize()?;
+        Self::open_with_timeout_inner(root.as_ref(), timeout, None)
+    }
+    /// Host-only Store setup observations, with no change to opening authority.
+    pub fn open_with_timeout_observed(
+        root: impl AsRef<Path>,
+        timeout: std::time::Duration,
+        observations: &mut store::OpeningObservations,
+    ) -> Result<Self> {
+        *observations = store::OpeningObservations::default();
+        Self::open_with_timeout_inner(root.as_ref(), timeout, Some(observations))
+    }
+    fn open_with_timeout_inner(
+        root: &Path,
+        timeout: std::time::Duration,
+        observations: Option<&mut store::OpeningObservations>,
+    ) -> Result<Self> {
+        let root = root.canonicalize()?;
         ensure!(root.is_dir(), "Workspace root must be a directory");
-        let store = Store::open_with_timeout(&root, timeout)?;
+        let store = match observations {
+            Some(observations) => Store::open_with_timeout_observed(&root, timeout, observations)?,
+            None => Store::open_with_timeout(&root, timeout)?,
+        };
         Ok(Self {
             git_repository_host: None,
             backend_servers: BTreeMap::new(),
             selected_backends: None,
+            automatic_backend_selection: false,
             backend_registry_sealed: false,
             symbol_workspace_folders: None,
             additional_workspace_folders: None,
@@ -589,11 +617,15 @@ impl Engine {
                 if let Some(ids) = &self.selected_backends {
                     status["capabilities"]["selectedLanguageServers"] = json!(ids);
                     status["capabilities"]["backendSelectionPolicy"] =
-                        json!("first_declared_extension_match_then_first_fallback");
+                        json!(if self.automatic_backend_selection {
+                            "creation_time_captured_filename_counts_then_priority"
+                        } else {
+                            "first_declared_extension_match_then_first_fallback"
+                        });
                     status["capabilities"]["backendRuntimeCertification"] = json!(false);
                 }
                 if let Some(policy) = self.capture_options.source_encoding {
-                    status["capabilities"]["sourceEncoding"] = json!({"schema":source_encoding::VERSION,"selected":policy,"supported":["utf8","utf16_bom_required","utf16_le","utf16_be","latin1"],"otherCodecs":"unsupported","offsets":"original_source_bytes","semanticWorkspaceEdits":false,"compilerPieceRefactors":false,"runtimeTraceMapping":false,"manifestBalancedRetrieval":false,"fullEncodingIdentityCertified":false});
+                    status["capabilities"]["sourceEncoding"] = json!({"schema":source_encoding::VERSION,"selected":policy,"supported":["utf8","utf8_sig","utf16_bom_required","utf16_le","utf16_be","latin1","ascii","windows1252","utf32_bom_required","utf32_le","utf32_be"],"otherCodecs":"unsupported","offsets":"original_source_bytes","semanticWorkspaceEdits":false,"compilerPieceRefactors":false,"runtimeTraceMapping":false,"manifestBalancedRetrieval":false,"fullEncodingIdentityCertified":false});
                 }
                 return Ok(status);
             }
@@ -1005,6 +1037,18 @@ impl Engine {
         let Some(ids) = &self.selected_backends else {
             return Ok(None);
         };
+        if self.automatic_backend_selection {
+            let selected = ids
+                .iter()
+                .find(|id| server_autoselection::matches_backend(id, path));
+            if let Some(id) = selected {
+                ensure!(
+                    self.backend_servers.contains_key(id),
+                    "language_server_not_host_registered"
+                );
+            }
+            return Ok(selected.map(String::as_str));
+        }
         let id = server_selection::choose(ids, path)?;
         ensure!(
             self.backend_servers.contains_key(id),
@@ -1019,6 +1063,9 @@ impl Engine {
     ) -> Result<Option<(lsp::Server, Option<lsp::HostConfiguration>)>> {
         if let Some((_, p)) = self.selected_provider(path)? {
             return Ok(Some((p.server, Some(p.configuration))));
+        }
+        if self.automatic_backend_selection {
+            return Ok(None);
         }
         Ok(self
             .servers
@@ -1062,6 +1109,9 @@ impl Engine {
     fn semantic_server(&self, language: &str, path: &str) -> Result<Option<lsp::Server>> {
         if let Some((_, p)) = self.selected_provider(path)? {
             return Ok(Some(p.server));
+        }
+        if self.automatic_backend_selection {
+            return Ok(None);
         }
         Ok(self
             .servers

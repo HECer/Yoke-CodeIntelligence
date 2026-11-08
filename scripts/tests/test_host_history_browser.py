@@ -23,6 +23,26 @@ SPEC.loader.exec_module(BROWSER)
 
 
 class WorkerAdmission(unittest.TestCase):
+    def test_after_save_failure_labels_are_closed_and_never_admit_success(self):
+        labels = ("after-pending-click", "after-pending-receipt", "after-pending-admission", "after-load",
+                  "after-review", "after-save-click", "after-save-confirm", "after-apply-receipt",
+                  "after-read-receipt", "after-read-admission", "after-saved-state", "after-script-errors",
+                  "after-snapshot")
+        secret = "https://private.invalid/#private-capability"
+        for viewport in ("desktop", "mobile"):
+            for checkpoint in (*labels, secret, [secret], None):
+                value = {"phase": "after", "ok": False, "reason": "real-browser-failed",
+                         "checkpoint": checkpoint, "viewport": viewport}
+                with self.subTest(viewport=viewport, checkpoint=checkpoint), \
+                        mock.patch.object(BROWSER.sys, "stderr", new_callable=io.StringIO) as log:
+                    BROWSER.report_driver_failure(value, "after")
+                    expected = checkpoint if type(checkpoint) is str and checkpoint in labels else "other"
+                    self.assertEqual(log.getvalue(),
+                                     f"Owned browser driver failed: checkpoint={expected}; viewport={viewport}\n")
+                    self.assertNotIn(secret, log.getvalue())
+                    with self.assertRaises(RuntimeError):
+                        BROWSER.admit_driver_reply(value, "after", "private-capability")
+
     def test_failed_driver_start_retains_and_closes_its_owned_process_and_channel_handles(self):
         with tempfile.TemporaryDirectory() as directory:
             fixture = Path(directory).resolve()
@@ -165,6 +185,16 @@ class WorkerAdmission(unittest.TestCase):
                 self.assertEqual(owner.read_bytes(), b"retained owner")
                 self.assertEqual(target.read_bytes(),
                                  "\ufeff# owned global \u03c0\r\nvalue: preserved\r\n# original saved history 1 \U0001f980\r\n".encode())
+
+    def test_mocked_before_review_case_does_not_require_a_windows_subprocess_constant(self):
+        # All actors and subprocesses are already mocked by this test. Supply
+        # the Windows flag only in that scope; production still requires Windows.
+        with mock.patch.dict(BROWSER.subprocess.__dict__):
+            BROWSER.subprocess.__dict__.pop("CREATE_NO_WINDOW", None)
+            result = WorkerAdmission(
+                "test_before_review_failures_preserve_refusal_owned_bytes_and_teardown").run(unittest.TestResult())
+            self.assertTrue(result.wasSuccessful(), (result.failures, result.errors))
+            self.assertNotIn("CREATE_NO_WINDOW", BROWSER.subprocess.__dict__)
 
     def test_link_diagnostic_emits_closed_labels_without_private_paths(self):
         root = Path(tempfile.gettempdir()).resolve() / "yoke-owned-history-browser-private"

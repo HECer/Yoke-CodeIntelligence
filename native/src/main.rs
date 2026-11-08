@@ -45,9 +45,12 @@ mod mixed_meaning_cli;
 mod mixed_view_cli;
 mod neo4j_publish_cli;
 mod postgres_catalog_cli;
+mod project_activation_cli;
 mod repository_discovery_cli;
+mod session_batch_output;
 mod session_config_cli;
 mod source_acquisition_cli;
+mod tool_usage_cli;
 mod view_comparison_cli;
 struct PreparedModelProvider {
     provider: yoke::providers::ProviderSpec,
@@ -61,6 +64,10 @@ struct PreparedModelProvider {
     about = "Native local code intelligence; immutable source, evidence graphs and guarded edits"
 )]
 struct Cli {
+    #[command(flatten)]
+    tool_usage: tool_usage_cli::Arguments,
+    #[command(flatten)]
+    activation: project_activation_cli::Arguments,
     #[arg(long, global = true, default_value = ".")]
     root: PathBuf,
     #[arg(long, global = true)]
@@ -77,6 +84,9 @@ struct Cli {
     /// Evaluate explicitly selected host prompts in session responses.
     #[arg(long, global = true)]
     allow_session_templates: bool,
+    /// Confirm exactly pinned authored notes as mandatory Session instructions.
+    #[arg(long, global = true)]
+    allow_required_prompt_memories: bool,
     #[arg(long, global = true)]
     language_server_config: Option<PathBuf>,
     #[arg(long, global = true)]
@@ -886,6 +896,11 @@ impl From<ParsedOperation> for Operation {
 }
 #[derive(Subcommand)]
 enum GraphOperation {
+    /// Admit one explicit host file against an existing captured snapshot.
+    ImportSourceClaims {
+        #[arg(long)]
+        input: PathBuf,
+    },
     Build {
         #[arg(long)]
         options: Option<PathBuf>,
@@ -2147,6 +2162,22 @@ fn run_parity(
         }
         ExtensionOperation::Graph { command } => {
             match command {
+                GraphOperation::ImportSourceClaims { input } => {
+                    ensure!(
+                        arguments["snapshotId"]
+                            .as_str()
+                            .is_some_and(yoke::model::valid_id),
+                        "Declared source import requires an explicit existing snapshot"
+                    );
+                    let (snapshot, graph) = engine.select(arguments, deadline)?;
+                    print(&yoke::graph_view::source_claims::import_file(
+                        &engine.store,
+                        &snapshot,
+                        &graph,
+                        &input,
+                        deadline,
+                    )?)?;
+                }
                 GraphOperation::Build { options } => {
                     let options = options
                         .map(|path| -> Result<yoke::graph_view::BuildOptions> {
@@ -2303,8 +2334,9 @@ struct AgentReplArguments {
     shell_argument: Vec<String>,
 }
 fn session_host_profile(
+    root: &std::path::Path,
     host_profile: Option<&std::path::Path>,
-    allow_templates: bool,
+    host_options: &SessionHostOptions<'_>,
     deadline: &Deadline,
 ) -> Result<yoke::project_session::HostProfile> {
     let mut host = host_profile
@@ -2313,7 +2345,14 @@ fn session_host_profile(
         })
         .transpose()?
         .unwrap_or_default();
-    session_config_cli::bind_prompt_runtime(&mut host, allow_templates, deadline)?;
+    session_config_cli::bind_prompt_runtime(
+        &mut host,
+        host_options.allow_templates,
+        host_options.allow_required_memories,
+        deadline,
+    )?;
+    host_options.tool_usage.bind(&mut host, deadline)?;
+    host_options.activation.bind(&mut host, root, deadline)?;
     Ok(host)
 }
 
@@ -2321,18 +2360,29 @@ fn open_session(
     engine: Engine,
     id: Option<String>,
     host_profile: Option<PathBuf>,
-    allow_session_templates: bool,
+    host_options: &SessionHostOptions<'_>,
+    inspection_only: bool,
     deadline: &Deadline,
 ) -> Result<yoke::project_session::Session> {
-    let host = session_host_profile(host_profile.as_deref(), allow_session_templates, deadline)?;
-    yoke::project_session::Session::open(engine, host, id.as_deref(), deadline)
+    let host = session_host_profile(
+        &engine.root,
+        host_profile.as_deref(),
+        host_options,
+        deadline,
+    )?;
+    if inspection_only {
+        yoke::project_session::Session::inspect(engine, host, id.as_deref(), deadline)
+    } else {
+        yoke::project_session::Session::open(engine, host, id.as_deref(), deadline)
+    }
 }
 fn run_session(
     engine: Engine,
     id: Option<String>,
     host_profile: Option<PathBuf>,
     requests: PathBuf,
-    allow_session_templates: bool,
+    max_bytes: u64,
+    host_options: &SessionHostOptions<'_>,
     deadline: &Deadline,
 ) -> Result<bool> {
     #[derive(serde::Deserialize)]
@@ -2341,21 +2391,45 @@ fn run_session(
         operation: String,
         args: Value,
     }
+    let mut reply = session_batch_output::Batch::new(max_bytes, deadline)?;
     let requests: Vec<Request> = yoke::json::decode(input_json(&requests, 4_000_000)?)?;
     ensure!(requests.len() <= 1000, "Too many session requests");
-    let mut session = open_session(engine, id, host_profile, allow_session_templates, deadline)?;
-    let mut results = Vec::new();
-    let mut bytes = 0usize;
-    for request in requests {
+    let inspection_only = requests
+        .iter()
+        .all(|r| yoke::project_session::Session::passive_operation(&r.operation));
+    let mut session = open_session(
+        engine,
+        id,
+        host_profile,
+        host_options,
+        inspection_only,
+        deadline,
+    )?;
+    for (index, request) in requests.into_iter().enumerate() {
         deadline.check()?;
+        reply
+            .admit_next(!inspection_only && session.activation_effects_possible(), deadline)
+            .with_context(|| format!("Session answer unavailable before operation {}; batch is not atomic and prior effects may have occurred", index + 1))?;
         let result = session.invoke(&request.operation, &request.args, deadline)?;
-        bytes = bytes
-            .checked_add(serde_json::to_vec(&result)?.len())
-            .ok_or_else(|| anyhow::anyhow!("Session output size overflow"))?;
-        ensure!(bytes <= 8_000_000, "Session batch output budget exceeded");
-        results.push(result);
+        reply
+            .push(
+                result,
+                !inspection_only && session.activation_effects_possible(),
+                deadline,
+            )
+            .with_context(|| format!("Session answer unavailable after operation {}; batch is not atomic and prior effects may have occurred", index + 1))?;
     }
-    print(&json!({"results":results,"sourceWritten":false,"atomicBatch":false}))?;
+    let bytes = reply
+        .finish(
+            !inspection_only && session.activation_effects_possible(),
+            deadline,
+        )
+        .context(
+            "Session answer unavailable; batch is not atomic and prior effects may have occurred",
+        )?;
+    io::stdout().lock().write_all(&bytes).context(
+        "Session answer transport failed; batch is not atomic and prior effects may have occurred",
+    )?;
     Ok(true)
 }
 #[derive(clap::Args)]
@@ -2393,7 +2467,7 @@ fn prepare_git_session(
     server: &ServeSessionArguments,
     capture_config: Option<&std::path::Path>,
     include_ignored_dirs: &[String],
-    allow_session_templates: bool,
+    host_options: &SessionHostOptions<'_>,
     deadline: &Deadline,
 ) -> Result<Option<PreparedGitSession>> {
     let Some(selection) = &server.git_projects else {
@@ -2432,11 +2506,7 @@ fn prepare_git_session(
                 }),
         })?;
     }
-    let host = session_host_profile(
-        server.host_profile.as_deref(),
-        allow_session_templates,
-        deadline,
-    )?;
+    let host = session_host_profile(root, server.host_profile.as_deref(), host_options, deadline)?;
     let selections: std::collections::BTreeMap<String, git_repository_http_cli::Selection> =
         yoke::json::decode(input_json(selection, 1_000_000)?)?;
     git_repository_http_cli::admit_projects(
@@ -2830,11 +2900,17 @@ fn invoke_model_operation(
     };
     Ok(data)
 }
+struct SessionHostOptions<'a> {
+    allow_templates: bool,
+    allow_required_memories: bool,
+    activation: &'a project_activation_cli::Arguments,
+    tool_usage: &'a tool_usage_cli::Arguments,
+}
 fn run_extension(
     mut engine: Engine,
     prepared_http: Option<PreparedModelProvider>,
     prepared_git: Option<PreparedGitSession>,
-    allow_session_templates: bool,
+    host_options: SessionHostOptions<'_>,
     operation: ExtensionOperation,
     arguments: &Value,
     deadline: &Deadline,
@@ -2956,7 +3032,8 @@ fn run_extension(
             id,
             host_profile,
             requests,
-            allow_session_templates,
+            arguments["maxBytes"].as_u64().unwrap_or(32000),
+            &host_options,
             deadline,
         );
     }
@@ -3000,7 +3077,7 @@ fn run_extension(
             session.index_initial_git_source(deadline)?;
             session
         } else {
-            open_session(engine, id, host_profile, allow_session_templates, deadline)?
+            open_session(engine, id, host_profile, &host_options, false, deadline)?
         };
         if let Some(python) = python {
             let spec = yoke::agent_repl::ReplSpec {
@@ -3085,8 +3162,7 @@ fn run_extension(
                 arguments: shell_argument,
             }),
         };
-        let mut session =
-            open_session(engine, id, host_profile, allow_session_templates, deadline)?;
+        let mut session = open_session(engine, id, host_profile, &host_options, false, deadline)?;
         session.select_prompt_profile(yoke::session_prompt::Profile::Serena);
         let mut repl = yoke::agent_repl::AgentRepl::spawn(spec, deadline)?;
         let mut results = Vec::new();
@@ -3259,7 +3335,7 @@ fn run_http(
     args: &HttpServeArguments,
     trust_servers: bool,
     allow_writes: bool,
-    allow_session_templates: bool,
+    host_options: &SessionHostOptions<'_>,
 ) -> Result<bool> {
     ensure!(
         args.trust_service,
@@ -3279,7 +3355,11 @@ fn run_http(
     for principal in &host.principals {
         http_profile(&principal.profile)?;
         ensure!(
-            principal.host_profile.prompt_templates.is_none() || allow_session_templates,
+            principal.host_profile.activation_commands.is_none() || principal.profile != "native",
+            "activation_session_profile_required"
+        );
+        ensure!(
+            principal.host_profile.prompt_templates.is_none() || host_options.allow_templates,
             "session_prompt_host_permission_required"
         );
         ensure!(
@@ -3288,6 +3368,16 @@ fn run_http(
         );
         if let Some(config) = &principal.host_profile.prompt_templates {
             config.validate(&Deadline::new(host.request_timeout_ms))?;
+        }
+        if let Some(policy) = &principal.host_profile.required_prompt_memories {
+            ensure!(
+                host_options.allow_required_memories,
+                "required_memory_host_confirmation_required"
+            );
+            policy.validate(
+                &principal.host_profile,
+                &Deadline::new(host.request_timeout_ms),
+            )?;
         }
 
         ensure!(
@@ -3378,9 +3468,19 @@ fn run_http(
         }
     }
     for principal in &mut host.principals {
+        host_options.tool_usage.bind(
+            &mut principal.host_profile,
+            &Deadline::new(host.request_timeout_ms),
+        )?;
         session_config_cli::bind_prompt_runtime(
             &mut principal.host_profile,
-            allow_session_templates,
+            host_options.allow_templates,
+            host_options.allow_required_memories,
+            &Deadline::new(host.request_timeout_ms),
+        )?;
+        host_options.activation.bind(
+            &mut principal.host_profile,
+            principal.root.as_deref().unwrap_or(root),
             &Deadline::new(host.request_timeout_ms),
         )?;
     }
@@ -3540,8 +3640,20 @@ fn validate_existing_batch_schema(db: &rusqlite::Connection, deadline: &Deadline
 }
 fn run(cli: Cli) -> Result<bool> {
     let mut operation: Operation = cli.command.into();
+    cli.activation.validate()?;
+    cli.tool_usage.validate()?;
     ensure!(
-        !cli.allow_session_templates
+        !cli.tool_usage.selected()
+            || matches!(&operation,Operation::Extensions(ext) if matches!(ext.as_ref(),ExtensionOperation::Session{..}|ExtensionOperation::ServeSession(_)|ExtensionOperation::ServeHttp(_)|ExtensionOperation::AgentRepl(_))),
+        "tool_usage_host_route_required"
+    );
+    ensure!(
+        !cli.activation.selected()
+            || matches!(&operation,Operation::Extensions(ext) if matches!(ext.as_ref(),ExtensionOperation::Session{..}|ExtensionOperation::ServeSession(_)|ExtensionOperation::ServeHttp(_)|ExtensionOperation::AgentRepl(_))),
+        "activation_host_route_required"
+    );
+    ensure!(
+        !(cli.allow_session_templates || cli.allow_required_prompt_memories)
             || matches!(&operation,Operation::Extensions(ext) if matches!(ext.as_ref(),ExtensionOperation::Session{..}|ExtensionOperation::ServeSession(_)|ExtensionOperation::ServeHttp(_)|ExtensionOperation::AgentRepl(_))),
         "session_prompt_host_route_required"
     );
@@ -4394,7 +4506,12 @@ fn run(cli: Cli) -> Result<bool> {
             args,
             cli.trust_servers,
             cli.allow_writes,
-            cli.allow_session_templates,
+            &SessionHostOptions {
+                allow_templates: cli.allow_session_templates,
+                allow_required_memories: cli.allow_required_prompt_memories,
+                activation: &cli.activation,
+                tool_usage: &cli.tool_usage,
+            },
         );
     }
     if let Operation::Credentials { ref command } = operation {
@@ -4690,6 +4807,12 @@ fn run(cli: Cli) -> Result<bool> {
         _ => None,
     };
     let deadline = Deadline::new(cli.timeout);
+    let host_options = SessionHostOptions {
+        allow_templates: cli.allow_session_templates,
+        allow_required_memories: cli.allow_required_prompt_memories,
+        activation: &cli.activation,
+        tool_usage: &cli.tool_usage,
+    };
     let prepared_git = if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::ServeSession(server) = extension.as_ref()
     {
@@ -4708,7 +4831,7 @@ fn run(cli: Cli) -> Result<bool> {
             server,
             cli.capture_config.as_deref(),
             &cli.include_ignored_dir,
-            cli.allow_session_templates,
+            &host_options,
             &deadline,
         )?
     } else {
@@ -4761,7 +4884,7 @@ fn run(cli: Cli) -> Result<bool> {
             engine,
             prepared_http,
             prepared_git,
-            cli.allow_session_templates,
+            host_options,
             *operation,
             &arguments,
             &deadline,
@@ -5667,6 +5790,104 @@ fn main() {
             eprintln!("yoke: {error:#}");
             std::process::exit(1);
         }
+    }
+}
+
+#[cfg(test)]
+mod cli_argument_tests {
+    use super::*;
+    use clap::{CommandFactory, error::ErrorKind};
+
+    #[test]
+    fn complete_parser_is_valid_and_default_invocation_grants_no_authority() {
+        Cli::command().debug_assert();
+        let cli = Cli::try_parse_from(["yoke", "server-catalog"]).unwrap();
+        assert!(!cli.tool_usage.selected());
+        cli.tool_usage.validate().unwrap();
+        assert!(!cli.activation.selected());
+        cli.activation.validate().unwrap();
+        assert!(!cli.allow_writes);
+        assert!(!cli.allow_session_templates);
+        assert!(!cli.trust_servers);
+    }
+
+    #[test]
+    fn token_disclosure_requires_both_flags_before_or_after_subcommand() {
+        for arguments in [
+            vec!["yoke", "--allow-tool-token-disclosure", "server-catalog"],
+            vec!["yoke", "server-catalog", "--allow-tool-token-disclosure"],
+            vec![
+                "yoke",
+                "--token-count-credential",
+                "owned-count-fixture",
+                "server-catalog",
+            ],
+            vec![
+                "yoke",
+                "server-catalog",
+                "--token-count-credential",
+                "owned-count-fixture",
+            ],
+        ] {
+            let error = Cli::try_parse_from(arguments)
+                .err()
+                .expect("Unpaired grant");
+            assert_eq!(error.kind(), ErrorKind::MissingRequiredArgument);
+        }
+        for arguments in [
+            vec![
+                "yoke",
+                "--allow-tool-token-disclosure",
+                "--token-count-credential",
+                "owned-count-fixture",
+                "server-catalog",
+            ],
+            vec![
+                "yoke",
+                "server-catalog",
+                "--token-count-credential",
+                "owned-count-fixture",
+                "--allow-tool-token-disclosure",
+            ],
+        ] {
+            let cli = Cli::try_parse_from(arguments).unwrap();
+            assert!(cli.tool_usage.selected());
+            cli.tool_usage.validate().unwrap();
+            assert_eq!(
+                cli.tool_usage.token_count_credential.as_deref(),
+                Some("owned-count-fixture")
+            );
+            assert!(!cli.activation.selected());
+            assert!(!cli.allow_writes);
+            assert!(!cli.allow_session_templates);
+            assert!(!cli.trust_servers);
+        }
+    }
+
+    #[test]
+    fn token_and_activation_groups_can_coexist_without_binding_either() {
+        let cli = Cli::try_parse_from([
+            "yoke",
+            "--allow-tool-token-disclosure",
+            "--token-count-credential",
+            "owned-count-fixture",
+            "--allow-project-activation",
+            "--activation-selection",
+            "owned-selection-not-read.json",
+            "server-catalog",
+        ])
+        .unwrap();
+        assert!(cli.tool_usage.selected());
+        cli.tool_usage.validate().unwrap();
+        assert!(cli.activation.selected());
+        cli.activation.validate().unwrap();
+        assert_eq!(
+            cli.activation.activation_selection.as_deref(),
+            Some(std::path::Path::new("owned-selection-not-read.json"))
+        );
+        assert!(!cli.allow_writes);
+        assert!(!cli.allow_session_templates);
+        assert!(!cli.trust_servers);
     }
 }
 

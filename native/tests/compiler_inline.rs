@@ -31,7 +31,14 @@ fn fixture(source: &str) -> (tempfile::TempDir, Engine) {
     let root = tempfile::tempdir().unwrap();
     fs::write(root.path().join("main.ts"), source).unwrap();
     fs::write(root.path().join("tsconfig.json"),r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"CommonJS","noEmit":true},"files":["main.ts"]}"#).unwrap();
-    let engine = Engine::open(root.path()).unwrap();
+    let mut opening = yoke::store::OpeningObservations::default();
+    // Preserve Engine::open's ten-second budget; phases record entry, not completion.
+    let engine = Engine::open_with_timeout_observed(
+        root.path(),
+        std::time::Duration::from_secs(10),
+        &mut opening,
+    )
+    .unwrap_or_else(|error| panic!("Compiler inline fixture opening failed: {error}; {opening:?}"));
     (root, engine)
 }
 fn args(keep: bool) -> Value {

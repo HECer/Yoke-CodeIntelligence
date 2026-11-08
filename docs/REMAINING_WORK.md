@@ -1,5 +1,356 @@
 # Remaining implementation and acceptance
 
+## Strict LSP lifecycle and current acceptance follow-up (2026-10-31)
+
+Compile and run both new strict lifecycle/native explicit-null fixtures, then
+repeat the real pinned Windows TSGo hover/definition/reference qualification.
+The actual `45323315` browser and combined VSIX checkpoints now have independent
+artifact and all-30-PNG visual proof, but the overall VSIX/TSGo job remains failed
+and those receipts do not qualify a later source. The earlier VSIX `api_error`
+remains unresolved; fixed private-safe phase/error labels are diagnostic only.
+Retain all ownership, deadline, resource, natural-exit and cleanup requirements.
+Human/motion/visible-shell, TypeScript editor-mode execution, all backend and
+full Windows/platform/main/release qualification remain open.
+
+## Session batch answer-budget qualification (2026-10-31)
+
+Compile and run the four new `session_batch_output` binary-unit functions and
+the complete four-case `session_batch_budget` CLI target on fresh native CI.
+Verify exact UTF-8/escaping/wrapper/separator/newline admission, activation
+metadata changes, inherited deadline refusal, successful JSON shape, no durable
+artifact fallback and no later operation after an overflowing result. The
+earlier mutation remains real and the failure must not claim atomic rollback.
+Run the existing complete Session, prompt-runtime, statistics and TSGo cases
+with the effective default 32000-byte outer cap; callers with larger legitimate
+batches must select an adequate explicit budget. No native typing/runtime or
+full Windows/release acceptance follows from source formatting or npm checks.
+
+The initial `512d026d` producer fails E0423 at the accumulator's removed `used`
+variable; `2c803a93` corrects that source line. Fresh hosted compilation and the
+complete eight-case budget coverage are still required.
+
+## Corrected reset project-binding fixture qualification (2026-10-31)
+
+The complete 20-test `session_dashboard_management` target now passes on Ubuntu
+at `53a28014`, including separate 400 malformed-label and 409 valid-foreign-project
+refusals that preserve counters and require `notApplied`. Its 48-group shard
+partition and all recorded logs are independently verified. The previous actual
+`3ceb66ce` result remains 19 passed and one failed. Fresh Windows execution and
+the subsequent candidate's own qualification remain open; do not relax the
+existing project-label grammar or infer whole-platform acceptance.
+
+The selected Windows credential-backed TLS case is independently confirmed at
+both `3ceb66ce` and `53a28014` (one passed, 49 filtered in each separate run).
+These counts are nonadditive and do not supply whole-target or subsequent
+candidate Windows/native/browser/VSIX/release acceptance.
+
+## Dashboard reset compiler repair qualification (2026-10-31)
+
+Recompile the explicit post-reset HTTP-failure conversion on fresh hosted
+Windows/native/TLS/VSIX producers. The prior failures were `E0277` compiler
+refusals at one shared source line, so they supply no executed runtime results.
+Keep the reset's final binding check and unconfirmed-outcome semantics intact;
+do not weaken the producer, permission, deadline, Job or acceptance gates.
+
+## Real statistics browser qualification (2026-10-31)
+
+Run the new independent `tool-usage` Windows CI browser variant against its
+fresh same-run native producer. Require exact counted rows/totals, real Cancel,
+the stale reset refusal without retry, explicit fresh clear, immutable source
+and persisted identity, all six distinct PNG/DOM artifacts and independent
+natural browser/driver/Session and Job exits. Inspect every actual desktop/mobile
+image and iterate on visible defects before claiming browser qualification.
+Local inert tests and previously inspected mocked-data HTML do not satisfy this
+gate. The separate `53a28014` browser diagnostic was skipped because the push
+lacked its explicit `[browser-evidence]` commit marker. The documentation
+follow-up requests that existing diagnostic, retaining all original mandatory
+shard/acceptance jobs and resource/source/lifecycle gates. The full native/
+Windows/VSIX/main/release requirements remain open.
+
+## Decimal duration projection qualification (2026-10-31)
+
+The selected tool-timeout and symbol-information projections now avoid the
+binary `2.007 * 1000` rounding artifact with one checked canonical-decimal
+conversion. Fractional milliseconds still round upward; zero policy, native
+integer selections, source bytes, original host ceilings and stale bindings
+retain their own semantics. Three authored shared-unit functions and one YAML
+integration fixture need fresh native compilation/execution. The independent
+arithmetic reproducer and source checks are not Rust runtime proof. Current
+native/Windows/VSIX/main/release qualification and full upstream parity remain
+open; no historical validation record is rewritten.
+
+## Selected dashboard statistics qualification (2026-10-31)
+
+The selected-estimator dashboard now has exact decimal display counters,
+BigInt comparisons, filtering/sorting and an independently granted confirmed
+reset. Its ephemeral revision refuses stale/replayed/ABA requests; current
+`ci_session` exclusions remain enforced. Eight pure extracted client tests pass,
+including obsolete state-response rejection. Authored native exact-counter,
+overflow and six real-HTTP management fixtures still require fresh guarded
+compilation/execution. Owned-data HTML screenshots and interaction checks do not
+qualify native HTTP, runtime/Windows kernels, VSIX, main or release. Full upstream
+default/application and statistical representation equivalence remain open.
+
+## Windows hover phase-observation candidate (2026-10-31)
+
+The separate Windows facade hover timeout still needs measured phase evidence.
+The owned fixture now supports explicit, bounded nonblocking loopback UDP phase
+observations; failure diagnostics admit only closed labels, numeric worker/time
+fields and the selected correlation nonce, then omit the nonce from output.
+Packets can be missing or dropped and cannot certify completion or cleanup.
+Original assertions and the 20-second deadline remain. Three helper tests are
+authored but uncompiled/unrun locally. Actual hosted Windows observations and a
+supported correction remain open, along with full native/VSIX/main/release gates.
+
+## Session host-option plumbing repair candidate (2026-10-31)
+
+The completed Linux Clippy run refused open_session, run_session and
+prepare_git_session for eight parameters. Their host template/activation/token
+options now travel together through the existing private SessionHostOptions
+structure, retaining the original bind order and all authority checks. No lint
+suppression, deserialization or default authority was added. Existing parser and
+native fixtures are unchanged; exact-head hosted Clippy and runtime acceptance
+remain open, including combined Windows/VSIX/main/release qualification.
+
+## CLI argument-group repair candidate (2026-10-31)
+
+Completed Linux and Windows CLI failures share a duplicate Clap group ID from
+the flattened token-count and activation `Arguments` types. A unique token group
+ID preserves required-pair and host authority rules. Three native parser tests
+cover the full command graph, default absence of grants, global flag pairing and
+coexisting activation options without host binding or credential/file reads.
+They remain uncompiled/unrun locally; fresh exact-head CI must verify this
+correction and the previously blocked CLI/TLS consumers. The old Windows TLS
+producer's successful compilation is not corrected-source runtime acceptance.
+Full native/Windows/platform/browser/VSIX/main/release gates remain open.
+
+## Persistent callback budget assertion repair candidate (2026-10-31)
+
+The separate persistent-callback budget failure used an obsolete scalar-error
+expectation. Its assertion now follows the unchanged structured Python cell
+error contract and additionally checks no result, callback count, retained worker
+state and exact override text. The original selected whole-cell deadline and
+worker-loss checks are unchanged. No runtime guard or production code changed;
+fresh native regression and combined Windows/VSIX/main/release gates remain open.
+
+## Compiler do-first admission repair candidate (2026-10-31)
+
+The matching four body-inline failures on Windows and Linux are addressed by a
+one-entry source correction: the publication inventory now includes the private
+do-first marker already validated during native reconstruction. Global name
+uniqueness and original source/observation/target/permission/budget gates remain.
+A new native compiler-witness unit fixture covers accepted two-frame output and
+forged names/targets/extra observations. It and the unchanged 34 integration cases
+require fresh hosted runtime qualification. The persistent-callback global-tool
+budget fixture also failed separately and still needs investigation. Combined
+native/Windows/platform/browser/VSIX/main/release acceptance remains open.
+
+## Hosted VSIX inventory and Session assertion repair candidate (2026-10-31)
+
+A completed Windows VSIX job stopped during source-name admission, before a
+native producer. The selected Git pathspecs now omit historical evidence before
+the original name/byte bounds, while preserving the intended selected source set.
+An inert regression covers 19,000 excluded index entries, exact selected Unicode
+text files and the existing path/count/byte refusals. The fixed admission test
+step includes it. Two native test assertions were aligned with the unchanged
+transport envelope and startup-lock metadata. Fresh native/VSIX/extension-host
+execution remains pending. Four compiler-inline Windows cases independently
+refuse unexplained identifier evidence and still need investigation. Combined
+native, Windows/platform, browser/VSIX, main and release acceptance remain open.
+
+## Hosted HTTP startup and catalog regression repair candidate (2026-10-31)
+
+The completed Linux creation-selection run exposed a preflight ordering failure
+and a stale 77-backend CLI expectation. A scoped source correction separates
+HTTP host validation from Session creation and checks the current 80 declared
+backends. Public inspection still refuses missing automatic choices. Three new
+native fixtures and strengthened authenticated HTTP assertions remain unrun
+locally; the original failing cases require fresh hosted qualification. Four
+inert declaration checks and TypeScript checks establish source-level evidence
+only. Full current-upstream, Windows/platform/browser/VSIX/main/release gates
+remain open; no live vendor certification follows from catalog declarations.
+
+## Selected tool-usage estimator candidate (2026-10-31)
+
+The selected global token_count_estimator now has source implementations for all
+three declared counting modes and actual public-tool accounting/read/reset paths.
+Local vocabulary is pinned and compiled; remote counting retains a separately
+granted count-only route. Existing byte estimates, provider billing, trust,
+source/answer/deadline bounds and history authority stay separate. Eighteen native
+unit and twelve integration fixtures, real vendor/counter resource behavior,
+exact hosted compilation/regression and dependency packaging remain unrun locally.
+Native JSON representation explicitly differs from upstream Python repr; literal
+upstream statistics/default and full application/visual equivalence are not
+established. No HTML statistics chart/control or visual acceptance was added.
+Broader current-upstream/backend/Windows/platform/browser/VSIX/main/release gates
+remain open. Historical records below retain their own source/evidence scope.
+[Selected counter contract and remaining qualification](../native/docs/tool-usage-estimators.md).
+
+## Creation-time language-server selection candidate (2026-10-31)
+
+The selected global ls_priorities setting now has a native source candidate
+for one creation-time backend choice from captured filenames, with all 80
+public matcher/default/order declarations pinned. Host registrations and
+execution grants remain independent; explicit selections supersede detection.
+The reviewed delta closes legacy fallback paths, bounds combined Session state
+before publication, and keeps filename metadata out of retention roots.
+Twelve authored native unit and seven integration fixtures, exact hosted
+compilation/transport/cleanup/regression and real-provider behavior remain
+unrun locally. Capture-limited selection is not exhaustive project detection;
+public interactive creation prompts are not implemented. Token estimators and
+full upstream/backend/platform/browser/VSIX/main/release gates remain open.
+Earlier entries below retain their historical source scope and pending gates.
+[Contract, exact defaults and remaining evidence](../native/docs/server-autoselection.md).
+
+## Explicit global tool-budget candidate (2026-10-31)
+
+A selected numeric policy now has actual configuration, Session binding and
+public facade/Serena/persistent-cell deadline and answer-limit integration.
+The original host ceiling and cancellation remain tighter; absent selection
+preserves preceding behavior. Native cooperative deadlines do not establish
+hard interruptible synchronous I/O. The 17 declared answer facades retain their
+per-call overrides and independent byte/frame caps. Four authored unit and seven
+integration tests, exact hosted compilation/regression and actual cleanup/time
+qualification remain unrun locally. Token estimators, backend auto-detection
+priorities and full upstream/backend/platform/VSIX/main/release remain open.
+[Contract and qualification scope](../native/docs/global-tool-budgets.md).
+
+## Selected context options candidate (2026-10-31)
+
+The pinned ten-field context and seven-field mode declarations now have a
+native candidate for literal description metadata, tool-description overrides,
+host-startup-only single-project restriction and true/false/null structured
+Serena MCP output. Null definition prompts do not invoke a renderer. Unknown,
+invalid, oversized and wrong-scope inputs refuse; exclusions, source/runtime
+permissions and recovery remain separate. Absent options preserve preceding
+serialization and output. Structured text/object copies share the original
+inline cap; no clipped success is substituted. Historical contracts/353 ledger
+remain unchanged. Two inert declaration checks passed RED/GREEN; four native
+unit and six integration tests are authored but unrun locally. Exact hosted,
+full configuration/client/backend/platform/VSIX/main/release gates remain open.
+[Actual behavior and bounds](../native/docs/context-definition-options.md).
+
+## Current Serena Session parameter candidate (2026-10-31)
+
+Current upstream activate_project and serena_repl declarations use session;
+the historical pinned declarations used session_id. The native candidate now
+advertises and accepts exactly one spelling while preserving the original
+host-owned Session equality and activation/REPL runtime gates. Dual, foreign,
+nonstring, unknown and oversized arguments refuse. The historical 53-tool JSON,
+other 51 schemas, original 353 ledger and unrelated behavior remain unchanged.
+Two inert public-data checks passed RED/GREEN. Three native unit and four
+integration tests are authored but unrun locally; exact hosted qualification,
+broader current parity, backends/platform/VSIX/main/release remain open.
+[Current and legacy parameter contract](../native/docs/current-serena-sessions.md).
+
+## Real Windows TSGo CI candidate (2026-10-31)
+
+An additive hosted profile now selects the pinned real Microsoft TSGo preview
+through the public native Session CLI and explicit host backend registration.
+It reuses the same-run fresh release producer, private owned process trees and
+unchanged VSIX gates. Vendor procurement binds SHA-512, version, archive/file
+budgets and the complete extracted inventory. Unicode/CRLF fixtures require
+nonempty hover, exact definition and reference byte/hash anchors, unchanged
+source and natural process-tree exit. The original 353-entry ledger is unchanged.
+Eleven inert admission tests cover this profile; local source/npm checks do not
+qualify vendor execution. Exact hosted evidence, the other current backends,
+passive TSGo behavior, broader parity/platform/VSIX/main/release remain open.
+[Profile, fixed vendor and actual acceptance requirements](../scripts/host_tsgo.md).
+
+## Current upstream backend-ID candidate (2026-10-31)
+
+The current Serena public registry adds vbnet, typescript_tsgo and graphql to
+the historical 77 IDs. A separately pinned data contract now admits all 80;
+the old 77 entries/order and original 353 inventory assessments are preserved.
+Explicit host registration/trust and original passive/source-execution, path,
+resource and selection gates remain. GraphQL requires explicit capture language
+overrides and no native GraphQL grammar is claimed. Data-contract RED/GREEN and
+local source/npm checks do not qualify the four authored native fixtures or
+real vendor runtimes. Combined/platform/VSIX/main/release gates stay open.
+[Exact contract and remaining runtime scope](../native/docs/current-backends.md).
+
+## Combined current-source candidate (2026-10-31)
+
+The isolated integration branch now includes the current source from PR7-20:
+trusted activation, selected encoding variants, while/for/do inlining, receipt
+verification, HTTP/Store observations and both owned Windows CI profiles.
+Five normal merges retain all constituent tips and both historical documentation
+blocks. No production/test conflict, assertion, permission, ignore, deadline,
+worker resource limit or release gate was changed during integration.
+The combined product source passes typecheck, npm 266/0/3 skips, 33 inert
+admission tests, Rust 2024 formatting/source parsing for 40 changed Rust files,
+nine Python AST parses and three JavaScript syntax checks. These are local
+source/npm results, not native compilation or combined runtime acceptance.
+Fresh whole-source platform/browser/credential/VSIX/editor qualification, strict
+macOS memory, full upstream/backend parity, main and release remain open.
+Earlier entries retain their own source-specific scope and do not certify this
+candidate. [Constituents, preserved gates and remaining acceptance](validation/integration-2026-10-31/combined-source-candidate/README.md).
+
+## Fresh combined VSIX CI candidate (2026-10-31)
+
+Update (2026-11-01): source `06267ee8` fails in source-inventory admission before
+the native producer. The repair moves the existing documentation selection into
+the fixed Git query, retaining the exact selected set and all inventory/source
+byte caps. Fresh hosted producer, VSIX and both real editor modes remain required;
+the failed preparation established no native or editor execution acceptance.
+
+A new push-only Windows job depends on the same-run owned-Job lifecycle probe.
+It requires fresh matching native release and TypeScript outputs, pinned editor
+procurement, unchanged native/combined VSIX packagers, complete inventory/hash
+admission, and separate real explicit/bundled Rust extension-host fixtures.
+Both workspaces are fresh runner-temp roots outside the checkout. Original
+test-host assertions, native importer caps and 180-second owned workers remain.
+Local inert admission and source checks do not qualify actual production,
+Windows kernel, package/editor execution or cleanup. Those hosted gates, full
+feature/backend/platform parity, main and release acceptance remain open.
+See [the exact profile and scope](../scripts/host_vscode.md).
+
+## Owned VS Code launcher lifecycle candidate (2026-10-31)
+
+The extension-host launcher now requires suspended Windows Job assignment,
+natural zero root/tree exit before forced cleanup, and checked empty-tree/handle
+cleanup before reading its result. A passed marker alone cannot establish
+success. Original extension test assertions, workspace/profile fixture and
+180-second ceiling remain; no PID/taskkill fallback or policy bypass is used.
+Pure admission checks pass. A separate Python-only hosted lifecycle probe must
+still qualify the actual kernel paths. Fresh matching native/combined VSIX,
+explicit and bundled real editor execution, combined-source parity, main and
+release acceptance remain open. No local Yoke/native/editor execution ran.
+See [the lifecycle contract](../scripts/vscode_owned_job.md).
+## Complete do-condition inlining candidate (2026-10-30)
+
+The finite classic function-body route now admits complete do-while condition
+calls with independent compiler/Rust ownership checks and a fresh first-iteration
+loop recipe. The original body runs before the first test; continue reaches the
+test after finally, while earlier break/return/throw leave without it. Original
+source copies, labels, type checks, budgets and writer/recovery gates remain.
+Three integration cases and two unit cases are authored, with an additional
+CLI verification/approval/recovery fixture. Native compilation and execution
+remain unrun locally; guarded hosted qualification and wider R1/full parity,
+platform, VSIX/main and release acceptance remain open.
+
+## For-condition inlining qualification (2026-10-30)
+
+The complete ordinary-for-condition source recipe now retains the original
+initializer, update and per-iteration environment while placing a fresh call
+expansion at each test. Guarded compilation, native reconstruction, runtime,
+predicate-flow and writer/recovery fixture execution remain required. The prior
+while candidate remains unqualified separately. Do/in/of/await-of, selected
+initializer/update calls, compound conditions and overlapping frames still
+refuse. Broader R1/full parity/Windows/VSIX/main/release gates remain open.
+[Candidate contract](../native/docs/compiler-inline.md#complete-for-conditions-candidate-native-qualification-pending).
+
+## While-condition inlining qualification (2026-10-30)
+
+The source candidate extends classic body expansion to complete direct calls in
+while conditions, with independent Rust reconstruction and authored native
+runtime/type/byte/control and verification/approval/recovery fixtures. Guarded
+native compilation and fixture execution remain required. For/do tests,
+compound/short-circuit conditions, nested expressions and overlapping selected
+frames still refuse. This does not close the broader R1 semantic-refactoring
+requirement or change any earlier source-bound CI/release checkpoint.
+[Candidate contract](../native/docs/compiler-inline.md#complete-while-conditions-candidate-native-qualification-pending).
+
 ## Gates remaining after scoped f41 acceptance (2026-10-30)
 
 Source `f41e5613` in run `41030808968` now has complete default-target coverage
@@ -15,6 +366,76 @@ qualification, main integration, public publisher and release remain open.
 No whole-project or release acceptance is claimed.
 [Exact scope, receipts and screenshots](validation/integration-2026-10-30/f41-ci-checkpoint/README.md).
 
+
+## UTF-32 hosted checkpoint and quoted-YAML fixture correction (2026-10-30)
+
+At source `38322c7`, all seven new UTF-32 cases and the entire 14-case transport
+target pass on Windows/Linux/macOS. The 24-case core target passes 23 and fails
+only a stale negative input expecting the newly supported quoted UTF-32 YAML
+selection to refuse. This correction substitutes unsupported UTF-7 and adds
+positive plain/quoted YAML and canonical JSON policy checks, retaining strict
+JSON enum alias refusal and all original assertions/permissions/budgets.
+Corrected full-core execution remains pending. Production codec code is unchanged;
+strict macOS memory, full platform/VSIX/main/release acceptance remain open.
+
+## Strict UTF-32 source candidate (2026-10-30)
+
+The existing selected-codec stack now admits explicit BOM-selected UTF-32 and
+UTF-32LE/BE source views, raw byte offsets and strict scalar/unit validation.
+Existing source identities and all preceding codec behavior remain. New authored
+core/stdio/HTTP/LSP/verified-writer fixtures preserve the original authority,
+verification, approval, journal, deadline and cleanup requirements. Native
+compilation and execution are pending; no native runtime or full encoding/parity
+certificate is claimed. See [the exact contract](../native/docs/source-encodings.md#utf-32-source-candidate-2026-10-30).
+
+
+## Windows-1252 integration requires native qualification (2026-10-30)
+
+The Windows-1252 source-only candidate is combined with ASCII and UTF-8-SIG after
+`272ec171`. Original bytes/offsets, all preceding codec fixtures, unsupported proof
+consumer refusals, and the existing verification/approval/writer gates remain.
+The complete byte table matches Python's strict codec; this comparison reads
+source constants and does not compile or execute Rust. New core and real-transport
+fixtures require guarded hosted execution. Full selected-encoding identity,
+remaining codecs/LSP combinations, strict platform memory, VSIX/release and main
+remain open. See the [codec contract](../native/docs/source-encodings.md).
+## Separate Windows credential-backed TLS CI candidate (2026-10-30)
+
+A dedicated hosted-Windows profile now prepares fresh matching CLI/test images
+and explicitly selects the existing ignored receiver TLS/Credential Manager
+case inside the unchanged assigned-before-resume Job launcher. Its own filtered
+count stays separate from default shard coverage. Original Rust fixture bytes,
+ignore, assertions, deadlines and default native jobs remain unchanged.
+Synthetic admission tests pass; actual OS credentials, TLS/recovery/query
+execution and cleanup still require hosted qualification. No local native
+build/tests or credential access ran. Full platform/VSIX/main/release stays open.
+See [the profile contract](../scripts/host_credential_tls.md).
+## Explorer HTTP receive observations await hosted execution (2026-10-30)
+
+At source `85d0893d`, completed push run `41096155077` passes five of six
+Windows Explorer HTTP cases; the rebuild/reload case fails because its received
+bytes lack a complete HTTP header delimiter. The retained artifact cannot
+distinguish empty from partial response bytes or establish the failing request,
+receive duration or cause. Linux/macOS pass all six at that same source.
+
+This candidate retains scalar receive elapsed time, byte count, read-failure and
+raw OS-error flags/code, and delimiter presence in a closed formatter (maximum
+169 bytes on 64-bit targets). It keeps the original read-to-EOF operation, success
+parser, all six test bodies, requests, timeouts and production code unchanged.
+Two added tests cover scalar extremes and an owned bounded TCP peer with empty,
+partial and valid responses plus synthetic-content exclusion. Those native tests
+and the eight-case target remain unrun locally and require guarded hosted CI.
+Instrumentation may affect scheduling; no cause or repair is established.
+Full platform, strict macOS memory, VSIX, main and release gates remain open.
+
+## MCP HTTP revocation failure still needs source-bound observations (2026-10-30)
+
+The `9d0c4c72` macOS PR run's queued-revocation case fails in the already-running
+reader's client exchange, before its expected 503 result. Existing artifacts lack
+prefix length and timing, so the cause remains unestablished. Failure-only scalar
+observations now preserve those values while every original request, assertion
+and budget remains. The formatter/owned-TCP adversaries and complete 15-case target need
+guarded native execution. A successful sibling run is not a causal repair.
 
 ## Remaining Python browser and strict platform gates (2026-10-30)
 
@@ -2452,3 +2873,18 @@ full upstream contract certification require their own actual evidence.
 PR #7 remains a draft against main. Main integration, release packaging and the
 separate `HECer/Code-Intelligence` publisher require real remote verification
 before release status changes. The integration branch is not a release receipt.
+
+
+## Combined inherited repair checkpoint (2026-11-01)
+
+The combined candidate now applies its existing documentation filter in the
+Git query before the unchanged inventory caps. Selected source names/order,
+file/total limits and ordinary-file checks remain authoritative. The notified
+VSIX job stopped during source inventory, before native build or editor work.
+The existing doFirst synthetic-name inventory repair and adversarial two-frame
+regression, plus the owned MCP/Explorer request-EOF fixture corrections, are
+also carried forward exactly from their scoped PRs. Original test assertions,
+timeouts, resource ceilings, permission and writer/recovery gates remain.
+No local native/controller/editor execution or native-image payload read is
+performed. Fresh guarded whole-source CI and real VSIX/extension-host evidence
+are still required; macOS resource enforcement and broader acceptance stay open.
