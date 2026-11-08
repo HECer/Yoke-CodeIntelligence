@@ -265,10 +265,23 @@ fn render(
             && reply["engine"] == ENGINE
             && reply["requestSha256"] == yoke::model::hash(&input)
             && reply["contextSha256"] == context.data.hash()?
-            && reply["originalPromptSha256"] == yoke::model::hash(text)
-            && reply["memoryCeilingBytes"] == MEMORY,
+            && reply["originalPromptSha256"] == yoke::model::hash(text),
         "session_config_template_worker_binding_invalid"
     );
+    let budget: Option<yoke::process::MacosMemoryBudget> = reply
+        .get("memoryBudget")
+        .map(|value| yoke::json::decode(value.clone()))
+        .transpose()?;
+    let ceiling = reply["memoryCeilingBytes"]
+        .as_u64()
+        .and_then(|n| usize::try_from(n).ok())
+        .ok_or_else(|| anyhow::anyhow!("session_config_template_worker_memory_invalid"))?;
+    yoke::process::validate_memory_report(
+        ceiling,
+        reply["memoryLimitKind"].as_str().unwrap_or(""),
+        budget.as_ref(),
+        MEMORY,
+    )?;
     ensure!(
         reply.get("entryTemplate").and_then(Value::as_str) == name,
         "session_config_template_worker_binding_invalid"
@@ -300,7 +313,10 @@ fn render(
             && reply["renderedSha256"] == yoke::model::hash(rendered),
         "session_config_template_worker_output_invalid"
     );
-    let mut evidence = json!({"schema":reply_schema,"engine":ENGINE,"requestSha256":reply["requestSha256"],"contextSha256":reply["contextSha256"],"memoryCeilingBytes":MEMORY,"memoryLimitKind":reply["memoryLimitKind"],"fuel":FUEL,"recursionLimit":64,"outputByteLimit":MAX_OUTPUT,"filesystemLoader":false,"environmentAccess":false,"modelCalls":0,"analyzedSourceExecuted":false,"templateWorkerExecuted":true});
+    let mut evidence = json!({"schema":reply_schema,"engine":ENGINE,"requestSha256":reply["requestSha256"],"contextSha256":reply["contextSha256"],"memoryCeilingBytes":ceiling,"memoryLimitKind":reply["memoryLimitKind"],"fuel":FUEL,"recursionLimit":64,"outputByteLimit":MAX_OUTPUT,"filesystemLoader":false,"environmentAccess":false,"modelCalls":0,"analyzedSourceExecuted":false,"templateWorkerExecuted":true});
+    if let Some(budget) = budget {
+        evidence["memoryBudget"] = serde_json::to_value(budget)?;
+    }
     if let Some(hash) = binding_hash {
         evidence["runtimeBindingSha256"] = json!(hash);
     }
@@ -448,9 +464,9 @@ fn worker_inner(deadline: &Deadline, cap: usize) -> Result<bool> {
     }
     // This runs before reading even the bounded input. Parent capture also sets
     // its own ceiling before exec. A direct worker call cannot omit this limit.
-    let _memory = yoke::process::limit_current_memory(MEMORY)?;
+    let memory = yoke::process::limit_current_memory(MEMORY)?;
     ensure!(
-        yoke::process::current_memory_limit()? == Some(MEMORY),
+        yoke::process::current_memory_limit()? == Some(memory.ceiling_bytes()),
         "session_config_template_memory_limit_unproven"
     );
     deadline.check()?;
@@ -558,13 +574,12 @@ fn worker_inner(deadline: &Deadline, cap: usize) -> Result<bool> {
         !rendered.contains('\0'),
         "session_config_template_rendered_nul"
     );
-    let kind = if cfg!(windows) {
-        "windows_job_committed_bytes"
-    } else {
-        "unix_address_space_bytes"
-    };
+    let kind = yoke::process::memory_limit_kind();
     let reply_schema = reply_schema(request.schema);
-    let mut value = json!({"schema":reply_schema,"engine":ENGINE,"requestSha256":yoke::model::hash(&input),"contextSha256":request.context.hash()?,"originalPromptSha256":yoke::model::hash(&request.prompt),"renderedSha256":yoke::model::hash(&rendered),"rendered":rendered,"memoryCeilingBytes":MEMORY,"memoryLimitKind":kind});
+    let mut value = json!({"schema":reply_schema,"engine":ENGINE,"requestSha256":yoke::model::hash(&input),"contextSha256":request.context.hash()?,"originalPromptSha256":yoke::model::hash(&request.prompt),"renderedSha256":yoke::model::hash(&rendered),"rendered":rendered,"memoryCeilingBytes":memory.ceiling_bytes(),"memoryLimitKind":kind});
+    if let Some(budget) = memory.macos_budget() {
+        value["memoryBudget"] = serde_json::to_value(budget)?;
+    }
     if let Some(binding) = &request.runtime_binding {
         value["runtimeBindingSha256"] = json!(yoke::model::hash(serde_json::to_vec(binding)?));
     }

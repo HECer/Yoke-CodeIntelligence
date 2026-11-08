@@ -2,12 +2,26 @@
 use crate::{capture::Deadline, project_session::Session};
 use anyhow::{Context, Result, bail, ensure};
 use serde_json::{Value, json};
-fn contracts() -> Value {
+mod current_sessions;
+pub(crate) fn contracts() -> Value {
     serde_json::from_str(include_str!("compatibility_contracts.json"))
         .expect("Built-in public contract JSON")
 }
 pub fn serena_tools() -> Value {
-    Value::Array(contracts()["tools"].as_array().expect("Built-in tools").iter().map(|row| json!({"name":row["name"],"description":row["description"],"inputSchema":row["inputSchema"]})).collect())
+    let current = current_sessions::schemas();
+    Value::Array(
+        contracts()["tools"]
+            .as_array()
+            .expect("Built-in tools")
+            .iter()
+            .map(|row| {
+                let schema = current
+                    .get(row["name"].as_str().expect("Built-in tool name"))
+                    .unwrap_or(&row["inputSchema"]);
+                json!({"name":row["name"],"description":row["description"],"inputSchema":schema})
+            })
+            .collect(),
+    )
 }
 pub(crate) fn serena_tools_for_session(session: &Session) -> Value {
     let mut tools = serena_tools();
@@ -48,6 +62,9 @@ pub(crate) fn serena_tools_for_session(session: &Session) -> Value {
                 tool["inputSchema"]["properties"]["skip_ignored_files"]["default"] = json!(default);
             }
         }
+    }
+    if let Some(definition) = session.context_definition() {
+        crate::context_options::decorate(&mut tools, definition);
     }
     tools
 }
@@ -133,11 +150,12 @@ pub(crate) fn arguments(args: &Value, schema: &Value) -> Result<Value> {
 }
 fn session_arguments(
     session: &Session,
+    name: &str,
     args: &Value,
     schema: &Value,
     method: &str,
 ) -> Result<Value> {
-    let mut normalized = arguments(args, schema)?;
+    let mut normalized = current_sessions::normalize(name, args, schema)?;
     if method == "fs.search_for_pattern"
         && session.has_git_ignore_selection()
         && args.get("skip_ignored_files").is_none()
@@ -164,6 +182,20 @@ pub fn invoke_serena(
     args: &Value,
     deadline: &Deadline,
 ) -> Result<Value> {
+    let policy = session.tool_budgets();
+    crate::tool_budgets::with_deadline(policy.as_ref(), deadline, |deadline| {
+        session.preflight_tool_usage(name, args, deadline)?;
+        let mut result = invoke_serena_inner(session, name, args, deadline)?;
+        session.record_tool_usage(name, args, &mut result, deadline)?;
+        Ok(result)
+    })
+}
+fn invoke_serena_inner(
+    session: &mut Session,
+    name: &str,
+    args: &Value,
+    deadline: &Deadline,
+) -> Result<Value> {
     deadline.check()?;
     session.require_serena_tool(name, deadline)?;
     let inventory = contracts();
@@ -175,6 +207,7 @@ pub fn invoke_serena(
         .context("Unknown public Serena tool")?;
     let args = session_arguments(
         session,
+        name,
         args,
         &row["inputSchema"],
         row["facadeMethod"].as_str().unwrap_or(""),
@@ -241,7 +274,7 @@ pub fn invoke_serena(
                 ),
                 "External public query is not an immutable source read"
             );
-            let nested = session_arguments(session, &nested, &target["inputSchema"], method)?;
+            let nested = session_arguments(session, tool, &nested, &target["inputSchema"], method)?;
             crate::agent_repl::invoke_facade(session, method, nested, Some(project), deadline)
         }
         "serena_repl" => {
@@ -274,6 +307,21 @@ pub fn invoke_serena_with_repl(
     args: &Value,
     deadline: &Deadline,
 ) -> Result<Value> {
+    let policy = session.tool_budgets();
+    crate::tool_budgets::with_deadline(policy.as_ref(), deadline, |deadline| {
+        session.preflight_tool_usage(name, args, deadline)?;
+        let mut result = invoke_serena_with_repl_inner(session, runtime, name, args, deadline)?;
+        session.record_tool_usage(name, args, &mut result, deadline)?;
+        Ok(result)
+    })
+}
+fn invoke_serena_with_repl_inner(
+    session: &mut Session,
+    runtime: &mut crate::agent_repl::AgentRepl,
+    name: &str,
+    args: &Value,
+    deadline: &Deadline,
+) -> Result<Value> {
     deadline.check()?;
     session.require_serena_tool(name, deadline)?;
     let inventory = contracts();
@@ -285,6 +333,7 @@ pub fn invoke_serena_with_repl(
         .context("Unknown public Serena tool")?;
     let args = session_arguments(
         session,
+        name,
         args,
         &row["inputSchema"],
         row["facadeMethod"].as_str().unwrap_or(""),
@@ -324,5 +373,5 @@ pub fn invoke_serena_with_repl(
         );
         return Ok(response["result"].clone());
     }
-    invoke_serena(session, name, &args, deadline)
+    invoke_serena_inner(session, name, &args, deadline)
 }

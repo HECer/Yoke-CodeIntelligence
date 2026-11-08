@@ -1,4 +1,6 @@
 //! Actual opt-in live catalog rendering and pure trusted-host authority boundaries.
+#[path = "support/memory_budget.rs"]
+mod memory_budget;
 use serde_json::{Value, json};
 use std::{
     fs,
@@ -231,7 +233,7 @@ fn live_native_mode_changes_share_the_exact_published_catalog_and_revision_bindi
             item["rendering"]["schema"],
             "native_session_prompt_jinja_v3"
         );
-        assert_eq!(item["rendering"]["memoryCeilingBytes"], 256 * 1024 * 1024);
+        memory_budget::assert_report(&item["rendering"], "memoryCeilingBytes");
         assert!(
             item["rendering"]["runtimeBindingSha256"]
                 .as_str()

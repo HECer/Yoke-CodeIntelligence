@@ -58,8 +58,13 @@ are never parsed or dispatched. This bounded tail cleanup avoids resetting an
 already framed refusal merely because an oversized header left unread bytes;
 it does not promise delivery for an unbounded sending peer.
 
-The host request budget is 250–30000 ms. The final 100 ms is reserved inside
-that budget for an expiry response. Nested `Deadline::new` calls inherit the
+The host request budget is 250–30000 ms. A quarter of that budget, clamped to
+100–500 ms, is reserved inside the original physical deadline for an expiry
+response. For a 1800 ms request, work expires at 1350 ms and the final 450 ms
+remains for reporting. Scheduling delays consume that same allowance; delivery
+is best effort if the physical budget is exhausted. Neither an error response
+nor TLS shutdown renews the deadline or bypasses cancellation.
+Nested `Deadline::new` calls inherit the
 host ceiling and cancellation on the dispatch thread; passed clones retain
 them across explicit worker boundaries. Unrelated threads do not inherit TLS
 context. Cancellation is cooperative, not hard CPU preemption. Shutdown closes

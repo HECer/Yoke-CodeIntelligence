@@ -78,3 +78,21 @@ main/publication and release gates stay open.
 The [fresh VSIX CI profile](host_vscode.md) now implements that next stage behind
 the same-run lifecycle probe. Its hosted production and real-editor outcomes
 remain unqualified until their own complete receipts are verified.
+
+## Output-inventory regression gate (2026-10-31)
+
+The launcher CI job now explicitly runs both `test_vscode_owned_job` and
+`test_vscode_output_usage` before its real kernel probe. Previously the eleven
+new inventory cases existed but were absent from that job's unittest selection.
+The original one-minute test-step bound and downstream VSIX dependency remain.
+The inventory suite extracts only the pure counting functions and uses owned
+text fixtures; it does not import the Windows controller or launch a process.
+
+Local execution passes all 47 launcher, inventory, host-admission and source-
+inventory tests, including the eleven inventory cases. The exact prior source
+`6989862daeee8f00592e2b53f60376b584ea3d37` also has independently checked
+[real explicit and bundled Rust host evidence](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/41243681181/job/124662716634).
+Those text receipts bind the original source inputs and natural empty-tree
+exits; they do not establish that the inventory race occurred during that run.
+The new CI selection requires its own hosted execution. See the
+[source-specific receipt](../docs/validation/vscode-inventory-2026-10-31.json).

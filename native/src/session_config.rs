@@ -95,6 +95,9 @@ fn label(value: &str) -> Result<()> {
     Ok(())
 }
 struct DecodedFields {
+    token_estimator: Option<Option<crate::tool_usage::Estimator>>,
+    auto_selection: Option<Option<crate::server_autoselection::Config>>,
+    tool_budgets: Map<String, Value>,
     encoding: Option<Option<crate::source_encoding::Codec>>,
     additional_folders: Option<Option<Vec<String>>>,
     native_defaults: Map<String, Value>,
@@ -113,11 +116,15 @@ struct DecodedFields {
 fn rename_fields(
     raw: Map<String, Value>,
     definition: bool,
+    context: bool,
     global: bool,
     project: bool,
     prompt_rendered: bool,
 ) -> Result<DecodedFields> {
     let mut mapped = Map::new();
+    let mut token_estimator = None;
+    let mut auto_selection = None;
+    let mut tool_budgets = Map::new();
     let mut encoding = None;
     let mut additional_folders = None;
     let mut native_defaults = Map::new();
@@ -132,6 +139,29 @@ fn rename_fields(
     let mut symbol_info_budget = None;
     let mut workspace_folders = None;
     for (key, value) in raw {
+        if key == "token_count_estimator" {
+            ensure!(global, "session_config_token_estimator_global_only");
+            token_estimator = Some(
+                serde_json::from_value(value)
+                    .map_err(|_| anyhow::anyhow!("session_config_token_estimator_invalid"))?,
+            );
+            continue;
+        }
+        if key == "ls_priorities" {
+            ensure!(global, "session_config_ls_priorities_global_only");
+            auto_selection = Some(crate::server_autoselection::Config::from_yaml(&value)?);
+            continue;
+        }
+        if crate::tool_budgets::yaml_field(&key, &value, global)? {
+            tool_budgets.insert(key, value);
+            continue;
+        }
+        if let Some((name, value)) =
+            crate::context_options::yaml_field(&key, &value, definition, context)?
+        {
+            mapped.insert(name, value);
+            continue;
+        }
         let name = match key.as_str() {
             "encoding" if global || project => {
                 let codec = if value.is_null() {
@@ -252,7 +282,13 @@ fn rename_fields(
             }
             "agent_interface" if !definition => "agentInterface",
             "initial_prompt" if project => "instructions",
-            "prompt" if definition => "instructions",
+            "prompt" if definition => {
+                if value.is_null() {
+                    mapped.insert("instructions".into(), json!(""));
+                    continue;
+                }
+                "instructions"
+            }
             "base_modes" if global => {
                 base = Some(value);
                 continue;
@@ -289,6 +325,9 @@ fn rename_fields(
         mapped.insert(name.into(), value);
     }
     Ok(DecodedFields {
+        token_estimator,
+        auto_selection,
+        tool_budgets,
         encoding,
         additional_folders,
         native_defaults,
@@ -335,6 +374,7 @@ pub fn project_for_session_templates(
     let mut selected = base.clone();
     selected.prompt_templates = Some(config.clone());
     selected.prompt_runtime = None;
+    selected.required_prompt_memory_runtime = None;
     project_inner(&selected, sources, deadline, None, true)
 }
 fn project_inner(
@@ -382,12 +422,14 @@ fn project_inner(
             Target::Project { .. } | Target::ProjectLocal { .. }
         );
         let definition = matches!(source.target, Target::Context { .. } | Target::Mode { .. });
+        let context = matches!(source.target, Target::Context { .. });
         let mut raw = yaml::decode(source.bytes, deadline)?;
         if renderer.is_some() || defer {
             // Reject unsupported settings before starting any host renderer.
             rename_fields(
                 raw.clone(),
                 definition,
+                context,
                 matches!(source.target, Target::Global),
                 is_project,
                 true,
@@ -414,7 +456,7 @@ fn project_inner(
         };
         if let Some(renderer) = renderer.as_mut()
             && let Some(key) = prompt_key
-            && let Some(value) = raw.get(key)
+            && let Some(value) = raw.get(key).filter(|value| !definition || !value.is_null())
         {
             let original = value
                 .as_str()
@@ -431,6 +473,9 @@ fn project_inner(
             raw.insert(key.into(), json!(rendered.text));
         }
         let DecodedFields {
+            token_estimator,
+            auto_selection,
+            tool_budgets,
             encoding,
             additional_folders,
             native_defaults,
@@ -448,10 +493,21 @@ fn project_inner(
         } = rename_fields(
             raw,
             definition,
+            context,
             matches!(source.target, Target::Global),
             is_project,
             prompt_rendering.is_some() || defer,
         )?;
+        crate::tool_budgets::project(&mut profile.tool_budgets, &tool_budgets)?;
+        if let Some(selected) = token_estimator {
+            profile.token_count_estimator = selected;
+            if selected != Some(crate::tool_usage::Estimator::AnthropicClaudeSonnet4) {
+                profile.token_count_runtime = None;
+            }
+        }
+        if let Some(selection) = auto_selection {
+            profile.language_server_auto_selection = selection;
+        }
         if let Target::Project { project } | Target::ProjectLocal { project } = source.target {
             label(project)?;
             ensure!(
@@ -694,6 +750,9 @@ fn project_inner(
             }
         }
         let mut receipt = json!({"target":source.target,"originalBytes":source.bytes.len(),"originalSha256":source.expected_sha256,"declaredProjectName":declared,"declaredProjectNameIsRegistration":false});
+        if let Some(selected) = token_estimator {
+            receipt["tokenCountEstimatorDeclaration"] = json!({"selected":selected,"networkAuthority":false,"textDisclosureAuthority":false});
+        }
         activation.project_yaml(source.target, &native_defaults);
         if defer && let Some(key) = prompt_key {
             let original = yaml::decode(source.bytes, deadline)?
@@ -707,6 +766,9 @@ fn project_inner(
 
         if let Some(rendering) = prompt_rendering {
             receipt["promptRendering"] = rendering;
+        }
+        if !tool_budgets.is_empty() {
+            receipt["toolBudgetDeclarations"] = Value::Object(tool_budgets);
         }
         let mut reported_defaults = native_defaults;
         if let Some(value) = reported_defaults
@@ -775,6 +837,15 @@ fn project_inner(
     }
     if let Some(folders) = &profile.symbol_workspace_folders {
         folders.validate(&profile)?;
+    }
+    if let Some(selection) = &profile.language_server_auto_selection {
+        selection.validate()?;
+    }
+    if let Some(budgets) = &profile.tool_budgets {
+        budgets.validate()?;
+    }
+    if crate::tool_budgets::unselected(&profile.tool_budgets) {
+        profile.tool_budgets = None;
     }
     if let Some(budgets) = &profile.symbol_info_budgets {
         budgets.validate(&profile)?;

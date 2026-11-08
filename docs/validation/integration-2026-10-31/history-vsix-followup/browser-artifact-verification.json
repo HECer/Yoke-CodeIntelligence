@@ -1,0 +1,384 @@
+{
+  "schema": "source_bound_history_and_vsix_evidence_v1",
+  "head": "3ceb66ced10bacda9cd024d0f84a5345ea8cf80c",
+  "browserProfiles": [
+    {
+      "variant": "native",
+      "artifactId": 13037009161,
+      "nativeSha256": "cbd10f4440ef5fdea83f3423aeea9e66b3cef4641472cbd9eedfe1d8a61ea9e7",
+      "controls": [
+        {
+          "path": "scripts/host_history_browser.py",
+          "gitBlobSha256": "3daf8296b4e4798a9d5cc90ffbf35d134cf5dfc1b15f5542a48501e3c0f4c8d9",
+          "recordedSourceSha256": "39e2fee7e0a2fc86be6b404aabf26f3baad53d5e9119b0cb7fdc56d08c5e66e9",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser.cjs",
+          "gitBlobSha256": "43734699ff863bb0e435a90c9e3a1cfa4c3a8593fbbce27e6c057c2f1a400711",
+          "recordedSourceSha256": "6f5c42790699349335961e73143922c3f8d4a827d10267bac5745be897203a1b",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_live.py",
+          "gitBlobSha256": "84373d7b4fbebda9d985dbd1925b8777c58ed1b10659cd26df4528df2ee31d44",
+          "recordedSourceSha256": "690a7ca66c42fb0a358355f9d099bade7dd1d471eb2faa63bee0ccfdd52a2543",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser_http.py",
+          "gitBlobSha256": "2c7c5946b679fc256b76d3549445bbeac3b2c584fcb7f26f6cc37c75bf181c52",
+          "recordedSourceSha256": "0fc2da425a713a5bc4e55440c067f1d3945ea936cc5b3ef78636c8cd59a54af4",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "native/src/session_dashboard.html",
+          "gitBlobSha256": "8b283db62061145e08ac5ed35b03ae49a34e382e1ceb1eb54362424f1b4d1d66",
+          "recordedSourceSha256": "8520ec8513fbd1318b010cacaf4f9c71c61e6ae07a0e92f8bb5961617a75cf75",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        }
+      ],
+      "states": [
+        {
+          "name": "native-desktop-before.png",
+          "sha256": "5ee87d74247ef091857c7f38b20548f461f780a7d2e722c1bc2145a7a63bd517",
+          "domSha256": "3fab7b0b6b4c699eecf2449b72d50de7fc37673506c44e63b4ddd65116d591e7",
+          "width": 1440,
+          "height": 1612
+        },
+        {
+          "name": "native-mobile-before.png",
+          "sha256": "3d514684e63ea2e13adf9a81925fb663f5e3b964e77c22d48029480ae80bbe37",
+          "domSha256": "26af253bb46a84e59660173444eb87794c2a1f88ab2fcffea9e4b7ef42a01dd5",
+          "width": 390,
+          "height": 2110
+        },
+        {
+          "name": "native-desktop-pending.png",
+          "sha256": "74e0669989e6df56d10939c808538df77c45d852ad63bb751af3540fcc402c88",
+          "domSha256": "29f3d51a8268af2bf28e346935bf44b5387b50049f8fa0af82223a451f430db1",
+          "width": 1440,
+          "height": 1796
+        },
+        {
+          "name": "native-mobile-pending.png",
+          "sha256": "3bf182da90927991724c9578e218231b1dcf1ad062452edc166c5c98bda08754",
+          "domSha256": "52470f3904e376f1fcfd47046281f48ac5a273ad7ed8c19cb097347ffacb4c4f",
+          "width": 390,
+          "height": 2347
+        },
+        {
+          "name": "native-desktop-after.png",
+          "sha256": "0a5cabbc81b114871fb62e9fdc6f26a4ae4951799da266f8f227dfeab4d42f96",
+          "domSha256": "18db04ed13913722dd326530791e1bf229a67b1be489381f4f1e34eec5b03cd9",
+          "width": 1440,
+          "height": 1327
+        },
+        {
+          "name": "native-mobile-after.png",
+          "sha256": "ad70401dec8585c5664555222a4d5e03b964031097c776290b3e2ff96494494d",
+          "domSha256": "3e8d87c28dfe6cc2658a15cc8f4b8fed461f4c52fa203bdb9510fce17a232750",
+          "width": 390,
+          "height": 1650
+        }
+      ],
+      "cliOutcomes": 20,
+      "archiveRecords": 14,
+      "naturalBrowserAndNativeExitsVerified": true
+    },
+    {
+      "variant": "serena",
+      "artifactId": 13037555327,
+      "nativeSha256": "cbd10f4440ef5fdea83f3423aeea9e66b3cef4641472cbd9eedfe1d8a61ea9e7",
+      "controls": [
+        {
+          "path": "scripts/host_history_browser.py",
+          "gitBlobSha256": "3daf8296b4e4798a9d5cc90ffbf35d134cf5dfc1b15f5542a48501e3c0f4c8d9",
+          "recordedSourceSha256": "39e2fee7e0a2fc86be6b404aabf26f3baad53d5e9119b0cb7fdc56d08c5e66e9",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser.cjs",
+          "gitBlobSha256": "43734699ff863bb0e435a90c9e3a1cfa4c3a8593fbbce27e6c057c2f1a400711",
+          "recordedSourceSha256": "6f5c42790699349335961e73143922c3f8d4a827d10267bac5745be897203a1b",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_live.py",
+          "gitBlobSha256": "84373d7b4fbebda9d985dbd1925b8777c58ed1b10659cd26df4528df2ee31d44",
+          "recordedSourceSha256": "690a7ca66c42fb0a358355f9d099bade7dd1d471eb2faa63bee0ccfdd52a2543",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser_http.py",
+          "gitBlobSha256": "2c7c5946b679fc256b76d3549445bbeac3b2c584fcb7f26f6cc37c75bf181c52",
+          "recordedSourceSha256": "0fc2da425a713a5bc4e55440c067f1d3945ea936cc5b3ef78636c8cd59a54af4",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "native/src/session_dashboard.html",
+          "gitBlobSha256": "8b283db62061145e08ac5ed35b03ae49a34e382e1ceb1eb54362424f1b4d1d66",
+          "recordedSourceSha256": "8520ec8513fbd1318b010cacaf4f9c71c61e6ae07a0e92f8bb5961617a75cf75",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        }
+      ],
+      "states": [
+        {
+          "name": "serena-desktop-before.png",
+          "sha256": "6d187678ae48aa92eb91059210995d1bea8adf80f63b5cf3f4741ff5c135ac27",
+          "domSha256": "3fab7b0b6b4c699eecf2449b72d50de7fc37673506c44e63b4ddd65116d591e7",
+          "width": 1440,
+          "height": 1612
+        },
+        {
+          "name": "serena-mobile-before.png",
+          "sha256": "ed2d9a41a164e59aa23ec2a001c821006d0b4dddaeaab0145f8bfa164a330b50",
+          "domSha256": "26af253bb46a84e59660173444eb87794c2a1f88ab2fcffea9e4b7ef42a01dd5",
+          "width": 390,
+          "height": 2110
+        },
+        {
+          "name": "serena-desktop-pending.png",
+          "sha256": "cf5238358a98b9db5a04d22a2f2eb7fa0a8475dc4ac8c5124df2cb95041c2744",
+          "domSha256": "29f3d51a8268af2bf28e346935bf44b5387b50049f8fa0af82223a451f430db1",
+          "width": 1440,
+          "height": 1796
+        },
+        {
+          "name": "serena-mobile-pending.png",
+          "sha256": "580c462c95b3adbe21b0f30a539166afc4f4b8b57e3fd564e7cb5f9f0587ffc4",
+          "domSha256": "52470f3904e376f1fcfd47046281f48ac5a273ad7ed8c19cb097347ffacb4c4f",
+          "width": 390,
+          "height": 2347
+        },
+        {
+          "name": "serena-desktop-after.png",
+          "sha256": "75a5bf701f02548591d21314a3b960d579fa9ee063b64e7a026e7154270ea9b1",
+          "domSha256": "18db04ed13913722dd326530791e1bf229a67b1be489381f4f1e34eec5b03cd9",
+          "width": 1440,
+          "height": 1327
+        },
+        {
+          "name": "serena-mobile-after.png",
+          "sha256": "7b20fac2903611a06391541a1b63a938881db4e44db695047586d2468db57014",
+          "domSha256": "3e8d87c28dfe6cc2658a15cc8f4b8fed461f4c52fa203bdb9510fce17a232750",
+          "width": 390,
+          "height": 1650
+        }
+      ],
+      "cliOutcomes": 20,
+      "archiveRecords": 14,
+      "naturalBrowserAndNativeExitsVerified": true
+    },
+    {
+      "variant": "persistent-python",
+      "artifactId": 13037176144,
+      "nativeSha256": "cbd10f4440ef5fdea83f3423aeea9e66b3cef4641472cbd9eedfe1d8a61ea9e7",
+      "controls": [
+        {
+          "path": "scripts/host_history_browser.py",
+          "gitBlobSha256": "3daf8296b4e4798a9d5cc90ffbf35d134cf5dfc1b15f5542a48501e3c0f4c8d9",
+          "recordedSourceSha256": "39e2fee7e0a2fc86be6b404aabf26f3baad53d5e9119b0cb7fdc56d08c5e66e9",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser.cjs",
+          "gitBlobSha256": "43734699ff863bb0e435a90c9e3a1cfa4c3a8593fbbce27e6c057c2f1a400711",
+          "recordedSourceSha256": "6f5c42790699349335961e73143922c3f8d4a827d10267bac5745be897203a1b",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_live.py",
+          "gitBlobSha256": "84373d7b4fbebda9d985dbd1925b8777c58ed1b10659cd26df4528df2ee31d44",
+          "recordedSourceSha256": "690a7ca66c42fb0a358355f9d099bade7dd1d471eb2faa63bee0ccfdd52a2543",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser_http.py",
+          "gitBlobSha256": "2c7c5946b679fc256b76d3549445bbeac3b2c584fcb7f26f6cc37c75bf181c52",
+          "recordedSourceSha256": "0fc2da425a713a5bc4e55440c067f1d3945ea936cc5b3ef78636c8cd59a54af4",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "native/src/session_dashboard.html",
+          "gitBlobSha256": "8b283db62061145e08ac5ed35b03ae49a34e382e1ceb1eb54362424f1b4d1d66",
+          "recordedSourceSha256": "8520ec8513fbd1318b010cacaf4f9c71c61e6ae07a0e92f8bb5961617a75cf75",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        }
+      ],
+      "states": [
+        {
+          "name": "persistent-python-desktop-before.png",
+          "sha256": "2e7835145ea40da65f202a1e674d00f5548e3d80047fa41846c7ca1fd2774b74",
+          "domSha256": "3fab7b0b6b4c699eecf2449b72d50de7fc37673506c44e63b4ddd65116d591e7",
+          "width": 1440,
+          "height": 1612
+        },
+        {
+          "name": "persistent-python-mobile-before.png",
+          "sha256": "017e0fa6be149129c4701f0f2b5dd89e70294e3fc259b35920b5b8b48e06cfb6",
+          "domSha256": "26af253bb46a84e59660173444eb87794c2a1f88ab2fcffea9e4b7ef42a01dd5",
+          "width": 390,
+          "height": 2110
+        },
+        {
+          "name": "persistent-python-desktop-pending.png",
+          "sha256": "1220759c57620ad88f0f0470f563ec2f61cdb4415d15fc8156338bd151c1e58f",
+          "domSha256": "29f3d51a8268af2bf28e346935bf44b5387b50049f8fa0af82223a451f430db1",
+          "width": 1440,
+          "height": 1796
+        },
+        {
+          "name": "persistent-python-mobile-pending.png",
+          "sha256": "0d66223e4f3ec827743b653d5b1330c3f8a212e1e805dbf0c3f4c78be18f41ce",
+          "domSha256": "52470f3904e376f1fcfd47046281f48ac5a273ad7ed8c19cb097347ffacb4c4f",
+          "width": 390,
+          "height": 2347
+        },
+        {
+          "name": "persistent-python-desktop-after.png",
+          "sha256": "1591bcdeb42b1ad9a08bd7e1f068445809d88447defacc730526989649cbb40c",
+          "domSha256": "18db04ed13913722dd326530791e1bf229a67b1be489381f4f1e34eec5b03cd9",
+          "width": 1440,
+          "height": 1327
+        },
+        {
+          "name": "persistent-python-mobile-after.png",
+          "sha256": "d3058af65b9c8e93a728c0efcf3387fda97966ae8717bc0b812cee5591b3b696",
+          "domSha256": "3e8d87c28dfe6cc2658a15cc8f4b8fed461f4c52fa203bdb9510fce17a232750",
+          "width": 390,
+          "height": 1650
+        }
+      ],
+      "cliOutcomes": 20,
+      "archiveRecords": 14,
+      "naturalBrowserAndNativeExitsVerified": true
+    },
+    {
+      "variant": "http",
+      "artifactId": 13037101706,
+      "nativeSha256": "cbd10f4440ef5fdea83f3423aeea9e66b3cef4641472cbd9eedfe1d8a61ea9e7",
+      "controls": [
+        {
+          "path": "scripts/host_history_browser.py",
+          "gitBlobSha256": "3daf8296b4e4798a9d5cc90ffbf35d134cf5dfc1b15f5542a48501e3c0f4c8d9",
+          "recordedSourceSha256": "39e2fee7e0a2fc86be6b404aabf26f3baad53d5e9119b0cb7fdc56d08c5e66e9",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser.cjs",
+          "gitBlobSha256": "43734699ff863bb0e435a90c9e3a1cfa4c3a8593fbbce27e6c057c2f1a400711",
+          "recordedSourceSha256": "6f5c42790699349335961e73143922c3f8d4a827d10267bac5745be897203a1b",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_live.py",
+          "gitBlobSha256": "84373d7b4fbebda9d985dbd1925b8777c58ed1b10659cd26df4528df2ee31d44",
+          "recordedSourceSha256": "690a7ca66c42fb0a358355f9d099bade7dd1d471eb2faa63bee0ccfdd52a2543",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "scripts/host_history_browser_http.py",
+          "gitBlobSha256": "2c7c5946b679fc256b76d3549445bbeac3b2c584fcb7f26f6cc37c75bf181c52",
+          "recordedSourceSha256": "0fc2da425a713a5bc4e55440c067f1d3945ea936cc5b3ef78636c8cd59a54af4",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        },
+        {
+          "path": "native/src/session_dashboard.html",
+          "gitBlobSha256": "8b283db62061145e08ac5ed35b03ae49a34e382e1ceb1eb54362424f1b4d1d66",
+          "recordedSourceSha256": "8520ec8513fbd1318b010cacaf4f9c71c61e6ae07a0e92f8bb5961617a75cf75",
+          "matchingForms": [
+            "Windows CRLF"
+          ]
+        }
+      ],
+      "states": [
+        {
+          "name": "http-desktop-before.png",
+          "sha256": "701b2468b571626de0ecc057e2f062fe534b1b775da7ba040479a4cceb8396fb",
+          "domSha256": "3fab7b0b6b4c699eecf2449b72d50de7fc37673506c44e63b4ddd65116d591e7",
+          "width": 1440,
+          "height": 1612
+        },
+        {
+          "name": "http-mobile-before.png",
+          "sha256": "2b7770d938ea5bea2ff7bf74c154b5f5943c7123dd5332c87797b64549ab6aa0",
+          "domSha256": "26af253bb46a84e59660173444eb87794c2a1f88ab2fcffea9e4b7ef42a01dd5",
+          "width": 390,
+          "height": 2110
+        },
+        {
+          "name": "http-desktop-pending.png",
+          "sha256": "5ba87e9948b7f59b1db56870e3fcf2084b4cf9f792e888f7e0bb92ce57e8bcae",
+          "domSha256": "29f3d51a8268af2bf28e346935bf44b5387b50049f8fa0af82223a451f430db1",
+          "width": 1440,
+          "height": 1796
+        },
+        {
+          "name": "http-mobile-pending.png",
+          "sha256": "a102d53b0f1724ea00d4054d4b742f30b97646ea09886958131d53bdfdaec50d",
+          "domSha256": "52470f3904e376f1fcfd47046281f48ac5a273ad7ed8c19cb097347ffacb4c4f",
+          "width": 390,
+          "height": 2347
+        },
+        {
+          "name": "http-desktop-after.png",
+          "sha256": "21a10f2e0d0ec15146da6f1bf0e6c84065ed73a9f408cf288e1d79f7780d3895",
+          "domSha256": "18db04ed13913722dd326530791e1bf229a67b1be489381f4f1e34eec5b03cd9",
+          "width": 1440,
+          "height": 1327
+        },
+        {
+          "name": "http-mobile-after.png",
+          "sha256": "3f38f2985bee2d6ff55e9991eefd995cae257b95a1d50daa814fd36bab249847",
+          "domSha256": "3e8d87c28dfe6cc2658a15cc8f4b8fed461f4c52fa203bdb9510fce17a232750",
+          "width": 390,
+          "height": 1650
+        }
+      ],
+      "cliOutcomes": 20,
+      "archiveRecords": 14,
+      "naturalBrowserAndNativeExitsVerified": true
+    }
+  ],
+  "nativeImagesReadLocally": false,
+  "visualInspectionComplete": false
+}

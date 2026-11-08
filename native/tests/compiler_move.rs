@@ -30,7 +30,14 @@ fn fixture(source: &str, target: &str, consumer: &str) -> (tempfile::TempDir, En
         fs::write(root.path().join(name), text).unwrap();
     }
     fs::write(root.path().join("tsconfig.json"),r#"{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","noEmit":true},"files":["source.ts","target.ts","consumer.ts"]}"#).unwrap();
-    let engine = Engine::open(root.path()).unwrap();
+    let mut opening = yoke::store::OpeningObservations::default();
+    // Preserve Engine::open's ten-second budget; phases record entry, not completion.
+    let engine = Engine::open_with_timeout_observed(
+        root.path(),
+        std::time::Duration::from_secs(10),
+        &mut opening,
+    )
+    .unwrap_or_else(|error| panic!("Compiler move fixture opening failed: {error}; {opening:?}"));
     (root, engine)
 }
 fn args(name: &str) -> Value {
